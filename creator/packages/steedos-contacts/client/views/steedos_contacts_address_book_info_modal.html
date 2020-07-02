@@ -1,0 +1,59 @@
+<template name="steedos_contacts_address_book_info_modal">
+	<div class="modal fade contacts-detail-info-modal" id="steedos_contacts_address_book_info_modal" role="dialog" aria-labelledby="modalLabel2" tabindex="-1">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">{{addressBook.name}}</h4>
+				</div>
+				<div class="modal-body weui-modal-content">
+					<div class="weui-cells weui-cells_form">
+						<div class="weui-cell">
+							<div class="weui-cell_hd">
+								<span class="weui-label">{{_ "address_books_email"}}</span>
+							</div>
+							<div class="weui-cell_bd weui-cell_primary text-muted">
+								<span class="weui-input">{{addressBook.email}}</span>
+							</div>
+						</div>
+						<div class="weui-cell">
+							<div class="weui-cell_hd">
+								<span class="weui-label">{{_ "address_books_mobile"}}</span>
+							</div>
+							<div class="weui-cell_bd weui-cell_primary text-muted">
+								{{#if isAndroidOrIOS}}
+									<a href="tel:{{addressBook.mobile}}" class="weui-input" style="color: #3c8dbc">{{addressBook.mobile}}</a>
+								{{else}}
+									<span class="weui-input">{{addressBook.mobile}}</span>
+								{{/if}}
+
+							</div>
+						</div>
+						<div class="weui-cell">
+							<div class="weui-cell_hd">
+								<span class="weui-label">{{_ "address_books_company"}}</span>
+							</div>
+							<div class="weui-cell_bd weui-cell_primary text-muted">
+								<span class="weui-input">{{addressBook.company}}</span>
+							</div>
+						</div>
+						<div class="weui-cell">
+							<div class="weui-cell_hd">
+								<span class="weui-label">{{_ "address_books_group"}}</span>
+							</div>
+							<div class="weui-cell_bd weui-cell_primary text-muted">
+								<span class="weui-input">{{addressGroupName addressBook.group}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="weui-btn-area text-right">
+						<button class="btn btn-default steedos-info-edit pull-left" data-id="{{targetId}}">{{_ "Edit"}}</button>
+						<button class="btn btn-default steedos-info-delete pull-left" data-id="{{targetId}}">{{_ "Delete"}}</button>
+
+						<button class="btn btn-default steedos-info-close">{{_ "steedos_contacts_close"}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

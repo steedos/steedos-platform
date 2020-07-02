@@ -1,0 +1,46 @@
+<template name="space_user_signs">
+
+    <section class="admin_flows">
+        <div class="navigation-bar">
+
+            <a class="btn btn-default" href="/admin">
+                <i class="ion ion-android-arrow-back"></i>
+            </a>
+
+            <span class="navigation-title">
+                    {{_ "space_user_signs"}}
+            </span>
+
+			<div class="pull-right">
+				<button type="button" class="btn btn-primary" id="addUserSigns">{{_ "Create"}}</button>
+			</div>
+
+        </div>
+        <div class="admin-content">
+            <div class="box-body" style="display: block;">
+                <div class="search-toolbar">
+                    <div class="pull-right">
+                        <div class="input-group">
+                            <input type="text" name="space-user-signs-search-key" id="space-user-signs-search-key" class="form-control space-user-signs-search-key" placeholder="{{_ 'Search'}}...">
+                            <span class="input-group-btn">
+                                <button type="submit" name="space-user-signs-search-btn" id="space-user-signs-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {{> tabular table=TabularTables.SpaceUserSigns selector=selector class="table dataTable no-footer datatable-space-user-signs table-hover"}}
+
+                {{#afModal class="btn btn-primary space-user-signs-insert hidden" fields="space,user,sign" collection="db.space_user_signs" operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}}
+                    {{_ "Create"}}
+                {{/afModal}}
+
+                {{#afModal class="btn btn-primary space-user-signs-edit hidden" collection="db.space_user_signs" operation="update" dialogClass="modal-lg modal-body-zoom" fields="space,user,sign" buttonContent=updateButtonContent showRemoveButton=true}}
+                    {{_ "Edit"}}
+                {{/afModal}}
+
+            </div>
+        </div>
+    </section>
+
+</template>

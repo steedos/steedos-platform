@@ -1,0 +1,32 @@
+<template name="copy_flow_modal">
+	<div class="modal fade creator-modal flow-modal copy-flow-modal" id="newFlowModal">
+		<div class="modal-dialog slds-modal slds-fade-in-open modal-lg">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<h2 class="title slds-text-heading--medium">
+						<h2 class="slds-text-heading--medium">复制流程</h2>
+					</h2>
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium">
+				{{#autoForm schema=schema id=formId}}
+					{{#each fields}}
+						<div class="slds-grid view-page-section-row">
+							<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+								<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+									{{> afQuickField name=this}}
+								</div>
+							</div>
+						</div>
+					{{/each}}
+				{{/autoForm}}
+			</div>
+
+				<footer class="slds-modal__footer">
+					<button type="submit" class="slds-button slds-button_brand btn-confirm">确定</button>
+					<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+				</footer>
+			</div>
+		</div>
+	</div>
+</template>

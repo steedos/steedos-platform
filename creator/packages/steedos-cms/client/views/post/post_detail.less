@@ -1,0 +1,41 @@
+.cms {
+    &.post-detail{
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 100px;
+        position: absolute;
+        top: 51px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+
+        .post-date {
+            text-align:center;
+        }
+
+        .post-content{
+            .members-box{
+                margin-top: 30px;
+            }
+
+            .post-attachments{
+                margin-top: 90px;
+                .list-unstyled{
+                    .post-attachment-android-app, .post-attachment, .swipebox, .post-attachment-html{
+                        cursor: pointer;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+    
+    .post-title {
+        margin-top: 0px;
+    }
+    .icon-post-view-count{
+        vertical-align: middle;
+        color: #3c763d;
+    }
+}

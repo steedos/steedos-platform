@@ -1,0 +1,45 @@
+
+/* these are special */
+.slip-reordering {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.45);
+}
+
+.slip-swiping-container {
+    overflow-x: hidden;
+}
+
+.slippylist .slippylist-item {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+/* the rest is junk for the slip page */
+.slippylist .slippylist-item.slip-allow-select {
+    user-select: text;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+}
+.slippylist .slippylist-item.slip-allow-select span {
+    cursor: text;
+}
+
+.slippylist {
+    clear:left;
+}
+
+.slippylist .slippylist-item {
+}
+
+.slippylist input {
+    vertical-align: middle;
+}
+
+.skewed {
+    transform: rotate(2deg) scale(0.99);
+    -webkit-transform: rotate(2deg) scale(0.99);
+}
+
+.slip-no-swipe.slip-no-reorder {
+    opacity: 0.5;
+}

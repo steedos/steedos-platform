@@ -1,0 +1,12 @@
+{{#each steedos_form.fields}}
+    {{#if includes this.type 'section,table'}}
+        <div class="col-md-12">
+            {{> afFormGroup name=this.code label=false}}
+        </div>
+    {{else}}
+        <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
+        {{> afFormGroup name=this.code}}
+        </div>
+    {{/if}}
+    
+{{/each}}

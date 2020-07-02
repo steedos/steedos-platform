@@ -1,0 +1,36 @@
+.steedos-markdown, .field-markdown{
+	font-size: 0.875rem;
+
+	p, pre, pre.prettyprint, blockquote {
+		margin: 0 0 1.1em;
+	}
+
+	#edit-markdown{
+		cursor: pointer;
+		position: absolute;
+		right: -3px;
+		top: 0px;
+	}
+
+	h1::after, h2::after {
+		content: '';
+		display: block;
+		position: relative;
+		top: 0.33em;
+		border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		margin: 1.8em 0;
+		line-height: 1.33;
+	}
+
+	h1 {
+		font-size: 2em;
+		margin: 0.67em 0;
+	}
+}
+
+.CodeMirror, .editor-preview-side {
+	height: 300px !important;
+}

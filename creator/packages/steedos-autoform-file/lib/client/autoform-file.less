@@ -1,0 +1,44 @@
+.img-fileUpload-thumbnail
+{
+	max-width:100%;
+	//width:200px;
+}
+
+.file-upload-clear
+{
+	cursor: pointer;
+}
+
+.form-group.file-upload
+{
+	.form-group
+	{
+		label, input
+		{
+			display: none;
+		}
+	}
+	.btn {
+		max-width: 100%;
+		text-overflow: ellipsis;
+		overflow:hidden;
+	}
+}
+
+.af-select-file {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+  .af-select-file input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+  }

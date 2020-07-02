@@ -1,0 +1,202 @@
+.mobile-content-wrapper {
+    .hidden {
+        opacity: 0;
+    }
+    .mobile-template-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: translate3d(0, 0, 0);
+        animation-duration: 0.4s;
+        -webkit-animation-duration: 0.4s;
+        transition-timing-function: ease;
+        -webkit-transition-timing-function: ease;
+        will-change: transfrom, -webkit-transform, opacity;
+        .mobile-template-header {
+            position: relative;
+            background-color: #1075a9;
+            .forceHeaderLayout {
+                position: relative;
+                width: 100%;
+                height: 44px;
+                .bLeft {
+                    float: left;
+                    padding: 12px;
+                    min-width: 44px;
+                    max-width: 120px;
+                    color: #cae4fb;
+                    height: 100%;
+                    text-align: left;
+                    .slds-icon {
+                        height: 16px;
+                        width: 16px;
+                        fill: #cae4fb;
+                        margin-top: -2px;
+                    }
+                }
+                .bLeft:active {
+                    background: rgba(0, 0, 0, 0.3);
+                }
+                .bBody {
+                    position: absolute;
+                    left: 120px;
+                    right: 120px;
+                    height: 100%;
+                    line-height: 44px;
+                    overflow: hidden;
+                    text-align: center;
+                    color: #fff;
+                    font-size: 16px;
+                    font-weight: 700;
+                    .slds-icon {
+                        height: 16px;
+                        width: 16px;
+                        fill: #fff;
+                    }
+                }
+                .bRight {
+                    float: right;
+                    padding-right: 15px;
+                    min-width: 44px;
+                    width: auto;
+                    line-height: 44px;
+                    color: #cae4fb;
+                    height: 100%;
+                    text-align: right;
+                    .slds-icon {
+                        height: 16px;
+                        width: 16px;
+                        fill: #cae4fb;
+                    }
+                }
+                .bRight:active {
+                    background: rgba(0, 0, 0, 0.3);
+                }
+            }
+        }
+        .mobile-template-content {
+            position: absolute;
+            top: 44px;
+            bottom: 0;
+            width: 100%;
+            overflow: auto;
+            background-color: #efeff4;
+            a:hover,
+            a:focus {
+                text-decoration: none !important;
+            }
+            .list-title-container {
+                background-color: #1075a9;
+                color: #fff;
+                .bBody .list-name .slds-icon_container .slds-icon {
+                    fill: #fff;
+                }
+            }
+            .dx-list {
+                background: #fff;
+                .dx-list-search {
+                    border: none;
+                    border-radius: 0;
+                    margin-bottom: 0;
+                    height: 44px;
+
+                    .dx-texteditor-container {
+                        padding: 5px 10px;
+                        background: #EFEFF4;
+                    }
+                    .dx-texteditor-input {
+                        padding: 5px 34px 6px 34px;
+                    }
+                    .dx-icon-search {
+                        display: none;
+                        font: normal normal normal 14px/1 "weui";
+                        line-height: 18px !important;
+                        &:before {
+                            content: "\EA0E";
+                        }
+                    }
+                    &.dx-state-focused {
+                        .dx-icon-search {
+                            display: block;
+                        }
+                        .dx-placeholder {
+                            display: none;
+                        }
+                    }
+                    &:not(.dx-texteditor-empty) {
+                        .dx-icon-search {
+                            display: block;
+                        }
+                    }
+                    .dx-placeholder {
+                        position: absolute;
+                        top: 0px;
+                        left: 0px;
+                        right: 0;
+                        bottom: 0;
+                        text-align: center;
+                    }
+                    .dx-placeholder:before {
+                        padding: 13px 9px 8px 34px;
+                    }
+                    .dx-placeholder:after {
+                        position: absolute;
+                        left: calc(~ "50% - 50px");
+                        width: 70px;
+                        height: auto;
+                        font: normal normal normal 14px/1 "weui";
+                        content: "\EA0E";
+                        top: 15px;
+                    }
+                    .dx-texteditor-buttons-container {
+                        right: 10px;
+                    }
+                }
+                .dx-list-item {
+                    font-size: 17px;
+                    &.dx-state-active {
+                        background: #e6e6e6;
+                    }
+                    .dx-item-content.dx-list-item-content {
+                        padding: 0;
+                        .weui-cell {
+                            padding: 10px 10px;
+                            .weui-cell__hd {
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+            .view-page-section-row {
+                .slds-form-element__label {
+                    font-size: 13px;
+                }
+            }
+            .group-section.slds-section {
+                margin: 0;
+                .group-section-control {
+                    font-size: 13px;
+                    line-height: 13px;
+                }
+                .slds-section__title-action {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .sweet-alert h2 {
+        font-weight: normal;
+        font-size: 22px;
+        margin: 0px;
+    }
+
+    body {
+        background-image: none !important;
+    }
+}

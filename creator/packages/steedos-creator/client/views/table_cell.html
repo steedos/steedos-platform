@@ -1,0 +1,52 @@
+<template name="creator_table_cell">
+	<span class="creator_table_cell slds-grid slds-grid_align-spread field-{{field.type}}">
+		<div class="{{#unless is_detail_view}}slds-truncate {{/unless}}{{#unless isMarkdown field.type}}cell-container {{else}}editor-preview-side {{/unless}} {{cellColorClass(cellData)}}">
+			{{#each cellData}}
+				{{#if isTable}}
+					<div class="cellGridContainer slds-table_edit slds-hint-parent"></div>
+				{{else if isImages}}
+					{{#each value}}
+						<img class="creator-table-cell-image" src="{{../baseUrl}}/{{this}}"/>
+					{{/each}}
+				{{else if isImage}}
+					<img class="creator-table-cell-image" src="{{baseUrl}}/{{value}}"/>
+				{{else if isUrl}}
+					<a onclick="{{getOpenWindowScript(href)}}">{{value}}</a>
+				{{else if isEmail}}
+					<a href="mailto:{{value}}">{{value}}</a>
+				{{else}}
+					{{#if href}}
+						{{#if itemActionName}}
+							<a title="{{value}}" class="link-detail list-item-link-{{id}} list-item-link-action" data-action-name={{itemActionName}}>{{value}}</a>
+						{{else}}
+							{{#if openWindow}}
+								<a onclick="{{getOpenWindowScript(href)}}" title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
+							{{else}}
+								<a href="{{href}}" title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
+							{{/if}}
+						{{/if}}
+					{{else}}
+						<span class="">{{{value}}}&nbsp;</span>
+					{{/if}}
+				{{/if}}
+			{{/each}}
+			{{#if is_detail_view}}
+				{{#if isExtraField}}
+					<div class="cell-extra-field-container"></div>
+				{{/if}}
+			{{/if}}
+		</div>
+		{{#if showEditIcon}}
+			<span class="triggerContainer">
+				<button type="button" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="{{_ 'edit'}}">
+					{{#if editable}}
+						{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" source="utility-sprite" name="edit"}}
+					{{else}}
+						{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_lock" source="utility-sprite" name="lock"}}
+					{{/if}}
+					<span class="slds-assistive-text">Edit</span>
+				</button>
+			</span>
+		{{/if}}
+	</span>
+</template>

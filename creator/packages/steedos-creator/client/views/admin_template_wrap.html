@@ -1,0 +1,61 @@
+<template name="admin_template_wrap">
+	{{#if isMobile}}
+		<div class="admin-menu mobile-template-container admin-template-wrap hidden" id="{{id}}">
+			<header class="mobile-template-header">
+				<div class="forceHeaderLayout">
+					<div class="bLeft admin-menu-back">
+						{{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}}
+					</div>
+					<div class="bRight"></div>
+					<div class="bBody">
+						{{_ title}}
+					</div>
+				</div>
+			</header>
+			<div class="admin-menu-content mobile-template-content">
+				{{> Template.dynamic template=template}}
+			</div>
+		</div>
+	{{else}}
+		<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view admin-template-wrap">
+			<div class="slds-template__container">
+				<div class="objectViewManager slds-grid slds-grid--vertical flexipageBaseRecordHomeTemplateDesktop">
+					<div class="slds-page-header slds-page-header_bleed">
+						<div class="slds-grid">
+							<div class="slds-col slds-has-flexi-truncate">
+								<div class="slds-media slds-no-space slds-grow">
+									<div class="slds-media__figure">
+										<span class="slds-icon_container">
+											<div class="slds-icon crm-header-icon">
+												<span class="uiImage">
+													{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="team_member"}}
+												</span>
+											</div>
+										</span>
+									</div>
+									<div class="slds-media__body">
+										<nav>
+											<ol class="slds-breadcrumb slds-line-height_reset">
+												<li class="slds-breadcrumb__item crm-breadcrumb-item">
+													<span>{{_ headline}}</span>
+												</li>
+											</ol>
+										</nav>
+										<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+											<div class="">
+												<span class="">{{_ title}}</span>
+											</div>
+										</h1>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="slds-show slds-form slds-form_stacked slds-grid slds-page-header__detail-row" role="tabpanel">
+							{{> Template.dynamic template=template}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+</template>

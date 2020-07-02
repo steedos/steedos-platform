@@ -1,0 +1,48 @@
+name: teams
+label: 团队
+icon: product
+fields:
+  id: 
+    type: text
+    primary: true
+  name:
+    type: text
+    label: 名称
+  displayname:
+    type: text
+    label: 显示名称
+  email:
+    type: text
+    label: 邮件
+  type:
+    type: text
+    label: 类型
+  allowopeninvite:
+    type: boolean
+    label: 允许邀请新用户
+  description: 
+    label: 描述
+    type: textarea
+list_views:
+  all:
+    label: 全部
+    columns:
+      - name
+      - displayname
+      - allowopeninvite
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

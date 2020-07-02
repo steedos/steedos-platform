@@ -1,0 +1,25 @@
+<template name="space_recharge_qrcode_modal">
+    <div class="modal fade" id="space_recharge_qrcode_modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content ins-modal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" >
+                        {{_ "billings"}}
+                    </h4>
+                </div>
+                <div class="modal-body modal-zoom" style='overflow-y:auto'>
+                    <div style="text-align:center;">
+                        <img src="/images/billing/WePayLogo.png" class="img-responsive;margin:auto;" style="width: 180px;margin-bottom: 10px;"/>
+                    </div>
+                    <div id="qrcodeDefault" style="text-align:center;"></div>
+                    <div style="text-align:center;">
+                        <img src="/images/billing/WePayDescription.png" class="img-responsive;margin:auto;" style="width:256px;"/>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</template>

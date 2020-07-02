@@ -1,0 +1,26 @@
+<template name="admin_flow_modal">
+	<div class="modal fade admin_flow_modal" id="adminFlowRoles_modal" role="dialog" aria-labelledby="adminFlowRoles_modal_label" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content ins-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="">
+						{{_ "Edit"}}
+					</h4>
+				</div>
+				<div class="modal-body modal-zoom">
+					{{#autoForm id="admin_flow" collection="db.flows" type="update" schema=flow_schema doc=doc disabled=false}}
+						{{> afQuickFields template="bootstrap3"}}
+					{{/autoForm}}
+				</div>
+				<div class="modal-footer">
+					<div class="pull-right">
+						<button type="button" class="btn btn-primary save-flow">
+							{{_ "Update"}}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

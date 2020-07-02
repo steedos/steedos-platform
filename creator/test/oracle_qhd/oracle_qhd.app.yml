@@ -1,0 +1,10 @@
+_id: oracle_qhd
+name: QHD在237上的应用
+description: QHD在237上的应用，用于Oracle数据库集成测试
+icon_slds: thanks
+is_creator: true
+objects: 
+  - oracle_qhd.users
+  - oracle_qhd.workflow
+  - oracle_qhd.bookmarks
+  - oracle_qhd.fieldcontroller

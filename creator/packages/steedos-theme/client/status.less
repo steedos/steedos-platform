@@ -1,0 +1,42 @@
+.connection-status{
+	position: absolute;
+	left: 50%;
+	right: auto;
+	z-index: 9999999;
+	width: 420px;
+	top: 50%;
+	margin: 0px;
+	padding: 0px;
+	margin-left: -210px;
+	margin-top: 20px;
+	@media (max-width: 767px){
+		z-index: 999;
+		width: 80%;
+		margin-left: -40%;
+	}
+	.alert{
+		border-radius: 4px!important;
+		bottom: 0px;
+		margin: 0px;
+		border: none;
+		background: rgba(51, 51, 51, 0.6)!important;
+		padding: 6px 2px;
+		font-size: 14px;
+		line-height: 16px;
+		font-weight: normal!important;
+		strong{
+			font-weight: normal!important;
+		}
+		.alert-link{
+			color: #fff;
+		}
+		.glyphicon{
+			display: none;
+		}
+	}
+}
+.offline{
+	.loadingOverlay{
+		display: none!important;
+	}
+}

@@ -1,0 +1,23 @@
+<template name="afArrayField_plain">
+  <fieldset>
+    <legend>{{afFieldLabelText name=this.atts.name}}</legend>
+    {{#if afFieldIsInvalid name=this.atts.name}}
+    <div class="autoform-array-field-error">
+      {{{afFieldMessage name=this.atts.name}}}
+    </div>
+    {{/if}}
+    {{#afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+    <div class="autoform-array-item">
+      {{> afQuickField name=this.name label=false}}
+      {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
+      <button type="button" class="autoform-remove-item">Remove</button>
+      {{/if}}
+    </div>
+    {{/afEachArrayItem}}
+    {{#if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+    <div style="margin-top: 20px;">
+      <button type="button" class="autoform-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}">Add</button>
+    </div>
+    {{/if}}
+  </fieldset>
+</template>

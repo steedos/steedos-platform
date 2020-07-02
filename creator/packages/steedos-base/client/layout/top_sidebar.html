@@ -1,0 +1,16 @@
+<template name="topSidebar">
+	<ul class="nav sidebar-menu mobile">
+		<li class="header">{{_ "Account"}}</li>
+<!-- 		<li class="{{menuClass 'steedos/springboard'}}">
+			<a href="javascript:void(0)" name="open_apps_btn">
+				<i class="ion ion-ios-home-outline"></i><span>{{_ "apps"}}</span>
+			</a>
+		</li> -->
+		<li class="{{menuClass 'steedos/admin'}}"><a href="{{urlPrefix}}/admin/"><i class="ion ion-ios-gear-outline"></i><span>{{_ "Settings"}}</span></a></li>
+		<li>
+			<a class="steedos-help" href="#"><i class="ion ion-help-circled"></i><span>{{_ "Help"}}</span></a>
+		</li>
+		<li class="steedos-about"><a href="/admin/about"><i class="ion ion-information-circled"></i><span>{{_ "steedos_about"}}</span></a></li>
+		<li class="steedos-logout"><a href="/steedos/logout"><i class="ion ion-power"></i><span>{{_ "Sign out"}}</span></a></li>
+	</ul>
+</template>

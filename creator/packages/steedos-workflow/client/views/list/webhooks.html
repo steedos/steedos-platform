@@ -1,0 +1,46 @@
+<template name="webhooks">
+
+    <section class="admin_flows">
+        <div class="navigation-bar">
+
+            <a class="btn btn-default" href="/admin">
+                <i class="ion ion-android-arrow-back"></i>
+            </a>
+
+            <span class="navigation-title">
+                    {{_ "Webhooks"}}
+            </span>
+
+			<div class="pull-right">
+				<button type="button" class="btn btn-primary" id="addWebhooks">{{_ "Create"}}</button>
+			</div>
+
+        </div>
+        <div class="admin-content">
+            <div class="box-body" style="display: block;">
+                <div class="search-toolbar">
+                    <div class="pull-right">
+                        <div class="input-group">
+                            <input type="text" name="webhooks-search-key" id="webhooks-search-key" class="form-control webhooks-search-key" placeholder="{{_ 'Search'}}...">
+                            <span class="input-group-btn">
+                                <button type="submit" name="webhooks-search-btn" id="webhooks-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {{> tabular table=TabularTables.Webhooks selector=selector class="table dataTable no-footer datatable-webhooks table-hover"}}
+                
+                {{#afModal class="btn btn-primary webhooks-insert hidden" collection="db.webhooks" operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}}
+                    {{_ "Create"}}
+                {{/afModal}}
+
+                {{#afModal class="btn btn-primary webhooks-edit hidden" collection="db.webhooks" operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
+                    {{_ "Edit"}}
+                {{/afModal}} 
+
+            </div>
+        </div>
+    </section>
+
+</template>

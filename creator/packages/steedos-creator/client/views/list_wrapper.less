@@ -1,0 +1,218 @@
+.filter-list-container {
+    .filter-list {
+        width: 321px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.40);
+        overflow: auto;
+        position: relative;
+        z-index: 1;
+    
+        .slds-form {
+            background: rgb(243, 242, 242);
+
+            .slds-filters {
+                background: #fff;
+			
+				.slds-filters__header {
+					-webkit-justify-content: space-between;
+					-ms-flex-pack: justify;
+					justify-content: space-between;
+				}
+			
+				h2.slds-align-middle {
+					font-weight: 300;
+					line-height: 1.875rem;
+				}
+			
+				h3.slds-text-body_small {
+					font-weight: 400;
+					font-size: .8125rem;
+					line-height: 1.5;
+				}
+			
+				.slds-filters__footer {
+					padding: 0.5rem 0.75rem;
+				}
+
+				.bodyTitle {
+					color: rgb(112, 110, 107);
+					font-weight: 400;
+					font-size: .8125rem;
+					line-height: 1.5;
+					padding-bottom: .5rem;
+					padding-left: 0.75rem;
+				}
+
+				.showNumbers {
+					margin-left: 25px;
+					.filter-item {
+						list-style-type: decimal;
+						padding-left: 0;
+					}
+				}
+			}
+        }
+	}
+	
+	.filter-logic-title {
+		display: block;
+		overflow: hidden;
+
+		.title {
+			float: left;
+		}
+
+		.logic-info {
+			float: left;
+			color: #706e6b;
+		}
+
+		.remove_filter_logic {
+			float: right;
+			color: #0070d2;
+		}
+		.add_filter_logic{
+			color: #0070d2;
+		}
+	}
+}
+
+.btn-filter-list.filtering:before,.btn-toggle-filter.filtering:before{
+	content: " ";
+	border: 4px solid red;
+	border-radius: 4px;
+	position: absolute;
+	z-index: 999;
+	top: 4px;
+	right: 0;
+	margin-right: 4px;
+}
+
+.leftNav{
+	background-color: rgb(255, 255, 255);
+	-webkit-box-flex: 0;
+	-webkit-flex: 0 0 auto;
+	-ms-flex: 0 0 auto;
+	flex: 0 0 auto;
+	width: 200px;
+	position: relative;
+	border-top: 1px solid #dddbda;
+	border-left: 1px solid #dddbda;
+	border-bottom: 1px solid #dddbda;
+	margin-left: 1em;
+
+	overflow: auto;
+
+	//.slds-is-active{
+	//	background-color: rgba(0, 112, 210, 0.1);
+	//}
+}
+
+.slds-navigation-list-vertical .slds-is-active .slds-navigation-list-vertical__action,
+.slds-navigation-list-vertical .slds-is-active .slds-navigation-list--vertical__action,
+.slds-navigation-list--vertical .slds-is-active .slds-navigation-list-vertical__action,
+.slds-navigation-list--vertical .slds-is-active .slds-navigation-list--vertical__action {
+	background-color: rgba(0, 112, 210, 0.1);
+	border-color: #dddbda;
+	border-left-color: #005fb2;
+	color: #000000;
+}
+.slds-col.sidebar-open{
+	display: flex;
+	flex: 4;
+	&>.list-table-container{
+		flex: 3;
+		&.list-table-sidebar{
+			position: relative;
+			flex: 1;
+			border-right: 1px solid rgb(224, 229, 238);
+			border-bottom-right-radius: 0px !important;
+			.dx-scrollable-content{
+				padding-bottom: 20px;
+			}
+			&~.list-table-container {
+				border-bottom-left-radius: 0px !important;
+			}
+		}
+	}
+}
+
+@media (max-width: 767px) {
+	.slds-page-header--object-home{
+		.slds-page-header__title{
+			/*手机上标题过长时省略号显示*/
+			.triggerLink{
+				max-width: 100%;
+				.triggerLinkTextAndIconWrapper{
+					max-width: 100%;
+					.triggerLinkText{
+						max-width: 90%;
+						overflow: hidden;
+						display: inline-block;
+						text-overflow: ellipsis;
+						float: left;
+					}
+				}
+			}
+			/*统一把手机上视图下拉菜单显示为全屏下拉效果*/
+			.dropdown-menu{
+				position: fixed;
+				top: 107px;
+				left: 10px;
+				right: 10px;
+				bottom: auto;
+				border-top-left-radius: unset;
+				border-top-right-radius: unset;
+				overflow: auto;
+				max-height: calc(~"100% - 120px");
+			}
+		}
+	}
+}
+
+//#addListView{
+//	.view-page-section-row:nth-child(5){
+//		display: none;
+//	}
+//}
+
+/*start=====处理客户端grid列表高度问题，客户端高度计算有bug，会造成grid列表底部显示不全，进而造成看不到底部水平滚动条======*/
+@media (min-width: 767px) {
+	.filter-list-wraper.creator-grid-wrap>.weui-flex {
+		height: calc(~"100% - 100px") !important;
+
+		&>.table-grid-content>.slds-col {
+			height: 100%;
+		}
+
+		.dx-datagrid {
+			.dx-scrollable-customizable-scrollbars {
+				height: calc(~"100% - 76px") !important;
+			}
+		}
+	}
+}
+/*end===========*/
+
+/*start=====处理客户端日历高度问题======*/
+@media (min-width: 767px) {
+	.filter-list-wraper.creator-calendar-wrap>.weui-flex {
+		height: calc(~"100% - 68px") !important;
+
+		&>.table-grid-content>.slds-col {
+			height: 100%;
+			&>.list-table-container>.creator-calendar>.slds-grid>.slds-col {
+				height: 100%;
+			}
+		}
+
+		.dx-scheduler-scrollable-fixed-content {
+			height: 100%;
+			min-height: 700px;
+			overflow: hidden !important;
+    		width: 100%;
+		}
+	}
+}
+/*end===========*/
+

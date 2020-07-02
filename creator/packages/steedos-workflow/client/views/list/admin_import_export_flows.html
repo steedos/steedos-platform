@@ -1,0 +1,36 @@
+<template name="admin_import_export_flows">
+
+    <section class="admin flows">
+        <div class="navigation-bar">
+
+            <a class="btn btn-default" href="/admin">
+                <i class="ion ion-android-arrow-back"></i>
+            </a>
+
+            <span class="navigation-title">
+                    {{_ "workflow_import_export_flows"}}
+            </span>
+
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary" id="importFlow">{{_ "workflow_import_flow"}}</button>
+            </div>
+        </div>
+        <div class="admin-content">
+            <div class="box-body" style="display: block;">
+                <div class="search-toolbar">
+                    <div class="pull-right">
+                        <div class="input-group">
+                            <input type="text" name="ioe-flows-search-key" id="ioe-flows-search-key" class="form-control ioe-flows-search-key" placeholder="{{_ 'Search'}}...">
+                            <span class="input-group-btn">
+                                <button type="submit" name="ioe-flows-search-btn" id="ioe-flows-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {{> tabular table=TabularTables.ImportOrExportFlows  selector=selector class="table table-hover dataTable no-footer datatable-ioe-flows"}}
+            </div>
+        </div>
+    </section>
+
+</template>

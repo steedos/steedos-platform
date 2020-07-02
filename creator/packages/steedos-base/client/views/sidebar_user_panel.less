@@ -1,0 +1,53 @@
+.sidebar{
+	.user-panel{
+		.account-default-avatar{
+			height: 45px;
+			width: 45px;
+			border: 3px solid;
+			border-color: rgba(255, 255, 255, 0.2);
+			border-radius: 50%;
+			font-size: 30px;
+			color: rgba(255, 255, 255, 0.3);
+			padding-top: 4px;
+			text-align: center;
+		}
+	}
+
+
+	.top-sidebar {
+		min-height: 50px;
+		padding: 0px !important;
+		margin: 0px !important;
+		box-shadow: rgba(0,0,0,0.3) 0 1px 9px, rgba(255,255,255,0.2) 0 -1px 0 inset;
+		transition: all 1s ease-in-out 0.5s;
+		border-bottom: 1px solid #000;
+		border-bottom: 1px solid rgba(0,0,0,0.2);
+		background: rgba(22, 84, 150, 0.84);
+
+		.logo {
+			background: transparent;
+			cursor:pointer;
+			&.logo-avatar{
+				background-size: contain!important;
+				.logo-lg{
+					display: none!important;
+				}
+			}
+			-webkit-transition: width 0.3s ease-in-out;
+			-o-transition: width 0.3s ease-in-out;
+			transition: width 0.3s ease-in-out;
+			display: block;
+			float: left;
+			height: 50px;
+			font-size: 20px;
+			line-height: 50px;
+			text-align: center;
+			width: 230px;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			padding: 0 15px;
+			font-weight: 300;
+			overflow: hidden;
+
+		}
+	}
+}

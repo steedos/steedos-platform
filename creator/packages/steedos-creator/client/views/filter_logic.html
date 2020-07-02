@@ -1,0 +1,23 @@
+<template name="filter_logic">
+	<div class="filter-logic-container slds-p-around--small">
+		<div class="filter-logic-title slds-p-bottom--x-small">
+			{{#if show_filter_logic}}
+				<span class="bodyTitle">
+					<span class="slds-m-right--xx-small uiLabel">
+						筛选器逻辑
+					</span>
+				</span>
+				<a class="remove_filter_logic">删除</a>
+			{{else}}
+				<a class="add_filter_logic">添加筛选逻辑</a>
+			{{/if}}
+		</div>
+		{{#if show_filter_logic}}
+		<div class="slds-form-element">
+			<div class="slds-form-element__control">
+				<textarea id="filter-logic" cols="20" rows="3" maxlength="120" class="slds-textarea filterLogicText textarea uiInput uiInputTextArea uiInput--default uiInput--textarea">{{default_filter_logic}}</textarea>
+			</div>
+		</div>
+		{{/if}}
+	</div>
+</template>

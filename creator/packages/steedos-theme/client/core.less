@@ -1,0 +1,120 @@
+.form-group input[type=datetime-local].form-control,.form-group input[type=date].form-control{
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 32px!important;
+}
+
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+span,a{
+    &.text-overflow{
+        display:inline-block;
+    }
+}
+
+.safari{
+    select{
+        appearance:none;
+        -webkit-appearance:none;
+        outline:none;
+        -webkit-tap-highlight-color:rgba(0,0,0,0);
+    }
+}
+
+body{
+    background-size: cover;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, Microsoft Yahei, SimHei;
+}
+.bg-body {
+    background-color: #222d32;
+    background-size: cover;
+}
+.img-fileUpload-thumbnail {
+    max-width: 200px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-weight: bold;
+    font-family: Helvetica, Arial, Microsoft Yahei, SimHei;
+}
+
+h1, .h1 {
+    font-size: 26px;
+}
+h2, .h2 {
+    font-size: 22px;
+}
+h3, .h3 {
+    font-size: 18px;
+}
+h4, .h4 {
+    font-size: 16px;
+}
+h5, .h5 {
+    font-size: 14px;
+}
+h6, .h6 {
+    font-size: 12px;
+}
+
+
+.steedos {
+    
+    .btn-default {
+        background-color: transparent;
+        border-color: transparent;
+    }
+    .btn-default:hover,
+    .btn-default:active,
+    .btn-default.hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+    }
+
+    a.thumbnail{
+        &.btn-default {
+            background-color: #f4f4f4;
+            color: #444;
+            border-color: #ddd;
+        }
+        &.btn-default:hover,
+        &.btn-default:active,
+        &.btn-default.hover {
+            color: #333;
+            background-color: #d4d4d4;
+            border-color: #8c8c8c;
+        }
+    }
+
+    .navigation-bar {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .modal-content {
+        border-radius: 5px;
+    }
+
+}
+
+
+
+.sidebar-mini.sidebar-collapse {
+        .sidebar-menu > li > a:active,
+        .sidebar-menu > li > a:focus,
+        .sidebar-menu > li.active > a,
+        .sidebar-menu > li.active > a:hover {
+            color: #ffffff;
+            background: #222;
+        }
+        .sidebar-menu > li:hover > a,
+        .sidebar-menu > li > a:hover {
+            color: #ffffff;
+            background: #333;
+        }
+        .sidebar-menu > li > .treeview-menu {
+            background: #333;
+        }
+}

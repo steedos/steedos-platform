@@ -1,0 +1,143 @@
+<template name="contacts_settings">
+	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view">
+		<div class="slds-template__container">
+			<div class="objectViewManager slds-grid slds-grid--vertical flexipageBaseRecordHomeTemplateDesktop">
+				<div class="slds-page-header slds-page-header_bleed">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon">
+											<span class="uiImage">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="team_member"}}
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span>通讯录</span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<div class="">
+											<span class="">权限设置</span>
+										</div>
+									</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="creator-contacts-settings-form" class="slds-show slds-form slds-form_stacked slds-grid slds-page-header__detail-row" role="tabpanel">
+						<div class="form-group">
+							<div class="contacts-settings-box hidden-users-block hidden">
+								<div class="weui-panel__bd">
+									<div class="weui-media-box weui-media-box_text">
+										<h4 class="weui-media-box__title contacts-setting-title">
+											{{_ "steedos_contacts_settings_hidden_users"}}
+										</h4>
+										<div class="pull-right box-tools">
+											<a href="javascript:void(0)" class="btn btn-sm btn-primary pull-left set_settings">
+												{{_ "Edit"}}
+											</a>
+										</div>
+										<p class="weui-media-box__desc profile_item_left_btnTips">
+											<i class="ion ion-ios-information-outline"></i>
+											{{_ "steedos_contacts_settings_hidden_users_tips"}}
+										</p>
+									</div>
+								</div>
+								<div class="contacts-settings-box-body">
+									<ul class="hidden-users-list clearfix">
+										{{#each hidden_users}}
+										<li class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+											<img src="/avatar/{{this.user}}">
+											<a class="users-list-name" href="#">{{this.name}}</a>
+											<span class="users-list-date">{{this.email}}</span>
+										</li>
+										{{/each}}
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-settings-box view-limit-block">
+								<div class="weui-panel__bd">
+									<div class="weui-media-box weui-media-box_text">
+										<h4 class="weui-media-box__title contacts-setting-title">
+											{{_ "space_viewing_limits"}}
+										</h4>
+										<div class="pull-right box-tools">
+											<a href="javascript:void(0)" class="btn btn-sm btn-primary pull-left btn-add">
+												{{_ "Add"}}
+											</a>
+										</div>
+										<p class="weui-media-box__desc profile_item_left_btnTips">
+											<i class="ion ion-ios-information-outline"></i>
+											{{_ "space_viewing_limits_tips"}}
+										</p>
+									</div>
+								</div>
+								<div class="contacts-settings-box-body">
+									<ul class="view-limit-list clearfix">
+										{{#each view_limits}}
+											{{#each this.values}}
+												<li class="col-md-12 clearfix">
+													<div class="pull-left left-names">
+														{{#each limit_from_names this.froms}}
+															<div class="limit-froms-item">
+																<i class="ion ion-android-folder"></i>
+																{{this}}
+															</div>
+														{{/each}}
+													</div>
+													<div class="pull-right">
+														<a class="btn btn-edit" data-index={{@index}}>{{_ "Edit"}}</a>
+														<a class="btn btn-delete" data-index={{@index}}>{{_ "Delete"}}</a>
+													</div>
+												</li>
+											{{/each}}
+										{{/each}}
+									</ul>
+								</div>
+							</div>
+							{{#if isForceAccountBindPhone}}
+								<div class="contacts-settings-box no-force-phone-block">
+									<div class="weui-panel__bd">
+										<div class="weui-media-box weui-media-box_text">
+											<h4 class="weui-media-box__title contacts-setting-title">
+												{{_ "no_force_phone"}}
+											</h4>
+											<div class="pull-right box-tools">
+												<a href="javascript:void(0)" class="btn btn-sm btn-primary pull-left btn-edit">
+													{{_ "Edit"}}
+												</a>
+											</div>
+											<p class="weui-media-box__desc profile_item_left_btnTips">
+												<i class="ion ion-ios-information-outline"></i>
+												{{_ "no_force_phone_tips"}}
+											</p>
+										</div>
+									</div>
+									<div class="contacts-settings-box-body">
+										<ul class="hidden-users-list clearfix">
+											{{#each no_force_phone_users}}
+											<li class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+												<img src="/avatar/{{this.user}}">
+												<a class="users-list-name" href="#">{{this.name}}</a>
+												<span class="users-list-date">{{this.email}}</span>
+											</li>
+											{{/each}}
+										</ul>
+									</div>
+								</div>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

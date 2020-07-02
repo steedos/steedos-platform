@@ -1,5 +1,5 @@
 {
-  "name": "steedos-server",
+  "name": "steedos-platform",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -28,6 +28,6 @@
     "**/cryptiles": "^4.1.2"
   },
   "devDependencies": {
-    "lerna": "^3.16.4"
+    "lerna": "^3.22.0"
   }
 }

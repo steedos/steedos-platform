@@ -1,0 +1,17 @@
+<template name="creatorMobileLayout">
+	{{#if subsReady}}
+		<div class="steedos layout-top-nav skin-blue-light">
+            
+			<div class="mobile-content-wrapper">
+				{{> Template.dynamic template=main}}
+                <div class="layout-placeholder"></div>
+            </div>
+			{{> CreatorAutoformModals}}
+			{{> mobile_apps_modal}}
+			{{> reset_password_modal}}
+		</div>
+		<div class="connection-status">
+			{{> status}}
+		</div>
+	{{/if}}
+</template>

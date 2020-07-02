@@ -1,0 +1,16 @@
+<template name="creator_home">
+    <div class="creator-home">
+        <div class="weui-grids weui-panel">
+            {{#each apps}}
+                <a href="{{this.url}}" class="weui-grid app-item">
+                    <div class="weui-grid__icon">
+                        {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=this.icon_slds}}
+                    </div>
+                    <p class="weui-grid__label">
+                        {{this.name}}
+                    </p>
+                </a>
+            {{/each}}
+        </div>
+    </div>
+</template> 

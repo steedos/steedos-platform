@@ -1,0 +1,10 @@
+<template name="steedosInputEmail">
+    {{#if isReadOnly}}
+        <div {{attsPlusFormControlClass}}>
+            <a href="mailto:{{this.value}}">{{this.value}}</a>
+        </div>
+        <input type="email" value="{{this.value}}" {{this.atts}} {{attsPlusFormControlClass}} style="display: none"/>
+    {{else}}
+        <input type="email" value="{{this.value}}" {{this.atts}} {{attsPlusFormControlClass}}/>
+    {{/if}}
+</template>

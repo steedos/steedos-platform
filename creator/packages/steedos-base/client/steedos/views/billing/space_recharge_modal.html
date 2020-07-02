@@ -1,0 +1,59 @@
+<template name="space_recharge_modal">
+    <div class="modal fade" id="space_recharge_modal" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content ins-modal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" >
+                        {{_ "billings"}}
+                    </h4>
+                </div>
+                <div class="modal-body modal-zoom" style='overflow-y:auto'>
+                    <div class="form-group">
+                        <label for="space_recharge_end_date" class="control-label">{{_ "billing.buy_date"}}</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon submit-date-icon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control" id="space_recharge_end_date" value="{{end_date}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="space_recharge_user_count" class="control-label">{{_ "billing.buy_user_count"}}</label>
+                        <input type="number" id="space_recharge_user_count" class="form-control" min="{{accepted_user_count}}" pattern="[0-9]" value="{{accepted_user_count}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="space_recharge_modules" class="control-label">{{_ "billing.buy_modules"}}</label>
+                        <div id="space_recharge_modules">
+                            {{#each modules }}
+                                <div class="checkbox {{#if is_paid_module name}}disabled{{/if}}">
+                                    <label>
+                                        <input type="checkbox" value="{{name}}" disabled="{{#if is_paid_module name}}disabled{{/if}}" checked="{{#if is_paid_module name}}checked{{/if}}" id="{{name}}">
+                                        {{name_zh}}
+                                    </label>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">{{_ "billing.price"}}</label>
+                        <div class="form-control"><label id="space_recharge_price"></label>元/人•月</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="space_recharge_fee" class="control-label">{{_ "billing.amount"}}</label>
+                        <input type="number" id="space_recharge_fee" class="form-control" disabled>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="space_recharge_generate_qrcode">{{_ "OK"}}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

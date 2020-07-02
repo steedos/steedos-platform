@@ -1,0 +1,164 @@
+.steedos-table .item-readonly{
+    cursor: pointer;
+}
+
+.steedos-table table .removed{
+    min-width: 31px;
+    width: 31px;
+    text-align: center;
+}
+
+.steedos-table table tbody .edit{
+    cursor: pointer;
+}
+
+.steedos-table table .number{
+    text-align: right;
+}
+
+.steedos-table table thead .title{
+    min-width:50px;
+    white-space: nowrap;
+}
+
+.steedos-table .checkbox, .steedos-table .radio{
+    margin-top: 0;
+    margin-bottom: 0;
+    display: table-cell;
+    border-radius: 0;
+}
+
+.steedos-table .steedosTable-add-item{
+    padding:3px 8px;
+}
+
+.steedos-table .panel-body .panel-heading{
+    background-color: #f5f5f5;
+    border-color: #ddd;
+
+    .description{
+        display: inherit;
+    }
+    .control-label{
+        font-weight: bold;
+        font-size: 15px;
+    }
+}
+
+.instance-table .form-table .form-group {
+    .steedos-table {
+        .autoform-table {
+            tr {
+                td {
+                    border-top: 1px solid #000 !important;
+                    border-bottom: 0px !important;
+                }
+            }
+            td:last-child {
+                border-right: none !important;
+            }
+        }
+    }
+}
+
+.steedos-table{
+    .add-item-tr {
+        background: rgba(255, 255, 0, 0.03);
+        cursor: pointer;
+        td {
+            border-bottom: 0px !important;
+        }
+        .ion {
+            height: 20px;
+            line-height: 20px;
+            margin-right: 6px;
+        }
+    }
+    .panel-body{
+        padding: 0px;
+        .panel-content{
+            padding: 0px;
+            overflow-x: auto;
+            .table{
+                margin-bottom: 0px;
+            }
+        }
+    }
+}
+
+.instance-default{
+    .steedos-table{
+        border-radius: 0px;
+        border: none;
+        .panel-body{
+            .panel-heading{
+                border: none;
+                padding: 2px 0;
+                margin-bottom: -5px;
+                margin-top: 5px;
+                background: none;
+                .control-label{
+                    width: 100%;
+                    color: #795548;
+                    font-size: 16px;
+                }
+                .description{
+                    margin-top: -10px;
+                    margin-bottom: 10px;
+                    color: #777;
+                    padding-top: 5px;
+                }
+            }
+            .panel-content{
+                padding-bottom: 1px;
+                border: solid 1px #d2d6de;
+                .table-bordered{
+                    border: none;
+                    thead{
+                        background: #f9f9f9;
+                        td:first-child{
+                            border-left: 0px;
+                        }
+                    }
+                    thead,tbody,tfoot{
+                        &>tr>td{
+                            border: 1px solid #eee;
+                            border-top: 0px;
+                            &:first-child{
+                                border-left: 0px;
+                            }
+                            &:last-child{
+                                border-right: 0px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.steedos-table-modal .steedos-table-modal-body{
+    overflow-y:auto;
+    padding: 0;
+    
+    .panel{
+        // min-height: 270px;
+        border: none;
+        box-shadow: none;
+        margin-bottom: 0;
+        .panel-body{
+            padding: 5px 15px;
+            border: none;
+            position:relative;
+        }
+
+        .panel-heading{
+            display: none;
+        }
+    }
+}
+
+.steedosTable-item-add{
+  padding: 2px 7px;
+}

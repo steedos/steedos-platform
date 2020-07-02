@@ -1,0 +1,19 @@
+<template name="creator_report_content">
+	<div class="scrollarea">
+		<div class="innerStacking">
+			<div class="eclair-container">
+				<div id="pivotgrid-chart"></div>
+			</div>
+			<div class="reportsDataGrid">
+				<div id="pivotgrid"></div>
+				<div id="datagrid"></div>
+				<div id="drill-down-popup"></div>
+			</div>
+		</div>
+		<div id="jsreport"></div>
+		<div id="stimulsoft-report"></div>
+		<div class="creator-report-empty" style="display: none">
+			{{> slds_illustration_preview title=filterEmptyText}}
+		</div>
+	</div>
+</template>

@@ -1,0 +1,808 @@
+.steedos{
+
+	table.dataTable {
+		margin-top: 0px !important;
+		margin-bottom: 0px !important;
+		&.datatable-mobile-users,
+		&.datatable-mobile-organizations {
+			cursor: pointer;
+		}
+	}
+	
+	.contacts-list-wrapper {
+		right: 0;
+		left: 0;
+		float: left;
+		padding-left: 0px;
+		padding-right: 0px;
+		overflow-y: hidden;
+		position: absolute;
+		top: 0px;
+		bottom: 0px;
+		border-right: 1px solid #d2d6de;
+
+		.contacts-tree{
+			background-color: #fff;
+			height: calc(~"100% - 43px");
+			overflow-y: auto;
+			width: 100%;
+			overflow-x: hidden;
+			#steedos_contacts_org_tree {
+				ul.jstree-container-ul {
+					width: 100%;
+					a.jstree-anchor {
+						width: calc(~"100% - 65px");
+						display: inline-block;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
+				}
+			}
+			.box-solid{
+				margin-bottom: 0px;
+				box-shadow: none;
+			}
+			.box-body{
+				height: 100%;
+				padding: 0;
+			}
+		}
+		
+		.contacts-list {
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
+			top: 51px;
+			bottom: 0px;
+			right: 0px;
+			left: 0px;
+			position: absolute;
+			background-color: white;
+
+			.contacts-name {
+					font-weight: bold
+			}
+			.contacts-modified {
+					padding-right: 10px;
+					float: right;
+			}
+			.contacts-applicant {
+					padding-left: 10px;
+			}
+
+		}
+
+		.navigation-title {
+			overflow: visible !important;
+		}
+		.navigation-bar{
+			overflow: hidden;
+		}
+
+		.dataTables_wrapper {
+			
+			.dataTable {
+				background: white;
+				border-top: 0px;
+				margin-top: 0px !important;
+
+				thead {
+					display: none
+				}
+
+			}
+			.dataTables_paginate {
+				padding-right: 10px;
+			}
+			.table > tbody > tr > td {
+				border-bottom: 1px solid #E8E8E8;
+				border-top: 0px;
+			}
+		}
+
+	}
+
+	.contacts-wrapper {
+		position: absolute;
+		top: 0px;
+		bottom: 0px;
+		width: 65%;
+		overflow: hidden;
+		-webkit-overflow-scrolling: touch;
+
+		.pull-right{
+			position: relative;
+			top: -1px;
+			width: 200px;
+			&.manage-contacts,&.add-contact-user {
+				width: auto;
+			}
+			&.manage-contacts{
+				margin-top: 2px;
+			}
+		}
+
+		@media screen and (max-width: 1024px){
+			.pull-right{
+				width: 160px;
+			}
+		}
+
+		@media screen and (max-width: 767px){
+			.pull-right{
+				width: 145px;
+				&.add-contact-user {
+					position: relative;
+					right: -9px;
+					padding: 15px;
+					top: -9px;
+				}
+			}
+		}
+
+		.contacts-name {
+				font-weight: bold
+		}
+		.contacts-modified {
+				padding-right: 10px;
+				float: right;
+		}
+		.contacts-applicant {
+				padding-left: 10px;
+		}
+
+		.contacts {
+			position: absolute;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+			top: 51px;
+			bottom: 0px;
+			right: 0px;
+			left: 0px;
+			padding: 0px;
+			background-color: white;
+			@media (max-width: 420px){
+				/*手机上竖着看不显示水平滚动条*/
+				overflow-x: hidden;
+			}
+
+			.row {
+				margin-right: 0px;
+				margin-left: 0px;
+			}
+
+			.contacts-suggestion.box {
+				//border-top: 0px;
+			}
+
+			.box-body {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+
+			.contacts-form .box-body, .contacts-suggestion .box-body {
+				padding-left: 0px;
+				padding-right: 0px;
+			}
+		}
+
+		.navigation-bar{
+			height: 51px;
+			#navigation-bar, #steedos_contacts_import_users_btn, #steedos_contacts_export_users_btn{
+				.fa{
+					margin-right: 2px;
+				}
+			}
+		}
+
+		.contacts-mobile{
+			.search-box{
+				border-bottom: solid 1px #eee;
+				.contact-list-search-key{
+					border: none;
+				}
+				.btn-clear{
+					padding: 4px 6px;
+					margin-top: 2px;
+				}
+			}
+			.weui-search-bar__cancel-btn {
+				cursor: pointer;
+			}
+			.dataTable{
+				thead{
+					display: none;
+				}
+				tbody{
+					tr{
+						&:nth-of-type(odd){
+							background: none;
+						}
+						td{
+							height: 24px;
+							line-height: 24px;
+							.contacts-users-mobile-avatar, .contacts-organizations-mobile-avatar{
+								position: absolute;
+								height: 24px;
+								line-height: 24px;
+								margin-top: 0;
+								img{
+									width: 24px;
+									height: 24px;
+									border-radius: 4px;
+								}
+							}
+							.contacts-users-mobile-name, .contacts-organizations-mobile-name{
+								position: absolute;
+								left: 42px;
+								right: 10px;
+								height: 24px;
+								line-height: 24px;
+								font-weight: bold;
+							}
+							.contacts-organizations-mobile-avatar{
+								background: rgba(228, 229, 230, 0.68);
+								padding: 4px;
+								border-radius: 4px;
+								.ion{
+									font-size: 17px;
+									color: rgba(63, 135, 217, 0.55);
+								}
+							}
+						}
+					}
+				}
+				&.datatable-mobile-organizations,&.datatable-mobile-users{
+					&+.dataTables_paginate{
+						display: none!important;
+					}
+				}
+				&.datatable-mobile-organizations{
+					//手机通讯录中永远不显示“没有组织”字眼
+					.dataTables_empty{
+						display: none;
+					}
+				}
+			}
+		}
+
+		.hidden-user{
+			.contacts-mobile,.contacts-work_phone{
+				display: none;
+			}
+		}
+	}
+
+	.contacts-main{
+		.control-sidebar{
+			padding-top: 0px;
+		}
+	}
+
+	.org-bar{
+		&.navigation-bar{
+			padding-top: 14px;
+			cursor: pointer;
+			text-align: center;
+			background: #f9f9f9;
+		}
+	}
+
+
+	@media (min-width: 768px) {
+		.contacts-main {
+			.contacts-list-wrapper {
+				display: block;
+				right: 65%;
+			}
+			.contacts-wrapper {
+				left: 100%;
+				width: 65%;
+				transform: translate(0, 0);
+			}   
+		}
+		.contacts-main.contacts-show {
+			.contacts-list-wrapper {
+				right: 65%;
+				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
+				display: block !important;
+				z-index: auto;
+				top: 0px;
+				.contacts_back{
+					display: none;
+				}
+
+				.offcanvas{
+					display: inline-block;
+				}
+
+				.navigation-bar{
+					display: block;
+				}
+			}
+			.contacts-wrapper {
+				width: 65%;
+				left: 35%;
+				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
+				.offcanvas{
+					display: none;
+				}
+				&.contacts-wrapper-mobile {
+					width: 100%;
+					left: 0;
+				}
+			}   
+		}
+	}
+
+	@media (max-width: 767px) {
+		.contacts-main {
+			.contacts-list-wrapper {
+				display: block;
+				width: 100%;
+				left: 0;
+				border-right: 0px;
+				transition: 0.3s ease-in-out;
+			}
+			.contacts-wrapper {
+				left: 100%;
+				width: 100%;
+				transition: 0.3s ease-in-out;
+			}
+		}
+		.contacts-main.contacts-show {
+			.contacts-list-wrapper {
+				display: none;
+				width: 100%;
+				z-index: 1010;
+				top: 85px;
+				bottom: 50px;
+
+				.contacts_back{
+					display: inline-block;
+				}
+
+				.offcanvas{
+					display: none;
+				}
+
+				.navigation-bar{
+					display: none;
+				}
+
+				.contacts-tree{
+					height:100%;
+				}
+			}
+			.contacts-wrapper {
+				left: 0;
+				width: 100%;
+				transition: 0.3s ease-in-out;
+				background: transparent;
+				.contacts{
+					top: 102px;
+					bottom: 50px;
+					-webkit-transition: -webkit-transform 0.2s ease-in-out, top 0.2s ease-in-out;
+					-moz-transition: -moz-transform 0.2s ease-in-out, top 0.2s ease-in-out;
+					-o-transition: -o-transform 0.2s ease-in-out, top 0.2s ease-in-out;
+					transition: transform 0.2s ease-in-out, top 0.2s ease-in-out;
+				}
+				.offcanvas{
+					display: inline-block;
+				}
+				.btn-back {
+					position: relative;
+					left: -9px;
+					padding: 15px;
+					top: -9px;	
+				}
+				&.contacts-wrapper-mobile{
+					.contacts{
+						top: 51px;
+						&.mobile-searching{
+							top: 0px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
+
+
+.steedos-contacts,.steedos-admin{
+	.box{
+		border-radius: 0px;
+		box-shadow: none;
+	}
+
+	.box-header{
+		border-bottom: 1px solid #d2d6de;
+	}
+
+	.valueLabel {
+		background-color: #fff;
+		border: 1px solid #ccc;
+		display: inline-block;
+		padding: 4px 6px;
+		color: #555;
+		vertical-align: middle;
+		border-radius: 0px;
+		width: 100%;
+		min-height: 32px;
+		line-height: 22px;
+		cursor: text;
+		list-style:none;
+		overflow-x: auto;
+	}
+
+	.valueLabel:after{
+		clear: both;
+		content: '';
+		display:block;
+	}
+
+	.valueLabel li {
+		cursor: move;
+		margin: 4px 5px 4px 0;
+		padding: 2px 4px;
+		background-color: #5F9EDF;
+		text-align:center;
+		color:#fff;
+		font-size:13px;
+		display: inline;
+	}
+
+	.valueLabel .remove{
+		background-color: #5F9EDF;
+		margin: 0 5px 4px 0;
+		cursor: pointer;
+	}
+
+	
+
+	.contacts-list{
+		// height: 645px;
+		background-color: #fff;
+		border: 1px solid #d2d6de;
+		.box{
+			border: 0px !important;
+			box-shadow: #fff 0px 0px 0px;
+			margin-bottom: 0px;
+		}
+	}
+
+	.contacts-admin{
+		margin-top: 20px;
+	}
+
+	.valueLabel-div{
+		text-align: left;
+	}
+	.datatable-steedos-contacts{
+		tr[data-id]{
+			cursor: pointer;
+			td {
+				.invite-refused {
+					color: #d33724;
+				}
+				.invite-pending {
+					color: #357ca5;
+				}
+			}
+		}
+		.drag-source{
+			cursor: pointer;
+			&.drag-source-moving{
+				background-color: #fcf8e3;
+				button{
+					display:none;
+				}
+			}
+		}
+
+	}
+	.steedos-mail-contacts-modal{
+		.contacts_orgs_list_table{
+			.datatable-steedos-contacts{
+				tr{
+					cursor: pointer;
+				}
+			}
+		}
+	}
+	.contacts_orgs_list_table{
+		.datatable-steedos-contacts{
+			tr{
+				th:first-child{
+					padding-left: 22px;
+				}
+				td:first-child{
+					padding-left: 22px;
+				}
+				td:last-child{
+					.edit-person{
+						float: right;
+						width: 30px;
+						height: 20px;
+						position: relative;
+						visibility: hidden;
+						.btn-group{
+							position: absolute;
+							margin-top: -5px;
+							.dropdown-toggle{
+								padding: 4px 12px;
+								float: right;
+								span{
+									position: relative;
+									top: 2px;
+								}
+							}
+						}
+					}
+				}
+				&:hover td .edit-person{
+					visibility: visible;
+				}
+				th{
+					min-width: 80px;
+					&:nth-last-child(1){
+						min-width: auto;
+					}
+					&:nth-last-child(2){
+						min-width: 30px;
+					}
+					@media (max-width: 420px){
+						display: none;
+					}
+				}
+				td{
+					@media (max-width: 420px){
+						display: none;
+						&:nth-child(1){
+							display: block;
+						}
+					}
+				}
+			}
+		}
+	}
+	.contacts-wrapper-mobile{
+		.navigation-bar{
+			.navigation-title{
+				cursor: pointer;
+				.top-title{
+					max-width: 85%;
+				}
+				.top-ion{
+					display: inline-block;
+					overflow: hidden;
+					line-height: 30px;
+					height: 30px;
+					.ion{
+						font-size: 100%;
+					}
+				}
+			}
+		}
+	}
+}
+
+.contacts-detail-info-modal{
+	.weui-btn-area{
+		.weui-btn{
+			margin-top: 4px;
+			&.steedos-info-copy{
+				margin-right: 14px;
+			}
+		}
+		.btn{
+			margin-right:5px;
+			&:last-child{
+				margin-right:0px;
+			}
+			&.steedos-info-edit,&.steedos-info-delete{
+				@media (max-width: 420px){
+					display: none;
+				}
+			}
+		}
+	}
+	.weui-cells .btn-edit-username{
+		@media (max-width: 420px){
+			display: none;
+		}
+	}
+	.weui-modal-content{
+		position: relative; 
+		background-color: #FFFFFF; 
+		padding-top: 1px; 
+		padding-bottom: 15px;
+		overflow-y: auto;
+		.weui-cell_primary.text-muted {
+			width: calc(~"100% - 105px");
+			.weui-input {
+				word-wrap: break-word;
+			}
+		}
+		.weui-cells{
+			margin-top: -3px;
+			font-size: 14px;
+			.btn-edit-username{
+				padding: 0 12px;
+				font-size: 100%;
+			}
+			.user-org-list{
+				width: 100%;
+			}
+			.user-org-item{
+				.badge{
+					margin-top: -2px;
+					margin-left: 6px;
+				}
+				&:hover .btn-set-primary{
+					display: inline!important;
+					margin-top: -2px;
+					margin-left: 6px;
+				}
+			}
+		}
+	}
+	.hidden-user{
+		.weui-cell-hidden-user-field{
+			.weui-input{
+				display: none;
+			}
+		}
+	}
+}
+
+.contacts-settings{
+	.hidden-users-list{
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		width: 100%;
+		li{
+			text-align: center;
+			float: left;
+			.users-list-name {
+				padding: 3px 0;
+			}
+			.users-list-date {
+				margin-bottom: 18px;
+			}
+		}
+		img{
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
+			margin-bottom: 5px;
+		}
+	}
+
+	.box{
+		padding-left: 20px;
+		padding-right: 20px;
+		.box-body {
+			padding: 0;
+		}
+		.contacts-setting-title {
+			display: inline-block;
+		}
+		.set_settings {
+			position: relative;
+			top: 3px;
+		}
+	}
+
+	.profile_item_left_btnTips{
+		padding-bottom: 10px;
+		border-bottom: 1px solid #E5E5E5;
+		.ion{
+			position: relative;
+			top: 1px;
+		}
+	}
+
+	.view-limit-list{
+		list-style: none;
+		padding: 0 15px;
+		li{
+			padding: 0 10px;
+			border: 1px solid #E4E6E9;
+			border-radius: 2px;
+			list-style: none;
+			margin-bottom: 10px;
+			display: table;
+			table-layout: fixed;
+		}
+		.left-names{
+			margin-top: 7px;
+			.limit-froms-item{
+				margin-right: 6px;
+				position: relative;
+				float: left;
+				padding-right: 6px;
+				&:before{
+					content: " ";
+					position: absolute;
+					top: 0;
+					right: 1px;
+					left: 0;
+					bottom: 0;
+					border: 1px solid #E4E6E9;
+					z-index: 0;
+				}
+				.ion{
+					font-size: 17px;
+					color: rgba(63, 135, 217, 0.55);
+					margin-left: 5px;
+					margin-right: 5px;
+					vertical-align: -2px;
+				}
+			}
+		}
+	}
+}
+
+#steedos_contacts_space_user_info_modal {
+	.space-user-info-container:before,
+	.space-user-info-container:after {
+		display: none;
+	}
+	.space-user-info-container {
+		padding: 0;
+		overflow: auto;
+		margin-top: 0px;
+		.weui-panel__hd:after {
+			display: none;
+		}
+		.weui-panel__hd {
+			padding: 12px 15px 5px;
+			font-size: 15px;
+		}
+		.weui-cell__bd {
+			.user-org-item {
+				cursor: pointer;
+				.badge {
+					position: relative;
+					top: -2px;
+				}
+				&:hover .btn-set-primary{
+					display: inline!important;
+					margin-top: -2px;
+					margin-left: 6px;
+				}
+			}
+		}
+		.weui-panel__bd:nth-of-type(2) {
+			//这里的margin-top是为解决第二个字段的底部边框线没了，可能是新版本chrome的BUG.
+			.weui-cells {
+				margin-top: 1px;
+			}
+		}
+		.weui-cell {
+			padding: 1px 15px 2px;
+			p {
+				font-size: 16px;
+				margin: 0 0 7px;
+			}
+		}
+		.weui-cells:after {
+			left: 16px;
+			right: 15px;
+		}
+		.weui-panel__bd:last-of-type {
+			.weui-cells:after {
+				display: none;
+			}
+		}
+	}
+	.modal-footer {
+		.weui-btn-area {
+			margin: 0;
+		}
+	}
+}

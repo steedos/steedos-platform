@@ -1,0 +1,10 @@
+_id: mall
+name: 商城
+description: Mall App
+icon_slds: thanks
+is_creator: true
+objects: 
+  - mall.product
+  - mall.orders
+  - mall.product_types
+  - mall.delivery

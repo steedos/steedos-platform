@@ -1,0 +1,115 @@
+<template name="contacts_settings">
+	<div class="contacts-settings">
+		<div class="navigation-bar">
+			<a class="btn btn-default" href="/admin">
+				<i class="ion ion-android-arrow-back"></i>
+			</a>
+			<span class="navigation-title">
+				{{_ "steedos_contacts_settings"}}
+			</span>
+		</div>
+		<div class="admin-content">
+			<div class="box box-success hidden-users-block hidden">
+				<div class="weui-panel__bd">
+					<div class="weui-media-box weui-media-box_text">
+						<h4 class="weui-media-box__title contacts-setting-title">
+							{{_ "steedos_contacts_settings_hidden_users"}}
+						</h4>
+						<div class="pull-right box-tools">
+							<a href="javascript:void(0)" class="btn btn-sm btn-primary pull-left set_settings">
+								{{_ "Edit"}}
+							</a>
+						</div>
+						<p class="weui-media-box__desc profile_item_left_btnTips">
+							<i class="ion ion-ios-information-outline"></i>
+							{{_ "steedos_contacts_settings_hidden_users_tips"}}
+						</p>
+					</div>
+				</div>
+				<div class="box-body">
+					<ul class="hidden-users-list clearfix">
+						{{#each hidden_users}}
+						<li class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+							<img src="/avatar/{{this.user}}">
+							<a class="users-list-name" href="#">{{this.name}}</a>
+							<span class="users-list-date">{{this.email}}</span>
+						</li>
+						{{/each}}
+					</ul>
+				</div>
+			</div>
+
+			<div class="box box-success view-limit-block">
+				<div class="weui-panel__bd">
+					<div class="weui-media-box weui-media-box_text">
+						<h4 class="weui-media-box__title contacts-setting-title">
+							{{_ "space_viewing_limits"}}
+						</h4>
+						<div class="pull-right box-tools">
+							<a href="javascript:void(0)" class="btn btn-sm btn-primary pull-left btn-add">
+								{{_ "Add"}}
+							</a>
+						</div>
+						<p class="weui-media-box__desc profile_item_left_btnTips">
+							<i class="ion ion-ios-information-outline"></i>
+							{{_ "space_viewing_limits_tips"}}
+						</p>
+					</div>
+				</div>
+				<div class="box-body">
+					<ul class="view-limit-list clearfix">
+						{{#each view_limits}}
+							{{#each this.values}}
+								<li class="col-md-12 clearfix">
+									<div class="pull-left left-names">
+										{{#each limit_from_names this.froms}}
+											<div class="limit-froms-item">
+												<i class="ion ion-android-folder"></i>
+												{{this}}
+											</div>
+										{{/each}}
+									</div>
+									<div class="pull-right">
+										<a class="btn btn-edit" data-index={{@index}}>{{_ "Edit"}}</a>
+										<a class="btn btn-delete" data-index={{@index}}>{{_ "Delete"}}</a>
+									</div>
+								</li>
+							{{/each}}
+						{{/each}}
+					</ul>
+				</div>
+			</div>
+			{{#if isForceAccountBindPhone}}
+				<div class="box box-success no-force-phone-block">
+					<div class="weui-panel__bd">
+						<div class="weui-media-box weui-media-box_text">
+							<h4 class="weui-media-box__title contacts-setting-title">
+								{{_ "no_force_phone"}}
+							</h4>
+							<div class="pull-right box-tools">
+								<a href="javascript:void(0)" class="btn btn-sm btn-primary pull-left btn-edit">
+									{{_ "Edit"}}
+								</a>
+							</div>
+							<p class="weui-media-box__desc profile_item_left_btnTips">
+								<i class="ion ion-ios-information-outline"></i>
+								{{_ "no_force_phone_tips"}}
+							</p>
+						</div>
+					</div>
+					<div class="box-body">
+						<ul class="hidden-users-list clearfix">
+							{{#each no_force_phone_users}}
+							<li class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+								<img src="/avatar/{{this.user}}">
+								<a class="users-list-name" href="#">{{this.name}}</a>
+								<span class="users-list-date">{{this.email}}</span>
+							</li>
+							{{/each}}
+						</ul>
+					</div>
+				</div>
+			{{/if}}
+		</div>
+	</div>
+</template>

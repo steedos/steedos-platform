@@ -1,0 +1,8 @@
+_id: test_mysql
+name: MySql单元测试
+description: MySql单元测试
+icon_slds: thanks
+is_creator: true
+objects: 
+  - test_mysql.crud
+  - test_mysql.field_type

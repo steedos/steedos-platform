@@ -1,0 +1,117 @@
+<template name="creatorHeader">
+
+	<header class="slds-global-header_container creatorHeader"><a href="javascript:void(0);"
+																  class="slds-assistive-text slds-assistive-text_focus">Skip
+		to Navigation</a><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to
+		Main Content</a>
+		<div class="slds-global-header slds-grid slds-grid_align-spread">
+			<div class="slds-global-header__item slds-global-header__item--logo">
+				<div class="slds-global-header__logo">
+					<img src="{{logoUrl}}" alt=""/>
+				</div>
+				<div class="slds-global-header__text" title={{spaceName}}>{{spaceName}}</div>
+			</div>
+			{{> headerSearch}}
+			<ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
+				{{#if showShopping}}
+					<li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+						<button class="creator-button-shopping slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small slds-is-disabled">
+							{{> steedos_button_icon class="slds-icon slds-icon--x-small" source="utility-sprite" name="shopping_bag"}}
+						</button>
+					</li>
+				{{/if}}
+				<li class="slds-hide slds-grid">
+					<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon-favorites slds-is-disabled"
+							aria-pressed="false" title="Toggle Favorites">
+						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="favorite"}}
+					</button>
+					<span class="slds-dropdown-trigger slds-dropdown-trigger_click">
+          <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-m-left_none slds-is-disabled"
+				  title="View Favorites">
+			  {{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="chevrondown"}}
+		  </button>
+        </span>
+				</li>
+				<li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+					<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small slds-is-disabled"
+							title="Global Actions">
+						{{> steedos_button_icon class="slds-icon slds-icon--x-small" source="utility-sprite" name="add"}}
+					</button>
+				</li>
+				{{#if showSwitchOrganization }}
+					<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+						<button class="creator-button-toggle slds-button" title="Toggle Company">
+							切换单位
+						</button>
+					</li>
+				{{/if}}
+				{{#if isNode}}
+					<li class="history-back slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+								title="{{_ "nw_top_button_history_back"}}">
+							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="back"}}
+						</button>
+					</li>
+					<li class="history-forward slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+								title="{{_ "nw_top_button_history_forward"}}">
+							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="forward"}}
+						</button>
+					</li>
+					<li class="refresh slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+								title="{{_ "nw_top_button_refresh"}}">
+							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="refresh"}}
+						</button>
+					</li>
+				{{/if}}
+				<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+					{{> favorites}}
+				</li>
+				<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+					<a class="creator-button-help slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+							title="{{_ "Help"}}">
+						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="question"}}
+					</a>
+				</li>
+				<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+					<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+							title="{{_ "app_admin_name"}}">
+						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup"}}
+					</button>
+					<div class="slds-dropdown slds-dropdown_right slds-nubbin_top-right" style="margin-top: 0.75rem;">
+						<ul class="slds-dropdown__list" role="menu" style="min-width: 170px">
+							<li class="creator-button-setup slds-dropdown__item" role="presentation">
+								<a href="javascript:void(0);" role="menuitem" tabindex="0">
+									  <span class="slds-truncate" title="{{_ "app_admin_name"}}">
+										{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup"}}{{_ "app_admin_name"}}</span>
+								</a>
+							</li>
+							{{#if showViewObject}}
+								<li class="slds-has-divider_top-space" role="separator"></li>
+								<li class="slds-dropdown__item show-object" role="presentation">
+									<a href="javascript:void(0);" role="menuitem" tabindex="0">
+										  <span class="slds-truncate" title="{{_ "view_object"}}">
+											  {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="sobject"}}{{_ "view_object"}}</span>
+									</a>
+								</li>
+							{{/if}}
+						</ul>
+					</div>
+				</li>
+				{{#unless isMobile}}
+					<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+						{{> notifications}}
+					</li>
+				{{/unless}}
+				<li class="slds-dropdown-trigger slds-m-left_x-small">
+					{{> headerProfile}}
+				</li>
+			</ul>
+		</div>
+
+		<div class="bBottom">
+			{{> creatorNavigation}}
+		</div>
+	</header>
+</template>

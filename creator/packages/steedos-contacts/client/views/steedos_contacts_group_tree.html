@@ -1,0 +1,19 @@
+<template name="steedos_contacts_group_tree">
+    <div class="navigation-bar">
+        <button type="button" class="btn btn-default contacts_back" id="contacts_back" title="返回"><i class="ion ion-android-arrow-back"></i></button>
+
+        <button type="button" class="btn btn-default offcanvas" data-toggle="offcanvas">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="pull-right">
+            <div class="btn-group" >
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="{{_ 'contacts_add'}}" class="btn btn-default btn-flat" id="steedos_contacts_group_tree_add_btn"><i class="ion ion-plus-round"></i></button>
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="{{_ 'contacts_edit'}}" class="btn btn-default btn-flat" id="steedos_contacts_group_tree_edit_btn" disabled="{{#if is_disabled}}disabled{{/if}}"><i class="ion ion-edit"></i></button>
+                <button type="button" data-toggle="tooltip" data-placement="bottom" title="{{_ 'contacts_delete'}}" class="btn btn-default btn-flat" id="steedos_contacts_group_tree_remove_btn" disabled="{{#if is_disabled}}disabled{{/if}}"><i class="ion ion-minus-round"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="contacts-tree">
+                <div id="steedos_contacts_group_tree"></div>
+    </div>
+</template>

@@ -1,0 +1,29 @@
+<template name="search_result_list">
+	<div class="results-item slds-col slds-no-flex slds-card {{#if hideGridContent}}hidden{{/if}}">
+		<div class="slds-card__header slds-grid">
+			<header class="slds-media slds-media_center slds-has-flexi-truncate">
+				<div class="slds-media__figure">
+					<span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
+						{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=object_icon}}
+					</span>
+				</div>
+				<div class="slds-media__body">
+					<h2>
+						<a href="javascript:void(0);" class="slds-card__header-link slds-truncate">
+							<span class="slds-text-heading_small">{{object_label}}</span>
+						</a>
+					</h2>
+				</div>
+			</header>
+		</div>
+		<div class="slds-card__body">
+			<div class="search-gridContainer-{{div_unique_glag}} slds-table_edit slds-hint-parent"></div>
+			{{#if show_more_records}}
+				<div class="more-records">
+					<button class="slds-button slds-button_neutral btn-more-records">更多</button>
+				</div>
+			{{/if}}
+			<div class="action-sheet-{{div_unique_glag}}"></div>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,58 @@
+.universe-selectize.selectize-control {
+    position: relative;
+
+    .hidden {
+        display: none;
+    }
+
+    select {
+        display: none;
+    }
+
+    .selectize-input {
+        input {
+            width: 4px;
+            opacity: 1;
+            position: relative;
+            left: 0px;
+        }
+
+        div.universe-selectize-placeholder {
+            color: #bbb;
+            background: none;
+            border: none;
+        }
+
+        &.input-active {
+            div.universe-selectize-placeholder {
+                display: none;
+            }
+        }
+    }
+
+    .selectize-dropdown {
+        width: 100% !important;
+        top: 36px;
+    }
+
+    &.loading:after {
+        content: "";
+        width: 16px;
+        height: 16px;
+        background: url('/packages/vazco_universe-selectize/img/loading.gif') no-repeat;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+    }
+
+    &.multi {
+        .selectize-input {
+            height: 36px;
+        }
+    }
+
+    .uniPlaceholder {
+        color: #bbb;
+    }
+}

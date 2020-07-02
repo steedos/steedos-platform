@@ -1,0 +1,10 @@
+<template name="afRadioGroupInline_bootstrap3">
+  <div class="af-radio-group" {{dsk}}>
+    {{#each this.items}}
+    <label class="radio-inline fix-indent">
+      <input type="radio" value="{{this.value}}" {{atts}} />
+      {{this.label}}
+    </label>
+    {{/each}}
+  </div>
+</template>

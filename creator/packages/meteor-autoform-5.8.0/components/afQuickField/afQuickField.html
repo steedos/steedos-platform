@@ -1,0 +1,16 @@
+<template name="afQuickField">
+  {{#if isGroup}}
+    {{> afObjectField}}
+  {{else}}
+    {{#if isFieldArray}}
+      {{> afArrayField}}
+    {{else}}
+      {{#if isHiddenInput}}
+        {{! if input type is defined as hidden, we don't render a form group}}
+        {{> afFieldInput groupAtts}}
+      {{else}}
+        {{> afFormGroup groupAtts}}
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</template>

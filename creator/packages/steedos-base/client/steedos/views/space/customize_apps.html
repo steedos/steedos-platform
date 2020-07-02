@@ -1,0 +1,38 @@
+<template name="customize_apps">
+	<section class="admin instance-number-rules">
+		<div class="navigation-bar">
+			<a class="btn btn-default" href="/admin">
+			<i class="ion ion-android-arrow-back"></i>
+		</a>
+		<span class="navigation-title">
+			{{_ "customize_apps"}}
+		</span>
+			<div class="pull-right">
+				<button type="button" class="btn btn-primary" id="add-customize-apps">{{_ "New"}}</button>
+			</div>
+		</div>
+		<div class="admin-content">
+			<div class="box-body" style="display: block;">
+				<div class="search-toolbar">
+					<div class="pull-right">
+						<div class="input-group">
+							<input type="text" name="customize-apps-search-key" id="customize-apps-search-key" class="form-control customize-apps-search-key" placeholder="{{_ 'Search'}}...">
+							<span class="input-group-btn">
+								<button type="submit" name="customize-apps-search-btn" id="customize-apps-search-btn" class="btn btn-default">	<i class="fa fa-search"></i>
+								</button>
+			 				 </span>
+						</div>
+					</div>
+				</div>
+				{{> tabular table=TabularTables.customize_apps selector=selector class="table table-hover dataTable no-footer datatable-customize-apps"}} 
+				{{#afModal class="btn btn-primary customize-apps-add hidden" collection="db.apps" operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}} 
+					{{_ "Create"}} 
+				{{/afModal}}
+
+				{{#afModal class="btn btn-primary customize-apps-edit hidden" collection="db.apps" operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
+					{{_ "Edit"}}
+				{{/afModal}}
+			</div>
+		</div>
+	</section>
+</template>

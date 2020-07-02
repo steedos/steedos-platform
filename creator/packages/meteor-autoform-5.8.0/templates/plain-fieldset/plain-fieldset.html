@@ -1,0 +1,21 @@
+<template name="quickForm_plain-fieldset">
+  {{#autoForm qfAutoFormContext}}
+    <fieldset>
+      {{#with ../atts.legend}}
+      <legend>{{this}}</legend>
+      {{/with}}
+      {{> afQuickFields quickFieldsAtts}}
+    </fieldset>
+    {{#if qfShouldRenderButton}}
+    <div>
+      <button type="submit" {{submitButtonAtts}}>
+        {{#with ../atts.buttonContent}}
+        {{this}}
+        {{else}}
+        Submit
+        {{/with}}
+      </button>
+    </div>
+    {{/if}}
+  {{/autoForm}}
+</template>

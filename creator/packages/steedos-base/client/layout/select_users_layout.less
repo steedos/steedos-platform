@@ -1,0 +1,34 @@
+@treeWidth: 20rem;
+
+.react-select-users-layout{
+	background: #fafaf9;
+	width: 100%;
+	height: 100%;
+
+	.select-users .organizations{
+		border-right: 1px solid #D5D5D5;
+		width: @treeWidth;
+	}
+
+	.select-users .organizations, .select-users .users .slds-grid_vertical{
+		margin-bottom: 49px;
+	}
+
+	.select-users .users{
+		margin-left: @treeWidth;
+		#combobox-base-selected-listbox{
+			max-height: 100px;
+			overflow-y: auto;
+		}
+		.slds-grid{
+			width: calc(~"100% - @{treeWidth}");
+		}
+	}
+
+	.slds-docked-form-footer{
+		justify-content: flex-end;
+		padding-right: 30px;
+		box-shadow: none;
+		border-top: 1px solid #D5D5D5;
+	}
+}

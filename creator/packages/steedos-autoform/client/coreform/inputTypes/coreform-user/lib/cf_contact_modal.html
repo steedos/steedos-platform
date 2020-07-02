@@ -1,0 +1,93 @@
+<template name="cf_contact_modal">
+    {{#if isMobile}}
+        {{#if showOrg}}
+            <div style="display:none" id="cf_users_organization_modal_div">
+                {{> cf_users_organization_modal}}
+            </div>
+        {{/if}}
+    {{/if}}
+
+    <div class="steedos modal fade cf_contact_modal" id="cf_contact_modal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" style='position: fixed;'>
+        <div class="modal-dialog {{modalStyle showOrg}}" role="document">
+            <div class="modal-content ins-modal">
+                <div class="modal-header">
+                    <div class="pull-left">
+                        <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                {{#if isMobile}}
+                    {{#if showOrg}}
+                        <div class="modal-header" style="border-bottom:0px;padding-bottom: 0px">
+                            <div class="navigation-bar">
+                  <span class="navigation-title text-overflow">
+                    <a href="#" class="organization-active"><i class="fa fa-sitemap"
+                                                               style="padding-right: 4px;"></i>{{orgName}} &nbsp;<i
+                            class="caret"></i></a>
+                      <!-- <div class="dropdown-menu cf-contact-modal-menu" role="menu" aria-labelledby="dropdownMenu">
+                       <div class="col-md-12">
+                        {{> cf_organization_list data}}
+                      </div>
+                    </div> -->
+                  </span>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/if}}
+                <div class="modal-body contacts-modal-body modal-zoom">
+                    <div class="row">
+                        {{#if isMobile}}
+                            <div class="col-md-12 cf-spaceusers-list">
+                                {{> cf_space_user_list data}}
+                            </div>
+                        {{else}}
+                            {{#if showOrg}}
+                                <div class="col-md-5 cf-organization-list">
+                                    {{> cf_organization_list data}}
+                                </div>
+                                <div class="col-md-7 cf-spaceusers-list">
+                                    {{> cf_space_user_list data}}
+                                </div>
+                            {{else}}
+                                <div class="col-md-12 cf-spaceusers-list">
+                                    {{> cf_space_user_list data}}
+                                </div>
+                            {{/if}}
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row" style="{{footer_display multiple}}">
+                        <div class="col-md-10 col-sm-8 col-xs-7" id="valueLabel_div">
+                            <ui id="valueLabel_ui" class="valueLabel">
+                                <div id="valueLabel"></div>
+                            </ui>
+                        </div>
+                        <div class="col-md-2 col-sm-4 col-xs-5 pull-right">
+                            <button type="button" class="btn btn-primary" id='confirm' title='{{_ "OK"}}'
+                                    style="width:100%">{{_ "OK"}}</button>
+                        </div>
+                    </div>
+
+                    {{#if multiple}}
+
+                    {{else}}
+                        <div class="row">
+                            <div class="col-md-2 pull-left" style="">
+                                <button type="button" class="btn btn-default" id='remove' title='{{_ "remove"}}'
+                                        style="width:100%">{{_ "remove"}}</button>
+                            </div>
+                            <div class="col-md-2 pull-right" style="">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" title='{{_ "close"}}'
+                                        style="width:100%">{{_ "close"}}</button>
+                            </div>
+                        </div>
+                    {{/if}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,8 @@
+{
+	"extensions": ["ttf", "woff2"],
+	"scanFolders": true,
+	"verbose": false,
+    "map": {
+        "node_modules/devextreme/dist/css/icons/": "/icons/"
+    }
+}

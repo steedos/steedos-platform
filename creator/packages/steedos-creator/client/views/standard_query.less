@@ -1,0 +1,107 @@
+#standQueryModal {
+    .container-vis {
+        overflow: visible !important;
+    }
+}
+
+.standard-query-modal {
+    .view-page-section-row {
+        align-items: center;
+
+        .to:last-child {
+            display: none;
+        }
+
+        .view-page-block-item {
+            .form-group {
+                //font-size: 0;
+                .control-label {
+                    min-width: 1px;
+                    height: 20px;
+                    font-size: 0.8125rem;
+                }
+                .form-control {
+                    font-size: 0.875rem;
+                }
+            }
+        }
+
+        .to + .view-page-block-item {
+            //.control-label {
+            //    display: none;
+            //}
+            .form-control {
+                margin-top: 21px;
+            }
+        }
+    }
+
+    .modal-lg{
+        width: 1000px;
+
+        .dx-texteditor-input{
+            font-size: 14px;
+            padding-right: 12px !important;
+        }
+
+        .range-fields{
+            width: 50%;
+            .dx-datebox-calendar{
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+            .view-page-block-item.range{
+                padding-right: 0px;
+                flex: 5;
+                .control-label{
+                    width:42.25%;
+                }
+
+                .col-sm-9{
+                    width: 57.75%;
+                    padding-right: 5px;
+                    padding-left: 9px;
+                }
+            }
+
+            .to + .view-page-block-item {
+                padding-left: 0px;
+                flex: 3;
+                .control-label{
+                    width: 21px;
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    display: none;
+                }
+
+                .col-sm-9{
+                    padding-left: 5px;
+                    //width: calc(~ "100% - 21px");
+                    width: 100%;
+                }
+
+            }
+        }
+
+        .wide-fields{
+            .col-sm-3{
+                width: 12.176914778856526% !important;
+            }
+            .col-sm-9{
+                width: 87.82308522114347% !important;
+            }
+        }
+    }
+    @media (max-width: 767px) {
+        .slds-p-around--medium, .slds-p-around_medium{
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+
+        .steedos-lookups .steedos-lookups-input {
+            height: 30px !important;
+            min-height: 30px !important;
+            max-height: 30px !important;
+        }
+    }
+}

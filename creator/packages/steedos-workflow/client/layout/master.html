@@ -1,0 +1,18 @@
+<template name="workflowLayout">
+
+	{{#if subsReady}}
+		<div class="steedos app-wrapper workflow">
+			{{# AdminLTE skin=skinName sidebarMini="true" }}
+				
+				{{> steedosHeader}}
+
+				{{> Template.dynamic template=main}}
+
+			{{/ AdminLTE}}
+		</div>
+		<div class="connection-status">
+			{{> status}}
+		</div>
+	{{/if}}
+</template>
+

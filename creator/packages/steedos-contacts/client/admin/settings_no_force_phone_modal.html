@@ -1,0 +1,21 @@
+<template name="contacts_settings_no_force_phone_modal">
+	<div class="steedos modal fade contacts_settings_no_force_phone_modal" id="contacts_settings_no_force_phone_modal" tabindex="-1" role="dialog" aria-labelledby="contacts_settings_no_force_phone_modal" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="contacts_settings_no_force_phone_modal">{{_ 'no_force_phone'}}</h4>
+				</div>
+				<div class="modal-body modal-zoom">
+					{{#autoForm id='contacts_settings_no_force_phone_users' schema=users_schema}}
+						{{> afFormGroup name="users" label=false}}
+					{{/autoForm}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-save">{{_ "OK"}}</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

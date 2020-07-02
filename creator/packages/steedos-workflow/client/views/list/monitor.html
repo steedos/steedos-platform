@@ -1,0 +1,40 @@
+<template name="monitor">
+  <section class="content-header">
+    <h1 style="margin-bottom: 5px">{{_ boxName}}</h1>
+    <ol class="breadcrumb">
+      <li><a href="/workflow/space/{{spaceId}}"><i class="fa fa-dashboard"></i> {{_ "Home"}}</a></li>
+      <li class="active">{{_ boxName}}</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="box">
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <th>{{_ "FlowName"}}</th>
+            </tr>
+            <ul class="sidebar-menu">
+              {{#each categories}}
+                <li class="treeview">
+                  <a href="#" name="selectCategory">
+                    <i class="fa fa-folder"></i><span>{{name}}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </a>
+                  <ul class="treeview-menu">
+                    {{#each categoryFlows _id}}
+                        <li><a href="#" id="{{_id}}" name="selectFlow" ><i class="fa fa-circle-o"></i>&nbsp;{{name}}</a></li>
+                    {{/each}}
+                  </ul>
+                </li>
+              {{/each}}
+              {{#each notCategoryFlows}}
+                <li><a href="#" id="{{_id}}" name="selectFlow" ><i class="fa fa-circle-o"></i><span>{{name}}</span></a></li>
+              {{/each}}
+            </ul>
+          </tbody>
+        </table>            
+      </div>     
+    </div>
+  </section>
+</template>

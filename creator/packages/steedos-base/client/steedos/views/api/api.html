@@ -1,0 +1,46 @@
+<template name="admin_api">
+
+	<div class="navigation-bar">
+		<a class="btn btn-default" href="/admin">
+			<i class="ion ion-android-arrow-back"></i>
+		</a>
+		<span class="navigation-title dropdown">
+			{{_ "Developer"}}
+		</span>
+		<div class="pull-right">
+			<button type="submit" class="btn btn-primary btn-get-secrets">{{_ 'New'}}</button>
+		</div>
+	</div>
+	<section class="content admin-content admin-api-content">
+
+
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#secrets" data-toggle="tab" aria-expanded="false">{{_ "Secret"}}</a></li>
+			</ul>
+		</div>
+		<div class="tab-content">
+			<div class="tab-pane active" id="secrets">
+				<div class="weui-cells">
+					{{#each user.secrets}}
+						<div class="weui-cell">
+							<div class="weui-cell__bd">
+								<p>{{this.name}}</p>
+							</div>
+							<div class="weui-cell__ft">{{this.token}}</div>
+							<div class="weui-cell__ft remove-secret">
+								<a class="weui-swiped-btn weui-swiped-btn_warn">
+									<i class="ion ion-ios-close-empty"></i>
+								</a>
+							</div>
+						</div>
+					{{/each}}
+				</div>
+			</div>
+
+		</div>
+
+		
+	</section>
+
+</template>

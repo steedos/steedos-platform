@@ -1,0 +1,18 @@
+<template name="cms_main">
+	{{> cmsSidebar}}
+	<div class="content-wrapper">
+		<div class="cms-main">
+			{{#if subsReady}}
+				<div class="post-list-wrapper">
+					{{> cms_post_list}}
+					{{> baseTabbar}}
+				</div>
+				<div class="post-wrapper">
+					{{#if PostId}}
+						{{> cms_post_detail}}
+					{{/if}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+</template>

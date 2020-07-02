@@ -1,0 +1,15 @@
+<template name="afSelectMultiple">
+  <select {{this.atts}} multiple>
+    {{#each this.items}}
+      {{#if this.optgroup}}
+        <optgroup label="{{this.optgroup}}">
+        {{#each this.items}}
+        <option {{afSelectOptionAtts}}>{{this.label}}</option>
+        {{/each}}
+        </optgroup>
+      {{else}}
+        <option {{afSelectOptionAtts}}>{{this.label}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+</template>

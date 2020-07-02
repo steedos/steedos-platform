@@ -1,0 +1,73 @@
+<template name="related_object_list">
+
+	<div class="steedos-brand-band slds-brand-band_medium  slds-template_bottom-magnet related_object_list">
+		<div class="slds-template__container">
+			<div class="listViewManager slds-grid slds-grid--vertical">
+				<div class="slds-page-header slds-page-header_joined">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__body">
+									<nav role="navigation" aria-label="Breadcrumbs">
+										<ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+											<li class="slds-breadcrumb__item slds-text-title_caps">
+												<a href="{{record_url}}">{{object_label}}</a>
+											</li>
+											<li class="slds-breadcrumb__item slds-text-title_caps">
+												<a href="{{record_url}}">{{record_name}}</a>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<div class="">
+											<span class="">{{related_object_label}}</span>
+										</div>
+									</h1>
+								</div>
+							</div>
+						</div>
+						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+							{{#if allowCreate}}
+								{{#if is_file}}
+									{{#if isUnlocked}}
+										{{#if hasPermission 'allowEdit' }}
+											<button class="slds-button slds-button_neutral btn-upload-file" title="{{_ "creator_actions_upload_file"}}">
+												{{_ "creator_actions_upload_file"}}
+												<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files">
+											</button>
+										{{/if}}
+									{{/if}}
+								{{else}}
+									<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{related_object_name}}" title="{{_ "New"}}">
+										{{_ "New"}}
+									</button>
+								{{/if}}
+							{{/if}}
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-align-middle">
+							<p class="slds-text-body_small tabular_info">{{#if recordsTotalCount}}{{_ "creator_list_item_counts" recordsTotalCount}}{{/if}}</p>
+						</div>
+						<div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="{{_ "creator_refresh"}}">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="slds-grid table-grid-content">
+					<div class="slds-col slds-no-space">
+						<div class="slds-table tale-content list-table-container td-cell-wrap">
+							{{#if isMobile}}
+								{{> list options=list_data}}
+							{{else}}
+								{{> Template.dynamic template="creator_grid" data=list_data}}
+							{{/if}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

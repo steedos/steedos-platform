@@ -1,0 +1,20 @@
+<template name="steedos_contacts_add_user_modal">
+	<div class="modal fade contacts-add-user-modal" id="steedos_contacts_add_user_modal" role="dialog" aria-labelledby="modalLabel3" tabindex="-1">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">{{_ "cantact_add_space_user"}}</h4>
+				</div>
+				<div class="modal-body">
+					{{#autoForm id="addContactsUser" schema=fields doc=values}}
+						{{> afQuickFields template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
+					{{/autoForm}}
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default contacts-add-user-save">{{_ "contact_save_user"}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

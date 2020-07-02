@@ -1,0 +1,9 @@
+.form-horizontal .autoform-padding-fix .form-group {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.checkbox input[type="checkbox"].autoform-checkbox-margin-fix,
+.checkbox-inline input[type="checkbox"].autoform-checkbox-margin-fix {
+  margin-left: 0;
+}

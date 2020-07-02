@@ -1,0 +1,33 @@
+<template name="viewLogs">
+	<div class="navigation-bar">
+		<button type="button" class="btn btn-default" data-toggle="offcanvas">
+			<i class="fa fa-bars"></i>
+		</button>
+		<span class="navigation-title dropdown">
+			View Logs
+		</span>
+		<div class="pull-right">
+		</div>
+	</div>
+	<div class="admin-content admin-view-logs-content">
+		{{#if hasPermission}}
+			<div class="section terminal">
+				{{#each logs}}
+					<div>
+						<!-- <span class="time">{{formatTS ts}}</span>  -->
+						{{{ansispan string}}}
+					</div>
+				{{/each}}
+			</div>
+			<div class="new-logs not color-primary-action-color">
+				<i class="ion-arrow-down-c"></i>
+				<span>新日志</span>
+			</div>
+		{{else}}
+			<div class="outoff-power text-warning">
+				您没有权限查看日志
+			</div>
+		{{/if}}
+	</div>
+
+</template>

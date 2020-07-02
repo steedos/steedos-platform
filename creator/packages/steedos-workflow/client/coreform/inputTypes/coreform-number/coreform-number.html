@@ -1,0 +1,6 @@
+<template name="afInputNumberSteedos">
+	{{#if this.isReadonly}}
+		<input type="text" class="coreform-read-only-number form-control" disabled value="{{coreformNumberToString this.value null}}"/>
+	{{/if}}
+	<input type="number" value="{{this.value}}" {{this.atts}}/>
+</template>

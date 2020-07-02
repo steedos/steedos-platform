@@ -1,0 +1,35 @@
+<template name="linked">
+
+
+    <div class="ui centered relaxed stackable grid container">
+
+      {{> accountMenu}}
+
+
+      <div class="ui ten wide column segment" id="form-signin">
+      
+        <div class="ui dividing header sixteen wide column">
+          <h3>{{_ 'Linked Accounts'}}</h3>
+        </div>
+
+        <div class="ui vertical items twelve wide column">
+          {{#each services}}
+          <div class="item">
+            <!-- {{#if user.google}}
+              <a href="/account/unlink/google" class="ui red large label">
+                <i class="google plus icon"></i>{{_ 'Unlink your Google account'}}
+              </a>
+            {{else}} -->
+              <button class="ui button" id="link_{{service}}">
+                <i class="{{icon}} icon"></i>{{_ 'Link your %s account' service}}
+              </button>
+            <!-- {{/if}} -->
+          </div>
+          {{/each}}
+
+        </div>
+      </div>
+
+    </div>
+
+</template>

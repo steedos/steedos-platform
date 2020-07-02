@@ -1,0 +1,24 @@
+#steedos_contacts_org_tree {
+	.jstree-wholerow-clicked + .pull-right.edit-menu {
+		display: block;
+	}
+	.jstree-wholerow-hovered + .pull-right.edit-menu {
+		display: block;
+	}
+	.pull-right.edit-menu {
+		display: none;
+		position: absolute;
+		right: 0;
+		.btn-group {
+			height: 28px;
+			margin-bottom: 2px;
+			margin-right: 2px;
+			.dropdown-toggle {
+				height: 28px;
+			}
+		}
+		&:active, &:hover, &:active {
+			display: block;
+		}
+	}
+}

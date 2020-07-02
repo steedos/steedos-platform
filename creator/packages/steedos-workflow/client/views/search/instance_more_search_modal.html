@@ -1,0 +1,101 @@
+<template name="instance_more_search_modal">
+    <div class="modal fade" id="instance_more_search_modal"  role="dialog" aria-labelledby="instance_more_search_modal_label" style="overflow-x: hidden;overflow-y: auto;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ins-modal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="instance_more_search_modal_label">{{_ 'instance_search_advanced_search'}}</h4>
+            </div>
+
+            <div class="modal-body modal-zoom">
+                <!-- <div class="form-group">
+                    <label class="control-label">关键字搜索</label>
+                    <input type="text" id="instance_more_search_key_words" class="form-control" placeholder="多个关键字之间请用空格">
+                </div> -->
+                <div class="">
+                    <div class="form-group">
+                        <label class="control-label">{{_ 'instance_search_flow'}}</label>
+                        <input type="button" id="instance_more_search_flow" class="form-control" value="{{selected_flow_name}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">{{_ 'instance_search_state'}}</label>
+                        <div style="margin:7px 0">
+                            {{#each state_options}}
+                                <label class="radio-inline">
+                                    <input type="radio" name="instance_more_search_state" value="{{value}}" {{selected_search_state value}}>{{name}}
+                                </label>
+                            {{/each}}
+                        </div>
+                        <!-- <select class="form-control"  id="instance_more_search_state">
+                            {{#each state_options }}
+                                <option value="{{value}}" >{{name}}</option>
+                            {{/each}}
+                        </select> -->
+                    </div>
+
+					<div class="form-group">
+						<label class="control-label">{{_ 'instances_archive'}}</label>
+						<select class="form-control" name="instance_is_archived">
+							<option value=""></option>
+							<option value="0">{{_ 'instances_not_archived'}}</option>
+							<option value="1">{{_ 'instances_archived'}}</option>
+						</select>
+					</div>
+
+                    <div class="form-group">
+                        <label class="control-label">{{_ 'instance_search_file'}}</label>
+                        <input type="text" id="instance_more_search_name" class="form-control" value="{{selected_search_name}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">{{_ 'instance_search_applicant_name'}}</label>
+                        <input type="text" id="instance_more_search_applicant_name" class="form-control" value="{{selected_search_appliacnt_name}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">{{_ 'instance_search_applicant_organization_name'}}</label>
+                        <input type="text" id="instance_more_search_applicant_organization_name" class="form-control" value="{{selected_search_applicant_organization_name}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">{{_ 'instance_search_submit_date'}}</label>
+                        <div class="row">
+                            <div class="{{#if isMobile}}col-xs-12{{else}}col-xs-6{{/if}}">
+                                <div class="input-group date">
+                                    <div class="input-group-addon">{{_ 'instance_search_start'}}</div>
+                                    <div class="input-group-addon submit-date-icon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    {{#if isMobile}}
+                                        <input type="date" class="form-control pull-left" id="instance_more_search_submit_date_start" value="{{selected_submit_start_date}}">
+                                    {{else}}
+                                        <input type="text" class="form-control pull-left" id="instance_more_search_submit_date_start" value="{{selected_submit_start_date}}">
+                                    {{/if}}
+                                </div>
+                            </div>
+                            <div class="{{#if isMobile}}col-xs-12 submit_date_end{{else}}col-xs-6{{/if}}">
+                                <div class="input-group date">
+                                    <div class="input-group-addon">{{_ 'instance_search_end'}}</div>
+                                    <div class="input-group-addon submit-date-icon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    {{#if isMobile}}
+                                        <input type="date" class="form-control pull-left" id="instance_more_search_submit_date_end" value="{{selected_submit_end_date}}">
+                                    {{else}}
+                                        <input type="text" class="form-control pull-right" id="instance_more_search_submit_date_end" value="{{selected_submit_end_date}}">
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="instance_more_search_btn">{{_ 'Search'}}</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</template>

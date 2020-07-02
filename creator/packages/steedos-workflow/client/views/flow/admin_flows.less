@@ -1,0 +1,105 @@
+.admin_flow_modal {
+	.export-table-template{
+		cursor: pointer;
+	}
+}
+
+.admin_flows{
+	.flow-list{
+		tr{
+			td:last-child{
+				.flow-edit{
+					float: right;
+					width: 30px;
+					height: 20px;
+					position: relative;
+					visibility: hidden;
+					.btn-group{
+						position: absolute;
+						margin-top: -5px;
+						.dropdown-toggle{
+							padding: 4px 12px;
+							float: right;
+							span{
+								position: relative;
+								top: 2px;
+							}
+						}
+					}
+				}
+			}
+
+			&:hover td .flow-edit{
+				visibility: visible;
+			}
+		}
+
+		.flow-list-switch{
+			position: relative;
+
+			label{
+				position: absolute;
+			}
+
+			.weui-switch-cp{
+				cursor: pointer;
+			}
+		}
+
+		.weui-switch-cp__box{
+			zoom: 0.60;
+		}
+
+		.filter-span{
+			display: inline-block;
+		}
+
+		.tabular-filter{
+			position: relative;
+			display: inline-block;
+			.btn-group{
+				position: absolute;
+				top: -18px;
+
+				.dropdown-toggle{
+					display: inline-block;
+					padding: 4px 8px;
+				}
+
+				.dropdown-menu{
+					a{
+						padding-top: 0px;
+						padding-bottom: 0px;
+						line-height: 1;
+
+						label{
+							font-weight: 400;
+							cursor: pointer;
+						}
+					}
+
+					input{
+						position: relative;
+						top: 3px;
+						margin-right: 6px;
+					}
+				}
+			}
+			.ion{
+				font-size: 100%;
+				color: lightgrey;
+			}
+
+			.btn-group.open .dropdown-toggle{
+				box-shadow: none;
+				-webkit-box-shadow: none;
+			}
+		}
+
+		.tabular-filter.enabled{
+			.ion{
+				color: #04be02
+			}
+		}
+	}
+}

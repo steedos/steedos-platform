@@ -1,0 +1,9 @@
+_id: stock
+name: 证券系统
+description: 证券系统
+icon_slds: thanks
+is_creator: true
+objects: 
+  - stock.stock_info
+  - stock.systemusers
+  - stock.systemgroups

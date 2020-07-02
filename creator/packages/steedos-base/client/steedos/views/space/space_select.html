@@ -1,0 +1,38 @@
+<template name="space_select">
+
+
+	<section class="content-header">
+		<h1>
+			{{_ "Select Space"}}
+			<small></small>
+		</h1>
+	</section> 
+
+	<section class="content">
+		<div class="row">
+			{{#each spaces}}
+			<div class="col-md-6 col-sm-6 col-xs-12">
+				<a href="{{urlPrefix}}/workflow/space/{{_id}}">
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>{{name}}</h3>
+							<p>&nbsp;</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-globe"></i>
+						</div>
+						<span class="small-box-footer">{{_ "Select Space"}} <i class="fa fa-arrow-circle-right"></i></span>
+					</div>
+				</a>
+			</div>
+			{{/each}}
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<button type="button" id="space_add" class="btn btn-default">{{_ "Add space"}}</button>
+			</div>
+		</div>
+	</section>
+
+
+</template>

@@ -1,0 +1,34 @@
+<template name="creator_table_actions">
+	<span class="slds-grid slds-grid--align-spread creator-table-actions">
+		<div class="forceVirtualActionMarker forceVirtualAction">
+			<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+				<span class="slds-icon_container slds-icon-utility-down">
+					<span class="lightningPrimitiveIcon">
+						<svg class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" aria-hidden="true">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{getSvgUrl "utility-sprite" "down"}}" />
+						</svg>
+					</span>
+					<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
+				</span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
+				<ul class="slds-dropdown__list slds-show" data-object-name="{{object_name}}">
+					{{#each actions}}
+						<li class="slds-dropdown__item crm-header-menu-item" role="presentation"> 
+							<a href="javascript:void(0);" title="{{this.label}}" 
+								data-action-key="{{this.name}}" data-object-name="{{object_name}}" data-record-id = "{{record_id}}"
+								class="list-item-action">
+								{{#if this.is_file}}
+									{{this.label}}
+									<input type="file" name="file" class="input-file-upload" data-parent="{{record_id}}">
+								{{else}}
+									<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+								{{/if}}
+							</a>
+						</li>
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+	</span>
+</template>

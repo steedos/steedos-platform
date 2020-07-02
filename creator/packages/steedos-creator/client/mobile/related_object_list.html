@@ -1,0 +1,25 @@
+<template name="relatedObjectList">
+	<div class="related-object-list mobile-template-container hidden" id="related_object_list_{{related_object_name}}">
+		<header class="mobile-template-header">
+			<div class="forceHeaderLayout">
+				<div class="bLeft related-object-list-back">
+                    {{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}}
+				</div>
+				{{#if isMobile}}
+					<div class="bRight add-related-item">
+						<i class="ion ion-plus"></i>
+					</div>
+				{{else}}
+					<div class="bRight"></div>
+				{{/if}}
+				<div class="bBody">
+					{{related_object_label}}
+				</div>
+			</div>
+		</header>
+		<div class="mobile-template-content">
+			<div id="relatedObjectRecords"></div>
+		</div>
+	</div>
+	{{#CreatorAfModal formId="addRelatedItem" class="btn btn-primary btn-add-related-item hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+</template>

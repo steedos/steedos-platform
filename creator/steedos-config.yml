@@ -1,0 +1,12 @@
+datasources:
+  default:
+    connection: 
+      url: mongodb://127.0.0.1/steedos
+public:
+  cfs:
+    store: "local"
+    local: 
+      folder: "./storage"
+plugins:
+  - "@steedos/app-contracts"
+  - "@steedos/steedos-plugin-workflow"

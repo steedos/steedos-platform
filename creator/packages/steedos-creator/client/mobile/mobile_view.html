@@ -1,0 +1,164 @@
+<template name="mobileView">
+	<div class="mobile-view mobile-template-container hidden" id="mobile_view_{{record_id}}">
+		<header class="mobile-template-header">
+			<div class="forceHeaderLayout">
+				<div class="bLeft mobile-view-back">
+					{{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}}
+				</div>
+				<div class="bRight action-manage">
+					{{> steedos_icon class="slds-icon" source="utility-sprite" name="threedots_vertical"}}
+				</div>
+				<div class="bBody">
+					{{object_label}}
+				</div>
+			</div>
+		</header>
+		<div class="mobile-template-content">
+			<header class="highlights">
+				<div class="dark forceHighlightsStencil forceRecordLayout">
+					<div class="header dark">
+						<div class="profilePicWrapper">
+							{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon)}}
+						</div>
+						<div class="fieldWrapper">
+							<h1 class="primaryField highlightsH1 dark">
+								{{record_name}}
+							</h1>
+							<h2 class="secondaryFields">
+								
+							</h2>
+						</div>
+					</div>
+				</div>
+			</header>
+			<div class="record-container">
+				<div class="forceAsyncCarouselIndicator">
+					<ul class="nav-container">
+						<li class="item" data-index="0">
+							<a role="tab" class="select-detail selected" aria-selected="true" tabindex="0">
+								<span class="">{{_ "creator_detail_info"}}</span>
+							</a>
+						</li>
+						<li class="item" data-index="1">
+							<a role="tab" class="select-related" aria-selected="false" tabindex="-1">
+								<span class="">{{_ "creator_detail_related"}}</span>
+							</a>
+						</li>
+					</ul>
+					<div class="indicator-state">
+						<div class="indicator-bar"></div>
+					</div>
+				</div>
+				<div class="scroller">
+					<div class="record-detail-card info-card-container">
+						{{#if showForm}}
+							{{#autoForm collection=collection type="disabled" id="record_detail_card_form" schema=schema doc=record}}
+								{{#if schemaFields.grouplessFields}}
+									{{#each schemaFields.grouplessFields}}
+										<div class="slds-grid view-page-section-row">
+											{{#each this}}
+												{{#if this}}
+													<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+														<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+															<div class="test-id__field-label-container">
+																<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+															</div>
+															<div class="slds-form-element__control slds-grid itemBody">
+																<span class="test-id__field-value slds-form-element__static slds-grow">
+																	{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details'}}
+																</span>
+															</div>
+														</div>
+													</div>
+												{{/if}}
+											{{/each}}
+										</div>
+									{{/each}}
+								{{/if}}
+
+								{{#if schemaFields.groupFields}}
+									{{#each schemaFields.groupFields}}
+										{{#if this.fields}}
+											<div class="slds-section slds-is-open group-section">
+												<h3 class="slds-section__title group-section-control">
+													<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+													{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
+													<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
+													</button>
+												</h3>
+												<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+													{{#each this.fields}}
+														<div class="slds-grid view-page-section-row">
+															{{#each this}}
+																{{#if this}}
+																	<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+																		<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+																			<div class="test-id__field-label-container">
+																				<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+																			</div>
+																			<div class="slds-form-element__control slds-grid itemBody">
+																				<span class="test-id__field-value slds-form-element__static slds-grow">
+																					{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true}}
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																{{/if}}
+															{{/each}}
+														</div>
+													{{/each}}
+												</div>
+											</div>
+										{{/if}}
+									{{/each}}
+								{{/if}}
+
+							{{/autoForm}}
+						{{/if}}
+					</div>
+					<div class="related-object-card info-card-container">
+						{{#each related_lists}}
+							<a class="slds-card slds-card_boundary forceBaseCard forceCard forceRelatedListCard" href="{{related_object_url this.object_name}}">
+								<div class="slds-card__header slds-grid">
+									<header class="slds-media slds-media--center slds-has-flexi-truncate">
+										<div class="slds-media__figure">
+											<div class="small forceEntityIcon">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this.object_name)}}
+											</div>
+										</div>
+										<div class="slds-media__body">
+											<h2 class="header-title-container">
+												<span class="slds-text-heading--small slds-truncate">
+													{{object_label this.object_name}}({{related_records_counts this.object_name this.related_field_name}})
+												</span>
+											</h2>
+										</div>
+									</header>
+								</div>
+							</a>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="weui-mask view-action-mask" style="display: none ;opacity: 0"></div>
+		<div class="weui-actionsheet view-action-actionsheet" style="display: none;opacity: 0">
+			<div class="weui-actionsheet__menu">
+				{{#each actions}}
+					<div class="weui-actionsheet__cell view-action">{{this.label}}</div>
+				{{/each}}
+				{{#each related_lists}}
+					{{#if allowCreate this.object_name}}
+						<div class="weui-actionsheet__cell add-related-record">{{_ "creator_new"}}{{object_label this.object_name}}</div>
+					{{/if}}
+				{{/each}}
+			</div>
+			<div class="weui-actionsheet__action">
+				<div class="weui-actionsheet__cell actionsheet-cancel">{{_ "Cancel"}}</div>
+			</div>
+		</div>
+	</div>
+	{{#CreatorAfModal formId="addRelatedRecord" class="btn btn-primary btn-add-related-record hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal formId="editRecord" class="btn btn-primary btn-edit-record hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal formId="editCellRecord" class="btn btn-primary btn-edit-cellrecord hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" collectionName=collectionName fields=fields useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
+</template>

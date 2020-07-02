@@ -1,0 +1,8 @@
+<template name="afObjectField_plain">
+  <fieldset>
+    {{#with afFieldLabelText name=this.name}}
+    <legend>{{this}}</legend>
+    {{/with}}
+    {{> afQuickFields quickFieldsAtts}}
+  </fieldset>
+</template>

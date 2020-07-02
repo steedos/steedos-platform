@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+	xmlns:o="urn:schemas-microsoft-com:office:office"
+	xmlns:x="urn:schemas-microsoft-com:office:excel"
+	xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+	xmlns:html="http://www.w3.org/TR/REC-html40">
+
+	<Worksheet ss:Name="<%= sheet_name %>" >
+		<Table>
+			<!-- 表头宽度 -->
+			<% _.each(fields, function(field){ %>
+				<Column ss:Width="<%= field.width %>"/>
+			<% }) %>
+			<!-- 表头内容 -->
+			<Row>
+				<% _.each(fields, function(field){ %>
+					<Cell><Data ss:Type="String"><%= field.title %></Data></Cell>
+				<% }) %>
+			</Row>
+			<!-- 表格正文 -->
+			<% _.each(users_to_xls, function(user) { %>
+				<Row>
+					<% _.each(fields, function(field){ %>
+						<% if (field.transform) { %>
+							<Cell><Data ss:Type="<%= field.type %>"><%= field.transform(user[field.name]) %></Data></Cell>
+						<% } else {%>
+							<Cell><Data ss:Type="<%= field.type %>"><%= user[field.name] %></Data></Cell>
+						<% } %>
+					<% }) %>
+				</Row>
+			<% }) %>
+		</Table>
+	</Worksheet>
+</Workbook>

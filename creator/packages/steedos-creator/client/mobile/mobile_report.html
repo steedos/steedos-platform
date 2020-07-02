@@ -1,0 +1,35 @@
+<template name="reportView">
+    <div class="report-view mobile-template-container hidden" id="report_view_id">
+        <header class="mobile-template-header">
+            <div class="forceHeaderLayout">
+                <div class="bLeft report-view-back">
+                    {{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}}
+                </div>
+                <div class="bRight"></div>
+                <div class="bBody">
+					报表
+                </div>
+            </div>
+        </header>
+        <div class="mobile-template-content">
+			<header class="highlights">
+				<div class="dark forceHighlightsStencil forceRecordLayout">
+					<div class="header dark">
+						<div class="profilePicWrapper">
+							{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="report"}}
+						</div>
+						<div class="fieldWrapper">
+							<h1 class="primaryField highlightsH1 dark">
+								{{reportObject.name}}
+							</h1>
+							<h2 class="secondaryFields">
+								
+							</h2>
+						</div>
+					</div>
+				</div>
+			</header>
+			{{> Template.dynamic template="creator_report_content" data=report_content_params}}
+        </div>
+    </div> 
+</template>

@@ -1,0 +1,42 @@
+<template name="afFileUpload">
+  <div>
+    {{#if file}}
+      {{#if file.isUploaded}}
+        {{> Template.dynamic template=previewTemplate data=previewTemplateData}}
+        {{> Template.dynamic template=removeFileBtnTemplate data=removeLabel}}
+      {{else}}
+        {{> Template.dynamic template=uploadProgressTemplate data=file}}
+      {{/if}}
+    {{else}}
+      {{> Template.dynamic template=selectFileBtnTemplate data=selectFileBtnData}}
+    {{/if}}
+    <input type="hidden" class="js-value" value="{{value}}" data-schema-key="{{schemaKey}}">
+  </div>
+</template>
+
+<template name="afFileUploadThumbIcon">
+	<a class="btn btn-default" target="_blank" href="{{url}}">
+		<i class="fa fa-{{icon}}"></i> {{file.original.name}}
+	</a>
+</template>
+
+<template name="afFileUploadThumbImg">
+	<img src="{{url}}" alt="" class="img-fileUpload-thumbnail img-thumbnail img-rounded">
+</template>
+
+<template name="afFileRemoveFileBtnTemplate">
+  <div>
+    <a href="#" class="js-af-remove-file"><i class="fa fa-times"></i> {{this}}</a>
+  </div>
+</template>
+
+<template name="afFileSelectFileBtnTemplate">
+  <div class="btn btn-default af-select-file js-af-select-file">
+    {{_ label}}
+    <input type="file" class="js-file" accept="{{accept}}">
+  </div>
+</template>
+
+<template name="afFileUploadProgress">
+  {{> FS.UploadProgressBar}}
+</template>

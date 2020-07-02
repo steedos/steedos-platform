@@ -1,0 +1,23 @@
+.floating-header-share-wx {
+	display: block;
+	align-items: center;
+	width: 60px;
+	height: 60px;
+	color: #fff;
+	line-height: 48px;
+	text-align: center;
+	transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.floating-header-share-wx {
+	background: #23ac3b;
+}
+
+
+@media (max-width: 900px) {
+	.floating-header-share-wx{
+		width: 40px;
+		height: 40px;
+		line-height: 38px;
+	}
+}

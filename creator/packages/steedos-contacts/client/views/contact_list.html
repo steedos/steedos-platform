@@ -1,0 +1,34 @@
+<template name="contacts_list">
+	
+	
+	<div id="contacts_list" class="contacts">
+		<div class="box box-solid" style="min-height:75%">
+			<div class="box-header ui-sortable-handle">
+	          	<div class="input-group">
+		          <input type="text" name="contact-list-search-key" id="contact-list-search-key" class="form-control" placeholder='{{_ "Search"}}...'>
+		              <span class="input-group-btn">
+		                <button type="submit" name="contact-list-search-btn" id="contact-list-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+		                </button>
+		              </span>
+		        </div>
+	        </div>
+			<div class="box-body">
+				{{#if showBooksList}}
+					<div class="contacts_books_list_table">
+						{{> tabular table=TabularTables.contactsBooks selector=books_selector class="table table-striped datatable-steedos-contacts"}}
+					</div>
+				{{else}}
+					<div class="contacts_orgs_list_table">
+						{{> tabular table=TabularTables.contacts selector=selector class="table table-striped datatable-steedos-contacts"}}
+					</div>
+				{{/if}}
+			</div>
+			<!-- /.box-body -->
+			<!-- Loading (remove the following to stop the loading)-->
+			<div class="overlay" id="contact_list_load">
+				<i class="fa fa-refresh fa-spin"></i>
+			</div>
+			<!-- end loading -->
+		</div>
+    </div>
+</template>

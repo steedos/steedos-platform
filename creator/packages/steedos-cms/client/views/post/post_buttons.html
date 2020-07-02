@@ -1,0 +1,30 @@
+<template name="cms_post_buttons">
+	<div class="navigation-bar">
+		<button type="button" class="btn btn-default btn-post-back hidden" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{_ 'cms_sites_back'}}"><i class="ion ion-android-arrow-back"></i></button>
+		<span class="navigation-title text-overflow" title="{{Post.title}}">{{Post.title}}</span>
+		<div class="pull-right">
+			{{#if PostId}}
+				{{#if isPostDropdownMenuNotEmpty}}
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							<span class="fa fa-ellipsis-h fa-1"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								{{#if isSitePublic}}
+									<li><a class="btn-preview-post"><i class="ion ion-ios-upload-outline"></i>{{_ 'cms_sites_preview'}}</a></li>
+								{{/if}}
+								{{#if isPostAuthor}}
+									{{#if isSitePublic}}
+										<li role="separator" class="divider"></li>
+									{{/if}}
+									<li><a class="btn-edit-post" data-id="{{PostId}}"><i class="ion ion-ios-compose-outline"></i>{{_ 'cms_button_edit'}}</a></li>
+									<li><a class="btn-remove-post" data-id="{{PostId}}"><i class="ion ion-android-close"></i>{{_ 'cms_button_remove'}}</a></li>
+								{{/if}}
+						</ul>
+					</div>
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+</template>

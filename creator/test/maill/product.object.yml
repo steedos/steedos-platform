@@ -1,0 +1,45 @@
+name: product
+label: 商品
+icon: product
+fields:
+  id: 
+    type: number
+    primary: true
+    generated: true
+  name:
+    type: text
+    label: 名称
+  price:
+    type: currency
+    label: 单价
+  # keyword:
+  #   type: "[text]"
+  type:
+    type: master_detail
+    reference_to: mall.product_types
+  description: 
+    label: 描述
+    type: textarea
+list_views:
+  all:
+    label: 全部
+    columns:
+      - name
+      - price
+      - description
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

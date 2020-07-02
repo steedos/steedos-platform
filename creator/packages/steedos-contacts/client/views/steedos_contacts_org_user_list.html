@@ -1,0 +1,48 @@
+<template name="steedos_contacts_org_user_list">
+	<div class="navigation-bar">
+		<button type="button" class="btn btn-default offcanvas" data-toggle="offcanvas">
+			<i class="fa fa-bars"></i>
+		</button>
+		{{#if canAddUser}}
+			<button type="button" data-toggle="tooltip" data-placement="right" class="btn btn-default" id="steedos_contacts_add_users_btn">
+				<i class="fa fa-user-plus" aria-hidden="true"></i>
+				{{_ "cantact_add_space_user"}}
+			</button>
+		{{/if}}
+		{{#if is_admin}}
+			{{#if canImportUsers}}
+				{{#unless is_nwjs}}
+				{{#if isSpaceAdmin}}
+					<button type="button" data-toggle="tooltip" data-placement="right" class="btn btn-default" id="steedos_contacts_import_users_btn">
+						<i class="fa fa-cloud-upload"></i>
+						{{_ 'steedos_contacts_import'}}
+					</button>
+				{{/if}}
+				{{/unless}}
+				<button type="button" data-toggle="tooltip" data-placement="right" class="btn btn-default" id="steedos_contacts_export_users_btn">
+					<i class="fa fa-cloud-download"></i>
+					{{_ 'steedos_contacts_export'}}
+				</button>
+			{{/if}}
+		{{/if}}
+		
+		<div class="pull-right">
+			<div class="input-group">
+				<input type="text" name="contact-list-search-key" id="contact-list-search-key" class="form-control contact-list-search-key" placeholder='{{_ "Search"}}...'>
+				<span class="input-group-btn">
+					<button type="submit" name="contact-list-search-btn" id="contact-list-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="navigation-bar org-bar" id="steedos_contacts_show_orgs">
+		<i class="fa fa-sitemap" style="padding-right: 4px;"></i>{{getOrgName}}<i class="caret"></i>
+	</div>
+	<div id="contacts_list" class="contacts">
+		<div class="contacts_orgs_list_table">
+            {{> tabular table=TabularTables.steedosContactsOrganizations selector=selector class="table table-striped datatable-steedos-contacts"}}
+		</div>
+	</div>
+</template>
+

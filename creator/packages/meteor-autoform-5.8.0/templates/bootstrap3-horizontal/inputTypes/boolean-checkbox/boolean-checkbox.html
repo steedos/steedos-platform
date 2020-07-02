@@ -1,0 +1,15 @@
+<template name="afCheckbox_bootstrap3-horizontal">
+  {{#if useLeftLabel}}
+  {{! same as bootstrap, but we don't include the label because it appears in the left column}}
+  <div class="checkbox">
+    <input type="checkbox" value="true" {{attsPlusSpecialClass}} />
+  </div>
+  {{else}}
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" value="true" {{atts}} />
+      {{afFieldLabelText name=this.name}}
+    </label>
+  </div>
+  {{/if}}
+</template>
