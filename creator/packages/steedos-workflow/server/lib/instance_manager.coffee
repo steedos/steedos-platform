@@ -71,10 +71,19 @@ InstanceManager.getMyApprove = (instanceId, userId)->
 
 		step = uuflowManager.getStep(instance, flow, trace.step)
 
-		nextSteps = uuflowManager.getNextSteps(instance, flow, step, "")
+		step_type = step.step_type
+
+		judge = if step_type == "sign" then "approved" else ""
+
+		nextSteps = uuflowManager.getNextSteps(instance, flow, step, judge)
 
 		if nextSteps.length == 1
+			if step_type == "sign" || step_type == "counterSign"
+				my_approve.judge = 'approved'
 			next_user_ids = getHandlersManager.getHandlers(instance._id , nextSteps[0])
+			if !next_user_ids
+				my_approve.next_steps = [{ step: nextSteps[0], users: [] }]
+				return my_approve
 			if next_user_ids.length == 1
 				my_approve.next_steps = [{step: nextSteps[0], users: next_user_ids}]
 				return my_approve
@@ -91,7 +100,7 @@ InstanceManager.getBatchInstances = (space, categoryId, flowIds, inbox_user)->
 
 	query = {space: space, inbox_users: inbox_user}
 
-	FIELDS = {name: 1, applicant_name: 1, submit_date: 1, flow_version: 1, "traces.step": 1, flow: 1}
+	FIELDS = { name: 1, applicant_name: 1, submit_date: 1, flow_version: 1, "traces.step": 1, flow: 1, current_step_name: 1, flow_name: 1 }
 
 	if categoryId
 
@@ -116,13 +125,17 @@ InstanceManager.getBatchInstances = (space, categoryId, flowIds, inbox_user)->
 
 		currentStep = stepManager.getStep(ins, flow, currentStepId)
 
-		if stepManager.allowBatch(currentStep) && InstanceManager.getMyApprove(ins._id, inbox_user)
+		myApprove = InstanceManager.getMyApprove(ins._id, inbox_user)
+
+		if stepManager.allowBatch(currentStep) && myApprove
 
 			delete ins.flow_version
 
 			delete ins.traces
 
 			delete ins.flow
+
+			ins.approve_start_date = myApprove.start_date
 
 			_batch_instances.push(ins)
 #		else

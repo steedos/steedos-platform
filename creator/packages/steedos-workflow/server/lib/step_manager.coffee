@@ -1,7 +1,7 @@
 stepManager = {}
 
 stepManager.allowBatch = (step)->
-	return step.step_type == 'counterSign' && step.allowBatch
+	return step.allowBatch
 
 stepManager.getStep = (instance, flow, step_id)->
 	flow_rev = instance.flow_version

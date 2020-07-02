@@ -4,10 +4,10 @@
 			{{#each this.batch_instances}}
 				<div class="weui-cell">
 					<div class="weui-cell__bd">
-						<p>{{name}}{{#if success _id}}<i class="weui-icon-success"></i>{{/if}}</p>
-						<span style="float: left;">{{applicant_name}}</span>
+						<p>{{name}}{{#if success _id}}<i class="weui-icon-success"></i>{{/if}}<span style="float: right;color: black;">{{applicant_name}}</span></p>
+						<span style="float: left;">{{flow_name}}({{current_step_name}})</span>
 						<span style="float: right">
-							{{dataFormat submit_date}}
+							{{dataFormat approve_start_date}}
 						</span>
 					</div>
 				</div>
