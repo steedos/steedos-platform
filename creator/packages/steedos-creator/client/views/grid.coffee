@@ -320,6 +320,23 @@ _getPageIndex = (grid_paging, curObjectName) ->
 getObjectpaging = (objectName)->
 	return Creator.getObject(objectName).paging
 
+_getObjectRowColors = (object)->
+	# 拿到object中select字段类型options中的color对应的配置
+	# 返回值类似格式{field:...,values:{value1:color1,value2:color2}}，为空则返回null
+	result = null
+	fields = object.fields
+	_.each fields, (field, key) -> 
+		if result
+			# 只支持一个字段的color配置，多个字段配置了color时，只取第一个
+			return
+		if field.type == "select" && field.options.length
+			_.each field.options, (option) -> 
+				if option.color
+					unless result
+						result = {field:key,values:{}}
+					result.values[option.value] = option.color
+	return result
+
 Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
@@ -530,6 +547,18 @@ Template.creator_grid.onRendered ->
 				enabled: true
 				fileName: fileName
 				allowExportSelectedData: false
+
+			rowColors = _getObjectRowColors(curObject)
+			if rowColors
+				rowColorValues = rowColors.values
+				rowColorField = rowColors.field
+				dxOptions.onRowPrepared = (args)->
+					if args.rowType == "data"
+						rowColorFieldValue = args.data?[rowColorField]
+						rowColor = rowColorValues[rowColorFieldValue]
+						if rowColor
+							args.rowElement.css("background",rowColor)
+
 			if !is_related and curObject.enable_tree
 				# 如果是tree则过虑条件适用tree格式，要排除相关项is_related的情况，因为相关项列表不需要支持tree
 				dxOptions.keyExpr = "_id"
