@@ -32,6 +32,7 @@ fields:
     index: true
     searchable: true
     inlineHelpText: The default data source does not support this property
+    group: External data source
   label:
     type: text
     label: Label
