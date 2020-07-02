@@ -8,14 +8,16 @@ fields:
     type: lookup
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
-                var _options;
+              var _options;
               _options = [];
               _.forEach(Creator.Objects, function (o, k) {
+                if(o.enable_web_forms){
                   return _options.push({
                     label: o.label,
                     value: k,
                     icon: o.icon
-                });
+                  });
+                }
               });
               return _options;
             }

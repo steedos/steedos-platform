@@ -232,6 +232,9 @@ Meteor.startup(function () {
                     throw new Meteor.Error(400, "space_users_error_name_required");
                 }
             }
+            if (doc.user) {
+                doc.owner = doc.user;
+            }
             if (doc.organizations && doc.organizations.length > 0) {
                 // 如果主组织未设置或设置的值不在doc.organizations内，则自动设置为第一个组织
                 if (!doc.organizations.includes(doc.organization)) {

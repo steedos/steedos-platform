@@ -213,7 +213,7 @@ export const translationObject = function(lng: string, objectName: string, objec
             _.each(field.options, function(op){
                 if(_.has(op, 'value')){
                     let _label = getObjectFieldOptionsLabel(lng, objectName, fieldName, op.value, op.label, object.datasource) 
-                    _options.push({value: op.value, label: _label})
+                    _options.push(_.extend({}, op, {label: _label}))
                 }else{
                     _options.push(op)
                 }

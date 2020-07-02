@@ -31,23 +31,28 @@ const generatHtml = (doc)=>{
                     break;
                 case "select":
                     if(tempField.options && tempField.options.length){
-                        let selectInput,selectOptions;
+                        let selectInput,selectOptions = [];
                         if(tempField.multiple){
                             // 多选时input控件的name要带[]后缀，以强制转为数组提交
-                            selectOptions = tempField.options.map((item)=>{
+                            if(tempField.options && tempField.options.length){
+                                selectOptions = tempField.options.map((item)=>{
                                 return `        <span>
             <input id="${item.value}" name="${tempField.name}[]" type="checkbox" value="${item.value}">
             <label for="${item.value}">
                 <span>${item.label}</span>
             </label>
         </span>`;
-                            });
+                                });
+                            }
                             selectInput = `\r\n    <div>\r\n${selectOptions.join("\r\n")}\r\n    </div>`;
                         }
                         else{
-                            selectOptions = tempField.options.map((item)=>{
-                                return `<option value="${item.value}">${item.label}</option>`
-                            });
+                            if(tempField.options && tempField.options.length){
+                                selectOptions = tempField.options.map((item)=>{
+                                    return `<option value="${item.value}">${item.label}</option>`
+                                });
+                            }
+                            selectOptions.unshift( `<option value="">${TAPi18n.__("web_forms_select_option_none", {}, lng)}</option>`);
                             selectInput = `<select id="${tempField.name}" name="${tempField.name}">\r\n${selectOptions.join("\r\n")}\r\n</select>`;
                         }
                         fieldsCode.push(`<label for="${tempField.name}">${tempField.label}</label>${selectInput}<br>\r\n`);

@@ -82,7 +82,7 @@ export const postObjectWebForm = async (req: express.Request, res: express.Respo
         }
         let owner = formDoc.record_owner ? formDoc.record_owner : null;
         let space = formDoc.space ? formDoc.space : null;
-        let entityDoc = { ...bodyParams, owner, space };
+        let entityDoc = { ...bodyParams, owner, created_by: owner, modified_by: owner, space };
         let entity = await object.insert(entityDoc);
         if (entity) {
             try{

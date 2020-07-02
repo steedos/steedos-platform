@@ -78,7 +78,7 @@
                                                     <td class="status {{this.judge}}"></td>
                                                 {{else}}
                                                     <td class="finish-date">{{dateFormat this.finish_date}}</td>
-                                                    <td class="status {{this.judge}}"><span class='{{getApproveStatusIcon this.judge}}'></span>&nbsp;&nbsp;<span class="hidden-xs">{{getApproveStatusText this.judge}}</span></td>
+                                                    <td class="status {{getApproveJudgeClass this.judge this.auto_submitted}}"><span class='{{getApproveStatusIcon this.judge this.auto_submitted}}'></span>&nbsp;&nbsp;<span class="hidden-xs">{{getApproveStatusText this.judge this.auto_submitted}}</span></td>
                                                 {{/if}}
                                             {{else}}
                                                 <td class="finish-date">
@@ -91,11 +91,6 @@
                                                 <td class="status {{this.judge}}"><!-- {{_t "instance_in_progress"}} --></td>
                                             {{/if}}
                                         </tr>
-                                        {{#if this.auto_submitted}}
-                                            <tr class="approve-description">
-                                                <td class="description red" colspan="3">{{_t "instance_approve_timeout_auto_submitted"}}</td>
-                                            </tr>
-                                        {{/if}}
                                 {{/each}}
                             </table>
                         </td>

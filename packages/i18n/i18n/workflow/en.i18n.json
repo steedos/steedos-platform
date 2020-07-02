@@ -37,6 +37,7 @@
 	"instance_readed": "Read",
 	"instance_next_step": "Next Step",
 	"instance_next_step_users": "Next Step User(s)",
+	"instance_next_step_user_countersign": "Next Step User(s)",
 	"instance_initiator": "Initiator",
 	"instance_approval_history": "Approval History",
 	"instance_in_progress": "In Progress",

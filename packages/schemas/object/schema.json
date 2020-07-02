@@ -124,6 +124,10 @@
             "type": "boolean",
             "description": "允许对象流程同步"
         },
+        "enable_web_forms": {
+            "type": "boolean",
+            "description": "允许在线表单"
+        },
         "is_view": {
             "type": "boolean",
             "description": "此对象是否对应数据库中的视图"
