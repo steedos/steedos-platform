@@ -2,6 +2,9 @@ name: object_webhooks
 label: Object Webhook
 icon: account
 fields:
+  name:
+    type: text
+    label: Name
   object_name:
     type: lookup
     label: Object
@@ -76,9 +79,6 @@ fields:
     label: Active
     type: boolean
     defaultValue: false
-  description:
-    type: text
-    label: Description
   space:
     type: text
     label: Company
@@ -89,11 +89,11 @@ fields:
 list_views:
   all:
     columns:
+      - name
       - object_name
       - events
       - payload_url
       - active
-      - description
     label: All Object Webhooks
     filter_scope: space
 permission_set:

@@ -1,4 +1,4 @@
-instances_statistic__object: 审批效率
+instances_statistic__object: 效率统计
 instances_statistic_field_avg_time: 总平均耗时
 instances_statistic_field_inbox_avg: 待处理平均耗时
 instances_statistic_field_inbox_count: 待处理总数

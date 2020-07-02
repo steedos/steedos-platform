@@ -9,6 +9,7 @@ admin_menus:
     permission_sets:
       - user
     expanded: false
+    sort: 500
   - _id: flows
     name: Workflows
     permission_sets:

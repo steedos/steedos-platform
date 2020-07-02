@@ -73,50 +73,50 @@ fields:
   enable_search:
     type: boolean
     label: Enable Search
-    group: Advanced
+    group: Switch
   enable_files:
     type: boolean
     label: Enable Files
-    group: Advanced
+    group: Switch
   enable_tasks:
     type: boolean
     label: Enable Tasks
-    group: Advanced
+    group: Switch
   enable_notes:
     type: boolean
     label: Enable Notes
-    group: Advanced
+    group: Switch
   enable_events:
     type: boolean
     label: Enable Events
-    group: Advanced
+    group: Switch
   enable_api:
     type: boolean
     defaultValue: true
     hidden: true
     label: Enable API
-    group: Advanced
+    group: Switch
   enable_share:
     type: boolean
     defaultValue: false
     label: Enable Share
-    group: Advanced
+    group: Switch
   enable_workflow:
     type: boolean
     label: Enable Workflow
-    group: Advanced
+    group: Switch
   enable_instances:
     type: boolean
     label: Enable Instances
-    group: Advanced
+    group: Switch
   enable_chatter:
     type: boolean
     label: Enable Chatter
-    group: Advanced
+    group: Switch
   enable_audit:
     type: boolean
     label: Enable Audit
-    group: Advanced
+    group: Switch
   # enable_trash:
   #   type: boolean
   # enable_space_global:
@@ -126,11 +126,12 @@ fields:
     type: boolean
     defaultValue: false
     label: Enable Approvals
-    group: Advanced
+    group: Switch
   enable_web_forms:
     type: boolean
     defaultValue: fasle
     label: Enable Web Forms
+    group: Switch
   # is_view:
   #   type: boolean
   #   defaultValue: false
@@ -224,20 +225,40 @@ fields:
 paging:
   enabled: false
 relatedList:
-  - object_fields
-  - object_listviews
-  - object_actions
-  - object_layouts
+  - objectName: object_fields
+    columns:
+      - label
+      - name
+      - type
+      - object
+      - sort_no
+  - objectName: object_listviews
+    columns:
+      - label
+      - name
+      - shared
+  - objectName: object_actions
+    columns:
+      - label
+      - name
+      - object
+      - 'on'
+      - is_enable
+  - objectName: object_layouts
+    columns:
+      - label
+      - object_name
+      - profiles
   - permission_objects
 list_views:
   all:
     columns:
       - label
       - name
-      - table_name
-      - datasource
-      - is_enable
+      # - table_name
+      # - datasource
       - in_development
+      - is_enable
       - is_system
     label: All
     filter_scope: space
@@ -245,10 +266,10 @@ list_views:
     columns:
       - label
       - name
-      - table_name
-      - datasource
-      - is_enable
+      # - table_name
+      # - datasource
       - in_development
+      - is_enable
       - is_system
     label: Customize
     filters:
@@ -258,10 +279,10 @@ list_views:
     columns:
       - label
       - name
-      - table_name
-      - datasource
-      - is_enable
+      # - table_name
+      # - datasource
       - in_development
+      - is_enable
       - is_system
     label: System
     filters:

@@ -1,4 +1,4 @@
-object_workflows__object: 对象流程
+object_workflows__object: 对象流程映射
 object_workflows_field_field_map: 字段映射关系（对象至表单）
 object_workflows_field_field_map_$_object_field: 对象字段
 object_workflows_field_field_map_$_workflow_field: 表单字段

@@ -1,4 +1,4 @@
-roles__object: 角色
+roles__object: 审批角色
 roles_field_description: 描述
 roles_field_name: 角色名称
 roles_field_parent: 上级角色

@@ -97,18 +97,9 @@ fields:
   is_name:
     type: boolean
     label: Is Name
-  primary:
-    type: boolean
-    label: Primary Key
-  generated:
-    type: boolean
-    label: Generated
   required:
     type: boolean
     label: Required
-  multiple:
-    type: boolean
-    label: Multiple
   is_wide:
     type: boolean
     label: Is Wide
@@ -124,12 +115,15 @@ fields:
   index:
     type: boolean
     label: Is Index Field
-  searchable:
-    type: boolean
-    label: Searchable
   sortable:
     type: boolean
     label: Sortable
+  searchable:
+    type: boolean
+    label: Searchable
+  filterable:
+    type: boolean
+    label: Filterable
   precision:
     type: currency
     label: Precision
@@ -165,14 +159,23 @@ fields:
     label: Rows
     scale: 0
     group: Advanced
-  allowedValues:
-    type: text
-    multiple: true
-    label: Allowed Values
+  # allowedValues:
+  #   type: text
+  #   multiple: true
+  #   label: Allowed Values
+  #   group: Advanced
+  multiple:
+    type: boolean
+    label: Multiple
     group: Advanced
   options:
     type: textarea
     label: Options
+    is_wide: true
+    group: Advanced
+  inlineHelpText:
+    label: Prompt text
+    type: text
     is_wide: true
     group: Advanced
   description:
@@ -180,6 +183,14 @@ fields:
     type: text
     is_wide: true
     group: Advanced
+  primary:
+    type: boolean
+    label: Primary Key
+    group: External data source
+  generated:
+    type: boolean
+    label: Generated
+    group: External data source
 paging:
   enabled: false
 list_views:

@@ -1,4 +1,4 @@
-webhooks__object: Webhooks
+webhooks__object: 流程触发器
 webhooks_field_active: 激活
 webhooks_field_content_type: 请求数据格式
 webhooks_field_description: 描述

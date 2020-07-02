@@ -1,7 +1,7 @@
-object_webhooks__object: 对象触发器
+object_webhooks__object: WebHooks
 object_webhooks_field_active: 激活
 object_webhooks_field_content_type: 请求数据格式
-object_webhooks_field_description: 描述
+object_webhooks_field_name: 名称
 object_webhooks_field_events: 事件
 object_webhooks_field_events_options_create: 新增
 object_webhooks_field_events_options_delete: 删除

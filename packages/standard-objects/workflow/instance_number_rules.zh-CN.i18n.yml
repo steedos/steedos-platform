@@ -1,4 +1,4 @@
-instance_number_rules__object: 流程编号规则
+instance_number_rules__object: 流程编号
 instance_number_rules_field_first_number: 起始序号
 instance_number_rules_field_name: 名称
 instance_number_rules_field_number: 序号

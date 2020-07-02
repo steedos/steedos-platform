@@ -48,6 +48,7 @@ fields:
     label: Objects
     type: lookup
     multiple: true
+    group: Business object
     optionsFunction: !!js/function |
       function () {
               var _options;
@@ -69,6 +70,7 @@ fields:
     label: Mobile Objects
     type: lookup
     multiple: true
+    group: Business object
     optionsFunction: !!js/function |
       function () {
               var _options;
