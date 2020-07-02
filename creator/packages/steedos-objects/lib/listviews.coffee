@@ -54,8 +54,10 @@ Creator.initListViews = (object_name)->
 		Creator.TabularSelectedIds?[object_name] = []
 
 Creator.convertListView = (default_view, list_view, list_view_name)->
-	default_columns = default_view.columns
-	default_mobile_columns = default_view.mobile_columns
+	default_columns = default_view?.columns
+	default_mobile_columns = default_view?.mobile_columns
+	unless list_view
+		return
 	oitem = _.clone(list_view)
 	if !_.has(oitem, "name")
 		oitem.name = list_view_name
