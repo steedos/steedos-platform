@@ -12,9 +12,9 @@
     "postinstall": "node .scripts/npm-postinstall.js",
     "prepare": "node .scripts/npm-postinstall.js",
     "clear": "rm -rf node_modules/@steedos/auth/node_modules/@steedos node_modules/@steedos/core/node_modules/@steedos node_modules/@steedos/objectql/node_modules/@steedos node_modules/@steedos/plugin-jsreport/node_modules/@steedos node_modules/@steedos/accounts/node_modules/@steedos",
-    "osy": "cd ../object-server/ && yarn",
-    "os": "cp -r ../object-server/packages/* node_modules/@steedos/ && cp -r ../object-server/apps/contracts/src/* node_modules/@steedos/app-contracts/src/",
-    "oss": "cp -r ../object-server/packages/standard-objects/* node_modules/@steedos/standard-objects/ && yarn start",
+    "osy": "cd ../ && yarn",
+    "os": "cp -r ../packages/* node_modules/@steedos/ && cp -r ../apps/contracts/src/* node_modules/@steedos/app-contracts/src/",
+    "oss": "cp -r ../packages/standard-objects/* node_modules/@steedos/standard-objects/ && yarn start",
     "osw": "cd ../steedos-webapp/ && yarn build-lib && cd ../creator/ && cp -r ../steedos-webapp/lib/* node_modules/@steedos/react/lib/",
     "sr": "cp -r ../steedos-plugin-stimulsoft-report/lib/* node_modules/@steedos/plugin-stimulsoft-report/lib/ && rm -rf node_modules/@steedos/plugin-stimulsoft-report/node_modules/@steedos"
   },
