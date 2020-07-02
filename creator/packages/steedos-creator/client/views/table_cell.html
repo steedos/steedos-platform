@@ -1,6 +1,6 @@
 <template name="creator_table_cell">
 	<span class="creator_table_cell slds-grid slds-grid_align-spread field-{{field.type}}">
-		<div class="{{#unless is_detail_view}}slds-truncate {{/unless}}{{#unless isMarkdown field.type}}cell-container {{else}}editor-preview-side {{/unless}}">
+		<div class="{{#unless is_detail_view}}slds-truncate {{/unless}}{{#unless isMarkdown field.type}}cell-container {{else}}editor-preview-side {{/unless}} {{cellColorClass(cellData)}}">
 			{{#each cellData}}
 				{{#if isTable}}
 					<div class="cellGridContainer slds-table_edit slds-hint-parent"></div>

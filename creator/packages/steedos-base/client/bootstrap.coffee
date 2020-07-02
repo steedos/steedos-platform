@@ -222,6 +222,8 @@ handleBootstrapData = (result, callback)->
 	Creator.Dashboards = if result.dashboards then result.dashboards else {};
 	Creator.Plugins = if result.plugins then result.plugins else {};
 
+	Creator.appendObjectFieldsColorStyles()
+
 	if _.isFunction(callback)
 		callback()
 
