@@ -662,8 +662,8 @@
 
 	"chart_traces": "图形化历程",
 	"cc_tag": "（传阅中）",
-	"workflow_batch_approval": "批量审批",
-	"workflow_batch_approval_btn": "批量<br/>审批",
+	"workflow_batch_approval": "批量核准",
+	"workflow_batch_approval_btn": "批量<br/>核准",
 	"workflow_batch_approval_processing": "处理中",
 	"workflow_batch_approval_message": "本次处理文件%s份",
 	"workflow_error_multiple_next_step_users": "「{$insname}」的下一步处理人有多个",
