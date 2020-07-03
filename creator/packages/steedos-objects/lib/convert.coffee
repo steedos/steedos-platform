@@ -1,6 +1,8 @@
 	getOption = (option)->
 		foo = option.split(":")
-		if foo.length > 1
+		if foo.length > 2
+			return {label: foo[0], value: foo[1], color: foo[2]}
+		else if foo.length > 1
 			return {label: foo[0], value: foo[1]}
 		else
 			return {label: foo[0], value: foo[0]}

@@ -5,8 +5,11 @@ _getObjectFieldsColorStyles = (object)->
 	result = []
 	fields = object.fields
 	_.each fields, (field, key) -> 
-		if field.type == "select" && field.options?.length
-			_.each field.options, (option) -> 
+		options = field.options
+		if _.isFunction(options)
+			options = options({})
+		if field.type == "select" && options?.length
+			_.each options, (option) -> 
 				if option.color
 					# result.push({object:object.name,field:key,value:option.value,color:option.color});
 					result.push(".creator-cell-color-#{object.name}-#{key}-#{option.value}{#{commonStyle}background:#{option.color};}");
