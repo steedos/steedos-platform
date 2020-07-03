@@ -108,9 +108,12 @@ Template.creator_table_cell.helpers
 	cellData: ()->
 		return Creator.getTableCellData(this)
 	
-	cellColorClass: (cellData)->
-		if this.field.type == "select" and this.val
-			return "creator-cell-color-#{this.object_name}-#{this.field.name} creator-cell-color-#{this.object_name}-#{this.field.name}-#{this.val}"
+	isSelects: (data)->
+		return data.field?.type == "select"
+	
+	selectCellColorClass: (data)->
+		if data.field.type == "select"
+			return "creator-cell-color-#{data.object_name}-#{data.field.name} creator-cell-color-#{data.object_name}-#{data.field.name}-#{this.value}"
 
 	editable: ()->
 		if !this.field

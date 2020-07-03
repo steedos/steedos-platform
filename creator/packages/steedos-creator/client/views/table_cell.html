@@ -1,6 +1,6 @@
 <template name="creator_table_cell">
 	<span class="creator_table_cell slds-grid slds-grid_align-spread field-{{field.type}}">
-		<div class="{{#unless is_detail_view}}slds-truncate {{/unless}}{{#unless isMarkdown field.type}}cell-container {{else}}editor-preview-side {{/unless}} {{cellColorClass(cellData)}}">
+		<div class="{{#unless is_detail_view}}slds-truncate {{/unless}}{{#unless isMarkdown field.type}}cell-container {{else}}editor-preview-side {{/unless}}">
 			{{#each cellData}}
 				{{#if isTable}}
 					<div class="cellGridContainer slds-table_edit slds-hint-parent"></div>
@@ -14,6 +14,10 @@
 					<a onclick="{{getOpenWindowScript(href)}}">{{value}}</a>
 				{{else if isEmail}}
 					<a href="mailto:{{value}}">{{value}}</a>
+				{{else if isSelects ..}}
+					{{#each value}}
+						<span class="{{selectCellColorClass ../..}}">{{{label}}}&nbsp;</span>
+					{{/each}}
 				{{else}}
 					{{#if href}}
 						{{#if itemActionName}}
@@ -26,7 +30,7 @@
 							{{/if}}
 						{{/if}}
 					{{else}}
-						<span class="">{{{value}}}&nbsp;</span>
+						<span>{{{value}}}&nbsp;</span>
 					{{/if}}
 				{{/if}}
 			{{/each}}

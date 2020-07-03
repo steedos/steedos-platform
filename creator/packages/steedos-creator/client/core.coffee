@@ -740,17 +740,13 @@ if Meteor.isClient
 					_options = _field.options(_record_val || _values)
 				if _.isFunction(_field.optionsFunction)
 					_options = _field.optionsFunction(_record_val || _values)
-				if _.isArray(props.val)
-					self_val = props.val
-					_val = []
-					_.each _options, (_o)->
-						if _.indexOf(self_val, _o.value) > -1
-							_val.push _o.label
-					val = _val.join(",")
-				else
-					val = _.findWhere(_options, {value: props.val})?.label
-				unless val
-					val = props.val
+				self_val = props.val
+				unless _.isArray(self_val)
+					self_val = [self_val]
+				val = []
+				_.each _options, (_o)->
+					if _.indexOf(self_val, _o.value) > -1
+						val.push {label: _o.label, value: _o.value}
 			else if _field.type == "lookup"
 				if _.isFunction(_field.optionsFunction)
 					_values = props.doc || {}
