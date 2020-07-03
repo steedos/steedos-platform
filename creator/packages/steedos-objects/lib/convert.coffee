@@ -20,9 +20,9 @@
 					_.each picklistOptions, (item)->
 						label = item.name
 						value = item.value || item.name
-						allOptions.push({label: label, value: value, enable: item.enable})
+						allOptions.push({label: label, value: value, enable: item.enable, color: item.color})
 						if item.enable
-							options.push({label: label, value: value})
+							options.push({label: label, value: value, color: item.color})
 						if item.default
 							field.defaultValue = value
 					if options.length > 0

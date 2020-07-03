@@ -15,6 +15,10 @@ fields:
     type: text
     label: Value
     inlineHelpText: Default Value = Name
+  color:
+    type: text
+    label: Color
+    inlineHelpText: Enter a color code in the format `#bad6f2`, and the selection will appear as the color background.
   sort_no:
     type: number
     label: Sort Number
