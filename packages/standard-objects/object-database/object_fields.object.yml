@@ -172,6 +172,8 @@ fields:
     type: textarea
     label: Options
     is_wide: true
+    inlineHelpText: |
+      支持三种选项格式：`值`、`选项名称:值`或`选项名称:值:颜色`，对应示例如：`high`、`high:高级`或`high:高级:#bad6f2`，多个选项请使用回车或英文逗号分隔，其中颜色为`#bad6f2`这种格式，表示选中该项时显示的背景色。
     group: Advanced
   inlineHelpText:
     label: Prompt text
