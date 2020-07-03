@@ -1,5 +1,5 @@
 # 字段配色相关
-commonStyle = "border-radius: 8px;padding: 0 6px;"
+commonStyle = "border-radius: 10px;padding: 2px 6px;"
 _getObjectFieldsColorStyles = (object)->
 	# 拿到object中select字段类型options中的color对应的配置，返回相关样式类数组，为空则返回空数组
 	result = []
