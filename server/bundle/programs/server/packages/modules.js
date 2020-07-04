@@ -241,6 +241,7 @@ install("meteorhacks:meteorx");
 install("meteorhacks:unblock");
 install("steedos:lightning-design-system");
 install("steedos:odata");
+install("steedos:object-database");
 install("steedos:mailqueue");
 install("chuangbo:cookie");
 install("steedos:sso");
@@ -843,7 +844,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.21.0-alpha.6",
+  "version": "1.21.0",
   "main": "lib/index.js"
 };
 
@@ -870,7 +871,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.21.0-alpha.6",
+  "version": "1.21.0",
   "main": "lib/index.js"
 };
 
@@ -897,7 +898,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.21.0-alpha.6",
+  "version": "1.21.0",
   "main": "lib/index.js"
 };
 
@@ -914,6 +915,33 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+}}},"objectql":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/@steedos/objectql/package.json                                                      //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "@steedos/objectql",
+  "version": "1.21.0",
+  "main": "lib/index.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/@steedos/objectql/lib/index.js                                                      //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }}},"filters":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -924,7 +952,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.21.0-alpha.6",
+  "version": "1.21.0",
   "main": "lib/index.js"
 };
 

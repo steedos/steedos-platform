@@ -641,6 +641,10 @@
       "path": "packages/steedos_odata.js"
     },
     {
+      "sourceMap": "packages/steedos_object-database.js.map",
+      "path": "packages/steedos_object-database.js"
+    },
+    {
       "sourceMap": "packages/steedos_mailqueue.js.map",
       "path": "packages/steedos_mailqueue.js"
     },

@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "edcfd2f6cf70d81ee725264e013b1564aa3cc194.js",
+      "path": "f182e5b5c80ba2c522e09405accc2e8473c2b30a.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/edcfd2f6cf70d81ee725264e013b1564aa3cc194.js?meteor_js_resource=true",
-      "size": 8129934,
-      "hash": "edcfd2f6cf70d81ee725264e013b1564aa3cc194",
-      "sri": "bWA+ON1jYYEAJvOq7eKQTH252ZjGqPxZHfOtM6gwjvs3dmEC7BpNr9jM5dE2CvNmGsrNNwZf8MEo5E1rQqJikQ=="
+      "url": "/f182e5b5c80ba2c522e09405accc2e8473c2b30a.js?meteor_js_resource=true",
+      "size": 8135498,
+      "hash": "f182e5b5c80ba2c522e09405accc2e8473c2b30a",
+      "sri": "4Sh1wbi7t8VyX1m1NGNV8yNw0M3jBAZOJByIplzUK8DEmkDFU2N9T3uVvc1iQaWGzVNeu8T0Z1CBK7elspEaYQ=="
     },
     {
-      "path": "edcfd2f6cf70d81ee725264e013b1564aa3cc194.stats.json",
+      "path": "f182e5b5c80ba2c522e09405accc2e8473c2b30a.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/edcfd2f6cf70d81ee725264e013b1564aa3cc194.stats.json?meteor_js_resource=true",
-      "size": 170944,
-      "hash": "213a0cf708df4c4dc62f7ef798be56305de9dbde",
-      "sri": "rMy7aZBFxFCBXNtte2wEyZM70QXHu/USruie6LnaUe3cPoKIay7NuMtTrlbI463dGqO+QcOvsScLy+sXcQA9jA=="
+      "url": "/f182e5b5c80ba2c522e09405accc2e8473c2b30a.stats.json?meteor_js_resource=true",
+      "size": 171233,
+      "hash": "0fa2c50d2c23e309f24bdf3e768c11ce584fbc87",
+      "sri": "smEcwn6xGMtLS4xBHdhg+w8UiqoZp2pCD8HZn7JP1ckDAp1C8QaCUa3LgTZQYuovSHwbtJY/0ucQDzrcfE489Q=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4697,9 +4697,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/word/demo.doc",
-      "size": 29696,
-      "hash": "31007e9052241b78a1e31edd5fe09a2d2eb24ede",
-      "sri": "K83/VMpdaFEsZucbiwN0FWy2Ql3zyS0/kV3ik2KQjOm4qWUVM17pwCLrwfK2OXNzChuecPXoUZykJYRzfafHhQ=="
+      "size": 4,
+      "hash": "eba9cccebc0362777dec5bb4d95f32335be5f533",
+      "sri": "zmd9tq4zxUlodKKQLTDTYfbPEldulr2Kn2YmoMop8LT5fkA+VHEdJOvzTU4YMjWo+ZUTRdMqIPLa1HbZEe5+Bg=="
     },
     {
       "path": "app/images/billing/WePayDescription.png",
