@@ -39,6 +39,7 @@ if(Meteor.isServer){
         sort_no: 1,
         enable: 1,
         default: 1,
+        color: 1
       }
     }).observe({
       added: function(doc){

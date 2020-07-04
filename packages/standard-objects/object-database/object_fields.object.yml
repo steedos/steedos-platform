@@ -35,7 +35,7 @@ fields:
   column_name:
     type: text
     label: Database column name
-    inlineHelpText: Only supports relational databases
+    inlineHelpText: Only supports relational databases.
     searchable: true
     index: true
   _name:
@@ -172,6 +172,7 @@ fields:
     type: textarea
     label: Options
     is_wide: true
+    inlineHelpText: One option per line. Three definition formats are supported. Value, label:value, Label :value:# FFFFFF, the third format can set the color of each option.
     group: Advanced
   inlineHelpText:
     label: Prompt text

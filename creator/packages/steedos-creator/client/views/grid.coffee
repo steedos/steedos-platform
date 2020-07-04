@@ -168,7 +168,8 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 
 	return columnItem;
 
-_columns = (object_name, columns, list_view_id, is_related, relatedSort)->
+_columns = (object_name, columns, list_view_id, is_related, related_list_item_props)->
+	relatedSort = related_list_item_props.sort
 	object = Creator.getObject(object_name)
 	grid_settings = Creator.getCollection("settings").findOne({object_name: object_name, record_id: "object_gridviews"})
 	column_default_sort = Creator.transformSortToDX(Creator.getObjectDefaultSort(object_name))
@@ -188,6 +189,8 @@ _columns = (object_name, columns, list_view_id, is_related, relatedSort)->
 		list_view_sort = column_default_sort
 	result = columns.map (n,i)->
 		defaultWidth = _defaultWidth(columns, object.enable_tree, i)
+		if is_related && related_list_item_props.customRelatedListObject && related_list_item_props.columns
+			list_view.columns = related_list_item_props.columns
 		return getColumnItem(object, list_view, n, list_view_sort, column_default_sort, column_sort_settings, is_related, defaultWidth)
 	if !_.isEmpty(list_view_sort)
 		_.each list_view_sort, (sort,index)->
@@ -209,7 +212,7 @@ _getShowColumns = (curObject, selectColumns, is_related, list_view_id, related_l
 	self = this
 	curObjectName = curObject.name
 	# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
-	showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related, related_list_item_props.sort)
+	showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related, related_list_item_props)
 	actions = Creator.getActions(curObjectName)
 	if true || !Steedos.isMobile() && actions.length
 		showColumns.push
