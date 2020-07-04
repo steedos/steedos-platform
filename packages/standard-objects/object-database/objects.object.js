@@ -108,7 +108,7 @@ function isRelationalDatabase(object){
 
 function canEnable(object){
     if(isRelationalDatabase(object)){
-        if(!object.fields || !_.isArray(object.fields)){
+        if(!object.fields || !_.isObject(object.fields)){
             return false
         }else{
             var hasPrimary = false;
@@ -117,7 +117,7 @@ function canEnable(object){
                     hasPrimary = true;
                 }
             })
-            console.log('hasPrimary', hasPrimary);
+            // console.log('hasPrimary', hasPrimary);
             return hasPrimary
         }
     }
