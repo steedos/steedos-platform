@@ -146,7 +146,7 @@ function checkName(name){
   return true
 }
 
-Creator.Objects.object_fields.triggers = {
+var triggers = {
   "after.insert.server.object_fields": {
     on: "server",
     when: "after.insert",
@@ -269,3 +269,5 @@ Creator.Objects.object_fields.triggers = {
     }
   }
 }
+
+Creator.Objects.object_fields.triggers = Object.assign({}, Creator.Objects.object_fields.triggers, triggers);

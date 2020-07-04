@@ -182,5 +182,8 @@
 	"web_forms_aciton_copyHtmlCode_success": "The form HTML code has been copied to the clipboard and can be copied to the web page to fill in the form online.",
 	"web_forms_aciton_copyHtmlCode_error": "The form HTML code copy failed.",
 	"web_forms_default_notification_body": "The Web form has a new record submission.",
-	"web_forms_select_option_none": "--none--"
+	"web_forms_select_option_none": "--none--",
+
+	"object_fields_error_option_color_not_valid": "The incorrectly formatted option color value is defined in the field 'Options' attribute. Enter the correct hexadecimal color value, such as #FFFFFF.",
+	"picklist_options_error_color_not_valid": "Background color format incorrect, please enter the correct hexadecimal color code, such as #FFFFFF."
 }
