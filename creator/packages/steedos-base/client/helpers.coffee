@@ -188,7 +188,7 @@ Steedos.Helpers =
 		if typeof appId == "object"
 			console.log("zero....");
 			return 0
-		if object.name == "instances"
+		if object?.name == "instances"
 			return Steedos.getWorkflowBadge(appId)
 			# return Steedos.getInstanceBadge(appId, spaceId)
 

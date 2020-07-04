@@ -30,6 +30,8 @@
 		return field;
 
 	Creator.convertObject = (object, spaceId)->
+		if !object
+			return
 		_.forEach object.triggers, (trigger, key)->
 
 			if (Meteor.isServer && trigger.on == "server") || (Meteor.isClient && trigger.on == "client")

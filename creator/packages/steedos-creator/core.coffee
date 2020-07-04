@@ -200,6 +200,8 @@ Creator.getApp = (app_id)->
 
 Creator.getAppDashboard = (app_id)->
 	app = Creator.getApp(app_id)
+	if !app
+		return
 	dashboard = null
 	_.each Creator.Dashboards, (v, k)->
 		if v.apps?.indexOf(app._id) > -1
@@ -208,10 +210,14 @@ Creator.getAppDashboard = (app_id)->
 
 Creator.getAppDashboardComponent = (app_id)->
 	app = Creator.getApp(app_id)
+	if !app
+		return
 	return ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "Dashboard", app._id);
 
 Creator.getAppObjectNames = (app_id)->
 	app = Creator.getApp(app_id)
+	if !app
+		return
 	isMobile = Steedos.isMobile()
 	appObjects = if isMobile then app.mobile_objects else app.objects
 	objects = []
@@ -223,6 +229,8 @@ Creator.getAppObjectNames = (app_id)->
 	return objects
 
 Creator.getVisibleApps = (includeAdmin)->
+	changeApp = Creator._subApp.get();
+	ReactSteedos.store.getState().entities.apps = Object.assign({}, ReactSteedos.store.getState().entities.apps, {apps: changeApp});
 	return ReactSteedos.visibleAppsSelector(ReactSteedos.store.getState(), includeAdmin)
 
 Creator.getVisibleAppsObjects = ()->

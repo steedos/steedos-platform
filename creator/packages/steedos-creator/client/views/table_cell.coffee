@@ -119,7 +119,8 @@ Template.creator_table_cell.helpers
 		if !this.field
 			return false
 		safeField = Creator.getRecordSafeField(this.field, this.doc, this.object_name);
-
+		if !safeField
+			return false
 		if safeField.omit or safeField.readonly
 			return false
 

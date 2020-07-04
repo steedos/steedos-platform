@@ -130,7 +130,7 @@ steedos:odata
 
 steedos:logger@0.0.2
 
-# steedos:object-database
+steedos:object-database
 
 
 # steedos:weixin
