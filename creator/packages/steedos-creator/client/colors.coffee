@@ -11,8 +11,11 @@ _getObjectFieldsColorStyles = (object)->
 		if field.type == "select" && options?.length
 			_.each options, (option) -> 
 				if option.color
-					# result.push({object:object.name,field:key,value:option.value,color:option.color});
-					result.push(".creator-cell-color-#{object.name}-#{key}-#{option.value}{#{commonStyle}background:#{option.color};}");
+					color = option.color
+					# 支持color中省略#前缀
+					if !/^#/.test(color)
+						color = "##{color}"
+					result.push(".creator-cell-color-#{object.name}-#{key}-#{option.value}{#{commonStyle}background:#{color};}");
 	return result
 
 Creator.appendObjectFieldsColorStyles = ()->
