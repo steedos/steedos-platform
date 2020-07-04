@@ -700,6 +700,12 @@ if Meteor.isClient
 				val = val.replace(/\n/g, '\n<br>');
 				val = val.replace(/ /g, '&nbsp;');
 			data.push {value: val, id: props._id, type: _field.type}
+		else if _field.type == "boolean"
+			if props.val
+				val = t "YES"
+			else
+				val = t "NO"
+			data.push {value: val, checked: props.val, id: props._id, isBoolean: true}
 		else
 			if (val && ["datetime", "date"].indexOf(_field.type) >= 0)
 				if props.agreement == "odata"
@@ -727,11 +733,6 @@ if Meteor.isClient
 						val = moment.utc(props.val).format('YYYY-MM-DD')
 			else if (props.val == null)
 				val = ""
-			else if _field.type == "boolean"
-				if props.val
-					val = t "YES"
-				else
-					val = t "NO"
 			else if _field.type == "select"
 				_options = _field.allOptions || _field.options
 				_values = props.doc || {}
