@@ -49,7 +49,7 @@ _getObjectFieldsColorStyles = (object)->
 					if !/^#/.test(color)
 						color = "##{color}"
 					fontColor = _pickTextColorBasedOnBgColorAdvanced(color, '#fff', '#333')
-					result.push(".creator-cell-color-#{object.name}-#{key}-#{option.value}{#{commonStyle}background:#{color};color:#{fontColor}}");
+					result.push(".creator-cell-color-#{object.name}-#{key}-#{option.value}{#{commonStyle}background:#{color};color:#{fontColor};}");
 	return result
 
 Creator.appendObjectFieldsColorStyles = ()->
