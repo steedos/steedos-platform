@@ -14,6 +14,18 @@
 					<a onclick="{{getOpenWindowScript(href)}}">{{value}}</a>
 				{{else if isEmail}}
 					<a href="mailto:{{value}}">{{value}}</a>
+				{{else if isBoolean}}
+					{{#if checked}}
+						<span class="slds-icon_container slds-icon-utility-check slds-current-color" title="{{value}}">
+							{{> steedos_button_icon class="slds-icon slds-icon_x-small" source="utility-sprite" name="check"}}
+							<span class="slds-assistive-text">{{value}}</span>
+						</span>
+					{{else}}
+						<span class="slds-icon_container slds-icon-utility-steps slds-current-color" title="{{value}}">
+							{{> steedos_button_icon class="slds-icon slds-icon_x-small" source="utility-sprite" name="steps"}}
+							<span class="slds-assistive-text">{{value}}</span>
+						</span>
+					{{/if}}
 				{{else if isSelects ..}}
 					{{#each value}}
 						<span class="{{selectCellColorClass ../..}}">{{{label}}}</span>
