@@ -113,6 +113,19 @@
 				catch error
 					console.error "Creator.convertFieldsOptions", field.options, error
 
+			else if field.options && _.isArray(field.options)
+				try
+					_options = []
+					#支持数组中直接定义每个选项的简版格式字符串
+					_.forEach field.options, (option)->
+						if _.isString(option)
+							_options.push(getOption(option))
+						else
+							_options.push(option)
+					field.options = _options
+				catch error
+					console.error "Creator.convertFieldsOptions", field.options, error
+
 			else if field.options && !_.isFunction(field.options) && !_.isArray(field.options) && _.isObject(field.options)
 				_options = []
 				_.each field.options, (v, k)->
