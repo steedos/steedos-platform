@@ -59,12 +59,25 @@ Creator.Objects['permission_set'].triggers = {
                 var type = set.type || doc.type;
                 var users = set.users || doc.users
                 if(type === 'profile' && users.length > 0){
-                    console.log('update...', modifier.$set.users, _.has(set, 'users'));
                     if(_.has(set, 'users')){
                         modifier.$set.users = []
                     }else{
                         modifier.$unset.users = 1
                     }
+                }
+            }
+        }
+    },
+    "after.update.server.syncSpaceUserProfile": {
+        on: "server",
+        when: "after.update",
+        todo: function(userId, doc, fieldNames, modifier, options){
+            modifier.$set = modifier.$set || {}
+            if(doc.type === 'profile' && _.has(modifier.$set, 'name') && modifier.$set.name != this.previous.name){
+                if(doc.space){
+                    db.space_users.update({space: doc.space, profile: this.previous.name}, {$set: {profile: doc.name}}, {
+                        multi: true
+                    });
                 }
             }
         }
