@@ -120,7 +120,15 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-# form:
+form:
+  initialValues: !!js/function |
+    function(){
+      var listView = Creator.getListView();
+      if(listView && listView.name === 'profile'){
+        return {type: 'profile'}
+      }
+      return {}
+    }
 #   validate: !!js/function |
 #     function(formValues){
 #       if(formValues && formValues.type === 'profile'){
