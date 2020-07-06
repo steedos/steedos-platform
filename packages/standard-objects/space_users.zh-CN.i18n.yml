@@ -33,7 +33,6 @@ space_users_field_user_accepted: 有效
 space_users_field_username: 用户名
 space_users_field_work_phone: 工作电话
 space_users_field_contact_id: 联系人
-space_users_field_profile_inlineHelpText: 可以在权限组中定义简档
 space_users_group_-: '-'
 space_users_listview_all: 全部人员
 space_users_listview_disabled: 离职停用人员
