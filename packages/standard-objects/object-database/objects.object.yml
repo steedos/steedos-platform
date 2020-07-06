@@ -170,6 +170,12 @@ fields:
     blackbox: true
     omit: true
     hidden: true
+  relatedList:
+    type: grid
+    label: Related List
+    blackbox: true
+    omit: true
+    hidden: true
   permission_set:
     type: object
     label: Permission Set
@@ -204,26 +210,6 @@ fields:
     omit: true
     hidden: true
     disabled: true
-  # relatedList:
-  #   type: lookup
-  #   label: 相关子表
-  #   multiple: true
-  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
-  #     function () {
-  #             var _options;
-
-  #             _options = [];
-
-  #             _.forEach(Creator.objectsByName, function (o, k) {
-  #               return _options.push({
-  #                 label: o.label,
-  #                 value: k,
-  #                 icon: o.icon
-  #               });
-  #             });
-
-  #             return _options;
-  #           }
 paging:
   enabled: false
 relatedList:
@@ -251,6 +237,7 @@ relatedList:
       - label
       - object_name
       - profiles
+  - object_related_list
   - permission_objects
 list_views:
   all:

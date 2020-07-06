@@ -23,6 +23,7 @@ Creator.Object = (options)->
 	self.description = options.description
 	self.is_view = options.is_view
 	self.form = options.form
+	self.relatedList = options.relatedList
 	if !_.isBoolean(options.is_enable)  || options.is_enable == true
 		self.is_enable = true
 	else
