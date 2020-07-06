@@ -22,6 +22,7 @@ _changeClientObjects = (document)->
 			old_obj = Creator.Objects[result.name]
 			if type != "added"
 				result.permissions = old_obj?.permissions || {}
+			delete Creator._recordSafeObjectCache[result.name]
 			Creator.Objects[result.name] = result
 			Creator.loadObjects result
 #			if Session.get("object_name")
