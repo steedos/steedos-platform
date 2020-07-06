@@ -192,7 +192,7 @@ module.exports = {
                     record_id: this.record_id,
                     space_id: Session.get("spaceId")
                 };
-                url = Meteor.absoluteUrl() + ("api/workflow/view/" + instanceId + "?") + $.param(uobj);
+                url = Steedos.absoluteUrl() + ("api/workflow/view/" + instanceId + "?") + $.param(uobj);
                 data = JSON.stringify(data);
                 $(document.body).addClass('loading');
                 return $.ajax({
@@ -211,7 +211,7 @@ module.exports = {
                             });
                             return;
                         } else if (responseText.redirect_url) {
-                            Steedos.openWindow(responseText.redirect_url);
+                            Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
                         }
                     },
                     error: function (xhr, msg, ex) {

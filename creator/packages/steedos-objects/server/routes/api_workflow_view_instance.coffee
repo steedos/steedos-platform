@@ -23,7 +23,6 @@ JsonRoutes.add 'post', '/api/workflow/view/:instanceId', (req, res, next) ->
 		# - 不是我的申请单则跳转至打印页面
 		# - 如申请单不存在则提示用户申请单已删除，并且更新record的状态，使用户可以重新发起审批
 		if ins
-			workflowUrl = Meteor.settings.public.webservices.workflow.url
 			box = ''
 			spaceId = ins.space
 			flowId = ins.flow
@@ -46,9 +45,9 @@ JsonRoutes.add 'post', '/api/workflow/view/:instanceId', (req, res, next) ->
 					box = 'monitor'
 
 			if box
-				redirect_url = workflowUrl + "workflow/space/#{spaceId}/#{box}/#{insId}?X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
+				redirect_url = "workflow/space/#{spaceId}/#{box}/#{insId}?X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
 			else
-				redirect_url = workflowUrl + "workflow/space/#{spaceId}/print/#{insId}?box=monitor&print_is_show_traces=1&print_is_show_attachments=1&X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
+				redirect_url = "workflow/space/#{spaceId}/print/#{insId}?box=monitor&print_is_show_traces=1&print_is_show_attachments=1&X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
 
 			JsonRoutes.sendResult res, {
 				code: 200
