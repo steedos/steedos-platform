@@ -301,7 +301,7 @@ actions:
                 if (selection && selection.length > 0) {
                     var record = selection[0];
                     var recordId = record._id;
-                    var url = Meteor.absoluteUrl("/api/v4/reports/all/copy");
+                    var url = Steedos.absoluteUrl("/api/v4/reports/all/copy");
                     var data = {
                         recordId: recordId
                     };
