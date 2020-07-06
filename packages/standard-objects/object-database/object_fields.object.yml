@@ -54,33 +54,35 @@ fields:
     label: Type
     required: true
     options: 
-      - label: text
+      - label: Text
         value: text
-      - label: textarea
+      - label: Textarea
         value: textarea
       - label: Html文本
         value: html
-      - label: select
+      - label: Select
         value: select
       - label: Checkbox
         value: boolean
-      - label: date
+      - label: Date
         value: date
-      - label: datetime
+      - label: Datetime
         value: datetime
-      - label: number
+      - label: Number
         value: number
-      - label: currency
+      - label: Currency
         value: currency
-      - label: password
+      - label: Password
         value: password
-      - label: lookup
+      - label: Lookup
         value: lookup
-      - label: master_detail
+      - label: Master Detail
         value: master_detail
-      - label: url
+      - label: Autonumber
+        value: autonumber
+      - label: Url
         value: url
-      - label: email
+      - label: Email
         value: email     
   defaultValue:
     type: text
@@ -183,6 +185,10 @@ fields:
     label: Description
     type: text
     is_wide: true
+    group: Advanced
+  formula:
+    label: Formula
+    type: text
     group: Advanced
   primary:
     type: boolean
