@@ -44,6 +44,7 @@ fields:
     searchable: true
     index: true
     required: true
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   label:
     type: text
     required: true
@@ -189,6 +190,7 @@ fields:
   formula:
     label: Formula
     type: text
+    inlineHelpText: This field must be filled when the field type is autonumber
     group: Advanced
   primary:
     type: boolean

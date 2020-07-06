@@ -30,6 +30,7 @@ objects_field_in_development_options_1: 开发中(仅管理员才可以访问对
 objects_field_label: 显示名
 objects_field_list_views: 列表视图
 objects_field_name: 对象名
+objects_field_name_inlineHelpText: $t(object_object__error_name_invalid_format)
 objects_field_owner: 拥有者
 objects_field_permission_set: 权限设置
 objects_field_sidebar: 左侧列表
@@ -43,3 +44,4 @@ objects_listview_system: 系统
 objects_field_datasource_defaultValue: 默认数据源
 objects_group_switch: 功能开关
 objects_group_external_data_source: 外部数据源
+object_object__error_name_invalid_format : $t(objects_field_name)只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
