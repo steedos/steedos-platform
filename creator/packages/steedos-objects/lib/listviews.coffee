@@ -110,6 +110,7 @@ if Meteor.isClient
 						related =
 							object_name: objOrName.objectName
 							columns: objOrName.columns
+							mobile_columns: objOrName.mobile_columns
 							is_file: objOrName.objectName == "cms_files"
 							filtersFunction: objOrName.filters
 							sort: objOrName.sort
@@ -129,6 +130,8 @@ if Meteor.isClient
 				return
 			columns = Creator.getObjectDefaultColumns(related_object_name) || ["name"]
 			columns = _.without(columns, related_field_name)
+			mobile_columns = Creator.getObjectDefaultColumns(related_object_name, true) || ["name"]
+			mobile_columns = _.without(mobile_columns, related_field_name)
 
 			order = Creator.getObjectDefaultSort(related_object_name)
 			tabular_order = Creator.transformSortToTabular(order, columns)
@@ -139,6 +142,7 @@ if Meteor.isClient
 			related =
 				object_name: related_object_name
 				columns: columns
+				mobile_columns: mobile_columns
 				related_field_name: related_field_name
 				is_file: related_object_name == "cms_files"
 				sharing: sharing
@@ -147,6 +151,8 @@ if Meteor.isClient
 			if relatedObject
 				if relatedObject.columns
 					related.columns = relatedObject.columns
+				if relatedObject.mobile_columns
+					related.mobile_columns = relatedObject.mobile_columns
 				if relatedObject.sort
 					related.sort = relatedObject.sort
 				if relatedObject.filtersFunction

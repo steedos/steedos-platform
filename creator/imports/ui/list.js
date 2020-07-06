@@ -16,7 +16,7 @@ const getListViewId = (is_related, related_object_name) => {
 	return list_view_id;
 }
 
-const getListProps = ({id, object_name, related_object_name, is_related, recordsTotal, total}, withoutFilters) => {
+const getListProps = ({id, object_name, related_object_name, is_related, recordsTotal, total, related_list_item_props}, withoutFilters) => {
 	let object = Creator.getObject(object_name);
 	if (!object) {
 		return;
@@ -31,7 +31,7 @@ const getListProps = ({id, object_name, related_object_name, is_related, records
 	let curObjectName;
 	curObjectName = is_related ? related_object_name : object_name;
 	let curObject = Creator.getObject(curObjectName);
-	let mainColumns = Creator.getListviewColumns(curObject, object_name, is_related, list_view_id, null, true);
+	let mainColumns = Creator.getListviewColumns(curObject, object_name, is_related, list_view_id, related_list_item_props, true);
 	let columns = Creator.unionSelectColumnsWithExtraAndDepandOn(mainColumns, curObject, object_name, is_related);
 	columns = columns.map((item) => {
 		let field = curObject.fields[item];

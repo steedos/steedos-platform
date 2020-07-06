@@ -216,8 +216,10 @@ Creator.getListviewColumns = (curObject, object_name, is_related, list_view_id, 
 		# else
 		# 	selectColumns = _fields(curObjectName, list_view_id)
 		return _fields(curObjectName, list_view_id, use_mobile_columns)
-	if related_list_item_props && related_list_item_props.customRelatedListObject && related_list_item_props.columns
+	if related_list_item_props && related_list_item_props.customRelatedListObject
 		selectColumns = related_list_item_props.columns
+		if use_mobile_columns and related_list_item_props.mobile_columns
+			selectColumns = related_list_item_props.mobile_columns
 		selectColumns = selectColumns.map (field)->
 			if _.isObject field
 				return field.field
