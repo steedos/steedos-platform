@@ -1910,10 +1910,10 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
 
-"@steedos/accounts@^1.19.9":
+"@steedos/accounts@^1.19.3-alpha.1":
   version "1.19.9"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.19.9.tgz#fc034a6de4ae48c71eae8683bbb8c98ed08e18f7"
-  integrity sha1-/ANKbeSuSMceroaDu7jJjtCOGPc=
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.19.9.tgz#fc034a6de4ae48c71eae8683bbb8c98ed08e18f7"
+  integrity sha512-Tq2x2OB18W/kjglfut0kq8E0lugkH+2FsoslaQjvwWStRGGvbaj7T3SkUzTJ3TnjjGFkO+hZedJVKcGxQz1D+A==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
@@ -1965,18 +1965,18 @@
     yargs "^13.2.1"
     yn "^2.0.0"
 
-"@steedos/steedos-plugin-workflow@^1.9.1":
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.9.1.tgz#e96115e4dba012dc5c454a3d38dab0f4ca7f9a44"
+"@steedos/steedos-plugin-workflow@^1.0.2":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.10.3.tgz#aabdadf14429c401b53288c760b7e01d65ff9b07"
+  integrity sha512-nXzj0uFJnIbRII7iIJ2d/C6zjbQukX814QTgRu+TNkHTvfxUJTlktuZLmUc30wWmm0SkB/foONeKGjBMz/1+0w==
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
     underscore "^1.9.1"
 
-"@steedos/steedos-plugin-workflow@^2.0.8":
-  version "2.0.8"
-  resolved "https://registry.npm.taobao.org/@steedos/steedos-plugin-workflow/download/@steedos/steedos-plugin-workflow-2.0.8.tgz#7614b762710fa7262816bb5a817dfcbc7a788958"
-  integrity sha1-dhS3YnEPpyYoFrtagX38vHp4iVg=
+"@steedos/steedos-plugin-workflow@^1.9.1":
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.9.1.tgz#e96115e4dba012dc5c454a3d38dab0f4ca7f9a44"
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
@@ -7465,10 +7465,10 @@ length-stream@^0.1.1:
   dependencies:
     pass-stream "~0.1.0"
 
-lerna@^3.22.0:
+lerna@^3.22.1:
   version "3.22.1"
-  resolved "https://registry.npm.taobao.org/lerna/download/lerna-3.22.1.tgz#82027ac3da9c627fd8bf02ccfeff806a98e65b62"
-  integrity sha1-ggJ6w9qcYn/YvwLM/v+AapjmW2I=
+  resolved "https://registry.yarnpkg.com/lerna/-/lerna-3.22.1.tgz#82027ac3da9c627fd8bf02ccfeff806a98e65b62"
+  integrity sha512-vk1lfVRFm+UuEFA7wkLKeSF7Iz13W+N/vFd48aW2yuS7Kv0RbNm2/qcDPV863056LMfkRlsEe+QYOw3palj5Lg==
   dependencies:
     "@lerna/add" "3.21.0"
     "@lerna/bootstrap" "3.21.0"

@@ -28,6 +28,6 @@
     "**/cryptiles": "^4.1.2"
   },
   "devDependencies": {
-    "lerna": "^3.22.0"
+    "lerna": "^3.22.1"
   }
 }
