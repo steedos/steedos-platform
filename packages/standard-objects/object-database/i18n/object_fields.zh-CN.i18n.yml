@@ -43,8 +43,10 @@ object_fields_field_type_options_select: 选择框
 object_fields_field_type_options_text: 文本
 object_fields_field_type_options_textarea: 长文本
 object_fields_field_type_options_url: 网址
+object_fields_field_type_options_autonumber: 自动编号
 object_fields_field_inlineHelpText: 提示文本
 object_fields_field_filterable: 过滤器默认字段
+object_fields_field_formula: 公式
 object_fields_listview_all: 所有
 object_fields_group_advanced: 高级
 object_fields_group_external_data_source: 外部数据源
