@@ -4,7 +4,6 @@ Template.initiate_approval.helpers
 
 Template.initiate_approval.events
     'click .weui_cell' : (e, t) ->
-        workflowUrl = Meteor.settings.public.webservices.workflow.url
         flowId = e.currentTarget.dataset.flow
         object_name = t.data.object_name
         record_id = t.data.record_id
@@ -13,7 +12,7 @@ Template.initiate_approval.events
         uobj.methodOverride = 'POST'
         uobj['X-User-Id'] = Meteor.userId()
         uobj['X-Auth-Token'] = Accounts._storedLoginToken()
-        url = Meteor.absoluteUrl() + 'api/object/workflow/drafts?' + $.param(uobj)
+        url = Steedos.absoluteUrl() + 'api/object/workflow/drafts?' + $.param(uobj)
         data = 'Instances': [ {
             'flow': flowId
             'applicant': Meteor.userId()
@@ -39,7 +38,7 @@ Template.initiate_approval.events
                     return
                 instance = responseText.inserts[0]
                 # 跳转到APPS草稿
-                Steedos.openWindow workflowUrl + 'workflow/space/' + Session.get('spaceId') + '/draft/' + instance._id
+                Steedos.openWindow Steedos.absoluteUrl('workflow/space/' + Session.get('spaceId') + '/draft/' + instance._id)
                 return
             error: (xhr, msg, ex) ->
                 $(document.body).removeClass 'loading'
