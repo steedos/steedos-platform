@@ -122,6 +122,8 @@ if Meteor.isClient
 		list = []
 		related_objects = Creator.getRelatedObjects(object_name)
 		_.each related_objects, (related_object_item) ->
+			if !related_object_item?.object_name
+				return
 			related_object_name = related_object_item.object_name
 			related_field_name = related_object_item.foreign_key
 			sharing = related_object_item.sharing
