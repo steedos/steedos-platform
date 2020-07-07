@@ -126,7 +126,7 @@ Meteor.startup ()->
 					if layouts_observer_init
 						_object = Creator.getObject(newDocument.object_name)
 						if _object
-							_changeClientObjects {_id: _object._id}
+							_changeClientObjects _object
 				removed: (oldDocument)->
 					if layouts_observer_init
 						_object = Creator.getObject(oldDocument.object_name)
