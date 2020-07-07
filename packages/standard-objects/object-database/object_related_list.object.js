@@ -3,7 +3,7 @@ var _ = require("underscore");
 function _syncToObject(doc) {
   var relatedList = Creator.getCollection("object_related_list").find({
     space: doc.space,
-    objectName: doc.objectName
+    object_name: doc.object_name
   }, {
     fields: {
       _id: 0,
