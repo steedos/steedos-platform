@@ -29,7 +29,9 @@ JsonRoutes.add 'get', '/api/creator/:space/objects/:_id', (req, res, next) ->
 		isSpaceAdmin = Creator.isSpaceAdmin(spaceId, userId)
 		if !_.isEmpty(_object)
 			if isSpaceAdmin || _object.in_development == '0' && _object.is_enable
-				object = Creator.convertObject(clone(new Creator.Object(_object)), spaceId);
+				Creator.Objects[_object.name] = _object;
+				Creator.loadObjects(_object, _object.name);
+				object = Creator.convertObject(clone(Creator.Objects[_object.name]), spaceId) # Creator.convertObject(clone(new Creator.Object(_object)), spaceId);
 				delete object.db
 				object.list_views = Creator.getUserObjectListViews(userId, spaceId, object.name)
 	#			if type == "added"
