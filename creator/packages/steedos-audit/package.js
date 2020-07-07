@@ -7,7 +7,7 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-
+	api.use('ecmascript');
 	api.use('coffeescript@1.11.1_4');
 	api.use('steedos:objects@0.0.7');
 
