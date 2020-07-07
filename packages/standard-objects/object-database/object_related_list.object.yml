@@ -25,7 +25,7 @@ fields:
               return _options;
             }
   objectName:
-    label: Object
+    label: Related Object
     type: lookup
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
