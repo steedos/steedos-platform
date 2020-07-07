@@ -1,6 +1,6 @@
 name: object_related_list
 label: Object Related List
-icon: forecasts
+icon: related_list
 hidden: true
 fields:
   object_name:
