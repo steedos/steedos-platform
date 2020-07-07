@@ -29,7 +29,7 @@ JsonRoutes.add 'get', '/api/creator/:space/objects/:_id', (req, res, next) ->
 		isSpaceAdmin = Creator.isSpaceAdmin(spaceId, userId)
 		if !_.isEmpty(_object)
 			if isSpaceAdmin || _object.in_development == '0' && _object.is_enable
-				object = clone(new Creator.Object(_object));
+				object = Creator.convertObject(clone(new Creator.Object(_object)), spaceId);
 				delete object.db
 				object.list_views = Creator.getUserObjectListViews(userId, spaceId, object.name)
 	#			if type == "added"
@@ -42,7 +42,6 @@ JsonRoutes.add 'get', '/api/creator/:space/objects/:_id', (req, res, next) ->
 
 				lng = _getLocale(db.users.findOne(userId, {fields: {locale: 1}}))
 				steedosI18n.translationObject(lng, object.name, Object.assign(object, {datasource: _object.datasource}))
-
 				objectLayout = getUserProfileObjectLayout(userId, spaceId, object.name)
 				if objectLayout
 					_fields = {};
