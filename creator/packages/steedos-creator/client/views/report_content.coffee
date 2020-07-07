@@ -30,21 +30,10 @@ getODataFilterForReport = (object_name, filter_scope, filters, filter_logic)->
 						if object_name != 'spaces' || (filter.length > 0 && filter[0] != "_id")
 							selector.push filter
 
-			if filter_scope == "mine"
-				if selector.length > 0
-					selector.push "and"
-				selector.push ["owner", "=", userId]
-		else
-			permissions = Creator.getPermissions(object_name)
-			if permissions.viewAllRecords
-				if filter_scope == "mine"
-					if selector.length > 0
-						selector.push "and"
-					selector.push ["owner", "=", userId]
-			else if permissions.allowRead
-				if selector.length > 0
-					selector.push "and"
-				selector.push ["owner", "=", userId]
+		if filter_scope == "mine"
+			if selector.length > 0
+				selector.push "and"
+			selector.push ["owner", "=", userId]
 
 	if selector.length == 0
 		# 不可以返回undefined，因为它不能实现清除过虑条件
