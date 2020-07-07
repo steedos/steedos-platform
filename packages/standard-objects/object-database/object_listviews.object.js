@@ -14,6 +14,18 @@ function transformFilters(filters){
   return _filters;
 }
 
+function checkName(name){
+  var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
+  if(!reg.test(name)){
+      throw new Error("object_listviews__error_name_invalid_format");
+  }
+  if(name.length > 20){
+      throw new Error("API 名称长度不能大于20个字符");
+  }
+  return true
+}
+
+
 Creator.Objects['object_listviews'].triggers = {
   "before.insert.cilent.object_listviews": {
     on: "client",
@@ -41,6 +53,7 @@ Creator.Objects['object_listviews'].triggers = {
     on: "server",
     when: "before.insert",
     todo: function (userId, doc) {
+      checkName(doc.name);
       if (!Steedos.isSpaceAdmin(doc.space, userId)) {
         doc.shared = false;
       }
@@ -52,6 +65,11 @@ Creator.Objects['object_listviews'].triggers = {
     when: "before.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
       modifier.$set = modifier.$set || {}
+
+      if(_.has(modifier.$set, "name") && modifier.$set.name != doc.name){
+        checkName(modifier.$set.name);
+      }
+
       if (modifier.$set.shared && !Steedos.isSpaceAdmin(doc.space, userId)) {
         modifier.$set.shared = false;
       }

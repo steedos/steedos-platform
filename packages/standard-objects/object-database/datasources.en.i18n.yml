@@ -1,4 +1,5 @@
 datasources_group_other_connection_options: Other connection options (Please note that other connection options will override parameters set from url.)
+datasources__error_name_invalid_format: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
 _datasources_testConnection_ok: Test OK
 _datasources_driver_error_notFind_mssql: Mssql driver not found, please install (`yarn add mssql`) in the project and restart the service
 _datasources_driver_error_notFind_pg: Postgres driver not found, please install (`yarn add pg`) in the project and restart the service

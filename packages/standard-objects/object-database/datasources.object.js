@@ -50,10 +50,10 @@ Creator.Objects['datasources'].methods = {
 function checkName(name){
     var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
     if(!reg.test(name)){
-        throw new Error("名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
+        throw new Error("datasources__error_name_invalid_format");
     }
     if(name.length > 20){
-        throw new Error("名称长度不能大于20个字符");
+        throw new Error("API 名称长度不能大于20个字符");
     }
     return true
 }

@@ -24,32 +24,26 @@ fields:
 
               return _options;
             }
-  name:
-    type: text
-    label: Name
-    searchable: true
-    index: true
-    hidden: true
-    omit: true
-    # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
-  column_name:
-    type: text
-    label: Database column name
-    inlineHelpText: Only supports relational databases.
-    searchable: true
-    index: true
-  _name:
-    type: text
-    label: Name
-    searchable: true
-    index: true
-    required: true
-    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   label:
     type: text
     required: true
     label: Label
     is_name: true
+  name:
+    type: text
+    label: API Name
+    searchable: true
+    index: true
+    hidden: true
+    omit: true
+    # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
+  _name:
+    type: text
+    label: API Name
+    searchable: true
+    index: true
+    required: true
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   type:
     type: select
     label: Type
@@ -192,6 +186,13 @@ fields:
     type: text
     inlineHelpText: This field must be filled when the field type is autonumber
     group: Advanced
+  column_name:
+    type: text
+    label: Database column name
+    inlineHelpText: Only supports relational databases.
+    searchable: true
+    index: true
+    group: External data source
   primary:
     type: boolean
     label: Primary Key

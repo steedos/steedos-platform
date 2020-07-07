@@ -3,17 +3,18 @@ label: List View
 icon: forecasts
 hidden: true
 fields:
-  name:
-    label: Name
-    type: text
-    searchable: true
-    index: true
-    required: true
   label:
     label: Label
     type: text
     is_name: true
     required: true
+  name:
+    label: API Name
+    type: text
+    searchable: true
+    index: true
+    required: true
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   object_name:
     label: Object
     type: master_detail

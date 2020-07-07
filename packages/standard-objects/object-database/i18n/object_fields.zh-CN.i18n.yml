@@ -1,5 +1,5 @@
 object_fields__object: 对象字段
-object_fields_field__name: 字段名
+object_fields_field__name: API 名称
 object_fields_field_allowedValues: 允许的值
 object_fields_field_column_name: 数据库字段名
 object_fields_field_column_name_inlineHelpText: 仅支持关系型数据库
@@ -13,7 +13,7 @@ object_fields_field_is_name: 名称字段
 object_fields_field_is_wide: 宽字段
 object_fields_field_label: 显示名称
 object_fields_field_multiple: 多选
-object_fields_field_name: 字段名
+object_fields_field_name: API 名称
 object_fields_field_object: 所属对象
 object_fields_field_omit: 忽略
 object_fields_field_options: 选择项

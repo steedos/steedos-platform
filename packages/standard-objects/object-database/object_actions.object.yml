@@ -23,17 +23,18 @@ fields:
 
               return _options;
             }
-  name:
-    type: text
-    label: Name
-    searchable: true
-    index: true
-    required: true
-    # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_][a-zA-Z0-9_]*$/'
   label:
     type: text
     label: Label
+    required: true
     is_name: true
+  name:
+    type: text
+    label: API Name
+    searchable: true
+    index: true
+    required: true
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   is_enable:
     type: boolean
     label: Enable

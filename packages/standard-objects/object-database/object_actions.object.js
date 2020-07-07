@@ -47,6 +47,17 @@ function isRepeatedName(doc, name) {
   return false;
 };
 
+function checkName(name){
+  var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
+  if(!reg.test(name)){
+      throw new Error("object_actions__error_name_invalid_format");
+  }
+  if(name.length > 20){
+      throw new Error("API 名称长度不能大于20个字符");
+  }
+  return true
+}
+
 Creator.Objects.object_actions.triggers = {
   "after.insert.server.object_actions": {
     on: "server",
@@ -78,6 +89,9 @@ Creator.Objects.object_actions.triggers = {
       // if(_.has(modifier.$set, "object") && modifier.$set.object != doc.object){
       //   throw new Error("不能修改所属对象");
       // }
+      if(_.has(modifier.$set, "name") && modifier.$set.name != doc.name){
+        checkName(modifier.$set.name);
+    }
 
       var ref;
       if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && isRepeatedName(doc, modifier.$set.name)) {
@@ -90,6 +104,7 @@ Creator.Objects.object_actions.triggers = {
     when: "before.insert",
     todo: function (userId, doc) {
       doc.visible = true;
+      checkName(doc.name);
       if (isRepeatedName(doc)) {
         throw new Meteor.Error(500, `名称不能重复${doc.name}`);
       }

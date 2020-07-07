@@ -29,7 +29,7 @@ objects_field_in_development_options_0: 已部署
 objects_field_in_development_options_1: 开发中(仅管理员才可以访问对象)
 objects_field_label: 显示名
 objects_field_list_views: 列表视图
-objects_field_name: 对象名
+objects_field_name: API 名称
 objects_field_name_inlineHelpText: $t(object_object__error_name_invalid_format)
 objects_field_owner: 拥有者
 objects_field_permission_set: 权限设置

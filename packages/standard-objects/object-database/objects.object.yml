@@ -22,7 +22,7 @@ fields:
     defaultValue: 'default'
   name:
     type: text
-    label: Name
+    label: API Name
     searchable: true
     index: true
     required: true
