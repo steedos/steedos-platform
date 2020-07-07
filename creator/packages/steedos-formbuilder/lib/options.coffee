@@ -493,7 +493,7 @@ Creator.formBuilder.optionsForFormFields = (is_sub)->
 	options = {
 		i18n: {
 			locale: 'zh-CN'
-			location: '/packages/steedos_formbuilder/formbuilder/languages'
+			location: Steedos.absoluteUrl('/packages/steedos_formbuilder/formbuilder/languages')
 		},
 		scrollToFieldOnAdd: true,
 		onCloseFieldEdit: (editPanel)->
