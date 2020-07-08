@@ -4,6 +4,9 @@ import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
+const connectConfig = {
+    url: databaseUrl
+};
 let tableName = "TestFieldTypesForSqlite3";
 let driver: SteedosSqlite3Driver;
 
@@ -30,55 +33,56 @@ describe('basic field types for sqlite3 database', () => {
     ];
 
     before(async () => {
-        let mySchema = new SteedosSchema({
-            datasources: {
-                default: {
-                    driver: SteedosDatabaseDriverType.Sqlite,
-                    url: databaseUrl,
-                    objects: {
-                        test: {
-                            label: 'Sqlite3 Schema',
-                            table_name: tableName,
-                            fields: {
-                                id: {
-                                    label: '主键',
-                                    type: 'number',
-                                    primary: true,
-                                    generated: true
-                                },
-                                text: {
-                                    label: '文本',
-                                    type: 'text'
-                                },
-                                textarea: {
-                                    label: '长文本',
-                                    type: 'textarea'
-                                },
-                                int: {
-                                    label: '数量',
-                                    type: 'number'
-                                },
-                                float: {
-                                    label: '小数',
-                                    type: 'number',
-                                    scale: 4
-                                },
-                                date: {
-                                    label: '日期',
-                                    type: 'date'
-                                },
-                                datetime: {
-                                    label: '创建时间',
-                                    type: 'datetime'
-                                },
-                                bool: {
-                                    label: '是否',
-                                    type: 'boolean'
-                                }
-                            }
+        let datasourceDefault: any = {
+            driver: SteedosDatabaseDriverType.Sqlite,
+            objects: {
+                test: {
+                    label: 'Sqlite3 Schema',
+                    table_name: tableName,
+                    fields: {
+                        id: {
+                            label: '主键',
+                            type: 'number',
+                            primary: true,
+                            generated: true
+                        },
+                        text: {
+                            label: '文本',
+                            type: 'text'
+                        },
+                        textarea: {
+                            label: '长文本',
+                            type: 'textarea'
+                        },
+                        int: {
+                            label: '数量',
+                            type: 'number'
+                        },
+                        float: {
+                            label: '小数',
+                            type: 'number',
+                            scale: 4
+                        },
+                        date: {
+                            label: '日期',
+                            type: 'date'
+                        },
+                        datetime: {
+                            label: '创建时间',
+                            type: 'datetime'
+                        },
+                        bool: {
+                            label: '是否',
+                            type: 'boolean'
                         }
                     }
                 }
+            }
+        };
+        datasourceDefault = { ...datasourceDefault, ...connectConfig };
+        let mySchema = new SteedosSchema({
+            datasources: {
+                DatasourcesDriverTest: datasourceDefault
             }
         });
         const datasource = mySchema.getDataSource("DatasourcesDriverTest");
