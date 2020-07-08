@@ -16,6 +16,7 @@ object_related_list_field_sort_$_order: 排序方式
 object_related_list_field_sort_$_order_options_asc: 正序
 object_related_list_field_sort_$_order_options_desc: 倒序
 object_related_list_field_type: 视图类型
+object_related_list_field_sort_no: 排序号
 object_related_list_listview_all: 全部
 object_related_list_field_mobile_columns: 手机端显示的列
 object_related_list_field_mobile_columns_$: 手机端显示的列

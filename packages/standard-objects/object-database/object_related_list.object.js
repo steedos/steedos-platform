@@ -5,6 +5,7 @@ function _syncToObject(doc) {
     space: doc.space,
     object_name: doc.object_name
   }, {
+    sort: {sort_no: -1},
     fields: {
       _id: 0,
       space: 0,
