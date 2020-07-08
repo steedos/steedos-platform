@@ -351,7 +351,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         }
 
-        if (field_name == 'name' || field.is_name) {
+        if(field.is_name){
+            this._NAME_FIELD_KEY = field_name
+        }else if(field_name == 'name' && !this._NAME_FIELD_KEY){
             this._NAME_FIELD_KEY = field_name
         }
     }

@@ -73,7 +73,9 @@ Creator.Object = (options)->
 	self.fields = clone(options.fields)
 
 	_.each self.fields, (field, field_name)->
-		if field_name == 'name' || field.is_name
+		if field.is_name
+			self.NAME_FIELD_KEY = field_name
+		else if field_name == 'name' && !self.NAME_FIELD_KEY
 			self.NAME_FIELD_KEY = field_name
 		if field.primary
 			self.idFieldName = field_name
