@@ -43,6 +43,7 @@ const getMenuLabel = function(lng, menuId, def){
 
 const translationApp = function(lng: string, appId: string, app: StringMap){
     app.label = getAppLabel(lng, appId, app.label || app.name);
+    // app.name = app.label
     app.description = getAppDescription(lng, appId, app.description);
     translationMenus(lng, app.admin_menus);
 }

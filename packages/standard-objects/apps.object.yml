@@ -230,16 +230,23 @@ fields:
         value: redirect
       - label: HTTP Post
         value: post
-
+  is_system:
+    type: boolean
+    label: System
+    omit: true
+    hidden: true
+    disabled: true
 list_views:
   all:
     label: All Apps
     filter_scope: space
     columns:
       - name
+      - code
       - description
       - visible
       - sort
+      - is_system
 permission_set:
   user:
     allowCreate: false
