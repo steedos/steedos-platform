@@ -101,6 +101,7 @@ Creator.convertListView = (default_view, list_view, list_view_name)->
 if Meteor.isClient
 	Creator.getRelatedList = (object_name)->
 		relatedListObjects = {}
+		relatedListNames = []
 		_object = Creator.Objects[object_name]
 		if _object
 			relatedList = _object.relatedList
@@ -118,8 +119,11 @@ if Meteor.isClient
 							customRelatedListObject: true
 							label: objOrName.label
 						relatedListObjects[objOrName.objectName] = related
+						relatedListNames.push objOrName.objectName
+					else if _.isString objOrName
+						relatedListNames.push objOrName
 
-		list = []
+		mapList = {}
 		related_objects = Creator.getRelatedObjects(object_name)
 		_.each related_objects, (related_object_item) ->
 			if !related_object_item?.object_name
@@ -165,7 +169,7 @@ if Meteor.isClient
 					related.label = relatedObject.label
 				delete relatedListObjects[related_object_name]
 
-			list.push related
+			mapList[related.object_name] = related
 
 
 		spaceId = Session.get("spaceId")
@@ -178,7 +182,15 @@ if Meteor.isClient
 			isActive = related_object_names.indexOf(related_object_name) > -1
 			allowRead = Creator.getPermissions(related_object_name, spaceId, userId)?.allowRead
 			if isActive && allowRead
-				list.push v
+				mapList[related_object_name] = v
+
+		list = []
+		if _.isEmpty relatedListNames
+			list =  _.values mapList
+		else
+			_.each relatedListNames, (objectName) ->
+				if mapList[objectName]
+					list.push mapList[objectName]
 
 		return list
 
