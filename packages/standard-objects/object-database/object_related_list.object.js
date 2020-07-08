@@ -28,7 +28,6 @@ function _syncToObject(doc) {
 };
 
 function check(object_name, objectName, _id){
-  console.log('check', object_name, objectName, _id);
   let query = {
     object_name: object_name,
     objectName: objectName
@@ -36,7 +35,6 @@ function check(object_name, objectName, _id){
   if(_id){
     query._id = {$ne: _id}
   }
-  console.log('check query', query);
   let count = Creator.getCollection("object_related_list").find(query).count();
 
   if(count > 0){
