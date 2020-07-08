@@ -20,6 +20,11 @@ fields:
         return options;
       }
     defaultValue: 'default'
+  label:
+    type: text
+    label: Label
+    required: true
+    is_name: true
   name:
     type: text
     label: API Name
@@ -34,11 +39,6 @@ fields:
     searchable: true
     inlineHelpText: The default data source does not support this property
     group: External data source
-  label:
-    type: text
-    label: Label
-    required: true
-    is_name: true
   icon:
     type: lookup
     label: Icon
