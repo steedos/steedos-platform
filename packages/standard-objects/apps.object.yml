@@ -236,6 +236,8 @@ fields:
     omit: true
     hidden: true
     disabled: true
+paging:
+  enabled: false
 list_views:
   all:
     label: All Apps
