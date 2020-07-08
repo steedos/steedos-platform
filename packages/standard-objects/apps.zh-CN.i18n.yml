@@ -39,6 +39,7 @@ apps_field_secret: API 密钥
 apps_field_sort: 排序
 apps_field_url: 外部链接
 apps_field_visible: 启用
+apps_field_is_system: 系统
 apps_group_oauth2: OAuth2
 apps_group_saml: SAML
 apps_group_business_object: 业务对象
