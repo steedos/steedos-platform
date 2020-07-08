@@ -4,6 +4,9 @@ import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
+const connectConfig = {
+    url: databaseUrl
+};
 let tableName = "TestPageForSqlite3";
 let driver: SteedosSqlite3Driver;
 
@@ -131,37 +134,38 @@ describe('fetch records by paging for sqlite3 database', () => {
     ];
 
     before(async () => {
-        let mySchema = new SteedosSchema({
-            datasources: {
-                default: {
-                    driver: SteedosDatabaseDriverType.Sqlite,
-                    url: databaseUrl,
-                    objects: {
-                        test: {
-                            label: 'Sqlite3 Schema',
-                            table_name: tableName,
-                            fields: {
-                                id: {
-                                    label: '主键',
-                                    type: 'text',
-                                    primary: true
-                                },
-                                name: {
-                                    label: '名称',
-                                    type: 'text'
-                                },
-                                title: {
-                                    label: '标题',
-                                    type: 'text'
-                                },
-                                index: {
-                                    label: '序号',
-                                    type: 'number'
-                                }
-                            }
+        let datasourceDefault: any = {
+            driver: SteedosDatabaseDriverType.Sqlite,
+            objects: {
+                test: {
+                    label: 'Sqlite3 Schema',
+                    table_name: tableName,
+                    fields: {
+                        id: {
+                            label: '主键',
+                            type: 'text',
+                            primary: true
+                        },
+                        name: {
+                            label: '名称',
+                            type: 'text'
+                        },
+                        title: {
+                            label: '标题',
+                            type: 'text'
+                        },
+                        index: {
+                            label: '序号',
+                            type: 'number'
                         }
                     }
                 }
+            }
+        };
+        datasourceDefault = { ...datasourceDefault, ...connectConfig };
+        let mySchema = new SteedosSchema({
+            datasources: {
+                DatasourcesDriverTest: datasourceDefault
             }
         });
         const datasource = mySchema.getDataSource("DatasourcesDriverTest");
