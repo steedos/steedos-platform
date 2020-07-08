@@ -18,7 +18,7 @@
     "clean": "lerna clean",
     "changed": "lerna changed",
     "git": "git config core.autocrlf true && git config core.filemode false",
-    "syncToTaoBao": "cnpm sync @steedos/app-contracts && cnpm sync @steedos/auth && cnpm sync steedos-cli && cnpm sync @steedos/core && cnpm sync @steedos/filters && cnpm sync @steedos/i18n && cnpm sync @steedos/meteor-bundle-dependencies && cnpm sync @steedos/meteor-bundle-runner && cnpm sync @steedos/migrate && cnpm sync @steedos/objectql && cnpm sync @steedos/project-template-empty && cnpm sync @steedos/schemas && cnpm sync @steedos/standard-objects && cnpm sync steedos-server && cnpm sync create-steedos-app"
+    "syncToTaoBao": "cnpm sync @steedos/app-contracts && cnpm sync @steedos/auth && cnpm sync steedos-cli && cnpm sync @steedos/core && cnpm sync @steedos/filters && cnpm sync @steedos/i18n && cnpm sync @steedos/meteor-bundle-dependencies && cnpm sync @steedos/meteor-bundle-runner && cnpm sync @steedos/migrate && cnpm sync @steedos/objectql && cnpm sync @steedos/project-template-empty && cnpm sync @steedos/schemas && cnpm sync @steedos/standard-objects && cnpm sync steedos-server && cnpm sync create-steedos-app && cnpm sync @steedos/plugin-enterprise"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
