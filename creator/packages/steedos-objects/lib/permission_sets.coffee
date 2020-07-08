@@ -534,6 +534,8 @@ if Meteor.isServer
 				po.permission_set_id == psetsCustomer?._id
 					# 默认的admin/user权限值只实行上面的默认值覆盖，不做算法判断
 					return
+				if _.isEmpty(permissions)
+					permissions = po
 				if po.allowRead
 					permissions.allowRead = true
 				if po.allowCreate
