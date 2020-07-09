@@ -429,10 +429,10 @@
     tslib "1.10.0"
     validator "^12.2.0"
 
-"@steedos/app-contracts@^1.19.8":
-  version "1.20.0"
-  resolved "https://registry.npm.taobao.org/@steedos/app-contracts/download/@steedos/app-contracts-1.20.0.tgz#856f064b01bd4b507881b55e104a89d1039c3fb7"
-  integrity sha1-hW8GSwG9S1B4gbVeEEqJ0QOcP7c=
+"@steedos/app-contracts@^1.19.10":
+  version "1.21.2"
+  resolved "https://registry.npm.taobao.org/@steedos/app-contracts/download/@steedos/app-contracts-1.21.2.tgz#6c42b2eccae169445d5e1ac4b36b2c6f4a40617e"
+  integrity sha1-bEKy7MrhaURdXhrEs2ssb0pAYX4=
   dependencies:
     dotenv "^8.2.0"
     dotenv-flow "^3.1.0"
@@ -559,10 +559,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/react@1.20.10":
-  version "1.20.10"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.20.10.tgz#3a7aa8688caf368b1e72b876e996ff11fea0501c"
-  integrity sha512-Tgz6ShB5jGTfi4ueCbWQ5H1Ile/meFt6+FOSg7nfbKrPtpv5Lr2Qg5fljnnLyBzMixGnhfrF8LcybLeT+4Im1w==
+"@steedos/react@1.20.11":
+  version "1.20.11"
+  resolved "https://registry.npm.taobao.org/@steedos/react/download/@steedos/react-1.20.11.tgz#b8fe0439b0d45193a67136458fead422dfb3f0f8"
+  integrity sha1-uP4EObDUUZOmcTZFj+rUIt+z8Pg=
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
