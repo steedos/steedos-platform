@@ -83,7 +83,7 @@ describe('fetch records for mysql with sort arguments as a string that comply wi
             objects: {
                 test: {
                     label: 'MySql Schema',
-                    tableName: tableName,
+                    table_name: tableName,
                     fields: {
                         id: {
                             label: '主键',

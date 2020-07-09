@@ -83,7 +83,7 @@ describe('fetch records for sqlserver with sort arguments as a string that compl
             objects: {
                 test: {
                     label: 'SqlServer Schema',
-                    tableName: tableName,
+                    table_name: tableName,
                     fields: {
                         id: {
                             label: '主键',
