@@ -87,7 +87,6 @@ list_views:
     columns:
       - label
       - name
-      - users
       - type
       - is_system
 actions:
