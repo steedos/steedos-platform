@@ -41,7 +41,7 @@
 							<div class="slds-col slds-no-flex slds-grid slds-align-middle actionsContainer">
 								<div class="slds-button-group" role="group">
 									{{#each actions}}
-										<li class="slds-button slds-button--neutral slds-truncate record-action-custom">
+										<li class="slds-button slds-button--neutral slds-truncate record-action-custom record-action-custom-{{this.name}}">
 											<a href="javascript:void(0);" title="{{this.label}}" class="">
 												{{#if this.is_file}}
 													{{this.label}}
@@ -62,7 +62,7 @@
 											<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
 												<ul class="slds-dropdown__list slds-show">
 													{{#each moreActions}}
-														<li class="slds-dropdown__item crm-header-menu-item record-action-custom" role="presentation">
+														<li class="slds-dropdown__item crm-header-menu-item record-action-custom record-action-custom-{{this.name}}" role="presentation">
 															<a href="javascript:void(0);" title="{{this.label}}" class="" role="option" tabindex="-1">
 																<span>{{this.label}}</span>
 															</a>

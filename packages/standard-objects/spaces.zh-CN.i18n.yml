@@ -2,6 +2,7 @@ spaces__object: 公司
 spaces_action_pay_records: 订单
 spaces_action_standard_new: 新建
 spaces_action_upgrade: 升级
+spaces_action_invite_space_users: 邀请注册
 spaces_field_admins: 管理员
 spaces_field_avatar: 浅色公司Logo
 spaces_field_avatar_dark: 深色公司Logo
