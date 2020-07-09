@@ -60,7 +60,6 @@ describe('crud for sqlserver database', () => {
     before(async () => {
         let datasourceDefault: any = {
             driver: SteedosDatabaseDriverType.SqlServer,
-            logging: true,
             objects: {
                 test: {
                     label: 'SqlServer Schema',
