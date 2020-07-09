@@ -151,7 +151,7 @@ module.exports = {
             }
         }
     },
-    disableSupplierSpaceUser: function(){
+    disableSupplierSpaceUser: function(object_name, record_id, fields){
         text = '将禁用与此供应商关联的外部用户。 是否确定？';
         swal({
             title: "禁用供应商账户",
