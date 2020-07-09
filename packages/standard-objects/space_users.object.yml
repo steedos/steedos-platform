@@ -311,6 +311,12 @@ actions:
     label: Invite Users
   setPassword: 
     label: Change Password
+  disable: 
+    label: Disable
+    on: record_only
+  enable: 
+    label: Enable
+    on: record_only
 permission_set:
   user:
     allowCreate: false

@@ -805,7 +805,7 @@ Meteor.startup(function () {
     }
 });
 
-Creator.Objects['space_users'].actions = {
+let actions = {
     import: {
         label: "导入",
         on: "list",
@@ -1056,3 +1056,66 @@ Creator.Objects['space_users'].actions = {
         }
     }
 }
+
+Creator.Objects.space_users.actions = Object.assign({}, Creator.Objects.space_users.actions, actions);
+
+let methods = {
+    disable: async function (req, res) {
+        try {
+            const params = req.params;
+            const steedosSchema = objectql.getSteedosSchema();
+            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: false });
+            if(result){
+                res.status(200).send({ success: true });
+            }
+            else{
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "The object updateOne return nothing."
+                    }
+                });
+            }
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                error: {
+                    reason: error.reason,
+                    message: error.message,
+                    details: error.details,
+                    stack: error.stack
+                }
+            });
+        }
+    },
+    enable: async function (req, res) {
+        try {
+            const params = req.params;
+            const steedosSchema = objectql.getSteedosSchema();
+            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: true });
+            if(result){
+                res.status(200).send({ success: true });
+            }
+            else{
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "The object updateOne return nothing."
+                    }
+                });
+            }
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                error: {
+                    reason: error.reason,
+                    message: error.message,
+                    details: error.details,
+                    stack: error.stack
+                }
+            });
+        }
+    }
+};
+
+Creator.Objects.space_users.methods = Object.assign({}, Creator.Objects.space_users.methods, methods);

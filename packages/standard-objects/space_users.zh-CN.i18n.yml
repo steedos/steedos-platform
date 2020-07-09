@@ -38,3 +38,5 @@ space_users_listview_all: 有效用户
 space_users_listview_disabled: 离职停用人员
 space_users_action_invite_space_users: 邀请注册
 space_users_action_setPassword: 修改密码
+space_users_action_disable: 停用
+space_users_action_enable: 启用
