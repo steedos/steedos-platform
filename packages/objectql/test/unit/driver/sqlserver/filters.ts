@@ -202,6 +202,14 @@ describe('filters for sqlserver database', () => {
         const datasource = mySchema.getDataSource("DatasourcesDriverTest");
         await datasource.init();
         driver = <SteedosSqlServerDriver>datasource.adapter;
+        let queryOptions: SteedosQueryOptions = {
+            fields: ["id", "name"],
+            filters: []
+        };
+        let result = await driver.find(tableName, queryOptions).catch((ex: any) => { console.error(ex); return false; });
+        result && result.forEach(async (item: any) => {
+            await driver.delete(tableName, item.id);
+        });
     });
 
     beforeEach(async () => {
