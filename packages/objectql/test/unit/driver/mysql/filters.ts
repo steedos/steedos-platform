@@ -24,7 +24,7 @@ describe('filters for mysql database', () => {
             title: "filter records with filters",
             options: {
                 fields: ["id", "name"],
-                filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
+                filters: [["name", "=", "ptr"], ["title", "=", "This is PTR"]]
             },
             expected: {
                 length: 1
@@ -34,7 +34,7 @@ describe('filters for mysql database', () => {
             title: "filter records with odata query string",
             options: {
                 fields: ["id", "name"],
-                filters: "(name eq 'ptr') and (title eq 'PTR')"
+                filters: "(name eq 'ptr') and (title eq 'This is PTR')"
             },
             expected: {
                 length: 1
@@ -131,6 +131,16 @@ describe('filters for mysql database', () => {
             }
         },
         {
+            title: "filter records with operator: eq and contains",
+            options: {
+                fields: ["id", "name"],
+                filters: [["title", "=", "This is PTR"], ["name", "contains", "p"]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        {
             title: "filter records with operator: notcontains",
             options: {
                 fields: ["id", "name"],
@@ -145,7 +155,7 @@ describe('filters for mysql database', () => {
             function: "count",
             options: {
                 fields: ["id", "name"],
-                filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
+                filters: [["name", "=", "ptr"], ["title", "=", "This is PTR"]]
             },
             expected: {
                 eq: 1
@@ -156,7 +166,7 @@ describe('filters for mysql database', () => {
             function: "count",
             options: {
                 fields: ["id", "name"],
-                filters: "(name eq 'ptr') and (title eq 'PTR')"
+                filters: "(name eq 'ptr') and (title eq 'This is PTR')"
             },
             expected: {
                 eq: 1
@@ -205,8 +215,8 @@ describe('filters for mysql database', () => {
         await driver.run(`SET SQL_SAFE_UPDATES = 0`);
         await driver.run(`delete from ${tableName}`);
         await driver.run(`SET SQL_SAFE_UPDATES = 1`);
-        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR", count: 120 });
-        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC", count: 18 });
+        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "This is PTR", count: 120 });
+        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "This is CNPC", count: 18 });
     });
 
     beforeEach(async () => {
