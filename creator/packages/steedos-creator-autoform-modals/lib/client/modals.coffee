@@ -362,7 +362,11 @@ helpers =
 
 			firstLevelKeys = schemaInstance._firstLevelSchemaKeys
 			object_name = getObjectName cmCollection
-			permission_fields = _.clone(Creator.getFields(object_name))
+			_permission_fields = _.clone(Creator.getRecordSafeFields(Session.get('cmDoc'), object_name))
+			permission_fields = []
+			_.each _permission_fields, (_sf, k)->
+				if !_sf.disabled
+					permission_fields.push(k)
 			unless permission_fields
 				permission_fields = []
 
