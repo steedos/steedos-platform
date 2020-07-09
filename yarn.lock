@@ -1937,10 +1937,10 @@
     tslib "1.10.0"
     validator "^12.2.0"
 
-"@steedos/odata-v4-typeorm@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npm.taobao.org/@steedos/odata-v4-typeorm/download/@steedos/odata-v4-typeorm-0.1.0.tgz#1041ac696775e575f949955efffbb3d2f0131197"
-  integrity sha1-EEGsaWd15XX5SZVe//uz0vATEZc=
+"@steedos/odata-v4-typeorm@^1.20.1":
+  version "1.20.1"
+  resolved "https://registry.yarnpkg.com/@steedos/odata-v4-typeorm/-/odata-v4-typeorm-1.20.1.tgz#66405daa7359905a3255b13ef6e6c323d7a635b1"
+  integrity sha512-A30+trxvhHvvMtGaiysDvbmYmbOTjQjNa5BhJgMNAFjjIcKtgqxM+7dCp6YrcIh1UeknDpMeVYPIc3gXROC+/g==
   dependencies:
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
