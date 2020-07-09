@@ -20,7 +20,7 @@
   "author": "Jack Zhuang",
   "devDependencies": {
     "@salesforce-ux/design-system": "^2.11.0",
-    "@steedos/accounts": "^1.19.3-alpha.1",
+    "@steedos/accounts": "^1.19.10",
     "@steedos/auth": "^1.21.2",
     "@steedos/core": "^1.21.2",
     "@steedos/filters": "^1.21.2",
