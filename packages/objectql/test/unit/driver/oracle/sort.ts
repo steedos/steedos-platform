@@ -83,7 +83,7 @@ describe('fetch records for oracle with sort arguments as a string that comply w
             objects: {
                 test: {
                     label: 'Oracle Schema',
-                    tableName: tableName,
+                    table_name: tableName,
                     fields: {
                         id: {
                             label: '主键',
