@@ -13,9 +13,7 @@ export class Plugins {
             app,
             settings: Meteor.settings
         };
-        const builtInPlugins= initConfig.built_in_plugins || [];
-        const settingsPlugins = Meteor.settings.plugins || [];
-        let plugins = _.union(builtInPlugins, settingsPlugins)
+        let plugins = this.getPluginNames();
         if (_.isArray(plugins)) {
             _.each(plugins, (pluginName) => {
                 try {
@@ -36,6 +34,13 @@ export class Plugins {
             })
             WebApp.connectHandlers.use(pluginContext.app);
         }
+    }
+
+    static getPluginNames() {
+        const builtInPlugins= initConfig.built_in_plugins || [];
+        const settingsPlugins = Meteor.settings.plugins || [];
+        let plugins = _.union(builtInPlugins, settingsPlugins);
+        return plugins || [];
     }
 
     static getPluginDir(pluginName) {
