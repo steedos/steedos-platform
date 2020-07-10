@@ -122,6 +122,17 @@
 			  margin-left: 0.25rem;
 			}
 		}
+		&[readonly]{
+			cursor: not-allowed;
+			li{
+				cursor: not-allowed;
+			}
+		}
+	}
+	&[readonly]{
+		.form-control{
+			cursor: not-allowed;
+		}
 	}
 	.createNew{
 		.slds-button__icon{
