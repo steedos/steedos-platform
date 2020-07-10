@@ -1,10 +1,12 @@
 Template.not_found.helpers
-	iconUrl: ->
-		return Steedos.absoluteUrl("/packages/steedos_theme/client/images/icon.png")
+	illustration: ()->
+		return ReactDesignSystem.Illustration
 
-	isShowInfo: ->
-		return Steedos.isMobile() or Steedos.isAndroidOrIOS()
+	notFoundPath: ()->
+		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
 
+	notFoundHeading: ()->
+		return t "steedos_i18n_404_not_found"
 
 Template.not_found.onRendered ->
 	# 在iframe打开的404窗口的时候，禁掉右键菜单

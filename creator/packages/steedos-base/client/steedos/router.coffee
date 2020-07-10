@@ -8,7 +8,7 @@ FlowRouter.notFound =
 			BlazeLayout.render 'loginLayout',
 				main: "not_found"
 		else
-			BlazeLayout.render 'notFoundLayout',
+			BlazeLayout.render 'creatorLayout',
 				main: "not_found"
 
 FlowRouter.triggers.enter [
