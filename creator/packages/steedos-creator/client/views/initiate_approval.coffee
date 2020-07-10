@@ -39,6 +39,7 @@ Template.initiate_approval.events
                 instance = responseText.inserts[0]
                 # 跳转到APPS草稿
                 Steedos.openWindow Steedos.absoluteUrl('workflow/space/' + Session.get('spaceId') + '/draft/' + instance._id)
+                Modal.hide(t)
                 return
             error: (xhr, msg, ex) ->
                 $(document.body).removeClass 'loading'
