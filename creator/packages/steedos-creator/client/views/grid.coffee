@@ -245,18 +245,20 @@ _getShowColumns = (curObject, selectColumns, is_related, list_view_id, related_l
 		needToShowLinkForIndexColumn = false
 		if selectColumns.indexOf(nameFieldKey) < 0
 			needToShowLinkForIndexColumn = true
-		if  true || !Steedos.isMobile()
-			showColumns.splice 0, 0,
-				dataField: "_id_checkbox"
-				width: 30
-				allowResizing: false
-				allowExporting: false
-				allowSorting: false
-				allowReordering: false
-				headerCellTemplate: (container) ->
-					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
-				cellTemplate: (container, options) ->
-					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
+		if !Steedos.isMobile()
+			isDetailView = self.data.recordsTotal and is_related; #详细界面相关列表
+			if !isDetailView
+				showColumns.splice 0, 0,
+					dataField: "_id_checkbox"
+					width: 30
+					allowResizing: false
+					allowExporting: false
+					allowSorting: false
+					allowReordering: false
+					headerCellTemplate: (container) ->
+						Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
+					cellTemplate: (container, options) ->
+						Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 
 			showColumns.splice 0, 0,
 				dataField: "_index"

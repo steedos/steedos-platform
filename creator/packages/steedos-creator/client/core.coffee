@@ -706,6 +706,25 @@ if Meteor.isClient
 			else
 				val = t "NO"
 			data.push {value: val, checked: props.val, id: props._id, isBoolean: true}
+		else if _field.type == "select"
+			_options = _field.allOptions || _field.options
+			_values = props.doc || {}
+			_record_val = props.record_val
+			if _.isFunction(_field.options)
+				_options = _field.options(_record_val || _values)
+			if _.isFunction(_field.optionsFunction)
+				_options = _field.optionsFunction(_record_val || _values)
+			self_val = props.val
+			unless _.isArray(self_val)
+				self_val = [self_val]
+			items = []
+			_.each _options, (_o)->
+				if _.indexOf(self_val, _o.value) > -1
+					items.push {label: _o.label, value: _o.value}
+			val = items.map (item)->
+				return item.label
+			val = val.join(",")
+			data.push({value: val, items: items, id: props._id, isSelects: true})
 		else
 			if (val && ["datetime", "date"].indexOf(_field.type) >= 0)
 				if props.agreement == "odata"
@@ -733,21 +752,22 @@ if Meteor.isClient
 						val = moment.utc(props.val).format('YYYY-MM-DD')
 			else if (props.val == null)
 				val = ""
-			else if _field.type == "select"
-				_options = _field.allOptions || _field.options
-				_values = props.doc || {}
-				_record_val = props.record_val
-				if _.isFunction(_field.options)
-					_options = _field.options(_record_val || _values)
-				if _.isFunction(_field.optionsFunction)
-					_options = _field.optionsFunction(_record_val || _values)
-				self_val = props.val
-				unless _.isArray(self_val)
-					self_val = [self_val]
-				val = []
-				_.each _options, (_o)->
-					if _.indexOf(self_val, _o.value) > -1
-						val.push {label: _o.label, value: _o.value}
+			# else if _field.type == "select"
+			# 	debugger;
+			# 	_options = _field.allOptions || _field.options
+			# 	_values = props.doc || {}
+			# 	_record_val = props.record_val
+			# 	if _.isFunction(_field.options)
+			# 		_options = _field.options(_record_val || _values)
+			# 	if _.isFunction(_field.optionsFunction)
+			# 		_options = _field.optionsFunction(_record_val || _values)
+			# 	self_val = props.val
+			# 	unless _.isArray(self_val)
+			# 		self_val = [self_val]
+			# 	val = []
+			# 	_.each _options, (_o)->
+			# 		if _.indexOf(self_val, _o.value) > -1
+			# 			val.push {label: _o.label, value: _o.value}
 			else if _field.type == "lookup"
 				if _.isFunction(_field.optionsFunction)
 					_values = props.doc || {}

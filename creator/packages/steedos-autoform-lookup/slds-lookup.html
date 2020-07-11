@@ -1,5 +1,5 @@
 <template name="steedosLookups">
-	<div class="slds-form-element steedos-lookups">
+	<div class="slds-form-element steedos-lookups" {{readonlyStr}}>
 		<div class="slds-form-element__control">
 			{{#if isDisabled}}
 				<div class="outputLookupContainer forceOutputLookupWithPreview">
@@ -144,7 +144,7 @@
 				</div>
 				{{#if isMultiple}}
 				{{!--已选中的(多选)--}}
-					<div id="listbox-selections-unique-id" role="listbox" aria-orientation="horizontal">
+					<div id="listbox-selections-unique-id" role="listbox" aria-orientation="horizontal" {{readonlyStr}}>
 						<ul class="slds-listbox slds-listbox_inline slds-p-top_xxx-small slds-selected-items-{{id}}"
 							role="group"
 							aria-label="Selected Options:">
@@ -160,9 +160,11 @@
 										</span>
 										{{/if}}
 										<span class="slds-pill__label" title="{{label}}">{{label}}</span>
+										{{#unless fieldReadonly}}
 										<span class="slds-icon_container slds-pill__remove" title="{{_ "Delete"}}">
 											{{> steedos_icon class="slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="close"}}
 										</span>
+										{{/unless}}
 									</span>
 								</li>
 							{{/each}}

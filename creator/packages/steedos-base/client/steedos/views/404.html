@@ -1,12 +1,13 @@
 <template name="not_found">
-	<div class="container not-found text-center">
-		<div class="error-box">
-			<br><br><br>
-			<h1>404</h1>
-			<h4>{{_ "steedos_i18n_404_not_found"}}</h4>
-			{{#if isShowInfo}}
-				<p>您可以回到 <a href="/workflow">审批中心</a></p>
-			{{/if}}
+	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view">
+		<div class="slds-template__container">
+			<div class="objectViewManager slds-grid slds-grid--vertical flexipageBaseRecordHomeTemplateDesktop">
+				<article class="slds-card">
+					<div class="slds-card__body slds-card__body_inner">
+						{{> React component=illustration path=notFoundPath heading=notFoundHeading}}
+					</div>
+				</article>
+			</div>
 		</div>
 	</div>
 </template>

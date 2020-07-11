@@ -25,9 +25,9 @@
 							<span class="slds-assistive-text">{{value}}</span>
 						</span>
 					{{/if}}
-				{{else if isSelects ..}}
-					{{#each value}}
-						<span class="{{selectCellColorClass ../..}}">{{{label}}}</span>
+				{{else if isSelects}}
+					{{#each items}}
+						<span title="{{label}}" class="{{selectCellColorClass ../..}}">{{label}}</span>
 					{{/each}}
 				{{else}}
 					{{#if href}}

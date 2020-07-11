@@ -14,15 +14,37 @@ fields:
     label: Report Type
     type: select
     defaultValue: tabular
-    options:
-      - label: Tabular
-        value: tabular
-      - label: Summary
-        value: summary
-      - label: Matrix
-        value: matrix
-      - label: JsReport
-        value: jsreport
+    options: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        var types = [
+          {
+            "label": t("reports_field_report_type_options_tabular"),
+            "value": "tabular"
+          },
+          {
+            "label": t("reports_field_report_type_options_summary"),
+            "value": "summary"
+          },
+          {
+            "label": t("reports_field_report_type_options_matrix"),
+            "value": "matrix"
+          }
+        ];
+        var plugins = Creator.Plugins;
+        if(plugins["@steedos/plugin-jsreport"]){
+          types.push({
+            "label": "JsReport",
+            "value": "jsreport"
+          });
+        }
+        if(plugins["@steedos/plugin-stimulsoft-report"]){
+          types.push({
+            "label": "StimulsoftReport",
+            "value": "stimulsoft-report"
+          });
+        }
+        return types;
+      }
     name: report_type
     filterable: true
   data_source:
@@ -240,6 +262,11 @@ fields:
     hidden: false
     group: JsReport
     name: script
+  mrt:
+    label: Mrt
+    type: textarea
+    is_wide: true
+    hidden: true
 list_views:
   default:
     columns:

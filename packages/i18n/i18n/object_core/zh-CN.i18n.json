@@ -188,5 +188,10 @@
 	"web_forms_select_option_none": "--无--",
 
 	"object_fields_error_option_color_not_valid": "该字段选择项属性中定义了错误格式的选项颜色值，请输入正确的16进制颜色值，如#ffffff。",
-	"picklist_options_error_color_not_valid": "选项背景色格式不对，请输入正确的16进制颜色代码，如#ffffff。"
+	"picklist_options_error_color_not_valid": "选项背景色格式不对，请输入正确的16进制颜色代码，如#ffffff。",
+
+	"space_users_method_disable_success": "已成功停用该用户。",
+	"space_users_method_disable_error": "停用用户失败，%s",
+	"space_users_method_enable_success": "已成功启用该用户。",
+	"space_users_method_enable_error": "启用用户失败，%s"
 }

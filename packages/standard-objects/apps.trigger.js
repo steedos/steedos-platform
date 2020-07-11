@@ -2,7 +2,6 @@ const _ = require('underscore');
 const clone = require("clone");
 const objectql = require("@steedos/objectql");
 const i18n = require("@steedos/i18n");
-const InternalData = require('./core/internalData');
 const auth = require("@steedos/auth");
 
 const permissions = {
@@ -17,13 +16,6 @@ const baseRecord = {
     record_permissions:permissions
 }
 
-const internalPermissionSet = [
-    {_id: 'admin', name: 'admin',label: 'admin', ...baseRecord},
-    {_id: 'user', name: 'user',label: 'user', ...baseRecord},
-    {_id: 'supplier', name: 'supplier',label: 'supplier', ...baseRecord},
-    {_id: 'customer', name: 'customer', label: 'customer',...baseRecord}
-];
-
 const getLng = function(userId){
     return Steedos.locale(userId, true);
 }
@@ -36,7 +28,9 @@ module.exports = {
             let allApps = clone(objectql.getAppConfigs());
             let apps = {}
             _.each(allApps, function(app){
-                apps[app._id] = app
+                if(app.is_creator){
+                    apps[app._id] = app
+                }
             })
             i18n.translationApps(lng, apps)
             _.each(apps, function(app){
@@ -46,10 +40,6 @@ module.exports = {
         }
     },
     afterCount: async function () {
-        // let filters = InternalData.parserFilters(this.query.filters);
-        // if(!_.has(filters, 'type') || (_.has(filters, 'type') && filters.type === 'profile')){
-        //     this.data.values = this.data.values + getInternalPermissionSet(this.spaceId, null).length
-        // }
         let result = await objectql.getObject('apps').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length
     },
@@ -60,7 +50,7 @@ module.exports = {
             let allApps = clone(objectql.getAppConfigs());
             let apps = {}
             _.each(allApps, function(app){
-                if(app._id === id){
+                if(app._id === id && app.is_creator){
                     apps[app._id] = app
                 }
             })

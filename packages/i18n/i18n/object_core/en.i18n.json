@@ -185,5 +185,10 @@
 	"web_forms_select_option_none": "--none--",
 
 	"object_fields_error_option_color_not_valid": "The incorrectly formatted option color value is defined in the field 'Options' attribute. Enter the correct hexadecimal color value, such as #FFFFFF.",
-	"picklist_options_error_color_not_valid": "Background color format incorrect, please enter the correct hexadecimal color code, such as #FFFFFF."
+	"picklist_options_error_color_not_valid": "Background color format incorrect, please enter the correct hexadecimal color code, such as #FFFFFF.",
+
+	"space_users_method_disable_success": "The user was successfully deactivated.",
+	"space_users_method_disable_error": "User deactivation failed, %s",
+	"space_users_method_enable_success": "The user was successfully enabled.",
+	"space_users_method_enable_error": "Enable user failure, %s"
 }
