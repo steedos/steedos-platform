@@ -10,6 +10,7 @@ fields:
     label: Object
     type: master_detail
     required: true
+    reference_to: objects
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -123,7 +124,14 @@ fields:
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
-              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, false, true);
+              var object_name = null;
+              if(values && values.object_name){
+                object_name = values.object_name;
+                if(_.isObject(object_name)){
+                  object_name = object_name.name
+                }
+              }
+              return Creator.getObjectLookupFieldOptions(object_name, true, false, true);
             }
   field_map_back:
     label: Field Mappings（from Workflow to Object）
@@ -140,7 +148,14 @@ fields:
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
-              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, false, true);
+        var object_name = null;
+              if(values && values.object_name){
+                object_name = values.object_name;
+                if(_.isObject(object_name)){
+                  object_name = object_name.name
+                }
+              }
+              return Creator.getObjectLookupFieldOptions(object_name, true, false, true);
             }
   field_map_back.$.workflow_field:
     label: Field of Workflow

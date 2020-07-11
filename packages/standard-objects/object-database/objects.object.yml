@@ -239,6 +239,7 @@ relatedList:
       - profiles
   - object_related_list
   - permission_objects
+  - object_workflows
 list_views:
   all:
     columns:

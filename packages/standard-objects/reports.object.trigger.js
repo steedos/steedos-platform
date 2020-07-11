@@ -1,4 +1,5 @@
 const _ = require('underscore');
+const objectql = require("@steedos/objectql");
 
 module.exports = {
 
@@ -58,6 +59,15 @@ module.exports = {
             if(!(doc.fields && doc.fields.length)){
                 throw new Error("creator_report_error_jsreport_miss_fields");
             }
+        }
+    },
+    afterFind: async function(){
+        this.data.values = this.data.values.concat(objectql.getConfigs("report"))
+    },
+    afterFindOne: async function(){
+        let id = this.id;
+        if(id && _.isEmpty(this.data.values)){
+            this.data.values = objectql.getConfigs("report")[0]
         }
     }
 }

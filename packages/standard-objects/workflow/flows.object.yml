@@ -367,9 +367,9 @@ actions:
             var flow = selection[0];
             var templateFlowId = flow._id;
             if(templateFlowId){
-              Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {name: flow.name}, function(error, result){
+              Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {name: flow.name, from: 'template'}, function(error, result){
                 if(error){
-                  toastr.error('error');
+                  toastr.error(t(error.reason));
                 }else{
                   toastr.success(t('workflow_copy_flow_success'));
                   if (result.length > 0) {
@@ -612,6 +612,9 @@ actions:
           sweetAlert.close();
         })
       }
+relatedList:
+  - cms_files
+  - object_workflows
 permission_set:
   user:
     allowCreate: false

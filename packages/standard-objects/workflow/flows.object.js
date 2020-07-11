@@ -1,3 +1,4 @@
+const objectql = require("@steedos/objectql");
 if (!db.flows) {
     const core = require('@steedos/core');
     db.flows = core.newCollection('flows');
@@ -7,42 +8,50 @@ if (Meteor.isServer) {
     db.flows.copy = function (userId, spaceId, flowId, options, enabled) {
         var company_id, flow, form, newFlowName, newName, ref;
         var templateSpaceId = Creator.getTemplateSpaceId();
-        var flowQuery = {
-            _id: flowId
-        }
-        if(templateSpaceId){
-            flowQuery["$or"] = [{space:templateSpaceId}, {space:spaceId}]
+        if(templateSpaceId === 'template' && options.from === 'template'){
+            let getData = function () {
+                return objectql.getObject("flows").findOne(flowId, {}, Object.assign({roles: ['admin']}, {spaceId: templateSpaceId}));
+            }
+            var data =  objectql.wrapAsync(getData, {});
+            return steedosImport.workflow(userId, spaceId, data, enabled, company_id);
         }else{
-            flowQuery.space = spaceId
-        }
-        flow = db.flows.findOne(flowQuery, {
+            var flowQuery = {
+                _id: flowId
+            }
+            if(templateSpaceId){
+                flowQuery["$or"] = [{space:templateSpaceId}, {space:spaceId}]
+            }else{
+                flowQuery.space = spaceId
+            }
+            flow = db.flows.findOne(flowQuery, {
                 fields: {
                     _id: 1,
                     name: 1,
                     form: 1
                 }
             });
-        if (!flow) {
-            throw new Meteor.Error(`[flow.copy]未找到flow, space: ${spaceId}, flowId: ${flowId}`);
+            if (!flow) {
+                throw new Meteor.Error(`[flow.copy]未找到flow, space: ${spaceId}, flowId: ${flowId}`);
+            }
+            newFlowName = options != null ? options.name : void 0;
+            company_id = options != null ? options.company_id : void 0;
+            if (newFlowName) {
+                newName = newFlowName;
+            } else {
+                newName = "复制:" + flow.name;
+            }
+            form = steedosExport.form(flow.form, flow._id, true, company_id);
+            if (_.isEmpty(form)) {
+                throw new Meteor.Error(`[flow.copy]未找到form, formId: ${flow.form}`);
+            }
+            form.name = newName;
+            if ((ref = form.flows) != null) {
+                ref.forEach(function (f) {
+                    return f.name = newName;
+                });
+            }
+            return steedosImport.workflow(userId, spaceId, form, enabled, company_id);
         }
-        newFlowName = options != null ? options.name : void 0;
-        company_id = options != null ? options.company_id : void 0;
-        if (newFlowName) {
-            newName = newFlowName;
-        } else {
-            newName = "复制:" + flow.name;
-        }
-        form = steedosExport.form(flow.form, flow._id, true, company_id);
-        if (_.isEmpty(form)) {
-            throw new Meteor.Error(`[flow.copy]未找到form, formId: ${flow.form}`);
-        }
-        form.name = newName;
-        if ((ref = form.flows) != null) {
-            ref.forEach(function (f) {
-                return f.name = newName;
-            });
-        }
-        return steedosImport.workflow(userId, spaceId, form, enabled, company_id);
     };
 }
 
