@@ -1,3 +1,5 @@
+objectql = require("@steedos/objectql");
+
 steedosImport = {}
 
 _formatFieldsID = (fields)->
@@ -246,6 +248,26 @@ upgradeFlow = (flowCome, userId, flowId)->
 
 	flowCollection.update(flowId, updateObj);
 
+# TODO check 对象、字段是否存在
+checkObjectWorkflow = (spaceId, objectName, doc)->
+	_obj = objectql.getObject(objectName);
+	if !_obj
+		throw new Meteor.Error(500, "import_flows_error_not_find_object");
+	_objconfig = _obj.toConfig();
+	if !_objconfig.enable_workflow
+		throw new Meteor.Error(500, "import_flows_error_not_allow_enable_workflow");
+	fileds = _objconfig.fields
+
+steedosImport.objectWorkflow = (spaceId, flowId, objectName, doc)->
+	checkObjectWorkflow(spaceId, objectName, doc)
+	delete doc._id
+	oldDoc = Creator.getCollection("object_workflows").findOne({space: spaceId, flow_id: flowId, object_name: objectName})
+	if oldDoc
+		Creator.getCollection("object_workflows").update(oldDoc._id, {$set: Object.assign({}, doc, {space: spaceId, flow_id: flowId, object_name: objectName})})
+	else
+		Creator.getCollection("object_workflows").insert(Object.assign({}, doc, {space: spaceId, flow_id: flowId, object_name: objectName}))
+
+
 steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 
 	upgrade = options?.upgrade || false
@@ -368,6 +390,8 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 			new_form_ids.push(form_id)
 
 		flows.forEach (flow)->
+			flowObjectWorkflows = flow.object_workflows
+			delete flow.object_workflows
 			flow_id = new Mongo.ObjectID()._str
 
 			flow._id = flow_id
@@ -572,9 +596,13 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 
 			if upgrade
 				upgradeFlow(flow, uid, upgradeFlowId)
+				_.each flowObjectWorkflows, (_objectWorkflow)->
+					steedosImport.objectWorkflow(spaceId, upgradeFlowId, _objectWorkflow.object_name, _objectWorkflow)
 			else
 				db.flows.direct.insert(flow)
 				new_flow_ids.push(flow_id)
+				_.each flowObjectWorkflows, (_objectWorkflow)->
+					steedosImport.objectWorkflow(spaceId, flow_id, _objectWorkflow.object_name, _objectWorkflow)
 
 		return new_flow_ids;
 	catch e

@@ -13,6 +13,7 @@ _getFlowByForm = (form, flowId, is_copy, company_id)->
 
 	flows.forEach (flow) ->
 		flow.historys = []
+		flow.object_workflows = Creator.getCollection("object_workflows").find({flow_id: flow._id}, {fields: {name: 1, object_name: 1, flow_id: 1, field_map: 1, field_map_back: 1, field_map_script: 1, field_map_back_script: 1, sync_attachment: 1}}).fetch();
 		if !is_copy || (!company_id && flow.company_id) || (company_id && !flow.company_id) || (company_id != flow.company_id)
 			flow.current.steps?.forEach (step) ->
 				roles_name = []
