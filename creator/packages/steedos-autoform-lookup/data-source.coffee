@@ -81,6 +81,9 @@ DataSource.Odata.lookup_options = (options)->
 			$select: "#{name_field_key}"
 		};
 
+		if options?.values?.length
+			delete odataOptions.$top
+
 		if !object.database_name || object.database_name == 'meteor-mongo'
 			odataOptions.$orderby = 'created desc'
 
