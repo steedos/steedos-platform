@@ -1,5 +1,5 @@
 Creator.Objects.object_workflows.triggers = {
-  "before.insert.server.default": {
+  "before.insert.server.object_workflows.check": {
     on: "server",
     when: "before.insert",
     todo: function (userId, doc) {
@@ -11,7 +11,7 @@ Creator.Objects.object_workflows.triggers = {
       }
     }
   },
-  "before.update.server.default": {
+  "before.update.server.object_workflows.check": {
     on: "server",
     when: "before.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
@@ -24,7 +24,7 @@ Creator.Objects.object_workflows.triggers = {
       }
     }
   },
-  "before.insert.client.default": {
+  "before.insert.client.object_workflows.check": {
     on: "client",
     when: "before.insert",
     todo: function (userId, doc) {
@@ -34,7 +34,7 @@ Creator.Objects.object_workflows.triggers = {
       }
     }
   },
-  "before.update.client.default": {
+  "before.update.client.object_workflows.check": {
     on: "client",
     when: "before.update",
     todo: function (userId, doc) {
