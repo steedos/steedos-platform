@@ -1,1 +1,5 @@
 flows_action_designFlow: Flow Designer
+import_flows_error_title: Import Error
+import_flows_error_not_find_object: Not find object [ %s ]
+import_flows_error_not_allow_enable_workflow: object [ %s ] not enable workflow
+import_flows_error_not_find_fields: Missing field [ %s ]

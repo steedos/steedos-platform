@@ -9,6 +9,7 @@ public:
     store: "local"
     local: 
       folder: "./storage"
+  templateSpaceId: 'template'
 email:
   host:
   port: 465

@@ -31,7 +31,7 @@ public:
   phone:
     forceAccountBindPhone: false
   cloudAdminSpaceId: cloud_admin
-  templateSpaceId: 5e38d51b41386900110ff5c5
+  templateSpaceId: 'template'
 cfs:
   -aliyun:
     region: ${ENV_CFS_ALIYUN_REGION}

@@ -369,7 +369,7 @@ actions:
             if(templateFlowId){
               Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {name: flow.name, from: 'template'}, function(error, result){
                 if(error){
-                  toastr.error(t(error.reason));
+                   toastr.error(t(error.reason, error.details), t('import_flows_error_title'));
                 }else{
                   toastr.success(t('workflow_copy_flow_success'));
                   if (result.length > 0) {

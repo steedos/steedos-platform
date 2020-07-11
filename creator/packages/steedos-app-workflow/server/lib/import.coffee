@@ -250,23 +250,32 @@ upgradeFlow = (flowCome, userId, flowId)->
 
 # TODO check 对象、字段是否存在
 checkObjectWorkflow = (spaceId, objectName, doc)->
-	_obj = objectql.getObject(objectName);
-	if !_obj
-		throw new Meteor.Error(500, "import_flows_error_not_find_object");
+	try
+		_obj = objectql.getObject(objectName);
+	catch
+		if !_obj
+			throw new Meteor.Error(500, "import_flows_error_not_find_object", objectName);
 	_objconfig = _obj.toConfig();
 	if !_objconfig.enable_workflow
-		throw new Meteor.Error(500, "import_flows_error_not_allow_enable_workflow");
+		throw new Meteor.Error(500, "import_flows_error_not_allow_enable_workflow", _objconfig.name);
 	fileds = _objconfig.fields
+	allowValues = _.pluck(Creator.getObjectLookupFieldOptions(objectName, true, false, true), 'value');
+	objectField = _.pluck(doc.field_map, "object_field");
+	diff = _.difference(objectField, allowValues);
+	if diff.length > 0
+		throw new Meteor.Error(500, "import_flows_error_not_find_fields", diff.join(","));
+	objectFieldBack = _.pluck(doc.field_map_back, "object_field");
+	diff1 = _.difference(objectFieldBack, allowValues);
+	if diff1.length > 0
+		throw new Meteor.Error(500, "import_flows_error_not_find_fields", diff1.join(","));
 
 steedosImport.objectWorkflow = (spaceId, flowId, objectName, doc)->
-	checkObjectWorkflow(spaceId, objectName, doc)
 	delete doc._id
 	oldDoc = Creator.getCollection("object_workflows").findOne({space: spaceId, flow_id: flowId, object_name: objectName})
 	if oldDoc
 		Creator.getCollection("object_workflows").update(oldDoc._id, {$set: Object.assign({}, doc, {space: spaceId, flow_id: flowId, object_name: objectName})})
 	else
 		Creator.getCollection("object_workflows").insert(Object.assign({}, doc, {space: spaceId, flow_id: flowId, object_name: objectName}))
-
 
 steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 
@@ -280,6 +289,12 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 	if company_id
 		if Creator.getCollection("company").find({ _id: company_id, space: spaceId }).count() == 0
 			throw new Meteor.Error('error', "无效的字段: company_id")
+
+	if form?.flows
+		_.each form.flows, (flow)->
+			if flow.object_workflows
+				_.each flow.object_workflows, (_ow)->
+					checkObjectWorkflow(spaceId, _ow.object_name, _ow)
 
 	new_form_ids = new Array()
 
