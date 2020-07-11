@@ -1,7 +1,7 @@
 web_forms__object: 在线表单
 web_forms_field_object_name: 关联对象
 web_forms_field_fields: 显示字段
-web_forms_field_record_owner: 默认潜在客户创建人
+web_forms_field_record_owner: 默认创建人
 web_forms_field_notification_users: 通知用户
 web_forms_field_generated_html: 表单HTML
 web_forms_field_return_url: 返回地址

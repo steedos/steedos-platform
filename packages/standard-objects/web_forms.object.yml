@@ -73,7 +73,7 @@ fields:
             }
     filterable: true
   record_owner:
-    label: Record Owner
+    label: Default Owner
     type: lookup
     reference_to: users
     sortable: true
