@@ -6,7 +6,6 @@ fields:
   name:
     label: Name
     type: text
-    is_wide: true
     required: true
   object_name:
     label: Object
@@ -27,7 +26,6 @@ fields:
               return _options;
             }
     required: true
-    is_wide: true
     filterable: true
     index: true
   fields:
@@ -36,7 +34,7 @@ fields:
     multiple: true
     required: true
     is_wide: true
-    inlineHelpText: 'The fields displayed in the online form currently only support text, Numbers, and drop-down boxes.'
+    inlineHelpText: 'The fields displayed in the online form currently only support text, textarea, and drop-down boxes.'
     depend_on:
       - object_name
     defaultIcon: service_contract
