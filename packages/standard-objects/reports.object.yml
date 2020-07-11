@@ -18,15 +18,15 @@ fields:
       function () {
         var types = [
           {
-            "label": "Tabular",
+            "label": t("reports_field_report_type_options_tabular"),
             "value": "tabular"
           },
           {
-            "label": "Summary",
+            "label": t("reports_field_report_type_options_summary"),
             "value": "summary"
           },
           {
-            "label": "Matrix",
+            "label": t("reports_field_report_type_options_matrix"),
             "value": "matrix"
           }
         ];
