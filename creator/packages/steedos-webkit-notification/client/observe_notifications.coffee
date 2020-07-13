@@ -27,8 +27,9 @@ Steedos.playNodeBadge =  (badgeCount)->
 	if Steedos.isNode()
 		# 新版客户端
 		if (nw.ipcRenderer)
-			if badgeCount != undefined
-				nw.ipcRenderer.sendToHost('onBadgeChange', false, 0, badgeCount, false, false)
+			unless badgeCount
+				badgeCount = 0
+			nw.ipcRenderer.sendToHost('onBadgeChange', false, 0, badgeCount, false, false)
 		else
 			# 任务栏高亮显示
 			nw.Window.get().requestAttention(3);
