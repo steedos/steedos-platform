@@ -37,6 +37,7 @@ reports_field_rows: 行
 reports_field_script: Script
 reports_field_totaling: 显示总计
 reports_field_values: 统计
+reports_field_is_system: 系统
 reports_group_jsreport: JsReport
 reports_listview_all: 所有报表
 reports_listview_application: 应用报表

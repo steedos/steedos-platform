@@ -267,12 +267,19 @@ fields:
     type: textarea
     is_wide: true
     hidden: true
+  is_system:
+    type: boolean
+    label: System
+    omit: true
+    hidden: true
+    disabled: true
 list_views:
   default:
     columns:
       - name
       - report_type
       - object_name
+      - is_system
   all:
     label: All Reports
     filter_scope: space
