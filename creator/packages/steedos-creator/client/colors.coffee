@@ -1,5 +1,5 @@
 # 字段配色相关
-commonStyle = "border-radius: 10px;padding: 2px 6px;"
+commonStyle = "border-radius: 10px;padding: 1px 6px;display: inline-block;"
 
 # hex: {String}, "#333", "#AF0382"
 hexToRgb = (hex) ->
@@ -57,6 +57,17 @@ Creator.appendObjectFieldsColorStyles = ()->
 	styles = []
 	_.each Creator.Objects, (object)->
 		styles = _.union styles, _getObjectFieldsColorStyles(object)
+	# styles.push(".creator-cell-multiple-color{margin-right:2px;}");
+	styles.push """
+		.creator-cell-multiple-color{
+			margin-right:1px;
+		}
+		@media (max-width:767px) {
+			.creator-cell-multiple-color{
+				margin-right:4px;
+			}
+		}
+	"""
 	styleCss = $("<style id=\"object_fields_color_styles\" type=\"text/css\">#{styles.join('\r\n')}</style>")
 	$('head').append styleCss
 
