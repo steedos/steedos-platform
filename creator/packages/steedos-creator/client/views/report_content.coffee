@@ -51,7 +51,7 @@ getReportContent = ()->
 	sort = []
 	column_width = []
 	report_settings = self.report_settings.get()
-	report = Creator.getObjectRecord()
+	report = self.record.get()
 	switch report.report_type
 		when 'tabular'
 			fields = self.dataGridInstance.get()?.getVisibleColumns()
@@ -179,7 +179,7 @@ maxLoadCount = 10000
 
 renderChart = (self)->
 	record_id = Session.get("record_id")
-	reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+	reportObject = Creator.Reports[record_id] or self.record.get()
 	unless reportObject
 		return
 	if reportObject?.report_type == "summary"
@@ -1061,7 +1061,7 @@ renderStimulsoftReport = (reportObject)->
 
 renderReport = (reportObject)->
 	unless reportObject
-		reportObject = Creator.Reports[Session.get("record_id")] or Creator.getObjectRecord()
+		reportObject = Creator.Reports[Session.get("record_id")] or this.record.get()
 	self = this
 	spaceId = Session.get("spaceId")
 	filter_items = Tracker.nonreactive ()->
@@ -1153,7 +1153,7 @@ Template.creator_report_content.onRendered ->
 			return
 		if Creator.subs["CreatorRecord"].ready()
 			# c.stop()
-			reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+			reportObject = Creator.Reports[record_id] or self.record.get()
 			unless reportObject
 				return
 			filter_items = reportObject.filters || []

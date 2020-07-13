@@ -1,3 +1,15 @@
+loadRecordFromOdata = (template, object_name, record_id)->
+	template.record.set({});
+	object = Creator.getObject(object_name)
+	selectFields = Creator.objectOdataSelectFields(object)
+	expand = Creator.objectOdataExpandFields(object)
+	if object_name == "space_users"
+# 用户详细界面额外请求company_ids对应的admins，以方便确认当前用户是否有权限编辑、删除该记录
+		expand = expand.replace(/\bcompany_ids\b/,"company_ids($select=name,admins)")
+	record = Creator.odata.get(object_name, record_id, selectFields, expand)
+	template.record.set(record)
+
+
 Template.creator_report.helpers Creator.helpers
 
 Template.creator_report.helpers
@@ -95,12 +107,14 @@ Template.creator_report.helpers
 		return reportObject?.report_type != "jsreport"
 	
 	report_content_params: ()->
+		record_id = Session.get "record_id"
 		return {
 			is_chart_open: Template.instance().is_chart_open
 			is_chart_disabled: Template.instance().is_chart_disabled
 			report_settings: Template.instance().report_settings
 			dataGridInstance: Template.instance().dataGridInstance
 			pivotGridInstance: Template.instance().pivotGridInstance
+			record: Template.instance().record
 		}
 	isFiltering: ()->
 		filter_items = Session.get("filter_items")
@@ -120,7 +134,6 @@ Template.creator_report.helpers
 		record_id = Session.get "record_id"
 		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
 		return reportObject?.report_type == "jsreport" and reportObject?.report_type != "stimulsoft-report"
-
 Template.creator_report.events
 
 	'click .record-action-custom': (event, template) ->
@@ -271,6 +284,10 @@ Template.creator_report.onRendered ->
 				Template.instance().filter_items_for_cancel.set(filter_items)
 				Template.instance().filter_scope_for_cancel.set(filter_scope)
 				Template.instance().filter_logic_for_cancel.set(filter_logic)
+	this.autorun ->
+		record_id = Session.get("record_id")
+		if record_id
+			Tracker.nonreactive(loadRecord)
 
 Template.creator_report.onCreated ->
 	this.filter_items_for_cancel = new ReactiveVar()
@@ -282,3 +299,31 @@ Template.creator_report.onCreated ->
 	this.report_settings = new ReactiveVar()
 	this.dataGridInstance = new ReactiveVar()
 	this.pivotGridInstance = new ReactiveVar()
+	this.record = new ReactiveVar()
+	object_name = Session.get "object_name"
+	template = Template.instance()
+	this.onEditSuccess = onEditSuccess = (formType,result)->
+		loadRecordFromOdata(template, Session.get("object_name"), Session.get("record_id"))
+		$('#afModal').modal('hide')
+	AutoForm.hooks creatorEditForm:
+		onSuccess: onEditSuccess
+	,false
+Template.creator_report.onDestroyed ()->
+	self = this
+	_.each(AutoForm._hooks.creatorEditForm.onSuccess, (fn, index)->
+		if fn == self.onEditSuccess
+			delete AutoForm._hooks.creatorEditForm.onSuccess[index]
+	)
+loadRecord = ()->
+	object_name = Session.get "object_name"
+	if object_name == "users"
+		return
+	record_id = Session.get "record_id"
+	object = Creator.getObject(object_name)
+
+	if Meteor.loggingIn() || Meteor.loggingOut() || !Meteor.userId()
+		return;
+
+	object_fields = object.fields
+	if object_name and record_id
+		loadRecordFromOdata(Template.instance(), object_name, record_id)
