@@ -193,5 +193,11 @@
 	"space_users_method_disable_success": "已成功停用该用户。",
 	"space_users_method_disable_error": "停用用户失败，%s",
 	"space_users_method_enable_success": "已成功启用该用户。",
-	"space_users_method_enable_error": "启用用户失败，%s"
+	"space_users_method_enable_error": "启用用户失败，%s", 
+
+	"reports_field_report_type_options_tabular": "表格",
+	"reports_field_report_type_options_summary": "摘要",
+	"reports_field_report_type_options_matrix": "矩阵",
+	"reports_field_report_type_options_jsreport": "JsReport",
+	"reports_field_report_type_options_stimulsoft-report": "StimulsoftReport"
 }
