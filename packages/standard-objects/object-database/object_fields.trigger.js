@@ -27,7 +27,7 @@ const validateOptionsValue = (value)=>{
 }
 
 const validateDoc = (doc)=>{
-    validateOptionsValue(doc.options);
+    // validateOptionsValue(doc.options);
     if(doc.type === "autonumber"){
         let formula = doc.formula && doc.formula.trim();
         if(!formula){
