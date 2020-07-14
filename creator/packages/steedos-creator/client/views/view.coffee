@@ -515,9 +515,12 @@ Template.creator_view.events
 
 
 	'click .slds-truncate > a': (event) ->
+		template = Template.instance()
 		Session.set("detail_info_visible", false)
 		Tracker.afterFlush ()->
 			Session.set("detail_info_visible", true)
+			Meteor.defer ()->
+				addFieldInfo(template)
 
 	'dblclick .slds-table td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click();
