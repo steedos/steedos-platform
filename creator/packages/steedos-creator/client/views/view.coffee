@@ -146,7 +146,7 @@ Template.creator_view.helpers
 					return
 				field = _object.fields[fieldKey]
 				if field
-					if _object.schema._schema[fieldKey]?.type.name != 'Object'
+					if _object.schema._schema[fieldKey]?.type?.name != 'Object'
 						r = true;
 					if field.type == 'lookup' || field.type == 'master_detail'
 						reference_to = field.reference_to
@@ -161,7 +161,7 @@ Template.creator_view.helpers
 		if !fieldKey
 			return
 		_object = Creator.getObject(Session.get("object_name"))
-		return _object.schema._schema[fieldKey]?.type.name == 'Object' && _object.fields[fieldKey].type != 'lookup' && _object.fields[fieldKey].type != 'master_detail'
+		return _object.schema._schema[fieldKey]?.type?.name == 'Object' && _object.fields[fieldKey].type != 'lookup' && _object.fields[fieldKey].type != 'master_detail'
 
 	objectField: (fieldKey)->
 		schema = Creator.getObject(Session.get("object_name")).schema
