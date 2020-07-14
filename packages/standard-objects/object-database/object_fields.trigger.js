@@ -26,8 +26,31 @@ const validateOptionsValue = (value)=>{
     }
 }
 
+const validateOptionColorValue = (value)=>{
+    if(value){
+        const reg = /^(#)?[\da-f]{3}([\da-f]{3})?$/i;
+        if(!reg.test(value)){
+            throw new Error("object_fields_error_option_color_not_valid");
+        }
+    }
+}
+
+const validateOptionsGridValue = (value)=>{
+    if(value){
+        value.forEach(function(option) {
+            if(!option.label){
+                throw new Error("object_fields_error_option_label_required");
+            }
+            if(!option.value){
+                throw new Error("object_fields_error_option_value_required");
+            }
+            validateOptionColorValue(option.color);
+        });
+    }
+}
+
 const validateDoc = (doc)=>{
-    // validateOptionsValue(doc.options);
+    validateOptionsGridValue(doc.options);
     if(doc.type === "autonumber"){
         let formula = doc.formula && doc.formula.trim();
         if(!formula){
