@@ -21,7 +21,7 @@ object_fields_field_options_$: Options
 object_fields_field_options_$_label: 显示名
 object_fields_field_options_$_value: 选项值
 object_fields_field_options_$_color: 背景颜色
-object_fields_field_options_inlineHelpText: 每行一个选项。支持三种定义格式。value, label:value, label:value:#ffffff ，其中第三种格式可以设置每个选项的颜色。
+object_fields_field_options_inlineHelpText: 选择项的每个选项显示名及选项值不能为空，背景颜色请设置为ffffff这种格式的16进制数值。
 object_fields_field_precision: 精度(数字长度)
 object_fields_field_primary: 主键
 object_fields_field_readonly: 只读
