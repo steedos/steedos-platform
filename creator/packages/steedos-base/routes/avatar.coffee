@@ -20,7 +20,7 @@ Meteor.startup ->
 			return
 
 		if user.avatar
-			res.setHeader "Location", Steedos.absoluteUrl("api/files/avatars/" + user.avatar)
+			res.setHeader "Location", Creator.getRelativeUrl("api/files/avatars/" + user.avatar)
 			res.writeHead 302
 			res.end()
 			return
