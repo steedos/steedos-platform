@@ -91,6 +91,10 @@ Creator.Object = (options)->
 				self.fields[field_name] = {}
 			self.fields[field_name] = _.extend(_.clone(field), self.fields[field_name])
 
+	_.each self.fields, (field, field_name)->
+		if field.type == 'autonumber'
+			field.readonly = true
+
 	self.list_views = {}
 	defaultView = Creator.getObjectDefaultView(self.name)
 	_.each options.list_views, (item, item_name)->
