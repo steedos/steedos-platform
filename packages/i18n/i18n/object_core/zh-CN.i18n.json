@@ -199,5 +199,7 @@
 	"reports_field_report_type_options_summary": "摘要",
 	"reports_field_report_type_options_matrix": "矩阵",
 	"reports_field_report_type_options_jsreport": "JsReport",
-	"reports_field_report_type_options_stimulsoft-report": "StimulsoftReport"
+	"reports_field_report_type_options_stimulsoft-report": "StimulsoftReport",
+	
+	"object_fields_error_formula_required": "字段类型为自动编号时，必须填写公式字段。"
 }

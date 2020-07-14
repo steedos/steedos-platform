@@ -26,6 +26,16 @@ const validateOptionsValue = (value)=>{
     }
 }
 
+const validateDoc = (doc)=>{
+    validateOptionsValue(doc.options);
+    if(doc.type === "autonumber"){
+        let formula = doc.formula && doc.formula.trim();
+        if(!formula){
+            throw new Error("object_fields_error_formula_required");
+        }
+    }
+}
+
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
@@ -59,10 +69,10 @@ module.exports = {
     },
     beforeInsert: async function () {
         let doc = this.doc;
-        validateOptionsValue(doc.options);
+        validateDoc(doc);
     },
     beforeUpdate: async function () {
         let doc = this.doc;
-        validateOptionsValue(doc.options);
+        validateDoc(doc);
     }
 }
