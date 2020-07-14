@@ -109,9 +109,9 @@ Template.creator_table_cell.helpers
 		return Creator.getTableCellData(this)
 	
 	selectCellColorClass: (data)->
-		if data.field.type == "select"
+		if data.field?.type == "select"
 			result = "creator-cell-color-#{data.object_name}-#{data.field.name} creator-cell-color-#{data.object_name}-#{data.field.name}-#{this.value}"
-			if data.field.multiple
+			if data.field?.multiple
 				result += " creator-cell-multiple-color"
 			return result
 	editable: ()->
