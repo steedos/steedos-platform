@@ -497,6 +497,16 @@ InstanceRecordQueue.Configure = function (options) {
 										}
 									}
 								}
+								// 表单选人选组字段 至 对象 lookup master_detail类型字段同步
+								if (['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedObjectField.type) && ['users', 'organizations'].includes(relatedObjectField.reference_to)) {
+									if (!_.isEmpty(relatedObjectFieldValue)) {
+										if (relatedObjectField.multiple && formField.is_multiselect) {
+											relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, 'id'))
+										} else if (!relatedObjectField.multiple && !formField.is_multiselect) {
+											relatedObjectFieldValue = relatedObjectFieldValue.id
+										}
+									}
+								}
 								relatedObjectValue[fieldKey] = relatedObjectFieldValue;
 							}
 						}
