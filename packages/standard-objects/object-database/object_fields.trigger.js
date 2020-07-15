@@ -28,7 +28,7 @@ const validateOptionsValue = (value)=>{
 
 const validateOptionColorValue = (value)=>{
     if(value){
-        const reg = /^(#)?[\da-f]{3}([\da-f]{3})?$/i;
+        const reg = /^[\da-f]{6}$/i;
         if(!reg.test(value)){
             throw new Error("object_fields_error_option_color_not_valid");
         }
