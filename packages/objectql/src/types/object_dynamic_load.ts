@@ -21,6 +21,7 @@ const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
 const _lazyLoadListeners: Dictionary<any> = {};
 const _lazyLoadActions: Dictionary<any> = {};
+const _objectsData: Dictionary<any> = {};
 
 let standardObjectsLoaded: boolean = false;
 
@@ -402,3 +403,27 @@ export function addObjectPermission(objectName: string, permissionConfig: Steedo
     object.permissions[permissionConfig.name] = permissionConfig;
 }
 
+export function getAllObjectData(){
+    return _objectsData
+}
+
+export function getObjectData(objectName){
+    return _objectsData[objectName]
+}
+
+export function setObjectData(objectName, records){
+    if(_objectsData[objectName]){
+        _objectsData[objectName].concat(records)
+    }else{
+        _objectsData[objectName] = records
+    }
+}
+
+export function addObjectDataFiles(filePath: string){
+    let result = util.loadObjectDataFiles(filePath);
+    _.each(result, function(item){
+        if(item.objectName){
+            setObjectData(item.objectName, item.records);
+        }
+    })
+}

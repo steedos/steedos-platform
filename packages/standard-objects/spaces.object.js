@@ -455,6 +455,38 @@ if (Meteor.isServer) {
     });
 }
 
+//仅考虑mongo-db数据源的对象数据
+function initSpaceData(spaceId, userId){
+    let spacesCollection = Creator.getCollection("spaces")
+    let datas = objectql.getAllObjectData();
+    let now = new Date();
+    let insertMap = {};
+    try {
+        for(let objectName in datas){
+            let records = datas[objectName];
+            if(_.indexOf(["spaces"], objectName) < 0){
+                for(let record of records){
+                    if(Creator.getCollection(objectName)){
+                        let docId = Creator.getCollection(objectName).direct.insert(Object.assign({}, record, {_id: record._id || spacesCollection._makeNewID(), space: spaceId, owner: userId, created: now, modified: now, created_by: userId, modified_by: userId}));
+                        if(insertMap[objectName]){
+                            insertMap[objectName].push(docId)
+                        }else{
+                            insertMap[objectName] = []
+                            insertMap[objectName].push(docId)
+                        }
+                        // await objectql.getObject(objectName).directInsert(Object.assign({}, record, {_id: spacesCollection._makeNewID(), space: spaceId}));
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        _.each(insertMap, function(_ids,objectName){
+            Creator.getCollection(objectName).direct.remove({_id: {$in: _ids}})
+        })
+        throw new Error("初始化数据失败");
+    }
+}
+
 Creator.Objects['spaces'].methods = {
     "tenant": function (req, res) {
         return Fiber(function () {
@@ -496,6 +528,9 @@ Creator.Objects['spaces'].methods = {
                         name: spaceName, 
                         owner: userId
                     }
+                    if(!tenant.saas){
+                        initSpaceData(spaceId, userId);
+                    }
                     let newSpace = db.spaces.insert(spaceDoc);
                     return res.send({
                         value: newSpace
@@ -515,5 +550,22 @@ Creator.Objects['spaces'].methods = {
                 "success": false
             });
         }).run();
-    }
+    },
+    // "initSpaceData": function(req, res){
+    //     return Fiber(function () {
+            
+    //         let userSession = req.user;
+    //         let { _id: spaceId } = req.params
+    
+    //         if(!Creator.isSpaceAdmin(spaceId, userSession.userId)){
+    //             return res.status(401).send({
+    //                 "success": false
+    //             });
+    //         }
+    //         initSpaceData(spaceId, userSession.userId);
+    //         return res.send({
+    //             "success": true
+    //         });
+    //     }).run();
+    // }
 }

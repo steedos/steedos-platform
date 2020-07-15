@@ -240,6 +240,21 @@ export function loadAppFiles(filePath: string) {
     return loadApps(filePath);
 }
 
+export function loadObjectDataFiles(filePath: string){
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.data.json")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        console.log("loadObjectDataFiles", matchedPath);
+        let records = loadFile(matchedPath);
+        let objectName = path.basename(matchedPath).split('.')[0];
+        results.push({objectName: objectName, records: records});
+    })
+    return results
+}
+
 export function getBaseDirectory(){
     //return require('app-root-path').path
     let cwd = process.cwd();

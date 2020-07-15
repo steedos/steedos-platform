@@ -31,5 +31,55 @@ module.exports = {
                 return true;
             }
         }
-    }
+    },
+    // initSpaceData: function (object_name, record_id, fileds) {
+    //     $("body").addClass("loading");
+    //     var userSession = Creator.USER_CONTEXT;
+    //     var spaceId = userSession.spaceId;
+    //     var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
+    //     var url = "/api/v4/spaces/" + spaceId + "/initSpaceData";
+    //     url = Steedos.absoluteUrl(url);
+    //     try {
+    //         var authorization = "Bearer " + spaceId + "," + authToken;
+    //         var fetchParams = {};
+    //         var headers = [{
+    //             name: 'Content-Type',
+    //             value: 'application/json'
+    //         }, {
+    //             name: 'Authorization',
+    //             value: authorization
+    //         }];
+    //         $.ajax({
+    //             type: "POST",
+    //             url: url,
+    //             data: fetchParams,
+    //             dataType: "json",
+    //             contentType: 'application/json',
+    //             beforeSend: function (XHR) {
+    //                 if (headers && headers.length) {
+    //                     return headers.forEach(function (header) {
+    //                         return XHR.setRequestHeader(header.name, header.value);
+    //                     });
+    //                 }
+    //             },
+    //             success: function (data) {
+    //                 $("body").removeClass("loading");
+    //             },
+    //             error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //                 $("body").removeClass("loading");
+    //                 console.error(XMLHttpRequest.responseJSON);
+    //                 if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
+    //                     toastr.error(XMLHttpRequest.responseJSON.error.message)
+    //                 }
+    //                 else {
+    //                     toastr.error(XMLHttpRequest.responseJSON)
+    //                 }
+    //             }
+    //         });
+    //     } catch (err) {
+    //         console.error(err);
+    //         toastr.error(err);
+    //         $("body").removeClass("loading");
+    //     }
+    // }
   }

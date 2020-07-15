@@ -157,6 +157,10 @@ actions:
   invite_space_users: 
     label: Invite Users
     'on': record
+  # initSpaceData:
+  #   label: Init Space Data
+  #   'on': record
+  #   visible: true
 permission_set:
   user:
     allowCreate: true
