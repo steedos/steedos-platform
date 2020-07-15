@@ -421,7 +421,7 @@
                                 "pattern": "^[^:]+(:[^:]+)?(:[0-9a-fA-F]{6})?$"
                             },
                             "type": "array",
-                            "title": "One option per line. Three definition formats are supported. Value, label:value, Label :value:# FFFFFF, the third format can set the color of each option, if supply as a string array."
+                            "title": "One option per line. Three definition formats are supported. value, label:value, label:value:FFFFFF, the third format can set the color of each option, if supply as a string array."
                         },
                         {
                             "items": {
