@@ -29,6 +29,9 @@ function _syncToObject(doc) {
       owner: 0,
       created_by: 0,
       modified_by: 0
+    },
+    sort: {
+      sort_no: 1
     }
   }).fetch();
   fields = {};

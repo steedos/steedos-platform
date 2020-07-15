@@ -436,6 +436,7 @@ TemplateHelpers =
 	# 			return count
 
 	getWorkflowBadge: (appId)->
+		result = 0
 		workflow_categories = _.pluck(db.categories.find({app: appId}).fetch(), '_id')
 		if _.isEmpty(workflow_categories)
 			# categorys = WorkflowManager.getSpaceCategories(Session.get("spaceId"), Session.get("workflow_categories"))
@@ -443,7 +444,7 @@ TemplateHelpers =
 			# 	# 有分类时，数量只显示在分类下面的子菜单，即流程菜单链接的右侧，总菜单不计算和显示数量
 			# 	return ""
 			spaceId = Steedos.spaceId()
-			return Steedos.getBadge("workflow", spaceId)
+			result = Steedos.getBadge("workflow", spaceId)
 		else
 			getInboxCount = (categoryIds)->
 				count = 0
@@ -456,7 +457,10 @@ TemplateHelpers =
 			# count = getInboxCount(Session.get("workflow_categories"))
 			count = getInboxCount(workflow_categories)
 			if count
-				return count
+				result = count
+		# 客户端推送依赖了订阅raix_push_notifications，可能不稳定，这里拿到最新数据后再播放一次客户端推送效果
+		Steedos.playNodeBadge(result)
+		return result
 
 	# getInstanceBadge: (appId, spaceId)->
 	# 	workflow_categories = _.pluck(db.categories.find({app: appId}).fetch(), '_id')

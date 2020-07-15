@@ -166,11 +166,27 @@ fields:
     label: Multiple
     group: Advanced
   options:
-    type: textarea
+    type: grid
     label: Options
     is_wide: true
-    inlineHelpText: One option per line. Three definition formats are supported. Value, label:value, Label :value:# FFFFFF, the third format can set the color of each option.
+    inlineHelpText: The label and value of each option cannot be empty. Set the background color to FFFFFF in hexadecimal format.
     group: Advanced
+  options.$:
+    label: Options
+    blackbox: true
+    type: object
+  options.$.label:
+    label: Label
+    type: text
+    required: true
+  options.$.value:
+    label: Value
+    type: text
+    required: true
+  options.$.color:
+    label: Color
+    type: text
+    required: false
   inlineHelpText:
     label: Prompt text
     type: text

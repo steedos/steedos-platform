@@ -6,7 +6,8 @@ menu_account_profile: 我的资料
 menu_account_background: 背景图
 menu_menu_users: 公司设置
 menu_spaces: 公司
-menu_space_users: 部门与用户
+menu_organizations: 部门
+menu_space_users: 用户
 menu_permission_set: 权限集
 menu_profile: 简档
 menu_apps: 应用程序

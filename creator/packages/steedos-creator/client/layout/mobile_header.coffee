@@ -48,7 +48,7 @@ Template.creatorMobileHeader.helpers
 		return Creator.getPermissions(object_name)?.allowCreate
 	headerTitle: ()->
 		object = Creator.getObject()
-		return Session.get("headerTitle") || object.label || object.name
+		return Session.get("headerTitle") || object?.label || object?.name
 
 Template.creatorMobileHeader.events
 	'click .creator-add-object-record': (e, t)->

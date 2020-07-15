@@ -43,8 +43,16 @@ admin_menus:
     object_name: spaces
     parent: menu_users
     sort: 10
+  - _id: organizations
+    name: Departments
+    permission_sets:
+      - admin
+      - organization_admin
+    object_name: organizations
+    parent: menu_users
+    sort: 12
   - _id: space_users
-    name: Departments & Users
+    name: Users
     permission_sets:
       - admin
       - organization_admin

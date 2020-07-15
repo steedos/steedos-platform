@@ -72,7 +72,7 @@ const generatHtml = (doc)=>{
 <!--  ----------------------------------------------------------------------  -->
 <!--  注意：请将以下 <FORM> 元素添加到您的网页中。                                  -->
 <!--  ----------------------------------------------------------------------  -->
-<form action=${formUrl} method="POST">
+<form action="${formUrl}" method="POST">
     <input type=hidden name="steedos_form_id" value="${doc._id}">
     <input type=hidden name="return_url" value="${doc.return_url}">
 

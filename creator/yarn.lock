@@ -402,10 +402,10 @@
   dependencies:
     tslib "^1.10.0"
 
-"@steedos/accounts@^1.19.9":
-  version "1.19.9"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.19.9.tgz#fc034a6de4ae48c71eae8683bbb8c98ed08e18f7"
-  integrity sha1-/ANKbeSuSMceroaDu7jJjtCOGPc=
+"@steedos/accounts@^1.19.10":
+  version "1.19.10"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.19.10.tgz#6eda5d9ac94345d7e8847d39e5f28951bac7711e"
+  integrity sha512-odQzpBQsrK6HipN5HRJ+yRJwGhEzkX2FVS/PGQheanuVYt6LZA9OmnbtUVhetGpt8dSs1gbFVbLRXbu0OXPAJg==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
@@ -559,10 +559,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/react@1.20.11":
-  version "1.20.11"
-  resolved "https://registry.npm.taobao.org/@steedos/react/download/@steedos/react-1.20.11.tgz#b8fe0439b0d45193a67136458fead422dfb3f0f8"
-  integrity sha1-uP4EObDUUZOmcTZFj+rUIt+z8Pg=
+"@steedos/react@1.21.1":
+  version "1.21.1"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.21.1.tgz#8477ef1f67399a5d037de83bac5552441e13eab1"
+  integrity sha512-S62O9SwAnAl2sWZf2jag5BdTHSBde1hKwtvnlNzbhj8Gf6Uf4hl+Ow5vTXsLC1oeCcleIVPNkPE8ltzwHBotcw==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"

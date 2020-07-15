@@ -105,7 +105,6 @@ list_views:
       - name
       - sort_no
       - hidden
-      - company_id
     label: All Departments
     filter_scope: space
     sort:

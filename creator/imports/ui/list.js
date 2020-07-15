@@ -1,5 +1,6 @@
 import './list.html';
 import ListContainer from './containers/ListContainer.jsx'
+import ListSelect from './containers/ListSelect.jsx'
 import { store, createGridAction } from '@steedos/react';
 
 let isListRendered = false;
@@ -36,7 +37,7 @@ const getListProps = ({id, object_name, related_object_name, is_related, records
 	columns = columns.map((item) => {
 		let field = curObject.fields[item];
 		if (field) {
-			return {
+			let column = {
 				field: item,
 				label: field.label,
 				type: field.type,
@@ -47,7 +48,14 @@ const getListProps = ({id, object_name, related_object_name, is_related, records
 				allOptions: field.allOptions,
 				optionsFunction: field.optionsFunction,
 				hidden: !mainColumns.contains(item)
+			};
+			if(field.type === "select"){
+				column.format = (children, doc, options)=>{
+					let cellData = Creator.getTableCellData({ field, doc, val: children, object_name: options.objectName, _id: doc._id });
+					return ListSelect(cellData, {object_name:curObjectName, field});
+				}
 			}
+			return column;
 		}
 		else {
 			console.error(`The object ${curObject.name} don't exist field '${item}'`);

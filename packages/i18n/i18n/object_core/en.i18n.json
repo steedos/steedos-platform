@@ -184,11 +184,21 @@
 	"web_forms_default_notification_body": "The Web form has a new record submission.",
 	"web_forms_select_option_none": "--none--",
 
+	"object_fields_error_option_label_required": "The 'Label' of each option in the selection attribute cannot be empty.",
+	"object_fields_error_option_value_required": "The option 'Value' for each option in the option property cannot be empty.",
 	"object_fields_error_option_color_not_valid": "The incorrectly formatted option color value is defined in the field 'Options' attribute. Enter the correct hexadecimal color value, such as #FFFFFF.",
 	"picklist_options_error_color_not_valid": "Background color format incorrect, please enter the correct hexadecimal color code, such as #FFFFFF.",
 
 	"space_users_method_disable_success": "The user was successfully deactivated.",
 	"space_users_method_disable_error": "User deactivation failed, %s",
 	"space_users_method_enable_success": "The user was successfully enabled.",
-	"space_users_method_enable_error": "Enable user failure, %s"
+	"space_users_method_enable_error": "Enable user failure, %s", 
+
+	"reports_field_report_type_options_tabular": "Tabular",
+	"reports_field_report_type_options_summary": "Summary",
+	"reports_field_report_type_options_matrix": "Matrix",
+	"reports_field_report_type_options_jsreport": "JsReport",
+	"reports_field_report_type_options_stimulsoft-report": "StimulsoftReport",
+	
+	"object_fields_error_formula_required": "When the field type is autonumber, the formula field must be filled in."
 }
