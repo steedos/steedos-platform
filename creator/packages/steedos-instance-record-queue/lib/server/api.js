@@ -313,8 +313,14 @@ InstanceRecordQueue.Configure = function (options) {
 						console.log('fm.workflow_field: ', fm.workflow_field)
 					}
 					// 表单选人选组字段 至 对象 lookup master_detail类型字段同步
-					if (!wField.is_multiselect && ['user', 'group'].includes(wField.type) && !oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && ['users', 'organizations'].includes(oField.reference_to)) {
-						obj[fm.object_field] = values[fm.workflow_field]['id'];
+					if (['user', 'group'].includes(wField.type) && ['lookup', 'master_detail'].includes(oField.type) && ['users', 'organizations'].includes(oField.reference_to)) {
+						if (!_.isEmpty(values[fm.workflow_field])) {
+							if (oField.multiple && wField.is_multiselect) {
+								obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], 'id'))
+							} else if (!oField.multiple && !wField.is_multiselect) {
+								obj[fm.object_field] = values[fm.workflow_field].id
+							}
+						}
 					}
 					else if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to) && _.isString(values[fm.workflow_field])) {
 						var oCollection = Creator.getCollection(oField.reference_to, spaceId)
