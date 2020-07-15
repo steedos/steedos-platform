@@ -53,7 +53,7 @@ Template.afSelectOrg.events({
 		if (Modal.allowMultiple) {
 			return;
 		}
-		if ("disabled" in template.data.atts || "readonly" in template.data.atts)
+		if ("disabled" in template.data.atts)
 			return;
 
 		try{
@@ -139,7 +139,7 @@ Template.afSelectOrg.helpers({
 		}
 	},
 	disabled: function () {
-		return "disabled" in this.atts ||  "readonly" in this.atts;
+		return "disabled" in this.atts;
 	}
 });
 

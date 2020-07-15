@@ -89,9 +89,9 @@ AutoForm.addInputType("select", {
       }
     });
 
-    if("readonly" in context.atts){
-      context.atts.disabled = "";
-    }
+    // if("readonly" in context.atts){
+    //   context.atts.disabled = "";
+    // }
 
     return context;
   }
