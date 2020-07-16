@@ -238,7 +238,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 		getFormTableField = (key) ->
 			return _.find formTableFields,  (f) ->
 				return f.code == key
-		
+
 		getFormField = (key) ->
 			return _.find formFields,  (f) ->
 				return f.code == key
@@ -265,6 +265,34 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				if !_.isEmpty _records
 					return _records
 			return
+
+		getSelectUserValue = (userId, spaceId) ->
+			su = Creator.getCollection('space_users').findOne({ space: spaceId, user: userId })
+			su.id = userId
+			return su
+
+		getSelectUserValues = (userIds, spaceId) ->
+			sus = []
+			if _.isArray userIds
+				_.each userIds, (userId) ->
+					su = getSelectUserValue(userId, spaceId)
+					if su
+						sus.push(su)
+			return sus
+
+		getSelectOrgValue = (orgId, spaceId) ->
+			org = Creator.getCollection('organizations').findOne(orgId, { fields: { _id: 1, name: 1, fullname: 1 } })
+			org.id = orgId
+			return org
+
+		getSelectOrgValues = (orgIds, spaceId) ->
+			orgs = []
+			if _.isArray orgIds
+				_.each orgIds, (orgId) ->
+					org = getSelectOrgValue(orgId, spaceId)
+					if org
+						orgs.push(org)
+			return orgs
 
 		tableFieldCodes = []
 		tableFieldMap = []
@@ -383,6 +411,19 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
 								else if !relatedObjectField.multiple && !formField.is_multiselect
 									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+							else if ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedObjectField.type) && ['users', 'organizations'].includes(relatedObjectField.reference_to)
+								referenceToFieldValue = rr[fieldKey]
+								if !_.isEmpty(referenceToFieldValue)
+									if formField.type == 'user'
+										if relatedObjectField.multiple && formField.is_multiselect
+											tableFieldValue = getSelectUserValues(referenceToFieldValue, spaceId)
+										else if !relatedObjectField.multiple && !formField.is_multiselect
+											tableFieldValue = getSelectUserValue(referenceToFieldValue, spaceId)
+									else if formField.type == 'group'
+										if relatedObjectField.multiple && formField.is_multiselect
+											tableFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
+										else if !relatedObjectField.multiple && !formField.is_multiselect
+											tableFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
 							else
 								tableFieldValue = rr[fieldKey]
 							tableValueItem[formFieldKey] = tableFieldValue
