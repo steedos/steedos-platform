@@ -530,9 +530,9 @@ pushManager.send_instance_notification = (send_from, instance, description, curr
 					if ['first_submit_inbox', 'submit_pending_inbox', 'submit_pending_rejected_inbox', 'submit_pending_rejected_applicant_inbox', 'reassign_new_inbox_users', 'trace_approve_cc', 'auto_submit_pending_inbox'].includes(send_from)
 						if current_user_info.email && current_user_info.email_notification
 							try
-								console.time("push-2-1-ins_html")
+								# console.time("push-2-1-ins_html")
 								ins_html = uuflowManager.ins_html(current_user_info, instance)
-								console.timeEnd("push-2-1-ins_html")
+								# console.timeEnd("push-2-1-ins_html")
 							catch e
 								console.error e
 
