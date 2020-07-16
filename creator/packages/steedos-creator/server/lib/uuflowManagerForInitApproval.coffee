@@ -353,6 +353,22 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				else if !objField.multiple && !formField.is_multiselect
 					odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
 				values[workflow_field] = odataFieldValue
+			else if formField && objField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objField.type) && ['users', 'organizations'].includes(objField.reference_to)
+				referenceToFieldValue = record[objField.name]
+				if !_.isEmpty(referenceToFieldValue)
+					selectFieldValue
+					if formField.type == 'user'
+						if objField.multiple && formField.is_multiselect
+							selectFieldValue = getSelectUserValues(referenceToFieldValue, spaceId)
+						else if !objField.multiple && !formField.is_multiselect
+							selectFieldValue = getSelectUserValue(referenceToFieldValue, spaceId)
+					else if formField.type == 'group'
+						if objField.multiple && formField.is_multiselect
+							selectFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
+						else if !objField.multiple && !formField.is_multiselect
+							selectFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
+					if selectFieldValue
+						values[workflow_field] = selectFieldValue
 			else if record.hasOwnProperty(object_field)
 				values[workflow_field] = record[object_field]
 
@@ -404,6 +420,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							
 							formField = getFormTableSubField(formTableField, formFieldKey)
 							relatedObjectField = relatedObject.fields[fieldKey]
+							if !formField || !relatedObjectField
+								return
 							if formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type) && _.isString(relatedObjectField.reference_to)
 								referenceToObjectName = relatedObjectField.reference_to
 								referenceToFieldValue = rr[fieldKey]
