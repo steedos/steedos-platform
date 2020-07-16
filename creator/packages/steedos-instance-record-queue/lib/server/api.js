@@ -494,6 +494,9 @@ InstanceRecordQueue.Configure = function (options) {
 								}
 								var formField = getFormField(formFields, formFieldKey);
 								var relatedObjectField = relatedObject.fields[fieldKey];
+								if (!relatedObjectField || !formField) {
+									return
+								}
 								if (formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type)) {
 									if (!_.isEmpty(relatedObjectFieldValue)) {
 										if (relatedObjectField.multiple && formField.is_multiselect) {
