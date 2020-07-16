@@ -32,6 +32,9 @@ export const hashStampedToken = function (stampedToken) {
 export const insertHashedLoginToken = async function (userId, hashedToken) {
   let userObject = getSteedosSchema().getObject('users')
   let user = await userObject.findOne(userId, { fields: ['services'] })
+  if(!user['services']){
+    user['services'] = {}
+  }
   if(!user['services']['resume']){
     user['services']['resume'] = {loginTokens: []}
   }
