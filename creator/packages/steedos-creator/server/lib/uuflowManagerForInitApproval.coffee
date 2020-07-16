@@ -168,7 +168,8 @@ uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info)
 	appr_obj.is_read = true
 	appr_obj.is_error = false
 	appr_obj.description = ''
-	appr_obj.values = uuflowManagerForInitApproval.initiateValues(ins_obj.record_ids[0], flow_id, space_id, form.current.fields)
+	relatedTablesInfo = {}
+	appr_obj.values = uuflowManagerForInitApproval.initiateValues(ins_obj.record_ids[0], flow_id, space_id, form.current.fields, relatedTablesInfo)
 
 	trace_obj.approves = [appr_obj]
 	ins_obj.traces = [trace_obj]
@@ -190,13 +191,15 @@ uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info)
 
 	new_ins_id = Creator.Collections.instances.insert(ins_obj)
 
-	uuflowManagerForInitApproval.initiateAttach(ins_obj.record_ids[0], space_id, ins_obj._id, appr_obj._id)
-
 	uuflowManagerForInitApproval.initiateRecordInstanceInfo(ins_obj.record_ids[0], new_ins_id, space_id)
+
+	uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo(relatedTablesInfo, new_ins_id, space_id)
+
+	uuflowManagerForInitApproval.initiateAttach(ins_obj.record_ids[0], space_id, ins_obj._id, appr_obj._id)
 
 	return new_ins_id
 
-uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, fields) ->
+uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, fields, relatedTablesInfo) ->
 	fieldCodes = []
 	_.each fields, (f) ->
 		if f.type == 'section'
@@ -348,6 +351,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 			else
 				relatedObjectName = key
 				tableValues = []
+				relatedTableItems = []
 				relatedObject = Creator.getObject(relatedObjectName, spaceId)
 				relatedField = _.find relatedObject.fields, (f) ->
 					return ['lookup', 'master_detail'].includes(f.type) && f.reference_to == objectName
@@ -356,7 +360,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 				selector = {}
 				selector[relatedFieldName] = recordId
-				relatedRecords = Creator.getCollection(relatedObjectName).find(selector)
+				relatedCollection = Creator.getCollection(relatedObjectName, spaceId)
+				relatedRecords = relatedCollection.find(selector)
 
 				relatedRecords.forEach (rr) ->
 					tableValueItem = {}
@@ -381,10 +386,13 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							else
 								tableFieldValue = rr[fieldKey]
 							tableValueItem[formFieldKey] = tableFieldValue
-
-					tableValues.push(tableValueItem)
+					if !_.isEmpty(tableValueItem)
+						tableValueItem._id = rr._id
+						tableValues.push(tableValueItem)
+						relatedTableItems.push({ _table: { _id: rr._id, _code: tableCode } } )
 
 				values[tableCode] = tableValues
+				relatedTablesInfo[relatedObjectName] = relatedTableItems
 
 		# 如果配置了脚本则执行脚本
 		if ow.field_map_script
@@ -462,6 +470,23 @@ uuflowManagerForInitApproval.initiateRecordInstanceInfo = (recordIds, insId, spa
 			instance_state: 'draft'
 		}
 	})
+
+	return
+
+
+uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo = (relatedTablesInfo, insId, spaceId) ->
+	_.each relatedTablesInfo, (tableItems, relatedObjectName) ->
+		relatedCollection = Creator.getCollection(relatedObjectName, spaceId)
+		_.each tableItems, (item) ->
+			relatedCollection.update(item._table._id, {
+				$set: {
+					instances: [{
+						_id: insId,
+						state: 'draft'
+					}],
+					_table: item._table
+				}
+			})
 
 	return
 
