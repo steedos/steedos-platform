@@ -547,7 +547,7 @@ InstanceRecordQueue.Configure = function (options) {
 		return {}
 	}
 
-	self.syncRelatedObjectsValue = function (mainRecordId, relatedObjects, relatedObjectsValue, spaceId, ins) {
+	self.syncRelatedObjectsValue = function (mainRecordId, relatedObjects, relatedObjectsValue, spaceId, ins, mainRecord) {
 		var insId = ins._id;
 
 		_.each(relatedObjects, function (relatedObject) {
@@ -562,6 +562,7 @@ InstanceRecordQueue.Configure = function (options) {
 				tableMap[table_code].push(table_id);
 				var oldRelatedRecord = Creator.getCollection(relatedObject.object_name, spaceId).findOne({ [relatedObject.foreign_key]: mainRecordId, "instances._id": insId, _table: relatedObjectValue._table }, { fields: { _id: 1 } })
 				if (oldRelatedRecord) {
+					self.setDefaultCompany(mainRecord, relatedObjectValue);
 					Creator.getCollection(relatedObject.object_name, spaceId).update({ _id: oldRelatedRecord._id }, { $set: relatedObjectValue })
 				} else {
 					relatedObjectValue[relatedObject.foreign_key] = mainRecordId;
@@ -579,6 +580,7 @@ InstanceRecordQueue.Configure = function (options) {
 						state: instance_state
 					}];
 					relatedObjectValue.instance_state = instance_state;
+					self.setDefaultCompany(mainRecord, relatedObjectValue);
 					Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, { validate: false, filter: false })
 				}
 			})
@@ -596,6 +598,24 @@ InstanceRecordQueue.Configure = function (options) {
 		tableIds = _.compact(tableIds);
 
 
+	}
+
+	/**
+	 * 
+	 * @param {*} source 
+	 * @param {*} target 
+	 */
+	self.setDefaultCompany = function (source, target) {
+		if (source && target) {
+			if (!target.company_id && _.isEmpty(target.company_ids)) {
+				if (source.company_id) {
+					target.company_id = source.company_id;
+				}
+				if (source.company_ids) {
+					target.company_ids = source.company_ids;
+				}
+			}
+		}
 	}
 
 	self.sendDoc = function (doc) {
@@ -624,6 +644,8 @@ InstanceRecordQueue.Configure = function (options) {
 		var values = ins.values,
 			spaceId = ins.space;
 
+		var su = Creator.getCollection('space_users', spaceId).findOne({ space: spaceId, user: ins.applicant });
+
 		if (records && !_.isEmpty(records)) {
 			// 此情况属于从creator中发起审批，或者已经从Apps同步到了creator
 			var objectName = records[0].o;
@@ -649,7 +671,7 @@ InstanceRecordQueue.Configure = function (options) {
 						instance_state = ins.final_decision;
 					}
 					setObj['instances.$.state'] = setObj.instance_state = instance_state;
-
+					self.setDefaultCompany(su, setObj);
 					objectCollection.update({
 						_id: record._id,
 						'instances._id': insId
@@ -659,7 +681,8 @@ InstanceRecordQueue.Configure = function (options) {
 
 					var relatedObjects = Creator.getRelatedObjects(ow.object_name, spaceId);
 					var relatedObjectsValue = syncValues.relatedObjectsValue;
-					self.syncRelatedObjectsValue(record._id, relatedObjects, relatedObjectsValue, spaceId, ins);
+					var newestRecord = objectCollection.findOne(record._id);
+					self.syncRelatedObjectsValue(record._id, relatedObjects, relatedObjectsValue, spaceId, ins, newestRecord);
 
 
 					// 以最终申请单附件为准，旧的record中附件删除
@@ -736,6 +759,7 @@ InstanceRecordQueue.Configure = function (options) {
 					newObj.owner = ins.applicant;
 					newObj.created_by = ins.applicant;
 					newObj.modified_by = ins.applicant;
+					self.setDefaultCompany(su, newObj);
 					var r = objectCollection.insert(newObj);
 					if (r) {
 						Creator.getCollection('instances').update(ins._id, {
@@ -748,9 +772,9 @@ InstanceRecordQueue.Configure = function (options) {
 						})
 						var relatedObjects = Creator.getRelatedObjects(ow.object_name, spaceId);
 						var relatedObjectsValue = syncValues.relatedObjectsValue;
-						self.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins);
-						// workflow里发起审批后，同步时也可以修改相关表的字段值 #1183
 						var record = objectCollection.findOne(newRecordId);
+						self.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins, record);
+						// workflow里发起审批后，同步时也可以修改相关表的字段值 #1183
 						self.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record);
 					}
 
