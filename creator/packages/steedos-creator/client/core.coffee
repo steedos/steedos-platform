@@ -700,7 +700,7 @@ if Meteor.isClient
 				val = val.replace(/\n/g, '\n<br>');
 				val = val.replace(/ /g, '&nbsp;');
 			data.push {value: val, id: props._id, type: _field.type}
-		else if _field.type == "boolean"
+		else if _field.type == "boolean" || _field.type == "toggle"
 			if props.val
 				val = t "YES"
 			else

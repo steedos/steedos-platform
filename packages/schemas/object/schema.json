@@ -304,6 +304,7 @@
                                 "html",
                                 "select",
                                 "boolean",
+                                "toggle",
                                 "date",
                                 "datetime",
                                 "number",
