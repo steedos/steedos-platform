@@ -11,6 +11,7 @@ const FIELDTYPES = [
     "html",
     "select",
     "boolean",
+    "toggle",
     "date",
     "datetime",
     "number",
@@ -187,6 +188,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 }
                 break;
             case 'boolean':
+                this._fieldDBType = SteedosFieldDBType.boolean
+                break;
+            case 'toggle':
                 this._fieldDBType = SteedosFieldDBType.boolean
                 break;
             case 'date':
