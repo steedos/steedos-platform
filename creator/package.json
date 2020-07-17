@@ -16,7 +16,7 @@
     "os": "cp -r ../packages/* node_modules/@steedos/ && cp -r ../apps/contracts/src/* node_modules/@steedos/app-contracts/src/",
     "oss": "cp -r ../packages/standard-objects/* node_modules/@steedos/standard-objects/ && yarn start",
     "osw": "cd ../../steedos-webapp/ && yarn build-lib && cd ../object-server/creator/ && cp -r ../../steedos-webapp/lib/* node_modules/@steedos/react/lib/",
-    "sr": "cp -r ../steedos-plugin-stimulsoft-report/lib/* node_modules/@steedos/plugin-stimulsoft-report/lib/ && rm -rf node_modules/@steedos/plugin-stimulsoft-report/node_modules/@steedos"
+    "sr": "cp -r ../../steedos-plugin-stimulsoft-report/lib/* node_modules/@steedos/plugin-stimulsoft-report/lib/ && rm -rf node_modules/@steedos/plugin-stimulsoft-report/node_modules/@steedos"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
