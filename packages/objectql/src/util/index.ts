@@ -247,7 +247,6 @@ export function loadObjectDataFiles(filePath: string){
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
-        console.log("loadObjectDataFiles", matchedPath);
         let records = loadFile(matchedPath);
         let objectName = path.basename(matchedPath).split('.')[0];
         results.push({objectName: objectName, records: records});
