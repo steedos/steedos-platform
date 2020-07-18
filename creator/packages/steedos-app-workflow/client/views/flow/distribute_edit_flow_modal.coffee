@@ -67,9 +67,6 @@ Template.distribute_edit_flow_modal.events
 		_.each allow_distribute_steps, (s)->
 			step_flows.push({_id: s._id, distribute_optional_flows: AutoForm.getFieldValue("distribute_flows", s._id)})
 
-		if _.isEmpty(selected_users_id) and _.isEmpty(step_flows)
-			return
-
 		$("body").addClass("loading")
 		Meteor.call 'update_distribute_settings', flow_id, selected_users_id, step_flows, $('#distribute_to_self')[0].checked,$('#distribute_end_notification')[0].checked, (err, result)->
 			$("body").removeClass("loading")
