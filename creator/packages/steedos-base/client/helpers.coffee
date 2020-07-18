@@ -205,7 +205,7 @@ Steedos.Helpers =
 		if organizations_parents
 			labels = organizations_parents.map (org)->
 				return org._NAME_FIELD_VALUE
-			return labels.join(" / ")
+			return labels.reverse().join(" / ")
 
 _.extend Steedos, Steedos.Helpers
 
