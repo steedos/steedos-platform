@@ -14,6 +14,8 @@ flows_action_standard_edit:
 flows_action_standard_new: 新建
 flows_action_standard_new_by_template: 从模板新建
 flows_action_upgradeFlow: 导入流程(升级)
+flows_action_enableFlow: 启用
+flows_action_disableFlow: 停用
 flows_field_allow_select_step: 申请人指定步骤、审批人
 flows_field_app: 所属应用
 flows_field_auto_remind: 自动催办

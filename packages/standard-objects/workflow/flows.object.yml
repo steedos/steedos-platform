@@ -432,6 +432,84 @@ actions:
       function (object_name, record_id, fields) {
               return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.form, Creator.getUserCompanyId());
             }
+  enableFlow:
+    label: Enable Flow
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions) {
+        var record = Creator.getObjectRecord(object_name, record_id, 'state');
+        if (record && record.state == 'disabled') {
+          return true;
+        }
+        return false;
+      }
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        $("body").addClass("loading");
+        var record = Creator.getObjectRecord(object_name, record_id, 'space,form,state');
+        var userSession = Creator.USER_CONTEXT;
+        var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+        var formId = _.isObject(record.form) ? record.form._id : record.form;
+        $.ajax({
+          type: "POST",
+          url: Steedos.absoluteUrl("/am/flows/state?methodOverride=PUT"),
+          data: JSON.stringify({ 'Flows': [{id: record._id, space: record.space, state: 'enabled', form: formId }] }),
+          dataType: "json",
+          contentType: 'application/json',
+          beforeSend: function (XHR) {
+            XHR.setRequestHeader('Content-Type', 'application/json');
+            XHR.setRequestHeader('Authorization', authorization);
+          },
+          success: function (data) {
+            $("body").removeClass("loading");
+            toastr.success("操作已成功！");
+            Template.creator_view.currentInstance.onEditSuccess();
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $("body").removeClass("loading");
+            toastr.error(XMLHttpRequest.responseJSON);
+          }
+        });
+      }
+  disableFlow:
+    label: Disable Flow
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions) {
+        var record = Creator.getObjectRecord(object_name, record_id, 'state');
+        if (record && record.state == 'enabled') {
+          return true;
+        }
+        return false;
+      }
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        $("body").addClass("loading");
+        var record = Creator.getObjectRecord(object_name, record_id, 'space,form,state');
+        var userSession = Creator.USER_CONTEXT;
+        var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+        var formId = _.isObject(record.form) ? record.form._id : record.form;
+        $.ajax({
+          type: "POST",
+          url: Steedos.absoluteUrl("/am/flows/state?methodOverride=PUT"),
+          data: JSON.stringify({ 'Flows': [{id: record._id, space: record.space, state: 'disabled', form: formId }] }),
+          dataType: "json",
+          contentType: 'application/json',
+          beforeSend: function (XHR) {
+            XHR.setRequestHeader('Content-Type', 'application/json');
+            XHR.setRequestHeader('Authorization', authorization);
+          },
+          success: function (data) {
+            $("body").removeClass("loading");
+            toastr.success("操作已成功！");
+            Template.creator_view.currentInstance.onEditSuccess();
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $("body").removeClass("loading");
+            toastr.error(XMLHttpRequest.responseJSON);
+          }
+        });
+      }
   export_default_template:
     label: Export Default Template
     'on': record_more
