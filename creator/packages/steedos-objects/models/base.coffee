@@ -439,7 +439,7 @@
 #		actionUserInfo = Creator.getCollection('users').findOne(userId, { fields: { name: 1 } })
 #
 #
-#		redirectUrl = Steedos.absoluteUrl(Creator.getObjectUrl(object_name, doc._id, object_name))
+#		redirectUrl = Creator.getObjectUrl(object_name, doc._id, object_name)
 #
 #		owCollection.find({
 #			object_name: object_name,
