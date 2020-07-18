@@ -201,6 +201,12 @@ Steedos.Helpers =
 	getOpenWindowScript: (href)->
 		return "window.open('#{href}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');event.stopPropagation();return false;"
 
+	getUserOrganizationsPathLabel: (organizations_parents)->
+		if organizations_parents
+			labels = organizations_parents.map (org)->
+				return org._NAME_FIELD_VALUE
+			return labels.join(" / ")
+
 _.extend Steedos, Steedos.Helpers
 
 Template.registerHelpers = (dict) ->

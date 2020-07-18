@@ -22,11 +22,14 @@
 									{{/if}}
 								</div>
 							</div>
-							<div class="slds-p-left--x-large slds-no-space user-name">
-								<div class="slds-m-top--medium truncate slds-m-right--small">
+							<div class="slds-p-left--x-large slds-no-space">
+								<div class="slds-m-top--medium truncate slds-m-right--small user-name">
 									<b>
 										<span>{{doc.name}}</span>
 									</b>
+								</div>
+								<div class="slds-m-top--medium truncate slds-m-right--small user-organizations">
+									<span>{{getUserOrganizationsPathLabel doc.organizations_parents}}</span>
 								</div>
 							</div>
 							{{#if showEditBtn}}
