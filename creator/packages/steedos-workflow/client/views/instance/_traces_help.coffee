@@ -269,6 +269,7 @@ TracesTemplate.helpers =
 				user = db.users.findOne({_id: ins.created_by}, {fields: {name: 1}})
 
 			if user.name
+				dis_info.from_user = user._id
 				dis_info.from_user_name = user.name
 				dis_info.created = ins.created
 
@@ -296,10 +297,12 @@ TracesTemplate.helpers =
 			locale = Session.get("TAPi18n::loaded_lang")
 
 		return TAPi18n.__('process_delegation_rules_description', {userName: userName}, locale)
+	
 	traceName: (instance_id, traceId)->
 		return _.find(db.instances.findOne(instance_id, {fields: {traces: 1}})?.traces, (trace)->
 					return trace._id ==  traceId
 		)?.name
+
 if Meteor.isServer
 	TracesTemplate.helpers.dateFormat = (date)->
 		if date

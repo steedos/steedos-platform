@@ -199,7 +199,7 @@ Steedos.Helpers =
 		return "/app/admin/space_users/view/#{space_userId}?ref=users"
 
 	getOpenWindowScript: (href)->
-		return "window.open('#{href}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false"
+		return "window.open('#{href}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');event.stopPropagation();return false;"
 
 _.extend Steedos, Steedos.Helpers
 

@@ -13,7 +13,11 @@
                                     <td class="td-approve">
                                         <table class="trace-approve-talbe">
                                             <tr class="approve-item-distribute">
-                                                <td class="name">{{this.from_user_name}}</td>
+                                                <td class="name">
+                                                    <a onclick="Creator.openSafeObjectUrl('users', '{{this.from_user}}')">
+                                                        {{this.from_user_name}}
+                                                    </a>
+                                                </td>
                                                 <td class="finish-date">{{dateFormat this.created}}</td>
                                                 <td class="status {{this.judge}}"></td>
                                             </tr>
