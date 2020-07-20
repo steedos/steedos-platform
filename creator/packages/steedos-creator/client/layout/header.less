@@ -11,9 +11,8 @@
 
         .slds-global-header__item--logo {
             display: flex;
-
             .slds-global-header__logo {
-                width: 36px;
+                width: auto;
                 height: 36px;
                 background-size: contain;
                 background-repeat: no-repeat;
@@ -21,8 +20,15 @@
                 border-radius: 3px;
                 background: transparent;
                 img{
-                    width: 36px;
                     height: 36px;
+                    object-fit: contain;
+                }
+                &.slds-global-header__logo_square{
+                    width: 36px;
+                    img{
+                        width: 36px;
+                        object-fit: unset;
+                    }
                 }
             }
             .slds-global-header__text {

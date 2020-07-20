@@ -6,10 +6,23 @@
 		Main Content</a>
 		<div class="slds-global-header slds-grid slds-grid_align-spread">
 			<div class="slds-global-header__item slds-global-header__item--logo">
-				<div class="slds-global-header__logo">
-					<img src="{{logoUrl}}" alt=""/>
-				</div>
-				<div class="slds-global-header__text" title={{spaceName}}>{{spaceName}}</div>
+				{{#if space}}
+					{{#if space.avatar}}
+						<div class="slds-global-header__logo">
+							<img src="{{logoUrl space.avatar}}" alt=""/>
+						</div>
+					{{else if space.avatar_square}}
+						<div class="slds-global-header__logo slds-global-header__logo_square">
+							<img src="{{logoUrl space.avatar_square}}" alt=""/>
+						</div>
+						<div class="slds-global-header__text" title={{space.name}}>{{space.name}}</div>
+					{{else}}
+						<div class="slds-global-header__logo slds-global-header__logo_square">
+							<img src="{{defaultLogoUrl}}" alt=""/>
+						</div>
+						<div class="slds-global-header__text" title={{space.name}}>{{space.name}}</div>
+					{{/if}}
+				{{/if}}
 			</div>
 			{{> headerSearch}}
 			<ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
