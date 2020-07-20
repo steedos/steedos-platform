@@ -9,7 +9,7 @@ Template.creatorHeader.helpers
 
 	defaultLogoUrl: ()->
 		logo_url = "/packages/steedos_creator/assets/logo-square.png"
-		return Creator.getRelativeUrl(logo_url)
+		return Steedos.absoluteUrl(logo_url)
 	
 	currentUserUser: ()->
 		url = "app/admin/users/view/#{Steedos.userId()}"
