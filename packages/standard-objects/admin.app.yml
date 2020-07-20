@@ -184,6 +184,13 @@ admin_menus:
     object_name: picklists
     parent: advanced
     sort: 40
+  - _id: holidays
+    name: Holidays
+    permission_sets:
+      - admin
+    object_name: holidays
+    parent: advanced
+    sort: 90
   - _id: about
     name: About Steedos
     permission_sets:

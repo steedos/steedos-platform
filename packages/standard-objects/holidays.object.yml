@@ -1,0 +1,56 @@
+name: holidays
+label: Holidays
+icon: groups
+fields:
+  name:
+    label: Name
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    index: true
+  date:
+    label: Date
+    type: date
+    index: true
+    required: true
+list_views:
+  all:
+    label: All
+    columns:
+      - name
+      - date
+    filter_scope: all
+actions:
+  makeHolidays:
+    label: Order
+    'on': list
+    visible: true
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        Modal.show('make_holidays_modal');
+      }
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  guest:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true

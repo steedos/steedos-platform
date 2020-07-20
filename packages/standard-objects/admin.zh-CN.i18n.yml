@@ -27,3 +27,4 @@ menu_object_manager: $t(objects__object)
 menu_datasources_manager: $t(datasources__object)
 menu_company: 分部
 menu_advanced: 高级设置
+menu_holidays: 节假日

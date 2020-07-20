@@ -367,6 +367,10 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/list/admin_process_delegation_rules.coffee', 'client');
 
 	api.addFiles('client/methods/call_statistics.coffee', 'client');
+
+	api.addFiles('client/views/holidays/make_holidays_modal.html', 'client');
+	api.addFiles('client/views/holidays/make_holidays_modal.coffee', 'client');
+	api.addFiles('client/views/holidays/make_holidays_modal.less', 'client');
 	
 	// api.addAssets("assets/designer/index.html", "client");
 	// api.addAssets("assets/designer/index.js", "client");
