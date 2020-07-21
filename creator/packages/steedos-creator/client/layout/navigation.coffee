@@ -1,5 +1,5 @@
 computeObjects = (maxW, hasAppDashboard)->
-	console.log("===hasAppDashboard===", hasAppDashboard)
+	# 当导航字体相关样式变更时，应该变更该font变量，否则计算可能出现偏差
 	font = '400 normal 13px -apple-system, system-ui, Helvetica, Arial, "Microsoft Yahei", SimHei'
 	itemPaddingW = 24 # 每项的边距宽度
 	unless maxW
@@ -10,7 +10,6 @@ computeObjects = (maxW, hasAppDashboard)->
 	if hasAppDashboard
 		dashboardW = Creator.measureWidth(t("Home"), font) + itemPaddingW
 		maxW = maxW - dashboardW
-	console.log("===maxW===", maxW)
 	mainW = 0
 	objectNames = Creator.getAppObjectNames()
 	currentObjectName = Session.get("object_name")
@@ -22,22 +21,15 @@ computeObjects = (maxW, hasAppDashboard)->
 		labelItem = objItem.label
 		widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
 		if mainW + widthItem >= maxW
-			console.log("==item==123==", item)
-			console.log("==objItem.name====currentObjectName====", objItem.name, currentObjectName)
 			if objItem.name == currentObjectName
 				currentObjectHiddenIndex = hiddens.length
 			hiddens.push objItem
 		else
 			mainW += widthItem
 			visiables.push objItem
-	console.log("===mainW===", mainW)
-	console.log("visiables=1==", _.pluck(visiables, 'label'))
-	console.log("hiddens==1=", _.pluck(hiddens, 'label'))
 	if hiddens.length
 		# 如果有需要隐藏的项，则进一步计算加上“更多”项后的宽度情况，优化定义visiables、hiddens
 		lastVisiableIndex = visiables.length - 1
-		console.log("===lastVisiableIndex==1=", lastVisiableIndex)
-		console.log("===currentObjectHiddenIndex===", currentObjectHiddenIndex)
 		if currentObjectHiddenIndex > -1
 			# 把currentObjectName对应的对象从hiddens中移除，并且追回到visiables尾部
 			# visiables追回后不可以变更lastVisiableIndex值，因为后续增加“更多”按钮逻辑中，追加的项不可以重新移到hidden中
@@ -50,9 +42,7 @@ computeObjects = (maxW, hasAppDashboard)->
 		moreIconW = 20 #更多右侧的下拉箭头宽度
 		moreW = Creator.measureWidth(t("更多"), font) + itemPaddingW + moreIconW
 		i = lastVisiableIndex
-		console.log("===lastVisiableIndex=2=", lastVisiableIndex);
 		while mainW + moreW > maxW and i > 0
-			console.log("===i==", i);
 			objItem = visiables[i]
 			if objItem.name == currentObjectName
 				# 为当前对象选项时不可以添加到隐藏对象菜单中，直接跳过即可
@@ -63,8 +53,6 @@ computeObjects = (maxW, hasAppDashboard)->
 			mainW -= widthItem
 			hiddens.unshift(visiables.splice(i,1)[0])
 			i--
-	console.log("visiables==2=", _.pluck(visiables, 'label'))
-	console.log("hiddens==2=", _.pluck(hiddens, 'label'))
 	return { visiables, hiddens }
 
 Template.creatorNavigation.helpers Creator.helpers
