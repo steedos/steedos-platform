@@ -1,3 +1,52 @@
+computeObjects = (maxW, hasAppDashboard)->
+	console.log("===hasAppDashboard===", hasAppDashboard)
+	font = '400 normal 13px -apple-system, system-ui, Helvetica, Arial, "Microsoft Yahei", SimHei'
+	itemPaddingW = 24 # 每项的边距宽度
+	unless maxW
+		maxW = $("body").width()
+	leftAreaW = 120 #左侧应用区域宽度
+	rightAreaW = 0 #右侧对象列表后面区域的宽度，目前没有内容，后续可能增加内容
+	maxW = maxW - leftAreaW - rightAreaW
+	if hasAppDashboard
+		dashboardW = Creator.measureWidth(t("Home"), font) + itemPaddingW
+		maxW = maxW - dashboardW
+	console.log("===maxW===", maxW)
+	mainW = 0
+	objectNames = Creator.getAppObjectNames()
+	hiddens = []
+	visiables = []
+	lastVisiableIndex = 0
+	objectNames?.forEach (item, index)->
+		objItem = Creator.getObject(item)
+		labelItem = objItem.label
+		widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
+		if mainW + widthItem >= maxW
+			hiddens.push objItem
+		else
+			lastVisiableIndex = index
+			mainW += widthItem
+			visiables.push objItem
+	console.log("===mainW===", mainW)
+	console.log("visiables=1==", _.pluck(visiables, 'label'))
+	console.log("hiddens==1=", _.pluck(hiddens, 'label'))
+	if hiddens.length
+		# 如果有需要隐藏的项，则进一步计算加上“更多”项后的宽度情况，优化定义visiables、hiddens
+		moreIconW = 20 #更多右侧的下拉箭头宽度
+		moreW = Creator.measureWidth(t("更多"), font) + itemPaddingW + moreIconW
+		i = lastVisiableIndex
+		console.log("===lastVisiableIndex==", lastVisiableIndex);
+		while mainW + moreW > maxW and i > 0
+			console.log("===i==", i);
+			objItem = visiables[i]
+			labelItem = objItem.label
+			widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
+			mainW -= widthItem
+			hiddens.unshift(visiables.pop())
+			i--
+	console.log("visiables==2=", _.pluck(visiables, 'label'))
+	console.log("hiddens==2=", _.pluck(hiddens, 'label'))
+	return { visiables, hiddens }
+
 Template.creatorNavigation.helpers Creator.helpers
 
 Template.creatorNavigation.helpers
@@ -17,6 +66,10 @@ Template.creatorNavigation.helpers
 	object_i: ()->
 		return Creator.getObject(this)
 
+	computed_objects: (hasAppDashboard)->
+		maxW = Template.instance()?.containerWidth.get()
+		return computeObjects(maxW, hasAppDashboard)
+
 	object_class_name: (obj)->
 		if Session.get("app_home_active")
 			return ;
@@ -24,7 +77,7 @@ Template.creatorNavigation.helpers
 			return "slds-is-active"
 
 	object_url: ()->
-		return Creator.getRelativeUrl("/app/-/#{String(this)}")
+		return Creator.getRelativeUrl("/app/-/#{String(this.name)}")
 
 	spaces: ->
 		return db.spaces.find();
@@ -55,6 +108,8 @@ Template.creatorNavigation.helpers
 		return Steedos.isNode()
 	
 	hideObjects: ()->
+		if Steedos.isMobile()
+			return true
 		app = Creator.getApp()
 		if app and app._id == "admin"
 			return true
@@ -87,3 +142,10 @@ Template.creatorNavigation.events
 	'click .slds-context-bar__item>a': (event, template)->
 		if this.name != Session.get("list_view_id")
 			Session.set("grid_paging", null)
+
+Template.creatorNavigation.onCreated ->
+	self = this
+	self.containerWidth = new ReactiveVar()
+	unless Steedos.isMobile()
+		$(window).resize ->
+			self.containerWidth.set($("body").width())

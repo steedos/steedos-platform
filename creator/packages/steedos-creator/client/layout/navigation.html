@@ -41,7 +41,7 @@
 					</li>
 				{{/if}}
 
-				{{#each app_objects}}
+				<!-- {{#each app_objects}}
 					<li class="slds-context-bar__item {{object_class_name this}}">
 						<a data-object-name="{{this}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this}}">
 							<span class="slds-truncate">{{_ object_i.label}}</span>
@@ -50,7 +50,48 @@
 							{{/with}}
 						</a>
 					</li>
-				{{/each}}
+				{{/each}} -->
+
+				{{#with computed_objects hasAppDashboard}}
+					{{#each this.visiables}}
+						<li class="slds-context-bar__item {{object_class_name this.name}}">
+							<a data-object-name="{{this.name}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
+								<span class="slds-truncate">{{this.label}}</span>
+								{{#with getObjectBadge this app_id}}
+									<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>
+								{{/with}}
+							</a>
+						</li>
+					{{/each}}
+					{{#if this.hiddens.length}}
+						<li class="slds-context-bar__item {{object_class_name this.name}}">
+							<a class="slds-context-bar__label-action" role="button" title="更多" href="javascript:void(0);" data-toggle="dropdown">
+								<div class="triggerLinkTextAndIconWrapper">
+									<span class="triggerLinkText selectedListView uiOutputText">更多</span>
+									<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
+										<span class="lightningPrimitiveIcon">
+											{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
+										</span>
+									</span>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" role="menu">
+								<ul class="slds-dropdown__list slds-show">
+									{{#each this.hiddens}}
+										<li class="slds-dropdown__item slds-context-bar__item {{object_class_name this.name}}" role="presentation">
+											<a role="option" tabindex="-1" data-object-name="{{this.name}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
+												<span class="slds-truncate">{{this.label}}</span>
+												{{#with getObjectBadge this app_id}}
+													<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>
+												{{/with}}
+											</a>
+										</li>
+									{{/each}}
+								</ul>
+							</div>
+						</li>
+					{{/if}}
+				{{/with}}
 			</ul>
 		</nav>
 	{{/unless}}
