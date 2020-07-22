@@ -98,7 +98,10 @@ Template.creatorNavigation.helpers
 	object_class_name: (obj)->
 		if Session.get("app_home_active")
 			return ;
-		if (obj == Session.get("object_name"))
+		isActive = obj.name == Session.get("object_name")
+		if isActive and obj.url
+			isActive = obj.url == Creator.getObjectUrl(obj.name, Session.get("record_id"))
+		if isActive
 			return "slds-is-active"
 
 	object_url: ()->

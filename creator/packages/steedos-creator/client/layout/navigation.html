@@ -41,20 +41,9 @@
 					</li>
 				{{/if}}
 
-				<!-- {{#each app_objects}}
-					<li class="slds-context-bar__item {{object_class_name this}}">
-						<a data-object-name="{{this}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this}}">
-							<span class="slds-truncate">{{_ object_i.label}}</span>
-							{{#with getObjectBadge object_i app_id}}
-								<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>
-							{{/with}}
-						</a>
-					</li>
-				{{/each}} -->
-
 				{{#with computed_objects hasAppDashboard}}
 					{{#each this.visiables}}
-						<li class="slds-context-bar__item {{object_class_name this.name}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
+						<li class="slds-context-bar__item {{object_class_name this}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
 							<a data-object-name="{{this.name}}" href="{{object_url}}" title="{{this.label}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
 								{{#if this.is_temp}}
 									<span class="slds-indicator-container">
@@ -78,7 +67,7 @@
 						</li>
 					{{/each}}
 					{{#if this.hiddens.length}}
-						<li class="slds-context-bar__item {{object_class_name this.name}} {{#if this.hasHiddenTempNavs}}slds-is-unsaved{{/if}}">
+						<li class="slds-context-bar__item {{object_class_name this}} {{#if this.hasHiddenTempNavs}}slds-is-unsaved{{/if}}">
 							<a class="slds-context-bar__label-action" role="button" title="更多" href="javascript:void(0);" data-toggle="dropdown">
 								<div class="triggerLinkTextAndIconWrapper">
 									{{#if this.hasHiddenTempNavs}}
@@ -97,7 +86,7 @@
 							<div class="dropdown-menu dropdown-menu-right" role="menu">
 								<ul class="slds-dropdown__list slds-show">
 									{{#each this.hiddens}}
-										<li class="slds-dropdown__item slds-context-bar__item {{object_class_name this.name}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
+										<li class="slds-dropdown__item slds-context-bar__item {{object_class_name this}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
 											<a role="option" tabindex="-1" data-object-name="{{this.name}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
 												<span class="slds-truncate">
 													{{#if this.is_temp}}
