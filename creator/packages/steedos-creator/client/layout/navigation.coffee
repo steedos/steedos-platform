@@ -28,6 +28,7 @@ computeObjects = (maxW, hasAppDashboard)->
 			mainW += widthItem
 			visiables.push objItem
 	tempNavs = Creator.getTempNavs()
+	hasHiddenTempNavs = false
 	tempNavs?.forEach (item, index)->
 		if item.url
 			objItem = item
@@ -38,6 +39,7 @@ computeObjects = (maxW, hasAppDashboard)->
 		if mainW + widthItem >= maxW
 			if objItem.name == currentObjectName
 				currentObjectHiddenIndex = hiddens.length
+			hasHiddenTempNavs = true
 			hiddens.push objItem
 		else
 			mainW += widthItem
@@ -68,7 +70,7 @@ computeObjects = (maxW, hasAppDashboard)->
 			mainW -= widthItem
 			hiddens.unshift(visiables.splice(i,1)[0])
 			i--
-	return { visiables, hiddens }
+	return { visiables, hiddens, hasHiddenTempNavs }
 
 Template.creatorNavigation.helpers Creator.helpers
 

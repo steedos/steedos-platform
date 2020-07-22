@@ -78,9 +78,14 @@
 						</li>
 					{{/each}}
 					{{#if this.hiddens.length}}
-						<li class="slds-context-bar__item {{object_class_name this.name}}">
+						<li class="slds-context-bar__item {{object_class_name this.name}} {{#if this.hasHiddenTempNavs}}slds-is-unsaved{{/if}}">
 							<a class="slds-context-bar__label-action" role="button" title="更多" href="javascript:void(0);" data-toggle="dropdown">
 								<div class="triggerLinkTextAndIconWrapper">
+									{{#if this.hasHiddenTempNavs}}
+										<span class="slds-indicator-container">
+											<abbr class="slds-indicator_unsaved" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
+										</span>
+									{{/if}}
 									<span class="triggerLinkText selectedListView uiOutputText">更多</span>
 									<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
 										<span class="lightningPrimitiveIcon">
@@ -92,9 +97,16 @@
 							<div class="dropdown-menu dropdown-menu-right" role="menu">
 								<ul class="slds-dropdown__list slds-show">
 									{{#each this.hiddens}}
-										<li class="slds-dropdown__item slds-context-bar__item {{object_class_name this.name}}" role="presentation">
+										<li class="slds-dropdown__item slds-context-bar__item {{object_class_name this.name}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
 											<a role="option" tabindex="-1" data-object-name="{{this.name}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
-												<span class="slds-truncate">{{this.label}}</span>
+												<span class="slds-truncate">
+													{{#if this.is_temp}}
+														<span class="slds-indicator-container">
+															<abbr class="slds-indicator_unsaved" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
+														</span>
+													{{/if}}
+													<span>{{this.label}}</span>
+												</span>
 												{{#with getObjectBadge this app_id}}
 													<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>
 												{{/with}}
