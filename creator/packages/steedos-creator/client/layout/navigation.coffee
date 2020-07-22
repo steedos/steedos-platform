@@ -27,6 +27,21 @@ computeObjects = (maxW, hasAppDashboard)->
 		else
 			mainW += widthItem
 			visiables.push objItem
+	tempNavs = Creator.getTempNavs()
+	tempNavs?.forEach (item, index)->
+		if item.url
+			objItem = item
+		else
+			objItem = Creator.getObject(item.name)
+		labelItem = objItem.label
+		widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
+		if mainW + widthItem >= maxW
+			if objItem.name == currentObjectName
+				currentObjectHiddenIndex = hiddens.length
+			hiddens.push objItem
+		else
+			mainW += widthItem
+			visiables.push objItem
 	if hiddens.length
 		# 如果有需要隐藏的项，则进一步计算加上“更多”项后的宽度情况，优化定义visiables、hiddens
 		lastVisiableIndex = visiables.length - 1
@@ -85,7 +100,7 @@ Template.creatorNavigation.helpers
 			return "slds-is-active"
 
 	object_url: ()->
-		return Creator.getRelativeUrl("/app/-/#{String(this.name)}")
+		return this.url || Creator.getObjectUrl(String(this.name))
 
 	spaces: ->
 		return db.spaces.find();
@@ -150,6 +165,11 @@ Template.creatorNavigation.events
 	'click .slds-context-bar__item>a': (event, template)->
 		if this.name != Session.get("list_view_id")
 			Session.set("grid_paging", null)
+
+	'click .btn-close-nav': (event)->
+		event.stopPropagation()
+		event.preventDefault()
+		Creator.removeTempNav(this.name, this.url)
 
 Template.creatorNavigation.onCreated ->
 	self = this

@@ -54,12 +54,26 @@
 
 				{{#with computed_objects hasAppDashboard}}
 					{{#each this.visiables}}
-						<li class="slds-context-bar__item {{object_class_name this.name}}">
-							<a data-object-name="{{this.name}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
+						<li class="slds-context-bar__item {{object_class_name this.name}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
+							<a data-object-name="{{this.name}}" href="{{object_url}}" title="{{this.label}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
+								{{#if this.is_temp}}
+									<span class="slds-indicator-container">
+										<abbr class="slds-indicator_unsaved" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
+									</span>
+								{{/if}}
 								<span class="slds-truncate">{{this.label}}</span>
 								{{#with getObjectBadge this app_id}}
 									<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>
 								{{/with}}
+								{{#if this.is_temp}}
+									<div class="slds-context-bar__icon-action slds-p-right_none">
+										<button class="slds-button slds-button_icon slds-button_icon-current-color slds-button_icon-container slds-button_icon-x-small btn-close-nav" 
+											tabindex="-1" title="{{_ 'close'}} {{this.label}}">
+											{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="close"}}
+											<span class="slds-assistive-text">{{_ 'close'}} {{this.label}}</span>
+										</button>
+									</div>
+								{{/if}}
 							</a>
 						</li>
 					{{/each}}
