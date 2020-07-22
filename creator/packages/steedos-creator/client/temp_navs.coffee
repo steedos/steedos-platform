@@ -4,18 +4,29 @@ saveTempNavsToCache = (userId, spaceId, appId, value)->
     # key格式：`tempNavs:${Meteor.userId()}:${Steedos.spaceId()}:${Session.get("app_id")}`
     # value格式：`${name1},${name2},${name3}:${record_id3}:${record_label3}`
 
+# 不增加lastRemovedTempNavUrl相关逻辑的话，删除导航栏有时会出现死循环删除不掉的情况
+lastRemovedTempNavUrl = null
+
+setLastRemovedTempNavUrl = (name, url)->
+    lastRemovedTempNavUrl = if url then url else Creator.getObjectUrl(name)
+
 redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
+    currentObjectName = Session.get("object_name")
+    currentRecordId = Session.get("record_id")
     if url
-        currentUrl = Creator.getObjectUrl(Session.get("object_name"), Session.get("record_id"))
+        currentUrl = Creator.getObjectUrl(currentObjectName, currentRecordId)
         isCurrentNav = currentUrl == url
     else
-        isCurrentNav = Session.get("object_name") == name
+        isCurrentNav = currentObjectName == name
     if isCurrentNav
         # 如果当前打开中的Url与需要被关闭的导航栏项一样，则优先返回到上一个url（除非找不到）
         # 其次再取tempNavs中最近的一个导航（先右再左），最后才取Creator.getAppObjectNames()中最后一个导航来跳转
         lastUrl = urlQuery[urlQuery.length - 2]
-        if lastUrl
+        lastUrlEnabled = lastUrl and lastRemovedTempNavUrl != __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + lastUrl
+        setLastRemovedTempNavUrl(name, url)
+        if lastUrlEnabled
             # urlQuery记录的是不带__meteor_runtime_config__.ROOT_URL_PATH_PREFIX前缀的相对路径，可以直接go
+            # console.log("===lastUrl===", lastUrl);
             FlowRouter.go(lastUrl)
         else
             # tempNavs中保存的url是带__meteor_runtime_config__.ROOT_URL_PATH_PREFIX前缀的相对路径，需要用redirect
@@ -29,6 +40,8 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
                 objectNames = Creator.getAppObjectNames()
                 lastObjectName = objectNames[objectNames.length - 1]
                 FlowRouter.redirect(Creator.getObjectUrl(lastObjectName))
+    else
+        setLastRemovedTempNavUrl(name, url)
 
 Creator.getTempNavs = ()->
     tempNavs = Session.get("temp_navs")
@@ -52,6 +65,7 @@ Creator.createTempNav = (name, url, label)->
         Session.set("temp_navs", tempNavs)
 
 Creator.removeTempNav = (name, url)->
+    # console.log("===Creator.removeTempNav===", name, url)
     tempNavs = Session.get("temp_navs")
     unless tempNavs
         return
@@ -64,16 +78,20 @@ Creator.removeTempNav = (name, url)->
         if skip
             skipIndex = index
         return !skip
+    # console.log("===Creator.removeTempNav==skipIndex=", skipIndex)
+    # console.log("===Creator.removeTempNav==result=", result)
     if !_.isNumber(skipIndex)
         return
     redirectBeforeRemoveTempNav(name, url, result, skipIndex)
-    Session.set("temp_navs", result)
+    Meteor.defer ()->
+        # console.log("===Creator.removeTempNav=defer=result=", result)
+        Session.set("temp_navs", result)
 
 Meteor.startup ()->
     Meteor.autorun (c)->
-        console.log("===tempnav autorun======");
         objectName = Session.get("object_name")
         recordId = Session.get("record_id")
+        # console.log("===tempnav autorun===objectName==recordId====", objectName,recordId);
         record = Creator.getObjectRecord()
         objectNames = Creator.getAppObjectNames()
         # 如果当前所在的object_name不存在顶部导航中，则添加一个临时的导航栏项
