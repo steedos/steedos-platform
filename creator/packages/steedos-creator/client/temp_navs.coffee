@@ -1,6 +1,7 @@
 getTempNavsFromCache = (userId, spaceId, appId)->
-    cachedTempNavsStr = localStorage.getItem("#{userId}:#{spaceId}:#{appId}")
+    cachedTempNavsStr = localStorage.getItem("TEMPNAVS:#{userId}:#{spaceId}:#{appId}")
     if cachedTempNavsStr
+        cachedTempNavsStr = cachedTempNavsStr.replace(/^TEMPNAVS:/,"")
         return cachedTempNavsStr.split(",").map (item)->
             itemValues = item.split(":")
             return {
@@ -20,7 +21,7 @@ saveTempNavsToCache = (userId, spaceId, appId, tempNavs)->
         if item.label
             itemValueStr += ":#{item.label}"
     valueStr = values.join(",")
-    localStorage.setItem("#{userId}:#{spaceId}:#{appId}", valueStr)
+    localStorage.setItem("TEMPNAVS:#{userId}:#{spaceId}:#{appId}", valueStr)
 
 # 不增加lastRemovedTempNavUrl相关逻辑的话，删除导航栏有时会出现死循环删除不掉的情况
 lastRemovedTempNavUrl = null
@@ -111,7 +112,7 @@ Meteor.startup ()->
     Meteor.autorun (c)->
         objectName = Session.get("object_name")
         recordId = Session.get("record_id")
-        # console.log("===tempnav autorun===objectName==recordId====", objectName,recordId);
+        console.log("===tempnav autorun===objectName==recordId====", objectName,recordId);
         record = Creator.getObjectRecord()
         objectNames = Creator.getAppObjectNames()
         # 如果当前所在的object_name不存在顶部导航中，则添加一个临时的导航栏项
