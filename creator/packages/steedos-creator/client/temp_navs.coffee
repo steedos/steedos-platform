@@ -1,8 +1,26 @@
 getTempNavsFromCache = (userId, spaceId, appId)->
+    cachedTempNavsStr = localStorage.getItem("#{userId}:#{spaceId}:#{appId}")
+    if cachedTempNavsStr
+        return cachedTempNavsStr.split(",").map (item)->
+            itemValues = item.split(":")
+            return {
+                name: itemValues[0],
+                url: itemValues[1],
+                label: itemValues[2],
+                is_temp: true
+            }
 
-saveTempNavsToCache = (userId, spaceId, appId, value)->
-    # key格式：`tempNavs:${Meteor.userId()}:${Steedos.spaceId()}:${Session.get("app_id")}`
-    # value格式：`${name1},${name2},${name3}:${record_id3}:${record_label3}`
+saveTempNavsToCache = (userId, spaceId, appId, tempNavs)->
+    # key格式：`tempNavs:${userId}:${spaceId}:${appId}`
+    # value格式：`${name1},${name2},${name3}:${url}:${label}`
+    values = tempNavs.map (item)->
+        itemValueStr = item.name
+        if item.url
+            itemValueStr += ":#{item.url}"
+        if item.label
+            itemValueStr += ":#{item.label}"
+    valueStr = values.join(",")
+    localStorage.setItem("#{userId}:#{spaceId}:#{appId}", valueStr)
 
 # 不增加lastRemovedTempNavUrl相关逻辑的话，删除导航栏有时会出现死循环删除不掉的情况
 lastRemovedTempNavUrl = null
@@ -63,6 +81,7 @@ Creator.createTempNav = (name, url, label)->
     unless existingNav
         tempNavs.push {name, url, label, is_temp: true}
         Session.set("temp_navs", tempNavs)
+        saveTempNavsToCache(Meteor.userId(), Steedos.spaceId(), Session.get("app_id"), tempNavs)
 
 Creator.removeTempNav = (name, url)->
     # console.log("===Creator.removeTempNav===", name, url)
@@ -86,6 +105,7 @@ Creator.removeTempNav = (name, url)->
     Meteor.defer ()->
         # console.log("===Creator.removeTempNav=defer=result=", result)
         Session.set("temp_navs", result)
+        saveTempNavsToCache(Meteor.userId(), Steedos.spaceId(), Session.get("app_id"), result)
 
 Meteor.startup ()->
     Meteor.autorun (c)->
