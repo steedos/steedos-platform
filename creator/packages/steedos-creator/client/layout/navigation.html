@@ -46,9 +46,7 @@
 						<li class="slds-context-bar__item {{object_class_name this}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
 							<a data-object-name="{{this.name}}" href="{{object_url}}" title="{{this.label}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
 								{{#if this.is_temp}}
-									<span class="slds-indicator-container">
-										<abbr class="slds-indicator_unsaved" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
-									</span>
+									<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
 								{{/if}}
 								<span class="slds-truncate">{{this.label}}</span>
 								{{#with getObjectBadge this app_id}}
@@ -58,7 +56,7 @@
 									<div class="slds-context-bar__icon-action slds-p-right_none">
 										<button class="slds-button slds-button_icon slds-button_icon-current-color slds-button_icon-container slds-button_icon-x-small btn-close-nav" 
 											tabindex="-1" title="{{_ 'close'}} {{this.label}}">
-											{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="close"}}
+											{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--xx-small" source="utility-sprite" name="close"}}
 											<span class="slds-assistive-text">{{_ 'close'}} {{this.label}}</span>
 										</button>
 									</div>
@@ -69,19 +67,15 @@
 					{{#if this.hiddens.length}}
 						<li class="slds-context-bar__item {{object_class_name this}} {{#if this.hasHiddenTempNavs}}slds-is-unsaved{{/if}}">
 							<a class="slds-context-bar__label-action" role="button" title="更多" href="javascript:void(0);" data-toggle="dropdown">
-								<div class="triggerLinkTextAndIconWrapper">
-									{{#if this.hasHiddenTempNavs}}
-										<span class="slds-indicator-container">
-											<abbr class="slds-indicator_unsaved" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
-										</span>
-									{{/if}}
-									<span class="triggerLinkText selectedListView uiOutputText">更多</span>
-									<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
-										<span class="lightningPrimitiveIcon">
-											{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
-										</span>
+								{{#if this.hasHiddenTempNavs}}
+									<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
+								{{/if}}
+								<span class="triggerLinkText selectedListView uiOutputText slds-p-right_xx-small">更多</span>
+								<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
+									<span class="lightningPrimitiveIcon">
+										{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
 									</span>
-								</div>
+								</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" role="menu">
 								<ul class="slds-dropdown__list slds-show">
@@ -90,9 +84,7 @@
 											<a role="option" tabindex="-1" data-object-name="{{this.name}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
 												<span class="slds-truncate">
 													{{#if this.is_temp}}
-														<span class="slds-indicator-container">
-															<abbr class="slds-indicator_unsaved" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
-														</span>
+														<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
 													{{/if}}
 													<span>{{this.label}}</span>
 												</span>

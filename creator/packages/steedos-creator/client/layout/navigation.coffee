@@ -1,7 +1,10 @@
 computeObjects = (maxW, hasAppDashboard)->
 	# 当导航字体相关样式变更时，应该变更该font变量，否则计算可能出现偏差
 	font = '400 normal 13px -apple-system, system-ui, Helvetica, Arial, "Microsoft Yahei", SimHei'
-	itemPaddingW = 24 # 每项的边距宽度
+	itemPaddingW = 24 # 每项的左右边距宽度
+	tempNavItemLeftW = 10 # 每个临时项的左侧包含边距和星号图标在内的宽度
+	tempNavItemRightW = 22 # 每个临时项的右侧包含边距和x图标在内的宽度
+	tempNavItemExtraW = tempNavItemLeftW + tempNavItemRightW
 	unless maxW
 		maxW = $("body").width()
 	leftAreaW = 120 #左侧应用区域宽度
@@ -28,18 +31,18 @@ computeObjects = (maxW, hasAppDashboard)->
 			mainW += widthItem
 			visiables.push objItem
 	tempNavs = Creator.getTempNavs()
-	hasHiddenTempNavs = false
 	tempNavs?.forEach (item, index)->
 		if item.url
 			objItem = item
 		else
-			objItem = Creator.getObject(item.name)
+			objItem = _.clone Creator.getObject(item.name)
+			objItem.is_temp = true
 		labelItem = objItem.label
 		widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
+		widthItem += tempNavItemExtraW #临时导航栏项一定要额外加上左右多出来的宽度
 		if mainW + widthItem >= maxW
 			if objItem.name == currentObjectName
 				currentObjectHiddenIndex = hiddens.length
-			hasHiddenTempNavs = true
 			hiddens.push objItem
 		else
 			mainW += widthItem
@@ -48,16 +51,23 @@ computeObjects = (maxW, hasAppDashboard)->
 		# 如果有需要隐藏的项，则进一步计算加上“更多”项后的宽度情况，优化定义visiables、hiddens
 		lastVisiableIndex = visiables.length - 1
 		if currentObjectHiddenIndex > -1
-			# 把currentObjectName对应的对象从hiddens中移除，并且追回到visiables尾部
-			# visiables追回后不可以变更lastVisiableIndex值，因为后续增加“更多”按钮逻辑中，追加的项不可以重新移到hidden中
+			# 把currentObjectName对应的对象从hiddens中移除，并且重新追加到visiables尾部
+			# visiables追加后不可以变更lastVisiableIndex值，因为后续增加“更多”按钮逻辑中，追加的项不可以重新移到hidden中
 			objItem = hiddens[currentObjectHiddenIndex]
 			labelItem = objItem.label
 			widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
+			if objItem.is_temp
+				widthItem += tempNavItemExtraW #临时导航栏项一定要额外加上左右多出来的宽度
 			mainW += widthItem
 			visiables.push(hiddens.splice(currentObjectHiddenIndex,1)[0])
 
-		moreIconW = 20 #更多右侧的下拉箭头宽度
+		hasHiddenTempNavs = !!hiddens.find (item)->
+			return item.is_temp
+
+		moreIconW = 22 #更多右侧的下拉箭头及其左侧多出的空格边距宽度
 		moreW = Creator.measureWidth(t("更多"), font) + itemPaddingW + moreIconW
+		if hasHiddenTempNavs
+			moreW += tempNavItemLeftW #临时导航栏项一定要额外加上左侧多出来的宽度
 		i = lastVisiableIndex
 		while mainW + moreW > maxW and i > 0
 			objItem = visiables[i]
@@ -70,6 +80,10 @@ computeObjects = (maxW, hasAppDashboard)->
 			mainW -= widthItem
 			hiddens.unshift(visiables.splice(i,1)[0])
 			i--
+		
+		# 再算一次hasHiddenTempNavs是因为上面“更多”项导航栏逻辑执行后hiddens可能有变化
+		hasHiddenTempNavs = !!hiddens.find (item)->
+			return item.is_temp
 	return { visiables, hiddens, hasHiddenTempNavs }
 
 Template.creatorNavigation.helpers Creator.helpers
