@@ -607,7 +607,7 @@ Template.creator_grid.helpers
 		related_object_name = Template.instance().data.related_object_name
 		result = if is_related then related_object_name else object_name
 		# 文件版本为"cfs.files.filerecord"，需要替换为"cfs-files-filerecord"
-		return result.replace(/\./g,"-")
+		return result?.replace(/\./g,"-")
 
 Template.creator_grid.events
 

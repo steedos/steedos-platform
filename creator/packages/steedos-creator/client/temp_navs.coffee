@@ -1,7 +1,7 @@
-getTempNavsFromCache = (userId, spaceId, appId)->
-    cachedTempNavsStr = localStorage.getItem("TEMPNAVS:#{userId}:#{spaceId}:#{appId}")
+getTempNavsFromCache = ()->
+    cachedTempNavsStr = localStorage.getItem("temp_navs")
     if cachedTempNavsStr
-        cachedTempNavsStr = cachedTempNavsStr.replace(/^TEMPNAVS:/,"")
+        # cachedTempNavsStr = cachedTempNavsStr.replace(/^TEMPNAVS:/,"")
         return cachedTempNavsStr.split(",").map (item)->
             itemValues = item.split(":")
             return {
@@ -11,9 +11,17 @@ getTempNavsFromCache = (userId, spaceId, appId)->
                 is_temp: true
             }
 
-saveTempNavsToCache = (userId, spaceId, appId, tempNavs)->
+getTempNavsIdFromCache = (userId, spaceId, appId)->
+    return localStorage.getItem("temp_navs_id")
+
+saveTempNavsIdToCache = (value)->
+    localStorage.setItem("temp_navs_id", value)
+
+saveTempNavsToCache = (tempNavs)->
     # key格式：`tempNavs:${userId}:${spaceId}:${appId}`
     # value格式：`${name1},${name2},${name3}:${url}:${label}`
+    unless tempNavs
+        tempNavs = []
     values = tempNavs.map (item)->
         itemValueStr = item.name
         if item.url
@@ -21,7 +29,7 @@ saveTempNavsToCache = (userId, spaceId, appId, tempNavs)->
         if item.label
             itemValueStr += ":#{item.label}"
     valueStr = values.join(",")
-    localStorage.setItem("TEMPNAVS:#{userId}:#{spaceId}:#{appId}", valueStr)
+    localStorage.setItem("temp_navs", valueStr)
 
 # 不增加lastRemovedTempNavUrl相关逻辑的话，删除导航栏有时会出现死循环删除不掉的情况
 lastRemovedTempNavUrl = null
@@ -65,13 +73,21 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
 Creator.getTempNavs = ()->
     tempNavs = Session.get("temp_navs")
     unless tempNavs
-        tempNavs = getTempNavsFromCache(Meteor.userId(), Steedos.spaceId(), Session.get("app_id"))
+        tempNavs = getTempNavsFromCache()
         if tempNavs
             Session.set("temp_navs", tempNavs)
     return tempNavs
 
+Creator.getTempNavsId = ()->
+    tempNavsId = Session.get("temp_navs_id")
+    unless tempNavsId
+        tempNavsId = getTempNavsIdFromCache()
+    return tempNavsId
+
 Creator.createTempNav = (name, url, label)->
+    # console.log("===createTempNav===name, url, label===", name, url, label);
     tempNavs = Session.get("temp_navs")
+    # console.log("===createTempNav===", tempNavs);
     unless tempNavs
         tempNavs = []
     existingNav = tempNavs.find (item)->
@@ -82,10 +98,10 @@ Creator.createTempNav = (name, url, label)->
     unless existingNav
         tempNavs.push {name, url, label, is_temp: true}
         Session.set("temp_navs", tempNavs)
-        saveTempNavsToCache(Meteor.userId(), Steedos.spaceId(), Session.get("app_id"), tempNavs)
+        saveTempNavsToCache(tempNavs)
 
-Creator.removeTempNav = (name, url)->
-    # console.log("===Creator.removeTempNav===", name, url)
+Creator.removeTempNavItem = (name, url)->
+    # console.log("===Creator.removeTempNavItem===", name, url)
     tempNavs = Session.get("temp_navs")
     unless tempNavs
         return
@@ -98,21 +114,41 @@ Creator.removeTempNav = (name, url)->
         if skip
             skipIndex = index
         return !skip
-    # console.log("===Creator.removeTempNav==skipIndex=", skipIndex)
-    # console.log("===Creator.removeTempNav==result=", result)
+    # console.log("===Creator.removeTempNavItem==skipIndex=", skipIndex)
+    # console.log("===Creator.removeTempNavItem==result=", result)
     if !_.isNumber(skipIndex)
         return
     redirectBeforeRemoveTempNav(name, url, result, skipIndex)
     Meteor.defer ()->
-        # console.log("===Creator.removeTempNav=defer=result=", result)
+        # console.log("===Creator.removeTempNavItem=defer=result=", result)
         Session.set("temp_navs", result)
-        saveTempNavsToCache(Meteor.userId(), Steedos.spaceId(), Session.get("app_id"), result)
+        saveTempNavsToCache(result)
+
+Creator.resetTempNavsIfNeeded = ()->
+    # 切换应用、工作区时，需要清除当前的tempNavs
+    tempNavsId = Creator.getTempNavsId()
+    currentTempNavsId = "#{Meteor.userId()}:#{Steedos.spaceId()}:#{Session.get("app_id")}"
+    neededToReset = tempNavsId != currentTempNavsId
+    if neededToReset
+        Session.set("temp_navs", null)
+        saveTempNavsToCache(null)
+    Session.set("temp_navs_id", currentTempNavsId)
+    saveTempNavsIdToCache(currentTempNavsId)
+    return neededToReset
 
 Meteor.startup ()->
-    Meteor.autorun (c)->
+    # 切换工作区时或APP时重置temp_navs值
+    Tracker.autorun ()->
+        spaceId = Session.get("spaceId")
+        appId = Session.get("app_id")
+        if spaceId or appId
+            Creator.resetTempNavsIfNeeded()
+
+    Tracker.autorun (c)->
         objectName = Session.get("object_name")
         recordId = Session.get("record_id")
-        console.log("===tempnav autorun===objectName==recordId====", objectName,recordId);
+        unless objectName
+            return
         record = Creator.getObjectRecord()
         objectNames = Creator.getAppObjectNames()
         # 如果当前所在的object_name不存在顶部导航中，则添加一个临时的导航栏项
@@ -129,3 +165,4 @@ Meteor.startup ()->
                 Creator.createTempNav(objectName, url, label)
             else
                 Creator.createTempNav(objectName)
+

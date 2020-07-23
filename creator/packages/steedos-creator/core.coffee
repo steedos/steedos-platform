@@ -512,13 +512,16 @@ Creator.getListViews = (object_name, spaceId, userId)->
 			spaceId = Session.get("spaceId")
 		if !userId
 			userId = Meteor.userId()
+	
+	unless object_name
+		return
 
 	object = Creator.getObject(object_name)
 
 	if !object
 		return
 
-	disabled_list_views = Creator.getPermissions(object_name, spaceId, userId).disabled_list_views || []
+	disabled_list_views = Creator.getPermissions(object_name, spaceId, userId)?.disabled_list_views || []
 
 	list_views = []
 
@@ -545,7 +548,7 @@ Creator.getFields = (object_name, spaceId, userId)->
 			userId = Meteor.userId()
 
 	fieldsName = Creator.getObjectFieldsName(object_name)
-	unreadable_fields =  Creator.getPermissions(object_name, spaceId, userId).unreadable_fields
+	unreadable_fields =  Creator.getPermissions(object_name, spaceId, userId)?.unreadable_fields
 	return _.difference(fieldsName, unreadable_fields)
 
 Creator.isloading = ()->

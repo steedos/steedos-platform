@@ -188,7 +188,7 @@ Template.creatorNavigation.events
 	'click .btn-close-nav': (event)->
 		event.stopPropagation()
 		event.preventDefault()
-		Creator.removeTempNav(this.name, this.url)
+		Creator.removeTempNavItem(this.name, this.url)
 
 Template.creatorNavigation.onCreated ->
 	self = this

@@ -820,6 +820,16 @@ if Meteor.isClient
 		canvasContext.font = font
 		return canvasContext.measureText(text).width
 
+Meteor.startup ()->
+	# 切换工作区时或APP时重置object_name及record_id
+	Tracker.autorun ()->
+		spaceId = Session.get("spaceId")
+		appId = Session.get("app_id")
+		if spaceId or appId
+			# 一定要先清除object_name，record_id，否则相关依赖的autorun会以之前错误的值运行
+			Session.set("object_name", null)
+			Session.set("record_id", null)
+
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->
 	Tracker.autorun ()->
