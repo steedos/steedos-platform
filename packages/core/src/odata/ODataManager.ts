@@ -276,6 +276,246 @@ export class ODataManager {
     return entities;
   }
 
+  makeAggregateLookup(createQuery: any, key: string, spaceId: string, userSession: object) {
+    if (_.isEmpty(createQuery.includes)) {
+      return [];
+    }
+    let obj = this.getObject(key);
+    let pipeline = [];
+
+    for (let i = 0; i < createQuery.includes.length; i++) {
+      let navigationProperty = createQuery.includes[i].navigationProperty;
+      navigationProperty = navigationProperty.replace('/', '.')
+      let field = obj.fields[navigationProperty].toConfig();
+      if (field && (field.type === 'lookup' || field.type === 'master_detail')) {
+
+
+        if (_.isFunction(field.reference_to)) {
+          field.reference_to = field.reference_to();
+        }
+        if (_.isString(field.reference_to)) {
+          let refFieldName = field.name;
+          let lookup = {
+            from: field.reference_to,
+            as: `${refFieldName}`
+          };
+
+          if (field.multiple) {
+            lookup['localField'] = refFieldName;
+            lookup['foreignField'] = '_id';
+          } else {
+            lookup['let'] = {};
+            lookup['pipeline'] = [];
+            lookup['let'][refFieldName] = `$${refFieldName}`;
+            lookup['pipeline'].push({
+              $match:
+              {
+                $expr:
+                {
+                  $and:
+                    [
+                      { $eq: ["$_id", `$$${refFieldName}`] }
+                    ]
+                }
+              }
+            });
+
+            if (!_.isEmpty(createQuery.includes[i].projection)) {
+              let project = {};
+              project['$project'] = createQuery.includes[i].projection;
+              lookup['pipeline'].push(project);
+            }
+          }
+
+          pipeline.push({ $lookup: lookup });
+
+        } else if (_.isArray(field.reference_to)) {
+          _.each(field.reference_to, function (relatedObjName) {
+            let refFieldName = field.name;
+            let lookup = {
+              from: relatedObjName,
+              as: `${refFieldName}` + '_$lookup'
+            };
+            let localField = refFieldName + '.ids';
+            if (field.multiple) {
+              lookup['localField'] = localField;
+              lookup['foreignField'] = '_id';
+            } else {
+              lookup['let'] = {};
+              lookup['pipeline'] = [];
+              lookup['let'][refFieldName] = `$${localField}`;
+              lookup['pipeline'].push({
+                $match:
+                {
+                  $expr:
+                  {
+                    $and:
+                      [
+                        { $in: ["$_id", `$$${refFieldName}`] }
+                      ]
+                  }
+                }
+              });
+
+              if (!_.isEmpty(createQuery.includes[i].projection)) {
+                let project = {};
+                project['$project'] = createQuery.includes[i].projection;
+                lookup['pipeline'].push(project);
+              }
+            }
+
+            pipeline.push({ $lookup: lookup });
+          })
+
+        }
+      }
+    };
+
+    return pipeline;
+  }
+
+  dealWithAggregateLookup(createQuery: any, entities: Array<any>, key: string, spaceId: string, userSession: object) {
+    if (_.isEmpty(createQuery.includes)) {
+      return entities;
+    }
+    let obj = this.getObject(key);
+
+    for (let i = 0; i < createQuery.includes.length; i++) {
+      let navigationProperty = createQuery.includes[i].navigationProperty;
+      navigationProperty = navigationProperty.replace('/', '.')
+      let field = obj.fields[navigationProperty].toConfig();
+      if (field && (field.type === 'lookup' || field.type === 'master_detail')) {
+        if (_.isFunction(field.reference_to)) {
+          field.reference_to = field.reference_to();
+        }
+        if (field.reference_to) {
+          let queryOptions = { fields: [] };
+          if (createQuery.includes[i].projection) {
+            queryOptions.fields = _.keys(createQuery.includes[i].projection);
+          }
+
+          if (_.isString(field.reference_to)) {
+
+            for (let idx = 0; idx < entities.length; idx++) {
+              let entityValues = navigationProperty.split('.').reduce(function (o, x) {
+                if (o) { return o[x] }
+              }, entities[idx])
+              if (!_.isEmpty(entityValues) || _.isNumber(entityValues)) {
+                if (field.multiple) {
+                  let originalData = _.clone(entityValues);
+                  let filters = [];
+                  _.each(entityValues, function (f) {
+                    filters.push(`(_id eq '${f}')`);
+                  })
+                  try {
+                    let ref: any;
+                    let referenceToCollection = this.getObject(field.reference_to);
+                    let _ro_NAME_FIELD_KEY = (ref = this.getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
+
+                    let queryFields = _.clone(queryOptions.fields)
+
+                    if (_.isEmpty(entities[idx][navigationProperty])) {
+                      entities[idx][navigationProperty] = originalData;
+                    } else {
+                      entities[idx][navigationProperty] = _.map(entities[idx][navigationProperty], function (o) {
+                        o['reference_to.o'] = referenceToCollection._name;
+                        o['reference_to._o'] = field.reference_to;
+                        o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
+                        if (_.isEmpty(queryFields)) {
+                          delete o[_ro_NAME_FIELD_KEY]
+                        }
+                        return o;
+                      });
+                      entityValues.splice(0, entityValues.length, ...entities[idx][navigationProperty])
+                    }
+                  } catch (error) {
+                    console.error(error)
+                    entities[idx][navigationProperty] = originalData;
+                  }
+
+                } else {
+                  let originalData = _.clone(entities[idx][navigationProperty]);
+                  try {
+                    let ref: any;
+                    let referenceToCollection = this.getObject(field.reference_to);
+                    let _ro_NAME_FIELD_KEY = (ref = this.getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
+
+                    let queryFields = _.clone(queryOptions.fields)
+                    if (_.isEmpty(queryFields)) {
+                      queryOptions.fields = [_ro_NAME_FIELD_KEY]
+                    }
+
+                    if (_.isEmpty(entities[idx][navigationProperty])) {
+                      entities[idx][navigationProperty] = originalData;
+                    } else {
+                      entities[idx][navigationProperty] = entities[idx][navigationProperty][0];
+                      entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
+                      entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
+                      entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
+                      if (_.isEmpty(queryFields)) {
+                        delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
+                      }
+                    }
+                  } catch (error) {
+                    console.error(error)
+                    entities[idx][navigationProperty] = originalData;
+                  }
+
+                }
+              }
+            };
+          }
+          if (_.isArray(field.reference_to)) {
+            for (let idx = 0; idx < entities.length; idx++) {
+              let ref1: any;
+              let ref2: any;
+              if ((ref1 = entities[idx][navigationProperty]) != null ? ref1.ids : void 0) {
+                let _o = entities[idx][navigationProperty].o;
+                let _ro_NAME_FIELD_KEY = (ref2 = this.getObject(_o)) != null ? ref2.NAME_FIELD_KEY : void 0;
+                let referenceToCollection = this.getObject(entities[idx][navigationProperty].o);
+                if (referenceToCollection) {
+                  let tempLookupKey = navigationProperty + '_$lookup';
+                  if (field.multiple) {
+                    let _ids = _.clone(entities[idx][navigationProperty].ids);
+
+                    let queryFields = _.clone(queryOptions.fields);
+
+                    entities[idx][navigationProperty] = _.map(entities[idx][tempLookupKey], function (o) {
+                      o['reference_to.o'] = referenceToCollection._name;
+                      o['reference_to._o'] = _o;
+                      o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
+                      if (_.isEmpty(queryFields)) {
+                        delete o[_ro_NAME_FIELD_KEY]
+                      }
+                      return o;
+                    });
+                    entities[idx][navigationProperty] = getCreator().getOrderlySetByIds(entities[idx][navigationProperty], _ids);
+                    delete entities[idx][tempLookupKey];
+                  } else {
+                    let queryFields = _.clone(queryOptions.fields)
+
+                    if (!_.isEmpty(entities[idx][tempLookupKey])) {
+                      entities[idx][navigationProperty] = entities[idx][tempLookupKey][0];
+                      entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
+                      entities[idx][navigationProperty]['reference_to._o'] = _o;
+                      entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
+                      if (_.isEmpty(queryFields)) {
+                        delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
+                      }
+                      delete entities[idx][tempLookupKey];
+                    }
+                  }
+                }
+              }
+            };
+          }
+        }
+      }
+    };
+
+    return entities;
+  }
+
   setOdataProperty(entities: any[], space: string, key: string) {
     let that = this;
     let entities_OdataProperties = [];

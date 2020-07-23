@@ -59,16 +59,18 @@ const getObjectList = async function (req: Request, res: Response) {
                 if (queryParams.$orderby) {
                     query['sort'] = queryParams.$orderby;
                 }
-                entities = await collection.find(query, userSession);
+                let externalPipeline = getODataManager().makeAggregateLookup(createQuery, key, spaceId, userSession);
+                entities = await collection.aggregate(query, externalPipeline, userSession);
             }
             if (entities) {
-                entities = await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
+                entities = getODataManager().dealWithAggregateLookup(createQuery, entities, key, spaceId, userSession);
                 let body = {};
                 body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
                 if (queryParams.$count != 'false') {
                     body['@odata.count'] = await collection.count({ filters: filters, fields: ['_id'] }, userSession);
                 }
                 let entities_OdataProperties = getCreator().setOdataProperty(entities, spaceId, key);
+
                 body['value'] = entities_OdataProperties;
                 getODataManager().setHeaders(res);
                 res.send(body);
@@ -325,13 +327,13 @@ const getObjectData = async function (req: Request, res: Response) {
                 let entities = [];
                 if (entity) {
                     let body = {};
-                        entities.push(entity);
-                        await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
-                        body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
-                        let entity_OdataProperties = getCreator().setOdataProperty(entities, spaceId, key);
-                        _.extend(body, entity_OdataProperties[0]);
-                        getODataManager().setHeaders(res);
-                        res.send(body);
+                    entities.push(entity);
+                    await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
+                    body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
+                    let entity_OdataProperties = getCreator().setOdataProperty(entities, spaceId, key);
+                    _.extend(body, entity_OdataProperties[0]);
+                    getODataManager().setHeaders(res);
+                    res.send(body);
                 } else {
                     res.status(404).send(setErrorMessage(404, collection, key, 'get'));
                 }
