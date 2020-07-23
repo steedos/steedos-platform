@@ -1,7 +1,6 @@
 getTempNavsFromCache = ()->
     cachedTempNavsStr = localStorage.getItem("temp_navs")
     if cachedTempNavsStr
-        # cachedTempNavsStr = cachedTempNavsStr.replace(/^TEMPNAVS:/,"")
         return cachedTempNavsStr.split(",").map (item)->
             itemValues = item.split(":")
             return {
@@ -53,7 +52,6 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
         setLastRemovedTempNavUrl(name, url)
         if lastUrlEnabled
             # urlQuery记录的是不带__meteor_runtime_config__.ROOT_URL_PATH_PREFIX前缀的相对路径，可以直接go
-            # console.log("===lastUrl===", lastUrl);
             FlowRouter.go(lastUrl)
         else
             # tempNavs中保存的url是带__meteor_runtime_config__.ROOT_URL_PATH_PREFIX前缀的相对路径，需要用redirect
@@ -82,12 +80,12 @@ Creator.getTempNavsId = ()->
     tempNavsId = Session.get("temp_navs_id")
     unless tempNavsId
         tempNavsId = getTempNavsIdFromCache()
+        if tempNavsId
+            Session.set("temp_navs_id", tempNavsId)
     return tempNavsId
 
 Creator.createTempNav = (name, url, label)->
-    # console.log("===createTempNav===name, url, label===", name, url, label);
-    tempNavs = Session.get("temp_navs")
-    # console.log("===createTempNav===", tempNavs);
+    tempNavs = Creator.getTempNavs()
     unless tempNavs
         tempNavs = []
     existingNav = tempNavs.find (item)->
@@ -101,7 +99,6 @@ Creator.createTempNav = (name, url, label)->
         saveTempNavsToCache(tempNavs)
 
 Creator.removeTempNavItem = (name, url)->
-    # console.log("===Creator.removeTempNavItem===", name, url)
     tempNavs = Session.get("temp_navs")
     unless tempNavs
         return
@@ -114,13 +111,10 @@ Creator.removeTempNavItem = (name, url)->
         if skip
             skipIndex = index
         return !skip
-    # console.log("===Creator.removeTempNavItem==skipIndex=", skipIndex)
-    # console.log("===Creator.removeTempNavItem==result=", result)
     if !_.isNumber(skipIndex)
         return
     redirectBeforeRemoveTempNav(name, url, result, skipIndex)
     Meteor.defer ()->
-        # console.log("===Creator.removeTempNavItem=defer=result=", result)
         Session.set("temp_navs", result)
         saveTempNavsToCache(result)
 
@@ -132,16 +126,16 @@ Creator.resetTempNavsIfNeeded = ()->
     if neededToReset
         Session.set("temp_navs", null)
         saveTempNavsToCache(null)
-    Session.set("temp_navs_id", currentTempNavsId)
-    saveTempNavsIdToCache(currentTempNavsId)
-    return neededToReset
+    if neededToReset or !Session.get("temp_navs_id")
+        Session.set("temp_navs_id", currentTempNavsId)
+        saveTempNavsIdToCache(currentTempNavsId)
 
 Meteor.startup ()->
     # 切换工作区时或APP时重置temp_navs值
     Tracker.autorun ()->
         spaceId = Session.get("spaceId")
         appId = Session.get("app_id")
-        if spaceId or appId
+        if spaceId and appId
             Creator.resetTempNavsIfNeeded()
 
     Tracker.autorun (c)->

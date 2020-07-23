@@ -825,7 +825,7 @@ Meteor.startup ()->
 	Tracker.autorun ()->
 		spaceId = Session.get("spaceId")
 		appId = Session.get("app_id")
-		if spaceId or appId
+		if spaceId and appId
 			# 一定要先清除object_name，record_id，否则相关依赖的autorun会以之前错误的值运行
 			Session.set("object_name", null)
 			Session.set("record_id", null)
