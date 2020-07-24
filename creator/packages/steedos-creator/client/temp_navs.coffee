@@ -182,8 +182,11 @@ Meteor.startup ()->
                 url = Creator.getObjectUrl(objectName, recordId)
                 unless record
                     return
-                nameField = object.NAME_FIELD_KEY || "name"
-                label = record[nameField]
+                if objectName == "cfs.files.filerecord"
+                    label = "File:" + record?.original?.name
+                else
+                    nameField = object.NAME_FIELD_KEY || "name"
+                    label = record[nameField]
                 Creator.createTempNav(objectName, url, label)
             else
                 Creator.createTempNav(objectName)
