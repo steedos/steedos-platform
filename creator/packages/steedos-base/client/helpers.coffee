@@ -264,6 +264,9 @@ TemplateHelpers =
 
 	setSpaceId: (spaceId)->
 		console.log("set spaceId " + spaceId)
+		# 切换Space时先清除object_name，record_id，否则相关依赖的autorun会以之前错误的值运行
+		Session.set("object_name", null)
+		Session.set("record_id", null)
 		if !spaceId
 			Session.set("spaceId", null)
 			localStorage.removeItem("spaceId:" + Meteor.userId())
