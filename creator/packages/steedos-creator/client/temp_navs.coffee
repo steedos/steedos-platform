@@ -109,6 +109,9 @@ Creator.getTempNavsId = ()->
     return tempNavsId
 
 Creator.createTempNav = (name, url, label)->
+    if !url and ["users", "cms_files", "cfs.files.filerecord"].indexOf(name) > -1
+        # 防止万一点开的是不支持列表的的对象
+        return
     tempNavs = Creator.getTempNavs()
     unless tempNavs
         tempNavs = []
