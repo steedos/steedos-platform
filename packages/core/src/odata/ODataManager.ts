@@ -309,35 +309,10 @@ export class ODataManager {
             let refFieldName = field.name;
             let lookup = {
               from: relatedObjName,
+              localField: refFieldName + '.ids',
+              foreignField: '_id',
               as: `${refFieldName}` + '_$lookup'
             };
-            let localField = refFieldName + '.ids';
-            if (field.multiple) {
-              lookup['localField'] = localField;
-              lookup['foreignField'] = '_id';
-            } else {
-              lookup['let'] = {};
-              lookup['pipeline'] = [];
-              lookup['let'][refFieldName] = `$${localField}`;
-              lookup['pipeline'].push({
-                $match:
-                {
-                  $expr:
-                  {
-                    $and:
-                      [
-                        { $in: ["$_id", `$$${refFieldName}`] }
-                      ]
-                  }
-                }
-              });
-
-              if (!_.isEmpty(createQuery.includes[i].projection)) {
-                let project = {};
-                project['$project'] = createQuery.includes[i].projection;
-                lookup['pipeline'].push(project);
-              }
-            }
 
             pipeline.push({ $lookup: lookup });
           })
