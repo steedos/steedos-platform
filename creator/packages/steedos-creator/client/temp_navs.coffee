@@ -1,5 +1,5 @@
 getTempNavsFromCache = ()->
-    cachedTempNavsStr = localStorage.getItem("temp_navs")
+    cachedTempNavsStr = sessionStorage.getItem("temp_navs")
     if cachedTempNavsStr
         return cachedTempNavsStr.split(",").map (item)->
             itemValues = item.split(":")
@@ -11,10 +11,10 @@ getTempNavsFromCache = ()->
             }
 
 getTempNavsIdFromCache = (userId, spaceId, appId)->
-    return localStorage.getItem("temp_navs_id")
+    return sessionStorage.getItem("temp_navs_id")
 
 saveTempNavsIdToCache = (value)->
-    localStorage.setItem("temp_navs_id", value)
+    sessionStorage.setItem("temp_navs_id", value)
 
 saveTempNavsToCache = (tempNavs)->
     # key格式：`tempNavs:${userId}:${spaceId}:${appId}`
@@ -28,7 +28,7 @@ saveTempNavsToCache = (tempNavs)->
         if item.label
             itemValueStr += ":#{item.label}"
     valueStr = values.join(",")
-    localStorage.setItem("temp_navs", valueStr)
+    sessionStorage.setItem("temp_navs", valueStr)
 
 # 不增加lastRemovedTempNavUrl相关逻辑的话，删除导航栏有时会出现死循环删除不掉的情况
 lastRemovedTempNavUrl = null
