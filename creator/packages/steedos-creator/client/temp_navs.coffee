@@ -43,6 +43,25 @@ removeLastRemovedTempNavUrl = (name, url)->
     if index > -1
         lastRemovedTempNavUrls.splice(index, 1)
 
+getValidLastUrl = (name, url)->
+    curentUrl = if url then url else Creator.getObjectUrl(name)
+    console.log "getValidLastUrl====curentUrl==", curentUrl
+    # 从urlQuery中找到最近的一个上次打开的url，但是该url不可以在lastRemovedTempNavUrls中
+    i = 2
+    maxBackCount = 3
+    lastUrlEnabled = false
+    while !lastUrlEnabled and i < 2 + maxBackCount
+        index = urlQuery.length - i
+        if index < 0
+            break
+        lastUrl = urlQuery[index]
+        if __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + lastUrl == curentUrl
+            i++
+            continue
+        lastUrlEnabled = lastUrl and lastRemovedTempNavUrls.indexOf(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX + lastUrl) < 0
+        i++
+    return if lastUrlEnabled then lastUrl else null
+
 redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
     currentObjectName = Session.get("object_name")
     currentRecordId = Session.get("record_id")
@@ -54,10 +73,10 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
     if isCurrentNav
         # 如果当前打开中的Url与需要被关闭的导航栏项一样，则优先返回到上一个url（除非找不到）
         # 其次再取tempNavs中最近的一个导航（先右再左），最后才取Creator.getAppObjectNames()中最后一个导航来跳转
-        lastUrl = urlQuery[urlQuery.length - 2]
-        lastUrlEnabled = lastUrl and lastRemovedTempNavUrls.indexOf(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX + lastUrl) < 0
+        lastUrl = getValidLastUrl(name, url)
+        console.log("=redirectBeforeRemoveTempNav==lastUrl=", lastUrl)
         appendLastRemovedTempNavUrl(name, url)
-        if lastUrlEnabled
+        if lastUrl
             # urlQuery记录的是不带__meteor_runtime_config__.ROOT_URL_PATH_PREFIX前缀的相对路径，可以直接go
             FlowRouter.go(lastUrl)
         else
