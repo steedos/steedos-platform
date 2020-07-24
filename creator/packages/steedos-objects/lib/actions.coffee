@@ -56,23 +56,10 @@ if Meteor.isClient
 			Meteor.defer ()->
 				$(".creator-add").click()
 			return 
-			
-		"standard_open_view": (object_name, record_id, fields)->
-			href = Creator.getObjectUrl(object_name, record_id)
-			window.open(
-				href,
-				'_blank',
-				'width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes'
-			)
-			return false
 
 		"standard_open_view": (object_name, record_id, fields)->
 			href = Creator.getObjectUrl(object_name, record_id)
-			window.open(
-				href,
-				'_blank',
-				'width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes'
-			)
+			FlowRouter.redirect(href)
 			return false
 
 		"standard_edit": (object_name, record_id, fields)->

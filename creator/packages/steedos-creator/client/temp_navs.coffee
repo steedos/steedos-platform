@@ -47,7 +47,7 @@ getValidLastUrl = (name, url)->
     curentUrl = if url then url else Creator.getObjectUrl(name)
     # 从urlQuery中找到最近的一个上次打开的url，但是该url不可以在lastRemovedTempNavUrls中
     i = 2
-    maxBackCount = 3
+    maxBackCount = 6 #指的是支持连续删除多少个打开的临时导航栏后仍能返回到之前最近一次打开的url
     lastUrlEnabled = false
     while !lastUrlEnabled and i < 2 + maxBackCount
         index = urlQuery.length - i
