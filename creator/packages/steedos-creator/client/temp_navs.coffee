@@ -30,11 +30,18 @@ saveTempNavsToCache = (tempNavs)->
     valueStr = values.join(",")
     sessionStorage.setItem("temp_navs", valueStr)
 
-# 不增加lastRemovedTempNavUrl相关逻辑的话，删除导航栏有时会出现死循环删除不掉的情况
-lastRemovedTempNavUrl = null
+# 不增加lastRemovedTempNavUrls相关逻辑的话，删除导航栏有时会出现死循环删除不掉的情况
+lastRemovedTempNavUrls = []
 
-setLastRemovedTempNavUrl = (name, url)->
+appendLastRemovedTempNavUrl = (name, url)->
     lastRemovedTempNavUrl = if url then url else Creator.getObjectUrl(name)
+    lastRemovedTempNavUrls.push lastRemovedTempNavUrl
+
+removeLastRemovedTempNavUrl = (name, url)->
+    lastRemovedTempNavUrl = if url then url else Creator.getObjectUrl(name)
+    index = lastRemovedTempNavUrls.indexOf(lastRemovedTempNavUrl)
+    if index > -1
+        lastRemovedTempNavUrls.splice(index, 1)
 
 redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
     currentObjectName = Session.get("object_name")
@@ -48,8 +55,8 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
         # 如果当前打开中的Url与需要被关闭的导航栏项一样，则优先返回到上一个url（除非找不到）
         # 其次再取tempNavs中最近的一个导航（先右再左），最后才取Creator.getAppObjectNames()中最后一个导航来跳转
         lastUrl = urlQuery[urlQuery.length - 2]
-        lastUrlEnabled = lastUrl and lastRemovedTempNavUrl != __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + lastUrl
-        setLastRemovedTempNavUrl(name, url)
+        lastUrlEnabled = lastUrl and lastRemovedTempNavUrls.indexOf(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX + lastUrl) < 0
+        appendLastRemovedTempNavUrl(name, url)
         if lastUrlEnabled
             # urlQuery记录的是不带__meteor_runtime_config__.ROOT_URL_PATH_PREFIX前缀的相对路径，可以直接go
             FlowRouter.go(lastUrl)
@@ -66,7 +73,7 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
                 lastObjectName = objectNames[objectNames.length - 1]
                 FlowRouter.redirect(Creator.getObjectUrl(lastObjectName))
     else
-        setLastRemovedTempNavUrl(name, url)
+        appendLastRemovedTempNavUrl(name, url)
 
 Creator.getTempNavs = ()->
     tempNavs = Session.get("temp_navs")
@@ -97,6 +104,7 @@ Creator.createTempNav = (name, url, label)->
         tempNavs.push {name, url, label, is_temp: true}
         Session.set("temp_navs", tempNavs)
         saveTempNavsToCache(tempNavs)
+        removeLastRemovedTempNavUrl(name, url)
 
 Creator.removeTempNavItem = (name, url)->
     tempNavs = Session.get("temp_navs")
