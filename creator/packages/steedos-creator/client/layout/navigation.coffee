@@ -1,3 +1,12 @@
+checkIsCurrentObject = (objItem, currentObjectName, currentObjectUrl)->
+	if objItem.is_temp
+		if objItem.url
+			return objItem.url == currentObjectUrl
+		else
+			return objItem.name == currentObjectName
+	else
+		return objItem.name == currentObjectName
+
 computeObjects = (maxW, hasAppDashboard)->
 	# 当导航字体相关样式变更时，应该变更该font变量，否则计算可能出现偏差
 	font = '400 normal 13px -apple-system, system-ui, Helvetica, Arial, "Microsoft Yahei", SimHei'
@@ -16,6 +25,8 @@ computeObjects = (maxW, hasAppDashboard)->
 	mainW = 0
 	objectNames = Creator.getAppObjectNames()
 	currentObjectName = Session.get("object_name")
+	currentRecordId = Session.get("record_id")
+	currentObjectUrl = Creator.getObjectUrl(currentObjectName, currentRecordId)
 	hiddens = []
 	visiables = []
 	currentObjectHiddenIndex = -1
@@ -24,7 +35,7 @@ computeObjects = (maxW, hasAppDashboard)->
 		labelItem = objItem.label
 		widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
 		if mainW + widthItem >= maxW
-			if objItem.name == currentObjectName
+			if checkIsCurrentObject(objItem, currentObjectName, currentObjectUrl)
 				currentObjectHiddenIndex = hiddens.length
 			hiddens.push objItem
 		else
@@ -41,7 +52,7 @@ computeObjects = (maxW, hasAppDashboard)->
 		widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
 		widthItem += tempNavItemExtraW #临时导航栏项一定要额外加上左右多出来的宽度
 		if mainW + widthItem >= maxW
-			if objItem.name == currentObjectName
+			if checkIsCurrentObject(objItem, currentObjectName, currentObjectUrl)
 				currentObjectHiddenIndex = hiddens.length
 			hiddens.push objItem
 		else
@@ -71,7 +82,7 @@ computeObjects = (maxW, hasAppDashboard)->
 		i = lastVisiableIndex
 		while mainW + moreW > maxW and i > 0
 			objItem = visiables[i]
-			if objItem.name == currentObjectName
+			if checkIsCurrentObject(objItem, currentObjectName, currentObjectUrl)
 				# 为当前对象选项时不可以添加到隐藏对象菜单中，直接跳过即可
 				i--
 				continue
