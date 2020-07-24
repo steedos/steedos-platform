@@ -297,35 +297,10 @@ export class ODataManager {
           let refFieldName = field.name;
           let lookup = {
             from: field.reference_to,
+            localField: refFieldName,
+            foreignField: '_id',
             as: `${refFieldName}`
           };
-
-          if (field.multiple) {
-            lookup['localField'] = refFieldName;
-            lookup['foreignField'] = '_id';
-          } else {
-            lookup['let'] = {};
-            lookup['pipeline'] = [];
-            lookup['let'][refFieldName] = `$${refFieldName}`;
-            lookup['pipeline'].push({
-              $match:
-              {
-                $expr:
-                {
-                  $and:
-                    [
-                      { $eq: ["$_id", `$$${refFieldName}`] }
-                    ]
-                }
-              }
-            });
-
-            if (!_.isEmpty(createQuery.includes[i].projection)) {
-              let project = {};
-              project['$project'] = createQuery.includes[i].projection;
-              lookup['pipeline'].push(project);
-            }
-          }
 
           pipeline.push({ $lookup: lookup });
 
@@ -403,30 +378,31 @@ export class ODataManager {
               if (!_.isEmpty(entityValues) || _.isNumber(entityValues)) {
                 if (field.multiple) {
                   let originalData = _.clone(entityValues);
-                  let filters = [];
-                  _.each(entityValues, function (f) {
-                    filters.push(`(_id eq '${f}')`);
-                  })
-                  try {
-                    let ref: any;
-                    let referenceToCollection = this.getObject(field.reference_to);
-                    let _ro_NAME_FIELD_KEY = (ref = this.getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
 
-                    let queryFields = _.clone(queryOptions.fields)
+                  try {
+                    let referenceToCollection = this.getObject(field.reference_to);
+                    let _ro_NAME_FIELD_KEY = referenceToCollection.NAME_FIELD_KEY;
+
+                    let queryFields = _.clone(queryOptions.fields);
+                    if (_.isEmpty(queryFields)) {
+                      queryOptions.fields = [_ro_NAME_FIELD_KEY]
+                    }
 
                     if (_.isEmpty(entities[idx][navigationProperty])) {
                       entities[idx][navigationProperty] = originalData;
                     } else {
-                      entities[idx][navigationProperty] = _.map(entities[idx][navigationProperty], function (o) {
+                      entities[idx][navigationProperty] = _.map(entities[idx][navigationProperty], function (o: any) {
+                        let tempId = o._id;
+                        o = _.pick(o, queryOptions.fields);
                         o['reference_to.o'] = referenceToCollection._name;
                         o['reference_to._o'] = field.reference_to;
                         o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
+                        o['_id'] = tempId;
                         if (_.isEmpty(queryFields)) {
                           delete o[_ro_NAME_FIELD_KEY]
                         }
                         return o;
                       });
-                      entityValues.splice(0, entityValues.length, ...entities[idx][navigationProperty])
                     }
                   } catch (error) {
                     console.error(error)
@@ -436,11 +412,10 @@ export class ODataManager {
                 } else {
                   let originalData = _.clone(entities[idx][navigationProperty]);
                   try {
-                    let ref: any;
                     let referenceToCollection = this.getObject(field.reference_to);
-                    let _ro_NAME_FIELD_KEY = (ref = this.getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
+                    let _ro_NAME_FIELD_KEY = referenceToCollection.NAME_FIELD_KEY;
 
-                    let queryFields = _.clone(queryOptions.fields)
+                    let queryFields = _.clone(queryOptions.fields);
                     if (_.isEmpty(queryFields)) {
                       queryOptions.fields = [_ro_NAME_FIELD_KEY]
                     }
@@ -448,10 +423,12 @@ export class ODataManager {
                     if (_.isEmpty(entities[idx][navigationProperty])) {
                       entities[idx][navigationProperty] = originalData;
                     } else {
-                      entities[idx][navigationProperty] = entities[idx][navigationProperty][0];
+                      let refId = entities[idx][navigationProperty][0]._id;
+                      entities[idx][navigationProperty] = _.pick(entities[idx][navigationProperty][0], queryOptions.fields);
                       entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                       entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
                       entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
+                      entities[idx][navigationProperty]['_id'] = refId;
                       if (_.isEmpty(queryFields)) {
                         delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
                       }
@@ -462,28 +439,38 @@ export class ODataManager {
                   }
 
                 }
+              } else {
+                delete entities[idx][navigationProperty];
               }
             };
           }
           if (_.isArray(field.reference_to)) {
             for (let idx = 0; idx < entities.length; idx++) {
               let ref1: any;
-              let ref2: any;
               if ((ref1 = entities[idx][navigationProperty]) != null ? ref1.ids : void 0) {
                 let _o = entities[idx][navigationProperty].o;
-                let _ro_NAME_FIELD_KEY = (ref2 = this.getObject(_o)) != null ? ref2.NAME_FIELD_KEY : void 0;
-                let referenceToCollection = this.getObject(entities[idx][navigationProperty].o);
+                let referenceToCollection = this.getObject(_o);
                 if (referenceToCollection) {
+                  let _ro_NAME_FIELD_KEY = referenceToCollection.NAME_FIELD_KEY;
                   let tempLookupKey = navigationProperty + '_$lookup';
                   if (field.multiple) {
                     let _ids = _.clone(entities[idx][navigationProperty].ids);
 
                     let queryFields = _.clone(queryOptions.fields);
+                    let query = {}
+                    if (_.isEmpty(queryFields)) {
+                      query['fields'] = [_ro_NAME_FIELD_KEY]
+                    } else {
+                      query['fields'] = queryFields
+                    }
 
-                    entities[idx][navigationProperty] = _.map(entities[idx][tempLookupKey], function (o) {
+                    entities[idx][navigationProperty] = _.map(entities[idx][tempLookupKey], function (o: any) {
+                      let tempId = o._id;
+                      o = _.pick(entities[idx][tempLookupKey][0], query['fields']);
                       o['reference_to.o'] = referenceToCollection._name;
                       o['reference_to._o'] = _o;
                       o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
+                      o['_id'] = tempId;
                       if (_.isEmpty(queryFields)) {
                         delete o[_ro_NAME_FIELD_KEY]
                       }
@@ -493,12 +480,19 @@ export class ODataManager {
                     delete entities[idx][tempLookupKey];
                   } else {
                     let queryFields = _.clone(queryOptions.fields)
-
+                    let query = {}
+                    if (_.isEmpty(queryFields)) {
+                      query['fields'] = [_ro_NAME_FIELD_KEY]
+                    } else {
+                      query['fields'] = queryFields
+                    }
                     if (!_.isEmpty(entities[idx][tempLookupKey])) {
-                      entities[idx][navigationProperty] = entities[idx][tempLookupKey][0];
+                      let tempId = entities[idx][tempLookupKey][0]._id;
+                      entities[idx][navigationProperty] = _.pick(entities[idx][tempLookupKey][0], query['fields']);
                       entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                       entities[idx][navigationProperty]['reference_to._o'] = _o;
                       entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
+                      entities[idx][navigationProperty]['_id'] = tempId;
                       if (_.isEmpty(queryFields)) {
                         delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
                       }
