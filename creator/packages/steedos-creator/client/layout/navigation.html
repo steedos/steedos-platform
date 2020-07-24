@@ -46,7 +46,7 @@
 						<li class="slds-context-bar__item {{object_class_name this}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
 							<a data-object-name="{{this.name}}" href="{{object_url}}" title="{{this.label}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
 								{{#if this.is_temp}}
-									<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
+									<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="{{_ 'creator_navigation_nav_not_saved'}}" aria-label="{{_ 'creator_navigation_nav_not_saved'}}">*</abbr>
 								{{/if}}
 								<span class="slds-truncate">{{this.label}}</span>
 								{{#with getObjectBadge this app_id}}
@@ -66,11 +66,11 @@
 					{{/each}}
 					{{#if this.hiddens.length}}
 						<li class="slds-context-bar__item {{object_class_name this}} {{#if this.hasHiddenTempNavs}}slds-is-unsaved{{/if}}">
-							<a class="slds-context-bar__label-action" role="button" title="更多" href="javascript:void(0);" data-toggle="dropdown">
+							<a class="slds-context-bar__label-action" role="button" title="{{_ 'creator_navigation_nav_more'}}" href="javascript:void(0);" data-toggle="dropdown">
 								{{#if this.hasHiddenTempNavs}}
-									<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
+									<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="{{_ 'creator_navigation_nav_not_saved'}}" aria-label="{{_ 'creator_navigation_nav_not_saved'}}">*</abbr>
 								{{/if}}
-								<span class="triggerLinkText selectedListView uiOutputText slds-p-right_xx-small">更多</span>
+								<span class="triggerLinkText selectedListView uiOutputText slds-p-right_xx-small">{{_ 'creator_navigation_nav_more'}}</span>
 								<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
 									<span class="lightningPrimitiveIcon">
 										{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
@@ -84,7 +84,7 @@
 											<a role="option" tabindex="-1" data-object-name="{{this.name}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
 												<span class="slds-truncate">
 													{{#if this.is_temp}}
-														<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="Tab Not Saved" aria-label="Tab Not Saved">*</abbr>
+														<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="{{_ 'creator_navigation_nav_not_saved'}}" aria-label="{{_ 'creator_navigation_nav_not_saved'}}">*</abbr>
 													{{/if}}
 													<span>{{this.label}}</span>
 												</span>

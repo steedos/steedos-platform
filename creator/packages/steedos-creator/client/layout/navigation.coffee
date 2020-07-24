@@ -65,7 +65,7 @@ computeObjects = (maxW, hasAppDashboard)->
 			return item.is_temp
 
 		moreIconW = 22 #更多右侧的下拉箭头及其左侧多出的空格边距宽度
-		moreW = Creator.measureWidth(t("更多"), font) + itemPaddingW + moreIconW
+		moreW = Creator.measureWidth(t("creator_navigation_nav_more"), font) + itemPaddingW + moreIconW
 		if hasHiddenTempNavs
 			moreW += tempNavItemLeftW #临时导航栏项一定要额外加上左侧多出来的宽度
 		i = lastVisiableIndex
