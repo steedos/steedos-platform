@@ -1,6 +1,16 @@
 Template.creatorLayout.helpers Creator.helpers
 
 Template.creatorLayout.helpers
+	showTrialHearder: ()->
+		if !Creator.__l
+			return true
+		if Creator.__l.is_trial || Creator.__l.is_develop
+			return true
+		if Creator.__l.verify_status != 'SUCCESS'
+			return true
+#		if Creator.__l.is_develop
+#			if  Creator.__l.days_left <= 7
+#				return true
 	hiddenHeader: ()->
 		if Session.get("hidden_header") and Session.get("hidden_header") == true
 			return true

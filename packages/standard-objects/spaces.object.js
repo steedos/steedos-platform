@@ -2,6 +2,7 @@ Fiber = require('fibers')
 const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 const _ = require("lodash");
+const steedosLicense = require("@steedos/license");
 db.spaces = core.newCollection('spaces');
 
 db.spaces.helpers({
@@ -551,6 +552,18 @@ Creator.Objects['spaces'].methods = {
             });
         }).run();
     },
+    "clean_license": function(req, res){
+        return Fiber(function () {
+            let userSession = req.user;
+            let { _id: spaceId } = req.params;
+            let spaceUser = db.space_users.findOne({space: spaceId, user: userSession.userId}, {fields: {_id: 1}})
+            //Creator.isSpaceAdmin(spaceId, userSession.userId)
+            if(spaceUser){
+                steedosLicense.cleanLicenseCache(spaceId);
+            }
+            return res.send({});
+        }).run();
+    }
     // "initSpaceData": function(req, res){
     //     return Fiber(function () {
             

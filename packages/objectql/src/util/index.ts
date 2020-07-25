@@ -18,6 +18,7 @@ var clone = require("clone")
 import { has, getJsonMap } from '@salesforce/ts-types';
 let STEEDOSCONFIG:any = {};
 const configName = 'steedos-config.yml'
+const licenseName = '.license'
 
 export * from './transform'
 export * from './permission_shares'
@@ -332,6 +333,20 @@ export function getSteedosConfig(){
     //     throw new Error('Config file not found: ' + configPath);
     }
     return STEEDOSCONFIG;
+}
+
+export function getLicense(){
+    let license = ""
+    let licensePath = path.join(getBaseDirectory(), licenseName)
+    if (fs.existsSync(licensePath) && !fs.statSync(licensePath).isDirectory()) {
+        license = clone(fs.readFileSync(licensePath, 'utf-8'));
+    }
+    return license;
+}
+
+export function writeLicense(license){
+    let licensePath = path.join(getBaseDirectory(), licenseName)
+    fs.writeFileSync(licensePath, license, "utf8")
 }
 
 export function getRandomString(length) {

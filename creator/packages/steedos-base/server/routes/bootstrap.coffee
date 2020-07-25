@@ -1,6 +1,7 @@
 steedosAuth = require("@steedos/auth");
 steedosI18n = require("@steedos/i18n");
 steedosCore = require("@steedos/core");
+steedosLicense = require("@steedos/license");
 clone = require("clone");
 
 _getLocale = (user)->
@@ -52,6 +53,7 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	result.dashboards = clone(Creator.Dashboards)
 	result.object_listviews = Creator.getUserObjectsListViews(userId, spaceId, result.objects)
 	result.object_workflows = Meteor.call 'object_workflows.get', spaceId, userId
+	result.license = steedosLicense.getLicense(spaceId);
 
 	permissions = Meteor.wrapAsync (v, userSession, cb)->
 		v.getUserObjectPermission(userSession).then (resolve, reject)->

@@ -190,6 +190,7 @@ handleBootstrapData = (result, callback)->
 	Creator.objectsByName = {};
 	object_listviews = result.object_listviews
 	Creator.object_workflows = result.object_workflows
+	Creator.__l = result.license
 	isSpaceAdmin = Steedos.isSpaceAdmin()
 
 	Session.set "user_permission_sets", result.user_permission_sets

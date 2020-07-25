@@ -141,6 +141,10 @@ Package.onUse(function (api) {
 	api.addFiles('client/layout/mobile_header.less', 'client');
 	api.addFiles('client/layout/mobile_header.coffee', 'client');
 
+	api.addFiles('client/layout/trial_header.html', 'client');
+	api.addFiles('client/layout/trial_header.less', 'client');
+	api.addFiles('client/layout/trial_header.coffee', 'client');
+
 	api.addFiles('client/layout/layout.html', 'client');
 	api.addFiles('client/layout/layout.less', 'client');
 	api.addFiles('client/layout/layout.coffee', 'client');

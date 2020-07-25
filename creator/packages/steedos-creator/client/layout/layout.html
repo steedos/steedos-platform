@@ -1,7 +1,7 @@
 <template name="creatorLayout">
 	{{#if isloading}}
 	{{else}}
-		<div class="steedos skin-blue-light creator">
+		<div class="steedos skin-blue-light creator {{#if showTrialHearder}}show-trial-header{{/if}}">
 			{{#unless hiddenHeader}}
 				{{> creatorMobileHeader}}
 				{{> creatorHeader}}
