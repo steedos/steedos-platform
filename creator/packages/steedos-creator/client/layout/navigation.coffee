@@ -128,10 +128,7 @@ Template.creatorNavigation.helpers
 		return Session.get("app_id")
 
 	app_name: ()->
-		app = Creator.getApp()
-		unless app
-			return ""
-		return if app.label then t(app.label) else t(app.name)
+		return Creator.getAppLabel()
 
 	app_objects: ()->
 		return Creator.getAppObjectNames()
