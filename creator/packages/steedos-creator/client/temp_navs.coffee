@@ -159,6 +159,9 @@ Creator.resetTempNavsIfNeeded = ()->
         saveTempNavsIdToCache(currentTempNavsId)
 
 Meteor.startup ()->
+    if Steedos.isMobile()
+        # 手机上不显示顶部导航，不用执行相关计算
+        return
     # 切换工作区时或APP时重置temp_navs值
     Tracker.autorun ()->
         spaceId = Session.get("spaceId")
