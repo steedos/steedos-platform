@@ -186,7 +186,7 @@ Meteor.startup ()->
                 unless record
                     return
                 if objectName == "cfs.files.filerecord"
-                    label = "File:" + record?.original?.name
+                    label = t('cfs_files_filerecord__object') + "-" + record?.original?.name
                 else
                     nameField = object.NAME_FIELD_KEY || "name"
                     label = record[nameField]
