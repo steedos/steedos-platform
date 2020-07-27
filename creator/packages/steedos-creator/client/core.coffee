@@ -808,8 +808,16 @@ if Meteor.isClient
 			window.open(url, '_blank', 'width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');
 		event?.stopPropagation();
 		return false;
+
+	Creator.getAppLabel = (app)->
+		unless app
+			app = Creator.getApp()
+		unless app
+			return ""
+		return if app.label then t(app.label) else t(app.name)
 	
-	Creator.measureWidth = _.memoize (text, font)->
+	Creator.measureWidth = _.memoize (text, font, maxWidth)->
+		# maxWidth是考虑文字超长时显示了省略号的情况
 		canvas = arguments.callee.canvas
 		unless canvas
 			canvas = document.createElement('canvas')
@@ -818,7 +826,11 @@ if Meteor.isClient
 			arguments.callee.canvas = canvas
 		canvasContext = canvas.getContext('2d')
 		canvasContext.font = font
-		return canvasContext.measureText(text).width
+		result = canvasContext.measureText(text).width
+		if maxWidth and result > maxWidth
+			return maxWidth
+		else
+			return result
 
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->

@@ -1,3 +1,25 @@
+# style = window.getComputedStyle($(".slds-global-header_container .slds-context-bar__primary .slds-context-bar__item .slds-context-bar__label-action>span.slds-truncate")[0]);
+# fontAppLable = [
+# 	style['font-weight'],
+# 	style['font-style'],
+# 	style['font-size'],
+# 	style['font-family'],
+# ].join(' ');
+# 导航栏左侧APP名称字体，获取方式是在浏览器控制台执行以上代码，不能直接在代码中执行是因为宽度计算是在dom渲染前执行的
+fontAppLable = '400 normal 18px -apple-system, system-ui, Helvetica, Arial, "Microsoft Yahei", SimHei'
+
+# style = window.getComputedStyle($(".slds-global-header_container .slds-context-bar__secondary .slds-context-bar__item .slds-context-bar__label-action>span.slds-truncate")[0]);
+# fontNavItem = [
+# 	style['font-weight'],
+# 	style['font-style'],
+# 	style['font-size'],
+# 	style['font-family'],
+# ].join(' ');
+# 导航栏每项对象名称字体，获取方式是在浏览器控制台执行以上代码，不能直接在代码中执行是因为宽度计算是在dom渲染前执行的
+fontNavItem = '400 normal 13px -apple-system, system-ui, Helvetica, Arial, "Microsoft Yahei", SimHei'
+
+measureMaxWidth = 182 # 考虑文字超长时显示了省略号的情况，这里定义显示了省略号时文字显示的长度就行
+
 checkIsCurrentObject = (objItem, currentObjectName, currentObjectUrl)->
 	if objItem.is_temp
 		if objItem.url
@@ -9,18 +31,19 @@ checkIsCurrentObject = (objItem, currentObjectName, currentObjectUrl)->
 
 computeObjects = (maxW, hasAppDashboard)->
 	# 当导航字体相关样式变更时，应该变更该font变量，否则计算可能出现偏差
-	font = '400 normal 13px -apple-system, system-ui, Helvetica, Arial, "Microsoft Yahei", SimHei'
-	itemPaddingW = 24 # 每项的左右边距宽度
+	itemPaddingW = 24 # 每项的左右边距宽度之和
 	tempNavItemLeftW = 10 # 每个临时项的左侧包含边距和星号图标在内的宽度
-	tempNavItemRightW = 22 # 每个临时项的右侧包含边距和x图标在内的宽度
+	tempNavItemRightW = 24 # 每个临时项的右侧包含边距和x图标在内的宽度
 	tempNavItemExtraW = tempNavItemLeftW + tempNavItemRightW
 	unless maxW
 		maxW = $("body").width()
-	leftAreaW = 120 #左侧应用区域宽度
+	appLable = Creator.getAppLabel()
+	appLableW = Creator.measureWidth(appLable, fontAppLable, measureMaxWidth)
+	leftAreaW = 60 + appLableW + 24 #左侧应用区域宽度，就是第一个nav项离浏览器最左侧的宽度值，不要考虑是否navs中有主页项，因为它由参数hasAppDashboard控制处理
 	rightAreaW = 0 #右侧对象列表后面区域的宽度，目前没有内容，后续可能增加内容
 	maxW = maxW - leftAreaW - rightAreaW
 	if hasAppDashboard
-		dashboardW = Creator.measureWidth(t("Home"), font) + itemPaddingW
+		dashboardW = Creator.measureWidth(t("Home"), fontNavItem, measureMaxWidth) + itemPaddingW
 		maxW = maxW - dashboardW
 	mainW = 0
 	objectNames = Creator.getAppObjectNames()
@@ -33,7 +56,7 @@ computeObjects = (maxW, hasAppDashboard)->
 	objectNames?.forEach (item, index)->
 		objItem = Creator.getObject(item)
 		labelItem = objItem.label
-		widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
+		widthItem = Creator.measureWidth(labelItem, fontNavItem, measureMaxWidth) + itemPaddingW
 		if mainW + widthItem >= maxW
 			if checkIsCurrentObject(objItem, currentObjectName, currentObjectUrl)
 				currentObjectHiddenIndex = hiddens.length
@@ -49,7 +72,7 @@ computeObjects = (maxW, hasAppDashboard)->
 			objItem = _.clone Creator.getObject(item.name)
 			objItem.is_temp = true
 		labelItem = objItem.label
-		widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
+		widthItem = Creator.measureWidth(labelItem, fontNavItem, measureMaxWidth) + itemPaddingW
 		widthItem += tempNavItemExtraW #临时导航栏项一定要额外加上左右多出来的宽度
 		if mainW + widthItem >= maxW
 			if checkIsCurrentObject(objItem, currentObjectName, currentObjectUrl)
@@ -66,7 +89,7 @@ computeObjects = (maxW, hasAppDashboard)->
 			# visiables追加后不可以变更lastVisiableIndex值，因为后续增加“更多”按钮逻辑中，追加的项不可以重新移到hidden中
 			objItem = hiddens[currentObjectHiddenIndex]
 			labelItem = objItem.label
-			widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
+			widthItem = Creator.measureWidth(labelItem, fontNavItem, measureMaxWidth) + itemPaddingW
 			if objItem.is_temp
 				widthItem += tempNavItemExtraW #临时导航栏项一定要额外加上左右多出来的宽度
 			mainW += widthItem
@@ -76,7 +99,7 @@ computeObjects = (maxW, hasAppDashboard)->
 			return item.is_temp
 
 		moreIconW = 22 #更多右侧的下拉箭头及其左侧多出的空格边距宽度
-		moreW = Creator.measureWidth(t("creator_navigation_nav_more"), font) + itemPaddingW + moreIconW
+		moreW = Creator.measureWidth(t("creator_navigation_nav_more"), fontNavItem, measureMaxWidth) + itemPaddingW + moreIconW
 		if hasHiddenTempNavs
 			moreW += tempNavItemLeftW #临时导航栏项一定要额外加上左侧多出来的宽度
 		i = lastVisiableIndex
@@ -87,7 +110,7 @@ computeObjects = (maxW, hasAppDashboard)->
 				i--
 				continue
 			labelItem = objItem.label
-			widthItem = Creator.measureWidth(labelItem, font) + itemPaddingW
+			widthItem = Creator.measureWidth(labelItem, fontNavItem, measureMaxWidth) + itemPaddingW
 			mainW -= widthItem
 			hiddens.unshift(visiables.splice(i,1)[0])
 			i--
