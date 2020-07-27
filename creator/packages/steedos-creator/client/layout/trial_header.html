@@ -63,28 +63,25 @@
 			<!--				</div>-->
 			<div class="slds-builder-header__item slds-builder-header__utilities">
 				<div class="slds-builder-header__utilities-item">
-<!--					<a href="javascript:void(0);"-->
-<!--					   class="slds-builder-header__item-action slds-media slds-media_center">-->
-<!--						<div class="slds-media__figure">-->
-<!--								<span class="slds-icon_container slds-icon-utility-back slds-current-color">-->
-<!--									<svg class="slds-icon slds-icon_x-small" aria-hidden="true">-->
-<!--										<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#back"></use>-->
-<!--									</svg>-->
-<!--								</span>-->
-<!--						</div>-->
-<!--						<div class="slds-media__body">Back</div>-->
-<!--					</a>-->
 					<div class="slds-builder-header__item-action slds-media slds-media_center">
-						<span class="days-remaining" data-aura-rendered-by="39:778;a">Days left in trial</span>
-						<span id="trial-countdown" data-aura-rendered-by="41:778;a">{{days_left}}</span>
+						<a class="trial-feedback">{{t "license_trial_feedback"}}</a>
 					</div>
 				</div>
+				{{#if hasLicense}}
+					<div class="slds-builder-header__utilities-item">
+						<div class="slds-builder-header__item-action slds-media slds-media_center">
+							<span class="days-remaining" data-aura-rendered-by="39:778;a">{{t "license_trial_day_left"}}</span>
+							<span id="trial-countdown" data-aura-rendered-by="41:778;a">{{days_left}}</span>
+						</div>
+					</div>
+				{{/if}}
+				{{#unless hasLicense}}
 				<div class="slds-builder-header__utilities-item">
 					<div class="slds-builder-header__item-action slds-media slds-media_center">
-<!--						<a class="trial-text" href="javascript:void(0);" target="_self" id="trial-subscribe-now">Subscribe Now</a>-->
-						<button class="slds-button slds-button_destructive" id="subscribeNow">Subscribe Now</button>
+						<button class="slds-button slds-button_destructive" id="subscribeNow">{{t "license_trial_subscribeNow"}}</button>
 					</div>
 				</div>
+				{{/unless}}
 			</div>
 		</header>
 	</div>

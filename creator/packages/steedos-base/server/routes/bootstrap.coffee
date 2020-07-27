@@ -53,7 +53,12 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	result.dashboards = clone(Creator.Dashboards)
 	result.object_listviews = Creator.getUserObjectsListViews(userId, spaceId, result.objects)
 	result.object_workflows = Meteor.call 'object_workflows.get', spaceId, userId
-	result.license = steedosLicense.getLicense(spaceId);
+	console.time('license1');
+	try
+		result.license = steedosLicense.getLicense(spaceId);
+	catch e
+		console.error("getLicense", e.message);
+	console.timeEnd('license1');
 
 	permissions = Meteor.wrapAsync (v, userSession, cb)->
 		v.getUserObjectPermission(userSession).then (resolve, reject)->

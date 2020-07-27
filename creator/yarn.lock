@@ -506,6 +506,15 @@
     i18next-sprintf-postprocessor "^0.2.2"
     i18next-xhr-backend "^3.2.2"
 
+"@steedos/license@1.22.0-alpha.0":
+  version "1.22.0-alpha.0"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.0.tgz#da46d1e457151141bd1a6c3bb5b092ca49d51cc5"
+  integrity sha1-2kbR5FcVEUG9Gmw7tbCSyknVHMU=
+  dependencies:
+    crypto "^1.0.1"
+    node-fetch "^2.6.0"
+    systeminformation "^4.26.10"
+
 "@steedos/migrate@^1.20.0":
   version "1.20.0"
   resolved "https://registry.npm.taobao.org/@steedos/migrate/download/@steedos/migrate-1.20.0.tgz#f6a42c55784322f0672cde87258097e7ff49e6a8"
@@ -4953,6 +4962,11 @@ node-fetch@^1.0.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
+node-fetch@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.npm.taobao.org/node-fetch/download/node-fetch-2.6.0.tgz?cache=0&sync_timestamp=1591866687090&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnode-fetch%2Fdownload%2Fnode-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
+  integrity sha1-5jNFY4bUqlWGP2dqerDaqP3ssP0=
+
 node-forge@^0.7.0:
   version "0.7.6"
   resolved "https://registry.npm.taobao.org/node-forge/download/node-forge-0.7.6.tgz#fdf3b418aee1f94f0ef642cd63486c77ca9724ac"
@@ -7134,6 +7148,11 @@ syntax-error@^1.1.6:
   integrity sha1-LZ1P9cBkrLcRWUo+O5UFStUdkHw=
   dependencies:
     acorn-node "^1.2.0"
+
+systeminformation@^4.26.10:
+  version "4.26.10"
+  resolved "https://registry.npm.taobao.org/systeminformation/download/systeminformation-4.26.10.tgz#2244e7529ca9e7b8ecd6941e19fe7df7e3da9146"
+  integrity sha1-IkTnUpyp57js1pQeGf599+PakUY=
 
 tapable@^1.0.0:
   version "1.1.3"

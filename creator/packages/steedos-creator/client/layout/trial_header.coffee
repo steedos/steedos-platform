@@ -1,4 +1,8 @@
 Template.trialHearder.helpers
+	t: (k)->
+		return TAPi18n.__(k);
+	hasLicense: ()->
+		return Creator.__l?.days_left
 	showTrialHearder: ()->
 		if !Creator.__l
 			return true
@@ -10,13 +14,17 @@ Template.trialHearder.helpers
 #			if  Creator.__l.days_left <= 7
 #				return true
 	days_left: ()->
-		return Creator.__l.days_left || 1
+		return Creator.__l?.days_left || 1
 Template.trialHearder.events
+	"click .trial-feedback": (e, t)->
+		window.open("https://www.steedos.com/company/contact-us");
 	"click #subscribeNow": (e, t)->
+		if !Creator.isSpaceAdmin()
+			return toastr.info("请联系管理员")
 		spaceId = Session.get("spaceId");
 		spaceName = Creator.getCollection("spaces").findOne(spaceId).name;
-		licenseServer = 'http://127.0.0.1:5000'; #TODO
-		licenseSpaceId = 'jYgTB7xC3ScqmXYdW'; #TODO
+		licenseServer = 'https://community.trial.steedos.com:8443'; #TODO
+		licenseSpaceId = 'LHXoSJWEtDKuHFyge'; #TODO
 		window.open(licenseServer + "/accounts/a/#/signup?X-Space-Id="+licenseSpaceId+"&redirect_uri=" + encodeURIComponent(licenseServer + "/api/v4/product_license/apply/new?q=" + spaceId + "&n=" + spaceName));
 		swal({
 			title: TAPi18n.__('license_trial_header_swal_title'),
