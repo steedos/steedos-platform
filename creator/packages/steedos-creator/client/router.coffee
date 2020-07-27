@@ -193,7 +193,8 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 		record_id = FlowRouter.getParam("record_id")
 		Creator.odata.get("instances", "#{record_id}/view?async", null, null, (result)=>
 			if result and result.redirect
-				FlowRouter.go result.redirect
+				# result.redirect返回的是带rootUrl前缀的相对路径，不能用FlowRouter.go
+				FlowRouter.redirect result.redirect
 		)
 
 
