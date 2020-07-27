@@ -86,7 +86,7 @@
 													{{#if this.is_temp}}
 														<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="{{_ 'creator_navigation_nav_not_saved'}}" aria-label="{{_ 'creator_navigation_nav_not_saved'}}">*</abbr>
 													{{/if}}
-													<span>{{this.label}}</span>
+													<span class="slds-truncate">{{this.label}}</span>
 												</span>
 												{{#with getObjectBadge this app_id}}
 													<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>
