@@ -22,14 +22,14 @@
       "sri": "Eh7Je0vHkoI+a/zCIRHRY2ohvarWUkPthasXHFG2urRVVQmk3hRXcNiIUKCV+JtHNuuYhZwGAGokydN+2GQ9Ag=="
     },
     {
-      "path": "204bf808c09d1f82eccf3b0d0a1804919f80fba0.css",
+      "path": "e13cbfbd4b62bbf3077d75738854f79d0379d79d.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/204bf808c09d1f82eccf3b0d0a1804919f80fba0.css?meteor_css_resource=true",
-      "size": 1661999,
-      "hash": "204bf808c09d1f82eccf3b0d0a1804919f80fba0",
-      "sri": "0WU0fwemnoLcoNF7xdnvMEiROOfHfQBd2ywmYfhtzatpAetbeR1DyntN0V+Qk30XqA2Xw88WGeKxGE8Yu0kUnw=="
+      "url": "/__cordova/e13cbfbd4b62bbf3077d75738854f79d0379d79d.css?meteor_css_resource=true",
+      "size": 1662173,
+      "hash": "e13cbfbd4b62bbf3077d75738854f79d0379d79d",
+      "sri": "muDESPKca6kzN6QecbemcsoUdzkzCcxzuBkCD0L0gVDiZLXdwmYPil3JP4gVGOY6/KJNSvKdcoD2AUdA2482Fg=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",

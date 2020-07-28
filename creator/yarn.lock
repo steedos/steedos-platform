@@ -506,10 +506,10 @@
     i18next-sprintf-postprocessor "^0.2.2"
     i18next-xhr-backend "^3.2.2"
 
-"@steedos/license@1.22.0-alpha.2":
-  version "1.22.0-alpha.2"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.2.tgz#def07cbaa5950edf7016287e1ed54ff982331ec8"
-  integrity sha1-3vB8uqWVDt9wFih+HtVP+YIzHsg=
+"@steedos/license@1.22.0-alpha.3":
+  version "1.22.0-alpha.3"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.3.tgz#0f11f67d97d51432255a522b1e8fbb037574b7af"
+  integrity sha1-DxH2fZfVFDIlWlIrHo+7A3V0t68=
   dependencies:
     crypto "^1.0.1"
     node-fetch "^2.6.0"
