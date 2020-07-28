@@ -504,6 +504,10 @@
                     "type": "boolean",
                     "description": "本公司"
                 },
+                "is_company_limited": {
+                    "type": ["boolean", "string"],
+                    "description": "本公司"
+                },
                 "system": {
                     "type": "string"
                 },
