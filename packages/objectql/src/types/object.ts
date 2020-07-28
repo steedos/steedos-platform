@@ -527,6 +527,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('find', this.table_name, clonedQuery, userSession)
     }
 
+    // 此函数支持driver: MeteorMongo
+    async aggregate(query: SteedosQueryOptions, externalPipeline, userSession?: SteedosUserSession) {
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('aggregate', this.table_name, clonedQuery, externalPipeline, userSession)
+    }
+
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
         await this.processUnreadableField(userSession, clonedQuery);
@@ -589,7 +596,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (_.isNull(userSession) || _.isUndefined(userSession)) {
             return true
         }
-        if (method === 'find' || method === 'findOne' || method === 'count') {
+        if (method === 'find' || method === 'findOne' || method === 'count' || method === 'aggregate') {
             return await this.allowFind(userSession)
         } else if (method === 'insert') {
             return await this.allowInsert(userSession)
@@ -755,8 +762,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private dealWithFilters(method: string, args: any[]) {
         let userSession = args[args.length - 1];
         if (userSession) {
-            if (method === 'find' || method === 'count') {
+            if (method === 'find' || method === 'count' || method === 'aggregate') {
                 let query = args[args.length - 2];
+                if (method === 'aggregate') {
+                    query = args[args.length - 3];
+                }
                 if (query.filters && !_.isString(query.filters)) {
                     query.filters = formatFiltersToODataQuery(query.filters, userSession);
                 }
@@ -770,8 +780,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let spaceId = userSession.spaceId;
             let userId = userSession.userId;
             let objPm = await this.getUserObjectPermission(userSession);
-            if (method === 'find' || method === 'count' || method === 'findOne') {
+            if (method === 'find' || method === 'count' || method === 'findOne' || method === 'aggregate') {
                 let query = args[args.length - 2];
+                if (method === 'aggregate') {
+                    query = args[args.length - 3];
+                }
+
                 if (query.filters && !_.isString(query.filters)) {
                     query.filters = formatFiltersToODataQuery(query.filters);
                 }

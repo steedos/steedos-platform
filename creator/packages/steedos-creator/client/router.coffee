@@ -88,6 +88,9 @@ FlowRouter.route '/app/:app_id',
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		if (app_id != "-")
+			# 切换APP时先清除object_name，record_id，否则相关依赖的autorun会以之前错误的值运行
+			Session.set("object_name", null)
+			Session.set("record_id", null)
 			Session.set("app_id", app_id)
 		Session.set("admin_template_name", null)
 		app = Creator.getApp(app_id)
@@ -190,7 +193,8 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 		record_id = FlowRouter.getParam("record_id")
 		Creator.odata.get("instances", "#{record_id}/view?async", null, null, (result)=>
 			if result and result.redirect
-				FlowRouter.go result.redirect
+				# result.redirect返回的是带rootUrl前缀的相对路径，不能用FlowRouter.go
+				FlowRouter.redirect result.redirect
 		)
 
 

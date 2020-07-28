@@ -187,7 +187,7 @@ Template.creator_view.helpers
 		}
 
 	collection: ()->
-		return "Creator.Collections." + Creator.getObject(Session.get("object_name"))._collection_name
+		return "Creator.Collections." + Creator.getObject(Session.get("object_name"))?._collection_name
 
 	schema: ()->
 		schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(Session.get("object_name"))))

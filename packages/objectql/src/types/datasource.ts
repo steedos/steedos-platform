@@ -290,6 +290,10 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.find(tableName, query, userId)
     }
 
+    async aggregate(tableName: string, query: SteedosQueryOptions, externalPipeline, userId?: SteedosIDType) {
+        return await this._adapter.aggregate(tableName, query, externalPipeline, userId)
+    }
+
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType) {
         return await this._adapter.findOne(tableName, id, query, userId)
     }

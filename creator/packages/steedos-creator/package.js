@@ -156,6 +156,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/layout/header.less', 'client');
 	api.addFiles('client/layout/navigation.html', 'client');
 	api.addFiles('client/layout/navigation.coffee', 'client');
+	api.addFiles('client/layout/navigation.less', 'client');
 	api.addFiles('client/layout/sidebar.html', 'client');
 	api.addFiles('client/layout/sidebar.coffee', 'client');
 	api.addFiles('client/layout/sidebar.less', 'client');

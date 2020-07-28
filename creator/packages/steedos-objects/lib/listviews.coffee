@@ -100,6 +100,8 @@ Creator.convertListView = (default_view, list_view, list_view_name)->
 
 if Meteor.isClient
 	Creator.getRelatedList = (object_name)->
+		unless object_name
+			return
 		relatedListObjects = {}
 		relatedListNames = []
 		_object = Creator.Objects[object_name]

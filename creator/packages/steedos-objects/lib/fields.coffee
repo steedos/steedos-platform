@@ -1,4 +1,6 @@
 Creator.getObjectSchema = (obj) ->
+	unless obj
+		return
 	schema = {}
 
 	fieldsArr = []

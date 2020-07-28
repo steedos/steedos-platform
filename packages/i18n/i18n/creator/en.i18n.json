@@ -123,6 +123,8 @@
 	"creator_list_show_as_two_columns": "List ｜ Record",
 	"creator_list_show_as_three_columns": "Menu ｜ List ｜ Record",
 
-	"creator_files_download_error_not_found": "No attachment found. It may have been deleted."
+	"creator_files_download_error_not_found": "No attachment found. It may have been deleted.",
 
+	"creator_navigation_nav_not_saved": "Not added to navigation bar",
+	"creator_navigation_nav_more": "More"
 }
