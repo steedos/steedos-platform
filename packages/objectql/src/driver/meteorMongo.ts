@@ -125,10 +125,10 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         let result = [];
         let projection: JsonMap = this.getMongoFieldsOptions(options.fields);
         let sort: JsonMap = this.getMongoSortOptions(options.sort);
-        if (projection) {
+        if (!_.isEmpty(projection)) {
             result.push({ $project: projection });
         }
-        if (sort) {
+        if (!_.isEmpty(sort)) {
             result.push({ $sort: sort });
         }
         if (options.skip) {
