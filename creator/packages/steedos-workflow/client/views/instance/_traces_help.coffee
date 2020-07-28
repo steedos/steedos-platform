@@ -355,17 +355,30 @@ TracesTemplate.events =
 		return
 
 	'click .approve-item,.approve-description': (event, template) ->
-		Modal.show "instance_trace_detail_modal", this
+		# PC上链接允许直接点开，不再打开签批历程详细
+		unless $(event.target).closest("a.btn-link").length
+			Modal.show "instance_trace_detail_modal", this
 
 	'taphold .approve-item,.approve-description': (event, template) ->
-		Modal.show "instance_trace_detail_modal", this
+		# 手机上长按打开签批历程详细，如果是链接长按打开后一放手窗口就又关掉了，所以不让链接打开签批历程详细
+		unless $(event.target).closest("a.btn-link").length
+			Modal.show "instance_trace_detail_modal", this
+
+	'click .approve-item a.btn-link,.approve-description a.btn-link,.approve-item-distribute a.btn-link': (event, template) ->
+		# 手机上点击链接，弹出新窗口
+		if Steedos.isMobile()
+			debugger;
+			userId = event.target.dataset?.target_user_id
+			Creator.openSafeObjectUrl('users', userId)
 
 	'tapend .approve-item,.approve-description': (event, template) ->
 		# 上述长按打开approve详细窗口的事件taphold会触发打开窗口后的touchend事件，造成长按打开窗口后一放手窗口就又关掉了
 		# 这里只能通过阻止tapend事件(不可以用touchend事件，因为会影响taphold功能，造成没有长按效果时也会触发taphold事件)冒泡来避免问题。
-		event.stopPropagation()
-		event.preventDefault()
-		return false
+		# 链接允许直接点开
+		unless $(event.target).closest("a.btn-link").length
+			event.stopPropagation()
+			event.preventDefault()
+			return false
 
 	'click .instance-trace-detail-modal .btn-forward-approve-remove': (event, template) ->
 		instanceId = Session.get('instanceId')

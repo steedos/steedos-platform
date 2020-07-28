@@ -803,10 +803,11 @@ if Meteor.isClient
 		return data;
 
 	Creator.openSafeObjectUrl = (object_name, record_id)->
-		url = Creator.getSafeObjectUrl(object_name, record_id)
+		url = Creator.getSafeObjectUrl(object_name, record_id, '-')
 		if url
 			window.open(url, '_blank', 'width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');
 		event?.stopPropagation();
+		event?.preventDefault();
 		return false;
 
 	Creator.getAppLabel = (app)->

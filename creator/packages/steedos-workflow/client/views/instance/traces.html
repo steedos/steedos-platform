@@ -17,7 +17,7 @@
                             </tr>
                             <tr class="approve-item-distribute">
                                 <td class="name">
-                                    <a onclick="Creator.openSafeObjectUrl('users', '{{this.from_user}}')">
+                                    <a class="btn-link" href="{{objectUrl 'users' this.from_user '-'}}" data-target_user_id="{{this.from_user}}">
                                         {{this.from_user_name}}
                                     </a>
                                 </td>
@@ -32,7 +32,7 @@
                     {{#each this.approves}}
                             <tr class="approve-item">
                                 <td class="name">
-                                    <a onclick="Creator.openSafeObjectUrl('users', '{{this.handler}}')">
+                                    <a class="btn-link" href="{{objectUrl 'users' this.handler '-'}}" data-target_user_id="{{this.handler}}">
                                         {{this.handler_name}}
                                     </a>
                                     {{#if isCC this}}
