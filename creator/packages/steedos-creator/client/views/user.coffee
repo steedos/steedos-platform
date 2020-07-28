@@ -41,8 +41,10 @@ Template.user.helpers
 		return getObjectRecord()
 
 	fields: ()->
-		schema = Creator.getSchema("space_users")._schema
-		fields = Creator.getSchema("space_users")._firstLevelSchemaKeys
+		object = Creator.getObject("space_users")
+		simpleSchema = new SimpleSchema(Creator.getObjectSchema(object))
+		schema = simpleSchema._schema
+		fields = simpleSchema._firstLevelSchemaKeys
 		fields.splice(_.indexOf(fields, "instances"), 1)
 		fields.splice(_.indexOf(fields, "sharing"), 1)
 		fields.splice(_.indexOf(fields, "avatar"), 1)
