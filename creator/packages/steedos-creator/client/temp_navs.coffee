@@ -164,10 +164,13 @@ Meteor.startup ()->
         return
     # 切换工作区时或APP时重置temp_navs值
     Tracker.autorun ()->
-        spaceId = Session.get("spaceId")
-        appId = Session.get("app_id")
-        if spaceId and appId
-            Creator.resetTempNavsIfNeeded()
+        if Creator.bootstrapLoaded.get()
+            # 加bootstrapLoaded判断是因为Session.get("app_id")可能来自其他已经打开的浏览器tab中的值，这个值应该先被浏览器url中的app_id重新设置
+            # 不加的话会先进这里再进url中的app_id重新设置的代码，这样app_id值就是错的
+            spaceId = Session.get("spaceId")
+            appId = Session.get("app_id")
+            if spaceId and appId
+                Creator.resetTempNavsIfNeeded()
 
     Tracker.autorun (c)->
         objectName = Session.get("object_name")
