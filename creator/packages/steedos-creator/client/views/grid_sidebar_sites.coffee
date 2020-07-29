@@ -19,10 +19,13 @@ resetFilters = ()->
 	Session.set("filter_items", null)
 	$("#grid-search").val('')
 
+baseExtraFields = ["owner", "company_id", "company_ids", "locked"]
+
 loadCategories = ()->
 	self = this
 	sites = self.sites.get()
-	options = $select: 'name,parent,site'
+	selects = _.union(baseExtraFields, ["name", "parent", "site"])
+	options = $select: selects
 	queryFilters = [["site", "in", _.pluck(sites, "_id")]];
 	steedosFilters = require('@steedos/filters')
 	odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
@@ -35,7 +38,8 @@ loadCategories = ()->
 loadSites = ()->
 	self = this
 	userId = Meteor.userId()
-	options = $select: ["name", "admins", "visibility", "enable_post_permissions"].toString()
+	selects = _.union(baseExtraFields, ["name", "admins", "visibility", "enable_post_permissions"])
+	options = $select: selects.toString()
 	queryFilters = [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
 	steedosFilters = require('@steedos/filters')
 	odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
