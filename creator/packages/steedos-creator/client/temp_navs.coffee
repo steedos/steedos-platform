@@ -180,7 +180,8 @@ Meteor.startup ()->
         record = Creator.getObjectRecord()
         objectNames = Creator.getAppObjectNames()
         # 如果当前所在的object_name不存在顶部导航中，则添加一个临时的导航栏项
-        if objectNames?.indexOf(objectName) < 0
+        forceCreate = Session.get("temp_navs_force_create")
+        if objectNames?.indexOf(objectName) < 0 or forceCreate
             object = Creator.getObject(objectName)
             unless object
                 return
@@ -196,4 +197,7 @@ Meteor.startup ()->
                 Creator.createTempNav(objectName, url, label)
             else
                 Creator.createTempNav(objectName)
+            
+            if forceCreate
+                Session.set("temp_navs_force_create", false)
 

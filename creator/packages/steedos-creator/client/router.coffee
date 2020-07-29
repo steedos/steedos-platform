@@ -26,17 +26,24 @@ set_sessions = (context, redirect)->
 	app_id = context.params.app_id
 	if (app_id != "-")
 		Session.set("app_id", app_id)
+	oldObjectName = Tracker.nonreactive ()-> return Session.get("object_name")
+	oldRecordId = Tracker.nonreactive ()-> return Session.get("record_id")
 	object_name = context.params.object_name
+	record_id = context.params.record_id
 	Session.set("object_name", object_name)
 	# 手机上record_id从老值变更为新值时，要清除record，否则list组件不会处理加载
-	if context.params.record_id != Session.set("record_id")
+	if record_id != oldRecordId
 		Template.creator_view.currentInstance?.record?.set(null)
-	Session.set("record_id", context.params.record_id)
+	Session.set("record_id", record_id)
 	objectHomeComponent = ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", object_name)
 	if objectHomeComponent
 		Session.set("object_home_component", object_name);
 	else
 		Session.set("object_home_component", null)
+	
+	if record_id and oldObjectName != object_name
+		# 切换object_name且是详细界面，说明是点击进入了相关详细记录界面，强制加一条临时导航栏项
+		Session.set("temp_navs_force_create", true)
 
 checkAppPermission = (context, redirect)->
 	app_id = context.params.app_id
