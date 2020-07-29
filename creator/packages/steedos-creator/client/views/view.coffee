@@ -61,6 +61,8 @@ loadRecord = ()->
 		loadRecordFromOdata(Template.instance(), object_name, record_id)
 
 addFieldInfo = (element)->
+	if element.view?.isDestroyed
+		return
 	element.$(".has-inline-text").each ->
 		id = "info_" + $(this).attr("for").replace(".", "_")
 		html = """
