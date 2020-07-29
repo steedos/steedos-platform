@@ -4,6 +4,8 @@ icon: user
 enable_search: true
 sidebar:
   template_name: creator_grid_sidebar_organizations
+  hidden: true
+  enable_hide: true
 fields:
   name:
     label: Name

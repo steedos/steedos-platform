@@ -445,6 +445,11 @@ Template.creator_list_wrapper.events
 		# 视图下拉菜单中如果有dxTreeView，则应该让点击展开折叠树节点时不隐藏弹出层
 		event.stopPropagation()
 
+	'click .btn-toggle-grid-sidebar': (event, template)->
+		$(event.currentTarget).toggleClass("slds-is-selected")
+		$(".list-table-container.list-table-sidebar").toggleClass("slds-hide")
+
+
 
 
 Template.creator_list_wrapper.onCreated ->
