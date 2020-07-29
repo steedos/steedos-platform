@@ -184,13 +184,13 @@ Meteor.startup ->
 Creator.bootstrapLoaded = new ReactiveVar(false)
 
 handleBootstrapData = (result, callback)->
+	requestLicense(result?.space?._id);
 	Creator._recordSafeObjectCache = []; # 切换工作区时，情况object缓存
 	Creator.Objects = result.objects;
 	Creator.baseObject = Creator.Objects.base;
 	Creator.objectsByName = {};
 	object_listviews = result.object_listviews
 	Creator.object_workflows = result.object_workflows
-	Creator.__l = result.license
 	isSpaceAdmin = Steedos.isSpaceAdmin()
 
 	Session.set "user_permission_sets", result.user_permission_sets
@@ -238,6 +238,33 @@ handleBootstrapData = (result, callback)->
 			return
 		else
 			FlowRouter.go("/")
+
+requestLicense = (spaceId)->
+	unless spaceId and Meteor.userId()
+		return
+	userId = Meteor.userId()
+	authToken = Accounts._storedLoginToken()
+	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
+	headers = {}
+	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
+	headers['X-User-Id'] = userId
+	headers['X-Auth-Token'] = authToken
+	$.ajax
+		type: "get"
+		url: Steedos.absoluteUrl("/api/license/#{spaceId}"),
+		dataType: "json"
+		headers: headers
+		error: (jqXHR, textStatus, errorThrown) ->
+			error = jqXHR.responseJSON
+			console.error error
+			if error?.reason
+				toastr?.error?(TAPi18n.__(error.reason))
+			else if error?.message
+				toastr?.error?(TAPi18n.__(error.message))
+			else
+				toastr?.error?(error)
+		success: (result) ->
+			Creator.__l = result
 
 requestBootstrapDataUseAjax = (spaceId, callback)->
 	unless spaceId and Meteor.userId()
