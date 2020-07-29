@@ -204,6 +204,7 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 					Session.set "organization", selectionItemData
 				else
 					Session.set "organization", null
+					selectionInfo.itemElement?.parent().removeClass("dx-state-focused")
 				resetFilters()
 				setGridSidebarFilters(selectionItemData)
 
