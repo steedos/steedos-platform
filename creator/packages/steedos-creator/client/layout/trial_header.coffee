@@ -16,6 +16,8 @@ Template.trialHearder.helpers
 	days_left: ()->
 		return Creator.__l?.days_left || 1
 Template.trialHearder.events
+	"click .trial-guide": (e, t)->
+		window.open("https://www.steedos.com/developer");
 	"click .trial-feedback": (e, t)->
 		window.open("https://www.steedos.com/company/contact-us");
 	"click #subscribeNow": (e, t)->
