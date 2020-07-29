@@ -22,7 +22,7 @@ export type SteedosTriggerTypeConfig = {
 }
 
 const ENUM_ON = ["client","server"]
-const ENUM_WHEN = ['beforeFind','beforeInsert','beforeUpdate','beforeDelete','afterFind','afterCount','afterFindOne','afterInsert','afterUpdate','afterDelete']
+const ENUM_WHEN = ['beforeFind','beforeInsert','beforeUpdate','beforeDelete','afterFind','afterCount','afterFindOne','afterInsert','afterUpdate','afterDelete', 'beforeAggregate', 'afterAggregate']
 
 export class SteedosTriggerType implements Dictionary {
     [key: string]: unknown;

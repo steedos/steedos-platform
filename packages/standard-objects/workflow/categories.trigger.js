@@ -17,5 +17,10 @@ module.exports = {
         if(this.spaceId === 'template'){
             this.data.values = this.data.values.concat(getCategories())
         }
+    },
+    afterAggregate: async function(){
+        if(this.spaceId === 'template'){
+            this.data.values = this.data.values.concat(getCategories())
+        }
     }
 }

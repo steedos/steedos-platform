@@ -69,6 +69,15 @@ module.exports = {
             }
         }
     },
+    afterAggregate: async function(){
+        let filters = InternalData.parserFilters(this.query.filters)
+        if(filters.object){
+            let fields = InternalData.getObjectFields(filters.object, this.userId);
+            if(fields){
+                this.data.values = this.data.values.concat(fields)
+            }
+        }
+    },
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){

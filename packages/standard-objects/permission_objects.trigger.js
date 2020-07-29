@@ -123,6 +123,33 @@ module.exports = {
         }
         
     },
+    afterAggregate: async function () {
+        let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
+        let isSystem = filters.is_system;
+        if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
+            if(_.isBoolean(isSystem) && isSystem){
+                this.data.values = find(this.query);
+            }else{
+                return ;
+            }
+            if(isSystem.$ne){
+                return 
+            }
+        }else{
+            let permissionObjects = find(this.query);
+            if(_.isArray(this.data.values)){
+                let that = this;
+                const dbObjectsName = _.pluck(that.data.values, 'object_name');
+                _.each(permissionObjects, function(_po){
+                    if(!_.include(dbObjectsName, _po.object_name)){
+                        that.data.values.push(_po);
+                    }
+                })
+                // this.data.values = this.data.values.concat(permissionObjects)
+            }
+        }
+        
+    },
     afterCount: async function () {
         let result = await objectql.getObject('permission_objects').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length

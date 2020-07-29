@@ -10,6 +10,15 @@ module.exports = {
             }
         }
     },
+    afterAggregate: async function(){
+        let filters = InternalData.parserFilters(this.query.filters)
+        if(filters.object_name){
+            let views = InternalData.getObjectListViews(filters.object_name, this.userId);
+            if(views){
+                this.data.values = this.data.values.concat(views)
+            }
+        }
+    },
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object_name){
