@@ -41,7 +41,7 @@ set_sessions = (context, redirect)->
 	else
 		Session.set("object_home_component", null)
 	
-	if record_id and oldObjectName != object_name
+	if record_id and (oldObjectName != object_name or (oldRecordId and record_id != oldRecordId))
 		# 切换object_name且是详细界面，说明是点击进入了相关详细记录界面，强制加一条临时导航栏项
 		Session.set("temp_navs_force_create", true)
 
