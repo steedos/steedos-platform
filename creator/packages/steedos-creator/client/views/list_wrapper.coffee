@@ -448,6 +448,10 @@ Template.creator_list_wrapper.events
 	'click .btn-toggle-grid-sidebar': (event, template)->
 		$(event.currentTarget).toggleClass("slds-is-selected")
 		$(".list-table-container.list-table-sidebar").toggleClass("slds-hide")
+		sidebar = Creator.getObject()?.sidebar
+		if sidebar and sidebar.clear_selection_while_hidden
+			gridSidebarInstance = $(".creator-list-wrapper .list-table-sidebar .gridSidebarContainer").dxTreeView().dxTreeView('instance')
+			gridSidebarInstance.unselectItem(gridSidebarInstance.getSelectedNodesKeys()?[0])
 
 
 

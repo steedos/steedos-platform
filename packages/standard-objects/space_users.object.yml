@@ -6,6 +6,7 @@ sidebar:
   template_name: creator_grid_sidebar_organizations
   hidden: true
   enable_hide: true
+  clear_selection_while_hidden: true
 fields:
   name:
     label: Name
