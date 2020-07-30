@@ -320,3 +320,22 @@ Template.filter_option.onCreated ->
 		this.filter_item = new ReactiveVar(filter_item)
 
 		this.show_form = new ReactiveVar(true)
+
+		# AutoForm中文本框字段回车会触发form表单的提交事件，会跳转url刷新浏览器，需要重写
+		this.onSubmit = onSubmit = (insertDoc, updateDoc, currentDoc)->
+			this.event.preventDefault()
+			$(this.event.target).closest(".filter-option-box").find("button.save-filter").trigger("click")
+			return false
+
+		AutoForm.hooks "filter-option":
+			onSubmit: onSubmit
+		,false
+
+Template.filter_option.onDestroyed ()->
+	self = this
+	autoFormOnSubmit = AutoForm._hooks["filter-option"]?.onSubmit
+	if autoFormOnSubmit
+		_.each(autoFormOnSubmit, (fn, index)->
+			if fn == self.onSubmit
+				delete autoFormOnSubmit[index]
+		)
