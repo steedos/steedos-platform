@@ -466,18 +466,6 @@ Template.creator_view.helpers
 		fields = Creator.getObject(object_name).fields
 		return fields[key]?.inlineHelpText
 
-	illustration: ()->
-		return ReactDesignSystem.Illustration
-
-	notFoundPath: ()->
-		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
-
-	notFoundHeading: ()->
-		return t "creator_not_found_heading"
-
-	notFoundMessageBody: ()->
-		return t "creator_not_found_message_body"
-
 	showBack: ()->
 		if Session.get("record_id") && (_.has(FlowRouter.current()?.queryParams, 'ref'))
 			return false

@@ -1,0 +1,26 @@
+<template name="notFound">
+	{{#if illustration}}
+		<article class="slds-card">
+			<div class="slds-card__header slds-grid">
+				<header class="slds-media slds-media_center slds-has-flexi-truncate">
+					<div class="slds-media__figure">
+						<span class="slds-icon_container slds-icon-standard-task" title="task">
+							{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=object.icon}}
+							<span class="slds-assistive-text">{{object.icon}}</span>
+						</span>
+					</div>
+					<div class="slds-media__body">
+						<h2 class="slds-card__header-title">
+							<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Tasks">
+								<span>{{_ object.label}}</span>
+							</a>
+						</h2>
+					</div>
+				</header>
+			</div>
+			<div class="slds-card__body slds-card__body_inner">
+				{{> React component=illustration path=notFoundPath heading=notFoundHeading messageBody=notFoundMessageBody}}
+			</div>
+		</article>
+	{{/if}}
+</template>

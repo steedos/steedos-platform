@@ -134,6 +134,7 @@ Template.creator_report.helpers
 		record_id = Session.get "record_id"
 		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
 		return reportObject?.report_type == "jsreport" and reportObject?.report_type != "stimulsoft-report"
+
 Template.creator_report.events
 
 	'click .record-action-custom': (event, template) ->

@@ -79,21 +79,6 @@ Template.user.helpers
 		else
 			return Creator.getRelativeUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
 
-	object: ()->
-		return Creator.getObject()
-
-	illustration: ()->
-		return ReactDesignSystem.Illustration
-
-	notFoundPath: ()->
-		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
-
-	notFoundHeading: ()->
-		return t "creator_not_found_heading"
-
-	notFoundMessageBody: ()->
-		return t "creator_not_found_message_body"
-
 Template.user.events 
 	'click .profile-pic': (event, template)->
 		if Session.get("record_id") == Meteor.userId()
