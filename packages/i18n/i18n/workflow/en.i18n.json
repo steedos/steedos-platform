@@ -700,6 +700,7 @@
 	"process_delegation_rules_to_name": "To",
 	"process_delegation_rules_start_must_lt_end": "Strat time must less than end time",
 	"process_delegation_rules_description": "{$userName} delegated",
+	"process_delegation_rules_cannot_deltegation_eachother": "Only allow one-way delegation",
 	"instance_handler_name": "Handler",
 	"instance_handler_organization_fullname": "Organization",
 
