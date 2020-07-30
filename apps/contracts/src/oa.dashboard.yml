@@ -1,0 +1,21 @@
+_id: home
+name: 华炎办公首页
+apps: 
+  - oa
+  - contracts
+widgets: 
+  - position: CENTER_TOP
+    type: instances_pendings
+  - position: CENTER_TOP
+    type: apps
+  - position: CENTER_TOP
+    type: announcements_week
+  - position: RIGHT
+    type: tasks_today
+  - position: RIGHT
+    type: events_today
+  - position: RIGHT
+    type: html
+    label: 自定义html
+    html: <style>a.test-html-link{color:red;}</style><a class="test-html-link">左侧带Label效果，自定义样式为红色链接</a>
+

@@ -1,0 +1,93 @@
+datasources:
+  default:
+    locale: zh
+    connection:
+      url: ${MONGO_URL}
+    objectFiles:
+      - "./src/**"
+    appFiles:
+      - "./src/**"
+public:
+  webservices:
+    www:
+      status: active
+      url: 'https://www.steedos.com:443'
+    creator:
+      status: active
+      url: ${ENV_CREATOR_URL}
+    workflow:
+      status: active
+      url: ${ENV_WORKFLOW_URL}
+  cfs:
+    store: ${ENV_CFS_STORE}
+    local:
+      folder: ${ENV_STORAGE_DIR}
+  admin:
+    disableAddSpace: false
+  accounts:
+    disableAccountRegistration: false
+    UTF8_Names_Validation: '[A-Za-z0-9-_.\u00C0-\u017F\u4e00-\u9fa5]+'
+    loginExpirationInDays: 1825
+  phone:
+    forceAccountBindPhone: false
+  cloudAdminSpaceId: cloud_admin
+  templateSpaceId: 'template'
+cfs:
+  -aliyun:
+    region: ${ENV_CFS_ALIYUN_REGION}
+    bucket: ${ENV_CFS_ALIYUN_BUCKET}
+    accessKeyId: ${ENV_CFS_ALIYUN_ACCESSKEYID}
+    secretAccessKey: ${ENV_CFS_ALIYUN_SECRETACCESSKEY}
+  worker:
+    enabled: true
+-cron:
+  -instancerecordqueue_interval: 10000
+  push_interval: 1000
+-push:
+  apn:
+    keyData: ${ENV_PUSH_APN_DATA}
+    certData: ${ENV_PUSH_APN_DATA}
+  gcm:
+    apiKey: xxx
+  xinge:
+    accessId: ${ENV_PUSH_XINGE_ACCESSID}
+    secretKey: ${ENV_PUSH_XINGE_SECRETKEY}
+  huawei:
+    appId: ${ENV_PUSH_HUAWEI_APPID}
+    appSecret: ${ENV_PUSH_HUAWEI_APPSECRET}
+    appPkgName: ${ENV_PUSH_HUAWEI_APPPKGNAME}
+  mi:
+    appSecret: ${ENV_PUSH_MI_APPSECRET}
+    production: ${ENV_PUSH_MI_PRODUCTION}
+email:
+  # url: ${MAIL_URL}
+  host: ${MAIL_HOST}
+  port: 465
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}
+  from: ${MAIL_FROM}
+  secure: true
+cron:
+  mailqueue_interval: 1000
+logger:
+  enabled: true
+  showPackage: true
+  showFileAndLine: true
+  logLevel: 0
+  viewLimit: 1000
+-billing:
+  appid: ${ENV_BILLING_APPID}
+  mch_id: ${ENV_BILLING_MCH_ID}
+  partner_key: ${ENV_BILLING_PARTNER_KEY}
+plugins:
+  - "@steedos/accounts"
+  # - "@steedos/plugin-stimulsoft-report"
+  # - "@steedos/plugin-jsreport"
+tenant:
+  # saas: true
+  enable_password_login: true
+  name: 华炎云
+  enable_mobile_code_login: true
+  enable_register: true
+accounts:
+  mobile_phone_locales: ['zh-CN']
