@@ -1,0 +1,45 @@
+name: license
+label: License
+fields:
+  name:
+    type: text
+  license:
+    type: textarea
+    rows: 15
+  key:
+    type: textarea
+    rows: 15
+actions:
+  apply:
+    label: Apply
+    on: list
+    visible: true
+  sync:
+    label: Sync
+    on: list
+    visible: true
+
+list_views:
+  all:
+    label: Al
+    columns:
+      - name
+      - created_by
+      - created
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    viewAllRecords: true
+    modifyAllRecords: false
+
+    
