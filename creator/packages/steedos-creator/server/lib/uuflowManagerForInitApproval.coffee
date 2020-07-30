@@ -168,7 +168,8 @@ uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info)
 	appr_obj.is_read = true
 	appr_obj.is_error = false
 	appr_obj.description = ''
-	appr_obj.values = uuflowManagerForInitApproval.initiateValues(ins_obj.record_ids[0], flow_id, space_id, form.current.fields)
+	relatedTablesInfo = {}
+	appr_obj.values = uuflowManagerForInitApproval.initiateValues(ins_obj.record_ids[0], flow_id, space_id, form.current.fields, relatedTablesInfo)
 
 	trace_obj.approves = [appr_obj]
 	ins_obj.traces = [trace_obj]
@@ -190,13 +191,15 @@ uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info)
 
 	new_ins_id = Creator.Collections.instances.insert(ins_obj)
 
-	uuflowManagerForInitApproval.initiateAttach(ins_obj.record_ids[0], space_id, ins_obj._id, appr_obj._id)
-
 	uuflowManagerForInitApproval.initiateRecordInstanceInfo(ins_obj.record_ids[0], new_ins_id, space_id)
+
+	uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo(relatedTablesInfo, new_ins_id, space_id)
+
+	uuflowManagerForInitApproval.initiateAttach(ins_obj.record_ids[0], space_id, ins_obj._id, appr_obj._id)
 
 	return new_ins_id
 
-uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, fields) ->
+uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, fields, relatedTablesInfo) ->
 	fieldCodes = []
 	_.each fields, (f) ->
 		if f.type == 'section'
@@ -235,7 +238,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 		getFormTableField = (key) ->
 			return _.find formTableFields,  (f) ->
 				return f.code == key
-		
+
 		getFormField = (key) ->
 			return _.find formFields,  (f) ->
 				return f.code == key
@@ -262,6 +265,34 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				if !_.isEmpty _records
 					return _records
 			return
+
+		getSelectUserValue = (userId, spaceId) ->
+			su = Creator.getCollection('space_users').findOne({ space: spaceId, user: userId })
+			su.id = userId
+			return su
+
+		getSelectUserValues = (userIds, spaceId) ->
+			sus = []
+			if _.isArray userIds
+				_.each userIds, (userId) ->
+					su = getSelectUserValue(userId, spaceId)
+					if su
+						sus.push(su)
+			return sus
+
+		getSelectOrgValue = (orgId, spaceId) ->
+			org = Creator.getCollection('organizations').findOne(orgId, { fields: { _id: 1, name: 1, fullname: 1 } })
+			org.id = orgId
+			return org
+
+		getSelectOrgValues = (orgIds, spaceId) ->
+			orgs = []
+			if _.isArray orgIds
+				_.each orgIds, (orgId) ->
+					org = getSelectOrgValue(orgId, spaceId)
+					if org
+						orgs.push(org)
+			return orgs
 
 		tableFieldCodes = []
 		tableFieldMap = []
@@ -322,6 +353,22 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				else if !objField.multiple && !formField.is_multiselect
 					odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
 				values[workflow_field] = odataFieldValue
+			else if formField && objField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objField.type) && ['users', 'organizations'].includes(objField.reference_to)
+				referenceToFieldValue = record[objField.name]
+				if !_.isEmpty(referenceToFieldValue)
+					selectFieldValue
+					if formField.type == 'user'
+						if objField.multiple && formField.is_multiselect
+							selectFieldValue = getSelectUserValues(referenceToFieldValue, spaceId)
+						else if !objField.multiple && !formField.is_multiselect
+							selectFieldValue = getSelectUserValue(referenceToFieldValue, spaceId)
+					else if formField.type == 'group'
+						if objField.multiple && formField.is_multiselect
+							selectFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
+						else if !objField.multiple && !formField.is_multiselect
+							selectFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
+					if selectFieldValue
+						values[workflow_field] = selectFieldValue
 			else if record.hasOwnProperty(object_field)
 				values[workflow_field] = record[object_field]
 
@@ -348,6 +395,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 			else
 				relatedObjectName = key
 				tableValues = []
+				relatedTableItems = []
 				relatedObject = Creator.getObject(relatedObjectName, spaceId)
 				relatedField = _.find relatedObject.fields, (f) ->
 					return ['lookup', 'master_detail'].includes(f.type) && f.reference_to == objectName
@@ -356,7 +404,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 				selector = {}
 				selector[relatedFieldName] = recordId
-				relatedRecords = Creator.getCollection(relatedObjectName).find(selector)
+				relatedCollection = Creator.getCollection(relatedObjectName, spaceId)
+				relatedRecords = relatedCollection.find(selector)
 
 				relatedRecords.forEach (rr) ->
 					tableValueItem = {}
@@ -371,6 +420,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							
 							formField = getFormTableSubField(formTableField, formFieldKey)
 							relatedObjectField = relatedObject.fields[fieldKey]
+							if !formField || !relatedObjectField
+								return
 							if formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type) && _.isString(relatedObjectField.reference_to)
 								referenceToObjectName = relatedObjectField.reference_to
 								referenceToFieldValue = rr[fieldKey]
@@ -378,13 +429,29 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
 								else if !relatedObjectField.multiple && !formField.is_multiselect
 									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+							else if ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedObjectField.type) && ['users', 'organizations'].includes(relatedObjectField.reference_to)
+								referenceToFieldValue = rr[fieldKey]
+								if !_.isEmpty(referenceToFieldValue)
+									if formField.type == 'user'
+										if relatedObjectField.multiple && formField.is_multiselect
+											tableFieldValue = getSelectUserValues(referenceToFieldValue, spaceId)
+										else if !relatedObjectField.multiple && !formField.is_multiselect
+											tableFieldValue = getSelectUserValue(referenceToFieldValue, spaceId)
+									else if formField.type == 'group'
+										if relatedObjectField.multiple && formField.is_multiselect
+											tableFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
+										else if !relatedObjectField.multiple && !formField.is_multiselect
+											tableFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
 							else
 								tableFieldValue = rr[fieldKey]
 							tableValueItem[formFieldKey] = tableFieldValue
-
-					tableValues.push(tableValueItem)
+					if !_.isEmpty(tableValueItem)
+						tableValueItem._id = rr._id
+						tableValues.push(tableValueItem)
+						relatedTableItems.push({ _table: { _id: rr._id, _code: tableCode } } )
 
 				values[tableCode] = tableValues
+				relatedTablesInfo[relatedObjectName] = relatedTableItems
 
 		# 如果配置了脚本则执行脚本
 		if ow.field_map_script
@@ -462,6 +529,23 @@ uuflowManagerForInitApproval.initiateRecordInstanceInfo = (recordIds, insId, spa
 			instance_state: 'draft'
 		}
 	})
+
+	return
+
+
+uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo = (relatedTablesInfo, insId, spaceId) ->
+	_.each relatedTablesInfo, (tableItems, relatedObjectName) ->
+		relatedCollection = Creator.getCollection(relatedObjectName, spaceId)
+		_.each tableItems, (item) ->
+			relatedCollection.update(item._table._id, {
+				$set: {
+					instances: [{
+						_id: insId,
+						state: 'draft'
+					}],
+					_table: item._table
+				}
+			})
 
 	return
 

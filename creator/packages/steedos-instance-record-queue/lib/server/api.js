@@ -313,8 +313,14 @@ InstanceRecordQueue.Configure = function (options) {
 						console.log('fm.workflow_field: ', fm.workflow_field)
 					}
 					// 表单选人选组字段 至 对象 lookup master_detail类型字段同步
-					if (!wField.is_multiselect && ['user', 'group'].includes(wField.type) && !oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && ['users', 'organizations'].includes(oField.reference_to)) {
-						obj[fm.object_field] = values[fm.workflow_field]['id'];
+					if (['user', 'group'].includes(wField.type) && ['lookup', 'master_detail'].includes(oField.type) && ['users', 'organizations'].includes(oField.reference_to)) {
+						if (!_.isEmpty(values[fm.workflow_field])) {
+							if (oField.multiple && wField.is_multiselect) {
+								obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], 'id'))
+							} else if (!oField.multiple && !wField.is_multiselect) {
+								obj[fm.object_field] = values[fm.workflow_field].id
+							}
+						}
 					}
 					else if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to) && _.isString(values[fm.workflow_field])) {
 						var oCollection = Creator.getCollection(oField.reference_to, spaceId)
@@ -488,12 +494,25 @@ InstanceRecordQueue.Configure = function (options) {
 								}
 								var formField = getFormField(formFields, formFieldKey);
 								var relatedObjectField = relatedObject.fields[fieldKey];
+								if (!relatedObjectField || !formField) {
+									return
+								}
 								if (formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type)) {
 									if (!_.isEmpty(relatedObjectFieldValue)) {
 										if (relatedObjectField.multiple && formField.is_multiselect) {
 											relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, '_id'))
 										} else if (!relatedObjectField.multiple && !formField.is_multiselect) {
 											relatedObjectFieldValue = relatedObjectFieldValue._id
+										}
+									}
+								}
+								// 表单选人选组字段 至 对象 lookup master_detail类型字段同步
+								if (['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedObjectField.type) && ['users', 'organizations'].includes(relatedObjectField.reference_to)) {
+									if (!_.isEmpty(relatedObjectFieldValue)) {
+										if (relatedObjectField.multiple && formField.is_multiselect) {
+											relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, 'id'))
+										} else if (!relatedObjectField.multiple && !formField.is_multiselect) {
+											relatedObjectFieldValue = relatedObjectFieldValue.id
 										}
 									}
 								}

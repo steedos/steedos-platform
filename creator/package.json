@@ -1,6 +1,6 @@
 {
   "name": "steedos",
-  "version": "1.21.4",
+  "version": "1.21.6",
   "private": true,
   "scripts": {
     "start": "env-cmd -f ./.env.local meteor run --settings settings.json --port 3100",
@@ -16,7 +16,7 @@
     "os": "cp -r ../packages/* node_modules/@steedos/ && cp -r ../apps/contracts/src/* node_modules/@steedos/app-contracts/src/",
     "oss": "cp -r ../packages/standard-objects/* node_modules/@steedos/standard-objects/ && yarn start",
     "osw": "cd ../../steedos-webapp/ && yarn build-lib && cd ../object-server/creator/ && cp -r ../../steedos-webapp/lib/* node_modules/@steedos/react/lib/",
-    "sr": "cp -r ../steedos-plugin-stimulsoft-report/lib/* node_modules/@steedos/plugin-stimulsoft-report/lib/ && rm -rf node_modules/@steedos/plugin-stimulsoft-report/node_modules/@steedos"
+    "sr": "cp -r ../../steedos-plugin-stimulsoft-report/lib/* node_modules/@steedos/plugin-stimulsoft-report/lib/ && rm -rf node_modules/@steedos/plugin-stimulsoft-report/node_modules/@steedos"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
@@ -99,7 +99,7 @@
   "devDependencies": {
     "@steedos/app-contracts": "^1.19.10",
     "@steedos/react": "1.21.1",
-    "@steedos/steedos-plugin-workflow": "^2.0.9",
+    "@steedos/steedos-plugin-workflow": "^2.0.10",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
     "cross-env": "^6.0.0",

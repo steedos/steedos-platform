@@ -17,6 +17,7 @@ fields:
     required: true
     name: users
     filterable: true
+    is_company_limited: false
   org:
     type: lookup
     label: Department

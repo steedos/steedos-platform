@@ -1,10 +1,11 @@
 try
-	steedosCore = require('@steedos/core')
 	if Meteor.isDevelopment
+		steedosCore = require('@steedos/core')
+		objectql = require('@steedos/objectql')
 		Meteor.startup ->
 			try
-				steedosCore.init()
+				objectql.wrapAsync(steedosCore.init)
 			catch ex
-				console.log(ex)
+				console.error("error:",ex)
 catch e
-	console.log(e)
+	console.error("error:",e)

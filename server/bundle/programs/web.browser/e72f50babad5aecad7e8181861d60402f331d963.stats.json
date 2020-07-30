@@ -3,8 +3,13 @@
     "name": "standard-minifier-js",
     "version": "2.4.0"
   },
+<<<<<<< HEAD:server/bundle/programs/web.browser/e72f50babad5aecad7e8181861d60402f331d963.stats.json
   "totalMinifiedBytes": 8141185,
   "totalMinifiedGzipBytes": 2047189,
+=======
+  "totalMinifiedBytes": 8140005,
+  "totalMinifiedGzipBytes": 2046816,
+>>>>>>> 1.21:server/bundle/programs/web.browser/ec74b4146c9ada92cac35f9e7ccf95021149b774.stats.json
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9433,
     "packages/coffeescript.js": 32,
@@ -4430,7 +4435,7 @@
       }
     ],
     "packages/steedos_autoform.js": [
-      164724,
+      164622,
       {
         "node_modules": {
           "meteor": {
@@ -4455,7 +4460,7 @@
                         "cf_organization_modal.coffee": 1034
                       },
                       "template.select-orgs.js": 685,
-                      "select-orgs.js": 2666
+                      "select-orgs.js": 2615
                     },
                     "coreform-user-localdata": {
                       "template.select-users.js": 336,
@@ -4475,7 +4480,7 @@
                         "cf_organization_modal.coffee": 381
                       },
                       "template.select-users.js": 849,
-                      "select-users.js": 3425
+                      "select-users.js": 3374
                     },
                     "coreform-tree": {
                       "template.select-tree.js": 360,
@@ -4533,7 +4538,11 @@
     ],
     "packages/steedos_app-base.js": 371,
     "packages/steedos_creator.js": [
+<<<<<<< HEAD:server/bundle/programs/web.browser/e72f50babad5aecad7e8181861d60402f331d963.stats.json
       579731,
+=======
+      578653,
+>>>>>>> 1.21:server/bundle/programs/web.browser/ec74b4146c9ada92cac35f9e7ccf95021149b774.stats.json
       {
         "node_modules": {
           "meteor": {
@@ -4666,7 +4675,11 @@
                   "template.apps_modal.js": 2071,
                   "apps_modal.coffee": 485
                 },
+<<<<<<< HEAD:server/bundle/programs/web.browser/e72f50babad5aecad7e8181861d60402f331d963.stats.json
                 "core.coffee": 15233,
+=======
+                "core.coffee": 15288,
+>>>>>>> 1.21:server/bundle/programs/web.browser/ec74b4146c9ada92cac35f9e7ccf95021149b774.stats.json
                 "colors.coffee": 1475,
                 "favorites.coffee": 1964,
                 "router.coffee": 7612,

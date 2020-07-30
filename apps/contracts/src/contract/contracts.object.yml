@@ -9,6 +9,7 @@ enable_audit: true
 enable_api: true
 enable_instances: true
 enable_trash: true
+enable_workflow: true
 fields:
   "no":
     type: text

@@ -321,88 +321,6 @@ pushManager.get_badge = (send_from, user_id)->
 		db.steedos_keyvalues.insert sk_all_new
 	return badge
 
-# 发送消息和badge到imo客户端
-pushManager.send_to_imo = (steedos_ids, body, current_user_info)->
-	try
-		if not current_user_info.imo_uid
-			return
-
-		fromuid = current_user_info.imo_uid
-		space_u = db.space_users.findOne({ user: current_user_info._id }, { fields: { space: 1 } })
-		space = db.spaces.findOne(space_u["space"])
-		fromcid = space["imo_cid"]
-		if not fromcid
-			return
-
-		users = new Array
-		db.users.find({ steedos_id: { $in: steedos_ids } }, { fields: { imo_uid: 1 } }).forEach (u)->
-			h = new Object
-			h["cid"] = fromcid
-			h["uid"] = u["imo_uid"]
-			users.push(h)
-
-		# 发送badge
-		if body["badge"]
-			appmsg = new Object
-			appmsg["ver"] = "1.0"
-			appmsg["tranid"] = (Math.round(new Date().getTime()/1000)).toString()
-			appmsg["protocol"] = "workbench_pc_web"
-			con = new Object
-			con["appname"] = this.imo_sync_app_key
-			con["type"] = "app"
-			con["ico"] = ""
-			con["count"] = body["badge"].to_s
-			appmsg["contents"] = [con]
-			res_b = HTTP.post(
-				'http://open.imoffice.com:8000/',
-				{
-					params:
-						app: "appnoticeopen",
-						pushtype: "2",
-						fromcid: fromcid,
-						fromuid: fromuid,
-						appcid: this.imo_app_cid,
-						appuid: this.imo_app_uid,
-						appkey: this.imo_sync_app_key,
-						tappkey: this.imo_sync_app_key,
-						users: JSON.stringify(users),
-						appmsg: JSON.stringify(appmsg)
-				}
-			)
-			res_badge = res_b.content
-			if res_badge and res_badge["result"] is "false"
-				console.error "send_to_imo 发送消息失败:" + (res_badge["msg"] || res_badge["info"])
-		# 发送msg
-		if body["alertTitle"]
-			msg = new Object
-			msg["ver"] = "1.0"
-			msg["title"] = "新消息: "+body["alertTitle"]
-			msg["img"] = "http:\/\/imoapp.imoffice.com:1863\/WorkBench/Manage\/Images\/24bc3fef811a017771038323d80a6cae_170519a.png"
-			msg["desc"] = body["alert"]
-			msg["lnk"] = Meteor.absoluteUrl() + "se/imo/login?appkey=#{this.imo_sync_app_key}"
-			res_m = HTTP.post(
-				'http://open.imoffice.com:5186/index.php',
-				{
-					params:
-						app: "sendmsg",
-						pushtype: "2",
-						fromcid: fromcid,
-						fromuid: fromuid,
-						appcid: this.imo_app_cid,
-						appuid: this.imo_app_uid,
-						appkey: this.imo_push_app_key,
-						users: JSON.stringify(users),
-						msg: JSON.stringify(msg),
-						poptype: "1",
-						chart: ""
-				}
-			)
-			res_msg = res_m.content
-			if res_msg and res_msg["result"] is "false"
-				console.error "send_to_imo 发送消息失败:" + (res_msg["msg"] || res_msg["info"])
-
-	catch e
-		console.error e.stack
 
 # 发送消息到qq
 pushManager.send_to_qq = (to_user, from_user, space_id, instance_id, instance_state, body, i18n_obj)->
@@ -492,7 +410,6 @@ pushManager.send_message = (steedos_ids, body, current_user_info)->
 
 	pushManager.send_message_by_raix_push(data)
 
-	pushManager.send_to_imo(steedos_ids, body, current_user_info) if body
 
 
 pushManager.send_to_sms = (to_user, message, current_user_info, spaceId)->
@@ -613,9 +530,9 @@ pushManager.send_instance_notification = (send_from, instance, description, curr
 					if ['first_submit_inbox', 'submit_pending_inbox', 'submit_pending_rejected_inbox', 'submit_pending_rejected_applicant_inbox', 'reassign_new_inbox_users', 'trace_approve_cc', 'auto_submit_pending_inbox'].includes(send_from)
 						if current_user_info.email && current_user_info.email_notification
 							try
-								console.time("push-2-1-ins_html")
+								# console.time("push-2-1-ins_html")
 								ins_html = uuflowManager.ins_html(current_user_info, instance)
-								console.timeEnd("push-2-1-ins_html")
+								# console.timeEnd("push-2-1-ins_html")
 							catch e
 								console.error e
 

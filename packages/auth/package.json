@@ -1,20 +1,20 @@
 {
   "name": "@steedos/auth",
   "private": false,
-  "version": "1.21.4",
+  "version": "1.21.6",
   "main": "lib/index.js",
   "scripts": {
     "watch": "tsc --watch",
-    "compile": "tsc",
+    "compile": "rm -rf lib && tsc",
     "test": "mocha test/**/*.ts",
-    "prepare": "tsc"
+    "prepare": "rm -rf lib && tsc"
   },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@steedos/objectql": "^1.21.4",
+    "@steedos/objectql": "^1.21.6",
     "bcrypt": "^3.0.6",
     "cookies": "^0.7.3",
     "express": "^4.16.4",
