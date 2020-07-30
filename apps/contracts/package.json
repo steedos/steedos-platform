@@ -1,5 +1,5 @@
 {
-  "name": "@steedos/app-contracts",
+  "name": "@steedos/app-contracts-for-dev-test",
   "version": "1.21.4",
   "description": "contract-management-system",
   "main": "index.js",
