@@ -1,98 +1,123 @@
 <template name="user">
-	<div class="slds-brand-band_cover slds-brand-band_medium slds-template_profile branding-banner_user_default forceBrandBand user-container">
+	<div class="slds-brand-band_cover slds-brand-band_medium slds-template_profile branding-banner_user_default forceBrandBand user-container {{#unless doc}}user-container-empty{{/unless}}">
 		<div class="slds-template__container">
-			<div class="slds-col slds-no-flex slds-card">
-				<div class="header anchor anchor--rec-home forceChatterUserProfileHighlightsStencilDesktop forceRecordLayout">
-					<div class="user slds-p-left--large">
-						<div class="media media--rec-home iconTitleAndChatterActions slds-grid slds-grid--vertical-align-start slds-m-left--x-large slds-m-right--medium">
-							<div class="media__figure profile-pic-wrapper">
-								<div class="profile-pic {{#if showEditBtn}}editable{{/if}}">
-									<div class="pic-container" style="background: url({{avatarUrl}})">
-										<!-- <img src="/creator/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png"
-										 alt=""> -->
+			{{#if doc}}
+				<div class="slds-col slds-no-flex slds-card">
+					<div class="header anchor anchor--rec-home forceChatterUserProfileHighlightsStencilDesktop forceRecordLayout">
+						<div class="user slds-p-left--large">
+							<div class="media media--rec-home iconTitleAndChatterActions slds-grid slds-grid--vertical-align-start slds-m-left--x-large slds-m-right--medium">
+								<div class="media__figure profile-pic-wrapper">
+									<div class="profile-pic {{#if showEditBtn}}editable{{/if}}">
+										<div class="pic-container" style="background: url({{avatarUrl}})">
+											<!-- <img src="/creator/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png"
+											alt=""> -->
 
-										<img src="{{avatarUrl}}" alt="">
-									</div>
-									{{#if showEditBtn}}
-										<div class="circular">
-											<span class="slds-icon_container slds-icon-utility-photo photoIcon slds-text-align--center slds-button__icon forceIcon">
-												{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="photo"}}
-											</span>
+											<img src="{{avatarUrl}}" alt="">
 										</div>
-									{{/if}}
-								</div>
-							</div>
-							<div class="slds-p-left--x-large slds-no-space">
-								<div class="slds-m-top--medium truncate slds-m-right--small user-name">
-									<b>
-										<span>{{doc.name}}</span>
-									</b>
-								</div>
-								<div class="slds-m-top--medium truncate slds-m-right--small user-organizations">
-									<span>{{getUserOrganizationsPathLabel doc.organizations_parents}}</span>
-								</div>
-							</div>
-							{{#if showEditBtn}}
-								<div class="slds-grid slds-shrink-none slds-m-top--medium slds-container_right">
-									<div class="slds-align-middle">
-										<ul class="branding-actions slds-button-group slds-m-left--xx-small">
-											<li class="slds-button slds-button--neutral slds-truncate edit-space-user">
-												<a href="javascript:void(0);">
-													<div class="slds-truncate">编辑</div>
-												</a>
-											</li>
-											<li class="slds-button slds-button--neutral slds-truncate change-pwd">
-												<a href="javascript:void(0);">
-													<div class="slds-truncate">修改密码</div>
-												</a>
-											</li>
-										</ul>
+										{{#if showEditBtn}}
+											<div class="circular">
+												<span class="slds-icon_container slds-icon-utility-photo photoIcon slds-text-align--center slds-button__icon forceIcon">
+													{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="photo"}}
+												</span>
+											</div>
+										{{/if}}
 									</div>
 								</div>
-							{{/if}}
+								<div class="slds-p-left--x-large slds-no-space">
+									<div class="slds-m-top--medium truncate slds-m-right--small user-name">
+										<b>
+											<span>{{doc.name}}</span>
+										</b>
+									</div>
+									<div class="slds-m-top--medium truncate slds-m-right--small user-organizations">
+										<span>{{getUserOrganizationsPathLabel doc.organizations_parents}}</span>
+									</div>
+								</div>
+								{{#if showEditBtn}}
+									<div class="slds-grid slds-shrink-none slds-m-top--medium slds-container_right">
+										<div class="slds-align-middle">
+											<ul class="branding-actions slds-button-group slds-m-left--xx-small">
+												<li class="slds-button slds-button--neutral slds-truncate edit-space-user">
+													<a href="javascript:void(0);">
+														<div class="slds-truncate">编辑</div>
+													</a>
+												</li>
+												<li class="slds-button slds-button--neutral slds-truncate change-pwd">
+													<a href="javascript:void(0);">
+														<div class="slds-truncate">修改密码</div>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								{{/if}}
+							</div>
+						</div>
+						<div class="slds-grid slds-m-bottom--medium">
+							<!-- <div class="slds-form-element" style="display: none">
+								<div class="slds-form-element__control">
+									<div class="slds-file-selector slds-file-selector_files">
+										<div class="slds-file-selector__dropzone">
+											<input type="file" class="slds-file-selector__input slds-assistive-text" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" id="avator-upload" aria-labelledby="file-selector-primary-label file-selector-secondary-label"
+											/>
+											<label class="slds-file-selector__body" for="avator-upload" id="file-selector-label">
+												<span class="slds-file-selector__button slds-button slds-button_neutral">
+													Upload Files
+												</span>
+											</label>
+										</div>
+									</div>
+								</div>
+							</div> -->
 						</div>
 					</div>
-					<div class="slds-grid slds-m-bottom--medium">
-						<!-- <div class="slds-form-element" style="display: none">
-							<div class="slds-form-element__control">
-								<div class="slds-file-selector slds-file-selector_files">
-									<div class="slds-file-selector__dropzone">
-										<input type="file" class="slds-file-selector__input slds-assistive-text" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" id="avator-upload" aria-labelledby="file-selector-primary-label file-selector-secondary-label"
-										/>
-										<label class="slds-file-selector__body" for="avator-upload" id="file-selector-label">
-											<span class="slds-file-selector__button slds-button slds-button_neutral">
-												Upload Files
-											</span>
-										</label>
-									</div>
-								</div>
-							</div>
-						</div> -->
-					</div>
 				</div>
-			</div>
-			<div class="slds-col slds-no-flex slds-card">
-				{{#autoForm collection="Creator.Collections.space_users" type="disabled" id="spaceUserForm" doc=doc}} {{#each fields}}
-				<div class="slds-grid view-page-section-row">
-					{{#each this}}
-					<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-						<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-							{{#if this}}
-							<div class="test-id__field-label-container">
-								<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+				<div class="slds-col slds-no-flex slds-card">
+					{{#autoForm collection="Creator.Collections.space_users" type="disabled" id="spaceUserForm" doc=doc}} {{#each fields}}
+					<div class="slds-grid view-page-section-row">
+						{{#each this}}
+						<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+							<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+								{{#if this}}
+								<div class="test-id__field-label-container">
+									<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+								</div>
+								<div class="slds-form-element__control slds-grid itemBody">
+									<span class="test-id__field-value slds-form-element__static slds-grow slds-has-divider_bottom">
+										{{> creator_table_cell _id=doc._id val=(keyValue this) doc=doc field=(keyField this) field_name=this object_name="space_users" disabled=true parent_view='record_details' hideIcon=true is_detail_view=true}}
+									</span>
+								</div>
+								{{/if}}
 							</div>
-							<div class="slds-form-element__control slds-grid itemBody">
-								<span class="test-id__field-value slds-form-element__static slds-grow slds-has-divider_bottom">
-									{{> creator_table_cell _id=doc._id val=(keyValue this) doc=doc field=(keyField this) field_name=this object_name="space_users" disabled=true parent_view='record_details' hideIcon=true is_detail_view=true}}
+						</div>
+						{{/each}}
+					</div>
+					{{/each}} {{/autoForm}}
+				</div>
+			{{else}}
+				<article class="slds-card">
+					<div class="slds-card__header slds-grid">
+						<header class="slds-media slds-media_center slds-has-flexi-truncate">
+							<div class="slds-media__figure">
+								<span class="slds-icon_container slds-icon-standard-task" title="task">
+									{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=object.icon}}
+									<span class="slds-assistive-text">{{object.icon}}</span>
 								</span>
 							</div>
-							{{/if}}
-						</div>
+							<div class="slds-media__body">
+								<h2 class="slds-card__header-title">
+									<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Tasks">
+										<span>{{_ object.label}}</span>
+									</a>
+								</h2>
+							</div>
+						</header>
 					</div>
-					{{/each}}
-				</div>
-				{{/each}} {{/autoForm}}
-			</div>
+					<div class="slds-card__body slds-card__body_inner">
+						{{> React component=illustration path=notFoundPath heading=notFoundHeading messageBody=notFoundMessageBody}}
+					</div>
+				</article>
+			{{/if}}
 		</div>
 	</div>
 	{{#if showEditBtn}}
