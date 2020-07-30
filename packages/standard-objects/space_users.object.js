@@ -507,28 +507,28 @@ Meteor.startup(function () {
                 db.space_users.update_company_ids(doc._id, doc);
             }
         });
-        db.space_users.before.remove(function (userId, doc) {
-            var isOrgAdmin, space;
-            // check space exists
-            space = db.spaces.findOne(doc.space);
-            if (!space) {
-                throw new Meteor.Error(400, "space_users_error_space_not_found");
-            }
-            // if (space.admins.indexOf(userId) < 0) {
-            //     // 要删除用户，需要至少有一个组织权限
-            //     isOrgAdmin = Steedos.isOrgAdminByOrgIds(doc.organizations, userId);
-            //     if (!isOrgAdmin) {
-            //         throw new Meteor.Error(400, "organizations_error_org_admins_only");
-            //     }
-            // }
-            // 不能删除当前工作区的拥有者
-            if (space.owner === doc.user) {
-                throw new Meteor.Error(400, "space_users_error_remove_space_owner");
-            }
-            if (space.admins.indexOf(doc.user) > 0) {
-                throw new Meteor.Error(400, "space_users_error_remove_space_admins");
-            }
-        });
+        // db.space_users.before.remove(function (userId, doc) {
+        //     var isOrgAdmin, space;
+        //     // check space exists
+        //     space = db.spaces.findOne(doc.space);
+        //     if (!space) {
+        //         throw new Meteor.Error(400, "space_users_error_space_not_found");
+        //     }
+        //     // if (space.admins.indexOf(userId) < 0) {
+        //     //     // 要删除用户，需要至少有一个组织权限
+        //     //     isOrgAdmin = Steedos.isOrgAdminByOrgIds(doc.organizations, userId);
+        //     //     if (!isOrgAdmin) {
+        //     //         throw new Meteor.Error(400, "organizations_error_org_admins_only");
+        //     //     }
+        //     // }
+        //     // 不能删除当前工作区的拥有者
+        //     if (space.owner === doc.user) {
+        //         throw new Meteor.Error(400, "space_users_error_remove_space_owner");
+        //     }
+        //     if (space.admins.indexOf(doc.user) > 0) {
+        //         throw new Meteor.Error(400, "space_users_error_remove_space_admins");
+        //     }
+        // });
         db.space_users.after.remove(function (userId, doc) {
             var content, e, locale, space, subject, user;
             if (doc.organizations) {
@@ -799,8 +799,9 @@ Meteor.startup(function () {
             }
         });
         return db.space_users.before.remove(function (userId, doc) {
-            // 禁用、从工作区移除用户时，检查用户是否被指定为角色成员或者步骤指定处理人 #1288
-            return db.space_users.vaildateUserUsedByOther(doc);
+            // // 禁用、从工作区移除用户时，检查用户是否被指定为角色成员或者步骤指定处理人 #1288
+            // return db.space_users.vaildateUserUsedByOther(doc);
+            throw new Meteor.Error(400, "space_users_error_can_not_remove");
         });
     }
 });
