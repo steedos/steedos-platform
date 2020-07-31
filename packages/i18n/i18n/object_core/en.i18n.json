@@ -202,5 +202,6 @@
 	
 	"object_fields_error_formula_required": "When the field type is autonumber, the formula field must be filled in.",
 	
-	"holidays_error_date_repeated": "This date already exists."
+	"holidays_error_date_repeated": "This date already exists.",
+	"business_hours_error_is_default_repeated": "There can only be one default working time. For the current working time to take effect, please first set other working hours as non-default working hours."
 }

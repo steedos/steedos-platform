@@ -11,10 +11,11 @@ fields:
     required: true
     searchable: true
     index: true
-  default:
+  is_default:
     type: boolean
     label: Use as default
-    inlineHelpText: 'Whether to use these working hours as the default setting will only take effect if checked.'
+    inlineHelpText: 'Whether to use this working time as the default setting will only take effect if checked.'
+    defaultValue: true
   start:
     type: text
     label: Start Time
@@ -29,6 +30,7 @@ fields:
     label: Working Days
     type: select
     multiple: true
+    is_wide: true
     required: true
     options:
       - Sunday:0
