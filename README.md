@@ -4,7 +4,7 @@
 
 - [了解华炎魔方](https://www.steedos.com/platform/?from=github)
 - [如何使用华炎魔方，快速开发随需定制的管理系统？](https://www.steedos.com/developer/)
-- [基于华炎魔方开发的OA系统实例](https://github.com/steedos/steedos-project-oa)
+- [基于华炎魔方开发的OA系统实例](https://github.com/steedos/steedos-project-saas)
 - [基于华炎魔方开发的合同管理系统实例](https://github.com/steedos/steedos-contracts-app)
 
 # 数据建模
