@@ -1,6 +1,9 @@
 holidays__object: 节假日
 holidays_field_object_name: 节假日
 holidays_field_name: 名称
+holidays_field_type: 类型
+holidays_field_type_options_public: 公众假日
+holidays_field_type_options_adjusted_holiday: 调配休息日
+holidays_field_type_options_adjusted_working_day: 调配工作日
 holidays_field_date: 日期
 holidays_listview_all: 全部
-holidays_action_makeHolidays: 生成周末假日

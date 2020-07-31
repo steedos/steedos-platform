@@ -11,6 +11,18 @@ fields:
     required: true
     searchable: true
     index: true
+  type:
+    label: Type
+    type: select
+    index: true
+    required: true
+    options:
+      - label: Public
+        value: public
+      - label: Adjusted Holiday
+        value: adjusted_holiday
+      - label: Adjusted Working Day
+        value: adjusted_working_day
   date:
     label: Date
     type: date
@@ -22,16 +34,8 @@ list_views:
     columns:
       - name
       - date
+      - type
     filter_scope: all
-actions:
-  makeHolidays:
-    label: Order
-    'on': list
-    visible: true
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-        Modal.show('make_holidays_modal');
-      }
 permission_set:
   user:
     allowCreate: false

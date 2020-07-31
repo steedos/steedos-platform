@@ -191,6 +191,13 @@ admin_menus:
     object_name: holidays
     parent: advanced
     sort: 90
+  - _id: business_hours
+    name: BusinessHours
+    permission_sets:
+      - admin
+    object_name: business_hours
+    parent: advanced
+    sort: 100
   - _id: about
     name: About Steedos
     permission_sets:

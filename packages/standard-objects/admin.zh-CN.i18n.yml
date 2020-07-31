@@ -28,3 +28,4 @@ menu_datasources_manager: $t(datasources__object)
 menu_company: 分部
 menu_advanced: 高级设置
 menu_holidays: 节假日
+menu_business_hours: 工作时间

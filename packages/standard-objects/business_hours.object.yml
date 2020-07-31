@@ -1,0 +1,71 @@
+name: business_hours
+label: BusinessHours
+icon: groups
+fields:
+  name:
+    label: Name
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    index: true
+  start:
+    type: text
+    label: Start Time
+    required: true
+    inlineHelpText: 'Please enter the HH:MM format of the 24 - hour time character.'
+  end:
+    type: text
+    label: End Time
+    required: true
+    inlineHelpText: 'Please enter the HH:MM format of the 24 hour time character, must be greater than the start time.'
+  working_days:
+    label: Working Days
+    type: select
+    multiple: true
+    required: true
+    options:
+      - Sunday:0
+      - Monday:1
+      - Tuesday:2
+      - Wednesday:3
+      - Thursday:4
+      - Friday:5
+      - Saturday:6
+  default:
+    type: boolean
+    label: Use as default
+    inlineHelpText: 'Whether to use these working hours as the default setting will only take effect if checked.'
+list_views:
+  all:
+    label: All
+    columns:
+      - name
+      - start
+      - end
+      - default
+    filter_scope: all
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  guest:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
