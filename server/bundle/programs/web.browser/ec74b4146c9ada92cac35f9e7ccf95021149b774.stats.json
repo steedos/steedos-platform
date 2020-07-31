@@ -3,13 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.4.0"
   },
-<<<<<<< HEAD:server/bundle/programs/web.browser/e72f50babad5aecad7e8181861d60402f331d963.stats.json
   "totalMinifiedBytes": 8141185,
   "totalMinifiedGzipBytes": 2047189,
-=======
-  "totalMinifiedBytes": 8140005,
-  "totalMinifiedGzipBytes": 2046816,
->>>>>>> 1.21:server/bundle/programs/web.browser/ec74b4146c9ada92cac35f9e7ccf95021149b774.stats.json
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9433,
     "packages/coffeescript.js": 32,
