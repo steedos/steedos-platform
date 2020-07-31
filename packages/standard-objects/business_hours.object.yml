@@ -11,6 +11,10 @@ fields:
     required: true
     searchable: true
     index: true
+  default:
+    type: boolean
+    label: Use as default
+    inlineHelpText: 'Whether to use these working hours as the default setting will only take effect if checked.'
   start:
     type: text
     label: Start Time
@@ -34,10 +38,6 @@ fields:
       - Thursday:4
       - Friday:5
       - Saturday:6
-  default:
-    type: boolean
-    label: Use as default
-    inlineHelpText: 'Whether to use these working hours as the default setting will only take effect if checked.'
 list_views:
   all:
     label: All

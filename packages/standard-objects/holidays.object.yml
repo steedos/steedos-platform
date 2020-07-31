@@ -28,6 +28,18 @@ fields:
     type: date
     index: true
     required: true
+  adjusted_to:
+    label: Corresponding working day
+    type: select
+    inlineHelpText: 'When the "Adjusted Working Day" type is selected, you need to select the day of the week.'
+    options:
+      - Sunday:0
+      - Monday:1
+      - Tuesday:2
+      - Wednesday:3
+      - Thursday:4
+      - Friday:5
+      - Saturday:6
 list_views:
   all:
     label: All
@@ -35,6 +47,7 @@ list_views:
       - name
       - date
       - type
+      - adjusted_to
     filter_scope: all
 permission_set:
   user:
