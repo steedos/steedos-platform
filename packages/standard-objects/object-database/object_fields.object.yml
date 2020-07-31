@@ -131,6 +131,7 @@ fields:
     label: Scale
     defaultValue: 2
     group: Advanced
+    min: 0
   reference_to:
     type: lookup
     label: Reference to
