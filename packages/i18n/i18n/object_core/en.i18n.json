@@ -200,5 +200,7 @@
 	"reports_field_report_type_options_jsreport": "JsReport",
 	"reports_field_report_type_options_stimulsoft-report": "StimulsoftReport",
 	
-	"object_fields_error_formula_required": "When the field type is autonumber, the formula field must be filled in."
+	"object_fields_error_formula_required": "When the field type is autonumber, the formula field must be filled in.",
+	
+	"holidays_error_date_repeated": "This date already exists."
 }

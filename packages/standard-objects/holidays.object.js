@@ -47,7 +47,10 @@ if (Meteor.isServer) {
         var space = doc.space;
         var collection = Creator.getCollection('holidays');
         if (date && space && collection.find({ space: space, date: date }).count() > 0) {
-          throw new Meteor.Error('400', '此日期已存在');
+          throw new Meteor.Error('400', 'holidays_error_date_repeated');
+        }
+        if(doc.type === "adjusted_working_day" && !doc.adjusted_to){
+          throw new Meteor.Error('400', 'holidays_field_adjusted_to_inlineHelpText');
         }
       }
     },
@@ -65,8 +68,11 @@ if (Meteor.isServer) {
           var newFormat = newMomentDate.format('YYYY-MM-DD: HH');
           var oldFormat = moment(oldDate).utc().format('YYYY-MM-DD: HH');
           if (newFormat != oldFormat && collection.find({ space: space, date: newMomentDate.toDate() }).count() > 0) {
-            throw new Meteor.Error('400', '此日期已存在');
+            throw new Meteor.Error('400', 'holidays_error_date_repeated');
           }
+        }
+        if(set.type === "adjusted_working_day" && !set.adjusted_to){
+          throw new Meteor.Error('400', 'holidays_field_adjusted_to_inlineHelpText');
         }
       }
     }
