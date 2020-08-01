@@ -14,7 +14,16 @@ const getTimeValue = (str)=>{
     else if(h === 24 && m > 0){
         return false;
     }
-    return { h, m };
+    let strH = splits[0];
+    let strM = splits[1];
+    if(strH.length < 2){
+        strH = 0 + strH;
+    }
+    if(strM.length < 2){
+        strM = 0 + strM;
+    }
+    let value = parseInt(`${strH}${strM}`);
+    return { h, m, value};
 }
 
 const validateStartEnd = (start, end)=>{
@@ -29,7 +38,7 @@ const validateStartEnd = (start, end)=>{
     if(!timeValueEnd){
         throw new Error("business_hours_error_end_format");
     }
-    if(parseInt(end.replace(":", "")) <= parseInt(start.replace(":", ""))){
+    if(timeValueStart.value >= parseInt(timeValueEnd.value)){
         throw new Error("business_hours_error_start_lt_end");
     }
 }
