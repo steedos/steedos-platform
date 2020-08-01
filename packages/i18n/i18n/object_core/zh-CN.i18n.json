@@ -206,5 +206,8 @@
 	"object_fields_error_formula_required": "字段类型为自动编号时，必须填写公式字段。",
 	
 	"holidays_error_date_repeated": "此日期已存在。",
-	"business_hours_error_is_default_repeated": "默认工作时间只能有一个，要让当前工作时间生效，请先设置其它工作时间为非默认工作时间。"
+	"business_hours_error_is_default_repeated": "默认工作时间只能有一个，要让当前工作时间生效，请先设置其它工作时间为非默认工作时间。",
+	"business_hours_error_start_format": "开始时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
+	"business_hours_error_end_format": "结束时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
+	"business_hours_error_start_lt_end": "结束时间值必须晚于开始时间。"
 }
