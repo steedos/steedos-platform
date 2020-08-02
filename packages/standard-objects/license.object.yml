@@ -1,14 +1,34 @@
 name: license
 label: License
+icon: buyer_account
+enable_audit: true
 fields:
-  name:
+  lid:
     type: text
+    is_name: true
   license:
     type: textarea
-    rows: 15
+    rows: 8
+    is_wide: true
   key:
     type: textarea
     rows: 15
+    is_wide: true
+    hidden: true
+  verify_status:
+    type: select
+    options: FAIL,SUCCESS
+    hidden: true
+  verify_error:
+    type: textarea
+    hidden: true
+  license_last_verify:
+    type: datetime
+    omit: true
+    hidden: true
+  is_local:
+    type: boolean
+    hidden: true
 actions:
   apply:
     label: Apply
@@ -18,12 +38,11 @@ actions:
     label: Sync
     on: list
     visible: true
-
 list_views:
   all:
     label: Al
     columns:
-      - name
+      - lid
       - created_by
       - created
 permission_set:
@@ -35,7 +54,7 @@ permission_set:
     modifyAllRecords: false
     viewAllRecords: false
   admin:
-    allowCreate: true
+    allowCreate: false
     allowDelete: false
     allowEdit: false
     allowRead: true

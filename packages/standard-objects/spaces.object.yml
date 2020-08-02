@@ -124,14 +124,6 @@ fields:
       }
     omit: true
     hidden: true
-  license:
-    type: textarea
-    omit: true
-    hidden: true
-  license_last_verify:
-    type: datetime
-    omit: true
-    hidden: true
 list_views:
   all:
     label: All Companies
