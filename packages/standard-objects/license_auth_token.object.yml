@@ -25,9 +25,9 @@ permission_set:
   admin:
     allowCreate: false
     allowDelete: false
-    allowEdit: true
-    allowRead: true
-    viewAllRecords: true
-    modifyAllRecords: true
+    allowEdit: false
+    allowRead: false
+    viewAllRecords: false
+    modifyAllRecords: false
 
     
