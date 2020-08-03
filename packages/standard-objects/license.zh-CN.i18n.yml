@@ -1,5 +1,5 @@
 license__object: 许可证
 license_action_apply: $t(license_trial_subscribeNow)
 license_action_sync: 同步许可证
-license_field_lid: 许可证密钥
+license_field_lid: 许可证ID
 license_listview_all: 全部
