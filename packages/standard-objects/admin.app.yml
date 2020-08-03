@@ -191,6 +191,23 @@ admin_menus:
     object_name: holidays
     parent: advanced
     sort: 90
+  - _id: license
+    name: License
+    permission_sets:
+      - admin
+    sort: 900
+  - _id: license_view
+    name: License View
+    permission_sets:
+      - admin
+    object_name: license
+    parent: license
+  - _id: license_auth_token
+    name: License Auth Token
+    permission_sets:
+      - admin
+    object_name: license_auth_token
+    parent: license
   - _id: about
     name: About Steedos
     permission_sets:
