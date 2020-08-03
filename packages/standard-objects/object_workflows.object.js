@@ -48,7 +48,7 @@ Creator.Objects.object_workflows.triggers = {
 
 Creator.Objects.object_workflows.actions = {
   forceSync: {
-    label: "同步历史申请单",
+    label: 'sync history approvals',
     visible: function (object_name, record_id, record_permissions) {
       var perms, record;
       perms = {};
@@ -77,14 +77,14 @@ Creator.Objects.object_workflows.actions = {
             errorLi += `<tr><td>${e._id}</td><td>${e.name}</td><td>${e.message}</td></tr>`;
           })
           swal({
-            title: "请处理以下同步失败申请单",
+            title: t('object_workflows_sync_history_instances_failed'),
             text: `<div style="height: 400px;overflow: auto;"><table><thead><tr><th>_id</th><th>name</th><th>message</th></tr></thead><tbody>${errorLi}</tbody></table></div>`,
             html: true,
             confirmButtonText: t('OK')
           })
         }
         else {
-          toastr.success('同步成功！');
+          toastr.success(t('object_workflows_sync_history_instances_success'));
         }
       })
     }
