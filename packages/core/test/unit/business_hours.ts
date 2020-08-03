@@ -34,6 +34,12 @@ describe('computeBusinessHoursPerDay', () => {
         expect(result.startValue.hours).to.be.eq(9);
         expect(result.startValue.minutes).to.be.eq(0);
     });
+    it('9:30 to 18:00 is 8.5 Hours', async () => {
+        let result = computeBusinessHoursPerDay("9:30", "18:00",)
+        expect(result.computedValue).to.be.eq(8.5);
+        expect(result.startValue.hours).to.be.eq(9);
+        expect(result.startValue.minutes).to.be.eq(30);
+    });
     it('18:00 to 9:00 is -9 Hours but will catch errors', async () => {
         let result:any;
         try {
