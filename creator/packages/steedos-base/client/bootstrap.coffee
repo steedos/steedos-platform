@@ -9,6 +9,7 @@ getCookie = (name)->
 	return false
 
 @Setup = {}
+Creator.__l = new ReactiveVar()
 
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
@@ -264,7 +265,7 @@ requestLicense = (spaceId)->
 			else
 				toastr?.error?(error)
 		success: (result) ->
-			Creator.__l = result
+			Creator.__l.set result
 
 requestBootstrapDataUseAjax = (spaceId, callback)->
 	unless spaceId and Meteor.userId()
