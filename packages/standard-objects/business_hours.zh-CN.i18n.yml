@@ -4,6 +4,10 @@ business_hours_field_start: 开始时间
 business_hours_field_start_inlineHelpText: 请输入HH:MM这种格式的24小时制时间字符。
 business_hours_field_end: 结束时间
 business_hours_field_end_inlineHelpText: 请输入HH:MM这种格式的24小时制时间字符，必须大于开始时间。
+business_hours_field_lunch_start: 午休开始时间
+business_hours_field_lunch_start_inlineHelpText: 请输入HH:MM这种格式的24小时制时间字符。
+business_hours_field_lunch_end: 午休结束时间
+business_hours_field_lunch_end_inlineHelpText: 请输入HH:MM这种格式的24小时制时间字符，必须大于午休开始时间，午休时间段将从工作时间内排除。
 business_hours_field_working_days: 工作日
 business_hours_field_working_days_options_0: 星期日
 business_hours_field_working_days_options_1: 星期一

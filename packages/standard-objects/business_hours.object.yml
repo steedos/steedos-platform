@@ -26,6 +26,16 @@ fields:
     label: End Time
     required: true
     inlineHelpText: 'Please enter the HH:MM format of the 24 hour time character, must be greater than the start time.'
+  lunch_start:
+    type: text
+    label: Lunch Start Time
+    required: true
+    inlineHelpText: 'Please enter the HH:MM format of the 24 - hour time character.'
+  lunch_end:
+    type: text
+    label: Lunch End Time
+    required: true
+    inlineHelpText: 'Please enter the HH:MM format of the 24 hour time character, must be greater than the lunch start time.'
   working_days:
     label: Working Days
     type: select

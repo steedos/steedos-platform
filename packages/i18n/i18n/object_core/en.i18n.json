@@ -206,5 +206,9 @@
 	"business_hours_error_is_default_repeated": "There can only be one default working time. For the current working time to take effect, please first set other working hours as non-default working hours.",
 	"business_hours_error_start_format": "Start time format error, please enter HH:MM this format of 24 hours time character.",
 	"business_hours_error_end_format": "End time format error, please enter HH:MM this format of 24 hours time character.",
-	"business_hours_error_start_lt_end": "The end time value must be later than the start time."
+	"business_hours_error_start_lt_end": "The end time value must be later than the start time.",
+	"business_hours_error_lunch_start_format": "Lunch start time format error, please enter HH:MM this format of 24 hours time character.",
+	"business_hours_error_lunch_end_format": "Lunch end time format error, please enter HH:MM this format of 24 hours time character.",
+	"business_hours_error_lunch_start_lt_lunch_end": "The lunch end time value must be later than the lunch start time.",
+	"business_hours_error_lunch_start_end_overflow": "Lunch breaks must be within working hours."
 }

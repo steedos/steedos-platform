@@ -209,5 +209,9 @@
 	"business_hours_error_is_default_repeated": "默认工作时间只能有一个，要让当前工作时间生效，请先设置其它工作时间为非默认工作时间。",
 	"business_hours_error_start_format": "开始时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
 	"business_hours_error_end_format": "结束时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
-	"business_hours_error_start_lt_end": "结束时间值必须晚于开始时间。"
+	"business_hours_error_start_lt_end": "结束时间值必须晚于开始时间。",
+	"business_hours_error_lunch_start_format": "午休开始时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
+	"business_hours_error_lunch_end_format": "午休结束时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
+	"business_hours_error_lunch_start_lt_lunch_end": "午休结束时间值必须晚于午休开始时间。",
+	"business_hours_error_lunch_start_end_overflow": "午休时间必须在工作时间范围内。"
 }
