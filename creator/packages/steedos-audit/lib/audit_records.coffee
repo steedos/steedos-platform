@@ -198,8 +198,7 @@ updateRecord = (userId, object_name, new_doc, previous_doc, modifier)->
 					db_previous_value = previous_value
 					db_new_value = new_value
 
-
-		if db_new_value != null || db_previous_value != null
+		if (db_new_value != null && db_new_value != undefined) || (db_previous_value != null && db_previous_value != undefined)
 			collection = Creator.getCollection("audit_records")
 			doc = {
 				_id: collection._makeNewID()
