@@ -10,15 +10,42 @@ fields:
     type: textarea
     rows: 8
     is_wide: true
+    hidden: true
   key:
     type: textarea
     rows: 15
     is_wide: true
     hidden: true
+  product:
+    type: select
+    label: 产品
+    options: 审批王:workflow
+  edition:
+    type: select
+    label: 版本
+    options: 企业版:workflow_enterprise,专业版:workflow_professional,入门版:workflow_standard
+  is_trial:
+    type: boolean
+    label: 试用版
+  user_number:
+    type: number
+    label: User number
+    scale: 0
+  custom_objects_number:
+    type: number
+    label: Custom objects number
+    scale: 0
+  flow_number:
+    type: number
+    label: Flow number
+    scale: 0
+  end_date:
+    type: date
+    label: 过期
+    required: true
   verify_status:
     type: select
     options: FAIL,SUCCESS
-    hidden: true
   verify_error:
     type: textarea
     hidden: true
@@ -43,8 +70,10 @@ list_views:
     label: Al
     columns:
       - lid
-      - created_by
-      - created
+      - is_trial
+      - product
+      - edition
+      - end_date
 permission_set:
   user:
     allowCreate: false
