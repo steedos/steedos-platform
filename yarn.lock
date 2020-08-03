@@ -1937,6 +1937,15 @@
     tslib "1.10.0"
     validator "^12.2.0"
 
+"@steedos/license@1.22.0-alpha.3":
+  version "1.22.0-alpha.3"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.3.tgz#0f11f67d97d51432255a522b1e8fbb037574b7af"
+  integrity sha1-DxH2fZfVFDIlWlIrHo+7A3V0t68=
+  dependencies:
+    crypto "^1.0.1"
+    node-fetch "^2.6.0"
+    systeminformation "^4.26.10"
+
 "@steedos/odata-v4-typeorm@^1.20.1":
   version "1.20.1"
   resolved "https://registry.yarnpkg.com/@steedos/odata-v4-typeorm/-/odata-v4-typeorm-1.20.1.tgz#66405daa7359905a3255b13ef6e6c323d7a635b1"
@@ -8792,7 +8801,7 @@ node-fetch@^1.0.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-fetch@^2.2.0, node-fetch@^2.3.0, node-fetch@^2.5.0:
+node-fetch@^2.2.0, node-fetch@^2.3.0, node-fetch@^2.5.0, node-fetch@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
 
@@ -11828,6 +11837,11 @@ syntax-error@^1.1.6:
   resolved "https://registry.yarnpkg.com/syntax-error/-/syntax-error-1.4.0.tgz#2d9d4ff5c064acb711594a3e3b95054ad51d907c"
   dependencies:
     acorn-node "^1.2.0"
+
+systeminformation@^4.26.10:
+  version "4.26.10"
+  resolved "https://registry.npm.taobao.org/systeminformation/download/systeminformation-4.26.10.tgz#2244e7529ca9e7b8ecd6941e19fe7df7e3da9146"
+  integrity sha1-IkTnUpyp57js1pQeGf599+PakUY=
 
 table@^5.2.3:
   version "5.4.6"
