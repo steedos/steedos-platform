@@ -2,7 +2,7 @@ Template.trialHearder.helpers
 	t: (k)->
 		return TAPi18n.__(k);
 	hasLicense: ()->
-		return Creator.__l?.get().days_left
+		return Creator.__l?.get()?.days_left
 	showTrialHearder: ()->
 		__l = Creator.__l.get()
 		if !__l
