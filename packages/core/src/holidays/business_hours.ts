@@ -1,4 +1,19 @@
-export const getStringTimeValue = (str: string, digitsForHours: number = 2)=>{
+import { JsonMap } from '@salesforce/ts-types';
+import { StringTimeValue, BusinessHoursPerDay } from './types';
+const moment = require('moment');
+
+/**
+ * 把09:33这种字符串解析出来对应的时间值
+ * @param str 
+ * @param digitsForHours 
+ * return JsonMap{
+ *  hours: number,小时部分值
+ *  minutes: number,分钟部分值
+ *  valueToHours: number,小时和分钟相加得到的数值，按小时为单位，用于计算多个字符串代表的时间差值
+ *  valueToMinutes: number,小时和分钟相加得到的数值，按分钟为单位，用于计算多个字符串代表的时间差值
+ * }
+ */
+export const getStringTimeValue = (str: string, digitsForHours: number = 2): StringTimeValue => {
     str = str.trim();
     if(!/^\d{1,2}:\d{1,2}$/.test(str)){
         throw new Error("getStringTimeValue:Time format error, please enter HH:MM this format of 24 hours time character.");
@@ -19,23 +34,32 @@ export const getStringTimeValue = (str: string, digitsForHours: number = 2)=>{
     return { hours: h, minutes: m, valueToHours, valueToMinutes};
 }
 
-
-export const computeBusinessHours = (start: Date, end: Date) => {
-    
-}
-
-export const computeBusinessHoursPerDay = (start:string, end: string, digitsForHours: number = 2) => {
-    let startValue = getStringTimeValue(start, digitsForHours);
-    let endValue = getStringTimeValue(end, digitsForHours);
+/**
+ * 计算09:00-18:00这种开始时间结束时间代表的每天工作时间长度，小时为单位
+ * @param start 
+ * @param end 
+ * @param digitsForHours 
+ * return JsonMap{
+ *  computedHours: 每天工作时间长度，小时为单位
+ *  computedMinutes: 每天工作时间长度，小时为单位
+ *  startValue: 开始时间返回的getStringTimeValue函数得到的对应解析值
+ *  endValue: 结束时间返回的getStringTimeValue函数得到的对应解析值
+ * }
+ */
+export const computeBusinessHoursPerDay = (start:string, end: string, digitsForHours: number = 2): BusinessHoursPerDay => {
+    let startValue:StringTimeValue = getStringTimeValue(start, digitsForHours);
+    let endValue:StringTimeValue = getStringTimeValue(end, digitsForHours);
     if(startValue && endValue){
-        let result: number = endValue.valueToHours - startValue.valueToHours;
-        result = Number(result.toFixed(digitsForHours));
-        if(result <= 0){
+        let computedMinutes: number = <number>endValue.valueToMinutes - <number>startValue.valueToMinutes;
+        if(computedMinutes <= 0){
             throw new Error("computeBusinessHoursPerDay:The end time value must be later than the start time.");
         }
         else{
+            let computedHours: number = <number>endValue.valueToHours - <number>startValue.valueToHours;
+            computedHours = Number(computedHours.toFixed(digitsForHours));
             return {
-                computedValue: result,
+                computedHours: computedHours,
+                computedMinutes: computedMinutes,
                 startValue,
                 endValue,
             };
@@ -44,4 +68,60 @@ export const computeBusinessHoursPerDay = (start:string, end: string, digitsForH
     else{
         throw new Error("computeBusinessHoursPerDay:start or end is not valid.");
     }
+}
+
+/**
+ * 计算某个日期是不是工作日
+ * @param date 要计算的日期
+ * @param holidays 节假日
+ * @param workingDays 工作日，周几工作，即businessHours中的working_days属性，[ '1', '2', '3', '4', '5' ] 表示周1到周5工作，周六'6'周日'0'休息
+ * return boolean 返回date是不是工作日
+ */
+export const computeIsBusinessDate = (date: Date, holidays: Array<JsonMap>, workingDays: Array<string>): boolean => {
+    const value = moment.utc(date);
+    // holidays中存入的肯定是utc0点0分，所以这里把date设置为0点0分即可
+    value.hours(0);
+    value.minutes(0);
+    const holiday = holidays.find((item)=>{
+        return item.date && (<any>item.date).getTime() === value.toDate().getTime();
+    });
+    if(holiday){
+        switch(holiday.type){
+            case "adjusted_working_day":
+                return true;
+            case "adjusted_holiday":
+                return false;
+            case "public":
+                return false;
+        }
+    }
+    else{
+        return workingDays.indexOf(value.day().toString()) > -1;
+    }
+}
+
+/**
+ * 根据开始时间计算下一个工作日的开始时间
+ * @param start 开始时间
+ * @param holidays 节假日
+ * @param businessHoursPerDay 工作时间，根据businessHours调用computeBusinessHoursPerDay函数计算得到的每天工作时间
+ * @param workingDays 工作日，周几工作，即businessHours中的working_days属性，[ '1', '2', '3', '4', '5' ] 表示周1到周5工作，周六'6'周日'0'休息
+ * @param utcOffset 时区偏差
+ * return Date 返回下一个工作工的开始时间点
+ */
+export const computeNextBusinessDateStartTime = (start: Date, holidays: Array<JsonMap>, businessHoursPerDay: JsonMap, workingDays: Array<string>, utcOffset: number): Date => {
+    const startMoment = moment.utc(start);
+    // 设置为start对应的当天工作日开始时间点
+    startMoment.hours((<any>businessHoursPerDay.startValue).hours - utcOffset);
+    startMoment.minutes((<any>businessHoursPerDay.startValue).minutes);
+    let result = null;
+    const maxCount = 365;//防止死循环
+    for(let i = 0;i < maxCount; i++){
+        startMoment.add(1, 'd');
+        if(computeIsBusinessDate(startMoment.toDate(), holidays, workingDays)){
+            result = startMoment.toDate();
+            break;
+        }
+    }
+    return result;
 }

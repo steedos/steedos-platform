@@ -1,6 +1,7 @@
-import { computeBusinessHoursPerDay } from './business_hours';
+import { computeBusinessHoursPerDay, computeNextBusinessDateStartTime } from './business_hours';
 import { JsonMap } from '@salesforce/ts-types';
 import { getSteedosSchema } from '@steedos/objectql';
+import { BusinessHoursPerDay } from './types';
 const moment = require('moment');
 
 export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, spaceId: string) => {
@@ -18,19 +19,19 @@ export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: n
 }
 
 export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: number, holidays: Array<JsonMap>, businessHours: JsonMap, utcOffset: number) => {
-    const businessHoursPerDay:any = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
+    const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
     const startMoment = moment.utc(start);
-    const start2 = moment.utc(start);
+    const startClosingTime = moment.utc(start);//当天下班时间点
     console.log("===computeTimeoutDateWithoutHolidays=====startMoment.format()===", startMoment.format());
-    console.log("===computeTimeoutDateWithoutHolidays=====start2.format()===", start2.format());
+    console.log("===computeTimeoutDateWithoutHolidays=====startClosingTime.format()===", startClosingTime.format());
     console.log("===computeTimeoutDateWithoutHolidays=====businessHoursPerDay.endValue.hours===", businessHoursPerDay.endValue.hours);
     console.log("===computeTimeoutDateWithoutHolidays=====businessHoursPerDay.endValue.minutes===", businessHoursPerDay.endValue.minutes);
     console.log("===computeTimeoutDateWithoutHolidays=====utcOffset===", utcOffset);
-    start2.hours(businessHoursPerDay.endValue.hours - utcOffset);
-    start2.minutes(businessHoursPerDay.endValue.minutes);
-    console.log("===computeTimeoutDateWithoutHolidays===2==start2.format()===", start2.format());
-    let offsetMinutes = start2.diff(startMoment, 'minute');
-    let timeoutMinutes = timeoutHours * 60;
+    startClosingTime.hours(businessHoursPerDay.endValue.hours - utcOffset);
+    startClosingTime.minutes(businessHoursPerDay.endValue.minutes);
+    console.log("===computeTimeoutDateWithoutHolidays===2==startClosingTime.format()===", startClosingTime.format());
+    let offsetMinutes = startClosingTime.diff(startMoment, 'minute');
+    const timeoutMinutes = timeoutHours * 60;
     console.log("===computeTimeoutDateWithoutHolidays=====timeoutMinutes, offsetMinutes===", timeoutMinutes, offsetMinutes);
     if(timeoutMinutes <= offsetMinutes){
         // 超时时间小于等于当天下班前，则直接返回添加timeoutHours后的时间值
@@ -38,10 +39,24 @@ export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: num
     }
     else{
         // 超时时间大于当天下班前。
-        // 没有周未和假期，则返回添加跳过下班时间后的超时时间值。
-        // let result = moment.utc(start).add(offsetMinutes, 'm').toDate();
+        // 一个工作日一个工作日的往上加，直到加至达到timeoutMinutes值
+        let result = moment.utc(start).add(offsetMinutes, 'm').toDate();
+        let nextMoment = moment.utc(result);
+        for(let i = 0;offsetMinutes < timeoutMinutes;i++){
+            let nextBusinessDateStartTime = computeNextBusinessDateStartTime(nextMoment.toDate(), holidays, businessHoursPerDay, <Array<string>>businessHours.working_days, utcOffset);
+            if(nextBusinessDateStartTime){
+                nextMoment.add(1, 'd');
+                offsetMinutes += businessHoursPerDay.computedMinutes;
+            }
+            else{
+                // 请假天数超过365天就可能触发该错误，理论上不可能出现。
+                throw new Error("computeTimeoutDateWithoutHolidays:Maximum number of calls, The number of days in holidays may exceed 365.");
+            }
+        }
+        // 最后一天加出来的可能有多，把多余的时间减掉
+        if(offsetMinutes > timeoutMinutes){
+            nextMoment.subtract(offsetMinutes - timeoutMinutes, 'm');
+        }
+        return nextMoment.toDate();
     }
-    // TODO:计算其他情况
-    
-    return 3;
 }
