@@ -79,7 +79,7 @@ Creator.Objects.object_workflows.actions = {
           })
           swal({
             title: t('object_workflows_sync_history_instances_failed'),
-            text: `<div style="height: 400px;overflow: auto;"><table><thead><tr><th>name</th><th>message</th></tr></thead><tbody>${errorLi}</tbody></table></div>`,
+            text: `<div style="height: 400px;overflow: auto;"><table><tbody>${errorLi}</tbody></table></div>`,
             html: true,
             confirmButtonText: t('OK')
           })
