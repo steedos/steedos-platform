@@ -1,6 +1,6 @@
 name: license
 label: License
-icon: buyer_account
+icon: product_item
 enable_audit: true
 fields:
   lid:

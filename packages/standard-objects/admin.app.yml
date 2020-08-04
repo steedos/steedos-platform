@@ -202,7 +202,7 @@ admin_menus:
       - admin
     object_name: license
     parent: license
-  - _id: license_auth_token
+  - _id: license_auth_token  #TODO remove
     name: License Auth Token
     permission_sets:
       - admin
