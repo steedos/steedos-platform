@@ -73,12 +73,13 @@ Creator.Objects.object_workflows.actions = {
         }
         if (result.error) {
           var errorLi = "";
+          var href = `${Steedos.absoluteUrl('workflow/space/' + Session.get('spaceId') + '/monitor/')}`
           result.error.forEach(function (e) {
-            errorLi += `<tr><td>${e._id}</td><td>${e.name}</td><td>${e.message}</td></tr>`;
+            errorLi += `<tr><td><a href='${href + e._id}' target='_blank'>${e.name}</a></td><td>${e.message}</td></tr>`;
           })
           swal({
             title: t('object_workflows_sync_history_instances_failed'),
-            text: `<div style="height: 400px;overflow: auto;"><table><thead><tr><th>_id</th><th>name</th><th>message</th></tr></thead><tbody>${errorLi}</tbody></table></div>`,
+            text: `<div style="height: 400px;overflow: auto;"><table><thead><tr><th>name</th><th>message</th></tr></thead><tbody>${errorLi}</tbody></table></div>`,
             html: true,
             confirmButtonText: t('OK')
           })
