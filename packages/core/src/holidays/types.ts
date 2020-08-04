@@ -21,7 +21,8 @@ export type BusinessHoursPerDay = {
 export type Holiday = {
     name: string,
     type: string,//public,adjusted_working_day,adjusted_holiday
-    date: Date
+    date: Date,
+    [propName: string]: any
 }
 
 export type BusinessHours = {
@@ -29,6 +30,8 @@ export type BusinessHours = {
     start: string,//HH:MM
     end: string,//HH:MM
     working_days: Array<string>
+    computedPerDay?: BusinessHoursPerDay //优化性能，计算过的可以缓存下来就不用重复计算了,
+    [propName: string]: any
 }
 
 export type BusinessHoursValue = {
