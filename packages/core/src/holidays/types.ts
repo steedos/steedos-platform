@@ -17,3 +17,21 @@ export type BusinessHoursPerDay = {
     startValue: StringTimeValue;//开始时间返回的getStringTimeValue函数得到的对应解析值
     endValue: StringTimeValue;//结束时间返回的getStringTimeValue函数得到的对应解析值
 }
+
+export type Holiday = {
+    name: string,
+    type: string,//public,adjusted_working_day,adjusted_holiday
+    date: Date
+}
+
+export type BusinessHours = {
+    name: string,
+    start: string,//HH:MM
+    end: string,//HH:MM
+    working_days: Array<string>
+}
+
+export type BusinessHoursValue = {
+    computedHours: number;//计算得到的工作时间长度，小时为单位
+    computedMinutes: number;//计算得到的工作时间长度，分钟为单位
+}

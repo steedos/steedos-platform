@@ -1,12 +1,11 @@
-import { JsonMap } from '@salesforce/ts-types';
-import { StringTimeValue, BusinessHoursPerDay } from './types';
+import { StringTimeValue, BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursValue } from './types';
 const moment = require('moment');
 
 /**
  * 把09:33这种字符串解析出来对应的时间值
  * @param str 
  * @param digitsForHours 
- * return JsonMap{
+ * return StringTimeValue{
  *  hours: number,小时部分值
  *  minutes: number,分钟部分值
  *  valueToHours: number,小时和分钟相加得到的数值，按小时为单位，用于计算多个字符串代表的时间差值
@@ -39,7 +38,7 @@ export const getStringTimeValue = (str: string, digitsForHours: number = 2): Str
  * @param start 
  * @param end 
  * @param digitsForHours 
- * return JsonMap{
+ * return BusinessHoursPerDay{
  *  computedHours: 每天工作时间长度，小时为单位
  *  computedMinutes: 每天工作时间长度，小时为单位
  *  startValue: 开始时间返回的getStringTimeValue函数得到的对应解析值
@@ -77,7 +76,7 @@ export const computeBusinessHoursPerDay = (start:string, end: string, digitsForH
  * @param workingDays 工作日，周几工作，即businessHours中的working_days属性，[ '1', '2', '3', '4', '5' ] 表示周1到周5工作，周六'6'周日'0'休息
  * return boolean 返回date是不是工作日
  */
-export const computeIsBusinessDate = (date: Date, holidays: Array<JsonMap>, workingDays: Array<string>): boolean => {
+export const computeIsBusinessDate = (date: Date, holidays: Array<Holiday>, workingDays: Array<string>): boolean => {
     const value = moment.utc(date);
     // holidays中存入的肯定是utc0点0分，所以这里把date设置为0点0分即可
     value.hours(0);
@@ -109,7 +108,7 @@ export const computeIsBusinessDate = (date: Date, holidays: Array<JsonMap>, work
  * @param utcOffset 时区偏差
  * return Date 返回下一个工作工的开始时间点
  */
-export const computeNextBusinessDateStartTime = (start: Date, holidays: Array<JsonMap>, businessHoursPerDay: JsonMap, workingDays: Array<string>, utcOffset: number): Date => {
+export const computeNextBusinessDateStartTime = (start: Date, holidays: Array<Holiday>, businessHoursPerDay: BusinessHoursPerDay, workingDays: Array<string>, utcOffset: number): Date => {
     const startMoment = moment.utc(start);
     // 设置为start对应的当天工作日开始时间点
     startMoment.hours((<any>businessHoursPerDay.startValue).hours - utcOffset);
@@ -124,4 +123,59 @@ export const computeNextBusinessDateStartTime = (start: Date, holidays: Array<Js
         }
     }
     return result;
+}
+
+/**
+ * 根据开始时间结束时间计算工作时间时长
+ * @param start 
+ * @param end 
+ * @param holidays 
+ * @param businessHours 
+ * @param utcOffset 
+ * @param digitsForHours 
+ * return BusinessHoursValue{
+    computedHours: number;//计算得到的工作时间长度，小时为单位
+    computedMinutes: number;//计算得到的工作时间长度，分钟为单位
+ * }
+ */
+export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2):BusinessHoursValue => {
+    const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
+    const startMoment = moment.utc(start);
+    const endMoment = moment.utc(end);
+    const startClosingMoment = moment.utc(start);//当天下班时间点
+    startClosingMoment.hours(businessHoursPerDay.endValue.hours - utcOffset);
+    startClosingMoment.minutes(businessHoursPerDay.endValue.minutes);
+    let computedMinutes: number;
+    let computedHours: number;
+    if(endMoment.toDate().getTime() <= startClosingMoment.toDate().getTime()){
+        // 结束时间小于等于当天下班时间，则直接返回开始结束时间差值
+        computedMinutes = endMoment.diff(startMoment, 'minute');
+    }
+    else{
+        // 结束时间大于当天下班时间
+        // 一个工作日一个工作日的往上加，直到加至达到大于等于结束时间
+        let startOffsetMinutes: number = startClosingMoment.diff(startMoment, 'minute');
+        computedMinutes = startOffsetMinutes;//先把当天下班前的时间记上
+        // let result = moment.utc(start).add(startOffsetMinutes, 'm').toDate();
+        // let nextMoment = moment.utc(result);
+        let nextMoment = startClosingMoment;
+        for(let i = 0;nextMoment.toDate().getTime() < endMoment.toDate().getTime();i++){
+            let nextBusinessDateStartTime = computeNextBusinessDateStartTime(nextMoment.toDate(), holidays, businessHoursPerDay, <Array<string>>businessHours.working_days, utcOffset);
+            if(nextBusinessDateStartTime){
+                nextMoment.add(1, 'd');
+                computedMinutes += businessHoursPerDay.computedMinutes;
+            }
+            else{
+                // 请假天数超过365天就可能触发该错误，理论上不可能出现。
+                throw new Error("computeTimeoutDateWithoutHolidays:Maximum number of calls, The number of days in holidays may exceed 365.");
+            }
+        }
+        // 最后一天加出来的可能有多，把多余的时间减掉
+        if(nextMoment.toDate().getTime() > endMoment.toDate().getTime()){
+            // nextMoment.subtract(offsetMinutes - timeoutMinutes, 'm');
+            computedMinutes -= nextMoment.diff(endMoment, 'minute');
+        }
+    }
+    computedHours = Number((computedMinutes / 60).toFixed(digitsForHours));
+    return { computedMinutes, computedHours };
 }

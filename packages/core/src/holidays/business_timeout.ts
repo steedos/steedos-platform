@@ -1,7 +1,6 @@
 import { computeBusinessHoursPerDay, computeNextBusinessDateStartTime } from './business_hours';
-import { JsonMap } from '@salesforce/ts-types';
 import { getSteedosSchema } from '@steedos/objectql';
-import { BusinessHoursPerDay } from './types';
+import { BusinessHoursPerDay, Holiday, BusinessHours } from './types';
 const moment = require('moment');
 
 export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, spaceId: string) => {
@@ -18,19 +17,19 @@ export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: n
     computeTimeoutDateWithoutHolidays(start, timeoutHours, defultBusinessHoursRecord, holidaysRecords, 8)
 }
 
-export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: number, holidays: Array<JsonMap>, businessHours: JsonMap, utcOffset: number) => {
+export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: number, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number) => {
     const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
     const startMoment = moment.utc(start);
-    const startClosingTime = moment.utc(start);//当天下班时间点
+    const startClosingMoment = moment.utc(start);//当天下班时间点
     console.log("===computeTimeoutDateWithoutHolidays=====startMoment.format()===", startMoment.format());
-    console.log("===computeTimeoutDateWithoutHolidays=====startClosingTime.format()===", startClosingTime.format());
+    console.log("===computeTimeoutDateWithoutHolidays=====startClosingMoment.format()===", startClosingMoment.format());
     console.log("===computeTimeoutDateWithoutHolidays=====businessHoursPerDay.endValue.hours===", businessHoursPerDay.endValue.hours);
     console.log("===computeTimeoutDateWithoutHolidays=====businessHoursPerDay.endValue.minutes===", businessHoursPerDay.endValue.minutes);
     console.log("===computeTimeoutDateWithoutHolidays=====utcOffset===", utcOffset);
-    startClosingTime.hours(businessHoursPerDay.endValue.hours - utcOffset);
-    startClosingTime.minutes(businessHoursPerDay.endValue.minutes);
-    console.log("===computeTimeoutDateWithoutHolidays===2==startClosingTime.format()===", startClosingTime.format());
-    let offsetMinutes = startClosingTime.diff(startMoment, 'minute');
+    startClosingMoment.hours(businessHoursPerDay.endValue.hours - utcOffset);
+    startClosingMoment.minutes(businessHoursPerDay.endValue.minutes);
+    console.log("===computeTimeoutDateWithoutHolidays===2==startClosingMoment.format()===", startClosingMoment.format());
+    let offsetMinutes = startClosingMoment.diff(startMoment, 'minute');
     const timeoutMinutes = timeoutHours * 60;
     console.log("===computeTimeoutDateWithoutHolidays=====timeoutMinutes, offsetMinutes===", timeoutMinutes, offsetMinutes);
     if(timeoutMinutes <= offsetMinutes){
@@ -40,8 +39,9 @@ export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: num
     else{
         // 超时时间大于当天下班前。
         // 一个工作日一个工作日的往上加，直到加至达到timeoutMinutes值
-        let result = moment.utc(start).add(offsetMinutes, 'm').toDate();
-        let nextMoment = moment.utc(result);
+        // let result = moment.utc(start).add(offsetMinutes, 'm').toDate();
+        // let nextMoment = moment.utc(result);
+        let nextMoment = startClosingMoment;
         for(let i = 0;offsetMinutes < timeoutMinutes;i++){
             let nextBusinessDateStartTime = computeNextBusinessDateStartTime(nextMoment.toDate(), holidays, businessHoursPerDay, <Array<string>>businessHours.working_days, utcOffset);
             if(nextBusinessDateStartTime){
