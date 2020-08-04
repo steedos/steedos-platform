@@ -1,4 +1,4 @@
-import { computeBusinessHoursPerDay, computeNextBusinessDateStartTime } from './business_hours';
+import { computeBusinessHoursPerDay, computeNextBusinessDate } from './business_hours';
 import { getSteedosSchema } from '@steedos/objectql';
 import { BusinessHoursPerDay, Holiday, BusinessHours } from './types';
 const moment = require('moment');
@@ -43,9 +43,11 @@ export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: num
         // let nextMoment = moment.utc(result);
         let nextMoment = startClosingMoment;
         for(let i = 0;offsetMinutes < timeoutMinutes;i++){
-            let nextBusinessDateStartTime = computeNextBusinessDateStartTime(nextMoment.toDate(), holidays, businessHoursPerDay, <Array<string>>businessHours.working_days, utcOffset);
-            if(nextBusinessDateStartTime){
-                nextMoment.add(1, 'd');
+            let nextBusinessDate = computeNextBusinessDate(nextMoment.toDate(), holidays, businessHoursPerDay, <Array<string>>businessHours.working_days, utcOffset);
+            // console.log("===nextBusinessDateStartTime===", (<any>nextBusinessDateStartTime).format());
+            if(nextBusinessDate){
+                // 把nextMoment设置为nextBusinessDate当天的工作日下班时间
+                nextMoment = moment.utc(nextBusinessDate.end);
                 offsetMinutes += businessHoursPerDay.computedMinutes;
             }
             else{

@@ -35,3 +35,8 @@ export type BusinessHoursValue = {
     computedHours: number;//计算得到的工作时间长度，小时为单位
     computedMinutes: number;//计算得到的工作时间长度，分钟为单位
 }
+
+export type NextBusinessDate = {
+    start: Date;//计算得到的下一个工作日的开始时间
+    end: Date;//计算得到的下一个工作日的结束时间
+}

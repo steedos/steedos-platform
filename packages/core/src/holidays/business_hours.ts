@@ -1,4 +1,4 @@
-import { StringTimeValue, BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursValue } from './types';
+import { StringTimeValue, BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursValue, NextBusinessDate } from './types';
 const moment = require('moment');
 
 /**
@@ -100,29 +100,39 @@ export const computeIsBusinessDate = (date: Date, holidays: Array<Holiday>, work
 }
 
 /**
- * 根据开始时间计算下一个工作日的开始时间
- * @param start 开始时间
+ * 根据来源时间计算下一个工作日的开始时间
+ * @param source 来源时间
  * @param holidays 节假日
  * @param businessHoursPerDay 工作时间，根据businessHours调用computeBusinessHoursPerDay函数计算得到的每天工作时间
  * @param workingDays 工作日，周几工作，即businessHours中的working_days属性，[ '1', '2', '3', '4', '5' ] 表示周1到周5工作，周六'6'周日'0'休息
  * @param utcOffset 时区偏差
  * return Date 返回下一个工作工的开始时间点
  */
-export const computeNextBusinessDateStartTime = (start: Date, holidays: Array<Holiday>, businessHoursPerDay: BusinessHoursPerDay, workingDays: Array<string>, utcOffset: number): Date => {
-    const startMoment = moment.utc(start);
+export const computeNextBusinessDate = (source: Date, holidays: Array<Holiday>, businessHoursPerDay: BusinessHoursPerDay, workingDays: Array<string>, utcOffset: number): NextBusinessDate => {
+    const sourceMoment = moment.utc(source);
     // 设置为start对应的当天工作日开始时间点
-    startMoment.hours((<any>businessHoursPerDay.startValue).hours - utcOffset);
-    startMoment.minutes((<any>businessHoursPerDay.startValue).minutes);
-    let result = null;
+    sourceMoment.hours(businessHoursPerDay.startValue.hours - utcOffset);
+    sourceMoment.minutes(businessHoursPerDay.startValue.minutes);
+    let startMoment = null;
     const maxCount = 365;//防止死循环
     for(let i = 0;i < maxCount; i++){
-        startMoment.add(1, 'd');
-        if(computeIsBusinessDate(startMoment.toDate(), holidays, workingDays)){
-            result = startMoment.toDate();
+        sourceMoment.add(1, 'd');
+        if(computeIsBusinessDate(sourceMoment.toDate(), holidays, workingDays)){
+            startMoment = sourceMoment;
             break;
         }
     }
-    return result;
+    if(startMoment){
+        let start = startMoment.toDate();
+        // 设置为start对应的当天的结束时间
+        startMoment.hours(businessHoursPerDay.endValue.hours - utcOffset);
+        startMoment.minutes(businessHoursPerDay.endValue.minutes);
+        let end = startMoment.toDate();
+        return { start, end };
+    }
+    else{
+        return null;
+    }
 }
 
 /**
@@ -160,9 +170,10 @@ export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Arra
         // let nextMoment = moment.utc(result);
         let nextMoment = startClosingMoment;
         for(let i = 0;nextMoment.toDate().getTime() < endMoment.toDate().getTime();i++){
-            let nextBusinessDateStartTime = computeNextBusinessDateStartTime(nextMoment.toDate(), holidays, businessHoursPerDay, <Array<string>>businessHours.working_days, utcOffset);
-            if(nextBusinessDateStartTime){
-                nextMoment.add(1, 'd');
+            let nextBusinessDate = computeNextBusinessDate(nextMoment.toDate(), holidays, businessHoursPerDay, <Array<string>>businessHours.working_days, utcOffset);
+            if(nextBusinessDate){
+                // 把nextMoment设置为nextBusinessDate当天的工作日下班时间
+                nextMoment = moment.utc(nextBusinessDate.end);
                 computedMinutes += businessHoursPerDay.computedMinutes;
             }
             else{
