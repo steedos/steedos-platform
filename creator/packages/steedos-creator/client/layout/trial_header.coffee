@@ -15,7 +15,7 @@ Template.trialHearder.helpers
 #			if  Creator.__l.days_left <= 7
 #				return true
 	days_left: ()->
-		return Creator.__l?.days_left || 1
+		return Creator.__l?.get()?.days_left || 1
 Template.trialHearder.events
 	"click .trial-guide": (e, t)->
 		window.open("https://www.steedos.com/developer");

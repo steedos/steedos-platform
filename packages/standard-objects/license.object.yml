@@ -17,13 +17,11 @@ fields:
     is_wide: true
     hidden: true
   product:
-    type: select
+    type: text
     label: 产品
-    options: 审批王:workflow
   edition:
-    type: select
+    type: text
     label: 版本
-    options: 企业版:workflow_enterprise,专业版:workflow_professional,入门版:workflow_standard
   is_trial:
     type: boolean
     label: 试用版
