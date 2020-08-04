@@ -119,18 +119,39 @@ describe('Test timeout value', () => {
         let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 36, holidays, businessHours, utcOffset);
         expect(result.getTime()).to.be.eq(moment.utc("2020-09-07T02:00:00.000Z").toDate().getTime());
     });
-    it('no holidays, timeout date is just at the weekend day, it will adjust timeout date to next Monday', async () => {
+    it('no holidays, timeout date is just at the weekend day, it will adjust timeout date to next Monday too', async () => {
         // 超时时间大于当天下班时间，没有假期，且超时时间正好为周末，则返回添加跳过下班时间及周末后的超时时间值。
         // 北京时间9月1号10时开始，50.2小时后超时，超时时间为本周六，会调整到下周二北京时间15点12分。
         const start = moment.utc("2020-09-01T02:00:00.000Z");
         let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 50.2, holidays, businessHours, utcOffset);
         expect(result.getTime()).to.be.eq(moment.utc("2020-09-08T07:12:00.000Z").toDate().getTime());
     });
-    // it('no holidays, exists weekend and timeout date is at wednesday of next week', async () => {
-    //     // 超时时间大于当天下班时间，有周未但是没有假期，则返回添加跳过周未和下班时间后的超时时间值。
-    //     // 北京时间9月1号15时50分开始，73.5小时后超时，超时时间为下周3北京时间17点20分。
-    //     const start = moment.utc("2020-09-01T07:50:00.000Z");
-    //     let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 73.5, holidays, businessHours, utcOffset);
-    //     expect(result.getTime()).to.be.eq(moment.utc("2020-09-09T09:20:00.000Z").toDate().getTime());
-    // });
+    it('no holidays, exists weekend and timeout date is at wednesday of next week', async () => {
+        // 超时时间大于当天下班时间，有周未但是没有假期，则返回添加跳过下班时间及周末后的超时时间值。
+        // 北京时间9月1号15时50分开始，55.5小时后超时，超时时间为下周3北京时间17点20分。
+        const start = moment.utc("2020-09-01T07:50:00.000Z");
+        let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 55.5, holidays, businessHours, utcOffset);
+        expect(result.getTime()).to.be.eq(moment.utc("2020-09-09T09:20:00.000Z").toDate().getTime());
+    });
+    it('exists holidays and weekend, start date is before them, then timeout date will at the date after them', async () => {
+        // 超时时间大于当天下班时间，有周未也有假期，开始时间在节假日前，则返回添加跳过下班时间、周末和假期时间后的超时时间值。
+        // 北京时间9月30号15时50分开始，3小时后超时，超时时间为下周日北京时间9点50分。
+        const start = moment.utc("2020-09-30T07:50:00.000Z");
+        let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 3, holidays, businessHours, utcOffset);
+        expect(result.getTime()).to.be.eq(moment.utc("2020-10-10T01:50:00.000Z").toDate().getTime());
+    });
+    it('exists holidays and weekend, start date between them, then timeout date will at the date after them too', async () => {
+        // 超时时间大于当天下班时间，有周未也有假期，开始时间在节假日中，则返回添加跳过下班时间、周末和假期时间后的超时时间值。
+        // 北京时间10月6号15时50分开始，3小时后超时，超时时间为下周日北京时间9点50分。
+        const start = moment.utc("2020-10-06T07:50:00.000Z");
+        let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 3, holidays, businessHours, utcOffset);
+        expect(result.getTime()).to.be.eq(moment.utc("2020-10-10T01:50:00.000Z").toDate().getTime());
+    });
+    it('exists holidays and weekend, start date between them, then timeout date will at the date after them again', async () => {
+        // 超时时间大于当天下班时间，有周未也有假期，开始时间在调休日中，则返回添加跳过下班时间、周末和假期时间后的超时时间值。
+        // 北京时间10月9号15时50分开始，3小时后超时，超时时间为下周日北京时间9点50分。
+        const start = moment.utc("2020-10-09T07:50:00.000Z");
+        let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 3, holidays, businessHours, utcOffset);
+        expect(result.getTime()).to.be.eq(moment.utc("2020-10-10T01:50:00.000Z").toDate().getTime());
+    });
 });
