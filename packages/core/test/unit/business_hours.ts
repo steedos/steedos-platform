@@ -1,4 +1,4 @@
-import { getStringTimeValue, computeBusinessHoursPerDay, computeIsBusinessDay, computeNextBusinessDate, NextBusinessDate, Holiday, BusinessHours, computeIsBusinessDate} from "../../src/holidays";
+import { getStringTimeValue, computeBusinessHoursPerDay, computeIsBusinessDay, computeNextBusinessDate, NextBusinessDate, Holiday, BusinessHours, computeIsBusinessDate, BusinessHoursPerDay} from "../../src/holidays";
 import { expect } from 'chai';
 const moment = require('moment');
 
@@ -66,6 +66,8 @@ const businessHours:BusinessHours = {
     name: 'A',
     start: '9:00',
     end: '18:00',
+    lunch_start: '12:00',
+    lunch_end: '13:00',
     working_days: [ '1', '2', '3', '4', '5' ]
 };
 
@@ -96,22 +98,28 @@ describe('getStringTimeValue', () => {
 });
 
 describe('computeBusinessHoursPerDay', () => {
-    it('9:00 to 18:00 is 9 Hours', async () => {
-        let result:any = computeBusinessHoursPerDay("9:00", "18:00",)
-        expect(result.computedHours).to.be.eq(9);
+    it('if lunch time is 12:00 to 13:00 then 9:00 to 18:00 is 8 Hours', async () => {
+        let result:BusinessHoursPerDay = computeBusinessHoursPerDay("9:00", "18:00", "12:00", "13:00")
+        expect(result.computedHours).to.be.eq(8);
         expect(result.startValue.hours).to.be.eq(9);
         expect(result.startValue.minutes).to.be.eq(0);
+        expect(result.computedLunchHours).to.be.eq(1);
+        expect(result.lunchStartValue.hours).to.be.eq(12);
+        expect(result.lunchStartValue.minutes).to.be.eq(0);
     });
-    it('9:30 to 18:00 is 8.5 Hours', async () => {
-        let result:any = computeBusinessHoursPerDay("9:30", "18:00",)
-        expect(result.computedHours).to.be.eq(8.5);
+    it('if lunch time is 12:30 to 13:30 then 9:30 to 18:00 is 7.5 Hours', async () => {
+        let result:BusinessHoursPerDay = computeBusinessHoursPerDay("9:30", "18:00", "12:30", "13:30")
+        expect(result.computedHours).to.be.eq(7.5);
         expect(result.startValue.hours).to.be.eq(9);
         expect(result.startValue.minutes).to.be.eq(30);
+        expect(result.computedLunchHours).to.be.eq(1);
+        expect(result.lunchStartValue.hours).to.be.eq(12);
+        expect(result.lunchStartValue.minutes).to.be.eq(30);
     });
-    it('18:00 to 9:00 is -9 Hours but will catch errors', async () => {
+    it('18:00 to 9:00 is -8 Hours but will catch errors', async () => {
         let result:any;
         try {
-            result = computeBusinessHoursPerDay("18:00", "9:00")
+            result = computeBusinessHoursPerDay("18:00", "9:00", "12:00", "13:00")
         }
         catch(ex){
         }
@@ -120,7 +128,34 @@ describe('computeBusinessHoursPerDay', () => {
     it('18:00 to 18:00 is zero Hours but will catch errors', async () => {
         let result:any;
         try {
-            result = computeBusinessHoursPerDay("18:00", "18:00")
+            result = computeBusinessHoursPerDay("18:00", "18:00", "12:00", "13:00")
+        }
+        catch(ex){
+        }
+        expect(result).to.eq(undefined);
+    });
+    it('lunch time 13:00 to 12:00 is -1 Hours but will catch errors', async () => {
+        let result:any;
+        try {
+            result = computeBusinessHoursPerDay("09:00", "18:00", "13:00", "12:00")
+        }
+        catch(ex){
+        }
+        expect(result).to.eq(undefined);
+    });
+    it('lunch time 12:00 to 12:00 is -1 Hours but will catch errors', async () => {
+        let result:any;
+        try {
+            result = computeBusinessHoursPerDay("09:00", "18:00", "12:00", "12:00")
+        }
+        catch(ex){
+        }
+        expect(result).to.eq(undefined);
+    });
+    it('lunch time 08:00 to 12:00 is out of work time 09:00 to 18:00, so will catch errors', async () => {
+        let result:any;
+        try {
+            result = computeBusinessHoursPerDay("09:00", "18:00", "08:00", "12:00")
         }
         catch(ex){
         }
@@ -129,7 +164,16 @@ describe('computeBusinessHoursPerDay', () => {
     it('24:01 to 25:00 has formated error, will catch errors', async () => {
         let result:any;
         try {
-            result = computeBusinessHoursPerDay("24:01", "25:00",)
+            result = computeBusinessHoursPerDay("24:01", "25:00", "12:00", "13:00")
+        }
+        catch(ex){
+        }
+        expect(result).to.eq(undefined);
+    });
+    it('lunch time 12:00 to 13:001 has formated error, will catch errors', async () => {
+        let result:any;
+        try {
+            result = computeBusinessHoursPerDay("09:01", "18:00", "12:00", "13:001")
         }
         catch(ex){
         }

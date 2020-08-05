@@ -39,28 +39,44 @@ export const getStringTimeValue = (str: string, digitsForHours: number = 2): Str
  * @param end 
  * @param digitsForHours 
  * return BusinessHoursPerDay{
- *  computedHours: 每天工作时间长度，小时为单位
- *  computedMinutes: 每天工作时间长度，小时为单位
- *  startValue: 开始时间返回的getStringTimeValue函数得到的对应解析值
- *  endValue: 结束时间返回的getStringTimeValue函数得到的对应解析值
+    computedHours: number;//每天工作时间长度，小时为单位，去除了午休时间
+    computedMinutes: number;//每天工作时间长度，分钟为单位
+    computedLunchHours: number;//每天午休时间长度，小时为单位
+    computedLunchMinutes: number;//每天午休时间长度，分钟为单位
+    startValue: StringTimeValue;//开始时间返回的getStringTimeValue函数得到的对应解析值
+    endValue: StringTimeValue;//结束时间返回的getStringTimeValue函数得到的对应解析值
+    lunchStartValue: StringTimeValue;//午休开始时间返回的getStringTimeValue函数得到的对应解析值
+    lunchEndValue: StringTimeValue;//午休结束时间返回的getStringTimeValue函数得到的对应解析值
  * }
  */
-export const computeBusinessHoursPerDay = (start:string, end: string, digitsForHours: number = 2): BusinessHoursPerDay => {
+export const computeBusinessHoursPerDay = (start:string, end: string, lunch_start:string, lunch_end: string, digitsForHours: number = 2): BusinessHoursPerDay => {
     let startValue:StringTimeValue = getStringTimeValue(start, digitsForHours);
     let endValue:StringTimeValue = getStringTimeValue(end, digitsForHours);
-    if(startValue && endValue){
+    let lunchStartValue:StringTimeValue = getStringTimeValue(lunch_start, digitsForHours);
+    let lunchEndValue:StringTimeValue = getStringTimeValue(lunch_end, digitsForHours);
+    if(startValue && endValue && lunchStartValue && lunchEndValue){
         let computedMinutes: number = <number>endValue.valueToMinutes - <number>startValue.valueToMinutes;
-        if(computedMinutes <= 0){
-            throw new Error("computeBusinessHoursPerDay:The end time value must be later than the start time.");
+        let computedLunchMinutes: number = <number>lunchEndValue.valueToMinutes - <number>lunchStartValue.valueToMinutes;
+        computedMinutes = computedMinutes - computedLunchMinutes; //排除午休时间
+        if(computedMinutes <= 0 || computedLunchMinutes <= 0){
+            throw new Error("computeBusinessHoursPerDay:The end or lunch_end time value must be later than the start or lunch_start time.");
+        }
+        else if(lunchStartValue.valueToMinutes <= startValue.valueToMinutes || lunchEndValue.valueToMinutes >= endValue.valueToMinutes){
+            throw new Error("computeBusinessHoursPerDay:The lunch time must between the working time.");
         }
         else{
-            let computedHours: number = <number>endValue.valueToHours - <number>startValue.valueToHours;
-            computedHours = Number(computedHours.toFixed(digitsForHours));
+            // let computedHours: number = <number>endValue.valueToHours - <number>startValue.valueToHours;
+            let computedHours = Number((computedMinutes / 60).toFixed(digitsForHours));
+            let computedLunchHours = Number((computedLunchMinutes / 60).toFixed(digitsForHours));
             return {
                 computedHours: computedHours,
                 computedMinutes: computedMinutes,
+                computedLunchHours: computedLunchHours,
+                computedLunchMinutes: computedLunchMinutes,
                 startValue,
                 endValue,
+                lunchStartValue,
+                lunchEndValue
             };
         }
     }
@@ -83,7 +99,7 @@ export const getBusinessHoursPerDay = (businessHours: BusinessHours, digitsForHo
     if(businessHours.computedPerDay){
         return businessHours.computedPerDay;
     }
-    let computedPerDay = computeBusinessHoursPerDay(businessHours.start, businessHours.end, digitsForHours);
+    let computedPerDay = computeBusinessHoursPerDay(businessHours.start, businessHours.end, businessHours.lunch_start, businessHours.lunch_end, digitsForHours);
     businessHours.computedPerDay = computedPerDay;
     return computedPerDay;
 }
