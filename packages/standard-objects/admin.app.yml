@@ -202,12 +202,6 @@ admin_menus:
       - admin
     object_name: license
     parent: license
-  - _id: license_auth_token  #TODO remove
-    name: License Auth Token
-    permission_sets:
-      - admin
-    object_name: license_auth_token
-    parent: license
   - _id: about
     name: About Steedos
     permission_sets:

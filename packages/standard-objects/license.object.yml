@@ -18,13 +18,13 @@ fields:
     hidden: true
   product:
     type: text
-    label: 产品
+    label: Product
   edition:
     type: text
-    label: 版本
+    label: Edition
   is_trial:
     type: boolean
-    label: 试用版
+    label: Trial
   user_number:
     type: number
     label: User number

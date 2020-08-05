@@ -2,4 +2,14 @@ license__object: 许可证
 license_action_apply: $t(license_trial_subscribeNow)
 license_action_sync: 同步许可证
 license_field_lid: 许可证ID
+license_field_product: 产品
+license_field_edition: 版本
+license_field_is_trial: 试用
+license_field_user_number: 用户数
+license_field_custom_objects_number: 自定义对象数
+license_field_flow_number: 流程数
+license_field_end_date: 过期
+license_field_verify_status: 状态
+license_field_verify_status_options_FAIL: 无效
+license_field_verify_status_options_SUCCESS: 有效
 license_listview_all: 全部
