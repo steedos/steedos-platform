@@ -14,7 +14,11 @@ function getFieldName(objectName, fieldName){
   if(object.datasource && object.datasource != 'default'){
     return fieldName;
   }else{
-    return `${fieldName}__c`;
+    if(fieldName != 'name'){
+      return `${fieldName}__c`;
+    }else{
+      return fieldName
+    }
   }
 }
 
