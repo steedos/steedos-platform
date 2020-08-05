@@ -1,4 +1,5 @@
 var _ = require("underscore");
+var objectql = require('@steedos/objectql');
 
 function canRemoveNameFileld(doc){
   var object = Creator.getCollection("objects").findOne({name: doc.object}, {fields: {datasource: 1}});
@@ -149,6 +150,15 @@ function checkName(name){
   return true
 }
 
+function allowChangeObject(){
+  var config = objectql.getSteedosConfig();
+  if(config.tenant && config.tenant.saas){
+      return false
+  }else{
+      return true;
+  }
+}
+
 var triggers = {
   "after.insert.server.object_fields": {
     on: "server",
@@ -179,6 +189,9 @@ var triggers = {
     on: "server",
     when: "before.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
+      if(!allowChangeObject()){
+        throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
+      }
       modifier.$set = modifier.$set || {}
       if(_.has(modifier.$set, "name")){
         throw new Error("不能修改对象的name属性");
@@ -243,6 +256,9 @@ var triggers = {
     on: "server",
     when: "before.insert",
     todo: function (userId, doc) {
+      if(!allowChangeObject()){
+        throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
+      }
       checkName(doc._name);
       if(doc._name === 'name'){
         doc.name = doc._name;
@@ -266,6 +282,9 @@ var triggers = {
     on: "server",
     when: "before.remove",
     todo: function (userId, doc) {
+      if(!allowChangeObject()){
+        throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
+      }
       if (doc.name === "name" && !canRemoveNameFileld(doc)) {
         throw new Meteor.Error(500, "不能删除此纪录");
       }
