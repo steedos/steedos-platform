@@ -32,7 +32,12 @@ AutoForm.addInputType("dx-date-box", {
         throw new Error("If you specify a timezoneId, make sure that you've added a moment-timezone package to your app");
       }
       if (val instanceof Date && !isNaN(val)) {
-        return moment(AutoForm.Utility.dateToNormalizedLocalDateAndTimeString(val, timezoneId), "YYYY-MM-DD[T]HH:mm:ss.SSS").toDate();
+        valueFormat = "YYYY-MM-DD[T]HH:mm:ss.SSS";
+        if(atts.dxDateBoxOptions && atts.dxDateBoxOptions.type === "date" && timezoneId === "utc"){
+          // 如果是日期类型定义了timezoneId为utc（这是creator的规则），则控件统一按utc的0点处理
+          valueFormat = "YYYY-MM-DD[T]00:00:00.000";
+        }
+        return moment(AutoForm.Utility.dateToNormalizedLocalDateAndTimeString(val, timezoneId), valueFormat).toDate();
       }
     }
 
