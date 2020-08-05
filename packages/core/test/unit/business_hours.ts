@@ -1,4 +1,4 @@
-import { getStringTimeValue, computeBusinessHoursPerDay, computeIsBusinessDay, computeNextBusinessDate, NextBusinessDate, BusinessHoursPerDay, Holiday, BusinessHours, computeIsBusinessDate} from "../../src/holidays";
+import { getStringTimeValue, computeBusinessHoursPerDay, computeIsBusinessDay, computeNextBusinessDate, NextBusinessDate, Holiday, BusinessHours, computeIsBusinessDate} from "../../src/holidays";
 import { expect } from 'chai';
 const moment = require('moment');
 
@@ -226,43 +226,37 @@ describe('computeIsBusinessDate', () => {
 describe('computeNextBusinessDate', () => {
     it('the start time of next business date of 2020-09-01T07:00:00.000Z is 2020-09-02T01:00:00Z', async () => {
         const start = moment.utc("2020-09-01T07:00:00.000Z");
-        const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
-        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHoursPerDay, businessHours.working_days, utcOffset);
+        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset);
         expect(moment.utc(result.start).format()).to.be.eq("2020-09-02T01:00:00Z");
         expect(moment.utc(result.end).format()).to.be.eq("2020-09-02T10:00:00Z");
     });
     it('the start time of next business date of 2020-09-30T07:00:00.000Z is 2020-10-10T01:00:00Z', async () => {
         const start = moment.utc("2020-09-30T07:00:00.000Z");
-        const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
-        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHoursPerDay, businessHours.working_days, utcOffset);
+        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset);
         expect(moment.utc(result.start).format()).to.be.eq("2020-10-10T01:00:00Z");
         expect(moment.utc(result.end).format()).to.be.eq("2020-10-10T10:00:00Z");
     });
     it('the start time of next business date of 2020-10-06T07:00:00.000Z is 2020-10-10T01:00:00Z', async () => {
         const start = moment.utc("2020-10-06T07:00:00.000Z");
-        const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
-        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHoursPerDay, businessHours.working_days, utcOffset);
+        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset);
         expect(moment.utc(result.start).format()).to.be.eq("2020-10-10T01:00:00Z");
         expect(moment.utc(result.end).format()).to.be.eq("2020-10-10T10:00:00Z");
     });
     it('the start time of next business date of 2020-10-08T07:00:00.000Z is 2020-10-10T01:00:00Z', async () => {
         const start = moment.utc("2020-10-08T07:00:00.000Z");
-        const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
-        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHoursPerDay, businessHours.working_days, utcOffset);
+        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset);
         expect(moment.utc(result.start).format()).to.be.eq("2020-10-10T01:00:00Z");
         expect(moment.utc(result.end).format()).to.be.eq("2020-10-10T10:00:00Z");
     });
     it('the start time of next business date of 2020-10-10T07:00:00.000Z is 2020-10-10T01:00:00Z', async () => {
         const start = moment.utc("2020-10-10T07:00:00.000Z");
-        const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
-        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHoursPerDay, businessHours.working_days, utcOffset);
+        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset);
         expect(moment.utc(result.start).format()).to.be.eq("2020-10-11T01:00:00Z");
         expect(moment.utc(result.end).format()).to.be.eq("2020-10-11T10:00:00Z");
     });
     it('the start time of next business date of 2020-10-16T07:00:00.000Z is 2020-10-19T01:00:00Z', async () => {
         const start = moment.utc("2020-10-16T07:00:00.000Z");
-        const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
-        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHoursPerDay, businessHours.working_days, utcOffset);
+        let result:NextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset);
         expect(moment.utc(result.start).format()).to.be.eq("2020-10-19T01:00:00Z");
         expect(moment.utc(result.end).format()).to.be.eq("2020-10-19T10:00:00Z");
     });

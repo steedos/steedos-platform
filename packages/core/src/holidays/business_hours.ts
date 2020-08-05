@@ -172,7 +172,9 @@ export const computeIsBusinessDay = (date: Date, holidays: Array<Holiday>, worki
  * @param utcOffset 时区偏差
  * return Date 返回下一个工作工的开始时间点
  */
-export const computeNextBusinessDate = (source: Date, holidays: Array<Holiday>, businessHoursPerDay: BusinessHoursPerDay, workingDays: Array<string>, utcOffset: number): NextBusinessDate => {
+export const computeNextBusinessDate = (source: Date, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2): NextBusinessDate => {
+    const businessHoursPerDay = getBusinessHoursPerDay(businessHours, digitsForHours);
+    const workingDays = businessHours.working_days;
     const sourceMoment = moment.utc(source);
     // 设置为start对应的当天工作日开始时间点
     sourceMoment.hours(businessHoursPerDay.startValue.hours - utcOffset);
@@ -217,7 +219,7 @@ export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Arra
     const isStartBusinessDate = computeIsBusinessDate(start, holidays, businessHours, utcOffset, digitsForHours);
     if(!isStartBusinessDate){
         // 如果开始时间不是工作时间，则设置为下一个工作日的开始时间
-        let nextBusinessDate = computeNextBusinessDate(start, holidays, businessHoursPerDay, businessHours.working_days, utcOffset);
+        let nextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset, digitsForHours);
         start = nextBusinessDate.start;
     }
     const startMoment = moment.utc(start);
@@ -241,7 +243,7 @@ export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Arra
         // let nextMoment = moment.utc(result);
         let nextMoment = startClosingMoment;
         for(let i = 0;nextMoment.toDate().getTime() < endTimeValue;i++){
-            let nextBusinessDate = computeNextBusinessDate(nextMoment.toDate(), holidays, businessHoursPerDay, <Array<string>>businessHours.working_days, utcOffset);
+            let nextBusinessDate = computeNextBusinessDate(nextMoment.toDate(), holidays, businessHours, utcOffset, digitsForHours);
             if(nextBusinessDate){
                 // 把nextMoment设置为nextBusinessDate当天的工作日下班时间
                 nextMoment = moment.utc(nextBusinessDate.end);
@@ -257,7 +259,7 @@ export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Arra
             const isEndBusinessDate = computeIsBusinessDate(end, holidays, businessHours, utcOffset, digitsForHours);
             if(!isEndBusinessDate){
                 // 如果结束时间不是工作时间，则设置为下一个工作日的开始时间，然后才能相减取差值
-                let nextBusinessDate = computeNextBusinessDate(end, holidays, businessHoursPerDay, businessHours.working_days, utcOffset);
+                let nextBusinessDate = computeNextBusinessDate(end, holidays, businessHours, utcOffset, digitsForHours);
                 end = nextBusinessDate.start;
                 endMoment = moment.utc(end);
             }

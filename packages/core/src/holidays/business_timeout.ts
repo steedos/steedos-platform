@@ -1,4 +1,4 @@
-import { computeBusinessHoursPerDay, computeNextBusinessDate, computeIsBusinessDate } from './business_hours';
+import { computeNextBusinessDate, computeIsBusinessDate, getBusinessHoursPerDay } from './business_hours';
 import { getSteedosSchema } from '@steedos/objectql';
 import { BusinessHoursPerDay, Holiday, BusinessHours } from './types';
 const moment = require('moment');
@@ -17,12 +17,12 @@ export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: n
     computeTimeoutDateWithoutHolidays(start, timeoutHours, defultBusinessHoursRecord, holidaysRecords, 8)
 }
 
-export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: number, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number) => {
-    const businessHoursPerDay:BusinessHoursPerDay = computeBusinessHoursPerDay(<string>businessHours.start, <string>businessHours.end);
-    const isStartBusinessDate = computeIsBusinessDate(start, holidays, businessHours, utcOffset);
+export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: number, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2) => {
+    const businessHoursPerDay:BusinessHoursPerDay = getBusinessHoursPerDay(businessHours, digitsForHours);
+    const isStartBusinessDate = computeIsBusinessDate(start, holidays, businessHours, utcOffset, digitsForHours);
     if(!isStartBusinessDate){
         // 如果开始时间不是工作时间，则设置为下一个工作日的开始时间
-        let nextBusinessDate = computeNextBusinessDate(start, holidays, businessHoursPerDay, businessHours.working_days, utcOffset);
+        let nextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset, digitsForHours);
         start = nextBusinessDate.start;
     }
     const startMoment = moment.utc(start);
@@ -49,7 +49,7 @@ export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: num
         // let nextMoment = moment.utc(result);
         let nextMoment = startClosingMoment;
         for(let i = 0;offsetMinutes < timeoutMinutes;i++){
-            let nextBusinessDate = computeNextBusinessDate(nextMoment.toDate(), holidays, businessHoursPerDay, <Array<string>>businessHours.working_days, utcOffset);
+            let nextBusinessDate = computeNextBusinessDate(nextMoment.toDate(), holidays, businessHours, utcOffset, digitsForHours);
             // console.log("===nextBusinessDateStartTime===", (<any>nextBusinessDateStartTime).format());
             if(nextBusinessDate){
                 // 把nextMoment设置为nextBusinessDate当天的工作日下班时间
