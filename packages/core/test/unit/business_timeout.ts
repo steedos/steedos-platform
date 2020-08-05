@@ -66,6 +66,8 @@ const businessHours:BusinessHours = {
     name: 'A',
     start: '9:00',
     end: '18:00',
+    lunch_start: '12:00',
+    lunch_end: '13:00',
     working_days: [ '1', '2', '3', '4', '5' ]
 };
 
@@ -93,6 +95,7 @@ describe('Test timeout value', () => {
         // 北京时间9月1号15时20分开始，3小时后超时，超时时间为第二天北京时间9点20分。
         const start = moment.utc("2020-09-01T07:20:00.000Z");
         let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 3, holidays, businessHours, utcOffset);
+        console.log("====result====", result);
         expect(result.getTime()).to.be.eq(moment.utc("2020-09-02T01:20:00.000Z").toDate().getTime());
         let result2 = computeBusinessHoursValue(start.toDate(), moment.utc("2020-09-02T01:20:00.000Z").toDate(), holidays, businessHours, utcOffset);
         expect(result2.computedHours).to.be.eq(3);
