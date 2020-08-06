@@ -369,7 +369,8 @@ if Meteor.isClient
 					if _.isFunction(ref)
 						ref = ref()
 				else
-					ref = fields[n].optionsFunction({}).getProperty("value")
+					if(_.isFunction(fields[n].optionsFunction))
+						ref = fields[n].optionsFunction({}).getProperty("value")
 
 				if !_.isArray(ref)
 					ref = [ref]
@@ -695,11 +696,6 @@ if Meteor.isClient
 			data.push({value: val, href: href, id: props._id, isUrl: true})
 		else if _field.type == "email"
 			data.push({value: val, href: href, id: props._id, isEmail: true})
-		else if _field.type == "textarea"
-			if val
-				val = val.replace(/\n/g, '\n<br>');
-				val = val.replace(/ /g, '&nbsp;');
-			data.push {value: val, id: props._id, type: _field.type}
 		else if _field.type == "boolean" || _field.type == "toggle"
 			if props.val
 				val = t "YES"
@@ -794,11 +790,15 @@ if Meteor.isClient
 			else if _field.type == "html"
 				if !_.isEmpty(val)
 					val = Spacebars.SafeString(val)
+			else if _field.type == "textarea"
+				if val
+					val = val.replace(/\n/g, '\n<br>');
+					val = val.replace(/ /g, '&nbsp;');
 
 			if props.parent_view != 'record_details' && props.field_name == this_name_field_key
 				href = Creator.getObjectUrl(props.object_name, props._id)
 
-			data.push({value: val, href: href, id: props._id})
+			data.push({value: val, href: href, id: props._id, type: _field.type})
 
 		return data;
 
