@@ -1,16 +1,11 @@
-import { StringTimeValue, BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursValue, NextBusinessDate } from './types';
+import { StringTimeValue, BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursValue, NextBusinessDate, BusinessHoursCheckedType } from './types';
 const moment = require('moment');
 
 /**
  * 把09:33这种字符串解析出来对应的时间值
  * @param str 
  * @param digitsForHours 
- * return StringTimeValue{
- *  hours: number,小时部分值
- *  minutes: number,分钟部分值
- *  valueToHours: number,小时和分钟相加得到的数值，按小时为单位，用于计算多个字符串代表的时间差值
- *  valueToMinutes: number,小时和分钟相加得到的数值，按分钟为单位，用于计算多个字符串代表的时间差值
- * }
+ * return StringTimeValue
  */
 export const getStringTimeValue = (str: string, digitsForHours: number = 2): StringTimeValue => {
     str = str.trim();
@@ -38,16 +33,7 @@ export const getStringTimeValue = (str: string, digitsForHours: number = 2): Str
  * @param start 
  * @param end 
  * @param digitsForHours 
- * return BusinessHoursPerDay{
-    computedHours: number;//每天工作时间长度，小时为单位，去除了午休时间
-    computedMinutes: number;//每天工作时间长度，分钟为单位
-    computedLunchHours: number;//每天午休时间长度，小时为单位
-    computedLunchMinutes: number;//每天午休时间长度，分钟为单位
-    startValue: StringTimeValue;//开始时间返回的getStringTimeValue函数得到的对应解析值
-    endValue: StringTimeValue;//结束时间返回的getStringTimeValue函数得到的对应解析值
-    lunchStartValue: StringTimeValue;//午休开始时间返回的getStringTimeValue函数得到的对应解析值
-    lunchEndValue: StringTimeValue;//午休结束时间返回的getStringTimeValue函数得到的对应解析值
- * }
+ * return BusinessHoursPerDay
  */
 export const computeBusinessHoursPerDay = (start:string, end: string, lunch_start:string, lunch_end: string, digitsForHours: number = 2): BusinessHoursPerDay => {
     let startValue:StringTimeValue = getStringTimeValue(start, digitsForHours);
@@ -56,6 +42,8 @@ export const computeBusinessHoursPerDay = (start:string, end: string, lunch_star
     let lunchEndValue:StringTimeValue = getStringTimeValue(lunch_end, digitsForHours);
     if(startValue && endValue && lunchStartValue && lunchEndValue){
         let computedMinutes: number = <number>endValue.valueToMinutes - <number>startValue.valueToMinutes;
+        let computedAmMinutes: number = <number>lunchStartValue.valueToMinutes - <number>startValue.valueToMinutes;
+        let computedPmMinutes: number = <number>endValue.valueToMinutes - <number>lunchEndValue.valueToMinutes;
         let computedLunchMinutes: number = <number>lunchEndValue.valueToMinutes - <number>lunchStartValue.valueToMinutes;
         computedMinutes = computedMinutes - computedLunchMinutes; //排除午休时间
         if(computedMinutes <= 0 || computedLunchMinutes <= 0){
@@ -67,12 +55,18 @@ export const computeBusinessHoursPerDay = (start:string, end: string, lunch_star
         else{
             // let computedHours: number = <number>endValue.valueToHours - <number>startValue.valueToHours;
             let computedHours = Number((computedMinutes / 60).toFixed(digitsForHours));
+            let computedAmHours = Number((computedAmMinutes / 60).toFixed(digitsForHours));
+            let computedPmHours = Number((computedPmMinutes / 60).toFixed(digitsForHours));
             let computedLunchHours = Number((computedLunchMinutes / 60).toFixed(digitsForHours));
             return {
-                computedHours: computedHours,
-                computedMinutes: computedMinutes,
-                computedLunchHours: computedLunchHours,
-                computedLunchMinutes: computedLunchMinutes,
+                computedHours,
+                computedMinutes,
+                computedAmHours,
+                computedAmMinutes,
+                computedPmHours,
+                computedPmMinutes,
+                computedLunchHours,
+                computedLunchMinutes,
                 startValue,
                 endValue,
                 lunchStartValue,
@@ -110,25 +104,26 @@ export const getBusinessHoursPerDay = (businessHours: BusinessHours, digitsForHo
  * @param holidays 节假日
  * @param businessHours 工作时间，其start为上班时间，end为下班时间
  * @param utcOffset 时区偏差
- * return boolean 返回date是不是工作时间
+ * return BusinessHoursCheckedType 返回date是不是工作时间，返回值大于0表示是工作时间，否则为非工作时间
  */
-export const computeIsBusinessDate = (date: Date, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2): boolean => {
+export const computeIsBusinessDate = (date: Date, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2): BusinessHoursCheckedType => {
     if(computeIsBusinessDay(date, holidays, businessHours.working_days)){
-        return computeIsInBusinessHours(date, businessHours, utcOffset, digitsForHours);
+        return computeIsBusinessHours(date, businessHours, utcOffset, digitsForHours);
     }
     else{
-        return false;
+        // 非工作日
+        return BusinessHoursCheckedType.offDay
     }
 }
 
 /**
- * 计算某个时间点是不是工作时间，只计算传入的时间值是否在工作时间start、end范围内，不判断周末和假期
+ * 计算某个时间点是不是工作时间，只计算传入的时间值是否在工作时间start、end范围内，并且不在午休时间lunch_start、lunch_end范围，只计算时间点，不计算日期是否工作日
  * @param date 要计算的日期时间
- * @param businessHours 工作时间，其start为上班时间，end为下班时间
+ * @param businessHours 工作时间，其start为上班时间，end为下班时间，lunch_start为午休开始时间、lunch_end为午休结束时间
  * @param utcOffset 时区偏差
- * return boolean 返回date是不是工作时间
+ * return BusinessHoursCheckedType 返回date是不是工作时间，返回值大于0表示是工作时间，否则为非工作时间
  */
-export const computeIsInBusinessHours = (date: Date, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2): boolean => {
+export const computeIsBusinessHours = (date: Date, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2): BusinessHoursCheckedType => {
     const businessHoursPerDay:BusinessHoursPerDay = getBusinessHoursPerDay(businessHours, digitsForHours);
     const startMoment = moment.utc(date);
     // 设置为对应的当天工作日开始时间点
@@ -138,14 +133,44 @@ export const computeIsInBusinessHours = (date: Date, businessHours: BusinessHour
     // 设置为对应的当天工作日结束时间点
     endMoment.hours(businessHoursPerDay.endValue.hours - utcOffset);
     endMoment.minutes(businessHoursPerDay.endValue.minutes);
+    const lunchStartMoment = moment.utc(date);
+    // 设置为对应的当天午休开始时间点
+    lunchStartMoment.hours(businessHoursPerDay.lunchStartValue.hours - utcOffset);
+    lunchStartMoment.minutes(businessHoursPerDay.lunchStartValue.minutes);
+    const lunchEndMoment = moment.utc(date);
+    // 设置为对应的当天午休结束时间点
+    lunchEndMoment.hours(businessHoursPerDay.lunchEndValue.hours - utcOffset);
+    lunchEndMoment.minutes(businessHoursPerDay.lunchEndValue.minutes);
     const startTimeValue = startMoment.toDate().getTime();
     const endTimeValue = endMoment.toDate().getTime();
+    const lunchStartTimeValue = lunchStartMoment.toDate().getTime();
+    const lunchEndTimeValue = lunchEndMoment.toDate().getTime();
     const dateTimeValue = date.getTime();
     if(dateTimeValue <= endTimeValue && dateTimeValue >= startTimeValue){
-        return true;
+        // 上班时间
+        if(dateTimeValue <= lunchStartTimeValue){
+            // 上午班
+            return BusinessHoursCheckedType.onAm
+        }
+        else if(dateTimeValue >= lunchEndTimeValue){
+            // 下午班
+            return BusinessHoursCheckedType.onPm
+        }
+        else{
+            // 午休时间
+            return BusinessHoursCheckedType.offLunch
+        }
     }
     else{
-        return false;
+        // 下班时间
+        if(dateTimeValue > endTimeValue){
+            // 下班时间，非午休，下午下班时间到第二天早上0点
+            return BusinessHoursCheckedType.offPm;
+        }
+        else{
+            // 下班时间，非午休，早上0点到上午上班时间
+            return BusinessHoursCheckedType.offAm;
+        }
     }
 }
 
@@ -180,12 +205,12 @@ export const computeIsBusinessDay = (date: Date, holidays: Array<Holiday>, worki
 }
 
 /**
- * 根据来源时间计算下一个工作日的开始时间
+ * 根据来源时间所在日期计算下一个工作日的开始时间，直接计算来源日期的下一个工作日是哪天，不判断来源日期本身是否是工作日或工作时间
  * @param source 来源时间
  * @param holidays 节假日
- * @param businessHoursPerDay 工作时间，根据businessHours调用computeBusinessHoursPerDay函数计算得到的每天工作时间
- * @param workingDays 工作日，周几工作，即businessHours中的working_days属性，[ '1', '2', '3', '4', '5' ] 表示周1到周5工作，周六'6'周日'0'休息
+ * @param businessHours 工作时间，其start为上班时间，end为下班时间
  * @param utcOffset 时区偏差
+ * @param digitsForHours 小时数精确到小数点几位
  * return Date 返回下一个工作工的开始时间点
  */
 export const computeNextBusinessDate = (source: Date, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2): NextBusinessDate => {
@@ -225,15 +250,12 @@ export const computeNextBusinessDate = (source: Date, holidays: Array<Holiday>, 
  * @param businessHours 
  * @param utcOffset 
  * @param digitsForHours 
- * return BusinessHoursValue{
-    computedHours: number;//计算得到的工作时间长度，小时为单位
-    computedMinutes: number;//计算得到的工作时间长度，分钟为单位
- * }
+ * return BusinessHoursValue
  */
 export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2):BusinessHoursValue => {
     const businessHoursPerDay:BusinessHoursPerDay = getBusinessHoursPerDay(businessHours, digitsForHours);
-    const isStartBusinessDate = computeIsBusinessDate(start, holidays, businessHours, utcOffset, digitsForHours);
-    if(!isStartBusinessDate){
+    const startBusinessHoursCheckedType = computeIsBusinessDate(start, holidays, businessHours, utcOffset, digitsForHours);
+    if(startBusinessHoursCheckedType <= 0){
         // 如果开始时间不是工作时间，则设置为下一个工作日的开始时间
         let nextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset, digitsForHours);
         start = nextBusinessDate.start;
@@ -272,8 +294,8 @@ export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Arra
         }
         // 最后一天加出来的可能有多，把多余的时间减掉
         if(nextMoment.toDate().getTime() > endTimeValue){
-            const isEndBusinessDate = computeIsBusinessDate(end, holidays, businessHours, utcOffset, digitsForHours);
-            if(!isEndBusinessDate){
+            const endBusinessHoursCheckedType = computeIsBusinessDate(end, holidays, businessHours, utcOffset, digitsForHours);
+            if(endBusinessHoursCheckedType <= 0){
                 // 如果结束时间不是工作时间，则设置为下一个工作日的开始时间，然后才能相减取差值
                 let nextBusinessDate = computeNextBusinessDate(end, holidays, businessHours, utcOffset, digitsForHours);
                 end = nextBusinessDate.start;
