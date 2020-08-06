@@ -1,5 +1,6 @@
 var _ = require("underscore");
 var objectql = require('@steedos/objectql');
+var clone = require('clone');
 
 function canRemoveNameFileld(doc){
   var object = Creator.getCollection("objects").findOne({name: doc.object}, {fields: {datasource: 1}});
@@ -190,6 +191,25 @@ function checkNameField(nameField){
   }
 }
 
+function getFieldDefaultProps(field){
+  let prosp = {}
+  switch (field.type) {
+    case 'autonumber':
+      if(!field.formula || !field.formula.trim()){
+        prosp.formula = '{0000}';
+      }
+      break;
+    default:
+      break;
+  }
+  return prosp;
+}
+
+//TODO 清理不匹配的属性
+function handleFieldProps(field){
+
+}
+
 var triggers = {
   "after.insert.server.object_fields": {
     on: "server",
@@ -290,6 +310,11 @@ var triggers = {
           throw new Meteor.Error(500, `对象${object.label}中已经有记录，不能修改reference_to字段`);
         }
       }
+
+      if(!_.isEmpty(modifier.$set)){
+        let defProps = getFieldDefaultProps(Object.assign(clone(doc), modifier.$set));
+        Object.assign(modifier.$set, defProps);
+      }
     }
   },
   //					if modifier?.$set?.reference_to
@@ -320,6 +345,9 @@ var triggers = {
       if(doc.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
         throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
       }
+
+      let defProps = getFieldDefaultProps(doc);
+      Object.assign(doc, defProps);
 
       if ((doc != null ? doc.index : void 0) && ((doc != null ? doc.type : void 0) === 'textarea' || (doc != null ? doc.type : void 0) === 'html')) {
         throw new Meteor.Error(500, '多行文本不支持建立索引');

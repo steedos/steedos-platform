@@ -51,12 +51,12 @@ const validateOptionsGridValue = (value)=>{
 
 const validateDoc = (doc)=>{
     validateOptionsGridValue(doc.options);
-    if(doc.type === "autonumber"){
-        let formula = doc.formula && doc.formula.trim();
-        if(!formula){
-            throw new Error("object_fields_error_formula_required");
-        }
-    }
+    // if(doc.type === "autonumber"){
+    //     let formula = doc.formula && doc.formula.trim();
+    //     if(!formula){
+    //         throw new Error("object_fields_error_formula_required");
+    //     }
+    // }
 }
 
 module.exports = {
