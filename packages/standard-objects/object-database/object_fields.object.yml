@@ -249,3 +249,16 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+form:
+  initialValues: !!js/function |
+    function(){
+      var object = Creator.odata.get('objects', Session.get("record_id"), "fields_serial_number");
+      if(object){
+        let fields_serial_number = object.fields_serial_number
+        if(!fields_serial_number || fields_serial_number < 100){
+          fields_serial_number = 100 + 10
+        }
+        return {sort_no: fields_serial_number}
+      }
+      return {}
+    }

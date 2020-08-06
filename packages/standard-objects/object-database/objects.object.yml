@@ -210,6 +210,12 @@ fields:
     omit: true
     hidden: true
     disabled: true
+  fields_serial_number:
+    type: number
+    scale: 0
+    omit: true
+    hidden: true
+    disabled: true
 paging:
   enabled: false
 relatedList:

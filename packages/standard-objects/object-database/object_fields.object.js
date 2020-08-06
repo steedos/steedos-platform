@@ -17,7 +17,7 @@ function getFieldName(objectName, fieldName){
   }
 }
 
-function _syncToObject(doc) {
+function _syncToObject(doc, isInsert) {
   var fields, object_fields, table_fields;
   object_fields = Creator.getCollection("object_fields").find({
     space: doc.space,
@@ -59,13 +59,34 @@ function _syncToObject(doc) {
       return _.extend(fields[k].fields, f);
     }
   });
+
+  let objectSet = {
+    fields: fields
+  }
+
+  if(isInsert){
+    const objectRecord = Creator.getCollection("objects").findOne({
+      space: doc.space,
+      name: doc.object
+    })
+    if(objectRecord){
+      let fields_serial_number = null;
+      if(!objectRecord.fields_serial_number || objectRecord.fields_serial_number < 100){
+        fields_serial_number = 100 + _.keys(fields).length * 10
+      }else{
+        fields_serial_number = objectRecord.fields_serial_number + 10
+      }
+
+      objectSet.fields_serial_number = fields_serial_number;
+    }
+  }
+
+
   return Creator.getCollection("objects").update({
     space: doc.space,
     name: doc.object
   }, {
-    $set: {
-      fields: fields
-    }
+    $set: objectSet
   });
 };
 
@@ -154,7 +175,7 @@ var triggers = {
     on: "server",
     when: "after.insert",
     todo: function (userId, doc) {
-      _syncToObject(doc);
+      _syncToObject(doc, true);
     }
   },
   "after.update.server.object_fields": {

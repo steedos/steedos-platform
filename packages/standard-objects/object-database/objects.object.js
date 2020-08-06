@@ -240,7 +240,7 @@ Creator.Objects.objects.triggers = {
             if (isRepeatedName(doc)) {
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
-
+            doc.fields_serial_number = 100;
             if(isRelationalDatabase(doc)){
                 doc.is_enable = false;
             }
