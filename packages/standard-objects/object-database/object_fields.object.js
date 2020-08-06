@@ -184,6 +184,12 @@ function allowChangeObject(){
   }
 }
 
+function checkNameField(nameField){
+  if(nameField.type === 'master_detail' || nameField.type === 'lookup'){
+    throw new Error("名称字段的类型不能是相关表、主表/子表");
+  }
+}
+
 var triggers = {
   "after.insert.server.object_fields": {
     on: "server",
@@ -220,6 +226,18 @@ var triggers = {
       modifier.$set = modifier.$set || {}
       if(_.has(modifier.$set, "name")){
         throw new Error("不能修改对象的name属性");
+      }
+
+      let fname = modifier.$set.name || doc.name
+      let ftype = modifier.$set.type || doc.type
+      let fisName = doc.is_name
+
+      if(_.has(modifier.$set, "is_name")){
+        fisName = modifier.$set.is_name
+      }
+
+      if(fname === 'name' || fisName){
+        checkNameField({type: ftype})
       }
 
       // if(_.has(modifier.$set, "object") && modifier.$set.object != doc.object){
@@ -290,6 +308,11 @@ var triggers = {
       }else{
         doc.name = getFieldName(doc.object,doc._name);
       }
+
+      if(doc.name === 'name' || doc.is_name){
+        checkNameField({type: ftype})
+      }
+
       if (isRepeatedName(doc)) {
         throw new Meteor.Error(doc.name, "字段名不能重复");
       }
