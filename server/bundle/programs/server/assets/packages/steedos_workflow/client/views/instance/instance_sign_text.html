@@ -8,7 +8,7 @@
 							{{#if (unempty (myApproveDescription _id))}}
 								<div class="instance-sign-item my-approve{{#unless is_finished}} not-finished{{/unless}}">
 								{{{markDownToHtml (myApproveDescription _id)}}}
-								{{#if (showSignImage handler ../image_sign)}}
+								{{#if (showSignImage handler ../image_sign this)}}
 									&emsp;&emsp;{{> imageSign (imageSignData handler)}}
 								{{else}}
 									&emsp;&emsp;{{handler_name}}

@@ -13,7 +13,11 @@
                                     <td class="td-approve">
                                         <table class="trace-approve-talbe">
                                             <tr class="approve-item-distribute">
-                                                <td class="name">{{this.from_user_name}}</td>
+                                                <td class="name">
+                                                    <a class="btn-link" href="{{objectUrl 'users' this.from_user '-'}}">
+                                                        {{this.from_user_name}}
+                                                    </a>
+                                                </td>
                                                 <td class="finish-date">{{dateFormat this.created}}</td>
                                                 <td class="status {{this.judge}}"></td>
                                             </tr>
@@ -50,7 +54,7 @@
 
                                         <tr class="approve-item">
                                             <td class="name">
-												{{> instance_traces_handler handler=this.handler handler_name=this.handler_name is_finished=this.is_finished}}
+												{{> instance_traces_handler handler=this.handler handler_name=this.handler_name is_finished=this.is_finished judge=this.judge}}
                                                 {{#if isCC this}}
                                                     <label class='cc-label'>
                                                         <span class="cc-label-title">({{_t "instance_cc_title"}})</span>

@@ -16,7 +16,11 @@
                                 <td colspan='3' class="trace-step-name">{{_t "instance_distribute_title"}}</td>
                             </tr>
                             <tr class="approve-item-distribute">
-                                <td class="name">{{this.from_user_name}}</td>
+                                <td class="name">
+                                    <a class="btn-link" href="{{objectUrl 'users' this.from_user '-'}}" data-target_user_id="{{this.from_user}}">
+                                        {{this.from_user_name}}
+                                    </a>
+                                </td>
                                 <td class="finish-date">{{dateFormat this.created}}</td>
                             </tr>
                         {{/with}}
@@ -27,7 +31,10 @@
                     </tr>
                     {{#each this.approves}}
                             <tr class="approve-item">
-                                <td class="name">{{this.handler_name}}
+                                <td class="name">
+                                    <a class="btn-link" href="{{objectUrl 'users' this.handler '-'}}" data-target_user_id="{{this.handler}}">
+                                        {{this.handler_name}}
+                                    </a>
                                     {{#if isCC this}}
                                         <label class='cc-label'>
                                             <span class="cc-label-title">({{_t "instance_cc_title"}})</span>
