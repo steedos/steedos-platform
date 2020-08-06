@@ -21,8 +21,6 @@ fields:
     formula: "{0}"
     label: 流水号
     filterable: true
-    omit: true
-    readonly: true
   create_date:
     label: 登记日期
     type: date
