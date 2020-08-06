@@ -637,7 +637,7 @@ InstanceRecordQueue.Configure = function (options) {
 		}
 	}
 
-	self.sendDoc = function (doc) {
+	InstanceRecordQueue.sendDoc = self.sendDoc = function (doc) {
 		if (InstanceRecordQueue.debug) {
 			console.log("sendDoc");
 			console.log(doc);
@@ -831,11 +831,13 @@ InstanceRecordQueue.Configure = function (options) {
 			})
 		}
 
-		InstanceRecordQueue.collection.update(doc._id, {
-			$set: {
-				'info.sync_date': new Date()
-			}
-		})
+		if (doc._id) {
+			InstanceRecordQueue.collection.update(doc._id, {
+				$set: {
+					'info.sync_date': new Date()
+				}
+			})
+		}
 
 	}
 

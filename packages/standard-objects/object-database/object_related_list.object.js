@@ -1,4 +1,5 @@
 var _ = require("underscore");
+var objectql = require('@steedos/objectql');
 
 function _syncToObject(doc) {
   var relatedList = Creator.getCollection("object_related_list").find({
@@ -42,21 +43,45 @@ function check(object_name, objectName, _id){
   }
 }
 
+function allowChangeObject(){
+  var config = objectql.getSteedosConfig();
+  if(config.tenant && config.tenant.saas){
+      return false
+  }else{
+      return true;
+  }
+}
+
 Creator.Objects.object_related_list.triggers = {
-  "before.insert.server.check": {
+  "before.insert.server.object_related_list.check": {
     on: 'server',
     when: 'before.insert',
     todo: function(userId, doc){
+      if(!allowChangeObject()){
+        throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
+      }
       check(doc.object_name, doc.objectName)
     }
   },
-  "before.update.server.check": {
+  "before.update.server.object_related_list.check": {
     on: 'server',
     when: 'before.update',
     todo: function(userId, doc, fieldNames, modifier, options){
+      if(!allowChangeObject()){
+        throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
+      }
       modifier.$set = modifier.$set || {}
       if(_.has(modifier.$set, 'object_name') || _.has(modifier.$set, 'objectName')){
         check(doc.object_name || modifier.$set.object_name, doc.objectName || modifier.$set.objectName, doc._id)
+      }
+    }
+  },
+  "before.remove.server.object_related_list.check": {
+    on: "server",
+    when: "before.remove",
+    todo: function (userId, doc) {
+      if(!allowChangeObject()){
+        throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
     }
   },

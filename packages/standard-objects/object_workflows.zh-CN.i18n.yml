@@ -31,3 +31,4 @@ object_workflows_field_field_map_$_workflow_field_final_decision: 最终意见
 object_workflows_group_script: 脚本
 object_workflows_listview_all: 全部
 object_workflows_listview_default: 默认
+object_workflows_action_forceSync: 同步历史申请单

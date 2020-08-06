@@ -32,7 +32,30 @@ AutoForm.addInputType("dx-date-box", {
         throw new Error("If you specify a timezoneId, make sure that you've added a moment-timezone package to your app");
       }
       if (val instanceof Date && !isNaN(val)) {
-        return moment(AutoForm.Utility.dateToNormalizedLocalDateAndTimeString(val, timezoneId), "YYYY-MM-DD[T]HH:mm:ss.SSS").toDate();
+        if(atts.dxDateBoxOptions && atts.dxDateBoxOptions.type === "date" && timezoneId === "utc"){
+          // 如果是日期类型定义了timezoneId为utc（这是creator的规则），则控件统一按utc的0点处理
+          // 这里不可以传入timezoneId，即用本地时区（传入的值在操作系统或浏览器显示几号就几号）显示日期
+          /**
+            > 总体规则：
+            - 日期控件始终显示为传入的默认值本地时区下的日期值。
+            - 保存后始终显示为当天utc时区下的0点值，如`2020-08-05T00:00:00.000Z`。
+
+            > 示例（北京时间时区）：
+            - 当前时间为8月5号早上7点，默认值为new Date()时，日期显示为8月5号，保存为8月5号utc的0点。
+            - 当前时间为8月5号下午1点，默认值为new Date()时，日期显示为8月5号，保存为8月5号utc的0点。
+            - 当前时间为8月5号下午22点，默认值为new Date()时，日期显示为8月5号，保存为8月5号utc的0点。
+            - 默认值为`new Date("2020-08-05T07:00:00Z")`时，日期显示为8月5号，保存为8月5号utc的0点。
+            - 默认值为`new Date("2020-08-05T13:00:00Z")`时，日期显示为8月5号，保存为8月5号utc的0点。
+            - 默认值为`new Date("2020-08-05T22:00:00Z")`时，日期显示为8月6号，保存为8月6号utc的0点。【注意时区】
+            - 默认值为`new Date("2020-08-05 07:00:00")`时，日期显示为8月5号，保存为8月5号utc的0点。
+            - 默认值为`new Date("2020-08-05 13:00:00Z")`时，日期显示为8月5号，保存为8月5号utc的0点。
+            - 默认值为`new Date("2020-08-05 22:00:00")`时，日期显示为8月5号，保存为8月5号utc的0点。
+           */
+          return moment(AutoForm.Utility.dateToNormalizedLocalDateAndTimeString(val), "YYYY-MM-DD[T]00:00:00.000").toDate();
+        }
+        else{
+          return moment(AutoForm.Utility.dateToNormalizedLocalDateAndTimeString(val, timezoneId), "YYYY-MM-DD[T]HH:mm:ss.SSS").toDate();
+        }
       }
     }
 

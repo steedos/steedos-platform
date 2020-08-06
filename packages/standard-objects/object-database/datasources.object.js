@@ -20,7 +20,7 @@ Creator.Objects['datasources'].methods = {
         var userSession = req.user
             var recordId = req.params._id;
             var spaceId = userSession.spaceId
-            let doc = await objectql.getObject('datasources').findOne(recordId, {filters: `(space eq ${spaceId})`});
+            let doc = await objectql.getObject('datasources').findOne(recordId, {filters: `(space eq \'${spaceId}\')`});
             if(doc){
                 var datasource;
                 try {

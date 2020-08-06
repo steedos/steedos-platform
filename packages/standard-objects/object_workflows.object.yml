@@ -286,9 +286,9 @@ fields:
   sync_attachment:
     label: Synchronization Mode of Attachment
     type: select
-    options: 
+    options:
       - label: No Synchronization
-        value: 'null'
+        value: "null"
       - label: Synchronize the Latest Version
         value: lastest
       - label: Synchronize All Versions
@@ -303,6 +303,9 @@ list_views:
   all:
     label: All Rules
     filter_scope: space
+actions:
+  forceSync:
+    label: sync history approvals
 permission_set:
   user:
     allowCreate: false

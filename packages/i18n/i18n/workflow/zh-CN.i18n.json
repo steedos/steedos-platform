@@ -740,5 +740,8 @@
 
 	"instance_print_traces_simplify": "精简",
 	"instance_print_a4_vertical": "A4纵向",
-	"instance_print_a4_horizontal": "A4横向"
+	"instance_print_a4_horizontal": "A4横向",
+
+	"object_workflows_sync_history_instances_success": "同步完成",
+	"object_workflows_sync_history_instances_failed": "请处理以下同步失败申请单"
 }

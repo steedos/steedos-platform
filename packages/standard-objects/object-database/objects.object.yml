@@ -124,11 +124,6 @@ fields:
   # enable_space_global:
   #   type: boolean
   #   defaultValue: false
-  enable_approvals:
-    type: boolean
-    defaultValue: false
-    label: Enable Approvals
-    group: Switch
   enable_web_forms:
     type: boolean
     defaultValue: fasle

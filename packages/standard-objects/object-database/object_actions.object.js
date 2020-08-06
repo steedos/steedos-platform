@@ -1,3 +1,5 @@
+var objectql = require('@steedos/objectql');
+
 function _syncToObject(doc) {
   var actions, object_actions;
   object_actions = Creator.getCollection("object_actions").find({
@@ -58,6 +60,15 @@ function checkName(name){
   return true
 }
 
+function allowChangeObject(){
+  var config = objectql.getSteedosConfig();
+  if(config.tenant && config.tenant.saas){
+      return false
+  }else{
+      return true;
+  }
+}
+
 Creator.Objects.object_actions.triggers = {
   "after.insert.server.object_actions": {
     on: "server",
@@ -84,6 +95,11 @@ Creator.Objects.object_actions.triggers = {
     on: "server",
     when: "before.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
+
+      if(!allowChangeObject()){
+        throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
+      }
+
       modifier.$set = modifier.$set || {}
 
       // if(_.has(modifier.$set, "object") && modifier.$set.object != doc.object){
@@ -103,10 +119,22 @@ Creator.Objects.object_actions.triggers = {
     on: "server",
     when: "before.insert",
     todo: function (userId, doc) {
+      if(!allowChangeObject()){
+        throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
+      }
       doc.visible = true;
       checkName(doc.name);
       if (isRepeatedName(doc)) {
         throw new Meteor.Error(500, `名称不能重复${doc.name}`);
+      }
+    }
+  },
+  "before.remove.server.object_actions": {
+    on: "server",
+    when: "before.remove",
+    todo: function (userId, doc) {
+      if(!allowChangeObject()){
+        throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
     }
   }

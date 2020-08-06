@@ -721,5 +721,8 @@
 
 	"instance_print_traces_simplify": "Simplify",
 	"instance_print_a4_vertical": "A4Vertical",
-	"instance_print_a4_horizontal": "A4Horizontal"
+	"instance_print_a4_horizontal": "A4Horizontal",
+
+	"object_workflows_sync_history_instances_success": "success",
+	"object_workflows_sync_history_instances_failed": "deal with sync failed approvals"
 }
