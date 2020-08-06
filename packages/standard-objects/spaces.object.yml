@@ -43,7 +43,29 @@ fields:
   enable_register:
     label: Enable User Registration
     type: boolean
-    group: Logon
+    group: Register account
+  default_profile:
+    label: Default profile
+    type: lookup
+    showIcon: false
+    optionsFunction: !!js/function |
+      function () {
+        var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
+        var result = [];
+        profiles.forEach(function (item) {
+          result.push({
+            label: item.label,
+            value: item.name
+          });
+        });
+        return result;
+      }
+    group: Register account
+  default_organization:
+    label: Default organization
+    type: lookup
+    reference_to: organizations
+    group: Register account
   is_paid:
     label: Paid
     type: boolean

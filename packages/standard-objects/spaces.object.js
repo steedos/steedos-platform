@@ -91,6 +91,17 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
         return ;
     }
 
+    let profile = 'user';
+
+    let space = db.spaces.findOne(spaceId, {fields: {default_profile: 1, default_organization: 1}})
+    if(space){
+        if(space.default_profile){
+            profile = space.default_profile
+        }
+        if(!organization_id && space.default_organization){
+            organization_id = space.default_organization
+        }
+    }
 
     if(!organization_id){
         let root_org = db.organizations.findOne({
@@ -109,7 +120,7 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
         // organizations_parents: [organization_id],
         // company_id: company_id,
         // company_ids: [company_id],
-        profile: 'user',
+        profile: profile,
         space: spaceId,
         owner: userId,
         created_by: userId,
