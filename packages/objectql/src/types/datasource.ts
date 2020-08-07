@@ -221,12 +221,18 @@ export class SteedosDataSourceType implements Dictionary {
 
         this.initDriver();
 
+        if (config.getRoles && !_.isFunction(config.getRoles)) {
+            throw new Error('getRoles must be a function')
+        }
+        this._getRoles = config.getRoles
+    }
+
+    loadFiles(){
         // 添加对象到缓存
         _.each(this.config.objects, (object, object_name) => {
             object.name = object_name
             addObjectConfig(object, this._name);
         })
-
         // 添加对象到缓存
         _.each(this.config.objectFiles, (objectPath) => {
             let filePath = objectPath;
@@ -235,11 +241,6 @@ export class SteedosDataSourceType implements Dictionary {
             }
             addAllConfigFiles(filePath, this._name)
         })
-
-        if (config.getRoles && !_.isFunction(config.getRoles)) {
-            throw new Error('getRoles must be a function')
-        }
-        this._getRoles = config.getRoles
     }
 
     setObjectPermission(object_name: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {

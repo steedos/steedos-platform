@@ -12,6 +12,7 @@ export async function init() {
     initDesignSystem();
     initPublicStaticRouter();
     Plugins.init();
+    Datasources.loadFiles();
     initCreator();
     await Datasources.init();
     await migrate.init();
