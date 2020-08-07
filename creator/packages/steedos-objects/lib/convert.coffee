@@ -223,7 +223,7 @@
 				reference_to = field._reference_to
 				createFunction = field._createFunction
 				beforeOpenFunction = field._beforeOpenFunction
-				filtersFunction = field._filtersFunction
+				filtersFunction = field._filtersFunction || field.filtersFunction
 
 				if optionsFunction && _.isString(optionsFunction)
 					field.optionsFunction = Creator.eval("(#{optionsFunction})")

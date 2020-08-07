@@ -50,10 +50,14 @@ object_fields_field_type_options_url: 网址
 object_fields_field_type_options_autonumber: 自动编号
 object_fields_field_inlineHelpText: 提示文本
 object_fields_field_filterable: 过滤器默认字段
+object_fields_field_filtersFunction: 过滤器函数
+object_fields_field_optionsFunction: 选择项函数
 object_fields_field__name_inlineHelpText: $t(object_fields__error_name_invalid_format)
 object_fields_field_formula: 公式
 object_fields_field_formula_inlineHelpText: 字段类型为自动编号时，必须填写此字段
 object_fields_listview_all: 所有
+object_fields_group_reference: $t(object_fields_field_type_options_lookup)、$t(object_fields_field_type_options_master_detail)
+object_fields_group_number: $t(object_fields_field_type_options_currency)、$t(object_fields_field_type_options_number)
 object_fields_group_advanced: 高级
 object_fields_group_external_data_source: 外部数据源
 object_fields__error_name_invalid_format : $t(object_fields_field_name)只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符

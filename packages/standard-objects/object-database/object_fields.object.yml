@@ -121,21 +121,11 @@ fields:
   filterable:
     type: boolean
     label: Filterable
-  precision:
-    type: currency
-    label: Precision
-    defaultValue: 18
-    group: Advanced
-  scale:
-    type: currency
-    label: Scale
-    defaultValue: 2
-    group: Advanced
-    min: 0
   reference_to:
     type: lookup
     label: Reference to
-    group: Advanced
+    group: Reference
+    is_wide: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -152,6 +142,27 @@ fields:
 
               return _options;
             }
+  filtersFunction:
+    group: Reference
+    label: filters Function
+    type: textarea
+    is_wide: true
+  optionsFunction:
+    group: Reference
+    label: options Function
+    type: textarea
+    is_wide: true
+  precision:
+    type: currency
+    label: Precision
+    defaultValue: 18
+    group: number
+  scale:
+    type: currency
+    label: Scale
+    defaultValue: 2
+    group: number
+    min: 0
   rows:
     type: currency
     label: Rows
@@ -203,6 +214,7 @@ fields:
     type: text
     inlineHelpText: This field must be filled when the field type is autonumber
     group: Advanced
+    is_wide: true
   column_name:
     type: text
     label: Database column name
