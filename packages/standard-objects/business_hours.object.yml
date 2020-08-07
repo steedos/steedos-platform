@@ -51,7 +51,7 @@ fields:
       - Friday:5
       - Saturday:6
   utcOffset:
-    label: Time Zone
+    label: GMT Offset
     type: number
     name: utcOffset
     omit: true
