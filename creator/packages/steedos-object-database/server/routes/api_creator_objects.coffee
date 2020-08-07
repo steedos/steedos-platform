@@ -130,6 +130,7 @@ JsonRoutes.add 'get', '/api/creator/:space/objects/:_id', (req, res, next) ->
 							_fields[_item.field].required = false
 					object.fields = _fields
 					object.allow_actions = objectLayout.actions || []
+					object.allow_relatedList = objectLayout.relatedList || []
 		JsonRoutes.sendResult res, {
 			code: 200
 			data: object

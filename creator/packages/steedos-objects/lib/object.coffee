@@ -31,6 +31,8 @@ Creator.Object = (options)->
 	if Meteor.isClient
 		if _.has(options, 'allow_actions')
 			self.allow_actions = options.allow_actions
+		if _.has(options, 'allow_relatedList')
+			self.allow_relatedList = options.allow_relatedList
 	self.enable_search = options.enable_search
 	self.enable_files = options.enable_files
 	self.enable_tasks = options.enable_tasks

@@ -194,6 +194,10 @@ if Meteor.isClient
 				if mapList[objectName]
 					list.push mapList[objectName]
 
+		if _.has(_object, 'allow_relatedList')
+			list = _.filter list, (item)->
+				return _.include(_object.allow_relatedList, item.object_name)
+
 		return list
 
 Creator.getObjectFirstListView = (object_name)->
