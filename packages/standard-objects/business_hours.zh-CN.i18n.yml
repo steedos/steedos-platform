@@ -18,4 +18,6 @@ business_hours_field_working_days_options_5: 星期五
 business_hours_field_working_days_options_6: 星期六
 business_hours_field_is_default: 默认工作时间
 business_hours_field_is_default_inlineHelpText: 是否将该工作时间用作默认设置，只有勾选时该时间设置才能生效。
+business_hours_field_utcOffset: 时区
+business_hours_field_utcOffset_inlineHelpText: 工作时间基于该时区，其值为用户本身所处时区。
 business_hours_listview_all: 全部

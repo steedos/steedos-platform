@@ -77,6 +77,8 @@ module.exports = {
                 throw new Error("business_hours_error_is_default_repeated");
             }
         }
+        let curUser = await this.getObject('users').findOne(this.userId, {fields:["utcOffset"]});
+        this.doc.utcOffset = curUser.utcOffset;
     },
 
     beforeUpdate: async function () {
@@ -92,5 +94,7 @@ module.exports = {
                 throw new Error("business_hours_error_is_default_repeated");
             }
         }
+        let curUser = await this.getObject('users').findOne(this.userId, {fields:["utcOffset"]});
+        this.doc.utcOffset = curUser.utcOffset;
     }
 }

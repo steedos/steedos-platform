@@ -1,5 +1,5 @@
 name: business_hours
-label: BusinessHours
+label: Business Hours
 icon: groups
 fields:
   name:
@@ -50,6 +50,12 @@ fields:
       - Thursday:4
       - Friday:5
       - Saturday:6
+  utcOffset:
+    label: Time Zone
+    type: number
+    name: utcOffset
+    omit: true
+    inlineHelpText: "The business hours is based on this time zone, and it's value is the user's own time zone."
 list_views:
   all:
     label: All
