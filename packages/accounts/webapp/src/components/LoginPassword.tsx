@@ -29,18 +29,20 @@ const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
 ));
 
 const LoginPassword = ({ history, settings, tenant, location, title, requestLoading, requestUnLoading }: any) => {
+  console.log('LoginPassword history.location.state', history.location.state);
   const _email = location && location.state ? location.state.email : '';
   const classes = useStyles();
   const [enableCode] = useState('');
   const [email, setEmail] = useState(_email || '');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(history.location.state ? (history.location.state.error || '') : '');
+  const [message, setMessage] = useState<any>(history.location.state ? (history.location.state.message || '') : '');
   const searchParams = new URLSearchParams(location.search);
   let spaceId = searchParams.get("X-Space-Id");
   accountsEventOnError((err: any)=>{
     setError(err.message);
-})
+  })
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -109,6 +111,7 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
       </FormControl>
       } 
       {error && <FormError error={error!} />}
+      {!error && message && message.data && <FormError variant={message.variant} error={message.data!} />}
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
             id='accounts.next'

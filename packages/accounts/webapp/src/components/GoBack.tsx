@@ -45,7 +45,7 @@ const GoBack = ({ tenant, history, location }: any) => {
         }
     }
 
-    let showBack =  ['/login', '/login/home', '/'].indexOf(location.pathname) < 0
+    let showBack =  ['/login', '/login/home', '/', '/generate-license', '/result-license'].indexOf(location.pathname) < 0
 
     return (
         <div>

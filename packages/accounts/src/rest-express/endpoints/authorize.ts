@@ -29,10 +29,13 @@ export const authorize = (accountsServer: AccountsServer) => async (
   let userIdCookie = get(req.cookies, 'X-User-Id') 
   let userAccessTokenCookie = get(req.cookies, 'X-Access-Token');
   let userAuthToken = get(req.cookies, 'X-Auth-Token')
+  let tokenUserId = null;
+  if(userAuthToken){
+    tokenUserId = await getUserIdByToken(userAuthToken);
+  }
   // let userSpaceId = get(req.cookies, 'X-Space-Id')
   //如果userAccessTokenCookie不存在并且有X-User-Id,X-Auth-Token有效(调用Meteor)，自动生成
   if(userAuthToken && userIdCookie && !userAccessTokenCookie){
-    let tokenUserId = await getUserIdByToken(userAuthToken);
     if(tokenUserId && tokenUserId === userIdCookie){
       userId = tokenUserId;
       let user: any = await accountsServer.findUserById(userId);
@@ -44,8 +47,7 @@ export const authorize = (accountsServer: AccountsServer) => async (
       setAuthCookies(req, res, userId, userAuthToken, userAccessTokenCookie, null);
     }
   }
-
-  if (userId && (userIdCookie== userId)) {
+  if (userId && (userIdCookie== userId) && userId === tokenUserId) {
     if (redirect_uri.indexOf("?") > -1)
       redirect_uri += "&token=" + userAccessTokenCookie
     else 

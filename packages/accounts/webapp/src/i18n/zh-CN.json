@@ -1,6 +1,6 @@
 {
     "accounts.signin": "登录",
-    "accounts.signup": "注册",
+    "accounts.signup": "创建账户",
     "accounts.submit": "确定",
     "accounts.forget_password": "忘记密码",
     "accounts.reset_password": "重置密码",

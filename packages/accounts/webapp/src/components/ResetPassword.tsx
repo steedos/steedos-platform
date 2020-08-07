@@ -58,12 +58,6 @@ const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
-      <h4 className={classes.title}>
-        <FormattedMessage
-            id='accounts.reset_password'
-            defaultMessage='Reset Password'
-        />
-      </h4>
       {!match.params.token && (
         <FormControl margin="normal">
           <InputLabel htmlFor="email">

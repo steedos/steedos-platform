@@ -70,6 +70,10 @@ const LoginAfter = async (history, tenant, result, location, action)=>{
 
     const user = await accountsRest.authFetch( 'user', {});
 
+    if(user._id){
+      localStorage.setItem("accounts:userId", user._id);
+    }
+
     if(tenant.enable_bind_mobile && (!user.mobile || !user.mobile_verified)){
       store.dispatch(requests("no_started"));
       history.push({
@@ -84,6 +88,10 @@ const LoginAfter = async (history, tenant, result, location, action)=>{
       if(!user.name){
         return LoginAfterHistoryPush(history, '/set-name' + location.search);
       }else {
+        if(!tenant.enable_create_tenant && user.spaces.length == 1){
+          return goInSystem(history, location, result.tokens.accessToken);
+        }
+
         if(user.spaces.length > 0){
           return LoginAfterHistoryPush(history, '/choose-tenant' + location.search);
         }

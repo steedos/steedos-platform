@@ -11,7 +11,7 @@ import FormError from './FormError';
 import { loadTranslations } from '../actions/i18n';
 import { loadSettings } from '../actions/settings';
 import { loadTenant } from '../actions/tenant';
-import { getSettings, getTenant } from '../selectors';
+import { getSettings, getTenant, getSettingsTenantId } from '../selectors';
 import { requests } from '../actions/requests'
 import { Login } from '../client'
 
@@ -33,7 +33,7 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => {
   )
 });
 
-const Signup = ({ match, history, location, actions, tenant, requestLoading, requestUnLoading }: any) => {
+const Signup = ({ match, history, settingsTenantId, location, actions, settings, tenant, requestLoading, requestUnLoading }: any) => {
   const _email = location && location.state ? location.state.email : '';
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +41,7 @@ const Signup = ({ match, history, location, actions, tenant, requestLoading, req
   const [email, setEmail] = useState<string | "">(_email || '');
   const [password, setPassword] = useState<string | "">("");
   const searchParams = new URLSearchParams(location.search);
-  let spaceId = searchParams.get("X-Space-Id");
+  let spaceId = searchParams.get("X-Space-Id") || settingsTenantId;
   // useEffect(() => {
   //   if(spaceId){
   //     actions.loadTenant(spaceId);
@@ -165,7 +165,8 @@ const Signup = ({ match, history, location, actions, tenant, requestLoading, req
 function mapStateToProps(state: any) {
   return {
     settings: getSettings(state),
-    tenant: getTenant(state)
+    tenant: getTenant(state),
+    settingsTenantId: getSettingsTenantId(state)
   };
 }
 function mapDispatchToProps(dispatch: any) {

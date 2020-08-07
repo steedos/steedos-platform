@@ -16,3 +16,9 @@ export function getTenant(state) {
 export function getRequests(state){
     return state.requests
 }
+
+export function getSettingsTenantId(state){
+    if(state.settings && state.settings.tenant){
+        return state.settings.tenant._id
+    }
+}

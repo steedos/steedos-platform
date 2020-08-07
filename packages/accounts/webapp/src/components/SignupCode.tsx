@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Input, Button, Typography, Dialog, DialogActio
 import { makeStyles } from '@material-ui/styles';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { getSettings, getTenant } from '../selectors';
+import { getSettings, getTenant, getSettingsTenantId } from '../selectors';
 import { accountsRest } from '../accounts';
 import FormError from './FormError';
 import { ApplyCode } from '../client';
@@ -28,14 +28,14 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => {
     )
 });
 
-const SignupCode = ({ match, settings, history, location, tenant }: any) => {
+const SignupCode = ({ match, settingsTenantId, settings, history, location, tenant }: any) => {
     const _email = location && location.state ? location.state.email : '';
     const classes = useStyles();
     const [error, setError] = useState<string | null>(null);
     const [email, setEmail] = useState<string | "">(_email);
     const type = match.params.type || 'email';
     const searchParams = new URLSearchParams(location.search);
-    let spaceId = searchParams.get("X-Space-Id");
+    let spaceId = searchParams.get("X-Space-Id") || settingsTenantId;
     
     signUpEventOnError((err: any)=>{
         setError(err.message);
@@ -132,7 +132,8 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
 function mapStateToProps(state: any) {
     return {
         settings: getSettings(state),
-        tenant: getTenant(state)
+        tenant: getTenant(state),
+        settingsTenantId: getSettingsTenantId(state)
     };
 }
 

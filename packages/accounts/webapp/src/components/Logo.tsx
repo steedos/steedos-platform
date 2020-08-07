@@ -19,15 +19,16 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Logo = ({ tenant }: any) => {
+const Logo = ({ tenant, location }: any) => {
   const classes = useStyles();
   let logoUrl = require("../assets/logo-square.png")
   if (tenant.logo_url) {
     logoUrl = tenant.logo_url
   }
-
-  return (
-    <img src={logoUrl} className={classes.logo}></img>
+  let show =  ['/result-license'].indexOf(location.pathname) < 0
+  return (<div>
+    {show && <img src={logoUrl} className={classes.logo}></img>}
+    </div>
   )
 };
 

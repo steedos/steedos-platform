@@ -49,3 +49,21 @@ export const setHistoryLength = ()=>{
 export const canBack = ()=>{
     return window.HistoryLength > 0;
 }
+
+export const getRootUrlPathPrefix = (rootUrl) => {
+    if (rootUrl) {
+        var parsedUrl = require('url').parse(rootUrl);
+        // Sometimes users try to pass, eg, ROOT_URL=mydomain.com.
+        if (!parsedUrl.host || ['http:', 'https:'].indexOf(parsedUrl.protocol) === -1) {
+            throw Error("$ROOT_URL, if specified, must be an URL");
+        }
+        var pathPrefix = parsedUrl.pathname;
+        if (pathPrefix.slice(-1) === '/') {
+            // remove trailing slash (or turn "/" into "")
+            pathPrefix = pathPrefix.slice(0, -1);
+        }
+        return pathPrefix;
+    } else {
+        return "";
+    }
+}

@@ -16,7 +16,7 @@ export const getTenant = (accountsServer: AccountsServer) => async (
     if (!spaceId)
       throw new Error("accounts.tenant_id_required")
     
-    const spaceDoc = await db.findOne("spaces", spaceId, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register"]})
+    const spaceDoc = await db.findOne("spaces", spaceId, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "account_logo"]})
 
     if(!spaceDoc){
       return res.send({
@@ -27,7 +27,9 @@ export const getTenant = (accountsServer: AccountsServer) => async (
     if (config.webservices && config.webservices.steedos) {
       if (!config.webservices.steedos.endsWith("/"))
         config.webservices.steedos += "/"
-      if (spaceDoc.avatar_dark) {
+      if (spaceDoc.account_logo) {
+        spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.account_logo
+      } else if (spaceDoc.avatar_dark) {
         spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar_dark
       } else if (spaceDoc.avatar) {
         spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar

@@ -7,7 +7,7 @@ import { AccountsServer } from '@accounts/server';
 import validator from 'validator';
 const moment = require('moment');
 
-const ALLOW_ACTIONS = ['emailVerify', 'mobileVerify', 'emailLogin', 'mobileLogin', 'emailSignupAccount', 'mobileSignupAccount'];
+const ALLOW_ACTIONS = ['emailVerify', 'mobileVerify', 'emailLogin', 'mobileLogin', 'emailSignupAccount', 'mobileSignupAccount', 'mobileApplyLicense'];
 const EFFECTIVE_TIME = 10; //10分钟
 const CODE_LENGTH = 6;
 const MAX_FAILURE_COUNT = 10;
@@ -239,7 +239,7 @@ export const applyCode = (accountsServer: AccountsServer) => async (
 
         if(filters.length > 0){
             const users = await db.find("users", { filters: filters });
-            if(users.length === 0 && action.endsWith('SignupAccount')){
+            if((users.length === 0 && action.endsWith('SignupAccount')) || action === 'mobileApplyLicense'){
                 token = await sendCode(null, name, action, spaceId, lng);
                 return res.send({
                     token
@@ -413,7 +413,7 @@ export const handleAction = async function(token: string, options: any = {}){
 
     if (record.action.startsWith("email")) {
         Steedos.setEmailVerified(handleUserId, record.name, true);
-    } else if (record.action.startsWith("mobile")) {
+    } else if (record.action != 'mobileApplyLicense' &&  record.action.startsWith("mobile")) {
         Steedos.setMobileVerified(handleUserId, record.name, true);
     }
     return handleUserId;

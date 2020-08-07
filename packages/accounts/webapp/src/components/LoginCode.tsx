@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Input, Button, Typography, Dialog, DialogActio
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 import { connect } from 'react-redux';
-import { getSettings, getTenant } from '../selectors';
+import { getSettings, getTenant, getSettingsTenantId } from '../selectors';
 import { accountsRest } from '../accounts';
 import FormError from './FormError';
 import { ApplyCode } from '../client'
@@ -21,14 +21,14 @@ const useStyles = makeStyles({
   }
 });
 
-const LoginCode = ({match, settings, history, location, tenant }: any) => {
+const LoginCode = ({match, settingsTenantId, settings, history, location, tenant }: any) => {
   const _email = location && location.state ? location.state.email : '';
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string | "">(_email);
   const type = match.params.type || 'email';
   const searchParams = new URLSearchParams(location.search);
-  let spaceId = searchParams.get("X-Space-Id");
+  let spaceId = searchParams.get("X-Space-Id") || settingsTenantId;
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -67,7 +67,7 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
             })
           }
       }else{
-        throw new Error("未找到您的账户，请先注册");
+        throw new Error("未找到您的账户，请先创建账户");
       }
     } catch (err) {
       setError(err.message);
@@ -130,7 +130,8 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
 function mapStateToProps(state: any) {
   return {
     settings: getSettings(state),
-    tenant: getTenant(state)
+    tenant: getTenant(state),
+    settingsTenantId: getSettingsTenantId(state)
   };
 }
 

@@ -30,10 +30,18 @@ const useStyles1 = makeStyles((theme: Theme) => {
       },
     },
     info: {
-      backgroundColor: theme.palette.primary.main,
+      color: getColor(theme.palette.primary.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.primary.main, 0.9),
+      '& $icon': {
+        color: theme.palette.primary.main,
+      },
     },
     warning: {
-      backgroundColor: amber[700],
+      color: getColor(amber[700], 0.6),
+      backgroundColor: getBackgroundColor(amber[700], 0.9),
+      '& $icon': {
+        color: amber[700],
+      },
     },
     icon: {
       fontSize: 20,
@@ -112,12 +120,11 @@ const useStyles = makeStyles({
 //   error: string;
 // }
 
-const FormError = ({ error }: any) => {
+const FormError = ({ error, variant}: any) => {
   const classes = useStyles2();
-
-  
+  let _variant = variant || "error";
   return <MySnackbarContentWrapper
-  variant="error"
+  variant= {_variant}
   className={classes.margin}
   message={error}
 />;

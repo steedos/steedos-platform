@@ -27,7 +27,8 @@ import GlobalMessage from './components/GlobalMessage';
 import Loading from './components/Loading';
 import theme from './theme';
 import Signup from './components/Signup';
-
+import GenerateLicense from './components/GenerateLicense';
+import LicenseResult from './components/LicenseResult';
 
 const Router = ({tenant}:any) => {
   let backgroundUrl = require("./assets/background.svg");
@@ -98,7 +99,7 @@ const Router = ({tenant}:any) => {
               <Paper className={classes.paper} id="paper">
                 <CssBaseline />
                 <Route path="/" component={GoBack}/>
-                <Logo></Logo>
+                <Route path="/" component={Logo}/>
                 <Route path="/" component={Title}/>
                 <Route exact path="/" component={Home}/>
                 <Route path="/signup" component={signupComponent} />
@@ -117,7 +118,8 @@ const Router = ({tenant}:any) => {
                 <Route path="/login-code" component={LoginCode} />
                 <Route path="/set-name" component={SetName} />
                 <Route path="/verify-mobile/:token" component={VerifyMobile} />
-
+                {/* <Route path="/generate-license" component={GenerateLicense} />
+                <Route path="/result-license" component={LicenseResult} /> */}
                 <Route path="/two-factor" component={TwoFactor} />
               </Paper>
             </Grid>

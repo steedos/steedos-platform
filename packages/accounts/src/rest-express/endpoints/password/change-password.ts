@@ -2,10 +2,10 @@ import * as express from 'express';
 import { AccountsServer } from '@accounts/server';
 import { sendError } from '../../utils/send-error';
 import { getSteedosConfig } from '@steedos/objectql'
+import { hashPassword } from '../../../password/utils';
 
 const config = getSteedosConfig();
-
-import { hashPassword } from '../../../password/utils';
+declare var Creator;
 
 export const changePassword = (accountsServer: AccountsServer) => async (
   req: express.Request,
@@ -19,7 +19,7 @@ export const changePassword = (accountsServer: AccountsServer) => async (
     }
     const { oldPassword, newPassword } = req.body;
 
-    let passworPolicy = (config as any).password.policy
+    let passworPolicy = ((config as any).password || {}).policy
 
     if(passworPolicy){
       if(!(new RegExp(passworPolicy)).test(newPassword || '')){
@@ -32,6 +32,13 @@ export const changePassword = (accountsServer: AccountsServer) => async (
 
     await password.changePassword((req as any).userId, oldPassword, hashPassword(newPassword, password.options.passwordHashAlgorithm));
     password.db.collection.updateOne({_id: (req as any).userId}, {$set: {password_expired: false}})
+    try {
+      Creator.getCollection('space_users').update({user: (req as any).userId}, {$set: {password_expired: false}}, {
+        multi: true
+      })
+    } catch (error) {
+      console.log('error', error);
+    }
     res.json(null);
   } catch (err) {
     sendError(res, err);

@@ -25,14 +25,17 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   }
 
   if (config.tenant && config.tenant._id) {
-    let spaceDoc = await db.findOne("spaces", config.tenant._id, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register"]})
+    let spaceDoc = await db.findOne("spaces", config.tenant._id, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "account_logo"]})
 
     if (config.webservices && config.webservices.steedos) {
       if (!config.webservices.steedos.endsWith("/"))
         config.webservices.steedos += "/"
       
         _.assignIn(tenant, spaceDoc);
-      if (spaceDoc.avatar_dark) {
+
+      if (spaceDoc.account_logo) {
+        tenant.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.account_logo
+      } else if (spaceDoc.avatar_dark) {
         tenant.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar_dark
       } else if (spaceDoc.avatar) {
         tenant.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar

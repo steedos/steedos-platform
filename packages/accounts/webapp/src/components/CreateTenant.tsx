@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import FormError from './FormError';
-import { getCookie } from '../utils/utils';
+import { getCookie, getRootUrlPathPrefix } from '../utils/utils';
 import { goInSystem } from '../client/index';
 import { accountsClient, accountsRest } from '../accounts';
 
@@ -54,7 +54,7 @@ const CreateTenant = ({ settings, history, tenant, location }: any) => {
         credentials: 'include'
       };
       const res: any = await fetch(
-        `${settings.root_url}/${route}`,
+        `${getRootUrlPathPrefix(settings.root_url)}/${route}`,
         fetchOptions
       );
       const token: any = await accountsClient.getTokens();

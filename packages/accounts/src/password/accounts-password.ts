@@ -322,19 +322,17 @@ export default class AccountsPassword implements AuthenticationService {
 
     if (this.options.notifyUserAfterPasswordChanged) {
       const address = user.emails && user.emails[0].address;
-      if (!address) {
-        throw new Error(this.options.errors.noEmailSet);
+      if (address) {
+        const passwordChangedMail = this.server.prepareMail(
+          address,
+          '',
+          this.server.sanitizeUser(user),
+          '',
+          this.server.options.emailTemplates.passwordChanged,
+          this.server.options.emailTemplates.from
+        );
+        await this.server.options.sendMail(passwordChangedMail);
       }
-
-      const passwordChangedMail = this.server.prepareMail(
-        address,
-        '',
-        this.server.sanitizeUser(user),
-        '',
-        this.server.options.emailTemplates.passwordChanged,
-        this.server.options.emailTemplates.from
-      );
-      await this.server.options.sendMail(passwordChangedMail);
     }
 
     if (this.options.returnTokensAfterResetPassword) {
@@ -384,19 +382,17 @@ export default class AccountsPassword implements AuthenticationService {
 
     if (this.options.notifyUserAfterPasswordChanged) {
       const address = user.emails && user.emails[0].address;
-      if (!address) {
-        throw new Error(this.options.errors.noEmailSet);
+      if (address) {
+        const passwordChangedMail = this.server.prepareMail(
+          address,
+          '',
+          this.server.sanitizeUser(user),
+          '',
+          this.server.options.emailTemplates.passwordChanged,
+          this.server.options.emailTemplates.from
+        );
+        await this.server.options.sendMail(passwordChangedMail);
       }
-
-      const passwordChangedMail = this.server.prepareMail(
-        address,
-        '',
-        this.server.sanitizeUser(user),
-        '',
-        this.server.options.emailTemplates.passwordChanged,
-        this.server.options.emailTemplates.from
-      );
-      await this.server.options.sendMail(passwordChangedMail);
     }
   }
 
