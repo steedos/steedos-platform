@@ -40,7 +40,7 @@ export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: num
             // 设置为当前工作日的开始时间
             startMoment.hours(businessHoursPerDay.startValue.hours - utcOffset);
             startMoment.minutes(businessHoursPerDay.startValue.minutes);
-            start = startMoment.start;
+            start = startMoment.toDate();
             startClosingMoment = moment.utc(start);
             // 设置为当前工作日上午班的结束工作时间，即午休开始时间
             startClosingMoment.hours(businessHoursPerDay.lunchStartValue.hours - utcOffset);
