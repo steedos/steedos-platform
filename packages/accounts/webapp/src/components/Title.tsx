@@ -3,8 +3,9 @@ import { Typography, Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import { getSettings, getTenant } from "../selectors";
 import { makeStyles } from "@material-ui/styles";
-import { t } from '../client/i18n'
+// import { t } from '../client/i18n'
 import { FormattedMessage } from 'react-intl';
+import { localizeMessage } from '../utils/utils'
 
 const pathMap: any = {
   "/login": "accounts.title.login",
@@ -49,8 +50,8 @@ const getTitle = (key: string) => {
 const Title = ({ tenant, location }: any) => {
   const classes = useStyles();
 
-  let pathTitle = getTitle(location.pathname);
-
+  let pathTitle = localizeMessage(getTitle(location.pathname));
+  
   document.title = pathTitle ? `${pathTitle} | ${tenant.name}` : tenant.name;
   let messageId = getTitle(location.pathname);
   // console.log("messageId", messageId);
