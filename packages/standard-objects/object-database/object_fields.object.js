@@ -335,7 +335,7 @@ var triggers = {
       }
 
       if(doc.name === 'name' || doc.is_name){
-        checkNameField({type: ftype})
+        checkNameField({type: doc.type})
       }
 
       if (isRepeatedName(doc)) {
