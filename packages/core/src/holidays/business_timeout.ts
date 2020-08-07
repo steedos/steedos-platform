@@ -3,20 +3,33 @@ import { getSteedosSchema } from '@steedos/objectql';
 import { BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursCheckedType } from './types';
 const moment = require('moment');
 
-export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, spaceId: string) => {
-    console.log("computeTimeoutDate===");
-    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "working_days"] };
+/**
+ * 计算在某个工作区下的节假日、工作时间数据基础上，以某个时间点开始，超时几个小时后，超时时间点是什么时候
+ * @param start 
+ * @param timeoutHours 超时时间，支持小数
+ * @param spaceId 工作区ID
+ * @param digitsForHours 小时单位支持几位小数，默认2位
+ */
+export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, spaceId: string, digitsForHours: number = 2) => {
+    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "working_days"] };
     const objectBusinessHours = getSteedosSchema().getObject("business_hours");
     const defultBusinessHoursRecords = await objectBusinessHours.find(defultBusinessHoursOptions);
     const defultBusinessHoursRecord = defultBusinessHoursRecords && defultBusinessHoursRecords[0];
-    console.log("computeTimeoutDate===defultBusinessHoursRecord===", defultBusinessHoursRecord);
     const holidaysOptions: any = { filters: [["space", "=", spaceId]], fields: ["name", "type", "date", "adjusted_to"] };
     const objectHolidays = getSteedosSchema().getObject("holidays");
     const holidaysRecords = await objectHolidays.find(holidaysOptions);
-    console.log("computeTimeoutDate===defultHolidaysRecords===", holidaysRecords);
-    computeTimeoutDateWithoutHolidays(start, timeoutHours, defultBusinessHoursRecord, holidaysRecords, 8)
+    return computeTimeoutDateWithoutHolidays(start, timeoutHours, holidaysRecords, defultBusinessHoursRecord, 8, digitsForHours)
 }
 
+/**
+ * 计算以某个时间点开始，超时几个小时后，超时时间点是什么时候
+ * @param start 开始时间
+ * @param timeoutHours 超时时间，支持小数
+ * @param holidays 节假日
+ * @param businessHours 工作时间
+ * @param utcOffset 时间偏差
+ * @param digitsForHours 小时单位支持几位小数，默认2位
+ */
 export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: number, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2) => {
     if(timeoutHours <= 0){
         return start;
