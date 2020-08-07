@@ -54,7 +54,7 @@ fields:
     label: GMT Offset
     type: number
     omit: true
-    inlineHelpText: "The business hours is based on this time zone, and it's value is the user's own time zone."
+    inlineHelpText: "The business hours is based on this GMT offset, and it's value is the user's own GMT offset."
 list_views:
   all:
     label: All
