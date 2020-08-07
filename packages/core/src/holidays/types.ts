@@ -40,8 +40,9 @@ export type BusinessHours = {
     end: string,//HH:MM，每天下班时间
     lunch_start: string,//HH:MM，每天午休开始时间
     lunch_end: string,//HH:MM，每天午休结束时间
-    working_days: Array<string>
-    computedPerDay?: BusinessHoursPerDay //优化性能，计算过的可以缓存下来就不用重复计算了,
+    utc_offset: number,
+    working_days: Array<string>,
+    computedPerDay?: BusinessHoursPerDay, //优化性能，计算过的可以缓存下来就不用重复计算了,
     [propName: string]: any
 }
 

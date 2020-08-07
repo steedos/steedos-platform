@@ -78,7 +78,7 @@ module.exports = {
             }
         }
         let curUser = await this.getObject('users').findOne(this.userId, {fields:["utcOffset"]});
-        this.doc.utcOffset = curUser.utcOffset;
+        this.doc.utc_offset = curUser.utcOffset;
     },
 
     beforeUpdate: async function () {
@@ -95,6 +95,6 @@ module.exports = {
             }
         }
         let curUser = await this.getObject('users').findOne(this.userId, {fields:["utcOffset"]});
-        this.doc.utcOffset = curUser.utcOffset;
+        this.doc.utc_offset = curUser.utcOffset;
     }
 }

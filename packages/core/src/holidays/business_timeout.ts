@@ -10,15 +10,15 @@ const moment = require('moment');
  * @param spaceId 工作区ID
  * @param digitsForHours 小时单位支持几位小数，默认2位
  */
-export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, utcOffset: number, spaceId: string, digitsForHours: number = 2) => {
-    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "working_days"] };
+export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, spaceId: string, digitsForHours: number = 2) => {
+    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "utcOffset", "working_days"] };
     const objectBusinessHours = getSteedosSchema().getObject("business_hours");
     const defultBusinessHoursRecords = await objectBusinessHours.find(defultBusinessHoursOptions);
     const defultBusinessHoursRecord = defultBusinessHoursRecords && defultBusinessHoursRecords[0];
     const holidaysOptions: any = { filters: [["space", "=", spaceId]], fields: ["name", "type", "date", "adjusted_to"] };
     const objectHolidays = getSteedosSchema().getObject("holidays");
     const holidaysRecords = await objectHolidays.find(holidaysOptions);
-    return computeTimeoutDateWithoutHolidays(start, timeoutHours, holidaysRecords, defultBusinessHoursRecord, utcOffset, digitsForHours)
+    return computeTimeoutDateWithoutHolidays(start, timeoutHours, holidaysRecords, defultBusinessHoursRecord, digitsForHours)
 }
 
 /**
@@ -27,15 +27,15 @@ export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: n
  * @param timeoutHours 超时时间，支持小数
  * @param holidays 节假日
  * @param businessHours 工作时间
- * @param utcOffset 时间偏差
  * @param digitsForHours 小时单位支持几位小数，默认2位
  */
-export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: number, holidays: Array<Holiday>, businessHours: BusinessHours, utcOffset: number, digitsForHours: number = 2) => {
+export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: number, holidays: Array<Holiday>, businessHours: BusinessHours, digitsForHours: number = 2) => {
     if(timeoutHours <= 0){
         return start;
     }
+    const utcOffset = businessHours.utc_offset;
     const businessHoursPerDay:BusinessHoursPerDay = getBusinessHoursPerDay(businessHours, digitsForHours);
-    const startBhct:BusinessHoursCheckedType = computeIsBusinessDate(start, holidays, businessHours, utcOffset, digitsForHours);
+    const startBhct:BusinessHoursCheckedType = computeIsBusinessDate(start, holidays, businessHours, digitsForHours);
     let offsetMinutes: number = 0;
     let startMoment = moment.utc(start);
     let startClosingMoment = moment.utc(start);//用于记录start对应的当前班的工作结束时间，比如上午班结束时间或当天下班时间
@@ -67,7 +67,7 @@ export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: num
         else {
             // 如果开始时间是工作日，下班时间，非午休，下午下班时间到第二天早上0点，或非工作日，即节假日、周未等
             // 设置为下一个工作日的开始时间
-            let nextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, utcOffset, digitsForHours);
+            let nextBusinessDate = computeNextBusinessDate(start, holidays, businessHours, digitsForHours);
             start = nextBusinessDate.start;
             startMoment = moment.utc(start);
             startClosingMoment = moment.utc(start);
@@ -120,7 +120,7 @@ export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: num
         // 一个工作日一个工作日的往上加，直到加至达到timeoutMinutes值
         let nextMoment = startClosingMoment;
         for(let i = 0;offsetMinutes < timeoutMinutes;i++){
-            let nextBusinessDate = computeNextBusinessDate(nextMoment.toDate(), holidays, businessHours, utcOffset, digitsForHours);
+            let nextBusinessDate = computeNextBusinessDate(nextMoment.toDate(), holidays, businessHours, digitsForHours);
             if(nextBusinessDate){
                 // 把nextMoment设置为nextBusinessDate当天的工作日下班时间
                 nextMoment = moment.utc(nextBusinessDate.end);

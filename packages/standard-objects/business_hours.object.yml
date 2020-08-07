@@ -50,10 +50,9 @@ fields:
       - Thursday:4
       - Friday:5
       - Saturday:6
-  utcOffset:
+  utc_offset:
     label: GMT Offset
     type: number
-    name: utcOffset
     omit: true
     inlineHelpText: "The business hours is based on this time zone, and it's value is the user's own time zone."
 list_views:
