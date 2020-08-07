@@ -11,7 +11,7 @@ const moment = require('moment');
  * @param digitsForHours 小时单位支持几位小数，默认2位
  */
 export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, spaceId: string, digitsForHours: number = 2) => {
-    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "utcOffset", "working_days"] };
+    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "utc_offset", "working_days"] };
     const objectBusinessHours = getSteedosSchema().getObject("business_hours");
     const defultBusinessHoursRecords = await objectBusinessHours.find(defultBusinessHoursOptions);
     const defultBusinessHoursRecord = defultBusinessHoursRecords && defultBusinessHoursRecords[0];
