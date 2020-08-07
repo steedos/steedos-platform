@@ -10,7 +10,7 @@ const moment = require('moment');
  * @param spaceId 工作区ID
  * @param digitsForHours 小时单位支持几位小数，默认2位
  */
-export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, spaceId: string, digitsForHours: number = 2) => {
+export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, utcOffset: number, spaceId: string, digitsForHours: number = 2) => {
     const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "working_days"] };
     const objectBusinessHours = getSteedosSchema().getObject("business_hours");
     const defultBusinessHoursRecords = await objectBusinessHours.find(defultBusinessHoursOptions);
@@ -18,7 +18,7 @@ export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: n
     const holidaysOptions: any = { filters: [["space", "=", spaceId]], fields: ["name", "type", "date", "adjusted_to"] };
     const objectHolidays = getSteedosSchema().getObject("holidays");
     const holidaysRecords = await objectHolidays.find(holidaysOptions);
-    return computeTimeoutDateWithoutHolidays(start, timeoutHours, holidaysRecords, defultBusinessHoursRecord, 8, digitsForHours)
+    return computeTimeoutDateWithoutHolidays(start, timeoutHours, holidaysRecords, defultBusinessHoursRecord, utcOffset, digitsForHours)
 }
 
 /**
@@ -99,17 +99,10 @@ export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: num
             startMoment = moment.utc(start);
         }
     }
-    console.log("===computeTimeoutDateWithoutHolidays=====startMoment.format()===", startMoment.format());
-    console.log("===computeTimeoutDateWithoutHolidays=====startClosingMoment.format()===", startClosingMoment.format());
-    console.log("===computeTimeoutDateWithoutHolidays=====businessHoursPerDay.endValue.hours===", businessHoursPerDay.endValue.hours);
-    console.log("===computeTimeoutDateWithoutHolidays=====businessHoursPerDay.endValue.minutes===", businessHoursPerDay.endValue.minutes);
-    console.log("===computeTimeoutDateWithoutHolidays=====utcOffset===", utcOffset);
     startClosingMoment.hours(businessHoursPerDay.endValue.hours - utcOffset);
     startClosingMoment.minutes(businessHoursPerDay.endValue.minutes);
-    console.log("===computeTimeoutDateWithoutHolidays===2==startClosingMoment.format()===", startClosingMoment.format());
     offsetMinutes += startClosingMoment.diff(startMoment, 'minute');
     const timeoutMinutes = timeoutHours * 60;
-    console.log("===computeTimeoutDateWithoutHolidays=====timeoutMinutes, offsetMinutes===", timeoutMinutes, offsetMinutes);
     if(timeoutMinutes <= offsetMinutes){
         // 超时时间小于等于当天下班前，则直接返回startClosingMoment倒退offsetMinutes中多加了部分的时间值
         let subMinutes = offsetMinutes - timeoutMinutes;
@@ -128,7 +121,6 @@ export const computeTimeoutDateWithoutHolidays = (start: Date, timeoutHours: num
         let nextMoment = startClosingMoment;
         for(let i = 0;offsetMinutes < timeoutMinutes;i++){
             let nextBusinessDate = computeNextBusinessDate(nextMoment.toDate(), holidays, businessHours, utcOffset, digitsForHours);
-            // console.log("===nextBusinessDateStartTime===", (<any>nextBusinessDateStartTime).format());
             if(nextBusinessDate){
                 // 把nextMoment设置为nextBusinessDate当天的工作日下班时间
                 nextMoment = moment.utc(nextBusinessDate.end);
