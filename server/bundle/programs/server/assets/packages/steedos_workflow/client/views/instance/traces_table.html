@@ -14,7 +14,7 @@
                                         <table class="trace-approve-talbe">
                                             <tr class="approve-item-distribute">
                                                 <td class="name">
-                                                    <a onclick="Creator.openSafeObjectUrl('users', '{{this.from_user}}')">
+                                                    <a class="btn-link" href="{{objectUrl 'users' this.from_user '-'}}">
                                                         {{this.from_user_name}}
                                                     </a>
                                                 </td>
@@ -54,7 +54,7 @@
 
                                         <tr class="approve-item">
                                             <td class="name">
-												{{> instance_traces_handler handler=this.handler handler_name=this.handler_name is_finished=this.is_finished}}
+												{{> instance_traces_handler handler=this.handler handler_name=this.handler_name is_finished=this.is_finished judge=this.judge}}
                                                 {{#if isCC this}}
                                                     <label class='cc-label'>
                                                         <span class="cc-label-title">({{_t "instance_cc_title"}})</span>

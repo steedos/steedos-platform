@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "31e3d077e6cf318103eaadf7ae63c05c9c913d1b.js",
+      "path": "5b201ade98e6effe41c6e8cb125449c9085454cd.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/31e3d077e6cf318103eaadf7ae63c05c9c913d1b.js?meteor_js_resource=true",
-      "size": 7938165,
-      "hash": "31e3d077e6cf318103eaadf7ae63c05c9c913d1b",
-      "sri": "NG6uHgpNmzCeborEB7grC8KjciqjJ1m/6pM6Lt7GFimpjCNoxGOthCh/l+jOhgPWNf9tVoIkAsEF3W0vZVPJ1Q=="
+      "url": "/5b201ade98e6effe41c6e8cb125449c9085454cd.js?meteor_js_resource=true",
+      "size": 7944052,
+      "hash": "5b201ade98e6effe41c6e8cb125449c9085454cd",
+      "sri": "7jjYO0hkRic2ENyBYlFTV3kPLF16umPnoCYhYMATP10hULTXEUAhFxa6tH2MgO5W9UntxnQb9F8mDl26CRmuwQ=="
     },
     {
-      "path": "31e3d077e6cf318103eaadf7ae63c05c9c913d1b.stats.json",
+      "path": "5b201ade98e6effe41c6e8cb125449c9085454cd.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/31e3d077e6cf318103eaadf7ae63c05c9c913d1b.stats.json?meteor_js_resource=true",
-      "size": 177379,
-      "hash": "96a30f6691810e3f534433baf2b860bb85522dc8",
-      "sri": "coMyTxWfgn3YGAYFWzxvPsDdmN0z8ydVNkUysCfcRkr/nEmVICjD/DOZ4BzNEbBh+hKiY7T1rlpwJvWrN8KbAQ=="
+      "url": "/5b201ade98e6effe41c6e8cb125449c9085454cd.stats.json?meteor_js_resource=true",
+      "size": 177472,
+      "hash": "e98bf0282ba92fe1f0abd79ac64ae541d7c7871f",
+      "sri": "sPjSvb374nmPJ90F5hD3G8KIDCRKjEdSL2n4AWuwUDtZ+qxAmg2Vw27DvD73NzyruXKkv2vACkbGctomtQNYKQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3432,14 +3432,14 @@
       "sri": "icZXWHyR3Vlehv0YYyYu5HoCVWUOTkrG5EfAPM51WF9yPT0oWuOCxE1Dw47vHp8HbOXsxiLN2sh9yQxeeW13xw=="
     },
     {
-      "path": "c0f70b3546afc5628dc46d5f6ad1f9cea449205f.css",
+      "path": "561fc74aa5362de87740b1ae3062cf69e17f63e9.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/c0f70b3546afc5628dc46d5f6ad1f9cea449205f.css?meteor_css_resource=true",
-      "size": 1662336,
-      "hash": "c0f70b3546afc5628dc46d5f6ad1f9cea449205f",
-      "sri": "FlrzNY95pzhL5n651LFkisvRa82ArQppPmXn4mua/W3sW6FYZAsXvbWTgnTU5deqt068uPO35J9ECThOE1jrjg=="
+      "url": "/561fc74aa5362de87740b1ae3062cf69e17f63e9.css?meteor_css_resource=true",
+      "size": 1662846,
+      "hash": "561fc74aa5362de87740b1ae3062cf69e17f63e9",
+      "sri": "GWSs+AR/NcQTtaj55rRKyOS+gtiQQ163hlvKcrNWGDt2tKVGYKozs9JzFo4IYA3EhKLf1hjzIIae7yTKUj6g/Q=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
