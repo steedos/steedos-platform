@@ -191,17 +191,17 @@ admin_menus:
     object_name: holidays
     parent: advanced
     sort: 90
-  - _id: license
-    name: License
-    permission_sets:
-      - admin
-    sort: 900
+  # - _id: license
+  #   name: License
+  #   permission_sets:
+  #     - admin
+  #   sort: 900
   - _id: license_view
     name: License View
     permission_sets:
       - admin
     object_name: license
-    parent: license
+    parent: menu_users
   - _id: business_hours
     name: BusinessHours
     permission_sets:
