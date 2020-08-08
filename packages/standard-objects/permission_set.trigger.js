@@ -93,6 +93,16 @@ module.exports = {
             
         }
     },
+    afterAggregate: async function () {
+        if(_.isArray(this.data.values)){
+            let filters = InternalData.parserFilters(this.query.filters);
+            if(!_.has(filters, 'type') || (_.has(filters, 'type') && filters.type === 'profile')){
+                let lng = getLng(this.userId);
+                this.data.values = this.data.values.concat(getInternalPermissionSet(this.spaceId, lng))
+            }
+            
+        }
+    },
     afterCount: async function () {
         let filters = InternalData.parserFilters(this.query.filters);
         if(!_.has(filters, 'type') || (_.has(filters, 'type') && filters.type === 'profile')){

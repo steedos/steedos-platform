@@ -127,5 +127,8 @@
 	"creator_files_download_error_not_found": "未找到附件，可能该附件已被删除。",
 
 	"creator_navigation_nav_not_saved": "未添加到导航栏",
-	"creator_navigation_nav_more": "更多"
+	"creator_navigation_nav_more": "更多",
+
+	"creator_not_found_heading": "似乎出现了一个问题。",
+	"creator_not_found_message_body": "我们无法找到您尝试访问的记录。此记录可能已被其他用户删除，或您没有此记录的访问权限，也可能发生了系统错误。请向您的管理员寻求帮助。"
 }

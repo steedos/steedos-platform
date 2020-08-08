@@ -91,6 +91,13 @@ module.exports = {
             self.data.values.push(Object.assign({}, report, baseRecord));
         })
     },
+    afterAggregate: async function(){
+        let reports = getReoprts();
+        let self = this;
+        _.each(reports, function(report){
+            self.data.values.push(Object.assign({}, report, baseRecord));
+        })
+    },
     afterCount: async function(){
         let filters = internalData.parserFilters(this.query.filters)
         if(filters && filters.space === 'global'){

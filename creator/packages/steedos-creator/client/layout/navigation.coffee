@@ -69,7 +69,10 @@ computeObjects = (maxW, hasAppDashboard)->
 		if item.url
 			objItem = item
 		else
-			objItem = _.clone Creator.getObject(item.name)
+			if item.name
+				objItem = _.clone Creator.getObject(item.name)
+			unless objItem
+				return
 			objItem.is_temp = true
 		labelItem = objItem.label
 		widthItem = Creator.measureWidth(labelItem, fontNavItem, measureMaxWidth) + itemPaddingW
@@ -147,10 +150,17 @@ Template.creatorNavigation.helpers
 
 	object_class_name: (obj)->
 		if Session.get("app_home_active")
-			return ;
-		isActive = obj.name == Session.get("object_name")
-		if isActive and obj.url
-			isActive = obj.url == Creator.getObjectUrl(obj.name, Session.get("record_id"))
+			return
+		tempNavs = Creator.getTempNavs()
+		objectName = Session.get("object_name")
+		recordId = Session.get("record_id")
+		isActive = obj.name == objectName
+		if isActive
+			if obj.url
+				isActive = obj.url == Creator.getObjectUrl(obj.name, recordId)
+			else if tempNavs?.length
+				# 如果在tempNavs中已经存在，则不选中当前对象主导航栏
+				isActive = !(recordId and !!tempNavs.find (n)-> return n.name == objectName and new RegExp(".+/view/#{recordId}$").test(n.url))
 		if isActive
 			return "slds-is-active"
 

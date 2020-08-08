@@ -160,6 +160,11 @@ getSelectFieldLabel = (value, options)->
 getBooleanFieldLabel = (value, caption)->
 	return "#{caption}: #{value}"
 
+getMultipleLookupFieldLabel = (value, field)->
+	if value
+		items = value.map (item)-> return item._NAME_FIELD_VALUE
+		return items.join(",")
+
 getSummaryTypeLabel = (type)->
 	switch type
 		when "sum"
@@ -344,6 +349,10 @@ renderTabularReport = (reportObject)->
 		if itemField.type == "select"
 			field.calculateDisplayValue = (rowData)->
 				return getSelectFieldLabel rowData[item], itemField.options
+		else if (itemField.type == "lookup" or itemField.type == "master_detail") and itemField.multiple
+			field.calculateDisplayValue = (rowData)->
+				cellData = rowData[itemField.name]
+				return getMultipleLookupFieldLabel cellData, itemField
 		else if itemField.type == "date"
 			# 如果不加这个转换语句，则datetime会显示为2019年 2月 28日这种格式，未显示时间值
 			field.dataType = "date"
@@ -477,6 +486,10 @@ renderSummaryReport = (reportObject)->
 		if itemField.type == "select"
 			field.calculateDisplayValue = (rowData)->
 				return getSelectFieldLabel rowData[item], itemField.options
+		else if (itemField.type == "lookup" or itemField.type == "master_detail") and itemField.multiple
+			field.calculateDisplayValue = (rowData)->
+				cellData = rowData[itemField.name]
+				return getMultipleLookupFieldLabel cellData, itemField
 		else if itemField.type == "date"
 			# 不加dataType，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
 			field.dataType = "date"
@@ -520,6 +533,10 @@ renderSummaryReport = (reportObject)->
 		if groupField.type == "select"
 			field.calculateDisplayValue = (rowData)->
 				return getSelectFieldLabel rowData[group], groupField.options
+		else if (groupField.type == "lookup" or groupField.type == "master_detail") and groupField.multiple
+			field.calculateDisplayValue = (rowData)->
+				cellData = rowData[groupField.name]
+				return getMultipleLookupFieldLabel cellData, groupField
 		else if groupField.type == "date"
 			# 不加dataType，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
 			field.dataType = "date"
@@ -739,7 +756,7 @@ renderMatrixReport = (reportObject)->
 			if rowField.type == "select"
 				field.customizeText = (data)->
 					return getSelectFieldLabel data.value, rowField.options
-			if rowField.type == 'boolean'
+			else if rowField.type == 'boolean'
 				field.customizeText = (data)->
 					return getBooleanFieldLabel(data.value, caption)
 
@@ -771,9 +788,10 @@ renderMatrixReport = (reportObject)->
 			if columnField.type == "select"
 				field.customizeText = (data)->
 					return getSelectFieldLabel data.value, columnField.options
-			if columnField.type == 'boolean'
+			else if columnField.type == 'boolean'
 				field.customizeText = (data)->
 					return getBooleanFieldLabel(data.value, caption)
+
 			if sorts[column]
 				field.sortOrder = sorts[column]
 			if columnWidths[column]
@@ -814,7 +832,7 @@ renderMatrixReport = (reportObject)->
 			# 数值类型就定为sum统计，否则默认为计数统计
 			if valueField.type == "number" or valueField.type == "currency"
 				operation = "sum"
-			if valueField.type == "lookup" or valueField.type == "master_detail"
+			else if valueField.type == "lookup" or valueField.type == "master_detail"
 				if valueField?.reference_to
 					relate_object_Fields = Creator.getObject(valueField?.reference_to)?.fields
 					relate_valueField = relate_object_Fields[fieldKeys[1]]

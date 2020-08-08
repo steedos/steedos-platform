@@ -12,4 +12,6 @@ export type SteedosListenerConfig = {
     afterInsert?: Function,
     afterUpdate?: Function,
     afterDelete?: Function,
+    beforeAggregate?: Function,
+    afterAggregate?: Function,
 }

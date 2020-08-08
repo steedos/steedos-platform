@@ -115,6 +115,19 @@ export const loadI18n = (filePath: string)=>{
     return results
 }
 
+export const loadRouters = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.router.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let router = loadFile(matchedPath);
+        results.push(router);
+    })
+    return results
+}
+
 export const loadTriggers = (filePath: string)=>{
     let results = []
     const filePatten = [
@@ -135,6 +148,22 @@ export const loadActions = (filePath: string)=>{
     let results = []
     const filePatten = [
         path.join(filePath, "*.action.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!_.has(json, 'listenTo')){
+            json.listenTo = path.basename(matchedPath).split('.')[0]
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadMethods = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.function.js")
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{

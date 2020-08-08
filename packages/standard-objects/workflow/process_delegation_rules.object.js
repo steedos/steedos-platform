@@ -55,6 +55,14 @@ if (Meteor.isServer) {
     }).count() > 0) {
       throw new Meteor.Error(400, "process_delegation_rules_only_one");
     }
+    if (doc.to) {
+      var pdr = db.process_delegation_rules.findOne({ from: doc.to, to: userId, enabled: true, $or: [{ start_time: { $lte: doc.start_time }, end_time: { $gte: doc.start_time } }, { start_time: { $gte: doc.start_time }, end_time: { $lte: doc.end_time } }, { start_time: { $lte: doc.end_time }, end_time: { $gte: doc.end_time } }] });
+      if (pdr) {
+        throw new Meteor.Error(400, "process_delegation_rules_cannot_deltegation_eachother");
+      }
+    }
+
+
     doc.created_by = userId;
     doc.created = new Date();
     doc.from = userId;
@@ -70,9 +78,16 @@ if (Meteor.isServer) {
   db.process_delegation_rules.before.update(function (userId, doc, fieldNames, modifier, options) {
     var ref, ref1;
     modifier.$set = modifier.$set || {};
-    if (modifier.$set.start_time >= modifier.$set.end_time) {
+    var mergeDoc = _.extend({}, doc, modifier.$set);
+    if (mergeDoc.start_time >= mergeDoc.end_time) {
       throw new Meteor.Error(400, "process_delegation_rules_start_must_lt_end");
     }
+
+    var pdr = db.process_delegation_rules.findOne({ from: mergeDoc.to, to: userId, enabled: true, $or: [{ start_time: { $lte: mergeDoc.start_time }, end_time: { $gte: mergeDoc.start_time } }, { start_time: { $gte: mergeDoc.start_time }, end_time: { $lte: mergeDoc.end_time } }, { start_time: { $lte: mergeDoc.end_time }, end_time: { $gte: mergeDoc.end_time } }] });
+    if (pdr && mergeDoc.enabled) {
+      throw new Meteor.Error(400, "process_delegation_rules_cannot_deltegation_eachother");
+    }
+
     modifier.$set.modified = new Date();
     if (userId) {
       modifier.$set.modified_by = userId;

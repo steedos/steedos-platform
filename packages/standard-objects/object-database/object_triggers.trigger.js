@@ -10,6 +10,15 @@ module.exports = {
             }
         }
     },
+    afterAggregate: async function(){
+        let filters = InternalData.parserFilters(this.query.filters)
+        if(filters.object){
+            let triggers = InternalData.getObjectTriggers(filters.object, this.userId);
+            if(triggers){
+                this.data.values = this.data.values.concat(triggers)
+            }
+        }
+    },
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){

@@ -1,0 +1,9 @@
+{
+    "accounts_emailSubject_emailLogin": "验证码登录",
+    "accounts_emailSubject_emailVerify": "验证邮箱",
+    "accounts_emailSubject_emailSignupAccount": "注册账户",
+    "accounts_emailBody_emailLogin": "验证码：{$code}, 有效期{$EFFECTIVE_TIME}分钟，请勿泄漏。如非本人操作，请忽略。",
+    "accounts_emailBody_emailVerify": "验证码：{$code}, 有效期{$EFFECTIVE_TIME}分钟，请勿泄漏。如非本人操作，请忽略。",
+    "accounts_emailBody_emailSignupAccount": "验证码：{$code}, 有效期{$EFFECTIVE_TIME}分钟，请勿泄漏。如非本人操作，请忽略。",
+    "accounts_sms_message": "您的验证码为：{$code}，该验证码{$EFFECTIVE_TIME}分钟内有效，请勿泄漏于他人！"
+}

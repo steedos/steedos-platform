@@ -39,6 +39,24 @@ module.exports = {
             })
         }
     },
+    afterAggregate: async function () {
+        if(_.isArray(this.data.values)){
+            let lng = getLng(this.userId);
+            let self = this;
+            let allApps = clone(objectql.getAppConfigs());
+            let apps = {}
+            _.each(allApps, function(app){
+                if(app.is_creator){
+                    apps[app._id] = app
+                }
+            })
+            i18n.translationApps(lng, apps)
+            _.each(apps, function(app){
+                app.name = app.label
+                self.data.values.push(Object.assign({code: app._id}, clone(app), baseRecord));
+            })
+        }
+    },
     afterCount: async function () {
         let result = await objectql.getObject('apps').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length

@@ -28,7 +28,7 @@ const validateOptionsValue = (value)=>{
 
 const validateOptionColorValue = (value)=>{
     if(value){
-        const reg = /^(#)?[\da-f]{3}([\da-f]{3})?$/i;
+        const reg = /^[\da-f]{6}$/i;
         if(!reg.test(value)){
             throw new Error("object_fields_error_option_color_not_valid");
         }
@@ -51,16 +51,25 @@ const validateOptionsGridValue = (value)=>{
 
 const validateDoc = (doc)=>{
     validateOptionsGridValue(doc.options);
-    if(doc.type === "autonumber"){
-        let formula = doc.formula && doc.formula.trim();
-        if(!formula){
-            throw new Error("object_fields_error_formula_required");
-        }
-    }
+    // if(doc.type === "autonumber"){
+    //     let formula = doc.formula && doc.formula.trim();
+    //     if(!formula){
+    //         throw new Error("object_fields_error_formula_required");
+    //     }
+    // }
 }
 
 module.exports = {
     afterFind: async function(){
+        let filters = InternalData.parserFilters(this.query.filters)
+        if(filters.object){
+            let fields = InternalData.getObjectFields(filters.object, this.userId);
+            if(fields){
+                this.data.values = this.data.values.concat(fields)
+            }
+        }
+    },
+    afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
             let fields = InternalData.getObjectFields(filters.object, this.userId);

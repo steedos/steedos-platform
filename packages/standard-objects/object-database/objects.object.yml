@@ -124,11 +124,6 @@ fields:
   # enable_space_global:
   #   type: boolean
   #   defaultValue: false
-  enable_approvals:
-    type: boolean
-    defaultValue: false
-    label: Enable Approvals
-    group: Switch
   enable_web_forms:
     type: boolean
     defaultValue: fasle
@@ -207,6 +202,12 @@ fields:
   is_system:
     type: boolean
     label: System
+    omit: true
+    hidden: true
+    disabled: true
+  fields_serial_number:
+    type: number
+    scale: 0
     omit: true
     hidden: true
     disabled: true

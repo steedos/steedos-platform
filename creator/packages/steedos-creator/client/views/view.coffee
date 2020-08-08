@@ -61,6 +61,8 @@ loadRecord = ()->
 		loadRecordFromOdata(Template.instance(), object_name, record_id)
 
 addFieldInfo = (element)->
+	if element.view?.isDestroyed
+		return
 	element.$(".has-inline-text").each ->
 		id = "info_" + $(this).attr("for").replace(".", "_")
 		html = """
@@ -463,18 +465,6 @@ Template.creator_view.helpers
 		object_name = Session.get "object_name"
 		fields = Creator.getObject(object_name).fields
 		return fields[key]?.inlineHelpText
-
-	illustration: ()->
-		return ReactDesignSystem.Illustration
-
-	notFoundPath: ()->
-		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
-
-	notFoundHeading: ()->
-		return "似乎出现了一个问题。"
-
-	notFoundMessageBody: ()->
-		return "我们无法找到您尝试访问的记录。此记录可能已被其他用户删除，或您没有此记录的访问权限，也可能发生了系统错误。请向您的管理员寻求帮助。"
 
 	showBack: ()->
 		if Session.get("record_id") && (_.has(FlowRouter.current()?.queryParams, 'ref'))

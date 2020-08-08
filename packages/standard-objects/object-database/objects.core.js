@@ -103,6 +103,7 @@ function loadObject(doc, oldDoc){
     objectql.addObjectConfig(doc, datasourceName);
     objectql.loadObjectLazyListenners(doc.name);
     objectql.loadObjectLazyActions(doc.name);
+    objectql.loadObjectLazyMethods(doc.name);
     //获取到继承后的对象
     const _doc = objectql.getObjectConfig(doc.name);
     datasource.setObject(doc.name, _doc);

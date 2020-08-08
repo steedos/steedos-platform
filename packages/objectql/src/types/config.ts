@@ -2,7 +2,7 @@ import path = require('path')
 import _ = require('lodash')
 import {loadJsonFiles} from '../util'
 import { addAppConfigFiles } from './app';
-import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectI18nFiles, addObjectDataFiles } from '.';
+import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectI18nFiles, addObjectDataFiles, addRouterFiles } from '.';
 
 export const LOADED_OBJECT_RECORDS = {}
 
@@ -86,6 +86,7 @@ export const addAllConfigFiles = (filePath, datasource) => {
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     addObjectI18nFiles(filePath);
+    addRouterFiles(filePath);
     // addConfigDataFiles(filePath);
     addConfigFiles('report', filePath);
     addConfigFiles('flow', filePath);

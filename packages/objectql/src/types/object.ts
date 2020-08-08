@@ -57,7 +57,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
 
-const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete']
+const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
 
 const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList']
 
@@ -244,7 +244,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     registerTrigger(trigger: SteedosTriggerType) {
         //如果是meteor mongo 则不做任何处理
-        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo || trigger.when === 'beforeFind' || trigger.when === 'afterFind' || trigger.when === 'afterFindOne' || trigger.when === 'afterCount') {
+        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo || trigger.when === 'beforeFind' || trigger.when === 'afterFind' || trigger.when === 'afterFindOne' || trigger.when === 'afterCount' || trigger.when === 'beforeAggregate' || trigger.when === 'afterAggregate') {
             if (!this._triggersQueue[trigger.when]) {
                 this._triggersQueue[trigger.when] = {}
             }
@@ -630,6 +630,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
             context.query = args[args.length - 2]
         }
 
+        if (method === 'aggregate') {
+            context.query = args[args.length - 3]
+        }
+
         if (method === 'findOne' || method === 'update' || method === 'delete') {
             context.id = args[1]
         }
@@ -735,7 +739,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
-            if(method === 'find' || method == 'findOne' || method == 'count'){
+            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate'){
                 let values = returnValue || {}
                 if(method === 'count'){
                     values = returnValue || 0
@@ -743,7 +747,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 Object.assign(afterTriggerContext, {data: {values: values}})
             }
             await this.runAfterTriggers(method, afterTriggerContext)
-            if(method === 'find' || method == 'findOne' || method == 'count'){
+            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate'){
                 if(_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))){
                     return returnValue
                 }else{

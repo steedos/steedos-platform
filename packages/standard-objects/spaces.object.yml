@@ -36,6 +36,10 @@ fields:
     index: true
     multiple: true
     filterable: true
+  account_logo:
+    label: Account logo
+    type: avatar
+    group: Logon
   background:
     label: Background
     type: avatar

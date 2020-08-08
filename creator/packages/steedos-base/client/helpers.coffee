@@ -207,6 +207,9 @@ Steedos.Helpers =
 				return org._NAME_FIELD_VALUE
 			return labels.reverse().join(" / ")
 
+	objectUrl: (object_name, record_id, app_id)->
+		return Creator.getObjectUrl(object_name, record_id, app_id)
+
 _.extend Steedos, Steedos.Helpers
 
 Template.registerHelpers = (dict) ->

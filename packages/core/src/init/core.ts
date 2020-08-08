@@ -4,6 +4,7 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
 const app = express();
+const routersApp = express();
 const router = express.Router();
 var path = require('path');
 import fs = require('fs')
@@ -106,7 +107,8 @@ export class Core {
     static run() {
         this.initGraphqlAPI();
         this.initPublishAPI()
-        this.initRoutes();
+        this.initCoreRoutes();
+        this.initRouters();
     }
 
     transformTriggerWhen(triggerWhen: string){
@@ -164,7 +166,7 @@ export class Core {
         Publish.init();
     }
 
-    private static initRoutes() {
+    private static initCoreRoutes() {
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
         app.use(coreExpress);
@@ -177,6 +179,13 @@ export class Core {
         WebApp.connectHandlers.use(app);
     }
 
+    private static initRouters(){
+        let routers = objectql.getRouters()
+        _.each(routers, (router)=>{
+            routersApp.use('', router.default)
+        })
+        WebApp.connectHandlers.use(routersApp);
+    }
 }
 
 export const initDesignSystem = () => {

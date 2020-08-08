@@ -9,6 +9,7 @@ enable_audit: true
 enable_api: true
 enable_instances: true
 enable_trash: true
+enable_workflow: true
 fields:
   "no":
     type: text
@@ -20,8 +21,6 @@ fields:
     formula: "{0}"
     label: 流水号
     filterable: true
-    omit: true
-    readonly: true
   create_date:
     label: 登记日期
     type: date

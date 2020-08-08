@@ -90,7 +90,7 @@ Template.related_object_list.events
 			related_lists = Creator.getRelatedList(object_name, record_id)
 			related_field_name = _.findWhere(related_lists, {object_name: related_object_name}).related_field_name
 			if related_field_name
-				Session.set 'cmDoc', {"#{related_field_name}": record_id}
+				Session.set 'cmDoc', Object.assign({"#{related_field_name}": record_id}, FormManager.getInitialValues(related_object_name))
 		
 		Session.set "action_collection", "Creator.Collections.#{related_object_name}"
 		Session.set "action_collection_name", action_collection_name

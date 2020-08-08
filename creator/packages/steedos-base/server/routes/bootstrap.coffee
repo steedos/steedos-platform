@@ -123,6 +123,7 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 #					_actions[actionName] = _object.actions[actionName]
 #				_object.actions = _actions
 				_object.allow_actions = objectLayout.actions || []
+				_object.allow_relatedList = objectLayout.relatedList || []
 			result.objects[objectLayout.object_name] = _object
 
 	JsonRoutes.sendResult res,

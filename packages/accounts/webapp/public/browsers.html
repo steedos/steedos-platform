@@ -1,0 +1,76 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport"
+    content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,shrink-to-fit=no">
+  <title>华炎云</title>
+  <style>
+    html,
+    body {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+
+    .app-shell-not-support {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 470px;
+      height: auto;
+      background: none;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-family: "PingFangSC", sans-serif;
+    }
+
+    .not-support-bg {
+      width: 100%;
+      margin-bottom: 3px;
+    }
+
+    .button {
+      display: block;
+      width: 120px;
+      height: 32px;
+      border-radius: 4px;
+      margin-left: 50%;
+      margin-top: 16px;
+      transform: translateX(-50%);
+      line-height: 32px;
+      background-color: #3377ff;
+      font-size: 14px;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .app-shell-not-support {
+        width: 78%;
+        min-width: 250px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .app-shell-not-support {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body id="root">
+  <div class="app-shell-not-support">
+    <img class="not-support-bg" src="images/unsupported.png">
+    <div><span>我们暂不支持该浏览器，推荐使用华炎客户端访问</span></div>
+    <a class="button" target="_blank" href="https://www.steedos.com/help/download">下载客户端</a>
+  </div>
+</body>
+
+</html>

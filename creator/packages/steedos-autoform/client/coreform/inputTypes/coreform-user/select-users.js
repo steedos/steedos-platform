@@ -107,7 +107,7 @@ Template.afSelectUser.helpers({
     },
 
     disabled: function () {
-		return "disabled" in this.atts || "readonly" in this.atts;
+		return "disabled" in this.atts;
 	},
 
     chooseAttr: function(attr) {
@@ -132,7 +132,7 @@ Template.afSelectUser.events({
 		if (Modal.allowMultiple) {
 			return;
 		}
-		if ("disabled" in template.data.atts || "readonly" in template.data.atts)
+		if ("disabled" in template.data.atts)
 			return;
 		
 		try{

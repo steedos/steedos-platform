@@ -26,6 +26,7 @@ fields:
     index: true
     name: to
     filterable: true
+    required: true
   to_name:
     type: text
     label: Trustee Name
