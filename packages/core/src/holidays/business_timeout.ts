@@ -1,5 +1,5 @@
 import { computeNextBusinessDate, computeIsBusinessDate, getBusinessHoursPerDay } from './business_hours';
-import { getSteedosSchema, getSteedosConfig, getConfigs, addConfig } from '@steedos/objectql';
+import { getSteedosSchema, getSteedosConfig, getConfigs, getConfig, addConfig, removeConfig } from '@steedos/objectql';
 import { BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursCheckedType } from './types';
 const moment = require('moment');
 import _ = require('lodash');
@@ -7,24 +7,70 @@ import _ = require('lodash');
 /**
  * 从数据库中取出指定工作区内的节假日数据，支持缓存
  * @param spaceId 
+ * @param years 要获取哪几年的数据 
  */
-export const getHolidays = async (spaceId: string) => {
+export const getHolidays = async (spaceId: string, years: Array<number>) => {
     let configs = getConfigs("holidays");
-    if(configs && configs.length){
-        configs = _.filter(configs, { 'space': spaceId });
-        if(configs.length){
-            return configs;
+    let tempYearConfig: any;
+    const holidaysFields = ["name", "type", "date", "adjusted_to", "space"];
+    for (const year of years) {
+        tempYearConfig = getConfig("holidays", `${spaceId}-${year}`);
+        if(!tempYearConfig){
+            tempYearConfig = { _id: `${spaceId}-${year}`, 'space': spaceId, year: year };
+            const yearStartDate = moment.utc(`${year}-01-01T00:00:00Z`).toDate();
+            const yearEndDate = moment.utc(`${year}-12-31T23:59:59Z`).toDate();
+            const holidaysOptions: any = { filters: [["space", "=", spaceId], ["date", "between", [yearStartDate, yearEndDate]]], fields: holidaysFields };
+            const objectHolidays = getSteedosSchema().getObject("holidays");
+            const holidaysRecords = await objectHolidays.find(holidaysOptions);
+            if(holidaysRecords && holidaysRecords.length){
+                tempYearConfig.values = holidaysRecords;
+            }
+            else{
+                tempYearConfig.values = [];
+            }
+            addConfig("holidays", tempYearConfig);
         }
     }
-    const holidaysOptions: any = { filters: [["space", "=", spaceId]], fields: ["name", "type", "date", "adjusted_to", "space"] };
-    const objectHolidays = getSteedosSchema().getObject("holidays");
-    const holidaysRecords = await objectHolidays.find(holidaysOptions);
-    if(holidaysRecords && holidaysRecords.length){
-        holidaysRecords.forEach((record: any)=>{
-            addConfig("holidays", record);
-        });
+    configs = getConfigs("holidays").filter((config: any)=>{
+        return config.space === spaceId && years.indexOf(config.year) > -1;
+    });
+    return _.flatten(configs.map((config: any)=>{return config.values}));
+}
+
+/**
+ * 更新指定工作区指定年份的节假日缓存数据
+ * @param spaceId 
+ * @param year 要更新哪年的数据
+ */
+export const updateHolidaysCache = async (spaceId: string, year: number) => {
+    let tempYearConfig = getConfig("holidays", `${spaceId}-${year}`);
+        if(tempYearConfig){
+        // 只有该年数据在缓存中已经存在才说明有用到，否则没必要加入缓存
+        const holidaysFields = ["name", "type", "date", "adjusted_to", "space"];
+        const yearStartDate = moment.utc(`${year}-01-01T00:00:00Z`).toDate();
+        const yearEndDate = moment.utc(`${year}-12-31T23:59:59Z`).toDate();
+        const holidaysOptions: any = { filters: [["space", "=", spaceId], ["date", "between", [yearStartDate, yearEndDate]]], fields: holidaysFields };
+        const objectHolidays = getSteedosSchema().getObject("holidays");
+        const holidaysRecords = await objectHolidays.find(holidaysOptions);
+        if(holidaysRecords && holidaysRecords.length){
+            tempYearConfig.values = holidaysRecords;
+        }
+        else{
+            tempYearConfig.values = [];
+        }
+        addConfig("holidays", tempYearConfig);
     }
-    return holidaysRecords;
+}
+
+/**
+ * 清除指定工作区节假日缓存数据，在节假日数据导入的时候应该有用
+ * @param spaceId 
+ * @param years 要清除哪几年的数据 
+ */
+export const clearHolidaysCache = async (spaceId: string, years: Array<number>) => {
+    for (const year of years) {
+        removeConfig("holidays", `${spaceId}-${year}`);
+    }
 }
 
 /**
@@ -67,7 +113,8 @@ export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: n
     if(!defultBusinessHoursRecord){
         throw new Error("getTimeoutDateWithoutHolidays:Can't find any valid business hours record on the datasource.");
     }
-    const holidaysRecords = await getHolidays(spaceId);
+    const startUTCYear = start.getUTCFullYear();
+    const holidaysRecords:any = await getHolidays(spaceId, [startUTCYear, startUTCYear + 1]);
     return computeTimeoutDateWithoutHolidays(start, timeoutHours, holidaysRecords, defultBusinessHoursRecord, digitsForHours)
 }
 
