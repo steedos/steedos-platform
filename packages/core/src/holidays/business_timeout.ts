@@ -1,21 +1,29 @@
 import { computeNextBusinessDate, computeIsBusinessDate, getBusinessHoursPerDay } from './business_hours';
-import { getSteedosSchema, getSteedosConfig, getConfigs, addConfigs } from '@steedos/objectql';
+import { getSteedosSchema, getSteedosConfig, getConfigs, addConfig } from '@steedos/objectql';
 import { BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursCheckedType } from './types';
 const moment = require('moment');
+import _ = require('lodash');
 
 /**
  * 从数据库中取出指定工作区内的节假日数据，支持缓存
  * @param spaceId 
  */
 export const getHolidays = async (spaceId: string) => {
-    const configs = getConfigs("holidays");
+    let configs = getConfigs("holidays");
     if(configs && configs.length){
-        return configs;
+        configs = _.filter(configs, { 'space': spaceId });
+        if(configs.length){
+            return configs;
+        }
     }
-    const holidaysOptions: any = { filters: [["space", "=", spaceId]], fields: ["name", "type", "date", "adjusted_to"] };
+    const holidaysOptions: any = { filters: [["space", "=", spaceId]], fields: ["name", "type", "date", "adjusted_to", "space"] };
     const objectHolidays = getSteedosSchema().getObject("holidays");
     const holidaysRecords = await objectHolidays.find(holidaysOptions);
-    addConfigs("holidays", holidaysRecords)
+    if(holidaysRecords && holidaysRecords.length){
+        holidaysRecords.forEach((record: any)=>{
+            addConfig("holidays", record);
+        });
+    }
     return holidaysRecords;
 }
 
@@ -24,14 +32,21 @@ export const getHolidays = async (spaceId: string) => {
  * @param spaceId 
  */
 export const getDefaultBusinessHours = async (spaceId: string) => {
-    const configs = getConfigs("business_hours");
+    let configs = getConfigs("business_hours");
     if(configs && configs.length){
-        return configs;
+        configs = _.filter(configs, { 'space': spaceId });
+        if(configs.length){
+            return configs;
+        }
     }
-    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "utc_offset", "working_days"] };
+    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "utc_offset", "working_days", "space"] };
     const objectBusinessHours = getSteedosSchema().getObject("business_hours");
     const defultBusinessHoursRecords = await objectBusinessHours.find(defultBusinessHoursOptions);
-    addConfigs("business_hours", defultBusinessHoursRecords)
+    if(defultBusinessHoursRecords && defultBusinessHoursRecords.length){
+        defultBusinessHoursRecords.forEach((record: any)=>{
+            addConfig("business_hours", record);
+        });
+    }
     return defultBusinessHoursRecords;
 }
 
