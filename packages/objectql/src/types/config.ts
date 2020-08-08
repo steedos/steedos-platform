@@ -57,6 +57,17 @@ export const addConfig = (objectName: string, record: any) => {
     records.push(record)
 }
 
+export const addConfigs = (objectName: string, records: any) => {
+    records.forEach((record: any)=>{
+        if(!record._id){
+            console.log("addConfigs", objectName, record);
+            throw new Error(`Error adding record to ${objectName}, record._id required`);
+        }
+    });
+    let cachedRecords = getConfigs(objectName);
+    LOADED_OBJECT_RECORDS[objectName] = _.union(cachedRecords, records);
+}
+
 export const removeConfig = (objectName: string, record: any) => {
     if(!record._id){
         throw new Error(`Error adding record to ${objectName}, record._id required`);
