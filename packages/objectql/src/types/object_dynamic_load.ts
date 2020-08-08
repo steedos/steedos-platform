@@ -4,7 +4,7 @@ import path = require('path')
 import { getMD5, JSONStringify } from '../util'
 import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles } from '.'
 import { isMeteor, transformListenersToTriggers } from '../util'
-import { Dictionary } from "@salesforce/ts-types";
+import { Dictionary, JsonMap } from '@salesforce/ts-types';
 
 var util = require('../util')
 var clone = require('clone')
@@ -21,6 +21,7 @@ const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
 const _lazyLoadListeners: Dictionary<any> = {};
 const _lazyLoadActions: Dictionary<any> = {};
+const _lazyLoadMethods: Dictionary<any> = {};
 const _objectsData: Dictionary<any> = {};
 
 let standardObjectsLoaded: boolean = false;
@@ -82,6 +83,24 @@ export const loadObjectLazyListenners = function(objectName: string){
     })
 }
 
+const addLazyLoadMethods = function(objectName: string, json: SteedosActionTypeConfig){
+    if(!_lazyLoadMethods[objectName]){
+        _lazyLoadMethods[objectName] = []
+    }
+    _lazyLoadMethods[objectName].push(json)
+}
+
+const getLazyLoadMethods = function(objectName: string){
+    return _lazyLoadMethods[objectName]
+}
+
+export const loadObjectLazyMethods = function(objectName: string){
+    let methods = getLazyLoadMethods(objectName);
+    _.each(methods, function(methods){
+        addObjectMethodConfig(clone(methods));
+    })
+}
+
 export const getOriginalObjectConfig = (object_name: string):SteedosObjectTypeConfig => {
     return _.find(_original_objectConfigs, {name: object_name})
 }
@@ -129,6 +148,13 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
     _.each(actions, (json: SteedosActionTypeConfig) => {
         addObjectActionConfig(json);
     })
+
+    let methods = util.loadMethods(filePath)
+
+    _.each(methods, (json: JsonMap) => {
+        addObjectMethodConfig(json);
+    })
+
 }
 
 export const addServerScriptFiles = (filePath: string) => {
@@ -158,6 +184,37 @@ export const addObjectI18nFiles = (filePath: string)=>{
 
 export const getObjectsI18n = ()=>{
     return _objectsI18n;
+}
+
+export const addObjectMethodConfig = (json: JsonMap)=>{
+    if (!json.listenTo) {
+        throw new Error('missing attribute listenTo')
+    }
+
+    if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo)) {
+        throw new Error('listenTo must be a function or string')
+    }
+
+    let object_name = '';
+
+    if (_.isString(json.listenTo)) {
+        object_name = json.listenTo
+    } else if (_.isFunction(json.listenTo)) {
+        object_name = json.listenTo()
+    }
+
+    let object = getObjectConfig(object_name);
+    if (object) {
+        if(!object.methods){
+            object.methods = {}
+        }
+        delete json.listenTo
+
+        Object.assign(object.methods, json);
+
+    } else {
+        addLazyLoadMethods(object_name, json)
+    }
 }
 
 export const  addClientScriptFiles = (filePath: string) => {

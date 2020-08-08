@@ -146,6 +146,22 @@ export const loadActions = (filePath: string)=>{
     return results
 }
 
+export const loadMethods = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.method.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!_.has(json, 'listenTo')){
+            json.listenTo = path.basename(matchedPath).split('.')[0]
+        }
+        results.push(json)
+    })
+    return results
+}
+
 export const loadFields = (filePath: string)=>{
     let results = []
     const filePatten = [
