@@ -19,6 +19,7 @@ const _routerConfigs: Array<any> = [];
 const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
+const _routers: Array<any> = [];
 const _lazyLoadListeners: Dictionary<any> = {};
 const _lazyLoadActions: Dictionary<any> = {};
 const _lazyLoadMethods: Dictionary<any> = {};
@@ -184,6 +185,20 @@ export const addObjectI18nFiles = (filePath: string)=>{
 
 export const getObjectsI18n = ()=>{
     return _objectsI18n;
+}
+
+export const addRouterFiles = (filePath: string)=>{
+    if(!path.isAbsolute(filePath)){
+        throw new Error(`${filePath} must be an absolute path`);
+    }
+    let routersData = util.loadRouters(filePath);
+    routersData.forEach(element => {
+        _routers.push(element)
+    });
+}
+
+export const getRouters = ()=>{
+    return _routers;
 }
 
 export const addObjectMethodConfig = (json: JsonMap)=>{
