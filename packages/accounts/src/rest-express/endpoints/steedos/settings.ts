@@ -47,7 +47,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   }
 
   let already_mail_service = canSendEmail();
-  let already_sms_service = canSendSMS();
+  let already_sms_service = true || canSendSMS();
 
   res.json({
     tenant: tenant,
