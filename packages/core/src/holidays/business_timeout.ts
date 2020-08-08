@@ -111,7 +111,8 @@ export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: n
     const defultBusinessHoursRecords = await getDefaultBusinessHours(spaceId);
     const defultBusinessHoursRecord = defultBusinessHoursRecords && defultBusinessHoursRecords[0];// 只会有一条工作时间数据
     if(!defultBusinessHoursRecord){
-        throw new Error("getTimeoutDateWithoutHolidays:Can't find any valid business hours record on the datasource.");
+        // 未配置工作时间，是直接按未开启enable_holidays处理
+        return moment(start).add(timeoutHours, 'h').toDate();
     }
     const startUTCYear = start.getUTCFullYear();
     const holidaysRecords:any = await getHolidays(spaceId, [startUTCYear, startUTCYear + 1]);
