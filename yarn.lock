@@ -1937,10 +1937,10 @@
     tslib "1.10.0"
     validator "^12.2.0"
 
-"@steedos/license@1.22.0-alpha.5":
-  version "1.22.0-alpha.5"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.5.tgz?cache=0&sync_timestamp=1596616530985&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40steedos%2Flicense%2Fdownload%2F%40steedos%2Flicense-1.22.0-alpha.5.tgz#3670f64ac872bf4f9bc76f82348f70027a475432"
-  integrity sha1-NnD2Sshyv0+bx2+CNI9wAnpHVDI=
+"@steedos/license@1.22.0-alpha.6":
+  version "1.22.0-alpha.6"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.6.tgz#143e447d903fed06cf8af126097c8192b9c2adc4"
+  integrity sha1-FD5EfZA/7QbPivEmCXyBkrnCrcQ=
   dependencies:
     crypto "^1.0.1"
     node-fetch "^2.6.0"
