@@ -149,7 +149,7 @@ export const loadActions = (filePath: string)=>{
 export const loadMethods = (filePath: string)=>{
     let results = []
     const filePatten = [
-        path.join(filePath, "*.method.js")
+        path.join(filePath, "*.function.js")
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
