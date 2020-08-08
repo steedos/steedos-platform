@@ -1,5 +1,5 @@
 import { computeNextBusinessDate, computeIsBusinessDate, getBusinessHoursPerDay } from './business_hours';
-import { getSteedosSchema } from '@steedos/objectql';
+import { getSteedosSchema, getSteedosConfig } from '@steedos/objectql';
 import { BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursCheckedType } from './types';
 const moment = require('moment');
 
@@ -11,6 +11,10 @@ const moment = require('moment');
  * @param digitsForHours 小时单位支持几位小数，默认2位
  */
 export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: number, spaceId: string, digitsForHours: number = 2) => {
+    const config = getSteedosConfig();
+    if(!config.enable_holidays){
+        return moment(start).add(timeoutHours, 'h').toDate();
+    }
     const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "utc_offset", "working_days"] };
     const objectBusinessHours = getSteedosSchema().getObject("business_hours");
     const defultBusinessHoursRecords = await objectBusinessHours.find(defultBusinessHoursOptions);

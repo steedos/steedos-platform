@@ -91,3 +91,4 @@ tenant:
   enable_register: true
 accounts:
   mobile_phone_locales: ['zh-CN']
+enable_holidays: true
