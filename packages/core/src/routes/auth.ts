@@ -5,7 +5,7 @@ interface Request extends core.Request {
     user: any;
 }
 
-export const authenticate = async (req: Request, res: Response, next: () => void)=>{
+export const requireAuthentication = async (req: Request, res: Response, next: () => void)=>{
     await steedosAuth.setRequestUser(req, res, function(){
         if (req.user) {
             next();
