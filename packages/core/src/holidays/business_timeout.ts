@@ -1,7 +1,54 @@
 import { computeNextBusinessDate, computeIsBusinessDate, getBusinessHoursPerDay } from './business_hours';
-import { getSteedosSchema, getSteedosConfig } from '@steedos/objectql';
+import { getSteedosSchema, getSteedosConfig, getConfigs, addConfig } from '@steedos/objectql';
 import { BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursCheckedType } from './types';
 const moment = require('moment');
+import _ = require('lodash');
+
+/**
+ * 从数据库中取出指定工作区内的节假日数据，支持缓存
+ * @param spaceId 
+ */
+export const getHolidays = async (spaceId: string) => {
+    let configs = getConfigs("holidays");
+    if(configs && configs.length){
+        configs = _.filter(configs, { 'space': spaceId });
+        if(configs.length){
+            return configs;
+        }
+    }
+    const holidaysOptions: any = { filters: [["space", "=", spaceId]], fields: ["name", "type", "date", "adjusted_to", "space"] };
+    const objectHolidays = getSteedosSchema().getObject("holidays");
+    const holidaysRecords = await objectHolidays.find(holidaysOptions);
+    if(holidaysRecords && holidaysRecords.length){
+        holidaysRecords.forEach((record: any)=>{
+            addConfig("holidays", record);
+        });
+    }
+    return holidaysRecords;
+}
+
+/**
+ * 从数据库中取出指定工作区内的默认工作时间数据，支持缓存
+ * @param spaceId 
+ */
+export const getDefaultBusinessHours = async (spaceId: string) => {
+    let configs = getConfigs("business_hours");
+    if(configs && configs.length){
+        configs = _.filter(configs, { 'space': spaceId });
+        if(configs.length){
+            return configs;
+        }
+    }
+    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "utc_offset", "working_days", "space"] };
+    const objectBusinessHours = getSteedosSchema().getObject("business_hours");
+    const defultBusinessHoursRecords = await objectBusinessHours.find(defultBusinessHoursOptions);
+    if(defultBusinessHoursRecords && defultBusinessHoursRecords.length){
+        defultBusinessHoursRecords.forEach((record: any)=>{
+            addConfig("business_hours", record);
+        });
+    }
+    return defultBusinessHoursRecords;
+}
 
 /**
  * 计算在某个工作区下的节假日、工作时间数据基础上，以某个时间点开始，超时几个小时后，超时时间点是什么时候
@@ -15,13 +62,12 @@ export const getTimeoutDateWithoutHolidays = async (start: Date, timeoutHours: n
     if(!config.enable_holidays){
         return moment(start).add(timeoutHours, 'h').toDate();
     }
-    const defultBusinessHoursOptions: any = { filters: [["space", "=", spaceId], ["is_default", "=", true]], fields: ["name", "start", "end", "lunch_start", "lunch_end", "utc_offset", "working_days"] };
-    const objectBusinessHours = getSteedosSchema().getObject("business_hours");
-    const defultBusinessHoursRecords = await objectBusinessHours.find(defultBusinessHoursOptions);
-    const defultBusinessHoursRecord = defultBusinessHoursRecords && defultBusinessHoursRecords[0];
-    const holidaysOptions: any = { filters: [["space", "=", spaceId]], fields: ["name", "type", "date", "adjusted_to"] };
-    const objectHolidays = getSteedosSchema().getObject("holidays");
-    const holidaysRecords = await objectHolidays.find(holidaysOptions);
+    const defultBusinessHoursRecords = await getDefaultBusinessHours(spaceId);
+    const defultBusinessHoursRecord = defultBusinessHoursRecords && defultBusinessHoursRecords[0];// 只会有一条工作时间数据
+    if(!defultBusinessHoursRecord){
+        throw new Error("getTimeoutDateWithoutHolidays:Can't find any valid business hours record on the datasource.");
+    }
+    const holidaysRecords = await getHolidays(spaceId);
     return computeTimeoutDateWithoutHolidays(start, timeoutHours, holidaysRecords, defultBusinessHoursRecord, digitsForHours)
 }
 
