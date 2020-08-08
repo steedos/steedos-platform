@@ -1,13 +1,10 @@
-const objectql = require("@steedos/objectql");
+const core = require("@steedos/core");
 const objectName = "holidays";
 
 Meteor.startup(function () {
   var _change, _remove, inited = false;
   _change = function (document) {
-    objectql.addConfig(objectName, document);
-  };
-  _remove = function (document) {
-    objectql.removeConfig(objectName, document);
+    core.updateHolidaysCache(document.space, document.date.getUTCFullYear());
   };
   Creator.getCollection(objectName).find({}, {
     fields: {
@@ -26,7 +23,7 @@ Meteor.startup(function () {
       return _change(newDocument);
     },
     removed: function (oldDocument) {
-      return _remove(oldDocument);
+      return _change(oldDocument);
     }
   });
   inited = true;

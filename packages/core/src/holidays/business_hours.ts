@@ -279,14 +279,14 @@ export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Arra
             // 设置为当前工作日上午班的结束工作时间，即午休开始时间
             startClosingMoment.hours(businessHoursPerDay.lunchStartValue.hours - utcOffset);
             startClosingMoment.minutes(businessHoursPerDay.lunchStartValue.minutes);
-            if(endTimeValue > startClosingMoment.getDate()){
+            if(endTimeValue > startClosingMoment.toDate().getTime()){
                 // 结束时间大于上午班的结束工作时间，即午休开始时间时，要额外处理午休时间
                 // 设置为当前工作日下午班的开始工作时间，即午休结束时间
                 let tempClosingMoment = moment.utc(start);
                 tempClosingMoment.hours(businessHoursPerDay.lunchEndValue.hours - utcOffset);
                 tempClosingMoment.minutes(businessHoursPerDay.lunchEndValue.minutes);
                 // 结束时间小于等于下午班的开始工作时间，即午休结束时间时，直接对结果即computedMinutes值进行减法处理下
-                if(endTimeValue <= tempClosingMoment.getDate()){
+                if(endTimeValue <= tempClosingMoment.toDate().getTime()){
                     computedMinutes = -endMoment.diff(startClosingMoment, 'minute');//为负数，对后面总数做减法
                 }
                 else{
@@ -309,14 +309,14 @@ export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Arra
             // 设置为下一个工作日上午班的结束工作时间，即午休开始时间
             startClosingMoment.hours(businessHoursPerDay.lunchStartValue.hours - utcOffset);
             startClosingMoment.minutes(businessHoursPerDay.lunchStartValue.minutes);
-            if(endTimeValue > startClosingMoment.getDate()){
+            if(endTimeValue > startClosingMoment.toDate().getTime()){
                 // 结束时间大于上午班的结束工作时间，即午休开始时间时，要额外处理午休时间
                 // 设置为当前工作日下午班的开始工作时间，即午休结束时间
                 let tempClosingMoment = moment.utc(start);
                 tempClosingMoment.hours(businessHoursPerDay.lunchEndValue.hours - utcOffset);
                 tempClosingMoment.minutes(businessHoursPerDay.lunchEndValue.minutes);
                 // 结束时间小于等于下午班的开始工作时间，即午休结束时间时，直接对结果即computedMinutes值进行减法处理下
-                if(endTimeValue <= tempClosingMoment.getDate()){
+                if(endTimeValue <= tempClosingMoment.toDate().getTime()){
                     computedMinutes = -endMoment.diff(startClosingMoment, 'minute');//为负数，对后面总数做减法
                 }
                 else{
@@ -337,14 +337,14 @@ export const computeBusinessHoursValue = (start: Date, end: Date, holidays: Arra
             // 设置为当天上午班的结束工作时间，即午休开始时间
             startClosingMoment.hours(businessHoursPerDay.lunchStartValue.hours - utcOffset);
             startClosingMoment.minutes(businessHoursPerDay.lunchStartValue.minutes);
-            if(endTimeValue > startClosingMoment.getDate()){
+            if(endTimeValue > startClosingMoment.toDate().getTime()){
                 // 结束时间大于上午班的结束工作时间，即午休开始时间时，要额外处理午休时间
                 // 设置为当前工作日下午班的开始工作时间，即午休结束时间
                 let tempClosingMoment = moment.utc(start);
                 tempClosingMoment.hours(businessHoursPerDay.lunchEndValue.hours - utcOffset);
                 tempClosingMoment.minutes(businessHoursPerDay.lunchEndValue.minutes);
                 // 结束时间小于等于下午班的开始工作时间，即午休结束时间时，直接对结果即computedMinutes值进行减法处理下
-                if(endTimeValue <= tempClosingMoment.getDate()){
+                if(endTimeValue <= tempClosingMoment.toDate().getTime()){
                     computedMinutes = -endMoment.diff(startClosingMoment, 'minute');//为负数，对后面总数做减法
                 }
                 else{
