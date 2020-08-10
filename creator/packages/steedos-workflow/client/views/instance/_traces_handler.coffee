@@ -10,3 +10,6 @@ TracesHandler.helpers =
 			return true
 		else
 			return false
+
+	objectUrl: (object_name, record_id, app_id)->
+		return Creator.getObjectUrl(object_name, record_id, app_id)
