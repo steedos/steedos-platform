@@ -769,7 +769,7 @@ InstanceManager.getMyApprove = function () {
 }
 
 // 申请单暂存
-InstanceManager.saveIns = function () {
+InstanceManager.saveIns = function (noWarn) {
 	$('body').addClass("loading");
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
@@ -786,7 +786,9 @@ InstanceManager.saveIns = function () {
 				};
 				if (result == true) {
 					WorkflowManager.instanceModified.set(false);
-					toastr.success(TAPi18n.__('Saved successfully'));
+					if(!noWarn){
+						toastr.success(TAPi18n.__('Saved successfully'));
+					}
 				}
 			})
 			return;
@@ -833,7 +835,9 @@ InstanceManager.saveIns = function () {
 				$('body').removeClass("loading");
 				WorkflowManager.instanceModified.set(false);
 				if (result == true) {
-					toastr.success(TAPi18n.__('Saved successfully'));
+					if(!noWarn){
+						toastr.success(TAPi18n.__('Saved successfully'));
+					}
 				} else if (result == "upgraded") {
 					toastr.info(TAPi18n.__('Flow upgraded'));
 					FlowRouter.go("/workflow/space/" + Session.get('spaceId') + "/draft/" + instance._id);
@@ -853,7 +857,9 @@ InstanceManager.saveIns = function () {
 					$('body').removeClass("loading");
 					WorkflowManager.instanceModified.set(false);
 					if (result == true) {
-						toastr.success(TAPi18n.__('Saved successfully'));
+						if(!noWarn){
+							toastr.success(TAPi18n.__('Saved successfully'));
+						}
 					} else {
 						toastr.error(error.reason);
 						FlowRouter.go("/workflow/space/" + Session.get('spaceId') + "/inbox/");
