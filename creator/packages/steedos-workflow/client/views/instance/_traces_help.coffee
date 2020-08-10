@@ -303,6 +303,9 @@ TracesTemplate.helpers =
 					return trace._id ==  traceId
 		)?.name
 
+	objectUrl: (object_name, record_id, app_id)->
+		return Creator.getObjectUrl(object_name, record_id, app_id)
+
 if Meteor.isServer
 	TracesTemplate.helpers.dateFormat = (date)->
 		if date
