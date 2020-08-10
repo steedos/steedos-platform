@@ -91,8 +91,10 @@ JsonRoutes.add "post", "/api/workflow/import/form", (req, res, next) ->
 						jsonData = file.data.toString("utf-8");
 						success[filename] = importWorkflow(jsonData, uid, spaceId, company_id, flowId)
 					catch e
-						console.error e
-						fail[filename] = e.reason || e.message
+						if  e.reason && e.details
+							fail[filename] = {reason: e.reason, details: e.details}
+						else
+							fail[filename] = e.reason || e.message
 				if _.isEmpty(fail)
 					res.statusCode = 200;
 				else

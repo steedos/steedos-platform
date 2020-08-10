@@ -1910,37 +1910,10 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
 
-"@steedos/accounts@^1.19.10":
-  version "1.19.10"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.19.10.tgz#6eda5d9ac94345d7e8847d39e5f28951bac7711e"
-  integrity sha1-btpdmslDRdfohH055fKJUbrHcR4=
-  dependencies:
-    "@accounts/mongo" "^0.19.0"
-    "@accounts/rest-express" "^0.19.0"
-    "@accounts/server" "^0.19.0"
-    "@accounts/two-factor" "^0.20.1"
-    "@babel/runtime" "^7.6.0"
-    app-root-path "^2.2.1"
-    bcryptjs "^2.4.3"
-    body-parser "1.19.0"
-    cookies "^0.7.3"
-    cors "2.8.5"
-    crypto "^1.0.1"
-    express "4.17.1"
-    js-yaml "^3.13.1"
-    mem "^5.1.1"
-    mongoose "5.6.6"
-    nodemailer "^6.3.0"
-    oauth2-server "^2.4.1"
-    redux-thunk "^2.3.0"
-    saml-idp "^1.1.0"
-    tslib "1.10.0"
-    validator "^12.2.0"
-
-"@steedos/license@1.22.0-alpha.6":
-  version "1.22.0-alpha.6"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.6.tgz#143e447d903fed06cf8af126097c8192b9c2adc4"
-  integrity sha1-FD5EfZA/7QbPivEmCXyBkrnCrcQ=
+"@steedos/license@1.22.0-alpha.7":
+  version "1.22.0-alpha.7"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.7.tgz#a3816fd565309318c20c47819e33c1a4ffd39054"
+  integrity sha1-o4Fv1WUwkxjCDEeBnjPBpP/TkFQ=
   dependencies:
     crypto "^1.0.1"
     node-fetch "^2.6.0"
