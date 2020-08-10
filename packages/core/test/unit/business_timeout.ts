@@ -58,6 +58,18 @@ const holidays:Array<Holiday> = [{
     type: 'adjusted_working_day',
     date: new Date("2020-10-11T00:00:00.000Z"),
     adjusted_to: '5'
+},
+{
+    name: '8月12号周3公开休息日',
+    type: 'public',
+    date: new Date("2020-08-12T00:00:00.000Z"),
+    adjusted_to: '3'
+},
+{
+    name: '8月13号周4公开休息日',
+    type: 'public',
+    date: new Date("2020-08-13T00:00:00.000Z"),
+    adjusted_to: '4'
 }];
 
 const businessHours:BusinessHours = {
@@ -214,5 +226,19 @@ describe('Test timeout value', () => {
         expect(result.getTime()).to.be.eq(moment.utc("2020-10-10T04:00:00.000Z").toDate().getTime());
         let result2 = computeBusinessHoursValue(start.toDate(), moment.utc("2020-10-10T04:00:00.000Z").toDate(), holidays, businessHours);
         expect(result2.computedHours).to.be.eq(3);
+    });
+    it("exists holidays and no weekend, start value's seconds or milliseconds is not zero", async () => {
+        const start = moment.utc("2020-08-10T08:16:25.167Z");
+        let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 16, holidays, businessHours);
+        expect(result.getTime()).to.be.eq(moment.utc("2020-08-14T08:16:25.167Z").toDate().getTime());
+        let result2 = computeBusinessHoursValue(start.toDate(), moment.utc("2020-08-14T08:16:25.167Z").toDate(), holidays, businessHours);
+        expect(result2.computedHours).to.be.eq(16);
+    });
+    it("exists holidays and weekend, start value's seconds or milliseconds is not zero.", async () => {
+        const start = moment.utc("2020-08-10T08:16:25.167Z");
+        let result:any = computeTimeoutDateWithoutHolidays(start.toDate(), 168, holidays, businessHours);
+        expect(result.getTime()).to.be.eq(moment.utc("2020-09-10T08:16:25.167Z").toDate().getTime());
+        let result2 = computeBusinessHoursValue(start.toDate(), moment.utc("2020-09-10T08:16:25.167Z").toDate(), holidays, businessHours);
+        expect(result2.computedHours).to.be.eq(168);
     });
 });

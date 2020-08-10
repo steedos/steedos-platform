@@ -185,6 +185,8 @@ export const computeIsBusinessDay = (date: Date, holidays: Array<Holiday>, worki
     // holidays中存入的肯定是utc0点0分，所以这里把date设置为0点0分即可
     value.hours(0);
     value.minutes(0);
+    value.seconds(0);
+    value.milliseconds(0);
     const holiday = holidays.find((item)=>{
         return item.date && (<any>item.date).getTime() === value.toDate().getTime();
     });
