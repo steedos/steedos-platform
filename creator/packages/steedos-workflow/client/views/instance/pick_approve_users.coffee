@@ -123,6 +123,7 @@ Template.instance_pick_approve_users.events
 	'change .selectUser': (event, template)->
 		formValue = AutoForm.getFormValues("pick_approve_users").insertDoc
 		stepsApprovesOptions = getStepsApprovesOptions();
+		InstanceManager.saveIns(true);
 		Meteor.call 'set_instance_step_approve', Session.get("instanceId"), formValue, stepsApprovesOptions, ()->
 			Meteor.setTimeout ()->
 				uuidv1 = require('uuid/v1');
@@ -152,6 +153,7 @@ Template.instance_pick_approve_users.events
 		action = 'pull';
 		if skip
 			action = 'push';
+		InstanceManager.saveIns(true);
 		Meteor.call 'set_instance_skip_steps', Session.get("instanceId"), stepId, action, ()->
 			Meteor.setTimeout ()->
 				uuidv1 = require('uuid/v1');
