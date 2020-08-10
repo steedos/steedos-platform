@@ -220,6 +220,7 @@ relatedList:
       - name
       - type
       - object
+      - group
       - sort_no
   - objectName: object_listviews
     columns:
