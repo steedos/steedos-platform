@@ -4,6 +4,7 @@ Template.trialHearder.helpers
 	hasLicense: ()->
 		return Creator.__l?.get()?.days_left
 	showTrialHearder: ()->
+		return false
 		__l = Creator.__l.get()
 		if !__l
 			return true

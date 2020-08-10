@@ -2,6 +2,7 @@ Template.creatorLayout.helpers Creator.helpers
 
 Template.creatorLayout.helpers
 	showTrialHearder: ()->
+		return false
 		__l = Creator.__l.get()
 		if !__l
 			return true
