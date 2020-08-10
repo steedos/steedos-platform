@@ -1,6 +1,6 @@
 {
   "name": "steedos",
-  "version": "1.21.9",
+  "version": "1.21.10",
   "private": true,
   "scripts": {
     "start": "env-cmd -f ./.env.local meteor run --settings settings.json --port 3100",
