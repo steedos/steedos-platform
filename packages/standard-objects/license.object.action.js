@@ -8,7 +8,8 @@ module.exports = {
     spaceName = Creator.getCollection("spaces").findOne(spaceId).name;
     licenseServer = 'https://community.trial.steedos.com:8443';
     toastr.info("升级完成后，请点击同步按钮");
-    window.open(licenseServer + "/accounts/a/#/signup?redirect_uri=" + encodeURIComponent(Meteor.absoluteUrl('/api/v4/license_auth_token/my_token/sync')));
+    var uri = new URL(window.location.href);
+    window.open(licenseServer + "/accounts/a/#/signup?redirect_uri=" + encodeURIComponent(Meteor.absoluteUrl('/api/v4/license_auth_token/my_token/sync', {rootUrl: Meteor.absoluteUrl(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX, {rootUrl: uri.origin})})));
   },
   sync: function (object_name, record_id, fields) {
     let userSession = Creator.USER_CONTEXT;
