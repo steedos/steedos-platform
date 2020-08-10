@@ -20,19 +20,16 @@ export const getSettings = async ()=>{
       
       if (config.tenant && config.tenant._id) {
         let spaceDoc = await db.findOne("spaces", config.tenant._id, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register"]})
-    
-        if (config.webservices && config.webservices.steedos) {
-          if (!config.webservices.steedos.endsWith("/"))
-            config.webservices.steedos += "/"
-          
+        let steedosService = getSteedosService();
+        if (steedosService) {
             _.assignIn(tenant, spaceDoc);
           if (spaceDoc.avatar_dark) {
-            tenant.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar_dark
+            tenant.logo_url = steedosService + "api/files/avatars/" + spaceDoc.avatar_dark
           } else if (spaceDoc.avatar) {
-            tenant.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar
+            tenant.logo_url = steedosService + "api/files/avatars/" + spaceDoc.avatar
           } 
           if (spaceDoc.background) {
-            tenant.background_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.background
+            tenant.background_url = steedosService + "api/files/avatars/" + spaceDoc.background
           }
         }
       }
@@ -54,17 +51,15 @@ export const getTenant = async (spaceId)=>{
     if(!spaceDoc){
       return {}
     }
-
-    if (config.webservices && config.webservices.steedos) {
-      if (!config.webservices.steedos.endsWith("/"))
-        config.webservices.steedos += "/"
+    let steedosService = getSteedosService();
+    if (steedosService) {
       if (spaceDoc.avatar_dark) {
-        spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar_dark
+        spaceDoc.logo_url = steedosService + "api/files/avatars/" + spaceDoc.avatar_dark
       } else if (spaceDoc.avatar) {
-        spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar
+        spaceDoc.logo_url = steedosService + "api/files/avatars/" + spaceDoc.avatar
       } 
       if (spaceDoc.background) {
-        spaceDoc.background_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.background
+        spaceDoc.background_url = steedosService + "api/files/avatars/" + spaceDoc.background
       }
     }
 
@@ -157,4 +152,32 @@ export const canSendSMS = ()=>{
     canSend = false;
   }
   return canSend;
+}
+
+export const getRootUrlPathPrefix = (rootUrl) => {
+  if (rootUrl) {
+      var parsedUrl = require('url').parse(rootUrl);
+      if (!parsedUrl.host || ['http:', 'https:'].indexOf(parsedUrl.protocol) === -1) {
+          throw Error("$ROOT_URL, if specified, must be an URL");
+      }
+      var pathPrefix = parsedUrl.pathname;
+      if (pathPrefix.slice(-1) === '/') {
+          pathPrefix = pathPrefix.slice(0, -1);
+      }
+      return pathPrefix;
+  } else {
+      return "";
+  }
+}
+
+export const getSteedosService = ()=>{
+  let steedosService = getRootUrlPathPrefix(process.env.ROOT_URL);
+  if (config.webservices && config.webservices.steedos) {
+    if (!config.webservices.steedos.endsWith("/"))
+      config.webservices.steedos += "/"
+    steedosService = config.webservices.steedos;
+  }
+  if (!steedosService.endsWith("/"))
+    steedosService += "/" ;
+  return steedosService;
 }

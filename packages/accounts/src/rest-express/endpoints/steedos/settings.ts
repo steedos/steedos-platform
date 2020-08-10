@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { AccountsServer } from '@accounts/server';
 import { getSteedosConfig } from '@steedos/objectql'
 import { db } from '../../../db';
-import { canSendEmail, canSendSMS } from '../../../core';
+import { canSendEmail, canSendSMS, getSteedosService } from '../../../core';
 
 const config = getSteedosConfig();
 
@@ -26,22 +26,18 @@ export const getSettings = (accountsServer: AccountsServer) => async (
 
   if (config.tenant && config.tenant._id) {
     let spaceDoc = await db.findOne("spaces", config.tenant._id, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "account_logo"]})
-
-    if (config.webservices && config.webservices.steedos) {
-      if (!config.webservices.steedos.endsWith("/"))
-        config.webservices.steedos += "/"
-      
+    let steedosService = getSteedosService();
+    if (steedosService) {
         _.assignIn(tenant, spaceDoc);
-
       if (spaceDoc.account_logo) {
-        tenant.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.account_logo
+        tenant.logo_url = steedosService + "api/files/avatars/" + spaceDoc.account_logo
       } else if (spaceDoc.avatar_dark) {
-        tenant.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar_dark
+        tenant.logo_url = steedosService + "api/files/avatars/" + spaceDoc.avatar_dark
       } else if (spaceDoc.avatar) {
-        tenant.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar
+        tenant.logo_url = steedosService + "api/files/avatars/" + spaceDoc.avatar
       } 
       if (spaceDoc.background) {
-        tenant.background_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.background
+        tenant.background_url = steedosService + "api/files/avatars/" + spaceDoc.background
       }
     }
   }

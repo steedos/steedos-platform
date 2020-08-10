@@ -3,6 +3,7 @@ import { AccountsServer } from '@accounts/server';
 import { sendError } from '../../utils/send-error';
 import { getSteedosConfig } from '@steedos/objectql'
 import { db } from '../../../db';
+import {getSteedosService } from '../../../core'
 
 const config = getSteedosConfig();
 
@@ -23,19 +24,19 @@ export const getTenant = (accountsServer: AccountsServer) => async (
           exists: false
       });
     }
+    
+    let steedosService = getSteedosService();
 
-    if (config.webservices && config.webservices.steedos) {
-      if (!config.webservices.steedos.endsWith("/"))
-        config.webservices.steedos += "/"
+    if (steedosService) {
       if (spaceDoc.account_logo) {
-        spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.account_logo
+        spaceDoc.logo_url = steedosService + "api/files/avatars/" + spaceDoc.account_logo
       } else if (spaceDoc.avatar_dark) {
-        spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar_dark
+        spaceDoc.logo_url = steedosService + "api/files/avatars/" + spaceDoc.avatar_dark
       } else if (spaceDoc.avatar) {
-        spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar
+        spaceDoc.logo_url = steedosService + "api/files/avatars/" + spaceDoc.avatar
       } 
       if (spaceDoc.background) {
-        spaceDoc.background_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.background
+        spaceDoc.background_url = steedosService + "api/files/avatars/" + spaceDoc.background
       }
     }
     res.json(spaceDoc);

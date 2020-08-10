@@ -2,7 +2,8 @@ import * as express from 'express';
 import { get, isEmpty, map } from 'lodash';
 import { AccountsServer } from '@accounts/server';
 import { db } from '../db';
-import { getSteedosConfig } from '@steedos/objectql'
+import { getSteedosConfig } from '@steedos/objectql';
+import { getSteedosService } from '../core'
 const config = getSteedosConfig();
 
 export const userLoader = (accountsServer: AccountsServer) => async (
@@ -35,15 +36,7 @@ export const userLoader = (accountsServer: AccountsServer) => async (
 
       });
 
-      let steedosService = "";
-
-      if (config.webservices && config.webservices.steedos) {
-        if (!config.webservices.steedos.endsWith("/")){
-          steedosService = config.webservices.steedos+  "/"
-        }else{
-          steedosService = config.webservices.steedos;
-        }
-      }
+      let steedosService = getSteedosService();
 
       if(userSpaces && userSpaces.length > 0){
         const dbSpaces = await db.find('spaces', {
