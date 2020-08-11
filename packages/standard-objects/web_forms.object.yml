@@ -2,6 +2,7 @@ name: web_forms
 label: Web Forms
 icon: account
 enable_api: true
+hidden: true
 fields:
   name:
     label: Name

@@ -1,6 +1,7 @@
 name: object_fields
 icon: orders
 enable_api: true
+hidden: true
 label: Object Fields
 fields:
   object:

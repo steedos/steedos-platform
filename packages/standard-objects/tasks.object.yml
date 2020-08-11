@@ -4,6 +4,7 @@ icon: timesheet_entry
 enable_search: true
 enable_files: true
 enable_chatter: true
+hidden: true
 fields:
   name:
     label: Name

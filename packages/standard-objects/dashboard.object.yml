@@ -1,6 +1,7 @@
 name: dashboard
 label: Dashboard
 icon: dashboard_ea
+hidden: true
 fields:
   name:
     label: Name

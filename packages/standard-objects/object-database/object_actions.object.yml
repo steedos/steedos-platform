@@ -1,6 +1,7 @@
 name: object_actions
 label: Object Action
 icon: marketing_actions
+hidden: true
 fields:
   object:
     type: master_detail

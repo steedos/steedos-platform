@@ -1,6 +1,7 @@
 name: follows
 label: Following
 icon: action.following
+hidden: true
 fields:
   object_name:
     label: Object

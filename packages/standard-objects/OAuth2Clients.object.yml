@@ -1,6 +1,7 @@
 name: OAuth2Clients
 icon: entity
 label: OAuth2 Client
+hidden: true
 enable_search: false
 fields:
   clientName:

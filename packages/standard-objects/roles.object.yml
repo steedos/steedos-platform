@@ -1,6 +1,7 @@
 name: roles
 label: Role
 icon: task
+hidden: true
 fields:
   name:
     label: Name

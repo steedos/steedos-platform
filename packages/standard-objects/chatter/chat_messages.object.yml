@@ -1,6 +1,7 @@
 name: chat_messages
 label: Chat Message
 icon: live-chat
+hidden: true
 fields:
   related_to:
     label: Related Object Record

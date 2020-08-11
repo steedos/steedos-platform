@@ -1,6 +1,7 @@
 name: picklists
 label: Picklist
 icon: orders
+hidden: true
 fields:
   name: 
     type: text

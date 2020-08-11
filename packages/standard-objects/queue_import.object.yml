@@ -2,6 +2,7 @@ name: queue_import
 label: Data Import Queue
 icon: product_consumed
 enable_files: true
+hidden: true
 fields:
   description:
     label: Description

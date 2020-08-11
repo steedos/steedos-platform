@@ -1,6 +1,7 @@
 name: spaces
 label: Company
 icon: groups
+hidden: true
 fields:
   name:
     label: Name

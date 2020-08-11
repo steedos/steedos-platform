@@ -1,6 +1,7 @@
 name: permission_objects
 label: Permission
 icon: user
+hidden: true
 fields:
   # name:
   #   label: Name

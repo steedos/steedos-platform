@@ -1,6 +1,7 @@
 name: space_user_signs
 icon: metrics
 label: User Sign
+hidden: true
 fields:
   user:
     type: lookup

@@ -16,63 +16,7 @@ const objectBaseFields = {
     in_development: '0'
 }
 
-const hiddenObjects = [
-    'core',
-    'audit_login',
-    'autonumber',
-    'cfs_files_filerecord',
-    'cms_files',
-    'connected_apps',
-    'object_webhooks',
-    'object_workflows',
-    'roles',
-    'sessions',
-    'spaces',
-    'chat_messages',
-    'chat_rooms',
-    'chat_subscriptions',
-    'approvals',
-    'categories',
-    'flow_positions',
-    'flow_roles',
-    'instance_number_rules',
-    'space_user_signs',
-    'billing_pay_records',
-    'oa_home',
-    'datasources',
-    'objects',
-    'object_actions',
-    'object_fields',
-    'object_triggers',
-    'instances_statistic',
-    'process_delegation_rules',
-    'webhooks',
-    'base',
-    'users',
-    'flows',
-    'forms',
-    'instances',
-    'settings',
-    'object_recent_viewed',
-    'OAuth2Clients',
-    'OAuth2AccessTokens',
-    'follows',
-    'favorites',
-    'audit_records',
-    'users_verify_code',
-    'permission_objects',
-    'permission_set',
-    'permission_shares',
-    'picklists',
-    'picklist_options',
-    'queue_import',
-    'object_listviews',
-    'notifications',
-    'cms_categories',
-    'cms_posts',
-    'cms_sites',
-    'cfs_instances_filerecord'
-]
+const hiddenObjects = ['core','base','cfs_instances_filerecord'];
 
 exports.hiddenObjects = hiddenObjects
 
@@ -115,6 +59,14 @@ function getObjects(userId){
                 _obj._id = k;
                 _obj.name = k;
                 _obj.datasource = name;
+                _obj.fields = {}
+                _.each(getObjectFields(k, userId), function(_f){
+                    _obj.fields[_f.name] = _f;
+                });
+                delete _obj.actions
+                delete _obj.triggers
+                delete _obj.list_views
+                delete _obj.permission_set
                 objects[_obj.name] = Object.assign({}, _obj, objectBaseFields)
             }
           });
@@ -168,7 +120,7 @@ function getObjectFields(objectName, userId){
     let object = getObject(objectName, userId);
     if(object){
         let fields = [];
-        let originalFieldsName = ['created','created_by','modified','modified_by'].concat(_.keys(getOriginalObjectFields(objectName)));
+        let originalFieldsName = ['created_by', 'modified_by', 'owner'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified',
         _.each(object.fields, function(field){
             if(!field._id && _.include(originalFieldsName, field.name)){
                 fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))

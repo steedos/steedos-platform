@@ -1,6 +1,7 @@
 name: datasources
 label: DataSource
 icon: entity
+hidden: true
 fields:
   driver:
     type: select

@@ -1,6 +1,7 @@
 name: license
 label: License
 icon: product_item
+hidden: true
 enable_audit: true
 fields:
   lid:

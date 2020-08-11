@@ -1,6 +1,7 @@
 name: notifications
 label: Notification
 icon: quick_text
+hidden: true
 fields:
   name: 
     label: Title
