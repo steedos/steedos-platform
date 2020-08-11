@@ -255,6 +255,9 @@ list_views:
       - is_system
     label: All
     filter_scope: space
+    extra_columns:
+      - datasource
+      - fields
   customize:
     columns:
       - label
@@ -268,6 +271,9 @@ list_views:
     filters:
       - ["is_system","<>",true]
     filter_scope: space
+    extra_columns:
+      - datasource
+      - fields
   system:
     columns:
       - label
@@ -281,6 +287,9 @@ list_views:
     filters:
       - ["is_system","=",true]
     filter_scope: space
+    extra_columns:
+      - datasource
+      - fields
 actions: 
   show_object: 
     label: Preview

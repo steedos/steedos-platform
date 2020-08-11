@@ -120,7 +120,7 @@ function getObjectFields(objectName, userId){
     let object = getObject(objectName, userId);
     if(object){
         let fields = [];
-        let originalFieldsName = ['created_by', 'modified_by', 'owner'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified',
+        let originalFieldsName = ['created_by', 'modified_by'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified', 'owner'
         _.each(object.fields, function(field){
             if(!field._id && _.include(originalFieldsName, field.name)){
                 fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
@@ -130,6 +130,13 @@ function getObjectFields(objectName, userId){
     }
 }
 exports.getObjectFields = getObjectFields
+
+exports.getDefaultSysFields = function(object, userId){
+    if(!object.datasource || object.datasource === 'default'){
+        let baseObject = getObject('base', userId)
+        return _.pick(baseObject.fields, 'created_by', 'modified_by');
+    }
+}
 
 exports.getObjectField = function(objectName, userId, fieldId){
     let fields = getObjectFields(objectName, userId);
