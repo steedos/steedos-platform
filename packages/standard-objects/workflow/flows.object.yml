@@ -262,7 +262,7 @@ fields:
     group: Script
     name: events
   distribute_optional_users:
-    type: lookup
+    type: object
     label: Users to be Distributed
     reference_to: users
     multiple: true
