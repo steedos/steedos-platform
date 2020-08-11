@@ -4,18 +4,25 @@
 # 其他 Steedos
 
 if Meteor.isClient
-	Meteor.startup ->
-		Tracker.autorun (c)->
-			if Session.get("steedos-locale") && Creator.bootstrapLoaded?.get()
-				titleTags = []
-				object = Creator.getObject()
-				record = Creator.getObjectRecord()
-				listView = Creator.getListView()
-				if record
-					titleTags.push record.name
-				else if listView
-					titleTags.push listView.label
-				if object
-					titleTags.push object.label
-				titleTags.push "Steedos"
-				Steedos.setAppTitle(titleTags.join(" | "));
+    Meteor.startup ->
+        Tracker.autorun (c)->
+            if Session.get("steedos-locale") && Creator.bootstrapLoaded?.get()
+                titleTags = []
+                object = Creator.getObject()
+                unless object
+                    return
+                record = Creator.getObjectRecord()
+                listView = Creator.getListView()
+                if record
+                    if object.name == "cfs.files.filerecord"
+                        label = record?.original?.name
+                    else
+                        nameField = object.NAME_FIELD_KEY || "name"
+                        label = record[nameField]
+                    titleTags.push label
+                else if listView
+                    titleTags.push listView.label
+                if object
+                    titleTags.push object.label
+                titleTags.push "Steedos"
+                Steedos.setAppTitle(titleTags.join(" | "));
