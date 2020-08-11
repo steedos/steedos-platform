@@ -1,6 +1,7 @@
 name: holidays
 label: Holidays
 icon: groups
+hidden: true
 fields:
   name:
     label: Name

@@ -1,6 +1,7 @@
 name: categories
 icon: metrics
 label: Workflow Category
+hidden: true
 fields:
   name:
     type: text

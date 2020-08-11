@@ -1,6 +1,7 @@
 name: apps
 label: App
 icon: apps
+hidden: true
 fields:
   name:
     label: Name

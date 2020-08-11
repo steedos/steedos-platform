@@ -1,6 +1,7 @@
 name: process_delegation_rules
 icon: metrics
 label: Delegation
+hidden: true
 fields:
   from:
     type: lookup

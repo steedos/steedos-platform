@@ -1,6 +1,7 @@
 name: users_verify_code
 label: Verify Code
 icon: custom.custom76
+hidden: true
 fields:
   name:
     label: Name

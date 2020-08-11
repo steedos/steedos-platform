@@ -1,6 +1,7 @@
 name: favorites
 label: My Favorite
 icon: custom.custom11
+hidden: true
 fields:
   name: 
     type: text

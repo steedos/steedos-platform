@@ -1,6 +1,7 @@
 name: flow_positions
 icon: metrics
 label: Workflow Position
+hidden: true
 fields:
   role:
     type: master_detail

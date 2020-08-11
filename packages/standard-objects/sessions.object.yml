@@ -1,6 +1,7 @@
 name: sessions
 label: Session
 icon: report
+hidden: true
 fields:
   name:
     label: Name

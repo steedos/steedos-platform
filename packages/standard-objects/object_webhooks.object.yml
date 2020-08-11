@@ -1,6 +1,7 @@
 name: object_webhooks
 label: Object Webhook
 icon: account
+hidden: true
 fields:
   name:
     type: text

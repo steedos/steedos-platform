@@ -1,6 +1,7 @@
 name: forms
 icon: timesheet
 label: Form
+hidden: true
 fields:
   name:
     type: text

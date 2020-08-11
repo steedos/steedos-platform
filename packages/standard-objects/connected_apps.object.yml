@@ -1,6 +1,7 @@
 name: connected_apps
 label: External Application
 icon: entity
+hidden: true
 enable_api: true
 fields:
   name: 

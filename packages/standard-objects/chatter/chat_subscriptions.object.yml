@@ -1,5 +1,6 @@
 name: chat_subscriptions
 label: Chat Subscription
+hidden: true
 fields:
   name:
     label: Name

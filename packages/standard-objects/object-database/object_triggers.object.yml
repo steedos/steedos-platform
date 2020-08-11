@@ -1,6 +1,7 @@
 name: object_triggers
 icon: asset_relationship
 label: Object Triggers
+hidden: true
 fields:
   name:
     type: text

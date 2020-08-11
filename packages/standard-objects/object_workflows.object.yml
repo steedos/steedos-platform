@@ -1,6 +1,7 @@
 name: object_workflows
 label: Object Synchronization Rule
 icon: apps
+hidden: true
 fields:
   name:
     label: Name

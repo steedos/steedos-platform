@@ -1,6 +1,7 @@
 name: object_layouts
 label: Object Layouts
 icon: custom.custom104
+hidden: true
 fields:
   label:
     type: text

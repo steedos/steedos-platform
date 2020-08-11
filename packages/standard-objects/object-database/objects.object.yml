@@ -1,6 +1,7 @@
 name: objects
 icon: orders
 label: Object
+hidden: true
 fields:
   datasource:
     type: master_detail

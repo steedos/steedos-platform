@@ -1,6 +1,7 @@
 name: picklist_options
 label: Picklist Options
 icon: order_item
+hidden: true
 fields:
   picklist:
     type: master_detail

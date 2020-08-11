@@ -1,6 +1,7 @@
 name: flows
 icon: timesheet
 label: Workflow
+hidden: true
 enable_files: true
 fields:
   name:

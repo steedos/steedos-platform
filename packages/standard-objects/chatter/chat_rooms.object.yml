@@ -1,5 +1,6 @@
 name: chat_rooms
 label: Chat Room
+hidden: true
 fields:
   name:
     is_name: true

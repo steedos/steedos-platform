@@ -1,6 +1,7 @@
 name: permission_shares
 label: Permission Share
 icon: assigned_resource
+hidden: true
 fields:
   name:
     label: Name

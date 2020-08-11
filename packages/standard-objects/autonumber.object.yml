@@ -1,6 +1,7 @@
 name: autonumber
 label: Auto Number
 icon: apps
+hidden: true
 fields:
   object_name:
     label: Object

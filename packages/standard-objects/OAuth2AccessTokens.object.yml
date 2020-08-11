@@ -2,6 +2,7 @@ name: OAuth2AccessTokens
 icon: entity
 label: OAuth2 Token
 enable_search: false
+hidden: true
 fields:
   userId:
     label: User

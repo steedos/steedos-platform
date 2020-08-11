@@ -1,6 +1,7 @@
 name: instance_number_rules
 icon: metrics
 label: Instance Number Rule
+hidden: true
 fields:
   name:
     type: text
