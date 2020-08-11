@@ -89,12 +89,18 @@ Meteor.startup ()->
 				changed: (newDocument, oldDocument)->
 					if objects_observer_init
 						if !Steedos.isSpaceAdmin() && (newDocument.is_enable == false || newDocument.in_development != '0')
-							_removeClientObjects newDocument
+							Meteor.setTimeout ()->
+								_removeClientObjects newDocument
+							, 5000
 						else
-							_changeClientObjects newDocument
+							Meteor.setTimeout ()->
+								_changeClientObjects newDocument
+							, 5000
 				removed: (oldDocument)->
 					if objects_observer_init
-						_removeClientObjects oldDocument
+						Meteor.setTimeout ()->
+							_removeClientObjects oldDocument
+						, 5000
 			}
 			objects_observer_init = true
 
