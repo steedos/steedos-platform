@@ -96,8 +96,8 @@
 						</div>
 						{{#if sidebar.enable_hide}}
 							<div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink grid-sidebar-toggle">
-								<button type="button" role="button" title="显示侧栏" aria-pressed="true" class="slds-button slds-button_icon slds-button_icon-border 
-									btn-toggle-grid-sidebar {{#unless sidebar.hidden}}slds-is-selected{{/unless}}">
+								<button type="button" role="button" title="显示侧栏" aria-pressed="true" 
+									class="slds-button slds-button_icon slds-button_icon-border btn-toggle-grid-sidebar {{#unless sidebar.hidden}}slds-is-selected{{/unless}}">
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="rows"}}
 									<span class="slds-assistive-text">显示侧栏</span>
 								</button>
@@ -208,7 +208,7 @@
 						<div class="slds-col slds-no-space {{#if sidebar}}sidebar-open{{/if}}">
 						{{#if list_view_visible}}
 							{{#if isCalendarView}}
-								<div class="tale-content list-table-container td-cell-wrap">
+								<div class="tale-content list-table-container td-cell-wrap list-table-main">
 									{{> Template.dynamic template='creator_calendarNew' data=list_data}}
 								</div>
 							{{else}}
@@ -217,7 +217,7 @@
 										{{> Template.dynamic template=sidebar.template_name}}
 									</div>
 								{{/if}}
-								<div class="slds-table tale-content list-table-container td-cell-wrap">
+								<div class="slds-table tale-content list-table-container td-cell-wrap list-table-main">
 									{{#if showAsGrid}}
 										{{> Template.dynamic template=list_template data=list_data}}
 									{{else}}
