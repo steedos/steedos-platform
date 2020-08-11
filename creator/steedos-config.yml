@@ -11,3 +11,4 @@ public:
 plugins:
   - "@steedos/app-contracts"
   - "@steedos/steedos-plugin-workflow"
+enable_holidays: true
