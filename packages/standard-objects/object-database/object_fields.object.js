@@ -186,8 +186,8 @@ function allowChangeObject(){
 }
 
 function checkNameField(nameField){
-  if(nameField.type === 'master_detail' || nameField.type === 'lookup'){
-    throw new Error("名称字段的类型不能是相关表、主表/子表");
+  if(["text", "autonumber"].indexOf(nameField.type) < 0){
+    throw new Error("只有文本或自动编号类型的字段可以被设置为名称字段");
   }
 }
 
