@@ -1,6 +1,5 @@
 datasources:
   default:
-    locale: zh
     connection:
       url: ${MONGO_URL}
     objectFiles:
