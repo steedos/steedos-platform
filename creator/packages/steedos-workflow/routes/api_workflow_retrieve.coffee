@@ -118,7 +118,7 @@ JsonRoutes.add 'post', '/api/workflow/retrieve', (req, res, next) ->
 				newTrace.step = previous_trace_step_id
 				newTrace.name = previous_trace_name
 				newTrace.start_date = now
-				newTrace.due_date = uuflowManager.getDueDate(previous_step.timeout_hours)
+				newTrace.due_date = uuflowManager.getDueDate(previous_step.timeout_hours, space_id)
 				newTrace.approves = []
 				# 插入下一步trace.approve记录
 				newApprove = new Object
