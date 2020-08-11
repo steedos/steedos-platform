@@ -395,7 +395,7 @@ export class ODataManager {
                       queryOptions.fields = [_ro_NAME_FIELD_KEY]
                     }
 
-                    if (_.isEmpty(entities[idx][navigationProperty])) {
+                    if (_.isEmpty(entities[idx][navigationProperty]) || !_.isArray(entities[idx][navigationProperty])) {
                       entities[idx][navigationProperty] = originalData;
                     } else {
                       let refId = entities[idx][navigationProperty][0]._id;
