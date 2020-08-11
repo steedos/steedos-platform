@@ -71,7 +71,6 @@ const hiddenObjects = [
     'cms_categories',
     'cms_posts',
     'cms_sites',
-    'cfs_instances_filerecord'
 ]
 
 exports.hiddenObjects = hiddenObjects
@@ -115,6 +114,14 @@ function getObjects(userId){
                 _obj._id = k;
                 _obj.name = k;
                 _obj.datasource = name;
+                _obj.fields = {}
+                _.each(getObjectFields(k, userId), function(_f){
+                    _obj.fields[_f.name] = _f;
+                });
+                delete _obj.actions
+                delete _obj.triggers
+                delete _obj.list_views
+                delete _obj.permission_set
                 objects[_obj.name] = Object.assign({}, _obj, objectBaseFields)
             }
           });
@@ -168,7 +175,7 @@ function getObjectFields(objectName, userId){
     let object = getObject(objectName, userId);
     if(object){
         let fields = [];
-        let originalFieldsName = ['created','created_by','modified','modified_by'].concat(_.keys(getOriginalObjectFields(objectName)));
+        let originalFieldsName = ['created_by', 'modified_by', 'owner'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified',
         _.each(object.fields, function(field){
             if(!field._id && _.include(originalFieldsName, field.name)){
                 fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
