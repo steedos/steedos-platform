@@ -1,6 +1,7 @@
 name: approvals
 icon: metrics
 label: Approval
+hidden: true
 fields:
   from_user:
     label: From 
