@@ -8,7 +8,7 @@ export function newCollection(tableName: string, datasourceName?: string, option
         datasourceName = 'default'
     }
     let datasourceConfig = config.datasources[datasourceName];
-    let locale = datasourceConfig.locale;
+    let locale = datasourceConfig.locale || 'zh';
     let driver = mongodrivers[datasourceName];
     if (!driver) {
         driver = new SteedosMongoDriver(datasourceConfig.connection);
