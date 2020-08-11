@@ -48,8 +48,9 @@ Template.creatorHeader.helpers
 	showViewObject: ()->
 		if !Steedos.isSpaceAdmin()
 			return false
-		objectName = Session.get("object_name")
-		if objectName && window._SteedosHiddenObjects && !_.include(window._SteedosHiddenObjects, objectName)
+		objectName = Session.get("object_name");
+		_object = Creator.getObject(objectName);
+		if objectName && !_object.hidden && window._SteedosHiddenObjects && !_.include(window._SteedosHiddenObjects, objectName)
 			return true
 		else
 			return false
