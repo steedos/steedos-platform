@@ -73,6 +73,8 @@ list_views:
       - product
       - edition
       - end_date
+    filters:
+      - [['lid', '<>', 'None']]
 permission_set:
   user:
     allowCreate: false
