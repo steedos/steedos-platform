@@ -94,6 +94,11 @@ export class ODataManager {
   }
 
   excludeDeleted(filters: string) {
+
+    if(filters && filters.indexOf('(is_deleted eq true)') > -1){
+      return filters
+    }
+
     return filters ? `(${filters}) and (is_deleted ne true)` : `(is_deleted ne true)`;
   }
 

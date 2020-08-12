@@ -82,25 +82,21 @@ Meteor.startup ()->
 	Tracker.autorun (c) ->
 		if Creator.bootstrapLoaded.get()
 			objects_observer_init = false
-			Creator.getCollection("objects").find().observe {
+			Creator.getCollection("objects").find({is_deleted: {$ne: true}}).observe {
 #				added: (newDocument)->
 #					if objects_observer_init
 #						_changeClientObjects newDocument
 				changed: (newDocument, oldDocument)->
 					if objects_observer_init
 						if !Steedos.isSpaceAdmin() && (newDocument.is_enable == false || newDocument.in_development != '0')
-							Meteor.setTimeout ()->
-								_removeClientObjects newDocument
-							, 5000
+							_removeClientObjects newDocument
 						else
 							Meteor.setTimeout ()->
 								_changeClientObjects newDocument
 							, 5000
 				removed: (oldDocument)->
 					if objects_observer_init
-						Meteor.setTimeout ()->
-							_removeClientObjects oldDocument
-						, 5000
+						_removeClientObjects oldDocument
 			}
 			objects_observer_init = true
 
