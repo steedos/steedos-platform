@@ -27,6 +27,7 @@ saveTempNavsToCache = (tempNavs)->
             itemValueStr += ":#{item.url}"
         if item.label
             itemValueStr += ":#{item.label}"
+        return itemValueStr
     valueStr = values.join(",")
     sessionStorage.setItem("temp_navs", valueStr)
 
