@@ -263,8 +263,7 @@ _itemDropdownClick = (e, selectionInfo)->
 	else
 		actionSheetOption.itemTemplate = (itemData, itemIndex, itemElement)->
 			itemElement.html "<span class='text-muted'>#{itemData.text}</span>"
-
-	actionSheet = $(".creator-list-wrapper .list-table-sidebar .action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
+	actionSheet = this.$(".action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
 
 	actionSheet.option("target", e.target);
 	actionSheet.option("visible", true);

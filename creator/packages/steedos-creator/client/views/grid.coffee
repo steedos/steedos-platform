@@ -51,7 +51,7 @@ _itemClick = (e, curObjectName, list_view_id)->
 		actionSheetOption.itemTemplate = (itemData, itemIndex, itemElement)->
 			itemElement.html "<span class='text-muted'>#{itemData.text}</span>"
 
-	actionSheet = $(".creator-list-wrapper .list-table-main .action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
+	actionSheet = this.$(".action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
 
 	actionSheet.option("target", e.event.target);
 	actionSheet.option("visible", true);
