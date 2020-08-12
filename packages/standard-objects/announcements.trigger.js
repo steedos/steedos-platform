@@ -46,15 +46,18 @@ module.exports = {
         const doc = Object.assign({}, this.doc, {_id: this.id});
         const userId = this.userId;
 
-        let oldMembers = previousDoc.members || [];
-        let newMembers = doc.members || [];
-        let addMembers = _.difference(newMembers, oldMembers);
-        let subMembers = _.difference(oldMembers, newMembers);
-        if (addMembers.length) {
-            addNotifications(userId, doc, addMembers);
-        }
-        if (subMembers.length) {
-            removeNotifications(doc, subMembers);
+        if(doc.members){
+            // 编辑单个非members字段时，doc.members为空
+            let oldMembers = previousDoc.members || [];
+            let newMembers = doc.members || [];
+            let addMembers = _.difference(newMembers, oldMembers);
+            let subMembers = _.difference(oldMembers, newMembers);
+            if (addMembers.length) {
+                addNotifications(userId, doc, addMembers);
+            }
+            if (subMembers.length) {
+                removeNotifications(doc, subMembers);
+            }
         }
     },
     afterDelete: async function () {
