@@ -27,6 +27,9 @@ const getTimeValue = (str)=>{
 }
 
 const validateStartEnd = (start, end, lunch_start, lunch_end)=>{
+    if(!start || !end || !lunch_start || !lunch_end){
+        return;
+    }
     // 验证start, end为HH:MM格式，结束时间必须晚于开始时间，午休时间必须在开始结束时间范围内
     start = start.trim();
     end = end.trim();
