@@ -4,6 +4,9 @@ const { getUserLocale } = require('@steedos/core').Util;
 const clone = require("clone");
 
 const generatHtml = (doc)=>{
+    if(!doc._id || !doc.object_name || !doc.fields || !doc.return_url){
+        return;
+    }
     const fields = doc.fields;
     let object = getSteedosSchema().getObject(doc.object_name);
     if(!object){
@@ -86,15 +89,19 @@ module.exports = {
     listenTo: 'web_forms',
     afterInsert: async function () {
         let doc = this.doc;
-        const object = this.getObject("web_forms");
         let generatedHtml = generatHtml(doc);
-        await object.directUpdate(doc._id, {generated_html:generatedHtml});
+        if(generatedHtml){
+            const object = this.getObject("web_forms");
+            await object.directUpdate(doc._id, {generated_html:generatedHtml});
+        }
     },
     afterUpdate: async function () {
-        // 因为afterUpdate中没有this.doc._id，所以把this.id集成过去
-        let doc = Object.assign({}, this.doc, {_id: this.id});
-        const object = this.getObject("web_forms");
+        // 因为afterUpdate中没有this.doc._id，所以把previousDoc集成过去，编辑单个字段时也需要从previousDoc中集成其他字段
+        let doc = Object.assign({}, this.previousDoc, this.doc);
         let generatedHtml = generatHtml(doc);
-        await object.directUpdate(doc._id, {generated_html:generatedHtml});
+        if(generatedHtml){
+            const object = this.getObject("web_forms");
+            await object.directUpdate(doc._id, {generated_html:generatedHtml});
+        }
     }
 }
