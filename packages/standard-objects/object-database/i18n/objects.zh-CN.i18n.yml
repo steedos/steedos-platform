@@ -41,6 +41,7 @@ objects_field_is_system: 系统
 objects_listview_all: 全部
 objects_listview_customize: 自定义
 objects_listview_system: 系统
+objects_listview_deleted: 已删除
 objects_field_datasource_defaultValue: 默认数据源
 objects_group_switch: 功能开关
 objects_group_external_data_source: 外部数据源

@@ -50,7 +50,7 @@ Template.creatorHeader.helpers
 			return false
 		objectName = Session.get("object_name");
 		_object = Creator.getObject(objectName);
-		if objectName && !_object.hidden && window._SteedosHiddenObjects && !_.include(window._SteedosHiddenObjects, objectName)
+		if objectName && !_object?.hidden && window._SteedosHiddenObjects && !_.include(window._SteedosHiddenObjects, objectName)
 			return true
 		else
 			return false

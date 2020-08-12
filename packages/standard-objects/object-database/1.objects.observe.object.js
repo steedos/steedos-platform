@@ -15,7 +15,7 @@ Meteor.startup(function () {
         return ;
     }else{
         server_objects_init = false;
-        Creator.getCollection("objects").find({}, {
+        Creator.getCollection("objects").find({is_deleted: {$ne: true}}, {
             fields: {
                 created: 0,
                 created_by: 0,

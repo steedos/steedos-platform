@@ -2,6 +2,7 @@ name: objects
 icon: orders
 label: Object
 hidden: true
+enable_trash: true
 fields:
   datasource:
     type: master_detail
@@ -212,6 +213,11 @@ fields:
     omit: true
     hidden: true
     disabled: true
+  is_deleted:
+    hidden: false
+    omit: false
+    disabled: false
+    readonly: false
 paging:
   enabled: false
 relatedList:
@@ -290,14 +296,29 @@ list_views:
     extra_columns:
       - datasource
       - fields
+  deleted:
+    columns:
+      - label
+      - name
+      # - table_name
+      # - datasource
+      - in_development
+      - is_enable
+      - is_system
+    label: Deleted
+    filters:
+      - ["is_system","<>",true]
+      - ["is_deleted","=",true]
+    filter_scope: space
+    extra_columns:
+      - datasource
+      - fields
 actions: 
   show_object: 
     label: Preview
-    visible: true
     on: record
   copy_odata: 
     label: Copy OData URL
-    visible: true
     on: record
   # export:
   #   label: Export
