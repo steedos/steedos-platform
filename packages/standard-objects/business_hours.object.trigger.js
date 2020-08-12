@@ -73,7 +73,7 @@ module.exports = {
         validateStartEnd(doc.start, doc.end, doc.lunch_start, doc.lunch_end);
         if (doc.is_default) {
             const repeats = await objectql.getObject("business_hours").find({
-                filters: [["space", "=", doc.space], ["is_default", "=", true]],
+                filters: [["space", "=", this.spaceId], ["is_default", "=", true]],
                 fields: ["_id"]
             });
             if(repeats && repeats.length){
@@ -90,7 +90,7 @@ module.exports = {
         validateStartEnd(doc.start, doc.end, doc.lunch_start, doc.lunch_end);
         if (doc.is_default) {
             const repeats = await objectql.getObject("business_hours").find({
-                filters: [["space", "=", doc.space], ["is_default", "=", true], ["_id", "!=", doc._id]],
+                filters: [["space", "=", this.spaceId], ["is_default", "=", true], ["_id", "!=", doc._id]],
                 fields: ["_id"]
             });
             if(repeats && repeats.length){
