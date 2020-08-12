@@ -24,6 +24,8 @@ fields:
         value: adjusted_holiday
       - label: Adjusted Working Day
         value: adjusted_working_day
+    depend_on:
+      - adjusted_to
   date:
     label: Date
     type: date
@@ -41,6 +43,8 @@ fields:
       - Thursday:4
       - Friday:5
       - Saturday:6
+    depend_on:
+      - type
 list_views:
   all:
     label: All
