@@ -15,11 +15,6 @@ fields:
     label: Report Type
     type: select
     defaultValue: tabular
-    depend_on:
-      - object_name #这个不加的话，行、列、字段值会显示为value而不是label
-      - rows
-      - columns
-      - fields
     options: !<tag:yaml.org,2002:js/function> |-
       function () {
         var types = [
@@ -136,7 +131,6 @@ fields:
     is_wide: true
     depend_on:
       - object_name
-      - report_type
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function (values) {
@@ -151,8 +145,6 @@ fields:
     is_wide: true
     depend_on:
       - object_name
-      - report_type
-      - columns
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function (values) {
@@ -167,8 +159,6 @@ fields:
     is_wide: true
     depend_on:
       - object_name
-      - report_type
-      - rows
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function (values) {
