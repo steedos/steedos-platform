@@ -48,15 +48,17 @@ Creator.Objects['tasks'].triggers = {
         when: "before.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
             modifier.$set = modifier.$set || {};
+            // 考虑到单字段编辑把doc集成过去
+            var newDoc = Object.assign({}, doc, modifier.$set);
             var docAssignees = doc.assignees || [];
-            var setAssignees = modifier.$set.assignees || [];
+            var setAssignees = newDoc.assignees || [];
             var addAssignees = _.difference(setAssignees, docAssignees);
             var removedAssignees = _.difference(docAssignees, setAssignees);
             if(addAssignees.length){
-                addNotifications(userId, doc, addAssignees);
+                addNotifications(userId, newDoc, addAssignees);
             }
             if(removedAssignees.length){
-                removeNotifications(doc, removedAssignees);
+                removeNotifications(newDoc, removedAssignees);
             }
         }
     },
