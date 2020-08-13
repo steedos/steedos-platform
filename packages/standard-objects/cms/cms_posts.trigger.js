@@ -77,8 +77,8 @@ module.exports = {
     },
     afterUpdate: async function () {
         const previousDoc = this.previousDoc;
-        // 因为afterUpdate中没有this.doc._id，所以把this.id集成过去
-        let doc = Object.assign({}, this.doc, {_id: this.id});
+        // 因为afterUpdate中没有this.doc._id，所以把this.id集成过去，考虑到单字段编辑把previousDoc也集成过去
+        let doc = Object.assign({}, previousDoc, this.doc, {_id: this.id});
         const userId = this.userId;
 
         if(doc.site){
