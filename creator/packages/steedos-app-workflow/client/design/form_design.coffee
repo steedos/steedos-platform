@@ -43,11 +43,16 @@ Template.formDesign.events
 				if jqXHR.status == 504
 					toastr?.error?(TAPi18n.__('连接超时，请稍后再试'))
 				else
-					error = jqXHR.responseJSON.error
-					console.error error
-					if error.reason
-						toastr?.error?(TAPi18n.__(error.reason))
-					else if error.message
-						toastr?.error?(TAPi18n.__(error.message))
+					if(jqXHR.responseJSON)
+						error = jqXHR.responseJSON.error
+						console.error error
+						if error.reason
+							toastr?.error?(TAPi18n.__(error.reason))
+						else if error.message
+							toastr?.error?(TAPi18n.__(error.message))
+						else
+							toastr?.error?(error)
 					else
-						toastr?.error?(error)
+						toastr?.error?(jqXHR.responseText)
+
+
