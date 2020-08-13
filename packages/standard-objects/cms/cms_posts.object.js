@@ -85,12 +85,13 @@ if (Meteor.isServer) {
       throw new Meteor.Error(400, "cms_error_login_required");
     }
     modifier.$set = modifier.$set || {};
-    if(modifier.$set.site){
-      var site = db.cms_sites.findOne({_id: modifier.$set.site}, {fields:{enable_post_permissions:1}})
+    var newDoc = Object.assign({}, doc, modifier.$set);//兼容单字段编辑情况
+    if(newDoc.site){
+      var site = db.cms_sites.findOne({_id: newDoc.site}, {fields:{enable_post_permissions:1}})
       if(site && site.enable_post_permissions){
         // 站点启用文章级权限时判断members必填
-        var isMemberUsersEmpty = !modifier.$set.members || !modifier.$set.members.users || !modifier.$set.members.users.length;
-        var isMemberOrgsEmpty = !modifier.$set.members || !modifier.$set.members.organizations || !modifier.$set.members.organizations.length;
+        var isMemberUsersEmpty = !newDoc.members || !newDoc.members.users || !newDoc.members.users.length;
+        var isMemberOrgsEmpty = !newDoc.members || !newDoc.members.organizations || !newDoc.members.organizations.length;
         if (isMemberUsersEmpty && isMemberOrgsEmpty) {
           throw new Meteor.Error(400, "cms_error_required_members_value");
         }
