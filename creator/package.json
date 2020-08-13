@@ -1,6 +1,6 @@
 {
   "name": "steedos",
-  "version": "1.21.9",
+  "version": "1.22.0-alpha.3",
   "private": true,
   "scripts": {
     "start": "env-cmd -f ./.env.local meteor run --settings settings.json --port 3100",
@@ -27,7 +27,7 @@
     "@steedos/core": "^1.19.8",
     "@steedos/filters": "^1.19.8",
     "@steedos/i18n": "^1.19.8",
-    "@steedos/license": "1.22.0-alpha.7",
+    "@steedos/license": "1.22.0-alpha.8",
     "@steedos/objectql": "^1.19.8",
     "@steedos/odata-v4-typeorm": "^0.1.0",
     "@steedos/schemas": "^1.19.8",
