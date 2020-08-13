@@ -224,7 +224,7 @@ Creator.getAppObjectNames = (app_id)->
 	if app
 		_.each appObjects, (v)->
 			obj = Creator.getObject(v)
-			if obj?.permissions.get().allowRead and !obj.hidden
+			if obj?.permissions.get().allowRead
 				objects.push v
 	return objects
 
