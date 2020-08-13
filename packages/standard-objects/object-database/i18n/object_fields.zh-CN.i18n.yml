@@ -25,6 +25,7 @@ object_fields_field_options_inlineHelpText: 选择项的每个选项显示名及
 object_fields_field_precision: 精度(数字长度)
 object_fields_field_primary: 主键
 object_fields_field_readonly: 只读
+object_fields_field_cell_readonly: 单元格只读
 object_fields_field_reference_to: 引用对象
 object_fields_field_required: 必填
 object_fields_field_rows: 多行文本行数

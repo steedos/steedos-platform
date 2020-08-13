@@ -375,6 +375,10 @@
                     "type": "boolean",
                     "description": "是否只读"
                 },
+                "cell_readonly": {
+                    "type": "boolean",
+                    "description": "单元格只读"
+                },
                 "hidden": {
                     "type": "boolean",
                     "description": "是否隐藏"
