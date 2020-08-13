@@ -1910,10 +1910,10 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
 
-"@steedos/license@1.22.0-alpha.7":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.7.tgz#a3816fd565309318c20c47819e33c1a4ffd39054"
-  integrity sha1-o4Fv1WUwkxjCDEeBnjPBpP/TkFQ=
+"@steedos/license@1.22.0-alpha.8":
+  version "1.22.0-alpha.8"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.8.tgz#75e1fcfdebacb0930ff32d591cd264a6a7bc3b74"
+  integrity sha1-deH8/eussJMP8y1ZHNJkpqe8O3Q=
   dependencies:
     crypto "^1.0.1"
     node-fetch "^2.6.0"
@@ -1947,15 +1947,6 @@
     yargs "^13.2.1"
     yn "^2.0.0"
 
-"@steedos/steedos-plugin-workflow@^1.0.2":
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.10.3.tgz#aabdadf14429c401b53288c760b7e01d65ff9b07"
-  integrity sha512-nXzj0uFJnIbRII7iIJ2d/C6zjbQukX814QTgRu+TNkHTvfxUJTlktuZLmUc30wWmm0SkB/foONeKGjBMz/1+0w==
-  dependencies:
-    body-parser "^1.19.0"
-    express "^4.17.1"
-    underscore "^1.9.1"
-
 "@steedos/steedos-plugin-workflow@^1.9.1":
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.9.1.tgz#e96115e4dba012dc5c454a3d38dab0f4ca7f9a44"
@@ -1964,7 +1955,7 @@
     express "^4.17.1"
     underscore "^1.9.1"
 
-"@steedos/steedos-plugin-workflow@^2.0.4":
+"@steedos/steedos-plugin-workflow@^2.0.10", "@steedos/steedos-plugin-workflow@^2.0.4":
   version "2.0.10"
   resolved "https://registry.npm.taobao.org/@steedos/steedos-plugin-workflow/download/@steedos/steedos-plugin-workflow-2.0.10.tgz#b3d575ecb69d980cbda4fc2f4fe9b6c4e8adc54d"
   integrity sha1-s9V17LadmAy9pPwvT+m2xOitxU0=
