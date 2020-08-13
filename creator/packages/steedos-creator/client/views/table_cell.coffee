@@ -120,7 +120,7 @@ Template.creator_table_cell.helpers
 		safeField = Creator.getRecordSafeField(this.field, this.doc, this.object_name);
 		if !safeField
 			return false
-		if safeField.omit or safeField.readonly or safeField.cell_readonly
+		if safeField.omit or safeField.readonly
 			return false
 
 		if safeField.type == "filesize"

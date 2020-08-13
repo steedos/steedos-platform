@@ -104,9 +104,6 @@ fields:
   readonly:
     type: boolean
     label: Readonly
-  cell_readonly:
-    type: boolean
-    label: Cell Readonly
   hidden:
     type: boolean
     label: Hidden
