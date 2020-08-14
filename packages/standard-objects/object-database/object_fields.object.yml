@@ -79,7 +79,9 @@ fields:
       - label: Url
         value: url
       - label: Email
-        value: email     
+        value: email
+      - label: Formula
+        value: formula
   defaultValue:
     type: text
     label: Default Value
@@ -213,9 +215,26 @@ fields:
   formula:
     label: Formula
     type: text
-    inlineHelpText: This field must be filled when the field type is autonumber
+    inlineHelpText: This field must be filled when the field type is 'Autonumber'
     group: Advanced
     is_wide: true
+  formula_type:
+    type: select
+    label: Formula Return Type
+    inlineHelpText: This field must be filled when the field type is 'Formula Return Type'
+    options: 
+      - label: Checkbox
+        value: boolean
+      - label: Number
+        value: number
+      - label: Currency
+        value: currency
+      - label: Text
+        value: text
+      - label: Date
+        value: date
+      - label: Datetime
+        value: datetime
   column_name:
     type: text
     label: Database column name
