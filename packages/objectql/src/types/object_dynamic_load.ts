@@ -77,6 +77,14 @@ const getLazyLoadListeners = function(objectName: string){
     return _lazyLoadListeners[objectName]
 }
 
+const perfectObjectConfig = (objectConfig: SteedosObjectTypeConfig)=>{
+    _.each(objectConfig.fields, (field: SteedosObjectTypeConfig, key: string)=>{
+        if(!field.name){
+            field.name = key;
+        }
+    })
+}
+
 export const loadObjectLazyListenners = function(objectName: string){
     let listenners = getLazyLoadListeners(objectName);
     _.each(listenners, function(listenner){
@@ -114,7 +122,7 @@ export const getOriginalObjectConfigs = (datasource: string) => {
     }
 }
 
-export const getObjectConfigs = (datasource: string) => {
+export const getObjectConfigs = (datasource?: string) => {
     if (datasource) {
         return _.filter(_objectConfigs, {datasource: datasource})
     } else {
@@ -283,6 +291,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
     config.datasource = datasource;
     _.remove(_objectConfigs, {name: object_name, datasource: datasource});
     delete config.__filename
+    perfectObjectConfig(config)
     _objectConfigs.push(config)
 }
 

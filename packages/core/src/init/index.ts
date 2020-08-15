@@ -5,6 +5,7 @@ import { getSteedosSchema } from '@steedos/objectql';
 import * as migrate from '@steedos/migrate';
 import { initPublicStaticRouter } from '../routes';
 import { InitI18n } from './i18n';
+import { initObjectFieldsFormulas } from '@steedos/objectql';
 
 export async function init() {
     getSteedosSchema();
@@ -13,6 +14,7 @@ export async function init() {
     initPublicStaticRouter();
     Plugins.init();
     Datasources.loadFiles();
+    initObjectFieldsFormulas();
     initCreator();
     await Datasources.init();
     await migrate.init();

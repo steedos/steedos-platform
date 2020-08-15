@@ -22,7 +22,7 @@ fields:
     name: account
     filterable: true
   account_site:
-    label: 业务伙伴网址
+    label: 业务伙伴网站
     type: formula
     sortable: true
     filterable: true

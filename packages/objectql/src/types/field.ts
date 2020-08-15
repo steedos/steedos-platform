@@ -84,6 +84,8 @@ abstract class SteedosFieldProperties{
     is_company_limited?: boolean
     system?: string;
     fieldDBType?: SteedosFieldDBType | string
+    formula?: string
+    formula_type?: string
 }
 
 export interface SteedosFieldTypeConfig extends SteedosFieldProperties{
