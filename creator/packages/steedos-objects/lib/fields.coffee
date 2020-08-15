@@ -1,3 +1,68 @@
+processFormulaType = (field, fs)->
+	if field.formula_type == "text"
+		fs.type = String
+		if field.multiple
+			fs.type = [String]
+			fs.autoform.type = "tags"
+	else if field.formula_type == "date"
+		fs.type = Date
+		if Meteor.isClient
+			if Steedos.isMobile() || Steedos.isPad()
+				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+				fs.autoform.afFieldInput =
+					type: "steedos-date-mobile"
+					dateMobileOptions:
+						type: "date"
+			else
+				fs.autoform.outFormat = 'yyyy-MM-dd';
+				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+				fs.autoform.afFieldInput =
+					type: "dx-date-box"
+					timezoneId: "utc"
+					dxDateBoxOptions:
+						type: "date"
+						displayFormat: "yyyy-MM-dd"
+	else if field.formula_type == "datetime"
+		fs.type = Date
+		if Meteor.isClient
+			if Steedos.isMobile() || Steedos.isPad()
+				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+				fs.autoform.afFieldInput =
+					type: "steedos-date-mobile"
+					dateMobileOptions:
+						type: "datetime"
+			else
+				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+				fs.autoform.afFieldInput =
+					type: "dx-date-box"
+					dxDateBoxOptions:
+						type: "datetime"
+						displayFormat: "yyyy-MM-dd HH:mm"
+	else if field.formula_type == "currency"
+		fs.type = Number
+		fs.autoform.type = "steedosNumber"
+		fs.autoform.precision = field.precision || 18
+		if field?.scale
+			fs.autoform.scale = field.scale
+			fs.decimal = true
+		else if field?.scale != 0
+			fs.autoform.scale = 2
+			fs.decimal = true
+	else if field.formula_type == "number"
+		fs.type = Number
+		fs.autoform.type = "steedosNumber"
+		fs.autoform.precision = field.precision || 18
+		if field?.scale
+			fs.autoform.scale = field.scale
+			fs.decimal = true
+	else if field.formula_type == "boolean"
+		fs.type = Boolean
+		if field.readonly
+			fs.autoform.disabled = true
+		fs.autoform.type = "steedos-boolean-toggle"
+	else
+		fs.type = String
+
 Creator.getObjectSchema = (obj) ->
 	unless obj
 		return
@@ -416,6 +481,8 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = 'steedosEmail'
 		else if field.type == 'autonumber'
 			fs.type = String
+		else if field.type == 'formula'
+			processFormulaType(field, fs)
 		else
 			fs.type = field.type
 
