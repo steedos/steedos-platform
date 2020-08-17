@@ -1,4 +1,4 @@
-import { addFieldFormulaConfig, SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteConfig, getFieldFormulaConfigs } from './field_formula';
+import { addFieldFormulaConfig, SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteConfig } from './field_formula';
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
 import _ = require('lodash')
 const clone = require('clone')
