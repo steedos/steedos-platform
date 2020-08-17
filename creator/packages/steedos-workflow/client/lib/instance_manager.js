@@ -673,11 +673,17 @@ InstanceManager.getCurrentValues = function () {
 			if (approve && approve.values)
 				return approve.values
 		} else if (box == "inbox") {
+			var c = InstanceManager.getCurrentStep();
 			approve = InstanceManager.getCurrentApprove();
-			if (approve && approve.values) {
-				if (_.isEmpty(approve.values))
-					approve.values = InstanceManager.clone(WorkflowManager.getInstance().values)
+			if (c.step_type == 'counterSign') {
+				approve.values = InstanceManager.clone(instance.values);
 				return approve.values
+			} else {
+				if (approve && approve.values) {
+					if (_.isEmpty(approve.values))
+						approve.values = InstanceManager.clone(WorkflowManager.getInstance().values)
+					return approve.values
+				}
 			}
 		} else if (box == "outbox" || box == "pending" || box == "completed" || box == "monitor") {
 

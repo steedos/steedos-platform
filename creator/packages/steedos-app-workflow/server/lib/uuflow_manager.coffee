@@ -525,14 +525,17 @@ uuflowManager.getNextSteps = (instance, flow, step, judge) ->
 	rev_nextSteps = _.uniq(rev_nextSteps)
 	return rev_nextSteps
 
-uuflowManager.getUpdatedValues = (instance) ->
+uuflowManager.getUpdatedValues = (instance, approve_id) ->
 
 	# 取得最新的approve
 	trace_approve = null
 	_.each(instance.traces, (trace) ->
 		if trace.is_finished is false
 			trace_approve = _.find(trace.approves, (approve) ->
-				return approve.is_finished is false and approve.type isnt 'cc' and approve.type isnt 'distribute'
+				if approve_id && approve._id == approve_id
+					return true
+				else
+					return approve.is_finished is false and approve.type isnt 'cc' and approve.type isnt 'distribute'
 			)
 	)
 	# 取得最新的values
@@ -1538,7 +1541,9 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 				setObj.traces = instance_traces
 				setObj.finish_date = new Date
 
-				setObj.values = instance.values
+				updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id), approve_id)
+				setObj.values = updated_values
+				setObj.name = uuflowManager.getInstanceName(instance)
 				if instance.cc_users
 					setObj.cc_users = instance.cc_users
 
@@ -1630,7 +1635,10 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 							setObj.traces = instance_traces
 
 							setObj.state = "pending"
-							setObj.values = instance.values
+
+							updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id), approve_id)
+							setObj.values = updated_values
+							setObj.name = uuflowManager.getInstanceName(instance)
 							if instance.cc_users
 								setObj.cc_users = instance.cc_users
 
@@ -1656,7 +1664,10 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 			setObj.traces = instance_traces
 
 			setObj.state = "pending"
-			setObj.values = instance.values
+
+			updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id), approve_id)
+			setObj.values = updated_values
+			setObj.name = uuflowManager.getInstanceName(instance)
 			if instance.cc_users
 				setObj.cc_users = instance.cc_users
 
