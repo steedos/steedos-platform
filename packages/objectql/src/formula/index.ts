@@ -1,62 +1,78 @@
-import { addFieldFormulaConfig, SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteConfig } from './field_formula';
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
+import { addFieldFormulaConfig, SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, getFieldFormulaConfigs } from './field_formula';
+import { pickFormulaVars } from './core';
 import _ = require('lodash')
 const clone = require('clone')
 
 export * from './field_formula'
+export * from './triggers'
 
-const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteConfig, quotes: Array<SteedosFieldFormulaQuoteConfig>) => {
+const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>) => {
     let existQuote = quotes.find((item) => {
         return item.field_name === quote.field_name && item.object_name === quote.object_name
     });
-    if (existQuote) {
+    if (!existQuote) {
         quotes.push(quote);
     }
 }
 
 /**
- * 把公式中a.b.c，比如account.website这样的变量转为SteedosFieldFormulaQuoteConfig追加到quotes中
+ * 把公式中a.b.c，比如account.website这样的变量转为SteedosFieldFormulaQuoteTypeConfig追加到quotes中
  * @param formulaVar 公式中的单个变量，比如account.website
  * @param fieldConfig 
  * @param objectConfigs 
  * @param quotes 
  */
-const computeFormulaVarQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteConfig>): Array<SteedosFieldFormulaQuoteConfig> => {
+const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
     let varItems = formulaVar.split(".");
+    let paths: Array<SteedosFieldFormulaVarPathTypeConfig> = [];
     if (varItems.length > 1) {
         let tempObjectConfig = objectConfig;
-        let tempFieldConfig: SteedosFieldTypeConfig;
-        for (let i = 0, varItem = varItems[i]; i < varItems.length; i++) {
-            tempFieldConfig = tempObjectConfig[varItem];
-            if(!tempFieldConfig){
+        for (let i = 0; i < varItems.length; i++) {
+            if (!tempObjectConfig) {
+                // 没找到相关引用对象，直接退出
+                break;
+            }
+            let varItem = varItems[i];
+            let tempFieldConfig: SteedosFieldTypeConfig = tempObjectConfig.fields[varItem];
+            if (!tempFieldConfig) {
                 // 不是对象上的字段，则直接退出
                 break;
             }
-            if(i > 0){
+            paths.push({
+                field_name: varItem,
+                reference_to: tempObjectConfig.name
+            });
+            if (i > 0) {
                 // 自己不能引用自己，大于0就是其他对象上的引用
                 addFieldFormulaQuotesConfig({
                     object_name: tempObjectConfig.name,
                     field_name: tempFieldConfig.name
                 }, quotes);
             }
-            if(tempFieldConfig.type !== "lookup" && tempFieldConfig.type !== "master_detail"){
+            if (tempFieldConfig.type !== "lookup" && tempFieldConfig.type !== "master_detail") {
                 // 不是引用类型字段，则直接退出
                 break;
             }
-            if(typeof tempFieldConfig.reference_to !== "string"){
+            if (typeof tempFieldConfig.reference_to !== "string") {
                 // 暂时只支持reference_to为字符的情况，其他类型直接跳过
                 break;
             }
-            tempObjectConfig = objectConfigs.find((item)=>{
+            tempObjectConfig = objectConfigs.find((item) => {
                 return item.name === tempFieldConfig.reference_to;
             });
-            if(!tempObjectConfig){
+            if (!tempObjectConfig) {
                 // 没找到相关引用对象，直接退出
                 break;
             }
         }
     }
-    return quotes;
+    let formulaVarItem: SteedosFieldFormulaVarTypeConfig = {
+        key: formulaVar,
+        paths: paths
+    };
+    vars.push(formulaVarItem);
+    return { quotes, vars };
 }
 
 /**
@@ -65,26 +81,27 @@ const computeFormulaVarQuotes = (formulaVar: string, objectConfig: SteedosObject
  * @param fieldConfig 
  * @param objectConfigs 
  */
-const computeFormulaQuotes = (formula: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>): Array<SteedosFieldFormulaQuoteConfig> => {
-    let quotes: Array<SteedosFieldFormulaQuoteConfig> = [];
-    const formulaVars = formula.match(/\{[\w\.]+\}/g).map((n) => { return n.replace(/{|}/g, "") })
+const computeFormulaVarsAndQuotes = (formula: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>) => {
+    let quotes: Array<SteedosFieldFormulaQuoteTypeConfig> = [];
+    let vars: Array<SteedosFieldFormulaVarTypeConfig> = [];
+    const formulaVars = pickFormulaVars(formula);
     formulaVars.forEach((formulaVar) => {
-        computeFormulaVarQuotes(formulaVar, objectConfig, objectConfigs, quotes);
+        computeFormulaVarAndQuotes(formulaVar, objectConfig, objectConfigs, quotes, vars);
     });
-    return quotes;
+    return { quotes, vars };
 }
 
 export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig, objectConfig: SteedosObjectTypeConfig) => {
-    // 注意不可以取config.name为当前字段的name，它可能为空，需要用传入的field_name
     const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs()
     const formula = fieldConfig.formula;
-    let quotes: Array<SteedosFieldFormulaQuoteConfig> = computeFormulaQuotes(formula, objectConfig, objectConfigs);
+    let result = computeFormulaVarsAndQuotes(formula, objectConfig, objectConfigs);
     let formulaConfig: SteedosFieldFormulaTypeConfig = {
         _id: `${objectConfig.name}__${fieldConfig.name}`,
         object_name: objectConfig.name,
         field_name: fieldConfig.name,
         formula: formula,
-        quotes: quotes
+        quotes: result.quotes,
+        vars: result.vars
     };
     addFieldFormulaConfig(formulaConfig);
 }
@@ -92,7 +109,6 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
 export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig) => {
     _.each(config.fields, function (field) {
         if (field.type === "formula") {
-            //field.name可能为空，所以传入name
             addObjectFieldFormulaConfig(clone(field), config);
         }
     })
@@ -103,6 +119,6 @@ export const initObjectFieldsFormulas = () => {
     _.each(objectConfigs, function (objectConfig) {
         addObjectFieldsFormulaConfig(objectConfig);
     })
-    
-    // console.log("===initObjectFieldsFormulas===", getFieldFormulaConfigs())
+
+    console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
 }

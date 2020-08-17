@@ -1,5 +1,8 @@
 
-objectWebhooksPreSend = function (userId, doc, object_name, action) {
+const objectql = require("@steedos/objectql");
+const wrapAsync = objectql.wrapAsync;
+
+const objectWebhooksPreSend = function (userId, doc, object_name, action) {
     var actionUserInfo, obj, owCollection, redirectUrl;
     if (!ObjectWebhooksQueue) {
         console.error('not found ObjectWebhooksQueue');
@@ -60,6 +63,10 @@ objectWebhooksPreSend = function (userId, doc, object_name, action) {
         });
     });
 };
+
+const fieldFormulaBeforeUpdate = function(userId, doc, fieldNames, modifier, options){
+    wrapAsync(objectql.fieldFormulaTriggers.beforeUpdate, Object.assign({userId: userId, spaceId: doc.space, id: doc._id, doc: modifier.$set, previousDoc: doc, object_name: this.object_name}))
+}
 
 module.exports = {
     extend: 'base',
@@ -530,7 +537,14 @@ module.exports = {
 
                 }
             }
-        }
+        },
+        "before.update.server.fieldFormula": {
+            on: "server",
+            when: "before.update",
+            todo: function (userId, doc, fieldNames, modifier, options) {
+                fieldFormulaBeforeUpdate.bind(this)(userId, doc, fieldNames, modifier, options);
+            }
+        },
     }
 };
 function setDetailOwner(doc, object_name, userId) {
