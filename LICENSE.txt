@@ -2,11 +2,11 @@ Steedos Licensing
 
 SOFTWARE LICENSING
 
-You are licensed to use npm packages of the Steedos Platform published by Steedos, Inc. under an [MIT LICENSE](https://choosealicense.com/licenses/mit/)
+You are licensed to use npm packages of the Steedos Platform published by Steedos, Inc. under an MIT LICENSE
 
 You may be licensed to use source code of Steedos Platform. in one of two ways:
 
-1. Under the Free Software Foundation’s [GNU AGPL v.3.0](https://choosealicense.com/licenses/agpl-3.0/); or
+1. Under the Free Software Foundation’s GNU AGPL v.3.0; or
 2. Under a commercial license available from Steedos, Inc. by contacting zhuangjianguo@steedos.com
 
 STEEDOS TRADEMARK GUIDELINES
