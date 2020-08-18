@@ -21,14 +21,14 @@ fields:
     sortable: true
     name: account
     filterable: true
-  account_site:
-    label: 业务伙伴网站
-    type: formula
-    sortable: true
-    filterable: true
-    formula_type: text
-    formula: "{account.website}"
-    readonly: true
+  # account_site:
+  #   label: 业务伙伴网站
+  #   type: formula
+  #   sortable: true
+  #   filterable: true
+  #   formula_type: text
+  #   formula: "{account.website}"
+  #   readonly: true
   title:
     label: 职务
     type: text
