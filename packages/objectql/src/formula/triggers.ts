@@ -8,10 +8,14 @@ const runFieldFormular = async function (fieldFormulaConfig: SteedosFieldFormula
 
 export const fieldFormulaTriggers = {
     beforeUpdate: async function () {
-        // console.log("===fieldFormulaTriggers======beforeUpdate===", this);
         const configs = getObjectFieldFormulaConfigs(this.object_name);
         for (const config of configs) {
-            // console.log("====config.formula==", config.formula);
+            await runFieldFormular.bind(this)(config)
+        }
+    },
+    beforeInsert: async function () {
+        const configs = getObjectFieldFormulaConfigs(this.object_name);
+        for (const config of configs) {
             await runFieldFormular.bind(this)(config)
         }
     }

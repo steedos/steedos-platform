@@ -62,7 +62,11 @@ export const runFieldFormular = function (formula: string, params: Array<Steedos
         formulaParams[key] = value;
         formula = formula.replace(`{${key}}`, `__params["${key}"]`);
     });
-    let formulaFun = `module.exports = function (__params) { return ${formula} }`;
+    if(!/\breturn\b/.test(formula)){
+        // 如果里面没有return语句，则在最前面加上return前缀
+        formula = `return ${formula}`;
+    }
+    let formulaFun = `module.exports = function (__params) { ${formula} }`;
     // console.log("==runFieldFormular==formulaFun===", formulaFun);
     // console.log("==runFieldFormular==formulaParams===", formulaParams);
     let result = _eval(formulaFun)(formulaParams);

@@ -68,6 +68,10 @@ const fieldFormulaBeforeUpdate = function(userId, doc, fieldNames, modifier, opt
     wrapAsync(objectql.fieldFormulaTriggers.beforeUpdate, Object.assign({userId: userId, spaceId: doc.space, id: doc._id, doc: modifier.$set, previousDoc: doc, object_name: this.object_name}))
 }
 
+const fieldFormulaBeforeInsert = function(userId, doc){
+    wrapAsync(objectql.fieldFormulaTriggers.beforeInsert, Object.assign({userId: userId, spaceId: doc.space, doc: doc, object_name: this.object_name}))
+}
+
 module.exports = {
     extend: 'base',
     actions: {
@@ -543,6 +547,13 @@ module.exports = {
             when: "before.update",
             todo: function (userId, doc, fieldNames, modifier, options) {
                 fieldFormulaBeforeUpdate.bind(this)(userId, doc, fieldNames, modifier, options);
+            }
+        },
+        "before.insert.server.fieldFormula": {
+            on: "server",
+            when: "before.insert",
+            todo: function (userId, doc) {
+                fieldFormulaBeforeInsert.bind(this)(userId, doc);
             }
         },
     }
