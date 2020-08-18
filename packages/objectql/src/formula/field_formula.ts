@@ -61,6 +61,12 @@ export const getFieldFormulaConfig = (_id: string): SteedosFieldFormulaTypeConfi
     return getConfig('field_formula', _id);
 }
 
+/**
+ * 获取对象本身的字段公式配置
+ * 不传入fieldName时取objectName关联的所有字段公式配置
+ * @param objectName 
+ * @param fieldName 
+ */
 export const getObjectFieldFormulaConfigs = (objectName: string, fieldName?: string): Array<SteedosFieldFormulaTypeConfig> => {
     const configs = getFieldFormulaConfigs();
     return configs.filter((config: SteedosFieldFormulaTypeConfig) => {
@@ -69,6 +75,32 @@ export const getObjectFieldFormulaConfigs = (objectName: string, fieldName?: str
         }
         else {
             return config.object_name === objectName;
+        }
+    });
+}
+
+/**
+ * 获取对象在哪些字段公式中被引用
+ * 不传入fieldNames时取objectName关联的所有字段公式配置
+ * @param objectName 
+ * @param fieldNames 
+ */
+export const getObjectQuotedFieldFormulaConfigs = (objectName: string, fieldNames?: Array<string>): Array<SteedosFieldFormulaTypeConfig> => {
+    const configs = getFieldFormulaConfigs();
+    return configs.filter((config: SteedosFieldFormulaTypeConfig) => {
+        const quotes = config.quotes;
+        if(quotes && quotes.length){
+            return !!quotes.find((quote)=>{
+                if (fieldNames && fieldNames.length) {
+                    return quote.object_name === objectName && fieldNames.indexOf(quote.field_name) > -1;
+                }
+                else {
+                    return quote.object_name === objectName;
+                }
+            });
+        }
+        else{
+            return false;
         }
     });
 }
