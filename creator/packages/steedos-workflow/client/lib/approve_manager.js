@@ -8,7 +8,7 @@ ApproveManager.error = {
 ApproveManager.isReadOnly = function() {
     var ins = WorkflowManager.getInstance();
 
-    if (InstanceManager.isCC(ins)) {
+    if (InstanceManager.isCC(ins) && !InstanceManager.ccHasEditPermission()) {
         return true;
     }
 

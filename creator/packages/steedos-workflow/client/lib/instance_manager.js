@@ -348,6 +348,9 @@ function removeMessage(parent_group) {
 }
 
 InstanceManager.checkFormValue = function () {
+	if (InstanceManager.isCC(WorkflowManager.getInstance())) {
+		return;
+	}
 
 	InstanceManager.checkNextStep();
 
@@ -675,7 +678,7 @@ InstanceManager.getCurrentValues = function () {
 		} else if (box == "inbox") {
 			var c = InstanceManager.getCurrentStep();
 			approve = InstanceManager.getCurrentApprove();
-			if (c.step_type == 'counterSign') {
+			if (c.step_type == 'counterSign' || InstanceManager.ccHasEditPermission()) {
 				approve.values = InstanceManager.clone(instance.values);
 				return approve.values
 			} else {
@@ -789,7 +792,9 @@ InstanceManager.saveIns = function (noWarn) {
 
 		if (InstanceManager.isCC(instance)) {
 			var description = $("#suggestion").val();
-			Meteor.call('cc_save', instance._id, description, function (error, result) {
+			var ccHasEditPermission = InstanceManager.ccHasEditPermission();
+			var myApprove = InstanceManager.getMyApprove();
+			Meteor.call('cc_save', instance._id, description, myApprove, ccHasEditPermission, function (error, result) {
 				$('body').removeClass("loading");
 				if (error) {
 					toastr.error(error);
@@ -924,7 +929,10 @@ InstanceManager.submitIns = function () {
 			Session.set("instance_submitting", true);
 
 			var description = $("#suggestion").val();
-			Meteor.call('cc_submit', instance._id, description, function (error, result) {
+
+			var ccHasEditPermission = InstanceManager.ccHasEditPermission();
+			var myApprove = InstanceManager.getMyApprove();
+			Meteor.call('cc_submit', instance._id, description, myApprove, ccHasEditPermission, function (error, result) {
 				if (error) {
 					toastr.error(error);
 					Session.set("instance_submitting", false);
@@ -1802,5 +1810,15 @@ InstanceManager.pickApproveSteps = function () {
 
 InstanceManager.ccHasEditPermission = function () {
 	var ccStep = InstanceManager.getCCStep();
-	return ccStep.cc_has_edit_permission;
+	// 当传阅步骤已结束时不应该允许编辑字段
+	var currentApprove = InstanceManager.getCurrentApprove();
+	if (!currentApprove)
+		return false;
+	var ins = WorkflowManager.getInstance();
+	if (!ins)
+		return false;
+	var trace = _.find(ins.traces, function (t) {
+		return t._id == currentApprove.trace;
+	})
+	return ccStep.cc_has_edit_permission && !trace.is_finished;
 }

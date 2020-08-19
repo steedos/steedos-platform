@@ -526,18 +526,20 @@ uuflowManager.getNextSteps = (instance, flow, step, judge) ->
 	return rev_nextSteps
 
 uuflowManager.getUpdatedValues = (instance, approve_id) ->
-
 	# 取得最新的approve
 	trace_approve = null
 	_.each(instance.traces, (trace) ->
 		if trace.is_finished is false
-			trace_approve = _.find(trace.approves, (approve) ->
-				if approve_id && approve._id == approve_id
-					return true
-				else
+			if approve_id
+				trace_approve = _.find(trace.approves, (approve) ->
+					return approve._id == approve_id
+				)
+			else
+				trace_approve = _.find(trace.approves, (approve) ->
 					return approve.is_finished is false and approve.type isnt 'cc' and approve.type isnt 'distribute'
-			)
+				)
 	)
+
 	# 取得最新的values
 	newest_values = null
 	if not instance.values

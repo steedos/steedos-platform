@@ -220,7 +220,7 @@ WorkflowManager.getInstanceFieldPermission = function() {
 		return {};
 	}
 
-	if (InstanceManager.isCC(instance)) {
+	if (InstanceManager.isCC(instance) && !InstanceManager.ccHasEditPermission()) {
 		return {};
 	}
 
