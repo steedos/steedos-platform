@@ -337,7 +337,7 @@ const updateObjectData = async function (req: Request, res: Response) {
         let urlParams = req.params;
         let bodyParams = req.body;
         let key = urlParams.objectName;
-        // let spaceId = userSession.spaceId;
+        let spaceId = userSession.spaceId;
         let recordId = urlParams._id;
         let setErrorMessage = getODataManager().setErrorMessage;
 
@@ -360,8 +360,14 @@ const updateObjectData = async function (req: Request, res: Response) {
                 })
                 let entityIsUpdated = await collection.update(recordId, data, userSession);
                 if (entityIsUpdated) {
+                    let body = {}
+                    let entities= []
+                    entities.push(entityIsUpdated);
+                    body['@odata.context'] = getODataManager().getODataContextPath(spaceId, key) + '/$entity';
+                    let entity_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
+                    body['value'] = entity_OdataProperties;
                     getODataManager().setHeaders(res);
-                    res.send({});
+                    res.send(body);
                 } else {
                     res.status(404).send(setErrorMessage(404, collection, key));
                 }
