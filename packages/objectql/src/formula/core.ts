@@ -14,6 +14,27 @@ export const pickFormulaVars = (formula: string): Array<string> => {
 }
 
 /**
+ * 根据公式内容，取出其中{}中的变量，并进一步取出这些变量中引用了当前对象的哪些字段
+ * @param fieldFormulaConfig 
+ */
+export const pickFieldFormulaVarFields = (fieldFormulaConfig: SteedosFieldFormulaTypeConfig): Array<string> => {
+    let { vars } = fieldFormulaConfig;
+    if(!vars.length){
+        return [];
+    }
+    // let fields = getSteedosSchema().getObject(fieldFormulaConfig.object_name).fields;
+    let result = [];
+    vars.forEach((varItem)=>{
+        if(varItem.paths.length){
+            // 取paths中第一个，第一个一定是当前对象中的字段
+            let firstKey = varItem.paths[0].field_name;
+            result.push(firstKey);
+        }
+    });
+    return result;
+}
+
+/**
  * 根据公式中的变量值，计算出跨对象引用的记录对应的字段值，作为公式运算的参数返回
  * @param doc 
  * @param vars 
@@ -110,6 +131,8 @@ export const updateQuotedObjectFieldFormulaValue = async (objectName: string, re
             addToAggregatePaths(varItemToAggregatePaths, toAggregatePaths);
         }
     }
+    const formulaVarFields = pickFieldFormulaVarFields(fieldFormulaConfig);
+    console.log("===updateQuotedObjectFieldFormulaValue=formulaVarFields====", formulaVarFields);
     // 只有一层引用关系时，vars格式如：[{"key":"account.website","paths":[{"field_name":"account","reference_to":"contacts"},{"field_name":"website","reference_to":"accounts"}]}]
     // 则toAggregatePaths为[[{"field_name":"account","reference_to":"contacts"}]]
     // 超过一层引用关系时，vars格式如：[{"key":"account.modified_by.name","paths":[{"field_name":"account","reference_to":"contacts"},{"field_name":"modified_by","reference_to":"accounts"},{"field_name":"name","reference_to":"users"}]}]
@@ -118,22 +141,24 @@ export const updateQuotedObjectFieldFormulaValue = async (objectName: string, re
         if (toAggregatePathsItem.length < 2) {
             // 引用关系只有一层时，可以直接查出哪些记录需要更新重算公式字段值
             let tempPath = toAggregatePathsItem[0];
-            let docs = await getSteedosSchema().getObject(fieldFormulaConfig.object_name).find({ filters: [[tempPath.field_name, "=", recordId]], fields: [tempPath.field_name] })
+            let docs = await getSteedosSchema().getObject(fieldFormulaConfig.object_name).find({ filters: [[tempPath.field_name, "=", recordId]], fields: formulaVarFields })
+            // let docs = await getSteedosSchema().getObject(fieldFormulaConfig.object_name).find({ filters: [[tempPath.field_name, "=", recordId]] })
             // console.log("===updateQuotedObjectFieldFormulaValue=docs====", docs);
-            for(let doc of docs){
+            for (let doc of docs) {
                 let value = await computeFieldFormulaValue(doc, fieldFormulaConfig);
-                // console.log("===updateQuotedObjectFieldFormulaValue=value====", value);
+                console.log("===updateQuotedObjectFieldFormulaValue=value====", value);
                 let setDoc = {};
                 setDoc[fieldFormulaConfig.field_name] = value;
-                // console.log("===updateQuotedObjectFieldFormulaValue=setDoc====", setDoc);
-                // console.log("===updateQuotedObjectFieldFormulaValue=doc====", doc);
-                // console.log("===updateQuotedObjectFieldFormulaValue=fieldFormulaConfig====", fieldFormulaConfig);
-                await getSteedosSchema().getObject(fieldFormulaConfig.object_name).updateOne(doc._id, setDoc);
+                console.log("===updateQuotedObjectFieldFormulaValue=setDoc====", setDoc);
+                console.log("===updateQuotedObjectFieldFormulaValue=doc====", doc);
+                console.log("===updateQuotedObjectFieldFormulaValue=fieldFormulaConfig====", fieldFormulaConfig);
+                // await getSteedosSchema().getObject(fieldFormulaConfig.object_name).updateOne(doc._id, setDoc);
+                await getSteedosSchema().getObject(fieldFormulaConfig.object_name).directUpdate(doc._id, setDoc);
             }
         }
         else {
             // 引用关系超过一层时，需要使用aggregate来查出哪些记录需要更新重算公式字段值
-
+            // TODO:调用aggregate函数来处理
         }
     }
 }

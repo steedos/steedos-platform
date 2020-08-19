@@ -16,17 +16,15 @@ const runCurrentObjectFieldFormulas = async function () {
 const runQuotedObjectFieldFormulas = async function () {
     const configs = getObjectQuotedFieldFormulaConfigs(this.object_name);
     for (const config of configs) {
-        console.log("===runQuotedObjectFieldFormulas====", config);
         await updateQuotedObjectFieldFormulaValue(this.object_name, this.id, config);
-        // this.doc[config.field_name] = await computeFieldFormulaValue(this.doc, config);
     }
 }
 
 export const fieldFormulaTriggers = {
-    beforeUpdate: async function () {
+    beforeInsert: async function () {
         await runCurrentObjectFieldFormulas.bind(this)();
     },
-    beforeInsert: async function () {
+    beforeUpdate: async function () {
         await runCurrentObjectFieldFormulas.bind(this)();
     },
     afterUpdate: async function () {

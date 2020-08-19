@@ -17,7 +17,7 @@ const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, 
 }
 
 /**
- * 把公式中a.b.c，比如account.website这样的变量转为SteedosFieldFormulaQuoteTypeConfig追加到quotes中
+ * 把公式中a.b.c，比如account.website这样的变量转为SteedosFieldFormulaQuoteTypeConfig和SteedosFieldFormulaVarTypeConfig追加到quotes和vars中
  * @param formulaVar 公式中的单个变量，比如account.website
  * @param fieldConfig 
  * @param objectConfigs 
@@ -26,45 +26,46 @@ const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, 
 const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
     let varItems = formulaVar.split(".");
     let paths: Array<SteedosFieldFormulaVarPathTypeConfig> = [];
-    if (varItems.length > 1) {
-        let tempObjectConfig = objectConfig;
-        for (let i = 0; i < varItems.length; i++) {
-            if (!tempObjectConfig) {
-                // 没找到相关引用对象，直接退出
-                break;
-            }
-            let varItem = varItems[i];
-            let tempFieldConfig: SteedosFieldTypeConfig = tempObjectConfig.fields[varItem];
-            if (!tempFieldConfig) {
-                // 不是对象上的字段，则直接退出
-                break;
-            }
-            paths.push({
-                field_name: varItem,
-                reference_to: tempObjectConfig.name
-            });
-            if (i > 0) {
-                // 自己不能引用自己，大于0就是其他对象上的引用
-                addFieldFormulaQuotesConfig({
-                    object_name: tempObjectConfig.name,
-                    field_name: tempFieldConfig.name
-                }, quotes);
-            }
-            if (tempFieldConfig.type !== "lookup" && tempFieldConfig.type !== "master_detail") {
-                // 不是引用类型字段，则直接退出
-                break;
-            }
-            if (typeof tempFieldConfig.reference_to !== "string") {
-                // 暂时只支持reference_to为字符的情况，其他类型直接跳过
-                break;
-            }
-            tempObjectConfig = objectConfigs.find((item) => {
-                return item.name === tempFieldConfig.reference_to;
-            });
-            if (!tempObjectConfig) {
-                // 没找到相关引用对象，直接退出
-                break;
-            }
+    let tempObjectConfig = objectConfig;
+    for (let i = 0; i < varItems.length; i++) {
+        if (!tempObjectConfig) {
+            // 没找到相关引用对象，直接退出
+            break;
+        }
+        let varItem = varItems[i];
+        if(tempObjectConfig.name === "contacts"){
+            console.log("===varItem===", varItem);
+        }
+        let tempFieldConfig: SteedosFieldTypeConfig = tempObjectConfig.fields[varItem];
+        if (!tempFieldConfig) {
+            // 不是对象上的字段，则直接退出
+            break;
+        }
+        paths.push({
+            field_name: varItem,
+            reference_to: tempObjectConfig.name
+        });
+        if (i > 0) {
+            // 自己不能引用自己，大于0就是其他对象上的引用
+            addFieldFormulaQuotesConfig({
+                object_name: tempObjectConfig.name,
+                field_name: tempFieldConfig.name
+            }, quotes);
+        }
+        if (tempFieldConfig.type !== "lookup" && tempFieldConfig.type !== "master_detail") {
+            // 不是引用类型字段，则直接退出
+            break;
+        }
+        if (typeof tempFieldConfig.reference_to !== "string") {
+            // 暂时只支持reference_to为字符的情况，其他类型直接跳过
+            break;
+        }
+        tempObjectConfig = objectConfigs.find((item) => {
+            return item.name === tempFieldConfig.reference_to;
+        });
+        if (!tempObjectConfig) {
+            // 没找到相关引用对象，直接退出
+            break;
         }
     }
     let formulaVarItem: SteedosFieldFormulaVarTypeConfig = {
