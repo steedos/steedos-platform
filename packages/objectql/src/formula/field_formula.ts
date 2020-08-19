@@ -1,9 +1,14 @@
 import { addConfig } from '../types';
 import { getConfigs, getConfig } from '../types/config';
 
+/**
+ * 记录公式字段中引用的其他对象上的字段或者引用的本对象上的公式字段
+ * 用于相关引用字段值变更时，能找到哪些公式字段需要级联变更
+ */
 export type SteedosFieldFormulaQuoteTypeConfig = {
     object_name: string,
-    field_name: string
+    field_name: string,
+    is_formula?: boolean
 }
 
 /**
@@ -12,7 +17,8 @@ export type SteedosFieldFormulaQuoteTypeConfig = {
  */
 export type SteedosFieldFormulaVarPathTypeConfig = {
     field_name: string,
-    reference_from: string
+    reference_from: string,
+    is_formula?: boolean
 }
 
 /**
