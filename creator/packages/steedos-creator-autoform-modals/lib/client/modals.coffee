@@ -21,8 +21,13 @@ collectionObj = (name) ->
 		o[x]
 	, window
 
-oDataOperation = (type, url, data, object_name)->
-	self = this
+oDataOperation = (type, url, data, object_name, other)->
+	self = this;
+	beforeHook = FormManager.runHook(object_name, Session.get("cmOperation"), 'before', {_id: other._id, formId: other.formId, doc: data})
+	if !beforeHook
+		return false;
+
+	previousDoc = FormManager.getPreviousDoc(object_name, other._id, Session.get("cmOperation"))
 	$.ajax
 		type: type
 		url: url
@@ -34,20 +39,22 @@ oDataOperation = (type, url, data, object_name)->
 			request.setRequestHeader 'X-User-Id', Meteor.userId()
 			request.setRequestHeader 'X-Auth-Token', Accounts._storedLoginToken()
 			request.setRequestHeader 'X-Space-Id', Steedos.spaceId()
-		success: (data) ->
+		success: (result) ->
 #			console.log('oDataOperation success');
 			if Session.get("cmOperation") == "insert"
-				_id = data.value[0]._id
+				_id = result.value[0]._id
 			else if Session.get("cmOperation") == "update"
-				_id = data._id
+				_id = result._id
 			# console.log _id
-			data = {_id: _id}
-			data.type = type
-			data.object_name = object_name
-			self.done(null, data)
+			_data = {_id: _id}
+			_data.type = type
+			_data.object_name = object_name
+			FormManager.runHook(object_name, Session.get("cmOperation"), 'after', {previousDoc: previousDoc, dbDoc: result?.value[0]})
+			self.done(null, _data)
 		error: (jqXHR, textStatus, errorThrown) ->
 			# console.log(errorThrown);
 			console.log('oDataOperation error');
+			FormManager.runHook(object_name, Session.get("cmOperation"), 'error', {_id: other._id, doc: data, error: jqXHR.responseJSON.error})
 			self.done(jqXHR.responseJSON.error)
 
 getObjectName = (collectionName)->
@@ -639,7 +646,7 @@ Template.CreatorAfModal.events
 					if Session.get("cmOperation") == "insert"
 						data = insertDoc
 						type = "post"
-						urls.push Steedos.absoluteUrl("/api/v4/#{object_name}")
+						urls.push {url: Steedos.absoluteUrl("/api/v4/#{object_name}"), formId: t.data.formId}
 						delete data._object_name
 					if Session.get("cmOperation") == "update"
 						if Session.get("cmMeteorMethod")
@@ -673,7 +680,7 @@ Template.CreatorAfModal.events
 
 						_ids = _id.split(",")
 						_.each _ids, (id)->
-							urls.push Steedos.absoluteUrl("/api/v4/#{object_name}/#{id}")
+							urls.push {url: Steedos.absoluteUrl("/api/v4/#{object_name}/#{id}"), _id: id, formId: t.data.formId}
 						data = updateDoc
 						type = "put"
 
@@ -689,14 +696,13 @@ Template.CreatorAfModal.events
 									trigger.todo.apply({object_name: object_name},[userId, data])
 
 
-					_.each urls, (url)->
-						oDataOperation.call(self, type, url, data, object_name)
+					_.each urls, (item)->
+						oDataOperation.call(self, type, item.url, data, object_name, {_id: item._id, formId: item.formId})
 
 					return false
 
 				onSuccess: (operation,result)->
 					Session.set 'cmSaving', false
-					console.log('onSuccess hide......');
 					$('#afModal').modal 'hide'
 					# if result.type == "post"
 					# 	app_id = Session.get("app_id")

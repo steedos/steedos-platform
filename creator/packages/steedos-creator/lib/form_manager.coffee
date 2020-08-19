@@ -48,11 +48,18 @@ FormManager.validate = (object_name, formId)->
 	object = Creator.getObject(object_name);
 	objectFormInitialValidateFun = object?.form?.validate
 	if _.isFunction(objectFormInitialValidateFun)
-		validateMsg = objectFormInitialValidateFun.apply({}, [AutoForm.getFormValues(formId)?.insertDoc])
-		if !_.isEmpty(validateMsg) && _.isObject(validateMsg)
-			_.each validateMsg, (val, key)->
-				AutoForm.addStickyValidationError(formId, key, 'formValidate', val)
-				toastr.error(val);
+		try
+			validateMsg = objectFormInitialValidateFun.apply({}, [AutoForm.getFormValues(formId)?.insertDoc])
+			if _.isBoolean(validateMsg) && validateMsg == false
+				return false
+			if !_.isEmpty(validateMsg) && _.isObject(validateMsg)
+				_.each validateMsg, (val, key)->
+					AutoForm.addStickyValidationError(formId, key, 'formValidate', val)
+					toastr.error(val);
+				return false;
+		catch e
+			console.error(e);
+			toastr.error(e.message);
 			return false;
 	return true
 
@@ -67,3 +74,68 @@ FormManager.onSubmit = (object_name, formId)->
 				toastr.error(val);
 			return false;
 	return true
+
+getContext = (object_name, hookName, options)->
+	context = {userId: Meteor.userId(), spaceId: Session.get("spaceId"), object_name: object_name}
+	if _.has(options, 'previousDoc')
+		context.previousDoc = options.previousDoc
+	if hookName.endsWith('Delete')
+		context.id = options._id
+		context.doc = Creator.odata.get(object_name, options._id)
+		context.error = options.error
+	else
+		if hookName.startsWith("after")
+			context.id = options.dbDoc?._id
+			context.doc = options.dbDoc
+		else if hookName.startsWith("before")
+			if !hookName.endsWith('Insert')
+				context.id = options._id
+			if hookName.endsWith('Update')
+				context.doc = options.doc?.$set
+			else
+				context.doc = options.doc
+		else if hookName.startsWith("error")
+			context.id = options._id
+			context.doc = options.doc
+			context.error = options.error
+	return context
+
+FormManager.getPreviousDoc = (object_name, _id, method)->
+	if method == 'update' || method == 'delete'
+		_when = 'after'
+		hookName = "#{_when}#{method.charAt(0).toLocaleUpperCase()}#{_.rest(method.split('')).join('')}"
+		object = Creator.getObject(object_name);
+		objectFormHookFun = object?.form?[hookName]
+		if _.isFunction(objectFormHookFun)
+			return Creator.odata.get(object_name, _id)
+
+# beforeInsert、 beforeUpdate、beforeDelete、afterInsert、 afterUpdate、afterDelete
+FormManager.runHook = (object_name, method, _when, options)->
+	formId = options.formId
+	hookName = "#{_when}#{method.charAt(0).toLocaleUpperCase()}#{_.rest(method.split('')).join('')}"
+	object = Creator.getObject(object_name);
+	objectFormHookFun = object?.form?[hookName]
+	if _.isFunction(objectFormHookFun)
+		try
+			context = getContext(object_name, hookName, options)
+			hookMsg = objectFormHookFun.apply(context)
+			if _.isBoolean(hookMsg) && hookMsg == false
+				return false
+			if formId && _when == 'before'
+				if !_.isEmpty(hookMsg) && _.isObject(hookMsg)
+					_.each hookMsg, (val, key)->
+						AutoForm.addStickyValidationError(formId, key, 'formValidate', val)
+						toastr.error(val);
+					return false;
+		catch e
+			console.error(e);
+			toastr.error(e.message);
+			return false;
+	return true;
+
+## TODO
+FormManager.onView
+
+FormManager.onEdit
+
+FormManager.onLoad

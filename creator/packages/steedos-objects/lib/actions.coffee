@@ -84,6 +84,9 @@ if Meteor.isClient
 
 		"standard_delete": (object_name, record_id, record_title, list_view_id, record, call_back)->
 			console.log("standard_delete", object_name, record_id, record_title, list_view_id)
+			beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
+			if !beforeHook
+				return false;
 			object = Creator.getObject(object_name)
 
 			if(!_.isString(record_title) && record_title?.name)
@@ -102,6 +105,7 @@ if Meteor.isClient
 				cancelButtonText: t('Cancel')
 				(option) ->
 					if option
+						previousDoc = FormManager.getPreviousDoc(object_name, record_id, 'delete')
 						Creator.odata.delete object_name, record_id, ()->
 							if record_title
 								# info = object.label + "\"#{record_title}\"" + "已删除"
@@ -138,3 +142,7 @@ if Meteor.isClient
 									FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
 							if call_back and typeof call_back == "function"
 								call_back()
+
+							FormManager.runHook(object_name, 'delete', 'after', {_id: record_id, previousDoc: previousDoc})
+						, (error)->
+							FormManager.runHook(object_name, 'delete', 'error', {_id: record_id, error: error})
