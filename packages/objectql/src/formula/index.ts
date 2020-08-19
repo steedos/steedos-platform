@@ -33,9 +33,6 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
             break;
         }
         let varItem = varItems[i];
-        if(tempObjectConfig.name === "contacts"){
-            console.log("===varItem===", varItem);
-        }
         let tempFieldConfig: SteedosFieldTypeConfig = tempObjectConfig.fields[varItem];
         if (!tempFieldConfig) {
             // 不是对象上的字段，则直接退出
@@ -43,7 +40,7 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         }
         paths.push({
             field_name: varItem,
-            reference_to: tempObjectConfig.name
+            reference_from: tempObjectConfig.name
         });
         if (i > 0) {
             // 自己不能引用自己，大于0就是其他对象上的引用

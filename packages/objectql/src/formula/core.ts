@@ -50,7 +50,7 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
                 }
                 else {
                     reslut = wrapAsync(function () {
-                        return getSteedosSchema().getObject(next.reference_to).findOne(<any>reslut, { fields: [next.field_name] })
+                        return getSteedosSchema().getObject(next.reference_from).findOne(<any>reslut, { fields: [next.field_name] })
                     }, {});
                     if (reslut) {
                         return reslut[next.field_name]
@@ -115,12 +115,12 @@ export const updateQuotedObjectFieldFormulaValue = async (objectName: string, re
     const { vars } = fieldFormulaConfig;
     let toAggregatePaths: Array<Array<SteedosFieldFormulaVarPathTypeConfig>> = [];
     for (let varItem of vars) {
-        // vars格式如：[{"key":"account.website","paths":[{"field_name":"account","reference_to":"contacts"},{"field_name":"website","reference_to":"accounts"}]}]
+        // vars格式如：[{"key":"account.website","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"website","reference_from":"accounts"}]}]
         const { paths } = varItem;
         let isInPaths = false;
         let varItemToAggregatePaths = [];
         for (let pathItem of paths) {
-            if (pathItem.reference_to === objectName) {
+            if (pathItem.reference_from === objectName) {
                 isInPaths = true;
                 break;
             }
@@ -133,10 +133,10 @@ export const updateQuotedObjectFieldFormulaValue = async (objectName: string, re
     }
     const formulaVarFields = pickFieldFormulaVarFields(fieldFormulaConfig);
     console.log("===updateQuotedObjectFieldFormulaValue=formulaVarFields====", formulaVarFields);
-    // 只有一层引用关系时，vars格式如：[{"key":"account.website","paths":[{"field_name":"account","reference_to":"contacts"},{"field_name":"website","reference_to":"accounts"}]}]
-    // 则toAggregatePaths为[[{"field_name":"account","reference_to":"contacts"}]]
-    // 超过一层引用关系时，vars格式如：[{"key":"account.modified_by.name","paths":[{"field_name":"account","reference_to":"contacts"},{"field_name":"modified_by","reference_to":"accounts"},{"field_name":"name","reference_to":"users"}]}]
-    // 则toAggregatePaths为[[{"field_name":"account","reference_to":"contacts"},{"field_name":"modified_by","reference_to":"accounts"}]]
+    // 只有一层引用关系时，vars格式如：[{"key":"account.website","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"website","reference_from":"accounts"}]}]
+    // 则toAggregatePaths为[[{"field_name":"account","reference_from":"contacts"}]]
+    // 超过一层引用关系时，vars格式如：[{"key":"account.modified_by.name","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"modified_by","reference_from":"accounts"},{"field_name":"name","reference_from":"users"}]}]
+    // 则toAggregatePaths为[[{"field_name":"account","reference_from":"contacts"},{"field_name":"modified_by","reference_from":"accounts"}]]
     for (let toAggregatePathsItem of toAggregatePaths) {
         if (toAggregatePathsItem.length < 2) {
             // 引用关系只有一层时，可以直接查出哪些记录需要更新重算公式字段值

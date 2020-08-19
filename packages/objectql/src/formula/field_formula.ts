@@ -8,11 +8,11 @@ export type SteedosFieldFormulaQuoteTypeConfig = {
 
 /**
  * 公式中的{}括起来的单个变量中的执行路径
- * {}中第一个reference_to肯定是指向当前对象
+ * {}中第一个reference_from肯定是指向当前对象
  */
 export type SteedosFieldFormulaVarPathTypeConfig = {
     field_name: string,
-    reference_to: string
+    reference_from: string
 }
 
 /**
@@ -30,8 +30,8 @@ export type SteedosFieldFormulaParamTypeConfig = {
  * {
  *  key: "account.website",
  *  paths: [
- *   {field_name: "account", reference_to:"contacts"},
- *   {field_name: "website", reference_to:"accounts"},
+ *   {field_name: "account", reference_from:"contacts"},
+ *   {field_name: "website", reference_from:"accounts"},
  *  ]
  * }
  */
