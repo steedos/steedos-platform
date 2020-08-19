@@ -82,7 +82,8 @@ getContext = (object_name, hookName, options)->
 	if hookName.endsWith('Delete')
 		context.id = options._id
 		context.doc = Creator.odata.get(object_name, options._id)
-		context.error = options.error
+		if hookName.startsWith("error")
+			context.error = options.error
 	else
 		if hookName.startsWith("after")
 			context.id = options.dbDoc?._id
