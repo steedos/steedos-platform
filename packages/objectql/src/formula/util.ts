@@ -20,6 +20,46 @@ export const getQuotedFieldFormulaConfigs = (config: SteedosFieldFormulaTypeConf
 }
 
 /**
+ * 参数configA中是否引用了参数configB
+ * @param configA 
+ * @param configB 
+ */
+export const isFieldFormulaConfigQuoted = (configA: SteedosFieldFormulaTypeConfig, configB: SteedosFieldFormulaTypeConfig): boolean => {
+    let configAQuoteds = getQuotedFieldFormulaConfigs(configA, [configB]);
+    return !!configAQuoteds.length;
+}
+
+/**
+ * 参数config是否与sourceConfigs中任何一项有双向引用关系
+ * 
+ * @param config 
+ * @param sourceConfigs 
+ */
+export const isFieldFormulaConfigQuotedTwoWays = (config: SteedosFieldFormulaTypeConfig, sourceConfigs: Array<SteedosFieldFormulaTypeConfig>): boolean => {
+    let quotedConfigs = getQuotedFieldFormulaConfigs(config, sourceConfigs);
+    if(!quotedConfigs.length){
+        return false;
+    }
+    for(let quotedConfig of quotedConfigs){
+        let isQuotedConfigQuoted = isFieldFormulaConfigQuoted(quotedConfig, config);
+        if(isQuotedConfigQuoted){
+            throw new Error(`isFieldFormulaConfigQuotedTwoWays:The field formula config '${config._id}' and '${quotedConfig._id}' is quoted each other.`);
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * 参数configA与参数configB是否存在双向引用关系
+ * @param configA 
+ * @param configB 
+ */
+export const isFieldFormulaConfigQuotedTwoWay = (configA: SteedosFieldFormulaTypeConfig, configB: SteedosFieldFormulaTypeConfig): boolean => {
+    return isFieldFormulaConfigQuotedTwoWays(configA, [configB]);
+}
+
+/**
  * 往参数configs中插入config，排除掉重复记录
  * @param config 
  * @param configs 

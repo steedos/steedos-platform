@@ -31,8 +31,7 @@ export const getObjectFieldFormulaConfigs = (objectName: string, fieldName?: str
             return config.object_name === objectName;
         }
     });
-    let resut2 = sortFieldFormulaConfigs(result);
-    return resut2
+    return sortFieldFormulaConfigs(result);
 }
 
 /**

@@ -1,6 +1,7 @@
 /**
  * 记录公式字段中引用的其他对象上的字段或者引用的本对象上的公式字段
  * 用于相关引用字段值变更时，能找到哪些公式字段需要级联变更
+ * is_formula指field_name是否是公式字段
  */
 export type SteedosFieldFormulaQuoteTypeConfig = {
     object_name: string,
@@ -11,6 +12,7 @@ export type SteedosFieldFormulaQuoteTypeConfig = {
 /**
  * 公式中的{}括起来的单个变量中的执行路径
  * {}中第一个reference_from肯定是指向当前对象
+ * is_formula指field_name是否是公式字段
  */
 export type SteedosFieldFormulaVarPathTypeConfig = {
     field_name: string,

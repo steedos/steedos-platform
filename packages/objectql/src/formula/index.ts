@@ -2,6 +2,7 @@ import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } fro
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig } from './type';
 import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
 import { pickFormulaVars } from './core';
+import { isFieldFormulaConfigQuotedTwoWays } from './util';
 import _ = require('lodash')
 const clone = require('clone')
 
@@ -114,7 +115,10 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
         quotes: result.quotes,
         vars: result.vars
     };
-    addFieldFormulaConfig(formulaConfig);
+    const isQuotedTwoWays = isFieldFormulaConfigQuotedTwoWays(formulaConfig, getFieldFormulaConfigs());
+    if(!isQuotedTwoWays){
+        addFieldFormulaConfig(formulaConfig);
+    }
 }
 
 export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig) => {
