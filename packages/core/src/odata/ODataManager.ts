@@ -95,7 +95,7 @@ export class ODataManager {
 
   excludeDeleted(filters: string) {
 
-    if(filters && filters.indexOf('(is_deleted eq true)') > -1){
+    if (filters && filters.indexOf('(is_deleted eq true)') > -1) {
       return filters
     }
 
@@ -316,7 +316,7 @@ export class ODataManager {
               from: relatedObjName,
               localField: refFieldName + '.ids',
               foreignField: '_id',
-              as: `${refFieldName}` + '_$lookup'
+              as: `${refFieldName}` + '_$lookup' + `_${relatedObjName}`
             };
 
             pipeline.push({ $lookup: lookup });
@@ -432,7 +432,7 @@ export class ODataManager {
                 let referenceToCollection = this.getObject(_o);
                 if (referenceToCollection) {
                   let _ro_NAME_FIELD_KEY = referenceToCollection.NAME_FIELD_KEY;
-                  let tempLookupKey = navigationProperty + '_$lookup';
+                  let tempLookupKey = navigationProperty + '_$lookup' + `_${_o}`;
                   if (field.multiple) {
                     let _ids = _.clone(entities[idx][navigationProperty].ids);
 
@@ -457,7 +457,6 @@ export class ODataManager {
                       return o;
                     });
                     entities[idx][navigationProperty] = getCreator().getOrderlySetByIds(entities[idx][navigationProperty], _ids);
-                    delete entities[idx][tempLookupKey];
                   } else {
                     let queryFields = _.clone(queryOptions.fields)
                     let query = {}
@@ -476,9 +475,11 @@ export class ODataManager {
                       if (_.isEmpty(queryFields)) {
                         delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
                       }
-                      delete entities[idx][tempLookupKey];
                     }
                   }
+                  _.each(field.reference_to, function (relatedObjName) {
+                    delete entities[idx][navigationProperty + '_$lookup' + `_${relatedObjName}`];
+                  })
                 }
               }
             };
