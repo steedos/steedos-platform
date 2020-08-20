@@ -1,5 +1,6 @@
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig, getObjectQuotedFieldFormulaConfigs } from './field_formula';
 import { getSteedosSchema } from '../index';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig } from './type';
+import { getObjectQuotedFieldFormulaConfigs } from './field_formula';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
 import _ = require('lodash')

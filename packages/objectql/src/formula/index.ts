@@ -1,10 +1,14 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
-import { addFieldFormulaConfig, SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, getFieldFormulaConfigs } from './field_formula';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig } from './type';
+import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
 import { pickFormulaVars } from './core';
 import _ = require('lodash')
 const clone = require('clone')
 
+export * from './type'
+export * from './util'
 export * from './field_formula'
+export * from './core'
 export * from './triggers'
 
 const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>) => {
