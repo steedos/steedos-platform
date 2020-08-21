@@ -25,8 +25,9 @@ Template.creator_view.onCreated ->
 	object = Creator.getObject(object_name)
 	template = Template.instance()
 	this.onEditSuccess = onEditSuccess = (formType,result)->
-		loadRecordFromOdata(template, Session.get("object_name"), Session.get("record_id"))
+#		loadRecordFromOdata(template, Session.get("object_name"), Session.get("record_id"))
 		$('#afModal').modal('hide')
+		FlowRouter.reload()
 	this.agreement.set('odata')
 	AutoForm.hooks creatorEditForm:
 		onSuccess: onEditSuccess
@@ -137,7 +138,7 @@ Template.creator_view.onRendered ->
 		Meteor.setTimeout ()->
 			Tracker.nonreactive ()->
 				FormManager.runHook(Session.get("object_name"), 'view', 'after', {schema: self.__schema, record: self.__record});
-		,200
+		,10
 
 	# if Steedos.isMobile()
 	# 	this.autorun ->

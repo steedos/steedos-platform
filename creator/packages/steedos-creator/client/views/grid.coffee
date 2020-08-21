@@ -668,21 +668,33 @@ Template.creator_grid.onCreated ->
 	self = this
 	self.list_view_id = Session.get("list_view_id")
 	self.creatorAddFormOnSuccess = (formType,result)->
-		console.log('creatorAddForm....', self.data, result, self.dxDataGridInstance);
-		self.dxDataGridInstance?.refresh().done (result)->
-			Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+		if self.data.related_object_name
+			if self.data.related_object_name == result.object_name
+				FlowRouter.reload();
+		else
+			self.dxDataGridInstance?.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
 	self.creatorEditFormOnSuccess = (formType,result)->
-		console.log('creatorEditForm....', self.data, result, self.dxDataGridInstance);
-		self.dxDataGridInstance?.refresh().done (result)->
-			Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+		if self.data.related_object_name
+			if self.data.related_object_name == result.object_name
+				FlowRouter.reload();
+		else
+			self.dxDataGridInstance?.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
 	self.creatorCellEditFormOnSuccess = (formType,result)->
-		console.log('creatorCellEditForm....', self.data, result, self.dxDataGridInstance);
-		self.dxDataGridInstance?.refresh().done (result)->
-			Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+		if self.data.related_object_name
+			if self.data.related_object_name == result.object_name
+				FlowRouter.reload();
+		else
+			self.dxDataGridInstance?.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
 	self.creatorAddRelatedFormOnSuccess = (formType,result)->
-		console.log('creatorAddRelatedForm....', self.data, result, self.dxDataGridInstance);
-		self.dxDataGridInstance?.refresh().done (result)->
-			Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+		if self.data.related_object_name
+			if self.data.related_object_name == result.object_name
+				FlowRouter.reload();
+		else
+			self.dxDataGridInstance?.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
 	AutoForm.hooks creatorAddForm:
 		onSuccess: self.creatorAddFormOnSuccess
 	,false
@@ -731,7 +743,6 @@ Template.creator_grid.refresh = (dxDataGridInstance)->
 		Creator.remainCheckboxState(dxDataGridInstance.$element())
 
 Template.creator_grid.onDestroyed ->
-	console.log('Template.creator_grid.onDestroyed...');
 	is_related = this.data.is_related
 	if !is_related && this.list_view_id == Session.get("list_view_id")
 		paging = this.dxDataGridInstance?.option().paging
