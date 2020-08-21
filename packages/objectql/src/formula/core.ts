@@ -117,6 +117,8 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     console.log("==runFieldFormular==result===", result);
     if(formulaType){
         const resultType = typeof result;
+        console.log("==runFieldFormular==formulaType===", formulaType);
+        console.log("==runFieldFormular==resultType===", resultType);
         switch(formulaType){
             case "boolean":
                 if(resultType !== "boolean"){
@@ -134,12 +136,12 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
                 }
                 break;
             case "date":
-                if(result instanceof Date){
+                if(!(result instanceof Date)){
                     throw new Error(`runFieldFormula:The field formula should return a date type result but got a ${resultType} type.`);
                 }
                 break;
             case "datetime":
-                if(result instanceof Date){
+                if(!(result instanceof Date)){
                     throw new Error(`runFieldFormula:The field formula should return a date type result but got a ${resultType} type.`);
                 }
                 break;
