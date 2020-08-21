@@ -85,6 +85,18 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
     return runFieldFormula(formula, params, formula_type);
 }
 
+export const evalFieldFormula = function (formula: string, formulaParams: object) {
+    try{
+        let formulaFun = `module.exports = function (__params) { ${formula} }`;
+        console.log("==evalFieldFormula==formulaFun===", formulaFun);
+        console.log("==evalFieldFormula==formulaParams===", formulaParams);
+        return _eval(formulaFun)(formulaParams);
+    }
+    catch(ex){
+        throw new Error(`evalFieldFormula:Catch an error "${ex}" while eval formula "${formula}" with params "${JSON.stringify(formulaParams)}"`);
+    }
+}
+
 /**
  * 运行公式
  * @param formula 公式脚本内容
@@ -101,15 +113,10 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
         // 如果里面没有return语句，则在最前面加上return前缀
         formula = `return ${formula}`;
     }
-    let formulaFun = `module.exports = function (__params) { ${formula} }`;
-    console.log("==runFieldFormular==formulaFun===", formulaFun);
-    console.log("==runFieldFormular==formulaParams===", formulaParams);
-    let result = _eval(formulaFun)(formulaParams);
+    let result = evalFieldFormula(formula, formulaParams);
     console.log("==runFieldFormular==result===", result);
-    console.log("==runFieldFormular==formulaType===", formulaType);
     if(formulaType){
         const resultType = typeof result;
-        console.log("==runFieldFormular==resultType===", resultType);
         switch(formulaType){
             case "boolean":
                 if(resultType !== "boolean"){
