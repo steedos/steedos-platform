@@ -129,7 +129,10 @@ if Meteor.isClient
 								if object.enable_tree
 									dxDataGridInstance.refresh()
 								else
-									Template.creator_grid.refresh(dxDataGridInstance)
+									if object_name != Session.get("object_name")
+										FlowRouter.reload();
+									else
+										Template.creator_grid.refresh(dxDataGridInstance)
 							if isOpenerRemove or !dxDataGridInstance
 								if isOpenerRemove
 									window.close()
