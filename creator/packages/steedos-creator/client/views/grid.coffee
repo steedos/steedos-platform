@@ -667,27 +667,34 @@ Template.creator_grid.events
 Template.creator_grid.onCreated ->
 	self = this
 	self.list_view_id = Session.get("list_view_id")
+	self.creatorAddFormOnSuccess = (formType,result)->
+		console.log('creatorAddForm....', self.data, result, self.dxDataGridInstance);
+		self.dxDataGridInstance?.refresh().done (result)->
+			Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+	self.creatorEditFormOnSuccess = (formType,result)->
+		console.log('creatorEditForm....', self.data, result, self.dxDataGridInstance);
+		self.dxDataGridInstance?.refresh().done (result)->
+			Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+	self.creatorCellEditFormOnSuccess = (formType,result)->
+		console.log('creatorCellEditForm....', self.data, result, self.dxDataGridInstance);
+		self.dxDataGridInstance?.refresh().done (result)->
+			Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+	self.creatorAddRelatedFormOnSuccess = (formType,result)->
+		console.log('creatorAddRelatedForm....', self.data, result, self.dxDataGridInstance);
+		self.dxDataGridInstance?.refresh().done (result)->
+			Creator.remainCheckboxState(self.dxDataGridInstance.$element())
 	AutoForm.hooks creatorAddForm:
-		onSuccess: (formType,result)->
-			self.dxDataGridInstance?.refresh().done (result)->
-				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+		onSuccess: self.creatorAddFormOnSuccess
 	,false
 	AutoForm.hooks creatorEditForm:
-		onSuccess: (formType,result)->
-			self.dxDataGridInstance?.refresh().done (result)->
-				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+		onSuccess: self.creatorEditFormOnSuccess
 	,false
 	AutoForm.hooks creatorCellEditForm:
-		onSuccess: (formType,result)->
-			self.dxDataGridInstance?.refresh().done (result)->
-				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+		onSuccess: self.creatorCellEditFormOnSuccess
 	,false
-
 	AutoForm.hooks creatorAddRelatedForm:
-		onSuccess: (formType,result)->
-			self.dxDataGridInstance?.refresh().done (result)->
-				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
-
+		onSuccess: self.creatorAddRelatedFormOnSuccess
+	,false
 # Template.creator_grid.onDestroyed ->
 # 	#离开界面时，清除hooks为空函数
 # 	AutoForm.hooks creatorAddForm:
@@ -724,6 +731,7 @@ Template.creator_grid.refresh = (dxDataGridInstance)->
 		Creator.remainCheckboxState(dxDataGridInstance.$element())
 
 Template.creator_grid.onDestroyed ->
+	console.log('Template.creator_grid.onDestroyed...');
 	is_related = this.data.is_related
 	if !is_related && this.list_view_id == Session.get("list_view_id")
 		paging = this.dxDataGridInstance?.option().paging
@@ -731,3 +739,20 @@ Template.creator_grid.onDestroyed ->
 			paging.object_name = this.data.object_name
 			paging.list_view_id = this.list_view_id
 			Session.set("grid_paging", paging)
+	self = this
+	_.each(AutoForm._hooks.creatorAddForm.onSuccess, (fn, index)->
+		if fn == self.creatorAddFormOnSuccess
+			delete AutoForm._hooks.creatorAddForm.onSuccess[index]
+	)
+	_.each(AutoForm._hooks.creatorEditForm.onSuccess, (fn, index)->
+		if fn == self.creatorEditFormOnSuccess
+			delete AutoForm._hooks.creatorEditForm.onSuccess[index]
+	)
+	_.each(AutoForm._hooks.creatorCellEditForm.onSuccess, (fn, index)->
+		if fn == self.creatorCellEditFormOnSuccess
+			delete AutoForm._hooks.creatorCellEditForm.onSuccess[index]
+	)
+	_.each(AutoForm._hooks.creatorAddRelatedForm.onSuccess, (fn, index)->
+		if fn == self.creatorAddRelatedFormOnSuccess
+			delete AutoForm._hooks.creatorAddRelatedForm.onSuccess[index]
+	)
