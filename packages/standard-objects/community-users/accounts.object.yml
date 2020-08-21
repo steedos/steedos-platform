@@ -140,7 +140,6 @@ fields:
   credit_code:
     type: text
     label: 纳税人识别号（身份证/其他）
-    unique: true
     name: credit_code
     searchable: true
   website:
