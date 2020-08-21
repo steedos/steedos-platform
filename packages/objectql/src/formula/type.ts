@@ -49,6 +49,7 @@ export type SteedosFieldFormulaTypeConfig = {
     _id: string,
     object_name: string,
     field_name: string,
+    formula_type: string,
     formula: string,
     quotes: Array<SteedosFieldFormulaQuoteTypeConfig>,
     vars: Array<SteedosFieldFormulaVarTypeConfig>

@@ -79,13 +79,19 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
 }
 
 export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig: SteedosFieldFormulaTypeConfig) => {
-    const { formula, vars } = fieldFormulaConfig;
+    const { formula, vars, formula_type } = fieldFormulaConfig;
     let params = await computeFieldFormulaParams(doc, vars);
     // console.log("==computeFieldFormulaValue==params===", params);
-    return runFieldFormula(formula, params);
+    return runFieldFormula(formula, params, formula_type);
 }
 
-export const runFieldFormula = function (formula: string, params: Array<SteedosFieldFormulaParamTypeConfig>) {
+/**
+ * 运行公式
+ * @param formula 公式脚本内容
+ * @param params 参数
+ * @param formulaType 公式返回类型，如果空则不判断类型
+ */
+export const runFieldFormula = function (formula: string, params: Array<SteedosFieldFormulaParamTypeConfig>, formulaType?: string) {
     let formulaParams = {};
     params.forEach(({ key, value }) => {
         formulaParams[key] = value;
@@ -99,7 +105,39 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     console.log("==runFieldFormular==formulaFun===", formulaFun);
     console.log("==runFieldFormular==formulaParams===", formulaParams);
     let result = _eval(formulaFun)(formulaParams);
-    // console.log("==runFieldFormular==result===", result);
+    console.log("==runFieldFormular==result===", result);
+    console.log("==runFieldFormular==formulaType===", formulaType);
+    if(formulaType){
+        const resultType = typeof result;
+        console.log("==runFieldFormular==resultType===", resultType);
+        switch(formulaType){
+            case "boolean":
+                if(resultType !== "boolean"){
+                    throw new Error(`runFieldFormula:The field formula should return a boolean type result but got a ${resultType} type.`);
+                }
+                break;
+            case "number":
+                if(resultType !== "number"){
+                    throw new Error(`runFieldFormula:The field formula should return a number type result but got a ${resultType} type.`);
+                }
+                break;
+            case "text":
+                if(resultType !== "string"){
+                    throw new Error(`runFieldFormula:The field formula should return a string type result but got a ${resultType} type.`);
+                }
+                break;
+            case "date":
+                if(result instanceof Date){
+                    throw new Error(`runFieldFormula:The field formula should return a date type result but got a ${resultType} type.`);
+                }
+                break;
+            case "datetime":
+                if(result instanceof Date){
+                    throw new Error(`runFieldFormula:The field formula should return a date type result but got a ${resultType} type.`);
+                }
+                break;
+        }
+    }
     return result;
 }
 
