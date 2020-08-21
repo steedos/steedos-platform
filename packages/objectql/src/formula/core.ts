@@ -136,12 +136,14 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
                 }
                 break;
             case "date":
-                if(!(result instanceof Date)){
+                if(result.constructor.name !== "Date"){
+                    // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
                     throw new Error(`runFieldFormula:The field formula should return a date type result but got a ${resultType} type.`);
                 }
                 break;
             case "datetime":
-                if(!(result instanceof Date)){
+                if(result.constructor.name !== "Date"){
+                    // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
                     throw new Error(`runFieldFormula:The field formula should return a date type result but got a ${resultType} type.`);
                 }
                 break;
