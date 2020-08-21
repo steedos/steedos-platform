@@ -96,6 +96,8 @@ Creator.Object = (options)->
 	_.each self.fields, (field, field_name)->
 		if field.type == 'autonumber'
 			field.readonly = true
+		else if field.type == 'formula'
+			field.readonly = true
 
 	self.list_views = {}
 	defaultView = Creator.getObjectDefaultView(self.name)
