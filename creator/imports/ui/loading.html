@@ -1,0 +1,9 @@
+<template name="recordLoading">
+	{{#if illustration}}
+		<article class="slds-card" style="height: 100%;">
+			<div class="slds-card__body slds-card__body_inner" style="margin-top: 10%;">
+				{{> React component=illustration path=path heading=heading messageBody=messageBody}}
+			</div>
+		</article>
+	{{/if}}
+</template>

@@ -110,33 +110,101 @@ FormManager.getPreviousDoc = (object_name, _id, method)->
 		if _.isFunction(objectFormHookFun)
 			return Creator.odata.get(object_name, _id)
 
-# beforeInsert、 beforeUpdate、beforeDelete、afterInsert、 afterUpdate、afterDelete
+# beforeInsert、 beforeUpdate、beforeDelete、afterInsert、 afterUpdate、afterDelete、 errorInsert、 errorUpdate、errorDelete
 FormManager.runHook = (object_name, method, _when, options)->
-	formId = options.formId
 	hookName = "#{_when}#{method.charAt(0).toLocaleUpperCase()}#{_.rest(method.split('')).join('')}"
+	if method == 'view' || method == 'edit'
+		FormManager.runViewEditHook(object_name, hookName, options.schema, options.record)
+	else
+		formId = options.formId
+		object = Creator.getObject(object_name);
+		objectFormHookFun = object?.form?[hookName]
+		if _.isFunction(objectFormHookFun)
+			try
+				context = getContext(object_name, hookName, options)
+				hookMsg = objectFormHookFun.apply(context)
+				if _.isBoolean(hookMsg) && hookMsg == false
+					return false
+				if formId && _when == 'before'
+					if !_.isEmpty(hookMsg) && _.isObject(hookMsg)
+						_.each hookMsg, (val, key)->
+							AutoForm.addStickyValidationError(formId, key, 'formValidate', val)
+							toastr.error(val);
+						return false;
+			catch e
+				console.error(e);
+				toastr.error(e.message);
+				return false;
+		return true;
+
+
+FormManager.runViewEditHook = (object_name, hookName, schema, record)->
 	object = Creator.getObject(object_name);
-	objectFormHookFun = object?.form?[hookName]
-	if _.isFunction(objectFormHookFun)
-		try
-			context = getContext(object_name, hookName, options)
-			hookMsg = objectFormHookFun.apply(context)
-			if _.isBoolean(hookMsg) && hookMsg == false
-				return false
-			if formId && _when == 'before'
-				if !_.isEmpty(hookMsg) && _.isObject(hookMsg)
-					_.each hookMsg, (val, key)->
-						AutoForm.addStickyValidationError(formId, key, 'formValidate', val)
-						toastr.error(val);
-					return false;
-		catch e
-			console.error(e);
-			toastr.error(e.message);
-			return false;
-	return true;
+	fun = object?.form?[hookName]
+	if _.isFunction(fun)
+		_schema = schema.get()
+		_record = record.get()
+		context = {
+			id: _record._id,
+			userId: Meteor.userId(),
+			spaceId: Session.get("spaceId"),
+			object_name: object_name
+			doc: _record,
+			schema: _schema
+		}
+		fun.apply(context)
+		schema.set(_schema)
+		record.set(_record)
 
-## TODO
-FormManager.onView
-
-FormManager.onEdit
-
-FormManager.onLoad
+#FormManager.afterView = (object_name, schema, record)->
+#	object = Creator.getObject(object_name);
+#	fun = object?.form?.afterView
+#	if _.isFunction(fun)
+#		nonreactiveHidden = (fieldName)->
+#			hidden = ()->
+#				_schema = schema.get();
+#				console.log('fieldName', fieldName);
+#				_schema._firstLevelSchemaKeys = _.difference(_schema._firstLevelSchemaKeys, [fieldName]);
+#				delete _schema._schema[fieldName]
+#				_schema._schemaKeys = _.difference(_schema._schemaKeys, [fieldName]);
+#				schema.set(_schema)
+#			Tracker.nonreactive(hidden)
+#		return fun.apply({hidden: nonreactiveHidden}, [schema.get(), record.get()])
+## 编辑时执行：控制字段隐藏、字段值
+#FormManager.beforeEdit = (object_name, schema, record)->
+#	object = Creator.getObject(object_name);
+#	fun = object?.form?.beforeEdit
+#	if _.isFunction(fun)
+#		nonreactiveHidden = (fieldName)->
+#			hidden = ()->
+#				_schema = schema.get();
+#				console.log('fieldName', fieldName);
+#				_schema._firstLevelSchemaKeys = _.difference(_schema._firstLevelSchemaKeys, [fieldName]);
+#				delete _schema._schema[fieldName]
+#				_schema._schemaKeys = _.difference(_schema._schemaKeys, [fieldName]);
+#				schema.set(_schema)
+#			Tracker.nonreactive(hidden)
+#		_schema = schema.get()
+#		_record = record.get()
+#		fun.apply({hidden: nonreactiveHidden}, [_schema, _record])
+#		schema.set(_schema)
+#		record.set(_record)
+#FormManager.afterEdit = (object_name, schema, record)->
+#	object = Creator.getObject(object_name);
+#	fun = object?.form?.afterEdit
+#	if _.isFunction(fun)
+#		nonreactiveHidden = (fieldName)->
+#			hidden = ()->
+#				_schema = schema.get();
+#				console.log('fieldName', fieldName);
+#				_schema._firstLevelSchemaKeys = _.difference(_schema._firstLevelSchemaKeys, [fieldName]);
+#				delete _schema._schema[fieldName]
+#				_schema._schemaKeys = _.difference(_schema._schemaKeys, [fieldName]);
+#				schema.set(_schema)
+#			Tracker.nonreactive(hidden)
+#		_schema = schema.get()
+#		_record = record.get()
+#		fun.apply({hidden: nonreactiveHidden}, [_schema, _record])
+#		schema.set(_schema)
+#		record.set(_record)
+#

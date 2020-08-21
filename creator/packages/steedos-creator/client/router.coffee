@@ -294,7 +294,11 @@ objectRoutes.route '/view/:record_id',
 		else
 			main = "creator_view"
 		BlazeLayout.render Creator.getLayout(),
-			main: main
+			main: 'recordLoading'
+		Meteor.setTimeout ()->
+			BlazeLayout.render Creator.getLayout(),
+				main: main
+		, 10
 
 objectRoutes.route '/grid/:list_view_id',
 	action: (params, queryParams)->

@@ -269,6 +269,10 @@ Template.CreatorAutoformModals.events
 		if(!validate)
 			event.preventDefault()
 			event.stopPropagation()
+		else
+			formId = Session.get('cmFormId') or defaultFormId
+			template.__record.set(AutoForm.getFormValues(formId)?.insertDoc)
+			FormManager.runHook(object_name, 'edit', 'after', {schema: template.__schema, record: template.__record});
 
 
 helpers =
@@ -277,7 +281,7 @@ helpers =
 	cmOperation: () ->
 		Session.get 'cmOperation'
 	cmDoc: () ->
-		Session.get 'cmDoc'
+		return Template.instance().__record.get();
 	cmButtonHtml: () ->
 		Session.get 'cmButtonHtml'
 	cmFields: () ->
@@ -357,14 +361,15 @@ helpers =
 		Session.get('cmTargetIds')
 
 	schema: ()->
-		cmCollection = Session.get 'cmCollection'
-		return getSimpleSchema(cmCollection)
+		return Template.instance().__schema.get();
 
 	schemaFields: ()->
+		if _.has(Template.instance().data, 'schemaFields')
+			return Template.instance().data.schemaFields
 		cmCollection = Session.get 'cmCollection'
 		keys = []
 		if cmCollection
-			schemaInstance = getSimpleSchema(cmCollection)
+			schemaInstance = Template.instance().__schema.get()
 			schema = schemaInstance._schema
 
 			firstLevelKeys = schemaInstance._firstLevelSchemaKeys
@@ -431,7 +436,7 @@ helpers =
 				hiddenFields: hiddenFields
 				disabledFields: disabledFields
 
-#			console.log finalFields
+#			console.log 'finalFields', finalFields
 
 			return finalFields
 
@@ -776,9 +781,26 @@ Template.CreatorAfModal.events
 		$('#afModal').data('bs.modal').options.backdrop = t.data.backdrop or 'static'
 		$('#afModal').modal 'show'
 
+Template.CreatorFormField.onCreated ->
+	self = this;
+	this.autorun ()->
+		cmCollection = Session.get 'cmCollection'
+		if cmCollection
+			self.__schema = new ReactiveVar(getSimpleSchema(cmCollection))
 Template.CreatorAutoformModals.onCreated ->
 	self = this;
 	self.shouldUpdateQuickForm = new ReactiveVar(true);
+	self.__schema = new ReactiveVar({})
+	self.__record = new ReactiveVar({});
+	this.autorun ()->
+		cmCollection = Session.get 'cmCollection'
+		if cmCollection
+			self.__schema.set(getSimpleSchema(cmCollection))
+			self.__record.set(Session.get('cmDoc'))
+			object_name = getObjectName(cmCollection)
+			Tracker.nonreactive ()->
+				FormManager.runHook(object_name, 'edit', 'before', {schema: self.__schema, record: self.__record});
+Template.CreatorAutoformModals.onRendered ->
 
 Template.CreatorAutoformModals.onDestroyed ->
 	Session.set 'cmIsMultipleUpdate', false

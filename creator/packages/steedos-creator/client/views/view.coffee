@@ -15,9 +15,12 @@ getRelatedListTemplateId = (related_object_name)->
 Template.creator_view.onCreated ->
 	Template.creator_view.currentInstance = this
 	this.recordsTotal = new ReactiveVar({})
+	this.__record = new ReactiveVar({})
+	this.__schema = new ReactiveVar({})
 	# this.recordLoad = new ReactiveVar(false)
 	this.record = new ReactiveVar()
 	this.agreement = new ReactiveVar()
+	this.object_name = Session.get "object_name"
 	object_name = Session.get "object_name"
 	object = Creator.getObject(object_name)
 	template = Template.instance()
@@ -28,6 +31,21 @@ Template.creator_view.onCreated ->
 	AutoForm.hooks creatorEditForm:
 		onSuccess: onEditSuccess
 	,false
+	self = this
+	getSchema = ()->
+		schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(Session.get("object_name"))))
+		#在只读页面将omit字段设置为false
+		_.forEach schema._schema, (f, key)->
+			if f.autoform?.omit
+				f.autoform.omit = false
+		return schema
+	this.autorun ()->
+		if self.object_name == Session.get("object_name")
+			self.__record.set(Creator.getObjectRecord());
+			self.__schema.set(getSchema());
+			Tracker.nonreactive ()->
+				if !_.isEmpty(self.__record.get())
+					FormManager.runHook(Session.get("object_name"), 'view', 'before', {schema: self.__schema, record: self.__record});
 #	if object.database_name && object.database_name != 'meteor-mongo'
 #		this.agreement.set('odata')
 #		AutoForm.hooks creatorEditForm:
@@ -114,6 +132,13 @@ Template.creator_view.onRendered ->
 		record_id = Session.get("record_id")
 		if record_id
 			Tracker.nonreactive(loadRecord)
+
+	this.autorun ()->
+		Meteor.setTimeout ()->
+			Tracker.nonreactive ()->
+				FormManager.runHook(Session.get("object_name"), 'view', 'after', {schema: self.__schema, record: self.__record});
+		,200
+
 	# if Steedos.isMobile()
 	# 	this.autorun ->
 	# 		loadRecord()
@@ -192,16 +217,11 @@ Template.creator_view.helpers
 		return "Creator.Collections." + Creator.getObject(Session.get("object_name"))?._collection_name
 
 	schema: ()->
-		schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(Session.get("object_name"))))
-		#在只读页面将omit字段设置为false
-		_.forEach schema._schema, (f, key)->
-			if f.autoform?.omit
-				f.autoform.omit = false
-		return schema
+		return Template.instance().__schema?.get()
 
 	schemaFields: ()->
 		object = Creator.getObject(Session.get("object_name"))
-		simpleSchema = new SimpleSchema(Creator.getObjectSchema(object))
+		simpleSchema = Template.instance().__schema?.get()
 		schema = simpleSchema._schema
 		# 不显示created/modified，因为它们显示在created_by/modified_by字段后面
 		firstLevelKeys = _.without simpleSchema._firstLevelSchemaKeys, "created", "modified"
@@ -271,7 +291,11 @@ Template.creator_view.helpers
 	# 		return permissions[permissionName]
 
 	record: ()->
-		return Creator.getObjectRecord()
+		record = Template.instance().__record?.get();
+		if _.isEmpty(record)
+			return false
+		else
+			return true
 
 	record_name: ()->
 		record = Creator.getObjectRecord()
@@ -441,7 +465,7 @@ Template.creator_view.helpers
 			related_list_item_props: related_list_item_props
 		}
 		if object_name == 'objects'
-			data.record_id = Creator.getObjectRecord().name
+			data.record_id = Creator.getObjectRecord()?.name
 		else
 			data.record_id = Session.get("record_id")
 		return data
@@ -696,6 +720,7 @@ Template.creator_view.events
 			FlowRouter.go "/app"
 
 Template.creator_view.onDestroyed ()->
+	console.log('Template.creator_view.onDestroyed...');
 	self = this
 	_.each(AutoForm._hooks.creatorEditForm.onSuccess, (fn, index)->
 		if fn == self.onEditSuccess
