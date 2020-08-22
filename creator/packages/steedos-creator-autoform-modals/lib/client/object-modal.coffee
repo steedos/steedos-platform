@@ -32,8 +32,7 @@ getSimpleSchema = (collectionName)->
 		object_name = getObjectName collectionName
 		object_fields = Creator.getObject(object_name).fields
 		_fields = Creator.getFields(object_name)
-		schema = Creator.getObject(object_name).schema._schema
-
+		schema = Creator.getRecordSafeObjectSchema({}, object_name)
 		final_schema = schema
 
 		if true
@@ -221,7 +220,11 @@ Template.CreatorObjectModal.helpers
 
 			firstLevelKeys = schemaInstance._firstLevelSchemaKeys
 
-			permission_fields = _.clone(Creator.getFields(object_name))
+			_permission_fields = _.clone(Creator.getRecordSafeFields({}, object_name))
+			permission_fields = []
+			_.each _permission_fields, (_sf, k)->
+				if !_sf.disabled
+					permission_fields.push(k)
 			unless permission_fields
 				permission_fields = []
 
@@ -282,3 +285,14 @@ Template.CreatorObjectFields.helpers
 	isDisabled :(key)->
 		fields = Template.instance().data.fields
 		return fields[key].disabled
+	getLabel: (key)->
+		return AutoForm.getLabelForField(key)
+	disabledFieldsValue: (key)->
+		cmCollection = Template.instance().data.collection
+		object_name = Template.instance().data.object_name
+		if cmCollection
+			fields = Creator.getObject(object_name).fields
+			defaultValue = fields[key].defaultValue
+			if _.isFunction(defaultValue)
+				defaultValue = defaultValue()
+			return defaultValue
