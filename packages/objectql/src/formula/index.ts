@@ -11,6 +11,7 @@ export * from './util'
 export * from './field_formula'
 export * from './core'
 export * from './triggers'
+export * from './recompute'
 
 const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>) => {
     let existQuote = quotes.find((item) => {
@@ -108,7 +109,7 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
     const formula = fieldConfig.formula;
     let result = computeFormulaVarsAndQuotes(formula, objectConfig, objectConfigs);
     let formulaConfig: SteedosFieldFormulaTypeConfig = {
-        _id: `${objectConfig.name}__${fieldConfig.name}`,
+        _id: `${objectConfig.name}.${fieldConfig.name}`,
         object_name: objectConfig.name,
         field_name: fieldConfig.name,
         formula: formula,

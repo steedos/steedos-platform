@@ -1,6 +1,6 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig } from './type';
-import { getObjectQuotedFieldFormulaConfigs } from './field_formula';
+import { getObjectQuotedByFieldFormulaConfigs } from './field_formula';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
 import _ = require('lodash')
@@ -161,12 +161,12 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFieldFormulaV
     }
 }
 
-export const runQuotedObjectFieldFormulas = async function (objectName: string, recordId: string, fieldNames?: Array<string>) {
-    // console.log("===runQuotedObjectFieldFormulas===", objectName, recordId, fieldNames);
-    const configs = getObjectQuotedFieldFormulaConfigs(objectName, fieldNames);
-    // console.log("===runQuotedObjectFieldFormulas=configs==", configs);
+export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, fieldNames?: Array<string>) {
+    // console.log("===runQuotedByObjectFieldFormulas===", objectName, recordId, fieldNames);
+    const configs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
+    // console.log("===runQuotedByObjectFieldFormulas=configs==", configs);
     for (const config of configs) {
-        await updateQuotedObjectFieldFormulaValue(objectName, recordId, config);
+        await updateQuotedByObjectFieldFormulaValue(objectName, recordId, config);
     }
 }
 
@@ -176,7 +176,7 @@ export const runQuotedObjectFieldFormulas = async function (objectName: string, 
  * @param recordId 当前修改的记录ID
  * @param fieldFormulaConfig 查到的引用了该记录所属对象的相关字段公式配置之一
  */
-export const updateQuotedObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig) => {
+export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig) => {
     const { vars, object_name: fieldFormulaObjectName } = fieldFormulaConfig;
     let toAggregatePaths: Array<Array<SteedosFieldFormulaVarPathTypeConfig>> = [];
     for (let varItem of vars) {
@@ -201,8 +201,8 @@ export const updateQuotedObjectFieldFormulaValue = async (objectName: string, re
         }
     }
     const formulaVarFields = pickFieldFormulaVarFields(fieldFormulaConfig);
-    // console.log("===updateQuotedObjectFieldFormulaValue=formulaVarFields====", formulaVarFields);
-    // console.log("===updateQuotedObjectFieldFormulaValue=toAggregatePaths====", JSON.stringify(toAggregatePaths));
+    // console.log("===updateQuotedByObjectFieldFormulaValue=formulaVarFields====", formulaVarFields);
+    // console.log("===updateQuotedByObjectFieldFormulaValue=toAggregatePaths====", JSON.stringify(toAggregatePaths));
     // 只有一层引用关系时，vars格式如：[{"key":"account.website","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"website","reference_from":"accounts"}]}]
     // 则toAggregatePaths为[[{"field_name":"account","reference_from":"contacts"}]]
     // 超过一层引用关系时，vars格式如：[{"key":"account.modified_by.name","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"modified_by","reference_from":"accounts"},{"field_name":"name","reference_from":"users"}]}]
@@ -215,34 +215,34 @@ export const updateQuotedObjectFieldFormulaValue = async (objectName: string, re
                 // 如果修改的是当前对象本身的公式字段值时，只需要更新当前记录的公式字段值就行
                 let doc = await getSteedosSchema().getObject(fieldFormulaObjectName).findOne(recordId, { fields: formulaVarFields })
                 let value = await computeFieldFormulaValue(doc, fieldFormulaConfig);
-                // console.log("===updateQuotedObjectFieldFormulaValue=value=is_formula===", value);
+                // console.log("===updateQuotedByObjectFieldFormulaValue=value=is_formula===", value);
                 let setDoc = {};
                 setDoc[fieldFormulaConfig.field_name] = value;
-                // console.log("===updateQuotedObjectFieldFormulaValue=setDoc==is_formula==", setDoc);
-                // console.log("===updateQuotedObjectFieldFormulaValue=doc==is_formula==", doc);
-                // console.log("===updateQuotedObjectFieldFormulaValue=fieldFormulaConfig===is_formula=", fieldFormulaConfig);
+                // console.log("===updateQuotedByObjectFieldFormulaValue=setDoc==is_formula==", setDoc);
+                // console.log("===updateQuotedByObjectFieldFormulaValue=doc==is_formula==", doc);
+                // console.log("===updateQuotedByObjectFieldFormulaValue=fieldFormulaConfig===is_formula=", fieldFormulaConfig);
                 // await getSteedosSchema().getObject(fieldFormulaObjectName).updateOne(doc._id, setDoc);
                 await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
                 // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
-                await runQuotedObjectFieldFormulas(fieldFormulaObjectName, doc._id, [fieldFormulaConfig.field_name])
+                await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, [fieldFormulaConfig.field_name])
             }
             else {
                 // 修改的是其他对象上的字段值（包括修改的是其他对象上的公式字段值），则需要按recordId值查出哪些记录需要更新重算公式字段值
                 let docs = await getSteedosSchema().getObject(fieldFormulaObjectName).find({ filters: [[tempPath.field_name, "=", recordId]], fields: formulaVarFields })
                 // let docs = await getSteedosSchema().getObject(fieldFormulaObjectName).find({ filters: [[tempPath.field_name, "=", recordId]] })
-                // console.log("===updateQuotedObjectFieldFormulaValue=docs====", docs);
+                // console.log("===updateQuotedByObjectFieldFormulaValue=docs====", docs);
                 for (let doc of docs) {
                     let value = await computeFieldFormulaValue(doc, fieldFormulaConfig);
-                    // console.log("===updateQuotedObjectFieldFormulaValue=value====", value);
+                    // console.log("===updateQuotedByObjectFieldFormulaValue=value====", value);
                     let setDoc = {};
                     setDoc[fieldFormulaConfig.field_name] = value;
-                    // console.log("===updateQuotedObjectFieldFormulaValue=setDoc====", setDoc);
-                    // console.log("===updateQuotedObjectFieldFormulaValue=doc====", doc);
-                    // console.log("===updateQuotedObjectFieldFormulaValue=fieldFormulaConfig====", fieldFormulaConfig);
+                    // console.log("===updateQuotedByObjectFieldFormulaValue=setDoc====", setDoc);
+                    // console.log("===updateQuotedByObjectFieldFormulaValue=doc====", doc);
+                    // console.log("===updateQuotedByObjectFieldFormulaValue=fieldFormulaConfig====", fieldFormulaConfig);
                     // await getSteedosSchema().getObject(fieldFormulaObjectName).updateOne(doc._id, setDoc);
                     await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
                     // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
-                    await runQuotedObjectFieldFormulas(fieldFormulaObjectName, doc._id, [fieldFormulaConfig.field_name])
+                    await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, [fieldFormulaConfig.field_name])
                 }
             }
         }

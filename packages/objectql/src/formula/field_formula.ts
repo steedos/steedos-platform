@@ -40,7 +40,7 @@ export const getObjectFieldFormulaConfigs = (objectName: string, fieldName?: str
  * @param objectName 
  * @param fieldNames 
  */
-export const getObjectQuotedFieldFormulaConfigs = (objectName: string, fieldNames?: Array<string>): Array<SteedosFieldFormulaTypeConfig> => {
+export const getObjectQuotedByFieldFormulaConfigs = (objectName: string, fieldNames?: Array<string>): Array<SteedosFieldFormulaTypeConfig> => {
     const configs = getFieldFormulaConfigs();
     return configs.filter((config: SteedosFieldFormulaTypeConfig) => {
         const quotes = config.quotes;
@@ -58,4 +58,12 @@ export const getObjectQuotedFieldFormulaConfigs = (objectName: string, fieldName
             return false;
         }
     });
+}
+
+/**
+ * 获取参数config在哪些字段公式中被引用
+ * @param config 
+ */
+export const getQuotedByFieldFormulaConfigs = (config: SteedosFieldFormulaTypeConfig): Array<SteedosFieldFormulaTypeConfig> => {
+    return getObjectQuotedByFieldFormulaConfigs(config.object_name, [config.field_name]);
 }
