@@ -12,10 +12,10 @@ import _eval = require('eval')
  */
 export const pickFormulaVars = (formula: string): Array<string> => {
     let matchs = formula.match(/\{[\w\.]+\}/g);
-    if(matchs && matchs.length){
+    if (matchs && matchs.length) {
         return matchs.map((n) => { return n.replace(/{|}/g, "") });
     }
-    else{
+    else {
         return [];
     }
 }
@@ -86,13 +86,13 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
 }
 
 export const evalFieldFormula = function (formula: string, formulaParams: object) {
-    try{
+    try {
         let formulaFun = `module.exports = function (__params) { ${formula} }`;
         console.log("==evalFieldFormula==formulaFun===", formulaFun);
         console.log("==evalFieldFormula==formulaParams===", formulaParams);
         return _eval(formulaFun)(formulaParams);
     }
-    catch(ex){
+    catch (ex) {
         throw new Error(`evalFieldFormula:Catch an error "${ex}" while eval formula "${formula}" with params "${JSON.stringify(formulaParams)}"`);
     }
 }
@@ -115,36 +115,36 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     }
     let result = evalFieldFormula(formula, formulaParams);
     console.log("==runFieldFormular==result===", result);
-    if(formulaType){
+    if (formulaType) {
         const resultType = typeof result;
         console.log("==runFieldFormular==formulaType===", formulaType);
         console.log("==runFieldFormular==resultType===", resultType);
-        switch(formulaType){
+        switch (formulaType) {
             case "boolean":
-                if(resultType !== "boolean"){
-                    throw new Error(`runFieldFormula:The field formula should return a boolean type result but got a ${resultType} type.`);
+                if (resultType !== "boolean") {
+                    throw new Error(`runFieldFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a boolean type result but got a ${resultType} type.`);
                 }
                 break;
             case "number":
-                if(resultType !== "number"){
-                    throw new Error(`runFieldFormula:The field formula should return a number type result but got a ${resultType} type.`);
+                if (resultType !== "number") {
+                    throw new Error(`runFieldFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${resultType} type.`);
                 }
                 break;
             case "text":
-                if(resultType !== "string"){
-                    throw new Error(`runFieldFormula:The field formula should return a string type result but got a ${resultType} type.`);
+                if (resultType !== "string") {
+                    throw new Error(`runFieldFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a string type result but got a ${resultType} type.`);
                 }
                 break;
             case "date":
-                if(result.constructor.name !== "Date"){
+                if (result.constructor.name !== "Date") {
                     // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
-                    throw new Error(`runFieldFormula:The field formula should return a date type result but got a ${resultType} type.`);
+                    throw new Error(`runFieldFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${resultType} type.`);
                 }
                 break;
             case "datetime":
-                if(result.constructor.name !== "Date"){
+                if (result.constructor.name !== "Date") {
                     // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
-                    throw new Error(`runFieldFormula:The field formula should return a date type result but got a ${resultType} type.`);
+                    throw new Error(`runFieldFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${resultType} type.`);
                 }
                 break;
         }
@@ -220,7 +220,7 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
                 setDoc[fieldFormulaConfig.field_name] = value;
                 // console.log("===updateQuotedByObjectFieldFormulaValue=setDoc==is_formula==", setDoc);
                 // console.log("===updateQuotedByObjectFieldFormulaValue=doc==is_formula==", doc);
-                // console.log("===updateQuotedByObjectFieldFormulaValue=fieldFormulaConfig===is_formula=", fieldFormulaConfig);
+                console.log("===updateQuotedByObjectFieldFormulaValue===fieldFormulaObjectName,setDoc==1==", fieldFormulaObjectName, setDoc);
                 // await getSteedosSchema().getObject(fieldFormulaObjectName).updateOne(doc._id, setDoc);
                 await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
                 // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
@@ -238,7 +238,7 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
                     setDoc[fieldFormulaConfig.field_name] = value;
                     // console.log("===updateQuotedByObjectFieldFormulaValue=setDoc====", setDoc);
                     // console.log("===updateQuotedByObjectFieldFormulaValue=doc====", doc);
-                    // console.log("===updateQuotedByObjectFieldFormulaValue=fieldFormulaConfig====", fieldFormulaConfig);
+                    console.log("===updateQuotedByObjectFieldFormulaValue===fieldFormulaObjectName,setDoc==2==", fieldFormulaObjectName, setDoc);
                     // await getSteedosSchema().getObject(fieldFormulaObjectName).updateOne(doc._id, setDoc);
                     await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
                     // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值

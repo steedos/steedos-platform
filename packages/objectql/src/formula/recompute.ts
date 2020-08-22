@@ -11,7 +11,6 @@ const runCurrentFieldFormulas = async function (fieldFormulaConfig: SteedosField
         const value = await computeFieldFormulaValue(doc, fieldFormulaConfig);
         let setDoc = {};
         setDoc[fieldName] = value;
-        console.log("===runCurrentFieldFormulas=setDoc====", setDoc);
         await getSteedosSchema().getObject(objectName).directUpdate(doc._id, setDoc);
         await runQuotedFieldFormulas(doc._id, fieldFormulaConfig)
     }
@@ -29,9 +28,7 @@ const runQuotedFieldFormulas = async function (recordId: string, fieldFormulaCon
  * @param fieldId 
  */
 export const recomputeFormulaValues = async (fieldId: string) => {
-    console.log("=====fieldId=========", fieldId);
     let config = getFieldFormulaConfig(fieldId);
-    console.log("=====config=========", config);
     if (!config) {
         throw new Error(`recomputeFormulaValues:${fieldId} not found in field_formula configs.`);
     }
