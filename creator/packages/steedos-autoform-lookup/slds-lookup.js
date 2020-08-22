@@ -63,7 +63,7 @@ AutoForm.addInputType('steedosLookups', {
 		context.atts.removeButton = context.atts.removeButton || context.atts.remove_button; // support for previous version
 
 		context.atts.dataSchemaKey = context.atts['data-schema-key'];
-
+		_.extend(context, context.atts);
 		return context;
 	}
 });
@@ -424,7 +424,6 @@ Template.steedosLookups.helpers({
 				return template.uniSelectize.itemsSelected.get().length > 0
 			}
 		}
-
 		return Template.instance().data.objectSwitche && !isReadonly()
 	},
 
