@@ -87,9 +87,6 @@ const generatHtml = (doc)=>{
 
 module.exports = {
     listenTo: 'web_forms',
-    beforeUpdate: async function () {
-        console.log("=======web_forms==", this);
-    },
     afterInsert: async function () {
         let doc = this.doc;
         let generatedHtml = generatHtml(doc);

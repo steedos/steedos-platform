@@ -10,7 +10,7 @@ export * from './type'
 export * from './util'
 export * from './field_formula'
 export * from './core'
-export * from './triggers'
+// export * from './triggers'
 export * from './recompute'
 
 const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>) => {
