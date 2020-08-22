@@ -269,8 +269,8 @@ Template.creator_view.helpers
 		, record
 
 	keyField: (key) ->
-		fields = Creator.getObject().fields
-		return fields[key]
+		fields = Creator.getObject()?.fields
+		return fields?[key]
 
 	is_wide: (key) ->
 		fields = Creator.getObject().fields
