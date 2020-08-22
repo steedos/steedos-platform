@@ -60,5 +60,25 @@ module.exports = {
         }
       }
     });
+  },
+  copySpaceId: function(object_name, record_id){
+    console.log('copySpaceId');
+    var item_element = $('.list-action-custom-copySpaceId')
+    item_element.attr('data-clipboard-text', Session.get("spaceId"));
+    if (!item_element.attr('data-clipboard-new')) {
+      // item_element.attr('data-clipboard-text', Session.get("spaceId"));
+      var clipboard = new Clipboard(item_element[0]);
+      item_element.attr('data-clipboard-new', true);
+      clipboard.on('success', function (e) {
+          return toastr.success('复制成功');
+      });
+      clipboard.on('error', function (e) {
+          toastr.error('复制失败');
+          return console.error("e");
+      });
+      if (item_element[0].tagName === 'LI' || item_element.hasClass('view-action')) {
+        return item_element.trigger("click");
+      }
+    }
   }
 }

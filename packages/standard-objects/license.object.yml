@@ -64,6 +64,10 @@ actions:
     label: Sync
     on: list
     visible: true
+  copySpaceId:
+    label: Copy space id
+    on: list
+    visible: true
 list_views:
   all:
     label: Al
