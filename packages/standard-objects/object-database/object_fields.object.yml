@@ -80,8 +80,8 @@ fields:
         value: url
       - label: Email
         value: email
-      - label: Formula
-        value: formula
+      # - label: Formula
+      #   value: formula
   defaultValue:
     type: text
     label: Default Value
