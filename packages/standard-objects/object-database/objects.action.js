@@ -80,7 +80,7 @@ module.exports = {
 
     var record = Creator.odata.get("objects", record_id, "is_deleted");
     if(record && !record.is_deleted){
-        return true;
+        return Creator.baseObject.actions.standard_delete.visible.apply(this, arguments);
     }
   }
   // export: function(object_name, record_id, fields){

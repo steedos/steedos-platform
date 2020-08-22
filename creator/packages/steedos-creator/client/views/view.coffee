@@ -296,7 +296,7 @@ Template.creator_view.helpers
 		if _.isEmpty(record)
 			return false
 		else
-			return true
+			return record
 
 	record_name: ()->
 		record = Creator.getObjectRecord()
