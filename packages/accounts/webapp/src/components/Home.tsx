@@ -17,6 +17,9 @@ const useStyles = makeStyles({
     fontSize: 18,
     fontWeight: "bold",
     margin: "0 auto",
+  },
+  notSpaces: {
+    textAlign: 'center'
   }
 });
 
@@ -53,18 +56,21 @@ const Home = ({ history, settings, tenant, location }: any) => {
       return;
     }
     setUser(data);
-    
-    const searchParams = new URLSearchParams(location.search);
-    let redirect_uri = searchParams.get("redirect_uri");
-    if (redirect_uri){
-      if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){
-        redirect_uri = window.location.origin + redirect_uri
+    if(!data.spaces || data.spaces.length === 0){
+      
+    }else{
+      const searchParams = new URLSearchParams(location.search);
+      let redirect_uri = searchParams.get("redirect_uri");
+      if (redirect_uri){
+        if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){
+          redirect_uri = window.location.origin + redirect_uri
+        }
+        let u = new URL(redirect_uri);
+        u.searchParams.append("token", tokens.accessToken);
+        u.searchParams.append("X-Auth-Token", getCookie('X-Auth-Token'));
+        u.searchParams.append("X-User-Id", getCookie('X-User-Id'));
+        window.location.href = u.toString();
       }
-      let u = new URL(redirect_uri);
-      u.searchParams.append("token", tokens.accessToken);
-      u.searchParams.append("X-Auth-Token", getCookie('X-Auth-Token'));
-      u.searchParams.append("X-User-Id", getCookie('X-User-Id'));
-      window.location.href = u.toString();
     }
   };
 
@@ -104,12 +110,18 @@ const Home = ({ history, settings, tenant, location }: any) => {
 
       <Link to="two-factor">Set up 2fa</Link> */}
       <br/><br/>
-      <Button onClick={onHome} variant="contained" color="primary">
+      {!(!user.spaces || user.spaces.length === 0) && <Button onClick={onHome} variant="contained" color="primary">
         <FormattedMessage
             id='accounts.home'
             defaultMessage='Home' 
         /> 
       </Button>
+      }
+      {(!user.spaces || user.spaces.length === 0) && <Typography variant="body2" gutterBottom className={classes.notSpaces}><FormattedMessage
+            id='accounts.notFindSpaces'
+            defaultMessage='您没有所属公司，请联系系统管理员' 
+          /></Typography>
+      }
       <br/>
       <Button onClick={onLogout}>
         <FormattedMessage

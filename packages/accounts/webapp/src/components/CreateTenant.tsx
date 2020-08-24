@@ -87,6 +87,14 @@ const CreateTenant = ({ settings, history, tenant, location }: any) => {
     }
   };
 
+  useEffect(() => {
+    checkCreateTenant();
+  }, []);
+  const checkCreateTenant = async () => {
+    if(!tenant.enable_create_tenant){
+      history.push('/');
+    }
+  };
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
         <FormControl margin="normal">

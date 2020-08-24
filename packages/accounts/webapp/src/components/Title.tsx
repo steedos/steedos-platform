@@ -57,7 +57,7 @@ const Title = ({ tenant, location }: any) => {
   // console.log("messageId", messageId);
   return (
     <div className={classes.container}>
-      {!location.pathname.startsWith("/verify/") && (
+      {!location.pathname.startsWith("/verify/") && messageId && (
         <h4 className={classes.title}><FormattedMessage id={messageId}/></h4>
       )}
     </div>
