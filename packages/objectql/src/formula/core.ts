@@ -1,5 +1,5 @@
 import { getSteedosSchema } from '../index';
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey, FormulaBlankValue } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
@@ -100,9 +100,9 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
     if(!userSession){
         throw new Error(`computeFieldFormulaValue:The param 'userSession' is required for the function'computeFieldFormulaValue'`);
     }
-    const { formula, vars, formula_type } = fieldFormulaConfig;
+    const { formula, vars, formula_type, formula_blank_value } = fieldFormulaConfig;
     let params = await computeFieldFormulaParams(doc, vars, userSession);
-    return runFieldFormula(formula, params, formula_type);
+    return runFieldFormula(formula, params, formula_type, formula_blank_value);
 }
 
 export const evalFieldFormula = function (formula: string, formulaParams: object) {
@@ -124,7 +124,7 @@ export const evalFieldFormula = function (formula: string, formulaParams: object
  * @param params 参数
  * @param formulaType 公式返回类型，如果空则不判断类型
  */
-export const runFieldFormula = function (formula: string, params: Array<SteedosFieldFormulaParamTypeConfig>, formulaType?: string) {
+export const runFieldFormula = function (formula: string, params: Array<SteedosFieldFormulaParamTypeConfig>, formulaType?: string, formulaBlankValue?: FormulaBlankValue) {
     let formulaParams = {};
     params.forEach(({ key, value }) => {
         formulaParams[key] = value;
@@ -138,7 +138,18 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     let result = evalFieldFormula(formula, formulaParams);
     console.log("==runFieldFormular==result===", result);
     if(result === null || result === undefined){
-        return null;
+        if(["number", "currency"].indexOf(formulaType) > -1){
+            if(formulaBlankValue === FormulaBlankValue.blanks){
+                return null;
+            }
+            else{
+                // 默认为按0值处理
+                return 0;
+            }
+        }
+        else{
+            return null;
+        }
     }
     if (formulaType) {
         const resultType = typeof result;
@@ -151,6 +162,11 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
                 }
                 break;
             case "number":
+                if (resultType !== "number") {
+                    throw new Error(`runFieldFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${resultType} type.`);
+                }
+                break;
+            case "currency":
                 if (resultType !== "number") {
                     throw new Error(`runFieldFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${resultType} type.`);
                 }

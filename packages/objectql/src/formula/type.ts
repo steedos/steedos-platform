@@ -64,11 +64,21 @@ export type SteedosFieldFormulaVarTypeConfig = {
 }
 
 export type SteedosFieldFormulaTypeConfig = {
+    // TODO:零代码_id为数据库中的_id值未处理
     _id: string, //低代码值为${objectConfig.name}.${fieldConfig.name}，零代码为数据库中的_id值
     object_name: string,
     field_name: string,
     formula_type: string,
+    formula_blank_value: FormulaBlankValue,
     formula: string,
     quotes: Array<SteedosFieldFormulaQuoteTypeConfig>,
     vars: Array<SteedosFieldFormulaVarTypeConfig>
+}
+
+/**
+ * 空白字段处理，只在公式类型返回值为number和currency类型时有效，默认为zeroes
+ */
+export enum FormulaBlankValue {
+    zeroes = "zeroes",
+    blanks = "blanks"
 }

@@ -1,5 +1,5 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey, FormulaBlankValue } from './type';
 import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
 import { pickFormulaVars } from './core';
 import { isFieldFormulaConfigQuotedTwoWays } from './util';
@@ -73,7 +73,7 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         }
         if (tempFieldConfig.type !== "lookup" && tempFieldConfig.type !== "master_detail") {
             // 不是引用类型字段，则直接退出
-            if(i < varItems.length - 1){
+            if (i < varItems.length - 1) {
                 // 提前找到非跨对象字段，说明varItems中后面没计算的变量是多余错误的，因为.后面肯定是跨对象引用出来的字段（除非是$user等全局变量）
                 throw new Error(`computeFormulaVarAndQuotes:Can't find more reference_to after the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
             }
@@ -120,6 +120,7 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
         field_name: fieldConfig.name,
         formula: formula,
         formula_type: fieldConfig.formula_type,
+        formula_blank_value: <FormulaBlankValue>fieldConfig.formula_blank_value,
         quotes: result.quotes,
         vars: result.vars
     };

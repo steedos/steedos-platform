@@ -218,23 +218,35 @@ fields:
     inlineHelpText: This field must be filled when the field type is 'Autonumber'
     group: Advanced
     is_wide: true
-  formula_type:
-    type: select
-    label: Formula Return Type
-    inlineHelpText: This field must be filled when the field type is 'Formula Return Type'
-    options: 
-      - label: Checkbox
-        value: boolean
-      - label: Number
-        value: number
-      - label: Currency
-        value: currency
-      - label: Text
-        value: text
-      - label: Date
-        value: date
-      - label: Datetime
-        value: datetime
+  # formula_type:
+  #   type: select
+  #   label: Formula Return Type
+  #   inlineHelpText: This field must be filled when the field type is 'Formula'
+  #   group: Advanced
+  #   options: 
+  #     - label: Checkbox
+  #       value: boolean
+  #     - label: Number
+  #       value: number
+  #     - label: Currency
+  #       value: currency
+  #     - label: Text
+  #       value: text
+  #     - label: Date
+  #       value: date
+  #     - label: Datetime
+  #       value: datetime
+  # formula_blank_value:
+  #   type: select
+  #   label: Blank Field Handling
+  #   inlineHelpText: If your formula references any number or currency fields, specify what happens to the formula output when their values are blank.
+  #   group: Advanced
+  #   options: 
+  #     - label: Treat blank fields as zeroes
+  #       value: zeroes
+  #     - label: Treat blank fields as blanks
+  #       value: blanks
+  #   defaultValue: zeroes
   column_name:
     type: text
     label: Database column name

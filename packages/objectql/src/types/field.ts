@@ -86,6 +86,7 @@ abstract class SteedosFieldProperties{
     fieldDBType?: SteedosFieldDBType | string
     formula?: string
     formula_type?: string
+    formula_blank_value?: string
 }
 
 export interface SteedosFieldTypeConfig extends SteedosFieldProperties{

@@ -570,6 +570,18 @@
                         }
                     ]
                 },
+                "formula_blank_value": {
+                    "type": "string",
+                    "description": "空白字段处理",
+                    "anyOf": [
+                        {
+                            "enum": [
+                                "zeroes",
+                                "blanks"
+                            ]
+                        }
+                    ]
+                },
                 "filters": {
                     "type": [
                         "array",
