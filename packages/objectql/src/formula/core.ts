@@ -1,5 +1,5 @@
 import { getSteedosSchema } from '../index';
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
@@ -54,17 +54,15 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
     }
     let params: Array<SteedosFieldFormulaParamTypeConfig> = [];
     if (vars && vars.length) {
-        for (let { key, paths } of vars) {
+        for (let { key, paths, is_user_session_var: isUserSessionVar } of vars) {
             key = key.trim();
             // 如果变量key以$user开头,则解析为userSession,此时paths为空
-            let userSessionKey = "$user";
-            let isUserSessionVar = key.startsWith(userSessionKey);
             let tempValue: any;
             if(isUserSessionVar){
                 let tempFormulaParams = {};
-                let tepmFormula = key.replace(`$user`, `__params["${userSessionKey}"]`);
+                let tepmFormula = key.replace(FormulaUserSessionKey, `__params["${FormulaUserSessionKey}"]`);
                 tepmFormula = `return ${tepmFormula}`
-                tempFormulaParams[userSessionKey] = userSession;
+                tempFormulaParams[FormulaUserSessionKey] = userSession;
                 tempValue = evalFieldFormula(tepmFormula, tempFormulaParams);
             }
             else{
@@ -115,6 +113,7 @@ export const evalFieldFormula = function (formula: string, formulaParams: object
         return _eval(formulaFun)(formulaParams);
     }
     catch (ex) {
+        formulaParams[FormulaUserSessionKey] = {} //$user去掉，打出的日志看得清楚点
         throw new Error(`evalFieldFormula:Catch an error "${ex}" while eval formula "${formula}" with params "${JSON.stringify(formulaParams)}"`);
     }
 }

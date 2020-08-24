@@ -1,5 +1,5 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey } from './type';
 import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
 import { pickFormulaVars } from './core';
 import { isFieldFormulaConfigQuotedTwoWays } from './util';
@@ -30,19 +30,26 @@ const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, 
  * @param quotes 
  */
 const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
+    let isUserSessionVar = formulaVar.startsWith(FormulaUserSessionKey);
     let varItems = formulaVar.split(".");
     let paths: Array<SteedosFieldFormulaVarPathTypeConfig> = [];
+    let formulaVarItem: SteedosFieldFormulaVarTypeConfig = {
+        key: formulaVar,
+        paths: paths
+    };
+    if (isUserSessionVar) {
+        // 如果是userSession变量，则不需要计算quotes引用，paths也直接空着
+        formulaVarItem.is_user_session_var = true;
+        vars.push(formulaVarItem);
+        return;
+    }
     let tempObjectConfig = objectConfig;
     for (let i = 0; i < varItems.length; i++) {
-        if (!tempObjectConfig) {
-            // 没找到相关引用对象，直接退出
-            break;
-        }
         let varItem = varItems[i];
         let tempFieldConfig: SteedosFieldTypeConfig = tempObjectConfig.fields[varItem];
         if (!tempFieldConfig) {
             // 不是对象上的字段，则直接退出
-            break;
+            throw new Error(`computeFormulaVarAndQuotes:Can't find the field '${varItem}' on the object '${tempObjectConfig.name}' for the formula var '${formulaVar}'`);
         }
         let isFormulaType = tempFieldConfig.type === "formula";
         let tempFieldFormulaVarPath: SteedosFieldFormulaVarPathTypeConfig = {
@@ -54,7 +61,7 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         }
         paths.push(tempFieldFormulaVarPath);
         if (i > 0 || isFormulaType) {
-            // 陈了公式字段外，自己不能引用自己，大于0就是其他对象上的引用
+            // 陈了公式字段外，自己不能引用自己，i大于0就是其他对象上的引用
             let tempFieldFormulaQuote: SteedosFieldFormulaQuoteTypeConfig = {
                 object_name: tempObjectConfig.name,
                 field_name: tempFieldConfig.name
@@ -66,6 +73,10 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         }
         if (tempFieldConfig.type !== "lookup" && tempFieldConfig.type !== "master_detail") {
             // 不是引用类型字段，则直接退出
+            if(i < varItems.length - 1){
+                // 提前找到非跨对象字段，说明varItems中后面没计算的变量是多余错误的，因为.后面肯定是跨对象引用出来的字段（除非是$user等全局变量）
+                throw new Error(`computeFormulaVarAndQuotes:Can't find more reference_to after the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
+            }
             break;
         }
         if (typeof tempFieldConfig.reference_to !== "string") {
@@ -77,15 +88,10 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         });
         if (!tempObjectConfig) {
             // 没找到相关引用对象，直接退出
-            break;
+            throw new Error(`computeFormulaVarAndQuotes:Can't find the object reference_to '${tempFieldConfig.reference_to}' by the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
         }
     }
-    let formulaVarItem: SteedosFieldFormulaVarTypeConfig = {
-        key: formulaVar,
-        paths: paths
-    };
     vars.push(formulaVarItem);
-    return { quotes, vars };
 }
 
 /**
@@ -118,7 +124,7 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
         vars: result.vars
     };
     const isQuotedTwoWays = isFieldFormulaConfigQuotedTwoWays(formulaConfig, getFieldFormulaConfigs());
-    if(!isQuotedTwoWays){
+    if (!isQuotedTwoWays) {
         addFieldFormulaConfig(formulaConfig);
     }
 }
