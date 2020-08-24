@@ -22,6 +22,20 @@ export type SteedosFieldFormulaVarPathTypeConfig = {
 
 /**
  * 运行公式时，要注入的参数，经过计算每个SteedosFieldFormulaVarTypeConfig最终会转换为该结构作为参数注入公式中
+ * 比如contacts对象中有公式{account.website}
+ * 解析后的SteedosFieldFormulaVarTypeConfig为：
+ * {
+ *  key: "account.website",
+ *  paths: [
+ *   {field_name: "account", reference_from:"contacts"},
+ *   {field_name: "website", reference_from:"accounts"},
+ *  ]
+ * }
+ * 最终转换成的SteedosFieldFormulaParamTypeConfig为：
+ * {
+ *  key: "account.website",
+ *  value: "www.abc.com"
+ * }
  */
 export type SteedosFieldFormulaParamTypeConfig = {
     key: string,
@@ -31,7 +45,7 @@ export type SteedosFieldFormulaParamTypeConfig = {
 /**
  * 公式中的{}括起来的单个变量
  * 比如contacts对象中有公式{account.website}
- * 则解析为
+ * 则解析为：
  * {
  *  key: "account.website",
  *  paths: [

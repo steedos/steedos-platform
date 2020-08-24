@@ -6,6 +6,7 @@ import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
+import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
 import { formatFiltersToODataQuery } from "@steedos/filters";
 
 abstract class SteedosObjectProperties {
@@ -725,18 +726,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
             await this.dealWithMethodPermission(method, args);
         }
 
-        let returnValue;
-
-
+        let returnValue: any;
+        let userSession: SteedosUserSession;
         if (this.isDirectCRUD(method)) {
-            let userSession = args[args.length - 1]
+            userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
         } else {
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             await this.runBeforeTriggers(method, beforeTriggerContext)
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
-            let userSession = args[args.length - 1]
+            userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
             if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate'){
@@ -755,9 +755,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
         }
-
+        await this.runFieldFormula(method, args, userSession);
         return returnValue
     };
+
+    private async runFieldFormula(method: string, args: Array<any>, userSession: SteedosUserSession) {
+        if(userSession && ["insert", "update"].indexOf(method) > -1){
+            let objectName = args[0], recordId = args[1], doc = args[2];
+            await runCurrentObjectFieldFormulas(objectName, recordId, doc, userSession);
+            await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
+        }
+    }
 
     /**
      * 把query.filters用formatFiltersToODataQuery转为odata query

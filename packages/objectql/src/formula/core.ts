@@ -1,8 +1,9 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig } from './type';
-import { getObjectQuotedByFieldFormulaConfigs } from './field_formula';
+import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
+import { SteedosUserSession } from '../types';
 import _ = require('lodash')
 import _eval = require('eval')
 
@@ -47,7 +48,8 @@ export const pickFieldFormulaVarFields = (fieldFormulaConfig: SteedosFieldFormul
  * @param vars 
  * return Array<SteedosFieldFormulaParamTypeConfig>
  */
-export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
+export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<SteedosFieldFormulaVarTypeConfig>, userSession: any) => {
+    console.log("===computeFieldFormulaParams==userSession=", userSession);
     let params: Array<SteedosFieldFormulaParamTypeConfig> = [];
     if (vars && vars.length) {
         for (let { key, paths } of vars) {
@@ -78,9 +80,9 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
     return params;
 }
 
-export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig: SteedosFieldFormulaTypeConfig) => {
+export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession?: any) => {
     const { formula, vars, formula_type } = fieldFormulaConfig;
-    let params = await computeFieldFormulaParams(doc, vars);
+    let params = await computeFieldFormulaParams(doc, vars, userSession);
     // console.log("==computeFieldFormulaValue==params===", params);
     return runFieldFormula(formula, params, formula_type);
 }
@@ -88,8 +90,8 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
 export const evalFieldFormula = function (formula: string, formulaParams: object) {
     try {
         let formulaFun = `module.exports = function (__params) { ${formula} }`;
-        console.log("==evalFieldFormula==formulaFun===", formulaFun);
-        console.log("==evalFieldFormula==formulaParams===", formulaParams);
+        // console.log("==evalFieldFormula==formulaFun===", formulaFun);
+        // console.log("==evalFieldFormula==formulaParams===", formulaParams);
         return _eval(formulaFun)(formulaParams);
     }
     catch (ex) {
@@ -107,6 +109,7 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     let formulaParams = {};
     params.forEach(({ key, value }) => {
         formulaParams[key] = value;
+        // 把{}括起来的变量替换为计算得到的变量值
         formula = formula.replace(`{${key}}`, `__params["${key}"]`);
     });
     if (!/\breturn\b/.test(formula)) {
@@ -161,13 +164,25 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFieldFormulaV
     }
 }
 
-export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, fieldNames?: Array<string>) {
+export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, userSession: SteedosUserSession, fieldNames?: Array<string>) {
     // console.log("===runQuotedByObjectFieldFormulas===", objectName, recordId, fieldNames);
     const configs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
     // console.log("===runQuotedByObjectFieldFormulas=configs==", configs);
     for (const config of configs) {
-        await updateQuotedByObjectFieldFormulaValue(objectName, recordId, config);
+        await updateQuotedByObjectFieldFormulaValue(objectName, recordId, config, userSession);
     }
+}
+
+export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, userSession: SteedosUserSession) {
+    const configs = getObjectFieldFormulaConfigs(objectName);
+    if(!configs.length){
+        return;
+    }
+    let setDoc = {};
+    for (const config of configs) {
+        setDoc[config.field_name] = await computeFieldFormulaValue(doc, config, userSession);
+    }
+    await getSteedosSchema().getObject(objectName).directUpdate(recordId, setDoc);
 }
 
 /**
@@ -176,7 +191,7 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
  * @param recordId 当前修改的记录ID
  * @param fieldFormulaConfig 查到的引用了该记录所属对象的相关字段公式配置之一
  */
-export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig) => {
+export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: SteedosUserSession) => {
     const { vars, object_name: fieldFormulaObjectName } = fieldFormulaConfig;
     let toAggregatePaths: Array<Array<SteedosFieldFormulaVarPathTypeConfig>> = [];
     for (let varItem of vars) {
@@ -224,7 +239,7 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
                 // await getSteedosSchema().getObject(fieldFormulaObjectName).updateOne(doc._id, setDoc);
                 await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
                 // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
-                await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, [fieldFormulaConfig.field_name])
+                await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, userSession, [fieldFormulaConfig.field_name])
             }
             else {
                 // 修改的是其他对象上的字段值（包括修改的是其他对象上的公式字段值），则需要按recordId值查出哪些记录需要更新重算公式字段值
@@ -242,7 +257,7 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
                     // await getSteedosSchema().getObject(fieldFormulaObjectName).updateOne(doc._id, setDoc);
                     await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
                     // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
-                    await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, [fieldFormulaConfig.field_name])
+                    await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, userSession, [fieldFormulaConfig.field_name])
                 }
             }
         }
@@ -252,3 +267,10 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
         }
     }
 }
+
+// export const runQuotedByObjectFieldFormulas = async function () {
+//     const configs = getObjectQuotedByFieldFormulaConfigs(this.object_name);
+//     for (const config of configs) {
+//         await updateQuotedByObjectFieldFormulaValue(this.object_name, this.id, config);
+//     }
+// }
