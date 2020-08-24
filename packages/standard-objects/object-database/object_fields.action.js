@@ -54,13 +54,12 @@ module.exports = {
     });
   },
   recomputeFormulaValuesVisible: function(object_name, record_id, record_permissions){
-    return false;
-    // if(!Creator.isSpaceAdmin()){
-    //     return false
-    // }
-    // var record = Creator.odata.get(object_name, record_id, "type");
-    // if(record && record.type === "formula"){
-    //     return true;
-    // }
+    if(!Creator.isSpaceAdmin()){
+        return false
+    }
+    var record = Creator.odata.get(object_name, record_id, "type");
+    if(record && record.type === "formula"){
+        return true;
+    }
   }
 }
