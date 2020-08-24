@@ -514,5 +514,6 @@
 	"menu_account_background": "背景图",
 
 	"notifications__object": "通知",
-	"favorites__object": "我的收藏夹"
+	"favorites__object": "我的收藏夹",
+  	"duplicate_unique_key": "字段%s值不能重复"
 }

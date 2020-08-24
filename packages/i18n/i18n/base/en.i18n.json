@@ -495,5 +495,6 @@
 	"menu_account_background": "Background",
 
 	"notifications__object": "Notifications",
-	"favorites__object": "My Favorite"
+	"favorites__object": "My Favorite",
+  	"duplicate_unique_key": "Duplicate unique key: %s"
 }

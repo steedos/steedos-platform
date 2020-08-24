@@ -126,6 +126,9 @@ Template.creator_table_cell.helpers
 		if safeField.type == "filesize"
 			return false
 
+		if safeField.name == '_id'
+			return false
+
 		permission = Creator.getRecordPermissions(this.object_name, this.doc, Meteor.userId())
 		if !permission.allowEdit
 			return false

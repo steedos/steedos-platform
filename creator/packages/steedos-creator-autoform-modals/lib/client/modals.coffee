@@ -100,7 +100,9 @@ getSimpleSchema = (collectionName)->
 					type: "hidden"
 					defaultValue: ->
 						return getObjectName collectionName
-
+	if Session.get("cmOperation") == "update" && final_schema._id
+		final_schema._id.autoform?.omit = true
+		delete final_schema._id
 	return new SimpleSchema(final_schema)
 
 
@@ -723,7 +725,12 @@ Template.CreatorAfModal.events
 					if error.reason
 						toastr?.error?(TAPi18n.__(error.reason, error.details))
 					else if error.message
-						toastr?.error?(TAPi18n.__(error.message, error.details))
+						if _.isString(error.message) && error.message.startsWith("E11000 duplicate")
+							cmCollection = Session.get 'cmCollection'
+							object_name = getObjectName(cmCollection)
+							toastr?.error?(TAPi18n.__("duplicate_unique_key", Creator.getObject(object_name)?.fields?._id?.label))
+						else
+							toastr?.error?(TAPi18n.__(error.message, error.details))
 					else
 						toastr?.error?(error)
 
