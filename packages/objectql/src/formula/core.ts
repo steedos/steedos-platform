@@ -113,7 +113,7 @@ export const evalFieldFormula = function (formula: string, formulaParams: object
         return _eval(formulaFun)(formulaParams);
     }
     catch (ex) {
-        formulaParams[FormulaUserSessionKey] = {} //$user去掉，打出的日志看得清楚点
+        formulaParams[FormulaUserSessionKey] = "{...}" //$user简化，打出的日志看得清楚点
         throw new Error(`evalFieldFormula:Catch an error "${ex}" while eval formula "${formula}" with params "${JSON.stringify(formulaParams)}"`);
     }
 }
@@ -137,6 +137,9 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     }
     let result = evalFieldFormula(formula, formulaParams);
     console.log("==runFieldFormular==result===", result);
+    if(result === null || result === undefined){
+        return null;
+    }
     if (formulaType) {
         const resultType = typeof result;
         console.log("==runFieldFormular==formulaType===", formulaType);
