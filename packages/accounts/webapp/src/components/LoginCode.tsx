@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import { getSettings, getTenant, getSettingsTenantId } from '../selectors';
 import { accountsRest } from '../accounts';
 import FormError from './FormError';
-import { ApplyCode } from '../client'
+import { ApplyCode } from '../client';
+import { accountsEvent, accountsEventOnError} from '../client/accounts.events'
 
 const useStyles = makeStyles({
   formContainer: {
@@ -26,6 +27,7 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string | "">(_email);
+  const [signupDialogState, setSignupDialogState] = useState<boolean>(false);
   const type = match.params.type || 'email';
   const searchParams = new URLSearchParams(location.search);
   let spaceId = searchParams.get("X-Space-Id") || settingsTenantId;
@@ -67,7 +69,8 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
             })
           }
       }else{
-        throw new Error("未找到您的账户，请先创建账户");
+        signupDialogOpen()
+        // throw new Error("未找到您的账户，请先创建账户");
       }
     } catch (err) {
       setError(err.message);
@@ -76,8 +79,8 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
 
   const goSignup = ()=>{
     let state = {};
-    if(email.trim().indexOf("@") > 0){
-      state =  { email: email }
+    if(email.trim().length > 0){
+      state =  { email: email.trim() }
     }
     history.push({
       pathname: `/signup`,
@@ -85,8 +88,59 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
       state: state
   })
   }
+  const signupDialogOpen = ()=>{
+    setSignupDialogState(true)
+  }
+  const signupDialogClose = ()=>{
+    setSignupDialogState(false)
+  }
+
   return (
       <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
+        <Dialog
+        fullWidth={true}
+        maxWidth='xs'
+        open={signupDialogState}
+        onClose={signupDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"提示"}</DialogTitle>
+        <DialogContent>
+        {tenant.enable_register &&
+          <DialogContentText id="alert-dialog-description">
+            {email.trim().indexOf("@") < 0 && "该手机号还未注册，请注册后再登录。"}
+            {email.trim().indexOf("@") >= 0 && "该邮箱还未注册，请注册后再登录。"}
+          </DialogContentText>
+        }
+        {!tenant.enable_register &&
+          <DialogContentText id="alert-dialog-description">
+            {email.trim().indexOf("@") < 0 && "该手机号还未注册，请联系系统管理员。"}
+            {email.trim().indexOf("@") >= 0 && "该邮箱还未注册，请联系系统管理员。"}
+          </DialogContentText>
+        }
+        </DialogContent>
+        
+        {tenant.enable_register &&
+        <DialogActions>
+          <Button onClick={signupDialogClose} color="primary">
+            暂不注册
+          </Button>
+          <Button onClick={goSignup} variant="contained" color="primary" autoFocus>
+            立即注册
+          </Button>
+          </DialogActions>
+        }
+
+        {!tenant.enable_register &&
+        <DialogActions>
+          <Button onClick={signupDialogClose} color="primary">
+            关闭
+          </Button>
+          </DialogActions>
+        }
+        
+      </Dialog>
         <FormControl margin="normal">
           <InputLabel htmlFor="verifyCode">
             {tenant.enable_bind_mobile &&
@@ -115,14 +169,14 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
             defaultMessage='Next'
           />
         </Button>
-        {!spaceId && tenant.enable_register && tenant.enable_password_login === false &&
+        {/* {!spaceId && tenant.enable_register && tenant.enable_password_login === false &&
         <Button onClick={goSignup}>
           <FormattedMessage
               id='accounts.signup'
               defaultMessage='Sign Up'
           />
         </Button>
-        }
+        } */}
       </form>
   );
 };
