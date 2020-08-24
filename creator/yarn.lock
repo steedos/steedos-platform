@@ -602,10 +602,10 @@
   resolved "https://registry.npm.taobao.org/@steedos/standard-objects/download/@steedos/standard-objects-1.20.0.tgz#dd0c6da323a6182171b16652d5e57fec98a89d14"
   integrity sha1-3QxtoyOmGCFxsWZS1eV/7JionRQ=
 
-"@steedos/steedos-plugin-workflow@^2.0.10":
-  version "2.0.10"
-  resolved "https://registry.npmjs.org/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-2.0.10.tgz#b3d575ecb69d980cbda4fc2f4fe9b6c4e8adc54d"
-  integrity sha512-HDh1VsFoFtTy4wrFAje3cvzm2hS9M4jMYHuduFp5VG+6sjPFxJJXwrOb4Gw8R2T+VTpwBwGWYnAvffwXTrcOIw==
+"@steedos/steedos-plugin-workflow@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-2.1.1.tgz#65f619402196240a788502b24586c158e5475f95"
+  integrity sha512-LFKxgDmCKJ3WhDLy23aMzo62wIl3d7MnJzZQDvVU3BDGfS6TIbqRHf3090DjGBtSvvwec3sudMkjB0Te2wOJEw==
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
