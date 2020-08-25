@@ -34,7 +34,7 @@ InstancesStat.run = function () {
   try {
     // space = InstancesStat.rule.space;
     // 效率统计，定时任务只扫描企业版
-    Creator.getCollection('spaces').find({ is_paid: true, modules: 'workflow.enterprise', end_date: { $gte: new Date() } }).forEach(function (space) {
+    Creator.getCollection('spaces').find({features: 'workflow_statistics'}).forEach(function (space) {
       return InstancesStat.costTime(space._id);
     });
   } catch (e) {

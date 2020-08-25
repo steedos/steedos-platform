@@ -151,6 +151,11 @@ fields:
       }
     omit: true
     hidden: true
+  features:
+    type: "[text]"
+    hidden: true
+    omit: true
+    readonly: true
 list_views:
   all:
     label: All Companies
@@ -162,24 +167,24 @@ list_views:
         - =
         - '{spaceId}'
 actions:
-  pay_records:
-    label: Order
-    'on': record
-    visible: true
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var url;
-              url = Creator.getListViewRelativeUrl("billing_pay_records", "admin", "all");
-              return FlowRouter.go(url);
-            }
-  upgrade:
-    label: Upgrade
-    'on': record
-    visible: true
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              return Modal.show('space_recharge_modal');
-            }
+  # pay_records:
+  #   label: Order
+  #   'on': record
+  #   visible: true
+  #   todo: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             var url;
+  #             url = Creator.getListViewRelativeUrl("billing_pay_records", "admin", "all");
+  #             return FlowRouter.go(url);
+  #           }
+  # upgrade:
+  #   label: Upgrade
+  #   'on': record
+  #   visible: true
+  #   todo: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             return Modal.show('space_recharge_modal');
+  #           }
   standard_new:
     visible: false
   invite_space_users: 
