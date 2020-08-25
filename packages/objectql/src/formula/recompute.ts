@@ -29,9 +29,9 @@ const runQuotedFieldFormulas = async function (recordId: string, fieldFormulaCon
  * @param fieldId 
  */
 export const recomputeFormulaValues = async (fieldId: string, userSession: SteedosUserSession) => {
-    if(!userSession){
-        throw new Error(`recomputeFormulaValues:The param 'userSession' is required for the function'recomputeFormulaValues'`);
-    }
+    // if(!userSession){
+    //     throw new Error(`recomputeFormulaValues:The param 'userSession' is required for the function'recomputeFormulaValues'`);
+    // }
     let config = getFieldFormulaConfig(fieldId);
     if (!config) {
         throw new Error(`recomputeFormulaValues:${fieldId} not found in field_formula configs.`);
@@ -44,9 +44,9 @@ export const recomputeFormulaValues = async (fieldId: string, userSession: Steed
  * @param fieldFormulaConfig 
  */
 export const recomputeFieldFormulaValues = async (fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: SteedosUserSession) => {
-    if(!userSession){
-        throw new Error(`recomputeFieldFormulaValues:The param 'userSession' is required for the function'recomputeFieldFormulaValues'`);
-    }
+    // if(!userSession){
+    //     throw new Error(`recomputeFieldFormulaValues:The param 'userSession' is required for the function'recomputeFieldFormulaValues'`);
+    // }
     await runCurrentFieldFormulas(fieldFormulaConfig, userSession);
     return true;
 }

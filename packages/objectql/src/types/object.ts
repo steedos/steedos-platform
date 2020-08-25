@@ -760,20 +760,32 @@ export class SteedosObjectType extends SteedosObjectProperties {
     };
 
     private async runFieldFormula(method: string, args: Array<any>, userSession: SteedosUserSession) {
-        if(userSession && ["insert", "update"].indexOf(method) > -1){
-            let objectName = args[0], recordId: string, doc: JsonMap;
-            if(method === "insert"){
-                doc = args[1];
-                recordId = <string>doc._id;
+        if(["insert", "update", "updateMany"].indexOf(method) > -1){
+            let isDirectCRUD= this.isDirectCRUD(method);
+            if(!userSession && isDirectCRUD){
+                // directUpdateMany/directUpdate/directInsert这个不传入Session时直接不运算公式
+                return;
+            }
+            if(method === "updateMany"){
+                // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
+                // let filters: SteedosQueryFilters = args[1];
+                // await runManyCurrentObjectFieldFormulas(objectName, filters, userSession);
             }
             else{
-                recordId = args[1];
-                doc = args[2];
-            }
-            await runCurrentObjectFieldFormulas(objectName, recordId, doc, userSession, true);
-            if(method === "update"){
-                // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
-                await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
+                let objectName = args[0], recordId: string, doc: JsonMap;
+                if(method === "insert"){
+                    doc = args[1];
+                    recordId = <string>doc._id;
+                }
+                else{
+                    recordId = args[1];
+                    doc = args[2];
+                }
+                await runCurrentObjectFieldFormulas(objectName, recordId, doc, userSession, true);
+                if(method === "update"){
+                    // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
+                    await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
+                }
             }
         }
     }
