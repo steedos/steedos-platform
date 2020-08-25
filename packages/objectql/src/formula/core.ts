@@ -1,9 +1,10 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey, FormulaBlankValue } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
+import { checkUserSessionNotRequiredForFieldFormulas } from './util';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
-import { SteedosUserSession } from '../types';
+import { SteedosUserSession, SteedosQueryFilters } from '../types';
 import _ = require('lodash')
 import _eval = require('eval')
 
@@ -51,9 +52,6 @@ export const pickFieldFormulaVarFields = (fieldFormulaConfigs: SteedosFieldFormu
  * return Array<SteedosFieldFormulaParamTypeConfig>
  */
 export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<SteedosFieldFormulaVarTypeConfig>, userSession: any) => {
-    if (!userSession) {
-        throw new Error(`computeFieldFormulaParams:The param 'userSession' is required for the function'computeFieldFormulaParams'`);
-    }
     let params: Array<SteedosFieldFormulaParamTypeConfig> = [];
     if (vars && vars.length) {
         for (let { key, paths, is_user_session_var: isUserSessionVar } of vars) {
@@ -61,6 +59,9 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
             // 如果变量key以$user开头,则解析为userSession,此时paths为空
             let tempValue: any;
             if (isUserSessionVar) {
+                if (!userSession) {
+                    throw new Error(`computeFieldFormulaParams:The param 'userSession' is required for the formula var key ${key}`);
+                }
                 let tempFormulaParams = {};
                 let tepmFormula = key.replace(FormulaUserSessionKey, `__params["${FormulaUserSessionKey}"]`);
                 tepmFormula = `return ${tepmFormula}`
@@ -100,7 +101,7 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
 
 export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any) => {
     if (!userSession) {
-        throw new Error(`computeFieldFormulaValue:The param 'userSession' is required for the function'computeFieldFormulaValue'`);
+        checkUserSessionNotRequiredForFieldFormulas(fieldFormulaConfig);
     }
     const { formula, vars, formula_type, formula_blank_value } = fieldFormulaConfig;
     let params = await computeFieldFormulaParams(doc, vars, userSession);
@@ -210,15 +211,16 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFieldFormulaV
  * @param recordId 
  * @param userSession 
  * @param fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
+ * @param quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, userSession: SteedosUserSession, fieldNames?: Array<string>) {
-    if (!userSession) {
-        throw new Error(`runQuotedByObjectFieldFormulas:The param 'userSession' is required for the function'runQuotedByObjectFieldFormulas'`);
+export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, userSession: SteedosUserSession, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldFormulaTypeConfig>) {
+    if(!quotedByConfigs){
+        quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
     }
-    // console.log("===runQuotedByObjectFieldFormulas===", objectName, recordId, fieldNames);
-    const configs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
-    // console.log("===runQuotedByObjectFieldFormulas=configs==", configs);
-    for (const config of configs) {
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(quotedByConfigs);
+    }
+    for (const config of quotedByConfigs) {
         await updateQuotedByObjectFieldFormulaValue(objectName, recordId, config, userSession);
     }
 }
@@ -229,14 +231,18 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
  * @param recordId 
  * @param doc 
  * @param userSession 
+ * @param needRefetchDoc 当doc不可信赖时，需要从数据库中重新抓取doc，请传入true值
+ * @param configs 如果已经根据objectName查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, userSession: SteedosUserSession, needRefetchDoc?: boolean) {
-    if (!userSession) {
-        throw new Error(`runCurrentObjectFieldFormulas:The param 'userSession' is required for the function'runCurrentObjectFieldFormulas'`);
+export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, userSession: SteedosUserSession, needRefetchDoc?: boolean, configs?: Array<SteedosFieldFormulaTypeConfig>) {
+    if(!configs){
+        configs = getObjectFieldFormulaConfigs(objectName);
     }
-    const configs = getObjectFieldFormulaConfigs(objectName);
     if (!configs.length) {
         return;
+    }
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(configs);
     }
     if(needRefetchDoc){
         const formulaVarFields = pickFieldFormulaVarFields(configs);
@@ -248,6 +254,27 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
         setDoc[config.field_name] = await computeFieldFormulaValue(doc, config, userSession);
     }
     await getSteedosSchema().getObject(objectName).directUpdate(recordId, setDoc);
+}
+
+/**
+ * 找到当前正在update的对象多条记录的公式字段并更新其字段值
+ * @param objectName 
+ * @param filters 
+ * @param userSession 
+ */
+export const runManyCurrentObjectFieldFormulas = async function (objectName: string, filters: SteedosQueryFilters, userSession: SteedosUserSession) {
+    const configs = getObjectFieldFormulaConfigs(objectName);
+    if (!configs.length) {
+        return;
+    }
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(configs);
+    }
+    const formulaVarFields = pickFieldFormulaVarFields(configs);
+    let docs = await getSteedosSchema().getObject(objectName).find({ filters: filters, fields: formulaVarFields });
+    for (const doc of docs) {
+        await runCurrentObjectFieldFormulas(objectName, doc._id, doc, userSession, false, configs);
+    }
 }
 
 /**
@@ -332,10 +359,3 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
         }
     }
 }
-
-// export const runQuotedByObjectFieldFormulas = async function () {
-//     const configs = getObjectQuotedByFieldFormulaConfigs(this.object_name);
-//     for (const config of configs) {
-//         await updateQuotedByObjectFieldFormulaValue(this.object_name, this.id, config);
-//     }
-// }
