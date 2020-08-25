@@ -1207,32 +1207,12 @@ InstanceManager.uploadAttach = function (files, isAddVersion, isMainAttach) {
 	$('.loading-text').text(TAPi18n.__("workflow_attachment_uploading"));
 
 	var limitSize, warnStr;
-
-	var is_paid = WorkflowManager.isPaidSpace(Session.get('spaceId'));
-
-	if (is_paid) {
-		// 单个附件大小限制: 基础版10M, 专业版50M, 企业版100M
-		// 读取settings中附件最大限制
-		var maximumFileSize = 0;
-		if (Steedos.isLegalVersion('', "workflow.enterprise")) {
-			maximumFileSize = 100;
-		} else if (Steedos.isLegalVersion('', "workflow.professional")) {
-			maximumFileSize = 50;
-		} else if (Steedos.isLegalVersion('', "workflow.standard")) {
-			maximumFileSize = 10;
-		}
-		var ref, ref1, ref2;
-		var attachment_size_limit = ((ref = Meteor.settings) != null ? (ref1 = ref["public"]) != null ? (ref2 = ref1.workflow) != null ? ref2.attachment_size_limit : void 0 : void 0 : void 0);
-		if (attachment_size_limit) {
-			maximumFileSize = attachment_size_limit;
-		}
-		limitSize = maximumFileSize * 1024 * 1024;
-		warnStr = t("workflow_attachment_paid_size_limit") + maximumFileSize + "MB";
-	} else {
-		// 免费版大小不能超过10M
-		limitSize = 10 * 1024 * 1024;
-		warnStr = t("workflow_attachment_free_size_limit");
+	var maximumFileSize = 100;
+	if(Meteor.settings.public && Meteor.settings.public.cfs && Meteor.settings.public.cfs.size_limit){
+		maximumFileSize = Meteor.settings.public.cfs.size_limit;
 	}
+	limitSize = maximumFileSize * 1024 * 1024;
+	warnStr = t("workflow_attachment_paid_size_limit") + maximumFileSize + "MB";
 
 	var fd, file, fileName, i;
 
