@@ -28,7 +28,7 @@ Creator.Objects.object_workflows.triggers = {
     on: "client",
     when: "before.insert",
     todo: function (userId, doc) {
-      if (!Steedos.isLegalVersion('', "workflow.enterprise")) {
+      if (!Steedos.hasFeature('object_workflow')) {
         Steedos.spaceUpgradedModal();
         throw new Meteor.Error('当前工作区版本不能使用此功能，请联络系统管理员升级版本');
       }
@@ -38,7 +38,7 @@ Creator.Objects.object_workflows.triggers = {
     on: "client",
     when: "before.update",
     todo: function (userId, doc) {
-      if (!Steedos.isLegalVersion('', "workflow.enterprise")) {
+      if (!Steedos.hasFeature('object_workflow')) {
         Steedos.spaceUpgradedModal();
         throw new Meteor.Error('当前工作区版本不能使用此功能，请联络系统管理员升级版本');
       }
