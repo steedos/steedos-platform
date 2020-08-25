@@ -1,4 +1,5 @@
 import { SteedosFieldFormulaTypeConfig } from './type';
+import _ = require('lodash')
 
 /**
  * 从参数sourceConfigs中找到参数config中引用过的公式字段配置
@@ -92,4 +93,26 @@ export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeCo
         addSortedFieldFormulaConfig(config, configs, sortedConfigs);
     });
     return sortedConfigs;
+}
+
+/**
+ * 当userSession为空时，确认参数configs中没有引用$user变量
+ * @param configs
+ */
+export const checkUserSessionNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>) => {
+    if (!_.isArray(configs)) {
+        configs = [configs];
+    }
+    if(!configs.length){
+        return;
+    }
+    for(let config of configs){
+        let { vars, object_name: objectName, field_name: fieldName } = config;
+        let required = !!vars.find(({ is_user_session_var: isUserSessionVar })=>{
+            return isUserSessionVar;
+        });
+        if(required){
+            throw new Error(`The param 'userSession' is required for the formula of '${fieldName}' on the object '${objectName}'`);
+        }
+    }
 }

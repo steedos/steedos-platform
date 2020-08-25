@@ -1,6 +1,7 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey, FormulaBlankValue } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
+import { checkUserSessionNotRequiredForFieldFormulas } from './util';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
 import { SteedosUserSession, SteedosQueryFilters } from '../types';
@@ -51,9 +52,6 @@ export const pickFieldFormulaVarFields = (fieldFormulaConfigs: SteedosFieldFormu
  * return Array<SteedosFieldFormulaParamTypeConfig>
  */
 export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<SteedosFieldFormulaVarTypeConfig>, userSession: any) => {
-    // if (!userSession) {
-    //     throw new Error(`computeFieldFormulaParams:The param 'userSession' is required for the function'computeFieldFormulaParams'`);
-    // }
     let params: Array<SteedosFieldFormulaParamTypeConfig> = [];
     if (vars && vars.length) {
         for (let { key, paths, is_user_session_var: isUserSessionVar } of vars) {
@@ -61,6 +59,9 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
             // 如果变量key以$user开头,则解析为userSession,此时paths为空
             let tempValue: any;
             if (isUserSessionVar) {
+                if (!userSession) {
+                    throw new Error(`computeFieldFormulaParams:The param 'userSession' is required for the formula var key ${key}`);
+                }
                 let tempFormulaParams = {};
                 let tepmFormula = key.replace(FormulaUserSessionKey, `__params["${FormulaUserSessionKey}"]`);
                 tepmFormula = `return ${tepmFormula}`
@@ -99,9 +100,9 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
 }
 
 export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any) => {
-    // if (!userSession) {
-    //     throw new Error(`computeFieldFormulaValue:The param 'userSession' is required for the function'computeFieldFormulaValue'`);
-    // }
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(fieldFormulaConfig);
+    }
     const { formula, vars, formula_type, formula_blank_value } = fieldFormulaConfig;
     let params = await computeFieldFormulaParams(doc, vars, userSession);
     return runFieldFormula(formula, params, formula_type, formula_blank_value);
@@ -213,11 +214,11 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFieldFormulaV
  * @param quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
 export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, userSession: SteedosUserSession, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldFormulaTypeConfig>) {
-    // if (!userSession) {
-    //     throw new Error(`runQuotedByObjectFieldFormulas:The param 'userSession' is required for the function'runQuotedByObjectFieldFormulas'`);
-    // }
     if(!quotedByConfigs){
         quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
+    }
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(quotedByConfigs);
     }
     for (const config of quotedByConfigs) {
         await updateQuotedByObjectFieldFormulaValue(objectName, recordId, config, userSession);
@@ -234,14 +235,14 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
  * @param configs 如果已经根据objectName查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
 export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, userSession: SteedosUserSession, needRefetchDoc?: boolean, configs?: Array<SteedosFieldFormulaTypeConfig>) {
-    // if (!userSession) {
-    //     throw new Error(`runCurrentObjectFieldFormulas:The param 'userSession' is required for the function'runCurrentObjectFieldFormulas'`);
-    // }
     if(!configs){
         configs = getObjectFieldFormulaConfigs(objectName);
     }
     if (!configs.length) {
         return;
+    }
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(configs);
     }
     if(needRefetchDoc){
         const formulaVarFields = pickFieldFormulaVarFields(configs);
@@ -265,6 +266,9 @@ export const runManyCurrentObjectFieldFormulas = async function (objectName: str
     const configs = getObjectFieldFormulaConfigs(objectName);
     if (!configs.length) {
         return;
+    }
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(configs);
     }
     const formulaVarFields = pickFieldFormulaVarFields(configs);
     let docs = await getSteedosSchema().getObject(objectName).find({ filters: filters, fields: formulaVarFields });
@@ -355,10 +359,3 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
         }
     }
 }
-
-// export const runQuotedByObjectFieldFormulas = async function () {
-//     const configs = getObjectQuotedByFieldFormulaConfigs(this.object_name);
-//     for (const config of configs) {
-//         await updateQuotedByObjectFieldFormulaValue(this.object_name, this.id, config);
-//     }
-// }
