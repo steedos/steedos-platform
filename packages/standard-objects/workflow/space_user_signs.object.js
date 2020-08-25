@@ -29,9 +29,6 @@ if (Meteor.isServer) {
   });
   db.space_user_signs.before.insert(function (userId, doc) {
     var userSign;
-    if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
-      throw new Meteor.Error(400, "space_paid_info_title");
-    }
     doc.created_by = userId;
     doc.created = new Date();
     doc.modified_by = userId;
@@ -48,9 +45,6 @@ if (Meteor.isServer) {
     var userSign;
     modifier.$set.modified_by = userId;
     modifier.$set.modified = new Date();
-    if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
-      throw new Meteor.Error(400, "space_paid_info_title");
-    }
     if (modifier.$set.user) {
       userSign = db.space_user_signs.findOne({
         space: doc.space,
