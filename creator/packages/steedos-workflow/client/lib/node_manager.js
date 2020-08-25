@@ -232,30 +232,24 @@ NodeManager.vbsEditFile = function(download_dir, filename, arg) {
 	}else{
 		Modal.show("attachments_upload_modal", { filePath: filePath });
 	}
-	
-	// 免费版大小不能超过1M
-	var freeMaximumFileSize = 1024 * 1024;
 
-	// 专业版文件大小不能超过100M
-	// 读取settings中附件最大限制,默认100M
-	var maximumFileSize = 100 * 1024 * 1024;
+
+	var maximumFileSize = 100;
+	if(Meteor.settings.public && Meteor.settings.public.cfs && Meteor.settings.public.cfs.size_limit){
+		maximumFileSize = Meteor.settings.public.cfs.size_limit;
+	}
+
+
 	var ref, ref1, ref2;
 	var attachment_size_limit = ((ref = Meteor.settings) != null ? (ref1 = ref["public"]) != null ? (ref2 = ref1.workflow) != null ? ref2.attachment_size_limit : void 0 : void 0 : void 0) || 100;
-	
+
 	if (attachment_size_limit)
 		maximumFileSize = attachment_size_limit * 1024 * 1024;
 
 	var limitSize, warnStr;
 
-	var is_paid = WorkflowManager.isPaidSpace(Session.get('spaceId'));
-
-	if (is_paid) {
-		limitSize = maximumFileSize;
-		warnStr = t("workflow_attachment_paid_size_limit") + attachment_size_limit + "MB";
-	} else {
-		limitSize = freeMaximumFileSize;
-		warnStr = t("workflow_attachment_free_size_limit");
-	}
+	limitSize = maximumFileSize * 1024 * 1024;
+	warnStr = t("workflow_attachment_paid_size_limit") + maximumFileSize + "MB";
 	// 执行vbs编辑word
 	var child = exec(cmd);
 	//正在编辑
