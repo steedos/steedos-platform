@@ -378,7 +378,7 @@ Template.instance_suggestion.events
 	'click #instance_submit': (event)->
 		if Session.get("box") == "draft" && !Template.instance_pick_approve_users.validate()
 			return
-		if WorkflowManager.isArrearageSpace()
+		if !Steedos.hasFeature('workflow')
 			ins = WorkflowManager.getInstance();
 			if ins.state == "draft"
 				toastr.error(t("spaces_isarrearageSpace"));
