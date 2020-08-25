@@ -98,10 +98,6 @@ Template.forward_select_flow_modal.events({
 		var related = false;
 
 		if (action_type == 'forward') {
-			if (!Steedos.isLegalVersion('', "workflow.professional")) {
-				Steedos.spaceUpgradedModal()
-				return;
-			}
 			selectedUsers = [Meteor.userId()];
 		} else if (action_type == 'distribute') {
 			if (!Steedos.isLegalVersion('', "workflow.enterprise")) {
