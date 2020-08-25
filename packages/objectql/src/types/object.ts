@@ -761,9 +761,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     private async runFieldFormula(method: string, args: Array<any>, userSession: SteedosUserSession) {
         if(userSession && ["insert", "update"].indexOf(method) > -1){
-            let objectName = args[0], recordId = args[1], doc = args[2];
-            await runCurrentObjectFieldFormulas(objectName, recordId, doc, userSession);
-            await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
+            let objectName = args[0], recordId: string, doc: JsonMap;
+            if(method === "insert"){
+                doc = args[1];
+                recordId = <string>doc._id;
+            }
+            else{
+                recordId = args[1];
+                doc = args[2];
+            }
+            await runCurrentObjectFieldFormulas(objectName, recordId, doc, userSession, true);
+            if(method === "update"){
+                // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
+                await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
+            }
         }
     }
 

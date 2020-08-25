@@ -25,21 +25,23 @@ export const pickFormulaVars = (formula: string): Array<string> => {
  * 根据公式内容，取出其中{}中的变量，并进一步取出这些变量中引用了当前对象的哪些字段
  * @param fieldFormulaConfig 
  */
-export const pickFieldFormulaVarFields = (fieldFormulaConfig: SteedosFieldFormulaTypeConfig): Array<string> => {
-    let { vars } = fieldFormulaConfig;
-    if (!vars.length) {
-        return [];
+export const pickFieldFormulaVarFields = (fieldFormulaConfigs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>): Array<string> => {
+    if (!_.isArray(fieldFormulaConfigs)) {
+        fieldFormulaConfigs = [fieldFormulaConfigs];
     }
-    // let fields = getSteedosSchema().getObject(fieldFormulaConfig.object_name).fields;
     let result = [];
-    vars.forEach((varItem) => {
-        if (varItem.paths.length) {
-            // 取paths中第一个，第一个一定是当前对象中的字段
-            let firstKey = varItem.paths[0].field_name;
-            result.push(firstKey);
-        }
+    fieldFormulaConfigs.forEach((fieldFormulaConfig: SteedosFieldFormulaTypeConfig) => {
+        let { vars } = fieldFormulaConfig;
+        vars.forEach((varItem: SteedosFieldFormulaVarTypeConfig) => {
+            if (varItem.paths.length) {
+                // 如果是$user变量则paths肯定为空，所以取paths中第一个，第一个一定是当前对象中的字段
+                let firstPath: SteedosFieldFormulaVarPathTypeConfig = varItem.paths[0];
+                let firstKey = firstPath.field_name;
+                result.push(firstKey);
+            }
+        });
     });
-    return result;
+    return _.uniq(result);
 }
 
 /**
@@ -49,7 +51,7 @@ export const pickFieldFormulaVarFields = (fieldFormulaConfig: SteedosFieldFormul
  * return Array<SteedosFieldFormulaParamTypeConfig>
  */
 export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<SteedosFieldFormulaVarTypeConfig>, userSession: any) => {
-    if(!userSession){
+    if (!userSession) {
         throw new Error(`computeFieldFormulaParams:The param 'userSession' is required for the function'computeFieldFormulaParams'`);
     }
     let params: Array<SteedosFieldFormulaParamTypeConfig> = [];
@@ -58,20 +60,20 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
             key = key.trim();
             // 如果变量key以$user开头,则解析为userSession,此时paths为空
             let tempValue: any;
-            if(isUserSessionVar){
+            if (isUserSessionVar) {
                 let tempFormulaParams = {};
                 let tepmFormula = key.replace(FormulaUserSessionKey, `__params["${FormulaUserSessionKey}"]`);
                 tepmFormula = `return ${tepmFormula}`
                 tempFormulaParams[FormulaUserSessionKey] = userSession;
                 tempValue = evalFieldFormula(tepmFormula, tempFormulaParams);
             }
-            else{
+            else {
                 tempValue = _.reduce(paths, (reslut, next, index) => {
                     if (index === 0) {
                         return <any>doc[next.field_name];
                     }
                     else {
-                        if(!reslut){
+                        if (!reslut) {
                             // 当上一轮返回空值或0时，直接返回
                             return reslut;
                         }
@@ -97,7 +99,7 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
 }
 
 export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any) => {
-    if(!userSession){
+    if (!userSession) {
         throw new Error(`computeFieldFormulaValue:The param 'userSession' is required for the function'computeFieldFormulaValue'`);
     }
     const { formula, vars, formula_type, formula_blank_value } = fieldFormulaConfig;
@@ -137,17 +139,17 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     }
     let result = evalFieldFormula(formula, formulaParams);
     console.log("==runFieldFormular==result===", result);
-    if(result === null || result === undefined){
-        if(["number", "currency"].indexOf(formulaType) > -1){
-            if(formulaBlankValue === FormulaBlankValue.blanks){
+    if (result === null || result === undefined) {
+        if (["number", "currency"].indexOf(formulaType) > -1) {
+            if (formulaBlankValue === FormulaBlankValue.blanks) {
                 return null;
             }
-            else{
+            else {
                 // 默认为按0值处理
                 return 0;
             }
         }
-        else{
+        else {
             return null;
         }
     }
@@ -210,7 +212,7 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFieldFormulaV
  * @param fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
  */
 export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, userSession: SteedosUserSession, fieldNames?: Array<string>) {
-    if(!userSession){
+    if (!userSession) {
         throw new Error(`runQuotedByObjectFieldFormulas:The param 'userSession' is required for the function'runQuotedByObjectFieldFormulas'`);
     }
     // console.log("===runQuotedByObjectFieldFormulas===", objectName, recordId, fieldNames);
@@ -228,13 +230,18 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
  * @param doc 
  * @param userSession 
  */
-export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, userSession: SteedosUserSession) {
-    if(!userSession){
+export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, userSession: SteedosUserSession, needRefetchDoc?: boolean) {
+    if (!userSession) {
         throw new Error(`runCurrentObjectFieldFormulas:The param 'userSession' is required for the function'runCurrentObjectFieldFormulas'`);
     }
     const configs = getObjectFieldFormulaConfigs(objectName);
-    if(!configs.length){
+    if (!configs.length) {
         return;
+    }
+    if(needRefetchDoc){
+        const formulaVarFields = pickFieldFormulaVarFields(configs);
+        doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
+        console.log("===runCurrentObjectFieldFormulas===doc==y=", doc);
     }
     let setDoc = {};
     for (const config of configs) {
