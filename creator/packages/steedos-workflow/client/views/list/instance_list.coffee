@@ -271,7 +271,7 @@ Template.instance_list.onCreated ->
 		Workflow.renderListColumns()
 
 	# 只有是企业版并且开关instance_batch_approval开时，才支持批量审批
-	if Steedos.isLegalVersion('',"workflow.enterprise") && Meteor.settings.public?.workflow?.instance_batch_approval
+	if Steedos.hasFeature('batch_approval') && Meteor.settings.public?.workflow?.instance_batch_approval
 		self.autorun ()->
 			if Session.get("box") == 'inbox' && Session.get("flowId")
 
