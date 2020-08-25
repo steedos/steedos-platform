@@ -952,7 +952,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/license",
-  "version": "1.22.0-alpha.8",
+  "version": "1.22.0-alpha.10",
   "main": "main.js"
 };
 
