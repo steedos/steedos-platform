@@ -572,7 +572,7 @@
                 },
                 "formula_blank_value": {
                     "type": "string",
-                    "description": "空白字段处理",
+                    "description": "空白字段处理，zeroes表示将空白字段视为零，blanks表示将空白字段视为空白，默认为zeroes",
                     "anyOf": [
                         {
                             "enum": [

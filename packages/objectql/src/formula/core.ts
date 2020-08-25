@@ -241,10 +241,10 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
     if(needRefetchDoc){
         const formulaVarFields = pickFieldFormulaVarFields(configs);
         doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
-        console.log("===runCurrentObjectFieldFormulas===doc==y=", doc);
     }
     let setDoc = {};
     for (const config of configs) {
+        doc = Object.assign({}, doc, setDoc);//setDoc中计算得到的结果应该重新并到doc中支持计算
         setDoc[config.field_name] = await computeFieldFormulaValue(doc, config, userSession);
     }
     await getSteedosSchema().getObject(objectName).directUpdate(recordId, setDoc);
