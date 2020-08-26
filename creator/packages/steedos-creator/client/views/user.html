@@ -95,7 +95,9 @@
 					{{/each}} {{/autoForm}}
 				</div>
 			{{else}}
-				{{> notFound}}
+				{{#unless isSubscribing}}
+					{{> notFound}}
+				{{/unless}}
 			{{/if}}
 		</div>
 	</div>

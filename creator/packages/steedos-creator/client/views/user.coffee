@@ -12,6 +12,7 @@ getObjectRecord = ()->
 
 Template.user.onCreated ->
 	this.record = new ReactiveVar()
+	this.isSubscribing = new ReactiveVar(true)
 	template = Template.instance()
 	this.onEditSuccess = onEditSuccess = (formType,result)->
 		spaceId = Session.get "spaceId"
@@ -24,6 +25,7 @@ Template.user.onCreated ->
 	,false
 
 Template.user.onRendered ->
+	self = this
 	this.autorun ->
 		spaceId = Session.get "spaceId"
 		userId = Session.get "record_id"
@@ -35,10 +37,14 @@ Template.user.onRendered ->
 		space_record = Creator.getCollection("space_users").findOne({space: spaceId, user: userId})
 		if space_record?._id
 			loadRecordFromOdata(Template.instance(), "space_users", space_record._id)
+			self.isSubscribing.set(false);
 
 Template.user.helpers 
 	doc: ()->
 		return getObjectRecord()
+
+	isSubscribing: ()->
+		return Template.instance().isSubscribing.get()
 
 	fields: ()->
 		object = Creator.getObject("space_users")
