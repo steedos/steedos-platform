@@ -100,7 +100,7 @@ Template.instance_list_wrapper.events
 	'click .list-action-custom-standard_new': (event) ->
 		#判断是否为欠费工作区
 		if !Steedos.hasFeature('workflow')
-			toastr.error(t("spaces_isarrearageSpace"));
+			Steedos.spaceUpgradedModal();
 			return;
 
 		WorkflowManager.alertFlowListModel

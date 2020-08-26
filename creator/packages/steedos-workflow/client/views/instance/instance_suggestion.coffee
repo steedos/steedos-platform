@@ -381,7 +381,7 @@ Template.instance_suggestion.events
 		if !Steedos.hasFeature('workflow')
 			ins = WorkflowManager.getInstance();
 			if ins.state == "draft"
-				toastr.error(t("spaces_isarrearageSpace"));
+				Steedos.spaceUpgradedModal()
 				return
 
 		if InstanceManager.isAttachLocked(Session.get('instanceId'), Meteor.userId())
