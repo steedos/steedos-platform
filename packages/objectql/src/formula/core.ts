@@ -1,7 +1,7 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey, FormulaBlankValue } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
-import { checkUserSessionNotRequiredForFieldFormulas } from './util';
+import { checkUserSessionNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups } from './util';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
 import { SteedosUserSession, SteedosQueryFilters } from '../types';
@@ -197,8 +197,12 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
 }
 
 const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFieldFormulaVarPathTypeConfig>, toAggregatePaths: Array<Array<SteedosFieldFormulaVarPathTypeConfig>>) => {
+    // 当引用了同一个对象的不同属性时，只需要记录其中一个，因为一个公式里面引用的字段变更后，只需要重算一次，比如以下两个都将只有第一条会加入到toAggregatePaths中
+    // [{"key":"account.website","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"website","reference_from":"accounts"}]}]
+    // [{"key":"account.name","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"name","reference_from":"accounts"}]}]
+    const pathLength = varItemToAggregatePaths.length;
     let existPath = toAggregatePaths.find((item) => {
-        return JSON.stringify(item) === JSON.stringify(varItemToAggregatePaths)
+        return JSON.stringify(item.slice(0, pathLength)) === JSON.stringify(varItemToAggregatePaths.slice(0, pathLength))
     });
     if (!existPath) {
         toAggregatePaths.push(varItemToAggregatePaths);
@@ -214,7 +218,7 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFieldFormulaV
  * @param quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
 export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, userSession: SteedosUserSession, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldFormulaTypeConfig>) {
-    if(!quotedByConfigs){
+    if (!quotedByConfigs) {
         quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
     }
     if (!userSession) {
@@ -235,7 +239,7 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
  * @param configs 如果已经根据objectName查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
 export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, userSession: SteedosUserSession, needRefetchDoc?: boolean, configs?: Array<SteedosFieldFormulaTypeConfig>) {
-    if(!configs){
+    if (!configs) {
         configs = getObjectFieldFormulaConfigs(objectName);
     }
     if (!configs.length) {
@@ -244,7 +248,7 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
     if (!userSession) {
         checkUserSessionNotRequiredForFieldFormulas(configs);
     }
-    if(needRefetchDoc){
+    if (needRefetchDoc) {
         const formulaVarFields = pickFieldFormulaVarFields(configs);
         doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
     }
@@ -292,15 +296,15 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
         let isInPaths = false;
         let varItemToAggregatePaths = [];
         for (let pathItem of paths) {
+            varItemToAggregatePaths.push(pathItem);
             if (pathItem.reference_from === objectName) {
                 isInPaths = true;
-                if (paths.length === 1 && pathItem.is_formula && fieldFormulaObjectName === objectName) {
-                    // 如果修改的是当前对象本身的公式字段值时，paths长度会为1，需要提前放入varItemToAggregatePaths中，否则会造成varItemToAggregatePaths作为空数组加入toAggregatePaths中
-                    varItemToAggregatePaths.push(pathItem);
-                }
+                // if (paths.length === 1 && pathItem.is_formula && fieldFormulaObjectName === objectName) {
+                //     // 如果修改的是当前对象本身的公式字段值时，paths长度会为1，需要提前放入varItemToAggregatePaths中，否则会造成varItemToAggregatePaths作为空数组加入toAggregatePaths中
+                //     varItemToAggregatePaths.push(pathItem);
+                // }
                 break;
             }
-            varItemToAggregatePaths.push(pathItem);
         }
         if (isInPaths) {
             // 添加时去除重复项
@@ -315,7 +319,7 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
     // 超过一层引用关系时，vars格式如：[{"key":"account.modified_by.name","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"modified_by","reference_from":"accounts"},{"field_name":"name","reference_from":"users"}]}]
     // 则toAggregatePaths为[[{"field_name":"account","reference_from":"contacts"},{"field_name":"modified_by","reference_from":"accounts"}]]
     for (let toAggregatePathsItem of toAggregatePaths) {
-        if (toAggregatePathsItem.length < 2) {
+        if (toAggregatePathsItem.length < 3) {
             // 引用关系只有一层时，可以直接查出哪些记录需要更新重算公式字段值
             let tempPath = toAggregatePathsItem[0];
             if (tempPath.is_formula && fieldFormulaObjectName === objectName && tempPath.reference_from === objectName) {
@@ -336,7 +340,6 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
             else {
                 // 修改的是其他对象上的字段值（包括修改的是其他对象上的公式字段值），则需要按recordId值查出哪些记录需要更新重算公式字段值
                 let docs = await getSteedosSchema().getObject(fieldFormulaObjectName).find({ filters: [[tempPath.field_name, "=", recordId]], fields: formulaVarFields })
-                // let docs = await getSteedosSchema().getObject(fieldFormulaObjectName).find({ filters: [[tempPath.field_name, "=", recordId]] })
                 // console.log("===updateQuotedByObjectFieldFormulaValue=docs====", docs);
                 for (let doc of docs) {
                     let value = await computeFieldFormulaValue(doc, fieldFormulaConfig, userSession);
@@ -355,7 +358,21 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
         }
         else {
             // 引用关系超过一层时，需要使用aggregate来查出哪些记录需要更新重算公式字段值
-            // TODO:调用aggregate函数来处理
+            let aggregateLookups = getFormulaVarPathsAggregateLookups(toAggregatePathsItem);
+            let lastLookupAs = aggregateLookups[aggregateLookups.length - 1]["$lookup"].as;
+            let aggregateFilters = [[`${lastLookupAs}._id`, "=", recordId]];
+            const docs = await getSteedosSchema().getObject(fieldFormulaObjectName).aggregate({
+                filters: aggregateFilters,
+                fields: formulaVarFields
+            }, aggregateLookups);
+            for (let doc of docs) {
+                let value = await computeFieldFormulaValue(doc, fieldFormulaConfig, userSession);
+                let setDoc = {};
+                setDoc[fieldFormulaConfig.field_name] = value;
+                await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
+                // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
+                await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, userSession, [fieldFormulaConfig.field_name])
+            }
         }
     }
 }
