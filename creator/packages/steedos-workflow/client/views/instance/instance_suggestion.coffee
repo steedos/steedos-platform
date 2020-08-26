@@ -378,7 +378,7 @@ Template.instance_suggestion.events
 	'click #instance_submit': (event)->
 		if Session.get("box") == "draft" && !Template.instance_pick_approve_users.validate()
 			return
-		if !Steedos.hasFeature('workflow')
+		if !Steedos.hasFeature('workflow', Steedos.getSpaceId())
 			ins = WorkflowManager.getInstance();
 			if ins.state == "draft"
 				Steedos.spaceUpgradedModal()

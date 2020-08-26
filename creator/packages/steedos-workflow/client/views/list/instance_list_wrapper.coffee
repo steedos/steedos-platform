@@ -99,7 +99,7 @@ Template.instance_list_wrapper.events
 
 	'click .list-action-custom-standard_new': (event) ->
 		#判断是否为欠费工作区
-		if !Steedos.hasFeature('workflow')
+		if !Steedos.hasFeature('workflow', Steedos.getSpaceId())
 			Steedos.spaceUpgradedModal();
 			return;
 

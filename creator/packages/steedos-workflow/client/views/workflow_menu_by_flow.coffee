@@ -143,7 +143,7 @@ Template.workflowMenuByFlow.events
 		event.stopPropagation()
 		event.preventDefault()
 		#判断是否为欠费工作区
-		if !Steedos.hasFeature('workflow')
+		if !Steedos.hasFeature('workflow', Steedos.getSpaceId())
 			Steedos.spaceUpgradedModal()
 			return;
 		
