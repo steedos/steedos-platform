@@ -26,12 +26,12 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	list_view_id = list_view?._id
 
 	if record_id
-		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
 	else
 		if object_name is "meeting"
-			return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/calendar/")
+			return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/calendar/")
 		else
-			return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+			return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
 
 Creator.getObjectRouterUrl = (object_name, record_id, app_id) ->
 	if !app_id

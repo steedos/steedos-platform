@@ -368,7 +368,7 @@ TracesTemplate.events =
 			Modal.show "instance_trace_detail_modal", this
 
 	'click .approve-item a.btn-link,.approve-description a.btn-link,.approve-item-distribute a.btn-link': (event, template) ->
-		# 手机上点击链接，弹出新窗口
+		# 手机上点击链接，弹出新窗口，不支持，因为android上会弹出登录界面
 		if Steedos.isMobile()
 			userId = event.target.dataset?.target_user_id
 			Creator.openSafeObjectUrl('users', userId)

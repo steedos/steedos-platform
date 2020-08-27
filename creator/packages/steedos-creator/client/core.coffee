@@ -808,9 +808,13 @@ if Meteor.isClient
 		return data;
 
 	Creator.openSafeObjectUrl = (object_name, record_id)->
-		url = Creator.getSafeObjectUrl(object_name, record_id, '-')
-		if url
-			window.open(url, '_blank', 'width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');
+		unless Steedos.isMobile()
+			# 手机端不支持是因为
+			# 1.配置了带后缀的roolURL时，通过代码`Steedos.absoluteUrl(Creator.getSafeObjectUrl(object_name, record_id, '-'))`拿到的值是错的，因为会返回两层带后缀名的url，如：/xxx/creator/creator/app/oa/users/...
+			# 2.android手机APP上window.open会进入登录界面，所以该函数应该只在PC上调用
+			url = Creator.getSafeObjectUrl(object_name, record_id, '-')
+			if url
+				window.open(url, '_blank', 'width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');
 		event?.stopPropagation();
 		event?.preventDefault();
 		return false;
