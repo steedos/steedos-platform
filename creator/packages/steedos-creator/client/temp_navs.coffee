@@ -1,3 +1,5 @@
+isRemovingTempNavItem = false
+
 getTempNavsFromCache = ()->
     cachedTempNavsStr = sessionStorage.getItem("temp_navs")
     if cachedTempNavsStr
@@ -142,10 +144,12 @@ Creator.removeTempNavItem = (name, url)->
         return !skip
     if !_.isNumber(skipIndex)
         return
+    isRemovingTempNavItem = true
     redirectBeforeRemoveTempNav(name, url, result, skipIndex)
     Meteor.defer ()->
         Session.set("temp_navs", result)
         saveTempNavsToCache(result)
+        isRemovingTempNavItem = false
 
 Creator.resetTempNavsIfNeeded = ()->
     # 切换应用、工作区时，需要清除当前的tempNavs
@@ -183,6 +187,10 @@ Meteor.startup ()->
         # 如果当前所在的object_name不存在顶部导航中，则添加一个临时的导航栏项
         forceCreate = Session.get("temp_navs_force_create")
         if objectNames?.indexOf(objectName) < 0 or forceCreate
+            if forceCreate and isRemovingTempNavItem
+                # 如果正在删除临时导航项，forceCreate为true说明强行添加的肯定是即将返回到的界面，没必要加，否则会闪现下即将返回到的界面的标题增加到临时导航中
+                Session.set("temp_navs_force_create", false)
+                return
             object = Creator.getObject(objectName)
             unless object
                 return
