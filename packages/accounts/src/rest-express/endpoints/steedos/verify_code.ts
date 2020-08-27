@@ -142,6 +142,15 @@ async function sendCode(owner: string, name: string, action: string, spaceId: st
     return record._id;
 }
 
+function checkMobile(mobile, config){
+    if(config.mobile_phone_locales){
+        return !(mobile.startsWith('+') || !validator.isMobilePhone(mobile, config.mobile_phone_locales || ['zh-CN']))
+    }else{
+        let mobileReg = config.mobile_regexp || '^[0-9]{11}$'
+        return new RegExp(mobileReg).test(mobile)
+    }
+}
+
 export const applyCode = (accountsServer: AccountsServer) => async (
     req: express.Request,
     res: express.Response
@@ -201,7 +210,7 @@ export const applyCode = (accountsServer: AccountsServer) => async (
                 }
             }
 
-            if(name.startsWith('+') || !validator.isMobilePhone(name, config.mobile_phone_locales || ['zh-CN'])){
+            if(!checkMobile(name, config)){
                 throw new Error("accounts.invalidMobile");
             }
         }

@@ -25,6 +25,15 @@ function removeSpaceAdmin(spaceId, userId){
     }
 }
 
+function checkMobile(mobile, config){
+    if(config.mobile_phone_locales){
+        return !(mobile.startsWith('+') || !validator.isMobilePhone(mobile, config.mobile_phone_locales || ['zh-CN']))
+    }else{
+        let mobileReg = config.mobile_regexp || '^[0-9]{11}$'
+        return new RegExp(mobileReg).test(mobile)
+    }
+}
+
 Meteor.startup(function () {
     if (Meteor.isServer) {
         db.space_users.insertVaildate = function (userId, doc) {
@@ -57,7 +66,7 @@ Meteor.startup(function () {
                 }
 
                 if (doc.mobile) {
-                    if (doc.mobile.startsWith('+') || !validator.isMobilePhone(doc.mobile, config.mobile_phone_locales || ['zh-CN'])) {
+                    if (!checkMobile(doc.mobile, config)) {
                         throw new Meteor.Error(400, "mobile_format_error");
                     }
                 }
@@ -118,7 +127,7 @@ Meteor.startup(function () {
             if(modifier.$set && modifier.$set.mobile){
                 const steedosConfig = objectql.getSteedosConfig();
                 const config = steedosConfig.accounts || {};
-                if (modifier.$set.mobile.startsWith('+') || !validator.isMobilePhone(modifier.$set.mobile, config.mobile_phone_locales || ['zh-CN'])) {
+                if (!checkMobile(modifier.$set.mobile, config)) {
                     throw new Meteor.Error(400, "mobile_format_error");
                 }
             }
