@@ -17,7 +17,7 @@ Template.creatorSidebarLeft.helpers
 		if app
 			_.each app.mobile_objects, (v)->
 				obj = Creator.getObject(v)
-				if obj?.permissions.get().allowRead and !obj.hidden
+				if obj?.permissions.get().allowRead
 					objects.push v
 		return objects
 

@@ -240,7 +240,7 @@ Creator.getVisibleAppsObjects = ()->
 		if visibleObjectNames.indexOf(obj.name) < 0
 			return false
 		else
-			return !obj.hidden
+			return true
 	objects = objects.sort(Creator.sortingMethod.bind({key:"label"}))
 	objects = _.pluck(objects,'name')
 	return _.uniq objects
