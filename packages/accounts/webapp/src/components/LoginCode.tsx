@@ -169,14 +169,14 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
             defaultMessage='Next'
           />
         </Button>
-        {/* {!spaceId && tenant.enable_register && tenant.enable_password_login === false &&
+        {tenant.enable_register &&
         <Button onClick={goSignup}>
           <FormattedMessage
               id='accounts.signup'
               defaultMessage='Sign Up'
           />
         </Button>
-        } */}
+        }
       </form>
   );
 };
