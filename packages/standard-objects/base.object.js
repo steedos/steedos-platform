@@ -13,6 +13,12 @@ const objectWebhooksPreSend = function (userId, doc, object_name, action) {
         console.error('not found collection object_webhooks');
         return;
     }
+    var spaceId = doc.space;
+    if (!spaceId) {
+        console.error('not found spaceId');
+        return;
+    }
+
     obj = Creator.getObject(object_name);
     actionUserInfo = Creator.getCollection('users').findOne(userId, {
         fields: {
@@ -23,7 +29,8 @@ const objectWebhooksPreSend = function (userId, doc, object_name, action) {
     owCollection.find({
         object_name: object_name,
         active: true,
-        events: action
+        events: action,
+        space: spaceId
     }).forEach(function (oh) {
         var data;
         data = {};
