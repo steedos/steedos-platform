@@ -151,6 +151,9 @@ Template.creatorNavigation.helpers
 	object_class_name: (obj)->
 		if Session.get("app_home_active")
 			return
+		if Session.get("temp_navs_force_create")
+			# 添加完临时导航项前不需要算当前选中项，否则点开的是顶部导航本来就已经存在的对象的相关详细记录界面时，会先选中已经存在的对象导航项再选中新打开的临时导航项
+			return
 		tempNavs = Creator.getTempNavs()
 		objectName = Session.get("object_name")
 		recordId = Session.get("record_id")
