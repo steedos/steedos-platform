@@ -273,7 +273,11 @@ _getShowColumns = (curObject, selectColumns, is_related, list_view_id, related_l
 					pageSize = self.dxDataGridInstance.pageSize()
 					pageIndex = self.dxDataGridInstance.pageIndex()
 					htmlText = options.rowIndex + 1 + pageSize * pageIndex
-					if needToShowLinkForIndexColumn
+					showLink = needToShowLinkForIndexColumn
+					unless showLink
+						# 当没配置name字段显示在列表视图中时，默认是不给序号列加链接的，但是如果配置了，要不要加链接显示取决于当前记录的name字段是否有值
+						showLink = !options.data?[nameFieldKey]
+					if showLink
 						href = Creator.getObjectUrl(curObjectName, options.data._id)
 						htmlText = $("<a href=\"#{href}\" class=\"grid-index-link\">#{htmlText}</a>")
 						# if is_related
