@@ -14,9 +14,13 @@
                                         <table class="trace-approve-talbe">
                                             <tr class="approve-item-distribute">
                                                 <td class="name">
-                                                    <a class="btn-link" href="{{objectUrl 'users' this.from_user '-'}}">
+                                                    {{#if isMobile}}
                                                         {{this.from_user_name}}
-                                                    </a>
+                                                    {{else}}
+                                                        <a class="btn-link" href="{{objectUrl 'users' this.from_user '-'}}">
+                                                            {{this.from_user_name}}
+                                                        </a>
+                                                    {{/if}}
                                                 </td>
                                                 <td class="finish-date">{{dateFormat this.created}}</td>
                                                 <td class="status {{this.judge}}"></td>
