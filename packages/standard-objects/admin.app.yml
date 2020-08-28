@@ -11,6 +11,7 @@ admin_menus:
     name: My Account
     permission_sets:
       - user
+      - customer
     expanded: false
     mobile: false
     sort: 100
@@ -18,6 +19,7 @@ admin_menus:
     name: My Profile
     permission_sets:
       - user
+      - customer
     parent: account
     object_name: users
     mobile: false
