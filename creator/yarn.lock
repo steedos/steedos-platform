@@ -506,10 +506,10 @@
     i18next-sprintf-postprocessor "^0.2.2"
     i18next-xhr-backend "^3.2.2"
 
-"@steedos/license@1.22.0-alpha.10":
-  version "1.22.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-1.22.0-alpha.10.tgz#3865f8635e09a9c77f290370b7ea9681fe8ad142"
-  integrity sha512-UEXcUEzbJpj5SX+HKfw16418ETl7qjiXQZkTjzfYF42/DKx/qzDwSHRVkJk2CEHFjp66oeZlAXG1XNVkuLL7OA==
+"@steedos/license@1.22.0-alpha.12":
+  version "1.22.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-1.22.0-alpha.12.tgz#4dfb0de592e9fee99b641b6c9a1fe252a6210f40"
+  integrity sha512-dtp1F04pxzrF80JD/7hYC9lqsoXi0/2f2UUxnv5B9V5IF/XrDzBu/zGLcVPhhO8zLmTcVe6XxSDG+N4nHN7mKQ==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
