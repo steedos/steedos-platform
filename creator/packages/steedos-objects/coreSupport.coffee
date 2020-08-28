@@ -121,7 +121,7 @@ Creator.evaluateFilters = (filters, context)->
 			value = Creator.evaluateFormula(filter[2], context)
 			selector[name] = {}
 			selector[name][action] = value
-	console.log("evaluateFilters-->selector", selector)
+	# console.log("evaluateFilters-->selector", selector)
 	return selector
 
 Creator.isCommonSpace = (spaceId) ->
