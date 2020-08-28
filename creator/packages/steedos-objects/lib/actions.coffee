@@ -133,6 +133,8 @@ if Meteor.isClient
 										FlowRouter.reload();
 									else
 										Template.creator_grid.refresh(dxDataGridInstance)
+							recordUrl = Creator.getObjectUrl(object_name, record_id)
+							tempNavRemoved = Creator.removeTempNavItem(object_name, recordUrl) #无论是在记录详细界面还是列表界面执行删除操作，都会把临时导航删除掉
 							if isOpenerRemove or !dxDataGridInstance
 								if isOpenerRemove
 									window.close()
@@ -142,7 +144,9 @@ if Meteor.isClient
 										list_view_id = Session.get("list_view_id")
 									unless list_view_id
 										list_view_id = "all"
-									FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
+									unless tempNavRemoved
+										# 如果确实删除了临时导航，就可能已经重定向到上一个页面了，没必要再重定向一次
+										FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
 							if call_back and typeof call_back == "function"
 								call_back()
 

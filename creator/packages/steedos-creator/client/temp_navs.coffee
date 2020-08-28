@@ -129,6 +129,7 @@ Creator.createTempNav = (name, url, label)->
         saveTempNavsToCache(tempNavs)
         removeLastRemovedTempNavUrl(name, url)
 
+# 删除成功时返回true
 Creator.removeTempNavItem = (name, url)->
     tempNavs = Session.get("temp_navs")
     unless tempNavs
@@ -150,6 +151,7 @@ Creator.removeTempNavItem = (name, url)->
         Session.set("temp_navs", result)
         saveTempNavsToCache(result)
         isRemovingTempNavItem = false
+    return true
 
 Creator.resetTempNavsIfNeeded = ()->
     # 切换应用、工作区时，需要清除当前的tempNavs
