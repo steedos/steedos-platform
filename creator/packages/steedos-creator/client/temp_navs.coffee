@@ -210,9 +210,17 @@ Meteor.startup ()->
             unless object
                 return
             if recordId
-                url = Creator.getObjectUrl(objectName, recordId)
                 unless record
                     return
+                url = Creator.getObjectUrl(objectName, recordId)
+                if forceCreate
+                    backUrl = urlQuery[urlQuery.length - 3]
+                    if backUrl
+                        regBackUrl = new RegExp("#{backUrl}$")
+                        if regBackUrl.test(url)
+                            # 如果正好点击了浏览器上的返回按钮，返回的正好是当前记录URL，则不用再增加临时导航项了
+                            Session.set("temp_navs_force_create", false)
+                            return
                 if objectName == "cfs.files.filerecord"
                     label = t('cfs_files_filerecord__object') + "-" + record?.original?.name
                 else
