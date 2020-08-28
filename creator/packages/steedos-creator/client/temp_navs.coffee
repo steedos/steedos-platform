@@ -129,6 +129,19 @@ Creator.createTempNav = (name, url, label)->
         saveTempNavsToCache(tempNavs)
         removeLastRemovedTempNavUrl(name, url)
 
+Creator.updateTempNavLabel = (name, url, label)->
+    if !url or !label
+        return
+    tempNavs = Creator.getTempNavs()
+    unless tempNavs
+        tempNavs = []
+    tempNav = tempNavs.find (item)->
+        return item.name == name and item.url == url
+    if tempNav
+        tempNav.label = label
+        Session.set("temp_navs", tempNavs)
+        saveTempNavsToCache(tempNavs)
+
 # 删除成功时返回true
 Creator.removeTempNavItem = (name, url)->
     tempNavs = Session.get("temp_navs")

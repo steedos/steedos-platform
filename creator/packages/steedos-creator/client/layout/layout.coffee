@@ -84,9 +84,20 @@ AutoForm.hooks creatorEditForm:
 			record_id = result._id
 			url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
 			FlowRouter.go url
+		
+		if this.docId and result.object_name
+			recordUrl = Creator.getObjectUrl(result.object_name, this.docId)
+			recordName = Creator.getObjectRecordName(this.updateDoc.$set, result.object_name)
+			# recordName为空时不会更新TempNavLabel
+			Creator.updateTempNavLabel(result.object_name, recordUrl, recordName)
 ,false
 
 AutoForm.hooks creatorCellEditForm:
-	onSuccess: ()->
+	onSuccess: (formType,result)->
 		$('#afModal').modal 'hide'
+		if this.docId and result.object_name
+			recordUrl = Creator.getObjectUrl(result.object_name, this.docId)
+			recordName = Creator.getObjectRecordName(this.updateDoc.$set, result.object_name)
+			# recordName为空时不会更新TempNavLabel
+			Creator.updateTempNavLabel(result.object_name, recordUrl, recordName)
 ,false

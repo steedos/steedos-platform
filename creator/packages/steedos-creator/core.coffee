@@ -191,6 +191,14 @@ Creator.getObjectRecord = (object_name, record_id, select_fields, expand)->
 		record = collection.findOne(record_id)
 		return record
 
+Creator.getObjectRecordName = (record, object_name)->
+	unless record
+		record = Creator.getObjectRecord()
+	if record
+		name_field_key = Creator.getObject(object_name)?.NAME_FIELD_KEY
+		if record and name_field_key
+			return record.label || record[name_field_key]
+
 Creator.getApp = (app_id)->
 	if !app_id
 		app_id = Session.get("app_id")
