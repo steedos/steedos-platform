@@ -18,6 +18,7 @@ fields:
   avatar_square:
     label: Square Logo
     type: avatar
+    hidden: true
   avatar_dark:
     # avatar_dark旧版本的wokflow中在用，所以隐藏掉，暂时不能删除
     label: Dark Logo
