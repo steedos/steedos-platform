@@ -28,7 +28,7 @@ const objectWebhooksPreSend = function (userId, doc, object_name, action) {
             name: 1
         }
     });
-    redirectUrl = Steedos.absoluteUrl(Creator.getObjectUrl(object_name, doc._id, "-"));
+    redirectUrl = Creator.getObjectAbsoluteUrl(object_name, doc._id, "-");
     owCollection.find({
         object_name: object_name,
         active: true,

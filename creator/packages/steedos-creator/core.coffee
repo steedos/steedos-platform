@@ -33,6 +33,23 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 		else
 			return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
 
+Creator.getObjectAbsoluteUrl = (object_name, record_id, app_id) ->
+	if !app_id
+		app_id = Session.get("app_id")
+	if !object_name
+		object_name = Session.get("object_name")
+
+	list_view = Creator.getListView(object_name, null)
+	list_view_id = list_view?._id
+
+	if record_id
+		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id, true)
+	else
+		if object_name is "meeting"
+			return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/calendar/", true)
+		else
+			return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id, true)
+
 Creator.getObjectRouterUrl = (object_name, record_id, app_id) ->
 	if !app_id
 		app_id = Session.get("app_id")
