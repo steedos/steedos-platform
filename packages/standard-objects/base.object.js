@@ -3,6 +3,14 @@
 // const wrapAsync = objectql.wrapAsync;
 
 const objectWebhooksPreSend = function (userId, doc, object_name, action) {
+    var spaceId = doc.space;
+    if (spaceId == '{spaceId}') {
+        return;
+    }
+    if (!spaceId) {
+        console.error('not found spaceId');
+        return;
+    }
     var actionUserInfo, obj, owCollection, redirectUrl;
     if (!ObjectWebhooksQueue) {
         console.error('not found ObjectWebhooksQueue');
@@ -11,11 +19,6 @@ const objectWebhooksPreSend = function (userId, doc, object_name, action) {
     owCollection = Creator.getCollection('object_webhooks');
     if (!owCollection) {
         console.error('not found collection object_webhooks');
-        return;
-    }
-    var spaceId = doc.space;
-    if (!spaceId) {
-        console.error('not found spaceId');
         return;
     }
 
