@@ -273,8 +273,8 @@ Template.CreatorAutoformModals.events
 			event.stopPropagation()
 		else
 			formId = Session.get('cmFormId') or defaultFormId
-			template.__record.set(AutoForm.getFormValues(formId)?.insertDoc)
-			FormManager.runHook(object_name, 'edit', 'after', {schema: template.__schema, record: template.__record});
+			_doc = AutoForm.getFormValues(formId)?.insertDoc
+			FormManager.runHook(object_name, 'edit', 'after', {schema: template.__schema, record: template.__record, doc: _doc});
 
 
 helpers =

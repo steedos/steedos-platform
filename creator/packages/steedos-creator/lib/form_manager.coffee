@@ -114,7 +114,7 @@ FormManager.getPreviousDoc = (object_name, _id, method)->
 FormManager.runHook = (object_name, method, _when, options)->
 	hookName = "#{_when}#{method.charAt(0).toLocaleUpperCase()}#{_.rest(method.split('')).join('')}"
 	if method == 'view' || method == 'edit'
-		FormManager.runViewEditHook(object_name, hookName, options.schema, options.record)
+		FormManager.runViewEditHook(object_name, hookName, options.schema, options.record, options.doc)
 	else
 		formId = options.formId
 		object = Creator.getObject(object_name);
@@ -138,12 +138,12 @@ FormManager.runHook = (object_name, method, _when, options)->
 		return true;
 
 
-FormManager.runViewEditHook = (object_name, hookName, schema, record)->
+FormManager.runViewEditHook = (object_name, hookName, schema, record, doc)->
 	object = Creator.getObject(object_name);
 	fun = object?.form?[hookName]
 	if _.isFunction(fun)
 		_schema = schema.get()
-		_record = record.get()
+		_record = doc || record.get()
 		context = {
 			id: _record._id,
 			userId: Meteor.userId(),

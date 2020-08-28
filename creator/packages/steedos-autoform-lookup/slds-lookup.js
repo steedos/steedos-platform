@@ -1,8 +1,10 @@
 AutoForm.addInputType('steedosLookups', {
 	template: 'steedosLookups',
 	valueIn: function(val, atts) {
-		atts._value = _.clone(val)
-
+		atts._value = _.clone(val);
+		if(!val){
+			return [];
+		}
 		if(_.isObject(val) && !_.isArray(val)){
 			return AutoForm.valueConverters.stringToStringArray(val.ids)
 		}else{
@@ -124,14 +126,14 @@ Template.steedosLookups.onRendered(function () {
 		var data = Template.currentData();
 		var formId = AutoForm.getFormId();
 		var value = data.value;
-
 		if (template.uniSelectize.optionsMethod && !template.uniSelectize.optionsFunction) {
-
-			_getOptions = function () {
-				template.uniSelectize.getOptionsFromMethod(value);
-			};
-
-			Tracker.nonreactive(_getOptions)
+			if(!_.isEqual(value, template.lastValue)){
+				_getOptions = function () {
+					template.uniSelectize.getOptionsFromMethod(value);
+				};
+				template.lastValue = value;
+				Tracker.nonreactive(_getOptions);
+			}
 		} else {
 			var optionsFunction = template.uniSelectize.optionsFunction;
 
@@ -450,26 +452,26 @@ Template.steedosLookups.helpers({
 });
 
 Template.steedosLookups.events({
-    // 'click .steedos-lookups-input': function (e, template) {
-    //     template.uniSelectize.checkDisabled();
-	// 	console.log('click .steedos-lookups-input');
-    //     var $el = $(e.target);
-	//
-	// 	if($el.prop("readonly")){
-	// 		return
-	// 	}
-	//
-	// 	template.uniSelectize.inputFocus(template);
-	//
-	// 	var formId = AutoForm.getFormId();
-	// 	var _values = AutoForm.getFormValues(formId).insertDoc;
-	//
-	// 	if(template.uniSelectize.optionsFunction){
-	// 		template.uniSelectize.addItems(template.uniSelectize.optionsFunction(_values))
-	// 	}else{
-	// 		template.uniSelectize.getOptionsFromMethod();
-	// 	}
-    // },
+    'click .steedos-lookups-input': function (e, template) {
+        template.uniSelectize.checkDisabled();
+		// console.log('click .steedos-lookups-input');
+        var $el = $(e.target);
+
+		if($el.prop("readonly")){
+			return
+		}
+
+		template.uniSelectize.inputFocus(template);
+
+		var formId = AutoForm.getFormId();
+		var _values = AutoForm.getFormValues(formId).insertDoc;
+
+		if(template.uniSelectize.optionsFunction){
+			template.uniSelectize.addItems(template.uniSelectize.optionsFunction(_values))
+		}else{
+			template.uniSelectize.getOptionsFromMethod();
+		}
+    },
     'keydown input.steedos-lookups-input': function (e, template) {
         var uniSelectize = template.uniSelectize;
         var itemsSelected = uniSelectize.itemsSelected.get();
@@ -591,7 +593,7 @@ Template.steedosLookups.events({
     },
     'focus input.steedos-lookups-input': function (e, template) {
         template.uniSelectize.checkDisabled();
-		console.log('focus input.steedos-lookups-input');
+		// console.log('focus input.steedos-lookups-input');
 		var $el = $(e.target);
 
 		if($el.prop("readonly")){
@@ -606,16 +608,6 @@ Template.steedosLookups.events({
 
 		template.uniSelectize.open.set(true);
 		Meteor.clearTimeout(template.uniSelectize.timeoutId);
-
-
-		var formId = AutoForm.getFormId();
-		var _values = AutoForm.getFormValues(formId).insertDoc;
-
-		if(template.uniSelectize.optionsFunction){
-			template.uniSelectize.addItems(template.uniSelectize.optionsFunction(_values))
-		}else{
-			template.uniSelectize.getOptionsFromMethod();
-		}
     },
     'change input.steedos-lookups-input': function(e, template) {
         template.uniSelectize.checkDisabled();
