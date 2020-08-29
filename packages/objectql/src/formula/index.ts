@@ -71,17 +71,24 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
             }
             addFieldFormulaQuotesConfig(tempFieldFormulaQuote, quotes);
         }
-        if (tempFieldConfig.type !== "lookup" && tempFieldConfig.type !== "master_detail") {
+        if (tempFieldConfig.type === "lookup" || tempFieldConfig.type === "master_detail") {
+            // 引用类型字段
+            if (i === varItems.length - 1) {
+                // 引用类型字段后面必须继续引用该字段的相关属性，否则直接报错
+                throw new Error(`computeFormulaVarAndQuotes:The field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is a ${tempFieldConfig.type} type, so you must add more property after it.`);
+            }
+        }
+        else {
             // 不是引用类型字段，则直接退出
             if (i < varItems.length - 1) {
                 // 提前找到非跨对象字段，说明varItems中后面没计算的变量是多余错误的，因为.后面肯定是跨对象引用出来的字段（除非是$user等全局变量）
-                throw new Error(`computeFormulaVarAndQuotes:Can't find more reference_to after the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
+                throw new Error(`computeFormulaVarAndQuotes:The field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is not a lookup/master_detail type, so you can't get more property for it.`);
             }
             break;
         }
         if (typeof tempFieldConfig.reference_to !== "string") {
             // 暂时只支持reference_to为字符的情况，其他类型直接跳过
-            break;
+            throw new Error(`computeFormulaVarAndQuotes:The reference_to of the field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is not a string type.`);
         }
         tempObjectConfig = objectConfigs.find((item) => {
             return item.name === tempFieldConfig.reference_to;
