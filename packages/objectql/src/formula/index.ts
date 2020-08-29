@@ -46,7 +46,17 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
     let tempObjectConfig = objectConfig;
     for (let i = 0; i < varItems.length; i++) {
         let varItem = varItems[i];
-        let tempFieldConfig: SteedosFieldTypeConfig = tempObjectConfig.fields[varItem];
+        let tempFieldConfig: SteedosFieldTypeConfig;
+        if(varItem === "_id"){
+            // 支持_id属性
+            tempFieldConfig = {
+                name: varItem,
+                type: "text"
+            }
+        }
+        else{
+            tempFieldConfig = tempObjectConfig.fields[varItem];
+        }
         if (!tempFieldConfig) {
             // 不是对象上的字段，则直接退出
             throw new Error(`computeFormulaVarAndQuotes:Can't find the field '${varItem}' on the object '${tempObjectConfig.name}' for the formula var '${formulaVar}'`);
