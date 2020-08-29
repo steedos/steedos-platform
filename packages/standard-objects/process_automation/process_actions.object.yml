@@ -1,0 +1,54 @@
+name: process_actions
+fields:
+  name:
+    type: text
+  type:
+    type: select
+    options: 修改字段:update_field
+    defaultValue: update_field
+  related_to:
+    label: Related to
+    type: master_detail
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        return ['process_steps', 'process_approvals'];
+      }
+  when:
+    type: select
+    options: approval, rejection, final_approval, final_rejection, recall
+  object_name:
+    label: Object Name
+    type: text
+  field_name:
+    label: Field to Update
+    type: text
+  field_new_value:
+    label: Specify New Field Value
+    type: text
+  description:
+    label: description
+    type: textarea
+  # todo:
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    columns:
+      - name
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  

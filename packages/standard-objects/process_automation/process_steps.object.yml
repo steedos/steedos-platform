@@ -1,0 +1,69 @@
+name: process_steps
+fields:
+  name:
+    type: text
+  process_approval:
+    type: master_detail
+    reference_to: process_approvals
+  filtrad:
+    type: boolean
+    label: filtrad
+    group: Specify Step Criteria
+    defaultValue: false
+  filtercriteria:
+    type: textarea
+    label: filtrad
+    group: Specify Step Criteria
+    defaultValue: false
+  critrad: # https://help.salesforce.com/articleView?err=1&id=approvals_step_entrycriteria.htm&type=5
+    type: select
+    options: approve,reject,skip
+    group: Specify Step Criteria
+  approver:
+    type: select
+    label: Select Approver
+    group: Select Assigned Approver
+    options:
+      - label: 'Let the submitter choose the approver manually'
+        value: 'submitter_choose'
+      - label: 'Automatically assign using the user field selected earlier'
+        value: 'role'
+      - label: 'Automatically assign to queue'
+        value: 'auto_queue'
+      - label: 'Automatically assign to approver(s)'
+        value: 'auto_approver'
+  reject_behavior:
+    type: select
+    label: Reject Behavior
+    is_wide: true
+    inlineHelpText: What should happen if the approver rejects this request?
+    options:
+      - label: 'Perform all rejection actions for this step AND all final rejection actions. (Final Rejection)'
+        value: 'rejradall'
+      - label: 'Perform ONLY the rejection actions for this step and send the approval request back to the most recent approver. (Go Back 1 Step)'
+        value: 'rejradprev'
+  description:
+    label: description
+    type: textarea
+    is_wide: true
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    columns:
+      - name
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
