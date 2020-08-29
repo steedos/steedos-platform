@@ -1,4 +1,6 @@
 name: process_flows
+label: process_flows
+icon: record
 fields:
   name: 
     type: text

@@ -1,4 +1,6 @@
 name: process_approvals
+label: process_approvals
+icon: record
 fields:
   name:
     type: text

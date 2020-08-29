@@ -1,4 +1,6 @@
 name: process_flows_criteria_action
+label: process_flows_criteria_action
+icon: record
 fields:
   criteria:
     type: master_detail

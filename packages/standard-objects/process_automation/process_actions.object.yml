@@ -1,4 +1,6 @@
 name: process_actions
+label: process_actions
+icon: record
 fields:
   name:
     type: text
