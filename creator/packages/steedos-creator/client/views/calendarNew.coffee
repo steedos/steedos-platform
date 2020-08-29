@@ -514,8 +514,8 @@ Template.creator_calendarNew.onRendered ->
 					})
 				onContentReady: (e)->
 					{ component, element, model } = e;
-					# 周、日视图滚动到大致8点的位置上
-					this.scrollToTime(7, 50)
+					# 周、日视图滚动到7点30的位置上
+					this.scrollToTime(7, 30)
 			}
 
 			_.extend(dxSchedulerConfig, view.options)
