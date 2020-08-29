@@ -336,7 +336,7 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
             let aggregateLookups = getFormulaVarPathsAggregateLookups(toAggregatePathsItem);
             let lastLookupAs = aggregateLookups[aggregateLookups.length - 1]["$lookup"].as;
             let aggregateFilters = [[`${lastLookupAs}._id`, "=", recordId]];
-            const docs = await getSteedosSchema().getObject(fieldFormulaObjectName).aggregate({
+            const docs = await getSteedosSchema().getObject(fieldFormulaObjectName).aggregatePrefixalPipeline({
                 filters: aggregateFilters,
                 fields: formulaVarFields
             }, aggregateLookups);

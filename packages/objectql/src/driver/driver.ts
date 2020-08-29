@@ -70,6 +70,7 @@ export interface SteedosDriver {
     getSupportedColumnTypes(): SteedosFieldDBType[];
     find(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     aggregate?(tableName: string, query: SteedosQueryOptions, externalPipeline: any, userId?: SteedosIDType): any;
+    aggregatePrefixalPipeline?(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any, userId?: SteedosIDType): any;
     findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     insert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType): any;
     update(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType): any;

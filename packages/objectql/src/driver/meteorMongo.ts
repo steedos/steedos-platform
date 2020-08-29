@@ -180,9 +180,36 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
 
         pipeline.push({ $match: mongoFilters });
 
-        // pipeline中的次序不能错，一定要先$lookup，再$match，再$project、$sort、$skip、$limit等，否则查询结果可能为空，比如公式字段中就用到了$lookup
-        // pipeline = externalPipeline.concat(pipeline).concat(aggregateOptions);
         pipeline = pipeline.concat(aggregateOptions).concat(externalPipeline);
+
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    rawCollection.aggregate(pipeline).toArray(function (err, data) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(data);
+                    });
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
+    }
+
+    async aggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let rawCollection = collection.rawCollection();
+        let pipeline = [];
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let aggregateOptions = this.getAggregateOptions(query);
+
+        pipeline.push({ $match: mongoFilters });
+
+        // pipeline中的次序不能错，一定要先$lookup，再$match，再$project、$sort、$skip、$limit等，否则查询结果可能为空，比如公式字段中就用到了$lookup
+        pipeline = prefixalPipeline.concat(pipeline).concat(aggregateOptions);
 
         return await new Promise((resolve, reject) => {
             Fiber(function () {
