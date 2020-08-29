@@ -767,14 +767,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
     };
 
     private async runFieldFormula(method: string, args: Array<any>, userSession: SteedosUserSession) {
+        let isDirectCRUD= this.isDirectCRUD(method);
+        if(isDirectCRUD){
+            // directUpdateMany/directUpdate/directInsert时直接不运算公式
+            return;
+        }
         if(["insert", "update", "updateMany"].indexOf(method) > -1){
-            console.log("===callAdapter==x==", method, args);
-            let isDirectCRUD= this.isDirectCRUD(method);
-            if(!userSession && isDirectCRUD){
-                console.log("===runFieldFormula==isDirectCRUD====", method, args);
-                // directUpdateMany/directUpdate/directInsert这个不传入Session时直接不运算公式
-                return;
-            }
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
                 // let filters: SteedosQueryFilters = args[1];
