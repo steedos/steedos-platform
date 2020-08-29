@@ -388,11 +388,23 @@ Template.creator_calendarNew.onRendered ->
 				dataSource: _dataSource(view.options)
 				views: [{
 					type: "day",
-					maxAppointmentsPerCell:"unlimited"
+					maxAppointmentsPerCell:"unlimited",
+					startDayHour: 0,
+					endDayHour: 24
 				}, {
 					type:"week",
-					maxAppointmentsPerCell:"unlimited"
-				}, "month", "agenda"]
+					maxAppointmentsPerCell:"unlimited",
+					startDayHour: 0,
+					endDayHour: 24
+				}, {
+					type:"month",
+					startDayHour: 0,
+					endDayHour: 24
+				}, {
+					type:"agenda",
+					startDayHour: 0,
+					endDayHour: 24
+				}]
 				currentView: "month"
 				currentDate: new Date()
 				firstDayOfWeek: 1
@@ -500,6 +512,10 @@ Template.creator_calendarNew.onRendered ->
 						onItemClick: (e) ->
 							e.itemData.onItemClick(contextMenuEvent, view.options)
 					})
+				onContentReady: (e)->
+					{ component, element, model } = e;
+					# 周、日视图滚动到大致8点的位置上
+					this.scrollToTime(7, 50)
 			}
 
 			_.extend(dxSchedulerConfig, view.options)
