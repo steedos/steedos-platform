@@ -14,6 +14,10 @@ export * from './core'
 export * from './recompute'
 
 const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>) => {
+    if(quote.field_name === "_id"){
+        // _id字段不记为引用关系，因为其值不会变化，相关记录属性变更时不需要重算被引用的字段公式
+        return;
+    }
     let existQuote = quotes.find((item) => {
         return item.field_name === quote.field_name && item.object_name === quote.object_name
     });
