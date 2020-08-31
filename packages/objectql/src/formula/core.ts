@@ -139,7 +139,7 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
         formula = `return ${formula}`;
     }
     let result = evalFieldFormula(formula, formulaParams);
-    console.log("==runFieldFormular==result===", result);
+    // console.log("==runFieldFormular==result===", result);
     if (result === null || result === undefined) {
         if (["number", "currency"].indexOf(formulaType) > -1) {
             if (formulaBlankValue === FormulaBlankValue.blanks) {
@@ -156,8 +156,8 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     }
     if (formulaType) {
         const resultType = typeof result;
-        console.log("==runFieldFormular==formulaType===", formulaType);
-        console.log("==runFieldFormular==resultType===", resultType);
+        // console.log("==runFieldFormular==formulaType===", formulaType);
+        // console.log("==runFieldFormular==resultType===", resultType);
         switch (formulaType) {
             case "boolean":
                 if (resultType !== "boolean") {
@@ -288,6 +288,7 @@ export const runManyCurrentObjectFieldFormulas = async function (objectName: str
  * @param fieldFormulaConfig 查到的引用了该记录所属对象的相关字段公式配置之一
  */
 export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: SteedosUserSession) => {
+    // console.log("===updateQuotedByObjectFieldFormulaValue===", objectName, recordId, JSON.stringify(fieldFormulaConfig));
     const { vars, object_name: fieldFormulaObjectName } = fieldFormulaConfig;
     let toAggregatePaths: Array<Array<SteedosFieldFormulaVarPathTypeConfig>> = [];
     for (let varItem of vars) {

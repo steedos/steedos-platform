@@ -165,5 +165,5 @@ export const initObjectFieldsFormulas = () => {
         addObjectFieldsFormulaConfig(objectConfig);
     })
 
-    console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
+    // console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
 }
