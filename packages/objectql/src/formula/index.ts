@@ -151,19 +151,22 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
     }
 }
 
-export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig) => {
+export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig, datasource: string) => {
     _.each(config.fields, function (field) {
         if (field.type === "formula") {
+            if(datasource !== "default"){
+                throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'formula', because it is not in the default datasource.`);
+            }
             addObjectFieldFormulaConfig(clone(field), config);
         }
     })
 }
 
-export const initObjectFieldsFormulas = () => {
-    const objectConfigs = getObjectConfigs()
+export const initObjectFieldsFormulas = (datasource: string) => {
+    const objectConfigs = getObjectConfigs(datasource)
     _.each(objectConfigs, function (objectConfig) {
-        addObjectFieldsFormulaConfig(objectConfig);
+        addObjectFieldsFormulaConfig(objectConfig, datasource);
     })
 
-    // console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
+    console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
 }

@@ -1,4 +1,5 @@
 import { Dictionary } from '@salesforce/ts-types';
+import { initObjectFieldsFormulas } from '../formula';
 import {
     SteedosDriver,
     SteedosMongoDriver,
@@ -382,6 +383,7 @@ export class SteedosDataSourceType implements Dictionary {
     init() {
         this.initObjects();
         this.initTypeORM();
+        initObjectFieldsFormulas(this.name);
         // this.schema.transformReferenceOfObject(this);
     }
 
