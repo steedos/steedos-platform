@@ -1910,11 +1910,12 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
 
-"@steedos/license@1.22.0-alpha.8":
-  version "1.22.0-alpha.8"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.8.tgz#75e1fcfdebacb0930ff32d591cd264a6a7bc3b74"
-  integrity sha1-deH8/eussJMP8y1ZHNJkpqe8O3Q=
+"@steedos/license@1.22.0-alpha.13":
+  version "1.22.0-alpha.13"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.13.tgz#9ca427dd3f7fab3d128ac7e6a588688b9bc315ac"
+  integrity sha1-nKQn3T9/qz0SisfmpYhoi5vDFaw=
   dependencies:
+    abort-controller "^3.0.0"
     crypto "^1.0.1"
     node-fetch "^2.6.0"
     systeminformation "^4.26.10"

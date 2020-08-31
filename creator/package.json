@@ -27,7 +27,7 @@
     "@steedos/core": "^1.19.8",
     "@steedos/filters": "^1.19.8",
     "@steedos/i18n": "^1.19.8",
-    "@steedos/license": "1.22.0-alpha.12",
+    "@steedos/license": "1.22.0-alpha.13",
     "@steedos/objectql": "^1.19.8",
     "@steedos/odata-v4-typeorm": "^0.1.0",
     "@steedos/schemas": "^1.19.8",

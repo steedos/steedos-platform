@@ -24,7 +24,7 @@
     "@steedos/core": "^1.22.0-alpha.4",
     "@steedos/filters": "^1.22.0-alpha.4",
     "@steedos/i18n": "^1.22.0-alpha.4",
-    "@steedos/license": "1.22.0-alpha.12",
+    "@steedos/license": "1.22.0-alpha.13",
     "@steedos/meteor-bundle-dependencies": "^1.22.0-alpha.4",
     "@steedos/meteor-bundle-runner": "^1.22.0-alpha.4",
     "@steedos/objectql": "^1.22.0-alpha.4",
