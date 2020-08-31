@@ -121,9 +121,9 @@ WorkflowManager.getInstanceFormVersion = function() {
 					if (field['sfields']) {
 						field['sfields'].forEach(function(sf) {
 							sf["permission"] = field_permission[sf.code] == 'editable' ? 'editable' : 'readonly';
-							if (sf["permission"] == 'editable') {
-								field['permission'] = 'editable';
-							}
+							// if (sf["permission"] == 'editable') {
+							// 	field['permission'] = 'editable';
+							// }
 						});
 						field['sfields'].push({
 							code: "_id",
