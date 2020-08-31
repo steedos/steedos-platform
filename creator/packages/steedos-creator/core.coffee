@@ -212,7 +212,8 @@ Creator.getObjectRecordName = (record, object_name)->
 	unless record
 		record = Creator.getObjectRecord()
 	if record
-		name_field_key = Creator.getObject(object_name)?.NAME_FIELD_KEY
+		# 显示组织列表时，特殊处理name_field_key为name字段
+		name_field_key = if object_name == "organizations" then "name" else Creator.getObject(object_name)?.NAME_FIELD_KEY
 		if record and name_field_key
 			return record.label || record[name_field_key]
 
