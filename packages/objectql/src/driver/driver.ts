@@ -79,6 +79,7 @@ export interface SteedosDriver {
     directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType): any;
     directInsert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType): any;
     directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType): any;
+    directAggregatePrefixalPipeline?(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     dropEntities?(): any;
     registerEntities?(objects: Dictionary<SteedosObjectType>): any;

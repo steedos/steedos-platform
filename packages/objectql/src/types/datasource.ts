@@ -335,6 +335,9 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.directDelete(tableName, id, userId)
     }
 
+    async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline, userId?: SteedosIDType) {
+        return await this._adapter.directAggregatePrefixalPipeline(tableName, query, prefixalPipeline, userId)
+    }
 
     public get schema(): SteedosSchema {
         return this._schema;

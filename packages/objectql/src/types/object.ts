@@ -535,6 +535,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('aggregate', this.table_name, clonedQuery, externalPipeline, userSession)
     }
 
+    // 此函数支持driver: MeteorMongo，类似于aggregate，其参数externalPipeline放在最前面而已
+    async directAggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline, userSession?: SteedosUserSession) {
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('directAggregatePrefixalPipeline', this.table_name, clonedQuery, prefixalPipeline, userSession)
+    }
+
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
         await this.processUnreadableField(userSession, clonedQuery);
@@ -597,7 +604,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (_.isNull(userSession) || _.isUndefined(userSession)) {
             return true
         }
-        if (method === 'find' || method === 'findOne' || method === 'count' || method === 'aggregate') {
+        if (method === 'find' || method === 'findOne' || method === 'count' || method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
             return await this.allowFind(userSession)
         } else if (method === 'insert') {
             return await this.allowInsert(userSession)
@@ -631,7 +638,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             context.query = args[args.length - 2]
         }
 
-        if (method === 'aggregate') {
+        if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
             context.query = args[args.length - 3]
         }
 
@@ -739,7 +746,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
-            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate'){
+            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
                 let values = returnValue || {}
                 if(method === 'count'){
                     values = returnValue || 0
@@ -747,25 +754,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 Object.assign(afterTriggerContext, {data: {values: values}})
             }
             await this.runAfterTriggers(method, afterTriggerContext)
-            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate'){
+            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
                 if(_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))){
                     return returnValue
                 }else{
                     return afterTriggerContext.data.values
                 }
             }
+            await this.runFieldFormula(method, args, userSession);
         }
-        await this.runFieldFormula(method, args, userSession);
         return returnValue
     };
 
     private async runFieldFormula(method: string, args: Array<any>, userSession: SteedosUserSession) {
         if(["insert", "update", "updateMany"].indexOf(method) > -1){
-            let isDirectCRUD= this.isDirectCRUD(method);
-            if(!userSession && isDirectCRUD){
-                // directUpdateMany/directUpdate/directInsert这个不传入Session时直接不运算公式
-                return;
-            }
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
                 // let filters: SteedosQueryFilters = args[1];
@@ -797,9 +799,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private dealWithFilters(method: string, args: any[]) {
         let userSession = args[args.length - 1];
         if (userSession) {
-            if (method === 'find' || method === 'count' || method === 'aggregate') {
+            if (method === 'find' || method === 'count' || method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                 let query = args[args.length - 2];
-                if (method === 'aggregate') {
+                if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                     query = args[args.length - 3];
                 }
                 if (query.filters && !_.isString(query.filters)) {
@@ -815,9 +817,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let spaceId = userSession.spaceId;
             let userId = userSession.userId;
             let objPm = await this.getUserObjectPermission(userSession);
-            if (method === 'find' || method === 'count' || method === 'findOne' || method === 'aggregate') {
+            if (method === 'find' || method === 'count' || method === 'findOne' || method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                 let query = args[args.length - 2];
-                if (method === 'aggregate') {
+                if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                     query = args[args.length - 3];
                 }
 
