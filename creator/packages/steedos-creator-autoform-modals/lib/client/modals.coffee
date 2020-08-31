@@ -369,6 +369,7 @@ helpers =
 		if _.has(Template.instance().data, 'schemaFields')
 			return Template.instance().data.schemaFields
 		cmCollection = Session.get 'cmCollection'
+		cmOperation = Session.get 'cmOperation'
 		keys = []
 		if cmCollection
 			schemaInstance = Template.instance().__schema.get()
@@ -394,6 +395,13 @@ helpers =
 				firstLevelKeys = _.intersection(firstLevelKeys, cmFields)
 			if Session.get 'cmOmitFields'
 				firstLevelKeys = _.difference firstLevelKeys, [Session.get('cmOmitFields')]
+
+			if cmOperation == "insert"
+				# 新建记录时，把autonumber、formula类型字段视为omit字段
+				# 修改记录时不用处理，由schema中设定的readonly属性控制
+				fields = Creator.getObject(object_name).fields
+				firstLevelKeys = _.filter firstLevelKeys, (firstLevelKey)->
+					return ["autonumber", "formula"].indexOf(fields[firstLevelKey]?.type) < 0
 
 			_.each schema, (value, key) ->
 				if (_.indexOf firstLevelKeys, key) > -1
