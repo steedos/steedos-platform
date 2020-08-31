@@ -1,12 +1,12 @@
-name: process_steps
-label: process_steps
+name: process_node
+label: process_node
 icon: record
 fields:
   name:
     type: text
-  process_approval:
+  process_definition:
     type: master_detail
-    reference_to: process_approvals
+    reference_to: process_definition
   filtrad:
     type: boolean
     label: filtrad

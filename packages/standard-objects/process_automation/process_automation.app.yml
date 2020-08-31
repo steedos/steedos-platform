@@ -10,39 +10,39 @@ admin_menus:
       - admin
     expanded: false
     sort: 500
-  - _id: process_approvals
-    name: process_approvals
+  - _id: process_definition
+    name: process_definition
     permission_sets:
       - admin
-    object_name: process_approvals
+    object_name: process_definition
     parent: process_automation
-  - _id: process_actions
-    name: process_actions
-    permission_sets:
-      - admin
-    object_name: process_actions
-    parent: process_automation
-  - _id: process_steps
-    name: process_steps
-    permission_sets:
-      - admin
-    object_name: process_approvals
-    parent: process_automation
-  - _id: process_flows
-    name: process_flows
-    permission_sets:
-      - admin
-    object_name: process_flows
-    parent: process_automation
-  - _id: process_flows_criteria
-    name: process_flows_criteria
-    permission_sets:
-      - admin
-    object_name: process_flows_criteria
-    parent: process_automation
-  - _id: process_flows_criteria_action
-    name: process_flows_criteria_action
-    permission_sets:
-      - admin
-    object_name: process_flows_criteria_action
-    parent: process_automation
+  # - _id: process_actions
+  #   name: process_actions
+  #   permission_sets:
+  #     - admin
+  #   object_name: process_actions
+  #   parent: process_automation
+  # - _id: process_steps
+  #   name: process_steps
+  #   permission_sets:
+  #     - admin
+  #   object_name: process_approvals
+  #   parent: process_automation
+  # - _id: process_flows
+  #   name: process_flows
+  #   permission_sets:
+  #     - admin
+  #   object_name: process_flows
+  #   parent: process_automation
+  # - _id: process_flows_criteria
+  #   name: process_flows_criteria
+  #   permission_sets:
+  #     - admin
+  #   object_name: process_flows_criteria
+  #   parent: process_automation
+  # - _id: process_flows_criteria_action
+  #   name: process_flows_criteria_action
+  #   permission_sets:
+  #     - admin
+  #   object_name: process_flows_criteria_action
+  #   parent: process_automation

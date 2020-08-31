@@ -1,0 +1,42 @@
+name: process_instances
+label: process_instances
+icon: record
+fields:
+  name:
+    type: text
+  status:
+    type: select
+    options: 
+      - Approved
+      - Fault
+      - Held
+      - NoResponse
+      - Pending
+      - Reassigned
+      - Rejected
+      - Removed
+      - Started
+  traces:
+    
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    columns:
+      - name
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  

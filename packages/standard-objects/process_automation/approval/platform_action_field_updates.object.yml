@@ -1,5 +1,5 @@
-name: process_actions
-label: process_actions
+name: platform_action_field_updates
+label: platform_action_field_updates
 icon: record
 fields:
   name:
@@ -8,14 +8,16 @@ fields:
     type: select
     options: 修改字段:update_field
     defaultValue: update_field
-  related_to:
-    label: Related to
-    type: master_detail
+  process_definition:
+    label: Process Definition
+    type: lookup
     index: true
-    reference_to: !<tag:yaml.org,2002:js/function> |-
-      function () {
-        return ['process_steps', 'process_approvals'];
-      }
+    reference_to: process_definition
+  process_node:
+    label: Process Node
+    type: lookup
+    index: true
+    reference_to: process_node
   when:
     type: select
     options: approval, rejection, final_approval, final_rejection, recall

@@ -12,10 +12,10 @@ fields:
     options: 
       - label: Submit for Approval
         value: submit
-  approval:
+  process_definition:
     type: lookup
     label: Approval Process
-    reference_to: process_approvals
+    reference_to: process_definition
   skip_entry_criteria:
     type: boolean
     label: Skip the entry criteria for this process?
