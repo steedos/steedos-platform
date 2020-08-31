@@ -34,7 +34,8 @@ const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, 
  * @param quotes 
  */
 const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
-    let isUserSessionVar = formulaVar.startsWith(FormulaUserSessionKey);
+    // 公式变量以FormulaUserSessionKey（即$user）值开头，说明是userSession变量
+    let isUserSessionVar = new RegExp(`^${FormulaUserSessionKey.replace("$","\\$")}\\b`).test(formulaVar);
     let varItems = formulaVar.split(".");
     let paths: Array<SteedosFieldFormulaVarPathTypeConfig> = [];
     let formulaVarItem: SteedosFieldFormulaVarTypeConfig = {
@@ -46,6 +47,11 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         formulaVarItem.is_user_session_var = true;
         vars.push(formulaVarItem);
         return;
+    }
+    else{
+        if(formulaVar.startsWith("$")){
+            throw new Error(`computeFormulaVarAndQuotes:The formula var '${formulaVar}' is starts with '$' but not a user session var that starts with $user.`);
+        }
     }
     let tempObjectConfig = objectConfig;
     for (let i = 0; i < varItems.length; i++) {
@@ -168,5 +174,5 @@ export const initObjectFieldsFormulas = (datasource: string) => {
         addObjectFieldsFormulaConfig(objectConfig, datasource);
     })
 
-    console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
+    // console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
 }
