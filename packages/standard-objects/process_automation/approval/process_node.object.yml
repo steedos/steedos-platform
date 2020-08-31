@@ -8,6 +8,7 @@ fields:
   label:
     type: text
     required: true
+    is_name: true
   order:
     is_wide: true
     type: number
@@ -39,7 +40,6 @@ fields:
     group: Specify Step Criteria
     is_wide: true
   approver:
-    inlineHelpText: 只有非步骤号不等于1时，才能设置拒绝行为， 等于1时始终为最终拒绝
     type: select
     is_wide: true
     label: Select Approver
@@ -58,7 +58,7 @@ fields:
     label: Reject Behavior
     is_wide: true
     group: Select Assigned Approver
-    inlineHelpText: What should happen if the approver rejects this request?
+    inlineHelpText: What should happen if the approver rejects this request? 只有非步骤号不等于1时，才能设置拒绝行为， 等于1时始终为最终拒绝
     options:
       - label: 'Perform all rejection actions for this step AND all final rejection actions. (Final Rejection)'
         value: 'rejradall'
@@ -69,7 +69,13 @@ list_views:
     label: All
     filter_scope: space
     columns:
-      - name
+      - order
+      - label
+      - description
+      - approver
+      - reject_behavior
+relatedList:
+  - platform_action_field_updates
 permission_set:
   user:
     allowCreate: false

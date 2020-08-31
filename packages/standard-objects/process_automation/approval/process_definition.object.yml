@@ -8,6 +8,7 @@ fields:
   label:
     type: text
     required: true
+    is_name: true
   object_name:
     type: text
     required: true
@@ -78,7 +79,8 @@ list_views:
     label: All
     filter_scope: space
     columns:
-      - name
+      - label
+      - description
 permission_set:
   user:
     allowCreate: false

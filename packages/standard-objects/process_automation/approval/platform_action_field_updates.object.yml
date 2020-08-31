@@ -8,6 +8,7 @@ fields:
   label:
     type: text
     required: true
+    is_name: true
   process_definition:
     label: Process Definition
     type: lookup
@@ -39,7 +40,9 @@ list_views:
     label: All
     filter_scope: space
     columns:
-      - name
+      - label
+      - when
+      - description
 permission_set:
   user:
     allowCreate: false
