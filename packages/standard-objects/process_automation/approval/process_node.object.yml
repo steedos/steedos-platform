@@ -4,25 +4,44 @@ icon: record
 fields:
   name:
     type: text
+    required: true
+  label:
+    type: text
+    required: true
+  order:
+    is_wide: true
+    type: number
+    scale: 0
+    min: 1
+    inlineHelpText: 必须为整数，最小为1， 最大值不能超过当前最大值+1。输入的值已存在则当前记录占用原来的序号，之后的记录序号后移，比如已有1，2，3。添加2后，原来的2，3变为3，4，新记录占用2
+  description:
+    label: description
+    type: textarea
+    is_wide: true
   process_definition:
     type: master_detail
+    is_wide: true
     reference_to: process_definition
   filtrad:
     type: boolean
-    label: filtrad
+    label: 所有记录都应进入此步骤
     group: Specify Step Criteria
     defaultValue: false
+    is_wide: true
   filtercriteria:
     type: textarea
     label: filtrad
+    is_wide: true
     group: Specify Step Criteria
-    defaultValue: false
   critrad: # https://help.salesforce.com/articleView?err=1&id=approvals_step_entrycriteria.htm&type=5
     type: select
     options: approve,reject,skip
     group: Specify Step Criteria
+    is_wide: true
   approver:
+    inlineHelpText: 只有非步骤号不等于1时，才能设置拒绝行为， 等于1时始终为最终拒绝
     type: select
+    is_wide: true
     label: Select Approver
     group: Select Assigned Approver
     options:
@@ -38,16 +57,13 @@ fields:
     type: select
     label: Reject Behavior
     is_wide: true
+    group: Select Assigned Approver
     inlineHelpText: What should happen if the approver rejects this request?
     options:
       - label: 'Perform all rejection actions for this step AND all final rejection actions. (Final Rejection)'
         value: 'rejradall'
       - label: 'Perform ONLY the rejection actions for this step and send the approval request back to the most recent approver. (Go Back 1 Step)'
         value: 'rejradprev'
-  description:
-    label: description
-    type: textarea
-    is_wide: true
 list_views:
   all:
     label: All

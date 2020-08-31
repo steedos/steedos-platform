@@ -1,0 +1,23 @@
+process_node__object: 批准步骤
+process_node_field_approver: 选择批准人
+process_node_field_approver_options_auto_approver: 自动分配至批准人。
+process_node_field_approver_options_auto_queue: 自动分配至队列。
+process_node_field_approver_options_role: 使用之前选择的用户字段自动分配
+process_node_field_approver_options_submitter_choose: 允许提交人手动选择批准人。
+process_node_field_critrad: 如果不满足条件，则
+process_node_field_critrad_options_approve: 批准记录
+process_node_field_critrad_options_reject: 拒绝记录
+process_node_field_critrad_options_skip: 转到下一步
+process_node_field_description: 描述
+process_node_field_filtercriteria: 如果满足以下条件，则进入此步骤
+process_node_field_filtrad: 所有记录都应进入此步骤
+process_node_field_name: API 名称
+process_node_field_label: 显示名称
+process_node_field_process_definition: $t(process_definition__object)
+process_node_field_reject_behavior: 拒绝行为
+process_node_field_reject_behavior_inlineHelpText: 如果批准人拒绝此请求会怎样？
+process_node_field_reject_behavior_options_rejradall: 执行此步骤的所有拒绝操作和所有最终拒绝操作。（最终拒绝）
+process_node_field_reject_behavior_options_rejradprev: 只执行此步骤的拒绝操作并将批准请求发回到最近的批准人。（返回 1 步）
+process_node_group_select_assigned_approver: 选择分配的批准人
+process_node_group_specify_step_criteria: 指定步骤条件
+process_node_listview_all: All

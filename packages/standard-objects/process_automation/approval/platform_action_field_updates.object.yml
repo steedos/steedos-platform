@@ -4,10 +4,10 @@ icon: record
 fields:
   name:
     type: text
-  type:
-    type: select
-    options: 修改字段:update_field
-    defaultValue: update_field
+    required: true
+  label:
+    type: text
+    required: true
   process_definition:
     label: Process Definition
     type: lookup
