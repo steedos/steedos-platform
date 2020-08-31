@@ -295,10 +295,6 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.aggregate(tableName, query, externalPipeline, userId)
     }
 
-    async aggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline, userId?: SteedosIDType) {
-        return await this._adapter.aggregatePrefixalPipeline(tableName, query, prefixalPipeline, userId)
-    }
-
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType) {
         return await this._adapter.findOne(tableName, id, query, userId)
     }
@@ -339,6 +335,9 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.directDelete(tableName, id, userId)
     }
 
+    async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline, userId?: SteedosIDType) {
+        return await this._adapter.directAggregatePrefixalPipeline(tableName, query, prefixalPipeline, userId)
+    }
 
     public get schema(): SteedosSchema {
         return this._schema;

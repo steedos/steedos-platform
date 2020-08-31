@@ -221,6 +221,9 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
     if (!quotedByConfigs) {
         quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
     }
+    if(!quotedByConfigs.length){
+        return;
+    }
     if (!userSession) {
         checkUserSessionNotRequiredForFieldFormulas(quotedByConfigs);
     }
@@ -337,7 +340,7 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
             let aggregateLookups = getFormulaVarPathsAggregateLookups(toAggregatePathsItem);
             let lastLookupAs = aggregateLookups[aggregateLookups.length - 1]["$lookup"].as;
             let aggregateFilters = [[`${lastLookupAs}._id`, "=", recordId]];
-            const docs = await getSteedosSchema().getObject(fieldFormulaObjectName).aggregatePrefixalPipeline({
+            const docs = await getSteedosSchema().getObject(fieldFormulaObjectName).directAggregatePrefixalPipeline({
                 filters: aggregateFilters,
                 fields: formulaVarFields
             }, aggregateLookups);

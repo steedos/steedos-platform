@@ -198,7 +198,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
-    async aggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
+    async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         let rawCollection = collection.rawCollection();
         let pipeline = [];

@@ -536,10 +536,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     // 此函数支持driver: MeteorMongo，类似于aggregate，其参数externalPipeline放在最前面而已
-    async aggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline, userSession?: SteedosUserSession) {
+    async directAggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
         await this.processUnreadableField(userSession, clonedQuery);
-        return await this.callAdapter('aggregatePrefixalPipeline', this.table_name, clonedQuery, prefixalPipeline, userSession)
+        return await this.callAdapter('directAggregatePrefixalPipeline', this.table_name, clonedQuery, prefixalPipeline, userSession)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession) {
@@ -761,17 +761,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return afterTriggerContext.data.values
                 }
             }
+            await this.runFieldFormula(method, args, userSession);
         }
-        await this.runFieldFormula(method, args, userSession);
         return returnValue
     };
 
     private async runFieldFormula(method: string, args: Array<any>, userSession: SteedosUserSession) {
-        let isDirectCRUD= this.isDirectCRUD(method);
-        if(isDirectCRUD){
-            // directUpdateMany/directUpdate/directInsert时直接不运算公式
-            return;
-        }
         if(["insert", "update", "updateMany"].indexOf(method) > -1){
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
