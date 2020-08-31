@@ -306,19 +306,19 @@ SteedosTable.getThead = function (field, editable) {
     return thead;
 }
 
-SteedosTable.getTbody = function (keys, field, values, editable) {
+SteedosTable.getTbody = function (keys, field, values, editable, sfieldsEditable) {
     var tbody = "";
 
     if (values instanceof Array) {
         values.forEach(function (value, index) {
-            tbody = tbody + SteedosTable.getTr(keys, value, index, field, editable);
+            tbody = tbody + SteedosTable.getTr(keys, value, index, field, editable, sfieldsEditable);
         });
     }
 
     return tbody;
 }
 
-SteedosTable.getTr = function (keys, item_value, index, field, editable) {
+SteedosTable.getTr = function (keys, item_value, index, field, editable, sfieldsEditable) {
 
     var fieldObj = field;
     if (!_.isObject(field))
@@ -326,7 +326,7 @@ SteedosTable.getTr = function (keys, item_value, index, field, editable) {
 
     var tr = "<tr id='" + fieldObj.code + "_item_" + index + "' name='" + fieldObj.code + "_item_" + index + "' data-index='" + index + "'"
 
-    if (editable) {
+    if (editable || sfieldsEditable) {
         tr = tr + "' class='item edit'"
     } else {
         if (Steedos.isMobile()) {
@@ -566,7 +566,7 @@ if (Meteor.isClient) {
         },
 
         'tap .steedos-table .steedosTable-item-field': function (event, template) {
-            if (template.data.atts.editable) {
+            if (template.data.atts.editable || template.data.atts.sfieldsEditable) {
                 var field = template.data.name;
                 var index = event.currentTarget.dataset.index;
                 SteedosTable.showModal(field, index, "edit");
@@ -595,13 +595,15 @@ if (Meteor.isClient) {
 
         var field = this.data.name;
 
+        var sfieldsEditable = this.data.atts.sfieldsEditable;
+
         var keys = SteedosTable.getKeys(field);
         var validValue = SteedosTable.handleData(field, this.data.value);
         SteedosTable.setTableValue(field, validValue);
 
         $("thead[name='" + field + "Thead']").html(SteedosTable.getThead(field, this.data.atts.editable));
 
-        $("tbody[name='" + field + "Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), this.data.atts.editable));
+        $("tbody[name='" + field + "Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), this.data.atts.editable, sfieldsEditable));
 
         str = t("steedos_table_add_item");
         addItemTr = "<tr class='add-item-tr'><td colspan='" + keys.length + "'><i class='ion ion-plus-round'></i>" + str + "</td></tr>";
@@ -616,7 +618,7 @@ if (Meteor.isClient) {
             var keys = SteedosTable.getKeys(field);
             var validValue = SteedosTable.handleData(field, data.value);
             SteedosTable.setTableValue(field, validValue);
-            $("tbody[name='" + field + "Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), data.atts.editable));
+            $("tbody[name='" + field + "Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), data.atts.editable, sfieldsEditable));
         })
     };
 }
