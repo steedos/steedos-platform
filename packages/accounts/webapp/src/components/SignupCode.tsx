@@ -113,12 +113,12 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
                     defaultMessage='Next'
                 />
             </Button>
-            <Button component={LogInLink} location={location}>
+            {/* <Button component={LogInLink} location={location}>
                 <FormattedMessage
                     id='accounts.signin'
                     defaultMessage='Sign In'
                 />
-            </Button>
+            </Button> */}
         </form>
     );
 };
