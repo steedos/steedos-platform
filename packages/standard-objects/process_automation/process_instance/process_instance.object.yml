@@ -1,0 +1,6 @@
+name: process_instance
+label: process_instance
+icon: record
+fields:
+  name:
+    type: text

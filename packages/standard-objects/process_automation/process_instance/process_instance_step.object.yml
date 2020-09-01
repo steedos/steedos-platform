@@ -1,0 +1,6 @@
+name: process_instance_step
+label: process_instance_step
+icon: record
+fields:
+  name:
+    type: text

@@ -4,3 +4,6 @@
 # 3 最终拒绝操作：取消锁定可以进行编辑. 可编辑
 # 4 调回操作：取消锁定可以进行编辑. 不可编辑
 name: process_definition_entity_lock
+fields:
+  name: 
+    type: text
