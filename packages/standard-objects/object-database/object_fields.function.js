@@ -5,7 +5,8 @@ module.exports = {
   recomputeFormulaValues: async function(req, res){
       try {
         const params = req.params;
-        const result = await objectql.recomputeFormulaValues(params._id, req.user);
+        const userId = req.user && req.user.userId;
+        const result = await objectql.recomputeFormulaValues(params._id, userId);
         if(result){
             res.status(200).send({ success: true });
         }
