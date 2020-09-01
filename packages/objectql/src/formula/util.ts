@@ -99,7 +99,7 @@ export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeCo
  * 当userSession为空时，确认参数configs中没有引用$user变量
  * @param configs
  */
-export const checkUserSessionNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>) => {
+export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>) => {
     if (!_.isArray(configs)) {
         configs = [configs];
     }
@@ -108,11 +108,11 @@ export const checkUserSessionNotRequiredForFieldFormulas = (configs: SteedosFiel
     }
     for(let config of configs){
         let { vars, object_name: objectName, field_name: fieldName } = config;
-        let required = !!vars.find(({ is_user_session_var: isUserSessionVar })=>{
-            return isUserSessionVar;
+        let required = !!vars.find(({ is_user_var: isUserVar })=>{
+            return isUserVar;
         });
         if(required){
-            throw new Error(`The param 'userSession' is required for the formula of '${fieldName}' on the object '${objectName}'`);
+            throw new Error(`The param 'currentUserId' is required while running the formula of '${fieldName}' on the object '${objectName}'`);
         }
     }
 }

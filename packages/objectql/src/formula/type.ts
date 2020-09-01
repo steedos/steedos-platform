@@ -1,5 +1,5 @@
 // 公式内容中表示userSession变量的占位符
-export const FormulaUserSessionKey = "$user";
+export const FormulaUserKey = "$user";
 
 /**
  * 记录公式字段中引用的其他对象上的字段或者引用的本对象上的公式字段
@@ -60,7 +60,7 @@ export type SteedosFieldFormulaParamTypeConfig = {
 export type SteedosFieldFormulaVarTypeConfig = {
     key: string,
     paths: Array<SteedosFieldFormulaVarPathTypeConfig>,
-    is_user_session_var?: boolean
+    is_user_var?: boolean
 }
 
 export type SteedosFieldFormulaTypeConfig = {

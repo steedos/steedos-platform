@@ -1,5 +1,5 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey, FormulaBlankValue } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserKey, FormulaBlankValue } from './type';
 import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
 import { pickFormulaVars } from './core';
 import { isFieldFormulaConfigQuotedTwoWays } from './util';
@@ -35,18 +35,18 @@ const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, 
  */
 const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
     // 公式变量以FormulaUserSessionKey（即$user）值开头，说明是userSession变量
-    let isUserSessionVar = new RegExp(`^${FormulaUserSessionKey.replace("$","\\$")}\\b`).test(formulaVar);
+    let isUserVar = new RegExp(`^${FormulaUserKey.replace("$","\\$")}\\b`).test(formulaVar);
     let varItems = formulaVar.split(".");
     let paths: Array<SteedosFieldFormulaVarPathTypeConfig> = [];
     let formulaVarItem: SteedosFieldFormulaVarTypeConfig = {
         key: formulaVar,
         paths: paths
     };
-    if (isUserSessionVar) {
-        // 如果是userSession变量，则不需要计算quotes引用，paths也直接空着
-        formulaVarItem.is_user_session_var = true;
-        vars.push(formulaVarItem);
-        return;
+    if (isUserVar) {
+        // 如果是userSession变量，则不需要计算quotes引用，但是其paths值需要正常记录下来
+        formulaVarItem.is_user_var = true;
+        // vars.push(formulaVarItem);
+        // return;
     }
     else{
         if(formulaVar.startsWith("$")){
@@ -57,11 +57,20 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
     for (let i = 0; i < varItems.length; i++) {
         let varItem = varItems[i];
         let tempFieldConfig: SteedosFieldTypeConfig;
+        const isUserKey = varItem === FormulaUserKey;
         if(varItem === "_id"){
             // 支持_id属性
             tempFieldConfig = {
                 name: varItem,
                 type: "text"
+            }
+        }
+        else if(isUserKey){
+            // 如果是$user变量，则特殊处理下
+            tempFieldConfig = {
+                name: varItem,
+                type: "lookup",
+                reference_to: "space_users"
             }
         }
         else{
@@ -79,8 +88,12 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         if (isFormulaType) {
             tempFieldFormulaVarPath.is_formula = true;
         }
-        paths.push(tempFieldFormulaVarPath);
-        if (i > 0 || isFormulaType) {
+        if(!isUserKey){
+            // 当是$user时，不需要把第一个path记录下来，只需要记录其后续的路径即可
+            paths.push(tempFieldFormulaVarPath);
+        }
+        if (!isUserVar && (i > 0 || isFormulaType)) {
+            // $user变量不需要记录引用关系，因为没法确定每条record当时对应的当前用户ID是多少
             // 陈了公式字段外，自己不能引用自己，i大于0就是其他对象上的引用
             let tempFieldFormulaQuote: SteedosFieldFormulaQuoteTypeConfig = {
                 object_name: tempObjectConfig.name,
@@ -174,5 +187,5 @@ export const initObjectFieldsFormulas = (datasource: string) => {
         addObjectFieldsFormulaConfig(objectConfig, datasource);
     })
 
-    // console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
+    console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
 }
