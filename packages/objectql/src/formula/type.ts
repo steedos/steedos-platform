@@ -17,7 +17,7 @@ export type SteedosFieldFormulaQuoteTypeConfig = {
  * {}中第一个reference_from肯定是指向当前对象
  * is_formula指field_name是否是公式字段
  */
-export type SteedosFieldFormulaVarPathTypeConfig = {
+export type SteedosFormulaVarPathTypeConfig = {
     field_name: string,
     reference_from: string,
     is_formula?: boolean
@@ -40,7 +40,7 @@ export type SteedosFieldFormulaVarPathTypeConfig = {
  *  value: "www.abc.com"
  * }
  */
-export type SteedosFieldFormulaParamTypeConfig = {
+export type SteedosFormulaParamTypeConfig = {
     key: string,
     value: any
 }
@@ -57,9 +57,9 @@ export type SteedosFieldFormulaParamTypeConfig = {
  *  ]
  * }
  */
-export type SteedosFieldFormulaVarTypeConfig = {
+export type SteedosFormulaVarTypeConfig = {
     key: string,
-    paths: Array<SteedosFieldFormulaVarPathTypeConfig>,
+    paths: Array<SteedosFormulaVarPathTypeConfig>,
     is_user_var?: boolean
 }
 
@@ -69,16 +69,16 @@ export type SteedosFieldFormulaTypeConfig = {
     object_name: string,
     field_name: string,
     formula_type: string,
-    formula_blank_value: FormulaBlankValue,
+    formula_blank_value: SteedosFormulaBlankValue,
     formula: string,
     quotes: Array<SteedosFieldFormulaQuoteTypeConfig>,
-    vars: Array<SteedosFieldFormulaVarTypeConfig>
+    vars: Array<SteedosFormulaVarTypeConfig>
 }
 
 /**
  * 空白字段处理，只在公式类型返回值为number和currency类型时有效，默认为zeroes
  */
-export enum FormulaBlankValue {
+export enum SteedosFormulaBlankValue {
     zeroes = "zeroes",
     blanks = "blanks"
 }

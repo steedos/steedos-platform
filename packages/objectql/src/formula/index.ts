@@ -1,7 +1,7 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs, getObjectConfig, getSteedosSchema } from '../types';
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserKey, FormulaBlankValue } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue } from './type';
 import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
-import { pickFormulaVars, computeFieldFormulaParams, pickFormulaVarFields, runFieldFormula } from './core';
+import { pickFormulaVars, computeFormulaParams, pickFormulaVarFields, runFieldFormula } from './core';
 import { isFieldFormulaConfigQuotedTwoWays, isCurrentUserIdRequiredForFormulaVars } from './util';
 import _ = require('lodash')
 const clone = require('clone')
@@ -33,12 +33,12 @@ const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, 
  * @param objectConfigs 
  * @param quotes 
  */
-const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
+const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFormulaVarTypeConfig>) => {
     // 公式变量以FormulaUserSessionKey（即$user）值开头，说明是userSession变量
     let isUserVar = new RegExp(`^${FormulaUserKey.replace("$","\\$")}\\b`).test(formulaVar);
     let varItems = formulaVar.split(".");
-    let paths: Array<SteedosFieldFormulaVarPathTypeConfig> = [];
-    let formulaVarItem: SteedosFieldFormulaVarTypeConfig = {
+    let paths: Array<SteedosFormulaVarPathTypeConfig> = [];
+    let formulaVarItem: SteedosFormulaVarTypeConfig = {
         key: formulaVar,
         paths: paths
     };
@@ -86,7 +86,7 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         }
         let isFormulaType = tempFieldConfig.type === "formula";
         if(!isUserKey){
-            let tempFieldFormulaVarPath: SteedosFieldFormulaVarPathTypeConfig = {
+            let tempFieldFormulaVarPath: SteedosFormulaVarPathTypeConfig = {
                 field_name: varItem,
                 reference_from: tempObjectConfig.name
             };
@@ -150,7 +150,7 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
  */
 const computeFormulaVarsAndQuotes = (formula: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>) => {
     let quotes: Array<SteedosFieldFormulaQuoteTypeConfig> = [];
-    let vars: Array<SteedosFieldFormulaVarTypeConfig> = [];
+    let vars: Array<SteedosFormulaVarTypeConfig> = [];
     const formulaVars = pickFormulaVars(formula);
     formulaVars.forEach((formulaVar) => {
         computeFormulaVarAndQuotes(formulaVar, objectConfig, objectConfigs, quotes, vars);
@@ -168,7 +168,7 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
         field_name: fieldConfig.name,
         formula: formula,
         formula_type: fieldConfig.formula_type,
-        formula_blank_value: <FormulaBlankValue>fieldConfig.formula_blank_value,
+        formula_blank_value: <SteedosFormulaBlankValue>fieldConfig.formula_blank_value,
         quotes: result.quotes,
         vars: result.vars
     };
@@ -215,7 +215,7 @@ export const computeFormulaValue = async (formula: string, objectName?:string, r
         const formulaVarFields = pickFormulaVarFields(vars);
         doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
     }
-    let params = await computeFieldFormulaParams(doc, vars, currentUserId);
+    let params = await computeFormulaParams(doc, vars, currentUserId);
     // return runFieldFormula(formula, params, formula_type, formula_blank_value);
     return runFieldFormula(formula, params);
 }

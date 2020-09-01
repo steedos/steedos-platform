@@ -1,5 +1,5 @@
 import { getSteedosSchema } from '../index';
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaParamTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserKey, FormulaBlankValue } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaParamTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
 import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups } from './util';
 import { wrapAsync } from '../util';
@@ -42,12 +42,12 @@ export const pickFieldFormulaVarFields = (fieldFormulaConfigs: SteedosFieldFormu
  * 根据公式内容已取出的{}中的变量，进一步取出这些变量中引用了当前对象的哪些字段
  * @param vars 
  */
-export const pickFormulaVarFields = (vars: Array<SteedosFieldFormulaVarTypeConfig>): Array<string> => {
+export const pickFormulaVarFields = (vars: Array<SteedosFormulaVarTypeConfig>): Array<string> => {
     let result = ["space"]; //space字段作为基础字段不能少
-    vars.forEach((varItem: SteedosFieldFormulaVarTypeConfig) => {
+    vars.forEach((varItem: SteedosFormulaVarTypeConfig) => {
         if (varItem.paths.length) {
             // 如果是$user变量则paths肯定为空，所以取paths中第一个，第一个一定是当前对象中的字段
-            let firstPath: SteedosFieldFormulaVarPathTypeConfig = varItem.paths[0];
+            let firstPath: SteedosFormulaVarPathTypeConfig = varItem.paths[0];
             let firstKey = firstPath.field_name;
             result.push(firstKey);
         }
@@ -59,10 +59,10 @@ export const pickFormulaVarFields = (vars: Array<SteedosFieldFormulaVarTypeConfi
  * 根据公式中的变量值，计算出跨对象引用的记录对应的字段值，作为公式运算的参数返回
  * @param doc 
  * @param vars 
- * return Array<SteedosFieldFormulaParamTypeConfig>
+ * return Array<SteedosFormulaParamTypeConfig>
  */
-export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<SteedosFieldFormulaVarTypeConfig>, currentUserId: string) => {
-    let params: Array<SteedosFieldFormulaParamTypeConfig> = [];
+export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosFormulaVarTypeConfig>, currentUserId: string) => {
+    let params: Array<SteedosFormulaParamTypeConfig> = [];
     const spaceId = doc.space;
     if (vars && vars.length) {
         for (let { key, paths, is_user_var: isUserVar } of vars) {
@@ -71,13 +71,13 @@ export const computeFieldFormulaParams = async (doc: JsonMap, vars: Array<Steedo
             let tempValue: any;
             if (isUserVar) {
                 if(!currentUserId){
-                    throw new Error(`computeFieldFormulaParams:The param 'currentUserId' is required for the formula var key ${key} while running`);
+                    throw new Error(`computeFormulaParams:The param 'currentUserId' is required for the formula var key ${key} while running`);
                 }
                 if(!spaceId){
-                    throw new Error(`computeFieldFormulaParams:The 'space' property is required for the doc of the formula var key ${key} while running`);
+                    throw new Error(`computeFormulaParams:The 'space' property is required for the doc of the formula var key ${key} while running`);
                 }
                 // if (!currentUserId) {
-                //     throw new Error(`computeFieldFormulaParams:The param 'currentUserId' is required for the formula var key ${key}`);
+                //     throw new Error(`computeFormulaParams:The param 'currentUserId' is required for the formula var key ${key}`);
                 // }
                 // let tempFormulaParams = {};
                 // let tepmFormula = key.replace(FormulaUserKey, `__params["${FormulaUserKey}"]`);
@@ -137,7 +137,7 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
         checkCurrentUserIdNotRequiredForFieldFormulas(fieldFormulaConfig);
     }
     const { formula, vars, formula_type, formula_blank_value } = fieldFormulaConfig;
-    let params = await computeFieldFormulaParams(doc, vars, currentUserId);
+    let params = await computeFormulaParams(doc, vars, currentUserId);
     return runFieldFormula(formula, params, formula_type, formula_blank_value);
 }
 
@@ -160,7 +160,7 @@ export const evalFieldFormula = function (formula: string, formulaParams: object
  * @param params 参数
  * @param formulaType 公式返回类型，如果空则不判断类型
  */
-export const runFieldFormula = function (formula: string, params: Array<SteedosFieldFormulaParamTypeConfig>, formulaType?: string, formulaBlankValue?: FormulaBlankValue) {
+export const runFieldFormula = function (formula: string, params: Array<SteedosFormulaParamTypeConfig>, formulaType?: string, formulaBlankValue?: SteedosFormulaBlankValue) {
     let formulaParams = {};
     params.forEach(({ key, value }) => {
         formulaParams[key] = value;
@@ -175,7 +175,7 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     // console.log("==runFieldFormular==result===", result);
     if (result === null || result === undefined) {
         if (["number", "currency"].indexOf(formulaType) > -1) {
-            if (formulaBlankValue === FormulaBlankValue.blanks) {
+            if (formulaBlankValue === SteedosFormulaBlankValue.blanks) {
                 return null;
             }
             else {
@@ -229,7 +229,7 @@ export const runFieldFormula = function (formula: string, params: Array<SteedosF
     return result;
 }
 
-const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFieldFormulaVarPathTypeConfig>, toAggregatePaths: Array<Array<SteedosFieldFormulaVarPathTypeConfig>>) => {
+const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFormulaVarPathTypeConfig>, toAggregatePaths: Array<Array<SteedosFormulaVarPathTypeConfig>>) => {
     // 当引用了同一个对象的不同属性时，只需要记录其中一个，因为一个公式里面引用的字段变更后，只需要重算一次，比如以下两个都将只有第一条会加入到toAggregatePaths中
     // [{"key":"account.website","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"website","reference_from":"accounts"}]}]
     // [{"key":"account.name","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"name","reference_from":"accounts"}]}]
@@ -326,7 +326,7 @@ export const runManyCurrentObjectFieldFormulas = async function (objectName: str
 export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, currentUserId: string) => {
     // console.log("===updateQuotedByObjectFieldFormulaValue===", objectName, recordId, JSON.stringify(fieldFormulaConfig));
     const { vars, object_name: fieldFormulaObjectName } = fieldFormulaConfig;
-    let toAggregatePaths: Array<Array<SteedosFieldFormulaVarPathTypeConfig>> = [];
+    let toAggregatePaths: Array<Array<SteedosFormulaVarPathTypeConfig>> = [];
     for (let varItem of vars) {
         // vars格式如：[{"key":"account.website","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"website","reference_from":"accounts"}]}]
         const { paths } = varItem;

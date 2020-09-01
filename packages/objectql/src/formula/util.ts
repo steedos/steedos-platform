@@ -1,4 +1,4 @@
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarPathTypeConfig, SteedosFieldFormulaVarTypeConfig } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarPathTypeConfig, SteedosFormulaVarTypeConfig } from './type';
 import _ = require('lodash')
 
 /**
@@ -119,7 +119,7 @@ export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFi
  * 当currentUserId为空时，判断参数vars中是否有引用$user变量
  * @param configs
  */
-export const isCurrentUserIdRequiredForFormulaVars = (vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
+export const isCurrentUserIdRequiredForFormulaVars = (vars: Array<SteedosFormulaVarTypeConfig>) => {
     let required = !!vars.find(({ is_user_var: isUserVar })=>{
         return isUserVar;
     });
@@ -149,11 +149,11 @@ export const isCurrentUserIdRequiredForFormulaVars = (vars: Array<SteedosFieldFo
 以上返回的lookup可用于当修改组织的名称时，找到合同中引用了该组织记录的记录，并重算其对应的公式字段值
  * @param paths 该参数最后一项的reference_from即为需要聚合查询的对象，亦即为当前正在修改对象（需要查找数据库中有哪些对象记录引用了该对象上的字段）
  */
-export const getFormulaVarPathsAggregateLookups = (paths: Array<SteedosFieldFormulaVarPathTypeConfig>) => {
+export const getFormulaVarPathsAggregateLookups = (paths: Array<SteedosFormulaVarPathTypeConfig>) => {
     if (!paths.length) {
         return [];
     }
-    let lookups = [], currentPath: SteedosFieldFormulaVarPathTypeConfig, nextPath: SteedosFieldFormulaVarPathTypeConfig;
+    let lookups = [], currentPath: SteedosFormulaVarPathTypeConfig, nextPath: SteedosFormulaVarPathTypeConfig;
     let tempLookupAs: string = "", tempLookupLocalField: string = "";
     for (let i = 0; i < paths.length - 1; i++) {
         currentPath = paths[i];
