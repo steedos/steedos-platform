@@ -107,12 +107,12 @@ export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFi
         return;
     }
     for(let config of configs){
-        let { vars, object_name: objectName, field_name: fieldName } = config;
+        let { vars, object_name: objectName, field_name: fieldName, formula } = config;
         let required = !!vars.find(({ is_user_var: isUserVar })=>{
             return isUserVar;
         });
         if(required){
-            throw new Error(`The param 'currentUserId' is required while running the formula of '${fieldName}' on the object '${objectName}'`);
+            throw new Error(`The param 'currentUserId' is required while running the formula '${formula.replace("$", "\\$")}' of field '${fieldName}' on the object '${objectName}'`);
         }
     }
 }
