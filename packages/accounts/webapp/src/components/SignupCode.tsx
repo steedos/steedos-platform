@@ -41,6 +41,15 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
         setError(err.message);
     })
 
+    let inputLabel = '';
+    if (tenant.enable_mobile_code_login && tenant.enable_email_code_login) 
+      inputLabel = 'accounts.loginCode.email_or_mobile';
+    else if (tenant.enable_mobile_code_login) 
+      inputLabel = 'accounts.loginCode.mobile';
+    else if (tenant.enable_email_code_login) 
+      inputLabel = 'accounts.loginCode.email';
+    
+  
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(null);
@@ -60,7 +69,7 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
                 // }
             }
 
-            if (!tenant.enable_bind_mobile && email.trim().indexOf("@") == 0) {
+            if (!tenant.enable_mobile_code_login && email.trim().indexOf("@") == 0) {
                 throw new Error("accounts.invalidEmail");
             }
 
@@ -69,11 +78,11 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
                 action = 'mobileSignupAccount'
             }
 
-            if(tenant.enable_bind_mobile && action === 'emailSignupAccount'){
+            if(!tenant.enable_mobile_code_login && action === 'mobileSignupAccount'){
                 throw new Error("accounts.invalidMobile");
             }
 
-            if(!tenant.enable_bind_mobile && action === 'mobileSignupAccount'){
+            if(!tenant.enable_email_code_login && action === 'emailSignupAccount'){
                 throw new Error("accounts.invalidEmail");
             }
 
@@ -87,24 +96,9 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
         <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
             <FormControl margin="normal">
                 <InputLabel htmlFor="verifyCode">
-                    {/* {tenant.enable_bind_mobile && tenant.enable_bind_email &&
-                        <FormattedMessage
-                            id='accounts.signupCode.email_or_mobile'
-                            defaultMessage='Email or Phone Number'
-                        />
-                    } */}
-                    {tenant.enable_bind_mobile &&
-                        <FormattedMessage
-                            id='accounts.signupCode.mobile'
-                            defaultMessage='Phone Number'
-                        />
-                    }
-                    {!tenant.enable_bind_mobile &&
-                        <FormattedMessage
-                            id='accounts.signupCode.email'
-                            defaultMessage='Email'
-                        />
-                    }
+                    <FormattedMessage
+                        id={inputLabel}
+                    />
                 </InputLabel>
                 <Input
                     id="email"

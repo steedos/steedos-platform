@@ -11,10 +11,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     logo: {
       width: "auto",
-      height: 70,
+      height: 40,
       display: "block",
-      margin: "0 auto",
-      paddingBottom: 20
+      marginBottom: 20,
+      //margin: "0 auto"
     }
   }),
 );

@@ -16,7 +16,6 @@ const useStyles = makeStyles({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    margin: "0 auto",
   },
   notSpaces: {
     textAlign: 'center'

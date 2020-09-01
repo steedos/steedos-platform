@@ -204,9 +204,9 @@ export const applyCode = (accountsServer: AccountsServer) => async (
 
         if(action.startsWith("mobile")){
 
-            if(tenantConfig && !tenantConfig.enable_bind_mobile){
+            if(tenantConfig && !tenantConfig.enable_mobile_code_login){
                 if(['mobileLogin', 'mobileSignupAccount'].indexOf(action) > -1){
-                    throw new Error("accounts.invalidEmail");
+                    throw new Error("accounts.invalidMobile");
                 }
             }
 

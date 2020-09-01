@@ -28,9 +28,11 @@ const useStyles = makeStyles({
     flexDirection: "column",
   },
   title: {
-    fontSize: 18,
+    fontSize: "1.5rem",
     fontWeight: "bold",
-    margin: "0 auto",
+    marginBottom: 0,
+    marginTop: 0,
+    // margin: "0 auto",
   },
 });
 

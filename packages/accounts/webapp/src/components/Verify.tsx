@@ -18,10 +18,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
   },
   title: {
-    fontSize: 18,
+    fontSize: "1.5rem",
     fontWeight: "bold",
-    margin: "0 auto",
-    marginBottom: 16
+    marginBottom: 0,
+    marginTop: 0,
   },
   back: {
     marginTop: theme.spacing(1)
@@ -72,16 +72,19 @@ const ReApplyCodeBtn = ({ onClick, id, name }: any) => {
 
 
 const Verify = ({ match, settings, tenant, history, location, setState, requestLoading, requestUnLoading }: any) => {
-  // const email = location && location.state ? location.state.email : '';
-  const _token = match.params.token;
+  const _email = location && location.state ? location.state.email : '';
+  const _spaceId = location && location.state ? location.state.spaceId : '';
+  // const _token = match.params.token;
+  let _token = "";
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
+  const [token, setToken] = useState<string | "">("");
   const [code, setCode] = useState<string | "">("");
   const [id, setId] = useState<string | "">("");
-  const [token, setToken] = useState<string | "">(_token);
   const [action, setAction] = useState<string | "">("");
   const [name, setName] = useState<string | "">("");
   const [actionLabel, setActionLabel] = useState<string | "">("accounts.verifyEmail");
+
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -92,15 +95,15 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
         throw new Error("accounts.codeRequired");
       }
 
-      const data = {
+      console.log(token)
+      requestLoading();
+      await Login({
         user: {
           id: id
         },
         token: token,
         token_code: code.trim(),
-      }
-      requestLoading();
-      await Login(data, history, tenant, location, action);
+      }, history, tenant, location, action);
       setCode('');
     } catch (err) {
       requestUnLoading();
@@ -109,7 +112,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
     }
   };
 
-  const getCodeId = async () => {
+  const getCodeId = async (token:any) => {
     try {
       const data = await accountsRest.fetch(`code/id?token=${token}`, {});
       if (data.id) {
@@ -129,7 +132,56 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
       }
     } catch (err) {
       setError(err.message);
-      history.push('/login')
+      //history.push('/login')
+    }
+  }
+
+  const applyCode = async () => {
+
+    if (!_email){
+      history.push('/login');
+      return (<div/>);
+    }
+    
+    if (token)
+      return;
+
+    setError(null);
+
+    let action = '';
+    if (tenant.enable_mobile_code_login && tenant.enable_email_code_login) {
+      if(_email.trim().indexOf("@") < 0){
+        action = 'mobileLogin'
+      } else 
+        action = 'emailLogin';
+    } else if (tenant.enable_mobile_code_login) {
+      action = 'mobileLogin'
+    } else if (tenant.enable_email_code_login) {
+      action = 'emailLogin';
+    } else {
+      throw new Error("配置错误，请启用密码验证、手机验证或邮箱验证。");
+    }
+
+    if(action.startsWith("email")){
+      setActionLabel('accounts.verifyEmail');
+    }
+
+    if(action.startsWith("mobile")){
+      setActionLabel('accounts.verifyMobile');
+    }
+    
+    try {
+      const getCode = await ApplyCode({
+        name: _email,
+        action: action,
+        spaceId: _spaceId
+      });
+      if (getCode.token) {
+        setToken(getCode.token);
+        getCodeId(getCode.token);
+      }
+    } catch (err) {
+      setError(err.message);
     }
   }
 
@@ -141,28 +193,19 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
         action: action,
       });
       if (data.token) {
-        setToken(data.token)
+        setToken(data.token);
       }
     } catch (err) {
       setError(err.message);
     }
   }
 
+
   useEffect(() => {
-    getCodeId();
+    applyCode();
   }, []);
+  
 
-  useEffect(() => {
-
-    if(action.startsWith("email")){
-      setActionLabel('accounts.verifyEmail');
-    }
-
-    if(action.startsWith("mobile")){
-      setActionLabel('accounts.verifyMobile');
-    }
-    
-  }, [action,name]);
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
@@ -190,7 +233,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
           onChange={e => setCode(e.target.value)}
           endAdornment={ id && 
             <InputAdornment position="end">
-              <ReApplyCodeBtn onClick={reApplyCode} id="reApplyCodeBtn" name={_token}/>
+              <ReApplyCodeBtn onClick={reApplyCode} id="reApplyCodeBtn" name={token}/>
             </InputAdornment>
           }
         />

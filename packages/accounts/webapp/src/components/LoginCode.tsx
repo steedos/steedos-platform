@@ -31,47 +31,51 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
   const type = match.params.type || 'email';
   const searchParams = new URLSearchParams(location.search);
   let spaceId = searchParams.get("X-Space-Id") || settingsTenantId;
+
+
+  let inputLabel = 'accounts.loginCode.username';
+  if (tenant.enable_password_login)
+    inputLabel = 'accounts.loginCode.username';
+  else if (tenant.enable_mobile_code_login && tenant.enable_email_code_login) 
+    inputLabel = 'accounts.loginCode.email_or_mobile';
+  else if (tenant.enable_mobile_code_login) 
+    inputLabel = 'accounts.loginCode.mobile';
+  else if (tenant.enable_email_code_login) 
+    inputLabel = 'accounts.loginCode.email';
+  
+
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     try {
+      // 必填
       if(!email.trim()){
-        if(tenant.enable_bind_mobile){
-          throw new Error("请输入手机号");
-        }else{
-            throw new Error("请输入邮箱");
-        }
-      }
-      if(email.trim().indexOf("@") == 0){
-        throw new Error("无效的邮箱地址");
-      }
-      
-      let action = 'emailLogin';
-      if(email.trim().indexOf("@") < 0){
-        action = 'mobileLogin'
-      }
-      if(!tenant.enable_bind_mobile && action === 'mobileLogin'){
-          throw new Error("无效的邮箱地址");
+        throw new Error("输入错误！");
       }
 
+      // 判断账户是否已存在
       const data = await accountsRest.fetch( `user/exists?id=${email.trim()}`, {});
-      if(data.exists){
-          const data = await ApplyCode({
-              name: email,
-              action: action,
-              spaceId: spaceId
-          });
-          if (data.token) {
-              history.push({
-                pathname: `/verify/${data.token}`,
-                search: location.search,
-                state: { email: email.trim() }
-            })
-          }
-      }else{
-        signupDialogOpen()
-        // throw new Error("未找到您的账户，请先创建账户");
+      if(!data.exists) {
+        signupDialogOpen();
+        return;
       }
+
+      if(tenant.enable_password_login){
+        history.push({
+          pathname: `/password/`,
+          search: location.search,
+          state: { email: email.trim() }
+        })
+        return;
+      } 
+
+      history.push({
+        pathname: `/verify/go`,
+        search: location.search,
+        state: { email: email.trim(), spaceId:spaceId }
+      })
+      
     } catch (err) {
       setError(err.message);
     }
@@ -109,14 +113,12 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
         <DialogContent>
         {tenant.enable_register &&
           <DialogContentText id="alert-dialog-description">
-            {email.trim().indexOf("@") < 0 && "该手机号还未注册，请注册后再登录。"}
-            {email.trim().indexOf("@") >= 0 && "该邮箱还未注册，请注册后再登录。"}
+            此账户未注册，请注册后再登录。
           </DialogContentText>
         }
         {!tenant.enable_register &&
           <DialogContentText id="alert-dialog-description">
-            {email.trim().indexOf("@") < 0 && "该手机号还未注册，请联系系统管理员。"}
-            {email.trim().indexOf("@") >= 0 && "该邮箱还未注册，请联系系统管理员。"}
+            未找到此账户，请联系系统管理员。
           </DialogContentText>
         }
         </DialogContent>
@@ -143,18 +145,9 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
       </Dialog>
         <FormControl margin="normal">
           <InputLabel htmlFor="verifyCode">
-            {tenant.enable_bind_mobile &&
-                <FormattedMessage
-                id='accounts.loginCode.email_or_mobile'
-                defaultMessage='Email or Phone Number'
-              />
-            }
-            {!tenant.enable_bind_mobile &&
-                <FormattedMessage
-                id='accounts.loginCode.email'
-                defaultMessage='Email'
-              />
-            }
+            <FormattedMessage
+              id={inputLabel}
+            />
           </InputLabel>
           <Input
             id="email"

@@ -17,7 +17,9 @@ const useStyles = makeStyles({
     title: {
         fontSize: 18,
         fontWeight: "bold",
-        margin: "0 auto",
+        marginBottom: 0,
+        marginTop: 0,
+        // margin: "0 auto",
     }
 });
 

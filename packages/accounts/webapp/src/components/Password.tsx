@@ -19,10 +19,6 @@ const useStyles = makeStyles({
   },
 });
 
-const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/reset-password", search: props.location.search}} {...props} ref={ref} />
-));
-
 const LoginPassword = ({ history, settings, tenant, location, title, requestLoading, requestUnLoading }: any) => {
   console.log('LoginPassword history.location.state', history.location.state);
   const _email = location && location.state ? location.state.email : '';
@@ -38,6 +34,11 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
   accountsEventOnError((err: any)=>{
     setError(err.message);
   })
+
+  const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
+    <Link to={{pathname: "/verify/go", search: props.location.search, state: {email: email}}} {...props} ref={ref} />
+  ));
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -113,14 +114,6 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
             defaultMessage='Next'
         />
       </Button>
-      {!spaceId && tenant.enable_register &&
-      <Button onClick={goSignup}>
-        <FormattedMessage
-            id='accounts.signup'
-            defaultMessage='Sign Up'
-        />
-      </Button>
-      }
       {tenant.enable_forget_password &&
       <Button component={ResetPasswordLink} location={location}>
         <FormattedMessage

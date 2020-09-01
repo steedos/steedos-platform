@@ -20,6 +20,7 @@ import Verify from './components/Verify';
 import LoginCode from './components/LoginCode';
 import LoginMethod from './components/LoginMethod'
 import LoginPassword from './components/LoginPassword';
+import Password from './components/Password';
 import Title from './components/Title';
 import GoBack from './components/GoBack';
 import SetName from './components/SetName';
@@ -80,14 +81,11 @@ const Router = ({tenant}:any) => {
 
   const classes = useStyles();
 
-  let loginComponent = LoginPassword;
+  let loginComponent = LoginCode;
   let resetPasswordComponent = LoginCode || ResetPassword;
-  if(tenant && tenant.enable_password_login === false){
-    loginComponent = LoginCode;
-  }
 
   let signupComponent = Signup;
-  if(tenant.enable_bind_mobile || tenant.enable_bind_email){
+  if(tenant.enable_mobile_code_login || tenant.enable_email_code_login){
     signupComponent = SignupCode;
   }
 
@@ -101,8 +99,8 @@ const Router = ({tenant}:any) => {
             <Grid item xs={12}>
               <Paper className={classes.paper} id="paper">
                 <CssBaseline />
-                <Route path="/" component={GoBack}/>
                 <Route path="/" component={Logo}/>
+                <Route path="/" component={GoBack}/>
                 <Route path="/" component={Title}/>
                 <Route exact path="/" component={Home}/>
                 <Route path="/signup" component={signupComponent} />
@@ -110,6 +108,7 @@ const Router = ({tenant}:any) => {
 
                 <Route path="/login" component={loginComponent} />
                 <Route path="/login-password" component={LoginPassword} />
+                <Route path="/password" component={Password} />
                 
                 <Route path="/create-tenant" component={CreateTenant} />
                 <Route path="/choose-tenant" component={ChooseTenant} />

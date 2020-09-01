@@ -10,6 +10,7 @@ export function getTenant(state) {
     const tenant = Object.assign({}, state.settings.tenant, state.tenant)
     if (!tenant.name)
         tenant.name = "Steedos"
+    tenant.enable_password_login = true
     return tenant;
 }
 
