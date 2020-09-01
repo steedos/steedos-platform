@@ -1,7 +1,7 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs, getObjectConfig, getSteedosSchema } from '../types';
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions } from './type';
 import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
-import { pickFormulaVars, computeFormulaParams, pickFormulaVarFields, runFieldFormula } from './core';
+import { pickFormulaVars, computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
 import { isFieldFormulaConfigQuotedTwoWays, isCurrentUserIdRequiredForFormulaVars } from './util';
 import _ = require('lodash')
 const clone = require('clone')
@@ -198,7 +198,7 @@ export const initObjectFieldsFormulas = (datasource: string) => {
     console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
 }
 
-export const computeFormulaValue = async (formula: string, objectName?:string, recordId?: string, currentUserId?: string) => {
+export const computeFormula = async (formula: string, objectName:string, recordId: string, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions) => {
     const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs("default")
     // 允许参数objectName为空，此时formula应该最多只引用了$user变量，未引用任何对象字段相关变量。
     const objectConfig = objectName ? getObjectConfig(objectName) : null;
@@ -210,12 +210,14 @@ export const computeFormulaValue = async (formula: string, objectName?:string, r
             throw new Error(`The param 'currentUserId' is required for formula ${formula.replace("$", "\\$")}`);
         }
     }
-    let doc = {};
+    let doc: any = {};
     if(objectName && recordId){
         const formulaVarFields = pickFormulaVarFields(vars);
         doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
     }
+    if(spaceId){
+        doc.space = spaceId;
+    }
     let params = await computeFormulaParams(doc, vars, currentUserId);
-    // return runFieldFormula(formula, params, formula_type, formula_blank_value);
-    return runFieldFormula(formula, params);
+    return runFormula(formula, params, options);
 }

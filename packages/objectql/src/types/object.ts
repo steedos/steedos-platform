@@ -761,12 +761,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return afterTriggerContext.data.values
                 }
             }
-            await this.runFieldFormula(method, args, userSession ? userSession.userId : undefined);
+            await this.runRecordFormula(method, args, userSession ? userSession.userId : undefined);
         }
         return returnValue
     };
 
-    private async runFieldFormula(method: string, args: Array<any>, currentUserId: any) {
+    private async runRecordFormula(method: string, args: Array<any>, currentUserId: any) {
         if(["insert", "update", "updateMany"].indexOf(method) > -1){
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
