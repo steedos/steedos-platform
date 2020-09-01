@@ -33,14 +33,24 @@ export const pickFieldFormulaVarFields = (fieldFormulaConfigs: SteedosFieldFormu
     let result = ["space"]; //space字段作为基础字段不能少
     fieldFormulaConfigs.forEach((fieldFormulaConfig: SteedosFieldFormulaTypeConfig) => {
         let { vars } = fieldFormulaConfig;
-        vars.forEach((varItem: SteedosFieldFormulaVarTypeConfig) => {
-            if (varItem.paths.length) {
-                // 如果是$user变量则paths肯定为空，所以取paths中第一个，第一个一定是当前对象中的字段
-                let firstPath: SteedosFieldFormulaVarPathTypeConfig = varItem.paths[0];
-                let firstKey = firstPath.field_name;
-                result.push(firstKey);
-            }
-        });
+        result = _.union(result, pickFormulaVarFields(vars));
+    });
+    return _.uniq(result);
+}
+
+/**
+ * 根据公式内容已取出的{}中的变量，进一步取出这些变量中引用了当前对象的哪些字段
+ * @param vars 
+ */
+export const pickFormulaVarFields = (vars: Array<SteedosFieldFormulaVarTypeConfig>): Array<string> => {
+    let result = ["space"]; //space字段作为基础字段不能少
+    vars.forEach((varItem: SteedosFieldFormulaVarTypeConfig) => {
+        if (varItem.paths.length) {
+            // 如果是$user变量则paths肯定为空，所以取paths中第一个，第一个一定是当前对象中的字段
+            let firstPath: SteedosFieldFormulaVarPathTypeConfig = varItem.paths[0];
+            let firstKey = firstPath.field_name;
+            result.push(firstKey);
+        }
     });
     return _.uniq(result);
 }

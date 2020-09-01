@@ -1,8 +1,8 @@
-import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
+import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs, getObjectConfig, getSteedosSchema } from '../types';
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserKey, FormulaBlankValue } from './type';
 import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
-import { pickFormulaVars } from './core';
-import { isFieldFormulaConfigQuotedTwoWays } from './util';
+import { pickFormulaVars, computeFieldFormulaParams, pickFormulaVarFields, runFieldFormula } from './core';
+import { isFieldFormulaConfigQuotedTwoWays, isCurrentUserIdRequiredForFormulaVars } from './util';
 import _ = require('lodash')
 const clone = require('clone')
 
@@ -52,6 +52,10 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         if(formulaVar.startsWith("$")){
             throw new Error(`computeFormulaVarAndQuotes:The formula var '${formulaVar}' is starts with '$' but not a user session var that starts with $user.`);
         }
+        if(!objectConfig){
+            // 不是$user变量时，需要传入objectConfig参数
+            throw new Error(`computeFormulaVarAndQuotes:The 'objectConfig' is required for the formula var '${formulaVar}'`);
+        }
     }
     let tempObjectConfig = objectConfig;
     for (let i = 0; i < varItems.length; i++) {
@@ -81,14 +85,14 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
             throw new Error(`computeFormulaVarAndQuotes:Can't find the field '${varItem}' on the object '${tempObjectConfig.name}' for the formula var '${formulaVar}'`);
         }
         let isFormulaType = tempFieldConfig.type === "formula";
-        let tempFieldFormulaVarPath: SteedosFieldFormulaVarPathTypeConfig = {
-            field_name: varItem,
-            reference_from: tempObjectConfig.name
-        };
-        if (isFormulaType) {
-            tempFieldFormulaVarPath.is_formula = true;
-        }
         if(!isUserKey){
+            let tempFieldFormulaVarPath: SteedosFieldFormulaVarPathTypeConfig = {
+                field_name: varItem,
+                reference_from: tempObjectConfig.name
+            };
+            if (isFormulaType) {
+                tempFieldFormulaVarPath.is_formula = true;
+            }
             // 当是$user时，不需要把第一个path记录下来，只需要记录其后续的路径即可
             paths.push(tempFieldFormulaVarPath);
         }
@@ -155,7 +159,7 @@ const computeFormulaVarsAndQuotes = (formula: string, objectConfig: SteedosObjec
 }
 
 export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig, objectConfig: SteedosObjectTypeConfig) => {
-    const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs()
+    const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs("default")
     const formula = fieldConfig.formula;
     let result = computeFormulaVarsAndQuotes(formula, objectConfig, objectConfigs);
     let formulaConfig: SteedosFieldFormulaTypeConfig = {
@@ -192,4 +196,26 @@ export const initObjectFieldsFormulas = (datasource: string) => {
     })
 
     console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
+}
+
+export const computeFormulaValue = async (formula: string, objectName?:string, recordId?: string, currentUserId?: string) => {
+    const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs("default")
+    // 允许参数objectName为空，此时formula应该最多只引用了$user变量，未引用任何对象字段相关变量。
+    const objectConfig = objectName ? getObjectConfig(objectName) : null;
+    const varsAndQuotes = computeFormulaVarsAndQuotes(formula, objectConfig, objectConfigs);
+    const vars = varsAndQuotes.vars;
+    if (!currentUserId) {
+        const required = isCurrentUserIdRequiredForFormulaVars(vars);
+        if(required){
+            throw new Error(`The param 'currentUserId' is required for formula ${formula.replace("$", "\\$")}`);
+        }
+    }
+    let doc = {};
+    if(objectName && recordId){
+        const formulaVarFields = pickFormulaVarFields(vars);
+        doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
+    }
+    let params = await computeFieldFormulaParams(doc, vars, currentUserId);
+    // return runFieldFormula(formula, params, formula_type, formula_blank_value);
+    return runFieldFormula(formula, params);
 }

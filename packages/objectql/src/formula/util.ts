@@ -1,4 +1,4 @@
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarPathTypeConfig } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarPathTypeConfig, SteedosFieldFormulaVarTypeConfig } from './type';
 import _ = require('lodash')
 
 /**
@@ -96,7 +96,7 @@ export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeCo
 }
 
 /**
- * 当userSession为空时，确认参数configs中没有引用$user变量
+ * 当currentUserId为空时，确认参数configs中没有引用$user变量
  * @param configs
  */
 export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>) => {
@@ -108,13 +108,22 @@ export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFi
     }
     for(let config of configs){
         let { vars, object_name: objectName, field_name: fieldName, formula } = config;
-        let required = !!vars.find(({ is_user_var: isUserVar })=>{
-            return isUserVar;
-        });
+        let required = isCurrentUserIdRequiredForFormulaVars(vars);
         if(required){
             throw new Error(`The param 'currentUserId' is required while running the formula '${formula.replace("$", "\\$")}' of field '${fieldName}' on the object '${objectName}'`);
         }
     }
+}
+
+/**
+ * 当currentUserId为空时，判断参数vars中是否有引用$user变量
+ * @param configs
+ */
+export const isCurrentUserIdRequiredForFormulaVars = (vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
+    let required = !!vars.find(({ is_user_var: isUserVar })=>{
+        return isUserVar;
+    });
+    return required;
 }
 
 /**
