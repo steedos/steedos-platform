@@ -9,12 +9,11 @@ fields:
     type: text
     required: true
     is_name: true
-  order:
+  order: #TODO 必须为整数，最小为1， 最大值不能超过当前最大值+1。输入的值已存在则当前记录占用原来的序号，之后的记录序号后移，比如已有1，2，3。添加2后，原来的2，3变为3，4，新记录占用2
     is_wide: true
     type: number
     scale: 0
     min: 1
-    inlineHelpText: 必须为整数，最小为1， 最大值不能超过当前最大值+1。输入的值已存在则当前记录占用原来的序号，之后的记录序号后移，比如已有1，2，3。添加2后，原来的2，3变为3，4，新记录占用2
   description:
     label: description
     type: textarea
@@ -38,7 +37,7 @@ fields:
     type: select
     options: approve,reject,skip
     group: Specify Step Criteria
-    is_wide: true
+    is_wide: true #TODO 选项规则：第一个有(order=1)：拒绝记录；批准记录；如果有后续步骤，则会多一个 转到下一步的条件;最后一个步骤且不是第一步时，不能设置不满足的情况（按拒绝记录处理）
   approver:
     type: select
     is_wide: true
@@ -47,18 +46,53 @@ fields:
     options:
       - label: 'Let the submitter choose the approver manually'
         value: 'submitter_choose'
-      - label: 'Automatically assign using the user field selected earlier'
-        value: 'role'
-      - label: 'Automatically assign to queue'
-        value: 'auto_queue'
+      # - label: 'Automatically assign using the user field selected earlier'
+      #   value: 'role'
+      # - label: 'Automatically assign to queue'
+      #   value: 'auto_queue'
       - label: 'Automatically assign to approver(s)'
         value: 'auto_approver'
+  auto_approver:
+    type: grid
+    label: auto_approver
+    group: Select Assigned Approver
+    is_wide: true
+  auto_approver.$.type:
+    type: select
+    options:
+      - label: 指定用户
+        value: user
+      - label: 相关用户
+        value: user_field
+      - label: 角色
+        value: role
+      - label: 客户、合作伙伴(TODO)
+        value: todo
+  auto_approver.$.value:
+    type: lookup
+    depend_on:
+      - auto_approver.$.type
+    optionsFunction: !!js/function
+      function(){
+        return []
+      }
+  approvers_apprrouting:
+    type: select
+    is_wide: true
+    label: When multiple approvers are selected
+    group: Select Assigned Approver
+    options:
+      - label: Approve or reject based on the FIRST response.
+        value: first
+      - label: Require UNANIMOUS approval from all selected approvers.
+        value: all
+  #TODO 批准代理也可以批准此请求
   reject_behavior:
     type: select
     label: Reject Behavior
     is_wide: true
     group: Select Assigned Approver
-    inlineHelpText: What should happen if the approver rejects this request? 只有非步骤号不等于1时，才能设置拒绝行为， 等于1时始终为最终拒绝
+    inlineHelpText: What should happen if the approver rejects this request? #TODO 只有非步骤号不等于1时，才能设置拒绝行为， 等于1时始终为最终拒绝
     options:
       - label: 'Perform all rejection actions for this step AND all final rejection actions. (Final Rejection)'
         value: 'rejradall'

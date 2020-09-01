@@ -1,5 +1,5 @@
-name: process_instance_node
-label: process_instance_node
+name: process_instance_history
+label: process_instance_history
 icon: record
 fields:
   name:
@@ -7,10 +7,7 @@ fields:
   process_instance:
     type: lookup
     reference_to: process_instance
-  process_node:
-    type: lookup
-    reference_to: process_node
-  node_status:
+  step_status:
     type: select
     options:
       - approved
@@ -22,14 +19,17 @@ fields:
       - rejected
       - removed
       - started
-  completed_date:
-    type: datetime
-    label: Completed Date
-  last_actorId:
+  original_actorId:
     type: lookup
     reference_to: users
-  process_node_name:
-    type: text
+  actorId:
+    type: lookup
+    reference_to: users
+  comments:
+    type: textarea
+  step_node:
+    type: lookup
+    reference_to: process_node
   elapsed_time_in_days:
     type: number
     precision: 18

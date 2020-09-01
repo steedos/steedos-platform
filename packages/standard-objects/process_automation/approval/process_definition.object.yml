@@ -13,6 +13,10 @@ fields:
     type: text
     required: true
     is_wide: true
+  order: #TODO 必须是连续的数字
+    type: number
+    scale: 0
+    min: 1
   description:
     label: 描述
     type: textarea
