@@ -87,6 +87,6 @@ export enum SteedosFormulaBlankValue {
  * 内核函数runFormula的额外参数
  */
 export type SteedosFormulaOptions = {
-    formulaType?: string,
-    formulaBlankValue?: SteedosFormulaBlankValue,
+    returnType?: string,
+    blankValue?: SteedosFormulaBlankValue,
 }

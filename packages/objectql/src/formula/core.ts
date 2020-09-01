@@ -139,8 +139,8 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
     const { formula, vars, formula_type, formula_blank_value } = fieldFormulaConfig;
     let params = await computeFormulaParams(doc, vars, currentUserId);
     return runFormula(formula, params, {
-        formulaType: formula_type, 
-        formulaBlankValue: formula_blank_value
+        returnType: formula_type, 
+        blankValue: formula_blank_value
     });
 }
 
@@ -167,7 +167,7 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     if(!options){
         options = {};
     }
-    let { formulaType, formulaBlankValue } = options;
+    let { returnType, blankValue } = options;
     let formulaParams = {};
     params.forEach(({ key, value }) => {
         formulaParams[key] = value;
@@ -181,8 +181,8 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     let result = evalFieldFormula(formula, formulaParams);
     // console.log("==runFieldFormular==result===", result);
     if (result === null || result === undefined) {
-        if (["number", "currency"].indexOf(formulaType) > -1) {
-            if (formulaBlankValue === SteedosFormulaBlankValue.blanks) {
+        if (["number", "currency"].indexOf(returnType) > -1) {
+            if (blankValue === SteedosFormulaBlankValue.blanks) {
                 return null;
             }
             else {
@@ -194,11 +194,9 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
             return null;
         }
     }
-    if (formulaType) {
+    if (returnType) {
         const resultType = typeof result;
-        // console.log("==runFieldFormular==formulaType===", formulaType);
-        // console.log("==runFieldFormular==resultType===", resultType);
-        switch (formulaType) {
+        switch (returnType) {
             case "boolean":
                 if (resultType !== "boolean") {
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a boolean type result but got a ${resultType} type.`);
