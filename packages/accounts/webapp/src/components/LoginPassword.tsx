@@ -138,7 +138,7 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
         </div>}
         
       <div className="mt-6 flex justify-end">
-        <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-green-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+        <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
           <FormattedMessage
             id='accounts.signin'
             defaultMessage='Login'

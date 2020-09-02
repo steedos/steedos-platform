@@ -101,6 +101,8 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
         }
     };
 
+    document.title = intl.formatMessage({id:'accounts.title.signup'}) + ` | ${tenant.name}`;
+
     return (
     <div>
         <h2 className="my-2 text-left text-2xl leading-9 font-extrabold text-gray-900">

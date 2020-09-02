@@ -174,7 +174,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
   }, []);
   
 
-  document.title = useIntl().formatMessage({id:'accounts.title.loginCode'}) + ` | ${tenant.name}` ;
+  document.title = useIntl().formatMessage({id:'accounts.title.verify'}) + ` | ${tenant.name}` ;
 
   return (
   <div>

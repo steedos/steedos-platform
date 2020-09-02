@@ -28,6 +28,8 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string | "">(_email);
   const [signupDialogState, setSignupDialogState] = useState<boolean>(false);
+  const intl = useIntl();
+
   const type = match.params.type || 'email';
   const searchParams = new URLSearchParams(location.search);
   let spaceId = searchParams.get("X-Space-Id") || settingsTenantId;
@@ -43,7 +45,7 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
   else if (tenant.enable_email_code_login) 
     inputLabel = 'accounts.email';
   
-  document.title = useIntl().formatMessage({id:'accounts.title.login'}) + ` | ${tenant.name}`;
+  document.title = intl.formatMessage({id:'accounts.title.login'}) + ` | ${tenant.name}`;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,7 +53,7 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
     try {
       // 必填
       if(!email.trim()){
-        throw new Error("请填写此字段。");
+        throw new Error(intl.formatMessage({id: inputLabel}));
       }
 
       // 判断账户是否已存在
@@ -113,12 +115,12 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
         <div className="rounded-md shadow-sm my-2">
           <div>
             <input 
-              aria-label={useIntl().formatMessage({id: inputLabel})}
+              aria-label={intl.formatMessage({id: inputLabel})}
               id="email"
               name="email" 
               value={email}
               className="appearance-none rounded-none relative block w-full px-3 py-2 border-b border-gray-500 bg-blue-50 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
-              placeholder={useIntl().formatMessage({id: inputLabel})}
+              placeholder={intl.formatMessage({id: inputLabel})}
               onChange={e => setEmail(e.target.value)}
             />
           </div>
