@@ -104,7 +104,7 @@ export const canPasswordLogin = async ()=>{
 
 export const canMobilePasswordLogin = async (user)=>{
   const tenant: any = await getMergedTenant();
-  if(tenant.enable_bind_mobile){
+  if(tenant.enable_mobile_code_login){
     return user.mobile_verified
   }
   return tenant.enable_password_login;
@@ -112,7 +112,7 @@ export const canMobilePasswordLogin = async (user)=>{
 
 export const canEmailPasswordLogin = async (user)=>{
   const tenant: any = await getMergedTenant();
-  if(tenant.enable_bind_email){
+  if(tenant.enable_email_code_login){
     return user.email_verified
   }
   return tenant.enable_password_login;

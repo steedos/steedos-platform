@@ -5,7 +5,7 @@ let lastOnError = null;
 
 accountsEvent.on("goSignup", (tenant, history, location, state)=>{
     try {
-        if(tenant.enable_bind_mobile || tenant.enable_bind_email){
+        if(tenant.enable_mobile_code_login || tenant.enable_email_code_login){
             history.push({
                 pathname: `/signup`,
                 search: location.search,
