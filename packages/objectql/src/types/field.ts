@@ -41,7 +41,8 @@ const FIELDTYPES = [
     "Object",
     "autonumber",
     "markdown",
-    "formula"
+    "formula",
+    "summary"
 ]
 
 abstract class SteedosFieldProperties{
@@ -289,6 +290,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                return SteedosFieldDBType.varchar
            case 'formula':
                return this.getDBType(this.formula_type);
+           case 'summary':
+                //汇总不需要check类型
+                return SteedosFieldDBType.varchar;
            default:
                throw new Error(`${this._object.name}.${this.name} invalid field type ${type}`)
         }

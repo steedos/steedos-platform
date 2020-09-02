@@ -330,7 +330,8 @@
                                 "code",
                                 "autonumber",
                                 "markdown",
-                                "formula"
+                                "formula",
+                                "summary"
                             ]
                         }
                     ]
@@ -569,6 +570,28 @@
                             ]
                         }
                     ]
+                },
+                "summary_object": {
+                    "type": "string",
+                    "description": "要汇总的对象"
+                },
+                "summary_type": {
+                    "type": "string",
+                    "description": "汇总类型",
+                    "anyOf": [
+                        {
+                            "enum": [
+                                "count",
+                                "sum",
+                                "min",
+                                "max"
+                            ]
+                        }
+                    ]
+                },
+                "summary_field": {
+                    "type": "string",
+                    "description": "要聚合的字段"
                 },
                 "formula_blank_value": {
                     "type": "string",
