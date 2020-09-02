@@ -17,16 +17,16 @@ const Navbar = ({ tenant, user }: any) => {
     document.location.href = '/';
   };
 
-  document.onclick=() => {if (menuOpen) setMenuOpen(false)}
+  // document.onclick=() => {if (menuOpen) setMenuOpen(false)}
 
   return (
 <div>
-  <nav className="bg-white shadow-md">
+  <nav className="bg-gray-800 shadow-md">
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex items-center justify-between h-16">
+      <div className="flex items-center justify-between h-15">
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <a href="/"><Logo/></a>
+            <a href="/"><img src="/images/logo_white.png" className="h-8 w-auto"></img></a>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
@@ -44,18 +44,18 @@ const Navbar = ({ tenant, user }: any) => {
         </div>
         <div className="md:block">
           <div className="ml-4 flex items-center md:ml-6">
-            {/* <button className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700" aria-label="Notifications">
-              <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            <a href="https://www.steedos.com/help/" target="_blank" className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700" aria-label="Notifications">
+              <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-            </button> */}
+            </a>
 
             <div className="ml-3 relative">
               <div>
-                <button className="max-w-xs flex items-center text-sm rounded-full text-gray-700 focus:outline-none opacity-75 hover:opacity-100" id="user-menu" aria-label="User menu" aria-haspopup="true"
+                <button className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out flex items-center" id="user-menu" aria-label="User menu" aria-haspopup="true"
                  onClick={() => setMenuOpen(!menuOpen)}
                 >
-                  {user && user.name &&(user.name)}
+                  <span className="mr-1">{user && user.name &&(user.name)}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-4 w-4">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -63,12 +63,6 @@ const Navbar = ({ tenant, user }: any) => {
               </div>
               <Transition
                 show={menuOpen}
-                enter="transition-opacity duration-75"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-150"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
                 >
                 <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
                   <div className="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
