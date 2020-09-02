@@ -45,7 +45,7 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
   else if (tenant.enable_email_code_login) 
     inputLabel = 'accounts.email';
   
-  document.title = intl.formatMessage({id:'accounts.title.login'}) + ` | ${tenant.name}`;
+  document.title = intl.formatMessage({id:'accounts.signin'}) + ` | ${tenant.name}`;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,8 +72,14 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
         return;
       } 
 
+      let action = ''
+      if(email.trim().indexOf("@") < 0){
+        action = 'mobileLogin'
+      } else 
+        action = 'emailLogin';
+        
       history.push({
-        pathname: `/verify/go`,
+        pathname: `/verify/${action}`,
         search: location.search,
         state: { email: email.trim(), spaceId:spaceId }
       })
@@ -105,7 +111,7 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
     <div>
       <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
         <FormattedMessage
-            id='accounts.title.login'
+            id='accounts.signin'
             defaultMessage='Login'
           />
       </h2>

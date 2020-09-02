@@ -10,7 +10,7 @@ signUpEvent.on('inputNext', async (tenant, history, location, spaceId, name, act
     try {
         if(tenant.enable_mobile_code_login || tenant.enable_email_code_login){
             history.push({
-                pathname: `/verify/go`,
+                pathname: `/verify/${action}`,
                 search: location.search,
                 state: { email: name.trim() }
             })

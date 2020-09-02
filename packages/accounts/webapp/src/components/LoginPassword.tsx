@@ -12,16 +12,8 @@ import { Login } from '../client'
 import { requests } from '../actions/requests'
 import { accountsEvent, accountsEventOnError} from '../client/accounts.events'
 
-const useStyles = makeStyles({
-  formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-});
-
 const LoginPassword = ({ history, settings, tenant, location, title, requestLoading, requestUnLoading }: any) => {
   const _email = location && location.state ? location.state.email : '';
-  const classes = useStyles();
   const [enableCode] = useState('');
   const [email, setEmail] = useState(_email || '');
   const [password, setPassword] = useState('');
@@ -41,10 +33,6 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
   if (!_email){
     return (<Redirect to="/login" />);
   }
-
-  const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
-    <Link to={{pathname: "/verify/go", search: props.location.search, state: {email: email}}} {...props} ref={ref} />
-  ));
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,8 +64,14 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
 
   const goVerify = ()=>{
     
+    let action = ''
+    if(email.trim().indexOf("@") < 0){
+      action = 'mobileLogin'
+    } else 
+      action = 'emailLogin';
+      
     history.push({
-      pathname: `/verify/go`,
+      pathname: `/verify/${action}`,
       search: location.search,
       state: { email: email, spaceId: spaceId }
     })
@@ -103,11 +97,11 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
     <h2 className="my-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
       <FormattedMessage
           id='accounts.title.password'
-          defaultMessage='Password'
+          defaultMessage='Enter Password'
         />
     </h2>
 
-    <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
+    <form onSubmit={onSubmit} className="mt-5" autoCapitalize="none">
       <input type="hidden" id="email" value={email} onChange={e => setEmail(e.target.value)}/>
 
       <div className="rounded-md shadow-sm my-2">

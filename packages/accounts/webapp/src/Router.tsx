@@ -119,7 +119,7 @@ const Router = ({tenant}:any) => {
                 <Route exact path="/update-password" component={UpdatePassword} />
                 <Route path="/reset-password/:token" component={resetPasswordComponent} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
-                <Route path="/verify/:token" component={Verify} />
+                <Route path="/verify/:action" component={Verify} />
                 <Route path="/login-code" component={LoginCode} />
                 <Route path="/set-name" component={SetName} />
                 <Route path="/verify-mobile/:token" component={VerifyMobile} />

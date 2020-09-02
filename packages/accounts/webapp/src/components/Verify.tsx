@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Redirect } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography, InputAdornment, Link , Theme} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useIntl, FormattedMessage } from 'react-intl';
@@ -52,15 +53,17 @@ const ReApplyCodeBtn = ({ onClick, id, name }: any) => {
 const Verify = ({ match, settings, tenant, history, location, setState, requestLoading, requestUnLoading }: any) => {
   const _email = location && location.state ? location.state.email : '';
   const _spaceId = location && location.state ? location.state.spaceId : '';
-  // const _token = match.params.token;
-  let _token = "";
+  const _action = match.params.action;
   const [error, setError] = useState<string | null>(null);
   const [token, setToken] = useState<string | "">("");
   const [code, setCode] = useState<string | "">("");
   const [id, setId] = useState<string | "">("");
-  const [action, setAction] = useState<string | "">("");
+  const [action, setAction] = useState<string | "">(_action);
   const [name, setName] = useState<string | "">("");
 
+  if (!tenant.enable_mobile_code_login && !tenant.enable_email_code_login) {
+    throw new Error("配置错误，未启用验证码登录。");
+  }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -115,28 +118,13 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
   const applyCode = async () => {
 
     if (!_email){
-      history.push('/login');
-      return (<div/>);
+      return (<Redirect to="/login" />);
     }
     
     if (token)
       return;
 
     setError(null);
-
-    let action = '';
-    if (tenant.enable_mobile_code_login && tenant.enable_email_code_login) {
-      if(_email.trim().indexOf("@") < 0){
-        action = 'mobileLogin'
-      } else 
-        action = 'emailLogin';
-    } else if (tenant.enable_mobile_code_login) {
-      action = 'mobileLogin'
-    } else if (tenant.enable_email_code_login) {
-      action = 'emailLogin';
-    } else {
-      throw new Error("配置错误，请启用密码验证、手机验证或邮箱验证。");
-    }
 
     try {
       const getCode = await ApplyCode({
