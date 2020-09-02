@@ -259,12 +259,11 @@ fields:
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
         if(!values.object){
-          return;
+          return [];
         }
-        console.log("==summary_object==optionsFunction==", values.object);
         var object = Creator.getObject(values.object);
         if(!object){
-          return;
+          return [];
         }
         var relatedObjects = object.related_objects;
         var _options = [];
@@ -308,14 +307,14 @@ fields:
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function (values) {
         if(!values.summary_object){
-          return;
+          return [];
         }
         if(values.summary_type && values.summary_type !== "count"){
           var options = Creator.getObjectLookupFieldOptions(values.summary_object, false, true);
           var object = Creator.getObject(values.summary_object);
           var fields = object ? object.fields : null;
           if(!fields){
-            return;
+            return [];
           }
           if(values.summary_type === "sum"){
             /*sum类型可以汇总数值、金额字段*/
