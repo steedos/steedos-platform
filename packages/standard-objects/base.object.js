@@ -265,7 +265,10 @@ module.exports = {
             }
         },
         standard_submit_for_approval: {
-            visible: true,
+            visible: function (object_name) {
+                let result = Creator.odata.query("process_definition", {$top: 1, $select: "_id", $filter: `((object_name eq '${object_name}') and (state eq 'active'))`}, true);
+                return result.length > 0;
+            },
             on: "record_only",
             todo: function(){
                 console.log('submit_for_approval...');
