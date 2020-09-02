@@ -263,6 +263,13 @@ module.exports = {
                     Creator.odata.insert('follows', { object_name: Session.get("object_name") });
                 }
             }
+        },
+        standard_submit_for_approval: {
+            visible: true,
+            on: "record_only",
+            todo: function(){
+                console.log('submit_for_approval...');
+            }
         }
     },
 

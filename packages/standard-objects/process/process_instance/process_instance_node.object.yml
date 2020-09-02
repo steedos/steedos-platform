@@ -2,8 +2,9 @@ name: process_instance_node
 label: process_instance_node
 icon: record
 fields:
-  name:
+  process_node_name:
     type: text
+    is_name: true
   process_instance:
     type: lookup
     reference_to: process_instance
@@ -28,8 +29,6 @@ fields:
   last_actorId:
     type: lookup
     reference_to: users
-  process_node_name:
-    type: text
   elapsed_time_in_days:
     type: number
     precision: 18
@@ -42,3 +41,18 @@ fields:
     type: number
     precision: 8
     scale: 0
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true

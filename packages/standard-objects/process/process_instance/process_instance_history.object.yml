@@ -19,10 +19,10 @@ fields:
       - rejected
       - removed
       - started
-  original_actorId:
+  original_actor:
     type: lookup
     reference_to: users
-  actorId:
+  actor:
     type: lookup
     reference_to: users
   comments:
@@ -34,11 +34,40 @@ fields:
     type: number
     precision: 18
     scale: 0
+    hidden: true
+    omit: true
   elapsed_time_in_hours:
     type: number
     precision: 5
     scale: 2
+    hidden: true
+    omit: true
   elapsed_time_in_minutes:
     type: number
     precision: 8
     scale: 0
+    hidden: true
+    omit: true
+  created_by:
+    label: 提交人
+  modified:
+    hidden: true
+    omit: true
+  modified_by:
+    hidden: true
+    omit: true
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true

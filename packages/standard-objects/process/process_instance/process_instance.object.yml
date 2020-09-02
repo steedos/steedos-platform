@@ -29,7 +29,7 @@ fields:
   completed_date:
     type: datetime
     label: Completed Date
-  last_actorId:
+  last_actor:
     type: lookup
     reference_to: users
   submitted_by:
@@ -47,3 +47,18 @@ fields:
     type: number
     precision: 8
     scale: 0
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true

@@ -68,14 +68,16 @@ fields:
         value: role
       - label: 客户、合作伙伴(TODO)
         value: todo
+  # auto_approver.$.value:  TODO
+  #   type: lookup
+  #   depend_on:
+  #     - auto_approver.$.type
+  #   optionsFunction: !!js/function
+  #     function(){
+  #       return []
+  #     }
   auto_approver.$.value:
-    type: lookup
-    depend_on:
-      - auto_approver.$.type
-    optionsFunction: !!js/function
-      function(){
-        return []
-      }
+      type: text
   approvers_apprrouting:
     type: select
     is_wide: true
