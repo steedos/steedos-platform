@@ -54,7 +54,7 @@ const CreateTenant = ({ settings, history, tenant, location }: any) => {
         credentials: 'include'
       };
       const res: any = await fetch(
-        `${settings.root_url}/${route}`,
+        `${getRootUrlPathPrefix(settings.root_url)}/${route}`,
         fetchOptions
       );
       const token: any = await accountsClient.getTokens();
