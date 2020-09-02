@@ -56,6 +56,23 @@ fields:
   modified_by:
     hidden: true
     omit: true
+actions:
+  approve:
+    label: Approve
+    on: record_only
+    visible: true
+  reject:
+    label: Reject
+    on: record_only
+    visible: true
+  reassign:
+    label: Reassign
+    on: record_only
+    visible: true
+  remove:
+    label: Recall
+    on: record_only
+    visible: true
 permission_set:
   user:
     allowCreate: false
