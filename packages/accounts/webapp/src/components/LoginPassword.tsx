@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import {FormattedMessage} from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import { accountsClient, accountsRest, accountsPassword } from '../accounts';
 import { connect } from 'react-redux';
@@ -19,12 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/reset-password", search: props.location.search}} {...props} ref={ref} />
-));
-
 const LoginPassword = ({ history, settings, tenant, location, title, requestLoading, requestUnLoading }: any) => {
-  console.log('LoginPassword history.location.state', history.location.state);
   const _email = location && location.state ? location.state.email : '';
   const classes = useStyles();
   const [enableCode] = useState('');
@@ -34,10 +29,23 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
   const [error, setError] = useState<string | null>(history.location.state ? (history.location.state.error || '') : '');
   const [message, setMessage] = useState<any>(history.location.state ? (history.location.state.message || '') : '');
   const searchParams = new URLSearchParams(location.search);
+  const intl = useIntl();
+
   let spaceId = searchParams.get("X-Space-Id");
   accountsEventOnError((err: any)=>{
     setError(err.message);
   })
+
+  document.title = intl.formatMessage({id:'accounts.title.password'}) + ` | ${tenant.name}`;
+
+  if (!_email){
+    return (<Redirect to="/login" />);
+  }
+
+  const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
+    <Link to={{pathname: "/verify/go", search: props.location.search, state: {email: email}}} {...props} ref={ref} />
+  ));
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -66,70 +74,80 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
     }
   };
 
-  const goSignup = ()=>{
-    let state = {};
-    if(email.trim().indexOf("@") > 0){
-      state = { email: email }
-    }
-    accountsEvent.emit('goSignup', tenant, history, location, state)
+  const goVerify = ()=>{
+    
+    history.push({
+      pathname: `/verify/go`,
+      search: location.search,
+      state: { email: email, spaceId: spaceId }
+    })
   }
-  
+
   return (
+  <div>
+
+    <button
+      className="flex text-sm text-gray-600 hover:text-gray-800 py-2"
+      onClick={function() {
+        window.history.back();
+      }}
+      >
+        <span className="left-0 inset-y-0 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 pr-2">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          {email}
+        </span>
+    </button>
+
+    <h2 className="my-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
+      <FormattedMessage
+          id='accounts.title.password'
+          defaultMessage='Password'
+        />
+    </h2>
+
     <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
-      <FormControl margin="normal">
-        <InputLabel htmlFor="email">
-          <FormattedMessage
-            id='accounts.username_or_email'
-            defaultMessage='Username or Email'
-          />
-        </InputLabel>
-        <Input id="email" value={email} onChange={e => setEmail(e.target.value)} />
-      </FormControl>
-      <FormControl margin="normal">
-        <InputLabel htmlFor="password">
-          <FormattedMessage
-            id='accounts.password'
-            defaultMessage='Password'
-          />
-        </InputLabel>
-        <Input
-          id="password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-      </FormControl>
-      {enableCode && 
-      <FormControl margin="normal">
-        <InputLabel htmlFor="password">2fa code if enabled</InputLabel>
-        <Input id="code" value={code} onChange={e => setCode(e.target.value)} />       
-      </FormControl>
-      } 
+      <input type="hidden" id="email" value={email} onChange={e => setEmail(e.target.value)}/>
+
+      <div className="rounded-md shadow-sm my-2">
+          <div>
+            <input 
+              aria-label={intl.formatMessage({id: 'accounts.password'})}
+              id="password"
+              name="password" 
+              value={password}
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border-b border-gray-500 bg-blue-50 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
+              placeholder={intl.formatMessage({id: 'accounts.password'})}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </div>
+        </div>
+
       {error && <FormError error={error!} />}
-      {!error && message && message.data && <FormError variant={message.variant} error={message.data!} />}
-      <Button variant="contained" color="primary" type="submit">
-        <FormattedMessage
-            id='accounts.next'
-            defaultMessage='Next'
-        />
-      </Button>
-      {!spaceId && tenant.enable_register &&
-      <Button onClick={goSignup}>
-        <FormattedMessage
-            id='accounts.signup'
-            defaultMessage='Sign Up'
-        />
-      </Button>
-      }
-      {tenant.enable_forget_password &&
-      <Button component={ResetPasswordLink} location={location}>
-        <FormattedMessage
-            id='accounts.loginCode'
-            defaultMessage='Validity Code Login'
-        />
-      </Button>
-      }
+
+      {(tenant.enable_email_code_login || tenant.enable_mobile_code_login) &&
+        <div className="text-sm leading-5 my-4">
+          <button type="button" onClick={goVerify}
+            className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+            <FormattedMessage
+                id='accounts.loginCode'
+                defaultMessage='Forget Password'
+            />
+          </button>
+        </div>}
+        
+      <div className="mt-6 flex justify-end">
+        <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-green-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+          <FormattedMessage
+            id='accounts.signin'
+            defaultMessage='Login'
+          />
+        </button>
+      </div>
+
     </form>
+  </div>
   );
 };
 

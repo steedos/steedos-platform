@@ -20,7 +20,7 @@ import Verify from './components/Verify';
 import LoginCode from './components/LoginCode';
 import LoginMethod from './components/LoginMethod'
 import LoginPassword from './components/LoginPassword';
-import Password from './components/Password';
+import Password from './components/LoginPassword';
 import Title from './components/Title';
 import GoBack from './components/GoBack';
 import SetName from './components/SetName';
@@ -47,7 +47,7 @@ const Router = ({tenant}:any) => {
       display: "flex",    
       height: "100%",
       background: 'white',
-      '@media only screen and (min-width: 768px)': {
+      '@media only screen and (min-width: 640px)': {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundImage: "url(" + backgroundUrl + ")",
@@ -64,7 +64,7 @@ const Router = ({tenant}:any) => {
     rootGrid: {
     },
     container: {
-      '@media only screen and (min-width: 768px)': {
+      '@media only screen and (min-width: 640px)': {
         alignItems: 'center'
       },
     },
@@ -75,14 +75,11 @@ const Router = ({tenant}:any) => {
       minWidth: 320,    
       boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
       borderRadius: 0,
-      '@media only screen and (max-width: 768px)': {
+      '@media only screen and (max-width: 640px)': {
         borderRadius: 0,
         boxShadow: "none",
         background: 'transparent'
       },
-      "& [type='submit']": {
-        marginTop: 20
-      }
     },
   });
 
@@ -107,15 +104,14 @@ const Router = ({tenant}:any) => {
               <Paper className={classes.paper} id="paper">
                 <CssBaseline />
                 <Route path="/" component={Logo}/>
-                <Route path="/" component={GoBack}/>
-                <Route path="/" component={Title}/>
+                {/* <Route path="/" component={GoBack}/> */}
+                {/* <Route path="/" component={Title}/> */}
                 <Route exact path="/" component={Home}/>
                 <Route path="/signup" component={signupComponent} />
                 <Route path="/signup-password" component={Signup} />
 
                 <Route path="/login" component={loginComponent} />
                 <Route path="/login-password" component={LoginPassword} />
-                <Route path="/password" component={Password} />
                 
                 <Route path="/create-tenant" component={CreateTenant} />
                 <Route path="/choose-tenant" component={ChooseTenant} />
