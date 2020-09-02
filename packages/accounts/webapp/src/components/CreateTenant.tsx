@@ -8,6 +8,7 @@ import FormError from './FormError';
 import { getCookie, getRootUrlPathPrefix } from '../utils/utils';
 import { goInSystem } from '../client/index';
 import { accountsClient, accountsRest } from '../accounts';
+import Logo from './Logo';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -96,6 +97,11 @@ const CreateTenant = ({ settings, history, tenant, location }: any) => {
     }
   };
   return (
+<div className="flex md:items-center md:justify-center mx-auto h-full">
+  <div className="p-11 sm:shadow-md sm:bg-transparent bg-white w-screen max-w-md">
+
+    <Logo/>
+  
     <form onSubmit={onSubmit} className={classes.formContainer}>
         <FormControl margin="normal">
           <InputLabel htmlFor="tenantName">
@@ -124,6 +130,8 @@ const CreateTenant = ({ settings, history, tenant, location }: any) => {
           />
         </Button> */}
       </form>
+    </div>
+  </div>
   );
 };
 

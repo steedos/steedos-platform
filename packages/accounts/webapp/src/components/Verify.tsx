@@ -10,6 +10,7 @@ import FormError from './FormError';
 import { Login, ApplyCode } from '../client'
 import { useCountDown } from "./countdown";
 import { requests } from '../actions/requests';
+import Logo from './Logo';
 
 const totalSeconds = 60;
 
@@ -165,7 +166,10 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
   document.title = useIntl().formatMessage({id:'accounts.title.verify'}) + ` | ${tenant.name}` ;
 
   return (
-  <div>
+<div className="flex md:items-center md:justify-center mx-auto h-full">
+  <div className="p-11 sm:shadow-md sm:bg-transparent bg-white w-screen max-w-md">
+
+    <Logo/>
 
     <button
       className="flex text-sm text-gray-600 hover:text-gray-800 py-2"
@@ -228,6 +232,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
 
     </form>
   </div>
+</div>
   );
 };
 

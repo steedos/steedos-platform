@@ -25,9 +25,8 @@ const Logo = ({ tenant, location }: any) => {
   if (tenant.logo_url) {
     logoUrl = tenant.logo_url
   }
-  let show =  ['/result-license'].indexOf(location.pathname) < 0
   return (<div>
-    {show && <img src={logoUrl} className={classes.logo}></img>}
+    <img src={logoUrl} className={classes.logo}></img>
     </div>
   )
 };

@@ -7,22 +7,11 @@ import { getSettings, getTenant } from '../selectors';
 import { accountsClient, accountsRest } from '../accounts';
 import FormError from './FormError';
 import { goInSystem } from '../client/index';
+import Logo from './Logo';
 
-const useStyles = makeStyles({
-    formContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: "bold",
-        margin: "0 auto",
-    }
-});
 
 const SetName = ({ match, settings, history, location, tenant }: any) => {
     const _fullname = location && location.state ? location.state.fullname : '';
-    const classes = useStyles();
     const [error, setError] = useState<string | null>(null);
     const [fullname, setFullname] = useState<string | "">(_fullname);
     const searchParams = new URLSearchParams(location.search);
@@ -84,7 +73,11 @@ const SetName = ({ match, settings, history, location, tenant }: any) => {
     };
 
     return (
-        <form onSubmit={onSubmit} className={classes.formContainer}>
+<div className="flex md:items-center md:justify-center mx-auto h-full">
+    <div className="p-11 sm:shadow-md sm:bg-transparent bg-white w-screen max-w-md">
+
+    <Logo/>
+        <form onSubmit={onSubmit} className="mt-4">
             <FormControl margin="normal">
                 <InputLabel htmlFor="verifyCode">
                     <FormattedMessage
@@ -99,13 +92,19 @@ const SetName = ({ match, settings, history, location, tenant }: any) => {
                 />
             </FormControl>
             {error && <FormError error={error!} />}
-            <Button variant="contained" color="primary" type="submit">
-                <FormattedMessage
+
+
+            <div className="mt-6 flex justify-end">
+                <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+                    <FormattedMessage
                     id='accounts.next'
                     defaultMessage='Next'
-                />
-            </Button>
+                    />
+                </button>
+            </div>
         </form>
+    </div>
+</div>
     );
 };
 

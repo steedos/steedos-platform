@@ -5,25 +5,12 @@ import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
+import Navbar from './Navbar';
 
 import { accountsClient, accountsRest } from '../accounts';
 
-const useStyles = makeStyles({
-  formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  notSpaces: {
-    textAlign: 'center'
-  }
-});
 
 const Home = ({ history, settings, tenant, location }: any) => {
-  const classes = useStyles();
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -73,10 +60,6 @@ const Home = ({ history, settings, tenant, location }: any) => {
     }
   };
 
-  const onResendEmail = async () => {
-    await accountsRest.sendVerificationEmail(user.emails[0].address);
-  };
-
   const onLogout = async () => {
     await accountsClient.logout();
     history.push('/login');
@@ -90,25 +73,14 @@ const Home = ({ history, settings, tenant, location }: any) => {
     return null;
   }
   return (
-    <div className={classes.formContainer}>
-      <h4 className={classes.title}>
+    <div>
+      <Navbar/>
+      {/* <h4>
         <FormattedMessage
             id='accounts.welcome'
             defaultMessage='Welcome' 
         /> {user.email || user.name}
       </h4>
-      {/* 
-      <Typography gutterBottom>You are logged in</Typography>
-      <Typography gutterBottom>Email: {user.emails[0].address}</Typography>
-      <Typography gutterBottom>
-        You email is {user.emails[0].verified ? 'verified' : 'unverified'}
-      </Typography>
-      {!user.emails[0].verified && (
-        <Button onClick={onResendEmail}>Resend verification email</Button>
-      )}
-
-      <Link to="two-factor">Set up 2fa</Link> */}
-      <br/><br/>
       {!(!user.spaces || user.spaces.length === 0) && <Button onClick={onHome} variant="contained" color="primary">
         <FormattedMessage
             id='accounts.home'
@@ -116,7 +88,7 @@ const Home = ({ history, settings, tenant, location }: any) => {
         /> 
       </Button>
       }
-      {(!user.spaces || user.spaces.length === 0) && <Typography variant="body2" gutterBottom className={classes.notSpaces}><FormattedMessage
+      {(!user.spaces || user.spaces.length === 0) && <Typography variant="body2" gutterBottom><FormattedMessage
             id='accounts.notFindSpaces'
             defaultMessage='您没有所属公司，请联系系统管理员' 
           /></Typography>
@@ -127,7 +99,7 @@ const Home = ({ history, settings, tenant, location }: any) => {
             id='accounts.logout'
             defaultMessage='Logout' 
         /> 
-      </Button>
+      </Button> */}
     </div>
   );
 };

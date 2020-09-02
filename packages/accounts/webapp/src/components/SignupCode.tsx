@@ -9,6 +9,7 @@ import { accountsRest } from '../accounts';
 import FormError from './FormError';
 import { ApplyCode } from '../client';
 import { signUpEvent, signUpEventOnError } from '../client/signup.events';
+import Logo from './Logo';
 
 const useStyles = makeStyles({
     formContainer: {
@@ -104,7 +105,10 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
     document.title = intl.formatMessage({id:'accounts.title.signup'}) + ` | ${tenant.name}`;
 
     return (
-    <div>
+<div className="flex md:items-center md:justify-center mx-auto h-full">
+    <div className="p-11 sm:shadow-md sm:bg-transparent bg-white w-screen max-w-md">
+
+    <Logo/>
         <h2 className="my-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
           <FormattedMessage
               id='accounts.title.signup'
@@ -155,6 +159,7 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
             </div>
         </form>
     </div>
+</div>
     );
 };
 

@@ -1,18 +1,15 @@
 import React from 'react';
-import { BrowserRouter, HashRouter, Route } from 'react-router-dom';
-import { CssBaseline, Grid, Paper } from '@material-ui/core';
+import {  HashRouter, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { getTenant } from './selectors';
 
-import Logo from './components/Logo';
 import SignupCode from './components/SignupCode';
 import Home from './components/Home';
 import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
 import VerifyMobile from './components/VerifyMobile';
-import TwoFactor from './components/TwoFactor';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './components/CreateTenant';
 import ChooseTenant from './components/ChooseTenant';
@@ -21,15 +18,10 @@ import LoginCode from './components/LoginCode';
 import LoginMethod from './components/LoginMethod'
 import LoginPassword from './components/LoginPassword';
 import Password from './components/LoginPassword';
-import Title from './components/Title';
-import GoBack from './components/GoBack';
 import SetName from './components/SetName';
-import GlobalMessage from './components/GlobalMessage';
 import Loading from './components/Loading';
 import theme from './theme';
 import Signup from './components/Signup';
-import GenerateLicense from './components/GenerateLicense';
-import LicenseResult from './components/LicenseResult';
 
 const Router = ({tenant}:any) => {
   let backgroundUrl = require("./assets/background.svg");
@@ -44,7 +36,6 @@ const Router = ({tenant}:any) => {
       bottom: 0,
       left: 0,
       right: 0,
-      display: "flex",    
       height: "100%",
       background: 'white',
       '@media only screen and (min-width: 640px)': {
@@ -53,33 +44,6 @@ const Router = ({tenant}:any) => {
         backgroundImage: "url(" + backgroundUrl + ")",
         backgroundSize: "cover",
       }
-    },
-    rootBackgroundFade: {
-      // top: 0,
-      // bottom: 0,
-      // left: 0,
-      // right: 0,
-      // backgroundColor: "rgba(0, 0, 0, 0.2)",
-    },
-    rootGrid: {
-    },
-    container: {
-      '@media only screen and (min-width: 640px)': {
-        alignItems: 'center'
-      },
-    },
-    paper: {
-      padding: 28,
-      margin: '0px auto',
-      maxWidth: 380,
-      minWidth: 320,    
-      boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-      borderRadius: 0,
-      '@media only screen and (max-width: 640px)': {
-        borderRadius: 0,
-        boxShadow: "none",
-        background: 'transparent'
-      },
     },
   });
 
@@ -99,11 +63,6 @@ const Router = ({tenant}:any) => {
         <div className={classes.root}>
           <Loading></Loading>
           {/* <GlobalMessage></GlobalMessage> */}
-          <Grid className={classes.container} container id="container">
-            <Grid item xs={12}>
-              <Paper className={classes.paper} id="paper">
-                <CssBaseline />
-                <Route path="/" component={Logo}/>
                 {/* <Route path="/" component={GoBack}/> */}
                 {/* <Route path="/" component={Title}/> */}
                 <Route exact path="/" component={Home}/>
@@ -120,17 +79,10 @@ const Router = ({tenant}:any) => {
                 <Route path="/reset-password/:token" component={resetPasswordComponent} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/verify/:action" component={Verify} />
-                <Route path="/login-code" component={LoginCode} />
+                {/* <Route path="/login-code" component={LoginCode} /> */}
                 <Route path="/set-name" component={SetName} />
                 <Route path="/verify-mobile/:token" component={VerifyMobile} />
-                {/* <Route path="/generate-license" component={GenerateLicense} />
-                <Route path="/result-license" component={LicenseResult} /> */}
-                <Route path="/two-factor" component={TwoFactor} />
-              </Paper>
-            </Grid>
-          </Grid>
-          <div className={classes.rootBackgroundFade}></div>
-        </div>
+          </div>
       </ThemeProvider>
     </HashRouter>
   );

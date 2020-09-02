@@ -9,6 +9,7 @@ import { accountsRest } from '../accounts';
 import FormError from './FormError';
 import { ApplyCode } from '../client';
 import { accountsEvent, accountsEventOnError} from '../client/accounts.events'
+import Logo from './Logo';
 
 const useStyles = makeStyles({
   formContainer: {
@@ -77,7 +78,7 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
         action = 'mobileLogin'
       } else 
         action = 'emailLogin';
-        
+
       history.push({
         pathname: `/verify/${action}`,
         search: location.search,
@@ -108,7 +109,11 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
   }
 
   return (
-    <div>
+  <div className="flex md:items-center md:justify-center mx-auto h-full">
+    <div className="p-11 sm:shadow-md sm:bg-transparent bg-white w-screen max-w-md">
+
+      <Logo/>
+
       <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
         <FormattedMessage
             id='accounts.signin'
@@ -159,6 +164,7 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
         </div>
       </form>
     </div>
+  </div>
   );
 };
 
