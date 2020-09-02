@@ -105,7 +105,7 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
     document.title = intl.formatMessage({id:'accounts.title.signup'}) + ` | ${tenant.name}`;
 
     return (
-<div className="flex md:items-center md:justify-center mx-auto h-full">
+<div className="flex sm:items-center justify-center mx-auto h-full">
     <div className="p-11 sm:shadow-md sm:bg-transparent bg-white w-screen max-w-md">
 
     <Logo/>

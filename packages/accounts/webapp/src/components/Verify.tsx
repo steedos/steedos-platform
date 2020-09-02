@@ -166,7 +166,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
   document.title = useIntl().formatMessage({id:'accounts.title.verify'}) + ` | ${tenant.name}` ;
 
   return (
-<div className="flex md:items-center md:justify-center mx-auto h-full">
+<div className="flex sm:items-center justify-center mx-auto h-full">
   <div className="p-11 sm:shadow-md sm:bg-transparent bg-white w-screen max-w-md">
 
     <Logo/>

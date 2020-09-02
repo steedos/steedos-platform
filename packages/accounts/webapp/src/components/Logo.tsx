@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "auto",
       height: 40,
       display: "block",
-      marginBottom: 20,
+      //marginBottom: 20,
       //margin: "0 auto"
     }
   }),

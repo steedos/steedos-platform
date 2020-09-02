@@ -74,7 +74,7 @@ const Home = ({ history, settings, tenant, location }: any) => {
   }
   return (
     <div>
-      <Navbar/>
+      <Navbar user={user}/>
       {/* <h4>
         <FormattedMessage
             id='accounts.welcome'
