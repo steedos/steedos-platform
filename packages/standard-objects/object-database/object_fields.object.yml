@@ -261,7 +261,9 @@ fields:
         if(!values.object){
           return [];
         }
-        var object = Creator.getObject(values.object);
+        /*在lookup控件编辑的时候values.object为字符串，在记录详细界面为对象*/
+        var objectName = typeof values.object === "string" ? values.object : values.object.name;
+        var object = Creator.getObject(objectName);
         if(!object){
           return [];
         }
