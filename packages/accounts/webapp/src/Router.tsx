@@ -45,23 +45,27 @@ const Router = ({tenant}:any) => {
       left: 0,
       right: 0,
       display: "flex",    
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      backgroundImage: "url(" + backgroundUrl + ")",
-      backgroundSize: "cover",
       height: "100%",
+      '@media only screen and (min-width: 768px)': {
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundImage: "url(" + backgroundUrl + ")",
+        backgroundSize: "cover",
+      }
     },
     rootBackgroundFade: {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: "rgba(0, 0, 0, 0.2)",
+      // top: 0,
+      // bottom: 0,
+      // left: 0,
+      // right: 0,
+      // backgroundColor: "rgba(0, 0, 0, 0.2)",
     },
     rootGrid: {
     },
     container: {
-      alignItems: 'center'
+      '@media only screen and (min-width: 768px)': {
+        alignItems: 'center'
+      },
     },
     paper: {
       padding: 28,
@@ -70,8 +74,10 @@ const Router = ({tenant}:any) => {
       minWidth: 320,    
       boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
       borderRadius: 0,
-      '@media only screen and (max-width: 480px)': {
-        borderRadius: 0
+      '@media only screen and (max-width: 768px)': {
+        borderRadius: 0,
+        boxShadow: "none",
+        background: 'transparent'
       },
       "& [type='submit']": {
         marginTop: 20
@@ -94,7 +100,7 @@ const Router = ({tenant}:any) => {
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
           <Loading></Loading>
-          <GlobalMessage></GlobalMessage>
+          {/* <GlobalMessage></GlobalMessage> */}
           <Grid className={classes.container} container id="container">
             <Grid item xs={12}>
               <Paper className={classes.paper} id="paper">
