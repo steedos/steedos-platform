@@ -21,7 +21,7 @@ const Navbar = ({ tenant, user }: any) => {
 
   return (
 <div>
-  <nav className="bg-gray-100 shadow-md">
+  <nav className="bg-white shadow-md">
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16">
         <div className="flex items-center">
@@ -42,7 +42,7 @@ const Navbar = ({ tenant, user }: any) => {
             </div>
           </div>
         </div>
-        <div className="hidden md:block">
+        <div className="md:block">
           <div className="ml-4 flex items-center md:ml-6">
             {/* <button className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700" aria-label="Notifications">
               <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -82,16 +82,6 @@ const Navbar = ({ tenant, user }: any) => {
               </Transition>
             </div>
           </div>
-        </div>
-        <div className="-mr-2 flex md:hidden">
-          <button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white">
-            <svg className="block h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-            <svg className="hidden h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
         </div>
       </div>
     </div>
