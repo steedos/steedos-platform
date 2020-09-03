@@ -7,6 +7,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
+import { runQuotedByObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
 
 abstract class SteedosObjectProperties {
@@ -788,6 +789,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
                     await runQuotedByObjectFieldFormulas(objectName, recordId, currentUserId);
                 }
+                await runQuotedByObjectFieldSummaries(objectName, recordId);
             }
         }
     }

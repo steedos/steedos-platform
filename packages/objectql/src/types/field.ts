@@ -88,6 +88,9 @@ abstract class SteedosFieldProperties{
     formula?: string
     formula_type?: string
     formula_blank_value?: string
+    summary_object?: string
+    summary_type?: string
+    summary_field?: string
 }
 
 export interface SteedosFieldTypeConfig extends SteedosFieldProperties{

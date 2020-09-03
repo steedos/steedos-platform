@@ -195,7 +195,7 @@ export const initObjectFieldsFormulas = (datasource: string) => {
         addObjectFieldsFormulaConfig(objectConfig, datasource);
     })
 
-    console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
+    // console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
 }
 
 export const computeFormula = async (formula: string, objectName:string, recordId: string, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions) => {
