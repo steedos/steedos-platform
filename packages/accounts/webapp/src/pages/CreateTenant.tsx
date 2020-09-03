@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { createStyles, Theme, makeStyles, FormControl, InputLabel, Input, Button} from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import FormError from '../components/FormError';
@@ -9,20 +9,8 @@ import { getCookie, getRootUrlPathPrefix } from '../utils/utils';
 import { goInSystem } from '../client/index';
 import { accountsClient, accountsRest } from '../accounts';
 import Logo from '../components/Logo';
+import Card from '../components/Card';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    title: {
-      fontSize: 18,
-      fontWeight: "bold",
-      margin: "0 auto",
-    }
-  }),
-);
 
 
 const LogInLink = React.forwardRef<Link, any>((props, ref) => (
@@ -30,9 +18,11 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => (
 ));
 
 const CreateTenant = ({ settings, history, tenant, location }: any) => {
-  const classes = useStyles();
+  
   const [error, setError] = useState<string | null>(null);
   const [tenantName, setTenantName] = useState<string | "">("");
+  const intl = useIntl();
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -97,41 +87,46 @@ const CreateTenant = ({ settings, history, tenant, location }: any) => {
     }
   };
   return (
-<div className="flex sm:items-center justify-center mx-auto h-full">
-  <div className="p-11 sm:shadow bg-white w-screen max-w-md">
+<Card>
 
     <Logo/>
   
-    <form onSubmit={onSubmit} className={classes.formContainer}>
-        <FormControl margin="normal">
-          <InputLabel htmlFor="tenantName">
-            <FormattedMessage
-              id='accounts.tenant_name'
-              defaultMessage='Company Name'
+    <h2 className="my-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
+      <FormattedMessage
+          id='accounts.title.createTenant'
+          defaultMessage='Create Tenant'
+        />
+    </h2>
+    
+    <form onSubmit={onSubmit} className="mt-4">
+
+
+        <div className="rounded-md shadow-sm my-2">
+          <div>
+            <input 
+              aria-label={intl.formatMessage({id: 'accounts.tenant_name'})}
+              id="tenantName"
+              name="tenantName" 
+              value={tenantName}
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border-b border-gray-500 bg-blue-50 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
+              placeholder={intl.formatMessage({id: 'accounts.tenant_name'})}
+              onChange={e => setTenantName(e.target.value)}
             />
-          </InputLabel>
-          <Input
-            id="tenantName"
-            value={tenantName}
-            onChange={e => setTenantName(e.target.value)}
-          />
-        </FormControl>
+          </div>
+        </div>
+        
         {error && <FormError error={error!} />}
-        <Button variant="contained" color="primary" type="submit">
-          <FormattedMessage
-            id='accounts.next'
-            defaultMessage='Next'
-          />
-        </Button>
-        {/* <Button component={LogInLink}>
-          <FormattedMessage
-            id='accounts.signin'
-            defaultMessage='Sign In'
-          />
-        </Button> */}
+
+        <div className="mt-6 flex justify-end">
+          <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+            <FormattedMessage
+              id='accounts.next'
+              defaultMessage='Next'
+            />
+          </button>
+        </div>
       </form>
-    </div>
-  </div>
+  </Card>
   );
 };
 

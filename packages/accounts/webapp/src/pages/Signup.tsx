@@ -98,7 +98,7 @@ const Signup = ({ match, settingsTenantId, settings, history, location, tenant }
 
         <form onSubmit={onSubmit} className="mt-4" autoCapitalize="none">
 
-            <div className="rounded-md shadow-sm my-2">
+            <div className="rounded-md shadow-sm my-10">
                 <div>
                     <input 
                     aria-label={intl.formatMessage({id: inputLabel})}

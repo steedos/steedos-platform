@@ -57,7 +57,7 @@
     "accounts.verifyEmailLinkExpired": "该邮箱验证链接已失效",
     "accounts.resetPasswordLinkExpired": "该重置密码链接已失效",
     "accounts.usernameAlreadyExists": "该用户名已被注册使用",
-    "accounts.emailAlreadyExists": "密码错误, 该邮箱已被注册使用",
+    "accounts.emailAlreadyExists": "该邮箱已被注册使用",
     "accounts.mobileAlreadyExists": "该手机号已被注册使用",
     "accounts.usernameOrEmailRequired": "手机号、邮箱、用户名不能为空",
     "accounts.nameRequired": "姓名不能为空",
