@@ -13,7 +13,7 @@ fields:
     type: lookup
     reference_to: !!js/function
       function(){
-        return []
+        return ['contracts']
       }
   step_status:
     type: select
@@ -75,6 +75,7 @@ list_views:
       - step_node
       - original_actor
       - actor
+      - target_object
 actions:
   approve:
     label: Approve
@@ -107,3 +108,20 @@ permission_set:
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
+form:
+  afterView: !!js/function |
+    function(){
+      var step_status = this.doc.step_status;
+      $("div", $(".crm-header-title")).css("display", "inline");
+      switch (step_status) {
+        case 'approved':
+            $(".crm-header-title").append('<span class="slds-badge slds-theme_success">approved</span>')
+            break;
+        case 'rejected':
+            $(".crm-header-title").append('<span class="slds-badge slds-theme_error">rejected</span>')
+            break;
+        default:
+            $(".crm-header-title").append('<span class="slds-badge" style="background-color: #706e6b;color: #fff;">'+step_status+'</span>')
+            break;
+      }
+    }

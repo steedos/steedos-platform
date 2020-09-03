@@ -55,8 +55,16 @@ const getProcessNodes = async (processDefinitionId: string, spaceId: string)=>{
 
 const addInstanceHistory = async (spaceId: string, instanceId: string, status: string, comments: string, options: any)=>{
     let instance = await objectql.getObject("process_instance").findOne(instanceId);
+    let name = '';
+    if(options.nodeId){
+        const node = await objectql.getObject("process_node").findOne(options.nodeId);
+        if(node){
+            name = node.name;
+        }
+    }
+
     let instanceHistory = await objectql.getObject("process_instance_history").insert({
-        // name: recordName, //TODO Approval Request Submitted
+        name: name,
         process_instance: instanceId,
         target_object: instance.target_object,
         step_status: status,
