@@ -86,7 +86,7 @@ const LoginAfter = async (history, tenant, result, location, action)=>{
 
     if(action && (action.endsWith('SignupAccount') || action.endsWith('mobileVerify'))){
       if(!user.name){
-        return LoginAfterHistoryPush(history, '/set-name' + location.search);
+        return LoginAfterHistoryPush(history, '/preference' + location.search);
       }else {
         if(!tenant.enable_create_tenant && user.spaces.length == 1){
           return goInSystem(history, location, result.tokens.accessToken);
