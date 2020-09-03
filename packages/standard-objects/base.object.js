@@ -270,8 +270,9 @@ module.exports = {
                 return result.length > 0;
             },
             on: "record_only",
-            todo: function(){
-                console.log('submit_for_approval...');
+            todo: function(object_name, record_id){
+                Steedos.authRequest(`/api/v4/process/submit/${object_name}/${record_id}`, {type: 'post', data: JSON.stringify({comments: `${new Date().getTime()}`})});
+                FlowRouter.reload();
             }
         }
     },

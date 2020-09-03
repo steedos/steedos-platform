@@ -1,12 +1,20 @@
 name: process_instance_history
 label: process_instance_history
 icon: record
+paging:
+  enabled: false
 fields:
   name:
     type: text
   process_instance:
     type: lookup
     reference_to: process_instance
+  target_object:
+    type: lookup
+    reference_to: !!js/function
+      function(){
+        return []
+      }
   step_status:
     type: select
     options:
@@ -56,6 +64,17 @@ fields:
   modified_by:
     hidden: true
     omit: true
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    columns:
+      - name
+      - step_status
+      - comments
+      - step_node
+      - original_actor
+      - actor
 actions:
   approve:
     label: Approve
