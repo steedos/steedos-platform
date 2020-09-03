@@ -145,10 +145,9 @@ const Home = ({ history, settings, tenant, location }: any) => {
                 </button>
               </span>
               <span className="shadow-sm rounded-md">
-                <button type="button" className="inline-flex items-center px-4 py-2 border border-cool-gray-300 text-sm leading-5 font-medium rounded-md text-cool-gray-700 bg-white hover:text-cool-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-cool-gray-800 active:bg-cool-gray-50 transition duration-150 ease-in-out"
-                  onClick={onLogout}>
-                  注销
-                </button>
+                <a href="#/preference" className="inline-flex items-center px-4 py-2 border border-cool-gray-300 text-sm leading-5 font-medium rounded-md text-cool-gray-700 bg-white hover:text-cool-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-cool-gray-800 active:bg-cool-gray-50 transition duration-150 ease-in-out">
+                  账户设置
+                </a>
               </span>
             </div>
           </div>
