@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar';
 
 import { accountsClient, accountsRest } from '../accounts';
 
@@ -101,8 +101,8 @@ const Home = ({ history, settings, tenant, location }: any) => {
         /> 
       </Button> */}
 
-      <div className="bg-opacity-75 bg-white border-b border-gray-200">
-        <div className="px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
+      <div className="bg-white overflow-hidden sm:shadow sm:rounded-lg sm:px-6 sm:mx-8 sm:my-8 md:max-w-5xl md:mx-auto">
+        <div className="px-4 py-5 sm:p-6">
           <div className="py-6 md:flex md:items-center md:justify-between">
             <div className="flex-1 min-w-0">
               <div className="flex items-center">

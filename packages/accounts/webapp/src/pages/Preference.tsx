@@ -1,14 +1,9 @@
 import React, { useState, useEffect} from 'react';
-import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import { accountsClient, accountsRest } from '../accounts';
-import FormError from './FormError';
-import { goInSystem } from '../client/index';
-import Navbar from './Navbar';
-import { ContactsOutlined } from '@material-ui/icons';
+import FormError from '../components/FormError';
+import Navbar from '../components/Navbar';
 
 
 const Preference = ({ match, settings, history, location, tenant }: any) => {

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getTenant } from './selectors';
 
 import SignupCode from './components/SignupCode';
-import Home from './components/Home';
+import Home from './pages/Home';
 import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
 import VerifyMobile from './components/VerifyMobile';
@@ -15,12 +15,9 @@ import CreateTenant from './components/CreateTenant';
 import ChooseTenant from './components/ChooseTenant';
 import Verify from './components/Verify';
 import LoginCode from './components/LoginCode';
-import LoginMethod from './components/LoginMethod'
 import LoginPassword from './components/LoginPassword';
-import Password from './components/LoginPassword';
-import Preference from './components/Preference';
+import Preference from './pages/Preference';
 import Loading from './components/Loading';
-import theme from './theme';
 import Signup from './components/Signup';
 
 const Router = ({tenant}:any) => {
