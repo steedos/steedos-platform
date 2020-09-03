@@ -45,6 +45,7 @@ Creator.Object = (options)->
 	self.custom = options.custom
 	self.enable_share = options.enable_share
 	self.enable_instances = options.enable_instances
+	self.enable_process = options.enable_process
 	if Meteor.isClient
 		if Creator.isCloudAdminSpace(Session.get("spaceId"))
 			self.enable_tree = false

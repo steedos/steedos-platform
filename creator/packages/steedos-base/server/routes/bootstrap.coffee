@@ -125,7 +125,10 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 				_object.allow_actions = objectLayout.actions || []
 				_object.allow_relatedList = objectLayout.relatedList || []
 			result.objects[objectLayout.object_name] = _object
-
+	# TODO object layout 是否需要控制审批记录显示？
+	spaceProcessDefinition = Creator.getCollection("process_definition").find({space: spaceId, state: 'active'}, {fields: {object_name: 1}}).fetch();
+	_.each spaceProcessDefinition, (item)->
+		result.objects[item.object_name]?.enable_process = true
 	JsonRoutes.sendResult res,
 		code: 200,
 		data: result
