@@ -29,24 +29,24 @@ const Router = ({tenant}:any) => {
   //   backgroundUrl = tenant.background_url 
   // }
 
-  const useStyles = makeStyles({
-    root: {
-      position: "absolute",
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      height: "100%",
-      // '@media only screen and (min-width: 640px)': {
-      //   backgroundRepeat: "no-repeat",
-      //   backgroundPosition: "center",
-      //   backgroundImage: "url(" + backgroundUrl + ")",
-      //   backgroundSize: "cover",
-      // }
-    },
-  });
+  // const useStyles = makeStyles({
+  //   root: {
+  //     position: "absolute",
+  //     top: 0,
+  //     bottom: 0,
+  //     left: 0,
+  //     right: 0,
+  //     height: "100%",
+  //     // '@media only screen and (min-width: 640px)': {
+  //     //   backgroundRepeat: "no-repeat",
+  //     //   backgroundPosition: "center",
+  //     //   backgroundImage: "url(" + backgroundUrl + ")",
+  //     //   backgroundSize: "cover",
+  //     // }
+  //   },
+  // });
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   let loginComponent = LoginCode;
   let resetPasswordComponent = LoginCode || ResetPassword;
@@ -58,8 +58,7 @@ const Router = ({tenant}:any) => {
 
   return (
     <HashRouter basename="">
-      <ThemeProvider theme={theme}>
-        <div className={classes.root}>
+        <div className="absolute w-full h-full">
           <Loading></Loading>
           {/* <GlobalMessage></GlobalMessage> */}
                 {/* <Route path="/" component={GoBack}/> */}
@@ -82,7 +81,6 @@ const Router = ({tenant}:any) => {
                 <Route path="/set-name" component={SetName} />
                 <Route path="/verify-mobile/:token" component={VerifyMobile} />
           </div>
-      </ThemeProvider>
     </HashRouter>
   );
 };
