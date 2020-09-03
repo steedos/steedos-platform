@@ -9,23 +9,12 @@ import { accountsRest } from '../accounts';
 import FormError from '../components/FormError';
 import { ApplyCode } from '../client';
 import { accountsEvent, accountsEventOnError} from '../client/accounts.events'
+import Card from '../components/Card';
 import Logo from '../components/Logo';
-
-const useStyles = makeStyles({
-  formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    margin: "0 auto",
-  }
-});
+import { ContactSupportOutlined } from '@material-ui/icons';
 
 const LoginCode = ({match, settingsTenantId, settings, history, location, tenant }: any) => {
   const _email = location && location.state ? location.state.email : '';
-  const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string | "">(_email);
   const [signupDialogState, setSignupDialogState] = useState<boolean>(false);
@@ -36,9 +25,9 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
   let spaceId = searchParams.get("X-Space-Id") || settingsTenantId;
 
 
-  let inputLabel = 'accounts.username';
+  let inputLabel = 'accounts.email_mobile';
   if (tenant.enable_password_login)
-    inputLabel = 'accounts.email_mobile_username';
+    inputLabel = 'accounts.email_mobile';
   else if (tenant.enable_mobile_code_login && tenant.enable_email_code_login) 
     inputLabel = 'accounts.email_mobile';
   else if (tenant.enable_mobile_code_login) 
@@ -51,6 +40,7 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
+    
     try {
       // 必填
       if(!email.trim()){
@@ -109,11 +99,8 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
   }
 
   return (
-  <div className="flex sm:items-center justify-center mx-auto h-full">
-    <div className="p-11 sm:shadow-md bg-white w-screen max-w-md">
-
+  <Card>
       <Logo/>
-
       <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
         <FormattedMessage
             id='accounts.signin'
@@ -163,8 +150,7 @@ const LoginCode = ({match, settingsTenantId, settings, history, location, tenant
           </button>
         </div>
       </form>
-    </div>
-  </div>
+    </Card>
   );
 };
 

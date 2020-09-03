@@ -11,27 +11,9 @@ import { ApplyCode } from '../client';
 import { signUpEvent, signUpEventOnError } from '../client/signup.events';
 import Logo from '../components/Logo';
 
-const useStyles = makeStyles({
-    formContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: "bold",
-        margin: "0 auto",
-    }
-});
 
-const LogInLink = React.forwardRef<Link, any>((props, ref) => {
-    return (
-        <Link to={{ pathname: "/login", search: props.location.search }} {...props} ref={ref} />
-    )
-});
-
-const SignupCode = ({ match, settingsTenantId, settings, history, location, tenant }: any) => {
+const Signup = ({ match, settingsTenantId, settings, history, location, tenant }: any) => {
     const _email = location && location.state ? location.state.email : '';
-    const classes = useStyles();
     const [error, setError] = useState<string | null>(null);
     const [email, setEmail] = useState<string | "">(_email);
     const type = match.params.type || 'email';
@@ -65,19 +47,17 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
         setError(null);
         try {
             if (!email || !email.trim()) {
-                if(tenant.enable_bind_mobile){
-                    throw new Error("accounts.mobileRequired");
-                }else {
-                    throw new Error("accounts.emailRequired");
-                }
-                // if(tenant.enable_bind_mobile && tenant.enable_bind_email){
-                //     throw new Error("请输入邮箱或手机号");
-                // }else if(tenant.enable_bind_mobile && !tenant.enable_bind_email){
-                //     throw new Error("请输入手机号");
-                // }else if(!tenant.enable_bind_mobile){
-                //     throw new Error("请输入邮箱");
-                // }
+                throw new Error(intl.formatMessage({id: inputLabel}));
             }
+
+            if(tenant.enable_password_login){
+                history.push({
+                  pathname: `/signup-password/`,
+                  search: location.search,
+                  state: { email: email.trim() }
+                })
+                return;
+            } 
 
             if (!tenant.enable_mobile_code_login && email.trim().indexOf("@") == 0) {
                 throw new Error("accounts.invalidEmail");
@@ -106,7 +86,7 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
 
     return (
 <div className="flex sm:items-center justify-center mx-auto h-full">
-    <div className="p-11 sm:shadow-md bg-white w-screen max-w-md">
+    <div className="p-11 sm:shadow bg-white w-screen max-w-md">
 
     <Logo/>
         <h2 className="my-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
@@ -116,7 +96,7 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
             />
         </h2>
 
-        <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
+        <form onSubmit={onSubmit} className="mt-4" autoCapitalize="none">
 
             <div className="rounded-md shadow-sm my-2">
                 <div>
@@ -135,19 +115,6 @@ const SignupCode = ({ match, settingsTenantId, settings, history, location, tena
 
             {error && <FormError error={error!} />}
 
-            {/* <div className="text-sm leading-5 my-4">
-                <FormattedMessage
-                        id='accounts.has_account'
-                        defaultMessage='Has account?'
-                    />
-                <button type="button" onClick={goLogin}
-                    className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
-                    <FormattedMessage
-                        id='accounts.signin'
-                        defaultMessage='Login'
-                    />
-                </button>
-            </div> */}
                 
             <div className="mt-6 flex justify-end">
                 <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
@@ -171,4 +138,4 @@ function mapStateToProps(state: any) {
     };
 }
 
-export default connect(mapStateToProps)(SignupCode);
+export default connect(mapStateToProps)(Signup);

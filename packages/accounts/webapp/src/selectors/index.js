@@ -13,6 +13,11 @@ export function getTenant(state) {
     return tenant;
 }
 
+export function getUser(state) {
+    const user = Object.assign({}, state.user)
+    return user;
+}
+
 export function getRequests(state){
     return state.requests
 }

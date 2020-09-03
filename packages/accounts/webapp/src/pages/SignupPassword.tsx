@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { RouteComponentProps, Link, Redirect } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography, Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { accountsPassword } from '../accounts';
@@ -14,18 +14,9 @@ import { loadTenant } from '../actions/tenant';
 import { getSettings, getTenant, getSettingsTenantId } from '../selectors';
 import { requests } from '../actions/requests'
 import { Login } from '../client'
+import Card from '../components/Card';
+import Logo from '../components/Logo';
 
-const useStyles = makeStyles({
-  formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    margin: "0 auto",
-  }
-});
 
 const LogInLink = React.forwardRef<Link, any>((props, ref) => {
   return (
@@ -35,13 +26,20 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => {
 
 const Signup = ({ match, history, settingsTenantId, location, actions, settings, tenant, requestLoading, requestUnLoading }: any) => {
   const _email = location && location.state ? location.state.email : '';
-  const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState<string | "">("");
   const [email, setEmail] = useState<string | "">(_email || '');
   const [password, setPassword] = useState<string | "">("");
   const searchParams = new URLSearchParams(location.search);
   let spaceId = searchParams.get("X-Space-Id") || settingsTenantId;
+  const intl = useIntl();
+
+  document.title = intl.formatMessage({id:'accounts.title.setPassword'}) + ` | ${tenant.name}`;
+
+  if (!_email){
+    return (<Redirect to="/login" />);
+  }
+
   // useEffect(() => {
   //   if(spaceId){
   //     actions.loadTenant(spaceId);
@@ -65,9 +63,9 @@ const Signup = ({ match, history, settingsTenantId, location, actions, settings,
     setError(null);
     try {
       
-      if(!name.trim()){
-        throw new Error('accounts.nameRequired');
-      }
+      // if(!name.trim()){
+      //   throw new Error('accounts.nameRequired');
+      // }
 
       if(!email.trim()){
         throw new Error('accounts.emailRequired');
@@ -79,7 +77,7 @@ const Signup = ({ match, history, settingsTenantId, location, actions, settings,
       requestLoading();
       await accountsPassword.createUser({
         locale: getBrowserLocale(),
-        name: name,
+        //name: name,
         email: email,
         password: password,
         spaceId: spaceId
@@ -97,68 +95,62 @@ const Signup = ({ match, history, settingsTenantId, location, actions, settings,
     }
   };
 
-  useEffect(() => {
-    if(tenant.exists === false){
-      history.replace('/signup');
-    }
-  }, [tenant]);
-
   return (
-    <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
-    <FormControl margin="normal">
-      <InputLabel htmlFor="name">
-        <FormattedMessage
-          id='accounts.name'
-          defaultMessage='Name'
+
+<Card>
+    <Logo/>
+
+    <button
+      className="flex text-sm text-gray-600 hover:text-gray-800 py-2"
+      onClick={function() {
+        window.history.back();
+      }}
+      >
+        <span className="left-0 inset-y-0 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 pr-2">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          {email}
+        </span>
+    </button>
+
+    <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
+      <FormattedMessage
+          id='accounts.title.setPassword'
+          defaultMessage='Set Password'
         />
-      </InputLabel>
-      <Input
-        id="name"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-    </FormControl>
-    <FormControl margin="normal">
-      <InputLabel htmlFor="email">
-        <FormattedMessage
-          id='accounts.email'
-          defaultMessage='Email'
-        />
-      </InputLabel>
-      <Input
-        id="email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
-    </FormControl>
-    <FormControl margin="normal">
-      <InputLabel htmlFor="password">
-        <FormattedMessage
-          id='accounts.password'
-          defaultMessage='Password'
-        />
-      </InputLabel>
-      <Input
-        id="password"
-        type="password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-    </FormControl>
+    </h2>
+
+    <form onSubmit={onSubmit} className="mt-4" autoCapitalize="none">
+
+        <div className="rounded-md shadow-sm my-2">
+          <div>
+            <input 
+              aria-label={intl.formatMessage({id: "accounts.password"})}
+              id="password"
+              name="password" 
+              value={password}
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border-b border-gray-500 bg-blue-50 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
+              placeholder={intl.formatMessage({id: "accounts.password"})}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </div>
+        </div>
+        
+        
     {error && <FormError error={error!} />}
-    <Button variant="contained" color="primary" type="submit">
-      <FormattedMessage
-        id='accounts.next'
-        defaultMessage='Next'
-      />
-    </Button>
-    {/* <Button component={LogInLink} location={location}>
-      <FormattedMessage
-        id='accounts.signin'
-        defaultMessage='Sign In'
-      />
-    </Button> */}
+    
+    <div className="mt-6 flex justify-end">
+      <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+        <FormattedMessage
+          id='accounts.next'
+          defaultMessage='Next'
+        />
+      </button>
+    </div>
   </form>
+</Card>
+
   );
 };
 

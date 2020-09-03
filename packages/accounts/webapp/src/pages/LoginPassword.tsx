@@ -11,6 +11,7 @@ import FormError from '../components/FormError';
 import { Login } from '../client'
 import { requests } from '../actions/requests'
 import { accountsEvent, accountsEventOnError} from '../client/accounts.events'
+import Card from '../components/Card';
 import Logo from '../components/Logo';
 
 const LoginPassword = ({ history, settings, tenant, location, title, requestLoading, requestUnLoading }: any) => {
@@ -79,10 +80,9 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
   }
 
   return (
-    <div className="flex sm:items-center justify-center mx-auto h-full">
-      <div className="p-11 sm:shadow-md bg-white w-screen max-w-md">
-  
-        <Logo/>
+<Card>
+
+    <Logo/>
 
     <button
       className="flex text-sm text-gray-600 hover:text-gray-800 py-2"
@@ -145,8 +145,7 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
       </div>
 
     </form>
-  </div>
-</div>
+  </Card>
   );
 };
 

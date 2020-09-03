@@ -10,6 +10,7 @@ import FormError from '../components/FormError';
 import { Login, ApplyCode } from '../client'
 import { useCountDown } from "../components/countdown";
 import { requests } from '../actions/requests';
+import Card from '../components/Card';
 import Logo from '../components/Logo';
 
 const totalSeconds = 60;
@@ -61,6 +62,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
   const [id, setId] = useState<string | "">("");
   const [action, setAction] = useState<string | "">(_action);
   const [name, setName] = useState<string | "">("");
+  const intl = useIntl();
 
   if (!tenant.enable_mobile_code_login && !tenant.enable_email_code_login) {
     throw new Error("配置错误，未启用验证码登录。");
@@ -118,10 +120,6 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
 
   const applyCode = async () => {
 
-    if (!_email){
-      return (<Redirect to="/login" />);
-    }
-    
     if (token)
       return;
 
@@ -157,17 +155,18 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
     }
   }
 
-
   useEffect(() => {
     applyCode();
   }, []);
   
-
-  document.title = useIntl().formatMessage({id:'accounts.title.verify'}) + ` | ${tenant.name}` ;
+  if (!_email){
+    return (<Redirect to="/login" />);
+  }
+  
+  document.title = intl.formatMessage({id:'accounts.title.verify'}) + ` | ${tenant.name}` ;
 
   return (
-<div className="flex sm:items-center justify-center mx-auto h-full">
-  <div className="p-11 sm:shadow-md bg-white w-screen max-w-md">
+<Card>
 
     <Logo/>
 
@@ -192,7 +191,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
         />
     </h2>
 
-    <div className="my-2">
+    <div className="my-2 text-sm text-gray-500">
       <FormattedMessage
           id='accounts.verify.info'
           values={{
@@ -206,12 +205,12 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
       <div className="rounded-md shadow-sm my-2">
         <div>
           <input 
-            aria-label={useIntl().formatMessage({id: 'accounts.verifyCode'})}
+            aria-label={intl.formatMessage({id: 'accounts.verifyCode'})}
             id="code"
             name="code" 
             value={code}
             className="appearance-none rounded-none relative block w-full px-3 py-2 border-b border-gray-500 bg-blue-50 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
-            placeholder={useIntl().formatMessage({id: 'accounts.verifyCode'})}
+            placeholder={intl.formatMessage({id: 'accounts.verifyCode'})}
             onChange={e => setCode(e.target.value)}
           />
         </div>
@@ -231,8 +230,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
       </div>
 
     </form>
-  </div>
-</div>
+</Card>
   );
 };
 
