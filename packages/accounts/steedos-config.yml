@@ -9,15 +9,15 @@ tenant:
   name: 华炎魔方
   logo_url:
   background_url: 
-  # enable_register: true
-  # enable_bind_mobile: false
-  # enable_bind_email: false
-  # enable_forget_password: true
-  # enable_create_tenant: true
-  # saas: false
-  # enable_password_login: false
-  # enable_mobile_code_login: true
-  # enable_email_code_login: true
+  enable_register: true
+  enable_bind_mobile: false
+  enable_bind_email: false
+  enable_forget_password: true
+  enable_create_tenant: true
+  saas: false
+  enable_password_login: false
+  enable_mobile_code_login: true
+  enable_email_code_login: true
 -email:
   url: ${MAIL_URL}
   from: ${MAIL_FROM}

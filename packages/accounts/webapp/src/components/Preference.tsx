@@ -11,7 +11,7 @@ import Navbar from './Navbar';
 import { ContactsOutlined } from '@material-ui/icons';
 
 
-const SetName = ({ match, settings, history, location, tenant }: any) => {
+const Preference = ({ match, settings, history, location, tenant }: any) => {
     const _fullname = location && location.state ? location.state.fullname : '';
     const [error, setError] = useState<string | null>(null);
     const [fullname, setFullname] = useState<string | "">(_fullname);
@@ -78,7 +78,7 @@ const SetName = ({ match, settings, history, location, tenant }: any) => {
     return (
 <>
   <Navbar/>
-    <main className="bg-gray-50 h-screen">
+    <main className="bg-cool-gray-100 h-screen">
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div className="px-4 py-8 sm:px-0">
 
@@ -140,4 +140,4 @@ function mapStateToProps(state: any) {
     };
 }
 
-export default connect(mapStateToProps)(SetName);
+export default connect(mapStateToProps)(Preference);

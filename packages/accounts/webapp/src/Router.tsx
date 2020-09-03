@@ -18,7 +18,7 @@ import LoginCode from './components/LoginCode';
 import LoginMethod from './components/LoginMethod'
 import LoginPassword from './components/LoginPassword';
 import Password from './components/LoginPassword';
-import SetName from './components/SetName';
+import Preference from './components/Preference';
 import Loading from './components/Loading';
 import theme from './theme';
 import Signup from './components/Signup';
@@ -78,7 +78,7 @@ const Router = ({tenant}:any) => {
                 <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/verify/:action" component={Verify} />
                 {/* <Route path="/login-code" component={LoginCode} /> */}
-                <Route path="/set-name" component={SetName} />
+                <Route path="/preference" component={Preference} />
                 <Route path="/verify-mobile/:token" component={VerifyMobile} />
           </div>
     </HashRouter>
