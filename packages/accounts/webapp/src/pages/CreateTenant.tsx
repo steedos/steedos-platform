@@ -4,11 +4,11 @@ import { createStyles, Theme, makeStyles, FormControl, InputLabel, Input, Button
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
-import FormError from './FormError';
+import FormError from '../components/FormError';
 import { getCookie, getRootUrlPathPrefix } from '../utils/utils';
 import { goInSystem } from '../client/index';
 import { accountsClient, accountsRest } from '../accounts';
-import Logo from './Logo';
+import Logo from '../components/Logo';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

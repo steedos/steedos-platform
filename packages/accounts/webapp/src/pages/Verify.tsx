@@ -6,11 +6,11 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import { accountsRest } from '../accounts';
-import FormError from './FormError';
+import FormError from '../components/FormError';
 import { Login, ApplyCode } from '../client'
-import { useCountDown } from "./countdown";
+import { useCountDown } from "../components/countdown";
 import { requests } from '../actions/requests';
-import Logo from './Logo';
+import Logo from '../components/Logo';
 
 const totalSeconds = 60;
 

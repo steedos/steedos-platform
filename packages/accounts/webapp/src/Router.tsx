@@ -5,20 +5,20 @@ import { ThemeProvider } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { getTenant } from './selectors';
 
-import SignupCode from './components/SignupCode';
+import Signup from './pages/Signup';
 import Home from './pages/Home';
 import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
 import VerifyMobile from './components/VerifyMobile';
 import UpdatePassword from './components/updatePassword';
-import CreateTenant from './components/CreateTenant';
+import CreateTenant from './pages/CreateTenant';
 import ChooseTenant from './components/ChooseTenant';
-import Verify from './components/Verify';
-import LoginCode from './components/LoginCode';
-import LoginPassword from './components/LoginPassword';
+import Verify from './pages/Verify';
+import LoginCode from './pages/Login';
+import LoginPassword from './pages/LoginPassword';
 import Preference from './pages/Preference';
 import Loading from './components/Loading';
-import Signup from './components/Signup';
+import SignupPassword from './pages/SignupPassword';
 
 const Router = ({tenant}:any) => {
   // let backgroundUrl = require("./assets/background.svg");
@@ -48,9 +48,9 @@ const Router = ({tenant}:any) => {
   let loginComponent = LoginCode;
   let resetPasswordComponent = LoginCode || ResetPassword;
 
-  let signupComponent = Signup;
+  let signupComponent = SignupPassword;
   if(tenant.enable_mobile_code_login || tenant.enable_email_code_login){
-    signupComponent = SignupCode;
+    signupComponent = Signup;
   }
 
   return (
@@ -62,7 +62,7 @@ const Router = ({tenant}:any) => {
                 {/* <Route path="/" component={Title}/> */}
                 <Route exact path="/" component={Home}/>
                 <Route path="/signup" component={signupComponent} />
-                <Route path="/signup-password" component={Signup} />
+                <Route path="/signup-password" component={SignupPassword} />
 
                 <Route path="/login" component={loginComponent} />
                 <Route path="/login-password" component={LoginPassword} />

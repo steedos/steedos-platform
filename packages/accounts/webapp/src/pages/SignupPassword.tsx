@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { accountsPassword } from '../accounts';
-import FormError from './FormError';
+import FormError from '../components/FormError';
 
 import { loadTranslations } from '../actions/i18n';
 import { loadSettings } from '../actions/settings';

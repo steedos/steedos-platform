@@ -6,10 +6,10 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings, getTenant, getSettingsTenantId } from '../selectors';
 import { accountsRest } from '../accounts';
-import FormError from './FormError';
+import FormError from '../components/FormError';
 import { ApplyCode } from '../client';
 import { signUpEvent, signUpEventOnError } from '../client/signup.events';
-import Logo from './Logo';
+import Logo from '../components/Logo';
 
 const useStyles = makeStyles({
     formContainer: {

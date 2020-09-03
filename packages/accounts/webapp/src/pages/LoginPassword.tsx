@@ -7,11 +7,11 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import { accountsClient, accountsRest, accountsPassword } from '../accounts';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
-import FormError from './FormError';
+import FormError from '../components/FormError';
 import { Login } from '../client'
 import { requests } from '../actions/requests'
 import { accountsEvent, accountsEventOnError} from '../client/accounts.events'
-import Logo from './Logo';
+import Logo from '../components/Logo';
 
 const LoginPassword = ({ history, settings, tenant, location, title, requestLoading, requestUnLoading }: any) => {
   const _email = location && location.state ? location.state.email : '';
