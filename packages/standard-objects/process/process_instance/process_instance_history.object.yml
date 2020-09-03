@@ -72,10 +72,8 @@ list_views:
       - name
       - step_status
       - comments
-      - step_node
       - original_actor
       - actor
-      - target_object
 actions:
   approve:
     label: Approve
