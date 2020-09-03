@@ -83,7 +83,7 @@ const Navbar = ({ tenant, user }: any) => {
                   <div className="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                     {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a> */}
 
-                    <a href="#/preference" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
+                    <a href="#/preference" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">账户设置</a>
 
                     <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" onClick={onLogout}>注销</a>
                   </div>

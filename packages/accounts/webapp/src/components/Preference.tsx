@@ -78,10 +78,20 @@ const Preference = ({ match, settings, history, location, tenant }: any) => {
     return (
 <>
   <Navbar/>
+
     <main className="bg-cool-gray-100 h-screen">
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div className="px-4 py-8 sm:px-0">
 
+
+
+  <header>
+    <div className="max-w-7xl">
+      <h1 className="text-3xl font-bold leading-tight text-gray-900">
+        账户设置
+      </h1>
+    </div>
+  </header>
 
 <div className="hidden sm:block">
   <div className="py-5">
