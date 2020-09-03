@@ -37,7 +37,7 @@ const Router = ({tenant}:any) => {
       left: 0,
       right: 0,
       height: "100%",
-      background: 'white',
+      background: '#f8f8f8',
       '@media only screen and (min-width: 640px)': {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
