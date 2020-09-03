@@ -24,10 +24,10 @@ import theme from './theme';
 import Signup from './components/Signup';
 
 const Router = ({tenant}:any) => {
-  let backgroundUrl = require("./assets/background.svg");
-  if (tenant.background_url) {
-    backgroundUrl = tenant.background_url 
-  }
+  // let backgroundUrl = require("./assets/background.svg");
+  // if (tenant.background_url) {
+  //   backgroundUrl = tenant.background_url 
+  // }
 
   const useStyles = makeStyles({
     root: {
@@ -37,13 +37,12 @@ const Router = ({tenant}:any) => {
       left: 0,
       right: 0,
       height: "100%",
-      background: '#f8f8f8',
-      '@media only screen and (min-width: 640px)': {
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundImage: "url(" + backgroundUrl + ")",
-        backgroundSize: "cover",
-      }
+      // '@media only screen and (min-width: 640px)': {
+      //   backgroundRepeat: "no-repeat",
+      //   backgroundPosition: "center",
+      //   backgroundImage: "url(" + backgroundUrl + ")",
+      //   backgroundSize: "cover",
+      // }
     },
   });
 

@@ -101,7 +101,7 @@ const Home = ({ history, settings, tenant, location }: any) => {
         /> 
       </Button> */}
 
-      <div className="bg-white shadow bg-opacity-75">
+      <div className="bg-opacity-75 bg-white border-b border-gray-200">
         <div className="px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
           <div className="py-6 md:flex md:items-center md:justify-between">
             <div className="flex-1 min-w-0">

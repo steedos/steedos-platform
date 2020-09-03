@@ -7,7 +7,8 @@ import { getSettings, getTenant } from '../selectors';
 import { accountsClient, accountsRest } from '../accounts';
 import FormError from './FormError';
 import { goInSystem } from '../client/index';
-import Logo from './Logo';
+import Navbar from './Navbar';
+import { ContactsOutlined } from '@material-ui/icons';
 
 
 const SetName = ({ match, settings, history, location, tenant }: any) => {
@@ -44,7 +45,7 @@ const SetName = ({ match, settings, history, location, tenant }: any) => {
                 throw new Error("accounts.nameRequired");
             }
 
-            await accountsRest.authFetch('user', {
+            const r = await accountsRest.authFetch('user', {
                 method: "PUT",
                 body: JSON.stringify({
                     fullname: fullname
@@ -52,20 +53,22 @@ const SetName = ({ match, settings, history, location, tenant }: any) => {
                 credentials: 'include'
             });
 
-            if(user.spaces.length === 1){
-                const token: any = await accountsClient.getTokens();
-                return goInSystem(history, location, token.accessToken, settings.root_url);
-            }
+            console.log(r)
 
-            if(user.spaces.length === 0 && !tenant.enable_create_tenant){
-                return history.push('/');
-            }
+            // if(user.spaces.length === 1){
+            //     const token: any = await accountsClient.getTokens();
+            //     return goInSystem(history, location, token.accessToken, settings.root_url);
+            // }
 
-            if(user.spaces.length === 0 && tenant.enable_create_tenant){
-                return history.push('/create-tenant' + location.search);
-            }
+            // if(user.spaces.length === 0 && !tenant.enable_create_tenant){
+            //     return history.push('/');
+            // }
+
+            // if(user.spaces.length === 0 && tenant.enable_create_tenant){
+            //     return history.push('/create-tenant' + location.search);
+            // }
             
-            return history.push('/choose-tenant' + location.search);
+            // return history.push('/choose-tenant' + location.search);
 
         } catch (err) {
             setError(err.message);
@@ -73,38 +76,60 @@ const SetName = ({ match, settings, history, location, tenant }: any) => {
     };
 
     return (
-<div className="flex sm:items-center justify-center mx-auto h-full">
-    <div className="p-11 sm:shadow-md sm:bg-transparent bg-white w-screen max-w-md">
-
-    <Logo/>
-        <form onSubmit={onSubmit} className="mt-4">
-            <FormControl margin="normal">
-                <InputLabel htmlFor="verifyCode">
-                    <FormattedMessage
-                        id='accounts.set_fullname'
-                        defaultMessage='Name'
-                    />
-                </InputLabel>
-                <Input
-                    id="fullname"
-                    value={fullname}
-                    onChange={e => setFullname(e.target.value)}
-                />
-            </FormControl>
-            {error && <FormError error={error!} />}
+<>
+  <Navbar/>
+    <main className="bg-gray-50 h-screen">
+      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div className="px-4 py-8 sm:px-0">
 
 
-            <div className="mt-6 flex justify-end">
-                <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
-                    <FormattedMessage
-                    id='accounts.next'
-                    defaultMessage='Next'
-                    />
-                </button>
-            </div>
-        </form>
-    </div>
+<div className="hidden sm:block">
+  <div className="py-5">
+    <div className="border-t border-gray-200"></div>
+  </div>
 </div>
+
+<div className="mt-10 sm:mt-0">
+  <div className="md:grid md:grid-cols-3 md:gap-6">
+    <div className="md:col-span-1">
+      <div className="px-4 sm:px-0">
+        <h3 className="text-lg font-medium leading-6 text-gray-900">个人信息</h3>
+        {/* <p className="mt-1 text-sm leading-5 text-gray-600">
+          Use a permanent address where you can receive mail.
+        </p> */}
+      </div>
+    </div>
+    <div className="mt-5 md:mt-0 md:col-span-2">
+      <form onSubmit={onSubmit}>
+        <div className="shadow overflow-hidden sm:rounded-md">
+          <div className="px-4 py-5 bg-white sm:p-6">
+            <div className="grid grid-cols-6 gap-6">
+              <div className="col-span-6 sm:col-span-3">
+                <label className="block text-sm font-medium leading-5 text-gray-700">姓名</label>
+                <input id="fullname"
+                  value={fullname}
+                  onChange={e => setFullname(e.target.value)}
+                  className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"/>
+              </div>
+            </div>
+          </div>
+          {error && <FormError error={error!} />}
+          <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+            <button className="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
+              保存
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </main>
+
+</>
     );
 };
 
