@@ -1,8 +1,8 @@
 name: process_instance_history
 label: process_instance_history
 icon: record
-paging:
-  enabled: false
+# paging:
+#   enabled: false
 fields:
   name:
     type: text
@@ -68,9 +68,11 @@ list_views:
   all:
     label: All
     filter_scope: space
+    sort: [["modified", "desc"]]
     columns:
       - name
       - step_status
+      - modified
       - comments
       - original_actor
       - actor
