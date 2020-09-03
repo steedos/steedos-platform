@@ -54,9 +54,11 @@ const getProcessNodes = async (processDefinitionId: string, spaceId: string)=>{
 }
 
 const addInstanceHistory = async (spaceId: string, instanceId: string, status: string, comments: string, options: any)=>{
+    let instance = await objectql.getObject("process_instance").findOne(instanceId);
     let instanceHistory = await objectql.getObject("process_instance_history").insert({
         // name: recordName, //TODO Approval Request Submitted
         process_instance: instanceId,
+        target_object: instance.target_object,
         step_status: status,
         original_actor: options.originalActor || options.actor, //TODO 根据规则处理
         actor: options.actor, //TODO 根据规则处理
@@ -77,7 +79,7 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
 const addInstanceNode = async  (instanceId: string, node: any, userSession: any)=>{
     let nodeId = node._id;
     let nodeName = node.name;
-    let instanceNode = await objectql.getObject("process_instance_node").insert({
+    await objectql.getObject("process_instance_node").insert({
         process_instance: instanceId,
         process_node: nodeId,
         process_node_name: nodeName,
@@ -86,7 +88,7 @@ const addInstanceNode = async  (instanceId: string, node: any, userSession: any)
     })
     const nodeApprover = await getProcessNodeApprover(node, userSession);
     for (const actor of nodeApprover) {
-        await addInstanceHistory(userSession.spaceId, instanceId, 'pending', null, {nodeId: instanceNode._id, actor: actor, originalActor: actor, submitted_by: userSession.userId});
+        await addInstanceHistory(userSession.spaceId, instanceId, 'pending', null, {nodeId: nodeId, actor: actor, originalActor: actor, submitted_by: userSession.userId});
     }
 }
 
@@ -94,21 +96,24 @@ const toNextNode = async (instanceId: string, comments: string, nodes: any, inde
     let spaceId = userSession.spaceId;
     let currentUserId = userSession.userId;
     let node = nodes[index];
-    const canEntry = await objectql.computeFormula(node.filtercriteria, objectName, recordId, currentUserId, spaceId);
-    if(canEntry){
-        // insert instance node && insert instance history
-        await addInstanceNode(instanceId, node, userSession)
-    }else{
-        if(node.critrad === 'skip'){
-            await toNextNode(instanceId, comments, nodes, index + 1, objectName, recordId, userSession)
+    console.log('toNextNode node', node, index, nodes.length);
+    if(node){
+        const canEntry = await objectql.computeFormula(node.filtercriteria, objectName, recordId, currentUserId, spaceId);
+        if(canEntry){
+            // insert instance node && insert instance history
+            await addInstanceNode(instanceId, node, userSession)
         }else{
-            let options = {actor: currentUserId}
-            if(node.critrad === 'approve'){
-                await addInstanceHistory(userSession.spaceId, instanceId, "approved", comments, options)
-            }else if(node.critrad === 'reject'){
-                await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comments, options)
+            if(node.critrad === 'skip'){
+                await toNextNode(instanceId, comments, nodes, index + 1, objectName, recordId, userSession)
             }else{
-                await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comments, options)
+                let options = {actor: currentUserId}
+                if(node.critrad === 'approve'){
+                    await addInstanceHistory(userSession.spaceId, instanceId, "approved", comments, options)
+                }else if(node.critrad === 'reject'){
+                    await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comments, options)
+                }else{
+                    await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comments, options)
+                }
             }
         }
     }
@@ -148,4 +153,89 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
     await addInstanceHistory(userSession.spaceId, instance._id, "started", comments, {actor: userSession.userId});
     const nodes = await getProcessNodes(processDefinitionId, userSession.spaceId);
     await toNextNode(instance._id, comments, nodes, 0, objectName, recordId, userSession);
+}
+
+export const getProcessInstanceWorkitem = async (instanceHistoryId: string, userSession: any)=>{
+    let spaceId = userSession.spaceId;
+    let userId = userSession.userId; //TODO 代理
+    const workitme = await objectql.getObject("process_instance_history").find({filters: [['_id', '=', instanceHistoryId], ['step_status', '=', 'pending'], ['actor', '=', userId], ['space', '=', spaceId]]})
+    if(workitme.length > 0){
+        return workitme[0];
+    }
+}
+
+// export const getProcessInstanceWorkitem = async (objectName: string, recordId: string, userSession: any)=>{
+//     let spaceId = userSession.spaceId;
+//     let userId = userSession.userId; //TODO 代理
+//     const instances = await objectql.getObject("process_instance").find({filters: [['space', '=', spaceId], ['status', '=', 'pending'], ['target_object.o', '=', objectName], ['target_object.ids', '=', recordId]]});
+//     if(instances.length < 1){
+//         return 
+//     }
+//     const instance = instances[0];
+//     const workitme = await objectql.getObject("process_instance_history").find({filters: [['process_instance', '=', instance._id], ['step_status', '=', 'pending'], ['actor', '=', userId]]})
+//     if(workitme.length > 0){
+//         return workitme[0];
+//     }
+// }
+
+//TODO 编写trigger 处理elapsed_time
+const handleProcessInstance = async(instanceId: string, processStatus: string, userSession: any)=>{
+    let otherPendingInstanceNodeCount = await objectql.getObject("process_instance_node").count({filters: [['process_instance', '=', instanceId], ['node_status', '=', 'pending']]});
+    if(otherPendingInstanceNodeCount === 0){
+        await objectql.getObject("process_instance").update(instanceId, {status: processStatus, completed_date: new Date(), last_actor: userSession.userId}) 
+    }
+}
+
+//TODO 编写trigger 处理elapsed_time
+const handleProcessInstanceNode = async(instanceId: string, processStatus: string, userSession: any)=>{
+    let otherPendingInstanceHistoryCount = await objectql.getObject("process_instance_history").count({filters: [['process_instance', '=', instanceId], ['step_status', '=', 'pending']]})
+    if(otherPendingInstanceHistoryCount === 0){
+
+        const pendingNodes = await objectql.getObject("process_instance_node").find({filters: [['process_instance', '=', instanceId], ['node_status', '=', 'pending']]});
+        let pendingNode = null;
+        if(pendingNodes.length > 0){
+            pendingNode = pendingNodes[0];
+        }
+
+        await objectql.getObject("process_instance_node").updateMany([['process_instance', '=', instanceId], ['node_status', '=', 'pending']], {node_status: processStatus, completed_date: new Date(), last_actor: userSession.userId})
+        
+        const instance = await objectql.getObject("process_instance").findOne(instanceId);
+
+        const nodes = await getProcessNodes(instance.process_definition, userSession.spaceId);
+
+        const index = _.findIndex(nodes, function(item){return item._id === pendingNode.process_node});
+
+        await toNextNode(instanceId, null, nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
+
+        await handleProcessInstance(instanceId, processStatus, userSession);
+    }
+}
+
+
+const handleProcessInstanceWorkitem = async (processStatus: string, instanceHistoryId: string, userSession: any, comments: string, approver?: string)=>{
+
+    //TODO 处理下一步需要选人的情况，如果需要选择，则return;
+
+    let instanceHistory = await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comments});
+    let apprrouting = 'first';
+    if(instanceHistory.step_node){
+        let processNode = await objectql.getObject("process_node").findOne(instanceHistory.step_node);
+        if(processNode && processNode.apprrouting){
+            apprrouting = processNode.apprrouting;
+        }
+    }
+
+    if(apprrouting === 'first' || (apprrouting === 'all' && processStatus === 'rejected')){
+        await objectql.getObject("process_instance_history").updateMany([['_id', '!=', instanceHistory._id], ['process_instance', '=', instanceHistory.process_instance], ['step_status', '=', 'pending']], {step_status: 'no_response'})
+    }
+
+    await handleProcessInstanceNode(instanceHistory.process_instance, processStatus, userSession);
+}
+
+export const processInstanceWorkitemApprove = async (instanceHistoryId: string, userSession: any, comments: string, approver: string)=>{
+    await handleProcessInstanceWorkitem('approved', instanceHistoryId, userSession, comments, approver);
+}
+
+export const processInstanceWorkitemReject = async (instanceHistoryId: string, userSession: any, comments: string)=>{
+    await handleProcessInstanceWorkitem('rejected', instanceHistoryId, userSession, comments);
 }
