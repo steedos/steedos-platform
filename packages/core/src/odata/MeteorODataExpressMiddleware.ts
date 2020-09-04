@@ -416,6 +416,9 @@ const deleteObjectData = async function (req: Request, res: Response) {
         }
         let permissions = await collection.getUserObjectPermission(userSession);
         let recordData = await collection.findOne(recordId, { fields: ['owner', 'company_id'] });
+        if(!recordData){
+            res.send({});
+        }
         let record_owner = recordData.owner;
         // let companyId = recordData.company_id;
         let isAllowed = (permissions.modifyAllRecords && permissions.allowDelete) || (permissions.modifyCompanyRecords && permissions.allowDelete) || (permissions.allowDelete && record_owner === userId);
