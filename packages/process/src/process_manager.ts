@@ -27,7 +27,6 @@ const sendNotifications = async (instanceHistory, from, to)=>{
     };
 
     Fiber(function () {
-        console.log('addNotifications', notificationDoc, null, [to]);
         Creator.addNotifications(notificationDoc, null, [to]);
     }).run();
 }
@@ -114,7 +113,7 @@ const toNextNode = async (instanceId: string, comments: string, nodes: any, inde
     let spaceId = userSession.spaceId;
     let currentUserId = userSession.userId;
     let node = nodes[index];
-    console.log('toNextNode node', node, index, nodes.length);
+    // console.log('toNextNode node', node, index, nodes.length);
     if(node){
         const canEntry = await objectql.computeFormula(node.entry_criteria, objectName, recordId, currentUserId, spaceId);
         if(canEntry){
@@ -141,7 +140,7 @@ const toNextNode = async (instanceId: string, comments: string, nodes: any, inde
 export const getObjectProcessDefinition = async (objectName: string, recordId: string, userSession: any)=>{
     let spaceId = userSession.spaceId;
     let currentUserId = userSession.userId;
-    let processes = await objectql.getObject('process_definition').find({filters: [['object_name', '=', objectName], ['space', '=', spaceId], ['state', '=', 'active']], sort: "order asc"})
+    let processes = await objectql.getObject('process_definition').find({filters: [['object_name', '=', objectName], ['space', '=', spaceId], ['active', '=', true]], sort: "order asc"})
     if(processes.length < 1){
         return null;
     }
@@ -236,15 +235,15 @@ const handleProcessInstanceWorkitem = async (processStatus: string, instanceHist
     //TODO 处理下一步需要选人的情况，如果需要选择，则return;
 
     let instanceHistory = await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comments});
-    let apprrouting = 'first';
+    let when_multiple_approvers = 'first';
     if(instanceHistory.step_node){
         let processNode = await objectql.getObject("process_node").findOne(instanceHistory.step_node);
-        if(processNode && processNode.apprrouting){
-            apprrouting = processNode.apprrouting;
+        if(processNode && processNode.when_multiple_approvers){
+            when_multiple_approvers = processNode.when_multiple_approvers;
         }
     }
 
-    if(apprrouting === 'first' || (apprrouting === 'all' && processStatus === 'rejected')){
+    if(when_multiple_approvers === 'first' || (when_multiple_approvers === 'all' && processStatus === 'rejected')){
         await objectql.getObject("process_instance_history").updateMany([['_id', '!=', instanceHistory._id], ['process_instance', '=', instanceHistory.process_instance], ['step_status', '=', 'pending']], {step_status: 'no_response'})
     }
 

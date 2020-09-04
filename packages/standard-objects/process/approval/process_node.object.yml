@@ -73,16 +73,16 @@ fields:
     group: Select Assigned Approver
     optionsFunction: !!js/function
       function(){return []}
-  approvers_apprrouting:
+  when_multiple_approvers:
     type: select
     is_wide: true
     label: When multiple approvers are selected
     group: Select Assigned Approver
     options:
       - label: Approve or reject based on the FIRST response.
-        value: first
+        value: first_response
       - label: Require UNANIMOUS approval from all selected approvers.
-        value: all
+        value: unanimous
   #TODO 批准代理也可以批准此请求
   reject_behavior:
     type: select
