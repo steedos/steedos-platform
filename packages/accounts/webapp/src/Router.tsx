@@ -43,8 +43,9 @@ const Router = ({tenant}:any) => {
       bottom: 0,
       left: 0,
       right: 0,
-      display: "flex",
-      backgroundColor: "rgba(0, 0, 0, 0.6)",
+      display: "flex",    
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
       backgroundImage: "url(" + backgroundUrl + ")",
       backgroundSize: "cover",
       height: "100%",
@@ -65,7 +66,9 @@ const Router = ({tenant}:any) => {
       padding: 28,
       margin: '0px auto',
       maxWidth: 380,
-      minWidth: 320,
+      minWidth: 320,    
+      boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+      borderRadius: 0,
       '@media only screen and (max-width: 480px)': {
         borderRadius: 0
       },
