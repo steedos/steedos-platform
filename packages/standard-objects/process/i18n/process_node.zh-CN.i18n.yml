@@ -18,6 +18,10 @@ process_node_field_filtrad: 所有记录都应进入此步骤
 process_node_field_name: API 名称
 process_node_field_label: 显示名称
 process_node_field_process_definition: $t(process_definition__object)
+process_node_field_assigned_approver_users: 指定用户处理
+process_node_field_assigned_approver_roles: 指定审批角色
+process_node_field_assigned_approver_flow_roles: 指定审批岗位
+process_node_field_assigned_approver_user_field: 指定相关用户
 process_node_field_approvers_apprrouting: 当选择多个批准人时
 process_node_field_approvers_apprrouting_options_first: 基于 首次 回复的批准或拒绝
 process_node_field_approvers_apprrouting_options_all: 要求所有选定批准人的 一致 批准
