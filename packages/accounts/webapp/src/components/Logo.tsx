@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Logo = ({ tenant, location }: any) => {
   const classes = useStyles();
-  let logoUrl = "/images/logo.png"
+  let logoUrl = "/images/logo_platform.png"
   if (tenant.logo_url) {
     logoUrl = tenant.logo_url
   }
