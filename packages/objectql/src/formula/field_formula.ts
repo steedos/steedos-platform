@@ -1,10 +1,13 @@
-import { addConfig } from '../types';
-import { getConfigs, getConfig } from '../types/config';
+import { addConfig, getConfigs, getConfig, removeManyConfigs } from '../types';
 import { SteedosFieldFormulaTypeConfig } from './type';
 import { sortFieldFormulaConfigs } from './util';
 
 export const addFieldFormulaConfig = (config: SteedosFieldFormulaTypeConfig) => {
     addConfig('field_formula', config);
+}
+
+export const clearFieldFormulaConfigs = (query?: object) => {
+    removeManyConfigs('field_formula', query);
 }
 
 export const getFieldFormulaConfigs = (): Array<SteedosFieldFormulaTypeConfig> => {

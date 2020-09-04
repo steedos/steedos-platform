@@ -1,6 +1,6 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs, getObjectConfig, getSteedosSchema } from '../types';
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions } from './type';
-import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
+import { addFieldFormulaConfig, getFieldFormulaConfigs, clearFieldFormulaConfigs } from './field_formula';
 import { pickFormulaVars, computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
 import { isFieldFormulaConfigQuotedTwoWays, isCurrentUserIdRequiredForFormulaVars } from './util';
 import { isSystemObject } from '../util';
@@ -29,6 +29,7 @@ const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, 
 
 /**
  * 把公式中a.b.c，比如account.website这样的变量转为SteedosFieldFormulaQuoteTypeConfig和SteedosFieldFormulaVarTypeConfig追加到quotes和vars中
+ * 因为getObjectConfigs拿到的对象肯定不包括被禁用和假删除的对象，所以不需要额外判断相关状态
  * @param formulaVar 公式中的单个变量，比如account.website
  * @param fieldConfig 
  * @param objectConfigs 
@@ -197,6 +198,11 @@ export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig, da
 }
 
 export const initObjectFieldsFormulas = (datasource: string) => {
+    if(datasource === "default"){
+        // 因为要考虑对象和字段可能被禁用、删除的情况，所以需要先清除下原来的内存数据
+        // 暂时只支持默认数据源，后续如果要支持多数据源时需要传入datasource参数清除数据
+        clearFieldFormulaConfigs()
+    }
     const objectConfigs = getObjectConfigs(datasource);
     // console.log("===initObjectFieldsFormulas==objectConfigs=", JSON.stringify(_.map(objectConfigs, 'name')));
     _.each(objectConfigs, function (objectConfig) {
