@@ -233,9 +233,9 @@ const handleProcessInstanceNode = async(instanceId: string, processStatus: strin
         if(processStatus === 'approved' || (processStatus === 'rejected' && pendingNode.reject_behavior === 'back_to_previous')){
             
             if(processStatus === 'rejected'){
-                //TODO 支持驳回时自定计算处理人
+                //TODO 支持驳回时自定计算处理人: 规则是上一步审批过的实际处理人，不包括被重新分配的(假设A分配给了B，那么实际处理人为B)
             }
-            await toNextNode(instanceId, null, nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
+            await toNextNode(instanceId, null, nodes, index, instance.target_object.o, instance.target_object.ids[0], userSession);
         }
 
         await handleProcessInstance(instanceId, processStatus, userSession);
