@@ -13,8 +13,10 @@ import { requests } from '../actions/requests'
 import { accountsEvent, accountsEventOnError} from '../client/accounts.events'
 import Card from '../components/Card';
 import Logo from '../components/Logo';
+import { bindActionCreators, Dispatch, AnyAction } from 'redux';
+import { login } from '../actions/users';
 
-const LoginPassword = ({ history, settings, tenant, location, title, requestLoading, requestUnLoading }: any) => {
+const LoginPassword = ({ actions, history, settings, tenant, location, title, requestLoading, requestUnLoading }: any) => {
   const _email = location && location.state ? location.state.email : '';
   const [enableCode] = useState('');
   const [email, setEmail] = useState(_email || '');
@@ -25,6 +27,7 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
   const searchParams = new URLSearchParams(location.search);
   const intl = useIntl();
 
+  console.log(actions)
   let spaceId = searchParams.get("X-Space-Id");
   accountsEventOnError((err: any)=>{
     setError(err.message);
@@ -49,17 +52,8 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
         throw new Error('accounts.passwordRequired');
       }
 
-      let data = {
-        user: {
-          email: email.trim(),
-        },
-        password,
-        code,
-      }
-      requestLoading();
-      await Login(data, history, tenant, location)
+      actions.login(email.trim(), password, '')
     } catch (err) {
-      requestUnLoading();
       setError(err.message);
     }
   };
@@ -157,11 +151,18 @@ function mapStateToProps(state: any) {
   };
 }
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
-  return ({
-    requestLoading: () => dispatch(requests("started")),
-    requestUnLoading: () => dispatch(requests("no_started")),
-  });
-}
+// const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+//   return ({
+//     requestLoading: () => dispatch(requests("started")),
+//     requestUnLoading: () => dispatch(requests("no_started")),
+//   });
+// }
 
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+  return {
+      actions: bindActionCreators({
+          login,
+      }, dispatch),
+  };
+}
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPassword);
