@@ -11,30 +11,38 @@ export const login = (accountsServer: AccountsServer) => async (
   const username = req.body.username;
   const password = req.body.password;
 
-  console.log(req);
-  
   if (!username || !password) {
     res.status(401);
     res.json({ message: 'Unauthorized.' });
     return;
   }
 
-  const user = await db.findOne('users', '', {
-    filters: [['username','=', username]],
-    fields: ['services.password.bcrypt']
+  const users = await db.find('users', {
+    filters: [['email','=', username]],
+    fields: ['services']
   });
 
-  if (!user) {
+  console.log(users);
+
+  if (!users || users.length == 0) {
     res.status(401);
     res.json({ message: 'User not found.' });
     return;
   }
 
-  console.log(user);
 
-  const hash = user.name;
+  const user = users[0];
+
+
+  if (!user.services || !user.services.password || !user.services.password.bcrypt) {
+    res.status(401);
+    res.json({ message: 'User has no password set' });
+    return;
+  }
 
   const pass: any = hashPassword(password, 'sha256');
-  const isPasswordValid = await verifyPassword(pass, hash);
+  const isPasswordValid = await verifyPassword(pass, user.services.password.bcrypt);
   
+  res.json({ message: isPasswordValid });
+  return;
 }

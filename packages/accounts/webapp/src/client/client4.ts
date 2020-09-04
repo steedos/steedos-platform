@@ -31,7 +31,9 @@ export default class Client4 {
     urlVersion = '';
     userAgent: string|null = null;
     enableLogging = false;
-    defaultHeaders: {[x: string]: string} = {};
+    defaultHeaders: {[x: string]: string} = {
+        'Content-Type': 'application/json'
+    };
     userId = '';
     diagnosticId = '';
     includeCookies = true;
@@ -185,7 +187,7 @@ export default class Client4 {
 
         return this.doFetch<UserProfile>(
             `${this.getAccountsRoute()}/password/login`,
-            {method: 'post', body: JSON.stringify(body)},
+            {method: 'POST', body: JSON.stringify(body)},
         );
     };
 

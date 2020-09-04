@@ -53,6 +53,7 @@ const LoginPassword = ({ actions, history, settings, tenant, location, title, re
       }
 
       actions.login(email.trim(), password, '')
+      
     } catch (err) {
       setError(err.message);
     }

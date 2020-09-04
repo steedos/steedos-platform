@@ -10,10 +10,10 @@ export default {
         currentUserId: '',
         profiles: {},
     },
-    teams: {
-        currentTeamId: '',
-        teams: {},
-    },
+    // teams: {
+    //     currentTeamId: '',
+    //     teams: {},
+    // },
   },
   i18n: {
       translations: {

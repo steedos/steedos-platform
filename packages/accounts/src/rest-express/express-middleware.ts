@@ -52,6 +52,7 @@ const accountsExpress = (
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.put(`${path}/user`, userLoader(accountsServer), changeUserFullname(accountsServer));
   router.get(`${path}/user/exists`, userExists());
+  router.post(`${path}/password/login`, login(accountsServer));
   router.post(`${path}/code/apply`, applyCode(accountsServer));
   router.get(`${path}/code/id`, getUserIdByToken());
   
@@ -72,7 +73,6 @@ const accountsExpress = (
   // @accounts/password
   if (services.password) {
 
-    router.post(`${path}/password/login`, login(accountsServer));
 
     router.post(`${path}/password/register`, registerPassword(accountsServer));
 
