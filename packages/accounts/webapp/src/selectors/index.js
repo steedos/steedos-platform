@@ -13,9 +13,24 @@ export function getTenant(state) {
     return tenant;
 }
 
-export function getUser(state) {
-    const user = Object.assign({}, state.user)
-    return user;
+export function getCurrentSpace(state) {
+    return state.entities.spaces.profiles[getCurrentSpaceId(state)];
+}
+
+export function getCurrentSpaceId(state) {
+    return state.entities.spaces.currentSpaceId;
+}
+
+export function getCurrentUser(state) {
+    return state.entities.users.profiles[getCurrentUserId(state)];
+}
+
+export function getCurrentUserId(state) {
+    return state.entities.users.currentUserId;
+}
+
+export function getUsers(state) {
+    return state.entities.users.profiles;
 }
 
 export function getRequests(state){

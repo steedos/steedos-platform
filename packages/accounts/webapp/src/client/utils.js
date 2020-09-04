@@ -1,10 +1,8 @@
-import ClientClass4 from './client4.js';
 import { accountsClient, accountsRest } from '../accounts';
 import { localizeMessage } from '../utils/utils';
 import store from '../stores/redux_store';
 import { requests } from '../actions/requests'
 // import { getTenant } from '../selectors'
-const Client4 = new ClientClass4();
 
 const getCookie = (name) => {
     let pattern = RegExp(name + "=.[^;]*")
@@ -168,7 +166,6 @@ const ApplyCode = async (data) =>{
 }
 
 export {
-    Client4,
     Login,
     ApplyCode,
     goInSystem,

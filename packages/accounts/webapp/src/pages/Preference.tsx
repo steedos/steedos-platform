@@ -48,7 +48,6 @@ const Preference = ({ match, settings, history, location, tenant }: any) => {
                 credentials: 'include'
             });
 
-            console.log(r)
 
             // if(user.spaces.length === 1){
             //     const token: any = await accountsClient.getTokens();

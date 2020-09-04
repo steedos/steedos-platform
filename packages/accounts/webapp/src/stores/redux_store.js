@@ -8,29 +8,22 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import rootReducer from '../reducers'
 import { devToolsEnhancer } from 'redux-devtools-extension';
-const en = require("../i18n/en.json");
+import initialState from './initial_state';
+import { ContactSupportOutlined } from '@material-ui/icons';
 
 // const config = await accountsRest.authFetch( '/config' );
 // window._steedos_runtime_config = config;
 
-const initialStore = {
-    i18n: {
-        translations: {
-            en: en
-        }
-    },
-    requests: {
-        status: "not_started"
-    }
-}
 
 const store = createStore(
     rootReducer, 
-    initialStore, 
+    initialState, 
     applyMiddleware(
       thunkMiddleware,
     )
 );
+
+console.log(store)
 
 export function bindActionToRedux(action, ...args) {
     return async () => {

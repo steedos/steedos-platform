@@ -77,7 +77,6 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
         throw new Error("accounts.codeRequired");
       }
 
-      console.log(token)
       requestLoading();
       await Login({
         user: {

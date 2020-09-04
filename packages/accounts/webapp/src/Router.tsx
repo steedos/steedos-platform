@@ -1,10 +1,11 @@
 import React from 'react';
-import {  HashRouter, Route } from 'react-router-dom';
+import {  HashRouter, Route, RouteProps } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { getTenant } from './selectors';
 
+import LoggedIn from './components/LoggedIn';
 import Signup from './pages/Signup';
 import Home from './pages/Home';
 import ResetPassword from './components/ResetPassword';
@@ -19,6 +20,21 @@ import LoginPassword from './pages/LoginPassword';
 import Preference from './pages/Preference';
 import Loading from './components/Loading';
 import SignupPassword from './pages/SignupPassword';
+
+
+const LoggedInRoute: React.FC<RouteProps> = ({component: Component, ...rest}) => {
+  if (!Component) return null;
+  return (
+    <Route
+        {...rest}
+        render={(props) => (
+            <LoggedIn {...props}>
+                <Component {...props}/>
+            </LoggedIn>
+        )}
+    />
+    )}
+;
 
 const Router = ({tenant}:any) => {
   // let backgroundUrl = require("./assets/background.svg");
@@ -75,7 +91,7 @@ const Router = ({tenant}:any) => {
                 <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/verify/:action" component={Verify} />
                 {/* <Route path="/login-code" component={LoginCode} /> */}
-                <Route path="/preference" component={Preference} />
+                <LoggedInRoute path="/preference" component={Preference} />
                 <Route path="/verify-mobile/:token" component={VerifyMobile} />
           </div>
     </HashRouter>
