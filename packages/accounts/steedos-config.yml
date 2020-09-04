@@ -1,7 +1,7 @@
 datasources:
   default:
     connection:
-      url: ${MONGO_URL}
+      url: mongodb://127.0.0.1/steedos
     objectFiles: 
       - ./src/**
 tenant:

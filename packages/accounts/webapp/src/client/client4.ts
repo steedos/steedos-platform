@@ -177,16 +177,14 @@ export default class Client4 {
 
         const body: any = {
             device_id: deviceId,
-            user: {
-                email: loginId,
-            },
+            username: loginId,
             password,
             token,
             locale: "zh-cn"
         };
 
         return this.doFetch<UserProfile>(
-            `${this.getAccountsRoute()}/password/authenticate`,
+            `${this.getAccountsRoute()}/password/login`,
             {method: 'post', body: JSON.stringify(body)},
         );
     };

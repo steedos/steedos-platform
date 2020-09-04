@@ -23,6 +23,7 @@ import { getSettings } from './endpoints/steedos/settings';
 import { userExists } from './endpoints/get-user-exists'
 import { applyCode, getUserIdByToken } from './endpoints/steedos/verify_code';
 import { changeUserFullname } from './endpoints/put-user-name';
+import { login } from './endpoints/password/login';
 
 
 const defaultOptions: AccountsExpressOptions = {
@@ -70,6 +71,9 @@ const accountsExpress = (
 
   // @accounts/password
   if (services.password) {
+
+    router.post(`${path}/password/login`, login(accountsServer));
+
     router.post(`${path}/password/register`, registerPassword(accountsServer));
 
     router.post(`${path}/password/verifyEmail`, verifyEmail(accountsServer));
