@@ -198,6 +198,34 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
+    async directAggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[], userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let rawCollection = collection.rawCollection();
+        let pipeline = [];
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let aggregateOptions = this.getAggregateOptions(query);
+
+        pipeline.push({ $match: mongoFilters });
+
+        pipeline = pipeline.concat(aggregateOptions).concat(externalPipeline);
+
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    rawCollection.aggregate(pipeline).toArray(function (err, data) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(data);
+                    });
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
+    }
+
     async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         let rawCollection = collection.rawCollection();

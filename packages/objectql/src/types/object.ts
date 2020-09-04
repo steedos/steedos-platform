@@ -536,8 +536,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('aggregate', this.table_name, clonedQuery, externalPipeline, userSession)
     }
 
+    // 此函数支持driver: MeteorMongo
+    async directAggregate(query: SteedosQueryOptions, externalPipeline: any[], userSession?: SteedosUserSession) {
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('directAggregate', this.table_name, clonedQuery, externalPipeline, userSession)
+    }
+
     // 此函数支持driver: MeteorMongo，类似于aggregate，其参数externalPipeline放在最前面而已
-    async directAggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline, userSession?: SteedosUserSession) {
+    async directAggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline: any[], userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
         await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('directAggregatePrefixalPipeline', this.table_name, clonedQuery, prefixalPipeline, userSession)
