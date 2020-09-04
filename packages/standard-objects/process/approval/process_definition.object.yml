@@ -13,14 +13,15 @@ fields:
     type: text
     required: true
     is_wide: true
-  order: #TODO 必须是连续的数字
-    type: number
-    scale: 0
-    min: 1
   description:
     label: 描述
     type: textarea
     is_wide: true
+  order: #TODO 必须是连续的数字
+    type: number
+    required: true
+    scale: 0
+    min: 1
   entry_criteria:
     type: textarea
     label: Specify Entry Criteria
@@ -30,11 +31,13 @@ fields:
     inlineHelpText: If only certain types of records should enter this approval process, enter that criteria below. For example, only expense reports from employees at headquarters should use this approval process.
   manager:
     type: text
+    is_wide: true
     label: Next Automated Approver Determined By
     inlineHelpText: 可选项为对象的所有人员字段
     group: Select Field Used for Automated Approval Routing
   owner_manager:
     type: boolean
+    is_wide: true
     label: Use Approver Field of Record Owner
     group: Select Field Used for Automated Approval Routing
   lock_type:
@@ -51,27 +54,31 @@ fields:
   approval_layout:
     type: text
     is_wide: true
-    group: 选择要在批准页面布局上显示的字段
+    group: 选择要在批准页面布局上显示的字段 TODO
     # type: lookup
     # reference_to: object_layout
-    label: Select Fields to Display on Approval Page Layout  （直接选择字段还是选择object layout，object layout 可以控制相关子表）
+    label: Select Fields to Display on Approval Page Layout
     inlineHelpText: The approval page is where an approver will actually approve or reject a request. Using the options below, choose the fields to display on this page.
   display_approval_history:
     type: boolean
+    is_wide: true
     label: Display approval history information in addition to the fields selected above.
-    group: 选择要在批准页面布局上显示的字段
+    group: 选择要在批准页面布局上显示的字段 TODO
   submitters:
     type: text
     multiple: true
-    group: 指定初始提交人
-    inlineHelpText: 对象上的人员字段及角色
+    is_wide: true
+    group: 指定初始提交人 TODO
+    inlineHelpText: 指定谁可以提交记录到批准过程。 如果该列表中不包括提交记录以待批准的用户，记录不会进入该批准过程，即使记录满足进入条件。
   recall:
     type: boolean
+    is_wide: true
     label: Allow submitters to recall approval requests
-    group: 提交设置
+    group: 提交设置 TODO
   state:
     type: select
     label: State
+    defaultValue: inactive
     options:
      - active
      - inactive
@@ -84,7 +91,10 @@ list_views:
     filter_scope: space
     columns:
       - label
+      - object_name
+      - order
       - description
+      - state
 permission_set:
   user:
     allowCreate: false

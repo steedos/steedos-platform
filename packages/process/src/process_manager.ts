@@ -35,18 +35,28 @@ const sendNotifications = async (instanceHistory, from, to)=>{
 const getProcessNodeApprover = async (processNode: any, userSession: any)=>{
     let nodeApprover = [];
     let approver = processNode.approver;
-    if(approver === 'auto_approver'){
-        _.each(processNode.auto_approver, function(item){
-            if(item.type === 'user'){
-                nodeApprover.push(item.value)
-            }else{
-                //TODO
-            }
-        })
+    if(approver === 'auto_assign'){
+
+        if(!_.isEmpty(processNode.assigned_approver_users)){
+            nodeApprover = nodeApprover.concat(processNode.assigned_approver_users)
+        }
+
+        if(!_.isEmpty(processNode.assigned_approver_roles)){
+            //TODO
+        }
+
+        if(!_.isEmpty(processNode.assigned_approver_flow_roles)){
+            //TODO
+        }
+
+        if(!_.isEmpty(processNode.assigned_approver_user_field)){
+            //TODO
+        }
+
     }else{
         //TODO
     }
-    return nodeApprover;
+    return _.uniq(_.compact(nodeApprover));
 }
 
 const getProcessNodes = async (processDefinitionId: string, spaceId: string)=>{
@@ -106,18 +116,18 @@ const toNextNode = async (instanceId: string, comments: string, nodes: any, inde
     let node = nodes[index];
     console.log('toNextNode node', node, index, nodes.length);
     if(node){
-        const canEntry = await objectql.computeFormula(node.filtercriteria, objectName, recordId, currentUserId, spaceId);
+        const canEntry = await objectql.computeFormula(node.entry_criteria, objectName, recordId, currentUserId, spaceId);
         if(canEntry){
             // insert instance node && insert instance history
             await addInstanceNode(instanceId, node, userSession)
         }else{
-            if(node.critrad === 'skip'){
+            if(node.if_criteria_not_met === 'skip'){
                 await toNextNode(instanceId, comments, nodes, index + 1, objectName, recordId, userSession)
             }else{
                 let options = {actor: currentUserId}
-                if(node.critrad === 'approve'){
+                if(node.if_criteria_not_met === 'approve'){
                     await addInstanceHistory(userSession.spaceId, instanceId, "approved", comments, options)
-                }else if(node.critrad === 'reject'){
+                }else if(node.if_criteria_not_met === 'reject'){
                     await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comments, options)
                 }else{
                     await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comments, options)
@@ -127,6 +137,7 @@ const toNextNode = async (instanceId: string, comments: string, nodes: any, inde
     }
 }
 
+//TODO 处理提交全
 export const getObjectProcessDefinition = async (objectName: string, recordId: string, userSession: any)=>{
     let spaceId = userSession.spaceId;
     let currentUserId = userSession.userId;

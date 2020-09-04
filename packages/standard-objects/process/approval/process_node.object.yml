@@ -28,12 +28,12 @@ fields:
     group: Specify Step Criteria
     defaultValue: false
     is_wide: true
-  filtercriteria:
+  entry_criteria:
     type: textarea
-    label: filtrad
+    label: Entry criteria
     is_wide: true
     group: Specify Step Criteria
-  critrad: # https://help.salesforce.com/articleView?err=1&id=approvals_step_entrycriteria.htm&type=5
+  if_criteria_not_met: # https://help.salesforce.com/articleView?err=1&id=approvals_step_entrycriteria.htm&type=5
     type: select
     options: approve,reject,skip
     group: Specify Step Criteria
@@ -51,33 +51,28 @@ fields:
       # - label: 'Automatically assign to queue'
       #   value: 'auto_queue'
       - label: 'Automatically assign to approver(s)'
-        value: 'auto_approver'
-  auto_approver:
-    type: grid
-    label: auto_approver
+        value: 'auto_assign'
+  assigned_approver_users:
+    type: lookup
+    reference_to: users
+    multiple: true
     group: Select Assigned Approver
-    is_wide: true
-  auto_approver.$.type:
-    type: select
-    options:
-      - label: 指定用户
-        value: user
-      - label: 相关用户
-        value: user_field
-      - label: 角色
-        value: role
-      - label: 客户、合作伙伴(TODO)
-        value: todo
-  # auto_approver.$.value:  TODO
-  #   type: lookup
-  #   depend_on:
-  #     - auto_approver.$.type
-  #   optionsFunction: !!js/function
-  #     function(){
-  #       return []
-  #     }
-  auto_approver.$.value:
-      type: text
+  assigned_approver_roles: 
+    type: lookup
+    reference_to: roles
+    multiple: true
+    group: Select Assigned Approver
+  assigned_approver_flow_roles: 
+    type: lookup
+    reference_to: flow_roles
+    multiple: true
+    group: Select Assigned Approver
+  assigned_approver_user_field: 
+    type: lookup
+    multiple: true
+    group: Select Assigned Approver
+    optionsFunction: !!js/function
+      function(){return []}
   approvers_apprrouting:
     type: select
     is_wide: true
@@ -105,8 +100,8 @@ list_views:
     label: All
     filter_scope: space
     columns:
-      - order
       - label
+      - order
       - description
       - approver
       - reject_behavior
