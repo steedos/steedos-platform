@@ -28,27 +28,27 @@ const getMyAdminOrMonitorFlows = (spaceId, userId)=>{
 	return flow_ids;
 }
 
-module.exports = {
+// module.exports = {
 
-    listenTo: 'instances',
+//     listenTo: 'instances',
 
-    beforeFind: async function () {
-        let userId = this.userId;
-        let spaceId = this.spaceId;
-        if(userId && spaceId){
-            let filters = this.query.filters;
-            if(!Steedos.isSpaceAdmin(spaceId, userId)){
-                let flow_ids = getMyAdminOrMonitorFlows(spaceId, userId)
-                const permissionsFilters = [ 
-                    [ "inbox_users", "=", userId],
-                    "or", [ "cc_users", "=", userId],
-                    "or", [ "outbox_users", "=", userId],
-                    "or", [ "submitter", "=", userId],
-                    "or", [ "applicant", "=", userId],
-                    "or", [ "flow", "in", flow_ids]
-                ];
-                this.query.filters = `(${filters}) and (${Filters.formatFiltersToODataQuery(permissionsFilters)})`
-            }
-        }
-    }
-}
+//     beforeFind: async function () {
+//         let userId = this.userId;
+//         let spaceId = this.spaceId;
+//         if(userId && spaceId){
+//             let filters = this.query.filters;
+//             if(!Steedos.isSpaceAdmin(spaceId, userId)){
+//                 let flow_ids = getMyAdminOrMonitorFlows(spaceId, userId)
+//                 const permissionsFilters = [ 
+//                     [ "inbox_users", "=", userId],
+//                     "or", [ "cc_users", "=", userId],
+//                     "or", [ "outbox_users", "=", userId],
+//                     "or", [ "submitter", "=", userId],
+//                     "or", [ "applicant", "=", userId],
+//                     "or", [ "flow", "in", flow_ids]
+//                 ];
+//                 this.query.filters = `(${filters}) and (${Filters.formatFiltersToODataQuery(permissionsFilters)})`
+//             }
+//         }
+//     }
+// }
