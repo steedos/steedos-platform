@@ -3,6 +3,7 @@ import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, Stee
 import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
 import { pickFormulaVars, computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
 import { isFieldFormulaConfigQuotedTwoWays, isCurrentUserIdRequiredForFormulaVars } from './util';
+import { isSystemObject } from '../util';
 import _ = require('lodash')
 const clone = require('clone')
 
@@ -81,7 +82,7 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
             tempFieldConfig = tempObjectConfig.fields[varItem];
         }
         if (!tempFieldConfig) {
-            // 不是对象上的字段，则直接退出
+            // 不是对象上的字段，则直接退出，这里注意公式中引用零代码中的字段的话，公式中字段名需要手动加上__c后缀（因为用户填写的api名称不带__c，是内核会自动加后缀），否则会找不到
             throw new Error(`computeFormulaVarAndQuotes:Can't find the field '${varItem}' on the object '${tempObjectConfig.name}' for the formula var '${formulaVar}'`);
         }
         let isFormulaType = tempFieldConfig.type === "formula";
@@ -111,7 +112,7 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         if (tempFieldConfig.type === "lookup" || tempFieldConfig.type === "master_detail") {
             // 引用类型字段
             if (tempFieldConfig.multiple) {
-                // 暂时不支持数组的解析，见：公式字段中要实现lookup关联到数组字段的情况 #783
+                // TODO:暂时不支持数组的解析，见：公式字段中要实现lookup关联到数组字段的情况 #783
                 throw new Error(`computeFormulaVarAndQuotes:The field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is a multiple ${tempFieldConfig.type} type, it is not supported yet.`);
             }
             if (i === varItems.length - 1) {
@@ -136,7 +137,13 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         });
         if (!tempObjectConfig) {
             // 没找到相关引用对象，直接退出
-            throw new Error(`computeFormulaVarAndQuotes:Can't find the object reference_to '${tempFieldConfig.reference_to}' by the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
+            // 如果不是零代码对象，直接报错，否则直接返回，待相关零代码对象加载进来时，会再进入该函数
+            if(isSystemObject(tempFieldConfig.reference_to)){
+                throw new Error(`computeFormulaVarAndQuotes:Can't find the object reference_to '${tempFieldConfig.reference_to}' by the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
+            }
+            else{
+                return;
+            }
         }
     }
     vars.push(formulaVarItem);
@@ -190,7 +197,8 @@ export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig, da
 }
 
 export const initObjectFieldsFormulas = (datasource: string) => {
-    const objectConfigs = getObjectConfigs(datasource)
+    const objectConfigs = getObjectConfigs(datasource);
+    // console.log("===initObjectFieldsFormulas==objectConfigs=", JSON.stringify(_.map(objectConfigs, 'name')));
     _.each(objectConfigs, function (objectConfig) {
         addObjectFieldsFormulaConfig(objectConfig, datasource);
     })
