@@ -92,9 +92,9 @@ fields:
     inlineHelpText: What should happen if the approver rejects this request? #TODO 只有非步骤号不等于1时，才能设置拒绝行为， 等于1时始终为最终拒绝
     options:
       - label: 'Perform all rejection actions for this step AND all final rejection actions. (Final Rejection)'
-        value: 'rejradall'
+        value: reject_request
       - label: 'Perform ONLY the rejection actions for this step and send the approval request back to the most recent approver. (Go Back 1 Step)'
-        value: 'rejradprev'
+        value: back_to_previous
 list_views:
   all:
     label: All

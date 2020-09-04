@@ -109,16 +109,15 @@ const addInstanceNode = async  (instanceId: string, node: any, userSession: any)
     }
 }
 
-const toNextNode = async (instanceId: string, comments: string, nodes: any, index: number = 0, objectName: string, recordId: string, userSession: any)=>{
+//TODO nextApprovers
+const toNextNode = async (instanceId: string, comments: string, nodes: any, index: number = 0, objectName: string, recordId: string, userSession: any, nextApprovers?)=>{
     let spaceId = userSession.spaceId;
     let currentUserId = userSession.userId;
     let node = nodes[index];
-    // console.log('toNextNode node', node, index, nodes.length);
     if(node){
         const canEntry = await objectql.computeFormula(node.entry_criteria, objectName, recordId, currentUserId, spaceId);
         if(canEntry){
-            // insert instance node && insert instance history
-            await addInstanceNode(instanceId, node, userSession)
+            await addInstanceNode(instanceId, node, userSession); //TODO 支持驳回时自定计算处理人
         }else{
             if(node.if_criteria_not_met === 'skip'){
                 await toNextNode(instanceId, comments, nodes, index + 1, objectName, recordId, userSession)
@@ -221,9 +220,23 @@ const handleProcessInstanceNode = async(instanceId: string, processStatus: strin
 
         const nodes = await getProcessNodes(instance.process_definition, userSession.spaceId);
 
-        const index = _.findIndex(nodes, function(item){return item._id === pendingNode.process_node});
+        let index = _.findIndex(nodes, function(item){return item._id === pendingNode.process_node});
 
-        await toNextNode(instanceId, null, nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
+        if(processStatus === 'rejected'){
+            index = index - 1;
+        }
+
+        if(processStatus === 'approved'){
+            index = index + 1;
+        }
+
+        if(processStatus === 'approved' || (processStatus === 'rejected' && pendingNode.reject_behavior === 'back_to_previous')){
+            
+            if(processStatus === 'rejected'){
+                //TODO 支持驳回时自定计算处理人
+            }
+            await toNextNode(instanceId, null, nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
+        }
 
         await handleProcessInstance(instanceId, processStatus, userSession);
     }
@@ -235,7 +248,7 @@ const handleProcessInstanceWorkitem = async (processStatus: string, instanceHist
     //TODO 处理下一步需要选人的情况，如果需要选择，则return;
 
     let instanceHistory = await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comments});
-    let when_multiple_approvers = 'first';
+    let when_multiple_approvers = 'first_response';
     if(instanceHistory.step_node){
         let processNode = await objectql.getObject("process_node").findOne(instanceHistory.step_node);
         if(processNode && processNode.when_multiple_approvers){
@@ -243,17 +256,17 @@ const handleProcessInstanceWorkitem = async (processStatus: string, instanceHist
         }
     }
 
-    if(when_multiple_approvers === 'first' || (when_multiple_approvers === 'all' && processStatus === 'rejected')){
+    if(when_multiple_approvers === 'first_response' || (when_multiple_approvers === 'unanimous' && processStatus === 'rejected')){
         await objectql.getObject("process_instance_history").updateMany([['_id', '!=', instanceHistory._id], ['process_instance', '=', instanceHistory.process_instance], ['step_status', '=', 'pending']], {step_status: 'no_response'})
     }
 
     await handleProcessInstanceNode(instanceHistory.process_instance, processStatus, userSession);
 }
 
-export const processInstanceWorkitemApprove = async (instanceHistoryId: string, userSession: any, comments: string, approver: string)=>{
+export const processInstanceWorkitemApprove = async (instanceHistoryId: string, userSession: any, comments: string, approver?: string)=>{
     await handleProcessInstanceWorkitem('approved', instanceHistoryId, userSession, comments, approver);
 }
 
-export const processInstanceWorkitemReject = async (instanceHistoryId: string, userSession: any, comments: string)=>{
-    await handleProcessInstanceWorkitem('rejected', instanceHistoryId, userSession, comments);
+export const processInstanceWorkitemReject = async (instanceHistoryId: string, userSession: any, comments: string, approver?: string)=>{
+    await handleProcessInstanceWorkitem('rejected', instanceHistoryId, userSession, comments, approver);
 }
