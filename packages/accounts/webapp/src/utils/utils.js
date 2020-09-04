@@ -50,13 +50,15 @@ export const canBack = ()=>{
     return window.HistoryLength > 0;
 }
 
-export const getRootUrlPathPrefix = (rootUrl) => {
+
+export const fixRootUrl = (rootUrl) => {
+
+    if (process.env.NODE_ENV == 'development')
+        return rootUrl;
+
     if (rootUrl) {
-        var parsedUrl = require('url').parse(rootUrl);
-        // Sometimes users try to pass, eg, ROOT_URL=mydomain.com.
-        if (!parsedUrl.host || ['http:', 'https:'].indexOf(parsedUrl.protocol) === -1) {
-            throw Error("$ROOT_URL, if specified, must be an URL");
-        }
+        var parsedUrl = new URL(rootUrl);
+        
         var pathPrefix = parsedUrl.pathname;
         if (pathPrefix.slice(-1) === '/') {
             // remove trailing slash (or turn "/" into "")
@@ -66,4 +68,5 @@ export const getRootUrlPathPrefix = (rootUrl) => {
     } else {
         return "";
     }
+
 }
