@@ -1,9 +1,13 @@
-import { addConfig } from '../types';
-import { getConfigs, getConfig } from '../types/config';
+import { addConfig, removeManyConfigs, getConfigs, getConfig } from '../types';
+// import { getConfigs, getConfig } from '../types/config';
 import { SteedosFieldSummaryTypeConfig } from './type';
 
 export const addFieldSummaryConfig = (config: SteedosFieldSummaryTypeConfig) => {
     addConfig('field_summary', config);
+}
+
+export const clearFieldSummaryConfigs = (query?: object) => {
+    removeManyConfigs('field_summary', query);
 }
 
 export const getFieldSummaryConfigs = (): Array<SteedosFieldSummaryTypeConfig> => {
