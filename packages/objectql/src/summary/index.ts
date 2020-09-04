@@ -83,7 +83,6 @@ export const addObjectFieldsSummaryConfig = (config: SteedosObjectTypeConfig, da
 }
 
 export const initObjectFieldsSummarys = (datasource: string) => {
-    clearFieldSummaryConfigs
     if(datasource === "default"){
         // 因为要考虑对象和字段可能被禁用、删除的情况，所以需要先清除下原来的内存数据
         // 暂时只支持默认数据源，后续如果要支持多数据源时需要传入datasource参数清除数据
