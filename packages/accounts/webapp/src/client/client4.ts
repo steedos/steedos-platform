@@ -27,8 +27,8 @@ export default class Client4 {
     clusterId = '';
     token = '';
     csrf = '';
-    url = '';
-    urlVersion = '/api/v4';
+    url = (process.env.NODE_ENV == 'development')? process.env.REACT_APP_API_URL as string : '';
+    urlVersion = '';
     userAgent: string|null = null;
     enableLogging = false;
     defaultHeaders: {[x: string]: string} = {};
@@ -41,7 +41,7 @@ export default class Client4 {
         unknownError: 'We received an unexpected status code from the server.',
     };
     userRoles?: string;
-
+    
     getUrl() {
         return this.url;
     }
@@ -113,12 +113,8 @@ export default class Client4 {
         return `${this.url}${this.urlVersion}`;
     }
 
-    getUsersRoute() {
-        return `${this.getBaseRoute()}/users`;
-    }
-
-    getUserRoute(userId: string) {
-        return `${this.getUsersRoute()}/${userId}`;
+    getAccountsRoute() {
+        return `${this.getBaseRoute()}/accounts`;
     }
 
     getCSRFFromCookie() {
@@ -181,37 +177,26 @@ export default class Client4 {
 
         const body: any = {
             device_id: deviceId,
-            login_id: loginId,
+            user: {
+                email: loginId,
+            },
             password,
             token,
+            locale: "zh-cn"
         };
 
         return this.doFetch<UserProfile>(
-            `${this.getUsersRoute()}/login`,
+            `${this.getAccountsRoute()}/password/authenticate`,
             {method: 'post', body: JSON.stringify(body)},
         );
     };
 
-    loginById = (id: string, password: string, token = '', deviceId = '') => {
-        this.trackEvent('api', 'api_users_login');
-        const body: any = {
-            device_id: deviceId,
-            id,
-            password,
-            token,
-        };
-
-        return this.doFetch<UserProfile>(
-            `${this.getUsersRoute()}/login`,
-            {method: 'post', body: JSON.stringify(body)},
-        );
-    };
 
     logout = async () => {
         this.trackEvent('api', 'api_users_logout');
 
         const {response} = await this.doFetchWithResponse(
-            `${this.getUsersRoute()}/logout`,
+            `${this.getAccountsRoute()}/logout`,
             {method: 'post'},
         );
 
