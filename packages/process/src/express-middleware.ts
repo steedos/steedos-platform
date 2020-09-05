@@ -4,7 +4,7 @@ import { submit } from './submit';
 import { approve } from './approve';
 import { reject } from './reject';
 import { reassign } from './reassign';
-
+import { recallByProcessInstance } from './recall';
 const express = require('express');
 
 
@@ -18,6 +18,8 @@ processExpress.post('/api/v4/process/reject/:objectName/:record', requireAuthent
 
 processExpress.post('/api/v4/process/reassign/:objectName/:record', requireAuthentication, reassign);
 
-processExpress.post('/api/v4/process/recall/:objectName/:record', requireAuthentication, submit);
+// processExpress.post('/api/v4/process/recall/:objectName/:record', requireAuthentication, recall);
+
+processExpress.post('/api/v4/process/recall/:objectName/:record', requireAuthentication, recallByProcessInstance);
 
 

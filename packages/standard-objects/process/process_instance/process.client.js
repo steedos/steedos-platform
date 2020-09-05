@@ -1,28 +1,6 @@
 Steedos.ProcessManager = {};
 
 Steedos.ProcessManager.showProcessApprovalForm = function(action, fields, formId, doc, onConfirm){
-    // var approveSchema = {
-    //     approver: { 
-    //         label: `process_approval_approver_label_${action}`, 
-    //         type: String,
-    //         optional: false, 
-    //         autoform: { 
-    //             reference_to: "users", 
-    //             create: false, 
-    //             type: "selectuser", 
-    //             is_company_limited: false 
-    //         } 
-    //     },
-    //     comment: {
-    //         label: "process_approval_comment", 
-    //         type: String,
-    //         optional: false,
-    //         autoform: { 
-    //             type: "widearea", 
-    //             rows: 2
-    //         } 
-    //     }
-    // }
 
     var approveSchema = Creator.getObjectSchema({fields: fields})
 
@@ -58,5 +36,23 @@ Steedos.ProcessManager.Reassign = function(object_name, record_id){
         Steedos.authRequest(`/api/v4/process/reassign/${object_name}/${record_id}`, {type: 'post', data: JSON.stringify(formValues.insertDoc)});
         FlowRouter.reload();
         Modal.hide(t);
+    })
+}
+
+Steedos.ProcessManager.Recall = function(object_name, record_id){
+    var formId = 'processApprovalForm';
+    Steedos.ProcessManager.showProcessApprovalForm('recall', {
+        comment: {
+            label: TAPi18n.__('process_approval_comment'),
+            type: 'textarea',
+            rows: 10,
+            is_wide: true
+        }
+    }, formId, {}, function(formValues, e, t){
+        console.log('recall formValues', formValues);
+        toastr.warning("TODO");
+        // Steedos.authRequest(`/api/v4/process/recall/${object_name}/${record_id}`, {type: 'post', data: JSON.stringify(formValues.insertDoc)});
+        // FlowRouter.reload();
+        // Modal.hide(t);
     })
 }

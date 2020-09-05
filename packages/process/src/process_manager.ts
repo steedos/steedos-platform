@@ -172,6 +172,11 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
     await toNextNode(instance._id, comment, nodes, 0, objectName, recordId, userSession);
 }
 
+export const getReocrdProcessInstance = async(objectName: string, recordId: string, status: string, userSession: any)=>{
+    let spaceId = userSession.spaceId;
+    return await objectql.getObject("process_instance").find({filters: [['space', '=', spaceId], ['status', '=', status], ['target_object.o', '=', objectName], ['target_object.ids', '=', recordId]]});
+}
+
 export const getProcessInstanceWorkitem = async (instanceHistoryId: string, userSession: any)=>{
     let spaceId = userSession.spaceId;
     let userId = userSession.userId; //TODO 代理
@@ -244,21 +249,23 @@ const handleProcessInstanceNode = async(instanceId: string, processStatus: strin
 
 
 const handleProcessInstanceWorkitem = async (processStatus: string, instanceHistoryId: string, userSession: any, comment: string, approver?: string)=>{
-
+    let instanceHistory = await objectql.getObject("process_instance_history").findOne(instanceHistoryId);
     //TODO 处理下一步需要选人的情况，如果需要选择，则return;
-
-    let instanceHistory = await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comment});
-    let when_multiple_approvers = 'first_response';
-    if(instanceHistory.step_node){
-        let processNode = await objectql.getObject("process_node").findOne(instanceHistory.step_node);
-        if(processNode && processNode.when_multiple_approvers){
-            when_multiple_approvers = processNode.when_multiple_approvers;
+    if(processStatus === 'rejected' || processStatus === 'approved'){
+        await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comment, actor: userSession.userId});
+        let when_multiple_approvers = 'first_response';
+        if(instanceHistory.step_node){
+            let processNode = await objectql.getObject("process_node").findOne(instanceHistory.step_node);
+            if(processNode && processNode.when_multiple_approvers){
+                when_multiple_approvers = processNode.when_multiple_approvers;
+            }
         }
-    }
-
-    if(when_multiple_approvers === 'first_response' || (when_multiple_approvers === 'unanimous' && processStatus === 'rejected')){
-        await objectql.getObject("process_instance_history").updateMany([['_id', '!=', instanceHistory._id], ['process_instance', '=', instanceHistory.process_instance], ['step_status', '=', 'pending']], {step_status: 'no_response'})
-    }
+        if(when_multiple_approvers === 'first_response' || (when_multiple_approvers === 'unanimous' && processStatus === 'rejected')){
+            await objectql.getObject("process_instance_history").updateMany([['_id', '!=', instanceHistory._id], ['process_instance', '=', instanceHistory.process_instance], ['step_status', '=', 'pending']], {step_status: 'no_response'})
+        }
+    }else if(processStatus === 'removed'){
+        await objectql.getObject("process_instance_history").updateMany([['process_instance', '=', instanceHistory.process_instance], ['step_status', '=', 'pending']], {step_status: processStatus, comments: comment})
+    } 
 
     await handleProcessInstanceNode(instanceHistory.process_instance, processStatus, userSession);
 }
@@ -288,3 +295,12 @@ export const processInstanceWorkitemReassign = async (instanceHistoryId: string,
     await addInstanceHistory(userSession.spaceId, history.process_instance, 'pending', null, {nodeId: history.step_node, actor: approver, originalActor: history.original_actor, submitted_by: userSession.userId});
 }
 
+export const processInstanceWorkitemRemove = async (instanceHistoryId: string, userSession: any, comment: string)=>{
+    await handleProcessInstanceWorkitem('removed', instanceHistoryId, userSession, comment);   
+}
+
+export const processInstanceWorkitemRemovebyInstance = async (instanceId: string, userSession: any, comment: string)=>{
+    const processStatus = 'removed';
+    await objectql.getObject("process_instance_history").updateMany([['process_instance', '=', instanceId], ['step_status', '=', 'pending']], {step_status: processStatus, comments: comment});
+    await handleProcessInstanceNode(instanceId, processStatus, userSession);
+}

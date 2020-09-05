@@ -2,7 +2,7 @@ process_instance_history__object: 批准历史
 process_instance_history_action_approve: 批准
 process_instance_history_action_reassign: 重新分配
 process_instance_history_action_reject: 拒绝
-process_instance_history_action_remove: 调回
+process_instance_history_action_recall: 调回
 process_instance_history_field_actor: 实际审批人
 process_instance_history_field_comments: 评论
 process_instance_history_field_created_by: 提交人

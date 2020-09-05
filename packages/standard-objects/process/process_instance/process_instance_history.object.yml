@@ -7,19 +7,18 @@ fields:
   name:
     type: text
     label: Step Name
+    hidden: true
+  created_by:
+    label: 提交人
+    is_wide: true
   process_instance:
     type: lookup
     reference_to: process_instance
-  target_object:
-    type: lookup
-    label: Approval Details
-    reference_to: !!js/function
-      function(){
-        return ['contracts']
-      }
+    hidden: true
   step_status:
     type: select
     label: Status
+    hidden: true
     options:
       - approved
       - fault
@@ -38,12 +37,22 @@ fields:
     type: lookup
     label: Actual Approver
     reference_to: users
+  target_object:
+    type: lookup
+    label: Approval Details
+    is_wide: true
+    reference_to: !!js/function
+      function(){
+        return ['contracts']
+      }
   comments:
     type: textarea
     label: Comments
+    is_wide: true
   step_node:
     type: lookup
     reference_to: process_node
+    hidden: true
   elapsed_time_in_days:
     type: number
     precision: 18
@@ -62,8 +71,6 @@ fields:
     scale: 0
     hidden: true
     omit: true
-  created_by:
-    label: 提交人
   modified:
     hidden: true
     omit: true
@@ -95,7 +102,7 @@ actions:
     label: Reassign
     on: record_only
     visible: true
-  remove:
+  recall:
     label: Recall
     on: record_only
     visible: true
