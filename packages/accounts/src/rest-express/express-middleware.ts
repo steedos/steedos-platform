@@ -4,7 +4,7 @@ import { verifyEmail, sendVerificationEmail } from './endpoints/password/verify-
 import * as express from 'express';
 import * as cookieParser from 'cookie-parser';
 var cookie = require('cookie-parser');
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../server';
 import { refreshAccessToken } from './endpoints/refresh-access-token';
 import { getUser } from './endpoints/get-user';
 import { impersonate } from './endpoints/impersonate';
@@ -52,7 +52,7 @@ const accountsExpress = (
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.put(`${path}/user`, userLoader(accountsServer), changeUserFullname(accountsServer));
   router.get(`${path}/user/exists`, userExists());
-  router.post(`${path}/password/login`, login(accountsServer));
+  router.post(`${path}/login`, login(accountsServer));
   router.post(`${path}/code/apply`, applyCode(accountsServer));
   router.get(`${path}/code/id`, getUserIdByToken());
   
@@ -90,23 +90,6 @@ const accountsExpress = (
       changePassword(accountsServer)
     );
 
-    router.post(
-      `${path}/password/twoFactorSecret`,
-      userLoader(accountsServer),
-      twoFactorSecret(accountsServer)
-    );
-
-    router.post(
-      `${path}/password/twoFactorSet`,
-      userLoader(accountsServer),
-      twoFactorSet(accountsServer)
-    );
-
-    router.post(
-      `${path}/password/twoFactorUnset`,
-      userLoader(accountsServer),
-      twoFactorUnset(accountsServer)
-    );
   }
 
   // @accounts/oauth

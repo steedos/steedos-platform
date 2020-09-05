@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
 import * as mongodb from 'mongodb';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from './server';
 import { AccountsPassword } from './password';
 import { errors } from './password/errors';
 import accountsExpress from './rest-express';

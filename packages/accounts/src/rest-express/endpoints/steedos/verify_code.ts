@@ -3,7 +3,7 @@ import { getSteedosConfig } from '@steedos/objectql';
 import { sendError } from '../../utils/send-error';
 import { db } from '../../../db';
 import { canRegister, spaceExists, canSendEmail, canSendSMS } from '../../../core';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../../../server';
 import validator from 'validator';
 const moment = require('moment');
 

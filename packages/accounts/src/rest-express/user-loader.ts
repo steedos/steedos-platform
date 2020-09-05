@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { get, isEmpty, map } from 'lodash';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../server';
 import { db } from '../db';
 import { getSteedosConfig } from '@steedos/objectql';
 import { getSteedosService } from '../core'

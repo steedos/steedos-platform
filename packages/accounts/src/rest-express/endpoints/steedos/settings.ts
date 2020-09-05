@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as _ from 'lodash';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../../../server';
 import { getSteedosConfig } from '@steedos/objectql'
 import { db } from '../../../db';
 import { canSendEmail, canSendSMS, getSteedosService } from '../../../core';

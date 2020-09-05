@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../../server';
 
 export const getUser = (accountsServer: AccountsServer) => async (
   req: express.Request,

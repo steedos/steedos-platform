@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { URL } from 'url';
 import { get, isEmpty } from 'lodash';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../../server';
 import { sendError } from '../utils/send-error';
 import { setAuthCookies, clearAuthCookies } from '../utils/steedos-auth';
 import { getUserIdByToken } from '@steedos/auth';

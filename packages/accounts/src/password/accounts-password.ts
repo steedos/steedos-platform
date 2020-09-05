@@ -9,9 +9,9 @@ import {
   HashAlgorithm,
   ConnectionInformations,
   LoginResult,
-} from '@accounts/types';
+} from '../types';
 import { TwoFactor, AccountsTwoFactorOptions, getUserTwoFactorService } from '@accounts/two-factor';
-import { AccountsServer, ServerHooks, generateRandomToken } from '@accounts/server';
+import { AccountsServer, ServerHooks, generateRandomToken } from '../server';
 import {
   getUserResetTokens,
   getUserVerificationTokens,
@@ -578,11 +578,11 @@ export default class AccountsPassword implements AuthenticationService {
     return await this.passwordAuthenticator({email: email}, password);
   }
 
-  private async passwordAuthenticator(
+  public async passwordAuthenticator(
     user: string | LoginUserIdentity,
     password: PasswordType
   ): Promise<User> {
-    const { username, email, id } = isString(user)
+    const { username, email, id, mobile } = isString(user)
       ? this.toUsernameAndEmail({ user })
       : this.toUsernameAndEmail({ ...user });
 
@@ -594,6 +594,9 @@ export default class AccountsPassword implements AuthenticationService {
     } else if (username) {
       // this._validateLoginWithField('username', user);
       foundUser = await this.db.findUserByUsername(username);
+    } else if (mobile) {
+      // this._validateLoginWithField('username', user);
+      foundUser = await this.db.findUserByMobile(mobile);
     } else if (email) {
       // this._validateLoginWithField('email', user);
       foundUser = await this.db.findUserByEmail(email);
