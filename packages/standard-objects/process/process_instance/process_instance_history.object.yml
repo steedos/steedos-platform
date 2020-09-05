@@ -6,17 +6,20 @@ icon: approval
 fields:
   name:
     type: text
+    label: Step Name
   process_instance:
     type: lookup
     reference_to: process_instance
   target_object:
     type: lookup
+    label: Approval Details
     reference_to: !!js/function
       function(){
         return ['contracts']
       }
   step_status:
     type: select
+    label: Status
     options:
       - approved
       - fault
@@ -29,12 +32,15 @@ fields:
       - started
   original_actor:
     type: lookup
+    label: Assigned To
     reference_to: users
   actor:
     type: lookup
+    label: Actual Approver
     reference_to: users
   comments:
     type: textarea
+    label: Comments
   step_node:
     type: lookup
     reference_to: process_node

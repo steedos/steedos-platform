@@ -1,0 +1,11 @@
+process_instance__object: process_instance
+process_instance_field_completed_date: Completed Date
+process_instance_field_elapsed_time_in_days: 
+process_instance_field_elapsed_time_in_hours: 
+process_instance_field_elapsed_time_in_minutes: 
+process_instance_field_last_actor: 
+process_instance_field_name: 
+process_instance_field_process_definition: 
+process_instance_field_status: 
+process_instance_field_submitted_by: 
+process_instance_field_target_object: 
