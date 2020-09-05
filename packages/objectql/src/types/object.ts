@@ -9,6 +9,7 @@ import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
 import { runQuotedByObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
+const clone = require('clone')
 
 abstract class SteedosObjectProperties {
     _id?: string
@@ -751,6 +752,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             await this.runBeforeTriggers(method, beforeTriggerContext)
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
+            let previousDoc = clone(afterTriggerContext.previousDoc);
             userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
@@ -770,6 +772,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             await this.runRecordFormula(method, args, userSession ? userSession.userId : undefined);
+            await this.runRecordSummaries(method, args, previousDoc);
         }
         return returnValue
     };
@@ -796,7 +799,26 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
                     await runQuotedByObjectFieldFormulas(objectName, recordId, currentUserId);
                 }
-                await runQuotedByObjectFieldSummaries(objectName, recordId);
+            }
+        }
+    }
+
+    private async runRecordSummaries(method: string, args: Array<any>, previousDoc: any) {
+        if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
+            if(method === "updateMany"){
+                // TODO:暂时不支持updateMany汇总计算，因为拿不到修改了哪些数据
+            }
+            else{
+                let objectName = args[0], recordId: string, doc: JsonMap;
+                if(method === "insert"){
+                    doc = args[1];
+                    recordId = <string>doc._id;
+                }
+                else{
+                    recordId = args[1];
+                    doc = args[2];
+                }
+                await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc);
             }
         }
     }

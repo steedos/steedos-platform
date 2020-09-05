@@ -1,6 +1,8 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue } from './type';
 import { getObjectQuotedByFieldSummaryConfigs } from './field_summary';
+import _ = require('lodash');
+
 /**
  * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在insert/update的对象字段的公式字段并更新其字段值
  * @param objectName 
@@ -9,7 +11,7 @@ import { getObjectQuotedByFieldSummaryConfigs } from './field_summary';
  * @param fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
  * @param quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runQuotedByObjectFieldSummaries = async function (objectName: string, recordId: string, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldSummaryTypeConfig>) {
+export const runQuotedByObjectFieldSummaries = async function (objectName: string, recordId: string, previousDoc: any, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldSummaryTypeConfig>) {
     if (!quotedByConfigs) {
         quotedByConfigs = getObjectQuotedByFieldSummaryConfigs(objectName, fieldNames);
     }
@@ -17,7 +19,7 @@ export const runQuotedByObjectFieldSummaries = async function (objectName: strin
         return;
     }
     for (const config of quotedByConfigs) {
-        await updateQuotedByObjectFieldSummaryValue(objectName, recordId, config);
+        await updateQuotedByObjectFieldSummaryValue(objectName, recordId, previousDoc, config);
     }
 }
 
@@ -99,34 +101,56 @@ export const getSummaryAggregateGroups = (summary_type: SteedosSummaryTypeValue,
     "count" : 2.0
 }]
  */
-export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, recordId: string, fieldSummaryConfig: SteedosFieldSummaryTypeConfig) => {
-    console.log("===updateQuotedByObjectFieldSummaryValue===", objectName, recordId, JSON.stringify(fieldSummaryConfig));
-    const { reference_to_field, summary_type, summary_field, summary_object, field_name, object_name } = fieldSummaryConfig;
+export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, recordId: string, previousDoc: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig) => {
+    // console.log("===updateQuotedByObjectFieldSummaryValue===", objectName, recordId, JSON.stringify(fieldSummaryConfig));
+    const { reference_to_field, summary_type, summary_field } = fieldSummaryConfig;
     // 引用关系超过一层时，需要使用aggregate来查出哪些记录需要更新重算公式字段值
     let aggregateGroups = getSummaryAggregateGroups(summary_type, summary_field);
     // let lastLookupAs = aggregateLookups[aggregateLookups.length - 1]["$lookup"].as;
     const referenceToRecord = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: [reference_to_field] })
     const referenceToId = referenceToRecord[reference_to_field];
-    if (!referenceToId) {
-        // 当子表中master_detail字段值为空，这里要区别下原来是否有值，如果原来本来就是空就不需要进一步汇总了，如果原来不是空则还是要拿到原来的值进行汇总
-        // TODO:暂时只考虑master_detail字段为必填的情况
-        return;
-    }
-    // TODO:应该额外再判断子表中master_detail字段值是否变更了，如果变更了，则需要额外对变更前的记录做汇总
-
-    let aggregateFilters = [[reference_to_field, "=", referenceToId]];
-    const aggregateResults = await getSteedosSchema().getObject(summary_object).aggregate({
-        filters: aggregateFilters
-    }, aggregateGroups);
-    if (aggregateResults && aggregateResults.length) {
-        let setDoc = {};
-        const groupKey = getSummaryAggregateGroupKey(summary_type, summary_field);
-        setDoc[field_name] = aggregateResults[0][groupKey];
-        await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
-        // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
-        // await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, currentUserId, [fieldFormulaConfig.field_name])
+    let referenceToIds = [];
+    let previousReferenceToId = previousDoc && previousDoc[reference_to_field];
+    if(referenceToId){
+        referenceToIds.push(referenceToId);
+        if(previousReferenceToId && previousReferenceToId != referenceToId){
+            // 应该额外再判断子表中master_detail字段值是否变更了，如果变更了，则需要额外对变更前的记录做汇总
+            referenceToIds.push(previousReferenceToId);
+        }
     }
     else {
-        throw new Error(`The aggregate result is empty while summarizing the record '${recordId}' of the object '${objectName}' with the FieldSummaryConfig '${JSON.stringify(fieldSummaryConfig)}'`);
+        // 当子表中master_detail字段值为空，这里要区别下原来是否有值，如果原来本来就是空就不需要进一步汇总了，如果原来不是空则还是要拿到原来的值进行汇总
+        if(previousReferenceToId){
+            referenceToIds.push(previousReferenceToId);
+        }
+    }
+    // console.log("===updateQuotedByObjectFieldSummaryValue===referenceToIds====", referenceToIds);
+    if(!referenceToIds.length){
+        return;
+    }
+    await updateReferenceTosFieldSummaryValue(referenceToIds, aggregateGroups, fieldSummaryConfig);
+}
+
+export const updateReferenceTosFieldSummaryValue = async (referenceToIds: any, aggregateGroups: any[], fieldSummaryConfig: SteedosFieldSummaryTypeConfig) => {
+    const { reference_to_field, summary_type, summary_field, summary_object, field_name, object_name } = fieldSummaryConfig;
+    if (!_.isArray(referenceToIds)) {
+        referenceToIds = [referenceToIds];
+    }
+    for (let referenceToId of referenceToIds) {
+        let aggregateFilters = [[reference_to_field, "=", referenceToId]];
+        const aggregateResults = await getSteedosSchema().getObject(summary_object).aggregate({
+            filters: aggregateFilters
+        }, aggregateGroups);
+        if (aggregateResults && aggregateResults.length) {
+            let setDoc = {};
+            const groupKey = getSummaryAggregateGroupKey(summary_type, summary_field);
+            setDoc[field_name] = aggregateResults[0][groupKey];
+            await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
+            // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
+            // await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, currentUserId, [fieldFormulaConfig.field_name])
+        }
+        else {
+            // 说明referenceToId对应的主表记录找不到了，可能被删除了，不用报错或其他处理
+        }
     }
 }
