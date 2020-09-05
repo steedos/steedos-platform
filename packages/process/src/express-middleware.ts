@@ -3,6 +3,7 @@ import { requireAuthentication } from '@steedos/core';
 import { submit } from './submit';
 import { approve } from './approve';
 import { reject } from './reject';
+import { reassign } from './reassign';
 
 const express = require('express');
 
@@ -15,7 +16,7 @@ processExpress.post('/api/v4/process/approve/:objectName/:record', requireAuthen
 
 processExpress.post('/api/v4/process/reject/:objectName/:record', requireAuthentication, reject);
 
-processExpress.post('/api/v4/process/reassign/:objectName/:record', requireAuthentication, submit);
+processExpress.post('/api/v4/process/reassign/:objectName/:record', requireAuthentication, reassign);
 
 processExpress.post('/api/v4/process/recall/:objectName/:record', requireAuthentication, submit);
 

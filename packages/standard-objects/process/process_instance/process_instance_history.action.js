@@ -17,7 +17,7 @@ module.exports = {
       return Steedos.ProcessManager.showApproveButs(object_name, record_id)
     },
     reassign: function(object_name, record_id, fields){
-        
+      Steedos.ProcessManager.Reassign(object_name, record_id);
     },
     removeVisible: function(object_name, record_id, record_permissions){
       return Steedos.ProcessManager.showApproveButs(object_name, record_id)

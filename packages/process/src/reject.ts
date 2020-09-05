@@ -13,11 +13,11 @@ export const reject = async (req: Request, res: express.Response) => {
         const instanceHistoryId = urlParams.record;
         const userSession = req.user;
         const body = req.body;
-        const comments = body.comments;
+        const comment = body.comment;
         const approver = body.approver;
         const workitem = await getProcessInstanceWorkitem(instanceHistoryId, userSession);
         //TODO 未找到待审核时，抛错
-        await processInstanceWorkitemReject(workitem._id, userSession, comments, approver);
+        await processInstanceWorkitemReject(workitem._id, userSession, comment, approver);
         return res.status(200).send({state: 'SUCCESS'});
     // } catch (error) {
     //     console.log(error);

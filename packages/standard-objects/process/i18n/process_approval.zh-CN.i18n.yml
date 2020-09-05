@@ -1,0 +1,4 @@
+process_approval_comment: 评论
+process_approval_title_reassign: 重新分配批准请求
+process_approval_approver_label_reassign: 重新分配处理人
+process_approval_confirmBtnText_reassign: $t(process_instance_history_action_reassign)

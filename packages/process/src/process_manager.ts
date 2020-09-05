@@ -62,7 +62,7 @@ const getProcessNodes = async (processDefinitionId: string, spaceId: string)=>{
     return await objectql.getObject('process_node').find({filters: [['process_definition', '=', processDefinitionId], ['space', '=', spaceId]], sort: "order asc"});
 }
 
-const addInstanceHistory = async (spaceId: string, instanceId: string, status: string, comments: string, options: any)=>{
+const addInstanceHistory = async (spaceId: string, instanceId: string, status: string, comment: string, options: any)=>{
     let instance = await objectql.getObject("process_instance").findOne(instanceId);
     let name = '';
     if(options.nodeId){
@@ -79,7 +79,7 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
         step_status: status,
         original_actor: options.originalActor || options.actor, //TODO 根据规则处理
         actor: options.actor, //TODO 根据规则处理
-        comments: comments,
+        comments: comment,
         step_node: options.nodeId,
         space: spaceId
     });
@@ -110,7 +110,7 @@ const addInstanceNode = async  (instanceId: string, node: any, userSession: any)
 }
 
 //TODO nextApprovers
-const toNextNode = async (instanceId: string, comments: string, nodes: any, index: number = 0, objectName: string, recordId: string, userSession: any, nextApprovers?)=>{
+const toNextNode = async (instanceId: string, comment: string, nodes: any, index: number = 0, objectName: string, recordId: string, userSession: any, nextApprovers?)=>{
     let spaceId = userSession.spaceId;
     let currentUserId = userSession.userId;
     let node = nodes[index];
@@ -120,15 +120,15 @@ const toNextNode = async (instanceId: string, comments: string, nodes: any, inde
             await addInstanceNode(instanceId, node, userSession); //TODO 支持驳回时自定计算处理人
         }else{
             if(node.if_criteria_not_met === 'skip'){
-                await toNextNode(instanceId, comments, nodes, index + 1, objectName, recordId, userSession)
+                await toNextNode(instanceId, comment, nodes, index + 1, objectName, recordId, userSession)
             }else{
                 let options = {actor: currentUserId}
                 if(node.if_criteria_not_met === 'approve'){
-                    await addInstanceHistory(userSession.spaceId, instanceId, "approved", comments, options)
+                    await addInstanceHistory(userSession.spaceId, instanceId, "approved", comment, options)
                 }else if(node.if_criteria_not_met === 'reject'){
-                    await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comments, options)
+                    await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
                 }else{
-                    await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comments, options)
+                    await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
                 }
             }
         }
@@ -155,7 +155,7 @@ export const getObjectProcessDefinition = async (objectName: string, recordId: s
     return process;
 }
 
-export const recordSubmit = async (processDefinitionId: string, objectName: string, recordId, userSession: any, comments: string, approver: string)=>{
+export const recordSubmit = async (processDefinitionId: string, objectName: string, recordId, userSession: any, comment: string, approver: string)=>{
     let instance = await objectql.getObject("process_instance").insert({
         // name: recordName,
         process_definition: processDefinitionId,
@@ -167,9 +167,9 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
         space: userSession.spaceId,
         submitted_by: userSession.userId, //TODO 确认规则
     });
-    await addInstanceHistory(userSession.spaceId, instance._id, "started", comments, {actor: userSession.userId});
+    await addInstanceHistory(userSession.spaceId, instance._id, "started", comment, {actor: userSession.userId});
     const nodes = await getProcessNodes(processDefinitionId, userSession.spaceId);
-    await toNextNode(instance._id, comments, nodes, 0, objectName, recordId, userSession);
+    await toNextNode(instance._id, comment, nodes, 0, objectName, recordId, userSession);
 }
 
 export const getProcessInstanceWorkitem = async (instanceHistoryId: string, userSession: any)=>{
@@ -243,11 +243,11 @@ const handleProcessInstanceNode = async(instanceId: string, processStatus: strin
 }
 
 
-const handleProcessInstanceWorkitem = async (processStatus: string, instanceHistoryId: string, userSession: any, comments: string, approver?: string)=>{
+const handleProcessInstanceWorkitem = async (processStatus: string, instanceHistoryId: string, userSession: any, comment: string, approver?: string)=>{
 
     //TODO 处理下一步需要选人的情况，如果需要选择，则return;
 
-    let instanceHistory = await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comments});
+    let instanceHistory = await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comment});
     let when_multiple_approvers = 'first_response';
     if(instanceHistory.step_node){
         let processNode = await objectql.getObject("process_node").findOne(instanceHistory.step_node);
@@ -263,10 +263,28 @@ const handleProcessInstanceWorkitem = async (processStatus: string, instanceHist
     await handleProcessInstanceNode(instanceHistory.process_instance, processStatus, userSession);
 }
 
-export const processInstanceWorkitemApprove = async (instanceHistoryId: string, userSession: any, comments: string, approver?: string)=>{
-    await handleProcessInstanceWorkitem('approved', instanceHistoryId, userSession, comments, approver);
+export const processInstanceWorkitemApprove = async (instanceHistoryId: string, userSession: any, comment: string, approver?: string)=>{
+    await handleProcessInstanceWorkitem('approved', instanceHistoryId, userSession, comment, approver);
 }
 
-export const processInstanceWorkitemReject = async (instanceHistoryId: string, userSession: any, comments: string, approver?: string)=>{
-    await handleProcessInstanceWorkitem('rejected', instanceHistoryId, userSession, comments, approver);
+export const processInstanceWorkitemReject = async (instanceHistoryId: string, userSession: any, comment: string, approver?: string)=>{
+    await handleProcessInstanceWorkitem('rejected', instanceHistoryId, userSession, comment, approver);
 }
+
+export const processInstanceWorkitemReassign = async (instanceHistoryId: string, userSession: any, comment: string, approver: string)=>{
+    if(_.isEmpty(approver)){
+        throw new Error('process_approval_error_reassign_approver_notFind');
+    }
+    if(!_.isString(approver)){
+        throw new Error('process_approval_error_reassign_approver_mustBeString');
+    }
+
+    const history = await objectql.getObject("process_instance_history").update(instanceHistoryId, {
+        step_status: "reassigned",
+        actor: approver,
+        comments: comment
+    })
+
+    await addInstanceHistory(userSession.spaceId, history.process_instance, 'pending', null, {nodeId: history.step_node, actor: approver, originalActor: history.original_actor, submitted_by: userSession.userId});
+}
+
