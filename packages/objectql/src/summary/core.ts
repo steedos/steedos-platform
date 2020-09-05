@@ -106,9 +106,11 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
     const { reference_to_field, summary_type, summary_field } = fieldSummaryConfig;
     // 引用关系超过一层时，需要使用aggregate来查出哪些记录需要更新重算公式字段值
     let aggregateGroups = getSummaryAggregateGroups(summary_type, summary_field);
-    // let lastLookupAs = aggregateLookups[aggregateLookups.length - 1]["$lookup"].as;
-    const referenceToRecord = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: [reference_to_field] })
-    const referenceToId = referenceToRecord[reference_to_field];
+    const referenceToRecord = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: [reference_to_field] });
+    let referenceToId: string;
+    if(referenceToRecord){
+        referenceToId = referenceToRecord[reference_to_field];
+    }
     let referenceToIds = [];
     let previousReferenceToId = previousDoc && previousDoc[reference_to_field];
     if(referenceToId){
@@ -119,7 +121,8 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
         }
     }
     else {
-        // 当子表中master_detail字段值为空，这里要区别下原来是否有值，如果原来本来就是空就不需要进一步汇总了，如果原来不是空则还是要拿到原来的值进行汇总
+        // 当子表中master_detail字段值为空，说明可能是直接删除了子表记录或者把子表记录的master_detail字段值修改为空了
+        // 这里要区别下原来是否有值，如果原来本来就是空就不需要进一步汇总了，如果原来不是空则还是要拿到原来的值进行汇总
         if(previousReferenceToId){
             referenceToIds.push(previousReferenceToId);
         }
