@@ -1,0 +1,39 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getSettings, getTenant, getCurrentUser } from '../selectors';
+import * as GlobalActions from '../actions/global_actions';
+import Loading from './Loading';
+
+class LoggedIn extends React.PureComponent {
+
+  static propTypes = {
+    currentUser: PropTypes.object,
+  }
+
+  isValidState() {
+    return this.props.currentUser != null;
+  }
+  
+  componentDidMount() {
+    if (!this.props.currentUser) {
+      GlobalActions.emitUserLoggedOutEvent('#/login?redirect_to=' + encodeURIComponent(this.props.location.pathname), true, false);
+    }
+  }
+  render() {
+    if (!this.isValidState()) {
+        return <Loading/>;
+    }
+
+    return this.props.children;
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    currentUser: getCurrentUser(state),
+    tenant: getTenant(state),
+  };
+}
+
+export default connect(mapStateToProps)(LoggedIn);

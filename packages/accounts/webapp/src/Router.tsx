@@ -76,7 +76,7 @@ const Router = ({tenant}:any) => {
           {/* <GlobalMessage></GlobalMessage> */}
                 {/* <Route path="/" component={GoBack}/> */}
                 {/* <Route path="/" component={Title}/> */}
-                <Route exact path="/" component={Home}/>
+                <LoggedInRoute exact path="/" component={Home}/>
                 <Route path="/signup" component={signupComponent} />
                 <Route path="/signup-password" component={SignupPassword} />
 
