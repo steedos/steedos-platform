@@ -25,8 +25,6 @@ import { errors } from './errors';
 import { getSteedosConfig } from '@steedos/objectql';
 import { verifyCode, getVerifyRecord } from '../rest-express/endpoints/steedos/verify_code';
 
-import { canEmailPasswordLogin } from '../core/index'
-
 export interface AccountsPasswordOptions {
   /**
    * Two factor options passed down to the @accounts/two-factor service.
@@ -600,11 +598,6 @@ export default class AccountsPassword implements AuthenticationService {
     } else if (email) {
       // this._validateLoginWithField('email', user);
       foundUser = await this.db.findUserByEmail(email);
-      if(foundUser){
-        if(!canEmailPasswordLogin(foundUser)){
-          throw new Error("accounts.disableUnverifiedEmailPasswordLogin");
-        }
-      }
     }
 
     if (!foundUser) {
@@ -638,7 +631,7 @@ export default class AccountsPassword implements AuthenticationService {
   private async codeAuthenticator(
     user, token, token_code, locale
   ): Promise<User> {
-    const { username, email, id } = isString(user)
+    const { username, email, mobile, id } = isString(user)
       ? this.toUsernameAndEmail({ user })
       : this.toUsernameAndEmail({ ...user });
     const verifyRecord: any = await getVerifyRecord(token);
@@ -702,8 +695,8 @@ export default class AccountsPassword implements AuthenticationService {
    * @param user An object containing at least `username`, `user` and/or `email`.
    * @returns An object containing `id`, `username` and `email`.
    */
-  private toUsernameAndEmail({ user, username, email, id }: any): any {
-    if (user && !username && !email) {
+  private toUsernameAndEmail({ user, username, email, mobile, id }: any): any {
+    if (user && !username && !email && !mobile) {
       if (isEmail(user)) {
         email = user;
         username = null;
@@ -712,6 +705,6 @@ export default class AccountsPassword implements AuthenticationService {
         email = null;
       }
     }
-    return { username, email, id };
+    return { username, email, mobile, id };
   }
 }

@@ -174,19 +174,19 @@ export default class Client4 {
         );
     }
 
-    login = (loginId: string, password: string, token = '', deviceId = '') => {
+    login = (user: string | object, password: string, token = '', deviceId = '') => {
         this.trackEvent('api', 'api_users_login');
 
         const body: any = {
             device_id: deviceId,
-            username: loginId,
+            user,
             password,
             token,
             locale: "zh-cn"
         };
 
         return this.doFetch<UserProfile>(
-            `${this.getAccountsRoute()}/password/login`,
+            `${this.getAccountsRoute()}/login`,
             {method: 'POST', body: JSON.stringify(body)},
         );
     };

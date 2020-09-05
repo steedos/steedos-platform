@@ -29,14 +29,15 @@ export function login(loginId: string, password: string, mfaToken = ''): ActionF
 }
 
 
-function completeLogin(data: UserProfile): ActionFunc {
+function completeLogin(data: any): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+      const user = data.user
       dispatch({
           type: UserTypes.RECEIVED_ME,
-          data,
+          data: user,
       });
 
-      Client4.setUserId(data._id);
+      Client4.setUserId(user._id);
       
       let teamMembers;
 

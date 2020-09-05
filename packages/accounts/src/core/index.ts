@@ -102,22 +102,6 @@ export const canPasswordLogin = async ()=>{
   return tenant.enable_password_login;
 }
 
-export const canMobilePasswordLogin = async (user)=>{
-  const tenant: any = await getMergedTenant();
-  if(tenant.enable_mobile_code_login){
-    return user.mobile_verified
-  }
-  return tenant.enable_password_login;
-}
-
-export const canEmailPasswordLogin = async (user)=>{
-  const tenant: any = await getMergedTenant();
-  if(tenant.enable_email_code_login){
-    return user.email_verified
-  }
-  return tenant.enable_password_login;
-}
-
 function isEmpty(str){
   if(!str){
     return true;

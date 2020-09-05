@@ -151,10 +151,12 @@ Please change it with a strong random token.`);
 
     return {
       sessionId,
+      token,
       tokens: {
         refreshToken,
         accessToken,
       },
+      user
     };
   }
 
@@ -306,6 +308,7 @@ Please change it with a strong random token.`);
         const result = {
           sessionId: session.id,
           user: this.sanitizeUser(user),
+          token: sessionToken,
           tokens,
         };
 
