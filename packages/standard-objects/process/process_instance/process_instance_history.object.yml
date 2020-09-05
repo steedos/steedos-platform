@@ -1,6 +1,6 @@
 name: process_instance_history
-label: process_instance_history
-icon: record
+label: 批准历史
+icon: approval
 # paging:
 #   enabled: false
 fields:
