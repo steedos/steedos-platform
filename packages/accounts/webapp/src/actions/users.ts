@@ -36,7 +36,7 @@ function completeLogin(data: UserProfile): ActionFunc {
           data,
       });
 
-      Client4.setUserId(data.id);
+      Client4.setUserId(data._id);
       
       let teamMembers;
 

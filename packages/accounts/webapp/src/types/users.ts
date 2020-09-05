@@ -1,7 +1,7 @@
 import {$ID, IDMappedObjects, RelationOneToMany, RelationOneToOne, Dictionary} from './utilities';
 
 export type UserProfile = {
-  id: string;
+  _id: string;
   create_at: number;
   update_at: number;
   delete_at: number;

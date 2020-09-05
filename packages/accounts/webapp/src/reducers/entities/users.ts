@@ -8,13 +8,13 @@ const currentUserId = (state = '', action: GenericAction) => {
     switch (action.type) {
         case UserTypes.RECEIVED_ME: {
             const data = action.data || action.payload;
-            return data.id;
+            return data._id;
         }
 
         case UserTypes.LOGIN: { // Used by the mobile app
             const {user} = action.data;
 
-            return user ? user.id : state;
+            return user ? user._id : state;
         }
         case UserTypes.LOGOUT_SUCCESS:
             return '';
@@ -33,7 +33,7 @@ const profiles = (state: IDMappedObjects<UserProfile> = {}, action: GenericActio
 
         return {
             ...state,
-            [data.id]: user,
+            [data._id]: user,
         };
     }
 
@@ -42,7 +42,7 @@ const profiles = (state: IDMappedObjects<UserProfile> = {}, action: GenericActio
 
         if (user) {
             const nextState = {...state};
-            nextState[user.id] = user;
+            nextState[user._id] = user;
             return nextState;
         }
 

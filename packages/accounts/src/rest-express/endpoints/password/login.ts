@@ -13,20 +13,17 @@ export const login = (accountsServer: AccountsServer) => async (
 
   if (!username || !password) {
     res.status(401);
-    res.json({ message: 'Unauthorized.' });
+    res.json({ message: 'Bad request' });
     return;
   }
 
   const users = await db.find('users', {
     filters: [['email','=', username]],
-    fields: ['services']
   });
-
-  console.log(users);
 
   if (!users || users.length == 0) {
     res.status(401);
-    res.json({ message: 'User not found.' });
+    res.json({ message: 'User not found' });
     return;
   }
 
@@ -43,6 +40,15 @@ export const login = (accountsServer: AccountsServer) => async (
   const pass: any = hashPassword(password, 'sha256');
   const isPasswordValid = await verifyPassword(pass, user.services.password.bcrypt);
   
-  res.json({ message: isPasswordValid });
+  if (!isPasswordValid) {
+    res.status(401);
+    res.json({ message: 'Unauthorized' });
+    return;
+
+  }
+
+  delete user.services
+
+  res.json(user);
   return;
 }
