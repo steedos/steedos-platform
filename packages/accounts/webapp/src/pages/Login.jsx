@@ -32,9 +32,10 @@ const ReApplyCodeBtn = ({ onClick, id, name }) => {
   }
   return (
 
-  <button class={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md text-gray-700 bg-gray-100 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 " + textColor}
+  <button class={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
     id={id}
     disabled={restTime > 0}
+    type="button"
     onClick={(e) => {
         resetCountdown();
         if(onClick){
@@ -134,6 +135,11 @@ class Login extends React.Component {
   }
 
   sendVerificationToken = (e) => {
+
+    if(!this.state.loginId.trim()){
+      throw new Error('accounts.usernameOrEmailRequired');
+    }
+
     this.props.actions.sendVerificationToken(this.state.loginId.trim())
   }
 
