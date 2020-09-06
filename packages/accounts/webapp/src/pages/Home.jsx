@@ -4,7 +4,8 @@ import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 import { connect } from 'react-redux';
-import { getTenant, getSettings, getCurrentUser } from '../selectors';
+import { getTenant, getSettings } from '../selectors';
+import { getCurrentUser } from "../selectors/entities/users";
 import Navbar from '../components/Navbar';
 
 import { accountsClient, accountsRest } from '../accounts';

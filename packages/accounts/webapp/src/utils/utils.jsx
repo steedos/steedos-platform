@@ -1,5 +1,6 @@
 import store from '../stores/redux_store';
 import {getCurrentLocale, getTranslations} from '../selectors/i18n';
+import {IDMappedObjects, Dictionary} from '../types/utilities';
 
 export function localizeMessage(id, defaultMessage) {
     const state = store.getState();
@@ -12,6 +13,26 @@ export function localizeMessage(id, defaultMessage) {
     }
 
     return translations[id];
+}
+
+export function isEmptyObject(object) {
+    if (!object) {
+        return true;
+    }
+
+    if (Object.keys(object).length === 0) {
+        return true;
+    }
+
+    return false;
+}
+
+export function listToMap(recordsList) {
+    const recordsMap = {};
+    for (let i = 0; i < recordsList.length; i++) {
+        recordsMap[recordsList[i].id] = recordsList[i];
+    }
+    return recordsMap;
 }
 
 export const getCookie = (name) => {

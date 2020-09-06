@@ -16,5 +16,5 @@ export type UserProfile = {
 
 export type UsersState = {
   currentUserId: string;
-  profiles: IDMappedObjects<UserProfile>;
+  users: IDMappedObjects<UserProfile>;
 };

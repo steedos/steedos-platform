@@ -8,12 +8,12 @@ export default {
     },
     users: {
         currentUserId: '',
-        profiles: {},
+        users: {},
     },
-    // teams: {
-    //     currentTeamId: '',
-    //     teams: {},
-    // },
+    spaces: {
+        currentSpaceId: '',
+        spaces: {},
+    },
   },
   i18n: {
       translations: {

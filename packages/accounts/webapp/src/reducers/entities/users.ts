@@ -24,7 +24,7 @@ const currentUserId = (state = '', action: GenericAction) => {
 }
 
 
-const profiles = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction) => {
+const users = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction) => {
     switch (action.type) {
     case UserTypes.RECEIVED_ME:
     case UserTypes.RECEIVED_PROFILE: {
@@ -59,5 +59,5 @@ const profiles = (state: IDMappedObjects<UserProfile> = {}, action: GenericActio
 
 export default combineReducers({
     currentUserId,
-    profiles
+    users
 })

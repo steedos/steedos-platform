@@ -13,14 +13,6 @@ export function getTenant(state) {
     return tenant;
 }
 
-export function getCurrentSpace(state) {
-    return state.entities.spaces.profiles[getCurrentSpaceId(state)];
-}
-
-export function getCurrentSpaceId(state) {
-    return state.entities.spaces.currentSpaceId;
-}
-
 export function getCurrentUser(state) {
     return state.entities.users.profiles[getCurrentUserId(state)];
 }

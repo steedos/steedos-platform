@@ -23,11 +23,9 @@ const LoginPassword = ({ actions, history, settings, tenant, location, title, re
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(history.location.state ? (history.location.state.error || '') : '');
-  const [message, setMessage] = useState<any>(history.location.state ? (history.location.state.message || '') : '');
   const searchParams = new URLSearchParams(location.search);
   const intl = useIntl();
 
-  console.log(actions)
   let spaceId = searchParams.get("X-Space-Id");
   accountsEventOnError((err: any)=>{
     setError(err.message);
@@ -107,6 +105,7 @@ const LoginPassword = ({ actions, history, settings, tenant, location, title, re
           <div>
             <input 
               aria-label={intl.formatMessage({id: 'accounts.password'})}
+              type="password"
               id="password"
               name="password" 
               value={password}

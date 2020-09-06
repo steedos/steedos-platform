@@ -77,7 +77,7 @@ export function loadMe(): ActionFunc {
       // await Promise.all(promises);
 
       const {currentUserId} = getState().entities.users;
-      const user = getState().entities.users.profiles[currentUserId];
+      const user = getState().entities.users.users[currentUserId];
       if (currentUserId) {
           Client4.setUserId(currentUserId);
       }

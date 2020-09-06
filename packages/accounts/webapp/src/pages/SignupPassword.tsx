@@ -130,6 +130,7 @@ const Signup = ({ match, history, settingsTenantId, location, actions, settings,
               id="password"
               name="password" 
               value={password}
+              type="password"
               className="appearance-none rounded-none relative block w-full px-3 py-2 border-b border-gray-500 bg-blue-50 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
               placeholder={intl.formatMessage({id: "accounts.password"})}
               onChange={e => setPassword(e.target.value)}

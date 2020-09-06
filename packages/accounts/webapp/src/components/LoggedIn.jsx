@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getSettings, getTenant, getCurrentUser } from '../selectors';
+import { getSettings, getTenant } from '../selectors';
+import { getCurrentUser } from "../selectors/entities/users";
 import * as GlobalActions from '../actions/global_actions';
 import Loading from './Loading';
 
