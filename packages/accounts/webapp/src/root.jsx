@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { getTenant } from './selectors';
 import * as GlobalActions from './actions/global_actions.jsx';
-import {browserHistory} from './utils/browser_history';
+import {hashHistory} from './utils/hash_history';
 import {loadMeAndConfig} from './actions/root';
 
 import LoggedIn from './components/LoggedIn';
@@ -76,14 +76,14 @@ class Root extends React.PureComponent {
     }
     
     return (
-      <HashRouter basename="" history={browserHistory}>
+      <HashRouter basename="">
           <div className="absolute w-full h-full">
             <Loading></Loading>
             {/* <GlobalMessage></GlobalMessage> */}
                   {/* <Route path="/" component={GoBack}/> */}
                   {/* <Route path="/" component={Title}/> */}
                 <Switch>
-                  <LoggedInRoute exact path="/home" component={Home}/>
+                  <Route path="/home" component={Home}/>
                   <Route path="/signup" component={Signup} />
                   <Route path="/signup-password" component={SignupPassword} />
 

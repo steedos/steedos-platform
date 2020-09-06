@@ -170,7 +170,9 @@ finishSignin = (team) => {
   // } else if (team) {
   //     browserHistory.push(`/${team.name}`);
   } else {
-    setTimeout(function(){ GlobalAction.redirectUserToDefaultSpace(); }, 100);
+    setTimeout( ()=> {
+      GlobalAction.redirectUserToDefaultSpace();
+    }, 100);
     
   }
 }

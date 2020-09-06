@@ -1,4 +1,4 @@
-import { browserHistory } from "../utils/browser_history";
+import { hashHistory } from "../utils/hash_history";
 import { logout, loadMe } from "./users";
 import store from '../stores/redux_store';
 import { getCurrentUser } from "../selectors/entities/users";
@@ -26,9 +26,9 @@ export function emitUserLoggedOutEvent(redirectTo = '/', shouldSignalLogout = tr
 
         // clearUserCookie();
 
-        browserHistory.push(redirectTo);
+        hashHistory.push(redirectTo);
     }).catch(() => {
-        browserHistory.push(redirectTo);
+        hashHistory.push(redirectTo);
     });
 }
 
@@ -80,5 +80,5 @@ export async function redirectUserToDefaultSpace() {
     //     }
     // }
 
-    browserHistory.push('#/home');
+    hashHistory.push('/home');
 }

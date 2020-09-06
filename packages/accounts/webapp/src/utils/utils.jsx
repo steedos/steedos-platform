@@ -63,14 +63,6 @@ export const getCookie = (name) => {
 //     return window._AccountsLocationSearch || ""
 // }
 
-export const setHistoryLength = ()=>{
-    window.HistoryLength = (window.HistoryLength || 0) + 1;
-}
-
-export const canBack = ()=>{
-    return window.HistoryLength > 0;
-}
-
 
 export const fixRootUrl = (rootUrl) => {
 
