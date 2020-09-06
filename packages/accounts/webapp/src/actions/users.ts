@@ -127,3 +127,26 @@ export function getMe(): ActionFunc {
       return me;
   };
 }
+
+export function sendVerificationToken(loginId: string): ActionFunc {
+    return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+        const deviceId = getState().entities.general.deviceToken;
+        let data;
+  
+        try {
+            data = await Client4.sendVerificationToken(loginId);
+        } catch (error) {
+            dispatch(batchActions([
+                {
+                    type: UserTypes.VERIFICATION_TOKEN_RECIEVED,
+                    error,
+                },
+                //logError(error),
+            ]));
+            return {error};
+        }
+  
+        return data;
+    };
+  }
+  

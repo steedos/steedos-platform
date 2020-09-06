@@ -14,8 +14,6 @@ export default class IntlProvider extends React.PureComponent {
         settings: PropTypes.object,
         translations: PropTypes.object,
         actions: PropTypes.shape({
-            loadTenant: PropTypes.func.isRequired,
-            loadSettings: PropTypes.func.isRequired,
             loadTranslations: PropTypes.func.isRequired,
         }).isRequired,
     };

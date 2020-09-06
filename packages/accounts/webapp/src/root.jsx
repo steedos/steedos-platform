@@ -14,14 +14,12 @@ import LoggedIn from './components/LoggedIn';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
 import VerifyMobile from './components/VerifyMobile';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './pages/CreateTenant';
 import ChooseTenant from './components/ChooseTenant';
 import Verify from './pages/Verify';
-import LoginPassword from './pages/LoginPassword';
 import Preference from './pages/Preference';
 import Loading from './components/Loading';
 import SignupPassword from './pages/SignupPassword';
@@ -88,7 +86,6 @@ class Root extends React.PureComponent {
                   <Route path="/signup-password" component={SignupPassword} />
 
                   <Route path="/login" component={Login} />
-                  <Route path="/login-password" component={LoginPassword} />
                   
                   <Route path="/create-tenant" component={CreateTenant} />
                   <Route path="/choose-tenant" component={ChooseTenant} />

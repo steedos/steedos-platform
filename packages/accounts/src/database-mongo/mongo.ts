@@ -5,7 +5,7 @@ import {
   DatabaseInterface,
   Session,
   User,
-} from '@accounts/types';
+} from '../types';
 import { get, merge, trim } from 'lodash';
 import { Collection, Db, ObjectID } from 'mongodb';
 
@@ -21,6 +21,7 @@ const toMongoID = (objectId: string | ObjectID) => {
 const defaultOptions = {
   collectionName: 'users',
   sessionCollectionName: 'sessions',
+  codeCollectionName: 'users_verify_code',
   timestamps: {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -40,6 +41,8 @@ export class Mongo implements DatabaseInterface {
   private collection: Collection;
   // Session collection
   private sessionCollection: Collection;
+  // Code collection
+  private codeCollection: Collection;
 
   constructor(db: any, options?: AccountsMongoOptions) {
     this.options = merge({ ...defaultOptions }, options);
@@ -49,6 +52,7 @@ export class Mongo implements DatabaseInterface {
     this.db = db;
     this.collection = this.db.collection(this.options.collectionName);
     this.sessionCollection = this.db.collection(this.options.sessionCollectionName);
+    this.codeCollection = this.db.collection(this.options.codeCollectionName);
   }
 
   public async setupIndexes(): Promise<void> {
@@ -167,6 +171,16 @@ export class Mongo implements DatabaseInterface {
     return user;
   }
 
+  public async findUserByMobileVerificationToken(token: string): Promise<User | null> {
+    const user = await this.collection.findOne({
+      'services.mobile.verificationTokens.token': token,
+    });
+    if (user) {
+      user.id = user._id.toString();
+    }
+    return user;
+  }
+
   public async findUserByResetPasswordToken(token: string): Promise<User | null> {
     const user = await this.collection.findOne({
       'services.password.reset.token': token,
@@ -242,14 +256,30 @@ export class Mongo implements DatabaseInterface {
   public async verifyEmail(userId: string, email: string): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
     const ret = await this.collection.updateOne(
-      { _id: id, 'emails.address': email },
+      { _id: id, 'email': email },
       {
         $set: {
-          'emails.$.verified': true,
-          'email': email,
+          'email_verified': true,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
         $pull: { 'services.email.verificationTokens': { address: email } },
+      }
+    );
+    if (ret.result.nModified === 0) {
+      throw new Error('User not found');
+    }
+  }
+
+  public async verifyMobile(userId: string, mobile: string): Promise<void> {
+    const id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
+    const ret = await this.collection.updateOne(
+      { _id: id, 'mobile': mobile },
+      {
+        $set: {
+          'mobile_verified': true,
+          [this.options.timestamps.updatedAt]: this.options.dateProvider(),
+        },
+        $pull: { 'services.mobile.verificationTokens': { mobile: mobile } },
       }
     );
     if (ret.result.nModified === 0) {
@@ -442,7 +472,8 @@ export class Mongo implements DatabaseInterface {
   public async addEmailVerificationToken(
     userId: string,
     email: string,
-    token: string
+    token: string,
+    code: string
   ): Promise<void> {
     const _id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
     await this.collection.updateOne(
@@ -450,6 +481,7 @@ export class Mongo implements DatabaseInterface {
       {
         $push: {
           'services.email.verificationTokens': {
+            code,
             token,
             address: email.toLowerCase(),
             when: this.options.dateProvider(),
@@ -458,6 +490,30 @@ export class Mongo implements DatabaseInterface {
       }
     );
   }
+  
+
+  public async addMobileVerificationToken(
+    userId: string,
+    mobile: string,
+    token: string,
+    code: string
+  ): Promise<void> {
+    const _id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
+    await this.collection.updateOne(
+      { _id },
+      {
+        $push: {
+          'services.mobile.verificationTokens': {
+            token,
+            code,
+            mobile: mobile.toLowerCase(),
+            when: this.options.dateProvider(),
+          },
+        },
+      }
+    );
+  }
+  
 
   public async addResetPasswordToken(
     userId: string,
@@ -484,4 +540,5 @@ export class Mongo implements DatabaseInterface {
   public async setResetPassword(userId: string, email: string, newPassword: string): Promise<void> {
     await this.setPassword(userId, newPassword);
   }
+
 }

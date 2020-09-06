@@ -1,6 +1,10 @@
 import { getSteedosConfig } from '@steedos/objectql'
 import { db } from '../db';
 import * as _ from 'lodash';
+import chalk from 'chalk';
+
+declare var MailQueue;
+declare var SMSQueue;
 
 const config = getSteedosConfig();
 
@@ -169,4 +173,38 @@ export const getSteedosService = ()=>{
   if (!steedosService.endsWith("/"))
     steedosService += "/" ;
   return steedosService;
+}
+
+export const sendMail = async (mail: any): Promise<void> => {
+  const {to, subject, html} = mail;
+  const config = getSteedosConfig().email || {};
+  let canSend = canSendEmail();
+  //如果没有配置发送邮件服务，则打印log
+  if(!canSend){
+      chalk.red(`Send email failed: ${to}, ${subject}`)
+      console.log("Please set email configs in steedos-config.yml")
+      return;
+  }else{
+      MailQueue.send({
+          to: to,
+          from: config.from || "华炎魔方",
+          subject: subject,
+          html: html
+      });
+  }
+};
+
+export function sendSMS(mobile, message, spaceId){
+  let canSend = canSendSMS();
+  if(!canSend){
+      chalk.red(`Send sms failed: ${mobile}, ${message}`)
+      chalk.red("Please set sms configs in steedos-config.yml")
+      return;
+  }else{
+      chalk.green(`sms: ${mobile}, ${message}`)
+      SMSQueue.send({
+          RecNum: mobile,
+          msg: message
+      }, spaceId)
+  }
 }

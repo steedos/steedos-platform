@@ -5,8 +5,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import { loadTranslations } from '../../actions/i18n';
-import { loadSettings } from '../../actions/settings';
-import { loadTenant } from '../../actions/tenant'
 
 import {getCurrentLocale, getTranslations} from '../../selectors/i18n';
 
@@ -26,8 +24,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators({
-            loadTenant,
-            loadSettings,
             loadTranslations,
         }, dispatch),
     };

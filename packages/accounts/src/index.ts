@@ -10,13 +10,12 @@ import MongoDBInterface from './database-mongo';
 import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
-import { sendMail } from './mail';
 import { getSteedosConfig, SteedosMongoDriver, getConnection } from '@steedos/objectql'
 import { URL } from 'url';
 import * as bodyParser from 'body-parser';
+import { sendMail, sendSMS} from './core';
 
 declare var WebApp;
-declare var Meteor;
 
 const config = getSteedosConfig();
 
@@ -51,7 +50,7 @@ async function getAccountsServer (context){
           return date ? date : new Date()
         },
       }),
-      // sendMail: sendMail,
+      sendMail: sendMail,
       siteUrl: siteUrl,
       tokenSecret: tokenSecret,
       tokenConfigs: {

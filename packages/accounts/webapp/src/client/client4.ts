@@ -205,7 +205,20 @@ export default class Client4 {
         };
 
         return this.doFetch<UserProfile>(
-            `${this.getAccountsRoute()}/login`,
+            `${this.getAccountsRoute()}/password/login`,
+            {method: 'POST', body: JSON.stringify(body)},
+        );
+    };
+
+    sendVerificationToken = (loginId: string) => {
+        this.trackEvent('api', 'api_users_verify');
+
+        const body: any = {
+            email: loginId,
+        };
+
+        return this.doFetch<UserProfile>(
+            `${this.getAccountsRoute()}/password/sendVerificationEmail`,
             {method: 'POST', body: JSON.stringify(body)},
         );
     };

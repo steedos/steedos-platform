@@ -49,13 +49,19 @@ export interface DatabaseInterface extends DatabaseInterfaceSessions {
   // Email related operations
   findUserByEmailVerificationToken(token: string): Promise<User | null>;
 
+  findUserByMobileVerificationToken(token: string): Promise<User | null>;
+
   addEmail(userId: string, newEmail: string, verified: boolean): Promise<void>;
 
   removeEmail(userId: string, email: string): Promise<void>;
 
   verifyEmail(userId: string, email: string): Promise<void>;
 
-  addEmailVerificationToken(userId: string, email: string, token: string): Promise<void>;
+  verifyMobile(userId: string, email: string): Promise<void>;
+
+  addEmailVerificationToken(userId: string, email: string, token: string, code: string): Promise<void>;
+
+  addMobileVerificationToken(userId: string, email: string, token: string, code: string): Promise<void>;
 
   setUserDeactivated(userId: string, deactivated: boolean): Promise<void>;
 }

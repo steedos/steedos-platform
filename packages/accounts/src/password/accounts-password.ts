@@ -11,7 +11,7 @@ import {
   LoginResult,
 } from '../types';
 import { TwoFactor, AccountsTwoFactorOptions, getUserTwoFactorService } from '@accounts/two-factor';
-import { AccountsServer, ServerHooks, generateRandomToken } from '../server';
+import { AccountsServer, ServerHooks, generateRandomToken, generateRandomCode } from '../server';
 import {
   getUserResetTokens,
   getUserVerificationTokens,
@@ -150,7 +150,7 @@ export default class AccountsPassword implements AuthenticationService {
 
   public setStore(store: DatabaseInterface) {
     this.db = store;
-    this.twoFactor.setStore(store);
+    // this.twoFactor.setStore(store);
   }
 
   public async authenticate(params: any): Promise<User> {
@@ -417,16 +417,12 @@ export default class AccountsPassword implements AuthenticationService {
     }
 
     // Do not send an email if the address is already verified
-    const emailRecord = find(
-      user.emails,
-      (email: EmailRecord) => email.address.toLowerCase() === address.toLocaleLowerCase()
-    );
-    if (!emailRecord || emailRecord.verified) {
-      return;
-    }
+    if (user.email_verified)
+      return
 
+    const code = generateRandomCode();
     const token = generateRandomToken();
-    await this.db.addEmailVerificationToken(user.id, address, token);
+    await this.db.addEmailVerificationToken(user.id, address, token, code);
 
     const resetPasswordMail = this.server.prepareMail(
       address,

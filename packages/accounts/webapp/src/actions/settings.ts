@@ -20,9 +20,10 @@ export function loadSettings(): ActionFunc {
         Client4.setEnableLogging(data.EnableDeveloper === 'true');
         Client4.setDiagnosticId(data.DiagnosticId);
 
-        dispatch(batchActions([
-            {type: GeneralTypes.RECEIVED_SETTINGS, data},
-        ]));
+        dispatch({
+            type: GeneralTypes.RECEIVED_SETTINGS,
+            data: data,
+        });
 
         return {data};
     };

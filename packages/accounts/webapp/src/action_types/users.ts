@@ -37,4 +37,6 @@ export default keyMirror({
     DISABLED_USER_ACCESS_TOKEN: null,
     ENABLED_USER_ACCESS_TOKEN: null,
     LOGIN: null,
+
+    VERIFICATION_TOKEN_RECIEVED: null,
 });

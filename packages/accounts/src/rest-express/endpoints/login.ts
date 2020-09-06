@@ -1,9 +1,9 @@
 import * as express from 'express';
 import * as requestIp from 'request-ip';
-import { AccountsServer, generateRandomToken } from '../../../server';
-import { getUserAgent } from '../../utils/get-user-agent';
-import { sendError } from '../../utils/send-error';
-import { setAuthCookies } from '../../utils/steedos-auth';
+import { AccountsServer, generateRandomToken } from '../../server';
+import { getUserAgent } from '../utils/get-user-agent';
+import { sendError } from '../utils/send-error';
+import { setAuthCookies } from '../utils/steedos-auth';
 
 export const login = (accountsServer: AccountsServer) => async (
   req: express.Request,

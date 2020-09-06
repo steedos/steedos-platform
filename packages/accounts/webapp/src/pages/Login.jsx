@@ -14,10 +14,48 @@ import Card from '../components/Card';
 import Logo from '../components/Logo';
 import LocalizedInput from '../components/LocalizedInput';
 import { bindActionCreators, Dispatch, AnyAction } from 'redux';
-import { login } from '../actions/users';
+import { login, sendVerificationToken } from '../actions/users';
 import {withRouter} from "react-router-dom";
 import * as GlobalAction from '../actions/global_actions';
 import { getCurrentUserId } from '../selectors/entities/users';
+import { useCountDown } from "../components/countdown";
+
+const totalSeconds = 60;
+const ReApplyCodeBtn = ({ onClick, id, name }) => {
+  const [restTime, resetCountdown] = useCountDown(name || "cnt1", {
+    total: totalSeconds,
+    lifecycle: "session"
+  });
+  let textColor = "text-blue-600 hover:text-blue-600"
+  if (restTime > 0) {
+    textColor = "text-gray-300 hover:text-gray-300"
+  }
+  return (
+    <div className="text-sm leading-5 my-4">
+      <button type="button"
+        id={id}
+        disabled={restTime > 0}
+        onClick={(e) => {
+          if(e.target && e.target.dataset && e.target.dataset.onlyCountDown === "1"){
+            resetCountdown();
+          }else{
+            resetCountdown();
+            if(onClick){
+              onClick();
+            }
+          }
+        }}
+        className={"font-medium focus:outline-none hover:underline transition ease-in-out duration-150 " + textColor}>
+      <FormattedMessage
+          id='accounts.reSendCode'
+          defaultMessage='Get Verify code' 
+        />{restTime > 0 ? ` (${restTime}s)` : null}
+      </button>
+    </div>
+
+  );
+};
+
 
 class Login extends React.Component {
 
@@ -37,24 +75,24 @@ class Login extends React.Component {
 
     this.state = {
         // ldapEnabled: this.props.isLicensed && this.props.enableLdap,
-        usernameSigninEnabled: this.props.enableSignInWithUsername,
-        emailSigninEnabled: this.props.enableSignInWithEmail,
-        mobileSigninEnabled: this.props.enableSignInWithMobile,
         // samlEnabled: this.props.isLicensed && this.props.enableSaml,
         spaceId,
         loginId,
         password: '',
+        verifyCode: '',
         showMfa: false,
         loading: false,
         sessionExpired: false,
 
-        loginWithPassword: true,
-        loginWithEmailCode: false,
-        loginWithMobileCode: false,
+        loginWith: "password",
 
         error: ''
 
         // brandImageError: false,
+    };
+
+    if (this.props.tenant.enable_email_code_login || this.props.tenant.enable_mobile_code_login) {
+      this.state.loginWith = "verifyCode"
     };
 
     this.loginIdInput = React.createRef();
@@ -65,130 +103,103 @@ class Login extends React.Component {
     document.title = Utils.localizeMessage('accounts.signin') + ` | ${this.props.tenant.name}`;
 
 
-}
+  }
 
-createLoginPlaceholder = () => {
+  createLoginPlaceholder = () => {
 
-  let inputLabel = 'accounts.email_mobile';
-  if (this.propstenant.enable_password_login)
-    inputLabel = 'accounts.email_mobile';
-  else if (this.propstenant.enable_mobile_code_login && this.propstenant.enable_email_code_login) 
-    inputLabel = 'accounts.email_mobile';
-  else if (this.propstenant.enable_mobile_code_login) 
-    inputLabel = 'accounts.mobile';
-  else if (this.propstenant.enable_email_code_login) 
-    inputLabel = 'accounts.email';
-  
-  return Utils.localizeMessage(inputLabel)
-}
-
-handleLoginIdChange = (e) => {
-  this.setState({
-      loginId: e.target.value,
-  });
-}
-
-handlePasswordChange = (e) => {
-  this.setState({
-    password: e.target.value,
-  });
-}
-
-// onSubmit = async (e) => {
-//   e.preventDefault();
-//   this.setState({error: null});
-  
-//   // try {
-//   //   // 判断账户是否已存在
-//   //   const data = await accountsRest.fetch( `user/exists?id=${this.state.loginId.trim()}`, {});
-//   //   if(!data.exists) {
-//   //     throw new Error("该账户不存在。");
-//   //     return;
-//   //   }
-
-//   //   if(this.props.tenant.enable_password_login){
-//   //     this.props.history.push({
-//   //       pathname: `/login-password/`,
-//   //       search: this.props.location.search,
-//   //       state: { email: this.state.loginId.trim() }
-//   //     })
-//   //     return;
-//   //   } 
-
-//   //   let action = ''
-//   //   if(this.state.loginId.trim().indexOf("@") < 0){
-//   //     action = 'mobileLogin'
-//   //   } else 
-//   //     action = 'emailLogin';
-
-//   //   this.props.history.push({
-//   //     pathname: `/verify/${action}`,
-//   //     search: this.props.location.search,
-//   //     state: { email: this.state.loginId.trim(), spaceId:this.state.spaceId }
-//   //   })
+    let inputLabel = 'accounts.email_mobile';
+    if (this.props.tenant.enable_password_login)
+      inputLabel = 'accounts.email_mobile';
+    else if (this.props.tenant.enable_mobile_code_login && this.propstenant.enable_email_code_login) 
+      inputLabel = 'accounts.email_mobile';
+    else if (this.props.tenant.enable_mobile_code_login) 
+      inputLabel = 'accounts.mobile';
+    else if (this.props.tenant.enable_email_code_login) 
+      inputLabel = 'accounts.email';
     
-//   // } catch (err) {
-//   //   this.setState({error: err.message});
-//   // }
-// };
-
-
-onSubmit = async (e) => {
-  e.preventDefault();
-  this.setState({error: null});
-
-  if(!this.state.loginId.trim()){
-    throw new Error('accounts.usernameOrEmailRequired');
+    return Utils.localizeMessage(inputLabel)
   }
 
-  if(!this.state.password.trim()){
-    throw new Error('accounts.passwordRequired');
+  handleLoginIdChange = (e) => {
+    this.setState({
+        loginId: e.target.value,
+    });
   }
 
-  this.props.actions.login(this.state.loginId.trim(), this.state.password, '').then(async ({error}) => {
-    if (error) {
-      this.setState({error: error.message});
-      return;
+  handlePasswordChange = (e) => {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+
+  handleCodeChange = (e) => {
+    this.setState({
+      verifyCode: e.target.value,
+    });
+  }
+
+  sendVerificationToken = (e) => {
+    this.props.actions.sendVerificationToken(this.state.loginId.trim())
+  }
+
+  onSubmit = async (e) => {
+    e.preventDefault();
+    this.setState({error: null});
+
+    if(!this.state.loginId.trim()){
+      throw new Error('accounts.usernameOrEmailRequired');
     }
-    
-  });
-  this.finishSignin();
-};
+
+    if(!this.state.password.trim()){
+      throw new Error('accounts.passwordRequired');
+    }
+
+    this.props.actions.login(this.state.loginId.trim(), this.state.password, '').then(async ({error}) => {
+      if (error) {
+        this.setState({error: error.message});
+        return;
+      }
+      
+    });
+    this.finishSignin();
+  };
 
 
-finishSignin = (team) => {
-  const query = new URLSearchParams(this.props.location.search);
-  const redirectTo = query.get('redirect_to');
+  finishSignin = (team) => {
+    const query = new URLSearchParams(this.props.location.search);
+    const redirectTo = query.get('redirect_to');
 
-  // Utils.setCSRFFromCookie();
+    // Utils.setCSRFFromCookie();
 
-  // Record a successful login to local storage. If an unintentional logout occurs, e.g.
-  // via session expiration, this bit won't get reset and we can notify the user as such.
-  // LocalStorageStore.setWasLoggedIn(true);
-  if (redirectTo && redirectTo.match(/^\/([^/]|$)/)) {
-    this.props.history.push(redirectTo);
-  // } else if (team) {
-  //     browserHistory.push(`/${team.name}`);
-  } else {
-    setTimeout( ()=> {
-      GlobalAction.redirectUserToDefaultSpace();
-    }, 100);
-    
+    // Record a successful login to local storage. If an unintentional logout occurs, e.g.
+    // via session expiration, this bit won't get reset and we can notify the user as such.
+    // LocalStorageStore.setWasLoggedIn(true);
+    if (redirectTo && redirectTo.match(/^\/([^/]|$)/)) {
+      this.props.history.push(redirectTo);
+    // } else if (team) {
+    //     browserHistory.push(`/${team.name}`);
+    } else {
+      setTimeout( ()=> {
+        GlobalAction.redirectUserToDefaultSpace();
+      }, 100);
+      
+    }
   }
-}
 
-goSignup = ()=>{
-  let state = {};
-  if(this.state.loginId.trim().length > 0){
-    state =  { email: this.state.loginId.trim() }
+  goSignup = ()=>{
+    let state = {};
+    if(this.state.loginId.trim().length > 0){
+      state =  { email: this.state.loginId.trim() }
+    }
+    this.props.history.push({
+      pathname: `/signup`,
+      search: this.props.location.search,
+      state: state
+    })
   }
-  this.props.history.push({
-    pathname: `/signup`,
-    search: this.props.location.search,
-    state: state
-  })
-}
-render() {
+
+
+  render() {
 
     return (
     <Card>
@@ -211,14 +222,14 @@ render() {
                 value={this.state.loginId}
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
-                placeholder={this.createLoginPlaceholder}
+                placeholder={this.createLoginPlaceholder()}
                 onChange={this.handleLoginIdChange}
               />
             </div>
 
-            {this.state.loginWithPassword && (
+            {this.state.loginWith === 'password' && (
                 <div class="-mt-px">
-                  <LocalizedInput 
+                  <input 
                     type="password"
                     id="password"
                     name="password" 
@@ -230,6 +241,19 @@ render() {
                 </div>
             )}
 
+            {this.state.loginWith === 'verifyCode' && (
+                <div class="-mt-px">
+                  <LocalizedInput 
+                    id="verifyCode"
+                    name="verifyCode" 
+                    value={this.state.verifyCode}
+                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
+                    placeholder={{id: 'accounts.verifyCode', defaultMessage: 'Verify Code'}}
+                    onChange={this.handleCodeChange}
+                  />
+                  <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn"/>
+                </div>
+            )}
           </div>
           
           {this.state.error && <FormError error={this.state.error} />}
@@ -277,6 +301,7 @@ function mapDispatchToProps(dispatch) {
   return {
       actions: bindActionCreators({
           login,
+          sendVerificationToken,
       }, dispatch),
   };
 }

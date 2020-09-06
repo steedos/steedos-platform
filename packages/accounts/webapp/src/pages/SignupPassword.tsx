@@ -10,7 +10,6 @@ import FormError from '../components/FormError';
 
 import { loadTranslations } from '../actions/i18n';
 import { loadSettings } from '../actions/settings';
-import { loadTenant } from '../actions/tenant';
 import { getSettings, getTenant, getSettingsTenantId } from '../selectors';
 import { requests } from '../actions/requests'
 import { Login } from '../client'
@@ -39,12 +38,6 @@ const Signup = ({ match, history, settingsTenantId, location, actions, settings,
   if (!_email){
     return (<Redirect to="/login" />);
   }
-
-  // useEffect(() => {
-  //   if(spaceId){
-  //     actions.loadTenant(spaceId);
-  //   }
-  // }, []);
 
   const getBrowserLocale = function () {
     var l, locale;
@@ -165,7 +158,6 @@ function mapStateToProps(state: any) {
 function mapDispatchToProps(dispatch: any) {
   return {
     actions: bindActionCreators({
-      loadTenant,
       loadSettings,
       loadTranslations,
     }, dispatch),
