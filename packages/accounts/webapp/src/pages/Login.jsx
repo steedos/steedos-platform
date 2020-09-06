@@ -17,6 +17,7 @@ import { bindActionCreators, Dispatch, AnyAction } from 'redux';
 import { login } from '../actions/users';
 import {withRouter} from "react-router-dom";
 import * as GlobalAction from '../actions/global_actions';
+import { getCurrentUserId } from '../selectors/entities/users';
 
 class Login extends React.Component {
 
@@ -145,7 +146,6 @@ onSubmit = async (e) => {
   }
 
   this.props.actions.login(this.state.loginId.trim(), this.state.password, '').then(async ({error}) => {
-    console.log(error)
     if (error) {
       this.setState({error: error.message});
       return;
@@ -170,7 +170,8 @@ finishSignin = (team) => {
   // } else if (team) {
   //     browserHistory.push(`/${team.name}`);
   } else {
-    GlobalAction.redirectUserToDefaultSpace();
+    setTimeout(function(){ GlobalAction.redirectUserToDefaultSpace(); }, 100);
+    
   }
 }
 
@@ -263,6 +264,7 @@ render() {
 
 function mapStateToProps(state) {
   return {
+    getCurrentUserId: getCurrentUserId(state),
     settings: getSettings(state),
     tenant: getTenant(state),
     settingsTenantId: getSettingsTenantId(state)

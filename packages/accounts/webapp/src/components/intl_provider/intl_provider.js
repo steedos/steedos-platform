@@ -22,8 +22,8 @@ export default class IntlProvider extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        props.actions.loadSettings();
-        props.actions.loadTenant();
+        // props.actions.loadSettings();
+        // props.actions.loadTenant();
     }
 
     componentDidMount() {

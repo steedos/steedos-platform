@@ -32,13 +32,13 @@ export function login(loginId: string, password: string, mfaToken = ''): ActionF
 
 function completeLogin(data: any): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-      const user = data.user
       dispatch({
-          type: UserTypes.RECEIVED_ME,
-          data: user,
+        type: UserTypes.RECEIVED_ME,
+        data: data.user,
       });
+      Client4.setToken(data.token);
+      Client4.setUserId(data.user._id);
 
-      Client4.setUserId(user._id);
       
       let teamMembers;
 
@@ -56,6 +56,12 @@ function completeLogin(data: any): ActionFunc {
       //     ]));
       //     return {error};
       // }
+
+      dispatch(batchActions([
+        {
+            type: UserTypes.LOGIN_SUCCESS,
+        },
+      ]));
 
       return {data: true};
   };
@@ -92,7 +98,7 @@ export function logout(): ActionFunc {
       dispatch({type: UserTypes.LOGOUT_REQUEST, data: null});
 
       try {
-          //await Client4.logout();
+          await Client4.logout();
       } catch (error) {
           // nothing to do here
       }

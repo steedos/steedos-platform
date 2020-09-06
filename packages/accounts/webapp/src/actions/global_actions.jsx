@@ -38,14 +38,13 @@ export async function redirectUserToDefaultSpace() {
 
     // Assume we need to load the user if they don't have any team memberships loaded or the user loaded
     let user = getCurrentUser(state);
-    const shouldLoadUser = Utils.isEmptyObject(getSpaceUsers(state)) || !user;
+    // const shouldLoadUser = Utils.isEmptyObject(getSpaceUsers(state)) || !user;
 
-    if (shouldLoadUser) {
-        await dispatch(loadMe());
-        state = getState();
-        user = getCurrentUser(state);
-    }
-
+    // if (shouldLoadUser) {
+    //     await dispatch(loadMe());
+    //     state = getState();
+    //     user = getCurrentUser(state);
+    // }
     if (!user) {
         return;
     }
@@ -81,6 +80,5 @@ export async function redirectUserToDefaultSpace() {
     //     }
     // }
 
-    console.log(user)
     browserHistory.push('#/home');
 }

@@ -1,6 +1,8 @@
 import keyMirror from '../utils/key_mirror';
 
 export default keyMirror({
+    RECEIVED_SETTINGS: null, 
+    
     RECEIVED_APP_STATE: null,
     RECEIVED_APP_CREDENTIALS: null,
     REMOVED_APP_CREDENTIALS: null,

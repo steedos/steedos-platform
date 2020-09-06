@@ -210,6 +210,13 @@ export default class Client4 {
         );
     };
 
+    getSettings = () => {
+        return this.doFetch<UserProfile>(
+            `${this.getAccountsRoute()}/settings`,
+            {method: 'get'},
+        );
+    };
+
     getMe = () => {
         return this.doFetch<UserProfile>(
             `${this.getAccountsRoute()}/user`,

@@ -1,7 +1,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 
-import {  HashRouter, Route, RouteProps } from 'react-router-dom';
+import { Switch, HashRouter, Route, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { connect } from 'react-redux';
@@ -57,7 +57,8 @@ class Root extends React.PureComponent {
 
   componentDidMount() {
     this.props.actions.loadMeAndConfig().then((response) => {
-      if (document.location.pathname === '/' && response[2] && response[2].data) {
+      console.log(response)
+      if (document.location.pathname === '/' && response[1] && response[1].data) {
           GlobalActions.redirectUserToDefaultSpace();
       }
       this.onConfigLoaded();
@@ -71,9 +72,9 @@ class Root extends React.PureComponent {
 
   render() {
     if (!this.state.configLoaded) {
-        return <div/>;
+      return <div/>;
     }
-
+    
     return (
       <HashRouter basename="" history={browserHistory}>
           <div className="absolute w-full h-full">
@@ -81,7 +82,7 @@ class Root extends React.PureComponent {
             {/* <GlobalMessage></GlobalMessage> */}
                   {/* <Route path="/" component={GoBack}/> */}
                   {/* <Route path="/" component={Title}/> */}
-                  <LoggedInRoute exact path="/" component={Home}/>
+                <Switch>
                   <LoggedInRoute exact path="/home" component={Home}/>
                   <Route path="/signup" component={Signup} />
                   <Route path="/signup-password" component={SignupPassword} />
@@ -97,6 +98,13 @@ class Root extends React.PureComponent {
                   {/* <Route path="/login-code" component={LoginCode} /> */}
                   <LoggedInRoute path="/preference" component={Preference} />
                   <Route path="/verify-mobile/:token" component={VerifyMobile} />
+                  <Redirect
+                      to={{
+                          ...this.props.location,
+                          pathname: '/login',
+                      }}
+                  />
+              </Switch>
             </div>
       </HashRouter>
     );
