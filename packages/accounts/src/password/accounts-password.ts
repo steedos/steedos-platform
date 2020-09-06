@@ -154,28 +154,26 @@ export default class AccountsPassword implements AuthenticationService {
   }
 
   public async authenticate(params: any): Promise<User> {
-    const { user, password, code, token, token_code, locale } = params;
+    const { user, password, token, locale } = params;
 
-    if(token){
-      if (!user) {
-        throw new Error(this.options.errors.unrecognizedOptionsForLogin);
-      }
-      return await this.codeAuthenticator(user, token, token_code, locale);
+    if(user && token){
+      return await this.codeAuthenticator(user, token, locale);
     }
 
     if (!user || !password) {
       throw new Error(this.options.errors.unrecognizedOptionsForLogin);
     }
+
     if ((!isString(user) && !isPlainObject(user)) || !isString(password)) {
       throw new Error(this.options.errors.matchFailed);
     }
 
     const foundUser = await this.passwordAuthenticator(user, password);
 
-    // If user activated two factor authentication try with the code
-    if (getUserTwoFactorService(foundUser)) {
-      await this.twoFactor.authenticate(foundUser, code!);
-    }
+    // // If user activated two factor authentication try with the code
+    // if (getUserTwoFactorService(foundUser)) {
+    //   await this.twoFactor.authenticate(foundUser, code!);
+    // }
 
     return foundUser;
   }
@@ -416,7 +414,7 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.userNotFound);
     }
 
-    // Do not send an email if the address is already verified
+    //Do not send an email if the address is already verified
     if (user.email_verified)
       return
 
@@ -426,7 +424,7 @@ export default class AccountsPassword implements AuthenticationService {
 
     const resetPasswordMail = this.server.prepareMail(
       address,
-      token,
+      code,
       this.server.sanitizeUser(user),
       getPathFragmentPrefix() + 'verify-email',
       this.server.options.emailTemplates.verifyEmail,
@@ -577,8 +575,8 @@ export default class AccountsPassword implements AuthenticationService {
     password: PasswordType
   ): Promise<User> {
     const { username, email, id, mobile } = isString(user)
-      ? this.toUsernameAndEmail({ user })
-      : this.toUsernameAndEmail({ ...user });
+      ? this.toMobileAndEmail({ user })
+      : this.toMobileAndEmail({ ...user });
 
     let foundUser: User | null = null;
 
@@ -625,39 +623,17 @@ export default class AccountsPassword implements AuthenticationService {
   }
 
   private async codeAuthenticator(
-    user, token, token_code, locale
+    user, token, locale
   ): Promise<User> {
     const { username, email, mobile, id } = isString(user)
-      ? this.toUsernameAndEmail({ user })
-      : this.toUsernameAndEmail({ ...user });
-    const verifyRecord: any = await getVerifyRecord(token);
+      ? this.toMobileAndEmail({ user })
+      : this.toMobileAndEmail({ ...user });
+    
+    let foundUser = null;
 
-    if(!verifyRecord){
-      throw new Error('accounts.invalidRequest');
-    }
-
-    let foundUser: User | null = null;
-
-    if (id) {
-      // this._validateLoginWithField('id', user);
-      foundUser = await this.db.findUserById(id);
-    } else if (username) {
-      // this._validateLoginWithField('username', user);
-      foundUser = await this.db.findUserByUsername(username);
-    } else if (email) {
-      // this._validateLoginWithField('email', user);
-      foundUser = await this.db.findUserByEmail(email);
-    }
-
-    let hasVerified = false;
-
-    if(!foundUser && verifyRecord.action.endsWith('SignupAccount')){
-      hasVerified = true;
-      const result = await verifyCode(null, token, token_code, {locale:locale, server: this});
-      if(result.verified){
-        foundUser = await this.db.findUserById(result.userId);
-      }
-    }
+    const loginId = email?email:mobile?mobile:username?username:null;
+    if (loginId)
+      foundUser = this.db.findUserByVerificationCode(loginId, token);
 
     if (!foundUser) {
       throw new Error(
@@ -665,16 +641,6 @@ export default class AccountsPassword implements AuthenticationService {
           ? this.options.errors.invalidCredentials
           : this.options.errors.userNotFound
       );
-    }
-    if(!hasVerified){
-      const result = await verifyCode(foundUser.id, token, token_code, {locale:locale, createUser: this.createUser})
-      if (!result.verified) {
-        throw new Error(
-          this.server.options.ambiguousErrorMessages
-            ? this.options.errors.invalidCredentials
-            : this.options.errors.incorrectPassword
-        );
-      }
     }
     return foundUser;
   }
@@ -691,16 +657,46 @@ export default class AccountsPassword implements AuthenticationService {
    * @param user An object containing at least `username`, `user` and/or `email`.
    * @returns An object containing `id`, `username` and `email`.
    */
-  private toUsernameAndEmail({ user, username, email, mobile, id }: any): any {
+  private toMobileAndEmail({ user, username, email, mobile, id }: any): any {
     if (user && !username && !email && !mobile) {
       if (isEmail(user)) {
         email = user;
-        username = null;
       } else {
-        username = user;
-        email = null;
+        mobile = user;
       }
     }
     return { username, email, mobile, id };
+  }
+
+
+  /**
+   * @description Send an email with a link the user can use verify their email address.
+   * @param {string} [address] - Which address of the user's to send the email to.
+   * This address must be in the user's emails list.
+   * Defaults to the first unverified email in the list.
+   * If the address is already verified we do not send any email.
+   * @returns {Promise<void>} - Return a Promise.
+   */
+  public async sendVerificationCode(loginId: string): Promise<void> {
+    if (!loginId || !isString(loginId)) {
+      throw new Error(this.options.errors.invalidEmailOrMobile);
+    }
+
+
+    const code = generateRandomCode();
+    const userId = await this.db.addVerificationCode(loginId, code);
+
+    const verificationCodeMail = this.server.prepareMail(
+      loginId,
+      code,
+      null,
+      getPathFragmentPrefix() + 'verify-email',
+      this.server.options.emailTemplates.verificationCode,
+      this.server.options.emailTemplates.from
+    );
+
+    await this.server.options.sendMail(verificationCodeMail);
+
+    return userId
   }
 }

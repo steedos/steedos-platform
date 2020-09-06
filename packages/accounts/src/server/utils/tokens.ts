@@ -10,7 +10,7 @@ const generateRandomDigit = function () {
 * @param length
 * @returns {string}
 */
-const getRandomCode = function (length) {
+export const getRandomCode = function (length) {
   length = length || 4;
   let output = "";
   while (length-- > 0) {

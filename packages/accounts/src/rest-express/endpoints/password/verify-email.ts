@@ -29,3 +29,18 @@ export const sendVerificationEmail = (accountsServer: AccountsServer) => async (
     sendError(res, err);
   }
 };
+
+export const sendVerificationCode = (accountsServer: AccountsServer) => async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { loginId } = req.body;
+    const password: any = accountsServer.getServices().password;
+    const userId = await password.sendVerificationCode(loginId);
+    res.json(userId);
+  } catch (err) {
+    sendError(res, err);
+  }
+};
+

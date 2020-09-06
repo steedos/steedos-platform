@@ -31,27 +31,23 @@ const ReApplyCodeBtn = ({ onClick, id, name }) => {
     textColor = "text-gray-300 hover:text-gray-300"
   }
   return (
-    <div className="text-sm leading-5 my-4">
-      <button type="button"
-        id={id}
-        disabled={restTime > 0}
-        onClick={(e) => {
-          if(e.target && e.target.dataset && e.target.dataset.onlyCountDown === "1"){
-            resetCountdown();
-          }else{
-            resetCountdown();
-            if(onClick){
-              onClick();
-            }
-          }
-        }}
-        className={"font-medium focus:outline-none hover:underline transition ease-in-out duration-150 " + textColor}>
-      <FormattedMessage
+
+  <button class={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md text-gray-700 bg-gray-100 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 " + textColor}
+    id={id}
+    disabled={restTime > 0}
+    onClick={(e) => {
+        resetCountdown();
+        if(onClick){
+          onClick();
+        }
+    }}>
+      <span class="">
+        <FormattedMessage
           id='accounts.reSendCode'
           defaultMessage='Get Verify code' 
-        />{restTime > 0 ? ` (${restTime}s)` : null}
-      </button>
-    </div>
+        />{restTime > 0 ? ` (${restTime})` : null}
+      </span>
+  </button>
 
   );
 };
@@ -97,7 +93,6 @@ class Login extends React.Component {
 
     this.loginIdInput = React.createRef();
     this.passwordInput = React.createRef();
-
 
     window.browserHistory = this.props.history;
     document.title = Utils.localizeMessage('accounts.signin') + ` | ${this.props.tenant.name}`;
@@ -150,11 +145,11 @@ class Login extends React.Component {
       throw new Error('accounts.usernameOrEmailRequired');
     }
 
-    if(!this.state.password.trim()){
-      throw new Error('accounts.passwordRequired');
-    }
+    // if(!this.state.password.trim()){
+    //   throw new Error('accounts.passwordRequired');
+    // }
 
-    this.props.actions.login(this.state.loginId.trim(), this.state.password, '').then(async ({error}) => {
+    this.props.actions.login(this.state.loginId.trim(), this.state.password, this.state.verifyCode).then(async ({error}) => {
       if (error) {
         this.setState({error: error.message});
         return;
@@ -221,7 +216,7 @@ class Login extends React.Component {
                 ref={this.loginIdInput}
                 value={this.state.loginId}
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
+                className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
                 placeholder={this.createLoginPlaceholder()}
                 onChange={this.handleLoginIdChange}
               />
@@ -234,7 +229,7 @@ class Login extends React.Component {
                     id="password"
                     name="password" 
                     value={this.state.password}
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
+                    className="appearance-none rounded-none relative block px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
                     placeholder={{id: 'accounts.password', defaultMessage: 'Password'}}
                     onChange={this.handlePasswordChange}
                   />
@@ -242,16 +237,17 @@ class Login extends React.Component {
             )}
 
             {this.state.loginWith === 'verifyCode' && (
-                <div class="-mt-px">
+                <div class="-mt-px grid grid-cols-5">
                   <LocalizedInput 
                     id="verifyCode"
                     name="verifyCode" 
                     value={this.state.verifyCode}
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
+                    className="col-span-3 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-bl-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
                     placeholder={{id: 'accounts.verifyCode', defaultMessage: 'Verify Code'}}
                     onChange={this.handleCodeChange}
                   />
                   <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn"/>
+
                 </div>
             )}
           </div>

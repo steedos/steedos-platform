@@ -4,6 +4,14 @@ import { EmailTemplatesType } from '../types/email-templates-type';
 export const emailTemplates: EmailTemplatesType = {
   from: 'accounts-js <no-reply@accounts-js.com>',
 
+  verificationCode: {
+    subject: (user, code) => 'Verify code: ${code}',
+    text: (user: User, url: string, code) =>
+      `To verify your account email please please enter the code: ${code}`,
+    html: (user: User, url: string, code) =>
+      `To verify your account email please please enter the code: ${code}.`,
+  },
+
   verifyEmail: {
     subject: () => 'Verify your account email',
     text: (user: User, url: string) =>

@@ -13,7 +13,7 @@ export const login = (accountsServer: AccountsServer) => async (
   try {
     let userAgent = getUserAgent(req) || '';
     const ip = requestIp.getClientIp(req);
-
+    
     const result: any = await accountsServer.loginWithService('password', req.body, {
       ip,
       userAgent

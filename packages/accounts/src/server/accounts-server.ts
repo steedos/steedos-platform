@@ -478,7 +478,7 @@ Please change it with a strong random token.`);
     user: User,
     pathFragment: string,
     emailTemplate: EmailTemplateType,
-    from: string
+    from: string,
   ): any {
     if (this.options.prepareMail) {
       return this.options.prepareMail(to, token, user, pathFragment, emailTemplate, from);
@@ -502,15 +502,15 @@ Please change it with a strong random token.`);
     user: User,
     pathFragment: string,
     emailTemplate: EmailTemplateType,
-    from: string
+    from: string, 
   ): object {
     const tokenizedUrl = this.defaultCreateTokenizedUrl(pathFragment, token);
     return {
       from: emailTemplate.from || from,
       to,
-      subject: emailTemplate.subject(user),
-      text: emailTemplate.text(user, tokenizedUrl),
-      html: emailTemplate.html && emailTemplate.html(user, tokenizedUrl),
+      subject: emailTemplate.subject(user, token),
+      text: emailTemplate.text(user, tokenizedUrl, token),
+      html: emailTemplate.html && emailTemplate.html(user, tokenizedUrl, token),
     };
   }
 

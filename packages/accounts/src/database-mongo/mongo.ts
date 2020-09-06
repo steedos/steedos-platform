@@ -10,6 +10,7 @@ import { get, merge, trim } from 'lodash';
 import { Collection, Db, ObjectID } from 'mongodb';
 
 import { AccountsMongoOptions, MongoUser } from './types';
+import { getSessionByUserId } from '@steedos/auth';
 
 const toMongoID = (objectId: string | ObjectID) => {
   if (typeof objectId === 'string') {
@@ -164,16 +165,6 @@ export class Mongo implements DatabaseInterface {
   public async findUserByEmailVerificationToken(token: string): Promise<User | null> {
     const user = await this.collection.findOne({
       'services.email.verificationTokens.token': token,
-    });
-    if (user) {
-      user.id = user._id.toString();
-    }
-    return user;
-  }
-
-  public async findUserByMobileVerificationToken(token: string): Promise<User | null> {
-    const user = await this.collection.findOne({
-      'services.mobile.verificationTokens.token': token,
     });
     if (user) {
       user.id = user._id.toString();
@@ -492,29 +483,6 @@ export class Mongo implements DatabaseInterface {
   }
   
 
-  public async addMobileVerificationToken(
-    userId: string,
-    mobile: string,
-    token: string,
-    code: string
-  ): Promise<void> {
-    const _id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
-    await this.collection.updateOne(
-      { _id },
-      {
-        $push: {
-          'services.mobile.verificationTokens': {
-            token,
-            code,
-            mobile: mobile.toLowerCase(),
-            when: this.options.dateProvider(),
-          },
-        },
-      }
-    );
-  }
-  
-
   public async addResetPasswordToken(
     userId: string,
     email: string,
@@ -539,6 +507,49 @@ export class Mongo implements DatabaseInterface {
 
   public async setResetPassword(userId: string, email: string, newPassword: string): Promise<void> {
     await this.setPassword(userId, newPassword);
+  }
+
+  public async addVerificationCode(loginId: string, code: string): Promise<void> {
+    var user;
+    if (loginId.indexOf('@'))
+      user = await this.findUserByEmail(loginId)
+    else
+      user = await this.findUserByMobile(loginId)
+    const owner = user? user.id: null;
+    const verification_code = {
+      name: loginId,
+      code: code,
+      owner,
+      [this.options.timestamps.createdAt]: this.options.dateProvider(),
+    }
+    const ret = await this.codeCollection.insertOne(verification_code);
+    return owner;
+  }
+
+  public async findUserByVerificationCode(loginId: string, code: string): Promise<User | null> {
+    var user;
+    
+    if (loginId.indexOf('@'))
+      user = await this.findUserByEmail(loginId)
+    else
+      user = await this.findUserByMobile(loginId)
+    if (!user) 
+      return null;
+
+    const owner = user.id;
+    const record = await this.codeCollection.findOne({
+      owner,
+      code
+    });
+    if (!record) 
+      return null;
+    
+    if (loginId.indexOf('@') && (user.email_verified == false))
+      await this.verifyEmail(owner, loginId)
+    else if (user.mobile_verified == false)
+      await this.verifyMobile(owner, loginId)
+    
+    return user;
   }
 
 }

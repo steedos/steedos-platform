@@ -9,6 +9,8 @@ export const errors: ErrorMessages = {
   matchFailed: 'accounts.matchFailed',
   invalidUsername: 'accounts.invalidUsername',
   invalidEmail: 'accounts.invalidEmail',
+  invalidMobile: 'accounts.invalidMobile',
+  invalidEmailOrMobile: 'accounts.invalidEmailOrMobile',
   invalidPassword: 'accounts.invalidPassword',
   invalidNewPassword: 'accounts.invalidNewPassword',
   invalidToken: 'accounts.invalidToken',

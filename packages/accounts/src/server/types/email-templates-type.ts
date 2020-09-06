@@ -6,4 +6,5 @@ export interface EmailTemplatesType {
   resetPassword: EmailTemplateType;
   enrollAccount: EmailTemplateType;
   passwordChanged: EmailTemplateType;
+  verificationCode: EmailTemplateType;
 }

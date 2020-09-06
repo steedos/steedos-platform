@@ -214,11 +214,11 @@ export default class Client4 {
         this.trackEvent('api', 'api_users_verify');
 
         const body: any = {
-            email: loginId,
+            loginId: loginId,
         };
 
         return this.doFetch<UserProfile>(
-            `${this.getAccountsRoute()}/password/sendVerificationEmail`,
+            `${this.getAccountsRoute()}/password/sendVerificationCode`,
             {method: 'POST', body: JSON.stringify(body)},
         );
     };

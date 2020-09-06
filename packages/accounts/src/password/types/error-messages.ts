@@ -32,6 +32,14 @@ export interface ErrorMessages {
    */
   invalidEmail: string;
   /**
+   * Default to 'Invalid email'
+   */
+  invalidMobile: string;
+  /**
+   * Default to 'Invalid email or mobile'
+   */
+  invalidEmailOrMobile: string;
+  /**
    * Default to 'Invalid password'
    */
   invalidPassword: string;
@@ -80,5 +88,5 @@ export interface ErrorMessages {
    */
   emailRequired: string;
 
-  emailOrMobileRequired: string
+  emailOrMobileRequired: string;
 }

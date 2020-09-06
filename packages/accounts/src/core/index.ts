@@ -180,9 +180,9 @@ export const sendMail = async (mail: any): Promise<void> => {
   const config = getSteedosConfig().email || {};
   let canSend = canSendEmail();
   //如果没有配置发送邮件服务，则打印log
+  console.log(chalk.green(`MAIL: ${to}, ${subject}`))
   if(!canSend){
-      chalk.red(`Send email failed: ${to}, ${subject}`)
-      console.log("Please set email configs in steedos-config.yml")
+      console.log(chalk.red("ERROR send mail, please set email configs in steedos-config.yml"));
       return;
   }else{
       MailQueue.send({

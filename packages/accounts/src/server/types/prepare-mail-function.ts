@@ -7,5 +7,6 @@ export type PrepareMailFunction = (
   user: User,
   pathFragment: string,
   emailTemplate: EmailTemplateType,
-  from: string
+  from: string,
+  params?: object
 ) => object;

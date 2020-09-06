@@ -1,6 +1,6 @@
 import { providerCallback } from './endpoints/oauth/provider-callback';
 import { resetPassword, sendResetPasswordEmail } from './endpoints/password/reset';
-import { verifyEmail, sendVerificationEmail } from './endpoints/password/verify-email';
+import { verifyEmail, sendVerificationEmail, sendVerificationCode } from './endpoints/password/verify-email';
 import * as express from 'express';
 import * as cookieParser from 'cookie-parser';
 var cookie = require('cookie-parser');
@@ -82,8 +82,10 @@ const accountsExpress = (
 
     router.post(`${path}/password/sendVerificationEmail`, sendVerificationEmail(accountsServer));
 
-    router.post(`${path}/password/sendResetPasswordEmail`, sendResetPasswordEmail(accountsServer));
+    router.post(`${path}/password/sendVerificationCode`, sendVerificationCode(accountsServer));
 
+    router.post(`${path}/password/sendResetPasswordEmail`, sendResetPasswordEmail(accountsServer));
+    
     router.post(
       `${path}/password/changePassword`,
       userLoader(accountsServer),

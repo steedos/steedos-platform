@@ -38,6 +38,7 @@ async function getAccountsServer (context){
   }
   const accountsServer = new AccountsServer(
     {
+      ambiguousErrorMessages: true,
       db: new MongoDBInterface(connection, {
         convertUserIdToMongoObjectId: false,
         convertSessionIdToMongoObjectId: false,
@@ -63,8 +64,15 @@ async function getAccountsServer (context){
       },
       emailTemplates: {
         from: emailFrom,
+        verificationCode: {
+          subject: (user, token) => `【华炎魔方】验证码：${token}`,
+          text: (user: any, url: string, token) =>
+            `您的验证码是: ${token}，请不要泄露给他人。`,
+          html: (user: any, url: string, token:string) =>
+            `您的验证码是: ${token}，请不要泄露给他人。`,
+        },
         verifyEmail: {
-          subject: () => '验证您的帐户电子邮件',
+          subject: (user, params) => '验证您的帐户电子邮件',
           text: (user: any, url: string) =>
             `请点击此链接来验证您的帐户电子邮件: ${url}`,
           html: (user: any, url: string) =>
