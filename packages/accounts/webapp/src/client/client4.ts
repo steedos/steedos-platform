@@ -174,6 +174,25 @@ export default class Client4 {
         );
     }
 
+
+    logClientError = (message: string, level = 'ERROR') => {
+        // const url = `${this.getBaseRoute()}/logs`;
+
+        // if (!this.enableLogging) {
+        //     throw new ClientError(this.getUrl(), {
+        //         message: 'Logging disabled.',
+        //         url,
+        //     });
+        // }
+
+        // return this.doFetch<{
+        //     message: string;
+        // }>(
+        //     url,
+        //     {method: 'post', body: JSON.stringify({message, level})},
+        // );
+    };
+
     login = (user: string | object, password: string, token = '', deviceId = '') => {
         this.trackEvent('api', 'api_users_login');
 
@@ -191,6 +210,12 @@ export default class Client4 {
         );
     };
 
+    getMe = () => {
+        return this.doFetch<UserProfile>(
+            `${this.getAccountsRoute()}/user`,
+            {method: 'get'},
+        );
+    };
 
     logout = async () => {
         this.trackEvent('api', 'api_users_logout');

@@ -13,18 +13,6 @@ export function getTenant(state) {
     return tenant;
 }
 
-export function getCurrentUser(state) {
-    return state.entities.users.profiles[getCurrentUserId(state)];
-}
-
-export function getCurrentUserId(state) {
-    return state.entities.users.currentUserId;
-}
-
-export function getUsers(state) {
-    return state.entities.users.profiles;
-}
-
 export function getRequests(state){
     return state.requests
 }
@@ -34,3 +22,4 @@ export function getSettingsTenantId(state){
         return state.settings.tenant._id
     }
 }
+

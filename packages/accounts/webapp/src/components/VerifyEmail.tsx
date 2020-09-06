@@ -27,7 +27,7 @@ interface RouteMatchProps {
 }
 
 const VerifyEmail = ({ match, settings, tenant }: any) => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

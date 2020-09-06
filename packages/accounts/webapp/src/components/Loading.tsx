@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Loading = ({ requests }: any) =>{
-  const classes = useStyles();
+  const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);

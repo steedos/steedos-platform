@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ChooseTenant = ({ settings, history, tenant, location }: any) => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState({ spaces: [], name: '' });
   useEffect(() => {

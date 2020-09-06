@@ -32,7 +32,7 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => {
 const VerifyMobile = ({ match, settings, history, location, tenant }: any) => {
     const _mobile = location && location.state ? location.state.mobile : '';
     const accessToken = match.params.token;
-    const classes = useStyles();
+    const classes = useStyles({});
     const [error, setError] = useState<string | null>(null);
     const [mobile, setMobile] = useState<string | "">(_mobile);
     const searchParams = new URLSearchParams(location.search);

@@ -5,15 +5,14 @@ import { getSettings, getTenant } from '../selectors';
 import { accountsClient, accountsRest } from '../accounts';
 import { Transition } from '@tailwindui/react'
 import { useState } from 'react'
+import * as GlobalActions from '../actions/global_actions.jsx';
 import Logo from './Logo';
 
 const Navbar = ({ tenant, user }: any) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const onLogout = async () => {
-    await accountsClient.logout();
-
-    document.location.href = '/';
+    GlobalActions.emitUserLoggedOutEvent();
   };
 
   // document.onclick=() => {if (menuOpen) setMenuOpen(false)}

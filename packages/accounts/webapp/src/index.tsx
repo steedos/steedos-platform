@@ -4,7 +4,7 @@ import 'core-js/stable';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from './Router';
+import Router from './root';
 import { Provider } from 'react-redux'
 import IntlProvider from './components/intl_provider';
 

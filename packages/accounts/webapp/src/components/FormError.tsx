@@ -65,7 +65,7 @@ export interface Props {
 }
 
 function MySnackbarContentWrapper(props: Props) {
-  const classes: any = useStyles1();
+  const classes: any = useStyles1({});
   const { className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
   return (
@@ -121,7 +121,7 @@ const useStyles = makeStyles({
 // }
 
 const FormError = ({ error, variant}: any) => {
-  const classes = useStyles2();
+  const classes = useStyles2({});
   let _variant = variant || "error";
   return <MySnackbarContentWrapper
   variant= {_variant}

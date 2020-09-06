@@ -27,7 +27,7 @@ interface RouteMatchProps {
 }
 
 const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState('');

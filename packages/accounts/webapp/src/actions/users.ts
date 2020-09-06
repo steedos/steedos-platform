@@ -1,8 +1,9 @@
-import { UserTypes } from '../action_types/';
-import { ActionFunc, DispatchFunc, GetStateFunc, batchActions } from "../types/actions";
+import {Action, ActionFunc, ActionResult, batchActions, DispatchFunc, GetStateFunc} from '../types/actions';
+
+import { UserTypes } from '../action_types';
 import { UserProfile } from '../types/users';
 import { Client4 } from '../client/';
-
+import {bindClientFunc, forceLogoutIfNecessary, debounce} from './helpers';
 
 export function login(loginId: string, password: string, mfaToken = ''): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -69,12 +70,12 @@ export function loadMe(): ActionFunc {
       //     Client4.attachDevice(deviceId);
       // }
 
-      // const promises = [
-      //     dispatch(getMe()),
-      //     dispatch(getMyTeams()),
-      // ];
+      const promises = [
+          dispatch(getMe()),
+          // dispatch(getMyTeams()),
+      ];
 
-      // await Promise.all(promises);
+      await Promise.all(promises);
 
       const {currentUserId} = getState().entities.users;
       const user = getState().entities.users.users[currentUserId];
@@ -99,5 +100,24 @@ export function logout(): ActionFunc {
       dispatch({type: UserTypes.LOGOUT_SUCCESS, data: null});
 
       return {data: true};
+  };
+}
+
+
+export function getMe(): ActionFunc {
+  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+      const getMeFunc = bindClientFunc({
+          clientFunc: Client4.getMe,
+          onSuccess: UserTypes.RECEIVED_ME,
+      });
+      const me = await getMeFunc(dispatch, getState);
+
+      if ('error' in me) {
+          return me;
+      }
+      // if ('data' in me) {
+      //     dispatch(loadRolesIfNeeded(me.data.roles.split(' ')));
+      // }
+      return me;
   };
 }

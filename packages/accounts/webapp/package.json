@@ -34,6 +34,7 @@
     "@material-ui/icons": "^4.4.1",
     "@material-ui/styles": "^4.4.1",
     "@tailwindui/react": "^0.1.1",
+    "@types/serialize-error": "^4.0.1",
     "add": "^2.0.6",
     "core-js": "^3.2.1",
     "qrcode.react": "0.9.3",
@@ -45,6 +46,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "serialize-error": "^7.0.1",
     "tslib": "1.10.0",
     "yarn": "^1.22.5"
   },
