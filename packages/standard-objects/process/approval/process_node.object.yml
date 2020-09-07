@@ -89,6 +89,7 @@ fields:
     label: Reject Behavior
     is_wide: true
     group: Select Assigned Approver
+    defaultValue: reject_request
     inlineHelpText: What should happen if the approver rejects this request? #TODO 只有非步骤号不等于1时，才能设置拒绝行为， 等于1时始终为最终拒绝
     options:
       - label: 'Perform all rejection actions for this step AND all final rejection actions. (Final Rejection)'

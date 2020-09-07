@@ -31,11 +31,18 @@ const sendNotifications = async (instanceHistory, from, to)=>{
     }).run();
 }
 
-const getProcessNodeApprover = async (processNode: any, userSession: any, isBack?: boolean)=>{
+const getProcessNodeApprover = async (instanceId: string, processNode: any, userSession: any, isBack?: boolean)=>{
     let nodeApprover = [];
 
     if(isBack){
-
+        const processInstanceNodes = await objectql.getObject("process_instance_node").find({filters: [['process_instance', '=', instanceId], ['process_node', '=', processNode._id]], sort: "created desc"});
+        if(!_.isEmpty(processInstanceNodes)){
+            const lastProcessInstanceNode = processInstanceNodes[0];
+            const nodeHistroy = await objectql.getObject("process_instance_history").find({filters: ['process_instance_node', '=', lastProcessInstanceNode._id]})
+            _.each(nodeHistroy, function(item){
+                nodeApprover.push(item.original_actor);
+            })
+        }
     }else{
         let approver = processNode.approver;
         if(approver === 'auto_assign'){
@@ -86,6 +93,7 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
         actor: options.actor, //TODO 根据规则处理
         comments: comment,
         step_node: options.nodeId,
+        process_instance_node: options.instanceNodeId,
         space: spaceId
     });
 
@@ -101,16 +109,16 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
 const addInstanceNode = async  (instanceId: string, node: any, userSession: any, isBack?: boolean)=>{
     let nodeId = node._id;
     let nodeName = node.name;
-    await objectql.getObject("process_instance_node").insert({
+    const nodeApprover = await getProcessNodeApprover(instanceId, node, userSession, isBack); //TODO nodeApprover为空
+    const instanceNode = await objectql.getObject("process_instance_node").insert({
         process_instance: instanceId,
         process_node: nodeId,
         process_node_name: nodeName,
         node_status: 'pending',
         space: userSession.spaceId,
     })
-    const nodeApprover = await getProcessNodeApprover(node, userSession, isBack);
     for (const actor of nodeApprover) {
-        await addInstanceHistory(userSession.spaceId, instanceId, 'pending', null, {nodeId: nodeId, actor: actor, originalActor: actor, submitted_by: userSession.userId});
+        await addInstanceHistory(userSession.spaceId, instanceId, 'pending', null, {nodeId: nodeId, actor: actor, originalActor: actor, submitted_by: userSession.userId, instanceNodeId: instanceNode._id});
     }
 }
 
@@ -144,10 +152,14 @@ const toNextNode = async (instanceId: string, comment: string, nodes: any, index
     }
 }
 
-const toPreviousNode = async (instanceId: string, nodes: any, index: number = 0, userSession: any)=>{
-    let node = nodes[index];
-    if(node){
-        await addInstanceNode(instanceId, node, userSession, true);
+const toPreviousNode = async (instanceId: string, currentNode: any, userSession: any)=>{
+    const previousInstanceNodes = await objectql.getObject("process_instance_node").find({filters: [['process_instance', '=', instanceId], ['process_node', '!=', currentNode._id]], sort: 'created desc'});
+    if(!_.isEmpty(previousInstanceNodes)){
+        const previousInstanceNode = previousInstanceNodes[0];
+        const previousNode = await objectql.getObject("process_node").findOne(previousInstanceNode.process_node)
+        await addInstanceNode(instanceId, previousNode, userSession, true);
+    }else{
+        throw new Error('not find previous node')
     }
 }
 
@@ -242,11 +254,10 @@ const handleProcessInstanceNode = async(instanceId: string, processStatus: strin
         const nodes = await getProcessNodes(instance.process_definition, userSession.spaceId);
 
         const index = _.findIndex(nodes, function(item){return item._id === pendingNode.process_node});
-
         if(processStatus === 'approved'){
             await toNextNode(instanceId, null, nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
-        }else if(processStatus === 'rejected' && pendingNode.reject_behavior === 'back_to_previous'){
-            await toPreviousNode(instanceId, nodes, index - 1, userSession);
+        }else if(processStatus === 'rejected' && nodes[index].reject_behavior === 'back_to_previous'){
+            await toPreviousNode(instanceId, nodes[index], userSession);
         }
 
         await handleProcessInstance(instanceId, processStatus, userSession);

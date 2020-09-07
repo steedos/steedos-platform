@@ -15,6 +15,10 @@ fields:
     type: lookup
     reference_to: process_instance
     hidden: true
+  process_instance_node:
+    type: lookup
+    reference_to: process_instance_node
+    hidden: true
   step_status:
     type: select
     label: Status
