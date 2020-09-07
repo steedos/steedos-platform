@@ -7,7 +7,6 @@ Steedos.ProcessManager.showProcessApprovalForm = function(action, fields, formId
     Modal.show("quickFormModal", {formId: formId, title: TAPi18n.__(`process_approval_title_${action}`), confirmBtnText: `process_approval_confirmBtnText_${action}`, schema: approveSchema, doc: doc, onConfirm: onConfirm});
 }
 
-
 Steedos.ProcessManager.showApproveButs = function(objectName, recordId){
     var record = Creator.getCollection(objectName).findOne(recordId);
     if(record){
@@ -49,10 +48,8 @@ Steedos.ProcessManager.Recall = function(object_name, record_id){
             is_wide: true
         }
     }, formId, {}, function(formValues, e, t){
-        console.log('recall formValues', formValues);
-        toastr.warning("TODO");
-        // Steedos.authRequest(`/api/v4/process/recall/${object_name}/${record_id}`, {type: 'post', data: JSON.stringify(formValues.insertDoc)});
-        // FlowRouter.reload();
-        // Modal.hide(t);
+        Steedos.authRequest(`/api/v4/process/recall/${object_name}/${record_id}`, {type: 'post', data: JSON.stringify(formValues.insertDoc)});
+        FlowRouter.reload();
+        Modal.hide(t);
     })
 }

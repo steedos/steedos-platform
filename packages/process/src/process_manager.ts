@@ -31,31 +31,36 @@ const sendNotifications = async (instanceHistory, from, to)=>{
     }).run();
 }
 
-const getProcessNodeApprover = async (processNode: any, userSession: any)=>{
+const getProcessNodeApprover = async (processNode: any, userSession: any, isBack?: boolean)=>{
     let nodeApprover = [];
-    let approver = processNode.approver;
-    if(approver === 'auto_assign'){
 
-        if(!_.isEmpty(processNode.assigned_approver_users)){
-            nodeApprover = nodeApprover.concat(processNode.assigned_approver_users)
-        }
-
-        if(!_.isEmpty(processNode.assigned_approver_roles)){
-            //TODO
-        }
-
-        if(!_.isEmpty(processNode.assigned_approver_flow_roles)){
-            //TODO
-        }
-
-        if(!_.isEmpty(processNode.assigned_approver_user_field)){
-            //TODO
-        }
+    if(isBack){
 
     }else{
-        //TODO
+        let approver = processNode.approver;
+        if(approver === 'auto_assign'){
+    
+            if(!_.isEmpty(processNode.assigned_approver_users)){
+                nodeApprover = nodeApprover.concat(processNode.assigned_approver_users)
+            }
+    
+            if(!_.isEmpty(processNode.assigned_approver_roles)){
+                //TODO
+            }
+    
+            if(!_.isEmpty(processNode.assigned_approver_flow_roles)){
+                //TODO
+            }
+    
+            if(!_.isEmpty(processNode.assigned_approver_user_field)){
+                //TODO
+            }
+    
+        }else{
+            //TODO
+        }
     }
-    return _.uniq(_.compact(nodeApprover));
+    return _.uniq(_.compact(nodeApprover)); 
 }
 
 const getProcessNodes = async (processDefinitionId: string, spaceId: string)=>{
@@ -93,7 +98,7 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
     }
 }
 
-const addInstanceNode = async  (instanceId: string, node: any, userSession: any)=>{
+const addInstanceNode = async  (instanceId: string, node: any, userSession: any, isBack?: boolean)=>{
     let nodeId = node._id;
     let nodeName = node.name;
     await objectql.getObject("process_instance_node").insert({
@@ -103,7 +108,7 @@ const addInstanceNode = async  (instanceId: string, node: any, userSession: any)
         node_status: 'pending',
         space: userSession.spaceId,
     })
-    const nodeApprover = await getProcessNodeApprover(node, userSession);
+    const nodeApprover = await getProcessNodeApprover(node, userSession, isBack);
     for (const actor of nodeApprover) {
         await addInstanceHistory(userSession.spaceId, instanceId, 'pending', null, {nodeId: nodeId, actor: actor, originalActor: actor, submitted_by: userSession.userId});
     }
@@ -115,23 +120,34 @@ const toNextNode = async (instanceId: string, comment: string, nodes: any, index
     let currentUserId = userSession.userId;
     let node = nodes[index];
     if(node){
-        const canEntry = await objectql.computeFormula(node.entry_criteria, objectName, recordId, currentUserId, spaceId);
-        if(canEntry){
-            await addInstanceNode(instanceId, node, userSession); //TODO 支持驳回时自定计算处理人
+        if(node.filtrad){
+            await addInstanceNode(instanceId, node, userSession);
         }else{
-            if(node.if_criteria_not_met === 'skip'){
-                await toNextNode(instanceId, comment, nodes, index + 1, objectName, recordId, userSession)
+            const canEntry = await objectql.computeFormula(node.entry_criteria, objectName, recordId, currentUserId, spaceId);
+            if(canEntry){
+                await addInstanceNode(instanceId, node, userSession);
             }else{
-                let options = {actor: currentUserId}
-                if(node.if_criteria_not_met === 'approve'){
-                    await addInstanceHistory(userSession.spaceId, instanceId, "approved", comment, options)
-                }else if(node.if_criteria_not_met === 'reject'){
-                    await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
+                if(node.if_criteria_not_met === 'skip'){
+                    await toNextNode(instanceId, comment, nodes, index + 1, objectName, recordId, userSession)
                 }else{
-                    await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
+                    let options = {actor: currentUserId}
+                    if(node.if_criteria_not_met === 'approve'){
+                        await addInstanceHistory(userSession.spaceId, instanceId, "approved", comment, options)
+                    }else if(node.if_criteria_not_met === 'reject'){
+                        await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
+                    }else{
+                        await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
+                    }
                 }
             }
         }
+    }
+}
+
+const toPreviousNode = async (instanceId: string, nodes: any, index: number = 0, userSession: any)=>{
+    let node = nodes[index];
+    if(node){
+        await addInstanceNode(instanceId, node, userSession, true);
     }
 }
 
@@ -225,22 +241,12 @@ const handleProcessInstanceNode = async(instanceId: string, processStatus: strin
 
         const nodes = await getProcessNodes(instance.process_definition, userSession.spaceId);
 
-        let index = _.findIndex(nodes, function(item){return item._id === pendingNode.process_node});
-
-        if(processStatus === 'rejected'){
-            index = index - 1;
-        }
+        const index = _.findIndex(nodes, function(item){return item._id === pendingNode.process_node});
 
         if(processStatus === 'approved'){
-            index = index + 1;
-        }
-
-        if(processStatus === 'approved' || (processStatus === 'rejected' && pendingNode.reject_behavior === 'back_to_previous')){
-            
-            if(processStatus === 'rejected'){
-                //TODO 支持驳回时自定计算处理人: 规则是上一步审批过的实际处理人，不包括被重新分配的(假设A分配给了B，那么实际处理人为B)
-            }
-            await toNextNode(instanceId, null, nodes, index, instance.target_object.o, instance.target_object.ids[0], userSession);
+            await toNextNode(instanceId, null, nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
+        }else if(processStatus === 'rejected' && pendingNode.reject_behavior === 'back_to_previous'){
+            await toPreviousNode(instanceId, nodes, index - 1, userSession);
         }
 
         await handleProcessInstance(instanceId, processStatus, userSession);
