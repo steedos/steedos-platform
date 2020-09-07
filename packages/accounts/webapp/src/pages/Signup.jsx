@@ -401,17 +401,6 @@ class Signup extends React.Component {
                 </div>
             )}
 
-            <div className="-mt-px">
-                  <LocalizedInput 
-                    id="name"
-                    name="name" 
-                    value={this.state.name}
-                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                    placeholder={{id: 'accounts.name_placeholder', defaultMessage: 'Name'}}
-                    onChange={this.handleNameChange}
-                  />
-            </div>
-            
             {this.state.loginWithPassword && (
                 <div className="-mt-px">
                   <LocalizedInput 
@@ -419,13 +408,24 @@ class Signup extends React.Component {
                     id="password"
                     name="password" 
                     value={this.state.password}
-                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
+                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
                     placeholder={{id: 'accounts.password_placeholder', defaultMessage: 'Password'}}
                     onChange={this.handlePasswordChange}
                   />
                 </div>
             )}
 
+            <div className="-mt-px">
+                  <LocalizedInput 
+                    id="name"
+                    name="name" 
+                    value={this.state.name}
+                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
+                    placeholder={{id: 'accounts.name_placeholder', defaultMessage: 'Name'}}
+                    onChange={this.handleNameChange}
+                  />
+            </div>
+            
           </div>
           
           {this.state.serverError && <FormError error={this.state.serverError} />}
