@@ -384,6 +384,20 @@ Template.creator_view.helpers
 
 	allowCreate: ()->
 		return Creator.getRecordRelatedListPermissions(Session.get('object_name'), this).allowCreate
+	relatedActions: ()->
+		if this.actions || this.object_name == 'process_instance_history'
+			relatedActionsName = this.actions || ['approve', 'reject', 'reassign', 'recall']
+			objectName = this.object_name
+			actions = Creator.getActions(objectName);
+			actions = _.filter actions, (action)->
+				if _.include(relatedActionsName, action.name)
+					if typeof action.visible == "function"
+						return action.visible(objectName)
+					else
+						return action.visible
+				else
+					return false
+			return actions
 
 	isUnlocked: ()->
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
@@ -719,6 +733,8 @@ Template.creator_view.events
 			FlowRouter.go "/app/#{app_id}"
 		else
 			FlowRouter.go "/app"
+	'click .relate-action-custom': (event, template)->
+		this.todo(Session.get("object_name"), Session.get("record_id"));
 
 Template.creator_view.onDestroyed ()->
 	console.log('Template.creator_view.onDestroyed...');

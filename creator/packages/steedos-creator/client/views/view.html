@@ -268,6 +268,17 @@
 																	<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{this.object_name}}">{{_ "New"}}</button>
 																{{/if}}
 															{{/if}}
+															{{#if relatedActions}}
+															<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
+																{{#each relatedActions}}
+																	<li class="slds-button slds-button--neutral slds-truncate relate-action-custom relate-action-custom-{{this.name}}">
+																		<a href="javascript:void(0);" title="{{this.label}}" class="">
+																			<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+																		</a>
+																	</li>
+																{{/each}}
+															</ul>
+															{{/if}}
 														</div>
 													</div>
 													<div class="slds-card__body">

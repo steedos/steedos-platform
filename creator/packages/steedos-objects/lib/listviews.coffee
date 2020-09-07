@@ -120,6 +120,7 @@ if Meteor.isClient
 							related_field_name: ''
 							customRelatedListObject: true
 							label: objOrName.label
+							actions: objOrName.actions
 						relatedListObjects[objOrName.objectName] = related
 						relatedListNames.push objOrName.objectName
 					else if _.isString objOrName
