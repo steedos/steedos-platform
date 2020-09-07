@@ -1,20 +1,15 @@
-import React, { useState } from 'react';
-import { RouteComponentProps, Link } from 'react-router-dom';
-import { FormControl, InputLabel, Input, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import { useIntl, FormattedMessage } from 'react-intl';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings, getTenant, getSettingsTenantId } from '../selectors';
 import * as Utils from '../utils/utils';
 import FormError from '../components/FormError';
-import { ApplyCode } from '../client';
-import { accountsEvent, accountsEventOnError} from '../client/accounts.events'
 import Card from '../components/Card';
 import Logo from '../components/Logo';
 import LocalizedInput from '../components/LocalizedInput';
 import { bindActionCreators, Dispatch, AnyAction } from 'redux';
 import { login, sendVerificationToken } from '../actions/users';
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import * as GlobalAction from '../actions/global_actions';
 import { getCurrentUserId } from '../selectors/entities/users';
 import { useCountDown } from "../components/countdown";
@@ -336,7 +331,12 @@ class Login extends React.Component {
                 type='button'
                 onClick={this.switchLoginByMobile}
                 className={"group inline-flex items-center py-1 px-1 border-b-2 border-transparent font-medium text-sm leading-5 focus:outline-none " + this.tabColor('mobile')}>
-                <span>手机</span>
+                <span>
+                  <FormattedMessage
+                    id='accounts.mobile'
+                    defaultMessage='Mobile'
+                  />
+                </span>
               </button>
             )}
             {this.state.loginByEmail && (
@@ -344,7 +344,12 @@ class Login extends React.Component {
                 type='button'
                 onClick={this.switchLoginByEmail}
                 className={"ml-8 group inline-flex items-center py-1 px-1 border-b-2 border-transparent font-medium text-sm leading-5 focus:outline-none " + this.tabColor('email')}>
-                <span>邮箱</span>
+                <span>
+                  <FormattedMessage
+                    id='accounts.email'
+                    defaultMessage='Email'
+                  />
+                </span>
               </button>)
             }
           </nav>)}
