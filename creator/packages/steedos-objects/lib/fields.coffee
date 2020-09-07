@@ -75,7 +75,7 @@ processSummaryType = (field, fs)->
 			throw new Meteor.Error 500, "The summary_object '#{field.summary_object}' is not found for the field '#{field.name}'"
 		
 		summaryField = summaryObject.fields[field.summary_field]
-		unless summaryObject
+		unless summaryField
 			throw new Meteor.Error 500, "The summary_field '#{field.summary_field}' is not found for the field '#{field.name}'"
 
 		summaryFieldType = summaryField.type

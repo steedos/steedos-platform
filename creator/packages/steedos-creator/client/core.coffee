@@ -597,6 +597,20 @@ if Meteor.isClient
 		if _field.type == "formula"
 			# 公式类型字段，其字段类型按formula_type来
 			_filedType = _field.formula_type
+		else if _field.type == "summary"
+			# 汇总类型字段，其字段类型按summary_type和summary_count来
+			if _field.summary_type == "count"
+				_filedType = "number"
+			else
+				# max/min/sum类型等于要聚合的字段的类型
+				summaryObject = Creator.getObject(_field.summary_object)
+				unless summaryObject
+					throw new Meteor.Error 500, "The summary_object '#{_field.summary_object}' is not found for the field '#{_field.name}'"
+				
+				summaryField = summaryObject.fields[_field.summary_field]
+				unless summaryField
+					throw new Meteor.Error 500, "The summary_field '#{_field.summary_field}' is not found for the field '#{_field.name}'"
+				_filedType = summaryField.type
 
 		reference_to = props.field?.reference_to
 
