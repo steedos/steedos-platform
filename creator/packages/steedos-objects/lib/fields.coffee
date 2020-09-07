@@ -70,7 +70,7 @@ processSummaryType = (field, fs)->
 		fs.autoform.precision = field.precision || 18
 	else
 		# max/min/sum类型等于要聚合的字段的类型
-		summaryObject = Creator.getObject(field.summary_object)
+		summaryObject = Creator.Objects[field.summary_object]
 		unless summaryObject
 			throw new Meteor.Error 500, "The summary_object '#{field.summary_object}' is not found for the field '#{field.name}'"
 		
