@@ -12,7 +12,7 @@ export function loadMeAndConfig() {
 
       // // need to await for clientConfig first as it is required for loadMe
       const resolvedPromises = await Promise.all(promises);
-      if (document.cookie.indexOf('X-User-Id=') > -1) {
+      if (localStorage.getItem('accounts:userId')) {
           resolvedPromises.push(await dispatch(UserActions.loadMe()));
       }
 

@@ -29,22 +29,6 @@ const Preference = ({ currentUser, match, settings, history, location, tenant }:
                 credentials: 'include'
             });
 
-
-            // if(user.spaces.length === 1){
-            //     const token: any = await accountsClient.getTokens();
-            //     return goInSystem(history, location, token.accessToken, settings.root_url);
-            // }
-
-            // if(user.spaces.length === 0 && !tenant.enable_create_tenant){
-            //     return history.push('/');
-            // }
-
-            // if(user.spaces.length === 0 && tenant.enable_create_tenant){
-            //     return history.push('/create-tenant' + location.search);
-            // }
-            
-            // return history.push('/choose-tenant' + location.search);
-
         } catch (err) {
             setError(err.message);
         }

@@ -8,8 +8,6 @@ import { getTenant, getSettings } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
 import Navbar from '../components/Navbar';
 
-import { accountsClient, accountsRest } from '../accounts';
-
 
 class Home extends React.PureComponent {
 

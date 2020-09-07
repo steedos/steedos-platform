@@ -11,10 +11,6 @@ import { devToolsEnhancer } from 'redux-devtools-extension';
 import initialState from './initial_state';
 import { ContactSupportOutlined } from '@material-ui/icons';
 
-// const config = await accountsRest.authFetch( '/config' );
-// window._steedos_runtime_config = config;
-
-
 const store = createStore(
     rootReducer, 
     initialState, 

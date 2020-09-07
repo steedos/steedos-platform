@@ -24,6 +24,7 @@ export const login = (accountsServer: AccountsServer) => async (
     res.json(result);
     return;
   } catch (err) {
-    sendError(res, err);
+    // console.log(err)
+    sendError(res, {id: "accounts.invalid_credentials", message: "accounts.invalid_credentials"});
   }
 }

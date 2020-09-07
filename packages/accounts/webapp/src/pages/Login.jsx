@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/styles';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings, getTenant, getSettingsTenantId } from '../selectors';
-import { accountsRest } from '../accounts';
 import * as Utils from '../utils/utils';
 import FormError from '../components/FormError';
 import { ApplyCode } from '../client';
@@ -21,8 +20,8 @@ import { getCurrentUserId } from '../selectors/entities/users';
 import { useCountDown } from "../components/countdown";
 
 const totalSeconds = 60;
-const ReApplyCodeBtn = ({ onClick, id, name }) => {
-  const [restTime, resetCountdown] = useCountDown(name || "cnt1", {
+const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
+  const [restTime, resetCountdown] = useCountDown(loginId || "cnt1", {
     total: totalSeconds,
     lifecycle: "session"
   });
@@ -44,7 +43,7 @@ const ReApplyCodeBtn = ({ onClick, id, name }) => {
     }}>
       <span className="">
         <FormattedMessage
-          id='accounts.reSendCode'
+          id='accounts.sendCode'
           defaultMessage='Get Verify code' 
         />{restTime > 0 ? ` (${restTime})` : null}
       </span>
@@ -75,6 +74,7 @@ class Login extends React.Component {
         // samlEnabled: this.props.isLicensed && this.props.enableSaml,
         spaceId,
         loginId,
+        userId: '',
         password: '',
         verifyCode: '',
         showMfa: false,
@@ -83,7 +83,8 @@ class Login extends React.Component {
 
         loginWith: "password",
 
-        error: ''
+        serverError: '',
+        loading: false
 
         // brandImageError: false,
     };
@@ -136,19 +137,48 @@ class Login extends React.Component {
 
   sendVerificationToken = (e) => {
 
+    this.setState({serverError: null, loading: true});
     if(!this.state.loginId.trim()){
-      throw new Error('accounts.usernameOrEmailRequired');
+      this.setState({
+          serverError: (
+              <FormattedMessage
+                  id='accounts.usernameOrEmailRequired'
+                  defaultMessage='Username or email is required'
+              />
+          ),
+      });
+      return
     }
 
-    this.props.actions.sendVerificationToken(this.state.loginId.trim())
+    this.props.actions.sendVerificationToken(this.state.loginId.trim()).then(async (userId) => {
+      this.state.userId = userId;
+      if (!userId)
+        this.setState({
+            serverError: (
+                <FormattedMessage
+                    id='accounts.userNotFound'
+                    defaultMessage='User not found.'
+                />
+            ),
+        });
+    });
   }
 
   onSubmit = async (e) => {
+    this.setState({serverError: null, loading: true});
     e.preventDefault();
     this.setState({error: null});
 
     if(!this.state.loginId.trim()){
-      throw new Error('accounts.usernameOrEmailRequired');
+      this.setState({
+          serverError: (
+              <FormattedMessage
+                  id='accounts.usernameOrEmailRequired'
+                  defaultMessage='Username or email is required'
+              />
+          ),
+      });
+      return
     }
 
     // if(!this.state.password.trim()){
@@ -157,7 +187,13 @@ class Login extends React.Component {
 
     this.props.actions.login(this.state.loginId.trim(), this.state.password, this.state.verifyCode).then(async ({error}) => {
       if (error) {
-        this.setState({error: error.message});
+        this.setState({
+            serverError: (
+                <FormattedMessage
+                    id= {error.message}
+                />
+            ),
+        });
         return;
       }
       
@@ -221,7 +257,6 @@ class Login extends React.Component {
                 name="loginId" 
                 ref={this.loginIdInput}
                 value={this.state.loginId}
-                required
                 className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
                 placeholder={this.createLoginPlaceholder()}
                 onChange={this.handleLoginIdChange}
@@ -252,13 +287,13 @@ class Login extends React.Component {
                     placeholder={{id: 'accounts.verifyCode', defaultMessage: 'Verify Code'}}
                     onChange={this.handleCodeChange}
                   />
-                  <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn"/>
+                  <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.loginId}/>
 
                 </div>
             )}
           </div>
           
-          {this.state.error && <FormError error={this.state.error} />}
+          {this.state.serverError && <FormError error={this.state.serverError} />}
 
           {this.props.tenant.enable_register &&
           <div className="text-sm leading-5 my-4">

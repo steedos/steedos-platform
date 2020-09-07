@@ -161,6 +161,7 @@ export default class Client4 {
             Object.assign(headers, newOptions.headers);
         }
 
+        console.log(newOptions)
         return {
             ...newOptions,
             headers,
@@ -204,10 +205,14 @@ export default class Client4 {
             locale: "zh-cn"
         };
 
-        return this.doFetch<UserProfile>(
+        const auth:any = this.doFetch<UserProfile>(
             `${this.getAccountsRoute()}/password/login`,
             {method: 'POST', body: JSON.stringify(body)},
         );
+
+        if (auth && auth.user && auth.user._id)
+            localStorage.setItem('accounts:userId', auth.user._id);
+        return auth
     };
 
     sendVerificationToken = (loginId: string) => {
@@ -250,6 +255,8 @@ export default class Client4 {
         }
 
         this.serverVersion = '';
+
+        localStorage.removeItem('accounts:userId');
 
         return response;
     };

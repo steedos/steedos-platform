@@ -55,7 +55,6 @@ class Root extends React.PureComponent {
 
   componentDidMount() {
     this.props.actions.loadMeAndConfig().then((response) => {
-      console.log(response)
       if (document.location.pathname === '/' && response[1] && response[1].data) {
           GlobalActions.redirectUserToDefaultSpace();
       }
