@@ -2,12 +2,9 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 
 import { Switch, HashRouter, Route, Redirect } from 'react-router-dom';
-import { makeStyles } from '@material-ui/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { getTenant } from './selectors';
 import * as GlobalActions from './actions/global_actions.jsx';
-import {hashHistory} from './utils/hash_history';
 import {loadMeAndConfig} from './actions/root';
 
 import LoggedIn from './components/LoggedIn';
@@ -19,10 +16,8 @@ import VerifyMobile from './components/VerifyMobile';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './pages/CreateTenant';
 import ChooseTenant from './components/ChooseTenant';
-import Verify from './pages/Verify';
 import Preference from './pages/Preference';
 import Loading from './components/Loading';
-import SignupPassword from './pages/SignupPassword';
 
 
 const LoggedInRoute = ({component: Component, ...rest}) => {
@@ -82,7 +77,6 @@ class Root extends React.PureComponent {
                 <Switch>
                   <Route path="/home" component={Home}/>
                   <Route path="/signup" component={Signup} />
-                  <Route path="/signup-password" component={SignupPassword} />
 
                   <Route path="/login" component={Login} />
                   
@@ -90,7 +84,6 @@ class Root extends React.PureComponent {
                   <Route path="/choose-tenant" component={ChooseTenant} />
                   <Route exact path="/update-password" component={UpdatePassword} />
                   <Route path="/verify-email/:token" component={VerifyEmail} />
-                  <Route path="/verify/:action" component={Verify} />
                   {/* <Route path="/login-code" component={LoginCode} /> */}
                   <LoggedInRoute path="/preference" component={Preference} />
                   <Route path="/verify-mobile/:token" component={VerifyMobile} />

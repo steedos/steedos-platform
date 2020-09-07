@@ -507,6 +507,7 @@ export default class AccountsPassword implements AuthenticationService {
    * @returns Return the id of user created.
    */
   public async createUser(user: PasswordCreateUserType): Promise<string> {
+    console.log(user)
     if (!user.email && !user.mobile) {
       throw new Error(this.options.errors.emailOrMobileRequired);
     }
@@ -534,16 +535,16 @@ export default class AccountsPassword implements AuthenticationService {
       user.password = await this.hashAndBcryptPassword(user.password);
     }
 
-    // If user does not provide the validate function only allow some fields
-    user = this.options.validateNewUser
-      ? await this.options.validateNewUser(user)
-      : pick<PasswordCreateUserType, 'username' | 'email' | 'password' | 'mobile' | 'locale'>(user, [
-          'username',
-          'email',
-          'password',
-          'mobile',
-          'locale'
-        ]);
+    // // If user does not provide the validate function only allow some fields
+    // user = this.options.validateNewUser
+    //   ? await this.options.validateNewUser(user)
+    //   : pick<PasswordCreateUserType, 'username' | 'email' | 'password' | 'mobile' | 'locale'>(user, [
+    //       'username',
+    //       'email',
+    //       'password',
+    //       'mobile',
+    //       'locale'
+    //     ]);
 
     try {
       const userId = await this.db.createUser(user);

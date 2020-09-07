@@ -8,7 +8,7 @@ import Card from '../components/Card';
 import Logo from '../components/Logo';
 import LocalizedInput from '../components/LocalizedInput';
 import { bindActionCreators, Dispatch, AnyAction } from 'redux';
-import { login, sendVerificationToken } from '../actions/users';
+import { createUser, sendVerificationToken } from '../actions/users';
 import { withRouter } from "react-router-dom";
 import * as GlobalAction from '../actions/global_actions';
 import { getCurrentUserId } from '../selectors/entities/users';
@@ -112,8 +112,8 @@ class Signup extends React.Component {
       this.state.loginBy = "email"
     } 
 
-    // this.state.loginWithCode = false
-    // this.state.loginWithPassword = true
+    this.state.loginWithCode = false
+    this.state.loginWithPassword = true
     // this.state.loginByMobile = true;
     // this.state.loginByEmail = true;
     // this.state.loginBy = "email"
@@ -261,10 +261,17 @@ class Signup extends React.Component {
     // }
 
     const user = {
-      email: this.state.email,
-      mobile: this.state.mobile
+      password: this.state.password,
+      name: this.state.name,
+      locale: 'zh-cn',
+      code: this.state.verifyCode
     }
-    this.props.actions.login(user, this.state.password, this.state.verifyCode).then(async ({error}) => {
+    if (this.state.loginBy === 'mobile'){
+      user.mobile = this.state.mobile
+    } else if (this.state.loginBy === 'email'){
+      user.email = this.state.email
+    }
+    this.props.actions.createUser(user).then(async ({error}) => {
       if (error) {
         this.setState({
             serverError: (
@@ -457,8 +464,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
       actions: bindActionCreators({
-          login,
-          sendVerificationToken,
+        createUser,
+        sendVerificationToken,
       }, dispatch),
   };
 }

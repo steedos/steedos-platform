@@ -107,7 +107,7 @@ export class Mongo implements DatabaseInterface {
     }
 
     user.steedos_id = user._id;
-
+    console.log(user);
     const ret = await this.collection.insertOne(user);
     return ret.ops[0]._id.toString();
   }

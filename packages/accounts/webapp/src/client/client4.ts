@@ -4,6 +4,7 @@
 import fetch from './fetch_etag';
 import {cleanUrlForLogging} from '../utils/sentry';
 import { Options, ClientResponse } from '../types/client4';
+import {buildQueryString} from '../utils/helpers';
 import { UserProfile } from '../types/users';
 import { ServerError } from '../types/errors';
 
@@ -207,6 +208,34 @@ export default class Client4 {
         const auth:any = this.doFetch<UserProfile>(
             `${this.getAccountsRoute()}/password/login`,
             {method: 'POST', body: JSON.stringify(body)},
+        );
+
+        if (auth && auth.user && auth.user._id)
+            localStorage.setItem('accounts:userId', auth.user._id);
+        return auth
+    };
+
+
+    createUser = (user: UserProfile, token: string, inviteId: string, redirect: string) => {
+        this.trackEvent('api', 'api_users_createUser');
+
+        const queryParams: any = {};
+
+        if (token) {
+            queryParams.t = token;
+        }
+
+        if (inviteId) {
+            queryParams.iid = inviteId;
+        }
+
+        if (redirect) {
+            queryParams.r = redirect;
+        }
+
+        const auth:any = this.doFetch<UserProfile>(
+            `${this.getAccountsRoute()}/password/register${buildQueryString(queryParams)}`,
+            {method: 'POST', body: JSON.stringify(user)},
         );
 
         if (auth && auth.user && auth.user._id)

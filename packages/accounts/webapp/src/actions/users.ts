@@ -3,7 +3,31 @@ import {Action, ActionFunc, ActionResult, batchActions, DispatchFunc, GetStateFu
 import { UserTypes } from '../action_types';
 import { UserProfile } from '../types/users';
 import { Client4 } from '../client/';
+import {logError} from './errors';
 import {bindClientFunc, forceLogoutIfNecessary, debounce} from './helpers';
+
+export function createUser(user: UserProfile, token: string, inviteId: string, redirect: string): ActionFunc {
+    return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+        let created;
+
+        try {
+            created = await Client4.createUser(user, token, inviteId, redirect);
+        } catch (error) {
+            forceLogoutIfNecessary(error, dispatch, getState);
+            dispatch(logError(error));
+            return {error};
+        }
+
+        // const profiles: {
+        //     [userId: string]: UserProfile;
+        // } = {
+        //     [created.id]: created,
+        // };
+        // dispatch({type: UserTypes.RECEIVED_PROFILES, data: profiles});
+
+        return {data: created};
+    };
+}
 
 export function login(loginId: string, password: string, mfaToken = ''): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
