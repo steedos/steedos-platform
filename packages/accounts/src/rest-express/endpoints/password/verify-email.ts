@@ -36,16 +36,8 @@ export const sendVerificationCode = (accountsServer: AccountsServer) => async (
 ) => {
   try {
     const { user } = req.body;
-    let loginId = '';
-    if (user && user.email)
-      loginId = user.email
-    else if (user && user.mobile)
-      loginId = user.email
-    
-    if (!loginId)
-      return
     const password: any = accountsServer.getServices().password;
-    const userId = await password.sendVerificationCode(loginId);
+    const userId = await password.sendVerificationCode(user);
     res.json(userId);
   } catch (err) {
     sendError(res, err);

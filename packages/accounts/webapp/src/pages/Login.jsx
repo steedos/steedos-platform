@@ -119,8 +119,8 @@ class Login extends React.Component {
       this.state.loginBy = "email"
     } 
 
-    // this.state.loginWithCode = true
-    // this.state.loginWithPassword = false
+    this.state.loginWithCode = false
+    this.state.loginWithPassword = true
     // this.state.loginByMobile = true;
     // this.state.loginByEmail = true;
     // this.state.loginBy = "email"
@@ -330,12 +330,12 @@ class Login extends React.Component {
 
         <form onSubmit={this.onSubmit} className="mt-4" autoCapitalize="none">
           {this.state.loginByMobile && this.state.loginByEmail && (
-          <nav class="flex -mb-px py-2">
+          <nav className="flex -mb-px py-2">
             {this.state.loginByMobile && (
               <button
                 type='button'
                 onClick={this.switchLoginByMobile}
-                class={"group inline-flex items-center py-1 px-1 border-b-2 border-transparent font-medium text-sm leading-5 focus:outline-none " + this.tabColor('mobile')}>
+                className={"group inline-flex items-center py-1 px-1 border-b-2 border-transparent font-medium text-sm leading-5 focus:outline-none " + this.tabColor('mobile')}>
                 <span>手机</span>
               </button>
             )}
@@ -343,7 +343,7 @@ class Login extends React.Component {
               <button
                 type='button'
                 onClick={this.switchLoginByEmail}
-                class={"ml-8 group inline-flex items-center py-1 px-1 border-b-2 border-transparent font-medium text-sm leading-5 focus:outline-none " + this.tabColor('email')}>
+                className={"ml-8 group inline-flex items-center py-1 px-1 border-b-2 border-transparent font-medium text-sm leading-5 focus:outline-none " + this.tabColor('email')}>
                 <span>邮箱</span>
               </button>)
             }

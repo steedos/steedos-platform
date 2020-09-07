@@ -629,11 +629,7 @@ export default class AccountsPassword implements AuthenticationService {
       ? this.toMobileAndEmail({ user })
       : this.toMobileAndEmail({ ...user });
     
-    let foundUser = null;
-
-    const loginId = email?email:mobile?mobile:username?username:null;
-    if (loginId)
-      foundUser = this.db.findUserByVerificationCode(loginId, token);
+    let foundUser = this.db.findUserByVerificationCode({email: email, mobile: mobile}, token);
 
     if (!foundUser) {
       throw new Error(
@@ -677,26 +673,28 @@ export default class AccountsPassword implements AuthenticationService {
    * If the address is already verified we do not send any email.
    * @returns {Promise<void>} - Return a Promise.
    */
-  public async sendVerificationCode(loginId: string): Promise<void> {
-    if (!loginId || !isString(loginId)) {
-      throw new Error(this.options.errors.invalidEmailOrMobile);
-    }
+  public async sendVerificationCode(user: any): Promise<void> {
 
 
     const code = generateRandomCode();
-    const userId = await this.db.addVerificationCode(loginId, code);
 
-    const verificationCodeMail = this.server.prepareMail(
-      loginId,
-      code,
-      null,
-      getPathFragmentPrefix() + 'verify-email',
-      this.server.options.emailTemplates.verificationCode,
-      this.server.options.emailTemplates.from
-    );
+    if (user.email) {
+      const userId = await this.db.addVerificationCode(user, code);
+      const verificationCodeMail = this.server.prepareMail(
+        user.email,
+        code,
+        null,
+        getPathFragmentPrefix() + 'verify-email',
+        this.server.options.emailTemplates.verificationCode,
+        this.server.options.emailTemplates.from
+      );
+      await this.server.options.sendMail(verificationCodeMail);
+      return userId
+    } else if (user.mobile) {
+      const userId = await this.db.addVerificationCode(user, code);
+      console.log('SMS Code: ' + code);
+      return userId
+    }
 
-    await this.server.options.sendMail(verificationCodeMail);
-
-    return userId
   }
 }

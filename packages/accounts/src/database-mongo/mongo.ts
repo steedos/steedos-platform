@@ -509,15 +509,17 @@ export class Mongo implements DatabaseInterface {
     await this.setPassword(userId, newPassword);
   }
 
-  public async addVerificationCode(loginId: string, code: string): Promise<void> {
-    var user;
-    if (loginId.indexOf('@'))
-      user = await this.findUserByEmail(loginId)
-    else
-      user = await this.findUserByMobile(loginId)
-    const owner = user? user.id: null;
+  public async addVerificationCode(user: any, code: string): Promise<void> {
+
+    let foundedUser = null
+    if (user.email)
+      foundedUser = await this.findUserByEmail(user.email)
+    else if (user.mobile)
+      foundedUser = await this.findUserByMobile(user.mobile)
+
+    const owner = foundedUser? foundedUser.id: null;
     const verification_code = {
-      name: loginId,
+      name: user.email?user.email:user.mobile,
       code: code,
       owner,
       [this.options.timestamps.createdAt]: this.options.dateProvider(),
@@ -526,17 +528,18 @@ export class Mongo implements DatabaseInterface {
     return owner;
   }
 
-  public async findUserByVerificationCode(loginId: string, code: string): Promise<User | null> {
-    var user;
+  public async findUserByVerificationCode(user: any, code: string): Promise<User | null> {
     
-    if (loginId.indexOf('@'))
-      user = await this.findUserByEmail(loginId)
-    else
-      user = await this.findUserByMobile(loginId)
-    if (!user) 
+    let foundedUser = null
+    if (user.email)
+      foundedUser = await this.findUserByEmail(user.email)
+    else if (user.mobile)
+      foundedUser = await this.findUserByMobile(user.mobile)
+
+    if (!foundedUser) 
       return null;
 
-    const owner = user.id;
+    const owner = foundedUser.id;
     const record = await this.codeCollection.findOne({
       owner,
       code
@@ -544,12 +547,12 @@ export class Mongo implements DatabaseInterface {
     if (!record) 
       return null;
     
-    if (loginId.indexOf('@') && (user.email_verified == false))
-      await this.verifyEmail(owner, loginId)
-    else if (user.mobile_verified == false)
-      await this.verifyMobile(owner, loginId)
+    if (user.email && (foundedUser.email_verified == false))
+      await this.verifyEmail(owner, user.email)
+    else if (user.mobile && foundedUser.mobile_verified == false)
+      await this.verifyMobile(owner, user.mobile)
     
-    return user;
+    return foundedUser;
   }
 
 }

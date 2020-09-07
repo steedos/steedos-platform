@@ -61,9 +61,9 @@ export interface DatabaseInterface extends DatabaseInterfaceSessions {
 
   setUserDeactivated(userId: string, deactivated: boolean): Promise<void>;
   
-  addVerificationCode(loginId: string, code: string): Promise<void>;
+  addVerificationCode(user: any, code: string): Promise<void>;
 
-  findUserByVerificationCode(loginId: string, code: string): Promise<User | null>;
+  findUserByVerificationCode(user: any, code: string): Promise<User | null>;
 
 }
 
