@@ -166,9 +166,9 @@ class Login extends React.Component {
 
   tabColor = (tab) => {
     if (this.state.loginBy === tab)
-      return "text-blue-500 hover:text-blue-700 focus:text-blue-700 border-blue-300"
+      return "text-blue-600 hover:text-blue-700 border-blue-600 hover:border-blue-300"
     else
-      return "text-gray-500 hover:text-gray-700 focus:text-gray-700"
+      return "text-gray-600 hover:text-gray-500 hover:border-gray-300"
   }
 
   handleMobileChange = (e) => {
