@@ -397,11 +397,11 @@ helpers =
 				firstLevelKeys = _.difference firstLevelKeys, [Session.get('cmOmitFields')]
 
 			if cmOperation == "insert"
-				# 新建记录时，把autonumber、formula类型字段视为omit字段
+				# 新建记录时，把autonumber、formula、summary类型字段视为omit字段
 				# 修改记录时不用处理，由schema中设定的readonly属性控制
 				fields = Creator.getObject(object_name).fields
 				firstLevelKeys = _.filter firstLevelKeys, (firstLevelKey)->
-					return ["autonumber", "formula"].indexOf(fields[firstLevelKey]?.type) < 0
+					return ["autonumber", "formula", "summary"].indexOf(fields[firstLevelKey]?.type) < 0
 
 			_.each schema, (value, key) ->
 				if (_.indexOf firstLevelKeys, key) > -1

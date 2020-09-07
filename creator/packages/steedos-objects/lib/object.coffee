@@ -99,6 +99,8 @@ Creator.Object = (options)->
 			field.readonly = true
 		else if field.type == 'formula'
 			field.readonly = true
+		else if field.type == 'summary'
+			field.readonly = true
 
 	self.list_views = {}
 	defaultView = Creator.getObjectDefaultView(self.name)
