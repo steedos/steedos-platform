@@ -214,11 +214,11 @@ export default class Client4 {
         return auth
     };
 
-    sendVerificationToken = (loginId: string) => {
+    sendVerificationToken = (user: string) => {
         this.trackEvent('api', 'api_users_verify');
 
         const body: any = {
-            loginId: loginId,
+            user: user,
         };
 
         return this.doFetch<UserProfile>(

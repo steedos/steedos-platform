@@ -35,7 +35,15 @@ export const sendVerificationCode = (accountsServer: AccountsServer) => async (
   res: express.Response
 ) => {
   try {
-    const { loginId } = req.body;
+    const { user } = req.body;
+    let loginId = '';
+    if (user && user.email)
+      loginId = user.email
+    else if (user && user.mobile)
+      loginId = user.email
+    
+    if (!loginId)
+      return
     const password: any = accountsServer.getServices().password;
     const userId = await password.sendVerificationCode(loginId);
     res.json(userId);
