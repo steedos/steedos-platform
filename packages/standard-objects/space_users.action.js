@@ -56,7 +56,10 @@ module.exports = {
   },
 
   disableVisible: function (object_name, record_id, record_permissions, record) {
-    if(record && record.user_accepted){
+    if (!Steedos.isSpaceAdmin()){
+      return;
+    }
+    if (record && record.user_accepted && (record.user && record.user._id) != Steedos.userId()) {
       return true
     }
   },
@@ -118,7 +121,10 @@ module.exports = {
   },
 
   enableVisible: function (object_name, record_id, record_permissions, record) {
-    if(record && !record.user_accepted){
+    if (!Steedos.isSpaceAdmin()) {
+      return;
+    }
+    if (record && !record.user_accepted && (record.user && record.user._id) != Steedos.userId()){
       return true
     }
   }
