@@ -4,34 +4,15 @@ import { getSettings, getTenant } from '../selectors';
 import { accountsClient, accountsRest } from '../accounts';
 import FormError from '../components/FormError';
 import Navbar from '../components/Navbar';
+import { getCurrentUser } from '../selectors/entities/users';
 
 
-const Preference = ({ match, settings, history, location, tenant }: any) => {
-    const _fullname = location && location.state ? location.state.fullname : '';
+const Preference = ({ currentUser, match, settings, history, location, tenant }: any) => {
     const [error, setError] = useState<string | null>(null);
-    const [fullname, setFullname] = useState<string | "">(_fullname);
+    const [fullname, setFullname] = useState<string | "">(currentUser.name);
     const searchParams = new URLSearchParams(location.search);
     let spaceId = searchParams.get("X-Space-Id");
     const [user, setUser] = useState({ spaces: [], name: '' });
-    useEffect(() => {
-      fetchUser();
-    }, []);
-  
-    const fetchUser = async () => {
-      const tokens = await accountsClient.refreshSession();
-      if (!tokens) {
-        history.push('/login');
-        return;
-      }
-      const data = await accountsRest.authFetch('user', {});
-  
-      if (!data) {
-        history.push('/login');
-        return;
-      }
-      setUser(data);
-    };
-
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(null);
@@ -139,8 +120,9 @@ const Preference = ({ match, settings, history, location, tenant }: any) => {
 
 function mapStateToProps(state: any) {
     return {
-        settings: getSettings(state),
-        tenant: getTenant(state)
+      currentUser: getCurrentUser(state),
+      settings: getSettings(state),
+      tenant: getTenant(state)
     };
 }
 

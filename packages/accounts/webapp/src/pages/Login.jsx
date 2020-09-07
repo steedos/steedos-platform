@@ -32,7 +32,7 @@ const ReApplyCodeBtn = ({ onClick, id, name }) => {
   }
   return (
 
-  <button class={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
+  <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
     id={id}
     disabled={restTime > 0}
     type="button"
@@ -42,7 +42,7 @@ const ReApplyCodeBtn = ({ onClick, id, name }) => {
           onClick();
         }
     }}>
-      <span class="">
+      <span className="">
         <FormattedMessage
           id='accounts.reSendCode'
           defaultMessage='Get Verify code' 
@@ -229,7 +229,7 @@ class Login extends React.Component {
             </div>
 
             {this.state.loginWith === 'password' && (
-                <div class="-mt-px">
+                <div className="-mt-px">
                   <input 
                     type="password"
                     id="password"
@@ -243,7 +243,7 @@ class Login extends React.Component {
             )}
 
             {this.state.loginWith === 'verifyCode' && (
-                <div class="-mt-px grid grid-cols-5">
+                <div className="-mt-px grid grid-cols-5">
                   <LocalizedInput 
                     id="verifyCode"
                     name="verifyCode" 
