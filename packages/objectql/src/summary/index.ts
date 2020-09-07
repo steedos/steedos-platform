@@ -1,5 +1,5 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
-import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue } from './type';
+import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryFieldTypeValue, SupportedSummaryFieldTypes } from './type';
 import { addFieldSummaryConfig, getFieldSummaryConfigs, clearFieldSummaryConfigs } from './field_summary';
 import { isSystemObject } from '../util';
 import _ = require('lodash')
@@ -16,7 +16,7 @@ export * from './core'
  */
 export const initSummaryConfig = (summaryConfig: SteedosFieldSummaryTypeConfig) => {
     const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs("default");
-    const { summary_object, summary_type, summary_field, field_name, object_name } = summaryConfig;
+    const { summary_object, field_name, object_name } = summaryConfig;
     let summaryObject = _.find(objectConfigs, (item) => {
         return item.name === summary_object;
     });
@@ -37,14 +37,26 @@ export const initSummaryConfig = (summaryConfig: SteedosFieldSummaryTypeConfig) 
         throw new Error(`Can't fount a master_detail type field that reference_to the master object '${object_name}' on the summary_object '${summary_object}'.`);
     }
     summaryConfig.reference_to_field = referenceToField.name;
+    summaryConfig.summary_field_type = getSummaryFieldType(summaryConfig, summaryObject);
+}
 
+export const getSummaryFieldType = (summaryConfig: SteedosFieldSummaryTypeConfig, summaryObject: SteedosObjectTypeConfig) => {
+    const { summary_object, summary_type, summary_field, field_name, object_name } = summaryConfig;
+    let result: SteedosSummaryFieldTypeValue;
     if (summary_field) {
-        if (summary_type === "count") {
+        if (summary_type === SteedosSummaryTypeValue.COUNT) {
             throw new Error(`You can't set a summary_field property for the field '${field_name}' of the object '${object_name}' while the summary_type is set to 'count'.`);
         }
         const field = summaryObject.fields[summary_field];
         if (field) {
-            summaryConfig.summary_field_type = field.type;
+            let fieldType = field.type;
+            if(fieldType === "formula"){
+                fieldType = field.formula_type;
+            }
+            if(!isSummaryFieldTypeSupported(summary_type, fieldType)){
+                throw new Error(`The summary_field_type '${fieldType}' on the field '${field_name}' of the object '${object_name}' is not supported for the summary_type '${summary_type}' which only support these types: ${SupportedSummaryFieldTypes[summary_type]}.`);
+            }
+            result = <SteedosSummaryFieldTypeValue>fieldType;
         }
         else {
             throw new Error(`The summary_field '${summary_field}' is not a field of the summary_object '${summary_object}'.`);
@@ -54,7 +66,13 @@ export const initSummaryConfig = (summaryConfig: SteedosFieldSummaryTypeConfig) 
         if (summary_type !== "count") {
             throw new Error(`You have to set a summary_field property for the field '${field_name}' of the object '${object_name}' when the summary_type is not set to 'count'.`);
         }
+        result = SteedosSummaryFieldTypeValue.Number;
     }
+    return result;
+}
+
+export const isSummaryFieldTypeSupported = (summaryType: string, summaryFieldType: string) => {
+    return !!(SupportedSummaryFieldTypes[summaryType] && SupportedSummaryFieldTypes[summaryType].indexOf(summaryFieldType) > -1)
 }
 
 export const addObjectFieldSummaryConfig = (fieldConfig: SteedosFieldTypeConfig, objectConfig: SteedosObjectTypeConfig) => {

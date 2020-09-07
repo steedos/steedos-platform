@@ -14,9 +14,32 @@ export type SteedosFieldSummaryTypeConfig = {
     reference_to_field?: string //子表上的master_detail关联到主表对象的字段，必须能找到且只能找到一个
 }
 
+/**
+ * 累计汇总字段支持的计算类型
+ */
 export enum SteedosSummaryTypeValue {
     COUNT = "count",
     SUM = "sum",
     MIN = "min",
     MAX = "max"
 }
+
+/**
+ * 累计汇总字段支持的字段类型（特指数据库中最终保存的结果类型）
+ * 注意公式也是支持的，不过最终使用的是公式字段本身的数据类型
+ */
+export enum SteedosSummaryFieldTypeValue {
+    Number = "number",
+    Currency = "currency",
+    Date = "date",
+    Datetime = "datetime"
+}
+
+/**
+ * 各个累计汇总计算类型支持的字段类型，用于判断SteedosFieldSummaryTypeConfig中配置的summary_field所指向的字段类型是否符合规范
+ */
+export const SupportedSummaryFieldTypes = {
+    "sum": [SteedosSummaryFieldTypeValue.Number, SteedosSummaryFieldTypeValue.Currency],
+    "min": [SteedosSummaryFieldTypeValue.Number, SteedosSummaryFieldTypeValue.Currency, SteedosSummaryFieldTypeValue.Date, SteedosSummaryFieldTypeValue.Datetime],
+    "max": [SteedosSummaryFieldTypeValue.Number, SteedosSummaryFieldTypeValue.Currency, SteedosSummaryFieldTypeValue.Date, SteedosSummaryFieldTypeValue.Datetime]
+};
