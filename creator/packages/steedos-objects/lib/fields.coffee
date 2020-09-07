@@ -63,6 +63,80 @@ processFormulaType = (field, fs)->
 	else
 		fs.type = String
 
+processSummaryType = (field, fs)->
+	if field.summary_type == "count"
+		fs.type = Number
+		fs.autoform.type = "steedosNumber"
+		fs.autoform.precision = field.precision || 18
+	else
+		# max/min/sum类型等于要聚合的字段的类型
+		summaryObject = Creator.getObject(field.summary_object)
+		unless summaryObject
+			throw new Meteor.Error 500, "The summary_object '#{field.summary_object}' is not found for the field '#{field.name}'"
+		
+		summaryField = summaryObject.fields[field.summary_field]
+		unless summaryObject
+			throw new Meteor.Error 500, "The summary_field '#{field.summary_field}' is not found for the field '#{field.name}'"
+
+		summaryFieldType = summaryField.type
+
+		if summaryFieldType == "date"
+			fs.type = Date
+			if Meteor.isClient
+				if Steedos.isMobile() || Steedos.isPad()
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+					fs.autoform.afFieldInput =
+						type: "steedos-date-mobile"
+						dateMobileOptions:
+							type: "date"
+				else
+					fs.autoform.outFormat = 'yyyy-MM-dd';
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+					fs.autoform.afFieldInput =
+						type: "dx-date-box"
+						timezoneId: "utc"
+						dxDateBoxOptions:
+							type: "date"
+							displayFormat: "yyyy-MM-dd"
+		else if summaryFieldType == "datetime"
+			fs.type = Date
+			if Meteor.isClient
+				if Steedos.isMobile() || Steedos.isPad()
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+					fs.autoform.afFieldInput =
+						type: "steedos-date-mobile"
+						dateMobileOptions:
+							type: "datetime"
+				else
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+					fs.autoform.afFieldInput =
+						type: "dx-date-box"
+						dxDateBoxOptions:
+							type: "datetime"
+							displayFormat: "yyyy-MM-dd HH:mm"
+		else if summaryFieldType == "currency"
+			fs.type = Number
+			fs.autoform.type = "steedosNumber"
+			fs.autoform.precision = field.precision || 18
+			if field?.scale
+				fs.autoform.scale = field.scale
+				fs.decimal = true
+			else if field?.scale != 0
+				fs.autoform.scale = 2
+				fs.decimal = true
+		else if summaryFieldType == "number"
+			fs.type = Number
+			fs.autoform.type = "steedosNumber"
+			fs.autoform.precision = field.precision || 18
+			if field?.scale
+				fs.autoform.scale = field.scale
+				fs.decimal = true
+		else
+			fs.type = Number
+			fs.autoform.type = "steedosNumber"
+			fs.autoform.precision = field.precision || 18
+
+
 Creator.getObjectSchema = (obj) ->
 	unless obj
 		return
@@ -483,6 +557,8 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = String
 		else if field.type == 'formula'
 			processFormulaType(field, fs)
+		else if field.type == 'summary'
+			processSummaryType(field, fs)
 		else
 			fs.type = field.type
 
