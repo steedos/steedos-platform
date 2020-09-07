@@ -26,7 +26,7 @@ const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
   }
   return (
 
-  <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
+  <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
     id={id}
     disabled={restTime > 0}
     type="button"
@@ -48,7 +48,7 @@ const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
 };
 
 
-class Login extends React.Component {
+class Signup extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -108,7 +108,7 @@ class Login extends React.Component {
     } else if (this.props.tenant.enable_password_login) {
       this.state.loginWithPassword = true
       this.state.loginByEmail = true;
-      this.state.loginByMobile = true;
+      this.state.loginByMobile = false;
       this.state.loginBy = "email"
     } 
 
@@ -123,7 +123,7 @@ class Login extends React.Component {
     this.passwordInput = React.createRef();
 
     window.browserHistory = this.props.history;
-    document.title = Utils.localizeMessage('accounts.signin') + ` | ${this.props.tenant.name}`;
+    document.title = Utils.localizeMessage('accounts.signup') + ` | ${this.props.tenant.name}`;
 
 
   }
@@ -142,6 +142,12 @@ class Login extends React.Component {
   handleEmailChange = (e) => {
     this.setState({
         email: e.target.value,
+    });
+  }
+
+  handleNameChange = (e) => {
+    this.setState({
+        name: e.target.value,
     });
   }
 
@@ -316,8 +322,8 @@ class Login extends React.Component {
         <Logo/>
         <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
           <FormattedMessage
-              id='accounts.signin'
-              defaultMessage='Login'
+              id='accounts.signup'
+              defaultMessage='Sign Up'
             />
         </h2>
 
@@ -380,27 +386,13 @@ class Login extends React.Component {
               </div>
             )}
 
-            {this.state.loginWithPassword && (
-              <div className="-mt-px">
-                <LocalizedInput 
-                  type="password"
-                  id="password"
-                  name="password" 
-                  value={this.state.password}
-                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                  placeholder={{id: 'accounts.password_placeholder', defaultMessage: 'Password'}}
-                  onChange={this.handlePasswordChange}
-                />
-              </div>
-            )}
-
             {this.state.loginWithCode && (
                 <div className="-mt-px grid grid-cols-5">
                   <LocalizedInput 
                     id="verifyCode"
                     name="verifyCode" 
                     value={this.state.verifyCode}
-                    className="col-span-3 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-bl-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
+                    className="col-span-3 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
                     placeholder={{id: 'accounts.verifyCode', defaultMessage: 'Verify Code'}}
                     onChange={this.handleCodeChange}
                   />
@@ -408,6 +400,32 @@ class Login extends React.Component {
 
                 </div>
             )}
+
+            <div className="-mt-px">
+                  <LocalizedInput 
+                    id="name"
+                    name="name" 
+                    value={this.state.name}
+                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
+                    placeholder={{id: 'accounts.name_placeholder', defaultMessage: 'Name'}}
+                    onChange={this.handleNameChange}
+                  />
+            </div>
+            
+            {this.state.loginWithPassword && (
+                <div className="-mt-px">
+                  <LocalizedInput 
+                    type="password"
+                    id="password"
+                    name="password" 
+                    value={this.state.password}
+                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
+                    placeholder={{id: 'accounts.password_placeholder', defaultMessage: 'Password'}}
+                    onChange={this.handlePasswordChange}
+                  />
+                </div>
+            )}
+
           </div>
           
           {this.state.serverError && <FormError error={this.state.serverError} />}
@@ -460,4 +478,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Signup));
