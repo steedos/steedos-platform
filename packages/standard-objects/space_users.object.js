@@ -1064,6 +1064,15 @@ let methods = {
         try {
             const params = req.params;
             const user = req.user;
+            if (!user.is_space_admin) {
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "space_users_method_disable_enable_error_only_space_admin"
+                    }
+                });
+                return;
+            }
             const steedosSchema = objectql.getSteedosSchema();
             let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"]});
             if (spaceUser.user === user.userId){
@@ -1112,6 +1121,15 @@ let methods = {
         try {
             const params = req.params;
             const user = req.user;
+            if (!user.is_space_admin){
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "space_users_method_disable_enable_error_only_space_admin"
+                    }
+                });
+                return;
+            }
             const steedosSchema = objectql.getSteedosSchema();
             let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
             if (spaceUser.user === user.userId) {

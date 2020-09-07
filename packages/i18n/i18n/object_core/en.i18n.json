@@ -193,9 +193,10 @@
 	"space_users_method_disable_error": "User deactivation failed, %s",
 	"space_users_method_enable_success": "The user was successfully enabled.",
 	"space_users_method_enable_error": "Enable user failure, %s",
-	"space_users_method_error_can_not_own": "Unable to enable / disable your own account.",
-	"space_users_method_error_can_not_disable_disabled": "Unable to disable a disabled account.",
-	"space_users_method_error_can_not_enable_enabled": "Unable to enable an enabled account.",
+	"space_users_method_disable_enable_error_only_space_admin": "Only the space admins can enable / disable accounts.",
+	"space_users_method_disable_enable_error_can_not_own": "Unable to enable / disable your own account.",
+	"space_users_method_disable_error_can_not_disable_disabled": "Unable to disable a disabled account.",
+	"space_users_method_enable_error_can_not_enable_enabled": "Unable to enable an enabled account.",
 	
 	"reports_field_report_type_options_tabular": "Tabular",
 	"reports_field_report_type_options_summary": "Summary",
