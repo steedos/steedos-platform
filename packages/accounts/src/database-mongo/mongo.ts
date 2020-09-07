@@ -75,7 +75,9 @@ export class Mongo implements DatabaseInterface {
     password,
     username,
     email,
+    email_verified,
     mobile,
+    mobile_verified,
     ...cleanUser
   }: CreateUser): Promise<string> {
     const user: MongoUser = {
@@ -89,17 +91,16 @@ export class Mongo implements DatabaseInterface {
     }
     if (username) {
       user.username = username;
-      user.name = username;
     }
     if (email) {
       user.email = email.toLowerCase();
-      user.email_verified = false;
-      user.emails = [{ address: email.toLowerCase(), verified: false }];
+      user.email_verified = email_verified;
+      user.emails = [{ address: email.toLowerCase(), verified: email_verified }];
     }
 
     if(mobile){
       user.mobile = mobile;
-      user.mobile_verified = false;
+      user.mobile_verified = mobile_verified;
     }
 
     if (this.options.idProvider) {
@@ -463,7 +464,6 @@ export class Mongo implements DatabaseInterface {
     userId: string,
     email: string,
     token: string,
-    code: string
   ): Promise<void> {
     const _id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
     await this.collection.updateOne(
@@ -471,7 +471,6 @@ export class Mongo implements DatabaseInterface {
       {
         $push: {
           'services.email.verificationTokens': {
-            code,
             token,
             address: email.toLowerCase(),
             when: this.options.dateProvider(),
