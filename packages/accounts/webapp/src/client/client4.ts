@@ -161,7 +161,6 @@ export default class Client4 {
             Object.assign(headers, newOptions.headers);
         }
 
-        console.log(newOptions)
         return {
             ...newOptions,
             headers,

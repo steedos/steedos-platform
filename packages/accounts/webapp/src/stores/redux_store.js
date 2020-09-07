@@ -19,8 +19,6 @@ const store = createStore(
     )
 );
 
-console.log(store)
-
 export function bindActionToRedux(action, ...args) {
     return async () => {
         await action(...args)(store.dispatch, store.getState);

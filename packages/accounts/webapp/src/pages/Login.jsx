@@ -139,11 +139,19 @@ class Login extends React.Component {
 
     this.setState({serverError: null, loading: true});
     if(!this.state.loginId.trim()){
+
+      let invalid = 'accounts.invalidEmailMobile';
+      if (this.props.tenant.enable_mobile_code_login && this.props.tenant.enable_email_code_login) 
+        invalid = 'accounts.invalidEmailMobile';
+      else if (this.props.tenant.enable_mobile_code_login) 
+        invalid = 'accounts.invalidMobile';
+      else if (this.props.tenant.enable_email_code_login) 
+        invalid = 'accounts.invalidEmail';
+      
       this.setState({
           serverError: (
               <FormattedMessage
-                  id='accounts.usernameOrEmailRequired'
-                  defaultMessage='Username or email is required'
+                  id={invalid}
               />
           ),
       });
@@ -170,11 +178,18 @@ class Login extends React.Component {
     this.setState({error: null});
 
     if(!this.state.loginId.trim()){
+
+      let invalid = 'accounts.invalidEmailMobile';
+      if (this.props.tenant.enable_mobile_code_login && this.props.tenant.enable_email_code_login) 
+        invalid = 'accounts.invalidEmailMobile';
+      else if (this.props.tenant.enable_mobile_code_login) 
+        invalid = 'accounts.invalidMobile';
+      else if (this.props.tenant.enable_email_code_login) 
+        invalid = 'accounts.invalidEmail';
       this.setState({
           serverError: (
               <FormattedMessage
-                  id='accounts.usernameOrEmailRequired'
-                  defaultMessage='Username or email is required'
+                  id={invalid}
               />
           ),
       });
@@ -190,7 +205,7 @@ class Login extends React.Component {
         this.setState({
             serverError: (
                 <FormattedMessage
-                    id= {error.message}
+                    id={error.message}
                 />
             ),
         });
@@ -313,8 +328,8 @@ class Login extends React.Component {
           <div className="mt-6 flex justify-end">
             <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
               <FormattedMessage
-                id='accounts.next'
-                defaultMessage='Next'
+                id='accounts.submit'
+                defaultMessage='Submit'
               />
             </button>
           </div>

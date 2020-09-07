@@ -9,7 +9,6 @@ import { loadTranslations } from '../../actions/i18n';
 import {getCurrentLocale, getTranslations} from '../../selectors/i18n';
 
 import IntlProvider from './intl_provider';
-import { getSettings } from '../../selectors';
 
 function mapStateToProps(state) {
     const locale = getCurrentLocale(state);
@@ -17,7 +16,6 @@ function mapStateToProps(state) {
     return {
         locale,
         translations: getTranslations(state, locale),
-        settings: getSettings(state),
     };
 }
 
