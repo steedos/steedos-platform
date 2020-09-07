@@ -507,7 +507,6 @@ export default class AccountsPassword implements AuthenticationService {
    * @returns Return the id of user created.
    */
   public async createUser(user: PasswordCreateUserType): Promise<string> {
-    console.log(user)
     if (!user.email && !user.mobile) {
       throw new Error(this.options.errors.emailOrMobileRequired);
     }
@@ -518,6 +517,10 @@ export default class AccountsPassword implements AuthenticationService {
 
     if (user.email && !this.options.validateEmail(user.email)) {
       throw new Error(this.options.errors.invalidEmail);
+    }
+
+    if (user.mobile && (await this.db.findUserByMobile(user.mobile))) {
+      throw new Error(this.options.errors.invalidMobile);
     }
 
     if (user.username && (await this.db.findUserByUsername(user.username))) {
@@ -535,6 +538,18 @@ export default class AccountsPassword implements AuthenticationService {
       user.password = await this.hashAndBcryptPassword(user.password);
     }
 
+    if (user.verifyCode) {
+      const r = await this.db.checkVerificationCode(user, user.verifyCode);
+      if (!r) {
+        throw new Error(this.options.errors.invalidVerifyCode);
+      }
+      delete user.verifyCode;
+      if (user.email)
+        user.email_verified = true
+      if (user.mobile)
+        user.mobile_verified = true
+    }
+
     // // If user does not provide the validate function only allow some fields
     // user = this.options.validateNewUser
     //   ? await this.options.validateNewUser(user)
@@ -549,7 +564,7 @@ export default class AccountsPassword implements AuthenticationService {
     try {
       const userId = await this.db.createUser(user);
       defer(async () => {
-        if (this.options.sendVerificationEmailAfterSignup && user.email)
+        if (this.options.sendVerificationEmailAfterSignup && user.email && !user.email_verified)
           this.sendVerificationEmail(user.email);
 
         const userRecord = (await this.db.findUserById(userId)) as User;

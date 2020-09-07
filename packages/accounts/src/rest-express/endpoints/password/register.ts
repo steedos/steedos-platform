@@ -12,7 +12,6 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
   res: express.Response
 ) => {
   try {
-    console.log(req.body)
     let spaceId = '';
     if(req.body.spaceId){
       spaceId = req.body.spaceId

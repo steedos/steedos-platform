@@ -112,8 +112,8 @@ class Login extends React.Component {
       this.state.loginBy = "email"
     } 
 
-    this.state.loginWithCode = false
-    this.state.loginWithPassword = true
+    // this.state.loginWithCode = false
+    // this.state.loginWithPassword = true
     // this.state.loginByMobile = true;
     // this.state.loginByEmail = true;
     // this.state.loginBy = "email"

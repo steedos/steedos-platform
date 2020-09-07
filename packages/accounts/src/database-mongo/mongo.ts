@@ -107,7 +107,6 @@ export class Mongo implements DatabaseInterface {
     }
 
     user.steedos_id = user._id;
-    console.log(user);
     const ret = await this.collection.insertOne(user);
     return ret.ops[0]._id.toString();
   }
@@ -526,6 +525,27 @@ export class Mongo implements DatabaseInterface {
     }
     const ret = await this.codeCollection.insertOne(verification_code);
     return owner;
+  }
+
+  public async checkVerificationCode(user: any, code: string): Promise<boolean> {
+    
+    let name = null
+    if (user.email)
+      name = user.email
+    else if (user.mobile)
+      name = user.mobile
+
+    if (!name) 
+      return false;
+
+    const record = await this.codeCollection.findOne({
+      name,
+      code
+    });
+    if (!record) 
+      return false;
+    
+    return true;
   }
 
   public async findUserByVerificationCode(user: any, code: string): Promise<User | null> {

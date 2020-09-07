@@ -106,5 +106,6 @@
     "accounts.disableUnverifiedEmailPasswordLogin": "你的邮箱未验证，请使用验证码登录",
     "accounts.invalidRequest": "无效的请求",
     "accounts.serverError": "服务异常",
-    "accounts.tooManyFailures": "验证次数过多，请10分钟后再试!"
+    "accounts.tooManyFailures": "验证次数过多，请10分钟后再试!",
+    "accounts.invalidVerifyCode": "验证码无效"
 }

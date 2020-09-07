@@ -23,5 +23,6 @@ export const errors: ErrorMessages = {
   emailAlreadyExists: 'accounts.emailAlreadyExists',
   usernameOrEmailRequired: 'accounts.usernameOrEmailRequired',
   emailOrMobileRequired: 'accounts.emailOrMobileRequired',
-  emailRequired: 'accounts.emailOrMobileRequired'
+  emailRequired: 'accounts.emailOrMobileRequired',
+  invalidVerifyCode: 'accounts.invalidVerifyCode',
 };

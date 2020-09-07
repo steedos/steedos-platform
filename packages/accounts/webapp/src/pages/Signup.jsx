@@ -112,8 +112,8 @@ class Signup extends React.Component {
       this.state.loginBy = "email"
     } 
 
-    this.state.loginWithCode = false
-    this.state.loginWithPassword = true
+    // this.state.loginWithCode = false
+    // this.state.loginWithPassword = true
     // this.state.loginByMobile = true;
     // this.state.loginByEmail = true;
     // this.state.loginBy = "email"
@@ -218,15 +218,15 @@ class Signup extends React.Component {
     }
     this.props.actions.sendVerificationToken(user).then(async (userId) => {
       this.state.userId = userId;
-      if (!userId)
-        this.setState({
-            serverError: (
-                <FormattedMessage
-                    id='accounts.userNotFound'
-                    defaultMessage='User not found.'
-                />
-            ),
-        });
+      // if (!userId)
+      //   this.setState({
+      //       serverError: (
+      //           <FormattedMessage
+      //               id='accounts.userNotFound'
+      //               defaultMessage='User not found.'
+      //           />
+      //       ),
+      //   });
     });
   }
 
@@ -264,7 +264,7 @@ class Signup extends React.Component {
       password: this.state.password,
       name: this.state.name,
       locale: 'zh-cn',
-      code: this.state.verifyCode
+      verifyCode: this.state.verifyCode
     }
     if (this.state.loginBy === 'mobile'){
       user.mobile = this.state.mobile

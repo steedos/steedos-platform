@@ -89,4 +89,6 @@ export interface ErrorMessages {
   emailRequired: string;
 
   emailOrMobileRequired: string;
+
+  invalidVerifyCode: string;
 }

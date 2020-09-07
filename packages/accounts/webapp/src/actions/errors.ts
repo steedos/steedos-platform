@@ -33,32 +33,32 @@ export function getLogErrorAction(error: ErrorObject, displayable = false) {
 
 export function logError(error: ServerError, displayable = false): ActionFunc {
     return async (dispatch: DispatchFunc) => {
-        if (error.server_error_id === 'api.context.session_expired.app_error') {
-            return {data: true};
-        }
+        // if (error.server_error_id === 'api.context.session_expired.app_error') {
+        //     return {data: true};
+        // }
 
-        const serializedError = serializeError(error);
+        // const serializedError = serializeError(error);
 
-        let sendToServer = true;
-        if (error.stack && error.stack.includes('TypeError: Failed to fetch')) {
-            sendToServer = false;
-        }
-        if (error.server_error_id) {
-            sendToServer = false;
-        }
+        // let sendToServer = true;
+        // if (error.stack && error.stack.includes('TypeError: Failed to fetch')) {
+        //     sendToServer = false;
+        // }
+        // if (error.server_error_id) {
+        //     sendToServer = false;
+        // }
 
-        if (sendToServer) {
-            try {
-                const stringifiedSerializedError = JSON.stringify(serializedError).toString();
-                await Client4.logClientError(stringifiedSerializedError);
-            } catch (err) {
-                // avoid crashing the app if an error sending
-                // the error occurs.
-            }
-        }
+        // if (sendToServer) {
+        //     try {
+        //         const stringifiedSerializedError = JSON.stringify(serializedError).toString();
+        //         await Client4.logClientError(stringifiedSerializedError);
+        //     } catch (err) {
+        //         // avoid crashing the app if an error sending
+        //         // the error occurs.
+        //     }
+        // }
 
-        // EventEmitter.emit(ErrorTypes.LOG_ERROR, error);
-        dispatch(getLogErrorAction(serializedError, displayable));
+        // // EventEmitter.emit(ErrorTypes.LOG_ERROR, error);
+        // dispatch(getLogErrorAction(serializedError, displayable));
 
         return {data: true};
     };

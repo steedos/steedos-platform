@@ -64,7 +64,8 @@ export interface DatabaseInterface extends DatabaseInterfaceSessions {
   addVerificationCode(user: any, code: string): Promise<void>;
 
   findUserByVerificationCode(user: any, code: string): Promise<User | null>;
-
+  
+  checkVerificationCode(user: any, code: string): Promise<boolean>;
 }
 
 export interface DatabaseInterfaceSessions {
