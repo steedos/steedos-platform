@@ -195,7 +195,11 @@
 	"space_users_method_disable_success": "已成功停用该用户。",
 	"space_users_method_disable_error": "停用用户失败，%s",
 	"space_users_method_enable_success": "已成功启用该用户。",
-	"space_users_method_enable_error": "启用用户失败，%s", 
+	"space_users_method_enable_error": "启用用户失败，%s",
+	"space_users_method_error_can_not_own": "无法启用/停用您自己的帐户。",
+	"space_users_method_error_can_not_disable_disabled": "无法停用已停用的帐户。",
+	"space_users_method_error_can_not_enable_enabled": "无法启用已启用的帐户。",
+	
 
 	"reports_field_report_type_options_tabular": "表格",
 	"reports_field_report_type_options_summary": "摘要",

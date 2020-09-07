@@ -1063,7 +1063,27 @@ let methods = {
     disable: async function (req, res) {
         try {
             const params = req.params;
+            const user = req.user;
             const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"]});
+            if (spaceUser.user === user.userId){
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "space_users_method_error_can_not_own"
+                    }
+                });
+                return;
+            }
+            if (!spaceUser.user_accepted) {
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "space_users_method_error_can_not_disable_disabled"
+                    }
+                });
+                return;
+            }
             let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: false });
             if(result){
                 res.status(200).send({ success: true });
@@ -1091,7 +1111,27 @@ let methods = {
     enable: async function (req, res) {
         try {
             const params = req.params;
+            const user = req.user;
             const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
+            if (spaceUser.user === user.userId) {
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "space_users_method_error_can_not_own"
+                    }
+                });
+                return;
+            }
+            if (spaceUser.user_accepted) {
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "space_users_method_error_can_not_enable_enabled"
+                    }
+                });
+                return;
+            }
             let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: true });
             if(result){
                 res.status(200).send({ success: true });
