@@ -611,6 +611,9 @@ if Meteor.isClient
 				unless summaryField
 					throw new Meteor.Error 500, "The summary_field '#{_field.summary_field}' is not found for the field '#{_field.name}'"
 				_filedType = summaryField.type
+				if _filedType == "formula"
+					# 公式类型按其公式返回值类型处理
+					_filedType = summaryField.formula_type
 
 		reference_to = props.field?.reference_to
 
