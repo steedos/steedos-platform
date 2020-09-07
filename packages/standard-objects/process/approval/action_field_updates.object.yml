@@ -28,9 +28,32 @@ fields:
   field_name:
     label: Field to Update
     type: text
-  field_new_value:
-    label: Specify New Field Value
+  operation:
+    type: select
+    options: 
+      - label: 'Null'
+        value: 'null'
+      - label: 'Formula'
+        value: 'formula'
+      - label: 'PreviousValue'
+        value: 'previous_value'
+      - label: 'NextValue'
+        value: 'next_value'
+      - label: '特定值'
+        value: 'literal'
+      - label: '特定值'
+        value: 'literal'
+      - label: '特定值'
+        value: 'literal'
+  formula:
     type: text
+  notify_assignee:
+    type: lookup
+    reference_to: users
+    label: 通知被分配人(仅修改拥有者时由此选项)
+  literal_value:
+    type: text
+    label: 如果为boolean, 则存储1/0
   description:
     label: description
     type: textarea
