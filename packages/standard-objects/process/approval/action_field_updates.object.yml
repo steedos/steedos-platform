@@ -28,6 +28,9 @@ fields:
   field_name:
     label: Field to Update
     type: text
+  target_object:
+    type: lookup
+    label: 相关对象(主-详master_detail)
   operation:
     type: select
     options: 
