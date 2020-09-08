@@ -74,6 +74,7 @@ class Signup extends React.Component {
         password: '',
         verifyCode: '',
         sessionExpired: false,
+        loginSuccess: false,
 
         loginByEmail: false,
         loginByMobile: false,
@@ -314,9 +315,7 @@ class Signup extends React.Component {
     // } else if (team) {
     //     browserHistory.push(`/${team.name}`);
     } else {
-      setTimeout( ()=> {
-        GlobalAction.redirectUserToDefaultSpace();
-      }, 100);
+      this.state.loginSuccess = true;
       
     }
   }
@@ -335,6 +334,9 @@ class Signup extends React.Component {
 
 
   render() {
+
+    if (this.state.loginSuccess && this.props.getCurrentUserId)
+      GlobalAction.redirectUserToDefaultSpace();
 
     return (
     <Card>

@@ -18,7 +18,7 @@ class LoggedIn extends React.PureComponent {
   
   componentDidMount() {
     if (!this.props.currentUser) {
-      GlobalActions.emitUserLoggedOutEvent('#/login?redirect_to=' + encodeURIComponent(this.props.location.pathname), true, false);
+      GlobalActions.emitUserLoggedOutEvent('/login?redirect_to=' + encodeURIComponent(this.props.location.pathname), true, false);
     }
   }
   render() {

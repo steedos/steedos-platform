@@ -80,9 +80,9 @@ class Root extends React.PureComponent {
 
                   <Route path="/login" component={Login} />
                   
-                  <Route path="/create-tenant" component={CreateTenant} />
-                  <Route path="/choose-tenant" component={ChooseTenant} />
-                  <Route exact path="/update-password" component={UpdatePassword} />
+                  <LoggedInRoute path="/create-tenant" component={CreateTenant} />
+                  <LoggedInRoute path="/choose-tenant" component={ChooseTenant} />
+                  <LoggedInRoute exact path="/update-password" component={UpdatePassword} />
                   <Route path="/verify-email/:token" component={VerifyEmail} />
                   {/* <Route path="/login-code" component={LoginCode} /> */}
                   <LoggedInRoute path="/preference" component={Preference} />

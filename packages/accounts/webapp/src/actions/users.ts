@@ -38,7 +38,7 @@ export function login(loginId: string, password: string, mfaToken = ''): ActionF
                   type: UserTypes.LOGIN_FAILURE,
                   error,
               },
-              //logError(error),
+              logError(error),
           ]));
           return {error};
       }
@@ -57,6 +57,8 @@ function completeLogin(data: any): ActionFunc {
       Client4.setToken(data.token);
       Client4.setUserId(data.user._id);
 
+      if (data.user)
+        localStorage.setItem('accounts:userId', data.user._id);
       
       let teamMembers;
 
@@ -121,6 +123,7 @@ export function logout(): ActionFunc {
           // nothing to do here
       }
 
+      localStorage.removeItem('accounts:userId');
       dispatch({type: UserTypes.LOGOUT_SUCCESS, data: null});
 
       return {data: true};
