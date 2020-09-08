@@ -14,5 +14,5 @@ export type SpaceUser = {
 export type SpacesState = {
   currentSpaceId: string;
   spaces: IDMappedObjects<Space>;
-  mySpaceUsers: Dictionary<SpaceUser>;
+  mySpaces: IDMappedObjects<Space>;
 };

@@ -236,8 +236,6 @@ export default class Client4 {
             {method: 'POST', body: JSON.stringify(user)},
         );
 
-        if (auth && auth.user && auth.user._id)
-            localStorage.setItem('accounts:userId', auth.user._id);
         return auth
     };
 

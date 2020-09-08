@@ -3,16 +3,28 @@ import {GetStateFunc, DispatchFunc, ActionFunc, ActionResult, batchActions, Acti
 import {SpaceTypes, UserTypes} from '../action_types';
 import {Space, SpaceUser} from '../types/spaces';
 import {bindClientFunc, forceLogoutIfNecessary} from './helpers';
+import LocalStorageStore from '../stores/local_storage_store';
+import { getCurrentUserId } from '../selectors/entities/users';
+import { getMySpaces as selectMySpaces } from '../selectors/entities/spaces';
 
-export function selectSpace(space: Space | string): ActionFunc {
+export function selectSpace(spaceId?: string | null): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-      const spaceId = (typeof space === 'string') ? space : space._id;
-      dispatch({
-          type: SpaceTypes.SELECT_SPACE,
-          data: spaceId,
-      });
+    
+    const userId = getCurrentUserId(getState());
+    let selectedSpaceId = spaceId;
+    if (!selectedSpaceId)
+      selectedSpaceId = LocalStorageStore.getPreviousSpaceId(userId);
+    const spaces = selectMySpaces(getState());
+    if (!spaces[selectedSpaceId])
+      return {data: false};
 
-      return {data: true};
+    dispatch({
+      type: SpaceTypes.SELECT_SPACE,
+      data: selectedSpaceId,
+    });
+    LocalStorageStore.setPreviousSpaceId(userId, selectedSpaceId);
+
+    return {data: selectedSpaceId};
   };
 }
 

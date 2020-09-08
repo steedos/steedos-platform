@@ -24,6 +24,7 @@
     "accounts.switch_mobile": "改为使用手机号码",
     "accounts.switch_code": "使用验证码登录",
     "accounts.switch_password": "使用密码登录",
+    "accounts.select_space": "选择企业",
     "accounts.title.password": "输入密码",
     "accounts.title.setPassword": "设置密码",
     "accounts.logout": "注销",

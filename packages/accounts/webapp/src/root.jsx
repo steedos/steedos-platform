@@ -15,7 +15,7 @@ import VerifyEmail from './components/VerifyEmail';
 import VerifyMobile from './components/VerifyMobile';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './pages/CreateTenant';
-import ChooseTenant from './components/ChooseTenant';
+import SelectSpace from './pages/SelectSpace';
 import Preference from './pages/Preference';
 import Loading from './components/Loading';
 
@@ -50,7 +50,8 @@ class Root extends React.PureComponent {
 
   componentDidMount() {
     this.props.actions.loadMeAndConfig().then((response) => {
-      if (document.location.pathname === '/' && response[1] && response[1].data) {
+      GlobalActions.selectDefaultSpace();
+      if (document.location.pathname === '/' && document.location.hash === '#/' && response[1] && response[1].data) {
           GlobalActions.redirectUserToDefaultSpace();
       }
       this.onConfigLoaded();
@@ -75,13 +76,13 @@ class Root extends React.PureComponent {
                   {/* <Route path="/" component={GoBack}/> */}
                   {/* <Route path="/" component={Title}/> */}
                 <Switch>
-                  <LoggedInRoute path="/home" component={Home}/>
+                  <LoggedInRoute path="/space/:spaceId" component={Home}/>
                   <Route path="/signup" component={Signup} />
 
                   <Route path="/login" component={Login} />
                   
                   <LoggedInRoute path="/create-tenant" component={CreateTenant} />
-                  <LoggedInRoute path="/choose-tenant" component={ChooseTenant} />
+                  <Route path="/select-space" component={SelectSpace} />
                   <LoggedInRoute exact path="/update-password" component={UpdatePassword} />
                   <Route path="/verify-email/:token" component={VerifyEmail} />
                   {/* <Route path="/login-code" component={LoginCode} /> */}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {bindActionCreators} from 'redux';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
@@ -6,43 +7,28 @@ import {FormattedMessage} from 'react-intl';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
+import { getCurrentSpace } from "../selectors/entities/spaces";
 import Navbar from '../components/Navbar';
-
+import { selectSpace } from '../actions/spaces';
+import { hashHistory } from "../utils/hash_history";
 
 class Home extends React.PureComponent {
 
 
-  fetchUser = async () => {
-    // refresh the session to get a new accessToken if expired
-    // const tokens = await accountsClient.refreshSession();
-    // if (!tokens) {
-    //   history.push('/login');
-    //   return;
-    // }
-    // const data = await accountsRest.authFetch( 'user', {});
-  
-    // if (!data) {
-    //   history.push('/login');
-    //   return;
-    // }
-    // setUser(data);
-    // if(!data.spaces || data.spaces.length === 0){
-      
-    // }else{
-    //   const searchParams = new URLSearchParams(location.search);
-    //   let redirect_uri = searchParams.get("redirect_uri");
-    //   if (redirect_uri){
-    //     if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){
-    //       redirect_uri = window.location.origin + redirect_uri
-    //     }
-    //     let u = new URL(redirect_uri);
-    //     //u.searchParams.append("token", tokens.accessToken);
-    //     u.searchParams.append("X-Auth-Token", getCookie('X-Auth-Token'));
-    //     u.searchParams.append("X-User-Id", getCookie('X-User-Id'));
-    //     window.location.href = u.toString();
-    //   }
-    // }
-  };
+  constructor(props, context) {
+    super(props, context);
+  }
+
+  componentDidMount() {
+    if (this.props.match && this.props.match.params) {
+      this.props.actions.selectSpace(this.props.match.params.spaceId).then(async (result) => {
+        console.log(result)
+        if (result && result.data == false) {
+          hashHistory.push('/select-space');
+        }
+      });
+    }
+  }
 
   onHome = async () => {
     window.location.href = this.props.settings.root_url ? this.props.settings.root_url : "/";
@@ -50,12 +36,13 @@ class Home extends React.PureComponent {
 
   render() {
 
-    const {currentUser} = this.props;
 
-    if (!currentUser) {
+    const {currentUser, currentSpace} = this.props;
+
+    if (!currentUser || !currentSpace) {
       return null;
     }
-    
+
     const emailVerified = () => {
       if (currentUser && currentUser.email_verified)
         return (
@@ -124,31 +111,31 @@ class Home extends React.PureComponent {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center">
                   {/* <img className="hidden h-15 w-15 rounded-full sm:block" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80" alt=""/> */}
-                  <span className="inline-block h-15 w-15 rounded-full overflow-hidden bg-gray-100">
-                    <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                  <span className="inline-block h-15 w-15 rounded-full overflow-hidden bg-gray-100 text-gray-500">
+                    <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                     </svg>
                   </span>
                   <div>
                     <div className="flex items-center">
                       <h1 className="ml-3 text-2xl font-bold leading-7 text-cool-gray-900 sm:leading-9 sm:truncate">
-                        欢迎您, {currentUser && currentUser.name}
+                        {this.props.currentSpace && this.props.currentSpace.name}
                       </h1>
                     </div>
-                    <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
-                      {/* <dt className="sr-only">Company</dt>
+                    {/* <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
+                      <dt className="sr-only">Company</dt>
                       <dd className="flex items-center text-sm leading-5 text-cool-gray-500 font-medium capitalize sm:mr-6">
                         <svg className="flex-shrink-0 mr-1.5 h-5 w-5 text-cool-gray-400" viewBox="0 0 20 20" fill="currentColor">
                           <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd" />
                         </svg>
                         华炎软件
-                      </dd> */}
+                      </dd>
                       <dt className="sr-only">Account status</dt>
                       <dd className="mt-3 flex items-center text-sm leading-5 text-cool-gray-500 font-medium sm:mr-6 sm:mt-0 capitalize">
                         {emailVerified()}
                         {mobileVerified()}
                       </dd>
-                    </dl>
+                    </dl> */}
                   </div>
                 </div>
               </div>
@@ -159,11 +146,11 @@ class Home extends React.PureComponent {
                     进入首页
                   </button>
                 </span>
-                <span className="shadow-sm rounded-md">
+                {/* <span className="shadow-sm rounded-md">
                   <a href="#/preference" className="inline-flex items-center px-4 py-2 border border-cool-gray-300 text-sm leading-5 font-medium rounded-md text-cool-gray-700 bg-white hover:text-cool-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-cool-gray-800 active:bg-cool-gray-50 transition duration-150 ease-in-out">
                     账户设置
                   </a>
-                </span>
+                </span> */}
               </div>
             </div>
           </div>
@@ -176,9 +163,17 @@ class Home extends React.PureComponent {
 function mapStateToProps(state) {
   return {
     currentUser: getCurrentUser(state),
+    currentSpace: getCurrentSpace(state),
     tenant: getTenant(state),
     settings: getSettings(state),
   };
 }
 
-export default connect(mapStateToProps)(Home);
+function mapDispatchToProps(dispatch) {
+  return {
+      actions: bindActionCreators({
+          selectSpace,
+      }, dispatch),
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

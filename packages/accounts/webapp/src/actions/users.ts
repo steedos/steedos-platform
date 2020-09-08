@@ -5,7 +5,8 @@ import { UserProfile } from '../types/users';
 import { Client4 } from '../client/';
 import {logError} from './errors';
 import {bindClientFunc, forceLogoutIfNecessary, debounce} from './helpers';
-import { getMySpaces } from './spaces';
+import { getMySpaces, selectSpace } from './spaces';
+import LocalStorageStore from '../stores/local_storage_store';
 
 export function createUser(user: UserProfile, token: string, inviteId: string, redirect: string): ActionFunc {
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -51,40 +52,53 @@ export function login(loginId: string, password: string, mfaToken = ''): ActionF
 
 function completeLogin(data: any): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-      dispatch({
-        type: UserTypes.RECEIVED_ME,
-        data: data.user,
-      });
-      Client4.setToken(data.token);
-      Client4.setUserId(data.user._id);
+    dispatch({
+      type: UserTypes.RECEIVED_ME,
+      data: data.user,
+    });
+    Client4.setToken(data.token);
+    Client4.setUserId(data.user._id);
 
-      if (data.user)
-        localStorage.setItem('accounts:userId', data.user._id);
-      
-      let teamMembers;
+    if (data.user) {
+      LocalStorageStore.setItem('userId', data.user._id);    
+      LocalStorageStore.setWasLoggedIn(true);
 
-      const promises = [
-          dispatch(getMySpaces()),
-        //   dispatch(getClientConfig()),
-      ];
+    }
+    
+    const promises = [
+        dispatch(getMySpaces()),
+        dispatch(selectSpace()),
+      //   dispatch(getClientConfig()),
+    ];
 
-      try {
-          await Promise.all(promises);
-      } catch (error) {
-          dispatch(batchActions([
-              {type: UserTypes.LOGIN_FAILURE, error},
-              logError(error),
-          ]));
-          return {error};
-      }
+    try {
+        await Promise.all(promises);
+    } catch (error) {
+        dispatch(batchActions([
+            {type: UserTypes.LOGIN_FAILURE, error},
+            logError(error),
+        ]));
+        return {error};
+    }
 
-      dispatch(batchActions([
-        {
-            type: UserTypes.LOGIN_SUCCESS,
-        },
-      ]));
+    dispatch(batchActions([
+      {
+          type: UserTypes.LOGIN_SUCCESS,
+      },
+    ]));
 
-      return {data: true};
+
+    LocalStorageStore.setItem('userId', data.user._id);
+    LocalStorageStore.setItem('token', data.token);
+    if(window.ReactNativeWebView && window.ReactNativeWebView.postMessage){
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        "X-Auth-Token": data.token,
+        "X-User-Id": data.user._id,
+        "X-Access-Token": data.tokens.accessToken
+      }))
+    }
+
+    return {data: true};
   };
 }
 
@@ -100,6 +114,7 @@ export function loadMe(): ActionFunc {
       const promises = [
           dispatch(getMe()),
           dispatch(getMySpaces()),
+          dispatch(selectSpace()),
       ];
 
       await Promise.all(promises);
@@ -124,7 +139,8 @@ export function logout(): ActionFunc {
           // nothing to do here
       }
 
-      localStorage.removeItem('accounts:userId');
+      LocalStorageStore.removeItem('userId');
+      LocalStorageStore.setWasLoggedIn(false);
       dispatch({type: UserTypes.LOGOUT_SUCCESS, data: null});
 
       return {data: true};
@@ -135,7 +151,7 @@ export function logout(): ActionFunc {
 export function getMe(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
 
-      if (!localStorage.getItem('accounts:userId'))
+      if (!LocalStorageStore.getItem('userId'))
         return null 
 
       const getMeFunc = bindClientFunc({
@@ -145,7 +161,7 @@ export function getMe(): ActionFunc {
       const me = await getMeFunc(dispatch, getState);
 
       if ('error' in me) {
-        localStorage.removeItem('accounts:userId');
+        LocalStorageStore.removeItem('userId');
         return me;
       }
       // if ('data' in me) {

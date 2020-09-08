@@ -69,7 +69,7 @@ const LoginAfter = async (history, tenant, result, location, action)=>{
     const user = await accountsRest.authFetch( 'user', {});
 
     if(user._id){
-      localStorage.setItem("accounts:userId", user._id);
+      localStorage.setItem("steedos:userId", user._id);
     }
 
     if(tenant.enable_bind_mobile && (!user.mobile || !user.mobile_verified)){

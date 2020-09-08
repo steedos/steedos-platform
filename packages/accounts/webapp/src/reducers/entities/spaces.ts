@@ -16,7 +16,6 @@ const currentSpaceId = (state = '', action: GenericAction) => {
     }
 }
 
-
 const spaces = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction) => {
   switch (action.type) {
     case SpaceTypes.RECEIVED_SPACES_LIST:
@@ -31,7 +30,7 @@ const spaces = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction)
 
 
 
-const mySpaceUsers = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction) => {
+const mySpaces = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction) => {
   switch (action.type) {
     case SpaceTypes.RECEIVED_SPACES_LIST:
       return Object.assign({}, state, listToMap(action.data));
@@ -46,5 +45,5 @@ const mySpaceUsers = (state: IDMappedObjects<UserProfile> = {}, action: GenericA
 export default combineReducers({
   currentSpaceId,
   spaces,
-  mySpaceUsers
+  mySpaces
 })

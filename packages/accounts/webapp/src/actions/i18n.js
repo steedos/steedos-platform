@@ -8,7 +8,6 @@ export function loadTranslations(locale, url) {
     if (locale === 'en') { 
         const en = I18n.getAllLanguages()[locale].translations;
         Object.assign(translations, en);
-        debugger
         return {
                 type: "RECEIVED_TRANSLATIONS",
                 data: {

@@ -286,7 +286,7 @@ class Login extends React.Component {
 
     // Record a successful login to local storage. If an unintentional logout occurs, e.g.
     // via session expiration, this bit won't get reset and we can notify the user as such.
-    // LocalStorageStore.setWasLoggedIn(true);
+
     if (redirectTo && redirectTo.match(/^\/([^/]|$)/)) {
       this.props.history.push(redirectTo);
     // } else if (team) {
@@ -311,7 +311,7 @@ class Login extends React.Component {
 
   render() {
 
-    if (this.state.loginSuccess && this.props.getCurrentUserId)
+    if (this.props.getCurrentUserId)
       GlobalAction.redirectUserToDefaultSpace();
 
     return (

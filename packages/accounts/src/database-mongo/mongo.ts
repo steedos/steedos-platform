@@ -576,7 +576,6 @@ export class Mongo implements DatabaseInterface {
 
   public async getMySpaces(userId:string): Promise<any | null> {
     const userSpaces:any = await this.db.collection('space_users').find({ user: userId }).project({space:1}).toArray();
-    console.log(userSpaces)
     const spaceIds = map(userSpaces, 'space')
     const spaces = await this.db.collection('spaces').find({ _id: { $in: spaceIds } }).project({name:1}).toArray();
 

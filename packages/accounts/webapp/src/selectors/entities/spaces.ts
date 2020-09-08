@@ -1,7 +1,11 @@
 import { GlobalState } from "../../types/store";
 
-export function getSpaceUsers(state: GlobalState) {
-  return state.entities.spaces.mySpaceUsers;
+export function getSpaces(state: GlobalState) {
+  return state.entities.spaces.spaces;
+}
+
+export function getMySpaces(state: GlobalState) {
+  return state.entities.spaces.mySpaces;
 }
 
 export function getCurrentSpace(state: GlobalState) {
@@ -10,4 +14,8 @@ export function getCurrentSpace(state: GlobalState) {
 
 export function getCurrentSpaceId(state: GlobalState) {
   return state.entities.spaces.currentSpaceId;
+}
+
+export function getSpace(state: GlobalState, spaceId: string) {
+  return state.entities.spaces.spaces[spaceId];
 }
