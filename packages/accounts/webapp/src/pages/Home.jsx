@@ -7,7 +7,7 @@ import {FormattedMessage} from 'react-intl';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
-import { getCurrentSpace } from "../selectors/entities/spaces";
+import { getCurrentSpace, currentSpaceId } from "../selectors/entities/spaces";
 import Navbar from '../components/Navbar';
 import { selectSpace } from '../actions/spaces';
 import { hashHistory } from "../utils/hash_history";
@@ -21,12 +21,15 @@ class Home extends React.PureComponent {
 
   componentDidMount() {
     if (this.props.match && this.props.match.params) {
-      this.props.actions.selectSpace(this.props.match.params.spaceId).then(async (result) => {
-        console.log(result)
-        if (result && result.data == false) {
-          hashHistory.push('/select-space');
-        }
-      });
+      const spaceId = this.props.match.params.spaceId;
+      if (spaceId != this.props.currentSpaceId) {
+        this.props.actions.selectSpace(spaceId).then(async (result) => {
+          console.log(result)
+          if (result && result.data == false) {
+            hashHistory.push('/select-space');
+          }
+        });
+      }
     }
   }
 
@@ -164,6 +167,7 @@ function mapStateToProps(state) {
   return {
     currentUser: getCurrentUser(state),
     currentSpace: getCurrentSpace(state),
+    currentSpaceId: getCurrentSpace(state),
     tenant: getTenant(state),
     settings: getSettings(state),
   };

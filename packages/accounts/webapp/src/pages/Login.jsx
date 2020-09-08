@@ -14,6 +14,7 @@ import { withRouter } from "react-router-dom";
 import * as GlobalAction from '../actions/global_actions';
 import { getCurrentUserId } from '../selectors/entities/users';
 import { useCountDown } from "../components/countdown";
+import LocalStorageStore from '../stores/local_storage_store';
 
 const totalSeconds = 60;
 const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
@@ -311,7 +312,7 @@ class Login extends React.Component {
 
   render() {
 
-    if (this.props.getCurrentUserId)
+    if (LocalStorageStore.getItem('userId') && this.props.getCurrentUserId)
       GlobalAction.redirectUserToDefaultSpace();
 
     return (

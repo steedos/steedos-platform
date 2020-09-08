@@ -13,6 +13,7 @@ export function selectSpace(spaceId?: string | null): ActionFunc {
     if (!userId)
       return
     let selectedSpaceId = spaceId;
+    
     if (!selectedSpaceId)
       selectedSpaceId = LocalStorageStore.getPreviousSpaceId(userId);
     const space = getMySpace(getState(), selectedSpaceId);
