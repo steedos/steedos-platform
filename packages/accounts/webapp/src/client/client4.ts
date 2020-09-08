@@ -7,6 +7,7 @@ import { Options, ClientResponse } from '../types/client4';
 import {buildQueryString} from '../utils/helpers';
 import { UserProfile } from '../types/users';
 import { ServerError } from '../types/errors';
+import { Space } from '../types/spaces';
 
 const FormData = require('form-data');
 const HEADER_AUTH = 'Authorization';
@@ -263,6 +264,13 @@ export default class Client4 {
     getMe = () => {
         return this.doFetch<UserProfile>(
             `${this.getAccountsRoute()}/user`,
+            {method: 'get'},
+        );
+    };
+
+    getMySpaces = () => {
+        return this.doFetch<Space[]>(
+            `${this.getAccountsRoute()}/spaces`,
             {method: 'get'},
         );
     };

@@ -112,9 +112,9 @@ async function getAccountsServer (context){
   return accountsServer;
 }
 
-async function getAccountsRouter(context){
+export async function getAccountsRouter(context){
 
-  let accountsServer = await getAccountsServer(context)
+  const accountsServer = await getAccountsServer(context)
 
   const router = accountsExpress(accountsServer, {
     path: '/',

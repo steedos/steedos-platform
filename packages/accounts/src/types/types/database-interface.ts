@@ -66,6 +66,8 @@ export interface DatabaseInterface extends DatabaseInterfaceSessions {
   findUserByVerificationCode(user: any, code: string): Promise<User | null>;
   
   checkVerificationCode(user: any, code: string): Promise<boolean>;
+
+  getMySpaces(userId: string): Promise<any | null>;
 }
 
 export interface DatabaseInterfaceSessions {

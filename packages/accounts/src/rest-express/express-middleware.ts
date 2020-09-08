@@ -24,6 +24,7 @@ import { userExists } from './endpoints/get-user-exists'
 import { applyCode, getUserIdByToken } from './endpoints/steedos/verify_code';
 import { changeUserFullname } from './endpoints/put-user-name';
 import { login } from './endpoints/login';
+import { getMySpaces } from './endpoints/spaces';
 
 
 const defaultOptions: AccountsExpressOptions = {
@@ -52,6 +53,7 @@ const accountsExpress = (
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.put(`${path}/user`, userLoader(accountsServer), changeUserFullname(accountsServer));
   router.get(`${path}/user/exists`, userExists());
+  router.get(`${path}/user/spaces`, userLoader(accountsServer), getMySpaces(accountsServer));
   router.post(`${path}/code/apply`, applyCode(accountsServer));
   router.get(`${path}/code/id`, getUserIdByToken());
   
