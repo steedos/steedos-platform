@@ -2,14 +2,16 @@
 export const FormulaUserKey = "$user";
 
 /**
- * 记录公式字段中引用的其他对象上的字段或者引用的本对象上的公式字段
+ * 记录公式字段中引用的本对象或其他对象上的字段
  * 用于相关引用字段值变更时，能找到哪些公式字段需要级联变更
  * is_formula指field_name是否是公式字段
+ * is_own指field_name是否引用的是本对象自身的字段（字段属于对象本身，且所对应的公式变量只有唯一一层引用，即直接引用当前对象自身上的字段）
  */
 export type SteedosFieldFormulaQuoteTypeConfig = {
     object_name: string,
     field_name: string,
     is_formula?: boolean
+    is_own?: boolean
 }
 
 /**

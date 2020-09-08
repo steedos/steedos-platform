@@ -2,7 +2,7 @@ import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } fro
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryFieldTypeValue, SupportedSummaryFieldTypes } from './type';
 import { addFieldSummaryConfig, getFieldSummaryConfigs, clearFieldSummaryConfigs } from './field_summary';
 import { isSystemObject } from '../util';
-import { isFormulaFieldQuotingObjectAndField } from '../formula';
+import { isFormulaFieldQuotingObjectAndFields } from '../formula';
 import _ = require('lodash')
 const clone = require('clone')
 
@@ -53,7 +53,7 @@ export const getSummaryFieldType = (summaryConfig: SteedosFieldSummaryTypeConfig
             let fieldType = field.type;
             if(fieldType === "formula"){
                 fieldType = field.formula_type;
-                const isQuotingTwoWay = isFormulaFieldQuotingObjectAndField(summary_object, summary_field, object_name, field_name);
+                const isQuotingTwoWay = isFormulaFieldQuotingObjectAndFields(summary_object, summary_field, object_name, [field_name]);
                 if(isQuotingTwoWay){
                     throw new Error(`Do not refer to each other, the field '${field_name}' of the master object '${object_name}' is summarizing a formula type summary_field '${summary_field}' of the detail object '${summary_object}', but the formula type field of the detail object exactly quoting the field of the master object, which is not allowed.`);
                 }

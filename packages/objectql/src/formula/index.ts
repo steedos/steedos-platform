@@ -98,13 +98,17 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
             // 当是$user时，不需要把第一个path记录下来，只需要记录其后续的路径即可
             paths.push(tempFieldFormulaVarPath);
         }
-        if (!isUserVar && (i > 0 || isFormulaType)) {
+        if (!isUserVar) {
             // $user变量不需要记录引用关系，因为没法确定每条record当时对应的当前用户ID是多少
-            // 陈了公式字段外，自己不能引用自己，i大于0就是其他对象上的引用
+            // 自己可以引用自己，i大于0就是其他对象上的引用
             let tempFieldFormulaQuote: SteedosFieldFormulaQuoteTypeConfig = {
                 object_name: tempObjectConfig.name,
                 field_name: tempFieldConfig.name
             };
+            if(i === 0 && i === varItems.length - 1){
+                // 是引用的本对象上自身的字段，即自己引用自己
+                tempFieldFormulaQuote.is_own = true;
+            }
             if (isFormulaType) {
                 tempFieldFormulaQuote.is_formula = true;
             }

@@ -1,7 +1,7 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaParamTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
-import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndField } from './util';
+import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndFields } from './util';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
 import { SteedosQueryFilters } from '../types';
@@ -248,16 +248,20 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFormulaVarPat
 }
 
 /**
- * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在insert/update的对象字段的公式字段并更新其字段值
+ * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在update的对象字段的公式字段并更新其字段值
+ * 如果当前不是update而是insert则不需要调用该函数，因为这时这条记录不可能存在引用关系
  * @param objectName 
  * @param recordId 
  * @param currentUserId 
  * @param fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
  * @param quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, currentUserId: string, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldFormulaTypeConfig>) {
+export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, currentUserId: string, fieldNames?: Array<string>, escapeObjectName?: string, quotedByConfigs?: Array<SteedosFieldFormulaTypeConfig>) {
     if (!quotedByConfigs) {
-        quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
+        // 如果要跳过的对象正好是当前要修改的对象，则跳过该对象不算入引用
+        // 如果当前修改的对象已经不是上次修改记录时要跳过的对象，则重置，不能再跳过了。
+        const escapeCurrentObject = escapeObjectName === objectName;
+        quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeCurrentObject);
     }
     if(!quotedByConfigs.length){
         return;
@@ -362,15 +366,16 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
         if (toAggregatePathsItem.length < 3) {
             // 引用关系只有一层时，可以直接查出哪些记录需要更新重算公式字段值
             let tempPath = toAggregatePathsItem[0];
-            if (tempPath.is_formula && fieldFormulaObjectName === objectName && tempPath.reference_from === objectName) {
+            // if (tempPath.is_formula && fieldFormulaObjectName === objectName && tempPath.reference_from === objectName) {
+            if (fieldFormulaObjectName === objectName && tempPath.reference_from === objectName) {
                 // 如果修改的是当前对象本身的公式字段值时，只需要更新当前记录的公式字段值就行
                 let doc = await getSteedosSchema().getObject(fieldFormulaObjectName).findOne(recordId, { fields: formulaVarFields })
-                await updateDocsFieldFormulaValue(doc, fieldFormulaConfig, currentUserId);
+                await updateDocsFieldFormulaValue(doc, fieldFormulaConfig, currentUserId, objectName);
             }
             else {
                 // 修改的是其他对象上的字段值（包括修改的是其他对象上的公式字段值），则需要按recordId值查出哪些记录需要更新重算公式字段值
                 let docs = await getSteedosSchema().getObject(fieldFormulaObjectName).find({ filters: [[tempPath.field_name, "=", recordId]], fields: formulaVarFields })
-                await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, currentUserId);
+                await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, currentUserId, objectName);
             }
         }
         else {
@@ -382,12 +387,12 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
                 filters: aggregateFilters,
                 fields: formulaVarFields
             }, aggregateLookups);
-            await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, currentUserId);
+            await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, currentUserId, objectName);
         }
     }
 }
 
-export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, currentUserId: string) => {
+export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, currentUserId: string, escapeObjectName?: string) => {
     const { object_name: fieldFormulaObjectName } = fieldFormulaConfig;
     if (!_.isArray(docs)) {
         docs = [docs];
@@ -398,7 +403,7 @@ export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig:
         setDoc[fieldFormulaConfig.field_name] = value;
         await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
         // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
-        await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, currentUserId, [fieldFormulaConfig.field_name])
+        await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, currentUserId, [fieldFormulaConfig.field_name], escapeObjectName)
     }
 }
 
@@ -409,10 +414,10 @@ export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig:
  * @param object_name 是否引用了该对象
  * @param field_name 是否引用了该字段
  */
-export const isFormulaFieldQuotingObjectAndField = (formulaObjectName: string, formulaFieldName: string, objectName: string, fieldName?: string): boolean => {
+export const isFormulaFieldQuotingObjectAndFields = (formulaObjectName: string, formulaFieldName: string, objectName: string, fieldNames?: Array<string>): boolean => {
     const configs: Array<SteedosFieldFormulaTypeConfig> = getObjectFieldFormulaConfigs(formulaObjectName, formulaFieldName);
     if(configs && configs.length){
-        return isFieldFormulaConfigQuotingObjectAndField(configs[0], objectName, fieldName);
+        return isFieldFormulaConfigQuotingObjectAndFields(configs[0], objectName, fieldNames);
     }
     else{
         // 没找到公式字段配置说明传入的参数不是公式字段

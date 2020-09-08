@@ -36,14 +36,14 @@ export const isFieldFormulaConfigQuoted = (configA: SteedosFieldFormulaTypeConfi
  * @param object_name 是否引用了该对象
  * @param field_name 是否引用了该字段
  */
-export const isFieldFormulaConfigQuotingObjectAndField = (config: SteedosFieldFormulaTypeConfig, objectName: string, fieldName?: string): boolean => {
+export const isFieldFormulaConfigQuotingObjectAndFields =(config: SteedosFieldFormulaTypeConfig, objectName: string, fieldNames?: Array<string>): boolean => {
     const { quotes } = config;
     if (quotes && quotes.length) {
         return !!quotes.find((quote) => {
-            if(fieldName){
-                return quote.object_name === objectName && quote.field_name === fieldName;
+            if (fieldNames && fieldNames.length) {
+                return quote.object_name === objectName && fieldNames.indexOf(quote.field_name) > -1;
             }
-            else{
+            else {
                 return quote.object_name === objectName;
             }
         });
@@ -108,6 +108,7 @@ const addSortedFieldFormulaConfig = (config: SteedosFieldFormulaTypeConfig, sour
 /**
  * 根据公式引用关系对字段公式配置进行排序
  * 这里不能用sort函数，因为sort函数只支持两个数值或对象中两个数值属性对比
+ * 规则是把其中被依赖的公式字段配置放前面
  * @param configs 
  */
 export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeConfig>): Array<SteedosFieldFormulaTypeConfig> => {

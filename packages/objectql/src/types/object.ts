@@ -771,6 +771,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return afterTriggerContext.data.values
                 }
             }
+            // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
             await this.runRecordFormula(method, args, userSession ? userSession.userId : undefined);
             await this.runRecordSummaries(method, args, previousDoc);
         }
