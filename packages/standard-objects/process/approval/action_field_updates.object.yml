@@ -1,5 +1,5 @@
-name: platform_action_field_updates
-label: platform_action_field_updates
+name: action_field_updates
+label: action_field_updates
 icon: record
 fields:
   name:
@@ -21,46 +21,179 @@ fields:
     reference_to: process_node
   when:
     type: select
-    options: approval, rejection, final_approval, final_rejection, recall
+    options: approval,rejection,final_approval,final_rejection,recall
   object_name:
     label: Object Name
-    type: text
-  field_name:
-    label: Field to Update
-    type: text
+    type: lookup
+    optionsFunction: !!js/function |
+      function () {
+        var _options;
+        _options = [];
+        _.forEach(Creator.objectsByName, function (o, object_name) {
+          if(o.label){
+            return _options.push({
+              label: o.label,
+              value: o.name,
+              icon: o.icon
+            });
+          }
+        });
+        return _options;
+      }
   target_object:
     type: lookup
     label: 相关对象(主-详master_detail)
-  operation:
-    type: select
-    options: 
-      - label: 'Null'
-        value: 'null'
-      - label: 'Formula'
-        value: 'formula'
-      - label: 'PreviousValue'
-        value: 'previous_value'
-      - label: 'NextValue'
-        value: 'next_value'
-      - label: '特定值'
-        value: 'literal'
-      - label: '特定值'
-        value: 'literal'
-      - label: '特定值'
-        value: 'literal'
-  formula:
-    type: text
-  notify_assignee:
+    depend_on:
+      - object_name
+    optionsFunction: !!js/function |
+      function (doc) {
+        var object = Creator.objectsByName[doc.object_name];
+        if(object){
+          var _options = [{label: object.label, value: object.name}];
+          _.forEach(object.fields, function (field, fname) {
+            if(field && field.type === 'master_detail' && _.isString(field.reference_to) && field.label){
+              _options.push({
+                label: field.label,
+                value: field.name,
+              });
+            }
+          });
+          return _options;
+        }
+       return [];
+      }
+  field_name:
+    label: Field to Update
     type: lookup
-    reference_to: users
-    label: 通知被分配人(仅修改拥有者时由此选项)
+    showIcon: false
+    depend_on:
+      - object_name
+      - target_object
+    optionsFunction: !!js/function |
+      function (doc) {
+        var mainObjectName = null;
+        if(doc.target_object && doc.target_object != doc.object_name){
+          var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
+        }else{
+          mainObjectName = doc.object_name;
+        }
+        var object = Creator.objectsByName[mainObjectName];
+        if(object){
+          var _options = [{label: object.label, value: object.name}];
+          _.forEach(object.fields, function (field, fname) {
+            _options.push({
+                label: field.label,
+                value: field.name,
+              });
+          });
+          return _options;
+        }
+        return [];
+      }
+  operation:
+    type: lookup
+    showIcon: false
+    depend_on:
+      - field_name
+    optionsFunction: !!js/function |
+      function (doc) {
+        var mainObjectName = null;
+        if(doc.target_object && doc.target_object != doc.object_name){
+          var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
+        }else{
+          mainObjectName = doc.object_name;
+        }
+        var object = Creator.objectsByName[mainObjectName];
+        console.log('object', object);
+        if(object && doc.field_name){
+          var _options = [];
+          var field = object.fields[doc.field_name];
+          if(field && field.type != 'boolean'){
+            _options.push({
+                label: 'Null',
+                value: 'null',
+            }) 
+          }
+          _options.push({
+              label: 'Formula',
+              value: 'formula',
+          });
+          _options.push({
+              label: '特定值',
+              value: 'literal',
+          })
+          return _options;
+        }
+        return [];
+      }
+    # options: 
+    #   - label: 'Null'
+    #     value: 'null'
+    #   - label: 'Formula'
+    #     value: 'formula'
+    #   - label: 'PreviousValue'
+    #     value: 'previous_value'
+    #   - label: 'NextValue'
+    #     value: 'next_value'
+    #   - label: '特定值'
+    #     value: 'literal'
+  formula:
+    type: textarea
+    is_wide: true
   literal_value:
     type: text
-    label: 如果为boolean, 则存储1/0
+    is_wide: true
+    label: 指定新字段值
+  notify_assignee:
+    type: boolean
+    hidden: true
+    omit: true
+    label: 通知被分配人(仅修改拥有者时由此选项)
   description:
     label: description
     type: textarea
+    is_wide: true
   # todo:
+form:
+  afterEdit: !!js/function |
+    function(){
+      console.log('afterEdit', this.doc);
+      var operation = this.doc.operation;
+      if(window.__cache_operation != operation){
+        if(operation === 'null'){
+          this.schema._schema.formula.autoform.type = 'hidden';
+          this.schema._schema.literal_value.autoform.type = 'hidden';
+        }
+
+        if(operation === 'formula'){
+          this.schema._schema.formula.autoform.type = 'widearea';
+          this.schema._schema.literal_value.autoform.type = 'hidden';
+        }
+
+        if(operation === 'literal'){
+          this.schema._schema.formula.autoform.type = 'hidden';
+          var doc = this.doc;
+          var mainObjectName = null;
+          if(doc.target_object && doc.target_object != doc.object_name){
+            var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
+          }else{
+            mainObjectName = doc.object_name;
+          }
+          var object = Creator.objectsByName[mainObjectName];
+          if(object && doc.field_name){
+            this.schema._schema.literal_value = Object.assign({},Creator.getObjectSchema(Creator.getObject(mainObjectName))[doc.field_name], {label: this.schema._schema.literal_value.label});
+            this.schema._schema.literal_value.autoform.disabled = false;
+            this.schema._schema.literal_value.autoform.omit = false;
+            this.schema._schema.literal_value.autoform.readonly = false;
+            this.schema._schema.literal_value.autoform.is_wide = true;
+          }else{
+            this.schema._schema.literal_value.autoform.type = 'text';
+          }
+          
+        }
+      }
+      window.__cache_operation = operation;
+    }
 list_views:
   all:
     label: All

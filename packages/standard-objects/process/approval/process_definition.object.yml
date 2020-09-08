@@ -80,7 +80,7 @@ fields:
     group: 提交设置 TODO
 relatedList:
   - process_node
-  - platform_action_field_updates
+  - action_field_updates
 list_views:
   all:
     label: All
