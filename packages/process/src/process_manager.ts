@@ -75,7 +75,7 @@ const getProcessNodes = async (processDefinitionId: string, spaceId: string)=>{
     return await objectql.getObject('process_node').find({filters: [['process_definition', '=', processDefinitionId], ['space', '=', spaceId]], sort: "order asc"});
 }
 
-const addInstanceHistory = async (spaceId: string, instanceId: string, status: string, comment: string, options: any)=>{
+const addInstanceHistory = async (spaceId: string, instanceId: string, status: string, comment: string, options: any, userSession)=>{
     let instance = await objectql.getObject("process_instance").findOne(instanceId);
     let name = '';
     if(options.nodeId){
@@ -99,7 +99,7 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
     });
 
     if(status === 'approved' || status === 'rejected'){
-        await objectql.getObject("process_instance").update(instanceId, {status: status, completed_date: new Date(), last_actor: options.actor})
+        await handleProcessInstance(instanceHistory.process_instance, status, userSession);
     }
 
     if(status === 'pending'){
@@ -119,7 +119,7 @@ const addInstanceNode = async  (instanceId: string, node: any, userSession: any,
         space: userSession.spaceId,
     })
     for (const actor of nodeApprover) {
-        await addInstanceHistory(userSession.spaceId, instanceId, 'pending', null, {nodeId: nodeId, actor: actor, originalActor: actor, submitted_by: userSession.userId, instanceNodeId: instanceNode._id});
+        await addInstanceHistory(userSession.spaceId, instanceId, 'pending', null, {nodeId: nodeId, actor: actor, originalActor: actor, submitted_by: userSession.userId, instanceNodeId: instanceNode._id}, userSession);
     }
 }
 
@@ -139,16 +139,12 @@ const toNextNode = async (instanceId: string, comment: string, nodes: any, index
                 if(node.if_criteria_not_met === 'skip'){
                     await toNextNode(instanceId, comment, nodes, index + 1, objectName, recordId, userSession)
                 }else{
-                    //TODO
                     let options = {actor: currentUserId}
-                    if(node.if_criteria_not_met === 'approve'){
-                        await addInstanceHistory(userSession.spaceId, instanceId, "approved", comment, options)
-                    }else if(node.if_criteria_not_met === 'reject'){
-                        await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
+                    if(node.if_criteria_not_met === 'reject'){
+                        await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options, userSession)
+                    }else if(node.if_criteria_not_met === 'approve'){
+                        // await addInstanceHistory(userSession.spaceId, instanceId, "approved", comment, options)
                     }
-                    // else{
-                    //     await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
-                    // }
                 }
             }
         }
@@ -166,7 +162,7 @@ const toPreviousNode = async (instanceId: string, currentNode: any, userSession:
     }
 }
 
-//TODO 处理提交全
+//TODO 处理提交权限
 export const getObjectProcessDefinition = async (objectName: string, recordId: string, userSession: any)=>{
     let spaceId = userSession.spaceId;
     let currentUserId = userSession.userId;
@@ -188,7 +184,6 @@ export const getObjectProcessDefinition = async (objectName: string, recordId: s
 
 export const recordSubmit = async (processDefinitionId: string, objectName: string, recordId, userSession: any, comment: string, approver: string)=>{
     let instance = await objectql.getObject("process_instance").insert({
-        // name: recordName,
         process_definition: processDefinitionId,
         target_object: {
             "o" : objectName,
@@ -196,9 +191,9 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
         },
         status: "pending",
         space: userSession.spaceId,
-        submitted_by: userSession.userId, //TODO 确认规则
+        submitted_by: userSession.userId,
     });
-    await addInstanceHistory(userSession.spaceId, instance._id, "started", comment, {actor: userSession.userId});
+    await addInstanceHistory(userSession.spaceId, instance._id, "started", comment, {actor: userSession.userId}, userSession);
     const nodes = await getProcessNodes(processDefinitionId, userSession.spaceId);
     await toNextNode(instance._id, comment, nodes, 0, objectName, recordId, userSession);
 }
@@ -343,7 +338,7 @@ export const processInstanceWorkitemReassign = async (instanceHistoryId: string,
         comments: comment
     })
 
-    await addInstanceHistory(userSession.spaceId, history.process_instance, 'pending', null, {nodeId: history.step_node, actor: approver, originalActor: history.original_actor, submitted_by: userSession.userId});
+    await addInstanceHistory(userSession.spaceId, history.process_instance, 'pending', null, {nodeId: history.step_node, actor: approver, originalActor: history.original_actor, submitted_by: userSession.userId}, userSession);
 }
 
 export const processInstanceWorkitemRemove = async (instanceHistoryId: string, userSession: any, comment: string)=>{

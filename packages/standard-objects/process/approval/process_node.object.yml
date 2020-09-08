@@ -37,7 +37,7 @@ fields:
     type: select
     options: approve,reject,skip
     group: Specify Step Criteria
-    is_wide: true #TODO 选项规则：第一个有(order=1)：拒绝记录；批准记录；如果有后续步骤，则会多一个 转到下一步的条件;最后一个步骤且不是第一步时，不能设置不满足的情况（按拒绝记录处理）
+    is_wide: true #TODO 选项规则：第一个有(order=1)：拒绝记录；批准记录；如果有后续步骤，则会多一个 转到下一步的条件; 最后一个步骤且不是第一步时，不能设置不满足的情况; 只有第一步有拒绝记录
   approver:
     type: select
     is_wide: true
