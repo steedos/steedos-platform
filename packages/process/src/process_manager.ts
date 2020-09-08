@@ -1,3 +1,4 @@
+import {runProcessAction, runProcessNodeAction} from './platform_action_manager';
 const objectql = require('@steedos/objectql');
 const Fiber = require('fibers');
 const _ = require("underscore");
@@ -80,7 +81,7 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
     if(options.nodeId){
         const node = await objectql.getObject("process_node").findOne(options.nodeId);
         if(node){
-            name = node.name;
+            name = node.label;
         }
     }
 
@@ -138,14 +139,16 @@ const toNextNode = async (instanceId: string, comment: string, nodes: any, index
                 if(node.if_criteria_not_met === 'skip'){
                     await toNextNode(instanceId, comment, nodes, index + 1, objectName, recordId, userSession)
                 }else{
+                    //TODO
                     let options = {actor: currentUserId}
                     if(node.if_criteria_not_met === 'approve'){
                         await addInstanceHistory(userSession.spaceId, instanceId, "approved", comment, options)
                     }else if(node.if_criteria_not_met === 'reject'){
                         await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
-                    }else{
-                        await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
                     }
+                    // else{
+                    //     await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options)
+                    // }
                 }
             }
         }
@@ -214,6 +217,28 @@ export const getProcessInstanceWorkitem = async (instanceHistoryId: string, user
     }
 }
 
+const getProcessActionWhenByStatus = (processStatus: string)=>{
+    let when = '';
+    if(processStatus === 'approved'){
+        when = 'final_approval';
+    }else if(processStatus === 'rejected'){
+        when = 'final_rejection';
+    }else if(processStatus === 'removed'){
+        when = 'recall';
+    }
+    return when;
+}
+
+const getProcessNodeActionWhenByStatus = (processStatus: string)=>{
+    let when = '';
+    if(processStatus === 'approved'){
+        when = 'approval';
+    }else if(processStatus === 'rejected'){
+        when = 'rejection';
+    }
+    return when;
+}
+
 // export const getProcessInstanceWorkitem = async (objectName: string, recordId: string, userSession: any)=>{
 //     let spaceId = userSession.spaceId;
 //     let userId = userSession.userId; //TODO 代理
@@ -232,7 +257,11 @@ export const getProcessInstanceWorkitem = async (instanceHistoryId: string, user
 const handleProcessInstance = async(instanceId: string, processStatus: string, userSession: any)=>{
     let otherPendingInstanceNodeCount = await objectql.getObject("process_instance_node").count({filters: [['process_instance', '=', instanceId], ['node_status', '=', 'pending']]});
     if(otherPendingInstanceNodeCount === 0){
-        await objectql.getObject("process_instance").update(instanceId, {status: processStatus, completed_date: new Date(), last_actor: userSession.userId}) 
+        const pInstance = await objectql.getObject("process_instance").update(instanceId, {status: processStatus, completed_date: new Date(), last_actor: userSession.userId});
+        let when = getProcessActionWhenByStatus(processStatus);
+        if(when){
+            await runProcessAction(pInstance.process_definition, when, pInstance.target_object.ids[0], userSession);
+        }
     }
 }
 
@@ -250,6 +279,11 @@ const handleProcessInstanceNode = async(instanceId: string, processStatus: strin
         await objectql.getObject("process_instance_node").updateMany([['process_instance', '=', instanceId], ['node_status', '=', 'pending']], {node_status: processStatus, completed_date: new Date(), last_actor: userSession.userId})
         
         const instance = await objectql.getObject("process_instance").findOne(instanceId);
+
+        let when = getProcessNodeActionWhenByStatus(processStatus);
+        if(when){
+            await runProcessNodeAction(pendingNode.process_node, when, instance.target_object.ids[0], userSession);
+        }
 
         const nodes = await getProcessNodes(instance.process_definition, userSession.spaceId);
 
