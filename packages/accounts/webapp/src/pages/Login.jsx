@@ -70,17 +70,19 @@ class Login extends React.Component {
         spaceId,
         email,
         mobile: '',
+        loginId: '',
         userId: '',
         password: '',
         verifyCode: '',
         sessionExpired: false,
 
-        loginByEmail: false,
-        loginByMobile: false,
+        loginByEmail: true,
+        loginByMobile: true,
         loginBy: "mobile",
         
-        loginWithCode: false,
-        loginWithPassword: false,
+        loginWith: this.props.tenant.enable_password_login? 'password':'code',
+        loginWithCode: this.props.tenant.enable_mobile_code_login || this.props.tenant.enable_email_code_login,
+        loginWithPassword: this.props.tenant.enable_password_login,
 
         serverError: '',
         loading: false
@@ -90,27 +92,27 @@ class Login extends React.Component {
 
     
     
-    if (this.props.tenant.enable_mobile_code_login || this.props.tenant.enable_email_code_login) {
-      this.state.loginWithCode = true;
-      this.state.loginByEmail = true;
-      this.state.loginByMobile = true;
-      this.state.loginBy = "mobile"
-    } else if (this.props.tenant.enable_mobile_code_login) {
-      this.state.loginWithCode = true
-      this.state.loginByMobile = true;
-      this.state.loginByEmail = false;
-      this.state.loginBy = "mobile"
-    } else if (this.props.tenant.enable_email_code_login) {
-      this.state.loginWithCode = true
-      this.state.loginByMobile = false;
-      this.state.loginByEmail = true;
-      this.state.loginBy = "email"
-    } else if (this.props.tenant.enable_password_login) {
-      this.state.loginWithPassword = true
-      this.state.loginByEmail = true;
-      this.state.loginByMobile = true;
-      this.state.loginBy = "email"
-    } 
+    // if (this.props.tenant.enable_mobile_code_login || this.props.tenant.enable_email_code_login) {
+    //   this.state.loginWithCode = true;
+    //   this.state.loginByEmail = true;
+    //   this.state.loginByMobile = true;
+    //   this.state.loginBy = "mobile"
+    // } else if (this.props.tenant.enable_mobile_code_login) {
+    //   this.state.loginWithCode = true
+    //   this.state.loginByMobile = true;
+    //   this.state.loginByEmail = false;
+    //   this.state.loginBy = "mobile"
+    // } else if (this.props.tenant.enable_email_code_login) {
+    //   this.state.loginWithCode = true
+    //   this.state.loginByMobile = false;
+    //   this.state.loginByEmail = true;
+    //   this.state.loginBy = "email"
+    // } else if (this.props.tenant.enable_password_login) {
+    //   this.state.loginWithPassword = true
+    //   this.state.loginByEmail = true;
+    //   this.state.loginByMobile = true;
+    //   this.state.loginBy = "email"
+    // } 
 
     // this.state.loginWithCode = false
     // this.state.loginWithPassword = true
@@ -139,35 +141,21 @@ class Login extends React.Component {
     return Utils.localizeMessage(inputLabel)
   }
 
-  handleEmailChange = (e) => {
-    this.setState({
+  handleLoginIdChange = (e) => {
+    const loginId = e.target.value;
+    if (loginId.indexOf('@')) {
+      this.setState({
+        loginId,
         email: e.target.value,
-    });
-  }
-
-  switchLoginByMobile = (e) => {
-    this.setState({
-        loginBy: 'mobile',
-    });
-  }
-
-  switchLoginByEmail = (e) => {
-    this.setState({
-        loginBy: 'email',
-    });
-  }
-
-  tabColor = (tab) => {
-    if (this.state.loginBy === tab)
-      return "text-blue-600 hover:text-blue-700 border-blue-600 hover:border-blue-300"
-    else
-      return "text-gray-600 hover:text-gray-500 hover:border-gray-300"
-  }
-
-  handleMobileChange = (e) => {
-    this.setState({
+        loginBy: 'email'
+      });
+    } else {
+      this.setState({
+        loginId,
         mobile: e.target.value,
-    });
+        loginBy: 'mobile'
+      });
+    }
   }
 
   handlePasswordChange = (e) => {
@@ -182,6 +170,18 @@ class Login extends React.Component {
     });
   }
 
+  switchLoginWithCode = (e) => {
+    this.setState({
+        loginWith: 'code',
+    });
+  }
+
+  switchLoginWithPassword = (e) => {
+    this.setState({
+        loginWith: 'password',
+    });
+  }
+  
   sendVerificationToken = (e) => {
 
     this.setState({serverError: null, loading: true});
@@ -323,65 +323,20 @@ class Login extends React.Component {
         </h2>
 
         <form onSubmit={this.onSubmit} className="mt-4" autoCapitalize="none">
-          {this.state.loginByMobile && this.state.loginByEmail && (
-          <nav className="flex -mb-px py-2">
-            {this.state.loginByMobile && (
-              <button
-                type='button'
-                onClick={this.switchLoginByMobile}
-                className={"group inline-flex items-center py-1 px-1 border-b-2 border-transparent font-medium text-sm leading-5 focus:outline-none " + this.tabColor('mobile')}>
-                <span>
-                  <FormattedMessage
-                    id='accounts.mobile'
-                    defaultMessage='Mobile'
-                  />
-                </span>
-              </button>
-            )}
-            {this.state.loginByEmail && (
-              <button
-                type='button'
-                onClick={this.switchLoginByEmail}
-                className={"ml-8 group inline-flex items-center py-1 px-1 border-b-2 border-transparent font-medium text-sm leading-5 focus:outline-none " + this.tabColor('email')}>
-                <span>
-                  <FormattedMessage
-                    id='accounts.email'
-                    defaultMessage='Email'
-                  />
-                </span>
-              </button>)
-            }
-          </nav>)}
           <div className="rounded-md shadow-sm my-2">
-            {this.state.loginBy === 'email' && (
-              <div>
-                <LocalizedInput 
-                  id="email"
-                  name="email" 
-                  ref={this.emailInput}
-                  value={this.state.email}
-                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                  placeholder={{id: 'accounts.email_placeholder', defaultMessage: 'Please enter email'}}
-                  onChange={this.handleEmailChange}
-                />
-              </div>
-            )}
+            <div>
+              <LocalizedInput 
+                id="loginId"
+                name="loginId" 
+                ref={this.loginIdInput}
+                value={this.state.loginId}
+                className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
+                placeholder={{id: 'accounts.email_mobile', defaultMessage: 'Email or mobile'}}
+                onChange={this.handleLoginIdChange}
+              />
+            </div>
 
-            {this.state.loginBy === 'mobile' && (
-              <div>
-                <LocalizedInput 
-                  id="mobile"
-                  name="mobile" 
-                  ref={this.mobileInput}
-                  value={this.state.mobile}
-                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                  placeholder={{id: 'accounts.mobile_placeholder', defaultMessage: 'Please enter mobile'}}
-                  onChange={this.handleMobileChange}
-                />
-              </div>
-            )}
-
-            {this.state.loginWithPassword && (
+            {this.state.loginWith == 'password' && (
               <div className="-mt-px">
                 <LocalizedInput 
                   type="password"
@@ -395,7 +350,7 @@ class Login extends React.Component {
               </div>
             )}
 
-            {this.state.loginWithCode && (
+            {this.state.loginWith == 'code' && (
                 <div className="-mt-px grid grid-cols-5">
                   <LocalizedInput 
                     id="verifyCode"
@@ -427,6 +382,30 @@ class Login extends React.Component {
               />
             </button>
           </div>}
+
+          {this.state.loginWithPassword && this.state.loginWith === 'code' && (
+            <div className="text-sm leading-5 my-4">
+              <button type="button" onClick={this.switchLoginWithPassword}
+                className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+                <FormattedMessage
+                    id='accounts.switch_password'
+                    defaultMessage='Login with password'
+                />
+              </button>
+            </div>
+          )}
+
+          {this.state.loginWithCode && this.state.loginWith === 'password' && (
+            <div className="text-sm leading-5 my-4">
+              <button type="button" onClick={this.switchLoginWithCode}
+                className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+                <FormattedMessage
+                    id='accounts.switch_code'
+                    defaultMessage='Login with verfiy code'
+                />
+              </button>
+            </div>
+          )}
 
           <div className="mt-6 flex justify-end">
             <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">

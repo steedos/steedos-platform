@@ -188,6 +188,18 @@ class Signup extends React.Component {
     });
   }
 
+  goLogin = ()=>{
+    let state = {
+      email: this.state.email,
+      mobile: this.state.mobile,
+    };
+    this.props.history.push({
+      pathname: `/login`,
+      search: this.props.location.search,
+      state: state
+    })
+  }
+
   sendVerificationToken = (e) => {
 
     this.setState({serverError: null, loading: true});
@@ -335,7 +347,7 @@ class Signup extends React.Component {
         </h2>
 
         <form onSubmit={this.onSubmit} className="mt-4" autoCapitalize="none">
-          {this.state.loginByMobile && this.state.loginByEmail && (
+          {/* {this.state.loginByMobile && this.state.loginByEmail && (
           <nav className="flex -mb-px py-2">
             {this.state.loginByMobile && (
               <button
@@ -363,7 +375,8 @@ class Signup extends React.Component {
                 </span>
               </button>)
             }
-          </nav>)}
+          </nav>
+          )} */}
           <div className="rounded-md shadow-sm my-2">
             {this.state.loginBy === 'email' && (
               <div>
@@ -436,6 +449,43 @@ class Signup extends React.Component {
           </div>
           
           {this.state.serverError && <FormError error={this.state.serverError} />}
+
+          {this.state.loginByEmail && this.state.loginBy === 'mobile' && (
+            <div className="text-sm leading-5 my-4">
+              <button type="button" onClick={this.switchLoginByEmail}
+                className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+                <FormattedMessage
+                    id='accounts.switch_email'
+                    defaultMessage='Use email'
+                />
+              </button>
+            </div>
+          )}
+
+          {this.state.loginByMobile && this.state.loginBy === 'email' && (
+            <div className="text-sm leading-5 my-4">
+              <button type="button" onClick={this.switchLoginByMobile}
+                className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+                <FormattedMessage
+                    id='accounts.switch_mobile'
+                    defaultMessage='Use mobile'
+                />
+              </button>
+            </div>
+          )}
+          <div className="text-sm leading-5 my-4">
+            <FormattedMessage
+                  id='accounts.has_account'
+                  defaultMessage='Has Account?'
+              />
+            <button type="button" onClick={this.goLogin}
+              className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+              <FormattedMessage
+                  id='accounts.signin'
+                  defaultMessage='Login'
+              />
+            </button>
+          </div>
 
           <div className="mt-6 flex justify-end">
             <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
