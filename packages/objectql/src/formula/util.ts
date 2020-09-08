@@ -31,6 +31,29 @@ export const isFieldFormulaConfigQuoted = (configA: SteedosFieldFormulaTypeConfi
 }
 
 /**
+ * 公式字段配置是否引用了某个对象和字段
+ * @param config 公式字段配置
+ * @param object_name 是否引用了该对象
+ * @param field_name 是否引用了该字段
+ */
+export const isFieldFormulaConfigQuotingObjectAndField = (config: SteedosFieldFormulaTypeConfig, objectName: string, fieldName?: string): boolean => {
+    const { quotes } = config;
+    if (quotes && quotes.length) {
+        return !!quotes.find((quote) => {
+            if(fieldName){
+                return quote.object_name === objectName && quote.field_name === fieldName;
+            }
+            else{
+                return quote.object_name === objectName;
+            }
+        });
+    }
+    else {
+        return false;
+    }
+}
+
+/**
  * 参数config是否与sourceConfigs中任何一项有双向引用关系
  * 
  * @param config 
@@ -88,6 +111,10 @@ const addSortedFieldFormulaConfig = (config: SteedosFieldFormulaTypeConfig, sour
  * @param configs 
  */
 export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeConfig>): Array<SteedosFieldFormulaTypeConfig> => {
+    if(configs.length <= 1){
+        // 只有一个时，不需要排序，直接返回
+        return configs;
+    }
     let sortedConfigs = [];
     configs.forEach((config) => {
         addSortedFieldFormulaConfig(config, configs, sortedConfigs);
