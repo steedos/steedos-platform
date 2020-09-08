@@ -377,6 +377,7 @@ class Signup extends React.Component {
             }
           </nav>
           )} */}
+            
           <div className="rounded-md shadow-sm my-2">
             {this.state.loginBy === 'email' && (
               <div>
@@ -406,6 +407,19 @@ class Signup extends React.Component {
               </div>
             )}
 
+            <div className="-mt-px">
+              <LocalizedInput 
+                type="password"
+                id="password"
+                name="password" 
+                autocomplete="new-password"
+                value={this.state.password}
+                className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
+                placeholder={{id: 'accounts.password_create', defaultMessage: 'Set Password'}}
+                onChange={this.handlePasswordChange}
+              />
+            </div>
+
             {this.state.loginWithCode && (
                 <div className="-mt-px grid grid-cols-5">
                   <LocalizedInput 
@@ -421,31 +435,16 @@ class Signup extends React.Component {
                 </div>
             )}
 
-            {this.state.loginWithPassword && (
-                <div className="-mt-px">
-                  <LocalizedInput 
-                    type="password"
-                    id="password"
-                    name="password" 
-                    value={this.state.password}
-                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                    placeholder={{id: 'accounts.password_placeholder', defaultMessage: 'Password'}}
-                    onChange={this.handlePasswordChange}
-                  />
-                </div>
-            )}
-
             <div className="-mt-px">
-                  <LocalizedInput 
-                    id="name"
-                    name="name" 
-                    value={this.state.name}
-                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                    placeholder={{id: 'accounts.name_placeholder', defaultMessage: 'Name'}}
-                    onChange={this.handleNameChange}
-                  />
+              <LocalizedInput 
+                id="name"
+                name="name" 
+                value={this.state.name}
+                className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
+                placeholder={{id: 'accounts.name_placeholder', defaultMessage: 'Name'}}
+                onChange={this.handleNameChange}
+              />
             </div>
-            
           </div>
           
           {this.state.serverError && <FormError error={this.state.serverError} />}

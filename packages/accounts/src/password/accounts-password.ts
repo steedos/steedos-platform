@@ -192,6 +192,15 @@ export default class AccountsPassword implements AuthenticationService {
    * @param {string} username - User username.
    * @returns {Promise<Object>} - Return a user or null if not found.
    */
+  public findUserById(id: string): Promise<User | null> {
+    return this.db.findUserById(id);
+  }
+
+  /**
+   * @description Find a user by his username.
+   * @param {string} username - User username.
+   * @returns {Promise<Object>} - Return a user or null if not found.
+   */
   public findUserByUsername(username: string): Promise<User | null> {
     return this.db.findUserByUsername(username);
   }
@@ -520,7 +529,7 @@ export default class AccountsPassword implements AuthenticationService {
     }
 
     if (user.mobile && (await this.db.findUserByMobile(user.mobile))) {
-      throw new Error(this.options.errors.invalidMobile);
+      throw new Error(this.options.errors.mobileAlreadyExists);
     }
 
     if (user.username && (await this.db.findUserByUsername(user.username))) {

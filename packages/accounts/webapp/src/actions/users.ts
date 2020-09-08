@@ -18,14 +18,8 @@ export function createUser(user: UserProfile, token: string, inviteId: string, r
             return {error};
         }
 
-        // const profiles: {
-        //     [userId: string]: UserProfile;
-        // } = {
-        //     [created.id]: created,
-        // };
-        // dispatch({type: UserTypes.RECEIVED_PROFILES, data: profiles});
-
-        return {data: created};
+        dispatch({type: UserTypes.RECEIVED_ME, data: created.user});
+        return completeLogin(created)(dispatch, getState);
     };
 }
 

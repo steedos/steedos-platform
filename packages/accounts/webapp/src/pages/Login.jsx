@@ -181,7 +181,7 @@ class Login extends React.Component {
         loginWith: 'password',
     });
   }
-  
+
   sendVerificationToken = (e) => {
 
     this.setState({serverError: null, loading: true});
@@ -368,20 +368,6 @@ class Login extends React.Component {
           
           {this.state.serverError && <FormError error={this.state.serverError} />}
 
-          {this.props.tenant.enable_register &&
-          <div className="text-sm leading-5 my-4">
-            <FormattedMessage
-                  id='accounts.no_account'
-                  defaultMessage='No Account?'
-              />
-            <button type="button" onClick={this.goSignup}
-              className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
-              <FormattedMessage
-                  id='accounts.signup'
-                  defaultMessage='Sign Up'
-              />
-            </button>
-          </div>}
 
           {this.state.loginWithPassword && this.state.loginWith === 'code' && (
             <div className="text-sm leading-5 my-4">
@@ -407,6 +393,21 @@ class Login extends React.Component {
             </div>
           )}
 
+          {this.props.tenant.enable_register &&
+          <div className="text-sm leading-5 my-4">
+            <FormattedMessage
+                  id='accounts.no_account'
+                  defaultMessage='No Account?'
+              />
+            <button type="button" onClick={this.goSignup}
+              className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+              <FormattedMessage
+                  id='accounts.signup'
+                  defaultMessage='Sign Up'
+              />
+            </button>
+          </div>}
+          
           <div className="mt-6 flex justify-end">
             <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
               <FormattedMessage

@@ -80,6 +80,10 @@ export interface ErrorMessages {
    */
   emailAlreadyExists: string;
   /**
+   * Default to 'Mobile already exists'
+   */
+  mobileAlreadyExists: string;
+  /**
    * Default to 'Username or Email is required'
    */
   usernameOrEmailRequired: string;

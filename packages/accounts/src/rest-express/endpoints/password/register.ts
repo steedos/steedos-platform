@@ -4,6 +4,7 @@ import { AccountsServer } from '../../../server';
 import { sendError } from '../../utils/send-error';
 import { errors } from '../../../password/errors';
 import { canRegister } from '../../../core';
+import { setAuthCookies } from '../../utils/steedos-auth';
 
 declare var Creator;
 
@@ -43,7 +44,15 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
     if(req.body.spaceId){
       Creator.addSpaceUsers(req.body.spaceId, userId, true)
     }
-    res.json(accountsServer.options.ambiguousErrorMessages ? null : userId);
+
+    const foundedUser = await password.findUserById(userId);
+    const result = await accountsServer.loginWithUser(foundedUser, {});
+
+    setAuthCookies(req, res, result.user._id, result.token, result.tokens.accessToken);
+
+    res.json(result)
+
+    // res.json(accountsServer.options.ambiguousErrorMessages ? null : userId);
   } catch (err) {
     // if(errors.emailAlreadyExists === err.message){
     //   try {
