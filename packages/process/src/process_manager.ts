@@ -108,7 +108,7 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
 
 const addInstanceNode = async  (instanceId: string, node: any, userSession: any, isBack?: boolean)=>{
     let nodeId = node._id;
-    let nodeName = node.name;
+    let nodeName = node.label;
     const nodeApprover = await getProcessNodeApprover(instanceId, node, userSession, isBack); //TODO nodeApprover为空
     const instanceNode = await objectql.getObject("process_instance_node").insert({
         process_instance: instanceId,
