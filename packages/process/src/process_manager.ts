@@ -193,6 +193,9 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
         space: userSession.spaceId,
         submitted_by: userSession.userId,
     });
+
+    await runProcessAction(processDefinitionId, 'initial_submission', recordId, userSession);
+
     await addInstanceHistory(userSession.spaceId, instance._id, "started", comment, {actor: userSession.userId}, userSession);
     const nodes = await getProcessNodes(processDefinitionId, userSession.spaceId);
     await toNextNode(instance._id, comment, nodes, 0, objectName, recordId, userSession);

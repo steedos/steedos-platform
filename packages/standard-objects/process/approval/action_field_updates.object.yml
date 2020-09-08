@@ -21,7 +21,7 @@ fields:
     reference_to: process_node
   when:
     type: select
-    options: approval,rejection,final_approval,final_rejection,recall
+    options: approval,rejection,final_approval,final_rejection,recall,initial_submission
   object_name:
     label: Object Name
     type: lookup

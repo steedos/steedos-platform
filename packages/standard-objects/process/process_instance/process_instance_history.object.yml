@@ -86,6 +86,8 @@ list_views:
     label: All
     filter_scope: space
     sort: [["modified", "desc"]]
+    extra_columns:
+      - step_node
     columns:
       - name
       - step_status
