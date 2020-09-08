@@ -6,6 +6,7 @@ import * as Utils from '../utils/utils';
 import FormError from '../components/FormError';
 import Card from '../components/Card';
 import Logo from '../components/Logo';
+import Background from '../components/Background';
 import LocalizedInput from '../components/LocalizedInput';
 import { bindActionCreators, Dispatch, AnyAction } from 'redux';
 import { createUser, sendVerificationToken } from '../actions/users';
@@ -339,6 +340,8 @@ class Signup extends React.Component {
       GlobalAction.redirectUserToDefaultSpace();
 
     return (
+    <>
+    <Background url='/images/background.svg'/>
     <Card>
         <Logo/>
         <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
@@ -489,7 +492,7 @@ class Signup extends React.Component {
           </div>
 
           <div className="mt-6 flex justify-end">
-            <button type="submit" className="group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+            <button type="submit" className="rounded group relative w-32 justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
               <FormattedMessage
                 id='accounts.submit'
                 defaultMessage='Submit'
@@ -498,6 +501,7 @@ class Signup extends React.Component {
           </div>
         </form>
       </Card>
+    </>
     );
   };
 

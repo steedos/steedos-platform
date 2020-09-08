@@ -7,10 +7,10 @@ class Card extends React.Component {
   render() {
     return (
 <div className="flex sm:items-center justify-center mx-auto h-full">
-  <div className="p-11 sm:shadow bg-white w-screen max-w-md">
+  <div className="absolute rounded p-11 sm:shadow bg-white w-screen max-w-md">
     {this.props.children}
   </div>
-</div>  
+</div>
     )
   }
 }

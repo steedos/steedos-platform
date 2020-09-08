@@ -75,7 +75,7 @@ class Root extends React.PureComponent {
                   {/* <Route path="/" component={GoBack}/> */}
                   {/* <Route path="/" component={Title}/> */}
                 <Switch>
-                  <Route path="/home" component={Home}/>
+                  <LoggedInRoute path="/home" component={Home}/>
                   <Route path="/signup" component={Signup} />
 
                   <Route path="/login" component={Login} />

@@ -12,9 +12,7 @@ export function loadMeAndConfig() {
 
       // // need to await for clientConfig first as it is required for loadMe
       const resolvedPromises = await Promise.all(promises);
-      if (localStorage.getItem('accounts:userId')) {
-          resolvedPromises.push(await dispatch(UserActions.loadMe()));
-      }
+      resolvedPromises.push(await dispatch(UserActions.loadMe()));
 
       return resolvedPromises;
   };

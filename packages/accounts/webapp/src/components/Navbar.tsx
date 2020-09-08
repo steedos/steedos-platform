@@ -19,12 +19,12 @@ const Navbar = ({ tenant, user }: any) => {
 
   return (
 <div>
-  <nav className="bg-white border-b border-gray-200">
+  <nav className="bg-white shadow border-gray-200">
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-15">
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <a href="#/"><img src="/images/logo_platform.png" className="h-10 w-auto"></img></a>
+            <a href="/"><img src="/images/logo_platform.png" className="h-10 w-auto"></img></a>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">

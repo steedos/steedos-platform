@@ -133,6 +133,10 @@ export function logout(): ActionFunc {
 
 export function getMe(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+
+      if (!localStorage.getItem('accounts:userId'))
+        return null 
+        
       const getMeFunc = bindClientFunc({
           clientFunc: Client4.getMe,
           onSuccess: UserTypes.RECEIVED_ME,
@@ -140,7 +144,8 @@ export function getMe(): ActionFunc {
       const me = await getMeFunc(dispatch, getState);
 
       if ('error' in me) {
-          return me;
+        localStorage.removeItem('accounts:userId');
+        return me;
       }
       // if ('data' in me) {
       //     dispatch(loadRolesIfNeeded(me.data.roles.split(' ')));
