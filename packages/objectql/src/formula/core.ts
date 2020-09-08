@@ -1,7 +1,7 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaParamTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
-import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups } from './util';
+import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndField } from './util';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
 import { SteedosQueryFilters } from '../types';
@@ -399,5 +399,23 @@ export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig:
         await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
         // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
         await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, currentUserId, [fieldFormulaConfig.field_name])
+    }
+}
+
+/**
+ * 某个对象上的公式字段是否引用了某个对象和字段
+ * @param formulaObjectName 公式字段在所在对象名称
+ * @param formulaFieldName 公式字段名称
+ * @param object_name 是否引用了该对象
+ * @param field_name 是否引用了该字段
+ */
+export const isFormulaFieldQuotingObjectAndField = (formulaObjectName: string, formulaFieldName: string, objectName: string, fieldName?: string): boolean => {
+    const configs: Array<SteedosFieldFormulaTypeConfig> = getObjectFieldFormulaConfigs(formulaObjectName, formulaFieldName);
+    if(configs && configs.length){
+        return isFieldFormulaConfigQuotingObjectAndField(configs[0], objectName, fieldName);
+    }
+    else{
+        // 没找到公式字段配置说明传入的参数不是公式字段
+        return false;
     }
 }
