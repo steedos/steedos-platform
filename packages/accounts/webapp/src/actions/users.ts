@@ -5,6 +5,7 @@ import { UserProfile } from '../types/users';
 import { Client4 } from '../client/';
 import {logError} from './errors';
 import {bindClientFunc, forceLogoutIfNecessary, debounce} from './helpers';
+import { getMySpaces } from './spaces';
 
 export function createUser(user: UserProfile, token: string, inviteId: string, redirect: string): ActionFunc {
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -62,20 +63,20 @@ function completeLogin(data: any): ActionFunc {
       
       let teamMembers;
 
-      // const promises = [
-      //     dispatch(getMyTeams()),
-      //     dispatch(getClientConfig()),
-      // ];
+      const promises = [
+          dispatch(getMySpaces()),
+        //   dispatch(getClientConfig()),
+      ];
 
-      // try {
-      //     await Promise.all(promises);
-      // } catch (error) {
-      //     dispatch(batchActions([
-      //         {type: UserTypes.LOGIN_FAILURE, error},
-      //         //logError(error),
-      //     ]));
-      //     return {error};
-      // }
+      try {
+          await Promise.all(promises);
+      } catch (error) {
+          dispatch(batchActions([
+              {type: UserTypes.LOGIN_FAILURE, error},
+              logError(error),
+          ]));
+          return {error};
+      }
 
       dispatch(batchActions([
         {
@@ -98,7 +99,7 @@ export function loadMe(): ActionFunc {
 
       const promises = [
           dispatch(getMe()),
-          // dispatch(getMyTeams()),
+          dispatch(getMySpaces()),
       ];
 
       await Promise.all(promises);
@@ -136,7 +137,7 @@ export function getMe(): ActionFunc {
 
       if (!localStorage.getItem('accounts:userId'))
         return null 
-        
+
       const getMeFunc = bindClientFunc({
           clientFunc: Client4.getMe,
           onSuccess: UserTypes.RECEIVED_ME,

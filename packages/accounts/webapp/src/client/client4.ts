@@ -270,7 +270,7 @@ export default class Client4 {
 
     getMySpaces = () => {
         return this.doFetch<Space[]>(
-            `${this.getAccountsRoute()}/spaces`,
+            `${this.getAccountsRoute()}/user/spaces`,
             {method: 'get'},
         );
     };

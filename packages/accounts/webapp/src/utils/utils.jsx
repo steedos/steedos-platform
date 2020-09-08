@@ -30,7 +30,7 @@ export function isEmptyObject(object) {
 export function listToMap(recordsList) {
     const recordsMap = {};
     for (let i = 0; i < recordsList.length; i++) {
-        recordsMap[recordsList[i].id] = recordsList[i];
+        recordsMap[recordsList[i]._id] = recordsList[i];
     }
     return recordsMap;
 }
