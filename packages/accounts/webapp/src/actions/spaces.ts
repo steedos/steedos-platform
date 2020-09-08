@@ -5,17 +5,18 @@ import {Space, SpaceUser} from '../types/spaces';
 import {bindClientFunc, forceLogoutIfNecessary} from './helpers';
 import LocalStorageStore from '../stores/local_storage_store';
 import { getCurrentUserId } from '../selectors/entities/users';
-import { getMySpaces as selectMySpaces } from '../selectors/entities/spaces';
+import { getMySpace } from '../selectors/entities/spaces';
 
 export function selectSpace(spaceId?: string | null): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-    
     const userId = getCurrentUserId(getState());
+    if (!userId)
+      return
     let selectedSpaceId = spaceId;
     if (!selectedSpaceId)
       selectedSpaceId = LocalStorageStore.getPreviousSpaceId(userId);
-    const spaces = selectMySpaces(getState());
-    if (!spaces[selectedSpaceId])
+    const space = getMySpace(getState(), selectedSpaceId);
+    if (!space)
       return {data: false};
 
     dispatch({

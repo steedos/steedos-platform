@@ -15,4 +15,5 @@ export type SpacesState = {
   currentSpaceId: string;
   spaces: IDMappedObjects<Space>;
   mySpaces: IDMappedObjects<Space>;
+  mySpacesCount: number
 };

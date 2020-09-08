@@ -29,21 +29,7 @@ const spaces = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction)
 }
 
 
-
-const mySpaces = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction) => {
-  switch (action.type) {
-    case SpaceTypes.RECEIVED_SPACES_LIST:
-      return Object.assign({}, state, listToMap(action.data));
-    case UserTypes.LOGOUT_SUCCESS:
-      return {};
-
-    default:
-      return state;
-    }
-}
-
 export default combineReducers({
   currentSpaceId,
   spaces,
-  mySpaces
 })
