@@ -83,7 +83,7 @@ object_fields_field_summary_filters: 过滤条件
 object_fields_field_summary_filters_inlineHelpText: 此计算仅应包括符合特定条件的记录，当过滤条件为空时，所有记录都应包括在计算中。
 object_fields_listview_all: 所有
 object_fields_action_recomputeFormulaValues: 重算公式值
-object_fields_action_recomputeSummaryValues: 重算汇总值
+object_fields_action_recomputeSummaryValues: 批量重算汇总值
 object_fields_group_reference: $t(object_fields_field_type_options_lookup)、$t(object_fields_field_type_options_master_detail)
 object_fields_group_number: $t(object_fields_field_type_options_currency)、$t(object_fields_field_type_options_number)
 object_fields_group_advanced: 高级

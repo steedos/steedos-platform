@@ -379,7 +379,7 @@ actions:
     label: Recompute Formula Values
     on: record_only
   recomputeSummaryValues: 
-    label: Recompute Summary Values
+    label: Batch Recompute Summary Values
     on: record_only
 permission_set:
   user:
