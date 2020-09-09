@@ -11,16 +11,20 @@ export const userLoader = (accountsServer: AccountsServer) => async (
   res: express.Response,
   next: any
 ) => {
-  let accessToken =
-    get(req.cookies, 'X-Access-Token') ||
+  let authToken =
+    get(req.cookies, 'X-Auth-Token') ||
     get(req.headers, 'Authorization') ||
-    get(req.headers, 'authorization') ||
-    get(req.body, 'accessToken', undefined);
-  accessToken = accessToken && accessToken.replace('Bearer ', '');
-  if (!isEmpty(accessToken)) {
+    get(req.headers, 'authorization');
+
+  authToken = authToken && authToken.replace('Bearer ', '').replace('BEARER ', '');
+  authToken = authToken && authToken.split(',').length >1?authToken.split(',')[0]:authToken;
+
+  console.log(authToken);
+
+  if (!isEmpty(authToken)) {
     try {
-      (req as any).authToken = accessToken;
-      const user: any = await accountsServer.resumeSession(accessToken);
+      (req as any).authToken = authToken;
+      const user: any = await accountsServer.resumeSession(authToken);
       user.id = user._id;
       user.userId = user._id;
       if(user.emails && user.emails.length > 0){

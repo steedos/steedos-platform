@@ -7,11 +7,17 @@ import { clearAuthCookies } from '../utils/steedos-auth';
 export const logout = (accountsServer: AccountsServer) => async (
   req: express.Request,
   res: express.Response
-) => {  
+) => { 
+  
+  let authToken =
+    get(req.cookies, 'X-Auth-Token') ||
+    get(req.headers, 'Authorization') ||
+    get(req.headers, 'authorization');
+
+  authToken = authToken && authToken.replace('Bearer ', 'token');
+  authToken = authToken && authToken.split(',').length >1?authToken.split(',')[0]:authToken;
+
   try {
-    const authToken =
-    get(req.cookies, 'X-Access-Token') ||
-    get(req.body, 'accessToken', undefined);
     clearAuthCookies(req, res);
     await accountsServer.logout(authToken);
     res.json(null);

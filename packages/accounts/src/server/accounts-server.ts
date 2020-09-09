@@ -363,7 +363,32 @@ Please change it with a strong random token.`);
    * @param {string} accessToken - User access token.
    * @returns {Promise<void>} - Return a promise.
    */
-  public async logout(accessToken: string): Promise<void> {
+  public async logout(token: string): Promise<void> {
+    try {
+      const session: Session = await this.db.findSessionByToken(token);
+
+      if (session.valid) {
+        await this.db.invalidateSession(session.id);
+        this.hooks.emit(ServerHooks.LogoutSuccess, {
+          session,
+          token,
+        });
+      } else {
+        throw new Error('Session is no longer valid');
+      }
+    } catch (error) {
+      this.hooks.emit(ServerHooks.LogoutError, error);
+
+      throw error;
+    }
+  }
+
+  /**
+   * @description Logout a user and invalidate his session.
+   * @param {string} accessToken - User access token.
+   * @returns {Promise<void>} - Return a promise.
+   */
+  public async logoutByAccessToken(accessToken: string): Promise<void> {
     try {
       const session: Session = await this.findSessionByAccessToken(accessToken);
 
@@ -383,7 +408,42 @@ Please change it with a strong random token.`);
     }
   }
 
-  public async resumeSession(accessToken: string): Promise<User> {
+
+  public async resumeSession(token: string): Promise<User> {
+    try {
+      const session: Session = await this.db.findSessionByToken(token);
+
+      if (session && session.valid) {
+        const user = await this.db.findUserById(session.userId);
+
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        if (this.options.resumeSessionValidator) {
+          try {
+            await this.options.resumeSessionValidator(user, session);
+          } catch (e) {
+            throw new Error(e);
+          }
+        }
+
+        this.hooks.emit(ServerHooks.ResumeSessionSuccess, { user, token });
+
+        return this.sanitizeUser(user);
+      }
+
+      this.hooks.emit(ServerHooks.ResumeSessionError, new Error('Invalid Session'));
+
+      throw new Error('Invalid Session');
+    } catch (e) {
+      this.hooks.emit(ServerHooks.ResumeSessionError, e);
+
+      throw e;
+    }
+  }
+
+  public async resumeSessionByAccessToken(accessToken: string): Promise<User> {
     try {
       const session: Session = await this.findSessionByAccessToken(accessToken);
 
