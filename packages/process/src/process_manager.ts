@@ -414,7 +414,7 @@ export const processInstanceWorkitemApprove = async (instanceHistoryId: string, 
     const nodes = await getProcessNodes(instance.process_definition, userSession.spaceId);
     const index = _.findIndex(nodes, function(item){return item._id === currentInstanceNode.process_node});
     
-    if(currentProcessNode.when_multiple_approvers === 'first_response' || (await getPendingInstanceHistoryCount(instanceId)) > 1){
+    if(currentProcessNode.when_multiple_approvers === 'first_response' || (await getPendingInstanceHistoryCount(instanceId)) < 2){
         let nextNode = await getNextNode(nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
     
         if(nextNode){
