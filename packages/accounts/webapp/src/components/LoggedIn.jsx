@@ -12,6 +12,10 @@ class LoggedIn extends React.PureComponent {
     currentUser: PropTypes.object,
   }
 
+  constructor(props, context) {
+    super(props, context);
+  }
+
   isValidState() {
     return this.props.currentUser != null;
   }
@@ -22,6 +26,7 @@ class LoggedIn extends React.PureComponent {
     }
   }
   render() {
+    console.log(this.props.currentUser)
     if (!this.isValidState()) {
         return <Loading/>;
     }

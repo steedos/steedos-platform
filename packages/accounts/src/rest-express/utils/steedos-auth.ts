@@ -30,7 +30,8 @@ export const setAuthCookies = function (req, res, userId, authToken, accessToken
     let options = {
       maxAge: 90 * 60 * 60 * 24 * 1000,
       httpOnly: false,
-      overwrite: true
+      overwrite: true,
+      sameSite: 'none',
     }
     cookies.set("X-User-Id", userId, options);
     cookies.set("X-Auth-Token", authToken, options);

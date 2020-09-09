@@ -11,6 +11,7 @@ import LoggedIn from './components/LoggedIn';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import GoRootUrl from './pages/GoRootUrl';
 import VerifyEmail from './components/VerifyEmail';
 import VerifyMobile from './components/VerifyMobile';
 import UpdatePassword from './components/updatePassword';
@@ -21,6 +22,7 @@ import Loading from './components/Loading';
 
 
 const LoggedInRoute = ({component: Component, ...rest}) => {
+
   if (!Component) return null;
   return (
     <Route
@@ -76,7 +78,6 @@ class Root extends React.PureComponent {
                   {/* <Route path="/" component={GoBack}/> */}
                   {/* <Route path="/" component={Title}/> */}
                 <Switch>
-                  <LoggedInRoute path="/space/:spaceId" component={Home}/>
                   <Route path="/signup" component={Signup} />
 
                   <Route path="/login" component={Login} />
@@ -88,6 +89,8 @@ class Root extends React.PureComponent {
                   {/* <Route path="/login-code" component={LoginCode} /> */}
                   <LoggedInRoute path="/preference" component={Preference} />
                   <Route path="/verify-mobile/:token" component={VerifyMobile} />
+                  <LoggedInRoute path="/space/:spaceId" component={Home}/>
+                  {/* <LoggedInRoute path="/space/:spaceId" component={GoRootUrl}/> */}
                   <Redirect
                       to={{
                           ...this.props.location,

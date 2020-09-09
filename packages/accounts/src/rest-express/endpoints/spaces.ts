@@ -9,8 +9,10 @@ export const getMySpaces = (accountsServer: AccountsServer) => async (
   res: express.Response
 ) => {
   const user = (req as any).user
-  if (!user)
+  if (!user){
     res.json({message: 'accounts.userNotFound'});
+    return;
+  }
 
   const spaces = await accountsServer.db.getMySpaces(user.id);
 

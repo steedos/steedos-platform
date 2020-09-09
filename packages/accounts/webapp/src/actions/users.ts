@@ -59,10 +59,8 @@ function completeLogin(data: any): ActionFunc {
     Client4.setToken(data.token);
     Client4.setUserId(data.user._id);
 
-    if (data.user) {
-      LocalStorageStore.setItem('userId', data.user._id);    
-      LocalStorageStore.setWasLoggedIn(true);
-
+    if (data.user && data.user._id) {
+      LocalStorageStore.setUserId(data.user._id, data.token);    
     }
     
     const promises = [
@@ -88,8 +86,6 @@ function completeLogin(data: any): ActionFunc {
     ]));
 
 
-    LocalStorageStore.setItem('userId', data.user._id);
-    LocalStorageStore.setItem('token', data.token);
     if(window.ReactNativeWebView && window.ReactNativeWebView.postMessage){
       window.ReactNativeWebView.postMessage(JSON.stringify({
         "X-Auth-Token": data.token,
@@ -139,8 +135,7 @@ export function logout(): ActionFunc {
           // nothing to do here
       }
 
-      LocalStorageStore.removeItem('userId');
-      LocalStorageStore.setWasLoggedIn(false);
+      LocalStorageStore.setUserId(null);
       dispatch({type: UserTypes.LOGOUT_SUCCESS, data: null});
 
       return {data: true};
