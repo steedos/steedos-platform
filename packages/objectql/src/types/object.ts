@@ -773,7 +773,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
             // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
             await this.runRecordFormula(method, args, userSession ? userSession.userId : undefined);
-            await this.runRecordSummaries(method, args, previousDoc);
+            await this.runRecordSummaries(method, args, previousDoc, userSession ? userSession.userId : undefined);
         }
         return returnValue
     };
@@ -804,7 +804,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async runRecordSummaries(method: string, args: Array<any>, previousDoc: any) {
+    private async runRecordSummaries(method: string, args: Array<any>, previousDoc: any, currentUserId: any) {
         if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany汇总计算，因为拿不到修改了哪些数据
@@ -819,7 +819,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     recordId = args[1];
                     doc = args[2];
                 }
-                await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc);
+                await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, currentUserId);
             }
         }
     }

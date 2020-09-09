@@ -6,7 +6,7 @@ import { updateReferenceTosFieldSummaryValue } from './core';
 const runCurrentFieldSummary = async function (fieldSummaryConfig: SteedosFieldSummaryTypeConfig, currentUserId: string) {
     const { object_name: objectName } = fieldSummaryConfig;
     const docs = await getSteedosSchema().getObject(objectName).find({ filters: [], fields: ["_id"] })
-    await updateReferenceTosFieldSummaryValue(docs, fieldSummaryConfig);
+    await updateReferenceTosFieldSummaryValue(docs, fieldSummaryConfig, currentUserId);
 }
 
 /**

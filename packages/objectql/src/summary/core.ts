@@ -13,7 +13,7 @@ import { JsonMap } from '@salesforce/ts-types';
  * @param fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
  * @param quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runQuotedByObjectFieldSummaries = async function (objectName: string, recordId: string, previousDoc: any, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldSummaryTypeConfig>) {
+export const runQuotedByObjectFieldSummaries = async function (objectName: string, recordId: string, previousDoc: any, currentUserId: string, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldSummaryTypeConfig>) {
     if (!quotedByConfigs) {
         quotedByConfigs = getObjectQuotedByFieldSummaryConfigs(objectName, fieldNames);
     }
@@ -21,7 +21,7 @@ export const runQuotedByObjectFieldSummaries = async function (objectName: strin
         return;
     }
     for (const config of quotedByConfigs) {
-        await updateQuotedByObjectFieldSummaryValue(objectName, recordId, previousDoc, config);
+        await updateQuotedByObjectFieldSummaryValue(objectName, recordId, previousDoc, config, currentUserId);
     }
 }
 
@@ -103,7 +103,7 @@ export const getSummaryAggregateGroups = (summary_type: SteedosSummaryTypeValue,
     "count" : 2.0
 }]
  */
-export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, recordId: string, previousDoc: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig) => {
+export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, recordId: string, previousDoc: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, currentUserId: string) => {
     // console.log("===updateQuotedByObjectFieldSummaryValue===", objectName, recordId, JSON.stringify(fieldSummaryConfig));
     const { reference_to_field } = fieldSummaryConfig;
     const referenceToRecord = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: [reference_to_field] });
@@ -131,10 +131,10 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
     if(!referenceToIds.length){
         return;
     }
-    await updateReferenceTosFieldSummaryValue(referenceToIds, fieldSummaryConfig);
+    await updateReferenceTosFieldSummaryValue(referenceToIds, fieldSummaryConfig, currentUserId);
 }
 
-export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig) => {
+export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, currentUserId: string) => {
     const { reference_to_field, summary_type, summary_field, summary_object, field_name, object_name } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
@@ -156,7 +156,7 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
             await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
             // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
             // console.log("===updateReferenceTosFieldSummaryValue====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
-            await runQuotedByObjectFieldFormulas(object_name, referenceToId, null, {
+            await runQuotedByObjectFieldFormulas(object_name, referenceToId, currentUserId, {
                 fieldNames:[field_name]
             })
         }
