@@ -85,3 +85,20 @@ Steedos.ProcessManager.Recall = function(object_name, record_id){
         Modal.hide(t);
     })
 }
+
+Steedos.ProcessManager.submit = function(object_name, record_id){
+    var formId = 'processApprovalForm';
+    Steedos.ProcessManager.showProcessApprovalForm('submit', {
+        comment: {
+            label: TAPi18n.__('process_approval_comment'),
+            type: 'textarea',
+            rows: 10,
+            is_wide: true
+        }
+    }, formId, {}, function(formValues, e, t){
+        Steedos.authRequest(`/api/v4/process/submit/${object_name}/${record_id}`, {type: 'post', data: JSON.stringify(formValues.insertDoc)});
+        FlowRouter.reload();
+        Modal.hide(t);
+    })
+    
+}

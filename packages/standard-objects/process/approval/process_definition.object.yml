@@ -77,7 +77,7 @@ fields:
     type: boolean
     is_wide: true
     label: Allow submitters to recall approval requests
-    group: 提交设置 TODO
+    group: 提交设置
 relatedList:
   - process_node
   - action_field_updates
