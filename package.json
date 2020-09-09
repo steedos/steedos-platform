@@ -29,5 +29,8 @@
   },
   "devDependencies": {
     "lerna": "^3.22.1"
+  },
+  "dependencies": {
+    "@steedos/react": "^1.21.1"
   }
 }
