@@ -2,7 +2,6 @@ import * as React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
-import { accountsClient, accountsRest } from '../accounts';
 import { Transition } from '@tailwindui/react'
 import { useState } from 'react'
 import * as GlobalActions from '../actions/global_actions.jsx';
@@ -24,7 +23,9 @@ const Navbar = ({ tenant, user }: any) => {
       <div className="flex items-center justify-between h-15">
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <a href="/"><img src="/images/logo_platform.png" className="h-10 w-auto"></img></a>
+            <a href="/">
+              <Logo/>
+            </a>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">

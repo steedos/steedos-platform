@@ -281,20 +281,29 @@ class Login extends React.Component {
 
   finishSignin = (team) => {
     const query = new URLSearchParams(this.props.location.search);
-    const redirectTo = query.get('redirect_to');
+    let redirectTo = query.get('redirect_uri');
 
     // Utils.setCSRFFromCookie();
 
     // Record a successful login to local storage. If an unintentional logout occurs, e.g.
     // via session expiration, this bit won't get reset and we can notify the user as such.
 
-    if (redirectTo && redirectTo.match(/^\/([^/]|$)/)) {
-      this.props.history.push(redirectTo);
+    if (redirectTo && redirectTo.indexOf('no_redirect=1')<0) {
+      const userId = LocalStorageStore.getItem('userId');
+      const authToken =  LocalStorageStore.getItem('token');
+      const spaceId =  LocalStorageStore.getItem('spaceId');
+      redirectTo = redirectTo.indexOf("?")>0?redirectTo+'no_redirect=1':redirectTo+'?no_redirect=1'
+      redirectTo = `${redirectTo}&X-Auth-Token=${authToken}&X-User-Id=${userId}&X-Space-Id=${spaceId}`
+
+      if (redirectTo.match(/^\/([^/]|$)/))
+        this.props.history.push(redirectTo);
+      else
+        document.location.href=redirectTo
     // } else if (team) {
     //     browserHistory.push(`/${team.name}`);
     } else {
       this.state.loginSuccess = true;
-      //GlobalAction.redirectUserToDefaultSpace();
+      GlobalAction.redirectUserToDefaultSpace();
     }
   }
 
@@ -312,15 +321,12 @@ class Login extends React.Component {
 
   render() {
 
-    if (LocalStorageStore.getItem('userId') && this.props.getCurrentUserId)
-      GlobalAction.redirectUserToDefaultSpace();
-
     return (
     <>
-    <Background url='/images/background.svg'/>
+    <Background/>
     <Card>
         <Logo/>
-        <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
+        <h2 className="mt-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
           <FormattedMessage
               id='accounts.signin'
               defaultMessage='Login'

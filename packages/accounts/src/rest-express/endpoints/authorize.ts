@@ -41,8 +41,8 @@ export const authorize = (accountsServer: AccountsServer) => async (
   const user = (req as any).user
 
   if (user) {
-    if (redirect_uri.indexOf('sso=1')<0) {
-      redirect_uri = redirect_uri.indexOf("?")>0?redirect_uri+'sso=1':redirect_uri+'?sso=1'
+    if (redirect_uri.indexOf('no_redirect=1')<0) {
+      redirect_uri = redirect_uri.indexOf("?")>0?redirect_uri+'no_redirect=1':redirect_uri+'?no_redirect=1'
       redirect_uri = `${redirect_uri}&X-Auth-Token=${authToken}&X-User-Id=${userId}`
       res.redirect(redirect_uri);
     }

@@ -1,10 +1,9 @@
 const en = require("../i18n/en.json");
-
+const zhCN = require("../i18n/zh-CN.json");
 
 export default {
   entities: {
     general: {
-  
     },
     users: {
         currentUserId: '',
@@ -17,10 +16,11 @@ export default {
   },
   i18n: {
       translations: {
-          en: en
+          en: en,
+          'zh-CN': zhCN
       }
   },
   requests: {
       status: "not_started"
-  }
+  },
 }

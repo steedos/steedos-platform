@@ -12,8 +12,6 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import GoRootUrl from './pages/GoRootUrl';
-import VerifyEmail from './components/VerifyEmail';
-import VerifyMobile from './components/VerifyMobile';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './pages/CreateTenant';
 import SelectSpace from './pages/SelectSpace';
@@ -85,10 +83,10 @@ class Root extends React.PureComponent {
                   <LoggedInRoute path="/create-tenant" component={CreateTenant} />
                   <LoggedInRoute path="/select-space" component={SelectSpace} />
                   <LoggedInRoute exact path="/update-password" component={UpdatePassword} />
-                  <LoggedInRoute path="/verify-email/:token" component={VerifyEmail} />
+                  {/* <LoggedInRoute path="/verify-email/:token" component={VerifyEmail} /> */}
                   {/* <Route path="/login-code" component={LoginCode} /> */}
                   <LoggedInRoute path="/preference" component={Preference} />
-                  <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} />
+                  {/* <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} /> */}
                   <LoggedInRoute path="/space/:spaceId" component={Home}/>
                   {/* <LoggedInRoute path="/space/:spaceId" component={GoRootUrl}/> */}
                   <Redirect

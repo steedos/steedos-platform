@@ -2,6 +2,40 @@ import store from '../stores/redux_store';
 import {getCurrentLocale, getTranslations} from '../selectors/i18n';
 import {IDMappedObjects, Dictionary} from '../types/utilities';
 
+export const getCookie = (name) => {
+    let pattern = RegExp(name + "=.[^;]*")
+    let matched = document.cookie.match(pattern)
+    if(matched){
+        let cookie = matched[0].split('=')
+        return cookie[1]
+    }
+    return ''
+}
+
+export const getBrowserLng = function () {
+  var l, lng;
+  var navigator = window.navigator;
+  l = navigator.userLanguage || navigator.language || 'en';
+  if (l.indexOf("zh") >= 0) {
+    lng = "zh-CN";
+  } else {
+    lng = "en";
+  }
+  return lng;
+};
+
+export const getBrowserLocale = function(){
+  var l, locale;
+    var navigator = window.navigator;
+    l = navigator.userLanguage || navigator.language || 'en';
+    if (l.indexOf("zh") >= 0) {
+      locale = "zh-cn";
+    } else {
+      locale = "en-us";
+    }
+    return locale;
+}
+
 export function localizeMessage(id, defaultMessage) {
     const state = store.getState();
 
@@ -35,15 +69,6 @@ export function listToMap(recordsList) {
     return recordsMap;
 }
 
-export const getCookie = (name) => {
-    let pattern = RegExp(name + "=.[^;]*")
-    let matched = document.cookie.match(pattern)
-    if(matched){
-        let cookie = matched[0].split('=')
-        return cookie[1]
-    }
-    return ''
-}
 
 // export const setLocationSearch = (location)=>{
 //     let value = '';

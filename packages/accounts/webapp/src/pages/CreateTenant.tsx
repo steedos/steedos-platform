@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import FormError from '../components/FormError';
 import { getCookie, fixRootUrl } from '../utils/utils';
-import { goInSystem } from '../client/index';
-import { accountsClient, accountsRest } from '../accounts';
 import Logo from '../components/Logo';
 import Card from '../components/Card';
 
@@ -24,58 +22,58 @@ const CreateTenant = ({ settings, history, tenant, location }: any) => {
   const intl = useIntl();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-    try {
+    // e.preventDefault();
+    // setError(null);
+    // try {
 
-      if (!tenantName.trim()) {
-        throw new Error('accounts.tenantNameRequired');
-      }
+    //   if (!tenantName.trim()) {
+    //     throw new Error('accounts.tenantNameRequired');
+    //   }
 
-      const route = 'api/v4/spaces/register/tenant';
-      const fetchOptions: any = {
-        headers: {
-          "X-User-Id": getCookie("X-User-Id"),
-          "X-Auth-Token": getCookie("X-Auth-Token")
-        },
-        method: "POST",
-        body: JSON.stringify({
-          name: tenantName
-        }),
-        credentials: 'include'
-      };
-      const res: any = await fetch(
-        `${fixRootUrl(settings.root_url)}/${route}`,
-        fetchOptions
-      );
-      const token: any = await accountsClient.getTokens();
-      if (res) {
-        if (res.status >= 400 && res.status < 600) {
-          const { message } = await res.json();
-          throw new Error(message);
-        }
-        const resJson = await res.json();
-        let spaceId = resJson.value;
-        try {
-          let result = await accountsRest.authFetch('password/session', {
-            method: 'POST',
-            body: JSON.stringify({
-              spaceId,
-              accessToken: token.accessToken
-            }),
-            credentials: "include"
-          });
-          localStorage.setItem("spaceId", spaceId);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        throw new Error('Server did not return a response');
-      }
-      goInSystem(history, location, token.accessToken, settings.root_url, true);
-    } catch (err) {
-      setError(err.message);
-    }
+    //   const route = 'api/v4/spaces/register/tenant';
+    //   const fetchOptions: any = {
+    //     headers: {
+    //       "X-User-Id": getCookie("X-User-Id"),
+    //       "X-Auth-Token": getCookie("X-Auth-Token")
+    //     },
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //       name: tenantName
+    //     }),
+    //     credentials: 'include'
+    //   };
+    //   const res: any = await fetch(
+    //     `${fixRootUrl(settings.root_url)}/${route}`,
+    //     fetchOptions
+    //   );
+    //   const token: any = await accountsClient.getTokens();
+    //   if (res) {
+    //     if (res.status >= 400 && res.status < 600) {
+    //       const { message } = await res.json();
+    //       throw new Error(message);
+    //     }
+    //     const resJson = await res.json();
+    //     let spaceId = resJson.value;
+    //     try {
+    //       let result = await accountsRest.authFetch('password/session', {
+    //         method: 'POST',
+    //         body: JSON.stringify({
+    //           spaceId,
+    //           accessToken: token.accessToken
+    //         }),
+    //         credentials: "include"
+    //       });
+    //       localStorage.setItem("spaceId", spaceId);
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   } else {
+    //     throw new Error('Server did not return a response');
+    //   }
+    //   // goInSystem(history, location, token.accessToken, settings.root_url, true);
+    // } catch (err) {
+    //   setError(err.message);
+    // }
   };
 
   useEffect(() => {

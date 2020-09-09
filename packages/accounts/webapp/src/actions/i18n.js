@@ -1,5 +1,5 @@
 import * as I18n from '../i18n/i18n';
-import { accountsRest } from '../accounts';
+import {Client4} from '../client';
 
 export function loadTranslations(locale, url) {
     // console.log('loadTranslations', locale,url);
@@ -18,7 +18,7 @@ export function loadTranslations(locale, url) {
     }
     
     return (dispatch) => {
-        accountsRest.fetch(url.startsWith("/") ? url.replace("/","") : url).then((translations) => {
+        Client4.doFetch(url).then((translations) => {
             dispatch({
                 type:"RECEIVED_TRANSLATIONS",
                 data: {

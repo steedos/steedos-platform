@@ -1,7 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
-import { accountsClient, accountsRest } from '../accounts';
 import FormError from '../components/FormError';
 import Navbar from '../components/Navbar';
 import { getCurrentUser } from '../selectors/entities/users';
@@ -21,13 +20,13 @@ const Preference = ({ currentUser, match, settings, history, location, tenant }:
                 throw new Error("accounts.nameRequired");
             }
 
-            const r = await accountsRest.authFetch('user', {
-                method: "PUT",
-                body: JSON.stringify({
-                    fullname: fullname
-                }),
-                credentials: 'include'
-            });
+            // const r = await accountsRest.authFetch('user', {
+            //     method: "PUT",
+            //     body: JSON.stringify({
+            //         fullname: fullname
+            //     }),
+            //     credentials: 'include'
+            // });
 
         } catch (err) {
             setError(err.message);

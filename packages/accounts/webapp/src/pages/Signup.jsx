@@ -316,6 +316,7 @@ class Signup extends React.Component {
     //     browserHistory.push(`/${team.name}`);
     } else {
       this.state.loginSuccess = true;
+      GlobalAction.redirectUserToDefaultSpace();
       
     }
   }
@@ -335,15 +336,12 @@ class Signup extends React.Component {
 
   render() {
 
-    if (this.state.loginSuccess && this.props.getCurrentUserId)
-      GlobalAction.redirectUserToDefaultSpace();
-
     return (
     <>
-    <Background url='/images/background.svg'/>
+    <Background/>
     <Card>
         <Logo/>
-        <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
+        <h2 className="mt-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
           <FormattedMessage
               id='accounts.signup'
               defaultMessage='Sign Up'

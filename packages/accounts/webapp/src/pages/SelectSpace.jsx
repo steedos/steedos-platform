@@ -83,7 +83,7 @@ class SelectSpace extends React.PureComponent {
 
     return (
     <>
-      <Background url='/images/background.svg'/>
+      <Background/>
       <div className="flex sm:items-center justify-center mx-auto h-full">
         <div className="absolute rounded sm:shadow bg-white w-screen max-w-md">
           <div className="pt-10 pl-10 pr-10">
