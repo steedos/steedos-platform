@@ -53,6 +53,7 @@ export const allowObjectSubmit = async(req: Request, res: express.Response)=>{
         }
         return res.status(200).send({allowSubmit: false});
     } catch (error) {
+        console.log('error', error);
         return res.status(200).send({allowSubmit: false});
     }
 }

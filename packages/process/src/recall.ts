@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { getProcessInstanceWorkitem, processInstanceWorkitemRemove, processInstanceWorkitemRemovebyInstance, getReocrdProcessInstance } from './process_manager'
+import { processInstanceWorkitemRemovebyInstance, getReocrdProcessInstance } from './process_manager'
 import * as core from "express-serve-static-core";
 import { allowRecall } from './permission_manager';
 
@@ -8,27 +8,6 @@ interface Request extends core.Request {
 }
 
 export const recall = async (req: Request, res: express.Response) => {
-
-    try {
-        const urlParams = req.params;
-        // const objectName = urlParams.objectName;
-        const instanceHistoryId = urlParams.record;
-        const userSession = req.user;
-        const body = req.body;
-        const comment = body.comment;
-
-        const workitem = await getProcessInstanceWorkitem(instanceHistoryId, userSession);
-
-        await processInstanceWorkitemRemove(workitem._id, userSession, comment);
-
-        return res.status(200).send({state: 'SUCCESS'});
-    } catch (error) {
-        console.log(error);
-        return res.status(200).send({state: 'FAILURE', error: error.message});
-    }
-}
-
-export const recallByProcessInstance = async (req: Request, res: express.Response) => {
     try {
         const urlParams = req.params;
         const objectName = urlParams.objectName;

@@ -15,10 +15,9 @@ export const reject = async (req: Request, res: express.Response) => {
         const userSession = req.user;
         const body = req.body;
         const comment = body.comment;
-        const approver = body.approver;
         if(allowApprover(instanceHistoryId, userSession)){
             const workitem = await getProcessInstanceWorkitem(instanceHistoryId, userSession);
-            await processInstanceWorkitemReject(workitem._id, userSession, comment, approver);
+            await processInstanceWorkitemReject(workitem._id, userSession, comment);
             return res.status(200).send({state: 'SUCCESS'});
         }
         throw new Error("process_approval_error_NoApproval");

@@ -32,7 +32,7 @@ const sendNotifications = async (instanceHistory, from, to)=>{
     }).run();
 }
 
-const getProcessNodeApprover = async (instanceId: string, processNode: any, userSession: any, isBack?: boolean)=>{
+const getProcessNodeApprover = async (instanceId: string, processNode: any, userSession: any, chooseApprover: any , isBack?: boolean)=>{
     let nodeApprover = [];
 
     if(isBack){
@@ -64,8 +64,18 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
                 //TODO
             }
     
-        }else{
-            //TODO
+        }else if(approver === 'submitter_choose'){
+            if(chooseApprover){
+                if(_.isString(chooseApprover)){
+                    return [chooseApprover];
+                }else if(_.isArray(chooseApprover)){
+                    return _.uniq(_.compact(chooseApprover));
+                }else{
+                    throw new Error('process_approval_error_invalidChooseApprover');
+                }
+            }else{
+                throw new Error('process_approval_error_needToChooseApprover');
+            }
         }
     }
     return _.uniq(_.compact(nodeApprover)); 
@@ -107,10 +117,10 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
     }
 }
 
-const addInstanceNode = async  (instanceId: string, node: any, userSession: any, isBack?: boolean)=>{
+const addInstanceNode = async  (instanceId: string, node: any, userSession: any, nodeApprover: any)=>{
     let nodeId = node._id;
     let nodeName = node.label;
-    const nodeApprover = await getProcessNodeApprover(instanceId, node, userSession, isBack); //TODO nodeApprover为空
+    // const nodeApprover = await getProcessNodeApprover(instanceId, node, userSession, isBack); 
     const instanceNode = await objectql.getObject("process_instance_node").insert({
         process_instance: instanceId,
         process_node: nodeId,
@@ -123,44 +133,84 @@ const addInstanceNode = async  (instanceId: string, node: any, userSession: any,
     }
 }
 
-//TODO nextApprovers
-const toNextNode = async (instanceId: string, comment: string, nodes: any, index: number = 0, objectName: string, recordId: string, userSession: any, nextApprovers?)=>{
+const getNextNode = async (nodes: any, index: number = 0, objectName: string, recordId: string, userSession: any)=>{
     let spaceId = userSession.spaceId;
     let currentUserId = userSession.userId;
     let node = nodes[index];
     if(node){
         if(node.filtrad){
-            await addInstanceNode(instanceId, node, userSession);
+            return node;
         }else{
             const canEntry = await objectql.computeFormula(node.entry_criteria, objectName, recordId, currentUserId, spaceId);
             if(canEntry){
-                await addInstanceNode(instanceId, node, userSession);
+                return node;
             }else{
                 if(node.if_criteria_not_met === 'skip'){
-                    await toNextNode(instanceId, comment, nodes, index + 1, objectName, recordId, userSession)
-                }else{
-                    let options = {actor: currentUserId}
-                    if(node.if_criteria_not_met === 'reject'){
-                        await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options, userSession)
-                    }else if(node.if_criteria_not_met === 'approve'){
-                        // await addInstanceHistory(userSession.spaceId, instanceId, "approved", comment, options)
-                    }
+                    return await getNextNode(nodes, index + 1, objectName, recordId, userSession)
+                }else if(node.if_criteria_not_met === 'reject'){
+                    return {to_final_rejection: true}
+                }else if(node.if_criteria_not_met === 'approve'){
+                    return {to_final_approval: true}
                 }
             }
         }
     }
 }
 
-const toPreviousNode = async (instanceId: string, currentNode: any, userSession: any)=>{
+const toNextNode = async (instanceId: string, node: any, nextApprovers: any, userSession: any)=>{
+    if(node){
+        await addInstanceNode(instanceId, node, userSession, nextApprovers);
+    }
+}
+
+//TODO nextApprovers
+// const toNextNode = async (instanceId: string, comment: string, nodes: any, index: number = 0, objectName: string, recordId: string, userSession: any, nextApprovers?)=>{
+//     let spaceId = userSession.spaceId;
+//     let currentUserId = userSession.userId;
+//     let node = nodes[index];
+//     if(node){
+//         if(node.filtrad){
+//             await addInstanceNode(instanceId, node, userSession);
+//         }else{
+//             const canEntry = await objectql.computeFormula(node.entry_criteria, objectName, recordId, currentUserId, spaceId);
+//             if(canEntry){
+//                 await addInstanceNode(instanceId, node, userSession);
+//             }else{
+//                 if(node.if_criteria_not_met === 'skip'){
+//                     await toNextNode(instanceId, comment, nodes, index + 1, objectName, recordId, userSession)
+//                 }else{
+//                     let options = {actor: currentUserId}
+//                     if(node.if_criteria_not_met === 'reject'){
+//                         await addInstanceHistory(userSession.spaceId, instanceId, "rejected", comment, options, userSession)
+//                     }else if(node.if_criteria_not_met === 'approve'){
+//                         // await addInstanceHistory(userSession.spaceId, instanceId, "approved", comment, options)
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+const getPreviousNode = async (instanceId: string, currentNode: any, userSession: any)=>{
     const previousInstanceNodes = await objectql.getObject("process_instance_node").find({filters: [['process_instance', '=', instanceId], ['process_node', '!=', currentNode._id]], sort: 'created desc'});
     if(!_.isEmpty(previousInstanceNodes)){
         const previousInstanceNode = previousInstanceNodes[0];
-        const previousNode = await objectql.getObject("process_node").findOne(previousInstanceNode.process_node)
-        await addInstanceNode(instanceId, previousNode, userSession, true);
+        const previousNode = await objectql.getObject("process_node").findOne(previousInstanceNode.process_node);
+        return previousNode;
     }else{
         throw new Error('not find previous node')
     }
 }
+
+// const toPreviousNode = async (instanceId: string, currentNode: any, userSession: any)=>{
+//     const previousInstanceNodes = await objectql.getObject("process_instance_node").find({filters: [['process_instance', '=', instanceId], ['process_node', '!=', currentNode._id]], sort: 'created desc'});
+//     if(!_.isEmpty(previousInstanceNodes)){
+//         const previousInstanceNode = previousInstanceNodes[0];
+//         const previousNode = await objectql.getObject("process_node").findOne(previousInstanceNode.process_node)
+//         await addInstanceNode(instanceId, previousNode, userSession, true);
+//     }else{
+//         throw new Error('not find previous node')
+//     }
+// }
 
 //TODO 处理提交权限
 export const getObjectProcessDefinition = async (objectName: string, recordId: string, userSession: any)=>{
@@ -182,7 +232,26 @@ export const getObjectProcessDefinition = async (objectName: string, recordId: s
     return process;
 }
 
-export const recordSubmit = async (processDefinitionId: string, objectName: string, recordId, userSession: any, comment: string, approver: string)=>{
+export const recordSubmit = async (processDefinitionId: string, objectName: string, recordId, userSession: any, comment: string, chooseApprover: any)=>{
+    const nodes = await getProcessNodes(processDefinitionId, userSession.spaceId);
+
+    const nextNode = await getNextNode(nodes, 0, objectName, recordId, userSession);
+
+    let to_final_rejection = false;
+    let to_final_approval = false;
+
+    if(nextNode.to_final_rejection){
+        to_final_rejection = true;
+    }else if(nextNode.to_final_approval){
+        to_final_approval = true;
+    }
+
+    let approver = null;
+
+    if(!to_final_rejection && !to_final_rejection){
+        approver = await getProcessNodeApprover(null, nextNode, userSession, chooseApprover);
+    }
+
     let instance = await objectql.getObject("process_instance").insert({
         process_definition: processDefinitionId,
         target_object: {
@@ -197,8 +266,16 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
     await runProcessAction(processDefinitionId, 'initial_submission', recordId, userSession);
 
     await addInstanceHistory(userSession.spaceId, instance._id, "started", comment, {actor: userSession.userId}, userSession);
-    const nodes = await getProcessNodes(processDefinitionId, userSession.spaceId);
-    await toNextNode(instance._id, comment, nodes, 0, objectName, recordId, userSession);
+    
+    if(to_final_rejection){
+        let options = {actor: userSession.userId};
+        await addInstanceHistory(userSession.spaceId, instance._id, "rejected", comment, options, userSession)
+    }else if(to_final_approval){
+        let options = {actor: userSession.userId};
+        await addInstanceHistory(userSession.spaceId, instance._id, "approved", comment, options, userSession)
+    }else{
+        await toNextNode(instance._id, nextNode, approver, userSession);
+    }
 }
 
 export const getReocrdProcessInstance = async(objectName: string, recordId: string, status: string, userSession: any)=>{
@@ -263,42 +340,52 @@ const handleProcessInstance = async(instanceId: string, processStatus: string, u
     }
 }
 
+const getCurrentInstanceNode = async(instanceId)=>{
+    const pendingNodes = await objectql.getObject("process_instance_node").find({filters: [['process_instance', '=', instanceId], ['node_status', '=', 'pending']]});
+    let currentNode = null;
+    if(pendingNodes.length > 0){
+        currentNode = pendingNodes[0];
+    }
+    return currentNode;
+}
+
+const getProcessInstance = async (instanceId)=>{
+    return await objectql.getObject("process_instance").findOne(instanceId);
+}
+
+const getProcessNode = async(processNodeId: string)=>{
+    return await objectql.getObject("process_node").findOne(processNodeId); 
+}
+
 //TODO 编写trigger 处理elapsed_time
-const handleProcessInstanceNode = async(instanceId: string, processStatus: string, userSession: any)=>{
+const handleProcessInstanceNode = async(instanceId: string, currentInstanceNode, processStatus: string, nextNodeOptions: any, userSession: any)=>{
     let otherPendingInstanceHistoryCount = await objectql.getObject("process_instance_history").count({filters: [['process_instance', '=', instanceId], ['step_status', '=', 'pending']]})
     if(otherPendingInstanceHistoryCount === 0){
-
-        const pendingNodes = await objectql.getObject("process_instance_node").find({filters: [['process_instance', '=', instanceId], ['node_status', '=', 'pending']]});
-        let pendingNode = null;
-        if(pendingNodes.length > 0){
-            pendingNode = pendingNodes[0];
-        }
-
         await objectql.getObject("process_instance_node").updateMany([['process_instance', '=', instanceId], ['node_status', '=', 'pending']], {node_status: processStatus, completed_date: new Date(), last_actor: userSession.userId})
-        
-        const instance = await objectql.getObject("process_instance").findOne(instanceId);
-
         let when = getProcessNodeActionWhenByStatus(processStatus);
         if(when){
-            await runProcessNodeAction(pendingNode.process_node, when, instance.target_object.ids[0], userSession);
+            const instance = await objectql.getObject("process_instance").findOne(instanceId);
+            await runProcessNodeAction(currentInstanceNode.process_node, when, instance.target_object.ids[0], userSession);
         }
 
-        const nodes = await getProcessNodes(instance.process_definition, userSession.spaceId);
-
-        const index = _.findIndex(nodes, function(item){return item._id === pendingNode.process_node});
-        if(processStatus === 'approved'){
-            await toNextNode(instanceId, null, nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
-        }else if(processStatus === 'rejected' && nodes[index].reject_behavior === 'back_to_previous'){
-            await toPreviousNode(instanceId, nodes[index], userSession);
+        if(nextNodeOptions){
+            await toNextNode(instanceId, nextNodeOptions.node, nextNodeOptions.approve, userSession);
         }
 
         await handleProcessInstance(instanceId, processStatus, userSession);
     }
 }
 
+const getInstanceHistory = async(instanceHistoryId)=>{
+    return await objectql.getObject("process_instance_history").findOne(instanceHistoryId)
+}
 
-const handleProcessInstanceWorkitem = async (processStatus: string, instanceHistoryId: string, userSession: any, comment: string, approver?: string)=>{
-    let instanceHistory = await objectql.getObject("process_instance_history").findOne(instanceHistoryId);
+const getPendingInstanceHistoryCount = async (instanceId: string)=>{
+    return await objectql.getObject("process_instance_history").count([['process_instance', '=', instanceId], ['step_status', '=', 'pending']]);
+}
+
+const handleProcessInstanceWorkitem = async (currentInstanceNode, processStatus: string, instanceHistoryId: string, userSession: any, comment: string, nextNodeOptions?: string)=>{
+    let instanceHistory = await getInstanceHistory(instanceHistoryId);
     //TODO 处理下一步需要选人的情况，如果需要选择，则return;
     if(processStatus === 'rejected' || processStatus === 'approved'){
         await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comment, actor: userSession.userId});
@@ -312,44 +399,70 @@ const handleProcessInstanceWorkitem = async (processStatus: string, instanceHist
         if(when_multiple_approvers === 'first_response' || (when_multiple_approvers === 'unanimous' && processStatus === 'rejected')){
             await objectql.getObject("process_instance_history").updateMany([['_id', '!=', instanceHistory._id], ['process_instance', '=', instanceHistory.process_instance], ['step_status', '=', 'pending']], {step_status: 'no_response'})
         }
-    }else if(processStatus === 'removed'){
-        await objectql.getObject("process_instance_history").updateMany([['process_instance', '=', instanceHistory.process_instance], ['step_status', '=', 'pending']], {step_status: processStatus, comments: comment})
-    } 
+    }
 
-    await handleProcessInstanceNode(instanceHistory.process_instance, processStatus, userSession);
+    await handleProcessInstanceNode(instanceHistory.process_instance, currentInstanceNode, processStatus, nextNodeOptions, userSession);
 }
 
-export const processInstanceWorkitemApprove = async (instanceHistoryId: string, userSession: any, comment: string, approver?: string)=>{
-    await handleProcessInstanceWorkitem('approved', instanceHistoryId, userSession, comment, approver);
+export const processInstanceWorkitemApprove = async (instanceHistoryId: string, userSession: any, comment: string, chooseApprover?: string)=>{
+    let nextNodeOptions = null;
+    let instanceHistory = await getInstanceHistory(instanceHistoryId);
+    let instanceId = instanceHistory.process_instance;
+    let currentInstanceNode = await getCurrentInstanceNode(instanceId);
+    let instance = await getProcessInstance(instanceId);
+    let currentProcessNode = await getProcessNode(instanceHistory.step_node);
+    const nodes = await getProcessNodes(instance.process_definition, userSession.spaceId);
+    const index = _.findIndex(nodes, function(item){return item._id === currentInstanceNode.process_node});
+    
+    if(currentProcessNode.when_multiple_approvers === 'first_response' || (await getPendingInstanceHistoryCount(instanceId)) > 1){
+        let nextNode = await getNextNode(nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
+    
+        if(nextNode){
+            nextNodeOptions = {}
+            nextNodeOptions.node = nextNode;
+            nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.nextNode, userSession, chooseApprover);
+        }
+    }
+
+    await handleProcessInstanceWorkitem(currentInstanceNode, 'approved', instanceHistoryId, userSession, comment, nextNodeOptions);
 }
 
-export const processInstanceWorkitemReject = async (instanceHistoryId: string, userSession: any, comment: string, approver?: string)=>{
-    await handleProcessInstanceWorkitem('rejected', instanceHistoryId, userSession, comment, approver);
+export const processInstanceWorkitemReject = async (instanceHistoryId: string, userSession: any, comment: string)=>{
+    let nextNodeOptions = null;
+    let instanceHistory = await getInstanceHistory(instanceHistoryId);
+    let instanceId = instanceHistory.process_instance;
+    let currentInstanceNode = await getCurrentInstanceNode(instanceId);
+    let currentProcessNode = await getProcessNode(instanceHistory.step_node);
+
+    if(currentProcessNode.reject_behavior === 'back_to_previous'){
+        nextNodeOptions = {}
+        nextNodeOptions.node = await getPreviousNode(instanceId, currentProcessNode, userSession)
+        nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.nextNode, userSession, null, true);
+    }
+
+    await handleProcessInstanceWorkitem(currentInstanceNode, 'rejected', instanceHistoryId, userSession, comment, nextNodeOptions);
 }
 
-export const processInstanceWorkitemReassign = async (instanceHistoryId: string, userSession: any, comment: string, approver: string)=>{
-    if(_.isEmpty(approver)){
+export const processInstanceWorkitemReassign = async (instanceHistoryId: string, userSession: any, comment: string, chooseApprover: string)=>{
+    if(_.isEmpty(chooseApprover)){
         throw new Error('process_approval_error_reassign_approver_notFind');
     }
-    if(!_.isString(approver)){
+    if(!_.isString(chooseApprover)){
         throw new Error('process_approval_error_reassign_approver_mustBeString');
     }
 
     const history = await objectql.getObject("process_instance_history").update(instanceHistoryId, {
         step_status: "reassigned",
-        actor: approver,
+        actor: chooseApprover,
         comments: comment
     })
 
-    await addInstanceHistory(userSession.spaceId, history.process_instance, 'pending', null, {nodeId: history.step_node, actor: approver, originalActor: history.original_actor, submitted_by: userSession.userId}, userSession);
+    await addInstanceHistory(userSession.spaceId, history.process_instance, 'pending', null, {nodeId: history.step_node, actor: chooseApprover, originalActor: history.original_actor, submitted_by: userSession.userId}, userSession);
 }
 
-export const processInstanceWorkitemRemove = async (instanceHistoryId: string, userSession: any, comment: string)=>{
-    await handleProcessInstanceWorkitem('removed', instanceHistoryId, userSession, comment);   
-}
 
 export const processInstanceWorkitemRemovebyInstance = async (instanceId: string, userSession: any, comment: string)=>{
     const processStatus = 'removed';
     await objectql.getObject("process_instance_history").updateMany([['process_instance', '=', instanceId], ['step_status', '=', 'pending']], {step_status: processStatus, comments: comment});
-    await handleProcessInstanceNode(instanceId, processStatus, userSession);
+    await handleProcessInstanceNode(instanceId, null, processStatus, null, userSession);
 }
