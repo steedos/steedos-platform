@@ -47,7 +47,7 @@ class Home extends React.PureComponent {
     return (
       <div>
         <Navbar user={currentUser}/>
-<div class="px-4 sm:px-6 lg:px-8 py-6 border-b border-gray-200 md:flex md:items-center md:justify-between">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 border-b border-gray-200 md:flex md:items-center md:justify-between">
   <div class="flex-1 min-w-0">
     <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
       {this.props.currentSpace && this.props.currentSpace.name}
