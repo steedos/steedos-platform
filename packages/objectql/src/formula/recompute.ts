@@ -18,8 +18,8 @@ const runCurrentFieldFormulas = async function (fieldFormulaConfig: SteedosField
 }
 
 const runQuotedFieldFormulas = async function (recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, currentUserId: string) {
-    const configs = getQuotedByFieldFormulaConfigs(fieldFormulaConfig);
-    for (const config of configs) {
+    const quotedBys = getQuotedByFieldFormulaConfigs(fieldFormulaConfig);
+    for (const config of quotedBys.allConfigs) {
         await updateQuotedByObjectFieldFormulaValue(fieldFormulaConfig.object_name, recordId, config, currentUserId);
     }
 }

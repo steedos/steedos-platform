@@ -1,6 +1,7 @@
 import { addConfig, getConfigs, getConfig, removeManyConfigs } from '../types';
-import { SteedosFieldFormulaTypeConfig } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosQuotedByFieldFormulasTypeConfig } from './type';
 import { sortFieldFormulaConfigs, isFieldFormulaConfigQuotingObjectAndFields } from './util';
+import _ = require('lodash');
 
 export const addFieldFormulaConfig = (config: SteedosFieldFormulaTypeConfig) => {
     addConfig('field_formula', config);
@@ -42,43 +43,47 @@ export const getObjectFieldFormulaConfigs = (objectName: string, fieldName?: str
  * 不传入fieldNames时取objectName关联的所有字段公式配置
  * @param objectName 
  * @param fieldNames 
- * @param escapeCurrentObject 是否跳过在当前对象上且引用自身的公式字段
+ * @param escapeConfigs 要跳过的字段公式
  */
-export const getObjectQuotedByFieldFormulaConfigs = (objectName: string, fieldNames?: Array<string>, escapeCurrentObject?: boolean): Array<SteedosFieldFormulaTypeConfig> => {
+export const getObjectQuotedByFieldFormulaConfigs = (objectName: string, fieldNames?: Array<string>, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>): SteedosQuotedByFieldFormulasTypeConfig => {
     const configs = getFieldFormulaConfigs();
     let configsOnCurrentObject = [];
     let configsOnOtherObjects = [];
     configs.forEach((config: SteedosFieldFormulaTypeConfig) => {
+        if (escapeConfigs && escapeConfigs.length) {
+            const escapeConfigIds = typeof escapeConfigs[0] === "string" ? <Array<string>>escapeConfigs : _.map(<Array<SteedosFieldFormulaTypeConfig>>escapeConfigs, '_id');
+            if (escapeConfigIds.indexOf(config._id) > -1) {
+                return;
+            }
+        }
         let isQuoting = isFieldFormulaConfigQuotingObjectAndFields(config, objectName, fieldNames);
-        if(isQuoting){
+        if (isQuoting) {
             let isOwn = config.object_name === objectName;
-            if(isOwn){
+            if (isOwn) {
                 // 要进一步确定其引用关系中有引用自身才算是引用自身的公式字段
-                isOwn = !!config.quotes.find((quote)=>{
+                isOwn = !!config.quotes.find((quote) => {
                     return quote.is_own;
                 });
             }
-            if(isOwn){
+            if (isOwn) {
                 configsOnCurrentObject.push(config);
             }
-            else{
+            else {
                 configsOnOtherObjects.push(config);
             }
         }
     });
-    if(escapeCurrentObject){
-        return configsOnOtherObjects;
-    }
-    else{
-        // 当前对象上的字段一定要做排序
-        return sortFieldFormulaConfigs(configsOnCurrentObject).concat(configsOnOtherObjects);
-    }
+    // 当前对象上的字段一定要做排序
+    const ownConfigs = sortFieldFormulaConfigs(configsOnCurrentObject);
+    const otherConfigs = configsOnOtherObjects;
+    const allConfigs = ownConfigs.concat(otherConfigs);
+    return { ownConfigs, otherConfigs, allConfigs }
 }
 
 /**
  * 获取参数config在哪些字段公式中被引用
  * @param config 
  */
-export const getQuotedByFieldFormulaConfigs = (config: SteedosFieldFormulaTypeConfig): Array<SteedosFieldFormulaTypeConfig> => {
+export const getQuotedByFieldFormulaConfigs = (config: SteedosFieldFormulaTypeConfig): SteedosQuotedByFieldFormulasTypeConfig => {
     return getObjectQuotedByFieldFormulaConfigs(config.object_name, [config.field_name]);
 }

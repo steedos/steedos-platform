@@ -153,7 +153,9 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: any, a
             // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
             // console.log("===updateReferenceTosFieldSummaryValue====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
             // TODO:有bug，当在主表上引用该汇总字段时不会生效【涉及bug：对象引用关系中需要包括当前对象中自己引用自己对象上的字段，而不只是记录引用了其他对象上哪些字段。】
-            await runQuotedByObjectFieldFormulas(object_name, referenceToId, null, [field_name])
+            await runQuotedByObjectFieldFormulas(object_name, referenceToId, null, {
+                fieldNames:[field_name]
+            })
         }
         else {
             // 说明referenceToId对应的主表记录找不到了，可能被删除了，不用报错或其他处理

@@ -78,6 +78,18 @@ export type SteedosFieldFormulaTypeConfig = {
 }
 
 /**
+ * 获取对象在哪些字段公式中被引用时的返回结果
+ * ownConfigs为引用关系为当前对象上的自身引用自身（即引用关系is_own为true）
+ * otherConfigs为引用关系中排除ownConfigs后的其他引用关系（包括当前对象上is_own为false的引用关系）
+ * allConfigs = ownConfigs + otherConfigs
+ */
+export type SteedosQuotedByFieldFormulasTypeConfig = {
+    ownConfigs: Array<SteedosFieldFormulaTypeConfig>,
+    otherConfigs: Array<SteedosFieldFormulaTypeConfig>,
+    allConfigs: Array<SteedosFieldFormulaTypeConfig>
+}
+
+/**
  * 空白字段处理，只在公式类型返回值为number和currency类型时有效，默认为zeroes
  */
 export enum SteedosFormulaBlankValue {
