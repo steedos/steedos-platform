@@ -21,49 +21,33 @@ export const authorize = (accountsServer: AccountsServer) => async (
   const userAgent = getUserAgent(req);
   const ip = requestIp.getClientIp(req);
   let query = queryString.stringify(req.query);
-  let redirect_uri = req.query.redirect_uri
-  if (!redirect_uri)
-    redirect_uri = "/"
+  let redirect_uri = req.query.redirect_uri?req.query.redirect_uri:'/'
 
-  let userId = (req as any).userId
-  let userIdCookie = get(req.cookies, 'X-User-Id') 
-  let userAccessTokenCookie = get(req.cookies, 'X-Access-Token');
-  let userAuthToken = get(req.cookies, 'X-Auth-Token')
-  let tokenUserId = null;
-  if(userAuthToken){
-    tokenUserId = await getUserIdByToken(userAuthToken);
-  }
-  // let userSpaceId = get(req.cookies, 'X-Space-Id')
-  //如果userAccessTokenCookie不存在并且有X-User-Id,X-Auth-Token有效(调用Meteor)，自动生成
-  if(userAuthToken && userIdCookie && !userAccessTokenCookie){
-    if(tokenUserId && tokenUserId === userIdCookie){
-      userId = tokenUserId;
-      let user: any = await accountsServer.findUserById(userId);
-      const loggedInUser: any = await accountsServer.loginWithUser(user, {
-        ip,
-        userAgent
-      })
-      userAccessTokenCookie = loggedInUser.tokens.accessToken;
-      setAuthCookies(req, res, userId, userAuthToken, userAccessTokenCookie, null);
+  let authToken =
+    get(req.cookies, 'X-Auth-Token') ||
+    get(req.body, 'X-Auth-Token') ||
+    get(req.params, 'X-Auth-Token') ||
+    get(req.headers, 'Authorization') ||
+    get(req.headers, 'authorization');
+
+  authToken = authToken && authToken.replace('Bearer ', '').replace('BEARER ', '');
+  authToken = authToken && authToken.split(',').length >1?authToken.split(',')[0]:authToken;
+
+  let userId = 
+    get(req.cookies, 'X-User-Id') ||
+    get(req.body, 'X-User-Id') ||
+    get(req.params, 'X-User-Id') 
+
+  const user = (req as any).user
+
+  if (user) {
+    if (redirect_uri.indexOf('sso=1')<0) {
+      redirect_uri = redirect_uri.indexOf("?")>0?redirect_uri+'sso=1':redirect_uri+'?sso=1'
+      redirect_uri = `${redirect_uri}&X-Auth-Token=${authToken}&X-User-Id=${userId}`
+      res.redirect(redirect_uri);
     }
-  }
-  if (userId && (userIdCookie== userId) && userId === tokenUserId) {
-    if (redirect_uri.indexOf("?") > -1)
-      redirect_uri += "&token=" + userAccessTokenCookie
-    else 
-      redirect_uri += "?token=" + userAccessTokenCookie
-    redirect_uri = `${redirect_uri}&X-Auth-Token=${userAuthToken}&X-User-Id=${userIdCookie}`
-    res.redirect(redirect_uri);
     res.end();
   } else {
-    //从cookies中读取X-Space-Id， 并传入login?X-Space-Id=${X-Space-Id}
-    // if(userSpaceId){
-    //   if(query){
-    //     query = `${query}&X-Space-Id=${userSpaceId}`
-    //   }else{
-    //     query = `X-Space-Id=${userSpaceId}`
-    //   }
-    // }
     clearAuthCookies(req, res);
     res.redirect("/accounts/a/#/login?" + query);
     res.end();

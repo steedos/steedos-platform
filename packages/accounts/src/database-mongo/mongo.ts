@@ -10,7 +10,7 @@ import { get, merge, trim, map } from 'lodash';
 import { Collection, Db, ObjectID } from 'mongodb';
 
 import { AccountsMongoOptions, MongoUser } from './types';
-import { getSessionByUserId } from '@steedos/auth';
+import { getSessionByUserId, hashStampedToken } from '@steedos/auth';
 
 const toMongoID = (objectId: string | ObjectID) => {
   if (typeof objectId === 'string') {
@@ -395,6 +395,7 @@ export class Mongo implements DatabaseInterface {
     }
 
     const ret = await this.sessionCollection.insertOne(session);
+    this.updateMeteorSession(userId, token)
     return ret.ops[0]._id.toString();
   }
 
@@ -582,4 +583,28 @@ export class Mongo implements DatabaseInterface {
     return spaces;
   }
 
+  public async updateMeteorSession(userId:string, token:string): Promise<boolean | null> {
+
+    //创建Meteor token
+    let stampedAuthToken = {
+      token: token,
+      when: new Date
+    };
+    let hashedToken = hashStampedToken(stampedAuthToken);
+    let _user = await this.collection.findOne({_id: userId})
+    if(!_user['services']){
+      _user['services'] = {}
+    }
+    if (!_user['services']['resume']) {
+      _user['services']['resume'] = {loginTokens: []}
+    }
+    if (!_user['services']['resume']['loginTokens']) {
+      _user['services']['resume']['loginTokens'] = [];
+    }
+    _user['services']['resume']['loginTokens'].push(hashedToken)
+    let data = { services: _user['services'] }
+    await this.collection.updateOne({_id: userId}, {$set: data});
+
+    return true
+  }
 }
