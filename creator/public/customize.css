@@ -1,1 +1,8 @@
 /* 由用户自定义 */
+html {
+	background: unset;
+}
+
+body {
+  background: #f8f8f8;
+}
