@@ -1,6 +1,6 @@
 import { getSteedosSchema } from '../index';
-import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue } from './type';
-import { getObjectQuotedByFieldSummaryConfigs } from './field_summary';
+import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryTypeBlankValue } from './type';
+import { getObjectQuotedByFieldSummaryConfigs, getObjectFieldSummaryConfigs } from './field_summary';
 import { runQuotedByObjectFieldFormulas } from '../formula';
 import _ = require('lodash');
 import { JsonMap } from '@salesforce/ts-types';
@@ -164,4 +164,25 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
             // 说明referenceToId对应的主表记录找不到了，可能被删除了，不用报错或其他处理
         }
     }
+}
+
+/**
+ * 新建主表记录时需要处理汇总字段默认值
+ * @param objectName 
+ * @param recordId 
+ */
+export const runCurrentObjectFieldSummaries = async function (objectName: string, recordId: string) {
+    const configs = getObjectFieldSummaryConfigs(objectName);
+    if (!configs.length) {
+        return;
+    }
+    let setDoc = {};
+    for (const config of configs) {
+        // sum和count类型直接按0值处理而不是空值，min/max类型（包括数值和日期时间字段）显示为空值
+        let defaultValue = SteedosSummaryTypeBlankValue[config.summary_type];
+        if(defaultValue != null){
+            setDoc[config.field_name] = defaultValue;
+        }
+    }
+    await getSteedosSchema().getObject(objectName).directUpdate(recordId, setDoc);
 }

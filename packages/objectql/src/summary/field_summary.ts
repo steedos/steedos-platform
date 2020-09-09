@@ -24,18 +24,18 @@ export const getFieldSummaryConfig = (_id: string): SteedosFieldSummaryTypeConfi
  * @param objectName 
  * @param fieldName 
  */
-// export const getObjectFieldSummaryConfigs = (objectName: string, fieldName?: string): Array<SteedosFieldSummaryTypeConfig> => {
-//     const configs = getFieldSummaryConfigs();
-//     let result = configs.filter((config: SteedosFieldSummaryTypeConfig) => {
-//         if (fieldName) {
-//             return config.object_name === objectName && config.field_name === fieldName;
-//         }
-//         else {
-//             return config.object_name === objectName;
-//         }
-//     });
-//     return sortFieldSummaryConfigs(result);
-// }
+export const getObjectFieldSummaryConfigs = (objectName: string, fieldName?: string): Array<SteedosFieldSummaryTypeConfig> => {
+    const configs = getFieldSummaryConfigs();
+    let result = configs.filter((config: SteedosFieldSummaryTypeConfig) => {
+        if (fieldName) {
+            return config.object_name === objectName && config.field_name === fieldName;
+        }
+        else {
+            return config.object_name === objectName;
+        }
+    });
+    return result;
+}
 
 
 /**

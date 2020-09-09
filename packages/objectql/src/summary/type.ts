@@ -43,3 +43,13 @@ export const SupportedSummaryFieldTypes = {
     "min": [SteedosSummaryFieldTypeValue.Number, SteedosSummaryFieldTypeValue.Currency, SteedosSummaryFieldTypeValue.Date, SteedosSummaryFieldTypeValue.Datetime],
     "max": [SteedosSummaryFieldTypeValue.Number, SteedosSummaryFieldTypeValue.Currency, SteedosSummaryFieldTypeValue.Date, SteedosSummaryFieldTypeValue.Datetime]
 };
+
+/**
+ * 各个累计汇总计算类型的空值处理方式
+ */
+export const SteedosSummaryTypeBlankValue = {
+    "count": 0,
+    "sum": 0,
+    "min": null,
+    "max": null
+};

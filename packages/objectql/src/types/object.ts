@@ -7,7 +7,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
-import { runQuotedByObjectFieldSummaries } from '../summary';
+import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
 const clone = require('clone')
 
@@ -818,6 +818,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 else{
                     recordId = args[1];
                     doc = args[2];
+                }
+                if(method === "insert"){
+                    await runCurrentObjectFieldSummaries(objectName, recordId);
                 }
                 await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, currentUserId);
             }
