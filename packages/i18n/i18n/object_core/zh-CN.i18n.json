@@ -221,5 +221,8 @@
 	"business_hours_error_lunch_start_end_overflow": "午休时间必须在工作时间范围内。",
 
 	"object_fields_function_recomputeFormulaValues_success": "已成功重算该公式字段值。",
-	"object_fields_function_recomputeFormulaValues_error": "未能成功重算该公式字段值，%s"
+	"object_fields_function_recomputeFormulaValues_error": "未能成功重算该公式字段值，%s",
+
+	"object_fields_function_recomputeSummaryValues_success": "已成功重算该汇总字段值。",
+	"object_fields_function_recomputeSummaryValues_error": "未能成功重算该汇总字段值，%s"
 }

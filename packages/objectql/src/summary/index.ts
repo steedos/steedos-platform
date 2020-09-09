@@ -9,6 +9,7 @@ const clone = require('clone')
 export * from './type'
 export * from './field_summary'
 export * from './core'
+export * from './recompute'
 
 /**
  * 校验summaryConfig合法性并设置其reference_to_field、summary_field_type属性值

@@ -33,9 +33,6 @@ export const recomputeFormulaValues = async (fieldId: string, currentUserId: str
     if (!config) {
         throw new Error(`recomputeFormulaValues:${fieldId} not found in field_formula configs.`);
     }
-    if (!currentUserId) {
-        checkCurrentUserIdNotRequiredForFieldFormulas(config);
-    }
     return await recomputeFieldFormulaValues(config, currentUserId);
 }
 

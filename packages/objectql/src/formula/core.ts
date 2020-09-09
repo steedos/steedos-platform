@@ -266,8 +266,8 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
     let { fieldNames, escapeConfigs, quotedByConfigs } = options;
     if (!quotedByConfigs) {
         quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs);
-        console.log("runQuotedByObjectFieldFormulas===objectName, fieldNames, escapeConfigs===", objectName, fieldNames, escapeConfigs);
-        console.log("runQuotedByObjectFieldFormulas===quotedByConfigs===", quotedByConfigs);
+        // console.log("runQuotedByObjectFieldFormulas===objectName, fieldNames, escapeConfigs===", objectName, fieldNames, escapeConfigs);
+        // console.log("runQuotedByObjectFieldFormulas===quotedByConfigs===", quotedByConfigs);
     }
     if (!quotedByConfigs.allConfigs.length) {
         return;

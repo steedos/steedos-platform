@@ -3,6 +3,7 @@ import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue } from './type';
 import { getObjectQuotedByFieldSummaryConfigs } from './field_summary';
 import { runQuotedByObjectFieldFormulas } from '../formula';
 import _ = require('lodash');
+import { JsonMap } from '@salesforce/ts-types';
 
 /**
  * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在insert/update的对象字段的公式字段并更新其字段值
@@ -104,9 +105,7 @@ export const getSummaryAggregateGroups = (summary_type: SteedosSummaryTypeValue,
  */
 export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, recordId: string, previousDoc: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig) => {
     // console.log("===updateQuotedByObjectFieldSummaryValue===", objectName, recordId, JSON.stringify(fieldSummaryConfig));
-    const { reference_to_field, summary_type, summary_field } = fieldSummaryConfig;
-    // 引用关系超过一层时，需要使用aggregate来查出哪些记录需要更新重算公式字段值
-    let aggregateGroups = getSummaryAggregateGroups(summary_type, summary_field);
+    const { reference_to_field } = fieldSummaryConfig;
     const referenceToRecord = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: [reference_to_field] });
     let referenceToId: string;
     if(referenceToRecord){
@@ -132,15 +131,20 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
     if(!referenceToIds.length){
         return;
     }
-    await updateReferenceTosFieldSummaryValue(referenceToIds, aggregateGroups, fieldSummaryConfig);
+    await updateReferenceTosFieldSummaryValue(referenceToIds, fieldSummaryConfig);
 }
 
-export const updateReferenceTosFieldSummaryValue = async (referenceToIds: any, aggregateGroups: any[], fieldSummaryConfig: SteedosFieldSummaryTypeConfig) => {
+export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig) => {
     const { reference_to_field, summary_type, summary_field, summary_object, field_name, object_name } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
     }
+    // 需要使用aggregate来汇总计算
+    let aggregateGroups = getSummaryAggregateGroups(summary_type, summary_field);
     for (let referenceToId of referenceToIds) {
+        if(typeof referenceToId !== "string"){
+            referenceToId = <string>referenceToId._id;
+        }
         let aggregateFilters = [[reference_to_field, "=", referenceToId]];
         const aggregateResults = await getSteedosSchema().getObject(summary_object).aggregate({
             filters: aggregateFilters
@@ -152,7 +156,6 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: any, a
             await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
             // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
             // console.log("===updateReferenceTosFieldSummaryValue====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
-            // TODO:有bug，当在主表上引用该汇总字段时不会生效【涉及bug：对象引用关系中需要包括当前对象中自己引用自己对象上的字段，而不只是记录引用了其他对象上哪些字段。】
             await runQuotedByObjectFieldFormulas(object_name, referenceToId, null, {
                 fieldNames:[field_name]
             })
