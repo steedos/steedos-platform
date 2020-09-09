@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { getProcessInstanceWorkitem, processInstanceWorkitemReassign } from './process_manager'
+import { allowApprover } from './permission_manager';
 import * as core from "express-serve-static-core";
 
 interface Request extends core.Request {
@@ -16,12 +17,12 @@ export const reassign = async (req: Request, res: express.Response) => {
         const body = req.body;
         const comment = body.comment;
         const approver = body.approver;
-
-        const workitem = await getProcessInstanceWorkitem(instanceHistoryId, userSession);
-
-        await processInstanceWorkitemReassign(workitem._id, userSession, comment, approver);
-
-        return res.status(200).send({state: 'SUCCESS'});
+        if(allowApprover(instanceHistoryId, userSession)){
+            const workitem = await getProcessInstanceWorkitem(instanceHistoryId, userSession);
+            await processInstanceWorkitemReassign(workitem._id, userSession, comment, approver);
+            return res.status(200).send({state: 'SUCCESS'});
+        }
+        throw new Error("process_approval_error_NoApproval");
     } catch (error) {
         console.log(error);
         return res.status(200).send({state: 'FAILURE', error: error.message});

@@ -2,6 +2,7 @@ Steedos.authRequest = function (url, options) {
     var userSession = Creator.USER_CONTEXT;
     var spaceId = userSession.spaceId;
     var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
+    var result = null;
     url = Steedos.absoluteUrl(url);
     try {
         var authorization = "Bearer " + spaceId + "," + authToken;
@@ -26,12 +27,10 @@ Steedos.authRequest = function (url, options) {
                 }
             },
             success: function (data) {
-                $("body").removeClass("loading");
-                toastr.success(t('OK'));
+                result = data;
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.error(XMLHttpRequest.responseJSON);
-                $("body").removeClass("loading");
                 if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
                     toastr.error(t(XMLHttpRequest.responseJSON.error.replace(/:/g, '：')))
                 }
@@ -41,9 +40,9 @@ Steedos.authRequest = function (url, options) {
             }
         }
         $.ajax(Object.assign({}, defOptions, options));
+        return result;
     } catch (err) {
         console.error(err);
         toastr.error(err);
-        $("body").removeClass("loading");
     }
 }

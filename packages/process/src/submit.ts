@@ -7,7 +7,6 @@ interface Request extends core.Request {
 }
 
 export const submit = async (req: Request, res: express.Response) => {
-
     try {
         const urlParams = req.params;
         const objectName = urlParams.objectName;

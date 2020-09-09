@@ -5,6 +5,7 @@ import { approve } from './approve';
 import { reject } from './reject';
 import { reassign } from './reassign';
 import { recallByProcessInstance } from './recall';
+import { allowObjectSubmit, allowRecallByProcessInstance, allowApproverByInstanceHistoryId } from './permission'
 const express = require('express');
 
 
@@ -22,4 +23,8 @@ processExpress.post('/api/v4/process/reassign/:objectName/:record', requireAuthe
 
 processExpress.post('/api/v4/process/recall/:objectName/:record', requireAuthentication, recallByProcessInstance);
 
+processExpress.get('/api/v4/process/permission/recall/:objectName/:record', requireAuthentication, allowRecallByProcessInstance);
 
+processExpress.get('/api/v4/process/permission/approver/:objectName/:record', requireAuthentication, allowApproverByInstanceHistoryId);
+
+processExpress.get('/api/v4/process/permission/submit/:objectName/:record', requireAuthentication, allowObjectSubmit);

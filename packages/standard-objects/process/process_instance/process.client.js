@@ -7,10 +7,15 @@ Steedos.ProcessManager.showProcessApprovalForm = function(action, fields, formId
     Modal.show("quickFormModal", {formId: formId, title: TAPi18n.__(`process_approval_title_${action}`), confirmBtnText: `process_approval_confirmBtnText_${action}`, schema: approveSchema, doc: doc, onConfirm: onConfirm});
 }
 
-Steedos.ProcessManager.showApproveButs = function(objectName, recordId){
-    var record = Creator.getCollection(objectName).findOne(recordId);
-    if(record){
-        return record.step_status === 'pending';
+Steedos.ProcessManager.allowApprover = function(object_name, record_id){
+    if(!object_name || !record_id){
+        return false;
+    }
+    var result = Steedos.authRequest(`/api/v4/process/permission/approver/${object_name}/${record_id}`, {type: 'get', async: false});
+    if(result && result.allowApprover){
+        return true;
+    }else{
+        return false;
     }
 }
 
@@ -36,6 +41,33 @@ Steedos.ProcessManager.Reassign = function(object_name, record_id){
         FlowRouter.reload();
         Modal.hide(t);
     })
+}
+
+Steedos.ProcessManager.allowRecall = function(object_name, record_id){
+    if(!object_name || !record_id){
+        return false;
+    }
+    var result = Steedos.authRequest(`/api/v4/process/permission/recall/${object_name}/${record_id}`, {type: 'get', async: false});
+    if(result && result.allowRecall){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+Steedos.ProcessManager.allowSubmit = function(object_name, record_id){
+    if(!object_name || !record_id){
+        return false;
+    }
+    if(!Creator.getObject(object_name).enable_process){
+        return false;
+    }
+    var result = Steedos.authRequest(`/api/v4/process/permission/submit/${object_name}/${record_id}`, {type: 'get', async: false});
+    if(result && result.allowSubmit){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 Steedos.ProcessManager.Recall = function(object_name, record_id){

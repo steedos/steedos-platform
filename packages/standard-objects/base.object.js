@@ -265,11 +265,10 @@ module.exports = {
             }
         },
         standard_submit_for_approval: {
-            visible: function (object_name) {
-                let result = Creator.odata.query("process_definition", {$top: 1, $select: "_id", $filter: `((object_name eq '${object_name}') and (active eq true))`}, true);
-                return result.length > 0;
+            visible: function (object_name, record_id) {
+                return Steedos.ProcessManager.allowSubmit(object_name, record_id);
             },
-            on: "record_only",
+            on: "record_only_more",
             todo: function(object_name, record_id){
                 Steedos.authRequest(`/api/v4/process/submit/${object_name}/${record_id}`, {type: 'post', data: JSON.stringify({comments: `${new Date().getTime()}`})});
                 FlowRouter.reload();
