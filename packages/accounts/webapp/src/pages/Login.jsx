@@ -273,9 +273,9 @@ class Login extends React.Component {
         });
         return;
       }
+      this.finishSignin();
       
     });
-    this.finishSignin();
   };
 
 

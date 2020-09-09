@@ -367,7 +367,7 @@ Please change it with a strong random token.`);
     try {
       const session: Session = await this.db.findSessionByToken(token);
 
-      if (session.valid) {
+      if (session && session.valid) {
         await this.db.invalidateSession(session.id);
         this.hooks.emit(ServerHooks.LogoutSuccess, {
           session,

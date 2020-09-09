@@ -19,8 +19,6 @@ export const userLoader = (accountsServer: AccountsServer) => async (
   authToken = authToken && authToken.replace('Bearer ', '').replace('BEARER ', '');
   authToken = authToken && authToken.split(',').length >1?authToken.split(',')[0]:authToken;
 
-  console.log(authToken);
-
   if (!isEmpty(authToken)) {
     try {
       (req as any).authToken = authToken;

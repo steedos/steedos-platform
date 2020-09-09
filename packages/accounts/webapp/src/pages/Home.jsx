@@ -24,7 +24,6 @@ class Home extends React.PureComponent {
       const spaceId = this.props.match.params.spaceId;
       if (spaceId != this.props.currentSpaceId) {
         this.props.actions.selectSpace(spaceId).then(async (result) => {
-          console.log(result)
           if (result && result.data == false) {
             hashHistory.push('/select-space');
           }

@@ -21,12 +21,20 @@ class LoggedIn extends React.PureComponent {
   }
   
   componentDidMount() {
+
+    // Tell the desktop app the webapp is ready
+    window.postMessage(
+      {
+          type: 'webapp-ready',
+      },
+      window.location.origin,
+    );
+
     if (!this.props.currentUser) {
       GlobalActions.emitUserLoggedOutEvent('/login?redirect_to=' + encodeURIComponent(this.props.location.pathname), true, false);
     }
   }
   render() {
-    console.log(this.props.currentUser)
     if (!this.isValidState()) {
         return <Loading/>;
     }

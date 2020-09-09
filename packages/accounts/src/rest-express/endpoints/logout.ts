@@ -17,11 +17,11 @@ export const logout = (accountsServer: AccountsServer) => async (
   authToken = authToken && authToken.replace('Bearer ', 'token');
   authToken = authToken && authToken.split(',').length >1?authToken.split(',')[0]:authToken;
 
+  clearAuthCookies(req, res);
   try {
-    clearAuthCookies(req, res);
     await accountsServer.logout(authToken);
-    res.json(null);
   } catch (err) {
-    sendError(res, err);
+    //sendError(res, err);
   }
+  res.json(null);
 };

@@ -296,9 +296,8 @@ class Signup extends React.Component {
         });
         return;
       }
-      
+      this.finishSignin();
     });
-    this.finishSignin();
   };
 
 
