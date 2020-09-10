@@ -375,7 +375,17 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm) {
         }
 
         if (field.type == 'table') {
-
+            let sfieldsEditable = false;
+            let sfields = field.sfields;
+            if (sfields) {
+                for (let index = 0; index < sfields.length; index++) {
+                    const element = sfields[index];
+                    if (element.type != 'hidden' && element.permission == "editable") {
+                        sfieldsEditable = true;
+                        break;
+                    }
+                }
+            }
             fieldSchema[field.code] = {
                 type: Array,
                 optional: (field.permission == "readonly") || (!field.is_required),
@@ -388,7 +398,8 @@ WorkflowManager_format.getAutoformSchema = function (steedosForm) {
                     initialCount: 0,
                     type: "table",
                     editable: field.permission == 'editable' ? true : false,
-                    description: field.description
+                    description: field.description,
+                    sfieldsEditable : sfieldsEditable
                 }
             };
             if (ApproveManager.isReadOnly()) {
