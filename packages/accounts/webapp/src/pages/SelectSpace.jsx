@@ -7,15 +7,17 @@ import { hashHistory } from "../utils/hash_history";
 import {Link} from 'react-router-dom';
 import Card from '../components/Card';
 import Logo from '../components/Logo';
+import Navbar from '../components/Navbar';
 import Background from '../components/Background';
 
 import { getCurrentUser } from '../selectors/entities/users';
-import { getCurrentSpaceId, getCurrentSpace, getSpaces, getMySpaces } from '../selectors/entities/spaces';
+import { getSpaceCount, getCurrentSpaceId, getCurrentSpace, getSpaces, getMySpaces } from '../selectors/entities/spaces';
 import { selectSpace } from '../actions/spaces';
 
 class SelectSpace extends React.PureComponent {
   static propTypes = {
       currentUserId: PropTypes.string,
+      spaceCount: PropTypes.number,
       isMemberOfSpace: PropTypes.bool,
       listableSpaces: PropTypes.array,
       canCreateSpaces: PropTypes.bool,
@@ -34,6 +36,10 @@ class SelectSpace extends React.PureComponent {
           loadingSpaceId: '',
           error: null,
       };
+  }
+
+  handleCreateTenant = () => {
+    hashHistory.push(`/create-space`)
   }
 
   handleSpaceClick = (space) => {
@@ -84,21 +90,40 @@ class SelectSpace extends React.PureComponent {
     return (
     <>
       <Background/>
-      <div className="flex sm:items-center justify-center mx-auto h-full">
-        <div className="absolute rounded sm:shadow bg-white w-screen max-w-md">
+      <div className="flex sm:items-center justify-center mx-auto overflow-auto p-10">
+        <div className="relative rounded sm:shadow bg-white w-screen max-w-md">
           <div className="pt-10 pl-10 pr-10">
             <Logo/>
             <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
-              <FormattedMessage
+              {this.props.spaceCount>0 &&(
+                <FormattedMessage
                   id='accounts.select_space'
                   defaultMessage='Select Company'
                 />
+              )}
+              {this.props.spaceCount==0 &&(
+                <FormattedMessage
+                  id='accounts.no_tenant'
+                  defaultMessage='No Company'
+                />
+              )}
             </h2>
           </div>
           <div className="mt-4 bg-white overflow-hidden mb-10">
             <ul className="border-t border-gray-100">
               {spaceContent}
             </ul>
+
+            <div className="mt-6 mx-10 flex justify-end">
+              <button type="button" 
+                onClick={this.handleCreateTenant}
+                className="rounded group relative w-full justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-none text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+                <FormattedMessage
+                  id='accounts.create_tenant'
+                  defaultMessage='Create Company'
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -114,6 +139,7 @@ function mapStateToProps(state) {
     currentSpace: getCurrentSpace(state),
     spaces: getSpaces(state),
     mySpaces: getMySpaces(state),
+    spaceCount: getSpaceCount(state),
   };
 }
 

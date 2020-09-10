@@ -8,6 +8,8 @@
     "accounts.reset_password": "重置密码",
     "accounts.username": "用户名",
     "accounts.create_tenant": "创建企业",
+    "accounts.no_tenant": "您不属于任何企业",
+    "accounts.create_tenant_description": "创建一个新的工作区，并邀请同事加入。您将成为新工作区的管理员。",
     "accounts.tenant_name": "企业名称",
     "accounts.name": "姓名",
     "accounts.name_placeholder": "您的姓名",

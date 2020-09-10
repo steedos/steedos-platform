@@ -8,7 +8,7 @@ export function getMySpaces(state: GlobalState) {
   return Object.values(state.entities.spaces.spaces);
 }
 
-export function getMySpacesCount(state: GlobalState) {
+export function getSpaceCount(state: GlobalState) {
   return Object.keys(state.entities.spaces.spaces).length;
 }
 
