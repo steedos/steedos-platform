@@ -7,7 +7,7 @@
     "accounts.forget_password": "忘记密码",
     "accounts.reset_password": "重置密码",
     "accounts.username": "用户名",
-    "accounts.create_tenant": "创建团队",
+    "accounts.create_tenant": "创建新团队",
     "accounts.no_tenant": "您不属于任何团队",
     "accounts.create_tenant_description": "创建一个新的团队，并邀请同事加入。您将成为新团队的管理员。",
     "accounts.tenant_name": "团队名称",
