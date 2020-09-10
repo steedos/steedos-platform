@@ -239,6 +239,19 @@ export default class Client4 {
         return auth
     };
 
+    createSpace = (name: string) => {
+        this.trackEvent('api', 'api_users_createTenant');
+
+        const queryParams: any = {};
+
+        const auth:any = this.doFetch<UserProfile>(
+            `${this.getBaseRoute()}/api/v4/spaces/register/tenant${buildQueryString(queryParams)}`,
+            {method: 'POST', body: JSON.stringify({name: name})},
+        );
+
+        return auth
+    };
+
     sendVerificationToken = (user: string) => {
         this.trackEvent('api', 'api_users_verify');
 

@@ -42,7 +42,8 @@ class LocalStorageStoreClass {
 
   setPreviousSpaceId(userId, spaceId) {
     this.setItem(getPreviousSpaceIdKey(userId), spaceId);
-    this.setItem('spaceId', spaceId);
+    // this.setItem('spaceId', spaceId);
+    localStorage.setItem('spaceId', spaceId);
   }
 
   setUserId(userId, token?:string) {

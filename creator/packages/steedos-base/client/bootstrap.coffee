@@ -54,7 +54,9 @@ Setup.validate = (onSuccess)->
 	if (!userId or !loginToken)
 		loginToken = getCookie("X-Auth-Token");
 		userId = getCookie("X-User-Id");
-	spaceId = localStorage.getItem("spaceId")
+	spaceId = searchParams.get("X-Space-Id");
+	if (!spaceId)
+		spaceId = localStorage.getItem("spaceId")
 	if (!spaceId)
 		spaceId = getCookie("X-Space-Id");
 	headers = {}

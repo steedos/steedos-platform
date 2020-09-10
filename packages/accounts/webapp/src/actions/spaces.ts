@@ -2,6 +2,7 @@ import {Client4} from '../client';
 import {GetStateFunc, DispatchFunc, ActionFunc, ActionResult, batchActions, Action} from '../types/actions';
 import {SpaceTypes, UserTypes} from '../action_types';
 import {Space, SpaceUser} from '../types/spaces';
+import {logError} from './errors';
 import {bindClientFunc, forceLogoutIfNecessary} from './helpers';
 import LocalStorageStore from '../stores/local_storage_store';
 import { getCurrentUserId } from '../selectors/entities/users';
@@ -37,4 +38,21 @@ export function getMySpaces(): ActionFunc {
       onSuccess: [SpaceTypes.RECEIVED_SPACES_LIST, SpaceTypes.MY_SPACES_SUCCESS],
       onFailure: SpaceTypes.MY_SPACES_FAILURE,
   });
+}
+
+
+export function createSpace(name: string): ActionFunc {
+  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+      let created;
+
+      try {
+          created = await Client4.createSpace(name);
+      } catch (error) {
+          forceLogoutIfNecessary(error, dispatch, getState);
+          dispatch(logError(error));
+          return {error};
+      }
+
+      return {data: true};
+  };
 }
