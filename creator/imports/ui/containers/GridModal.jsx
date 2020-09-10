@@ -1,8 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { GridModal, Bootstrap, store } from '@steedos/react';
 
 function GridModalContainer(prop){
+	const Provider = ReactRedux.Provider;
 	// console.log('GridModalContainer prop', prop);
 	return (
 		<Provider store={store}>
