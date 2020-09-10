@@ -13,6 +13,7 @@ fields:
     type: text
     required: true
     is_wide: true
+    filterable: true
   description:
     label: 描述
     type: textarea
@@ -38,12 +39,12 @@ fields:
   #   is_wide: true
   #   label: Next Automated Approver Determined By
   #   inlineHelpText: 可选项为对象的所有人员字段
-  #   group: next Automated Approver
+  #   group: next Automated Approver TODO
   # use_approver_field_of_record_owner:
   #   type: boolean
   #   is_wide: true
   #   label: Use Approver Field of Record Owner
-  #   group: next Automated Approver
+  #   group: next Automated Approver TODO
   record_editability:
     type: select
     is_wide: true

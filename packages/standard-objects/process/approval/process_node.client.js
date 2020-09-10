@@ -1,7 +1,7 @@
 Steedos.ProcessNodeManager = {};
 
 Steedos.ProcessNodeManager.changeSchema = function(doc, schema){
-    var objectSchema = Creator.getObjectSchema(Creator.getObject());
+    var objectSchema = Creator.getObjectSchema(Creator.getObject("process_node"));
 
     if(doc.filtrad){
         schema._schema.entry_criteria.autoform.omit = true;

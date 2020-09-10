@@ -155,43 +155,17 @@ fields:
     is_wide: true
   # todo:
 form:
+  beforeEdit: !!js/function |
+    function(){
+      Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
+    }
   afterEdit: !!js/function |
     function(){
-      var operation = this.doc.operation;
-      if(window.__cache_operation != operation){
-        if(operation === 'null'){
-          this.schema._schema.formula.autoform.type = 'hidden';
-          this.schema._schema.literal_value.autoform.type = 'hidden';
-        }
-
-        if(operation === 'formula'){
-          this.schema._schema.formula.autoform.type = 'widearea';
-          this.schema._schema.literal_value.autoform.type = 'hidden';
-        }
-
-        if(operation === 'literal'){
-          this.schema._schema.formula.autoform.type = 'hidden';
-          var doc = this.doc;
-          var mainObjectName = null;
-          if(doc.target_object && doc.target_object != doc.object_name){
-            var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
-          }else{
-            mainObjectName = doc.object_name;
-          }
-          var object = Creator.objectsByName[mainObjectName];
-          if(object && doc.field_name){
-            this.schema._schema.literal_value = Object.assign({},Creator.getObjectSchema(Creator.getObject(mainObjectName))[doc.field_name], {label: this.schema._schema.literal_value.label});
-            this.schema._schema.literal_value.autoform.disabled = false;
-            this.schema._schema.literal_value.autoform.omit = false;
-            this.schema._schema.literal_value.autoform.readonly = false;
-            this.schema._schema.literal_value.autoform.is_wide = true;
-          }else{
-            this.schema._schema.literal_value.autoform.type = 'text';
-          }
-          
-        }
-      }
-      window.__cache_operation = operation;
+      Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
+    }
+  beforeView: !!js/function |
+    function(){
+      Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
     }
 list_views:
   all:
