@@ -63,18 +63,24 @@ processFormulaType = (field, fs)->
 	else
 		fs.type = String
 
-processSummaryType = (field, fs)->
+processSummaryType = (field, fs, obj)->
+	unless field.summary_object
+		throw new Error("You have to set a summary_object property for the field '#{field.name}' of the object '#{obj.name}' when the field type is set to '#{field.type}'.")
+
 	if field.summary_type == "count"
 		summaryFieldType = "number"
 	else
 		# max/min/sum类型等于要聚合的字段的类型
 		summaryObject = Creator.Objects[field.summary_object]
 		unless summaryObject
-			throw new Meteor.Error 500, "The summary_object '#{field.summary_object}' is not found for the field '#{field.name}'"
+			throw new Meteor.Error 500, "The summary_object '#{field.summary_object}' is not found for the field '#{field.name}' of the object '#{obj.name}'"
+
+		unless field.summary_field
+			throw new Error("You have to set a summary_field property for the field '#{field.name}' of the object '#{obj.name}' when the summary_type is not set to 'count'.")
 		
 		summaryField = summaryObject.fields[field.summary_field]
 		unless summaryField
-			throw new Meteor.Error 500, "The summary_field '#{field.summary_field}' is not found for the field '#{field.name}'"
+			throw new Meteor.Error 500, "The summary_field '#{field.summary_field}' is not found for the field '#{field.name}' of the object '#{obj.name}'"
 		
 		summaryFieldType = summaryField.type
 		if summaryFieldType == "formula"
@@ -559,7 +565,7 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == 'formula'
 			processFormulaType(field, fs)
 		else if field.type == 'summary'
-			processSummaryType(field, fs)
+			processSummaryType(field, fs, obj)
 		else
 			fs.type = field.type
 
