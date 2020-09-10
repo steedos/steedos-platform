@@ -381,7 +381,7 @@ const getInstanceHistory = async(instanceHistoryId)=>{
 }
 
 const getPendingInstanceHistoryCount = async (instanceId: string)=>{
-    return await objectql.getObject("process_instance_history").count([['process_instance', '=', instanceId], ['step_status', '=', 'pending']]);
+    return await objectql.getObject("process_instance_history").count({filters: [['process_instance', '=', instanceId], ['step_status', '=', 'pending']]});
 }
 
 const handleProcessInstanceWorkitem = async (currentInstanceNode, processStatus: string, instanceHistoryId: string, userSession: any, comment: string, nextNodeOptions?: string)=>{
@@ -413,7 +413,6 @@ export const processInstanceWorkitemApprove = async (instanceHistoryId: string, 
     let currentProcessNode = await getProcessNode(instanceHistory.step_node);
     const nodes = await getProcessNodes(instance.process_definition, userSession.spaceId);
     const index = _.findIndex(nodes, function(item){return item._id === currentInstanceNode.process_node});
-    
     if(currentProcessNode.when_multiple_approvers === 'first_response' || (await getPendingInstanceHistoryCount(instanceId)) < 2){
         let nextNode = await getNextNode(nodes, index + 1, instance.target_object.o, instance.target_object.ids[0], userSession);
     
@@ -423,7 +422,6 @@ export const processInstanceWorkitemApprove = async (instanceHistoryId: string, 
             nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.node, userSession, chooseApprover);
         }
     }
-
     await handleProcessInstanceWorkitem(currentInstanceNode, 'approved', instanceHistoryId, userSession, comment, nextNodeOptions);
 }
 

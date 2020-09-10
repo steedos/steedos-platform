@@ -119,7 +119,7 @@ Steedos.ProcessManager.submit = function(object_name, record_id, options){
             Modal.hide(t);
             Meteor.setTimeout(function(){
                 Steedos.ProcessManager.submit(object_name, record_id, {showApprover: true, value: {comment: formValues.insertDoc.comment}});
-            }, 300)
+            }, 800)
         }else{
             Modal.hide(t);
             FlowRouter.reload();
@@ -161,7 +161,7 @@ Steedos.ProcessManager.approve = function(object_name, record_id, options){
             Modal.hide(t);
             Meteor.setTimeout(function(){
                 Steedos.ProcessManager.approve(object_name, record_id, {showApprover: true, value: {comment: formValues.insertDoc.comment}});
-            }, 300)
+            }, 800)
         }else{
             Modal.hide(t);
             FlowRouter.reload();
