@@ -194,6 +194,7 @@ const typography = theme => ({
 
 module.exports = {
   // purge: ["./src/**/*.html", "./src/**/*.vue"],
+  important: true,
   purge: false,
   corePlugins: {
     preflight: false,

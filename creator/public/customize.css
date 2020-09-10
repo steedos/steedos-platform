@@ -9,7 +9,6 @@ body {
 
 .slds-page-header {
   background: rgba(var(--color-cool-gray-50));
-  border: none;
 }
 
 .slds-button__icon {
@@ -22,5 +21,5 @@ body {
 
 .slds-tabs_card, .slds-tabs_card.slds-tabs_card {
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-  border: none;
+  border-width: 0;
 }
