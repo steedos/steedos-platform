@@ -141,8 +141,10 @@ Template.instance_suggestion.helpers
 
 		currentApprove = Tracker.nonreactive(InstanceManager.getCurrentApprove);
 		currentStep = InstanceManager.getCurrentStep();
-		# if (currentStep?.step_type == 'start' || !currentApprove?.next_steps) && nextStep?.step_type == 'counterSign' && !_.isEmpty(getStepApproves(nextStep._id))
-		# 	selectedUser = users
+		if Meteor.settings.public?.workflow?.autoPickNextStepUsersAtCounterSignStep != false
+			# 会签步骤中默认选中下一步骤处理人，除非开关量设置为false
+			if (currentStep?.step_type == 'start' || !currentApprove?.next_steps) && nextStep?.step_type == 'counterSign' && !_.isEmpty(getStepApproves(nextStep._id))
+				selectedUser = users
 
 		if next_user && next_user.length > 0
 
