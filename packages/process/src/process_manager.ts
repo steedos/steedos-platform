@@ -420,7 +420,7 @@ export const processInstanceWorkitemApprove = async (instanceHistoryId: string, 
         if(nextNode){
             nextNodeOptions = {}
             nextNodeOptions.node = nextNode;
-            nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.nextNode, userSession, chooseApprover);
+            nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.node, userSession, chooseApprover);
         }
     }
 

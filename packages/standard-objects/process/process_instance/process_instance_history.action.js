@@ -3,15 +3,13 @@ module.exports = {
       return Steedos.ProcessManager.allowApprover(object_name, record_id)
     },
     approve: function(object_name, record_id, fields){
-      Steedos.authRequest(`/api/v4/process/approve/${object_name}/${record_id}`, {type: 'post', data: JSON.stringify({comments: `同意 -- ${new Date().getTime()}`})});
-      FlowRouter.reload();
+      Steedos.ProcessManager.approve(object_name, record_id);
     },
     rejectVisible: function(object_name, record_id, record_permissions){
       return Steedos.ProcessManager.allowApprover(object_name, record_id)
     },
     reject: function(object_name, record_id, fields){
-      Steedos.authRequest(`/api/v4/process/reject/${object_name}/${record_id}`, {type: 'post', data: JSON.stringify({comments: `同意 -- ${new Date().getTime()}`})});
-      FlowRouter.reload();
+      Steedos.ProcessManager.reject(object_name, record_id);
     },
     reassignVisible: function(object_name, record_id, record_permissions){
       return Steedos.ProcessManager.allowApprover(object_name, record_id)
@@ -23,6 +21,6 @@ module.exports = {
       return Steedos.ProcessManager.allowRecall(Session.get("object_name"), Session.get("record_id"))
     },
     recall: function(object_name, record_id, fields){
-      Steedos.ProcessManager.Recall(object_name, record_id);
+      Steedos.ProcessManager.recall(object_name, record_id);
     }
   }
