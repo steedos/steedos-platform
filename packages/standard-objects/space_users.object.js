@@ -374,6 +374,11 @@ Meteor.startup(function () {
                     throw new Meteor.Error(400, "can not change profile");
                 }
 
+                // 管理员不允许把自己的简档设置为非管理员 #804
+                if (doc.user === userId && modifier.$set.profile != 'admin') {
+                    throw new Meteor.Error(400, 'spaces_error_space_admins_required');
+                }
+
                 if(doc.profile === 'admin'){
                     removeSpaceAdmin(doc.space, doc.user);
                 }
