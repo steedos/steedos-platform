@@ -36,15 +36,19 @@ class Home extends React.PureComponent {
       if (!this.props.currrentSpace)
         hashHistory.push('/select-space');
     }
+
+    if (process.env.NODE_ENV == 'production')
+      this.goHome();
   }
 
-  onHome = async () => {
-    // window.location.href = this.props.settings.root_url ? this.props.settings.root_url : "/";
+  goHome = async () => {
     this.props.actions.goSpaceHome();
   };
 
   render() {
 
+    if (process.env.NODE_ENV == 'production')
+      return null;
 
     const {currentUser, currentSpace} = this.props;
 
@@ -68,7 +72,7 @@ class Home extends React.PureComponent {
     </span> */}
     <span class="shadow-sm rounded-md">
       <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out"
-        onClick={this.onHome}>
+        onClick={this.goHome}>
           进入首页
       </button>
     </span>
