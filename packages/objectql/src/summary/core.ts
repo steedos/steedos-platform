@@ -184,5 +184,8 @@ export const runCurrentObjectFieldSummaries = async function (objectName: string
             setDoc[config.field_name] = defaultValue;
         }
     }
+    if(_.isEmpty(setDoc)){
+        return;
+    }
     await getSteedosSchema().getObject(objectName).directUpdate(recordId, setDoc);
 }
