@@ -22,13 +22,19 @@ class Home extends React.PureComponent {
   componentDidMount() {
     if (this.props.match && this.props.match.params) {
       const spaceId = this.props.match.params.spaceId;
-      if (spaceId != this.props.currentSpaceId) {
+      if (spaceId && spaceId != this.props.currentSpaceId) {
         this.props.actions.selectSpace(spaceId).then(async (result) => {
           if (result && result.data == false) {
             hashHistory.push('/select-space');
           }
         });
+      } else {
+        if (!this.props.currrentSpace)
+          hashHistory.push('/select-space');
       }
+    } else {
+      if (!this.props.currrentSpace)
+        hashHistory.push('/select-space');
     }
   }
 

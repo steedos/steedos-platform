@@ -62,6 +62,6 @@ export async function redirectUserToDefaultSpace() {
 
     const spaceId = await selectDefaultSpace();
     
-    hashHistory.push(`/space/${spaceId}`);
+    hashHistory.push(`/home/${spaceId}`);
 }
 

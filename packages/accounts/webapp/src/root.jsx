@@ -75,7 +75,9 @@ class Root extends React.PureComponent {
             {/* <GlobalMessage></GlobalMessage> */}
                   {/* <Route path="/" component={GoBack}/> */}
                   {/* <Route path="/" component={Title}/> */}
-                <Switch>
+                <Switch>                  
+                  <LoggedInRoute exact path="/" component={Home}/>
+
                   <Route path="/signup" component={Signup} />
 
                   <Route path="/login" component={Login} />
@@ -87,8 +89,8 @@ class Root extends React.PureComponent {
                   {/* <Route path="/login-code" component={LoginCode} /> */}
                   <LoggedInRoute path="/preference" component={Preference} />
                   {/* <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} /> */}
-                  <LoggedInRoute path="/space/:spaceId" component={Home}/>
-                  {/* <LoggedInRoute path="/space/:spaceId" component={GoRootUrl}/> */}
+                  <LoggedInRoute path="/home/:spaceId" component={Home}/>
+                  {/* <LoggedInRoute path="/home/:spaceId" component={GoRootUrl}/> */}
                   <Redirect
                       to={{
                           ...this.props.location,

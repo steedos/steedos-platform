@@ -35,29 +35,30 @@ class CreateTenant extends React.PureComponent {
   onSubmit = async (e) => {
     this.setState({serverError: null, loading: true});
     e.preventDefault();
-    const spaceId = this.props.actions.createSpace(this.state.name).then(async ({error}) => {
-      if (error) {
-        this.setState({
-            serverError: (
-                <FormattedMessage
-                    id={error.message}
-                />
-            ),
-        });
-        return;
-      }
+    this.props.actions.createSpace(this.state.name).then(async ({data}) => {
+      console.log(data)
+      // if (error) {
+      //   this.setState({
+      //       serverError: (
+      //           <FormattedMessage
+      //               id={error.message}
+      //           />
+      //       ),
+      //   });
+      //   return;
+      // }
       
+      if (data)
+        this.selectSpace(data)
     });
 
-    if (spaceId)
-      this.selectSpace(spaceId)
 
   };
 
   selectSpace = (space) => {
-    if(space) {
+    if(space && space._id) {
       this.props.actions.selectSpace(space._id);
-      hashHistory.push(`/space/${space._id}`)
+      hashHistory.push(`/home/${space._id}`)
     }
   }
 

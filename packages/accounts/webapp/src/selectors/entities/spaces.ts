@@ -12,10 +12,6 @@ export function getMySpacesCount(state: GlobalState) {
   return Object.keys(state.entities.spaces.spaces).length;
 }
 
-export function getMySpace(state: GlobalState, spaceId: string) {
-  return state.entities.spaces.spaces[spaceId];
-}
-
 export function getCurrentSpace(state: GlobalState) {
   return state.entities.spaces.spaces[getCurrentSpaceId(state)];
 }

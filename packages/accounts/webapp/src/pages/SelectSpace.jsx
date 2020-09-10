@@ -39,7 +39,7 @@ class SelectSpace extends React.PureComponent {
   handleSpaceClick = (space) => {
     if(space) {
       this.props.actions.selectSpace(space._id);
-      hashHistory.push(`/space/${space._id}`)
+      hashHistory.push(`/home/${space._id}`)
     }
   }
 

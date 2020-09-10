@@ -543,10 +543,9 @@ Creator.Objects['spaces'].methods = {
                     if(!tenant.saas){
                         initSpaceData(spaceId, userId);
                     }
-                    let newSpace = db.spaces.insert(spaceDoc);
-                    return res.send({
-                        value: newSpace
-                    });
+                    let newSpaceId = db.spaces.insert(spaceDoc);
+                    let newSpace = db.spaces.findOne(newSpaceId);
+                    return res.send(newSpace);
                 }else{
                     if(!userSession){
                         return res.status(401).send({

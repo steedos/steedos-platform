@@ -6,7 +6,7 @@ import {logError} from './errors';
 import {bindClientFunc, forceLogoutIfNecessary} from './helpers';
 import LocalStorageStore from '../stores/local_storage_store';
 import { getCurrentUserId } from '../selectors/entities/users';
-import { getMySpace } from '../selectors/entities/spaces';
+import { getSpace } from '../selectors/entities/spaces';
 
 export function selectSpace(spaceId?: string | null): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -17,7 +17,7 @@ export function selectSpace(spaceId?: string | null): ActionFunc {
     
     if (!selectedSpaceId)
       selectedSpaceId = LocalStorageStore.getPreviousSpaceId(userId);
-    const space = getMySpace(getState(), selectedSpaceId);
+    const space = getSpace(getState(), selectedSpaceId);
     if (!space)
       return {data: false};
 
@@ -43,16 +43,30 @@ export function getMySpaces(): ActionFunc {
 
 export function createSpace(name: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-      let created;
+      let space = null;
 
       try {
-          created = await Client4.createSpace(name);
+        space = await Client4.createSpace(name);
       } catch (error) {
           forceLogoutIfNecessary(error, dispatch, getState);
           dispatch(logError(error));
           return {error};
       }
 
-      return {data: true};
+      if (space && space._id) {
+        const promises = [
+          dispatch(getMySpaces()),
+          dispatch(selectSpace(space._id)),
+        //   dispatch(getClientConfig()),
+        ];
+  
+        try {
+            await Promise.all(promises);
+        } catch (error) {
+            return {error};
+        }
+      }
+
+      return {data: space};
   };
 }
