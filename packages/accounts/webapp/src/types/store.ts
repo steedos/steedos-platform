@@ -8,5 +8,6 @@ export type GlobalState = {
     general: GeneralState
     users: UsersState
     spaces: SpacesState
-  }
+  },
+  settings: any
 }

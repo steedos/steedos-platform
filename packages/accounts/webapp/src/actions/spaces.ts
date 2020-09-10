@@ -7,6 +7,10 @@ import {bindClientFunc, forceLogoutIfNecessary} from './helpers';
 import LocalStorageStore from '../stores/local_storage_store';
 import { getCurrentUserId } from '../selectors/entities/users';
 import { getSpace } from '../selectors/entities/spaces';
+import { getRootUrl } from '../selectors/settings';
+import store from '../stores/redux_store';
+
+import { hashHistory } from "../utils/hash_history";
 
 export function selectSpace(spaceId?: string | null): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -69,4 +73,23 @@ export function createSpace(name: string): ActionFunc {
 
       return {data: space};
   };
+}
+
+
+export function goSpaceHome(spaceId: string): ActionFunc {
+  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+    const userId = LocalStorageStore.getItem('userId');
+    const authToken =  LocalStorageStore.getItem('token');
+    const spaceId =  LocalStorageStore.getItem('spaceId');
+    const rootUrl = getRootUrl(store.getState());
+    
+    const url =  new URL(rootUrl);
+    url.searchParams.append('X-User-Id',userId);
+    url.searchParams.append('X-Auth-Token',authToken);
+    url.searchParams.append('X-Space-Id',spaceId);
+
+    document.location.href = url.toString();
+
+    return null;
+  }
 }

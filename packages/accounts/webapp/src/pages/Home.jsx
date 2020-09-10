@@ -9,7 +9,7 @@ import { getTenant, getSettings } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
 import { getCurrentSpace, currentSpaceId } from "../selectors/entities/spaces";
 import Navbar from '../components/Navbar';
-import { selectSpace } from '../actions/spaces';
+import { selectSpace, goSpaceHome } from '../actions/spaces';
 import { hashHistory } from "../utils/hash_history";
 
 class Home extends React.PureComponent {
@@ -39,7 +39,8 @@ class Home extends React.PureComponent {
   }
 
   onHome = async () => {
-    window.location.href = this.props.settings.root_url ? this.props.settings.root_url : "/";
+    // window.location.href = this.props.settings.root_url ? this.props.settings.root_url : "/";
+    this.props.actions.goSpaceHome();
   };
 
   render() {
@@ -143,6 +144,7 @@ function mapDispatchToProps(dispatch) {
   return {
       actions: bindActionCreators({
           selectSpace,
+          goSpaceHome,
       }, dispatch),
   };
 }
