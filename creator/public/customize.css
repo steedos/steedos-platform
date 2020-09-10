@@ -7,6 +7,10 @@ body {
   background: rgba(225,239,254);
 }
 
+.slds-button__icon {
+  display: inline;
+}
+
 .slds-global-header_container{
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }
