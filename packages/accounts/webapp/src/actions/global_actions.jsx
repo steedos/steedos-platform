@@ -18,7 +18,7 @@ export function emitUserLoggedOutEvent(redirectTo, shouldSignalLogout = true, us
     }
 
     if (!redirectTo)
-        redirectTo = '/accounts/a/#login'
+        redirectTo = '/login'
 
     dispatch(logout()).then(() => {
         LocalStorageStore.setUserId(null);
@@ -33,9 +33,9 @@ export function emitUserLoggedOutEvent(redirectTo, shouldSignalLogout = true, us
 
         // clearUserCookie();
 
-        document.location.hash = redirectTo;
+        this.redirectTo(redirectTo);
     }).catch(() => {
-        document.location.hash = redirectTo;
+        this.redirectTo(redirectTo);
     });
 }
 

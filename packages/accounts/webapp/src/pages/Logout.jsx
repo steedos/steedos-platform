@@ -20,12 +20,11 @@ class Logout extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.actions.logout().then(async () => {
-      let redirect_uri = new URLSearchParams(this.props.location.search).get('redirect_uri')
-      if (!redirect_uri)
-        redirect_uri = '/login'
-      GlobalAction.redirectTo(redirect_uri);
-    });
+
+    let redirect_uri = new URLSearchParams(this.props.location.search).get('redirect_uri')
+    if (!redirect_uri)
+      redirect_uri = '/login'
+    GlobalAction.emitUserLoggedOutEvent(redirect_uri);
   }
 
   render() {
