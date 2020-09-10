@@ -8,11 +8,11 @@ import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
 import { getCurrentSpace, currentSpaceId } from "../selectors/entities/spaces";
-import Navbar from '../components/Navbar';
-import { selectSpace } from '../actions/spaces';
+import { logout } from '../actions/users';
 import { hashHistory } from "../utils/hash_history";
+import * as GlobalAction from '../actions/global_actions';
 
-class GoRootUrl extends React.PureComponent {
+class Logout extends React.PureComponent {
 
 
   constructor(props, context) {
@@ -20,20 +20,13 @@ class GoRootUrl extends React.PureComponent {
   }
 
   componentDidMount() {
-
-    const {currentUser, currentSpace} = this.props;
-
-    if (!currentUser || !currentSpace) {
-      return null;
-    }
-
-    this.goRootUrl();
-    
+    this.props.actions.logout().then(async () => {
+      let redirect_uri = new URLSearchParams(this.props.location.search).get('redirect_uri')
+      if (!redirect_uri)
+        redirect_uri = '/login'
+      GlobalAction.redirectTo(redirect_uri);
+    });
   }
-
-  goRootUrl = async () => {
-    window.location.href = this.props.settings.root_url ? this.props.settings.root_url : "/";
-  };
 
   render() {
     return null
@@ -43,9 +36,6 @@ class GoRootUrl extends React.PureComponent {
 function mapStateToProps(state) {
   return {
     currentUser: getCurrentUser(state),
-    currentSpace: getCurrentSpace(state),
-    currentSpaceId: getCurrentSpace(state),
-    tenant: getTenant(state),
     settings: getSettings(state),
   };
 }
@@ -53,8 +43,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
       actions: bindActionCreators({
-          selectSpace,
+        logout,
       }, dispatch),
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(GoRootUrl);
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);

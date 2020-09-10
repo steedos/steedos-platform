@@ -10,8 +10,8 @@ import {loadMeAndConfig} from './actions/root';
 import LoggedIn from './components/LoggedIn';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import Logout from './pages/Logout';
 import Home from './pages/Home';
-import GoRootUrl from './pages/GoRootUrl';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './pages/CreateTenant';
 import SelectSpace from './pages/SelectSpace';
@@ -81,6 +81,7 @@ class Root extends React.PureComponent {
                   <Route path="/signup" component={Signup} />
 
                   <Route path="/login" component={Login} />
+                  <Route path="/logout" component={Logout} />
                   
                   <LoggedInRoute path="/create-space" component={CreateTenant} />
                   <LoggedInRoute path="/select-space" component={SelectSpace} />
@@ -90,7 +91,6 @@ class Root extends React.PureComponent {
                   <LoggedInRoute path="/preference" component={Preference} />
                   {/* <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} /> */}
                   <LoggedInRoute path="/home/:spaceId" component={Home}/>
-                  {/* <LoggedInRoute path="/home/:spaceId" component={GoRootUrl}/> */}
                   <Redirect
                       to={{
                           ...this.props.location,

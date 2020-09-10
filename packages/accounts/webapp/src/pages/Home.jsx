@@ -7,10 +7,11 @@ import {FormattedMessage} from 'react-intl';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
-import { getCurrentSpace, currentSpaceId } from "../selectors/entities/spaces";
+import { getCurrentSpace, getCurrentSpaceId } from "../selectors/entities/spaces";
 import Navbar from '../components/Navbar';
 import { selectSpace, goSpaceHome } from '../actions/spaces';
 import { hashHistory } from "../utils/hash_history";
+import LocalStorageStore from '../stores/local_storage_store';
 
 class Home extends React.PureComponent {
 
@@ -20,25 +21,26 @@ class Home extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.match && this.props.match.params) {
-      const spaceId = this.props.match.params.spaceId;
-      if (spaceId && spaceId != this.props.currentSpaceId) {
-        this.props.actions.selectSpace(spaceId).then(async (result) => {
-          if (result && result.data == false) {
-            hashHistory.push('/select-space');
-          }
-        });
-      } else {
-        if (!this.props.currrentSpace)
+    const previousSpaceId = LocalStorageStore.getPreviousSpaceId();
+    const paramSpaceId = (this.props.match && this.props.match.params)?this.props.match.params.spaceId:null;
+    const {currentSpaceId} = this.props;
+
+    const spaceId = paramSpaceId?paramSpaceId:currentSpaceId?currentSpaceId:previousSpaceId
+
+    if (spaceId) {
+      this.props.actions.selectSpace(spaceId).then(async (result) => {
+        if (result && result.data == false) {
           hashHistory.push('/select-space');
-      }
+          return
+        }
+      });
     } else {
-      if (!this.props.currrentSpace)
-        hashHistory.push('/select-space');
+      hashHistory.push('/select-space');
     }
 
     if (process.env.NODE_ENV == 'production')
-      this.goHome();
+      if (this.props.currentUser && this.props.currentSpace) 
+        this.goHome();
   }
 
   goHome = async () => {
@@ -55,6 +57,7 @@ class Home extends React.PureComponent {
     if (!currentUser || !currentSpace) {
       return null;
     }
+
     return (
       <div>
         <Navbar user={currentUser}/>
@@ -138,7 +141,7 @@ function mapStateToProps(state) {
   return {
     currentUser: getCurrentUser(state),
     currentSpace: getCurrentSpace(state),
-    currentSpaceId: getCurrentSpace(state),
+    currentSpaceId: getCurrentSpaceId(state),
     tenant: getTenant(state),
     settings: getSettings(state),
   };
