@@ -157,7 +157,6 @@ fields:
 form:
   afterEdit: !!js/function |
     function(){
-      console.log('afterEdit', this.doc);
       var operation = this.doc.operation;
       if(window.__cache_operation != operation){
         if(operation === 'null'){

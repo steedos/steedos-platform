@@ -10,7 +10,7 @@ process_definition_field_record_editability_inlineHelpText: 定义批准步骤�
 process_definition_field_record_editability_options_admin_only: 仅管理员可在批准过程中编辑记录。
 process_definition_field_record_editability_options_admin_or_current_approver: 管理员或当前分配的批准人可在批准过程中编辑记录。
 process_definition_field_user_hierarchy_field: 下一个批准人的自动确定方式
-process_definition_group_next_automated_approver: 选择用于自动传送批准的字段
+process_definition_group_next_automated_approver: 选择用于自动传送批准的字段 TODO
 process_definition_field_user_hierarchy_field_inlineHelpText: 可选项为审批岗位？
 process_definition_field_use_approver_field_of_record_owner: 使用记录所有人的批准人字段
 process_definition_field_name: API 名称

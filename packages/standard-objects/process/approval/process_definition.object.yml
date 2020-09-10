@@ -33,17 +33,17 @@ fields:
     required: true
     group: 指定条目条件
     inlineHelpText: If only certain types of records should enter this approval process, enter that criteria below. For example, only expense reports from employees at headquarters should use this approval process.
-  user_hierarchy_field:
-    type: text
-    is_wide: true
-    label: Next Automated Approver Determined By
-    inlineHelpText: 可选项为对象的所有人员字段
-    group: next Automated Approver
-  use_approver_field_of_record_owner:
-    type: boolean
-    is_wide: true
-    label: Use Approver Field of Record Owner
-    group: next Automated Approver
+  # user_hierarchy_field:
+  #   type: text
+  #   is_wide: true
+  #   label: Next Automated Approver Determined By
+  #   inlineHelpText: 可选项为对象的所有人员字段
+  #   group: next Automated Approver
+  # use_approver_field_of_record_owner:
+  #   type: boolean
+  #   is_wide: true
+  #   label: Use Approver Field of Record Owner
+  #   group: next Automated Approver
   record_editability:
     type: select
     is_wide: true
@@ -54,25 +54,25 @@ fields:
         value: admin_only
       - label: Administrators OR the currently assigned approver can edit records during the approval process.
         value: admin_or_current_approver
-  approval_page_fields:
-    type: text
-    is_wide: true
-    group: 选择要在批准页面布局上显示的字段 TODO
-    # type: lookup
-    # reference_to: object_layout
-    label: Select Fields to Display on Approval Page Layout
-    inlineHelpText: The approval page is where an approver will actually approve or reject a request. Using the options below, choose the fields to display on this page.
-  show_approval_history:
-    type: boolean
-    is_wide: true
-    label: Display approval history information in addition to the fields selected above.
-    group: 选择要在批准页面布局上显示的字段 TODO
-  allowed_submitters:
-    type: text
-    multiple: true
-    is_wide: true
-    group: 指定初始提交人 TODO
-    inlineHelpText: 指定谁可以提交记录到批准过程。 如果该列表中不包括提交记录以待批准的用户，记录不会进入该批准过程，即使记录满足进入条件。
+  # approval_page_fields:
+  #   type: text
+  #   is_wide: true
+  #   group: 选择要在批准页面布局上显示的字段 TODO
+  #   # type: lookup
+  #   # reference_to: object_layout
+  #   label: Select Fields to Display on Approval Page Layout
+  #   inlineHelpText: The approval page is where an approver will actually approve or reject a request. Using the options below, choose the fields to display on this page.
+  # show_approval_history:
+  #   type: boolean
+  #   is_wide: true
+  #   label: Display approval history information in addition to the fields selected above.
+  #   group: 选择要在批准页面布局上显示的字段 TODO
+  # allowed_submitters:
+  #   type: text
+  #   multiple: true
+  #   is_wide: true
+  #   group: 指定初始提交人 TODO
+  #   inlineHelpText: 指定谁可以提交记录到批准过程。 如果该列表中不包括提交记录以待批准的用户，记录不会进入该批准过程，即使记录满足进入条件。
   allow_recall:
     type: boolean
     is_wide: true
