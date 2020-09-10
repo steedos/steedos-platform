@@ -1,5 +1,3 @@
+# 1.0.5 / 2019-09-02
 
-1.0.5 / 2019-09-02
-===================
-
-  * 对象扩展action.on值，增加选项list_item、record_only
+- 对象扩展 action.on 值，增加选项 list_item、record_only
