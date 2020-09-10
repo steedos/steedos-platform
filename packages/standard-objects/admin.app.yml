@@ -24,13 +24,13 @@ admin_menus:
     object_name: users
     mobile: false
     sort: 10
-  - _id: account_background
-    name: Background
-    permission_sets:
-      - user
-    template_name: account_background
-    parent: account
-    sort: 20
+  # - _id: account_background
+  #   name: Background
+  #   permission_sets:
+  #     - user
+  #   template_name: account_background
+  #   parent: account
+  #   sort: 20
   - _id: menu_users
     name: My Company
     permission_sets:

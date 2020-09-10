@@ -58,10 +58,9 @@ JsonRoutes.add 'post', '/api/workflow/view/:instanceId', (req, res, next) ->
 			collection = Creator.getCollection(object_name, space_id)
 			if collection
 				collection.update(record_id, {
-					$pull: {
-						"instances": {
-							"_id": insId
-						}
+					$unset: {
+						"instances": 1,
+						"instance_state": 1
 					}
 				})
 

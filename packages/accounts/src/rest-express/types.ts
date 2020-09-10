@@ -15,3 +15,14 @@ export interface AccountsExpressOptions {
   onOAuthError?: OAuthErrorCallback;
   transformOAuthResponse?: TransformOAuthResponse;
 }
+
+export interface JwtData {
+  token: string;
+  isImpersonated: boolean;
+  userId: string;
+}
+
+export interface JwtPayload {
+  data: JwtData;
+  [key: string]: any;
+}

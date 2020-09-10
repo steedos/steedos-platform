@@ -5,11 +5,12 @@ import {
   DatabaseInterface,
   Session,
   User,
-} from '@accounts/types';
-import { get, merge, trim } from 'lodash';
+} from '../types';
+import { get, merge, trim, map } from 'lodash';
 import { Collection, Db, ObjectID } from 'mongodb';
 
 import { AccountsMongoOptions, MongoUser } from './types';
+import { getSessionByUserId, hashStampedToken } from '@steedos/auth';
 
 const toMongoID = (objectId: string | ObjectID) => {
   if (typeof objectId === 'string') {
@@ -21,6 +22,7 @@ const toMongoID = (objectId: string | ObjectID) => {
 const defaultOptions = {
   collectionName: 'users',
   sessionCollectionName: 'sessions',
+  codeCollectionName: 'users_verify_code',
   timestamps: {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -40,6 +42,8 @@ export class Mongo implements DatabaseInterface {
   private collection: Collection;
   // Session collection
   private sessionCollection: Collection;
+  // Code collection
+  private codeCollection: Collection;
 
   constructor(db: any, options?: AccountsMongoOptions) {
     this.options = merge({ ...defaultOptions }, options);
@@ -49,6 +53,7 @@ export class Mongo implements DatabaseInterface {
     this.db = db;
     this.collection = this.db.collection(this.options.collectionName);
     this.sessionCollection = this.db.collection(this.options.sessionCollectionName);
+    this.codeCollection = this.db.collection(this.options.codeCollectionName);
   }
 
   public async setupIndexes(): Promise<void> {
@@ -70,7 +75,9 @@ export class Mongo implements DatabaseInterface {
     password,
     username,
     email,
+    email_verified,
     mobile,
+    mobile_verified,
     ...cleanUser
   }: CreateUser): Promise<string> {
     const user: MongoUser = {
@@ -84,17 +91,16 @@ export class Mongo implements DatabaseInterface {
     }
     if (username) {
       user.username = username;
-      user.name = username;
     }
     if (email) {
       user.email = email.toLowerCase();
-      user.email_verified = false;
-      user.emails = [{ address: email.toLowerCase(), verified: false }];
+      user.email_verified = email_verified;
+      user.emails = [{ address: email.toLowerCase(), verified: email_verified }];
     }
 
     if(mobile){
       user.mobile = mobile;
-      user.mobile_verified = false;
+      user.mobile_verified = mobile_verified;
     }
 
     if (this.options.idProvider) {
@@ -102,7 +108,6 @@ export class Mongo implements DatabaseInterface {
     }
 
     user.steedos_id = user._id;
-
     const ret = await this.collection.insertOne(user);
     return ret.ops[0]._id.toString();
   }
@@ -242,14 +247,30 @@ export class Mongo implements DatabaseInterface {
   public async verifyEmail(userId: string, email: string): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
     const ret = await this.collection.updateOne(
-      { _id: id, 'emails.address': email },
+      { _id: id, 'email': email },
       {
         $set: {
-          'emails.$.verified': true,
-          'email': email,
+          'email_verified': true,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
         $pull: { 'services.email.verificationTokens': { address: email } },
+      }
+    );
+    if (ret.result.nModified === 0) {
+      throw new Error('User not found');
+    }
+  }
+
+  public async verifyMobile(userId: string, mobile: string): Promise<void> {
+    const id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
+    const ret = await this.collection.updateOne(
+      { _id: id, 'mobile': mobile },
+      {
+        $set: {
+          'mobile_verified': true,
+          [this.options.timestamps.updatedAt]: this.options.dateProvider(),
+        },
+        $pull: { 'services.mobile.verificationTokens': { mobile: mobile } },
       }
     );
     if (ret.result.nModified === 0) {
@@ -374,6 +395,7 @@ export class Mongo implements DatabaseInterface {
     }
 
     const ret = await this.sessionCollection.insertOne(session);
+    this.updateMeteorSession(userId, token)
     return ret.ops[0]._id.toString();
   }
 
@@ -442,7 +464,7 @@ export class Mongo implements DatabaseInterface {
   public async addEmailVerificationToken(
     userId: string,
     email: string,
-    token: string
+    token: string,
   ): Promise<void> {
     const _id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
     await this.collection.updateOne(
@@ -458,6 +480,7 @@ export class Mongo implements DatabaseInterface {
       }
     );
   }
+  
 
   public async addResetPasswordToken(
     userId: string,
@@ -483,5 +506,105 @@ export class Mongo implements DatabaseInterface {
 
   public async setResetPassword(userId: string, email: string, newPassword: string): Promise<void> {
     await this.setPassword(userId, newPassword);
+  }
+
+  public async addVerificationCode(user: any, code: string): Promise<void> {
+
+    let foundedUser = null
+    if (user.email)
+      foundedUser = await this.findUserByEmail(user.email)
+    else if (user.mobile)
+      foundedUser = await this.findUserByMobile(user.mobile)
+
+    const owner = foundedUser? foundedUser.id: null;
+    const verification_code = {
+      name: user.email?user.email:user.mobile,
+      code: code,
+      owner,
+      [this.options.timestamps.createdAt]: this.options.dateProvider(),
+    }
+    const ret = await this.codeCollection.insertOne(verification_code);
+    return owner;
+  }
+
+  public async checkVerificationCode(user: any, code: string): Promise<boolean> {
+    
+    let name = null
+    if (user.email)
+      name = user.email
+    else if (user.mobile)
+      name = user.mobile
+
+    if (!name) 
+      return false;
+
+    const record = await this.codeCollection.findOne({
+      name,
+      code
+    });
+    if (!record) 
+      return false;
+    
+    return true;
+  }
+
+  public async findUserByVerificationCode(user: any, code: string): Promise<User | null> {
+    
+    let foundedUser = null
+    if (user.email)
+      foundedUser = await this.findUserByEmail(user.email)
+    else if (user.mobile)
+      foundedUser = await this.findUserByMobile(user.mobile)
+
+    if (!foundedUser) 
+      return null;
+
+    const owner = foundedUser.id;
+    const record = await this.codeCollection.findOne({
+      owner,
+      code
+    });
+    if (!record) 
+      return null;
+    
+    if (user.email && (foundedUser.email_verified == false))
+      await this.verifyEmail(owner, user.email)
+    else if (user.mobile && foundedUser.mobile_verified == false)
+      await this.verifyMobile(owner, user.mobile)
+    
+    return foundedUser;
+  }
+
+  public async getMySpaces(userId:string): Promise<any | null> {
+    const userSpaces:any = await this.db.collection('space_users').find({ user: userId }).project({space:1}).toArray();
+    const spaceIds = map(userSpaces, 'space')
+    const spaces = await this.db.collection('spaces').find({ _id: { $in: spaceIds } }).project({name:1}).toArray();
+
+    return spaces;
+  }
+
+  public async updateMeteorSession(userId:string, token:string): Promise<boolean | null> {
+
+    //创建Meteor token
+    let stampedAuthToken = {
+      token: token,
+      when: new Date
+    };
+    let hashedToken = hashStampedToken(stampedAuthToken);
+    let _user = await this.collection.findOne({_id: userId})
+    if(!_user['services']){
+      _user['services'] = {}
+    }
+    if (!_user['services']['resume']) {
+      _user['services']['resume'] = {loginTokens: []}
+    }
+    if (!_user['services']['resume']['loginTokens']) {
+      _user['services']['resume']['loginTokens'] = [];
+    }
+    _user['services']['resume']['loginTokens'].push(hashedToken)
+    let data = { services: _user['services'] }
+    await this.collection.updateOne({_id: userId}, {$set: data});
+
+    return true
   }
 }

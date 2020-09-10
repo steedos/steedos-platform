@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     }
 });
 const GlobalMessage = ({ settings, tenant, location }: any) => {
-    const classes = useStyles();
+    const classes = useStyles({});
     const showEmailHelp = ()=>{
       if(settings.already_mail_service){
         return false

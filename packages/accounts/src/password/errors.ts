@@ -9,6 +9,8 @@ export const errors: ErrorMessages = {
   matchFailed: 'accounts.matchFailed',
   invalidUsername: 'accounts.invalidUsername',
   invalidEmail: 'accounts.invalidEmail',
+  invalidMobile: 'accounts.invalidMobile',
+  invalidEmailOrMobile: 'accounts.invalidEmailOrMobile',
   invalidPassword: 'accounts.invalidPassword',
   invalidNewPassword: 'accounts.invalidNewPassword',
   invalidToken: 'accounts.invalidToken',
@@ -20,6 +22,8 @@ export const errors: ErrorMessages = {
   usernameAlreadyExists: 'accounts.usernameAlreadyExists',
   emailAlreadyExists: 'accounts.emailAlreadyExists',
   usernameOrEmailRequired: 'accounts.usernameOrEmailRequired',
+  mobileAlreadyExists: 'accounts.mobileAlreadyExists',
   emailOrMobileRequired: 'accounts.emailOrMobileRequired',
-  emailRequired: 'accounts.emailOrMobileRequired'
+  emailRequired: 'accounts.emailOrMobileRequired',
+  invalidVerifyCode: 'accounts.invalidVerifyCode',
 };

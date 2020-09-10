@@ -1,7 +1,7 @@
 import { store, Bootstrap, Dashboard } from '@steedos/react';
-import { Provider } from 'react-redux';
 
 function DashboardContainer(prop){
+	const Provider = ReactRedux.Provider;
 	return (
 		<Provider store={store}>
 			<Bootstrap>

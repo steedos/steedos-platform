@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../../../server';
 import { sendError } from '../../utils/send-error';
 
 export const verifyEmail = (accountsServer: AccountsServer) => async (
@@ -29,3 +29,18 @@ export const sendVerificationEmail = (accountsServer: AccountsServer) => async (
     sendError(res, err);
   }
 };
+
+export const sendVerificationCode = (accountsServer: AccountsServer) => async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { user } = req.body;
+    const password: any = accountsServer.getServices().password;
+    const userId = await password.sendVerificationCode(user);
+    res.json(userId);
+  } catch (err) {
+    sendError(res, err);
+  }
+};
+

@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as requestIp from 'request-ip';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../../server';
 import { getUserAgent } from '../utils/get-user-agent';
 import { sendError } from '../utils/send-error';
 

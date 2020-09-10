@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
 import * as mongodb from 'mongodb';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from './server';
 import { AccountsPassword } from './password';
 import { errors } from './password/errors';
 import accountsExpress from './rest-express';
@@ -10,13 +10,12 @@ import MongoDBInterface from './database-mongo';
 import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
-import { sendMail } from './mail';
 import { getSteedosConfig, SteedosMongoDriver, getConnection } from '@steedos/objectql'
 import { URL } from 'url';
 import * as bodyParser from 'body-parser';
+import { sendMail, sendSMS} from './core';
 
 declare var WebApp;
-declare var Meteor;
 
 const config = getSteedosConfig();
 
@@ -39,6 +38,7 @@ async function getAccountsServer (context){
   }
   const accountsServer = new AccountsServer(
     {
+      ambiguousErrorMessages: true,
       db: new MongoDBInterface(connection, {
         convertUserIdToMongoObjectId: false,
         convertSessionIdToMongoObjectId: false,
@@ -51,7 +51,7 @@ async function getAccountsServer (context){
           return date ? date : new Date()
         },
       }),
-      // sendMail: sendMail,
+      sendMail: sendMail,
       siteUrl: siteUrl,
       tokenSecret: tokenSecret,
       tokenConfigs: {
@@ -64,8 +64,15 @@ async function getAccountsServer (context){
       },
       emailTemplates: {
         from: emailFrom,
+        verificationCode: {
+          subject: (user, token) => `【华炎魔方】验证码：${token}`,
+          text: (user: any, url: string, token) =>
+            `您的验证码是: ${token}，请不要泄露给他人。`,
+          html: (user: any, url: string, token:string) =>
+            `您的验证码是: ${token}，请不要泄露给他人。`,
+        },
         verifyEmail: {
-          subject: () => '验证您的帐户电子邮件',
+          subject: (user, params) => '验证您的帐户电子邮件',
           text: (user: any, url: string) =>
             `请点击此链接来验证您的帐户电子邮件: ${url}`,
           html: (user: any, url: string) =>
@@ -105,9 +112,9 @@ async function getAccountsServer (context){
   return accountsServer;
 }
 
-async function getAccountsRouter(context){
+export async function getAccountsRouter(context){
 
-  let accountsServer = await getAccountsServer(context)
+  const accountsServer = await getAccountsServer(context)
 
   const router = accountsExpress(accountsServer, {
     path: '/',

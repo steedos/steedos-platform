@@ -1,6 +1,10 @@
 import { getSteedosConfig } from '@steedos/objectql'
 import { db } from '../db';
 import * as _ from 'lodash';
+import chalk from 'chalk';
+
+declare var MailQueue;
+declare var SMSQueue;
 
 const config = getSteedosConfig();
 
@@ -11,7 +15,12 @@ export const getSettings = async ()=>{
         background_url: undefined,
         enable_create_tenant: true,
         enable_register: true,
-        enable_forget_password: true
+        enable_forget_password: true,
+        enable_password_login: true,
+        enable_mobile_code_login: false,
+        enable_email_code_login: false,
+        enable_bind_mobile: false,
+        enable_bind_email: false,
       }
 
       if (config.tenant) {
@@ -82,34 +91,18 @@ export const getMergedTenant = async (spaceId?)=>{
 
 export const canRegister = async (spaceId, action)=>{
     const tenant: any = await getMergedTenant(spaceId);
-    if(action === 'emailSignupAccount' && (tenant.enable_bind_mobile === true || tenant.enable_bind_email != true)){
+    if(action === 'emailSignupAccount' && !tenant.enable_email_code_login){
       return false
-    }else if(action === 'mobileSignupAccount' && tenant.enable_bind_mobile != true){
+    }else if(action === 'mobileSignupAccount' && !tenant.enable_mobile_code_login){
       return false
     }else if(action === 'withPassword'){
-      return tenant.enable_register && !tenant.enable_bind_mobile && !tenant.enable_bind_email
+      return tenant.enable_register && tenant.enable_password_login
     }
     return tenant.enable_register;
 }
 
 export const canPasswordLogin = async ()=>{
   const tenant: any = await getMergedTenant();
-  return tenant.enable_password_login;
-}
-
-export const canMobilePasswordLogin = async (user)=>{
-  const tenant: any = await getMergedTenant();
-  if(tenant.enable_bind_mobile){
-    return user.mobile_verified
-  }
-  return tenant.enable_password_login;
-}
-
-export const canEmailPasswordLogin = async (user)=>{
-  const tenant: any = await getMergedTenant();
-  if(tenant.enable_bind_email){
-    return user.email_verified
-  }
   return tenant.enable_password_login;
 }
 
@@ -180,4 +173,38 @@ export const getSteedosService = ()=>{
   if (!steedosService.endsWith("/"))
     steedosService += "/" ;
   return steedosService;
+}
+
+export const sendMail = async (mail: any): Promise<void> => {
+  const {to, subject, html} = mail;
+  const config = getSteedosConfig().email || {};
+  let canSend = canSendEmail();
+  //如果没有配置发送邮件服务，则打印log
+  console.log(chalk.green(`MAIL: ${to}, ${subject}`))
+  if(!canSend){
+      console.log(chalk.red("ERROR send mail, please set email configs in steedos-config.yml"));
+      return;
+  }else{
+      MailQueue.send({
+          to: to,
+          from: config.from || "华炎魔方",
+          subject: subject,
+          html: html
+      });
+  }
+};
+
+export function sendSMS(mobile, message, spaceId){
+  let canSend = canSendSMS();
+  if(!canSend){
+      chalk.red(`Send sms failed: ${mobile}, ${message}`)
+      chalk.red("Please set sms configs in steedos-config.yml")
+      return;
+  }else{
+      chalk.green(`sms: ${mobile}, ${message}`)
+      SMSQueue.send({
+          RecNum: mobile,
+          msg: message
+      }, spaceId)
+  }
 }

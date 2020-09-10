@@ -1,13 +1,11 @@
 export function getSettings(state) {
-    const tenant = state.tenant
     return {
         ...state.settings,
-        tenant,
     };
 }
 
 export function getTenant(state) {
-    const tenant = Object.assign({}, state.settings.tenant, state.tenant)
+    const tenant = Object.assign({}, state.settings.tenant)
     if (!tenant.name)
         tenant.name = "Steedos"
     return tenant;
@@ -22,3 +20,4 @@ export function getSettingsTenantId(state){
         return state.settings.tenant._id
     }
 }
+

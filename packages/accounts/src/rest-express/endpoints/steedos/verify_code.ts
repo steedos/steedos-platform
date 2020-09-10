@@ -3,7 +3,7 @@ import { getSteedosConfig } from '@steedos/objectql';
 import { sendError } from '../../utils/send-error';
 import { db } from '../../../db';
 import { canRegister, spaceExists, canSendEmail, canSendSMS } from '../../../core';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../../../server';
 import validator from 'validator';
 const moment = require('moment');
 
@@ -204,9 +204,9 @@ export const applyCode = (accountsServer: AccountsServer) => async (
 
         if(action.startsWith("mobile")){
 
-            if(tenantConfig && !tenantConfig.enable_bind_mobile){
+            if(tenantConfig && !tenantConfig.enable_mobile_code_login){
                 if(['mobileLogin', 'mobileSignupAccount'].indexOf(action) > -1){
-                    throw new Error("accounts.invalidEmail");
+                    throw new Error("accounts.invalidMobile");
                 }
             }
 

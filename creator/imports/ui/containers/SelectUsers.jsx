@@ -1,8 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { SelectUsers, Bootstrap, store } from '@steedos/react';
 
 function SelectUsersContainer(prop){
+	const Provider = ReactRedux.Provider;
 	return (
 		<Provider store={store}>
 			<Bootstrap>

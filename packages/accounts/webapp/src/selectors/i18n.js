@@ -2,7 +2,7 @@
 import * as I18n from '../i18n/i18n';
 
 import { getSettings } from '../selectors';
-import { getBrowserLng } from '../client/index'
+import { getBrowserLng } from '../utils/utils';
 
 export function getCurrentUserLocale(state) {
     return getBrowserLng();

@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 import { localizeMessage } from '../utils/utils';
 
-import { accountsRest } from '../accounts';
 import FormError from './FormError';
 
 const useStyles = makeStyles({
@@ -27,7 +26,7 @@ interface RouteMatchProps {
 }
 
 const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState('');
@@ -40,16 +39,16 @@ const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
     const token = match.params.token;
     try {
       // If no tokens send email to user
-      if (!token) {
-        await accountsRest.sendResetPasswordEmail(email);
-        // Email sent
-        setSnackbarMessage(localizeMessage('accounts.emailSent'));
-      } else {
-        // If token try to change user password
-        await accountsRest.resetPassword(token, newPassword);
-        // Your password has been reset successfully
-        setSnackbarMessage(localizeMessage('accounts.passwordResetSuccessfully'));
-      }
+      // if (!token) {
+      //   await accountsRest.sendResetPasswordEmail(email);
+      //   // Email sent
+      //   setSnackbarMessage(localizeMessage('accounts.emailSent'));
+      // } else {
+      //   // If token try to change user password
+      //   await accountsRest.resetPassword(token, newPassword);
+      //   // Your password has been reset successfully
+      //   setSnackbarMessage(localizeMessage('accounts.passwordResetSuccessfully'));
+      // }
     } catch (err) {
       setError(err.message);
       setSnackbarMessage(null);

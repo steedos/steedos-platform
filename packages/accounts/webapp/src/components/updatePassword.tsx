@@ -3,7 +3,6 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
-import { accountsPassword, accountsClient } from '../accounts';
 import FormError from './FormError';
 import { localizeMessage } from '../utils/utils';
 
@@ -24,7 +23,7 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => (
 ));
 
 const UpdatePassword = ({ history, location }: RouteComponentProps<{}>) => {
-  const classes = useStyles();
+  const classes = useStyles({});
   const [error, setError] = useState<string | null>(history.location.state ? (history.location.state.error || '') : '');
   const [email, setEmail] = useState<string | undefined>('');
   const [oldPassword, setOldPassword] = useState<string>('');
@@ -35,11 +34,11 @@ const UpdatePassword = ({ history, location }: RouteComponentProps<{}>) => {
   }, [])
 
   const checkToken = async () => {
-    const tokens = await accountsClient.refreshSession();
-    if (!tokens) {
-      history.push('/login');
-      return;
-    }
+    // const tokens = await accountsClient.refreshSession();
+    // if (!tokens) {
+    //   history.push('/login');
+    //   return;
+    // }
   }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,13 +61,13 @@ const UpdatePassword = ({ history, location }: RouteComponentProps<{}>) => {
     //     return;
     // }
     try {
-      await accountsPassword.changePassword(oldPassword, newPassword);
-      await accountsClient.logout();
-      history.push({
-          pathname: `/login`,
-          search: location.search,
-          state: {message: {data: "请使用新密码重新登录", variant: 'info'}}
-      })
+      // await accountsPassword.changePassword(oldPassword, newPassword);
+      // await accountsClient.logout();
+      // history.push({
+      //     pathname: `/login`,
+      //     search: location.search,
+      //     state: {message: {data: "请使用新密码重新登录", variant: 'info'}}
+      // })
     } catch (err) {
       if(err.message === 'accounts.invalid_credentials'){
         err.message = 'accounts.updatePassword_invalid_credentials'

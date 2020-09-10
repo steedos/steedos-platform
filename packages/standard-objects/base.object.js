@@ -234,6 +234,7 @@ module.exports = {
                             responseText.errors.forEach(function (e) {
                                 toastr.error(e.errorMessage);
                             });
+                            Template.creator_view.currentInstance.onEditSuccess();
                             return;
                         } else if (responseText.redirect_url) {
                             Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
@@ -242,6 +243,7 @@ module.exports = {
                     error: function (xhr, msg, ex) {
                         $(document.body).removeClass('loading');
                         toastr.error(msg);
+                        Template.creator_view.currentInstance.onEditSuccess();
                     }
                 });
             }

@@ -1,13 +1,12 @@
 import * as express from 'express';
 import * as requestIp from 'request-ip';
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../../server';
 import { getUserAgent } from '../utils/get-user-agent';
 import { sendError } from '../utils/send-error';
 import { setAuthCookies, hashStampedToken } from '../utils/steedos-auth';
 import { db } from '../../db';
 import * as _ from 'lodash';
 import { getUserSpace } from '../utils/users'
-import { canPasswordLogin, canMobilePasswordLogin } from '../../core/index'
 
 export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
   req: express.Request,
@@ -21,21 +20,6 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     const spaceId = req.body.spaceId;
     let services: any = accountsServer.getServices();
     let db = services[serviceName].db;
-
-    if(!canPasswordLogin()){
-      throw new Error("accounts.disablePasswordLogin");
-    }
-
-
-    if(/^\+?\d+$/g.test(email)){
-      const mobileUser = await db.findUserByMobile(email)
-      if(mobileUser && mobileUser._id){
-        if(!canMobilePasswordLogin(mobileUser)){
-          throw new Error("accounts.disableUnverifiedMobilePasswordLogin");
-        }
-        req.body.user.id = mobileUser._id;
-      }
-    }
 
     if(email && email.indexOf("@") < 0){
       req.body.user.username = email

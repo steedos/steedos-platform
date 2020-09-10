@@ -8,19 +8,12 @@ let lastOnError = null;
 
 signUpEvent.on('inputNext', async (tenant, history, location, spaceId, name, action)=>{
     try {
-        if(tenant.enable_bind_mobile || tenant.enable_bind_email){
-            const data = await ApplyCode({
-                name: name,
-                action: action,
-                spaceId: spaceId
-            });
-            if (data.token) {
-                history.push({
-                    pathname: `/verify/${data.token}`,
-                    search: location.search,
-                    state: { email: name.trim() }
-                })
-            }
+        if(tenant.enable_mobile_code_login || tenant.enable_email_code_login){
+            history.push({
+                pathname: `/verify/${action}`,
+                search: location.search,
+                state: { email: name.trim() }
+            })
         }else{
             history.push({
                 pathname: `/signup-password`,

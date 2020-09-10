@@ -6,18 +6,18 @@ datasources:
       - ./src/**
 tenant:
   _id: 
-  name: 华炎云
+  name: 华炎魔方
   logo_url:
   background_url: 
   enable_register: true
-  disable_email_register: true
-  enable_bind_mobile: true
+  enable_bind_mobile: false
+  enable_bind_email: false
   enable_forget_password: true
   enable_create_tenant: true
   saas: false
   enable_password_login: true
-  enable_email_code_login: true
   enable_mobile_code_login: true
+  enable_email_code_login: true
 -email:
   url: ${MAIL_URL}
   from: ${MAIL_FROM}

@@ -1,10 +1,10 @@
 import { providerCallback } from './endpoints/oauth/provider-callback';
 import { resetPassword, sendResetPasswordEmail } from './endpoints/password/reset';
-import { verifyEmail, sendVerificationEmail } from './endpoints/password/verify-email';
+import { verifyEmail, sendVerificationEmail, sendVerificationCode } from './endpoints/password/verify-email';
 import * as express from 'express';
 import * as cookieParser from 'cookie-parser';
 var cookie = require('cookie-parser');
-import { AccountsServer } from '@accounts/server';
+import { AccountsServer } from '../server';
 import { refreshAccessToken } from './endpoints/refresh-access-token';
 import { getUser } from './endpoints/get-user';
 import { impersonate } from './endpoints/impersonate';
@@ -23,6 +23,8 @@ import { getSettings } from './endpoints/steedos/settings';
 import { userExists } from './endpoints/get-user-exists'
 import { applyCode, getUserIdByToken } from './endpoints/steedos/verify_code';
 import { changeUserFullname } from './endpoints/put-user-name';
+import { login } from './endpoints/login';
+import { getMySpaces } from './endpoints/spaces';
 
 
 const defaultOptions: AccountsExpressOptions = {
@@ -51,6 +53,7 @@ const accountsExpress = (
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.put(`${path}/user`, userLoader(accountsServer), changeUserFullname(accountsServer));
   router.get(`${path}/user/exists`, userExists());
+  router.get(`${path}/user/spaces`, userLoader(accountsServer), getMySpaces(accountsServer));
   router.post(`${path}/code/apply`, applyCode(accountsServer));
   router.get(`${path}/code/id`, getUserIdByToken());
   
@@ -70,6 +73,9 @@ const accountsExpress = (
 
   // @accounts/password
   if (services.password) {
+
+
+    router.post(`${path}/password/login`, login(accountsServer));
     router.post(`${path}/password/register`, registerPassword(accountsServer));
 
     router.post(`${path}/password/verifyEmail`, verifyEmail(accountsServer));
@@ -78,31 +84,16 @@ const accountsExpress = (
 
     router.post(`${path}/password/sendVerificationEmail`, sendVerificationEmail(accountsServer));
 
-    router.post(`${path}/password/sendResetPasswordEmail`, sendResetPasswordEmail(accountsServer));
+    router.post(`${path}/password/sendVerificationCode`, sendVerificationCode(accountsServer));
 
+    router.post(`${path}/password/sendResetPasswordEmail`, sendResetPasswordEmail(accountsServer));
+    
     router.post(
       `${path}/password/changePassword`,
       userLoader(accountsServer),
       changePassword(accountsServer)
     );
 
-    router.post(
-      `${path}/password/twoFactorSecret`,
-      userLoader(accountsServer),
-      twoFactorSecret(accountsServer)
-    );
-
-    router.post(
-      `${path}/password/twoFactorSet`,
-      userLoader(accountsServer),
-      twoFactorSet(accountsServer)
-    );
-
-    router.post(
-      `${path}/password/twoFactorUnset`,
-      userLoader(accountsServer),
-      twoFactorUnset(accountsServer)
-    );
   }
 
   // @accounts/oauth

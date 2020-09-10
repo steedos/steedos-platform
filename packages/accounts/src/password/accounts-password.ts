@@ -9,9 +9,9 @@ import {
   HashAlgorithm,
   ConnectionInformations,
   LoginResult,
-} from '@accounts/types';
+} from '../types';
 import { TwoFactor, AccountsTwoFactorOptions, getUserTwoFactorService } from '@accounts/two-factor';
-import { AccountsServer, ServerHooks, generateRandomToken } from '@accounts/server';
+import { AccountsServer, ServerHooks, generateRandomToken, generateRandomCode } from '../server';
 import {
   getUserResetTokens,
   getUserVerificationTokens,
@@ -24,8 +24,6 @@ import { PasswordCreateUserType, PasswordLoginType, PasswordType, ErrorMessages 
 import { errors } from './errors';
 import { getSteedosConfig } from '@steedos/objectql';
 import { verifyCode, getVerifyRecord } from '../rest-express/endpoints/steedos/verify_code';
-
-import { canEmailPasswordLogin } from '../core/index'
 
 export interface AccountsPasswordOptions {
   /**
@@ -152,32 +150,30 @@ export default class AccountsPassword implements AuthenticationService {
 
   public setStore(store: DatabaseInterface) {
     this.db = store;
-    this.twoFactor.setStore(store);
+    // this.twoFactor.setStore(store);
   }
 
   public async authenticate(params: any): Promise<User> {
-    const { user, password, code, token, token_code, locale } = params;
+    const { user, password, token, locale } = params;
 
-    if(token){
-      if (!user) {
-        throw new Error(this.options.errors.unrecognizedOptionsForLogin);
-      }
-      return await this.codeAuthenticator(user, token, token_code, locale);
+    if(user && token){
+      return await this.codeAuthenticator(user, token, locale);
     }
 
     if (!user || !password) {
       throw new Error(this.options.errors.unrecognizedOptionsForLogin);
     }
+
     if ((!isString(user) && !isPlainObject(user)) || !isString(password)) {
       throw new Error(this.options.errors.matchFailed);
     }
 
     const foundUser = await this.passwordAuthenticator(user, password);
 
-    // If user activated two factor authentication try with the code
-    if (getUserTwoFactorService(foundUser)) {
-      await this.twoFactor.authenticate(foundUser, code!);
-    }
+    // // If user activated two factor authentication try with the code
+    // if (getUserTwoFactorService(foundUser)) {
+    //   await this.twoFactor.authenticate(foundUser, code!);
+    // }
 
     return foundUser;
   }
@@ -189,6 +185,15 @@ export default class AccountsPassword implements AuthenticationService {
    */
   public findUserByEmail(email: string): Promise<User | null> {
     return this.db.findUserByEmail(email);
+  }
+
+  /**
+   * @description Find a user by his username.
+   * @param {string} username - User username.
+   * @returns {Promise<Object>} - Return a user or null if not found.
+   */
+  public findUserById(id: string): Promise<User | null> {
+    return this.db.findUserById(id);
   }
 
   /**
@@ -418,21 +423,17 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.userNotFound);
     }
 
-    // Do not send an email if the address is already verified
-    const emailRecord = find(
-      user.emails,
-      (email: EmailRecord) => email.address.toLowerCase() === address.toLocaleLowerCase()
-    );
-    if (!emailRecord || emailRecord.verified) {
-      return;
-    }
+    //Do not send an email if the address is already verified
+    if (user.email_verified)
+      return
 
+    const code = generateRandomCode();
     const token = generateRandomToken();
-    await this.db.addEmailVerificationToken(user.id, address, token);
+    await this.db.addEmailVerificationToken(user.id, address, token, code);
 
     const resetPasswordMail = this.server.prepareMail(
       address,
-      token,
+      code,
       this.server.sanitizeUser(user),
       getPathFragmentPrefix() + 'verify-email',
       this.server.options.emailTemplates.verifyEmail,
@@ -527,6 +528,10 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.invalidEmail);
     }
 
+    if (user.mobile && (await this.db.findUserByMobile(user.mobile))) {
+      throw new Error(this.options.errors.mobileAlreadyExists);
+    }
+
     if (user.username && (await this.db.findUserByUsername(user.username))) {
       throw new Error(this.options.errors.usernameAlreadyExists);
     }
@@ -542,21 +547,33 @@ export default class AccountsPassword implements AuthenticationService {
       user.password = await this.hashAndBcryptPassword(user.password);
     }
 
-    // If user does not provide the validate function only allow some fields
-    user = this.options.validateNewUser
-      ? await this.options.validateNewUser(user)
-      : pick<PasswordCreateUserType, 'username' | 'email' | 'password' | 'mobile' | 'locale'>(user, [
-          'username',
-          'email',
-          'password',
-          'mobile',
-          'locale'
-        ]);
+    if (user.verifyCode) {
+      const r = await this.db.checkVerificationCode(user, user.verifyCode);
+      if (!r) {
+        throw new Error(this.options.errors.invalidVerifyCode);
+      }
+      delete user.verifyCode;
+      if (user.email)
+        user.email_verified = true
+      if (user.mobile)
+        user.mobile_verified = true
+    }
+
+    // // If user does not provide the validate function only allow some fields
+    // user = this.options.validateNewUser
+    //   ? await this.options.validateNewUser(user)
+    //   : pick<PasswordCreateUserType, 'username' | 'email' | 'password' | 'mobile' | 'locale'>(user, [
+    //       'username',
+    //       'email',
+    //       'password',
+    //       'mobile',
+    //       'locale'
+    //     ]);
 
     try {
       const userId = await this.db.createUser(user);
       defer(async () => {
-        if (this.options.sendVerificationEmailAfterSignup && user.email)
+        if (this.options.sendVerificationEmailAfterSignup && user.email && !user.email_verified)
           this.sendVerificationEmail(user.email);
 
         const userRecord = (await this.db.findUserById(userId)) as User;
@@ -578,13 +595,13 @@ export default class AccountsPassword implements AuthenticationService {
     return await this.passwordAuthenticator({email: email}, password);
   }
 
-  private async passwordAuthenticator(
+  public async passwordAuthenticator(
     user: string | LoginUserIdentity,
     password: PasswordType
   ): Promise<User> {
-    const { username, email, id } = isString(user)
-      ? this.toUsernameAndEmail({ user })
-      : this.toUsernameAndEmail({ ...user });
+    const { username, email, id, mobile } = isString(user)
+      ? this.toMobileAndEmail({ user })
+      : this.toMobileAndEmail({ ...user });
 
     let foundUser: User | null = null;
 
@@ -594,14 +611,12 @@ export default class AccountsPassword implements AuthenticationService {
     } else if (username) {
       // this._validateLoginWithField('username', user);
       foundUser = await this.db.findUserByUsername(username);
+    } else if (mobile) {
+      // this._validateLoginWithField('username', user);
+      foundUser = await this.db.findUserByMobile(mobile);
     } else if (email) {
       // this._validateLoginWithField('email', user);
       foundUser = await this.db.findUserByEmail(email);
-      if(foundUser){
-        if(!canEmailPasswordLogin(foundUser)){
-          throw new Error("accounts.disableUnverifiedEmailPasswordLogin");
-        }
-      }
     }
 
     if (!foundUser) {
@@ -633,39 +648,13 @@ export default class AccountsPassword implements AuthenticationService {
   }
 
   private async codeAuthenticator(
-    user, token, token_code, locale
+    user, token, locale
   ): Promise<User> {
-    const { username, email, id } = isString(user)
-      ? this.toUsernameAndEmail({ user })
-      : this.toUsernameAndEmail({ ...user });
-    const verifyRecord: any = await getVerifyRecord(token);
-
-    if(!verifyRecord){
-      throw new Error('accounts.invalidRequest');
-    }
-
-    let foundUser: User | null = null;
-
-    if (id) {
-      // this._validateLoginWithField('id', user);
-      foundUser = await this.db.findUserById(id);
-    } else if (username) {
-      // this._validateLoginWithField('username', user);
-      foundUser = await this.db.findUserByUsername(username);
-    } else if (email) {
-      // this._validateLoginWithField('email', user);
-      foundUser = await this.db.findUserByEmail(email);
-    }
-
-    let hasVerified = false;
-
-    if(!foundUser && verifyRecord.action.endsWith('SignupAccount')){
-      hasVerified = true;
-      const result = await verifyCode(null, token, token_code, {locale:locale, server: this});
-      if(result.verified){
-        foundUser = await this.db.findUserById(result.userId);
-      }
-    }
+    const { username, email, mobile, id } = isString(user)
+      ? this.toMobileAndEmail({ user })
+      : this.toMobileAndEmail({ ...user });
+    
+    let foundUser = this.db.findUserByVerificationCode({email: email, mobile: mobile}, token);
 
     if (!foundUser) {
       throw new Error(
@@ -673,16 +662,6 @@ export default class AccountsPassword implements AuthenticationService {
           ? this.options.errors.invalidCredentials
           : this.options.errors.userNotFound
       );
-    }
-    if(!hasVerified){
-      const result = await verifyCode(foundUser.id, token, token_code, {locale:locale, createUser: this.createUser})
-      if (!result.verified) {
-        throw new Error(
-          this.server.options.ambiguousErrorMessages
-            ? this.options.errors.invalidCredentials
-            : this.options.errors.incorrectPassword
-        );
-      }
     }
     return foundUser;
   }
@@ -699,16 +678,48 @@ export default class AccountsPassword implements AuthenticationService {
    * @param user An object containing at least `username`, `user` and/or `email`.
    * @returns An object containing `id`, `username` and `email`.
    */
-  private toUsernameAndEmail({ user, username, email, id }: any): any {
-    if (user && !username && !email) {
+  private toMobileAndEmail({ user, username, email, mobile, id }: any): any {
+    if (user && !username && !email && !mobile) {
       if (isEmail(user)) {
         email = user;
-        username = null;
       } else {
-        username = user;
-        email = null;
+        mobile = user;
       }
     }
-    return { username, email, id };
+    return { username, email, mobile, id };
+  }
+
+
+  /**
+   * @description Send an email with a link the user can use verify their email address.
+   * @param {string} [address] - Which address of the user's to send the email to.
+   * This address must be in the user's emails list.
+   * Defaults to the first unverified email in the list.
+   * If the address is already verified we do not send any email.
+   * @returns {Promise<void>} - Return a Promise.
+   */
+  public async sendVerificationCode(user: any): Promise<void> {
+
+
+    const code = generateRandomCode();
+
+    if (user.email) {
+      const userId = await this.db.addVerificationCode(user, code);
+      const verificationCodeMail = this.server.prepareMail(
+        user.email,
+        code,
+        null,
+        getPathFragmentPrefix() + 'verify-email',
+        this.server.options.emailTemplates.verificationCode,
+        this.server.options.emailTemplates.from
+      );
+      await this.server.options.sendMail(verificationCodeMail);
+      return userId
+    } else if (user.mobile) {
+      const userId = await this.db.addVerificationCode(user, code);
+      console.log('SMS Code: ' + code);
+      return userId
+    }
+
   }
 }
