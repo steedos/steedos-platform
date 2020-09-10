@@ -72,14 +72,14 @@ class CreateTenant extends React.PureComponent {
     <h2 className="my-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
       <FormattedMessage
           id='accounts.title.createTenant'
-          defaultMessage='Create Tenant'
+          defaultMessage='Create Team'
         />
     </h2>
     <div class="mt-2 max-w-xl text-sm leading-5 text-gray-500">
       <p>
       <FormattedMessage
           id='accounts.create_tenant_description'
-          defaultMessage='Create a new company and invite your colleagues to join.'
+          defaultMessage='Create a new team and invite your colleagues to join.'
         />
       </p>
     </div>
@@ -94,7 +94,7 @@ class CreateTenant extends React.PureComponent {
               name="name" 
               value={this.state.name}
               className="appearance-none rounded-none relative block w-full px-3 py-2 border-b border-gray-500 bg-blue-50 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" 
-              placeholder={{id: 'accounts.tenant_name', defaultMessage: 'Company Name'}}
+              placeholder={{id: 'accounts.tenant_name', defaultMessage: 'Team Name'}}
               onChange={this.handleNameChange}
             />
           </div>
