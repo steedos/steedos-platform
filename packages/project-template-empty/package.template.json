@@ -14,7 +14,7 @@
       "dotenv-flow": "^3.1.0",
       "@steedos/steedos-plugin-workflow": "^2.0.8",
       "@steedos/accounts": "^1.19.10",
-      "steedos-server": "^1.21.12"
+      "steedos-server": "^1.21.13"
   },
   "devDependencies": {
       "nodemon": "^1.19.1"
