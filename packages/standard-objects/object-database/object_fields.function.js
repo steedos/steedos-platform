@@ -34,8 +34,7 @@ module.exports = {
   recomputeSummaryValues: async function(req, res){
       try {
         const params = req.params;
-        const userId = req.user && req.user.userId;
-        const result = await objectql.recomputeSummaryValues(params._id, userId);
+        const result = await objectql.recomputeSummaryValues(params._id, req.user);
         if(result){
             res.status(200).send({ success: true });
         }
