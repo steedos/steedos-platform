@@ -49,6 +49,7 @@ fields:
     type: select
     is_wide: true
     required: true
+    firstOption: false
     defaultValue: admin_only
     inlineHelpText: When a record is submitted for approval, it’s locked to prevent users from editing it during the approval process. Use the record editability properties to determine who can edit records that are locked in this approval process.
     label: Record Editability Properties
@@ -84,6 +85,7 @@ fields:
   initialSubmissionRecordLock:
     type: select
     required: true
+    firstOption: false
     options:
       - label: 锁定记录以免进行编辑
         value: lock
@@ -96,6 +98,7 @@ fields:
   finalApprovalRecordLock:
     type: select
     required: true
+    firstOption: false
     options:
       - label: 锁定记录以免进行编辑
         value: lock
@@ -107,6 +110,7 @@ fields:
   finalRejectionRecordLock:
     type: select
     required: true
+    firstOption: false
     options:
       - label: 锁定记录以免进行编辑
         value: lock
@@ -118,6 +122,7 @@ fields:
   recallRecordLock:
     type: select
     required: true
+    firstOption: false
     options:
       - label: 锁定记录以免进行编辑
         value: lock

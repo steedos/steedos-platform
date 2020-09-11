@@ -416,6 +416,9 @@
                     "type": "integer",
                     "description": "多行文本默认行数"
                 },
+                "firstOption": {
+                    "type": "boolean"
+                },
                 "options": {
                     "anyOf": [
                         {

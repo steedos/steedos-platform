@@ -35,6 +35,7 @@ fields:
     group: Specify Step Criteria
   if_criteria_not_met: # https://help.salesforce.com/articleView?err=1&id=approvals_step_entrycriteria.htm&type=5
     type: select
+    firstOption: false
     options: approve,reject,skip
     group: Specify Step Criteria
     is_wide: true #TODO 选项规则：第一个有(order=1)：拒绝记录；批准记录；如果有后续步骤，则会多一个 转到下一步的条件; 最后一个步骤且不是第一步时，不能设置不满足的情况; 只有第一步有拒绝记录
@@ -43,6 +44,7 @@ fields:
     is_wide: true
     label: Select Approver
     required: true
+    firstOption: false
     group: Select Assigned Approver
     options:
       - label: 'Let the submitter choose the approver manually'
@@ -79,6 +81,7 @@ fields:
     is_wide: true
     label: When multiple approvers are selected
     group: Select Assigned Approver
+    firstOption: false
     options:
       - label: Approve or reject based on the FIRST response.
         value: first_response
@@ -92,6 +95,7 @@ fields:
     required: true
     group: Select Assigned Approver
     defaultValue: reject_request
+    firstOption: false
     inlineHelpText: What should happen if the approver rejects this request? #TODO 只有步骤号不等于1时，才能设置拒绝行为， 等于1时始终为最终拒绝
     options:
       - label: 'Perform all rejection actions for this step AND all final rejection actions. (Final Rejection)'
