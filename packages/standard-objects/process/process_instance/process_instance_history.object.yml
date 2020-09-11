@@ -134,13 +134,13 @@ form:
       $("div", $(".crm-header-title")).css("display", "inline");
       switch (step_status) {
         case 'approved':
-            $(".crm-header-title").append('<span class="slds-badge slds-theme_success">approved</span>')
+            $(".crm-header-title").append('<span class="slds-badge slds-theme_success">'+TAPi18n.__("process_instance_history_field_step_status_options_approved")+'</span>')
             break;
         case 'rejected':
-            $(".crm-header-title").append('<span class="slds-badge slds-theme_error">rejected</span>')
+            $(".crm-header-title").append('<span class="slds-badge slds-theme_error">'+TAPi18n.__("process_instance_history_field_step_status_options_rejected")+'</span>')
             break;
         default:
-            $(".crm-header-title").append('<span class="slds-badge" style="background-color: #706e6b;color: #fff;">'+step_status+'</span>')
+            $(".crm-header-title").append('<span class="slds-badge" style="background-color: #706e6b;color: #fff;">'+TAPi18n.__("process_instance_history_field_step_status_options_"+step_status)+'</span>')
             break;
       }
     }
