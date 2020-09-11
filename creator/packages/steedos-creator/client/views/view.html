@@ -237,9 +237,8 @@
 									{{#if related_list}}
 										<div id="creator-tabular" class="">
 											{{#each related_list}}
-												<div class="slds-card slds-card_boundary forceRelatedListCardDesktop related-object-tabular">
-													<div class="related_list_themed_border_top"></div>
-													<div class="slds-card__header slds-grid  bg-cool-gray-50">
+												<div class="forceRelatedListCardDesktop related-object-tabular bg-white overflow-hidden border border-gray-200 border-solid rounded my-4">
+													<div class="flex border-b border-gray-200 px-3 py-3 bg-cool-gray-50">
 														<header class="slds-media slds-media_center slds-has-flexi-truncate">
 															<div class="slds-media__figure">
 																{{> steedos_icon class="extraSmall forceEntityIcon slds-icon" source="standard-sprite" name=related_object.icon}}
@@ -270,16 +269,13 @@
 															{{/if}}
 														</div>
 													</div>
-													<div class="slds-card__body">
-														{{#if record}}
+													{{#if record}}
 															{{#if isMobile}}
 																{{> list options=(list_data this)}}
 															{{else}}
 																{{> Template.dynamic template="creator_grid" data=(list_data this)}}
 															{{/if}}
-														{{/if}}
-													</div>
-													<footer class="slds-card__footer"></footer>
+													{{/if}}
 												</div>
 											{{/each}}
 										</div>
