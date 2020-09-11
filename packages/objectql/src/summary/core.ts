@@ -136,7 +136,7 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
 }
 
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, currentUserId: string) => {
-    const { reference_to_field, summary_type, summary_field, summary_object, field_name, object_name, filters } = fieldSummaryConfig;
+    const { reference_to_field, summary_type, summary_field, summary_object, object_name, filters } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
     }
@@ -146,39 +146,55 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
         if(typeof referenceToId !== "string"){
             referenceToId = <string>referenceToId._id;
         }
-        let aggregateFilters:any = [[reference_to_field, "=", referenceToId]];
+        let referenceToFilters:any = [[reference_to_field, "=", referenceToId]];
+        let aggregateFilters:any;
         if(filters && filters.length){
             if(typeof filters === "string"){
                 // 传入的过滤条件为odata字符串时，需要把aggregateFilters也解析为odata串并取AND
-                aggregateFilters = formatFiltersToODataQuery(aggregateFilters);
+                aggregateFilters = formatFiltersToODataQuery(referenceToFilters);
                 aggregateFilters = `(${aggregateFilters}) and (${filters})`;
             }
             else{
-                aggregateFilters = [aggregateFilters, filters];
+                aggregateFilters = [referenceToFilters, filters];
             }
         }
         const aggregateResults = await getSteedosSchema().getObject(summary_object).aggregate({
             filters: aggregateFilters
         }, aggregateGroups);
+        // console.log("===aggregateResults===", aggregateResults);
         if (aggregateResults && aggregateResults.length) {
-            let setDoc = {};
             const groupKey = getSummaryAggregateGroupKey(summary_type, summary_field);
-            setDoc[field_name] = aggregateResults[0][groupKey];
-            await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
-            // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
-            // console.log("===updateReferenceTosFieldSummaryValue====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
-            await runQuotedByObjectFieldFormulas(object_name, referenceToId, currentUserId, {
-                fieldNames:[field_name]
-            })
+            let summarizedValue = aggregateResults[0][groupKey];
+            await updateReferenceToFieldSummaryValue(referenceToId, summarizedValue, fieldSummaryConfig, currentUserId);
         }
         else {
             // 说明referenceToId对应的主表记录找不到了，可能被删除了，不用报错或其他处理
+            // 也可能是要汇总的子表记录全部删除了，或者不再有任何子表记录符合汇总字段过滤条件，这时应该重置汇总字段值
+            const masterRecord = await getSteedosSchema().getObject(object_name).findOne(referenceToId, { fields: ["_id"] });
+            if(masterRecord){
+                // sum和count类型直接按0值处理而不是空值，min/max类型（包括数值和日期时间字段）显示为空值
+                let defaultValue = SteedosSummaryTypeBlankValue[summary_type];
+                await updateReferenceToFieldSummaryValue(referenceToId, defaultValue, fieldSummaryConfig, currentUserId);
+            }
+
         }
     }
 }
 
+export const updateReferenceToFieldSummaryValue = async (referenceToId: string, value: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, currentUserId: string) => {
+    const { field_name, object_name } = fieldSummaryConfig;
+    let setDoc = {};
+    setDoc[field_name] = value;
+    await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
+    // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
+    // console.log("===updateReferenceToFieldSummaryValue====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
+    await runQuotedByObjectFieldFormulas(object_name, referenceToId, currentUserId, {
+        fieldNames:[field_name]
+    })
+}
+
 /**
- * 新建主表记录时需要处理汇总字段默认值
+ * 新建主表记录时需要处理汇总字段默认值，只有insert主表记录才需要调用该函数
  * @param objectName 
  * @param recordId 
  */
