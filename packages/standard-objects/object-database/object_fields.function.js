@@ -19,6 +19,7 @@ module.exports = {
             });
         }
     } catch (error) {
+        console.error("recomputeFormulaValues error:", error);
         res.status(400).send({
             success: false,
             error: {
@@ -47,6 +48,7 @@ module.exports = {
             });
         }
     } catch (error) {
+        console.error("recomputeSummaryValues error:", error);
         res.status(400).send({
             success: false,
             error: {
