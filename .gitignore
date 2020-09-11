@@ -40,3 +40,5 @@ apps/contracts/storage/**
 **/yalc.lock
 yalc.lock
 packages/project-template-empty/.env.local
+apps/contracts/src/_test/**
+packages/accounts/webapp/build/**
