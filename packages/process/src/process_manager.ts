@@ -346,17 +346,16 @@ const handleProcessInstance = async(instanceId: string, processStatus: string, u
         if(processStatus === 'removed'){
             await unlockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);
         }else{
-            let process = objectql.getObject("process_definition").findOne(pInstance.process_definition);
-
+            let process = await objectql.getObject("process_definition").findOne(pInstance.process_definition);
             if(processStatus === 'approved'){
-                if(process.finalApprovalRecordLock === 'unlock'){
+                if(process.final_approval_record_lock === 'unlock'){
                     await unlockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);
                 }else{
                     await lockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);
                 }
                 
             }else if(processStatus === 'rejected'){
-                if(process.finalRejectionRecordLock === 'unlock'){
+                if(process.final_rejection_record_lock === 'unlock'){
                     await unlockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);
                 }else{
                     await lockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);

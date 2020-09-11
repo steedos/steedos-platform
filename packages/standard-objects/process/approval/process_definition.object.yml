@@ -82,7 +82,7 @@ fields:
     is_wide: true
     label: Allow submitters to recall approval requests
     group: 提交设置
-  initialSubmissionRecordLock:
+  initial_submission_record_lock:
     type: select
     required: true
     firstOption: false
@@ -95,7 +95,7 @@ fields:
     readonly: true
     label: 初始提交
     group: record lock
-  finalApprovalRecordLock:
+  final_approval_record_lock:
     type: select
     required: true
     firstOption: false
@@ -107,7 +107,7 @@ fields:
     defaultValue: lock
     label: 最终批准
     group: record lock
-  finalRejectionRecordLock:
+  final_rejection_record_lock:
     type: select
     required: true
     firstOption: false
@@ -119,7 +119,7 @@ fields:
     defaultValue: unlock
     label: 最终拒绝
     group: record lock
-  recallRecordLock:
+  recall_record_lock:
     type: select
     required: true
     firstOption: false
