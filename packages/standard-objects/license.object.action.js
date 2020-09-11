@@ -51,7 +51,7 @@ module.exports = {
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         $("body").removeClass("loading");
         if(XMLHttpRequest.status === 403){
-          return toastr.warning('请先点击升级企业版')
+          return toastr.warning('您尚未购买许可证。')
         }
         if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
           return toastr.error(t(XMLHttpRequest.responseJSON.error.replace(/:/g, '：')));

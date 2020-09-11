@@ -10,8 +10,8 @@ import {loadMeAndConfig} from './actions/root';
 import LoggedIn from './components/LoggedIn';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import Logout from './pages/Logout';
 import Home from './pages/Home';
-import GoRootUrl from './pages/GoRootUrl';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './pages/CreateTenant';
 import SelectSpace from './pages/SelectSpace';
@@ -75,20 +75,22 @@ class Root extends React.PureComponent {
             {/* <GlobalMessage></GlobalMessage> */}
                   {/* <Route path="/" component={GoBack}/> */}
                   {/* <Route path="/" component={Title}/> */}
-                <Switch>
+                <Switch>                  
+                  <LoggedInRoute exact path="/" component={Home}/>
+
                   <Route path="/signup" component={Signup} />
 
                   <Route path="/login" component={Login} />
+                  <Route path="/logout" component={Logout} />
                   
-                  <LoggedInRoute path="/create-tenant" component={CreateTenant} />
+                  <LoggedInRoute path="/create-space" component={CreateTenant} />
                   <LoggedInRoute path="/select-space" component={SelectSpace} />
                   <LoggedInRoute exact path="/update-password" component={UpdatePassword} />
                   {/* <LoggedInRoute path="/verify-email/:token" component={VerifyEmail} /> */}
                   {/* <Route path="/login-code" component={LoginCode} /> */}
                   <LoggedInRoute path="/preference" component={Preference} />
                   {/* <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} /> */}
-                  <LoggedInRoute path="/space/:spaceId" component={Home}/>
-                  {/* <LoggedInRoute path="/space/:spaceId" component={GoRootUrl}/> */}
+                  <LoggedInRoute path="/home/:spaceId" component={Home}/>
                   <Redirect
                       to={{
                           ...this.props.location,

@@ -13,7 +13,7 @@ class Background extends React.Component {
     }
     return (
       <div>
-        <div className="absolute justify-center mx-auto h-full w-full" style={style}>
+        <div className="fixed justify-center mx-auto h-full w-full" style={style}>
         </div>  
       </div>
     )

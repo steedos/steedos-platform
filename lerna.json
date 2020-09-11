@@ -1,6 +1,7 @@
 {
   "packages": [
     "packages/*",
+    "apps/*",
     "server"
   ],
   "useWorkspaces": true,

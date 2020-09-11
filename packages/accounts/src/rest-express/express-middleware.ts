@@ -20,7 +20,6 @@ import { AccountsExpressOptions } from './types';
 import { getTenant } from './endpoints/steedos/get-tenant';
 import { createTenant } from './endpoints/steedos/create-tenant';
 import { getSettings } from './endpoints/steedos/settings';
-import { userExists } from './endpoints/get-user-exists'
 import { applyCode, getUserIdByToken } from './endpoints/steedos/verify_code';
 import { changeUserFullname } from './endpoints/put-user-name';
 import { login } from './endpoints/login';
@@ -52,7 +51,6 @@ const accountsExpress = (
   router.get(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.put(`${path}/user`, userLoader(accountsServer), changeUserFullname(accountsServer));
-  router.get(`${path}/user/exists`, userExists());
   router.get(`${path}/user/spaces`, userLoader(accountsServer), getMySpaces(accountsServer));
   router.post(`${path}/code/apply`, applyCode(accountsServer));
   router.get(`${path}/code/id`, getUserIdByToken());

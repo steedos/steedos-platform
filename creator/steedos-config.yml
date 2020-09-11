@@ -9,6 +9,6 @@ public:
       folder: "./storage"
   templateSpaceId: template
 plugins:
-  - "@steedos/app-contracts"
+  - "@steedos/app-crm"
   - "@steedos/steedos-plugin-workflow"
 enable_holidays: true

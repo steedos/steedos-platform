@@ -11,14 +11,18 @@ import { selectSpace } from '../actions/spaces';
 const dispatch = store.dispatch;
 const getState = store.getState;
 
-export function emitUserLoggedOutEvent(redirectTo = '/', shouldSignalLogout = true, userAction = true) {
+export function emitUserLoggedOutEvent(redirectTo, shouldSignalLogout = true, userAction = true) {
     // If the logout was intentional, discard knowledge about having previously been logged in.
     // This bit is otherwise used to detect session expirations on the login page.
     if (userAction) {
-        LocalStorageStore.setUserId();
     }
 
+    if (!redirectTo)
+        redirectTo = '/login'
+
     dispatch(logout()).then(() => {
+        LocalStorageStore.setUserId(null);
+
         // if (shouldSignalLogout) {
         //     BrowserStore.signalLogout();
         // }
@@ -29,9 +33,9 @@ export function emitUserLoggedOutEvent(redirectTo = '/', shouldSignalLogout = tr
 
         // clearUserCookie();
 
-        hashHistory.push(redirectTo);
+        this.redirectTo(redirectTo);
     }).catch(() => {
-        hashHistory.push(redirectTo);
+        this.redirectTo(redirectTo);
     });
 }
 
@@ -62,6 +66,26 @@ export async function redirectUserToDefaultSpace() {
 
     const spaceId = await selectDefaultSpace();
     
-    hashHistory.push(`/space/${spaceId}`);
+    hashHistory.push(`/home/${spaceId}`);
 }
 
+export async function redirectTo(redirectTo) {
+
+    if (!redirectTo) 
+        return;
+
+    if (redirectTo && redirectTo.indexOf('no_redirect=1')<0) {
+      const userId = LocalStorageStore.getItem('userId');
+      const authToken =  LocalStorageStore.getItem('token');
+      const spaceId =  LocalStorageStore.getItem('spaceId');
+      redirectTo = redirectTo.indexOf("?")>0?redirectTo+'no_redirect=1':redirectTo+'?no_redirect=1'
+      if (userId && authToken)
+        redirectTo = `${redirectTo}&X-Auth-Token=${authToken}&X-User-Id=${userId}&X-Space-Id=${spaceId}`
+
+      if (redirectTo.match(/^\/([^/]|$)/))
+        hashHistory.push(redirectTo);
+      else
+        document.location.href=redirectTo
+    }
+
+}

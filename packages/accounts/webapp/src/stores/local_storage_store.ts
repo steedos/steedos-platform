@@ -37,12 +37,19 @@ class LocalStorageStoreClass {
   }
 
   getPreviousSpaceId(userId) {
+    if (!userId)
+      userId = this.getItem('userId');
     return this.getItem(getPreviousSpaceIdKey(userId));
   }
 
   setPreviousSpaceId(userId, spaceId) {
     this.setItem(getPreviousSpaceIdKey(userId), spaceId);
     this.setItem('spaceId', spaceId);
+    localStorage.setItem('spaceId', spaceId);
+  }
+
+  getUserId() {
+    return this.getItem('userId')
   }
 
   setUserId(userId, token?:string) {
@@ -54,6 +61,7 @@ class LocalStorageStoreClass {
       this.removeItem('userId')
       this.removeItem('token')
       this.removeItem('spaceId')
+      localStorage.removeItem('spaceId');
       this.setItem(getWasLoggedInKey(), 'false');
     }
   }
@@ -72,5 +80,7 @@ class LocalStorageStoreClass {
 }
 
 const LocalStorageStore = new LocalStorageStoreClass();
+
+window['LocalStorageStore'] = LocalStorageStore;
 
 export default LocalStorageStore;

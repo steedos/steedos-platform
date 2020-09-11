@@ -1,0 +1,3 @@
+[submodule "apps/steedos-app-crm"]
+	path = apps/steedos-app-crm
+	url = https://github.com/steedos/steedos-app-crm/
