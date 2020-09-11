@@ -6,6 +6,14 @@ const _ = require("underscore");
 declare var Creator;
 // declare var TAPi18n;
 
+const lockObjectRecord = async (objectName, reocrdId)=>{
+    await objectql.getObject(objectName).directUpdate(reocrdId, {locked: true});
+}
+
+const unlockObjectRecord = async (objectName, reocrdId)=>{
+    await objectql.getObject(objectName).directUpdate(reocrdId, {locked: false});
+}
+
 const sendNotifications = async (instanceHistory, from, to)=>{
     if(!to){
         return;
@@ -263,6 +271,8 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
         submitted_by: userSession.userId,
     });
 
+    await lockObjectRecord(objectName, recordId);
+
     await runProcessAction(processDefinitionId, 'initial_submission', recordId, userSession);
 
     await addInstanceHistory(userSession.spaceId, instance._id, "started", comment, {actor: userSession.userId}, userSession);
@@ -333,6 +343,26 @@ const handleProcessInstance = async(instanceId: string, processStatus: string, u
     let otherPendingInstanceNodeCount = await objectql.getObject("process_instance_node").count({filters: [['process_instance', '=', instanceId], ['node_status', '=', 'pending']]});
     if(otherPendingInstanceNodeCount === 0){
         const pInstance = await objectql.getObject("process_instance").update(instanceId, {status: processStatus, completed_date: new Date(), last_actor: userSession.userId});
+        if(processStatus === 'removed'){
+            await unlockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);
+        }else{
+            let process = objectql.getObject("process_definition").findOne(pInstance.process_definition);
+
+            if(processStatus === 'approved'){
+                if(process.finalApprovalRecordLock === 'unlock'){
+                    await unlockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);
+                }else{
+                    await lockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);
+                }
+                
+            }else if(processStatus === 'rejected'){
+                if(process.finalRejectionRecordLock === 'unlock'){
+                    await unlockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);
+                }else{
+                    await lockObjectRecord(pInstance.target_object.o, pInstance.target_object.ids[0]);
+                }
+            }
+        } 
         let when = getProcessActionWhenByStatus(processStatus);
         if(when){
             await runProcessAction(pInstance.process_definition, when, pInstance.target_object.ids[0], userSession);

@@ -566,7 +566,14 @@ module.exports = {
 
                 }
             }
-        }
+        },
+        // "before.update.server.processRecordLockCheck": {
+        //     on: 'server',
+        //     when: 'before.update',
+        //     todo: function(userId, doc, fieldNames, modifier, options){
+
+        //     }
+        // }
         // "before.update.server.fieldFormula": {
         //     on: "server",
         //     when: "before.update",

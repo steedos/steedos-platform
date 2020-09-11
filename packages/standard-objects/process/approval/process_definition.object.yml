@@ -48,13 +48,15 @@ fields:
   record_editability:
     type: select
     is_wide: true
+    required: true
+    defaultValue: admin_only
     inlineHelpText: When a record is submitted for approval, it’s locked to prevent users from editing it during the approval process. Use the record editability properties to determine who can edit records that are locked in this approval process.
     label: Record Editability Properties
     options:
       - label: Administrators ONLY can edit records during the approval process
         value: admin_only
-      - label: Administrators OR the currently assigned approver can edit records during the approval process.
-        value: admin_or_current_approver
+      # - label: Administrators OR the currently assigned approver can edit records during the approval process.
+      #   value: admin_or_current_approver
   # approval_page_fields:
   #   type: text
   #   is_wide: true
@@ -79,6 +81,52 @@ fields:
     is_wide: true
     label: Allow submitters to recall approval requests
     group: 提交设置
+  initialSubmissionRecordLock:
+    type: select
+    required: true
+    options:
+      - label: 锁定记录以免进行编辑
+        value: lock
+      - label: 取消锁定可以进行编辑
+        value: unlock
+    defaultValue: lock
+    readonly: true
+    label: 初始提交
+    group: record lock
+  finalApprovalRecordLock:
+    type: select
+    required: true
+    options:
+      - label: 锁定记录以免进行编辑
+        value: lock
+      - label: 取消锁定可以进行编辑
+        value: unlock
+    defaultValue: lock
+    label: 最终批准
+    group: record lock
+  finalRejectionRecordLock:
+    type: select
+    required: true
+    options:
+      - label: 锁定记录以免进行编辑
+        value: lock
+      - label: 取消锁定可以进行编辑
+        value: unlock
+    defaultValue: unlock
+    label: 最终拒绝
+    group: record lock
+  recallRecordLock:
+    type: select
+    required: true
+    options:
+      - label: 锁定记录以免进行编辑
+        value: lock
+      - label: 取消锁定可以进行编辑
+        value: unlock
+    defaultValue: unlock
+    readonly: true
+    label: 调回
+    group: record lock
 relatedList:
   - process_node
   - action_field_updates

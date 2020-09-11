@@ -53,3 +53,10 @@ export const allowApprover = async (instanceHistoryId: string, userSession: any)
         return false;
     }
 }
+
+// export const allowEditRecord = async (objectName, recordId, userSession: any)=>{
+//     let processInstance = await objectql.getObject("process_instance").count({filters: [['target_object.o', '=', objectName],['target_object.ids', '=', recordId]]});
+//     if(processInstance < 1){
+//         return true;
+//     }
+// }
