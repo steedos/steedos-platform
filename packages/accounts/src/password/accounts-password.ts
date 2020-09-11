@@ -717,11 +717,12 @@ export default class AccountsPassword implements AuthenticationService {
       return userId
     } else if (user.mobile) {
       const EFFECTIVE_TIME = 10; //10分钟
+      const userId = await this.db.addVerificationCode(user, code);
       const sms = {
         mobile: user.mobile,
-        message: `验证码：{$code}，{$EFFECTIVE_TIME}分钟内有效，请勿泄漏给他人！`
+        message: `验证码：${code}，${EFFECTIVE_TIME}分钟内有效，请勿泄漏给他人！`
       }
-      const userId = await this.db.addVerificationCode(user, code);
+      await this.server.options.sendSMS(sms);
       return userId
     }
 
