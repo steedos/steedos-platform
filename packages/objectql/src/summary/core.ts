@@ -147,7 +147,7 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
             referenceToId = <string>referenceToId._id;
         }
         let referenceToFilters:any = [[reference_to_field, "=", referenceToId]];
-        let aggregateFilters:any;
+        let aggregateFilters:any = referenceToFilters;
         if(filters && filters.length){
             if(typeof filters === "string"){
                 // 传入的过滤条件为odata字符串时，需要把aggregateFilters也解析为odata串并取AND
@@ -158,9 +158,14 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
                 aggregateFilters = [referenceToFilters, filters];
             }
         }
-        const aggregateResults = await getSteedosSchema().getObject(summary_object).aggregate({
+
+        if (userSession && aggregateFilters && !_.isString(aggregateFilters)) {
+            // 过滤器中支持userSession变量的写法，比如[["owner", "=", "{userId}"]]
+            aggregateFilters = formatFiltersToODataQuery(aggregateFilters, userSession);
+        }
+        const aggregateResults = await getSteedosSchema().getObject(summary_object).directAggregate({
             filters: aggregateFilters
-        }, aggregateGroups, userSession);
+        }, aggregateGroups);
         // console.log("===aggregateResults===", aggregateResults);
         if (aggregateResults && aggregateResults.length) {
             const groupKey = getSummaryAggregateGroupKey(summary_type, summary_field);
