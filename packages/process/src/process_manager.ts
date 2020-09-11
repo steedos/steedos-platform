@@ -40,7 +40,7 @@ const sendNotifications = async (instanceHistory, from, to)=>{
     }).run();
 }
 
-const getProcessNodeApprover = async (instanceId: string, processNode: any, userSession: any, chooseApprover: any , isBack?: boolean)=>{
+const getProcessNodeApprover = async (instanceId: string, processNode: any, userSession: any, chooseApprover: any , isBack: boolean, record?:any)=>{
     let nodeApprover = [];
 
     if(isBack){
@@ -69,7 +69,21 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
             }
     
             if(!_.isEmpty(processNode.assigned_approver_user_field)){
-                //TODO
+                if(instanceId){
+                    const processInstance = await objectql.getObject("process_instance").findOne(instanceId);
+                    record = await objectql.getObject(processInstance.target_object.o).findOne(processInstance.target_object.ids[0]);
+                }
+                if(record){
+                    _.each(processNode.assigned_approver_user_field, function(fieldName){
+                        let fieldValue = record[fieldName];
+                        if(_.isString(fieldValue)){
+                            fieldValue = [fieldValue]
+                        }
+                        if(_.isArray(fieldValue)){
+                            nodeApprover = nodeApprover.concat(fieldValue);
+                        }
+                    })
+                }
             }
     
         }else if(approver === 'submitter_choose'){
@@ -257,7 +271,8 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
     let approver = null;
 
     if(!to_final_rejection && !to_final_rejection){
-        approver = await getProcessNodeApprover(null, nextNode, userSession, chooseApprover);
+        const record = await objectql.getObject(objectName).findOne(recordId);
+        approver = await getProcessNodeApprover(null, nextNode, userSession, chooseApprover, false, record);
     }
 
     let instance = await objectql.getObject("process_instance").insert({
@@ -448,7 +463,7 @@ export const processInstanceWorkitemApprove = async (instanceHistoryId: string, 
         if(nextNode){
             nextNodeOptions = {}
             nextNodeOptions.node = nextNode;
-            nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.node, userSession, chooseApprover);
+            nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.node, userSession, chooseApprover, false);
         }
     }
     await handleProcessInstanceWorkitem(currentInstanceNode, 'approved', instanceHistoryId, userSession, comment, nextNodeOptions);

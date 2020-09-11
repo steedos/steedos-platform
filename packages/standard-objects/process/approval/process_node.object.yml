@@ -74,8 +74,27 @@ fields:
     type: lookup
     multiple: true
     group: Select Assigned Approver
-    optionsFunction: !!js/function
-      function(){return []}
+    showIcon: false
+    depend_on:
+      - process_definition
+    optionsFunction: !!js/function |
+      function (doc){
+        var options = [];
+        if(doc.process_definition){
+          var pid = doc.process_definition;
+          if(_.isObject(pid)){
+            pid = pid._id;
+          }
+          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
+          var userFields = _.filter(Creator.getObject(object_name).fields, function(field){
+            return (field.type === 'lookup' || field.type === 'master_detail') && field.omit != true && field.reference_to === 'users'
+          });
+          _.each(userFields, function(field){
+            options.push({label:field.label, value:field.name});
+          })
+        }
+        return options;
+      }
   when_multiple_approvers:
     type: select
     is_wide: true
@@ -103,6 +122,18 @@ fields:
       - label: 'Perform ONLY the rejection actions for this step and send the approval request back to the most recent approver. (Go Back 1 Step)'
         value: back_to_previous
 form:
+  beforeInsert:
+    function(){
+      if(_.isString(this.doc.assigned_approver_users)){
+        this.doc.assigned_approver_users = this.doc.assigned_approver_users.split(',')
+      }
+    }
+  beforeUpdate:
+    function(){
+      if(_.isString(this.doc.assigned_approver_users)){
+        this.doc.assigned_approver_users = this.doc.assigned_approver_users.split(',')
+      }
+    }
   beforeEdit: !!js/function |
     function(){
       Steedos.ProcessNodeManager.changeSchema(this.doc, this.schema);
