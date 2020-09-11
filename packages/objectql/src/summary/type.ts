@@ -1,3 +1,5 @@
+import { SteedosQueryFilters } from '../types';
+
 /**
  * 累计汇总字段配置结构
  * 低代码/零代码中可以配置object_name、field_name、summary_object、summary_type、summary_field属性，其他属性都是算出来的
@@ -10,6 +12,7 @@ export type SteedosFieldSummaryTypeConfig = {
     summary_object: string, //对汇总的子表对象
     summary_type: SteedosSummaryTypeValue, //要汇总的类型
     summary_field?: string, //要聚合的字段，只能是数值、金额、日期、日期时间字段类型
+    filters?: SteedosQueryFilters, //要汇总子表记录的过滤条件
     summary_field_type?: string, //如果summary_field不为空，记录其字段类型，用于数据库最终保存的字段类型
     reference_to_field?: string //子表上的master_detail关联到主表对象的字段，必须能找到且只能找到一个
 }

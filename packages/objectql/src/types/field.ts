@@ -3,6 +3,7 @@ import { SteedosObjectType } from '.';
 import _ = require('underscore')
 import { SteedosFieldDBType } from '../driver';
 import { SteedosDataSourceType } from './datasource';
+import { SteedosQueryFilters } from './query';
 
 //TODO 整理字段类型
 const FIELDTYPES = [
@@ -91,6 +92,7 @@ abstract class SteedosFieldProperties{
     summary_object?: string
     summary_type?: string
     summary_field?: string
+    filters?: SteedosQueryFilters
 }
 
 export interface SteedosFieldTypeConfig extends SteedosFieldProperties{

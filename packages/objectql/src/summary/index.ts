@@ -88,7 +88,8 @@ export const addObjectFieldSummaryConfig = (fieldConfig: SteedosFieldTypeConfig,
         field_name: fieldConfig.name,
         summary_object: fieldConfig.summary_object,
         summary_type: <SteedosSummaryTypeValue>fieldConfig.summary_type,
-        summary_field: fieldConfig.summary_field
+        summary_field: fieldConfig.summary_field,
+        filters: fieldConfig.filters
     };
     
     initSummaryConfig(summaryConfig);

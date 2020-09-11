@@ -2,6 +2,7 @@ import { getSteedosSchema } from '../index';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryTypeBlankValue } from './type';
 import { getObjectQuotedByFieldSummaryConfigs, getObjectFieldSummaryConfigs } from './field_summary';
 import { runQuotedByObjectFieldFormulas } from '../formula';
+import { formatFiltersToODataQuery } from '@steedos/filters';
 import _ = require('lodash');
 import { JsonMap } from '@salesforce/ts-types';
 
@@ -135,7 +136,7 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
 }
 
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, currentUserId: string) => {
-    const { reference_to_field, summary_type, summary_field, summary_object, field_name, object_name } = fieldSummaryConfig;
+    const { reference_to_field, summary_type, summary_field, summary_object, field_name, object_name, filters } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
     }
@@ -145,7 +146,17 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
         if(typeof referenceToId !== "string"){
             referenceToId = <string>referenceToId._id;
         }
-        let aggregateFilters = [[reference_to_field, "=", referenceToId]];
+        let aggregateFilters:any = [[reference_to_field, "=", referenceToId]];
+        if(filters && filters.length){
+            if(typeof filters === "string"){
+                // 传入的过滤条件为odata字符串时，需要把aggregateFilters也解析为odata串并取AND
+                aggregateFilters = formatFiltersToODataQuery(aggregateFilters);
+                aggregateFilters = `(${aggregateFilters}) and (${filters})`;
+            }
+            else{
+                aggregateFilters = [aggregateFilters, filters];
+            }
+        }
         const aggregateResults = await getSteedosSchema().getObject(summary_object).aggregate({
             filters: aggregateFilters
         }, aggregateGroups);

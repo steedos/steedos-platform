@@ -335,13 +335,34 @@ fields:
           return options;
         }
       }
-  # summary_filters:
-  #   label: Filter Criteria
-  #   type: '[Object]'
-  #   inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
-  #   group: Summary
-  #   is_wide: true
-  #   # omit: true
+  filters:
+    label: Filter Criteria
+    type: 'grid'
+    inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
+    group: Summary
+    is_wide: true
+    hidden: true
+    omit: true
+  filters.$:
+    label: Filter Criteria
+    blackbox: true
+    type: object
+    omit: true
+    hidden: true
+  filters.$.field:
+    label: Field
+    type: text
+  filters.$.operation:
+    label: Operator
+    type: select
+    defaultValue: =
+    options: !<tag:yaml.org,2002:js/function> |- 
+      function () {
+              return Creator.getFieldOperation();
+          }
+  filters.$.value:
+    label: Value
+    blackbox: true
   column_name:
     type: text
     label: Database column name
