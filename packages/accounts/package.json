@@ -32,6 +32,7 @@
     "@accounts/two-factor": "^0.20.1",
     "@babel/runtime": "^7.6.0",
     "app-root-path": "^2.2.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "1.19.0",
     "cookies": "^0.8.0",
     "cors": "2.8.5",
