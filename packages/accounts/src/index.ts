@@ -52,6 +52,7 @@ async function getAccountsServer (context){
         },
       }),
       sendMail: sendMail,
+      sendSMS: sendSMS,
       siteUrl: siteUrl,
       tokenSecret: tokenSecret,
       tokenConfigs: {

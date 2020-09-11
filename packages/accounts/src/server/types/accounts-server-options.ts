@@ -4,7 +4,7 @@ import { EmailTemplatesType } from './email-templates-type';
 import { UserObjectSanitizerFunction } from './user-object-sanitizer-function';
 import { ResumeSessionValidator } from './resume-session-validator';
 import { PrepareMailFunction } from './prepare-mail-function';
-import { SendMailType } from './send-mail-type';
+import { SendMailType, SendSMSType } from './send-mail-type';
 
 export interface AccountsServerOptions {
   /**
@@ -24,4 +24,5 @@ export interface AccountsServerOptions {
   siteUrl?: string;
   prepareMail?: PrepareMailFunction;
   sendMail?: SendMailType;
+  sendSMS?: SendSMSType;
 }
