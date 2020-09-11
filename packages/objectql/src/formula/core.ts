@@ -254,9 +254,9 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFormulaVarPat
  * @param objectName 
  * @param recordId 
  * @param currentUserId 
- * @param fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
- * @param escapeObjectName 传入该参数时，将跳过该对象上的is_own的公式字段，且只有参数objectName与该参数值相同时才生效
- * @param quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
+ * @param options.fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
+ * @param options.escapeConfigs 传入该参数时，将额外跳过这些公式字段配置的运算，提高性能
+ * @param options.quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
 export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, currentUserId: string, options: {
     fieldNames?: Array<string>,
