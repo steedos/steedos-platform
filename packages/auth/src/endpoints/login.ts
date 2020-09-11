@@ -1,7 +1,7 @@
 
 import * as express from 'express';
 const SHA256 = require("sha256");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 import { getSession } from '../session';
 import { setAuthCookies, generateStampedLoginToken, hashStampedToken, insertHashedLoginToken } from '../utils';
 
