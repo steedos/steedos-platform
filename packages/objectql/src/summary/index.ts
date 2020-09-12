@@ -1,6 +1,6 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryFieldTypeValue, SupportedSummaryFieldTypes } from './type';
-import { addFieldSummaryConfig, getFieldSummaryConfigs, clearFieldSummaryConfigs } from './field_summary';
+import { addFieldSummaryConfig, clearFieldSummaryConfigs } from './field_summary';
 import { isSystemObject } from '../util';
 import { isFormulaFieldQuotingObjectAndFields } from '../formula';
 import _ = require('lodash')
