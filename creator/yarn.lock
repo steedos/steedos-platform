@@ -561,8 +561,8 @@
 
 "@steedos/react@1.21.1":
   version "1.21.1"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.21.1.tgz#8477ef1f67399a5d037de83bac5552441e13eab1"
-  integrity sha512-S62O9SwAnAl2sWZf2jag5BdTHSBde1hKwtvnlNzbhj8Gf6Uf4hl+Ow5vTXsLC1oeCcleIVPNkPE8ltzwHBotcw==
+  resolved "https://registry.npm.taobao.org/@steedos/react/download/@steedos/react-1.21.1.tgz#8477ef1f67399a5d037de83bac5552441e13eab1"
+  integrity sha1-hHfvH2c5ml0Dfeg7rFVSRB4T6rE=
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
