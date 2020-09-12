@@ -155,6 +155,7 @@ list_views:
   all:
     label: All
     filter_scope: space
+    sort: [["order", "asc"]]
     columns:
       - label
       - order
