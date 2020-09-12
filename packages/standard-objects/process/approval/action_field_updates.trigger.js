@@ -1,5 +1,4 @@
 const _ = require("underscore");
-const objectql = require('@steedos/objectql');
 const util = require('./util');
 
 
