@@ -30,7 +30,6 @@ export const recall = async (req: Request, res: express.Response) => {
         }
         
     } catch (error) {
-        console.log(error);
         return res.status(200).send({state: 'FAILURE', error: error.message});
     }
 }
