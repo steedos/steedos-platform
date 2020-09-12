@@ -1,11 +1,12 @@
+import './page.html';
 
 import PageContainer from './containers/PageContainer.jsx';
 
-Template.dashboard.helpers({
-	Page: function () {
+Template.page.helpers({
+	pageContainer: function () {
 			return PageContainer;
 	},
 	pageId: function () {
-		FlowRouter.getParam('page_id')
+		return FlowRouter.getParam('page_id')
 	}
 });
