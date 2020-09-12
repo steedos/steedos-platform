@@ -118,5 +118,5 @@ export const initObjectFieldsSummarys = (datasource: string) => {
     _.each(objectConfigs, function (objectConfig) {
         addObjectFieldsSummaryConfig(objectConfig, datasource);
     })
-    console.log("===initObjectFieldsSummarys===", JSON.stringify(getFieldSummaryConfigs()))
+    // console.log("===initObjectFieldsSummarys===", JSON.stringify(getFieldSummaryConfigs()))
 }
