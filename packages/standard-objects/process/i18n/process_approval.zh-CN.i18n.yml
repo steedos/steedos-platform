@@ -9,3 +9,4 @@ process_approval_confirmBtnText_submit: 提交
 process_approval_confirmBtnText_approve: $t(process_instance_history_action_approve)
 process_approval_approver_label: 选择下一位批准人
 process_approval_confirmBtnText_reject: $t(process_instance_history_action_reject)
+process_approval_empty_node_title: 已提交的批准请求
