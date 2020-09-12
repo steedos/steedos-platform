@@ -127,7 +127,8 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
         comments: comment,
         step_node: options.nodeId,
         process_instance_node: options.instanceNodeId,
-        space: spaceId
+        space: spaceId,
+        created_by: userSession.userId
     });
 
     if(status === 'approved' || status === 'rejected'){
@@ -149,6 +150,7 @@ const addInstanceNode = async  (instanceId: string, node: any, userSession: any,
         process_node_name: nodeName,
         node_status: 'pending',
         space: userSession.spaceId,
+        created_by: userSession.userId
     })
     for (const actor of nodeApprover) {
         await addInstanceHistory(userSession.spaceId, instanceId, 'pending', null, {nodeId: nodeId, actor: actor, originalActor: actor, submitted_by: userSession.userId, instanceNodeId: instanceNode._id}, userSession);
@@ -284,6 +286,7 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
         status: "pending",
         space: userSession.spaceId,
         submitted_by: userSession.userId,
+        created_by: userSession.userId
     });
 
     await lockObjectRecord(objectName, recordId);
