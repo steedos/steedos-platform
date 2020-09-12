@@ -1,3 +1,9 @@
+Creator.Pages = {}
+
+Steedos.addPage = (page_id, page )->
+	if (page_id)
+		Creator.Pages[page_id] = page;
+
 Creator.getLayout = (app_id)->
 	if !app_id
 		app_id = Session.get("app_id")
