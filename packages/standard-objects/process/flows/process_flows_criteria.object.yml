@@ -1,5 +1,6 @@
 name: process_flows_criteria
 label: process_flows_criteria
+hidden: true
 icon: record
 fields:
   process_flow:

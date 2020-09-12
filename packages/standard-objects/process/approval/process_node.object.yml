@@ -1,5 +1,6 @@
 name: process_node
 label: process_node
+hidden: true
 icon: record
 fields:
   name:

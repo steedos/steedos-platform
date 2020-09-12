@@ -1,5 +1,6 @@
 name: process_instance_history
 label: 批准历史
+hidden: true
 icon: approval
 # paging:
 #   enabled: false

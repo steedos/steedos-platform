@@ -4,19 +4,19 @@ icon_slds: approval
 is_creator: false
 admin_menus:
   # 单位管理员可以创建和设置流程及相关参数。
-  - _id: process_automation
-    name: Process Automation
-    permission_sets:
-      - admin
-    expanded: false
-    sort: 500
+  # - _id: process_automation
+  #   name: Process Automation
+  #   permission_sets:
+  #     - admin
+  #   expanded: false
+  #   sort: 500
   - _id: process_definition
     label: 批准过程
     name: process_definition
     permission_sets:
       - admin
     object_name: process_definition
-    parent: process_automation
+    parent: menu_workflow
   # - _id: process_actions
   #   name: process_actions
   #   permission_sets:

@@ -1,5 +1,6 @@
 name: process_definition
 label: process_definition
+hidden: true
 icon: record
 fields:
   name:
@@ -10,10 +11,22 @@ fields:
     required: true
     is_name: true
   object_name:
-    type: text
+    type: lookup
     required: true
     is_wide: true
     filterable: true
+    create: false
+    reference_to: objects
+    optionsFunction: !!js/function |
+      function(){
+        var options = [];
+        _.each(Creator.objectsByName, function(v, k){
+          if(!v.hidden && !_.include(['base','users', 'company', 'space_users', 'cms_categories', 'cms_sites', 'cfs_instances_filerecord', 'license_spaces', 'product_orders', 'application_package'], v.name)){
+            options.push({label: v.label, value: v.name, icon: v.icon})
+          }
+        })
+        return options;
+      }
   description:
     label: 描述
     type: textarea

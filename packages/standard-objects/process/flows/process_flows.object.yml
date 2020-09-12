@@ -1,5 +1,6 @@
 name: process_flows
 label: process_flows
+hidden: true
 icon: record
 fields:
   name: 
