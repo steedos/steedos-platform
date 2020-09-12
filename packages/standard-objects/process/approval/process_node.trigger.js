@@ -36,8 +36,50 @@ const reviseRecordOrder = async function (processId, record) {
     }
 }
 
+const allowChange = async function(processId){
+    if(processId){
+        var process = await objectql.getObject("process_definition").findOne(processId);
+        if(process){
+            if(process.active){
+                return false;    
+            }else{
+                var processInstancesCount = await objectql.getObject('process_instance').count({filters: ['process_definition', '=', processId]});
+                if(processInstancesCount > 0){
+                    return false;
+                }
+            }
+            return true
+        }else{
+            throw new Error('未找到批准过程');    
+        }
+    }else{
+        throw new Error('未找到批准过程');
+    }
+}
+
+const allowEdit = async function(recordId, doc){
+    var unAllowEditFields = ['process_definition', 'filtrad', 'entry_criteria', 'if_criteria_not_met', 'reject_behavior'];
+    var record = await objectql.getObject('process_node').findOne(recordId);
+    if(record){
+        console.log('allowChange', await allowChange(record.process_definition));
+        if(!(await allowChange(record.process_definition))){
+            _.each(unAllowEditFields, function(fieldName){
+                if(_.has(doc, fieldName) && doc[fieldName] != record[fieldName]){
+                    throw new Error('批准过程已启用或者已提交过审批，不能修改审批步骤的批准过程、步骤条件、拒绝行为');
+                }
+            })
+        }
+    }
+}
+
 module.exports = {
     beforeInsert: async function () {
+
+        if(!(await allowChange(this.doc.process_definition)))
+        {
+            throw new Error('批准过程已启用或者已提交过审批, 禁止添加、删除批准步骤'); 
+        }
+
         if (this.doc.order === 1) {
             this.doc.reject_behavior = 'reject_request'
         }
@@ -56,6 +98,9 @@ module.exports = {
         await reviseRecordOrder(this.doc.process_definition, this.doc);
     },
     beforeUpdate: async function () {
+
+        await allowEdit(this.id, this.doc);
+
         if (this.doc.order === 1) {
             this.doc.reject_behavior = 'reject_request'
         }
@@ -72,6 +117,13 @@ module.exports = {
     afterUpdate: async function () {
         const record = await objectql.getObject("process_node").findOne(this.id)
         await reviseRecordOrder(record.process_definition, record);
+    },
+    beforeDelete: async function(){
+        let doc = await objectql.getObject('process_node').findOne(this.id);
+        if(!(await allowChange(doc.process_definition)))
+        {
+            throw new Error('批准过程已启用或者已提交过审批, 禁止添加、删除批准步骤'); 
+        }
     },
     afterDelete: async function () {
         await reviseRecordOrder(this.previousDoc.process_definition);
