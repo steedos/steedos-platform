@@ -151,6 +151,10 @@ form:
     function(){
       Steedos.ProcessNodeManager.changeSchema(this.doc, this.schema);
     }
+  afterView: !!js/function |
+    function(){
+      $(".table-cell-edit").remove();
+    }
 list_views:
   all:
     label: All

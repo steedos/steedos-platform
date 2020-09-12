@@ -173,3 +173,8 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+form:
+  afterView: !!js/function |
+    function(){
+      $(".table-cell-edit").remove();
+    }

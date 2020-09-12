@@ -61,7 +61,6 @@ const allowEdit = async function(recordId, doc){
     var unAllowEditFields = ['process_definition', 'filtrad', 'entry_criteria', 'if_criteria_not_met', 'reject_behavior'];
     var record = await objectql.getObject('process_node').findOne(recordId);
     if(record){
-        console.log('allowChange', await allowChange(record.process_definition));
         if(!(await allowChange(record.process_definition))){
             _.each(unAllowEditFields, function(fieldName){
                 if(_.has(doc, fieldName) && doc[fieldName] != record[fieldName]){
