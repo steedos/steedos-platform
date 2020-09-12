@@ -69,9 +69,12 @@ workflowSpaceRoutes.route '/print/:instanceId',
 		Session.set("box", queryParams.box);
 		Session.set("instance_change", false);
 
-		localStorage.setItem "print_is_show_attachments", !!queryParams.show_attachments
-		localStorage.setItem "print_is_show_traces", !!queryParams.show_traces
-		localStorage.setItem "print_is_show_traces_simplify", !!queryParams.show_traces_simplify
+		if _.has(queryParams, 'show_attachments')
+			localStorage.setItem "print_is_show_attachments", !!queryParams.show_attachments
+		if _.has(queryParams, 'show_traces')
+			localStorage.setItem "print_is_show_traces", !!queryParams.show_traces
+		if _.has(queryParams, 'show_traces_simplify')
+			localStorage.setItem "print_is_show_traces_simplify", !!queryParams.show_traces_simplify
 
 		BlazeLayout.render 'printLayout',
 			main: "instancePrint"

@@ -7,19 +7,16 @@ console.log("Running npm-postinstall.js");
 // fix DevExtreme的 formatISO8601函数没用使用utc时间
 execSync('cp -r .scripts/devextreme/* node_modules/devextreme/');
 execSync('rm -rf ./node_modules/crypto');
+execSync('rm -rf ./node_modules/bcrypt');
 
-if (process.platform == "darwin"){
-    try {execSync('mkdir ./node_modules/bcrypt/');} catch(e) {}
-    execSync('cp -r ../node_modules/bcrypt/* ./node_modules/bcrypt/');
-    execSync('cp -r .scripts/bcrypt-57-darwin-x64/* node_modules/bcrypt/');
-    execSync('cp -r .scripts/bcrypt-57-darwin-x64/* ../node_modules/bcrypt/');
-}
-else if (process.platform == "win32") {
-    try {execSync('mkdir ./node_modules/bcrypt/');} catch(e) {}
-    execSync('cp -r ../node_modules/bcrypt/* ./node_modules/bcrypt/');
-    execSync('cp -r .scripts/bcrypt-57-win32-x64/* node_modules/bcrypt/');
-    execSync('cp -r .scripts/bcrypt-57-win32-x64/* ../node_modules/bcrypt/');
-}
+// if (process.platform == "darwin"){
+//     execSync('cp -r .scripts/bcrypt-57-darwin-x64/* node_modules/bcrypt/');
+//     execSync('cp -r .scripts/bcrypt-57-darwin-x64/* ../node_modules/bcrypt/');
+// }
+// else if (process.platform == "win32") {
+//     execSync('cp -r .scripts/bcrypt-57-win32-x64/* node_modules/bcrypt/');
+//     execSync('cp -r .scripts/bcrypt-57-win32-x64/* ../node_modules/bcrypt/');
+// }
 
 // 修正 旧版 windows 客户端
 execSync('cp -r .scripts/iconv-lite/* node_modules/iconv-lite/');

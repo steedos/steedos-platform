@@ -13,7 +13,7 @@
     "apn": "1.6.2",
     "arson": "0.2.6",
     "basic-auth-connect": "1.0.0",
-    "bcryptjs": "2.3.0",
+    "bcryptjs": "^2.4.3",
     "cli-color": "0.2.3",
     "combined-stream2": "1.1.2",
     "compression": "1.7.1",

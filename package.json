@@ -25,8 +25,7 @@
     "**/handlebars": "^4.3.0",
     "**/debug": "^3.1.0",
     "**/hoek": "^5.0.3",
-    "**/cryptiles": "^4.1.2",
-    "**/bcrypt": "3.0.6"
+    "**/cryptiles": "^4.1.2"
   },
   "devDependencies": {
     "lerna": "^3.22.1"

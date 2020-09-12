@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@steedos/objectql": "^1.22.0-alpha.5",
-    "bcrypt": "^3.0.6",
     "cookies": "^0.7.3",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
