@@ -15,7 +15,7 @@ export const reject = async (req: Request, res: express.Response) => {
         const userSession = req.user;
         const body = req.body;
         const comment = body.comment;
-        if(allowApprover(instanceHistoryId, userSession)){
+        if(await allowApprover(instanceHistoryId, userSession)){
             const workitem = await getProcessInstanceWorkitem(instanceHistoryId, userSession);
             await processInstanceWorkitemReject(workitem._id, userSession, comment);
             return res.status(200).send({state: 'SUCCESS'});

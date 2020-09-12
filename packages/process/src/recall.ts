@@ -19,14 +19,14 @@ export const recall = async (req: Request, res: express.Response) => {
         //TODO 权限处理：如果支持取回，则发起人可以取回；否则只有对象管理员(有编辑所有的权限)可以取回 ，考虑company级权限？
         if(pendingInstances.length > 0){
             const instanceId = pendingInstances[0]._id;
-            if(allowRecall(instanceId, userSession)){
+            if(await allowRecall(instanceId, userSession)){
                 await processInstanceWorkitemRemovebyInstance(instanceId, userSession, comment);
                 return res.status(200).send({state: 'SUCCESS'});
             }else{
                 throw new Error("process_approval_error_recall_NoPermission");
             }
         }else{
-            throw new Error("process_approval_error_recall_NoApproval")
+            throw new Error("process_approval_error_NoApproval")
         }
         
     } catch (error) {

@@ -10,3 +10,6 @@ process_approval_confirmBtnText_approve: $t(process_instance_history_action_appr
 process_approval_approver_label: 选择下一位批准人
 process_approval_confirmBtnText_reject: $t(process_instance_history_action_reject)
 process_approval_empty_node_title: 已提交的批准请求
+process_approval_error_notFindProcessDefinition: 未找到适用批准流程。
+process_approval_error_NoApproval: 其他用户已调回或响应此请求。
+process_approval_error_processInstancePending: 此记录当前正在批准过程中。记录一次只能在一个批准过程中。

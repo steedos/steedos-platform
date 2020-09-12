@@ -17,12 +17,12 @@ export const submit = async (req: Request, res: express.Response) => {
         const approver = body.approver;
         
         const processDefinition = await getObjectProcessDefinition(objectName, recordId, userSession);
-
+        if(!processDefinition){
+            throw new Error('process_approval_error_notFindProcessDefinition');
+        }
         await recordSubmit(processDefinition._id, objectName, recordId, userSession, comment, approver);
-
         return res.status(200).send({state: 'SUCCESS'});
     } catch (error) {
-        console.log(error);
         return res.status(200).send({state: 'FAILURE', error: error.message});
     }
 }

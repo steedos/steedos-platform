@@ -4,7 +4,6 @@ const Fiber = require('fibers');
 const _ = require("underscore");
 
 declare var Creator;
-// declare var TAPi18n;
 
 const lockObjectRecord = async (objectName, reocrdId)=>{
     await objectql.getObject(objectName).directUpdate(reocrdId, {locked: true});
@@ -257,6 +256,12 @@ export const getObjectProcessDefinition = async (objectName: string, recordId: s
 }
 
 export const recordSubmit = async (processDefinitionId: string, objectName: string, recordId, userSession: any, comment: string, chooseApprover: any)=>{
+
+    const pendingInstanceCount = await objectql.getObject("process_instance").count({filters: [['target_object.o', '=', objectName],['target_object.ids', '=', recordId],['status', '=', 'pending']]});
+    if(pendingInstanceCount > 0){
+        throw new Error('process_approval_error_processInstancePending');
+    }
+
     const nodes = await getProcessNodes(processDefinitionId, userSession.spaceId);
 
     const nextNode = await getNextNode(nodes, 0, objectName, recordId, userSession);

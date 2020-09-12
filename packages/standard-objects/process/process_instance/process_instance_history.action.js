@@ -15,7 +15,7 @@ module.exports = {
       return Steedos.ProcessManager.allowApprover(object_name, record_id)
     },
     reassign: function(object_name, record_id, fields){
-      Steedos.ProcessManager.Reassign(object_name, record_id);
+      Steedos.ProcessManager.reassign(object_name, record_id);
     },
     recallVisible: function(){
       return Steedos.ProcessManager.allowRecall(Session.get("object_name"), Session.get("record_id"))
