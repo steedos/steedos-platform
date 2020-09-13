@@ -13,3 +13,5 @@ schema.json
 .history/*
 .env.local
 storage
+
+build/
