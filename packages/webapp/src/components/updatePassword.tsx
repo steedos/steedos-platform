@@ -24,7 +24,7 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => (
 
 const UpdatePassword = ({ history, location }: RouteComponentProps<{}>) => {
   const classes = useStyles({});
-  const [error, setError] = useState<string | null>(history.location.state ? (history.location.state.error || '') : '');
+  const [error, setError] = useState<string | null>('');
   const [email, setEmail] = useState<string | undefined>('');
   const [oldPassword, setOldPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
