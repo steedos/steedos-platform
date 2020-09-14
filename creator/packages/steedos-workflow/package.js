@@ -290,35 +290,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/router.coffee', 'client');
 	api.addFiles('client/subscribe.coffee', 'client');
 
-	// api.addFiles('client/views/flow/distribute_edit_flow_modal.html', 'client');
-	// api.addFiles('client/views/flow/distribute_edit_flow_modal.coffee', 'client');
-	// api.addFiles('client/views/flow/distribute_edit_flow_modal.less', 'client');
-
-	api.addFiles('client/views/flow/admin_flows.less', 'client');
-	api.addFiles('client/views/flow/admin_flows.html', 'client');
-	api.addFiles('client/views/flow/admin_flows.coffee', 'client');
-
-	api.addFiles('client/views/flow/admin_categories.html', 'client');
-	api.addFiles('client/views/flow/admin_categories.coffee', 'client');
-
-	api.addFiles('client/views/list/admin_flow_modal.html', 'client');
-	api.addFiles('client/views/list/admin_flow_modal.coffee', 'client');
-
-	api.addFiles('client/views/list/admin_import_export_flows.html', 'client');
-	api.addFiles('client/views/list/admin_import_export_flows.coffee', 'client');
-
-	api.addFiles('client/views/list/admin_flows_roles.html', 'client');
-	api.addFiles('client/views/list/admin_flows_roles.less', 'client');
-	api.addFiles('client/views/list/admin_flows_roles.coffee', 'client');
-
-	api.addFiles('client/views/list/admin_flows_roles_modal.html', 'client');
-	api.addFiles('client/views/list/admin_flows_roles_modal.less', 'client');
-	api.addFiles('client/views/list/admin_flows_roles_modal.coffee', 'client');
-
-	api.addFiles('client/views/list/admin_flows_roles_detail_modal.html', 'client');
-	api.addFiles('client/views/list/admin_flows_roles_detail_modal.less', 'client');
-	api.addFiles('client/views/list/admin_flows_roles_detail_modal.coffee', 'client');
-
 	api.addFiles('client/views/list/related_instances_list.html', 'client');
 	api.addFiles('client/views/list/related_instances_list.coffee', 'client');
 	api.addFiles('client/views/list/related_instances_modal.less', 'client');
@@ -339,17 +310,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/instance/remind_modal.html', 'client');
 	api.addFiles('client/views/instance/remind_modal.coffee', 'client');
 
-	api.addFiles('client/views/list/admin_instance_number_rules.html', 'client');
-	api.addFiles('client/views/list/admin_instance_number_rules.coffee', 'client');
-
-	api.addFiles('client/views/list/admin_flow_positions.html', 'client');
-	api.addFiles('client/views/list/admin_flow_positions.coffee', 'client');
-	api.addFiles('client/views/list/admin_flow_positions.less', 'client');
-
-	api.addFiles('client/views/list/tableau_introduction_modal.html', 'client');
-	api.addFiles('client/views/list/tableau_introduction_modal.less', 'client');
-	api.addFiles('client/views/list/tableau_introduction_modal.coffee', 'client');
-
 	api.addFiles('client/views/list/batch_instances.html', 'client');
 	api.addFiles('client/views/list/batch_instances.coffee', 'client');
 	api.addFiles('client/views/list/batch_instances_modal.html', 'client');
@@ -363,26 +323,10 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/list/webhooks.html', 'client');
 	api.addFiles('client/views/list/webhooks.coffee', 'client');
 
-	api.addFiles('client/views/list/admin_process_delegation_rules.html', 'client');
-	api.addFiles('client/views/list/admin_process_delegation_rules.coffee', 'client');
-
 	api.addFiles('client/methods/call_statistics.coffee', 'client');
 
-	api.addFiles('client/views/holidays/make_holidays_modal.html', 'client');
-	api.addFiles('client/views/holidays/make_holidays_modal.coffee', 'client');
-	api.addFiles('client/views/holidays/make_holidays_modal.less', 'client');
-	
-	// api.addAssets("assets/designer/index.html", "client");
-	// api.addAssets("assets/designer/index.js", "client");
-	// api.addAssets("assets/designer/index.css", "client");
 	api.addFiles('routes/designer.coffee', 'server');
 
-	// app-workflow plugins
-	// api.addFiles('plugins/flow_import_action.coffee', 'client');
-	// api.addFiles('plugins/flow_state_action.coffee', 'client');
-	// api.addFiles('plugins/flow_export_action.coffee', 'client');
-	// api.addFiles('plugins/flow_copy_action.coffee', 'client');
-	// api.addFiles('plugins/flow_export_template_action.coffee', 'client');
 
 	api.addFiles('server/methods/set_instance_step_approve.coffee', 'server');
 	//add server file

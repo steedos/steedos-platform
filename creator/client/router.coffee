@@ -57,3 +57,10 @@ FlowRouter.route '/steedos/sso',
 		Steedos.loginWithCookie ()->
 			Meteor._debug("cookie login success");
 			FlowRouter.go(returnurl);
+
+
+FlowRouter.route '/admin/view-logs',
+	triggersEnter: [ checkUserSigned ],
+	action: (params, queryParams)->
+		BlazeLayout.render Creator.getLayout(),
+			main: "viewLogs"
