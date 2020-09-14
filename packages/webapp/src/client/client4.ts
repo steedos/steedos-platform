@@ -29,7 +29,7 @@ export default class Client4 {
     clusterId = '';
     token = '';
     csrf = '';
-    url = (process.env.NODE_ENV == 'development')? process.env.REACT_APP_API_URL as string : '';
+    url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL)? process.env.REACT_APP_API_URL as string : '';
     urlVersion = '';
     userAgent: string|null = null;
     enableLogging = false;
