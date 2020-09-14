@@ -1,7 +1,7 @@
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import path from 'path';
 
-exports.init = function(context){
+export const init = (context) => {
 
   const router = express.Router()
   
@@ -12,4 +12,5 @@ exports.init = function(context){
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
   context.app.use("/accounts/a/", router);
+  
 }

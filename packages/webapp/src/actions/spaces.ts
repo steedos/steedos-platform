@@ -16,14 +16,16 @@ export function selectSpace(spaceId?: string | null): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     const userId = getCurrentUserId(getState());
     if (!userId)
-      return
+      return {data: false};
     let selectedSpaceId = spaceId;
     
     if (!selectedSpaceId)
       selectedSpaceId = LocalStorageStore.getPreviousSpaceId(userId);
-    const space = getSpace(getState(), selectedSpaceId);
-    if (!space)
-      return {data: false};
+    else {
+      const space = getSpace(getState(), selectedSpaceId);
+      if (!space)
+        return {data: false};
+    }
 
     dispatch({
       type: SpaceTypes.SELECT_SPACE,
@@ -47,7 +49,7 @@ export function getMySpaces(): ActionFunc {
 
 export function createSpace(name: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-      let space = null;
+      let space:any = null;
 
       try {
         space = await Client4.createSpace(name);
@@ -84,12 +86,15 @@ export function goSpaceHome(spaceId: string): ActionFunc {
     const rootUrl = getRootUrl(store.getState());
     
     const url =  new URL(rootUrl);
-    url.searchParams.append('X-User-Id',userId);
-    url.searchParams.append('X-Auth-Token',authToken);
-    url.searchParams.append('X-Space-Id',spaceId);
+    if (userId)
+      url.searchParams.append('X-User-Id',userId);
+    if (authToken)
+      url.searchParams.append('X-Auth-Token',authToken);
+    if (spaceId)
+      url.searchParams.append('X-Space-Id',spaceId);
 
     document.location.href = url.toString();
 
-    return null;
+    return { data: true };
   }
 }

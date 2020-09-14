@@ -30,6 +30,7 @@ const GlobalMessage = ({ settings, tenant, location }: any) => {
           return true
         }
       }
+      return false
     }
 
     const showMobileHelp = ()=>{
@@ -40,6 +41,7 @@ const GlobalMessage = ({ settings, tenant, location }: any) => {
           return true
         }
       }
+      return false
     }
 
     const getMsg = ()=>{

@@ -127,12 +127,12 @@ const UpdatePassword = ({ history, location }: RouteComponentProps<{}>) => {
             defaultMessage='Next'
         />
       </Button>
-      <Button component={LogInLink} location={location}>
+      {/* <Button component={LogInLink} location={location}>
         <FormattedMessage
             id='accounts.signin'
             defaultMessage='Sign In'
         />
-      </Button>
+      </Button> */}
     </form>
   );
 };

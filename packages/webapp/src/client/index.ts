@@ -3,7 +3,8 @@ import ClientClass4, {DEFAULT_LIMIT_AFTER, DEFAULT_LIMIT_BEFORE, HEADER_X_VERSIO
 
 const Client4 = new ClientClass4();
 
-window['Client4'] = Client4;
+if ((typeof(window) !== 'undefined'))
+  window['Client4'] = Client4;
 
 export {
   Client4, DEFAULT_LIMIT_AFTER, DEFAULT_LIMIT_BEFORE, HEADER_X_VERSION_ID,

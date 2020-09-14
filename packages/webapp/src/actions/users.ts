@@ -147,7 +147,7 @@ export function getMe(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
 
       if (!LocalStorageStore.getItem('userId'))
-        return null 
+        return {error: 'user not found.'} 
 
       const getMeFunc = bindClientFunc({
           clientFunc: Client4.getMe,
