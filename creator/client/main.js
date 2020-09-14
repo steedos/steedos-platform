@@ -14,7 +14,6 @@ registerDefaultPlugins();
 // 把组件导入才能在creator中正常使用
 import * as UI from '../imports/ui';
 
-
 Meteor.startup(() => {
     import { renderRoutes } from '../imports/startup/client/router.js';
     import { render } from 'react-dom';

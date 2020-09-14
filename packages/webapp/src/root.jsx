@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import { Switch, HashRouter, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getTenant } from './selectors';
-import * as GlobalActions from './actions/global_actions.jsx';
+import * as GlobalActions from './actions/global_actions';
 import {loadMeAndConfig} from './actions/root';
 
 import LoggedIn from './components/LoggedIn';

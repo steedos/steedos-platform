@@ -1,6 +1,6 @@
 {
   "name": "@steedos/react",
-  "version": "1.22.0-alpha.5",
+  "version": "1.21.1",
   "private": false,
   "files": [
     "package.json",
@@ -31,6 +31,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.6",
     "@devexpress/dx-react-core": "^2.0.4",
     "@devexpress/dx-react-grid": "^2.0.4",
     "@devexpress/dx-react-grid-material-ui": "^2.0.4",

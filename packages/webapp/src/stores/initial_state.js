@@ -20,6 +20,11 @@ export default {
           'zh-CN': zhCN
       }
   },
+  settings: {
+      services: {
+
+      }
+  },
   requests: {
       status: "not_started"
   },

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import { Transition } from '@tailwindui/react'
 import { useState } from 'react'
-import * as GlobalActions from '../actions/global_actions.jsx';
+import * as GlobalActions from '../actions/global_actions';
 import Logo from './Logo';
 
 const Navbar = ({ tenant, user }: any) => {

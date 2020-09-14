@@ -1,5 +1,2 @@
-import Background from './components/Background';
-
-export { 
-  Background,
-}
+export * from './components';
+export * from './pages';

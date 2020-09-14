@@ -2,7 +2,6 @@ import { hashHistory } from "../utils/hash_history";
 import { logout, loadMe } from "./users";
 import store from '../stores/redux_store';
 import { getCurrentUser } from "../selectors/entities/users";
-import * as Utils from '../utils/utils.jsx';
 import { getMySpaces, getCurrentSpaceId, getSpace } from '../selectors/entities/spaces';
 import LocalStorageStore from '../stores/local_storage_store';
 import { selectSpace } from '../actions/spaces';

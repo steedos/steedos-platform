@@ -26,7 +26,7 @@ export function bindActionToRedux(action, ...args) {
 }
 
 if (process.env.NODE_ENV !== 'production') { //eslint-disable-line no-process-env
-    window.store = store;
+    window.storeWebapp = store;
 }
 
 export default store;
