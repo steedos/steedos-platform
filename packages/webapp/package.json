@@ -6,9 +6,10 @@
   "scripts": {
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts start",
     "build": "cross-env NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts build",
-    "copy-assets": "rm -rf ../assets/public/accounts/a/ && cp -r build ../assets/public/accounts/a/ rm -rf build",
-    "build-lib": "rm -rf lib && tsc --build tsconfig.lib.json",
-    "prepare": "yarn build && yarn copy-assets && yarn build-lib",
+    "clean": "rm -rf ./public/accounts/ && rm -rf lib",
+    "copy-to-public": "rm -rf build/assets && mkdir public/accounts && mv build ./public/accounts/a",
+    "build-lib": "tsc --build tsconfig.lib.json",
+    "prepare": "yarn clean && yarn build && yarn copy-to-public && yarn build-lib",
     "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },
   "eslintConfig": {

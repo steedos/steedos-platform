@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development postcss tailwind-src.css -o dist/steedos-tailwind.min.css",
     "prod": "cross-env NODE_ENV=production postcss tailwind-src.css -o dist/steedos-tailwind.min.css",
-    "creator": "cp dist/steedos-tailwind.min.css ../../creator/public/assets/styles",
-    "prepare": "yarn prod && yarn creator"
+    "copy-to-public": "cp dist/steedos-tailwind.min.css ../webapp/public/assets/styles",
+    "prepare": "yarn prod && yarn copy-to-public"
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
