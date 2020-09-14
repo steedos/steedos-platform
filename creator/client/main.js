@@ -15,9 +15,11 @@ import { registerWindowLibraries, registerDefaultPlugins } from '@steedos/react'
 registerWindowLibraries();
 registerDefaultPlugins();
 
+
 import { renderRoutes } from '../imports/startup/client/router.js';
 import { render } from 'react-dom';
 Meteor.startup(() => {
+    BlazeLayout.setRoot('body');
     render(renderRoutes(), document.getElementById('root'));
 });
 
