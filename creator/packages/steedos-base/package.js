@@ -197,30 +197,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/steedos/views/404.html', 'client');
 	api.addFiles('client/steedos/views/404.coffee', 'client');
 
-	api.addFiles('client/steedos/views/api/api.html', 'client');
-	api.addFiles('client/steedos/views/api/api.less', 'client');
-	api.addFiles('client/steedos/views/api/api.coffee', 'client');
-
-	api.addFiles('client/steedos/views/login/login_layout.less', 'client');
-	api.addFiles('client/steedos/views/login/login_layout.html', 'client');
-	api.addFiles('client/steedos/views/login/login_layout.coffee', 'client');
-
-	api.addFiles('client/steedos/views/profile/linked.html', 'client');
-	api.addFiles('client/steedos/views/profile/linked.coffee', 'client');
-
-	api.addFiles('client/steedos/views/profile/profile.less', 'client');
-	api.addFiles('client/steedos/views/profile/profile.html', 'client');
-	api.addFiles('client/steedos/views/profile/profile.coffee', 'client');
-
-	api.addFiles('client/steedos/views/space/customize_apps.html', 'client');
-	api.addFiles('client/steedos/views/space/customize_apps.coffee', 'client');
-
-	api.addFiles('client/steedos/views/space/space_info.html', 'client');
-	api.addFiles('client/steedos/views/space/space_info.coffee', 'client');
-
-	api.addFiles('client/steedos/views/space/space_select.html', 'client');
-	api.addFiles('client/steedos/views/space/space_select.coffee', 'client');
-
 	api.addFiles('client/steedos/views/billing/steedos_billing.html', 'client');
 	api.addFiles('client/steedos/views/billing/steedos_billing.coffee', 'client');
 	api.addFiles('client/steedos/views/billing/steedos_billing.less', 'client');
@@ -230,9 +206,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/steedos/views/billing/space_recharge_qrcode_modal.coffee', 'client');
 
 	api.addAssets('client/images/default-avatar.png', 'client');
-
-	api.addFiles('client/views/space_user_signs.html', 'client');
-	api.addFiles('client/views/space_user_signs.coffee', 'client');
 
 	api.addFiles('client/iframe/master.html', 'client');
 	api.addFiles('client/iframe/master.coffee', 'client');

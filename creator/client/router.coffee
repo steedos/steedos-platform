@@ -48,3 +48,12 @@ FlowRouter.route '/apps/iframe/:app_id',
 		BlazeLayout.render 'iframeLayout',
 			url: url
 
+
+## 不知还能不能用
+FlowRouter.route '/steedos/sso', 
+	action: (params, queryParams)->
+		returnurl = queryParams.returnurl
+
+		Steedos.loginWithCookie ()->
+			Meteor._debug("cookie login success");
+			FlowRouter.go(returnurl);
