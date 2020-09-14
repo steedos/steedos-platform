@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts start",
     "build": "cross-env NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts build",
-    "copy-assets": "rm -rf ../assets/public/accounts/a/ && cp -r build ../assets/public/accounts/a/",
+    "copy-assets": "rm -rf ../assets/public/accounts/a/ && cp -r build ../assets/public/accounts/a/ rm -rf build",
     "build-lib": "rm -rf lib && tsc --build tsconfig.lib.json",
     "prepare": "yarn build && yarn copy-assets && yarn build-lib",
     "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
