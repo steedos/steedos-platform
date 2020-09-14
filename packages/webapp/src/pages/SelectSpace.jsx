@@ -60,7 +60,7 @@ class SelectSpace extends React.PureComponent {
         space ={space}
         onClick={e => this.handleSpaceClick(space)} 
         className="w-full text-left border-b border-gray-100 block hover:bg-blue-100 focus:outline-none transition duration-150 ease-in-out">
-        <div className="flex items-center px-10 py-4">
+        <div className="flex items-center sm:px-10 py-4">
           <div className="min-w-0 flex-1 flex items-center">
             <div className="flex-shrink-0 pr-4 text-gray-600">
               {/* <img className="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/> */}
@@ -92,7 +92,7 @@ class SelectSpace extends React.PureComponent {
       <Background/>
       <div className="flex sm:items-center justify-center mx-auto overflow-auto p-10">
         <div className="relative rounded sm:shadow bg-white w-screen max-w-md">
-          <div className="pt-10 pl-10 pr-10">
+          <div className="sm:pt-10 sm:pl-10 sm:pr-10">
             <Logo/>
             <h2 className="mt-6 text-left text-2xl leading-9 font-extrabold text-gray-900">
               {this.props.spaceCount>0 &&(
