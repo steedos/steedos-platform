@@ -133,13 +133,13 @@ FlowRouter.route '/app/:app_id/home',
 			Session.set("hidden_header", undefined)
 	]
 
-FlowRouter.route '/app/:app_id/page/:page_id/',
-	triggersEnter: [ checkUserSigned, checkAppPermission ],
-	action: (params, queryParams)->
-		app_id = FlowRouter.getParam("app_id")
-		Session.set("app_id", app_id)
-		BlazeLayout.render Creator.getLayout(),
-			main: 'page'
+#FlowRouter.route '/app/:app_id/page/:page_id/',
+#	triggersEnter: [ checkUserSigned, checkAppPermission ],
+#	action: (params, queryParams)->
+#		app_id = FlowRouter.getParam("app_id")
+#		Session.set("app_id", app_id)
+#		BlazeLayout.render Creator.getLayout(),
+#			main: 'page'
 
 FlowRouter.route '/page/:page_id/',
 	action: (params, queryParams)->
