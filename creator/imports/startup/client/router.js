@@ -1,16 +1,16 @@
-import React from 'react';
-import { Router, Route, Switch } from 'react-router';
+
 import history from 'history';
+import { Router, Route, Switch } from 'react-router';
+import {Background} from '@steedos/webapp';
 
 // route components
-import DashboardContainer from '../../ui/containers/DashboardContainer.jsx';
 const browserHistory = history.createBrowserHistory();
 window.browserHistory = browserHistory;
 
 export const renderRoutes = () => (
   <Router history={browserHistory}>
     <Switch>
-      <Route exact path="/react" component={DashboardContainer}/>
+      <Route exact path="/react" component={Background}/>
     </Switch>
   </Router>
 );
