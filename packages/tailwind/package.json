@@ -1,6 +1,7 @@
 {
   "name": "@steedos/tailwind",
-  "version": "1.0.0",
+  "private": false,
+  "version": "1.22.0-alpha.6",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -17,6 +18,9 @@
     "postcss-selector-parser": "^6.0.2",
     "tailwindcss": "^1.6.2",
     "tailwindcss-theming": "^3.0.0-beta.1"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "cssnano": "^4.1.10"
