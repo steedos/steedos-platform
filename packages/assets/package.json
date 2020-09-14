@@ -1,13 +1,10 @@
 {
   "name": "@steedos/assets",
   "description": "static assets for steedos platform",
-  "version": "0.18.0",
+  "version": "1.22.0-alpha.5",
   "private": false,
   "main": "plugin.js",
   "scripts": {
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
