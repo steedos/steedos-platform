@@ -4,12 +4,12 @@
   "private": false,
   "main": "lib/exports.js",
   "scripts": {
-    "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts start",
-    "build": "cross-env NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts build",
-    "clean": "rm -rf ./public/accounts/ && rm -rf lib",
+    "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/ react-scripts start",
+    "build": "cross-env NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/ react-scripts build",
+    "build-after": "mkdir build/accounts && mkdir build/accounts/a && mv build/index.html build/accounts/a/",
     "copy-to-public": "rm -rf build/assets && mkdir public/accounts && mv build ./public/accounts/a",
-    "build-lib": "tsc --build tsconfig.lib.json",
-    "prepare": "yarn clean && yarn build && yarn copy-to-public && yarn build-lib",
+    "build-lib": "rm -rf lib && tsc --build tsconfig.lib.json",
+    "prepare": "yarn build && yarn build-after && yarn build-lib",
     "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },
   "eslintConfig": {

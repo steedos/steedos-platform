@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Logo = ({ tenant, location }: any) => {
-  let logoUrl = Client4.getAbsoluteUrl("/accounts/a/images/logo_platform.png");
+  let logoUrl = "/images/logo_platform.png";
   if (tenant.logo_url) {
     logoUrl = tenant.logo_url
   }
