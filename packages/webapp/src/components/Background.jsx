@@ -7,13 +7,14 @@ class Background extends React.Component {
     const color = this.props.color?this.props.color:'#f8f8f8';
     const url = this.props.url?this.props.url:Client4.getAbsoluteUrl('/accounts/a/images/background.svg');
 
-    const style = {
+    const style = (window.innerWidth > 640)?{
       backgroundImage: 'url('+url+')',
       backgroundColor: color
-    }
+    }:{}
+
     return (
-      <div className="hidden sm:block">
-        <div className="fixed justify-center mx-auto h-full w-full" style={style}>
+      <div className="">
+        <div className="fixed bg-white justify-center mx-auto h-full w-full" style={style}>
         </div>  
       </div>
     )
