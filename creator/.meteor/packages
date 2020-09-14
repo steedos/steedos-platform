@@ -167,7 +167,6 @@ steedos:app-chat
 # steedos:app-mailbase
 
 steedos:users-import
-steedos:app-base
 
 
 # steedos:version
@@ -202,6 +201,5 @@ steedos:slipjs
 react-template-helper
 
 steedos:webkit-notification
-steedos:cms
 
 steedos:huaweipush

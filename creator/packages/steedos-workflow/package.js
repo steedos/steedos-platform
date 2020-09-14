@@ -54,7 +54,6 @@ Package.onUse(function(api) {
 
 	api.use('steedos:mailqueue');
 	api.use('steedos:webhookqueue');
-	api.use('steedos:api-authenticate-user');
 	api.use('steedos:slipjs');
 
 	api.use('universe:i18n@1.13.0');
