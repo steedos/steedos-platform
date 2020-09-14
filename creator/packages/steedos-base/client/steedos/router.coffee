@@ -35,14 +35,6 @@ FlowRouter.triggers.exit [
 ]
 
 
-# FlowRouter.route '/steedos', 
-#   action: (params, queryParams)->
-#       if !Meteor.userId()
-#           Steedos.redirectToSignIn()
-#           return true
-#       else
-#           FlowRouter.go "/steedos/springboard";
-
 
 FlowRouter.route '/admin/profile', 
 	action: (params, queryParams)->
