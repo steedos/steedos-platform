@@ -12,13 +12,13 @@
 			<div class="creator-content-wrapper {{#if split}}split{{/if}}" style="{{#if hiddenHeader}}top: 0px !important;{{/if}}">
 				{{#if split}}
 					<div class="split-left bg-white shadow">
-						{{> Template.dynamic template="creatorSidebar"}}
+						{{> Template.dynamic template="creatorSidebar" data=data}}
 					</div>
 					<div class="split-right">
-						{{> Template.dynamic template=main}}
+						{{> Template.dynamic template=main data=data}}
 					</div>
 				{{else}}
-					{{> Template.dynamic template=main}}
+					{{> Template.dynamic template=main data=data}}
 				{{/if}}
 			</div>
 		</div>

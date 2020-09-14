@@ -50,6 +50,10 @@ Template.creatorLayout.helpers
 		else
 			return false
 
+	data: ->
+		data = Template.instance()?.data?.data?()
+		return if data then data else {}
+
 Template.creatorLayout.events
 	'click .sidebar-show': (e, t)->
 		$("#sidebar-left").addClass('move--right')
