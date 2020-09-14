@@ -34,6 +34,10 @@
           "forceAccountBindPhone": false, //强行弹出手机号绑定窗口
           "expiredDays": 30, //失效时间，forceAccountBindPhone为true时失效后重新强行弹出手机号绑定窗口
           "showRemindButton": true //显示催办按钮
+        },
+        //系统设置相关
+        "admin": {
+            "background": "/packages/steedos_theme-qhd/client/background/qhd.jpg", //增加默认背景图
         }
     },
     "cron": {
