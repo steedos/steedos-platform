@@ -175,9 +175,6 @@ Package.onUse(function(api) {
 		'client/views/loading.less',
 		'client/views/space_switcher_modal.html',
 		'client/views/space_switcher_modal.coffee',
-		'client/views/sidebar_user_panel.html',
-		'client/views/sidebar_user_panel.coffee',
-		'client/views/sidebar_user_panel.less',
 		'client/dataTables_bootstrap.less',
 		'client/my_contacts_limit.coffee',
 		'client/company.coffee'
@@ -199,9 +196,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/steedos/views/404.less', 'client');
 	api.addFiles('client/steedos/views/404.html', 'client');
 	api.addFiles('client/steedos/views/404.coffee', 'client');
-
-	api.addFiles('client/steedos/views/layouts/sidebar.html', 'client');
-	api.addFiles('client/steedos/views/layouts/sidebar.coffee', 'client');
 
 	api.addFiles('client/steedos/views/api/api.html', 'client');
 	api.addFiles('client/steedos/views/api/api.less', 'client');
@@ -235,16 +229,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/steedos/views/billing/space_recharge_qrcode_modal.html', 'client');
 	api.addFiles('client/steedos/views/billing/space_recharge_qrcode_modal.coffee', 'client');
 
-	api.addFiles('client/views/springboard.less', 'client');
-	api.addFiles('client/views/springboard.html', 'client');
-	api.addFiles('client/views/springboard.coffee', 'client');
 	api.addAssets('client/images/default-avatar.png', 'client');
-	api.addFiles('client/views/workbench.less', 'client');
-	api.addFiles('client/views/workbench.html', 'client');
-	api.addFiles('client/views/workbench.coffee', 'client');
-	api.addFiles('client/views/manage_business.less', 'client');
-	api.addFiles('client/views/manage_business.html', 'client');
-	api.addFiles('client/views/manage_business.coffee', 'client');
 
 	api.addFiles('client/views/space_user_signs.html', 'client');
 	api.addFiles('client/views/space_user_signs.coffee', 'client');
@@ -255,9 +240,6 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/loading.coffee', 'client');
 
-	api.addFiles('client/layout/master.less', 'client');
-	api.addFiles('client/layout/master.html', 'client');
-	api.addFiles('client/layout/master.coffee', 'client');
 
 	api.addFiles('client/layout/notFound_layout.html', 'client');
 	api.addFiles('client/layout/notFound_layout.coffee', 'client');
