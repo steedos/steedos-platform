@@ -12,7 +12,7 @@ class Background extends React.Component {
       backgroundColor: color
     }
     return (
-      <div>
+      <div className="hidden sm:block">
         <div className="fixed justify-center mx-auto h-full w-full" style={style}>
         </div>  
       </div>
