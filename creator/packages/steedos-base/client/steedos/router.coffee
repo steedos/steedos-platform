@@ -2,14 +2,14 @@ checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
 		Steedos.redirectToSignIn()
 
-FlowRouter.notFound = 
-	action: ()->
-		if !Meteor.userId()
-			BlazeLayout.render 'loginLayout',
-				main: "not_found"
-		else
-			BlazeLayout.render 'creatorLayout',
-				main: "not_found"
+# FlowRouter.notFound = 
+# 	action: ()->
+# 		if !Meteor.userId()
+# 			BlazeLayout.render 'loginLayout',
+# 				main: "not_found"
+# 		else
+# 			BlazeLayout.render 'creatorLayout',
+# 				main: "not_found"
 
 FlowRouter.triggers.enter [
 	()-> Session.set("router-path", FlowRouter.current().path)
