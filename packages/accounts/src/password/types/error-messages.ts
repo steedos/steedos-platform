@@ -51,6 +51,8 @@ export interface ErrorMessages {
    * Default to 'Invalid credentials'
    */
   invalidCredentials: string;
+
+  invalidCode: string;
   /**
    * Default to 'Invalid token'
    */
