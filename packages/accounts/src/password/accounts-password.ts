@@ -24,7 +24,9 @@ import { PasswordCreateUserType, PasswordLoginType, PasswordType, ErrorMessages 
 import { errors } from './errors';
 import { getSteedosConfig } from '@steedos/objectql';
 import { verifyCode, getVerifyRecord } from '../rest-express/endpoints/steedos/verify_code';
-
+const EFFECTIVE_TIME = 10; //10分钟
+const CODE_LENGTH = 6;
+const MAX_FAILURE_COUNT = 10;
 export interface AccountsPasswordOptions {
   /**
    * Two factor options passed down to the @accounts/two-factor service.
@@ -654,12 +656,11 @@ export default class AccountsPassword implements AuthenticationService {
       ? this.toMobileAndEmail({ user })
       : this.toMobileAndEmail({ ...user });
     
-    let foundUser = this.db.findUserByVerificationCode({email: email, mobile: mobile}, token);
-
+    let foundUser = await this.db.findUserByVerificationCode({email: email, mobile: mobile}, token);
     if (!foundUser) {
       throw new Error(
         this.server.options.ambiguousErrorMessages
-          ? this.options.errors.invalidCredentials
+          ? this.options.errors.invalidCode
           : this.options.errors.userNotFound
       );
     }
@@ -704,26 +705,25 @@ export default class AccountsPassword implements AuthenticationService {
     const code = generateRandomCode();
 
     if (user.email) {
-      const userId = await this.db.addVerificationCode(user, code);
+      const result: any = await this.db.addVerificationCode(user, code, {MAX_FAILURE_COUNT, EFFECTIVE_TIME});
       const verificationCodeMail = this.server.prepareMail(
         user.email,
-        code,
+        result.code,
         null,
         getPathFragmentPrefix() + 'verify-email',
         this.server.options.emailTemplates.verificationCode,
         this.server.options.emailTemplates.from
       );
       await this.server.options.sendMail(verificationCodeMail);
-      return userId
+      return result.owner
     } else if (user.mobile) {
-      const EFFECTIVE_TIME = 10; //10分钟
-      const userId = await this.db.addVerificationCode(user, code);
+      const result: any = await this.db.addVerificationCode(user, code, {MAX_FAILURE_COUNT, EFFECTIVE_TIME});
       const sms = {
         mobile: user.mobile,
-        message: `验证码：${code}，${EFFECTIVE_TIME}分钟内有效，请勿泄漏给他人！`
+        message: `验证码：${result.code}，${EFFECTIVE_TIME}分钟内有效，请勿泄漏给他人！`
       }
       await this.server.options.sendSMS(sms);
-      return userId
+      return result.owner
     }
 
   }

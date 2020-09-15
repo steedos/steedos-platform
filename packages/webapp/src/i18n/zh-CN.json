@@ -42,6 +42,7 @@
     "accounts.home": "首页",
     "accounts.welcome": "欢迎您",
     "accounts.invalid_credentials": "账号或密码错。",
+    "accounts.invalid_code": "账号或验证码错。",
     "accounts.update_password": "修改密码",
     "accounts.oldPassword": "旧密码",
     "accounts.newPassword": "新密码",
