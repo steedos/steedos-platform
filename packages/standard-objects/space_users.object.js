@@ -1044,9 +1044,10 @@ let actions = {
         },
         todo: function(){
             // var address = window.location.origin + "/accounts/a/#/signup?redirect_uri=" + encodeURIComponent(window.location.origin + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX) + "&X-Space-Id=" + Steedos.getSpaceId();
-            let address = window.location.origin + "/accounts/a/#/signup?&X-Space-Id=" + Steedos.getSpaceId();
+            var inviteToken = Steedos.getInviteToken();
+            let address = window.location.origin + "/accounts/a/#/signup?invite_token=" + inviteToken;
             if(_.isFunction(Steedos.isCordova) && Steedos.isCordova()){
-                address = Meteor.absoluteUrl("accounts/a/#/signup?&X-Space-Id=" + Steedos.getSpaceId())
+                address = Meteor.absoluteUrl("accounts/a/#/signup?invite_token=" + inviteToken)
             }
             
             var clipboard = new Clipboard('.list-action-custom-invite_space_users');
