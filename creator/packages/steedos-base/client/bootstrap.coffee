@@ -300,7 +300,7 @@ requestBootstrapDataUseAjax = (spaceId, callback)->
 
 requestBootstrapDataUseAction = (spaceId)->
 	SteedosReact = require('@steedos/react');
-	store.dispatch(SteedosReact.loadBootstrapEntitiesData({spaceId: spaceId}))
+	SteedosReact.store.dispatch(SteedosReact.loadBootstrapEntitiesData({spaceId: spaceId}))
 
 requestBootstrapData = (spaceId, callback)->
 	SteedosReact = require('@steedos/react');
