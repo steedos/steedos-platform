@@ -313,13 +313,6 @@ Setup.bootstrap = (spaceId, callback)->
 	requestBootstrapData(spaceId, callback)
 
 
-FlowRouter.route '/steedos/logout',
-	action: (params, queryParams)->
-		#AccountsTemplates.logout();
-		$("body").addClass('loading')
-		Meteor.logout ()->
-#			FlowRouter.go("/steedos/sign-in")
-			return
 
 Meteor.startup ()->
 	SteedosReact = require('@steedos/react');

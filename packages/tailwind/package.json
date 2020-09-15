@@ -5,18 +5,19 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development postcss tailwind-src.css -o dist/steedos-tailwind.min.css",
-    "prod": "cross-env NODE_ENV=production postcss tailwind-src.css -o dist/steedos-tailwind.min.css",
-    "creator": "cp dist/steedos-tailwind.min.css ../../creator/public/assets/styles",
-    "prepare": "yarn prod && yarn creator"
+    "dev": "cross-env NODE_ENV=development node build.js",
+    "build": "cross-env NODE_ENV=production node build.js",
+    "copy-to-public": "cp dist/steedos-tailwind.min.css ../webapp/public/assets/styles && cp dist/steedos-tailwind.min.css ../webapp/build/assets/styles",
+    "prepare": "yarn build && yarn copy-to-public"
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
     "@tailwindcss/typography": "^0.2.0",
+    "@tailwindcss/ui": "^0.6.1",
     "hex-rgb": "^4.1.0",
     "postcss-cli": "^6.1.2",
     "postcss-selector-parser": "^6.0.2",
-    "tailwindcss": "^1.6.2",
+    "tailwindcss": "^1.8.10",
     "tailwindcss-theming": "^3.0.0-beta.1"
   },
   "publishConfig": {

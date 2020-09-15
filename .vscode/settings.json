@@ -1,4 +1,9 @@
 {
+    "files.exclude": {
+        "**/.dist": true,
+        "**/.meteor/local": true,
+        "**/.npm": true
+    },
     "yaml.completion": true,
     "yaml.customTags": [
         "tag:yaml.org,2002:js/function"

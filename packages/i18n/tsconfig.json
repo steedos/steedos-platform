@@ -14,9 +14,10 @@
       //"noImplicitReturns": true,
       "stripInternal": true,
       "pretty": true,
-      //"strictNullChecks": true,
       "noUnusedLocals": true,
       "downlevelIteration": true,
+      "strictNullChecks": false,
+      "skipLibCheck": true,
       "lib": [
         "es5",
         "es6",
@@ -28,5 +29,8 @@
   },
   "include": [
     "./src/**/*"
+  ],
+  "exclude": [
+    "../../node_modules/"
   ]
 }

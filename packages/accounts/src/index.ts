@@ -127,13 +127,6 @@ export async function getAccountsRouter(context){
     res.end();
   });
 
-  /* Router to webapps build */
-  router.use("/a/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
-  router.use("/a/i18n", express.static(path.join(__dirname, '..', 'webapp', 'src', 'i18n')));
-  router.get('/a/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'webapp', 'build', 'index.html'));
-  });
-
   /* Router to SAML-IDP */
   router.use("/saml/", userLoader(accountsServer), accountsSamlIdp);
 

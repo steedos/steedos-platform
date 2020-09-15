@@ -88,7 +88,6 @@ Package.onUse(function (api) {
 	api.use('blaze-html-templates@1.1.2');
 	api.use('steedos:lightning-design-system@0.0.2');
 	api.use('universe:i18n');
-	api.use('steedos:app-base');
 
 	api.addFiles('checkNpm.js', "server");
 

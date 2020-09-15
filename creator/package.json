@@ -74,6 +74,7 @@
     "phone": "^1.0.12",
     "qs": "^6.6.0",
     "querystring": "^0.2.0",
+    "react-router": "^5.2.0",
     "request": "2.81.0",
     "requestretry": "1.12.2",
     "sha256": "^0.2.0",
@@ -95,7 +96,8 @@
   },
   "devDependencies": {
     "@steedos/app-contracts": "^1.22.0-alpha.5",
-    "@steedos/react": "1.21.1",
+    "@steedos/react": "../packages/react",
+    "@steedos/webapp": "../packages/webapp",
     "@steedos/steedos-plugin-workflow": "^2.1.1",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",

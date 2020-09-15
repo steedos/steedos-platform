@@ -161,11 +161,6 @@ Package.onUse(function(api) {
 		'client/helpers.coffee',
 		'client/tooltip.coffee',
 		'client/router.coffee',
-		'client/layout/main.coffee',
-		'client/layout/layout.html',
-		'client/layout/layout.less',
-		'client/layout/content_wrapper_shadow.html',
-		'client/layout/sidebar.html',
 		'client/layout/select_users_layout.html',
 		'client/layout/select_users_layout.less',
 		'client/views/app_list_box_modal.html',
@@ -180,36 +175,11 @@ Package.onUse(function(api) {
 		'client/views/loading.less',
 		'client/views/space_switcher_modal.html',
 		'client/views/space_switcher_modal.coffee',
-		'client/views/quick_form_modal.html',
-		'client/views/quick_form_modal.coffee',
-		'client/views/quick_form_modal.less',
-		'client/views/sidebar_user_panel.html',
-		'client/views/sidebar_user_panel.coffee',
-		'client/views/sidebar_user_panel.less',
 		'client/dataTables_bootstrap.less',
 		'client/my_contacts_limit.coffee',
 		'client/company.coffee'
 	], "client");
 
-	api.addFiles([
-		'client/layout/header/header_logo.html',
-		'client/layout/header/header_logo.coffee',
-		'client/layout/header/header_account.html',
-		'client/layout/header/header_account.coffee',
-		'client/layout/header/header_refresh.html',
-		'client/layout/header/header_refresh.coffee',
-		'client/layout/header/header_loading.html',
-		'client/layout/header/header.html',
-		'client/layout/header/header.coffee',
-		'client/layout/header/header.less',
-		'client/layout/header/steedosheader-account.html',
-		'client/layout/header/steedosheader-account.coffee',
-		'client/layout/header/steedosheader-account.less',
-		'client/layout/header/header_workflow_badge.html',
-		'client/layout/header/header_workflow_badge.coffee',
-		'client/layout/header/header_cms_badge.html',
-		'client/layout/header/header_cms_badge.coffee',
-	], "client");
 
 	api.addFiles('client/lib/jquery-touch-events/jquery.mobile-events.js', 'client');
 
@@ -227,33 +197,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/steedos/views/404.html', 'client');
 	api.addFiles('client/steedos/views/404.coffee', 'client');
 
-	api.addFiles('client/steedos/views/layouts/sidebar.html', 'client');
-	api.addFiles('client/steedos/views/layouts/sidebar.coffee', 'client');
-
-	api.addFiles('client/steedos/views/api/api.html', 'client');
-	api.addFiles('client/steedos/views/api/api.less', 'client');
-	api.addFiles('client/steedos/views/api/api.coffee', 'client');
-
-	api.addFiles('client/steedos/views/login/login_layout.less', 'client');
-	api.addFiles('client/steedos/views/login/login_layout.html', 'client');
-	api.addFiles('client/steedos/views/login/login_layout.coffee', 'client');
-
-	api.addFiles('client/steedos/views/profile/linked.html', 'client');
-	api.addFiles('client/steedos/views/profile/linked.coffee', 'client');
-
-	api.addFiles('client/steedos/views/profile/profile.less', 'client');
-	api.addFiles('client/steedos/views/profile/profile.html', 'client');
-	api.addFiles('client/steedos/views/profile/profile.coffee', 'client');
-
-	api.addFiles('client/steedos/views/space/customize_apps.html', 'client');
-	api.addFiles('client/steedos/views/space/customize_apps.coffee', 'client');
-
-	api.addFiles('client/steedos/views/space/space_info.html', 'client');
-	api.addFiles('client/steedos/views/space/space_info.coffee', 'client');
-
-	api.addFiles('client/steedos/views/space/space_select.html', 'client');
-	api.addFiles('client/steedos/views/space/space_select.coffee', 'client');
-
 	api.addFiles('client/steedos/views/billing/steedos_billing.html', 'client');
 	api.addFiles('client/steedos/views/billing/steedos_billing.coffee', 'client');
 	api.addFiles('client/steedos/views/billing/steedos_billing.less', 'client');
@@ -262,29 +205,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/steedos/views/billing/space_recharge_qrcode_modal.html', 'client');
 	api.addFiles('client/steedos/views/billing/space_recharge_qrcode_modal.coffee', 'client');
 
-	api.addFiles('client/layout/login_layout.html', "client");
-	api.addFiles('client/layout/login_layout.coffee', "client");
-	api.addFiles('client/layout/login_layout.less', "client");
-	api.addFiles('client/layout/tabbar.html', "client");
-	api.addFiles('client/layout/tabbar.coffee', "client");
-	api.addFiles('client/layout/tabbar.less', "client");
-	api.addFiles('client/views/springboard.less', 'client');
-	api.addFiles('client/views/springboard.html', 'client');
-	api.addFiles('client/views/springboard.coffee', 'client');
 	api.addAssets('client/images/default-avatar.png', 'client');
-	api.addFiles('client/views/workbench.less', 'client');
-	api.addFiles('client/views/workbench.html', 'client');
-	api.addFiles('client/views/workbench.coffee', 'client');
-	api.addFiles('client/views/manage_business.less', 'client');
-	api.addFiles('client/views/manage_business.html', 'client');
-	api.addFiles('client/views/manage_business.coffee', 'client');
-
-	api.addFiles('client/views/space_user_signs.html', 'client');
-	api.addFiles('client/views/space_user_signs.coffee', 'client');
-
-	api.addFiles('client/layout/top_sidebar.html', 'client');
-	api.addFiles('client/layout/top_sidebar.coffee', 'client');
-	api.addFiles('client/layout/top_sidebar.less', 'client');
 
 	api.addFiles('client/iframe/master.html', 'client');
 	api.addFiles('client/iframe/master.coffee', 'client');
@@ -292,9 +213,6 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/loading.coffee', 'client');
 
-	api.addFiles('client/layout/master.less', 'client');
-	api.addFiles('client/layout/master.html', 'client');
-	api.addFiles('client/layout/master.coffee', 'client');
 
 	api.addFiles('client/layout/notFound_layout.html', 'client');
 	api.addFiles('client/layout/notFound_layout.coffee', 'client');

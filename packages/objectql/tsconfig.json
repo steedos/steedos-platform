@@ -14,9 +14,10 @@
         //"noImplicitReturns": true,
         "stripInternal": true,
         "pretty": true,
-        //"strictNullChecks": true,
+        "strictNullChecks": false,
         "noUnusedLocals": true,
         "downlevelIteration": true,
+        "skipLibCheck": true,
         "lib": [
           "es5",
           "es6",
