@@ -11,11 +11,13 @@ window.browserHistory = browserHistory;
 export const renderRoutes = () => (
   <Provider store={store}>
     <IntlProvider>
+      <div className="absolute w-full h-full">
       <Router history={browserHistory}>
         <Switch>
           <Route exact path="/steedos/login" component={Login}/>
         </Switch>
       </Router>
+      </div>
     </IntlProvider>
   </Provider>
 );
