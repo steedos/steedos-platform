@@ -12,5 +12,8 @@
   "private": false,
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "typescript": "3.5.3"
   }
 }
