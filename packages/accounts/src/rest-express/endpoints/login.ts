@@ -25,6 +25,6 @@ export const login = (accountsServer: AccountsServer) => async (
     return;
   } catch (err) {
     console.log(err)
-    sendError(res, {message: "accounts.invalid_credentials"});
+    sendError(res, {message: err.message});
   }
 }

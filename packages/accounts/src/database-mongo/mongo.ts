@@ -11,6 +11,7 @@ import { Collection, Db, ObjectID } from 'mongodb';
 
 import { AccountsMongoOptions, MongoUser } from './types';
 import { getSessionByUserId, hashStampedToken } from '@steedos/auth';
+const moment = require('moment');
 
 const toMongoID = (objectId: string | ObjectID) => {
   if (typeof objectId === 'string') {
@@ -508,7 +509,36 @@ export class Mongo implements DatabaseInterface {
     await this.setPassword(userId, newPassword);
   }
 
-  public async addVerificationCode(user: any, code: string): Promise<void> {
+  private async applyCode(name, owner, nextCode, MAX_FAILURE_COUNT, EFFECTIVE_TIME){
+    const now: any = new Date();
+    const query: any = {
+      name: name,
+      expiredAt: {$gt: now}
+    };
+    if(owner){
+      query.owner = owner
+    }
+    let record = await this.codeCollection.findOne(query);
+    if(record){
+      // if(record.failureCount >= MAX_FAILURE_COUNT){
+      //   throw new Error('accounts.tooManyFailures');
+      // }
+      // await this.codeCollection.updateOne({_id: record._id}, {$set: {expiredAt: new Date(moment().add(EFFECTIVE_TIME, 'm'))}});
+    }else{
+      let doc: any = {
+          name, owner, code: nextCode, expiredAt: new Date(moment().add(EFFECTIVE_TIME, 'm')), [this.options.timestamps.createdAt]: this.options.dateProvider()
+      }
+      if (this.options.idProvider) {
+        doc._id = this.options.idProvider();
+      }
+  
+      let result = await this.codeCollection.insertOne(doc);
+      record = result.ops[0];
+    }
+    return record;
+  }
+
+  public async addVerificationCode(user: any, code: string, options: any): Promise<void> {
 
     let foundedUser = null
     if (user.email)
@@ -517,14 +547,46 @@ export class Mongo implements DatabaseInterface {
       foundedUser = await this.findUserByMobile(user.mobile)
 
     const owner = foundedUser? foundedUser.id: null;
-    const verification_code = {
-      name: user.email?user.email:user.mobile,
+    const ret = await this.applyCode(user.email?user.email:user.mobile, owner, code, options.MAX_FAILURE_COUNT, options.EFFECTIVE_TIME);
+    return ret;
+  }
+
+
+  private async verifyCodeByName(name, code){
+    const now: any = new Date();
+    let query = {
+      name: name,
       code: code,
-      owner,
-      [this.options.timestamps.createdAt]: this.options.dateProvider(),
+      verifiedAt: null,
+      expiredAt: {$gt: now}
     }
-    const ret = await this.codeCollection.insertOne(verification_code);
-    return owner;
+
+    let result = await this.codeCollection.findOne(query);
+    if(result){
+      return result;
+    }else{
+      console.log("verifyCodeByName throw new Error accounts.invalidCode");
+      throw new Error("accounts.invalidCode");
+    }
+  }
+
+  private async verifyCodeByOwner(owner, code){
+    const now: any = new Date();
+    let query = {
+      owner: owner,
+      code: code,
+      verifiedAt: null,
+      expiredAt: {$gt: now}
+    }
+
+    let result = await this.codeCollection.findOne(query);
+    if(result){
+      await this.codeCollection.updateOne({_id: result._id}, {$set: {verifiedAt: now}})
+      return result;
+    }else{
+      console.log("verifyCodeByOwner throw new Error accounts.invalidCode");
+      throw new Error("accounts.invalidCode");
+    }
   }
 
   public async checkVerificationCode(user: any, code: string): Promise<boolean> {
@@ -538,10 +600,7 @@ export class Mongo implements DatabaseInterface {
     if (!name) 
       return false;
 
-    const record = await this.codeCollection.findOne({
-      name,
-      code
-    });
+    const record = await this.verifyCodeByName(name, code);
     if (!record) 
       return false;
     
@@ -560,10 +619,7 @@ export class Mongo implements DatabaseInterface {
       return null;
 
     const owner = foundedUser.id;
-    const record = await this.codeCollection.findOne({
-      owner,
-      code
-    });
+    const record = await this.verifyCodeByOwner(owner, code);
     if (!record) 
       return null;
     

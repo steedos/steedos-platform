@@ -15,6 +15,7 @@ export const errors: ErrorMessages = {
   invalidNewPassword: 'accounts.invalidNewPassword',
   invalidToken: 'accounts.invalidToken',
   invalidCredentials: 'accounts.invalid_credentials',
+  invalidCode: 'accounts.invalid_code',
   verifyEmailLinkExpired: 'accounts.verifyEmailLinkExpired',
   verifyEmailLinkUnknownAddress: 'Verify email link is for unknown address',
   resetPasswordLinkExpired: 'accounts.resetPasswordLinkExpired',
