@@ -26,7 +26,9 @@ Template.adminMenu.helpers
 		return t("none_space_selected_title")
 		 
 
-Template.adminMenu.events 
+Template.adminMenu.events
+	'click .steedos-logout': ()->
+		Steedos.logout();
 	"click .admin-menu-back": (event, template) ->
 		lastUrl = urlQuery[urlQuery.length - 2]
 		urlQuery.pop()
