@@ -7,8 +7,10 @@ svg4everybody();
 import("./main.html");
 
 // 全局变量导入
-import { registerWindowLibraries, registerDefaultPlugins } from '@steedos/react';
+import { registerWindowLibraries } from './plugin';
 registerWindowLibraries();
+
+import { registerDefaultPlugins } from '@steedos/react';
 registerDefaultPlugins();
 
 // 把组件导入才能在creator中正常使用
