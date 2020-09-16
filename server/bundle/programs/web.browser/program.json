@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "fa61cf5a118e6ab1fe715a11f4a8f02307079e33.js",
+      "path": "ac914a0f334a6f89fa0d8f9d5a8a9132cb0d6325.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/fa61cf5a118e6ab1fe715a11f4a8f02307079e33.js?meteor_js_resource=true",
-      "size": 12482157,
-      "hash": "fa61cf5a118e6ab1fe715a11f4a8f02307079e33",
-      "sri": "ORfD774hc+3HZQnBrVQegIjAw4EybOYeC+DH05WwpUi6cPtKtqIl4nNjmTt5Ax049Q0/rxif710dAFul3tQwGA=="
+      "url": "/ac914a0f334a6f89fa0d8f9d5a8a9132cb0d6325.js?meteor_js_resource=true",
+      "size": 7699863,
+      "hash": "ac914a0f334a6f89fa0d8f9d5a8a9132cb0d6325",
+      "sri": "H1ACCYgD5mdSbyNPL/Cq7CmaHdLY+zBpvxZna7wDdF3WT1W74JOOa1O8XP7inzHl/zkj1DX3nwNDLWTNrBxRfg=="
     },
     {
-      "path": "fa61cf5a118e6ab1fe715a11f4a8f02307079e33.stats.json",
+      "path": "ac914a0f334a6f89fa0d8f9d5a8a9132cb0d6325.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/fa61cf5a118e6ab1fe715a11f4a8f02307079e33.stats.json?meteor_js_resource=true",
-      "size": 435511,
-      "hash": "5b3155aef09818342cb9d9ecfd2ded1e69b85d2d",
-      "sri": "vF9PpQYf2f1jsHGm2AWAVAb8bMykLghuDc+BqYBNVcvMPSW14+2mfrj7QraU1hkbkByaRicGrZe4/MJGPNyXEQ=="
+      "url": "/ac914a0f334a6f89fa0d8f9d5a8a9132cb0d6325.stats.json?meteor_js_resource=true",
+      "size": 164663,
+      "hash": "d5152a0151c303590da7d9074322e47a6fc92dff",
+      "sri": "7AdekHbl41eeKFQe4KfUYhesujeI6f+mjpj47G5Wd3Ss5sTun2IUnPynGICgL+ZNVy7ohAlfkQp7vsF/mJ6zSQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4660,16 +4660,6 @@
       "size": 3907,
       "hash": "38f9f21ceeefca80e7cbd7ca6daf3939c4b0e37d",
       "sri": "8M/c2U5CGY7gJCJo53N/dYhXhsJUng/k14jUVp8N9ZOcaeMYQmk9qVVgx4ae2du9ARurZT3S8n2fLojxel9Xkg=="
-    },
-    {
-      "path": "app/js/xlsx.full.min.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/js/xlsx.full.min.js",
-      "size": 1001089,
-      "hash": "44841e3e028e4d557db3016256684b3390ffa1fa",
-      "sri": "wxT3sSluKyZ6QOMJJs1DasTEOEC6bzQ+v7f0DRckzfOX1goLA3ozqu0Ho2XnmuUg9LtChU+pArMJEpG2Qa73iw=="
     },
     {
       "path": "app/sound/notification.mp3",
