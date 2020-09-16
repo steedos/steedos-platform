@@ -18,7 +18,7 @@ Steedos.goResetPassword = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
 		if !redirect
-			redirect = location.href.replace("/steedos/sign-in", "").replace("/steedos/logout", "")
+			redirect = location.href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "")
 		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
 			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
 			accountsUrl = rootUrl.origin + accountsUrl
@@ -28,7 +28,7 @@ Steedos.redirectToSignIn = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl 
 		if !redirect
-			redirect = location.href.replace("/steedos/sign-in", "").replace("/steedos/logout", "")
+			redirect = location.href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "")
 		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
 			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
 			accountsUrl = rootUrl.origin + accountsUrl
@@ -84,7 +84,7 @@ Setup.validate = (onSuccess)->
 			Accounts.loginWithToken data.authToken, (err) ->
 				if (err)
 					Meteor._debug("Error logging in with token: " + err);
-					FlowRouter.go "/steedos/logout"
+					window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout");
 					return
 
 		if data.webservices

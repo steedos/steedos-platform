@@ -16,7 +16,7 @@ Template.adminMenu.helpers
 		return Creator.getCollection("users").findOne()?.name
 
 	logoutUrL: ()->
-		return Creator.getRelativeUrl("/steedos/logout")
+		return Creator.getRelativeUrl("/accounts/a/#/logout")
 
 	spaceName: ->
 		if Session.get("spaceId")

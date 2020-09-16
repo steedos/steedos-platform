@@ -20,7 +20,7 @@ Template.headerProfile.helpers({
 	},
 	logoutAccountClick: function(){
 		return function(){
-			FlowRouter.go("/steedos/logout");
+			window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout");
 		}
 	},
 	settingsAccountClick: function(){
