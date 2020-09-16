@@ -146,7 +146,7 @@ class Login extends React.Component {
 
   handleLoginIdChange = (e) => {
     const loginId = e.target.value;
-    if (loginId.indexOf('@')) {
+    if (loginId.indexOf('@') > 0) {
       this.setState({
         loginId,
         email: e.target.value,
