@@ -1,12 +1,12 @@
-loadRecordFromOdata = (template, objectName, recordId)->
+loadRecordFromOdata = (template, object_name, record_id)->
 	template.record.set({});
-	object = Creator.getObject(objectName)
+	object = Creator.getObject(object_name)
 	selectFields = Creator.objectOdataSelectFields(object)
 	expand = Creator.objectOdataExpandFields(object)
-	if objectName == "space_users"
+	if object_name == "space_users"
 		# 用户详细界面额外请求company_ids对应的admins，以方便确认当前用户是否有权限编辑、删除该记录
 		expand = expand.replace(/\bcompany_ids\b/,"company_ids($select=name,admins)")
-	record = Creator.odata.get(objectName, recordId, selectFields, expand)
+	record = Creator.odata.get(object_name, record_id, selectFields, expand)
 	template.record.set(record)
 
 getRelatedListTemplateId = (related_object_name)->
@@ -15,18 +15,14 @@ getRelatedListTemplateId = (related_object_name)->
 Template.creator_view.onCreated ->
 	Template.creator_view.currentInstance = this
 	this.recordsTotal = new ReactiveVar({})
+	this.__record = new ReactiveVar({})
 	this.__schema = new ReactiveVar({})
 	# this.recordLoad = new ReactiveVar(false)
 	this.record = new ReactiveVar()
 	this.agreement = new ReactiveVar()
-	templateData = Template.instance().data
-	objectApiName = templateData?.objectApiName
-	recordId = templateData?.recordId
-	if !objectApiName or !recordId
-		return
-	this.objectApiName = objectApiName
-	this.recordId = recordId
-	object = Creator.getObject(objectApiName)
+	this.object_name = Session.get "object_name"
+	object_name = Session.get "object_name"
+	object = Creator.getObject(object_name)
 	template = Template.instance()
 	this.onEditSuccess = onEditSuccess = (formType,result)->
 #		loadRecordFromOdata(template, Session.get("object_name"), Session.get("record_id"))
@@ -38,21 +34,19 @@ Template.creator_view.onCreated ->
 	,false
 	self = this
 	getSchema = ()->
-		schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(objectApiName)))
+		schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(Session.get("object_name"))))
 		#在只读页面将omit字段设置为false
 		_.forEach schema._schema, (f, key)->
 			if f.autoform?.omit
 				f.autoform.omit = false
 		return schema
-
-	Tracker.nonreactive ()->
-		loadRecord(self.objectApiName, self.recordId)
-
-	self.__schema.set(getSchema())
-	Tracker.nonreactive ()->
-		if !_.isEmpty(self.record.get())
-			FormManager.runHook(self.objectApiName, 'view', 'before', {schema: self.__schema, record: self.record});
-
+	this.autorun ()->
+		if self.object_name == Session.get("object_name")
+			self.__record.set(Creator.getObjectRecord());
+			self.__schema.set(getSchema());
+			Tracker.nonreactive ()->
+				if !_.isEmpty(self.__record.get())
+					FormManager.runHook(Session.get("object_name"), 'view', 'before', {schema: self.__schema, record: self.__record});
 #	if object.database_name && object.database_name != 'meteor-mongo'
 #		this.agreement.set('odata')
 #		AutoForm.hooks creatorEditForm:
@@ -61,28 +55,29 @@ Template.creator_view.onCreated ->
 #	else
 #		this.agreement.set('subscribe')
 
-loadRecord = (objectName, recordId)->
-	if objectName == "users"
+loadRecord = ()->
+	object_name = Session.get "object_name"
+	if object_name == "users"
 		return
-	# recordId = Session.get "record_id"
-	object = Creator.getObject(objectName)
+	record_id = Session.get "record_id"
+	object = Creator.getObject(object_name)
 
-	# if Meteor.loggingIn() || Meteor.loggingOut() || !Meteor.userId()
-	# 	return;
+	if Meteor.loggingIn() || Meteor.loggingOut() || !Meteor.userId()
+		return;
 
 	object_fields = object.fields
-#	if objectName and recordId
+#	if object_name and record_id
 #		if !object.database_name || !object.database_name == 'meteor-mongo'
-#			fields = Creator.getFields(objectName)
+#			fields = Creator.getFields(object_name)
 #			ref_fields = {}
 #			_.each fields, (f)->
 #				if f.indexOf(".")  < 0
 #					ref_fields[f] = 1
-#			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + objectName, [recordId], ref_fields, Session.get("spaceId")
+#			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], ref_fields, Session.get("spaceId")
 #		else
-#			loadRecordFromOdata(Template.instance(), objectName, recordId)
-	if objectName and recordId
-		loadRecordFromOdata(Template.instance(), objectName, recordId)
+#			loadRecordFromOdata(Template.instance(), object_name, record_id)
+	if object_name and record_id
+		loadRecordFromOdata(Template.instance(), object_name, record_id)
 
 addFieldInfo = (element)->
 	if element.view?.isDestroyed
@@ -123,28 +118,27 @@ addFieldInfo = (element)->
 
 Template.creator_view.onRendered ->
 	self = this
-	# this.autorun ->
-	# 	record_id = Session.get("record_id")
-	# 	if record_id
-	# 		$(".creator-view-tabs-link").closest(".slds-tabs_default__item").removeClass("slds-is-active")
-	# 		$(".creator-view-tabs-link").attr("aria-selected", false)
+	this.autorun ->
+		record_id = Session.get("record_id")
+		if record_id
+			$(".creator-view-tabs-link").closest(".slds-tabs_default__item").removeClass("slds-is-active")
+			$(".creator-view-tabs-link").attr("aria-selected", false)
 
-	# 		$(".creator-view-tabs-link[data-tab='creator-quick-form']").closest(".slds-tabs_default__item").addClass("slds-is-active")
-	# 		$(".creator-view-tabs-link[data-tab='creator-quick-form']").attr("aria-selected", false)
+			$(".creator-view-tabs-link[data-tab='creator-quick-form']").closest(".slds-tabs_default__item").addClass("slds-is-active")
+			$(".creator-view-tabs-link[data-tab='creator-quick-form']").attr("aria-selected", false)
 
-	# 		$(".creator-view-tabs-content").removeClass("slds-show").addClass("slds-hide")
-	# 		$("#creator-quick-form").addClass("slds-show")
-	# this.autorun ->
-	# 	record_id = Session.get("record_id")
-	# 	if record_id
-	# 		Tracker.nonreactive(loadRecord)
+			$(".creator-view-tabs-content").removeClass("slds-show").addClass("slds-hide")
+			$("#creator-quick-form").addClass("slds-show")
+	this.autorun ->
+		record_id = Session.get("record_id")
+		if record_id
+			Tracker.nonreactive(loadRecord)
 
-
-	Meteor.setTimeout ()->
-		Tracker.nonreactive ()->
-			FormManager.runHook(self.objectApiName, 'view', 'after', {schema: self.__schema, record: self.record});
-	,10
-
+	this.autorun ()->
+		Meteor.setTimeout ()->
+			Tracker.nonreactive ()->
+				FormManager.runHook(Session.get("object_name"), 'view', 'after', {schema: self.__schema, record: self.__record});
+		,10
 
 	# if Steedos.isMobile()
 	# 	this.autorun ->
@@ -172,12 +166,9 @@ Template.creator_view.helpers
 
 	hasUnObjectField: (t)->
 		r = false;
-		objectApiName = Template.instance().objectApiName
-		unless objectApiName
-			return r
 
 		if t && t.length > 0
-			_object = Creator.getObject(objectApiName)
+			_object = Creator.getObject(Session.get("object_name"))
 			_.find t, (fieldKey)->
 				if !fieldKey
 					return
@@ -197,17 +188,11 @@ Template.creator_view.helpers
 	isObjectField: (fieldKey)->
 		if !fieldKey
 			return
-		objectApiName = Template.instance().objectApiName
-		unless objectApiName
-			return
-		_object = Creator.getObject(objectApiName)
+		_object = Creator.getObject(Session.get("object_name"))
 		return _object.schema._schema[fieldKey]?.type?.name == 'Object' && _object.fields[fieldKey].type != 'lookup' && _object.fields[fieldKey].type != 'master_detail'
 
 	objectField: (fieldKey)->
-		objectApiName = Template.instance().objectApiName
-		unless objectApiName
-			return
-		schema = Creator.getObject(objectApiName).schema
+		schema = Creator.getObject(Session.get("object_name")).schema
 		name = schema._schema[fieldKey].label
 		schemaFieldKeys = _.map(schema._objectKeys[fieldKey + '.'], (k)->
 			return fieldKey + '.' + k
@@ -230,19 +215,13 @@ Template.creator_view.helpers
 		}
 
 	collection: ()->
-		objectApiName = Template.instance().objectApiName
-		unless objectApiName
-			return
-		return "Creator.Collections." + Creator.getObject(objectApiName)?._collection_name
+		return "Creator.Collections." + Creator.getObject(Session.get("object_name"))?._collection_name
 
 	schema: ()->
 		return Template.instance().__schema?.get()
 
 	schemaFields: ()->
-		objectApiName = Template.instance().objectApiName
-		if !objectApiName
-			return
-		object = Creator.getObject(objectApiName)
+		object = Creator.getObject(Session.get("object_name"))
 		simpleSchema = Template.instance().__schema?.get()
 		schema = simpleSchema._schema
 		# 不显示created/modified，因为它们显示在created_by/modified_by字段后面
@@ -283,26 +262,22 @@ Template.creator_view.helpers
 		return finalFields
 
 	keyValue: (key) ->
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return
-		record = Creator.getObjectRecord(objectApiName, recordId)
+		record = Creator.getObjectRecord()
 #		return record[key]
 		key.split('.').reduce (o, x) ->
 				o?[x]
 		, record
 
 	keyField: (key) ->
-		fields = Creator.getObject(Template.instance().objectApiName)?.fields
+		fields = Creator.getObject()?.fields
 		return fields?[key]
 
 	is_wide: (key) ->
-		fields = Creator.getObject(Template.instance().objectApiName).fields
+		fields = Creator.getObject().fields
 		return fields[key]?.is_wide
 
 	full_screen: (key) ->
-		fields = Creator.getObject(Template.instance().objectApiName).fields
+		fields = Creator.getObject().fields
 		if fields[key]?.type is "markdown"
 			return true
 		else
@@ -317,14 +292,14 @@ Template.creator_view.helpers
 	# 		return permissions[permissionName]
 
 	record: ()->
-		record = Template.instance().record?.get();
+		record = Template.instance().__record?.get();
 		if _.isEmpty(record)
 			return false
 		else
 			return record
 
 	record_name: ()->
-		record = Creator.getObjectRecord(Template.instance().objectApiName, Template.instance().recordId)
+		record = Creator.getObjectRecord()
 		name_field_key = Creator.getObject()?.NAME_FIELD_KEY
 		if record and name_field_key
 			record_name = record.label || record[name_field_key]
@@ -332,10 +307,10 @@ Template.creator_view.helpers
 		return record_name;
 
 	backUrl: ()->
-		return Creator.getObjectUrl(Template.instance().objectApiName, null)
+		return Creator.getObjectUrl(Session.get("object_name"), null)
 
 	showForm: ()->
-		if Creator.getObjectRecord(Template.instance().objectApiName, Template.instance().recordId)
+		if Creator.getObjectRecord()
 			return true
 
 	hasPermission: (permissionName)->
@@ -344,12 +319,10 @@ Template.creator_view.helpers
 			return permissions[permissionName]
 
 	recordPerminssion: (permissionName)->
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return
-		record = Creator.getCollection(objectApiName).findOne recordId
-		recordPerminssion = Creator.getRecordPermissions objectApiName, record, Meteor.userId()
+		object_name = Session.get "object_name"
+		record_id = Session.get "record_id"
+		record = Creator.getCollection(object_name).findOne record_id
+		recordPerminssion = Creator.getRecordPermissions object_name, record, Meteor.userId()
 		if recordPerminssion
 			return recordPerminssion[permissionName]
 
@@ -358,14 +331,10 @@ Template.creator_view.helpers
 		return Creator.getObject()
 
 	object_name: ()->
-		return Template.instance().objectApiName
+		return Session.get "object_name"
 
 	related_list: ()->
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return
-		return Creator.getRelatedList(objectApiName, recordId)
+		return Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 
 	related_object_label: (relatedListObjLabel, relatedObjLabel) ->
 		return relatedListObjLabel || relatedObjLabel
@@ -377,34 +346,34 @@ Template.creator_view.helpers
 			if !_.isEmpty(recordsTotal) and object_name
 				return recordsTotal[object_name]
 
-	# related_selector: ()->
-	# 	object_name = this.object_name
-	# 	related_field_name = this.related_field_name
-	# 	record_id = Session.get "record_id"
-	# 	if object_name and related_field_name and Session.get("spaceId")
-	# 		if object_name == "cfs.files.filerecord"
-	# 			selector = {"metadata.space": Session.get("spaceId")}
-	# 		else
-	# 			selector = {space: Session.get("spaceId")}
-	# 		if object_name == "cms_files" || object_name == "tasks" || object_name == "notes"
-	# 			# 附件的关联搜索条件是定死的
-	# 			selector["#{related_field_name}.o"] = Session.get "object_name"
-	# 			selector["#{related_field_name}.ids"] = [record_id]
-	# 		else if object_name == "instances"
-	# 			instances = Creator.getObjectRecord()?.instances || []
-	# 			selector["_id"] = { $in: _.pluck(instances, "_id") }
-	# 		else if Session.get("object_name") == "objects"
-	# 			recordObjectName = Creator.getObjectRecord()?.name
-	# 			selector[related_field_name] = recordObjectName
-	# 		else
-	# 			selector[related_field_name] = record_id
-	# 		permissions = Creator.getPermissions(object_name)
-	# 		if permissions.viewAllRecords
-	# 			return selector
-	# 		else if permissions.allowRead and Meteor.userId()
-	# 			selector.owner = Meteor.userId()
-	# 			return selector
-	# 	return {_id: "nothing to return"}
+	related_selector: ()->
+		object_name = this.object_name
+		related_field_name = this.related_field_name
+		record_id = Session.get "record_id"
+		if object_name and related_field_name and Session.get("spaceId")
+			if object_name == "cfs.files.filerecord"
+				selector = {"metadata.space": Session.get("spaceId")}
+			else
+				selector = {space: Session.get("spaceId")}
+			if object_name == "cms_files" || object_name == "tasks" || object_name == "notes"
+				# 附件的关联搜索条件是定死的
+				selector["#{related_field_name}.o"] = Session.get "object_name"
+				selector["#{related_field_name}.ids"] = [record_id]
+			else if object_name == "instances"
+				instances = Creator.getObjectRecord()?.instances || []
+				selector["_id"] = { $in: _.pluck(instances, "_id") }
+			else if Session.get("object_name") == "objects"
+				recordObjectName = Creator.getObjectRecord()?.name
+				selector[related_field_name] = recordObjectName
+			else
+				selector[related_field_name] = record_id
+			permissions = Creator.getPermissions(object_name)
+			if permissions.viewAllRecords
+				return selector
+			else if permissions.allowRead and Meteor.userId()
+				selector.owner = Meteor.userId()
+				return selector
+		return {_id: "nothing to return"}
 
 	appName: ()->
 		app = Creator.getApp()
@@ -431,33 +400,26 @@ Template.creator_view.helpers
 			return actions
 
 	isUnlocked: ()->
-
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return
-		if Creator.getPermissions(objectApiName).modifyAllRecords
+		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
 			return true
-		record = Creator.getObjectRecord(objectApiName, recordId)
+		record = Creator.getObjectRecord()
 		return !record?.locked
 
 	detail_info_visible: ()->
 		return Session.get("detail_info_visible")
 
 	actions: ()->
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return
-		actions = Creator.getActions(objectApiName)
-		if recordId
-			record = Creator.getObjectRecord(objectApiName, recordId)
+		actions = Creator.getActions()
+		object_name = Session.get "object_name"
+		record_id = Session.get "record_id"
+		if record_id
+			record = Creator.getObjectRecord()
 			userId = Meteor.userId()
-			record_permissions = Creator.getRecordPermissions objectApiName, record, userId
+			record_permissions = Creator.getRecordPermissions object_name, record, userId
 			actions = _.filter actions, (action)->
 				if action.on == "record" or action.on == "record_only"
 					if typeof action.visible == "function"
-						return action.visible(objectApiName, recordId, record_permissions, record)
+						return action.visible(object_name, record_id, record_permissions, record)
 					else
 						return action.visible
 				else
@@ -465,19 +427,17 @@ Template.creator_view.helpers
 			return actions
 
 	moreActions: ()->
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return
-		actions = Creator.getActions(objectApiName)
-		if recordId
-			record = Creator.getObjectRecord(objectApiName, recordId)
+		actions = Creator.getActions()
+		object_name = Session.get "object_name"
+		record_id = Session.get "record_id"
+		if record_id
+			record = Creator.getObjectRecord()
 			userId = Meteor.userId()
-			record_permissions = Creator.getRecordPermissions objectApiName, record, userId
+			record_permissions = Creator.getRecordPermissions object_name, record, userId
 			actions = _.filter actions, (action)->
 				if action.on == "record_more" or action.on == "record_only_more"
 					if typeof action.visible == "function"
-						return action.visible(objectApiName, recordId, record_permissions, record)
+						return action.visible(object_name, record_id, record_permissions, record)
 					else
 						return action.visible
 				else
@@ -485,67 +445,51 @@ Template.creator_view.helpers
 			return actions
 
 	isFileDetail: ()->
-		return "cms_files" == Template.instance().objectApiName
+		return "cms_files" == Session.get "object_name"
 
 	related_object_url: ()->
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return
+		object_name = Session.get "object_name"
+		record_id = Session.get "record_id"
 		app_id = Session.get "app_id"
 		related_object_name = this.object_name
-		return Creator.getRelatedObjectUrl(objectApiName, app_id, recordId, related_object_name)
+		return Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name)
 
 	cell_data: (key)->
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return
-		record = Creator.getObjectRecord(objectApiName, recordId)
+		record = Creator.getObjectRecord()
 		data = {}
 		data._id = record._id
 		data.val = record[key]
 		data.doc = record
-		data.field = Creator.getObject(objectApiName).fields[key]
+		data.field = Creator.getObject().fields[key]
 		data.field_name = key
-		data.object_name = objectApiName
+		data.object_name = Session.get("object_name")
 		data.disabled = true
 		data.parent_view = "record_details"
 		return data
 
 	list_data: (item) ->
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return {}
+		object_name = Session.get "object_name"
 		related_list_item_props = item
 		related_object_name = item.object_name
 		data = {
 			id: getRelatedListTemplateId(related_object_name)
 			related_object_name: related_object_name, 
-			object_name: objectApiName, 
+			object_name: object_name, 
 			recordsTotal: Template.instance().recordsTotal, 
 			is_related: true, 
 			related_list_item_props: related_list_item_props
 		}
-		if objectApiName == 'objects'
-			data.recordId = Creator.getObjectRecord(objectApiName)?.name
+		if object_name == 'objects'
+			data.record_id = Creator.getObjectRecord()?.name
 		else
-			data.recordId = recordId
+			data.record_id = Session.get("record_id")
 		return data
 
 	enable_chatter: ()->
-		objectApiName = Template.instance().objectApiName
-		if !objectApiName
-			return
-		return Creator.getObject(objectApiName)?.enable_chatter
+		return Creator.getObject(Session.get("object_name"))?.enable_chatter
 
 	show_chatter: ()->
-		objectApiName = Template.instance().objectApiName
-		recordId = Template.instance().recordId
-		if !objectApiName or !recordId
-			return
-		return Creator.getObjectRecord(objectApiName, recordId)
+		return Creator.getObjectRecord()
 
 	agreement: ()->
 		return Template.instance().agreement.get()
@@ -557,20 +501,14 @@ Template.creator_view.helpers
 		return Steedos.isMobile() && this.name == 'standard_edit'
 
 	hasInlineHelpText: (key)->
-		objectApiName = Template.instance().objectApiName
-		if !objectApiName
-			return
-		fields = Creator.getObject(objectApiName).fields
+		object_name = Session.get "object_name"
+		fields = Creator.getObject(object_name).fields
 		return fields[key]?.inlineHelpText
 
 	showBack: ()->
-		# objectApiName = Template.instance().objectApiName
-		# record_id = Template.instance().record_id
-		# if !objectApiName or !record_id
-		# 	return
-		# if record_id && (_.has(FlowRouter.current()?.queryParams, 'ref'))
-		# 	return false
-		# # return true
+		if Session.get("record_id") && (_.has(FlowRouter.current()?.queryParams, 'ref'))
+			return false
+		# return true
 		# 先不显示返回按钮 【相关记录的链接，不要弹出新窗口 #461】
 		return false
 
@@ -578,10 +516,10 @@ Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->
 		console.log('click action');
-		objectApiName = template.objectApiName
-		recordId = template.recordId
-		record = Creator.getObjectRecord(objectApiName, recordId)
-		object = Creator.getObject(objectApiName)
+		record = Creator.getObjectRecord()
+		objectName = Session.get("object_name")
+		object = Creator.getObject(objectName)
+		recordId = record._id
 		collection_name = object.label
 		Session.set("action_fields", undefined)
 		Session.set("action_collection", "Creator.Collections.#{object._collection_name}")
@@ -589,9 +527,9 @@ Template.creator_view.events
 		Session.set("action_save_and_insert", true)
 		if this.todo == "standard_delete"
 			action_record_title = record[object.NAME_FIELD_KEY]
-			Creator.executeAction objectApiName, this, recordId, action_record_title, Session.get("list_view_id")
+			Creator.executeAction objectName, this, recordId, action_record_title, Session.get("list_view_id")
 		else
-			Creator.executeAction objectApiName, this, recordId, $(event.currentTarget)
+			Creator.executeAction objectName, this, recordId, $(event.currentTarget)
 
 	'click .creator-view-tabs-link': (event) ->
 		$(".creator-view-tabs-link").closest(".slds-tabs_default__item").removeClass("slds-is-active")
@@ -647,37 +585,36 @@ Template.creator_view.events
 		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 
 	'click .add-related-object-record': (event, template) ->
-		objectName = event.currentTarget.dataset.objectName
-		collection_name = Creator.getObject(objectName).label
-		collection = "Creator.Collections.#{Creator.getObject(objectName)._collection_name}"
-		objectApiName = template.objectApiName
-		recordId = template.recordId
+		object_name = event.currentTarget.dataset.objectName
+		collection_name = Creator.getObject(object_name).label
+		collection = "Creator.Collections.#{Creator.getObject(object_name)._collection_name}"
+		current_object_name = Session.get("object_name")
 
 #		relatedKey = ""
 #		relatedValue = Session.get("record_id")
 #		Creator.getRelatedList(current_object_name, relatedValue).forEach (related_obj) ->
-#			if objectName == related_obj.object_name
+#			if object_name == related_obj.object_name
 #				relatedKey = related_obj.related_field_name
 		
-		ids = Creator.TabularSelectedIds[objectName]
+		ids = Creator.TabularSelectedIds[object_name]
 		if ids?.length
 			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
 			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
 			record_id = ids[0]
-			doc = Creator.odata.get(objectName, record_id)
+			doc = Creator.odata.get(object_name, record_id)
 			Session.set 'cmDoc', doc
 			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 			Session.set 'cmShowAgainDuplicated', true
 		else
-			defaultDoc = FormManager.getRelatedInitialValues(objectApiName, recordId, objectName);
+			defaultDoc = FormManager.getRelatedInitialValues(current_object_name, Session.get("record_id"), object_name);
 			if !_.isEmpty(defaultDoc)
 				Session.set 'cmDoc', defaultDoc
 
-#		else if objectApiName == "objects"
+#		else if current_object_name == "objects"
 #			recordObjectName = Creator.getObjectRecord().name
 #			Session.set 'cmDoc', {"#{relatedKey}": recordObjectName}
 #		else if relatedKey
-#			Session.set 'cmDoc', {"#{relatedKey}": {o: objectApiName, ids: [relatedValue]}}
+#			Session.set 'cmDoc', {"#{relatedKey}": {o: current_object_name, ids: [relatedValue]}}
 
 		Session.set("action_fields", undefined)
 		Session.set("action_collection", collection)
@@ -706,12 +643,10 @@ Template.creator_view.events
 
 	'click #creator-quick-form .table-cell-edit': (event, template)->
 		# $(".creator-record-edit").click()
-		objectApiName = template.objectApiName
-		recordId = template.recordId
 		full_screen = this.full_screen
 		field = this.field_name
 		_fs = field.split('.')
-		schema = Creator.getObject(objectApiName).schema
+		schema = Creator.getObject(Session.get("object_name")).schema
 		if _fs.length > 1
 			_obj_fields = _.map(schema._objectKeys[_fs[0] + '.'], (k)->
 				return _fs[0] + '.' + k
@@ -737,7 +672,7 @@ Template.creator_view.events
 			field = field.join(",")
 		object_name = this.object_name
 		collection_name = Creator.getObject(object_name).label
-		doc = Creator.odata.get(object_name, recordId)
+		doc = Creator.odata.get(object_name, Session.get("record_id"))
 		if doc
 			Session.set("cmFullScreen", full_screen)
 			Session.set("action_fields", field)
@@ -789,9 +724,9 @@ Template.creator_view.events
 		currentTarget.siblings(".slds-is-active").removeClass("slds-is-active").end().addClass("slds-is-active")
 		currentTabContainer.find(">.slds-tabs_default__content.slds-show").toggleClass("slds-show").toggleClass("slds-hide")
 		currentTabContainer.find(">.slds-tabs_default__content").eq(currentIndex).toggleClass("slds-show").toggleClass("slds-hide")
-	'click .back-icon': (event, template)->
+	'click .back-icon': (event)->
 		app_id = Session.get("app_id")
-		object = template.objectApiName
+		object = Session.get("object_name")
 		if app_id && object
 			FlowRouter.go Creator.getObjectRouterUrl(object, undefined, app_id)
 		else if app_id
@@ -799,7 +734,7 @@ Template.creator_view.events
 		else
 			FlowRouter.go "/app"
 	'click .relate-action-custom': (event, template)->
-		this.todo(template.objectApiName, template.recordId);
+		this.todo(Session.get("object_name"), Session.get("record_id"));
 
 Template.creator_view.onDestroyed ()->
 	console.log('Template.creator_view.onDestroyed...');

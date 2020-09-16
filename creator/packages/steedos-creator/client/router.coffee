@@ -293,6 +293,7 @@ objectRoutes.route '/view/:record_id',
 		app_id = FlowRouter.getParam("app_id")
 		object_name = FlowRouter.getParam("object_name")
 		record_id = FlowRouter.getParam("record_id")
+		data = {app_id: app_id, object_name: object_name, record_id: record_id}
 		ObjectRecent.insert(object_name, record_id)
 		Session.set("detail_info_visible", true)
 		# if object_name == "cms_posts"
@@ -308,7 +309,7 @@ objectRoutes.route '/view/:record_id',
 			main: 'recordLoading'
 		Meteor.setTimeout ()->
 			BlazeLayout.render Creator.getLayout(),
-				main: main, data: {objectApiName: object_name, recordId: record_id}
+				main: main
 		, 10
 
 objectRoutes.route '/grid/:list_view_id',
