@@ -14,12 +14,14 @@ registerDefaultPlugins();
 // 把组件导入才能在creator中正常使用
 import * as UI from '../imports/ui';
 
-Meteor.startup(() => {
-    import { renderRoutes } from '../imports/startup/client/router.js';
-    import { render } from 'react-dom';
-    BlazeLayout.setRoot('body');
-    render(renderRoutes(), document.getElementById('root'));
-});
+BlazeLayout.setRoot('body');
+
+// 停用 @steedos/webapp 集成，目前会导致客户端文件大小暴涨
+// Meteor.startup(() => {
+//     import { renderRoutes } from '../imports/startup/client/router.js';
+//     import { render } from 'react-dom';
+//     render(renderRoutes(), document.getElementById('root'));
+// });
 
 Template.preloadAssets.helpers({
     absoluteUrl(url){
