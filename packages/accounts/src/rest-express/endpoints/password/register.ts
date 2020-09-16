@@ -39,10 +39,22 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
     //     return pick(req.body, ['name', 'email', 'password', 'locale', 'mobile']);
     //   };
     // }
+    let inviteInfo = null;
+    if(req.body.invite_token){
+      inviteInfo = await password.getInviteInfo(req.body.invite_token);
+      if(!inviteInfo || !inviteInfo.valid){
+        throw new Error('accounts.invalid_invite');
+      }
+    }
+
     const userId = await password.createUser(req.body);
     //工作区密码注册
     if(req.body.spaceId){
       Creator.addSpaceUsers(req.body.spaceId, userId, true)
+    }
+
+    if(inviteInfo && inviteInfo.space){
+      Creator.addSpaceUsers(inviteInfo.space, userId, true)
     }
 
     const foundedUser = await password.findUserById(userId);
