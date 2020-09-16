@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "9ab7da27c4b007a44630926277cfd8855dcbee74.js",
+      "path": "bd32cd6364cd8338ea76df2d0986bea233cdcd24.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/9ab7da27c4b007a44630926277cfd8855dcbee74.js?meteor_js_resource=true",
-      "size": 15746624,
-      "hash": "9ab7da27c4b007a44630926277cfd8855dcbee74",
-      "sri": "SWR4XAny2m4JaTilk5+jmlTZW6qO7PoICEouJwlkUAmzwAuS8c1MljT9ilOUeBCBaNDADw5QQ33Ne9KzJTeTLA=="
+      "url": "/__cordova/bd32cd6364cd8338ea76df2d0986bea233cdcd24.js?meteor_js_resource=true",
+      "size": 10964442,
+      "hash": "bd32cd6364cd8338ea76df2d0986bea233cdcd24",
+      "sri": "cL0flZicZZIxhVFREI32nRxjMnDblasKwyp17J9UiVwihOM+TqEkbW1gDCOqB/J16qBC8EE6UOc17epRhUMSrQ=="
     },
     {
-      "path": "9ab7da27c4b007a44630926277cfd8855dcbee74.stats.json",
+      "path": "bd32cd6364cd8338ea76df2d0986bea233cdcd24.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/9ab7da27c4b007a44630926277cfd8855dcbee74.stats.json?meteor_js_resource=true",
-      "size": 445465,
-      "hash": "0b99fe65fe61caabc786f6146976ccdfcfd4e39e",
-      "sri": "PEl2Cpt+6WLC82A1VDIqJKTbyPRd08zN7mbst7nVELUc88HNgHFEXHDPh5x8Uj/MdHJKJmln07dmMh8ch6cymQ=="
+      "url": "/__cordova/bd32cd6364cd8338ea76df2d0986bea233cdcd24.stats.json?meteor_js_resource=true",
+      "size": 174658,
+      "hash": "14d0491b60bde59276074a5ac7118a4e40c6f674",
+      "sri": "A7fQs+0JjhEpIm10qAPJAHtyUxywu1zVGMjTFrKiLdqxb9ppsz6pa6fiwTyWApE4edGe+jfZK4f2cDPpGqn6zA=="
     },
     {
       "path": "64fd4aa0d23cd9db99c4c8803690686b5eb5bde4.css",
@@ -2490,26 +2490,6 @@
       "size": 3907,
       "hash": "38f9f21ceeefca80e7cbd7ca6daf3939c4b0e37d",
       "sri": "8M/c2U5CGY7gJCJo53N/dYhXhsJUng/k14jUVp8N9ZOcaeMYQmk9qVVgx4ae2du9ARurZT3S8n2fLojxel9Xkg=="
-    },
-    {
-      "path": "app/js/xlsx.full.min.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/__cordova/js/xlsx.full.min.js",
-      "size": 1001089,
-      "hash": "44841e3e028e4d557db3016256684b3390ffa1fa",
-      "sri": "wxT3sSluKyZ6QOMJJs1DasTEOEC6bzQ+v7f0DRckzfOX1goLA3ozqu0Ho2XnmuUg9LtChU+pArMJEpG2Qa73iw=="
-    },
-    {
-      "path": "app/js/xlsx.full.min.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/js/xlsx.full.min.js",
-      "size": 1001089,
-      "hash": "44841e3e028e4d557db3016256684b3390ffa1fa",
-      "sri": "wxT3sSluKyZ6QOMJJs1DasTEOEC6bzQ+v7f0DRckzfOX1goLA3ozqu0Ho2XnmuUg9LtChU+pArMJEpG2Qa73iw=="
     },
     {
       "path": "app/sound/notification.mp3",

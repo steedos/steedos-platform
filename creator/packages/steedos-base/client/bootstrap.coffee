@@ -14,6 +14,10 @@ Creator.__l = new ReactiveVar()
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
 
+Steedos.logout = ()->
+	Accounts._unstoreLoginToken();
+	window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout");
+
 Steedos.goResetPassword = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
@@ -84,7 +88,7 @@ Setup.validate = (onSuccess)->
 			Accounts.loginWithToken data.authToken, (err) ->
 				if (err)
 					Meteor._debug("Error logging in with token: " + err);
-					window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout");
+					Steedos.logout();
 					return
 
 		if data.webservices
