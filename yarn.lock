@@ -3743,93 +3743,6 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
 
-"@steedos/accounts@1.22.0-alpha.5":
-  version "1.22.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.22.0-alpha.5.tgz#c5184cb1b3095b5bfb68ffc5dcb3582035482500"
-  integrity sha512-oob8et6OSC3Jfe0Sez4TzvOKJkS1vAQIlyuMA58yYsvacCazD37EvTQ5FWi1/05foRbpgvanP9sYSnUVPzk9dQ==
-  dependencies:
-    "@accounts/mongo" "^0.19.0"
-    "@accounts/rest-express" "^0.19.0"
-    "@accounts/server" "^0.19.0"
-    "@accounts/two-factor" "^0.20.1"
-    "@babel/runtime" "^7.6.0"
-    app-root-path "^2.2.1"
-    bcryptjs "^2.4.3"
-    body-parser "1.19.0"
-    cookies "^0.7.3"
-    cors "2.8.5"
-    crypto "^1.0.1"
-    express "4.17.1"
-    js-yaml "^3.13.1"
-    mem "^5.1.1"
-    mongoose "5.6.6"
-    nodemailer "^6.3.0"
-    oauth2-server "^2.4.1"
-    redux-thunk "^2.3.0"
-    saml-idp "^1.1.0"
-    tslib "1.10.0"
-    validator "^12.2.0"
-
-"@steedos/auth@1.22.0-alpha.5":
-  version "1.22.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-1.22.0-alpha.5.tgz#4fd1aa710f0180bad41978b4c97f841b665a2cd2"
-  integrity sha512-/BjMk1hLLncbWumgYLURsEX8F/QP9Lr1+f+fNHbZGhU8bmuI3YesXNz1nmQDDcAZzq5ImmnnoAZ4JqXELavPAw==
-  dependencies:
-    "@steedos/objectql" "^1.22.0-alpha.5"
-    bcrypt "^3.0.6"
-    cookies "^0.7.3"
-    express "^4.16.4"
-    express-jwt "^5.3.1"
-    jsonwebtoken "^8.5.1"
-    sha256 "^0.2.0"
-    underscore "^1.9.1"
-
-"@steedos/core@1.22.0-alpha.5":
-  version "1.22.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@steedos/core/-/core-1.22.0-alpha.5.tgz#6d4bcac5135245c03e1e5a1744c1a9f5e4c5f47a"
-  integrity sha512-BitySGibC0+Nipu/y+XHwFWOZSOzfErrvRC/aB6lO8mltzczMVxz9tNZr89Ub4hr91g0Wzk2woBCT7OD+DbS4w==
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    "@salesforce/kit" "^1.0.4"
-    "@salesforce/ts-types" "^1.1.1"
-    "@steedos/auth" "^1.22.0-alpha.5"
-    "@steedos/migrate" "^1.22.0-alpha.5"
-    "@steedos/objectql" "^1.22.0-alpha.5"
-    "@steedos/standard-objects" "^1.22.0-alpha.5"
-    "@types/express" "^4.16.1"
-    "@types/mongodb" "^3.1.22"
-    "@types/node" "^11.10.4"
-    "@types/underscore" "^1.8.13"
-    body-parser "^1.18.1"
-    bunyan-sfdx-no-dtrace "^1.8.2"
-    chai "^4.2.0"
-    clone "^2.1.2"
-    cookies "^0.6.1"
-    express "^4.15.4"
-    express-graphql "^0.7.1"
-    fibers "^4.0.3"
-    globby "^9.1.0"
-    graphql "^14.1.1"
-    graphql-type-json "^0.2.2"
-    js-yaml ">=3.13.1"
-    jsen "^0.6.6"
-    mongodb "^3.0.8"
-    odata-v4-mongodb "^0.1.12"
-    pg "^7.8.2"
-    reflect-metadata "^0.1.10"
-    routing-controllers "^0.7.7"
-    simpl-schema "^1.5.5"
-    uglify-js "^3.6.0"
-    underscore "1.5.2"
-
-"@steedos/filters@1.22.0-alpha.5":
-  version "1.22.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.22.0-alpha.5.tgz#7cd53fb4180509c1ddff8ffe499ddf3a22a5e7c3"
-  integrity sha512-uxTr6kGDa6TIrCqYe/YrNz4XEbGpCuBYnFnZ0kl+farZyAS2Y2zEaLlsdlmbtifOe+2pYzNxk5qe7KYaMM6qDg==
-  dependencies:
-    moment "^2.24.0"
-    underscore "^1.9.1"
-
 "@steedos/filters@^1.7.4":
   version "1.21.15"
   resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.21.15.tgz#f92c25aeac234dbfd7f63cc7a3ada26950c744a7"
@@ -3848,58 +3761,6 @@
     node-fetch "^2.6.0"
     systeminformation "^4.26.10"
 
-"@steedos/meteor-bundle-runner@1.22.0-alpha.5":
-  version "1.22.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@steedos/meteor-bundle-runner/-/meteor-bundle-runner-1.22.0-alpha.5.tgz#c445f8b8880d6c21d49690c04f786a78a32793cd"
-  integrity sha512-neX01Pct22Gjb15fibQgHJFF7Qj7YQZiQp2+yQzEkoXhdx4C95K6iqkJ9Wpn97gfgZME/98O8VFOJVaukyUamg==
-  dependencies:
-    fibers "4.0.3"
-    meteor-promise "0.8.5"
-    node-pre-gyp "0.6.34"
-    promise "8.0.1"
-    semver "5.3.0"
-    source-map-support "^0.5.10"
-    underscore "1.5.2"
-
-"@steedos/objectql@1.22.0-alpha.5":
-  version "1.22.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.22.0-alpha.5.tgz#fd8bbee28fafb25c7b56bee16e082297ef0e54cd"
-  integrity sha512-ouNIg7sUXU9UHSQYiJn3OuKlkMhVuuRnqkofBdJsNh+jd4QEtS1uZHALZMIilpq6JUp+UMjfYInKqy/IkoW6xg==
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    "@salesforce/kit" "^1.0.4"
-    "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "^1.22.0-alpha.5"
-    "@steedos/odata-v4-typeorm" "^1.20.1"
-    "@steedos/schemas" "^1.22.0-alpha.5"
-    "@steedos/standard-objects" "^1.22.0-alpha.5"
-    "@types/express" "^4.16.1"
-    "@types/mongodb" "^3.1.22"
-    "@types/node" "^11.10.4"
-    "@types/underscore" "^1.8.13"
-    app-root-path "^2.2.1"
-    body-parser "^1.18.1"
-    bunyan-sfdx-no-dtrace "^1.8.2"
-    chai "^4.2.0"
-    clone "^2.1.2"
-    cookies "^0.6.1"
-    eval "^0.1.4"
-    express "^4.15.4"
-    express-graphql "^0.7.1"
-    fibers "^4.0.3"
-    globby "^9.1.0"
-    graphql "^14.1.1"
-    graphql-type-json "^0.2.2"
-    jsen "^0.6.6"
-    lodash "^4.17.15"
-    mongodb "^3.0.8"
-    odata-v4-mongodb "^0.1.12"
-    odata-v4-sql "^0.1.2"
-    reflect-metadata "^0.1.10"
-    routing-controllers "^0.7.7"
-    typeorm "^0.2.16"
-    underscore "1.5.2"
-
 "@steedos/odata-v4-typeorm@^1.20.1":
   version "1.20.1"
   resolved "https://registry.yarnpkg.com/@steedos/odata-v4-typeorm/-/odata-v4-typeorm-1.20.1.tgz#66405daa7359905a3255b13ef6e6c323d7a635b1"
@@ -3907,16 +3768,6 @@
   dependencies:
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
-
-"@steedos/plugin-enterprise@1.22.0-alpha.5":
-  version "1.22.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-enterprise/-/plugin-enterprise-1.22.0-alpha.5.tgz#2a5a2576b4f160a31ecf20ff4cd1b0ea64f1a777"
-  integrity sha512-NIFs4yfqdqA+JI97UtdhzFqI6+DNepzSEiNO5sfkA4UtIMHPvKCNqmZrxdqpd7Jrkmd4bmK2uZwxGUZ2rNT1Sg==
-
-"@steedos/standard-objects@1.22.0-alpha.5":
-  version "1.22.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.22.0-alpha.5.tgz#d74c7c4fc531d39fc14248a108178b791914e4d3"
-  integrity sha512-j4l30AL3w0bT4Sx/JTVcHyKfnYzhg/XOCslQZj5Zl9Rc+PwG/wMY/P9YdS3KDKWm7Rq52quTIXgGN7b/okuhIg==
 
 "@steedos/steedos-model-generator@^1.20.0":
   version "1.20.0"
@@ -7169,14 +7020,6 @@ bcrypt@3.0.6:
   dependencies:
     nan "2.13.2"
     node-pre-gyp "0.12.0"
-
-bcrypt@^3.0.6:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/bcrypt/-/bcrypt-3.0.8.tgz#fe437b7569faffc1105c3c3f6e7d2913e3d3bea5"
-  integrity sha512-jKV6RvLhI36TQnPDvUFqBEnGX9c8dRRygKxCZu7E+MgLfKZbmmXL8a7/SFFOyHoPNX9nV81cKRC5tbQfvEQtpw==
-  dependencies:
-    nan "2.14.0"
-    node-pre-gyp "0.14.0"
 
 bcryptjs@^2.4.3:
   version "2.4.3"
@@ -15902,14 +15745,6 @@ minipass@^2.2.1, minipass@^2.3.5:
     safe-buffer "^5.1.2"
     yallist "^3.0.0"
 
-minipass@^2.8.6:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.9.0.tgz#e713762e7d3e32fed803115cf93e04bca9fcc9a6"
-  integrity sha512-wxfUjg9WebH+CUDX/CdbRlh5SmfZiy/hpkxaRI16Y9W56Pa75sWgd/rvFilSgrauD9NyFymP/+JFV3KwzIsJeg==
-  dependencies:
-    safe-buffer "^5.1.2"
-    yallist "^3.0.0"
-
 minipass@^3.0.0, minipass@^3.1.1:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-3.1.3.tgz#7d42ff1f39635482e15f9cdb53184deebd5815fd"
@@ -16252,7 +16087,7 @@ nan@2.13.2:
   version "2.13.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.13.2.tgz#f51dc7ae66ba7d5d55e1e6d4d8092e802c9aefe7"
 
-nan@2.14.0, nan@^2.0.8, nan@^2.12.1:
+nan@^2.0.8, nan@^2.12.1:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
 
@@ -16491,22 +16326,6 @@ node-pre-gyp@0.12.0, node-pre-gyp@^0.12.0:
     rimraf "^2.6.1"
     semver "^5.3.0"
     tar "^4"
-
-node-pre-gyp@0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
-  integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
-  dependencies:
-    detect-libc "^1.0.2"
-    mkdirp "^0.5.1"
-    needle "^2.2.1"
-    nopt "^4.0.1"
-    npm-packlist "^1.1.6"
-    npmlog "^4.0.2"
-    rc "^1.2.7"
-    rimraf "^2.6.1"
-    semver "^5.3.0"
-    tar "^4.4.2"
 
 node-pre-gyp@0.6.34:
   version "0.6.34"
@@ -21501,7 +21320,7 @@ stealthy-require@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
 
-steedos-server@^1.22.0-alpha.6:
+steedos-server@1.22.0-alpha.6, steedos-server@^1.22.0-alpha.6:
   version "1.22.0-alpha.6"
   resolved "https://registry.npm.taobao.org/steedos-server/download/steedos-server-1.22.0-alpha.6.tgz#e862b91d51605a260bfddb5270d61211086fad91"
   integrity sha1-6GK5HVFgWiYL/dtScNYSEQhvrZE=
@@ -22157,19 +21976,6 @@ tar@^4, tar@^4.4.10, tar@^4.4.8:
     safe-buffer "^5.1.2"
     yallist "^3.0.3"
 
-tar@^4.4.2:
-  version "4.4.13"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-4.4.13.tgz#43b364bc52888d555298637b10d60790254ab525"
-  integrity sha512-w2VwSrBoHa5BsSyH+KxEqeQBAllHhccyMFVHtGtdMpF4W7IRWfZjFiQceJPChOeTsSDVUpER2T8FA93pr0L+QA==
-  dependencies:
-    chownr "^1.1.1"
-    fs-minipass "^1.2.5"
-    minipass "^2.8.6"
-    minizlib "^1.2.1"
-    mkdirp "^0.5.0"
-    safe-buffer "^5.1.2"
-    yallist "^3.0.3"
-
 tedious@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/tedious/-/tedious-2.7.1.tgz#5308edebdd33767ca67b36fc71b2ab9c54675278"
@@ -22795,9 +22601,10 @@ typeorm@^0.2.13, typeorm@^0.2.16:
     yargonaut "^1.1.2"
     yargs "^13.2.1"
 
-typescript@3.1.x, typescript@3.5.3, typescript@^3.3.3333, typescript@^3.6.2, typescript@^4.0.2, typescript@~3.1.6:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
+typescript@3.1.x, typescript@3.5.3, typescript@3.6.5, typescript@^3.3.3333, typescript@^3.6.2, typescript@^4.0.2, typescript@~3.1.6:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.5.tgz#dae20114a7b4ff4bd642db9c8c699f2953e8bbdb"
+  integrity sha512-BEjlc0Z06ORZKbtcxGrIvvwYs5hAnuo6TKdNFL55frVDlB+na3z5bsLhFaIxmT+dPWgBIjMo6aNnTOgHHmHgiQ==
 
 ua-parser-js@^0.7.18:
   version "0.7.20"

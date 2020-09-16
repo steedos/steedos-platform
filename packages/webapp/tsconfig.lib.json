@@ -21,7 +21,7 @@
     "noEmit": false,
     //"declaration": true,
     "allowJs": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -29,6 +29,6 @@
     "resolveJsonModule": true
   },
   "include": [
-    "src"
-  ]
+    "src",
+  ],
 }

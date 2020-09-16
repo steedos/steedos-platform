@@ -81,6 +81,7 @@ class LocalStorageStoreClass {
 
 const LocalStorageStore = new LocalStorageStoreClass();
 
-window['LocalStorageStore'] = LocalStorageStore;
+if (typeof window !== 'undefined')
+  window['LocalStorageStore'] = LocalStorageStore;
 
 export default LocalStorageStore;
