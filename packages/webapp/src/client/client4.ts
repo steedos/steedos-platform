@@ -400,6 +400,16 @@ export default class Client4 {
         // rudderAnalytics.track('event', properties, options);
     }
 
+    changePassword = (oldPassword: string, newPassword: string)=>{
+        return this.doFetch<UserProfile>(
+            `${this.getAccountsRoute()}/password/changePassword`,
+            {method: 'POST', body: JSON.stringify({
+                oldPassword: oldPassword,
+                newPassword: newPassword,
+            })},
+        );
+    }
+
     // _initLocalStorage(ROOT_URL_PATH_PREFIX){
     //     if (ROOT_URL_PATH_PREFIX) {
     //         let namespace = `:${ROOT_URL_PATH_PREFIX}`;

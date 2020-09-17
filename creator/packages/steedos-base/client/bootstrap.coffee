@@ -26,6 +26,7 @@ Steedos.goResetPassword = (redirect)->
 		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
 			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
 			accountsUrl = rootUrl.origin + accountsUrl
+		Accounts._unstoreLoginToken();
 		window.location.href = accountsUrl + "/a/#/update-password?redirect_uri=" + redirect;
 
 Steedos.redirectToSignIn = (redirect)->

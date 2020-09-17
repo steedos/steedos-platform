@@ -69,6 +69,11 @@ export async function redirectUserToDefaultSpace() {
     hashHistory.push(`/home/${spaceId}`);
 }
 
+export async function redirectUserToUpdatePassword(){
+    console.log('redirectUserToUpdatePassword....');
+    hashHistory.push('/update-password');
+}
+
 export async function redirectTo(redirectTo) {
 
     if (!redirectTo) 
