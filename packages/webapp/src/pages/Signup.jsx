@@ -58,12 +58,6 @@ class Signup extends React.Component {
     if ((new URLSearchParams(this.props.location.search)).get('email')) {
       email = (new URLSearchParams(this.props.location.search)).get('email');
     }
-    let spaceId = '';
-    if ((new URLSearchParams(this.props.location.search)).get('X-Space-Id')) {
-      spaceId = (new URLSearchParams(this.props.location.search)).get('email');
-    } else if (this.props.settingsTenantId) {
-      spaceId = this.props.settingsTenantId
-    }
     let invite_token = '';
     if ((new URLSearchParams(this.props.location.search)).get('invite_token')) {
       invite_token = (new URLSearchParams(this.props.location.search)).get('invite_token');
@@ -72,7 +66,6 @@ class Signup extends React.Component {
     this.state = {
         // ldapEnabled: this.props.isLicensed && this.props.enableLdap,
         // samlEnabled: this.props.isLicensed && this.props.enableSaml,
-        spaceId,
         invite_token,
         email,
         mobile: '',
