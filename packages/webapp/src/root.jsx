@@ -18,6 +18,7 @@ import CreateTenant from './pages/CreateTenant';
 import SelectSpace from './pages/SelectSpace';
 import Preference from './pages/Preference';
 import Loading from './components/Loading';
+import Verify from './pages/Verify';
 
 
 const LoggedInRoute = ({component: Component, ...rest}) => {
@@ -51,7 +52,10 @@ class Root extends React.PureComponent {
 
   componentDidMount() {
     this.props.actions.loadMeAndConfig().then((response) => {
-      let password_expired = this.props.currentUser.password_expired;
+      let password_expired = false;
+      if(this.props.currentUser && this.props.currentUser.password_expired){
+        password_expired = true;
+      }
       if(password_expired){
         GlobalActions.redirectUserToUpdatePassword();
       }else{
@@ -92,7 +96,7 @@ class Root extends React.PureComponent {
                   <LoggedInRoute path="/create-space" component={CreateTenant} />
                   <LoggedInRoute path="/select-space" component={SelectSpace} />
                   <LoggedInRoute exact path="/update-password" component={UpdatePassword} />
-                  {/* <LoggedInRoute path="/verify-email/:token" component={VerifyEmail} /> */}
+                  <LoggedInRoute path="/verify/:token" component={Verify} />
                   {/* <Route path="/login-code" component={LoginCode} /> */}
                   <LoggedInRoute path="/preference" component={Preference} />
                   {/* <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} /> */}
