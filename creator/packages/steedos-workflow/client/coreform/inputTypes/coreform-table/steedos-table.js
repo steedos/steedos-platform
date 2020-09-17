@@ -612,13 +612,17 @@ if (Meteor.isClient) {
             $("tfoot[name='" + field + "Tfoot']").append(addItemTr);
         }
 
-        this.autorun(function () {
-            var data = Template.currentData();
-            var field = data.name;
-            var keys = SteedosTable.getKeys(field);
-            var validValue = SteedosTable.handleData(field, data.value);
-            SteedosTable.setTableValue(field, validValue);
-            $("tbody[name='" + field + "Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), data.atts.editable, sfieldsEditable));
-        })
+        var c = InstanceManager.getCurrentStep();
+        if (c.step_type == 'counterSign' || InstanceManager.ccHasEditPermission()) {
+            this.autorun(function () {
+                var data = Template.currentData();
+                var field = data.name;
+                var keys = SteedosTable.getKeys(field);
+                var validValue = SteedosTable.handleData(field, data.value);
+                SteedosTable.setTableValue(field, validValue);
+                $("tbody[name='" + field + "Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), data.atts.editable, sfieldsEditable));
+            })
+        }
+
     };
 }
