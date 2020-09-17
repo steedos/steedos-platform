@@ -45,6 +45,10 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
       if(!inviteInfo || !inviteInfo.valid){
         throw new Error('accounts.invalid_invite');
       }
+
+      if(!(await canRegister(inviteInfo.space, 'inviteSpaceUser'))){
+        throw new Error('accounts.unenableRegister');
+      }
     }
 
     const userId = await password.createUser(req.body);
