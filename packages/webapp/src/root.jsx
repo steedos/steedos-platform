@@ -51,7 +51,10 @@ class Root extends React.PureComponent {
 
   componentDidMount() {
     this.props.actions.loadMeAndConfig().then((response) => {
-      let password_expired = this.props.currentUser.password_expired;
+      let password_expired = false;
+      if(this.props.currentUser && this.props.currentUser.password_expired){
+        password_expired = true;
+      }
       if(password_expired){
         GlobalActions.redirectUserToUpdatePassword();
       }else{

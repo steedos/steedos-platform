@@ -33,6 +33,7 @@
     "app-root-path": "^2.2.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "1.19.0",
+    "chalk":"^2.4.2",
     "cookies": "^0.8.0",
     "cors": "2.8.5",
     "crypto": "^1.0.1",
@@ -48,6 +49,7 @@
     "validator": "^12.2.0"
   },
   "devDependencies": {
+    "@steedos/auth": "^1.22.0-alpha.6",
     "@steedos/meteor-bundle-runner": "^1.22.0-alpha.6",
     "@steedos/objectql": "^1.22.0-alpha.6",
     "@steedos/steedos-plugin-workflow": "^2.0.4",
