@@ -2,34 +2,34 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "8bd5b050ed03e50ccb50657eaf4d7e7847d56e88.js",
+      "path": "e14d44e166e4e4a84185e52163d230edb9af4b3f.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/8bd5b050ed03e50ccb50657eaf4d7e7847d56e88.js?meteor_js_resource=true",
-      "size": 15731345,
-      "hash": "8bd5b050ed03e50ccb50657eaf4d7e7847d56e88",
-      "sri": "lnF5lgx8tNwyavQks6S1mWK43/EoB5FlnJbByaHlYAWFw2/f3dj5dZAHdBImALQ9A1YJpWoNgNYD164LovSXKQ=="
+      "url": "/__cordova/e14d44e166e4e4a84185e52163d230edb9af4b3f.js?meteor_js_resource=true",
+      "size": 10964569,
+      "hash": "e14d44e166e4e4a84185e52163d230edb9af4b3f",
+      "sri": "dxUBfebT646nkNneCZIggzqqhX6pWzeh0woZXIgkct49xm3vJjpgbJsSeeBg9K+3N8YkjObU+E1Ktqq1pjT/vw=="
     },
     {
-      "path": "8bd5b050ed03e50ccb50657eaf4d7e7847d56e88.stats.json",
+      "path": "e14d44e166e4e4a84185e52163d230edb9af4b3f.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/8bd5b050ed03e50ccb50657eaf4d7e7847d56e88.stats.json?meteor_js_resource=true",
-      "size": 445462,
-      "hash": "58a5332406883ea12234dca35eb985434dc34dbb",
-      "sri": "4fH6Yr707mMB34e2eRb5wTutxbx8xqWHbbVm5ngTx/t8BPhrBlMp1GF4wrQAIRN5RgN0FKwKiWssZWZwIVQzUA=="
+      "url": "/__cordova/e14d44e166e4e4a84185e52163d230edb9af4b3f.stats.json?meteor_js_resource=true",
+      "size": 174658,
+      "hash": "04b1a6539c8a2c8c10edc2911d0158b18adc4c69",
+      "sri": "XnF8JtPDx2JXXotcw0T4EvXjsccF1+OV8WF1pz69H5eETUaUeDNXfeySr8IkthUQQ3e6xuwa8tTc1es84Z7ePQ=="
     },
     {
-      "path": "9fb19aa3ff2a0a6f9cbe6071b7e8b587adf7034c.css",
+      "path": "64fd4aa0d23cd9db99c4c8803690686b5eb5bde4.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/9fb19aa3ff2a0a6f9cbe6071b7e8b587adf7034c.css?meteor_css_resource=true",
-      "size": 1644386,
-      "hash": "9fb19aa3ff2a0a6f9cbe6071b7e8b587adf7034c",
-      "sri": "l46oZ5uUmFos+MQSvEHa9wcfCuzUdaaDSWNLNgmMzYH0/gxKNK2sWxNmwvsSaVPJZ+uN7BiY2yCmSWWHSHELhA=="
+      "url": "/__cordova/64fd4aa0d23cd9db99c4c8803690686b5eb5bde4.css?meteor_css_resource=true",
+      "size": 1644416,
+      "hash": "64fd4aa0d23cd9db99c4c8803690686b5eb5bde4",
+      "sri": "QOD6FrVe1mP9xp7avCJVSzpUK3sSkDNznI09mFugd9P8tqc52pJ8amy8C7LU0lMb1IBXVXI5TWsvlU+0ZcZvWg=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -2492,26 +2492,6 @@
       "sri": "tmdNCj5nPHtP2ArMi13NOTjZOPnGyilYnq05xl2GJKB4PwgyO5Likm22dIfhyWxNlE7rIEJutHOaNgIouZfsgQ=="
     },
     {
-      "path": "app/js/xlsx.full.min.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/__cordova/js/xlsx.full.min.js",
-      "size": 1001064,
-      "hash": "06e769d2827936dd49deecc8cc8edd3598422c56",
-      "sri": "Bk9SYEkE9NpxqInRntNqpAewXC3V6oVcvAttITG2EJgbcdxwIcgnlUsk/z/VAqjdBa3irmPNkbCnSAXXCnD3IQ=="
-    },
-    {
-      "path": "app/js/xlsx.full.min.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/js/xlsx.full.min.js",
-      "size": 1001064,
-      "hash": "06e769d2827936dd49deecc8cc8edd3598422c56",
-      "sri": "Bk9SYEkE9NpxqInRntNqpAewXC3V6oVcvAttITG2EJgbcdxwIcgnlUsk/z/VAqjdBa3irmPNkbCnSAXXCnD3IQ=="
-    },
-    {
       "path": "app/sound/notification.mp3",
       "where": "client",
       "type": "asset",
@@ -2547,9 +2527,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/word/demo.doc",
-      "size": 2,
-      "hash": "c16e0a090d34333640ee7c89f588af18bf8e6898",
-      "sri": "AWuoxM/eZa+Zy1+ouKN+Lrc/SBs640mRZm3y4E/rbAOGZuvR7CtvYjlndWAzxwLd5fQj99R6tu0YJ/9TeDcx9w=="
+      "size": 4,
+      "hash": "eba9cccebc0362777dec5bb4d95f32335be5f533",
+      "sri": "zmd9tq4zxUlodKKQLTDTYfbPEldulr2Kn2YmoMop8LT5fkA+VHEdJOvzTU4YMjWo+ZUTRdMqIPLa1HbZEe5+Bg=="
     },
     {
       "path": "app/images/billing/WePayDescription.png",
@@ -2807,9 +2787,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/plugins/toastr/toastr.min.js",
-      "size": 4321,
-      "hash": "9804ebab9d5f94b3548c07cb9a0bff58408fd3df",
-      "sri": "pi7w4/MYBJ/7/NFGQ1OCInentlT3CCVVKU2udjNRWhxIOY5K2vxSPKYEa6EKbEZvHkgyEB8SMlSU8E84Ig81Og=="
+      "size": 4323,
+      "hash": "5b2805c6d1268052c4e9f5c9b1ffd4a017eab697",
+      "sri": "k8coAnKh3OrzWdm3QFjBasOBkaoRpnkZfUAn6H45/eiT/zkcndoLj14gI6Dzg9F+6DFV7x8VYXV+3b9eEZ5yHg=="
     },
     {
       "path": "app/lib/swipebox/img/icons.png",

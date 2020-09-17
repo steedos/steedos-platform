@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "ed97775032b3bba73bfb4b3eec222390978253e0.js",
+      "path": "114c5e8e4c961cf026825caac613fe1fa2c12f78.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/ed97775032b3bba73bfb4b3eec222390978253e0.js?meteor_js_resource=true",
-      "size": 12466878,
-      "hash": "ed97775032b3bba73bfb4b3eec222390978253e0",
-      "sri": "Ao+tU++eLO91sllz1PA4jFA5NnlfRJc8BlrWck6yvEpIW6B+4wn7+PWkjxX8uC8qsWwuJAyskl460VlX7FWrsg=="
+      "url": "/114c5e8e4c961cf026825caac613fe1fa2c12f78.js?meteor_js_resource=true",
+      "size": 7699981,
+      "hash": "114c5e8e4c961cf026825caac613fe1fa2c12f78",
+      "sri": "2Znn8fQ+jPSGFwteqd+PUiQOt9R7Jpwj55itahh52DIfT4EYgZ3AT2WhQABe3PZ2CvlQRRWOpTSNzf/19sIk/g=="
     },
     {
-      "path": "ed97775032b3bba73bfb4b3eec222390978253e0.stats.json",
+      "path": "114c5e8e4c961cf026825caac613fe1fa2c12f78.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/ed97775032b3bba73bfb4b3eec222390978253e0.stats.json?meteor_js_resource=true",
-      "size": 435508,
-      "hash": "5dd0effd41ed17f4295a5fa3ac3759038585e3d2",
-      "sri": "HupxoFgNpP2lzHuWNS/HX5aJBQOIrBNCFhUf+TRu4+DcBYdrLot/Jjh+/pXFJm6yqv6RXd9h33ecpak+2EIPGg=="
+      "url": "/114c5e8e4c961cf026825caac613fe1fa2c12f78.stats.json?meteor_js_resource=true",
+      "size": 164663,
+      "hash": "c6e2b625cc516f51e198edc790d39729fd47956d",
+      "sri": "1IBTYesQqrwqgH+MQtGOJ3MPlYTU7B4wZwBXo5yMba1Xm6GJZOglw5Z316TOOO0kCwUZA3WHmS1TYodPGNzymw=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3422,14 +3422,14 @@
       "sri": "icZXWHyR3Vlehv0YYyYu5HoCVWUOTkrG5EfAPM51WF9yPT0oWuOCxE1Dw47vHp8HbOXsxiLN2sh9yQxeeW13xw=="
     },
     {
-      "path": "9fb19aa3ff2a0a6f9cbe6071b7e8b587adf7034c.css",
+      "path": "64fd4aa0d23cd9db99c4c8803690686b5eb5bde4.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/9fb19aa3ff2a0a6f9cbe6071b7e8b587adf7034c.css?meteor_css_resource=true",
-      "size": 1644386,
-      "hash": "9fb19aa3ff2a0a6f9cbe6071b7e8b587adf7034c",
-      "sri": "l46oZ5uUmFos+MQSvEHa9wcfCuzUdaaDSWNLNgmMzYH0/gxKNK2sWxNmwvsSaVPJZ+uN7BiY2yCmSWWHSHELhA=="
+      "url": "/64fd4aa0d23cd9db99c4c8803690686b5eb5bde4.css?meteor_css_resource=true",
+      "size": 1644416,
+      "hash": "64fd4aa0d23cd9db99c4c8803690686b5eb5bde4",
+      "sri": "QOD6FrVe1mP9xp7avCJVSzpUK3sSkDNznI09mFugd9P8tqc52pJ8amy8C7LU0lMb1IBXVXI5TWsvlU+0ZcZvWg=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -4662,16 +4662,6 @@
       "sri": "tmdNCj5nPHtP2ArMi13NOTjZOPnGyilYnq05xl2GJKB4PwgyO5Likm22dIfhyWxNlE7rIEJutHOaNgIouZfsgQ=="
     },
     {
-      "path": "app/js/xlsx.full.min.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/js/xlsx.full.min.js",
-      "size": 1001064,
-      "hash": "06e769d2827936dd49deecc8cc8edd3598422c56",
-      "sri": "Bk9SYEkE9NpxqInRntNqpAewXC3V6oVcvAttITG2EJgbcdxwIcgnlUsk/z/VAqjdBa3irmPNkbCnSAXXCnD3IQ=="
-    },
-    {
       "path": "app/sound/notification.mp3",
       "where": "client",
       "type": "asset",
@@ -4687,9 +4677,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/word/demo.doc",
-      "size": 2,
-      "hash": "c16e0a090d34333640ee7c89f588af18bf8e6898",
-      "sri": "AWuoxM/eZa+Zy1+ouKN+Lrc/SBs640mRZm3y4E/rbAOGZuvR7CtvYjlndWAzxwLd5fQj99R6tu0YJ/9TeDcx9w=="
+      "size": 4,
+      "hash": "eba9cccebc0362777dec5bb4d95f32335be5f533",
+      "sri": "zmd9tq4zxUlodKKQLTDTYfbPEldulr2Kn2YmoMop8LT5fkA+VHEdJOvzTU4YMjWo+ZUTRdMqIPLa1HbZEe5+Bg=="
     },
     {
       "path": "app/images/billing/WePayDescription.png",
@@ -4817,9 +4807,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/plugins/toastr/toastr.min.js",
-      "size": 4321,
-      "hash": "9804ebab9d5f94b3548c07cb9a0bff58408fd3df",
-      "sri": "pi7w4/MYBJ/7/NFGQ1OCInentlT3CCVVKU2udjNRWhxIOY5K2vxSPKYEa6EKbEZvHkgyEB8SMlSU8E84Ig81Og=="
+      "size": 4323,
+      "hash": "5b2805c6d1268052c4e9f5c9b1ffd4a017eab697",
+      "sri": "k8coAnKh3OrzWdm3QFjBasOBkaoRpnkZfUAn6H45/eiT/zkcndoLj14gI6Dzg9F+6DFV7x8VYXV+3b9eEZ5yHg=="
     },
     {
       "path": "app/lib/swipebox/img/icons.png",
