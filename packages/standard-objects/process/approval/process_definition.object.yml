@@ -39,6 +39,8 @@ fields:
   active:
     type: boolean
     label: State
+    # hidden: true
+    omit: true
     defaultValue: false
   entry_criteria:
     type: textarea
@@ -158,6 +160,13 @@ list_views:
       - order
       - description
       - active
+actions:
+  enable:
+    label: 启用
+    on: record
+  disable:
+    label: 停用
+    on: record
 permission_set:
   user:
     allowCreate: false
