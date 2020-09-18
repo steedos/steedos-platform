@@ -16,7 +16,7 @@ admin_menus:
     permission_sets:
       - admin
     object_name: process_definition
-    parent: menu_workflow
+    parent: objects_manager
   # - _id: process_actions
   #   name: process_actions
   #   permission_sets:

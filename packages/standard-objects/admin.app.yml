@@ -125,13 +125,13 @@ admin_menus:
     object_name: object_webhooks
     parent: objects_manager
     sort: 150
-  - _id: object_workflows
-    name: Object Synchronization Rules
-    permission_sets:
-      - admin
-    object_name: object_workflows
-    parent: objects_manager
-    sort: 80
+  # - _id: object_workflows
+  #   name: Object Synchronization Rules
+  #   permission_sets:
+  #     - admin
+  #   object_name: object_workflows
+  #   parent: objects_manager
+  #   sort: 80
   - _id: web_forms
     name: Web Forms
     permission_sets:
