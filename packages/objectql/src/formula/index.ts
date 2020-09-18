@@ -1,8 +1,9 @@
-import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFieldFormulaVarTypeConfig, SteedosFieldFormulaVarPathTypeConfig, FormulaUserSessionKey, FormulaBlankValue } from './type';
-import { addFieldFormulaConfig, getFieldFormulaConfigs } from './field_formula';
-import { pickFormulaVars } from './core';
-import { isFieldFormulaConfigQuotedTwoWays } from './util';
+import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs, getObjectConfig, getSteedosSchema } from '../types';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions } from './type';
+import { addFieldFormulaConfig, getFieldFormulaConfigs, clearFieldFormulaConfigs } from './field_formula';
+import { pickFormulaVars, computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
+import { isFieldFormulaConfigQuotedTwoWays, isCurrentUserIdRequiredForFormulaVars } from './util';
+import { isSystemObject } from '../util';
 import _ = require('lodash')
 const clone = require('clone')
 
@@ -28,29 +29,41 @@ const addFieldFormulaQuotesConfig = (quote: SteedosFieldFormulaQuoteTypeConfig, 
 
 /**
  * 把公式中a.b.c，比如account.website这样的变量转为SteedosFieldFormulaQuoteTypeConfig和SteedosFieldFormulaVarTypeConfig追加到quotes和vars中
+ * 因为getObjectConfigs拿到的对象肯定不包括被禁用和假删除的对象，所以不需要额外判断相关状态
  * @param formulaVar 公式中的单个变量，比如account.website
  * @param fieldConfig 
  * @param objectConfigs 
  * @param quotes 
  */
-const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFieldFormulaVarTypeConfig>) => {
-    let isUserSessionVar = formulaVar.startsWith(FormulaUserSessionKey);
+const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>, quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFormulaVarTypeConfig>) => {
+    // 公式变量以FormulaUserSessionKey（即$user）值开头，说明是userSession变量
+    let isUserVar = new RegExp(`^${FormulaUserKey.replace("$","\\$")}\\b`).test(formulaVar);
     let varItems = formulaVar.split(".");
-    let paths: Array<SteedosFieldFormulaVarPathTypeConfig> = [];
-    let formulaVarItem: SteedosFieldFormulaVarTypeConfig = {
+    let paths: Array<SteedosFormulaVarPathTypeConfig> = [];
+    let formulaVarItem: SteedosFormulaVarTypeConfig = {
         key: formulaVar,
         paths: paths
     };
-    if (isUserSessionVar) {
-        // 如果是userSession变量，则不需要计算quotes引用，paths也直接空着
-        formulaVarItem.is_user_session_var = true;
-        vars.push(formulaVarItem);
-        return;
+    if (isUserVar) {
+        // 如果是userSession变量，则不需要计算quotes引用，但是其paths值需要正常记录下来
+        formulaVarItem.is_user_var = true;
+        // vars.push(formulaVarItem);
+        // return;
+    }
+    else{
+        if(formulaVar.startsWith("$")){
+            throw new Error(`computeFormulaVarAndQuotes:The formula var '${formulaVar}' is starts with '$' but not a user session var that starts with $user.`);
+        }
+        if(!objectConfig){
+            // 不是$user变量时，需要传入objectConfig参数
+            throw new Error(`computeFormulaVarAndQuotes:The 'objectConfig' is required for the formula var '${formulaVar}'`);
+        }
     }
     let tempObjectConfig = objectConfig;
     for (let i = 0; i < varItems.length; i++) {
         let varItem = varItems[i];
         let tempFieldConfig: SteedosFieldTypeConfig;
+        const isUserKey = varItem === FormulaUserKey;
         if(varItem === "_id"){
             // 支持_id属性
             tempFieldConfig = {
@@ -58,28 +71,44 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
                 type: "text"
             }
         }
+        else if(isUserKey){
+            // 如果是$user变量，则特殊处理下
+            tempFieldConfig = {
+                name: varItem,
+                type: "lookup",
+                reference_to: "space_users"
+            }
+        }
         else{
             tempFieldConfig = tempObjectConfig.fields[varItem];
         }
         if (!tempFieldConfig) {
-            // 不是对象上的字段，则直接退出
+            // 不是对象上的字段，则直接退出，这里注意公式中引用零代码中的字段的话，公式中字段名需要手动加上__c后缀（因为用户填写的api名称不带__c，是内核会自动加后缀），否则会找不到
             throw new Error(`computeFormulaVarAndQuotes:Can't find the field '${varItem}' on the object '${tempObjectConfig.name}' for the formula var '${formulaVar}'`);
         }
         let isFormulaType = tempFieldConfig.type === "formula";
-        let tempFieldFormulaVarPath: SteedosFieldFormulaVarPathTypeConfig = {
-            field_name: varItem,
-            reference_from: tempObjectConfig.name
-        };
-        if (isFormulaType) {
-            tempFieldFormulaVarPath.is_formula = true;
+        if(!isUserKey){
+            let tempFieldFormulaVarPath: SteedosFormulaVarPathTypeConfig = {
+                field_name: varItem,
+                reference_from: tempObjectConfig.name
+            };
+            if (isFormulaType) {
+                tempFieldFormulaVarPath.is_formula = true;
+            }
+            // 当是$user时，不需要把第一个path记录下来，只需要记录其后续的路径即可
+            paths.push(tempFieldFormulaVarPath);
         }
-        paths.push(tempFieldFormulaVarPath);
-        if (i > 0 || isFormulaType) {
-            // 陈了公式字段外，自己不能引用自己，i大于0就是其他对象上的引用
+        if (!isUserVar) {
+            // $user变量不需要记录引用关系，因为没法确定每条record当时对应的当前用户ID是多少
+            // 自己可以引用自己，i大于0就是其他对象上的引用
             let tempFieldFormulaQuote: SteedosFieldFormulaQuoteTypeConfig = {
                 object_name: tempObjectConfig.name,
                 field_name: tempFieldConfig.name
             };
+            if(i === 0 && i === varItems.length - 1){
+                // 是引用的本对象上自身的字段，即自己引用自己
+                tempFieldFormulaQuote.is_own = true;
+            }
             if (isFormulaType) {
                 tempFieldFormulaQuote.is_formula = true;
             }
@@ -87,6 +116,10 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         }
         if (tempFieldConfig.type === "lookup" || tempFieldConfig.type === "master_detail") {
             // 引用类型字段
+            if (tempFieldConfig.multiple) {
+                // TODO:暂时不支持数组的解析，见：公式字段中要实现lookup关联到数组字段的情况 #783
+                throw new Error(`computeFormulaVarAndQuotes:The field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is a multiple ${tempFieldConfig.type} type, it is not supported yet.`);
+            }
             if (i === varItems.length - 1) {
                 // 引用类型字段后面必须继续引用该字段的相关属性，否则直接报错
                 throw new Error(`computeFormulaVarAndQuotes:The field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is a ${tempFieldConfig.type} type, so you must add more property after it.`);
@@ -109,7 +142,13 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         });
         if (!tempObjectConfig) {
             // 没找到相关引用对象，直接退出
-            throw new Error(`computeFormulaVarAndQuotes:Can't find the object reference_to '${tempFieldConfig.reference_to}' by the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
+            // 如果不是零代码对象，直接报错，否则直接返回，待相关零代码对象加载进来时，会再进入该函数
+            if(isSystemObject(tempFieldConfig.reference_to)){
+                throw new Error(`computeFormulaVarAndQuotes:Can't find the object reference_to '${tempFieldConfig.reference_to}' by the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
+            }
+            else{
+                return;
+            }
         }
     }
     vars.push(formulaVarItem);
@@ -123,7 +162,7 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
  */
 const computeFormulaVarsAndQuotes = (formula: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>) => {
     let quotes: Array<SteedosFieldFormulaQuoteTypeConfig> = [];
-    let vars: Array<SteedosFieldFormulaVarTypeConfig> = [];
+    let vars: Array<SteedosFormulaVarTypeConfig> = [];
     const formulaVars = pickFormulaVars(formula);
     formulaVars.forEach((formulaVar) => {
         computeFormulaVarAndQuotes(formulaVar, objectConfig, objectConfigs, quotes, vars);
@@ -132,7 +171,7 @@ const computeFormulaVarsAndQuotes = (formula: string, objectConfig: SteedosObjec
 }
 
 export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig, objectConfig: SteedosObjectTypeConfig) => {
-    const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs()
+    const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs("default")
     const formula = fieldConfig.formula;
     let result = computeFormulaVarsAndQuotes(formula, objectConfig, objectConfigs);
     let formulaConfig: SteedosFieldFormulaTypeConfig = {
@@ -141,7 +180,7 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
         field_name: fieldConfig.name,
         formula: formula,
         formula_type: fieldConfig.formula_type,
-        formula_blank_value: <FormulaBlankValue>fieldConfig.formula_blank_value,
+        formula_blank_value: <SteedosFormulaBlankValue>fieldConfig.formula_blank_value,
         quotes: result.quotes,
         vars: result.vars
     };
@@ -151,19 +190,52 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
     }
 }
 
-export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig) => {
+export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig, datasource: string) => {
     _.each(config.fields, function (field) {
         if (field.type === "formula") {
+            if(datasource !== "default"){
+                throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'formula', because it is not in the default datasource.`);
+            }
             addObjectFieldFormulaConfig(clone(field), config);
         }
     })
 }
 
-export const initObjectFieldsFormulas = () => {
-    const objectConfigs = getObjectConfigs()
+export const initObjectFieldsFormulas = (datasource: string) => {
+    if(datasource === "default"){
+        // 因为要考虑对象和字段可能被禁用、删除的情况，所以需要先清除下原来的内存数据
+        // 暂时只支持默认数据源，后续如果要支持多数据源时需要传入datasource参数清除数据
+        clearFieldFormulaConfigs()
+    }
+    const objectConfigs = getObjectConfigs(datasource);
+    // console.log("===initObjectFieldsFormulas==objectConfigs=", JSON.stringify(_.map(objectConfigs, 'name')));
     _.each(objectConfigs, function (objectConfig) {
-        addObjectFieldsFormulaConfig(objectConfig);
+        addObjectFieldsFormulaConfig(objectConfig, datasource);
     })
 
     // console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
+}
+
+export const computeFormula = async (formula: string, objectName:string, recordId: string, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions) => {
+    const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs("default")
+    // 允许参数objectName为空，此时formula应该最多只引用了$user变量，未引用任何对象字段相关变量。
+    const objectConfig = objectName ? getObjectConfig(objectName) : null;
+    const varsAndQuotes = computeFormulaVarsAndQuotes(formula, objectConfig, objectConfigs);
+    const vars = varsAndQuotes.vars;
+    if (!currentUserId) {
+        const required = isCurrentUserIdRequiredForFormulaVars(vars);
+        if(required){
+            throw new Error(`The param 'currentUserId' is required for formula ${formula.replace("$", "\\$")}`);
+        }
+    }
+    let doc: any = {};
+    if(objectName && recordId){
+        const formulaVarFields = pickFormulaVarFields(vars);
+        doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
+    }
+    if(spaceId){
+        doc.space = spaceId;
+    }
+    let params = await computeFormulaParams(doc, vars, currentUserId);
+    return runFormula(formula, params, options);
 }

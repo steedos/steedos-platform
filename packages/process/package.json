@@ -1,0 +1,19 @@
+{
+  "name": "@steedos/process",
+  "version": "1.22.0-alpha.7",
+  "main": "lib/index.js",
+  "repository": "https://github.com/steedos/steedos-platform.git",
+  "scripts": {
+    "compile": "tsc",
+    "prepare": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "typescript": "3.5.3"
+  }
+}

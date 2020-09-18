@@ -243,17 +243,15 @@ install("steedos:lightning-design-system");
 install("steedos:odata");
 install("steedos:object-database");
 install("steedos:mailqueue");
-install("chuangbo:cookie");
-install("steedos:sso");
 install("steedos:webhookqueue");
-install("steedos:api-authenticate-user");
 install("steedos:huaweipush");
 install("steedos:api");
 install("meteorhacks:ssr");
 install("steedos:autoform-filesize");
 install("steedos:autoform-location");
+install("chuangbo:cookie");
+install("steedos:sso");
 install("steedos:autoform");
-install("steedos:app-base");
 install("steedos:creator");
 install("steedos:instance-record-queue");
 install("steedos:app-chat");
@@ -272,8 +270,6 @@ install("jeremy:selectize");
 install("comerc:autoform-selectize");
 install("react-template-helper");
 install("steedos:webkit-notification");
-install("vazco:universe-selectize");
-install("steedos:cms");
 install("hot-code-push");
 install("launch-screen");
 install("autoupdate", "meteor/autoupdate/autoupdate_server.js");
@@ -817,7 +813,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.22.0-alpha.5",
+  "version": "1.22.0-alpha.6",
   "main": "lib/index.js"
 };
 
@@ -844,7 +840,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "1.22.0-alpha.5",
+  "version": "1.22.0-alpha.6",
   "main": "lib/index.js"
 };
 
@@ -871,7 +867,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.22.0-alpha.5",
+  "version": "1.22.0-alpha.6",
   "main": "lib/index.js"
 };
 
@@ -898,7 +894,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.22.0-alpha.5",
+  "version": "1.22.0-alpha.6",
   "main": "lib/index.js"
 };
 
@@ -952,7 +948,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.22.0-alpha.5",
+  "version": "1.22.0-alpha.6",
   "main": "lib/index.js"
 };
 

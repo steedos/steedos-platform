@@ -1,0 +1,48 @@
+name: process_flows
+label: process_flows
+hidden: true
+icon: record
+fields:
+  name: 
+    type: text
+  object_name:
+    type: text
+  when:
+    type: select
+    options: record_changes
+    label: The process starts when
+  start:
+    type: select
+    options:
+      - label: only when a record is created
+        value: create
+      - label: when a record is created or edited
+        value: changes
+  enable_recursion_check:
+    type: boolean
+    label: Recursion - Allow process to evaluate a record multiple times in a single save operation?
+  description:
+    label: description
+    type: textarea
+    is_wide: true
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    columns:
+      - name
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

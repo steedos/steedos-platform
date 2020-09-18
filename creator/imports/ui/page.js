@@ -1,12 +1,10 @@
 import './page.html';
 
-import PageContainer from './containers/PageContainer.jsx';
-
 Template.page.helpers({
-	pageContainer: function () {
-			return PageContainer;
-	},
-	pageId: function () {
-		return FlowRouter.getParam('page_id')
+	PageComponent: function () {
+		const pageId = FlowRouter.getParam('page_id')
+		if (!pageId || !Creator.Pages[pageId])
+			return null;
+		return Creator.Pages[pageId]	
 	}
 });

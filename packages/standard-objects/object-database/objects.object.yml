@@ -249,6 +249,7 @@ relatedList:
   - object_related_list
   - permission_objects
   - object_workflows
+  - process_definition
 list_views:
   all:
     columns:

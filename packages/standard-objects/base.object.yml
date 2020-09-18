@@ -318,6 +318,8 @@ actions:
     label: View Instance
   standard_follow: 
     label: Follow
+  standard_submit_for_approval:
+    label: Submit for Approval
 permission_set:
   none:
     allowCreate: false

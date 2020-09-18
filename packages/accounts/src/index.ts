@@ -7,7 +7,7 @@ import { AccountsPassword } from './password';
 import { errors } from './password/errors';
 import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';
-import accountsSamlIdp from './saml-idp';
+// import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
 import { getSteedosConfig, SteedosMongoDriver, getConnection } from '@steedos/objectql'
@@ -127,15 +127,8 @@ export async function getAccountsRouter(context){
     res.end();
   });
 
-  /* Router to webapps build */
-  router.use("/a/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
-  router.use("/a/i18n", express.static(path.join(__dirname, '..', 'webapp', 'src', 'i18n')));
-  router.get('/a/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'webapp', 'build', 'index.html'));
-  });
-
   /* Router to SAML-IDP */
-  router.use("/saml/", userLoader(accountsServer), accountsSamlIdp);
+  // router.use("/saml/", userLoader(accountsServer), accountsSamlIdp);
 
   return router
 }

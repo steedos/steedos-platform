@@ -1,0 +1,147 @@
+name: process_instance_history
+label: 批准历史
+hidden: true
+icon: approval
+# paging:
+#   enabled: false
+fields:
+  name:
+    type: text
+    label: Step Name
+    hidden: true
+  created_by:
+    label: 提交人
+    is_wide: true
+  process_instance:
+    type: lookup
+    reference_to: process_instance
+    hidden: true
+  process_instance_node:
+    type: lookup
+    reference_to: process_instance_node
+    hidden: true
+  step_status:
+    type: select
+    label: Status
+    hidden: true
+    options:
+      - approved
+      - fault
+      - held
+      - no_response
+      - pending
+      - reassigned
+      - rejected
+      - removed
+      - started
+  original_actor:
+    type: lookup
+    label: Assigned To
+    reference_to: users
+  actor:
+    type: lookup
+    label: Actual Approver
+    reference_to: users
+  target_object:
+    type: lookup
+    label: Approval Details
+    is_wide: true
+    reference_to: !!js/function
+      function(){
+        return ['contracts']
+      }
+  comments:
+    type: textarea
+    label: Comments
+    is_wide: true
+  step_node:
+    type: lookup
+    reference_to: process_node
+    hidden: true
+  elapsed_time_in_days:
+    type: number
+    precision: 18
+    scale: 0
+    hidden: true
+    omit: true
+  elapsed_time_in_hours:
+    type: number
+    precision: 5
+    scale: 2
+    hidden: true
+    omit: true
+  elapsed_time_in_minutes:
+    type: number
+    precision: 8
+    scale: 0
+    hidden: true
+    omit: true
+  modified:
+    hidden: true
+    omit: true
+  modified_by:
+    hidden: true
+    omit: true
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    sort: [["modified", "desc"]]
+    extra_columns:
+      - step_node
+    columns:
+      - name
+      - step_status
+      - modified
+      - comments
+      - original_actor
+      - actor
+actions:
+  approve:
+    label: Approve
+    on: record_only
+    visible: true
+  reject:
+    label: Reject
+    on: record_only
+    visible: true
+  reassign:
+    label: Reassign
+    on: record_only
+    visible: true
+  recall:
+    label: Recall
+    on: record_only
+    visible: true
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+form:
+  afterView: !!js/function |
+    function(){
+      var step_status = this.doc.step_status;
+      $("div", $(".crm-header-title")).css("display", "inline");
+      switch (step_status) {
+        case 'approved':
+            $(".crm-header-title").append('<span class="slds-badge slds-theme_success">'+TAPi18n.__("process_instance_history_field_step_status_options_approved")+'</span>')
+            break;
+        case 'rejected':
+            $(".crm-header-title").append('<span class="slds-badge slds-theme_error">'+TAPi18n.__("process_instance_history_field_step_status_options_rejected")+'</span>')
+            break;
+        default:
+            $(".crm-header-title").append('<span class="slds-badge" style="background-color: #706e6b;color: #fff;">'+TAPi18n.__("process_instance_history_field_step_status_options_"+step_status)+'</span>')
+            break;
+      }
+    }

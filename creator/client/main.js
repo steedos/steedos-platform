@@ -6,13 +6,24 @@ svg4everybody();
 
 import("./main.html");
 
+// 全局变量导入
+import { registerWindowLibraries } from './plugin';
+registerWindowLibraries();
+
+import { registerDefaultPlugins } from '@steedos/react';
+registerDefaultPlugins();
+
 // 把组件导入才能在creator中正常使用
 import * as UI from '../imports/ui';
 
-// 全局变量导入
-import { registerWindowLibraries, registerDefaultPlugins } from '@steedos/react';
-registerWindowLibraries();
-registerDefaultPlugins();
+BlazeLayout.setRoot('body');
+
+// 停用 @steedos/webapp 集成，目前会导致客户端文件大小暴涨
+// Meteor.startup(() => {
+//     import { renderRoutes } from '../imports/startup/client/router.js';
+//     import { render } from 'react-dom';
+//     render(renderRoutes(), document.getElementById('root'));
+// });
 
 Template.preloadAssets.helpers({
     absoluteUrl(url){

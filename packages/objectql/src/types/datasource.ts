@@ -1,4 +1,6 @@
 import { Dictionary } from '@salesforce/ts-types';
+import { initObjectFieldsFormulas } from '../formula';
+import { initObjectFieldsSummarys } from '../summary';
 import {
     SteedosDriver,
     SteedosMongoDriver,
@@ -335,7 +337,11 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.directDelete(tableName, id, userId)
     }
 
-    async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline, userId?: SteedosIDType) {
+    async directAggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[], userId?: SteedosIDType) {
+        return await this._adapter.directAggregate(tableName, query, externalPipeline, userId)
+    }
+
+    async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
         return await this._adapter.directAggregatePrefixalPipeline(tableName, query, prefixalPipeline, userId)
     }
 
@@ -382,6 +388,8 @@ export class SteedosDataSourceType implements Dictionary {
     init() {
         this.initObjects();
         this.initTypeORM();
+        initObjectFieldsFormulas(this.name);
+        initObjectFieldsSummarys(this.name);
         // this.schema.transformReferenceOfObject(this);
     }
 

@@ -7,7 +7,9 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
+import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
+const clone = require('clone')
 
 abstract class SteedosObjectProperties {
     _id?: string
@@ -535,8 +537,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('aggregate', this.table_name, clonedQuery, externalPipeline, userSession)
     }
 
+    // 此函数支持driver: MeteorMongo
+    async directAggregate(query: SteedosQueryOptions, externalPipeline: any[], userSession?: SteedosUserSession) {
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('directAggregate', this.table_name, clonedQuery, externalPipeline, userSession)
+    }
+
     // 此函数支持driver: MeteorMongo，类似于aggregate，其参数externalPipeline放在最前面而已
-    async directAggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline, userSession?: SteedosUserSession) {
+    async directAggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline: any[], userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
         await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('directAggregatePrefixalPipeline', this.table_name, clonedQuery, prefixalPipeline, userSession)
@@ -743,6 +752,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             await this.runBeforeTriggers(method, beforeTriggerContext)
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
+            let previousDoc = clone(afterTriggerContext.previousDoc);
             userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
@@ -761,12 +771,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return afterTriggerContext.data.values
                 }
             }
-            await this.runFieldFormula(method, args, userSession);
+            // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
+            await this.runRecordFormula(method, args, userSession ? userSession.userId : undefined);
+            await this.runRecordSummaries(method, args, previousDoc, userSession);
         }
         return returnValue
     };
 
-    private async runFieldFormula(method: string, args: Array<any>, userSession: SteedosUserSession) {
+    private async runRecordFormula(method: string, args: Array<any>, currentUserId: any) {
         if(["insert", "update", "updateMany"].indexOf(method) > -1){
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
@@ -783,11 +795,34 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     recordId = args[1];
                     doc = args[2];
                 }
-                await runCurrentObjectFieldFormulas(objectName, recordId, doc, userSession, true);
+                await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
                 if(method === "update"){
                     // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
-                    await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
+                    await runQuotedByObjectFieldFormulas(objectName, recordId, currentUserId);
                 }
+            }
+        }
+    }
+
+    private async runRecordSummaries(method: string, args: Array<any>, previousDoc: any, userSession: any) {
+        if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
+            if(method === "updateMany"){
+                // TODO:暂时不支持updateMany汇总计算，因为拿不到修改了哪些数据
+            }
+            else{
+                let objectName = args[0], recordId: string, doc: JsonMap;
+                if(method === "insert"){
+                    doc = args[1];
+                    recordId = <string>doc._id;
+                }
+                else{
+                    recordId = args[1];
+                    doc = args[2];
+                }
+                if(method === "insert"){
+                    await runCurrentObjectFieldSummaries(objectName, recordId);
+                }
+                await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, userSession);
             }
         }
     }

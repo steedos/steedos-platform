@@ -59,10 +59,24 @@ export const addConfig = (objectName: string, record: any) => {
 
 export const removeConfig = (objectName: string, record: any) => {
     if(!record._id){
-        throw new Error(`Error adding record to ${objectName}, record._id required`);
+        throw new Error(`Error removing record of ${objectName}, record._id required`);
     }
     let records = getConfigs(objectName);
     _.remove(records, {_id: record._id});
+}
+
+export const removeManyConfigs = (objectName: string, query?: object) => {
+    let records = getConfigs(objectName);
+    if(query ){
+        if(typeof query !== "object"){
+            throw new Error(`Error removing config of ${objectName}, query should be an object as {properyName: properyValue} just like {type:'abc'}`);
+        }
+        _.remove(records, query);
+    }
+    else{
+        // 移除objectName关联的所有数据
+        _.remove(records);
+    }
 }
 
 export const getConfigDatabase = (objectName: string) => {

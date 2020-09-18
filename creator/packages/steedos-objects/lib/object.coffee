@@ -45,6 +45,7 @@ Creator.Object = (options)->
 	self.custom = options.custom
 	self.enable_share = options.enable_share
 	self.enable_instances = options.enable_instances
+	self.enable_process = options.enable_process
 	if Meteor.isClient
 		if Creator.isCloudAdminSpace(Session.get("spaceId"))
 			self.enable_tree = false
@@ -97,6 +98,8 @@ Creator.Object = (options)->
 		if field.type == 'autonumber'
 			field.readonly = true
 		else if field.type == 'formula'
+			field.readonly = true
+		else if field.type == 'summary'
 			field.readonly = true
 
 	self.list_views = {}
@@ -197,7 +200,7 @@ Creator.Object = (options)->
 
 	schema = Creator.getObjectSchema(self)
 	self.schema = new SimpleSchema(schema)
-	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view && !_.contains(["flows", "forms", "instances", "organizations"], self.name)
+	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view && !_.contains(["flows", "forms", "instances", "organizations", "action_field_updates"], self.name)
 		if Meteor.isClient
 			_db.attachSchema(self.schema, {replace: true})
 		else

@@ -1,5 +1,6 @@
 const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
+const steedosProcess = require("@steedos/process");
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
@@ -169,6 +170,7 @@ export class Core {
     private static initCoreRoutes() {
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
+        app.use(steedosProcess.processExpress)
         app.use(coreExpress);
         
         let routers = objectql.getRouterConfigs()
@@ -186,6 +188,19 @@ export class Core {
         })
         WebApp.connectHandlers.use(routersApp);
     }
+}
+
+export const initPublic = () => {
+    const router = express.Router()
+
+    let publicPath = require.resolve("@steedos/webapp/package.json")
+    publicPath = publicPath.replace("package.json", 'build')
+    let routerPath = "/"
+    if (__meteor_runtime_config__ && __meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
+        routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + "/";
+    const cacheTime = 86400000*1; // one day
+    router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
+    WebApp.rawConnectHandlers.use(router);
 }
 
 export const initDesignSystem = () => {
