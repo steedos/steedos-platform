@@ -153,9 +153,6 @@ Template.instance_list.helpers
 	showBatchBtn: ()->
 		return Session.get("workflow_batch_instances_count") > 0
 
-	illustration: ()->
-		return ReactDesignSystem.Illustration
-
 	illustrationPath: ()->
 		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
 
