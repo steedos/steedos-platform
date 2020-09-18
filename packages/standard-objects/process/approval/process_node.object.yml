@@ -126,6 +126,44 @@ fields:
         value: reject_request
       - label: 'Perform ONLY the rejection actions for this step and send the approval request back to the most recent approver. (Go Back 1 Step)'
         value: back_to_previous
+  approval_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: 字段更新
+    reference_to: action_field_updates
+    depend_on:
+      - process_definition
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.process_definition){
+          var pid = dependValues.process_definition;
+          if(_.isObject(pid)){
+            pid = pid._id;
+          }
+          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
+          return "object_name eq '" + object_name + "'";
+        }
+      }
+    group: 批准操作
+  rejection_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: 字段更新
+    reference_to: action_field_updates
+    depend_on:
+      - process_definition
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.process_definition){
+          var pid = dependValues.process_definition;
+          if(_.isObject(pid)){
+            pid = pid._id;
+          }
+          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
+          return "object_name eq '" + object_name + "'";
+        }
+      }
+    group: 拒绝操作
 form:
   beforeInsert:
     function(){
@@ -166,8 +204,6 @@ list_views:
       - description
       - approver
       - reject_behavior
-relatedList:
-  - action_field_updates
 permission_set:
   user:
     allowCreate: false

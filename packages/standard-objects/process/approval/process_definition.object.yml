@@ -108,8 +108,22 @@ fields:
         value: unlock
     defaultValue: lock
     readonly: true
-    label: 初始提交
-    group: record lock
+    label: 锁定记录
+    group: 初始提交操作
+  initial_submission_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: 字段更新
+    reference_to: action_field_updates
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: 初始提交操作
   final_approval_record_lock:
     type: select
     required: true
@@ -120,8 +134,22 @@ fields:
       - label: 取消锁定可以进行编辑
         value: unlock
     defaultValue: lock
-    label: 最终批准
-    group: record lock
+    label: 锁定记录
+    group: 最终批准操作
+  final_approval_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: 字段更新
+    reference_to: action_field_updates
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: 最终批准操作
   final_rejection_record_lock:
     type: select
     required: true
@@ -132,8 +160,22 @@ fields:
       - label: 取消锁定可以进行编辑
         value: unlock
     defaultValue: unlock
-    label: 最终拒绝
-    group: record lock
+    label: 锁定记录
+    group: 最终拒绝操作
+  final_rejection_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: 字段更新
+    reference_to: action_field_updates
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: 最终拒绝操作
   recall_record_lock:
     type: select
     required: true
@@ -145,11 +187,26 @@ fields:
         value: unlock
     defaultValue: unlock
     readonly: true
-    label: 调回
-    group: record lock
+    label: 锁定记录
+    group: 调回操作
+  recall_updates_field_actions:
+    type: lookup
+    multiple: true
+    label: 字段更新
+    reference_to: action_field_updates
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: 调回操作
+    
 relatedList:
   - process_node
-  - action_field_updates
+  # - action_field_updates
 list_views:
   all:
     label: All

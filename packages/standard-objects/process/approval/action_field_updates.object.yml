@@ -10,31 +10,15 @@ fields:
     type: text
     required: true
     is_name: true
-  process_definition:
-    label: Process Definition
-    type: lookup
-    index: true
-    reference_to: process_definition
-  process_node:
-    label: Process Node
-    type: lookup
-    index: true
-    reference_to: process_node
-  when:
-    type: select
-    required: true
-    firstOption: false
-    options: initial_submission,approval,rejection,final_approval,final_rejection,recall
   object_name:
     label: Object Name
     type: lookup
-    readonly: true
     optionsFunction: !!js/function |
       function () {
         var _options;
         _options = [];
         _.forEach(Creator.objectsByName, function (o, object_name) {
-          if(o.label){
+          if(!o.hidden && o.label && object_name != 'base' && object_name != 'core'){
             return _options.push({
               label: o.label,
               value: o.name,
@@ -180,7 +164,7 @@ list_views:
     filter_scope: space
     columns:
       - label
-      - when
+      - object_name
       - description
 permission_set:
   user:
