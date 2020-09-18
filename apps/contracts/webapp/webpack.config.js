@@ -43,7 +43,7 @@ module.exports = {
         "react-redux": 'ReactRedux',
         "prop-types": 'PropTypes',
         "@steedos/react": 'ReactSteedos',
-        "@steedos/filters": 'SteedosFilters',
+        // "@steedos/filters": 'SteedosFilters',
         "@salesforce/design-system-react": 'ReactDesignSystem',
     },
     output: {
