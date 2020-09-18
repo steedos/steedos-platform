@@ -53,7 +53,7 @@ Steedos.ProcessManager.submit = function(object_name, record_id, options){
         comment: {
             label: TAPi18n.__('process_approval_comment'),
             type: 'textarea',
-            rows: 10,
+            rows: 3,
             is_wide: true
         }
     }
@@ -100,7 +100,7 @@ Steedos.ProcessManager.recall = function(object_name, record_id){
         comment: {
             label: TAPi18n.__('process_approval_comment'),
             type: 'textarea',
-            rows: 10,
+            rows: 3,
             is_wide: true
         }
     }, formId, {}, function(formValues, e, t){
@@ -120,7 +120,7 @@ Steedos.ProcessManager.approve = function(object_name, record_id, options){
         comment: {
             label: TAPi18n.__('process_approval_comment'),
             type: 'textarea',
-            rows: 10,
+            rows: 3,
             is_wide: true
         }
     }
@@ -168,7 +168,7 @@ Steedos.ProcessManager.reject = function(object_name, record_id){
         comment: {
             label: TAPi18n.__('process_approval_comment'),
             type: 'textarea',
-            rows: 10,
+            rows: 3,
             is_wide: true
         }
     }, formId, {}, function(formValues, e, t){
@@ -194,7 +194,7 @@ Steedos.ProcessManager.reassign = function(object_name, record_id){
         comment: {
             label: TAPi18n.__('process_approval_comment'),
             type: 'textarea',
-            rows: 10,
+            rows: 3,
             is_wide: true
         }
     }, formId, {}, function(formValues, e, t){
