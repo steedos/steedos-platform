@@ -24,6 +24,7 @@ import { applyCode, getUserIdByToken } from './endpoints/steedos/verify_code';
 import { changeUserFullname } from './endpoints/put-user-name';
 import { login } from './endpoints/login';
 import { getMySpaces } from './endpoints/spaces';
+import { verify_email, verify_mobile} from './endpoints/password/verify';
 
 
 const defaultOptions: AccountsExpressOptions = {
@@ -86,8 +87,8 @@ const accountsExpress = (
 
     router.post(`${path}/password/sendResetPasswordEmail`, sendResetPasswordEmail(accountsServer));
 
-    // router.post(`${path}/password/verify/email`, todo(accountsServer)); TODO
-    // router.post(`${path}/password/verify/mobile`, todo(accountsServer)); TODO
+    router.post(`${path}/password/verify/email`, verify_email(accountsServer));
+    router.post(`${path}/password/verify/mobile`, verify_mobile(accountsServer));
     
     router.post(
       `${path}/password/changePassword`,

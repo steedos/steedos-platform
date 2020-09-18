@@ -117,15 +117,6 @@ class Verify extends React.Component {
         }
         this.props.actions.sendVerificationToken(user).then(async (userId) => {
             this.state.userId = userId;
-            if (!userId)
-                this.setState({
-                    serverError: (
-                        <FormattedMessage
-                            id='accounts.userNotFound'
-                            defaultMessage='User not found.'
-                        />
-                    ),
-                });
         });
     }
 
@@ -157,7 +148,7 @@ class Verify extends React.Component {
         }
 
         if(this.state.verifyBy === 'email'){
-            this.props.actions.verifyEmail(this.state.email.trim(), this.state.code).then(async ({ error }) => {
+            this.props.actions.verifyEmail(this.state.email.trim(), this.state.verifyCode).then(async ({ error }) => {
                 if (error) {
                     this.setState({
                         serverError: (
@@ -173,7 +164,7 @@ class Verify extends React.Component {
         }
 
         if(this.state.verifyBy === 'mobile'){
-            this.props.actions.verifyMobile(this.state.mobile.trim(), this.state.code).then(async ({ error }) => {
+            this.props.actions.verifyMobile(this.state.mobile.trim(), this.state.verifyCode).then(async ({ error }) => {
                 if (error) {
                     this.setState({
                         serverError: (
@@ -191,12 +182,6 @@ class Verify extends React.Component {
 
 
     finish = (team) => {
-        let password_expired = this.props.currentUser.password_expired;
-        if (password_expired) {
-            GlobalAction.redirectUserToUpdatePassword();
-            return;
-        }
-
         let redirect_uri = new URLSearchParams(this.props.location.search).get('redirect_uri')
         if (!redirect_uri)
             redirect_uri = '/'

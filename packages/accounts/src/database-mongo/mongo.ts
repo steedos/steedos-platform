@@ -566,12 +566,10 @@ export class Mongo implements DatabaseInterface {
       verifiedAt: null,
       expiredAt: {$gt: now}
     }
-
     let result = await this.codeCollection.findOne(query);
     if(result){
       return result;
     }else{
-      console.log("verifyCodeByName throw new Error accounts.invalidCode");
       throw new Error("accounts.invalidCode");
     }
   }
