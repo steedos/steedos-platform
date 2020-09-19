@@ -7,7 +7,7 @@
     "server"
   ],
   "scripts": {
-    "bootstrap": "lerna clean --yes && lerna bootstrap --force-local",
+    "bootstrap": "lerna clean --yes && lerna bootstrap --force-local && rm -rf apps/steedos-app-crm/node_modules",
     "link": "lerna exec -- yarn link",
     "unlink": "lerna exec -- yarn unlink",
     "ver": "lerna version --force-publish",
