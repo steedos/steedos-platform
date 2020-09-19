@@ -30,10 +30,14 @@ Template.related_object_list.helpers
 		return Creator.getObjectUrl(object_name, record_id)
 
 	allowCreate: ()->
-		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		object_name = Session.get "object_name"
 		related_object_name = Session.get "related_object_name"
+		if related_object_name == object_name
+			# 说明是进入了已经新建成功的详细界面，此时会因为Session再进入该函数，不再需要处理
+			return false
+		relatedList = Creator.getRelatedList(object_name, Session.get("record_id"))
 		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
-		return Creator.getRecordRelatedListPermissions(Session.get('object_name'), related_list_item_props).allowCreate
+		return Creator.getRecordRelatedListPermissions(object_name, related_list_item_props).allowCreate
 
 	isUnlocked: ()->
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
@@ -87,10 +91,9 @@ Template.related_object_list.events
 			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 			Session.set 'cmShowAgainDuplicated', true
 		else 
-			related_lists = Creator.getRelatedList(object_name, record_id)
-			related_field_name = _.findWhere(related_lists, {object_name: related_object_name}).related_field_name
-			if related_field_name
-				Session.set 'cmDoc', Object.assign({"#{related_field_name}": record_id}, FormManager.getInitialValues(related_object_name))
+			defaultDoc = FormManager.getRelatedInitialValues(object_name, record_id, related_object_name);
+			if !_.isEmpty(defaultDoc)
+				Session.set 'cmDoc', defaultDoc
 		
 		Session.set "action_collection", "Creator.Collections.#{related_object_name}"
 		Session.set "action_collection_name", action_collection_name
