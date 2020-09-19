@@ -28,7 +28,7 @@ const getObjectList = async function (req: Request, res: Response) {
         }
 
         getODataManager().removeInvalidMethod(queryParams);
-        let qs = decodeURIComponent(querystring.stringify(queryParams));
+        let qs = decodeURIComponent(querystring.stringify(queryParams as querystring.ParsedUrlQueryInput));
         if (qs) {
             var createQuery = odataV4Mongodb.createQuery(qs);
         } else {
@@ -108,7 +108,7 @@ const getObjectRecent = async function (req: Request, res: Response) {
             recent_view_records_ids = _.flatten(recent_view_records_ids);
             recent_view_records_ids = _.uniq(recent_view_records_ids);
             getODataManager().removeInvalidMethod(queryParams);
-            let qs = decodeURIComponent(querystring.stringify(queryParams));
+            let qs = decodeURIComponent(querystring.stringify(queryParams as querystring.ParsedUrlQueryInput));
             if (qs) {
                 var createQuery = odataV4Mongodb.createQuery(qs);
             } else {
@@ -283,7 +283,7 @@ const getObjectData = async function (req: Request, res: Response) {
             }
             if (userId) {
                 getODataManager().removeInvalidMethod(queryParams);
-                let qs = decodeURIComponent(querystring.stringify(queryParams));
+                let qs = decodeURIComponent(querystring.stringify(queryParams as querystring.ParsedUrlQueryInput));
                 if (qs) {
                     var createQuery = odataV4Mongodb.createQuery(qs);
                 } else {

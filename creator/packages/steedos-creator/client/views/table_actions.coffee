@@ -25,4 +25,4 @@ Template.creator_table_actions.helpers
 
 	getSvgUrl: (source, name)->
 		url = "/assets/icons/#{source}/svg/symbols.svg##{name}"
-		return Creator.getRelativeUrl(url)
+		return Steedos.absoluteUrl(url)
