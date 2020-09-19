@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "4b1ef5875d6725f5353a2116ebe58fded2c61a7e.js",
+      "path": "cf52cb14e3213af459166b439b4efe9d1baaab5c.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/4b1ef5875d6725f5353a2116ebe58fded2c61a7e.js?meteor_js_resource=true",
-      "size": 7696308,
-      "hash": "4b1ef5875d6725f5353a2116ebe58fded2c61a7e",
-      "sri": "rUlzHauD1Da6oCdbACHOaAluWrS2VtYGmPPC6gSMhk4AM+Sf0K06Cd/9ixSli0bLetMulK6LhPXtKv0xTxv/ow=="
+      "url": "/cf52cb14e3213af459166b439b4efe9d1baaab5c.js?meteor_js_resource=true",
+      "size": 7761820,
+      "hash": "cf52cb14e3213af459166b439b4efe9d1baaab5c",
+      "sri": "OIRzzKmtTsvhSMa/BB07gLTmWxJg4utrF3eROkH978I2uURk4L338QcRG2VqOkcE/T5Ng0YRAzNVq8L/Pu7QEA=="
     },
     {
-      "path": "4b1ef5875d6725f5353a2116ebe58fded2c61a7e.stats.json",
+      "path": "cf52cb14e3213af459166b439b4efe9d1baaab5c.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/4b1ef5875d6725f5353a2116ebe58fded2c61a7e.stats.json?meteor_js_resource=true",
-      "size": 164651,
-      "hash": "6df5c6343a6a9dbf63de618b0081ea15e797c003",
-      "sri": "U71bIAkgerDWXrxHHWmnQZdW90oov8ergQb29DtCScQRUNVdMVQ+jkqJJIPzJ/XpmVJimcN5xedqm0+k80O/IQ=="
+      "url": "/cf52cb14e3213af459166b439b4efe9d1baaab5c.stats.json?meteor_js_resource=true",
+      "size": 163906,
+      "hash": "23ce8245b48d9dc39e6789a4d77c202d669fb1b8",
+      "sri": "fr96XpOH20nMuVMqxtXtSqFKkKyDicPDrz5Ceny7wGmSEZHaUsFtZKef1WMjzoAWp5cn4DyjwRBszIXcaNEWoQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -46,20 +46,20 @@
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/package.json?hash=4cd8c1f7b4979af5bc5e0dc4037f7e10fda81089",
+      "url": "/dynamic/node_modules/codemirror/package.json?hash=103b66d15fdf8e287a3e3a848a2f0c9df715ccaf",
       "size": 90,
-      "hash": "4cd8c1f7b4979af5bc5e0dc4037f7e10fda81089",
-      "sri": "oBlTQhbvQNNDb6XRnyRE853j52w/q7cflI2EOibXgKznAfV9b4Em1ipuzbv41UmqOgdh4ipKnKc/lfYBDzV0Jg=="
+      "hash": "103b66d15fdf8e287a3e3a848a2f0c9df715ccaf",
+      "sri": "mo/et8eEbiazdo/+0+8eAhxAuvTg8qU1Je7R1c11MZte9qcljtTqIZ5m9y0lo13TPaRrWwW0ewar+WNquKjBmw=="
     },
     {
       "path": "dynamic/node_modules/codemirror/lib/codemirror.js",
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/lib/codemirror.js?hash=21fda0a0569fea60ddd557953546805dc0cf4d08",
-      "size": 171484,
-      "hash": "21fda0a0569fea60ddd557953546805dc0cf4d08",
-      "sri": "Gy6hweVmuaFWcF5G58g+fZvdzWlIUp/+V4DsF6ZR1Jj5Kt3Gu7aNzQfm/JwvlSpWQtXxDn1IAr7HPufzzTvkwQ=="
+      "url": "/dynamic/node_modules/codemirror/lib/codemirror.js?hash=7fca71ae9f8d952ade5228c0ab312e9e82e9ede5",
+      "size": 171517,
+      "hash": "7fca71ae9f8d952ade5228c0ab312e9e82e9ede5",
+      "sri": "8mwNvyTVlZNEEm7K0CmGqEhxmDO0Ga6vHOtfwjx9uufgCtK3vCCQ3q7B0TFoba3YxawSiqYNXjHdW1uiFtfi9A=="
     },
     {
       "path": "dynamic/node_modules/codemirror/addon/edit/continuelist.js",
@@ -96,10 +96,10 @@
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/mode/markdown/markdown.js?hash=b628a01d08e8b608cfd1b4ba7d7e2e10fc1db11b",
-      "size": 14976,
-      "hash": "b628a01d08e8b608cfd1b4ba7d7e2e10fc1db11b",
-      "sri": "oTr5Ja1O10gydg0KZ7Z4HHZ9DpcK84vRf0Ot+DlDP9OKkcCOZ++TKC5BSkZIBi9zS1KZP9Z33Q+4BkTHxrWq9g=="
+      "url": "/dynamic/node_modules/codemirror/mode/markdown/markdown.js?hash=213d8746d8ae200f0a9b8d85bb8c738a09a82595",
+      "size": 14988,
+      "hash": "213d8746d8ae200f0a9b8d85bb8c738a09a82595",
+      "sri": "VkF+Puzd//i9+c4ZY1d750ID0U9oIdKvTCM8vVfyPJXqYQZ0fbD2u+WbXD6oWj1h5XwSZNM4q7lZzGzS+sRaiw=="
     },
     {
       "path": "dynamic/node_modules/codemirror/mode/xml/xml.js",
@@ -116,10 +116,10 @@
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/mode/meta.js?hash=cd1286148c50afe32b8c96c66a38828844baa04d",
-      "size": 12719,
-      "hash": "cd1286148c50afe32b8c96c66a38828844baa04d",
-      "sri": "VJXou00FKFoPrXG8Ry9mHJwbRg+79QGQ3LeTzfh//gRiSGGuAo0pFCyFAqPIczHoUip9X+h9gci8evtu7HNn6g=="
+      "url": "/dynamic/node_modules/codemirror/mode/meta.js?hash=3e00df2a91d2e66b87a7be9f903d8cc1054c846d",
+      "size": 12721,
+      "hash": "3e00df2a91d2e66b87a7be9f903d8cc1054c846d",
+      "sri": "kOwiV4cgdKTm5mGf/OZ9/2EnKg/8dCQ33Jd3a8KykqHsJZTUuT34DHTpv1vmnVnd/vGqeIVxCRmENSuQ0xKQFw=="
     },
     {
       "path": "dynamic/node_modules/codemirror/addon/mode/overlay.js",
@@ -206,10 +206,20 @@
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/marked/package.json?hash=1dc428c2df8355a56b674d615e7945414ed41b2c",
+      "url": "/dynamic/node_modules/marked/package.json?hash=b0779edeaf53dfadccee13450a47f0c2df50564f",
       "size": 109,
-      "hash": "1dc428c2df8355a56b674d615e7945414ed41b2c",
-      "sri": "5iUNzgq6mPxZP512o3bIAL3LPKiK9Wgl78tjVslB9QD38mh2Tov5TX4sPi0YoxT+yGPf64I3nzIGfJ1+flPdog=="
+      "hash": "b0779edeaf53dfadccee13450a47f0c2df50564f",
+      "sri": "tErOj5WilTAR8sDv25oQur0H4skPKKhLdB6B1SSWqJ/yW8TNpDA5u5ZKpOSlDTYlxAI8UG7yOTgeryEk5dx+7w=="
+    },
+    {
+      "path": "dynamic/node_modules/marked/lib/marked.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/marked/lib/marked.js?hash=f6fffc3270a8cb68ba5f0643051cdb2f70539c7c",
+      "size": 35211,
+      "hash": "f6fffc3270a8cb68ba5f0643051cdb2f70539c7c",
+      "sri": "kER4kVM+c+wzbdgOAxzRgvyRtulJ4tzpa6qV88ZhtJ2iPbtp1obpYPWzj0L5QAzMVJCHbrx3jRh6EwJhbyNW+A=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/drop_down_box.js",
@@ -3406,10 +3416,10 @@
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/formBuilder/dist/form-builder.min.js?hash=4def999da9e3c15d6e913a2bf1fd73ad660d96ab",
-      "size": 153194,
-      "hash": "4def999da9e3c15d6e913a2bf1fd73ad660d96ab",
-      "sri": "I2nIz+FB6bTQ2DlmEKPaNvfwC/c2JE8pI6UEzkcnAnFgzVFj/MR1UzGTE9rAyRD6lnzFdGdtDoj6UqZM+dLD0g=="
+      "url": "/dynamic/node_modules/formBuilder/dist/form-builder.min.js?hash=577d34a96df0313b6e6fd64ccac80f81bcaaa0bd",
+      "size": 155198,
+      "hash": "577d34a96df0313b6e6fd64ccac80f81bcaaa0bd",
+      "sri": "A1x8hMK+/+DgAzPnUJm4Y0I7r3/okYX+hNXtgodUYwGiiqPnvNNPE1Y+A29bI8UUlgXdbi5l3ft27VWdHT0oWQ=="
     },
     {
       "path": "dynamic/client/main.html",
@@ -3422,14 +3432,14 @@
       "sri": "icZXWHyR3Vlehv0YYyYu5HoCVWUOTkrG5EfAPM51WF9yPT0oWuOCxE1Dw47vHp8HbOXsxiLN2sh9yQxeeW13xw=="
     },
     {
-      "path": "e76632bbebf9ce6ca15c85633683f0a52bd98a0e.css",
+      "path": "441c8fe72659c714d96b880f3a5fa0f255728d63.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/e76632bbebf9ce6ca15c85633683f0a52bd98a0e.css?meteor_css_resource=true",
-      "size": 1647405,
-      "hash": "e76632bbebf9ce6ca15c85633683f0a52bd98a0e",
-      "sri": "3H8Uaek7Hs5GUblraN/3uFWCRyZgj/JTFpPPe5C145RGNen/U9Z19tob8P4GHTrxHvfBN75ISM9C18LySXnsRA=="
+      "url": "/441c8fe72659c714d96b880f3a5fa0f255728d63.css?meteor_css_resource=true",
+      "size": 1647469,
+      "hash": "441c8fe72659c714d96b880f3a5fa0f255728d63",
+      "sri": "WZZ229E4N4dk58PEdpWGqaD41A7eInv+d1XQH65QsKXH3SvNonsvRRsUp3N2YyCscWsjLHRkjEXI+YtGLazbVQ=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -4862,6 +4872,106 @@
       "sri": "4lTnmq2kNbykTiOPulgEvxRgqegB5/YMhMqaBWvxji/9wRgR9W/TSGF51/mIG1hQ6janxTojpr41y5/gaW9LRA=="
     },
     {
+      "path": "assets/icons/action-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/action-sprite/svg/symbols-rtl.svg",
+      "size": 110839,
+      "hash": "e53f6f00a6c4c9c0ff9bc7e6626f72d071adc05a",
+      "sri": "Y9m/W13Z89wRc1NxcReEr1h3b4dFeLo4kmUo9XT8S/7slNcarHlwAnIqtti1sWj7uO1juTrYaBys7dmiAzfp1A=="
+    },
+    {
+      "path": "assets/icons/action-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/action-sprite/svg/symbols.svg",
+      "size": 111051,
+      "hash": "9614a383b83af6a31e671bf3b1f38bd74df0644f",
+      "sri": "2bg+/gXpSLKQlvByf7J4DYY6+OXbNQDq+3vFllES3clVz3qpukACskK075R/viH4W8Ije7/9v+vL4FBYzvlG4Q=="
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/custom-sprite/svg/symbols-rtl.svg",
+      "size": 68139,
+      "hash": "d8d69c01d62ba2b7ead7507044b37a78cc16b1c2",
+      "sri": "2xG76OQpViEhLceoPGjIqwlf59SOR0bHPIRFW4mYt/sDXUDA/1cHhfjEQ45388nAJRc1dg7NmPH9BJD54nQA0g=="
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/custom-sprite/svg/symbols.svg",
+      "size": 68171,
+      "hash": "2bfda21da8d9d1afcb8d8d6038a60ed58801d12a",
+      "sri": "m/6zNPTH1GS3SavaXVksXPzIYfK4476KL5RpFxp8Be1tEn039zaKVwO9PGZtOWsnLjWqBMn6R7T1v7vLIQsSxQ=="
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/doctype-sprite/svg/symbols-rtl.svg",
+      "size": 44164,
+      "hash": "707280174dde40af72e8a01681ce0da2388bc87c",
+      "sri": "QX3m/KhOlVCUt8pJynYYnOqn+qgSXGDcTbxPULviLPIIOj7iMLCDvKf5f/gwaEsXv9bprbu3pxFYn97DKJb2jw=="
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/doctype-sprite/svg/symbols.svg",
+      "size": 45027,
+      "hash": "62109c3913e275b84962effb6cdb0092b6e7a391",
+      "sri": "V7RdGi3DWoerPeLYYRm3azOFcxOXytCeDB8WidE1sHtaHOM8+1Rg6oQFsOwIpr7vr6R58+jsmpMLPGMdlQrwYw=="
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/standard-sprite/svg/symbols-rtl.svg",
+      "size": 257971,
+      "hash": "96b9df6832af471c9797988c46263ebd8a4a60fe",
+      "sri": "SB596GH9iExML68FhMg0f0oYonAwkx14wR2G8nfU03/32Mk9whNQFHzHKSqF0j/NpEbMSn562+e3Qol275uXfQ=="
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/standard-sprite/svg/symbols.svg",
+      "size": 257518,
+      "hash": "bc8177d16f3e33102edccae7437895648035d2cc",
+      "sri": "owwHUkHt1MPJl42tKL6m/Kx11yhTvOfMJi4lGnJGwg+MYOlug/6fPeyKYXJx2nupJWpD10ejDGrWmauGXWJb8Q=="
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "size": 263480,
+      "hash": "7a81c2d4bb3c2d7898416dc437fa7040a6e98100",
+      "sri": "Kq3uJmD1qL6s6N8J0Z00gM2DPG9EkNDzyjNJNGJabY6hxCSR+mTwVYCLhQw9C7SfH+GdABK88zRhdJullyTxSg=="
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols.svg",
+      "size": 263630,
+      "hash": "fb6bee6ff26acff2a1674e0e97481c2cfe5f4b4c",
+      "sri": "JAb54K32BIyTFgUUTe8aSCEWyfvSna+kCqKLKgWsaYSTcP/g9XV1LQxs4FoMWrrMw0Amx8BAeuJr6tTKBFIYxw=="
+    },
+    {
       "path": "app/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
       "where": "client",
       "type": "asset",
@@ -4875,7 +4985,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "0a341b8b17b3ff10f850691af09b4509706823b0"
+      "hash": "5cefdfc52e08de1c4006e0f6f88cf028682ad494"
     }
   ]
 }

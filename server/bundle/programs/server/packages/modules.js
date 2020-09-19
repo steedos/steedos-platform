@@ -1029,7 +1029,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "moment",
-  "version": "2.26.0",
+  "version": "2.28.0",
   "main": "./moment.js"
 };
 
@@ -1509,7 +1509,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "jszip",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "main": "./lib/index"
 };
 

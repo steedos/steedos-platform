@@ -2,34 +2,34 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "5afd62215ebbc0fbd249c552830461b47bcd4cda.js",
+      "path": "dcf946a8c9d026e226ff230adc8fe523fe2cca4b.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/5afd62215ebbc0fbd249c552830461b47bcd4cda.js?meteor_js_resource=true",
-      "size": 10960851,
-      "hash": "5afd62215ebbc0fbd249c552830461b47bcd4cda",
-      "sri": "KXwbH2D2Yivf7PHTIQNT4REV+F0BpDBuPXZN32onysFmdVpgZL2vJQEIQtfWIIbcD6EEGLuXZ7TkGcv1nMKEtQ=="
+      "url": "/__cordova/dcf946a8c9d026e226ff230adc8fe523fe2cca4b.js?meteor_js_resource=true",
+      "size": 11065651,
+      "hash": "dcf946a8c9d026e226ff230adc8fe523fe2cca4b",
+      "sri": "xSo/5AvWqSDdcZGy8Vndlxf2ZUkaOzbbT6wHS1+9UwNo3/bi3XNlIJJ4KbCulbsMe35odTHsQY8UG3KBHAYAaA=="
     },
     {
-      "path": "5afd62215ebbc0fbd249c552830461b47bcd4cda.stats.json",
+      "path": "dcf946a8c9d026e226ff230adc8fe523fe2cca4b.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/5afd62215ebbc0fbd249c552830461b47bcd4cda.stats.json?meteor_js_resource=true",
-      "size": 174646,
-      "hash": "5f7237a2357263c41af4d7eb341322abcef1d827",
-      "sri": "LSOOZl4kZFJw+nEVZqewOnrQeuqRuJ6WQ3c/N/bVekRcjSZIDI20MW7sS7s4zk3VBhZqnju7j/e2nnC6iIwUeA=="
+      "url": "/__cordova/dcf946a8c9d026e226ff230adc8fe523fe2cca4b.stats.json?meteor_js_resource=true",
+      "size": 174354,
+      "hash": "505fc12c9aa566d9ba1ae71cb13efe80c09278b6",
+      "sri": "LEfPpF/iBjpcsOonItZNCOVO71foZ+rW+/QzK7GS0D+8MVVDo/F4VtP+n/KUsocQ7mkf0FnHCx5VN5CekZBpag=="
     },
     {
-      "path": "e76632bbebf9ce6ca15c85633683f0a52bd98a0e.css",
+      "path": "441c8fe72659c714d96b880f3a5fa0f255728d63.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/e76632bbebf9ce6ca15c85633683f0a52bd98a0e.css?meteor_css_resource=true",
-      "size": 1647405,
-      "hash": "e76632bbebf9ce6ca15c85633683f0a52bd98a0e",
-      "sri": "3H8Uaek7Hs5GUblraN/3uFWCRyZgj/JTFpPPe5C145RGNen/U9Z19tob8P4GHTrxHvfBN75ISM9C18LySXnsRA=="
+      "url": "/__cordova/441c8fe72659c714d96b880f3a5fa0f255728d63.css?meteor_css_resource=true",
+      "size": 1647469,
+      "hash": "441c8fe72659c714d96b880f3a5fa0f255728d63",
+      "sri": "WZZ229E4N4dk58PEdpWGqaD41A7eInv+d1XQH65QsKXH3SvNonsvRRsUp3N2YyCscWsjLHRkjEXI+YtGLazbVQ=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -2892,6 +2892,206 @@
       "sri": "4lTnmq2kNbykTiOPulgEvxRgqegB5/YMhMqaBWvxji/9wRgR9W/TSGF51/mIG1hQ6janxTojpr41y5/gaW9LRA=="
     },
     {
+      "path": "assets/icons/action-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/action-sprite/svg/symbols-rtl.svg",
+      "size": 110839,
+      "hash": "e53f6f00a6c4c9c0ff9bc7e6626f72d071adc05a",
+      "sri": "Y9m/W13Z89wRc1NxcReEr1h3b4dFeLo4kmUo9XT8S/7slNcarHlwAnIqtti1sWj7uO1juTrYaBys7dmiAzfp1A=="
+    },
+    {
+      "path": "assets/icons/action-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/action-sprite/svg/symbols-rtl.svg",
+      "size": 110839,
+      "hash": "e53f6f00a6c4c9c0ff9bc7e6626f72d071adc05a",
+      "sri": "Y9m/W13Z89wRc1NxcReEr1h3b4dFeLo4kmUo9XT8S/7slNcarHlwAnIqtti1sWj7uO1juTrYaBys7dmiAzfp1A=="
+    },
+    {
+      "path": "assets/icons/action-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/action-sprite/svg/symbols.svg",
+      "size": 111051,
+      "hash": "9614a383b83af6a31e671bf3b1f38bd74df0644f",
+      "sri": "2bg+/gXpSLKQlvByf7J4DYY6+OXbNQDq+3vFllES3clVz3qpukACskK075R/viH4W8Ije7/9v+vL4FBYzvlG4Q=="
+    },
+    {
+      "path": "assets/icons/action-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/action-sprite/svg/symbols.svg",
+      "size": 111051,
+      "hash": "9614a383b83af6a31e671bf3b1f38bd74df0644f",
+      "sri": "2bg+/gXpSLKQlvByf7J4DYY6+OXbNQDq+3vFllES3clVz3qpukACskK075R/viH4W8Ije7/9v+vL4FBYzvlG4Q=="
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/custom-sprite/svg/symbols-rtl.svg",
+      "size": 68139,
+      "hash": "d8d69c01d62ba2b7ead7507044b37a78cc16b1c2",
+      "sri": "2xG76OQpViEhLceoPGjIqwlf59SOR0bHPIRFW4mYt/sDXUDA/1cHhfjEQ45388nAJRc1dg7NmPH9BJD54nQA0g=="
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/custom-sprite/svg/symbols-rtl.svg",
+      "size": 68139,
+      "hash": "d8d69c01d62ba2b7ead7507044b37a78cc16b1c2",
+      "sri": "2xG76OQpViEhLceoPGjIqwlf59SOR0bHPIRFW4mYt/sDXUDA/1cHhfjEQ45388nAJRc1dg7NmPH9BJD54nQA0g=="
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/custom-sprite/svg/symbols.svg",
+      "size": 68171,
+      "hash": "2bfda21da8d9d1afcb8d8d6038a60ed58801d12a",
+      "sri": "m/6zNPTH1GS3SavaXVksXPzIYfK4476KL5RpFxp8Be1tEn039zaKVwO9PGZtOWsnLjWqBMn6R7T1v7vLIQsSxQ=="
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/custom-sprite/svg/symbols.svg",
+      "size": 68171,
+      "hash": "2bfda21da8d9d1afcb8d8d6038a60ed58801d12a",
+      "sri": "m/6zNPTH1GS3SavaXVksXPzIYfK4476KL5RpFxp8Be1tEn039zaKVwO9PGZtOWsnLjWqBMn6R7T1v7vLIQsSxQ=="
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/doctype-sprite/svg/symbols-rtl.svg",
+      "size": 44164,
+      "hash": "707280174dde40af72e8a01681ce0da2388bc87c",
+      "sri": "QX3m/KhOlVCUt8pJynYYnOqn+qgSXGDcTbxPULviLPIIOj7iMLCDvKf5f/gwaEsXv9bprbu3pxFYn97DKJb2jw=="
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/doctype-sprite/svg/symbols-rtl.svg",
+      "size": 44164,
+      "hash": "707280174dde40af72e8a01681ce0da2388bc87c",
+      "sri": "QX3m/KhOlVCUt8pJynYYnOqn+qgSXGDcTbxPULviLPIIOj7iMLCDvKf5f/gwaEsXv9bprbu3pxFYn97DKJb2jw=="
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/doctype-sprite/svg/symbols.svg",
+      "size": 45027,
+      "hash": "62109c3913e275b84962effb6cdb0092b6e7a391",
+      "sri": "V7RdGi3DWoerPeLYYRm3azOFcxOXytCeDB8WidE1sHtaHOM8+1Rg6oQFsOwIpr7vr6R58+jsmpMLPGMdlQrwYw=="
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/doctype-sprite/svg/symbols.svg",
+      "size": 45027,
+      "hash": "62109c3913e275b84962effb6cdb0092b6e7a391",
+      "sri": "V7RdGi3DWoerPeLYYRm3azOFcxOXytCeDB8WidE1sHtaHOM8+1Rg6oQFsOwIpr7vr6R58+jsmpMLPGMdlQrwYw=="
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/standard-sprite/svg/symbols-rtl.svg",
+      "size": 257971,
+      "hash": "96b9df6832af471c9797988c46263ebd8a4a60fe",
+      "sri": "SB596GH9iExML68FhMg0f0oYonAwkx14wR2G8nfU03/32Mk9whNQFHzHKSqF0j/NpEbMSn562+e3Qol275uXfQ=="
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/standard-sprite/svg/symbols-rtl.svg",
+      "size": 257971,
+      "hash": "96b9df6832af471c9797988c46263ebd8a4a60fe",
+      "sri": "SB596GH9iExML68FhMg0f0oYonAwkx14wR2G8nfU03/32Mk9whNQFHzHKSqF0j/NpEbMSn562+e3Qol275uXfQ=="
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/standard-sprite/svg/symbols.svg",
+      "size": 257518,
+      "hash": "bc8177d16f3e33102edccae7437895648035d2cc",
+      "sri": "owwHUkHt1MPJl42tKL6m/Kx11yhTvOfMJi4lGnJGwg+MYOlug/6fPeyKYXJx2nupJWpD10ejDGrWmauGXWJb8Q=="
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/standard-sprite/svg/symbols.svg",
+      "size": 257518,
+      "hash": "bc8177d16f3e33102edccae7437895648035d2cc",
+      "sri": "owwHUkHt1MPJl42tKL6m/Kx11yhTvOfMJi4lGnJGwg+MYOlug/6fPeyKYXJx2nupJWpD10ejDGrWmauGXWJb8Q=="
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "size": 263480,
+      "hash": "7a81c2d4bb3c2d7898416dc437fa7040a6e98100",
+      "sri": "Kq3uJmD1qL6s6N8J0Z00gM2DPG9EkNDzyjNJNGJabY6hxCSR+mTwVYCLhQw9C7SfH+GdABK88zRhdJullyTxSg=="
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "size": 263480,
+      "hash": "7a81c2d4bb3c2d7898416dc437fa7040a6e98100",
+      "sri": "Kq3uJmD1qL6s6N8J0Z00gM2DPG9EkNDzyjNJNGJabY6hxCSR+mTwVYCLhQw9C7SfH+GdABK88zRhdJullyTxSg=="
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/utility-sprite/svg/symbols.svg",
+      "size": 263630,
+      "hash": "fb6bee6ff26acff2a1674e0e97481c2cfe5f4b4c",
+      "sri": "JAb54K32BIyTFgUUTe8aSCEWyfvSna+kCqKLKgWsaYSTcP/g9XV1LQxs4FoMWrrMw0Amx8BAeuJr6tTKBFIYxw=="
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols.svg",
+      "size": 263630,
+      "hash": "fb6bee6ff26acff2a1674e0e97481c2cfe5f4b4c",
+      "sri": "JAb54K32BIyTFgUUTe8aSCEWyfvSna+kCqKLKgWsaYSTcP/g9XV1LQxs4FoMWrrMw0Amx8BAeuJr6tTKBFIYxw=="
+    },
+    {
       "path": "app/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
       "where": "client",
       "type": "asset",
@@ -2915,7 +3115,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "0a341b8b17b3ff10f850691af09b4509706823b0"
+      "hash": "5cefdfc52e08de1c4006e0f6f88cf028682ad494"
     }
   ],
   "cordovaCompatibilityVersions": {
