@@ -13,6 +13,7 @@ module.exports = {
             
     },
     customizeVisible: function(object_name, record_id, record_permissions, record){
+        if(record._id === 'admin'){return false;}
         return Creator.baseObject.actions.standard_new.visible() && record.is_system;
     },
     reset: function(object_name, record_id, fields){
