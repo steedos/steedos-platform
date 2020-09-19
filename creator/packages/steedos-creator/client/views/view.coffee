@@ -619,7 +619,7 @@ Template.creator_view.events
 		Session.set("action_fields", undefined)
 		Session.set("action_collection", collection)
 		Session.set("action_collection_name", collection_name)
-		Session.set("action_save_and_insert", true)
+		Session.set("action_save_and_insert", false)
 		Meteor.defer ()->
 			$(".creator-add-related").click()
 		return

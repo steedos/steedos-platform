@@ -97,6 +97,7 @@ Template.related_object_list.events
 		
 		Session.set "action_collection", "Creator.Collections.#{related_object_name}"
 		Session.set "action_collection_name", action_collection_name
+		Session.set("action_save_and_insert", false)
 		Meteor.defer ->
 			$(".creator-add").click()
 
