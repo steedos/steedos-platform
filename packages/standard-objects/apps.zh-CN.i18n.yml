@@ -45,3 +45,5 @@ apps_group_saml: SAML
 apps_group_business_object: 业务对象
 apps_group_external_application: 外接应用
 apps_listview_all: 所有
+apps_action_customize: 编辑
+apps_action_reset: 重置

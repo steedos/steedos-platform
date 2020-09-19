@@ -237,8 +237,20 @@ fields:
     omit: true
     hidden: true
     disabled: true
+  from_code_id:
+    type: text
+    omit: true
+    hidden: true
+    disabled: true
 paging:
   enabled: false
+actions:
+  customize:
+    label: Customize
+    on: record_only
+  reset:
+    label: Reset
+    on: record_only
 list_views:
   all:
     label: All Apps

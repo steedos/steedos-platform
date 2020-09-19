@@ -35,7 +35,9 @@ module.exports = {
             i18n.translationApps(lng, apps)
             _.each(apps, function(app){
                 app.name = app.label
-                self.data.values.push(Object.assign({code: app._id}, clone(app), baseRecord));
+                if(!_.find(self.data.values, function(item){return item.code === app._id})){
+                    self.data.values.push(Object.assign({code: app._id}, clone(app), baseRecord));
+                }
             })
         }
     },
@@ -53,7 +55,9 @@ module.exports = {
             i18n.translationApps(lng, apps)
             _.each(apps, function(app){
                 app.name = app.label
-                self.data.values.push(Object.assign({code: app._id}, clone(app), baseRecord));
+                if(!_.find(self.data.values, function(item){return item.code === app._id})){
+                    self.data.values.push(Object.assign({code: app._id}, clone(app), baseRecord));
+                }
             })
         }
     },
