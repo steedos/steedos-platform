@@ -3,6 +3,7 @@ import { SteedosObjectType } from '.';
 import _ = require('underscore')
 import { SteedosFieldDBType } from '../driver';
 import { SteedosDataSourceType } from './datasource';
+import { SteedosQueryFilters } from './query';
 
 //TODO 整理字段类型
 const FIELDTYPES = [
@@ -41,7 +42,8 @@ const FIELDTYPES = [
     "Object",
     "autonumber",
     "markdown",
-    "formula"
+    "formula",
+    "summary"
 ]
 
 abstract class SteedosFieldProperties{
@@ -87,6 +89,10 @@ abstract class SteedosFieldProperties{
     formula?: string
     formula_type?: string
     formula_blank_value?: string
+    summary_object?: string
+    summary_type?: string
+    summary_field?: string
+    filters?: SteedosQueryFilters
 }
 
 export interface SteedosFieldTypeConfig extends SteedosFieldProperties{
@@ -289,6 +295,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                return SteedosFieldDBType.varchar
            case 'formula':
                return this.getDBType(this.formula_type);
+           case 'summary':
+                //汇总不需要check类型
+                return SteedosFieldDBType.varchar;
            default:
                throw new Error(`${this._object.name}.${this.name} invalid field type ${type}`)
         }

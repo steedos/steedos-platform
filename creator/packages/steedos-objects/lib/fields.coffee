@@ -63,6 +63,87 @@ processFormulaType = (field, fs)->
 	else
 		fs.type = String
 
+processSummaryType = (field, fs, obj)->
+	unless field.summary_object
+		throw new Error("You have to set a summary_object property for the field '#{field.name}' of the object '#{obj.name}' when the field type is set to '#{field.type}'.")
+
+	if field.summary_type == "count"
+		summaryFieldType = "number"
+	else
+		# max/min/sum类型等于要聚合的字段的类型
+		summaryObject = Creator.Objects[field.summary_object]
+		unless summaryObject
+			throw new Meteor.Error 500, "The summary_object '#{field.summary_object}' is not found for the field '#{field.name}' of the object '#{obj.name}'"
+
+		unless field.summary_field
+			throw new Error("You have to set a summary_field property for the field '#{field.name}' of the object '#{obj.name}' when the summary_type is not set to 'count'.")
+		
+		summaryField = summaryObject.fields[field.summary_field]
+		unless summaryField
+			throw new Meteor.Error 500, "The summary_field '#{field.summary_field}' is not found for the field '#{field.name}' of the object '#{obj.name}'"
+		
+		summaryFieldType = summaryField.type
+		if summaryFieldType == "formula"
+			# 公式类型按其公式返回值类型处理
+			summaryFieldType = summaryField.formula_type
+
+	if summaryFieldType == "date"
+		fs.type = Date
+		if Meteor.isClient
+			if Steedos.isMobile() || Steedos.isPad()
+				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+				fs.autoform.afFieldInput =
+					type: "steedos-date-mobile"
+					dateMobileOptions:
+						type: "date"
+			else
+				fs.autoform.outFormat = 'yyyy-MM-dd';
+				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+				fs.autoform.afFieldInput =
+					type: "dx-date-box"
+					timezoneId: "utc"
+					dxDateBoxOptions:
+						type: "date"
+						displayFormat: "yyyy-MM-dd"
+	else if summaryFieldType == "datetime"
+		fs.type = Date
+		if Meteor.isClient
+			if Steedos.isMobile() || Steedos.isPad()
+				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+				fs.autoform.afFieldInput =
+					type: "steedos-date-mobile"
+					dateMobileOptions:
+						type: "datetime"
+			else
+				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+				fs.autoform.afFieldInput =
+					type: "dx-date-box"
+					dxDateBoxOptions:
+						type: "datetime"
+						displayFormat: "yyyy-MM-dd HH:mm"
+	else if summaryFieldType == "currency"
+		fs.type = Number
+		fs.autoform.type = "steedosNumber"
+		fs.autoform.precision = field.precision || 18
+		if field?.scale
+			fs.autoform.scale = field.scale
+			fs.decimal = true
+		else if field?.scale != 0
+			fs.autoform.scale = 2
+			fs.decimal = true
+	else if summaryFieldType == "number"
+		fs.type = Number
+		fs.autoform.type = "steedosNumber"
+		fs.autoform.precision = field.precision || 18
+		if field?.scale
+			fs.autoform.scale = field.scale
+			fs.decimal = true
+	else
+		fs.type = Number
+		fs.autoform.type = "steedosNumber"
+		fs.autoform.precision = field.precision || 18
+
+
 Creator.getObjectSchema = (obj) ->
 	unless obj
 		return
@@ -354,7 +435,10 @@ Creator.getObjectSchema = (obj) ->
 			else
 				fs.autoform.type = "select"
 				fs.autoform.options = field.options
-				fs.autoform.firstOption = ""
+				if _.has(field, 'firstOption')
+					fs.autoform.firstOption = field.firstOption
+				else
+					fs.autoform.firstOption = ""
 		else if field.type == "currency"
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"
@@ -483,6 +567,8 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = String
 		else if field.type == 'formula'
 			processFormulaType(field, fs)
+		else if field.type == 'summary'
+			processSummaryType(field, fs, obj)
 		else
 			fs.type = field.type
 

@@ -18,8 +18,10 @@ Meteor.methods
 			throw new Meteor.Error(400, "该用户尚未同意加入该工作区，无法修改密码")
 
 		Steedos.validatePassword(password)
-
-		Accounts.setPassword(user_id, password, {logout: true})
+		logout = true;
+		if this.userId == user_id
+			logout = false
+		Accounts.setPassword(user_id, password, {logout: logout})
 
 		# 如果用户手机号通过验证，就发短信提醒
 		if userCP.mobile && userCP.mobile_verified

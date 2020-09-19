@@ -22,7 +22,7 @@ oDataOperation = (type, url, data, object_name, operation)->
 			result.value = value
 			self.done(null, result)
 		error: (jqXHR, textStatus, errorThrown) ->
-			self.done(jqXHR.responseJSON)
+			self.done(jqXHR.responseJSON.error)
 
 getObjectName = (collectionName)->
 	return collectionName.replace(/Creator.Collections./, "")
@@ -65,6 +65,10 @@ Template.CreatorObjectModal.onCreated ()->
 
 	if !@data.operation
 		throw new Meteor.Error("500", "缺少参数operation")
+	collection = Template.instance().data.collection
+	this.__schema = new ReactiveVar(getSimpleSchema(collection))
+	this.__record = new ReactiveVar(this.doc || {});
+	FormManager.runHook(@data.object_name, 'edit', 'before', {schema: this.__schema, record: this.__record});
 
 Template.CreatorObjectModal.onRendered ()->
 	template = @
@@ -191,9 +195,10 @@ Template.CreatorObjectModal.onRendered ()->
 
 
 Template.CreatorObjectModal.helpers
+	doc: ()->
+		return Template.instance().__record.get();
 	schema: ()->
-		collection = Template.instance().data.collection
-		return getSimpleSchema(collection)
+		return Template.instance().__schema.get()
 	title: ()->
 		data_title = Template.instance().data.title
 		if data_title
@@ -215,7 +220,7 @@ Template.CreatorObjectModal.helpers
 		object_name = Template.instance().data.object_name
 		keys = []
 		if cmCollection
-			schemaInstance = getSimpleSchema(object_name)
+			schemaInstance = Template.instance().__schema.get()
 			schema = schemaInstance._schema
 
 			firstLevelKeys = schemaInstance._firstLevelSchemaKeys
@@ -280,6 +285,16 @@ Template.CreatorObjectModal.helpers
 Template.CreatorObjectModal.events
 	'click button.btn-insert': (event,template) ->
 		$("#"+template.data.formId, "#creatorObjectModal").submit()
+	'change form': (event, template)->
+		object_name = template.data.object_name
+		formId = template.data.formId
+		validate = FormManager.validate(object_name, formId);
+		if(!validate)
+			event.preventDefault()
+			event.stopPropagation()
+		else
+			_doc = AutoForm.getFormValues(formId)?.insertDoc
+			FormManager.runHook(object_name, 'edit', 'after', {schema: template.__schema, record: template.__record, doc: _doc});
 
 Template.CreatorObjectFields.helpers
 	isDisabled :(key)->

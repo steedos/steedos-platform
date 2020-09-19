@@ -1,0 +1,25 @@
+{   
+    "extends": "../../node_modules/@salesforce/dev-config/tsconfig-strict",
+    "compilerOptions": {
+        "outDir": "./lib",
+        "strict": false,
+        "noUnusedLocals": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "lib": [
+          "es5",
+          "es6",
+          "dom",
+          "es2015",
+          "es2016",
+          "es2017",
+          "esnext"
+        ],
+    },
+    "include": [
+      "./src/**/*"
+    ]
+  }

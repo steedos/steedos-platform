@@ -265,6 +265,15 @@ module.exports = {
                     Creator.odata.insert('follows', { object_name: Session.get("object_name") });
                 }
             }
+        },
+        standard_submit_for_approval: {
+            visible: function (object_name, record_id) {
+                return Steedos.ProcessManager.allowSubmit(object_name, record_id);
+            },
+            on: "record_only_more",
+            todo: function(object_name, record_id){
+                Steedos.ProcessManager.submit(object_name, record_id);
+            }
         }
     },
 
@@ -557,7 +566,14 @@ module.exports = {
 
                 }
             }
-        }
+        },
+        // "before.update.server.processRecordLockCheck": {
+        //     on: 'server',
+        //     when: 'before.update',
+        //     todo: function(userId, doc, fieldNames, modifier, options){
+
+        //     }
+        // }
         // "before.update.server.fieldFormula": {
         //     on: "server",
         //     when: "before.update",

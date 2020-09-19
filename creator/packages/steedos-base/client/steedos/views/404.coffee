@@ -1,7 +1,4 @@
 Template.not_found.helpers
-	illustration: ()->
-		return ReactDesignSystem.Illustration
-
 	notFoundPath: ()->
 		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
 

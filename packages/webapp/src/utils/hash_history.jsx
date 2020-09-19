@@ -1,3 +1,3 @@
 import {createHashHistory} from 'history';
 
-export const hashHistory = createHashHistory();
+export const hashHistory = typeof window !== 'undefined'?createHashHistory():null;

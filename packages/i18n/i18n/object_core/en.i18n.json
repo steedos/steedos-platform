@@ -217,5 +217,8 @@
 	"business_hours_error_lunch_start_end_overflow": "Lunch breaks must be within working hours.",
 
 	"object_fields_function_recomputeFormulaValues_success": "The formula field value was successfully recomputed.",
-	"object_fields_function_recomputeFormulaValues_error": "Failed to recompute the formula field value, %s"
+	"object_fields_function_recomputeFormulaValues_error": "Failed to recompute the formula field value, %s",
+
+	"object_fields_function_recomputeSummaryValues_success": "The summary field value was successfully recomputed.",
+	"object_fields_function_recomputeSummaryValues_error": "Failed to recompute the summary field value, %s"
 }

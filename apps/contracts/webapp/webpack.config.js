@@ -42,9 +42,7 @@ module.exports = {
         "redux": 'Redux',
         "react-redux": 'ReactRedux',
         "prop-types": 'PropTypes',
-        "@steedos/react": 'ReactSteedos',
-        "@steedos/filters": 'SteedosFilters',
-        "@salesforce/design-system-react": 'ReactDesignSystem',
+        "@steedos/react": 'ReactSteedos'
     },
     output: {
         path: path.join(__dirname, '..', '/src'),

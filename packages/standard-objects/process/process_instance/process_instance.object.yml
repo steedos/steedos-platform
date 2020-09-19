@@ -1,0 +1,65 @@
+name: process_instance
+label: process_instance
+hidden: true
+icon: record
+fields:
+  name:
+    type: text
+  process_definition:
+    type: master_detail
+    is_wide: true
+    reference_to: process_definition
+  target_object:
+    type: lookup
+    reference_to: !!js/function
+      function(){
+        return []
+      }
+  status:
+    type: select
+    options:
+      - approved
+      - fault
+      - held
+      - no_response
+      - pending
+      - reassigned
+      - rejected
+      - removed
+      - started
+  completed_date:
+    type: datetime
+    label: Completed Date
+  last_actor:
+    type: lookup
+    reference_to: users
+  submitted_by:
+    type: lookup
+    reference_to: users
+  elapsed_time_in_days:
+    type: number
+    precision: 18
+    scale: 0
+  elapsed_time_in_hours:
+    type: number
+    precision: 5
+    scale: 2
+  elapsed_time_in_minutes:
+    type: number
+    precision: 8
+    scale: 0
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true

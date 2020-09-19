@@ -519,6 +519,7 @@ export class Mongo implements DatabaseInterface {
     const now: any = new Date();
     const query: any = {
       name: name,
+      verifiedAt: null,
       expiredAt: {$gt: now}
     };
     if(owner){

@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp",
-  "version": "1.22.0-alpha.5",
+  "version": "1.22.0-alpha.8",
   "private": false,
   "main": "lib/exports.js",
   "scripts": {
@@ -75,5 +75,8 @@
     "tslib": "1.10.0",
     "typescript": "^4.0.2",
     "yarn": "^1.22.5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

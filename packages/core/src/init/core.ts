@@ -1,5 +1,6 @@
 const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
+const steedosProcess = require("@steedos/process");
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
@@ -169,6 +170,7 @@ export class Core {
     private static initCoreRoutes() {
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
+        app.use(steedosProcess.processExpress)
         app.use(coreExpress);
         
         let routers = objectql.getRouterConfigs()

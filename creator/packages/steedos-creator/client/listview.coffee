@@ -44,6 +44,10 @@ _fields = (object_name, list_view_id, use_mobile_columns)->
 
 	if Creator.isCommonSpace(Session.get("spaceId")) && fields.indexOf("space") < 0
 		fields.push('space')
+	
+	if object_name == "cms_files"
+		# 附件列表需要这个字段判断权限
+		fields.push("parent")
 
 	fields = _.compact(fields)
 	fieldsName = Creator.getObjectFieldsName(object_name)

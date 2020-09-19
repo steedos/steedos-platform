@@ -1,4 +1,4 @@
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaVarPathTypeConfig } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarPathTypeConfig, SteedosFormulaVarTypeConfig } from './type';
 import _ = require('lodash')
 
 /**
@@ -28,6 +28,29 @@ export const getQuotedFieldFormulaConfigs = (config: SteedosFieldFormulaTypeConf
 export const isFieldFormulaConfigQuoted = (configA: SteedosFieldFormulaTypeConfig, configB: SteedosFieldFormulaTypeConfig): boolean => {
     let configAQuoteds = getQuotedFieldFormulaConfigs(configA, [configB]);
     return !!configAQuoteds.length;
+}
+
+/**
+ * 公式字段配置是否引用了某个对象和字段
+ * @param config 公式字段配置
+ * @param object_name 是否引用了该对象
+ * @param field_name 是否引用了该字段
+ */
+export const isFieldFormulaConfigQuotingObjectAndFields =(config: SteedosFieldFormulaTypeConfig, objectName: string, fieldNames?: Array<string>): boolean => {
+    const { quotes } = config;
+    if (quotes && quotes.length) {
+        return !!quotes.find((quote) => {
+            if (fieldNames && fieldNames.length) {
+                return quote.object_name === objectName && fieldNames.indexOf(quote.field_name) > -1;
+            }
+            else {
+                return quote.object_name === objectName;
+            }
+        });
+    }
+    else {
+        return false;
+    }
 }
 
 /**
@@ -85,9 +108,14 @@ const addSortedFieldFormulaConfig = (config: SteedosFieldFormulaTypeConfig, sour
 /**
  * 根据公式引用关系对字段公式配置进行排序
  * 这里不能用sort函数，因为sort函数只支持两个数值或对象中两个数值属性对比
+ * 规则是把其中被依赖的公式字段配置放前面
  * @param configs 
  */
 export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeConfig>): Array<SteedosFieldFormulaTypeConfig> => {
+    if(configs.length <= 1){
+        // 只有一个时，不需要排序，直接返回
+        return configs;
+    }
     let sortedConfigs = [];
     configs.forEach((config) => {
         addSortedFieldFormulaConfig(config, configs, sortedConfigs);
@@ -96,10 +124,10 @@ export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeCo
 }
 
 /**
- * 当userSession为空时，确认参数configs中没有引用$user变量
+ * 当currentUserId为空时，确认参数configs中没有引用$user变量
  * @param configs
  */
-export const checkUserSessionNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>) => {
+export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>) => {
     if (!_.isArray(configs)) {
         configs = [configs];
     }
@@ -107,14 +135,23 @@ export const checkUserSessionNotRequiredForFieldFormulas = (configs: SteedosFiel
         return;
     }
     for(let config of configs){
-        let { vars, object_name: objectName, field_name: fieldName } = config;
-        let required = !!vars.find(({ is_user_session_var: isUserSessionVar })=>{
-            return isUserSessionVar;
-        });
+        let { vars, object_name: objectName, field_name: fieldName, formula } = config;
+        let required = isCurrentUserIdRequiredForFormulaVars(vars);
         if(required){
-            throw new Error(`The param 'userSession' is required for the formula of '${fieldName}' on the object '${objectName}'`);
+            throw new Error(`The param 'currentUserId' is required while running the formula '${formula.replace("$", "\\$")}' of field '${fieldName}' on the object '${objectName}'`);
         }
     }
+}
+
+/**
+ * 当currentUserId为空时，判断参数vars中是否有引用$user变量
+ * @param configs
+ */
+export const isCurrentUserIdRequiredForFormulaVars = (vars: Array<SteedosFormulaVarTypeConfig>) => {
+    let required = !!vars.find(({ is_user_var: isUserVar })=>{
+        return isUserVar;
+    });
+    return required;
 }
 
 /**
@@ -140,11 +177,11 @@ export const checkUserSessionNotRequiredForFieldFormulas = (configs: SteedosFiel
 以上返回的lookup可用于当修改组织的名称时，找到合同中引用了该组织记录的记录，并重算其对应的公式字段值
  * @param paths 该参数最后一项的reference_from即为需要聚合查询的对象，亦即为当前正在修改对象（需要查找数据库中有哪些对象记录引用了该对象上的字段）
  */
-export const getFormulaVarPathsAggregateLookups = (paths: Array<SteedosFieldFormulaVarPathTypeConfig>) => {
+export const getFormulaVarPathsAggregateLookups = (paths: Array<SteedosFormulaVarPathTypeConfig>) => {
     if (!paths.length) {
         return [];
     }
-    let lookups = [], currentPath: SteedosFieldFormulaVarPathTypeConfig, nextPath: SteedosFieldFormulaVarPathTypeConfig;
+    let lookups = [], currentPath: SteedosFormulaVarPathTypeConfig, nextPath: SteedosFormulaVarPathTypeConfig;
     let tempLookupAs: string = "", tempLookupLocalField: string = "";
     for (let i = 0; i < paths.length - 1; i++) {
         currentPath = paths[i];

@@ -1,5 +1,6 @@
 name: space_users_invite
 icon: link
+hidden: true
 fields:
   valid:
     type: boolean

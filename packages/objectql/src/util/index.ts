@@ -457,3 +457,8 @@ export function JSONStringify(data) {
         return val;
     })
 }
+
+export function isSystemObject(object_name: string) {
+    // 以c结尾的都是零代码上定义的对象
+    return !object_name.endsWith("__c")
+}
