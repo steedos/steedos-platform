@@ -1,6 +1,6 @@
 Template.not_found.helpers
 	notFoundPath: ()->
-		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
+		return Steedos.absoluteUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
 
 	notFoundHeading: ()->
 		return t "steedos_i18n_404_not_found"

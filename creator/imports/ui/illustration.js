@@ -6,7 +6,7 @@ Template.illustration.helpers({
 		return Illustration;
 	},
 	path: function () {
-		return this.path || Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results");
+		return this.path || Steedos.absoluteUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results");
 	},
 	heading: function () {
 		return this.heading;
