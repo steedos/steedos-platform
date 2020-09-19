@@ -121,7 +121,7 @@ export async function finishSignin(currentUser, tenant, location){
       return;
     }
 
-    let redirect_uri = new URLSearchParams(location.search).get('redirect_uri')
+    let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri')
     if (!redirect_uri)
       redirect_uri = '/'
     redirectTo(redirect_uri);

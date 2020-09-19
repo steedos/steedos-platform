@@ -12,8 +12,8 @@ import { createSpace, selectSpace, } from '../actions/spaces';
 import { hashHistory } from "../utils/hash_history";
 import Logo from '../components/Logo';
 import Card from '../components/Card';
-
-
+import * as GlobalAction from '../actions/global_actions';
+import { getCurrentUser } from '../selectors/entities/users';
 
 class CreateTenant extends React.PureComponent {
 
@@ -58,7 +58,11 @@ class CreateTenant extends React.PureComponent {
   selectSpace = (space) => {
     if(space && space._id) {
       this.props.actions.selectSpace(space._id);
-      hashHistory.push(`/home/${space._id}`)
+      const currentUser = this.props.currentUser;
+      const tenant = this.props.tenant;
+      const location = this.props.location;
+      GlobalAction.finishSignin(currentUser, tenant, location)
+      // hashHistory.push(`/home/${space._id}`)
     }
   }
 
@@ -118,6 +122,7 @@ class CreateTenant extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
+    currentUser: getCurrentUser(state),
     settings: getSettings(state),
     tenant: getTenant(state)
   };

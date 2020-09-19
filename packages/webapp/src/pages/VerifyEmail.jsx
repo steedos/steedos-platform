@@ -110,8 +110,8 @@ class VerifyEmail extends React.Component {
         }
 
         const user = {
-            email: this.state.verifyBy === 'email'?this.state.email:'',
-            mobile: this.state.verifyBy === 'mobile'?this.state.mobile:'',
+            email: this.state.verifyBy === 'email'?this.state.email.trim():'',
+            mobile: this.state.verifyBy === 'mobile'?this.state.mobile.trim():'',
         }
         this.props.actions.sendVerificationToken(user).then(async (userId) => {
             if(userId && userId !== this.props.currentUserId){
@@ -167,8 +167,19 @@ class VerifyEmail extends React.Component {
             return
         }
 
+        if(!this.state.verifyCode || !this.state.verifyCode.trim()){
+            this.setState({
+                serverError: (
+                    <FormattedMessage
+                        id='accounts.accounts.codeRequired'
+                    />
+                ),
+            });
+            return
+        }
+
         if(this.state.verifyBy === 'email'){
-            this.props.actions.verifyEmail(this.state.email.trim(), this.state.verifyCode).then(async ({ error }) => {
+            this.props.actions.verifyEmail(this.state.email.trim(), this.state.verifyCode.trim()).then(async ({ error }) => {
                 if (error) {
                     this.setState({
                         serverError: (
@@ -184,7 +195,7 @@ class VerifyEmail extends React.Component {
         }
 
         if(this.state.verifyBy === 'mobile'){
-            this.props.actions.verifyMobile(this.state.mobile.trim(), this.state.verifyCode).then(async ({ error }) => {
+            this.props.actions.verifyMobile(this.state.mobile.trim(), this.state.verifyCode.trim()).then(async ({ error }) => {
                 if (error) {
                     this.setState({
                         serverError: (
@@ -205,7 +216,6 @@ class VerifyEmail extends React.Component {
         const currentUser = this.props.currentUser;
         const tenant = this.props.tenant;
         const location = this.props.location;
-        console.log('GlobalAction.finishSignin', JSON.stringify(currentUser));
         GlobalAction.finishSignin(currentUser, tenant, location)
     }
 
