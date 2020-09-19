@@ -21,7 +21,7 @@ export const authorize = (accountsServer: AccountsServer) => async (
   const userAgent = getUserAgent(req);
   const ip = requestIp.getClientIp(req);
   let query = queryString.stringify(req.query);
-  let redirect_uri = req.query.redirect_uri?req.query.redirect_uri:'/'
+  let redirect_uri = req.query.redirect_uri?req.query.redirect_uri as string:'/'
 
   let authToken =
     get(req.cookies, 'X-Auth-Token') ||

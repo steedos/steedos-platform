@@ -42,7 +42,7 @@ const getObjectList = async function (req: Request, res: Response) {
         let permissions = await collection.getUserObjectPermission(userSession);
         if (permissions.viewAllRecords || (permissions.viewCompanyRecords) || (permissions.allowRead && userId)) {
             let entities = [];
-            let filters = queryParams.$filter || '';
+            let filters = queryParams.$filter as string || '';
             let fields = [];
 
             if (queryParams.$select) {
@@ -125,7 +125,7 @@ const getObjectRecent = async function (req: Request, res: Response) {
             }
 
             let entities = [];
-            let filters = queryParams.$filter;
+            let filters = queryParams.$filter as string ;
             let fields = [];
             if (queryParams.$select) {
                 fields = _.keys(createQuery.projection)

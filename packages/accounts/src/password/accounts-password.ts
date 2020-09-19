@@ -23,7 +23,6 @@ import {
 import { PasswordCreateUserType, PasswordLoginType, PasswordType, ErrorMessages } from './types';
 import { errors } from './errors';
 import { getSteedosConfig } from '@steedos/objectql';
-import { verifyCode, getVerifyRecord } from '../rest-express/endpoints/steedos/verify_code';
 const EFFECTIVE_TIME = 10; //10分钟
 const CODE_LENGTH = 6;
 const MAX_FAILURE_COUNT = 10;
