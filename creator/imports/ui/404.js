@@ -9,7 +9,7 @@ Template.notFound.helpers({
 	  return Illustration;
 	},
 	notFoundPath: function() {
-	  return Steedos.absoluteUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results");
+	  return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results");
 	},
 	notFoundHeading: function() {
 	  return t("creator_not_found_heading");

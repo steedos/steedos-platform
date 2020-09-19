@@ -1,12 +1,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'underscore'
-import { getAbsoluteUrl } from '../../utils';
+import { getRelativeUrl } from '../../utils';
 
 class Bootstrap extends React.Component {
 
 	getChildContext() {
-        let iconPath = getAbsoluteUrl('/assets/icons');
+        let iconPath = getRelativeUrl('/assets/icons');
         return {
 			iconPath: iconPath,
 		};

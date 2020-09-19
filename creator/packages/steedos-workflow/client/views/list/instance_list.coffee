@@ -154,7 +154,7 @@ Template.instance_list.helpers
 		return Session.get("workflow_batch_instances_count") > 0
 
 	illustrationPath: ()->
-		return Steedos.absoluteUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
+		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
 
 	illustrationMessageBody: ()->
 		if Session.get("box") == "inbox"
