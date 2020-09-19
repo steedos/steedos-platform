@@ -7,14 +7,18 @@ export const verify_email = (accountsServer: AccountsServer) => async (
   res: express.Response
 ) => {
   try {
+    if (!(req as any).userId) {
+      res.status(401);
+      res.json({ message: 'Unauthorized' });
+      return;
+    }
+    const userId = (req as any).userId;
     const { email, code } = req.body;
     const valid = await accountsServer.db.checkVerificationCode({email: email}, code)
     if(valid){
-
-      
-
-
-      res.json({});
+      await accountsServer.db.setEmail(userId, email);
+      await accountsServer.db.verifyEmail(userId, email);
+      res.json({userId: userId, email_verified: true});
     }else{
       res.json({error: 'accounts.invalidCode'})
     }
@@ -28,13 +32,21 @@ export const verify_mobile = (accountsServer: AccountsServer) => async (
     res: express.Response
   ) => {
     try {
-        const { mobile, code } = req.body;
-        const valid = await accountsServer.db.checkVerificationCode({mobile: mobile}, code);
-        if(valid){
-          res.json({});
-        }else{
-          res.json({error: 'accounts.invalidCode'})
-        }
+      if (!(req as any).userId) {
+        res.status(401);
+        res.json({ message: 'Unauthorized' });
+        return;
+      }
+      const userId = (req as any).userId;
+      const { mobile, code } = req.body;
+      const valid = await accountsServer.db.checkVerificationCode({mobile: mobile}, code);
+      if(valid){
+        await accountsServer.db.setMobile(userId, mobile);
+        await accountsServer.db.verifyMobile(userId, mobile);
+        res.json({userId: userId, mobile_verified: true});
+      }else{
+        res.json({error: 'accounts.invalidCode'})
+      }
     } catch (err) {
       sendError(res, err);
     }

@@ -88,5 +88,6 @@ tenant:
   name: 华炎云
   enable_mobile_code_login: true
   enable_bind_mobile: true
+  enable_bind_email: true
   enable_register: true
 enable_holidays: true

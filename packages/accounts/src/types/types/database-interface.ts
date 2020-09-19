@@ -70,6 +70,9 @@ export interface DatabaseInterface extends DatabaseInterfaceSessions {
   getMySpaces(userId: string): Promise<any | null>;
 
   getInviteInfo(id: string): Promise<any | null>;
+  
+  setEmail(userId: string, newEmail: string): Promise<void>;
+  setMobile(userId: string, newMobile: string): Promise<void>;
 }
 
 export interface DatabaseInterfaceSessions {

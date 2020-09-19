@@ -70,8 +70,15 @@ export async function redirectUserToDefaultSpace() {
 }
 
 export async function redirectUserToUpdatePassword(){
-    console.log('redirectUserToUpdatePassword....');
     hashHistory.push('/update-password');
+}
+
+export async function redirectUserToVerifyEmail(){
+    hashHistory.push('/verify/email');
+}
+
+export async function redirectUserToVerifyMobile(){
+    hashHistory.push('/verify/mobile');
 }
 
 export async function redirectTo(redirectTo) {
@@ -93,4 +100,29 @@ export async function redirectTo(redirectTo) {
         document.location.href=redirectTo
     }
 
+}
+
+export async function finishSignin(currentUser, tenant, location){
+    let password_expired = currentUser.password_expired;
+    if(password_expired){
+      redirectUserToUpdatePassword();
+      return;
+    }
+    
+    let enable_bind_mobile = tenant.enable_bind_mobile;
+    if(enable_bind_mobile && !currentUser.mobile_verified){
+      redirectUserToVerifyMobile();
+      return;
+    }
+
+    let enable_bind_email = tenant.enable_bind_email;
+    if(enable_bind_email && !currentUser.email_verified){
+      redirectUserToVerifyEmail();
+      return;
+    }
+
+    let redirect_uri = new URLSearchParams(location.search).get('redirect_uri')
+    if (!redirect_uri)
+      redirect_uri = '/'
+    redirectTo(redirect_uri);
 }

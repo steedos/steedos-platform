@@ -25,6 +25,7 @@ const defaultOptions = {
   sessionCollectionName: 'sessions',
   codeCollectionName: 'users_verify_code',
   inviteCollectionName: 'space_users_invite',
+  spaceUserCollectionName: 'space_users',
   timestamps: {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -49,6 +50,8 @@ export class Mongo implements DatabaseInterface {
 
   private inviteCollection: Collection;
 
+  private spaceUserCollection: Collection;
+
   constructor(db: any, options?: AccountsMongoOptions) {
     this.options = merge({ ...defaultOptions }, options);
     if (!db) {
@@ -59,6 +62,7 @@ export class Mongo implements DatabaseInterface {
     this.sessionCollection = this.db.collection(this.options.sessionCollectionName);
     this.codeCollection = this.db.collection(this.options.codeCollectionName);
     this.inviteCollection = this.db.collection(this.options.inviteCollectionName);
+    this.spaceUserCollection = this.db.collection(this.options.spaceUserCollectionName);
   }
 
   public async setupIndexes(): Promise<void> {
@@ -261,6 +265,7 @@ export class Mongo implements DatabaseInterface {
         $pull: { 'services.email.verificationTokens': { address: email } },
       }
     );
+    await this.spaceUserCollection.updateMany({user: id}, {$set: {email_verified: true, modified: this.options.dateProvider(), modified_by: id}})
     if (ret.result.nModified === 0) {
       throw new Error('User not found');
     }
@@ -278,10 +283,64 @@ export class Mongo implements DatabaseInterface {
         $pull: { 'services.mobile.verificationTokens': { mobile: mobile } },
       }
     );
+    await this.spaceUserCollection.updateMany({user: id}, {$set: {mobile_verified: true, modified: this.options.dateProvider(), modified_by: id}})
     if (ret.result.nModified === 0) {
       throw new Error('User not found');
     }
   }
+
+  public async setMobile(userId: string, newMobile: string): Promise<void> {
+    const id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
+    let existed = await this.collection.find({_id: {$ne: id}, mobile: newMobile}).count();
+    if(existed > 0){
+      throw new Error("该手机号已被其他用户注册");
+    }
+    let user = await this.collection.findOne({_id: id}, {fields: {mobile: 1}});
+    if(user && user.mobile != newMobile){
+      const ret = await this.collection.updateOne(
+        { _id: id},
+        {
+          $set: {
+            'mobile': newMobile,
+            [this.options.timestamps.updatedAt]: this.options.dateProvider(),
+          },
+          $pull: { 'services.mobile.verificationTokens': { mobile: newMobile } },
+        }
+      );
+      await this.spaceUserCollection.updateMany({user: id}, {$set: {mobile: newMobile, modified: this.options.dateProvider(), modified_by: id}})
+      
+    }
+    if(!user){
+      throw new Error('User not found');
+    }
+  }
+
+  public async setEmail(userId: string, newEmail: string): Promise<void> {
+    const id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
+    let existed = await this.collection.find({_id: {$ne: id}, email: newEmail}).count();
+    if(existed > 0){
+      throw new Error("该邮箱已被其他用户注册");
+    }
+    let user = await this.collection.findOne({_id: id}, {fields: {email: 1}});
+    if(user && user.email != newEmail){
+      const ret = await this.collection.updateOne(
+        { _id: id},
+        {
+          $set: {
+            'email': newEmail,
+            [this.options.timestamps.updatedAt]: this.options.dateProvider(),
+          },
+          $pull: { 'services.email.verificationTokens': { address: newEmail } },
+        }
+      );
+      await this.spaceUserCollection.updateMany({user: id}, {$set: {email: newEmail, modified: this.options.dateProvider(), modified_by: id}})
+      
+    }
+    if(!user){
+      throw new Error('User not found');
+    }
+  }
+
 
   public async setUsername(userId: string, newUsername: string): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
@@ -569,6 +628,7 @@ export class Mongo implements DatabaseInterface {
     }
     let result = await this.codeCollection.findOne(query);
     if(result){
+      await this.codeCollection.updateOne({_id: result._id}, {$set: {verifiedAt: now}})
       return result;
     }else{
       throw new Error("accounts.invalidCode");
