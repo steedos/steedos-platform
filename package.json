@@ -8,8 +8,7 @@
   ],
   "scripts": {
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
-    "link": "lerna exec -- yarn link",
-    "unlink": "lerna exec -- yarn unlink",
+    "link": "lerna link --force-local",
     "ver": "lerna version --force-publish",
     "pub": "lerna publish from-package --registry https://registry.npmjs.org",
     "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
