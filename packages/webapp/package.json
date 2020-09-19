@@ -5,11 +5,11 @@
   "main": "lib/exports.js",
   "scripts": {
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/ react-scripts start",
-    "build": "cross-env NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/ react-scripts build",
+    "build": "cross-env NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/ react-scripts build && yarn build-after",
     "build-after": "mkdirp build/accounts && mkdirp build/accounts/a && mv build/index.html build/accounts/a/",
     "copy-to-public": "rm -rf build/assets && mkdirp public/accounts && mv build ./public/accounts/a",
     "build-lib": "rm -rf lib && tsc --build tsconfig.lib.json",
-    "prepare": "yarn build && yarn build-after && yarn build-lib",
+    "prepare": "yarn build && yarn build-lib",
     "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },
   "eslintConfig": {
