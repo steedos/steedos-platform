@@ -210,8 +210,8 @@ class Login extends React.Component {
     }
 
     const user = {
-      email: this.state.email,
-      mobile: this.state.mobile
+      email: this.state.loginBy === 'email'?this.state.email.trim():'',
+      mobile: this.state.loginBy === 'mobile'?this.state.mobile.trim():'',
     }
     this.props.actions.sendVerificationToken(user).then(async (userId) => {
       this.state.userId = userId;
@@ -258,11 +258,11 @@ class Login extends React.Component {
     // }
 
     const user = {
-      email: this.state.loginBy === 'email'?this.state.email:'',
-      mobile: this.state.loginBy === 'mobile'?this.state.mobile:'',
+      email: this.state.loginBy === 'email'?this.state.email.trim():'',
+      mobile: this.state.loginBy === 'mobile'?this.state.mobile.trim():'',
       spaceId: this.state.spaceId,
     }
-    this.props.actions.login(user, this.state.password, this.state.verifyCode).then(async ({error}) => {
+    this.props.actions.login(user, this.state.password?this.state.password.trim():this.state.password, this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode).then(async ({error}) => {
       if (error) {
         this.setState({
             serverError: (
@@ -280,41 +280,10 @@ class Login extends React.Component {
 
 
   finishSignin = (team) => {
-    let password_expired = this.props.currentUser.password_expired;
-    if(password_expired){
-      GlobalAction.redirectUserToUpdatePassword();
-      return;
-    }
-
-    let redirect_uri = new URLSearchParams(this.props.location.search).get('redirect_uri')
-    if (!redirect_uri)
-      redirect_uri = '/'
-    GlobalAction.redirectTo(redirect_uri);
-    // const query = new URLSearchParams(this.props.location.search);
-    // let redirectTo = query.get('redirect_uri');
-
-    // // Utils.setCSRFFromCookie();
-
-    // // Record a successful login to local storage. If an unintentional logout occurs, e.g.
-    // // via session expiration, this bit won't get reset and we can notify the user as such.
-
-    // if (redirectTo && redirectTo.indexOf('no_redirect=1')<0) {
-    //   const userId = LocalStorageStore.getItem('userId');
-    //   const authToken =  LocalStorageStore.getItem('token');
-    //   const spaceId =  LocalStorageStore.getItem('spaceId');
-    //   redirectTo = redirectTo.indexOf("?")>0?redirectTo+'no_redirect=1':redirectTo+'?no_redirect=1'
-    //   redirectTo = `${redirectTo}&X-Auth-Token=${authToken}&X-User-Id=${userId}&X-Space-Id=${spaceId}`
-
-    //   if (redirectTo.match(/^\/([^/]|$)/))
-    //     this.props.history.push(redirectTo);
-    //   else
-    //     document.location.href=redirectTo
-    // // } else if (team) {
-    // //     browserHistory.push(`/${team.name}`);
-    // } else {
-    //   this.state.loginSuccess = true;
-    //   GlobalAction.redirectUserToDefaultSpace();
-    // }
+    const currentUser = this.props.currentUser;
+    const tenant = this.props.tenant;
+    const location = this.props.location;
+    GlobalAction.finishSignin(currentUser, tenant, location)
   }
 
   goSignup = ()=>{

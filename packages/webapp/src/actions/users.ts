@@ -193,7 +193,13 @@ export function changePassword(oldPassword: string, newPassword: string){
     dispatch({type: UserTypes.CHANGEPASSWORD_REQUEST, data: null});
     let data;
     try {
-        data = await Client4.changePassword(oldPassword, newPassword);
+      const getChangePasswordFunc = bindClientFunc({
+        clientFunc: Client4.changePassword,
+        onSuccess: UserTypes.CHANGEPASSWORD_RECEIVED,
+        params: [oldPassword, newPassword]
+      });
+      
+      data = await getChangePasswordFunc(dispatch, getState);
     } catch (error) {
         dispatch(batchActions([
             {
@@ -214,7 +220,13 @@ export function verifyEmail(email: string, code: string){
     dispatch({type: UserTypes.VERIFYEMAIL_REQUEST, data: null});
     let data;
     try {
-        data = await Client4.verifyEmail(email, code);
+      const getVerifyEmailFunc = bindClientFunc({
+        clientFunc: Client4.verifyEmail,
+        onSuccess: UserTypes.VERIFYEMAIL_RECEIVED,
+        params: [email, code]
+      });
+      
+      data = await getVerifyEmailFunc(dispatch, getState);
     } catch (error) {
         dispatch(batchActions([
             {
@@ -235,7 +247,12 @@ export function verifyMobile(mobile: string, code: string){
     dispatch({type: UserTypes.VERIFYMOBILE_REQUEST, data: null});
     let data;
     try {
-        data = await Client4.verifyMobile(mobile, code);
+      const getVerifyMobileFunc = bindClientFunc({
+        clientFunc: Client4.verifyMobile,
+        onSuccess: UserTypes.VERIFYMOBILE_RECEIVED,
+        params: [mobile, code]
+      });
+      data = await getVerifyMobileFunc(dispatch, getState);
     } catch (error) {
         dispatch(batchActions([
             {

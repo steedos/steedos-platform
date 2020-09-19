@@ -39,7 +39,7 @@ export const changePassword = (accountsServer: AccountsServer) => async (
     } catch (error) {
       console.log('error', error);
     }
-    res.json(null);
+    res.json({userId: (req as any).userId, password_expired: false});
   } catch (err) {
     sendError(res, err);
   }

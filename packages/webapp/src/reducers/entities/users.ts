@@ -26,32 +26,52 @@ const currentUserId = (state = '', action: GenericAction) => {
 
 const users = (state: IDMappedObjects<UserProfile> = {}, action: GenericAction) => {
     switch (action.type) {
-    case UserTypes.RECEIVED_ME:
-    case UserTypes.RECEIVED_PROFILE: {
-        const data = action.data || action.payload;
-        const user = {...data};
+        case UserTypes.RECEIVED_ME:
+        case UserTypes.RECEIVED_PROFILE: {
+            const data = action.data || action.payload;
+            const user = { ...data };
 
-        return {
-            ...state,
-            [data._id]: user,
-        };
-    }
-
-    case UserTypes.LOGIN: { // Used by the mobile app
-        const {user} = action.data;
-
-        if (user) {
-            const nextState = {...state};
-            nextState[user._id] = user;
-            return nextState;
+            return {
+                ...state,
+                [data._id]: user,
+            };
         }
+        case UserTypes.LOGIN: { // Used by the mobile app
+            const { user } = action.data;
 
-        return state;
-    }
-    case UserTypes.LOGOUT_SUCCESS:
-        return {};
-    default:
-        return state;
+            if (user) {
+                const nextState = { ...state };
+                nextState[user._id] = user;
+                return nextState;
+            }
+
+            return state;
+        }
+        case UserTypes.LOGOUT_SUCCESS:
+            return {};
+        case UserTypes.CHANGEPASSWORD_RECEIVED:{
+            const data = action.data || action.payload;
+            return {
+                ...state,
+                [data.userId]: Object.assign({}, state[data.userId], { password_expired: data.password_expired }),
+            }
+        }
+        case UserTypes.VERIFYEMAIL_RECEIVED: {
+            const data = action.data || action.payload;
+            return {
+                ...state,
+                [data.userId]: Object.assign({}, state[data.userId], { email_verified: data.email_verified }),
+            }
+        }
+        case UserTypes.VERIFYMOBILE_RECEIVED: {
+            const data = action.data || action.payload;
+            return {
+                ...state,
+                [data.userId]: Object.assign({}, state[data.userId], { mobile_verified: data.mobile_verified }),
+            }
+        }
+        default:
+            return state;
     }
 }
 

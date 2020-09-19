@@ -49,19 +49,17 @@ const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
 };
 
 
-class Verify extends React.Component {
+class VerifyMobile extends React.Component {
 
     constructor(props, context) {
         super(props, context);
 
-        const verifyBy = this.props.match.params.token;
+        const verifyBy = 'mobile';
         this.state = {
             verifyBy,
-
             email: '',
             mobile: '',
             verifyCode: '',
-
             serverError: '',
             loading: false
         };
@@ -90,7 +88,7 @@ class Verify extends React.Component {
 
     sendVerificationToken = (e) => {
         this.setState({ serverError: null, loading: true });
-        if (this.state.loginBy === 'email' && !this.state.email.trim()) {
+        if (this.state.verifyBy === 'email' && !this.state.email.trim()) {
             this.setState({
                 serverError: (
                     <FormattedMessage
@@ -100,7 +98,7 @@ class Verify extends React.Component {
             });
             return
         }
-        if (this.state.loginBy === 'mobile' && !this.state.mobile.trim()) {
+        if (this.state.verifyBy === 'mobile' && !this.state.mobile.trim()) {
             this.setState({
                 serverError: (
                     <FormattedMessage
@@ -112,20 +110,33 @@ class Verify extends React.Component {
         }
 
         const user = {
-            email: this.state.email,
-            mobile: this.state.mobile
+            email: this.state.verifyBy === 'email'?this.state.email.trim():'',
+            mobile: this.state.verifyBy === 'mobile'?this.state.mobile.trim():'',
         }
         this.props.actions.sendVerificationToken(user).then(async (userId) => {
-            this.state.userId = userId;
-            if (!userId)
-                this.setState({
-                    serverError: (
-                        <FormattedMessage
-                            id='accounts.userNotFound'
-                            defaultMessage='User not found.'
-                        />
-                    ),
-                });
+            if(userId && userId !== this.props.currentUserId){
+                if(this.state.verifyBy === 'email'){
+                    this.setState({
+                        serverError: (
+                            <FormattedMessage
+                                id='accounts.emailAlreadyExists'
+                            />
+                        ),
+                    });
+                }
+
+                if(this.state.verifyBy === 'mobile'){
+                    this.setState({
+                        serverError: (
+                            <FormattedMessage
+                                id='accounts.mobileAlreadyExists'
+                            />
+                        ),
+                    });
+                }
+                
+                return
+            }
         });
     }
 
@@ -156,8 +167,19 @@ class Verify extends React.Component {
             return
         }
 
+        if(!this.state.verifyCode || !this.state.verifyCode.trim()){
+            this.setState({
+                serverError: (
+                    <FormattedMessage
+                        id='accounts.accounts.codeRequired'
+                    />
+                ),
+            });
+            return
+        }
+
         if(this.state.verifyBy === 'email'){
-            this.props.actions.verifyEmail(this.state.email.trim(), this.state.code).then(async ({ error }) => {
+            this.props.actions.verifyEmail(this.state.email.trim(), this.state.verifyCode.trim()).then(async ({ error }) => {
                 if (error) {
                     this.setState({
                         serverError: (
@@ -173,7 +195,7 @@ class Verify extends React.Component {
         }
 
         if(this.state.verifyBy === 'mobile'){
-            this.props.actions.verifyMobile(this.state.mobile.trim(), this.state.code).then(async ({ error }) => {
+            this.props.actions.verifyMobile(this.state.mobile.trim(), this.state.verifyCode.trim()).then(async ({ error }) => {
                 if (error) {
                     this.setState({
                         serverError: (
@@ -191,16 +213,11 @@ class Verify extends React.Component {
 
 
     finish = (team) => {
-        let password_expired = this.props.currentUser.password_expired;
-        if (password_expired) {
-            GlobalAction.redirectUserToUpdatePassword();
-            return;
-        }
-
-        let redirect_uri = new URLSearchParams(this.props.location.search).get('redirect_uri')
-        if (!redirect_uri)
-            redirect_uri = '/'
-        GlobalAction.redirectTo(redirect_uri);
+        const currentUser = this.props.currentUser;
+        const tenant = this.props.tenant;
+        const location = this.props.location;
+        console.log('GlobalAction.finishSignin', JSON.stringify(currentUser));
+        GlobalAction.finishSignin(currentUser, tenant, location)
     }
 
     render() {
@@ -281,7 +298,7 @@ class Verify extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        getCurrentUserId: getCurrentUserId(state),
+        currentUserId: getCurrentUserId(state),
         currentUser: getCurrentUser(state),
         settings: getSettings(state),
         tenant: getTenant(state),
@@ -299,4 +316,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Verify));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(VerifyMobile));
