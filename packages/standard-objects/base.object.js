@@ -567,6 +567,18 @@ module.exports = {
                 }
             }
         },
+        "after.delete.server.object_recent_viewed": {
+            "on": "server",
+            when: "after.remove",
+            todo: function (userId, doc, fieldNames, modifier, options) {
+                let selector = {
+                    "space": doc.space,
+                    "record.o": this.object_name,
+                    "record.ids": doc._id
+                };
+                Creator.getCollection('object_recent_viewed').direct.remove(selector);
+            }
+        },
         // "before.update.server.processRecordLockCheck": {
         //     on: 'server',
         //     when: 'before.update',
@@ -574,27 +586,6 @@ module.exports = {
 
         //     }
         // }
-        // "before.update.server.fieldFormula": {
-        //     on: "server",
-        //     when: "before.update",
-        //     todo: function (userId, doc, fieldNames, modifier, options) {
-        //         fieldFormulaBeforeUpdate.bind(this)(userId, doc, fieldNames, modifier, options);
-        //     }
-        // },
-        // "before.insert.server.fieldFormula": {
-        //     on: "server",
-        //     when: "before.insert",
-        //     todo: function (userId, doc) {
-        //         fieldFormulaBeforeInsert.bind(this)(userId, doc);
-        //     }
-        // },
-        // "after.update.server.fieldFormula": {
-        //     "on": "server",
-        //     when: "after.update",
-        //     todo: function (userId, doc, fieldNames, modifier, options) {
-        //         fieldFormulaAfterUpdate.bind(this)(userId, doc, fieldNames, modifier, options);
-        //     }
-        // },
     }
 };
 function setDetailOwner(doc, object_name, userId) {
