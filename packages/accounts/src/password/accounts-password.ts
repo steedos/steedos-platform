@@ -723,7 +723,7 @@ export default class AccountsPassword implements AuthenticationService {
       const result: any = await this.db.addVerificationCode(user, code, {MAX_FAILURE_COUNT, EFFECTIVE_TIME});
       const sms = {
         mobile: user.mobile,
-        message: `验证码：${result.code}，${EFFECTIVE_TIME}分钟内有效，请勿泄漏给他人！`
+        message: `您的验证码为：${result.code}，该验证码${EFFECTIVE_TIME}分钟内有效，请勿泄漏于他人！`
       }
       await this.server.options.sendSMS(sms);
       return result.owner
