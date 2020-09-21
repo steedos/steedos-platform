@@ -284,7 +284,11 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 		data = {app_id: app_id, object_name: object_name, record_id: record_id, related_object_name: related_object_name}
 		Session.set 'related_object_name', related_object_name
 		BlazeLayout.render Creator.getLayout(),
-			main: "related_object_list"
+			main: 'recordLoading'
+		Meteor.setTimeout ()->
+			BlazeLayout.render Creator.getLayout(),
+				main: "related_object_list"
+		, 10
 
 objectRoutes.route '/view/:record_id',
 	action: (params, queryParams)->
