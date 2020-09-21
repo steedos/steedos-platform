@@ -13,7 +13,11 @@ if Meteor.isClient
 					return
 				record = Creator.getObjectRecord()
 				listView = Creator.getListView()
-				if record
+				record_name = Session.get('record_name')
+				if record_name
+					label = record_name
+					titleTags.push label
+				else if record
 					if object.name == "cfs.files.filerecord"
 						label = record?.original?.name
 					else
