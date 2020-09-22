@@ -336,20 +336,24 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				lookupFieldName = object_field.split('.')[1]
 				if object
 					objectField = object.fields[objectFieldName]
-					if objectField && formField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objectField.type) && _.isString(objectField.reference_to)
-						referenceToObjectName = objectField.reference_to
-						referenceToFieldValue = record[objectFieldName]
-						odataFieldValue
-						if objectField.multiple && formField.is_multiselect
-							odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
-						else if !objectField.multiple && !formField.is_multiselect
-							odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
-						values[workflow_field] = odataFieldValue
-					else
+					if objectField && formField && ['lookup', 'master_detail'].includes(objectField.type) && _.isString(objectField.reference_to)
 						fieldsObj = {}
 						fieldsObj[lookupFieldName] = 1
 						lookupObjectRecord = Creator.getCollection(objectField.reference_to, spaceId).findOne(record[objectFieldName], { fields: fieldsObj })
-						values[workflow_field] = lookupObjectRecord[lookupFieldName]
+						objectFieldObjectName = objectField.reference_to
+						lookupFieldObj = Creator.getObject(objectFieldObjectName, spaceId)
+						objectLookupField = lookupFieldObj.fields[lookupFieldName]
+						referenceToFieldValue = lookupObjectRecord[lookupFieldName]
+						if objectLookupField && formField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objectLookupField.type) && _.isString(objectLookupField.reference_to)
+							referenceToObjectName = objectLookupField.reference_to
+							odataFieldValue
+							if objectField.multiple && formField.is_multiselect
+								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+							else if !objectField.multiple && !formField.is_multiselect
+								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+							values[workflow_field] = odataFieldValue
+						else
+							values[workflow_field] = lookupObjectRecord[lookupFieldName]
 
 			# lookup、master_detail字段同步到odata字段
 			else if formField && objField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to)
