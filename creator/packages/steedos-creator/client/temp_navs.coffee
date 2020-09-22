@@ -80,6 +80,11 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
         if lastUrl
             # urlQuery记录的是不带__meteor_runtime_config__.ROOT_URL_PATH_PREFIX前缀的相对路径，可以直接go
             FlowRouter.go(lastUrl)
+            # 从详细界面子表点开某条记录后，关掉其tab，再点开就不再会新增tab了 #869
+            # 返回到上一个页面后应该清除相关历史记录，这样就可以在重复进入相同的url时也新增tab
+            # pop两次分别是FlowRouter.go产生的新url和点击临时导航的x按钮要删除的当前url
+            urlQuery.pop()
+            urlQuery.pop()
         else
             # tempNavs中保存的url是带__meteor_runtime_config__.ROOT_URL_PATH_PREFIX前缀的相对路径，需要用redirect
             toNav = tempNavsAfterRemove[removeAtIndex]
@@ -174,6 +179,7 @@ Creator.resetTempNavsIfNeeded = ()->
     if neededToReset
         Session.set("temp_navs", null)
         saveTempNavsToCache(null)
+        lastRemovedTempNavUrls.length = 0 #重置该值防止有bug时只能刷新浏览器还原
     if neededToReset or !Session.get("temp_navs_id")
         Session.set("temp_navs_id", currentTempNavsId)
         saveTempNavsIdToCache(currentTempNavsId)
