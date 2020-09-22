@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "80c390820e061c0576cad2d180b1b7f5d5c45dc5.js",
+      "path": "48c0b631021d10f26f54da81423e1faaedeedf38.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/80c390820e061c0576cad2d180b1b7f5d5c45dc5.js?meteor_js_resource=true",
-      "size": 7910431,
-      "hash": "80c390820e061c0576cad2d180b1b7f5d5c45dc5",
-      "sri": "5PylzuoovfLeAviggcnoX3ITWpEECqg4wMUN+NyGtmog6mWlIQDsbfcIT0ebUbSR5YLaSmZX2HuaWihTU6f4kg=="
+      "url": "/48c0b631021d10f26f54da81423e1faaedeedf38.js?meteor_js_resource=true",
+      "size": 7920000,
+      "hash": "48c0b631021d10f26f54da81423e1faaedeedf38",
+      "sri": "A0dIsC3FG7ZXG7Aavd6UN+JnQ77AMkjzVLmYo4SP2tQx4S0QNvb7d2pCINeTlGpc9d0eM2A5s30uaW8ZRBnzXg=="
     },
     {
-      "path": "80c390820e061c0576cad2d180b1b7f5d5c45dc5.stats.json",
+      "path": "48c0b631021d10f26f54da81423e1faaedeedf38.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/80c390820e061c0576cad2d180b1b7f5d5c45dc5.stats.json?meteor_js_resource=true",
-      "size": 173791,
-      "hash": "8005f5583a452d3231bec9ed63297b7daaebe7a6",
-      "sri": "KaFOVC/ILIeZdXYbqbue0pQ5cX7iVupGqngoCg1Z+AEEYN53LGUrWL5n9IryNdVRbXfaBpgbz14bt6u2l71Icw=="
+      "url": "/48c0b631021d10f26f54da81423e1faaedeedf38.stats.json?meteor_js_resource=true",
+      "size": 173662,
+      "hash": "9607c115d83b31fc3980e5407a24a197a3044c9c",
+      "sri": "/ZdZzmV7mB7zH+qw5YuRt9sNKTqp8QkzmqbbdFfgupJ8gDkdZR6l8BIHCG6MOwdIrjg+d5DFB9MhyBK4GvxqAA=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -210,16 +210,6 @@
       "size": 109,
       "hash": "b0779edeaf53dfadccee13450a47f0c2df50564f",
       "sri": "tErOj5WilTAR8sDv25oQur0H4skPKKhLdB6B1SSWqJ/yW8TNpDA5u5ZKpOSlDTYlxAI8UG7yOTgeryEk5dx+7w=="
-    },
-    {
-      "path": "dynamic/node_modules/marked/lib/marked.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/marked/lib/marked.js?hash=f6fffc3270a8cb68ba5f0643051cdb2f70539c7c",
-      "size": 35211,
-      "hash": "f6fffc3270a8cb68ba5f0643051cdb2f70539c7c",
-      "sri": "kER4kVM+c+wzbdgOAxzRgvyRtulJ4tzpa6qV88ZhtJ2iPbtp1obpYPWzj0L5QAzMVJCHbrx3jRh6EwJhbyNW+A=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/drop_down_box.js",
