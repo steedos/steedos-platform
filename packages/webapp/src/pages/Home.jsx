@@ -27,16 +27,14 @@ class Home extends React.PureComponent {
     const {currentSpaceId} = this.props;
 
     const spaceId = paramSpaceId?paramSpaceId:currentSpaceId?currentSpaceId:previousSpaceId
-    // let password_expired = this.props.currentUser.password_expired;
-    // if(password_expired){
-    //   GlobalAction.redirectUserToUpdatePassword();
-    //   return;
-    // }
     if (spaceId) {
       this.props.actions.selectSpace(spaceId).then(async (result) => {
         if (result) {
           if(result.data == false){
-            hashHistory.push('/select-space');
+            hashHistory.push({
+              pathname: '/select-space',
+              search: this.props.location.search
+            });
             return
           }else{
             this.goHome();
@@ -45,7 +43,10 @@ class Home extends React.PureComponent {
         }
       });
     } else {
-      hashHistory.push('/select-space');
+      hashHistory.push({
+        pathname: '/select-space',
+        search: this.props.location.search
+      });
     }
     if (process.env.NODE_ENV == 'production')
       if (this.props.currentUser && this.props.currentSpace) 
@@ -53,7 +54,7 @@ class Home extends React.PureComponent {
   }
 
   goHome = async () => {
-    this.props.actions.goSpaceHome();
+    this.props.actions.goSpaceHome(this.props.location);
   };
 
   render() {

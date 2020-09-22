@@ -10,6 +10,8 @@ import { getUserAgent } from '../utils/get-user-agent';
 
 const queryString = require('querystring');
 
+declare var __meteor_runtime_config__:any;
+
 export const authorize = (accountsServer: AccountsServer) => async (
   req: express.Request,
   res: express.Response
@@ -22,7 +24,6 @@ export const authorize = (accountsServer: AccountsServer) => async (
   const ip = requestIp.getClientIp(req);
   let query = queryString.stringify(req.query);
   let redirect_uri = req.query.redirect_uri?req.query.redirect_uri as string:'/'
-
   let authToken =
     get(req.cookies, 'X-Auth-Token') ||
     get(req.body, 'X-Auth-Token') ||
@@ -49,7 +50,7 @@ export const authorize = (accountsServer: AccountsServer) => async (
     res.end();
   } else {
     clearAuthCookies(req, res);
-    res.redirect("/accounts/a/#/login?" + query);
+    res.redirect(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX + "/accounts/a/#/login?" + query);
     res.end();
   }
 };

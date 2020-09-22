@@ -78,22 +78,29 @@ export function createSpace(name: string): ActionFunc {
 }
 
 
-export function goSpaceHome(spaceId: string): ActionFunc {
+export function goSpaceHome(location, spaceId: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-    const userId = LocalStorageStore.getItem('userId');
-    const authToken =  LocalStorageStore.getItem('token');
-    const spaceId =  LocalStorageStore.getItem('spaceId');
-    const rootUrl = getRootUrl(store.getState());
-    
-    const url =  new URL(rootUrl);
-    if (userId)
-      url.searchParams.append('X-User-Id',userId);
-    if (authToken)
-      url.searchParams.append('X-Auth-Token',authToken);
-    if (spaceId)
-      url.searchParams.append('X-Space-Id',spaceId);
+    const userId: any = LocalStorageStore.getItem('userId');
+    const authToken: any =  LocalStorageStore.getItem('token');
+    const spaceId: any =  LocalStorageStore.getItem('spaceId');
+    const rootUrl: any = getRootUrl(store.getState());
 
-    document.location.href = url.toString();
+    const searchParams = new URLSearchParams(location.search);
+    let redirect_uri = searchParams.get("redirect_uri");
+  
+    if (redirect_uri){
+      if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){
+        redirect_uri = window.location.origin + redirect_uri
+      }
+      let u = new URL(redirect_uri);
+      u.searchParams.append('X-Space-Id',spaceId);
+      u.searchParams.append('X-Auth-Token',authToken);
+      u.searchParams.append('X-User-Id',userId);
+      window.location.href = u.toString();
+    }
+    else{
+      window.location.href = rootUrl ? rootUrl : "/";
+    }
 
     return { data: true };
   }

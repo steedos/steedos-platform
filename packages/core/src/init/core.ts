@@ -198,7 +198,7 @@ export const initPublic = () => {
     let routerPath = "/"
     const cacheTime = 86400000*1; // one day
     router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
-    WebApp.rawConnectHandlers.use(router);
+    // WebApp.rawConnectHandlers.use(router);
     WebApp.connectHandlers.use(router);
 }
 

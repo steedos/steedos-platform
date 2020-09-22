@@ -14,30 +14,47 @@ Creator.__l = new ReactiveVar()
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
 
-Steedos.logout = ()->
+getRedirectUrl = ()->
+	redirect = location.href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "");
+	u = new URL(redirect);
+	u.searchParams.delete('no_redirect');
+	u.searchParams.delete('X-Space-Id');
+	u.searchParams.delete('X-Auth-Token');
+	u.searchParams.delete('X-User-Id');
+	return u.toString();
+
+
+Steedos.logout = (redirect)->
 	Accounts._unstoreLoginToken();
-	window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout");
+	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
+	if accountsUrl
+		if !redirect
+			redirect = getRedirectUrl();
+		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
+			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
+			accountsUrl = rootUrl.origin + accountsUrl
+	window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout?redirect_uri="+ redirect);
 
 Steedos.goResetPassword = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
 		if !redirect
-			redirect = location.href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "")
+			redirect = getRedirectUrl();
 		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
 			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
 			accountsUrl = rootUrl.origin + accountsUrl
 		Accounts._unstoreLoginToken();
-		window.location.href = accountsUrl + "/a/#/update-password?redirect_uri=" + redirect;
+		window.location.href = Steedos.absoluteUrl(accountsUrl + "/a/#/update-password?redirect_uri=" + redirect);
 
 Steedos.redirectToSignIn = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl 
 		if !redirect
-			redirect = location.href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "")
+			redirect = getRedirectUrl();
 		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
 			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
 			accountsUrl = rootUrl.origin + accountsUrl
-		window.location.href = accountsUrl + "/authorize?redirect_uri=" + redirect;
+		window.location.href = Steedos.absoluteUrl(accountsUrl + "/authorize?redirect_uri=" + redirect);
 
 Setup.validate = (onSuccess)->
 

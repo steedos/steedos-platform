@@ -40,7 +40,7 @@ export function emitUserLoggedOutEvent(redirectToPath, shouldSignalLogout = true
 }
 
 
-export async function selectDefaultSpace() {
+export async function selectDefaultSpace(location) {
     let state = getState();
 
     // Assume we need to load the user if they don't have any team memberships loaded or the user loaded
@@ -58,30 +58,43 @@ export async function selectDefaultSpace() {
         dispatch(selectSpace(space._id));
         return space._id;
     } else {
-        hashHistory.push('/select-space');
+        hashHistory.push({
+            pathname: '/select-space',
+            search: location.search
+        });
     }
 }
 
-export async function redirectUserToDefaultSpace() {
-
-    const spaceId = await selectDefaultSpace();
-    
-    hashHistory.push(`/home/${spaceId}`);
+export async function redirectUserToDefaultSpace(location) {
+    const spaceId = await selectDefaultSpace(location);
+    hashHistory.push({
+        pathname: `/home/${spaceId}`,
+        search: location.search
+    });
 }
 
-export async function redirectUserToUpdatePassword(){
-    hashHistory.push('/update-password');
+export async function redirectUserToUpdatePassword(location){
+    hashHistory.push({
+        pathname: '/update-password',
+        search: location.search
+    });
 }
 
-export async function redirectUserToVerifyEmail(){
-    hashHistory.push('/verify/email');
+export async function redirectUserToVerifyEmail(location){
+    hashHistory.push({
+        pathname: '/verify/email',
+        search: location.search
+    });
 }
 
-export async function redirectUserToVerifyMobile(){
-    hashHistory.push('/verify/mobile');
+export async function redirectUserToVerifyMobile(location){
+    hashHistory.push({
+        pathname: '/verify/mobile',
+        search: location.search
+    });
 }
 
-export async function redirectTo(redirectTo) {
+export async function redirectTo(redirectTo, location) {
 
     if (!redirectTo) 
         return;
@@ -94,8 +107,16 @@ export async function redirectTo(redirectTo) {
       if (userId && authToken)
         redirectTo = `${redirectTo}&X-Auth-Token=${authToken}&X-User-Id=${userId}&X-Space-Id=${spaceId}`
 
-      if (redirectTo.match(/^\/([^/]|$)/))
-        hashHistory.push(redirectTo);
+      if (redirectTo.match(/^\/([^/]|$)/)){
+          if(location){
+            hashHistory.push({
+                pathname: redirectTo,
+                search: location.search
+              })
+          }else{
+            hashHistory.push(redirectTo);
+          }
+      }
       else
         document.location.href=redirectTo
     }
@@ -105,24 +126,24 @@ export async function redirectTo(redirectTo) {
 export async function finishSignin(currentUser, tenant, location){
     let password_expired = currentUser.password_expired;
     if(password_expired){
-      redirectUserToUpdatePassword();
+      redirectUserToUpdatePassword(location);
       return;
     }
     
     let enable_bind_mobile = tenant.enable_bind_mobile;
     if(enable_bind_mobile && !currentUser.mobile_verified){
-      redirectUserToVerifyMobile();
+      redirectUserToVerifyMobile(location);
       return;
     }
 
     let enable_bind_email = tenant.enable_bind_email;
     if(enable_bind_email && !currentUser.email_verified){
-      redirectUserToVerifyEmail();
+      redirectUserToVerifyEmail(location);
       return;
     }
 
     let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri')
     if (!redirect_uri)
       redirect_uri = '/'
-    redirectTo(redirect_uri);
+    redirectTo(redirect_uri, location);
 }

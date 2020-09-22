@@ -319,7 +319,7 @@ class Signup extends React.Component {
     //     browserHistory.push(`/${team.name}`);
     } else {
       this.state.loginSuccess = true;
-      GlobalAction.redirectUserToDefaultSpace();
+      GlobalAction.redirectUserToDefaultSpace(this.props.location);
       
     }
   }

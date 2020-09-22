@@ -216,7 +216,6 @@ class VerifyMobile extends React.Component {
         const currentUser = this.props.currentUser;
         const tenant = this.props.tenant;
         const location = this.props.location;
-        console.log('GlobalAction.finishSignin', JSON.stringify(currentUser));
         GlobalAction.finishSignin(currentUser, tenant, location)
     }
 

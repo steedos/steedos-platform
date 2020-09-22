@@ -54,6 +54,15 @@ export default class Client4 {
     userRoles?: string;
     
     getUrl() {
+        var href = new URL(window.location.href);
+        var foo = href.pathname.split('/accounts');
+        if(!this.url){
+            var ROOT_URL_PATH_PREFIX = '';
+            if(foo.length > 1){
+                ROOT_URL_PATH_PREFIX = foo[0];
+            }
+            return ROOT_URL_PATH_PREFIX;
+        }
         return this.url;
     }
 
@@ -121,7 +130,7 @@ export default class Client4 {
     }
 
     getBaseRoute() {
-        return `${this.url}${this.urlVersion}`;
+        return `${this.getUrl()}${this.urlVersion}`;
     }
 
     getAccountsRoute() {

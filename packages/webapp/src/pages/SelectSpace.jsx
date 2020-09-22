@@ -39,13 +39,19 @@ class SelectSpace extends React.PureComponent {
   }
 
   handleCreateTenant = () => {
-    hashHistory.push(`/create-space`)
+    hashHistory.push({
+      pathname: '/create-space',
+      search: this.props.location.search
+    })
   }
 
   handleSpaceClick = (space) => {
     if(space) {
       this.props.actions.selectSpace(space._id);
-      hashHistory.push(`/home/${space._id}`)
+      hashHistory.push({
+        pathname: `/home/${space._id}`,
+        search: this.props.location.search
+      })
     }
   }
 
