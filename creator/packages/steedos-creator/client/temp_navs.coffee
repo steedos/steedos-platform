@@ -205,6 +205,7 @@ Meteor.startup ()->
             return
         record = Creator.getObjectRecord()
         objectNames = Creator.getAppObjectNames()
+        record_name = Session.get('record_name')
         # 如果当前所在的object_name不存在顶部导航中，则添加一个临时的导航栏项
         forceCreate = Session.get("temp_navs_force_create")
         if objectNames?.indexOf(objectName) < 0 or forceCreate
@@ -227,7 +228,9 @@ Meteor.startup ()->
                             # 如果正好点击了浏览器上的返回按钮，返回的正好是当前记录URL，则不用再增加临时导航项了
                             Session.set("temp_navs_force_create", false)
                             return
-                if objectName == "cfs.files.filerecord"
+                if record_name
+                    label = record_name
+                else if objectName == "cfs.files.filerecord"
                     label = t('cfs_files_filerecord__object') + "-" + record?.original?.name
                 else
                     nameField = object.NAME_FIELD_KEY || "name"
