@@ -9784,7 +9784,7 @@ dotenv-expand@5.1.0, dotenv-expand@^5.1.0:
   resolved "https://registry.npm.taobao.org/dotenv-expand/download/dotenv-expand-5.1.0.tgz#3fbaf020bfd794884072ea26b1e9791d45a629f0"
   integrity sha1-P7rwIL/XlIhAcuomsel5HUWmKfA=
 
-dotenv-flow@^3.1.0:
+dotenv-flow@^3.1.0, dotenv-flow@^3.2.0:
   version "3.2.0"
   resolved "https://registry.npm.taobao.org/dotenv-flow/download/dotenv-flow-3.2.0.tgz#a5d79dd60ddb6843d457a4874aaf122cf659a8b7"
   integrity sha1-pded1g3baEPUV6SHSq8SLPZZqLc=
@@ -16768,7 +16768,7 @@ nodemon@1.19.1:
     undefsafe "^2.0.2"
     update-notifier "^2.5.0"
 
-nodemon@^1.18.10:
+nodemon@^1.18.10, nodemon@^1.19.1:
   version "1.19.4"
   resolved "https://registry.npm.taobao.org/nodemon/download/nodemon-1.19.4.tgz#56db5c607408e0fdf8920d2b444819af1aae0971"
   integrity sha1-VttcYHQI4P34kg0rREgZrxquCXE=
