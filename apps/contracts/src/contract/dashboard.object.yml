@@ -1,7 +1,0 @@
-name: oa_home
-label: 首页
-icon: home
-fields:
-  name:
-    label: name
-    type: text
