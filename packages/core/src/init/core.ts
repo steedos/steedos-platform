@@ -196,10 +196,13 @@ export const initPublic = () => {
     let publicPath = require.resolve("@steedos/webapp/package.json")
     publicPath = publicPath.replace("package.json", 'build')
     let routerPath = "/"
+    if(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX){
+        routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
+    }
     const cacheTime = 86400000*1; // one day
     router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
-    // WebApp.rawConnectHandlers.use(router);
-    WebApp.connectHandlers.use(router);
+    WebApp.rawConnectHandlers.use(router);
+    // WebApp.connectHandlers.use(router);
 }
 
 export const initDesignSystem = () => {
