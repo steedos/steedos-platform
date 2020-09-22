@@ -1,10 +1,10 @@
 {
   "packages": [
     "packages/*",
-    "apps/contracts",
+    "apps/*",
     "server"
   ],
   "useWorkspaces": true,
   "npmClient": "yarn",
-  "version": "1.22.0-alpha.9"
+  "version": "1.22.0-alpha.10"
 }
