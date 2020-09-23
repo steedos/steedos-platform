@@ -25,9 +25,9 @@
 								{{#unless hideObjects _id}}
 									{{#each app_objects _id}}
 										<a href="{{object_url ../_id}}" class="{{#if isActive this ../_id}} bg-gray-100 text-gray-900 {{else}} hover:text-gray-900 hover:bg-gray-50 text-gray-600 {{/if}} flex justify-between no-underline group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150">
-											<div class="flex">
-												{{> steedos_icon class="mr-4 h-6 w-6 slds-icon" source="standard-sprite" name=object_i.icon}}
-												{{_ object_i.label}}
+											<div class="flex h-6">
+												{{> steedos_icon size="small" source="standard-sprite" name=object_i.icon}}
+												<span class="ml-3">{{_ object_i.label}}</span>
 											</div>
 											{{#with getObjectBadge object_i ../_id}}
 												<div class="flex">
@@ -50,8 +50,10 @@
 							{{/each}}
 
 							<a href="{{settings_url}}" class="hover:text-gray-900 hover:bg-gray-50 text-gray-600 no-underline group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150">
-								{{> steedos_icon class="mr-4 h-6 w-6 slds-icon" source="standard-sprite" name='settings'}}
-								{{_ 'app_admin_name'}}
+								<div class="flex h-6">
+									{{> steedos_icon size="small" source="standard-sprite" name='settings'}}
+									<span class="ml-3">{{_ 'app_admin_name'}}</span>
+								</div>
 							</a>
 						</div>
 					</div>
