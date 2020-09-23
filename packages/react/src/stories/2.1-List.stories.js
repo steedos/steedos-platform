@@ -2,7 +2,7 @@ import React from 'react';
 import Bootstrap from '../components/bootstrap'
 import { Provider  } from 'react-redux';
 import store from '../stores/configureStore'
-import { Icon, Button } from '@salesforce/design-system-react';
+import { Icon, Button } from '@steedos/design-system-react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import { createGridAction } from '../actions'

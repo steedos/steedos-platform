@@ -13,22 +13,22 @@ import classNames from 'classnames';
 
 // This component's `checkProps` which issues warnings to developers about properties when in development mode (similar to React's built in development tools)
 // import checkProps from './check-props';
-import checkProps from '@salesforce/design-system-react/lib/components/app-launcher/check-props';
+import checkProps from '@steedos/design-system-react/lib/components/app-launcher/check-props';
 // import componentDoc from './component.json';
-import componentDoc from '@salesforce/design-system-react/lib/components/app-launcher/component.json';
+import componentDoc from '@steedos/design-system-react/lib/components/app-launcher/component.json';
 
 // ## Children
 // import Button from '../button';
-import { Button } from '@salesforce/design-system-react';
+import { Button } from '@steedos/design-system-react';
 // import Highlighter from '../slds_utilities/highlighter';
-import Highlighter from '@salesforce/design-system-react/lib/components/utilities/highlighter';
+import Highlighter from '@steedos/design-system-react/lib/components/utilities/highlighter';
 // import Tooltip from '../tooltip';
-import { Tooltip } from '@salesforce/design-system-react';
+import { Tooltip } from '@steedos/design-system-react';
 // import Truncate from '../slds_utilities/truncate';
-import Truncate from '@salesforce/design-system-react/lib/components/utilities/truncate';
+import Truncate from '@steedos/design-system-react/lib/components/utilities/truncate';
 
 // import { APP_LAUNCHER_TILE } from '../../utilities/constants';
-import { APP_LAUNCHER_TILE } from '@salesforce/design-system-react/lib/utilities/constants';
+import { APP_LAUNCHER_TILE } from '@steedos/design-system-react/lib/utilities/constants';
 
 const propTypes = {
 	/**

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Grid from '../grid'
 import PropTypes from 'prop-types';
 import _ from 'underscore'
-import { Card } from '@salesforce/design-system-react';
+import { Card } from '@steedos/design-system-react';
 import { getSpaceId, getRelativeUrl, isMobile } from '../../utils';
 import styled from 'styled-components';
 

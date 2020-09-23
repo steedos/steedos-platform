@@ -13,7 +13,8 @@
   "dependencies": {
     "@material-ui/core": "^4.4.0",
     "@material-ui/icons": "^4.2.1",
-    "@salesforce/design-system-react": "^0.10.17",
+    "@salesforce-ux/icons": "^9.38.0",
+    "@steedos/design-system-react": "^0.10.17",
     "dotenv-flow": "^3.1.0",
     "immer": "^4.0.1",
     "marked": "^0.8.0",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
+    "@babel/plugin-syntax-jsx": "^7.10.4",
     "@devexpress/dx-react-core": "^2.0.4",
     "@devexpress/dx-react-grid": "^2.0.4",
     "@devexpress/dx-react-grid-material-ui": "^2.0.4",

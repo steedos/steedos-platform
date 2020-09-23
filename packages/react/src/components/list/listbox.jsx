@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 // import { SPLIT_VIEW_LISTBOX } from '../../utilities/constants';
 
-import { Icon } from '@salesforce/design-system-react';
+import { Icon } from '@steedos/design-system-react';
 import ListItemContent from './private/list-item-content';
 import listItemWithContent from './private/list-item-with-content';
 

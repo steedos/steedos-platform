@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'underscore';
-import { DataTableColumn, DataTableCell, Illustration, Icon, Button } from '@salesforce/design-system-react';
+import { DataTableColumn, DataTableCell, Illustration, Icon, Button } from '@steedos/design-system-react';
 import Lookup from '../lookup'
 import { createGridAction } from '../../actions'
 import PropTypes from 'prop-types';

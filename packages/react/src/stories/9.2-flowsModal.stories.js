@@ -6,7 +6,7 @@ import Bootstrap from '../components/bootstrap'
 import { FlowsModal } from '../components';
 import { createFlowsModalAction } from '../actions'
 import _ from 'underscore'
-import { Icon,Button,ButtonIcon,ButtonStateful } from '@salesforce/design-system-react';
+import { Icon,Button,ButtonIcon,ButtonStateful } from '@steedos/design-system-react';
 
 export default {
     title: 'FlowsModal',

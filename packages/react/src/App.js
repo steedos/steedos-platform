@@ -6,7 +6,7 @@ import SelectUsers from './components/select_users'
 import { FlowsModal } from './components'
 import DXGrid from './components/dx_grid'
 import Grid from './components/grid'
-import { IconSettings,Illustration } from '@salesforce/design-system-react';
+import { IconSettings,Illustration } from '@steedos/design-system-react';
 import { dataServicesSelector } from './selectors';
 import Bootstrap from './components/bootstrap'
 

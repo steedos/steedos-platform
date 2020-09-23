@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Modal, Button, Settings } from '@salesforce/design-system-react';
+import { Modal, Button, Settings } from '@steedos/design-system-react';
 import { Flows } from '../';
 import styled from 'styled-components'
 import PropTypes from 'prop-types';

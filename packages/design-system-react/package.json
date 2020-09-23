@@ -1,0 +1,7 @@
+{
+  "name": "@steedos/design-system-react",
+  "version": "0.10.22",
+  "main": "design-system-react.js",
+  "license": "MIT",
+  "private": false
+}

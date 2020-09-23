@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Icon } from '@salesforce/design-system-react';
+import { Icon } from '@steedos/design-system-react';
 import styled from 'styled-components';
 
 export const DISPLAY_NAME = 'ListItemContent';

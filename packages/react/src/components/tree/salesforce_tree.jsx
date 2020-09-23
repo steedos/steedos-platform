@@ -1,7 +1,7 @@
 import React from 'react';
-// import IconSettings from '@salesforce/design-system-react/components/icon-settings';
-import {Tree, Search} from '@salesforce/design-system-react';
-// import Search from '@salesforce/design-system-react/lib/components/forms/input/search.js';
+// import IconSettings from '@steedos/design-system-react/components/icon-settings';
+import {Tree, Search} from '@steedos/design-system-react';
+// import Search from '@steedos/design-system-react/lib/components/forms/input/search.js';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import _ from 'underscore';

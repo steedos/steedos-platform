@@ -4,7 +4,7 @@ import { Provider  } from 'react-redux';
 import store from './stores/configureStore'
 import Dashboard from './components/dashboard'
 import Bootstrap from './components/bootstrap'
-import { IconSettings, Card, DataTable, DataTableColumn } from '@salesforce/design-system-react';
+import { IconSettings, Card, DataTable, DataTableColumn } from '@steedos/design-system-react';
 import WidgetApps from './components/widget_apps';
 
 
@@ -66,7 +66,7 @@ const config = {
     type: "react",
     component: function (options){
       // return <div>ssss</div>
-      const AppLauncherExpandableSection = require('@salesforce/design-system-react').AppLauncherExpandableSection;
+      const AppLauncherExpandableSection = require('@steedos/design-system-react').AppLauncherExpandableSection;
       return (
         <AppLauncherExpandableSection title={options.label}>
         </AppLauncherExpandableSection>
