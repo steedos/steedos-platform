@@ -33,6 +33,6 @@ helpers =
 		return getSourceName(this.source, this.name)
 
 
-Template.steedos_icon.helpers helpers
+# Template.steedos_icon.helpers helpers
 
 Template.steedos_button_icon.helpers helpers

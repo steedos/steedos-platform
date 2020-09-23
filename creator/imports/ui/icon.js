@@ -1,12 +1,23 @@
 import './icon.html';
 import { Icon } from '@steedos/design-system-react';
 
-Template.icon.helpers({
+const getSourceName = (source, name) => {
+	var foo;
+	foo = name != null ? name.split(".") : void 0;
+	if (foo && foo.length > 1) {
+	  return foo[0];
+	}
+	if (source != null ? source.endsWith("-sprite") : void 0) {
+	  return source.substr(0, source.length - 7);
+	}
+};
+
+Template.steedos_icon.helpers({
 	icon: function () {
 		return Icon;
 	},
 	category: function () {
-		return this.category;
+		return this.category || getSourceName(this.source, this.name);
 	},
 	name: function () {
 		return this.name;
@@ -15,7 +26,7 @@ Template.icon.helpers({
 		return this.size;
 	},
 	className: function () {
-		return this.className;
+		return this.className || this.class;
 	},
 	title: function () {
 		return this.title;
