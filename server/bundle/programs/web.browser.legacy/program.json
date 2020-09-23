@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "48c0b631021d10f26f54da81423e1faaedeedf38.js",
+      "path": "4ab2ac3928232d895209794ae0976165263deb5c.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/48c0b631021d10f26f54da81423e1faaedeedf38.js?meteor_js_resource=true",
-      "size": 7920000,
-      "hash": "48c0b631021d10f26f54da81423e1faaedeedf38",
-      "sri": "A0dIsC3FG7ZXG7Aavd6UN+JnQ77AMkjzVLmYo4SP2tQx4S0QNvb7d2pCINeTlGpc9d0eM2A5s30uaW8ZRBnzXg=="
+      "url": "/4ab2ac3928232d895209794ae0976165263deb5c.js?meteor_js_resource=true",
+      "size": 8494295,
+      "hash": "4ab2ac3928232d895209794ae0976165263deb5c",
+      "sri": "mGvmtD7tdKnbM9iNHC49/4nDvhj3l1KUM642Y+wo3ohNaHEhq4pj69gvbkt5YJogAqqJCOGbaIalCC5zv0HzDQ=="
     },
     {
-      "path": "48c0b631021d10f26f54da81423e1faaedeedf38.stats.json",
+      "path": "4ab2ac3928232d895209794ae0976165263deb5c.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/48c0b631021d10f26f54da81423e1faaedeedf38.stats.json?meteor_js_resource=true",
-      "size": 173662,
-      "hash": "9607c115d83b31fc3980e5407a24a197a3044c9c",
-      "sri": "/ZdZzmV7mB7zH+qw5YuRt9sNKTqp8QkzmqbbdFfgupJ8gDkdZR6l8BIHCG6MOwdIrjg+d5DFB9MhyBK4GvxqAA=="
+      "url": "/4ab2ac3928232d895209794ae0976165263deb5c.stats.json?meteor_js_resource=true",
+      "size": 150326,
+      "hash": "68712b1ecbfc939caff57ee6794ffffa71b06ab6",
+      "sri": "RlapYUJJtODrHTB+ab/twf+kA9+E688fW0MhK3I8T/5MdpQiKezzSSEpu0m5GlQBuMAWBgF27H3axM33YLHkfQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4582,16 +4582,6 @@
       "sri": "dl7KYdTP/WdBKH+8owEMVefKWO9XA+Xk5GJVMI9Lx9d+vBN0RmUQ4Riy4D8/vLhdOtwq9cfzsTvLnTD31/oLWQ=="
     },
     {
-      "path": "app/images/background.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/images/background.svg",
-      "size": 1119,
-      "hash": "32acc3dad552116a23d045818acb98373bcf87d1",
-      "sri": "0Jx22z/ErZMMRQpYSos55VF21xmMkjnfVwHc1RSTdz94gGRwtTO767ArYDps/LZvRJQ9O9TuzBer0M8tmCWYxw=="
-    },
-    {
       "path": "app/images/bg.jpg",
       "where": "client",
       "type": "asset",
@@ -4600,16 +4590,6 @@
       "size": 29176,
       "hash": "18697251b69fdaf58c1d0b39d94cd6ec1ebae446",
       "sri": "fvPwLMVirFdYpipBJeF9VlCwQiOoUQaZ+kO7OJej+t982vSdj/acA7xKMlLN7j/v94eFQe0JO7LDq5K+XUxXKA=="
-    },
-    {
-      "path": "app/images/logo.png",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/images/logo.png",
-      "size": 383790,
-      "hash": "e145b49aebc74573d302d2e32d962f2493917375",
-      "sri": "gavHpTQQsv+1lKApEwYcaJ9wFOiBbZ7tPyjlw5/hjCwaO3oe610JLS1ltp2+MX4sJ1VLw8qa9j65OkavOnt00Q=="
     },
     {
       "path": "app/js/infinitescroll.js",
@@ -4975,7 +4955,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "5cefdfc52e08de1c4006e0f6f88cf028682ad494"
+      "hash": "3e2f82167fba1543da4ea1a82835286f1b5a72f9"
     }
   ]
 }
