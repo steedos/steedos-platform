@@ -5,7 +5,7 @@ import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 import { connect } from 'react-redux';
-import { getTenant, getSettings } from '../selectors';
+import { getTenant, getSettings, getSettingsTenantId } from '../selectors';
 import { getCurrentUser } from "../selectors/entities/users";
 import { getCurrentSpace, getCurrentSpaceId } from "../selectors/entities/spaces";
 import Navbar from '../components/Navbar';
@@ -24,9 +24,8 @@ class Home extends React.PureComponent {
   componentDidMount() {
     const previousSpaceId = LocalStorageStore.getPreviousSpaceId();
     const paramSpaceId = (this.props.match && this.props.match.params)?this.props.match.params.spaceId:null;
-    const {currentSpaceId} = this.props;
-
-    const spaceId = paramSpaceId?paramSpaceId:currentSpaceId?currentSpaceId:previousSpaceId
+    const {currentSpaceId, settingsTenantId} = this.props;
+    const spaceId = paramSpaceId ? paramSpaceId : currentSpaceId ? currentSpaceId : (previousSpaceId && previousSpaceId !== 'null') ? previousSpaceId : settingsTenantId
     if (spaceId) {
       this.props.actions.selectSpace(spaceId).then(async (result) => {
         if (result) {
@@ -154,6 +153,7 @@ function mapStateToProps(state) {
     currentSpaceId: getCurrentSpaceId(state),
     tenant: getTenant(state),
     settings: getSettings(state),
+    settingsTenantId: getSettingsTenantId(state)
   };
 }
 

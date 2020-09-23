@@ -22,7 +22,7 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
     //   throw new Error('禁止密码注册');
     // }
 
-    if(!(await canRegister(spaceId, 'withPassword'))){
+    if(!(await canRegister(spaceId, 'signupAccount'))){
       throw new Error('accounts.unenableRegister');
     }
     
@@ -52,13 +52,10 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
     }
 
     const userId = await password.createUser(req.body);
-    //工作区密码注册
-    if(req.body.spaceId){
-      Creator.addSpaceUsers(req.body.spaceId, userId, true)
-    }
-
     if(inviteInfo && inviteInfo.space){
       Creator.addSpaceUsers(inviteInfo.space, userId, true)
+    }else if(req.body.spaceId){
+      Creator.addSpaceUsers(req.body.spaceId, userId, true)
     }
 
     const foundedUser = await password.findUserById(userId);

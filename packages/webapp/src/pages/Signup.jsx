@@ -63,10 +63,13 @@ class Signup extends React.Component {
       invite_token = (new URLSearchParams(this.props.location.search)).get('invite_token');
     }
 
+    let spaceId = this.props.settingsTenantId
+
     this.state = {
         // ldapEnabled: this.props.isLicensed && this.props.enableLdap,
         // samlEnabled: this.props.isLicensed && this.props.enableSaml,
         invite_token,
+        spaceId,
         email,
         mobile: '',
         userId: '',
@@ -277,6 +280,10 @@ class Signup extends React.Component {
       name: this.state.name.trim(),
       locale: 'zh-cn',
       verifyCode: this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode,
+    }
+
+    if(this.state.spaceId){
+      user.spaceId = this.state.spaceId;
     }
     
     if(this.state.invite_token){

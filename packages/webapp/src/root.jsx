@@ -99,6 +99,7 @@ class Root extends React.PureComponent {
                   {/* <Route path="/login-code" component={LoginCode} /> */}
                   <LoggedInRoute path="/preference" component={Preference} />
                   {/* <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} /> */}
+                  <LoggedInRoute path="/home" component={Home}/>
                   <LoggedInRoute path="/home/:spaceId" component={Home}/>
                   <Redirect
                       to={{

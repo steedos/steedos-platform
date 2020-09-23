@@ -94,7 +94,7 @@ export async function redirectUserToVerifyMobile(location){
     });
 }
 
-export async function redirectTo(redirectTo, location) {
+export function redirectTo(redirectTo, location) {
 
     if (!redirectTo) 
         return;
@@ -103,9 +103,11 @@ export async function redirectTo(redirectTo, location) {
       const userId = LocalStorageStore.getItem('userId');
       const authToken =  LocalStorageStore.getItem('token');
       const spaceId =  LocalStorageStore.getItem('spaceId');
-      redirectTo = redirectTo.indexOf("?")>0?redirectTo+'no_redirect=1':redirectTo+'?no_redirect=1'
-      if (userId && authToken)
+      
+      redirectTo = redirectTo.indexOf("?")>0?redirectTo+'&no_redirect=1':redirectTo+'?no_redirect=1'
+      if (userId && authToken){
         redirectTo = `${redirectTo}&X-Auth-Token=${authToken}&X-User-Id=${userId}&X-Space-Id=${spaceId}`
+     }
 
       if (redirectTo.match(/^\/([^/]|$)/)){
           if(location){
@@ -123,7 +125,7 @@ export async function redirectTo(redirectTo, location) {
 
 }
 
-export async function finishSignin(currentUser, tenant, location){
+export function finishSignin(currentUser, tenant, location){
     let password_expired = currentUser.password_expired;
     if(password_expired){
       redirectUserToUpdatePassword(location);
@@ -142,8 +144,16 @@ export async function finishSignin(currentUser, tenant, location){
       return;
     }
 
-    let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri')
-    if (!redirect_uri)
-      redirect_uri = '/'
-    redirectTo(redirect_uri, location);
+    if(location){
+        hashHistory.push({
+            pathname: '/home',
+            search: location.search
+          })
+      }else{
+        hashHistory.push('/home');
+      }
+    // let redirect_uri = new URLSearchParams(location?location.search:"").get('redirect_uri')
+    // if (!redirect_uri)
+    //   redirect_uri = '/'
+    // redirectTo(redirect_uri, location);
 }
