@@ -30,9 +30,6 @@ Steedos.logout = (redirect)->
 	if accountsUrl
 		if !redirect
 			redirect = getRedirectUrl();
-		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
-			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
-			accountsUrl = rootUrl.origin + accountsUrl
 	window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout?redirect_uri="+ redirect);
 
 Steedos.goResetPassword = (redirect)->
@@ -40,9 +37,6 @@ Steedos.goResetPassword = (redirect)->
 	if accountsUrl
 		if !redirect
 			redirect = getRedirectUrl();
-		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
-			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
-			accountsUrl = rootUrl.origin + accountsUrl
 		Accounts._unstoreLoginToken();
 		window.location.href = Steedos.absoluteUrl(accountsUrl + "/a/#/update-password?redirect_uri=" + redirect);
 
@@ -51,9 +45,6 @@ Steedos.redirectToSignIn = (redirect)->
 	if accountsUrl 
 		if !redirect
 			redirect = getRedirectUrl();
-		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
-			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
-			accountsUrl = rootUrl.origin + accountsUrl
 		window.location.href = Steedos.absoluteUrl(accountsUrl + "/authorize?redirect_uri=" + redirect);
 
 Setup.validate = (onSuccess)->
