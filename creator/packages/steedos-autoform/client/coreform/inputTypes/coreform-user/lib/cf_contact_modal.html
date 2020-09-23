@@ -1,7 +1,7 @@
 <template name="cf_contact_modal">
     {{#if isMobile}}
         {{#if showOrg}}
-            <div style="display:none" id="cf_users_organization_modal_div">
+            <div style="display:none;position: fixed;z-index: 9999999;" id="cf_users_organization_modal_div">
                 {{> cf_users_organization_modal}}
             </div>
         {{/if}}
