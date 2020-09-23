@@ -13,7 +13,7 @@ const getSourceName = (source, name) => {
 };
 
 Template.steedos_icon.helpers({
-	icon: function () {
+	component: function () {
 		return Icon;
 	},
 	category: function () {
@@ -25,14 +25,20 @@ Template.steedos_icon.helpers({
 	size: function () {
 		return this.size;
 	},
-	className: function () {
-		return this.className || this.class;
-	},
 	title: function () {
 		return this.title;
 	},
+	icon: function () {
+		return this.icon;
+	},
 	colorVariant: function () {
 		return this.colorVariant;
+	},
+	className: function () {
+		return this.className || this.class;
+	},
+	containerClassName: function () {
+		return this.containerClassName;
 	},
 	style: function () {
 		return this.style;
