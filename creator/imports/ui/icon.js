@@ -3,11 +3,9 @@ import { Icon } from '@steedos/design-system-react';
 
 Template.icon.helpers({
 	icon: function () {
-		debugger;
 		return Icon;
 	},
 	category: function () {
-		debugger;
 		return this.category;
 	},
 	name: function () {
@@ -32,7 +30,11 @@ Template.icon.helpers({
 		return this.containerStyle;
 	},
 	assistiveText: function () {
-		return { label: "abc" }
-		// return this.assistiveText;
+		if(this.assistiveText){
+			return this.assistiveText;
+		}
+		else if(this.title){
+			{ label: this.title }
+		}
 	}
 });
