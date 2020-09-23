@@ -45,7 +45,7 @@ Template.steedos_icon.helpers({
 			return this.assistiveText;
 		}
 		else if(this.title){
-			{ label: this.title }
+			return { label: this.title }
 		}
 	}
 });
