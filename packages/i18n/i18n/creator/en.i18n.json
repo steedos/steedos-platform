@@ -129,5 +129,6 @@
 	"creator_navigation_nav_more": "More",
 
 	"creator_not_found_heading": "There seems to be a problem.",
-	"creator_not_found_message_body": "We were unable to find the record you tried to access. This record may have been deleted by another user, or you do not have access to it, or a system error may have occurred. Please ask your administrator for help."
+	"creator_not_found_message_body": "We were unable to find the record you tried to access. This record may have been deleted by another user, or you do not have access to it, or a system error may have occurred. Please ask your administrator for help.",
+	"creator_office_online_web_url_required": "Please configure the Office Online Web service address."
 }

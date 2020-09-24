@@ -864,6 +864,22 @@ if Meteor.isClient
 			return maxWidth
 		else
 			return result
+	
+	Creator.showPreviewButton = (fileName)->
+		# 配置webservices.officeOnline.url并且是office类型文件或pdf类型文件，显示预览按钮
+		if Meteor.settings?.public?.webservices?.officeOnline?.url && (Steedos.isPdfFile(fileName) || Steedos.isOfficeFile(fileName))
+			return true
+		
+		return false
+
+	Creator.officeOnlinePreview = (fileUrl)->
+		officeOnlineUrl = Meteor.settings?.public?.webservices?.officeOnline?.url
+		if !officeOnlineUrl || (officeOnlineUrl == "")
+			toastr.error TAPi18n.__("creator_office_online_web_url_required")
+			return false
+		openUrl = officeOnlineUrl + encodeURIComponent(fileUrl);
+		# console.log(openUrl);
+		return Steedos.openWindow(openUrl);
 
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->
