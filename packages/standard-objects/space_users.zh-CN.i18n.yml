@@ -8,6 +8,7 @@ space_users_field_email_verified: 邮件已验证
 space_users_field_hr: HR
 space_users_field_invite_state: 邀请状态
 space_users_field_last_logon: 最近登陆
+space_users_field_password_expired: 密码过期
 space_users_field_locale: 语言
 space_users_field_locale_options_en-us: English
 space_users_field_locale_options_zh-cn: 简体中文

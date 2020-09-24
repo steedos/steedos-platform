@@ -24,4 +24,4 @@ process_definition_field_allowed_submitters_inlineHelpText: 对象上的人员�
 process_definition_group_approval_page_fields: 批准页面字段 TODO
 process_definition_group_select_field_used_for_automated_approval_routing: 指定批准人字段和记录可编辑性属性 TODO
 process_definition_group_record_lock: 锁定记录
-process_definition_listview_all: All
+process_definition_listview_all: 所有

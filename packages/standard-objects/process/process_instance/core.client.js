@@ -46,3 +46,26 @@ Steedos.authRequest = function (url, options) {
         toastr.error(err);
     }
 }
+
+Steedos.getObjectsOptions = function (filterFunction) {
+    var options = [];
+    _.each(Steedos.getDisplayObjects(filterFunction), function (v, k) {
+        options.push({ label: v.label, value: v.name, icon: v.icon })
+    })
+    return options;
+}
+
+Steedos.getDisplayObjects = function(filterFunction){
+    var objects = [];
+    _.each(Creator.objectsByName, function (object, k) {
+        var filterReturn = true;
+        if (filterFunction && _.isFunction(filterFunction)) {
+            filterReturn = filterFunction(v);
+        }
+        if (filterReturn && !object.hidden && !_.include(['cfs_instances_filerecord'], object.name)) {
+            objects.push(object)
+        }
+    })
+    objects.sort(Creator.sortingMethod.bind({key:"label"}))
+    return objects;
+}

@@ -64,17 +64,8 @@ fields:
     type: lookup
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
-                var _options;
-              _options = [];
-              _.forEach(Creator.Objects, function (o, k) {
-                  return _options.push({
-                    label: o.label,
-                    value: k,
-                    icon: o.icon
-                });
-              });
-              return _options;
-            }
+        return Steedos.getObjectsOptions()
+      }
     required: true
     name: object_name
     filterable: true

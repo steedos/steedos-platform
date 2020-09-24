@@ -15,18 +15,7 @@ fields:
     type: lookup
     optionsFunction: !!js/function |
       function () {
-        var _options;
-        _options = [];
-        _.forEach(Creator.objectsByName, function (o, object_name) {
-          if(!o.hidden && o.label && object_name != 'base' && object_name != 'core'){
-            return _options.push({
-              label: o.label,
-              value: o.name,
-              icon: o.icon
-            });
-          }
-        });
-        return _options;
+        return Steedos.getObjectsOptions();
       }
   target_object:
     type: lookup

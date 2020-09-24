@@ -2,6 +2,7 @@ Creator.Objects.application_package =
 	name: "application_package"
 	icon: "custom.custom42"
 	label: "软件包"
+	hidden: true
 	fields:
 		name:
 			type: "text"
