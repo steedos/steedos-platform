@@ -724,5 +724,7 @@
 	"instance_print_a4_horizontal": "A4Horizontal",
 
 	"object_workflows_sync_history_instances_success": "success",
-	"object_workflows_sync_history_instances_failed": "deal with sync failed approvals"
+	"object_workflows_sync_history_instances_failed": "deal with sync failed approvals",
+
+	"workflow_attachment_office_online_preview": "Preview"
 }
