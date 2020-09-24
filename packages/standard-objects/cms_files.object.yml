@@ -83,6 +83,17 @@ actions:
   standard_open_view:
     label: Open
     visible: true
+  office_online_preview:
+    label: Preview
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions, record) {
+              if (Meteor.isCordova){
+                return false;
+              }
+              var file = record;
+              return Creator.showPreviewButton(file.name);
+            }
+    'on': record
   standard_edit:
     label: Edit
     sort: 0

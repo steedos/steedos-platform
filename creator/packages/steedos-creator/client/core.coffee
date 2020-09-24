@@ -878,7 +878,7 @@ if Meteor.isClient
 			toastr.error TAPi18n.__("creator_office_online_web_url_required")
 			return false
 		openUrl = officeOnlineUrl + encodeURIComponent(fileUrl);
-		# console.log(openUrl);
+		# console.log("-----openUrl------: ",openUrl);
 		return Steedos.openWindow(openUrl);
 
 # 切换工作区时，重置下拉框的选项
