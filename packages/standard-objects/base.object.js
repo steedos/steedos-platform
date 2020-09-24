@@ -212,7 +212,7 @@ module.exports = {
                             Template.creator_view.currentInstance.onEditSuccess();
                             return;
                         } else if (responseText.redirect_url) {
-                            Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
+                            Steedos.openWindow(responseText.redirect_url);
                         }
                     },
                     error: function (xhr, msg, ex) {
