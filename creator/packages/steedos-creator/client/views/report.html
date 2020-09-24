@@ -111,10 +111,9 @@
 									{{/if}}
 									{{#if moreActions}}
 										<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
-											<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
-												{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="down"}}
-												<span class="slds-assistive-text">Show More</span>
-											</button>
+											<div data-toggle="dropdown" aria-haspopup="true" >
+												{{> steedos_button className="slds-button_icon-border-filled" iconCategory="utility" iconName="down" variant="icon" title="Show More"}}
+											</div>
 											<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
 												<ul class="slds-dropdown__list slds-show">
 													{{#each moreActions}}

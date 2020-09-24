@@ -17,7 +17,7 @@
 				{{else if isBoolean}}
 					{{#if checked}}
 						<span class="slds-icon_container slds-icon-utility-check slds-current-color" title="{{value}}">
-							{{> steedos_button_icon class="slds-icon slds-icon_x-small" source="utility-sprite" name="check"}}
+							{{> steedos_icon class="slds-icon_x-small" source="utility-sprite" name="check"}}
 							<span class="slds-assistive-text">{{value}}</span>
 						</span>
 					{{else}}
@@ -53,14 +53,10 @@
 		</div>
 		{{#if showEditIcon}}
 			<span class="triggerContainer">
-				<button type="button" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="{{_ 'edit'}}">
-					{{#if editable}}
-						{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" source="utility-sprite" name="edit"}}
-					{{else}}
-						{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_lock" source="utility-sprite" name="lock"}}
-					{{/if}}
-					<span class="slds-assistive-text">Edit</span>
-				</button>
+				<div class="{{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="{{_ 'edit'}}">
+					{{> steedos_button className="slds-cell-edit__button slds-m-left_x-small" iconClassName=(eidtIconClassName editable)
+						iconCategory="utility" iconName=(eidtIconName editable) variant="icon" title=(_ 'edit')}}
+				</div>
 			</span>
 		{{/if}}
 	</span>

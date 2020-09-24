@@ -5,39 +5,17 @@ Template.steedos_button.helpers({
 	component: function () {
 		return Button;
 	},
-	iconCategory: function () {
-		return this.iconCategory;
-	},
-	title: function () {
-		return this.title;
-	},
-	iconName: function () {
-		return this.iconName;
-	},
-	iconSize: function () {
-		return this.iconSize;
-	},
-	iconVariant: function () {
-		return this.iconVariant;
-	},
-	variant: function () {
-		return this.variant;
-	},
-	className: function () {
-		return this.className;
-	},
-	iconClassName: function () {
-		return this.iconClassName;
-	},
-	style: function () {
-		return this.style;
-	},
-	assistiveText: function () {
+	data: function () {
+		let assistiveText;
 		if(this.assistiveText){
-			return this.assistiveText;
+			assistiveText = this.assistiveText;
 		}
 		else if(this.title){
-			return { label: this.title }
+			assistiveText = { label: this.title }
 		}
+		return Object.assign({}, {...this}, {
+			title: this.title || this.label,
+			assistiveText
+		}, {component: Button})
 	}
 });

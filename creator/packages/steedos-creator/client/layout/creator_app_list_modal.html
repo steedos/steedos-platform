@@ -4,9 +4,9 @@
 		<div class="modal-dialog modal-extra slds-modal slds-fade-in-open" role="document">
 			<div class="slds-modal__container">
 				<header class="slds-modal__header slds-app-launcher__header slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
-					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="{{_ 'close'}}" data-dismiss="modal">
-						{{> steedos_button_icon class="slds-button__icon slds-button__icon_large" source="utility-sprite" name="close" title=(_ 'close')}}
-					</button>
+					<div data-dismiss="modal">
+						{{> steedos_button className="slds-modal__close slds-button__icon" iconSize="large" inverse=true iconCategory="utility" iconName="close" title=(_ 'close') variant="icon"}}
+					</div>
 					<h2 class="slds-text-heading_medium">
 						<h2 class="slds-text-heading--medium">{{_ "creator_app_launcher"}}</h2>
 					</h2>
@@ -18,9 +18,7 @@
 							</a>
 							{{#if spacesSwitcherVisible}}
 							<div class="slds-context-bar__icon-action slds-p-left_none">
-								<button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true">
-									{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="chevrondown" title="切换工作区"}}
-								</button>
+								{{> steedos_button className="slds-context-bar__button" iconCategory="utility" iconName="chevrondown" title='切换工作区' variant="icon"}}
 							</div>
 							<div class="slds-dropdown slds-dropdown_right" style="max-height: 450px;overflow-y: auto;">
 								<ul class="slds-dropdown__list" role="menu">
@@ -44,11 +42,9 @@
 
 		<div class="app-sction-part-1 slds-section slds-is-open">
           <h3 class="slds-section__title">
-            <button aria-controls="appsContent" aria-expanded="true" class="slds-button slds-section__title-action control-app-list">
-              {{> steedos_button_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse"
-								source="utility-sprite" name="chevrondown"}}
-              <span class="slds-truncate">{{_ "creator_app_launcher_all_apps"}}</span>
-            </button>
+			{{> steedos_button containerClassName="slds-section__title-action-wrap" className="slds-section__title-action control-app-list" 
+				iconClassName="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse" 
+				iconCategory="utility" iconName="chevrondown" label=(_ 'creator_app_launcher_all_apps') variant="icon"}}
           </h3>
           <div aria-hidden="false" class="slds-section__content" id="appsContent">
             <div class="slds-assistive-text" id="drag-live-region" aria-live="assertive"></div>
@@ -93,11 +89,9 @@
 
 					<div class="app-sction-part-2 slds-section">
 						<h3 class="slds-section__title">
-							<button aria-controls="appsContent" aria-expanded="true" class="slds-button slds-section__title-action control-object-list">
-								{{> steedos_button_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse"
-								source="utility-sprite" name="chevrondown"}}
-								<span class="slds-truncate">{{_ "creator_app_launcher_all_items"}}</span>
-							</button>
+							{{> steedos_button containerClassName="slds-section__title-action-wrap" className="slds-section__title-action control-object-list" 
+								iconClassName="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse" 
+								iconCategory="utility" iconName="chevrondown" label=(_ 'creator_app_launcher_all_items') variant="icon"}}
 						</h3>
 						<div class="slds-section__content">
 							<ul class="slds-grid slds-wrap">

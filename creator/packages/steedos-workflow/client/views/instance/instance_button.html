@@ -8,7 +8,6 @@
 		{{#if enabled_submit}}
 			<div class="slds-button slds-button_brand slds-button--neutral slds-truncate btn-instance-submit">
 				<a href="javascript:void(0);" title="{{_ 'Send'}}" class="">
-					<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
 					<div class="record-edit-text slds-truncate" title="{{_ 'Send'}}">{{_ 'Send'}}</div>
 				</a>
 			</div>
@@ -18,7 +17,6 @@
 			{{#each mainButtons}}
 				<div class="slds-button slds-button--neutral slds-truncate {{classNames}}">
 					<a href="javascript:void(0);" title="{{name}}" class="">
-						<!-- <div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div> -->
 						<div class="record-edit-text slds-truncate" title="{{name}}">{{name}}</div>
 					</a>
 				</div>
@@ -26,10 +24,9 @@
 			<!-- 其他按钮放折叠菜单里面  -->
 			{{#if foldedButtons.length}}
 				<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
-					<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
-						{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="down"}}
-						<span class="slds-assistive-text">显示更多</span>
-					</button>
+					<div data-toggle="dropdown" aria-haspopup="true" title="Show More">
+						{{> steedos_button className="slds-button_icon-border-filled" iconCategory="utility" iconName="down" variant="icon" title="显示更多"}}
+					</div>
 					<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
 						<ul class="slds-dropdown__list slds-show">
 							{{#each foldedButtons}}

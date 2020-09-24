@@ -149,6 +149,10 @@ Template.creator_table_cell.helpers
 	isExtraField: () ->
 		fieldName = this.field?.name
 		return fieldName == "created_by" or fieldName == "modified_by"
+	eidtIconName: (editable) ->
+		return if editable then 'edit' else 'lock'
+	eidtIconClassName: (editable) ->
+		return if editable then 'slds-button__icon_hint slds-button__icon_edit' else 'slds-button__icon_hint slds-button__icon_lock'
 
 
 Template.creator_table_cell.events
