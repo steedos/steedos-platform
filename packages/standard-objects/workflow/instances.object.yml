@@ -2,7 +2,6 @@ name: instances
 icon: task
 label: Request
 enable_search: true
-hidden: true
 fields:
   name:
     label: Name
