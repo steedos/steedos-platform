@@ -126,11 +126,11 @@ fields:
   # enable_space_global:
   #   type: boolean
   #   defaultValue: false
-  enable_web_forms:
-    type: boolean
-    defaultValue: fasle
-    label: Enable Web Forms
-    group: Switch
+  # enable_web_forms:
+  #   type: boolean
+  #   defaultValue: fasle
+  #   label: Enable Web Forms
+  #   group: Switch
   # is_view:
   #   type: boolean
   #   defaultValue: false
