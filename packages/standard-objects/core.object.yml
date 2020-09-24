@@ -1,5 +1,5 @@
 name: core
-
+hidden: true
 permission_set:
   admin:
     allowCreate: true

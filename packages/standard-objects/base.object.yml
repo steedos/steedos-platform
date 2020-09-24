@@ -1,4 +1,5 @@
 name: base
+hidden: true
 fields:
   owner:
     label: Owner

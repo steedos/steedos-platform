@@ -3523,10 +3523,10 @@
     yargs "^13.2.1"
     yn "^2.0.0"
 
-"@steedos/steedos-plugin-schema-builder@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/@steedos/steedos-plugin-schema-builder/download/@steedos/steedos-plugin-schema-builder-1.0.1.tgz#5088c94ec47409ae37595df5c6a704839dda4d26"
-  integrity sha1-UIjJTsR0Ca43WV31xqcEg53aTSY=
+"@steedos/steedos-plugin-schema-builder@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/@steedos/steedos-plugin-schema-builder/download/@steedos/steedos-plugin-schema-builder-1.0.4.tgz?cache=0&sync_timestamp=1600926696944&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40steedos%2Fsteedos-plugin-schema-builder%2Fdownload%2F%40steedos%2Fsteedos-plugin-schema-builder-1.0.4.tgz#3c71b303cc8668adc5bd5dba7b8f83b8f2351e31"
+  integrity sha1-PHGzA8yGaK3FvV26e4+DuPI1HjE=
 
 "@steedos/steedos-plugin-workflow@^1.9.1":
   version "1.10.3"

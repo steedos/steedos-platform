@@ -280,12 +280,16 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
             // 确保字段顺序正确，避免base中的字段跑到前面
             config.fields = _.clone(objectConfig.fields);
-            config = util.extend(config, clone(baseObjectConfig), clone(objectConfig));
+            let _baseObjectConfig = clone(baseObjectConfig);
+            delete _baseObjectConfig.hidden;
+            config = util.extend(config, _baseObjectConfig, clone(objectConfig));
         } else {
             let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
             // 确保字段顺序正确，避免base中的字段跑到前面
             config.fields = _.clone(objectConfig.fields);
-            config = util.extend(config, clone(coreObjectConfig), clone(objectConfig));
+            let _coreObjectConfig = clone(coreObjectConfig)
+            delete _coreObjectConfig.hidden;
+            config = util.extend(config, _coreObjectConfig, clone(objectConfig));
         }
     }
     config.datasource = datasource;

@@ -14,18 +14,7 @@ fields:
     index: true
     optionsFunction: !!js/function |
       function () {
-        var _options;
-        _options = [];
-        _.forEach(Creator.objectsByName, function(o, k) {
-          if (!o.hidden) {
-            _options.push({
-              label: o.label,
-              value: k,
-              icon: o.icon
-            });
-          }
-        });
-        return _options;
+        return Steedos.getObjectsOptions();
       }
   events:
     type: select

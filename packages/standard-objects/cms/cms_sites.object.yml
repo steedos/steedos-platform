@@ -1,6 +1,7 @@
 name: cms_sites
 icon: app
 label: Site
+hidden: true
 fields:
   type:
     label: Type

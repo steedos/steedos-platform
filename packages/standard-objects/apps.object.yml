@@ -52,20 +52,8 @@ fields:
     group: Business object
     optionsFunction: !!js/function |
       function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, object_name) {
-                return _options.push({
-                  label: o.label,
-                  value: o.name,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
+        return Steedos.getObjectsOptions()
+      }
     filterable: true
   mobile_objects:
     label: Mobile Objects
@@ -74,20 +62,8 @@ fields:
     group: Business object
     optionsFunction: !!js/function |
       function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, object_name) {
-                return _options.push({
-                  label: o.label,
-                  value: o.name,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
+        return Steedos.getObjectsOptions()
+      }
     filterable: true
   icon:
     label: Icon
