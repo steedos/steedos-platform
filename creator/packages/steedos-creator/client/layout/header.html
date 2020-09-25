@@ -59,22 +59,16 @@
 				{{/if}}
 				{{#if isNode}}
 					<li class="history-back slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
-						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-								title="{{_ "nw_top_button_history_back"}}">
-							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="back"}}
-						</button>
+						{{> steedos_button className="slds-button_icon-container slds-global-header__button_icon" iconClassName="slds-global-header__icon"
+							iconCategory="utility" iconName="back" variant="icon" title=(_ "nw_top_button_history_back")}}
 					</li>
 					<li class="history-forward slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
-						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-								title="{{_ "nw_top_button_history_forward"}}">
-							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="forward"}}
-						</button>
+						{{> steedos_button className="slds-button_icon-container slds-global-header__button_icon" iconClassName="slds-global-header__icon"
+							iconCategory="utility" iconName="forward" variant="icon" title=(_ "nw_top_button_history_forward")}}
 					</li>
 					<li class="refresh slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
-						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-								title="{{_ "nw_top_button_refresh"}}">
-							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="refresh"}}
-						</button>
+						{{> steedos_button className="slds-button_icon-container slds-global-header__button_icon" iconClassName="slds-global-header__icon"
+							iconCategory="utility" iconName="refresh" variant="icon" title=(_ "nw_top_button_refresh")}}
 					</li>
 				{{/if}}
 				<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
