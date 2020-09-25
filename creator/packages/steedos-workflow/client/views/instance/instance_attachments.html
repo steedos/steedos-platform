@@ -8,7 +8,7 @@
 				{{#if enabled_add_main_attachment}}
 				<div class="slds-button slds-button_neutral slds-m-left_x-small ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none{{/if}}">
 					<input type="file" name="file" class="ins-file-input" id="ins_upload_main_attach">
-					{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="upload" size="xx-small"}}
+					{{> steedos_icon class="slds-button__icon" wrapClassName="leading-none" source="utility-sprite" name="upload" size="xx-small"}}
 					<span>&nbsp;{{_ "workflow_attach_upload"}}</span>
 				</div>
 				{{/if}}
@@ -39,7 +39,7 @@
 					<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "Attachments"}}</span>
 					<div class="slds-button slds-button_neutral slds-m-left_x-small ins-upload" title='{{_ "Attachments"}}'>
 						<input type="file" name="file" class="ins-file-input" id="ins_upload_normal_attach">
-						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="upload" size="xx-small"}}
+						{{> steedos_icon class="slds-button__icon" wrapClassName="leading-none" source="utility-sprite" name="upload" size="xx-small"}}
 						<span>&nbsp;{{_ "workflow_attach_upload"}}</span>
 					</div>
 					{{#if isDraftAndFlowfilesExist}}
