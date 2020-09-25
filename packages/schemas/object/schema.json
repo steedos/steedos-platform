@@ -701,16 +701,16 @@
         },
         "action": {
             "type": "object",
-            "description": "对象操作",
+            "description": "操作按钮",
             "additionalProperties": false,
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "操作名称"
+                    "description": "按钮名称"
                 },
                 "label": {
                     "type": "string",
-                    "description": "操作显示名称"
+                    "description": "按钮显示名称"
                 },
                 "is_enable": {
                     "type": "boolean",
@@ -792,7 +792,7 @@
                 },
                 "disabled_actions": {
                     "type": "array",
-                    "description": "禁用对象操作"
+                    "description": "禁用操作按钮"
                 },
                 "unreadable_fields": {
                     "type": "array",
