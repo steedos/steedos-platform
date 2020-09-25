@@ -6,6 +6,9 @@
             },
             "steedos":{
                 "url": "http://192.168.3.2:5001" //当前服务地址，用于react 组件获取数据
+            },
+            "officeOnline":{
+                "url": "http://127.0.0.1/op/view.aspx?src=" //配置office online服务地址
             }
         },
         "cfs": {
