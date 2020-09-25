@@ -8,7 +8,7 @@
 				{{#if enabled_add_main_attachment}}
 				<div class="slds-button slds-button_neutral slds-m-left_x-small ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none{{/if}}">
 					<input type="file" name="file" class="ins-file-input" id="ins_upload_main_attach">
-					{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="upload"}}
+					{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="upload" size="xx-small"}}
 					<span>&nbsp;{{_ "workflow_attach_upload"}}</span>
 				</div>
 				{{/if}}
@@ -16,7 +16,7 @@
 					<div class="slds-button slds-button_neutral ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none;{{/if}}margin-left: 0.5rem;">
 						<button type="button" class="ins-file-input" id="ins_new_main_file"></button>
 						<!-- <i class="fa fa-file-word-o"></i> -->
-						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="edit"}}
+						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="edit" size="xx-small"}}
 						<span>&nbsp;{{_ "workflow_attach_new"}}</span>
 					</div>
 				{{/if}}
@@ -39,13 +39,13 @@
 					<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "Attachments"}}</span>
 					<div class="slds-button slds-button_neutral slds-m-left_x-small ins-upload" title='{{_ "Attachments"}}'>
 						<input type="file" name="file" class="ins-file-input" id="ins_upload_normal_attach">
-						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="upload"}}
+						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="upload" size="xx-small"}}
 						<span>&nbsp;{{_ "workflow_attach_upload"}}</span>
 					</div>
 					{{#if isDraftAndFlowfilesExist}}
 					<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small" aria-expanded="false">
 						<button class="slds-button slds-button_neutral" aria-haspopup="true" data-toggle="dropdown">
-							{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="download"}}
+							{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="download" size="xx-small"}}
 							<span>&nbsp;{{_t "flow.template_files"}}</span>
 						</button>
 						<div class="dropdown-menu dropdown-menu-left" role="menu">
