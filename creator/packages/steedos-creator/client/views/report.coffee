@@ -134,6 +134,28 @@ Template.creator_report.helpers
 		record_id = Session.get "record_id"
 		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
 		return reportObject?.report_type == "jsreport" and reportObject?.report_type != "stimulsoft-report"
+	
+	btnToggleChartClass: (isChartOpen)->
+		result = "slds-button_icon-border-filled btn-toggle-chart"
+		return if isChartOpen then result + " slds-is-selected" else result + " slds-not-selected"
+
+	btnToggleFilterClass: (isFiltering, isFilterOpen)->
+		result = "slds-button_icon-border-filled btn-toggle-filter"
+		if isFiltering
+			result += " filtering"
+		if isFilterOpen
+			result += " slds-is-selected"
+		else
+			result += " slds-not-selected"
+		return result
+	
+	btnToggleDesignerClass: (isDesignerOpen)->
+		result = "slds-button_icon-border-filled btn-toggle-designer"
+		return if isDesignerOpen then result + " slds-is-selected" else result + " slds-not-selected"
+	
+	btnToggleFilterDirtyClass: (isFilterDirty)->
+		result = "slds-button_icon-small btn-toggle-filter"
+		return if isFilterDirty then result + " hidden" else result
 
 Template.creator_report.events
 

@@ -96,11 +96,8 @@
 						</div>
 						{{#if sidebar.enable_hide}}
 							<div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink grid-sidebar-toggle">
-								<button type="button" role="button" title="显示侧栏" aria-pressed="true" 
-									class="slds-button slds-button_icon slds-button_icon-border btn-toggle-grid-sidebar {{#unless sidebar.hidden}}slds-is-selected{{/unless}}">
-									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="rows"}}
-									<span class="slds-assistive-text">显示侧栏</span>
-								</button>
+								{{> steedos_button className=(btnToggleGridSidebarClass sidebar.hidden)
+									iconCategory="utility" iconName="rows" variant="icon" title="显示侧栏"}}
 							</div>
 						{{/if}}
 						<div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink grid-search-div">
@@ -121,10 +118,10 @@
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-bottom grid-actions">
 							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small" aria-expanded="false">
-								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="{{_ "creator_list_view_controls"}}" data-toggle="dropdown">
-									{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="settings"}}
-									{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="down"}}
-								</button>
+								<div aria-haspopup="true" data-toggle="dropdown">
+									{{> steedos_button className="slds-button_icon-more"
+										iconCategory="utility" iconName="settings" iconVariant="more" variant="icon" title=(_ "creator_list_view_controls")}}
+								</div>
 								<div class="dropdown-menu dropdown-menu-right" role="menu">
 									<ul class="slds-dropdown__list list-view-controls">
 										<li class="slds-dropdown__header" role="separator">
@@ -172,33 +169,22 @@
 									</ul>
 								</div>
 							</div>
-							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_xx-small">
-								<button class="slds-button slds-button_icon slds-button_icon-more hide" aria-haspopup="true" title="{{_ "creator_change_view"}}" disabled>
-									{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="table"}}
-									{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="down"}}
-								</button>
+							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_xx-small hide">
+								{{> steedos_button className="slds-button_icon-more" disabled=true
+									iconCategory="utility" iconName="table" iconVariant="more" variant="icon" title=(_ "creator_change_view")}}
 							</div>
-							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled hide" title="{{_ "creator_edit_list"}}" disabled>
-								{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="edit"}}
-							</button>
+							{{> steedos_button className="slds-m-left_xx-small slds-button_icon-border-filled hide" disabled=true
+								iconCategory="utility" iconName="edit" variant="icon" title=(_ "creator_edit_list")}}
 							{{#if isRefreshable}}
-								<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="{{_ "creator_refresh"}}">
-									{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="refresh"}}
-								</button>
+								{{> steedos_button className="slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" 
+									iconCategory="utility" iconName="refresh" variant="icon" title=(_ "creator_refresh")}}
 							{{/if}}
-							{{!--
-							<div class="slds-button-group" role="group">
-								<button class="slds-button slds-button_icon slds-button_icon-border-filled hide" title="{{_ "creator_charts"}}" disabled>
-									{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="chart"}}
-								</button>
-								<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list {{#if isFiltering}}filtering{{/if}}" title="{{_ "creator_filters"}}">
-									{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="filterList"}}
-								</button>
-							</div>
-							--}}
-							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list {{#if isFiltering}}filtering{{/if}}" title="{{_ "creator_filters"}}">
-								{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="filterList"}}
-							</button>
+							<!-- <div class="slds-button-group" role="group">
+								{{> steedos_button className="slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" disabled=true 
+									iconCategory="utility" iconName="chart" variant="icon" title=(_ "creator_charts")}}
+							</div> -->
+							{{> steedos_button className=(btnToggleFilterClass isFiltering)
+								iconCategory="utility" iconName="filterList" variant="icon" title=(_ "creator_filters")}}
 						</div>
 					</div>
 					{{/unless}}
@@ -234,9 +220,8 @@
 										<div class="slds-filters__header slds-grid slds-has-divider_bottom-space">
 											{{#unless is_filter_changed}}
 												<h2 class="slds-align-middle slds-text-heading_small">{{_ "creator_list_filter"}}</h2>
-												<button class="slds-button slds-button_icon slds-col_bump-left slds-button_icon slds-button_icon-small close-filter-panel" title="{{_ "creator_filter_close_filter_panel"}}">
-													{{> steedos_icon class="slds-button__icon slds-icon--xx-small" source="utility-sprite" name="forward"}}
-												</button>
+												{{> steedos_button className="slds-col_bump-left slds-button_icon slds-button_icon-small close-filter-panel" title=(_ "creator_filter_close_filter_panel")
+													iconCategory="utility" iconName="forward" iconClassName="slds-button__icon_hint" variant="icon"}}
 											{{else}}
 												<button class="slds-button slds-button_neutral cancel-change">{{_ "creator_list_filter_cancel"}}</button>
 												<!-- <button class="slds-button slds-button_neutral filters-save-as">{{_ "creator_list_filter_save_as"}}</button> -->

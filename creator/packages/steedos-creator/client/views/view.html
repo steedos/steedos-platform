@@ -130,10 +130,8 @@
 																	{{#with objectField this}}
 																		<div class="slds-section group-section">
 																			<h3 class="slds-section__title group-section-control">
-																				<a aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
-																					{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
-																					<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
-																				</a>
+																				{{> steedos_button className="slds-section__title-action" iconClassName="slds-section__title-action-icon slds-button__icon_left" 
+																					iconCategory="utility" iconName="switch" variant="icon" label=this.name}}
 																			</h3>
 																			<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
 																				{{#each this.fields}}
@@ -195,10 +193,8 @@
 															{{#if this.fields}}
 																<div class="slds-section group-section">
 																	<h3 class="slds-section__title group-section-control">
-																		<button type="button" aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
-																		{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
-																		<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
-																		</button>
+																		{{> steedos_button className="slds-section__title-action" iconClassName="slds-section__title-action-icon slds-button__icon_left" 
+																			iconCategory="utility" iconName="switch" variant="icon" label=this.name}}
 																	</h3>
 																	<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
 																		{{#each this.fields}}

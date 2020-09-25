@@ -36,25 +36,21 @@
 							</div>
 							<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 								{{#if isChartNeedToShow}}
-									<button disabled={{isChartDisabled}} class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-chart {{#if isChartOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="{{_ "creator_report_switch_chart_open"}}">
-										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
-									</button>
+									{{> steedos_button className=(btnToggleChartClass isChartOpen) containerClassName="mr-1" disabled=isChartDisabled
+										iconCategory="utility" iconName="chart" variant="icon" title=(_ "creator_report_switch_chart_open")}}
 								{{/if}}
 
-								<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-filter {{#if isFiltering}}filtering{{/if}} {{#if isFilterOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="{{_ "creator_list_filter"}}">
-									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
-								</button>
+								{{> steedos_button className=(btnToggleFilterClass isFiltering isFilterOpen) containerClassName="mr-1"
+									iconCategory="utility" iconName="filterList" variant="icon" title=(_ "creator_list_filter")}}
 
-								<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="{{_ "refresh"}}">
-									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
-								</button>
+								{{> steedos_button className="slds-button_icon-border-filled btn-refresh" containerClassName="mr-1"
+									iconCategory="utility" iconName="refresh" variant="icon" title=(_ "refresh")}}
 
-								<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small slds-button slds-button_icon" aria-expanded="false">
-									<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
-										title="{{_ "Settings"}}" data-toggle="dropdown">
-										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
-										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
-									</button>
+								<div class="slds-dropdown-trigger slds-dropdown-trigger_click mr-1" aria-expanded="false">
+									<div aria-haspopup="true" data-toggle="dropdown">
+										{{> steedos_button className="slds-button_icon-more"
+											iconCategory="utility" iconName="settings" iconVariant="more" variant="icon" title=(_ "Settings")}}
+									</div>
 									<div class="dropdown-menu dropdown-menu-right" role="menu">
 										<ul class="slds-dropdown__list list-view-controls">
 											<li class="slds-dropdown__header" role="separator">
@@ -84,9 +80,8 @@
 								</div>
 								{{#if isDesignerNeedToShow}}
 									{{#if isSavable}}
-										<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-designer {{#if isDesignerOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="{{_ "creator_report_design_mode"}}">
-											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="puzzle"}}
-										</button>
+										{{> steedos_button className=(btnToggleDesignerClass isDesignerOpen) containerClassName="mr-1"
+											iconCategory="utility" iconName="puzzle" variant="icon" title=(_ "creator_report_design_mode")}}
 									{{/if}}
 								{{/if}}
 								<div class="slds-button-group" role="group">
@@ -150,9 +145,8 @@
 												<button class="slds-button slds-button_brand btn-filter-apply {{#unless isFilterDirty}}hidden{{/unless}}" type="button" title="Click to apply changes">
 													{{_ "creator_list_filter_apply"}}
 												</button>
-												<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small btn-toggle-filter {{#if isFilterDirty}}hidden{{/if}}">
-													{{> steedos_icon class="slds-button__icon slds-button__icon_hint" source="utility-sprite" name="forward"}}
-												</button>
+												{{> steedos_button className=(btnToggleFilterDirtyClass isFilterDirty)
+													iconCategory="utility" iconName="forward" iconClassName="slds-button__icon_hint" variant="icon"}}
 											</div>
 										</div>
 										<div class="vert-scroller">

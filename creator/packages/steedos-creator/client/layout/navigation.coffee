@@ -206,15 +206,21 @@ Template.creatorNavigation.helpers
 			return true
 		else
 			return false
+
 	hasAppDashboard: ()->
 		if Steedos.isMobile()
 			return false;
 		return Creator.getAppDashboard() or Creator.getAppDashboardComponent()
+
 	dashboard_url: ()->
 		return Steedos.absoluteUrl("app/#{Session.get('app_id')}/home")
+
 	dashboard_class_name: ()->
 		if Session.get("app_home_active")
 			return "slds-is-active"
+	
+	btnCloseTempNavTitle: (navName)->
+		return t("close") + " " + navName
 
 Template.creatorNavigation.events
 
