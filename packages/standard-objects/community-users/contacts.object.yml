@@ -179,12 +179,12 @@ fields:
     filterable: true
     inlineHelpText: 潜在客户来源，例如，广告、合作伙伴或 Web。
     hidden: true
-  contact_currency:
-    label: 联系人币种
-    type: lookup
-    reference_to: currency
-    hidden: true
-    inlineHelpText: 联系人中所有币种金额字段的默认币种。仅在使用多种货币的组织中可用。
+  # contact_currency:
+  #   label: 联系人币种
+  #   type: lookup
+  #   reference_to: currency
+  #   hidden: true
+  #   inlineHelpText: 联系人中所有币种金额字段的默认币种。仅在使用多种货币的组织中可用。
   # asset_id:
   #   type: lookup
   #   label: 资产
