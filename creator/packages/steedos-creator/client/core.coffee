@@ -880,6 +880,24 @@ if Meteor.isClient
 		openUrl = officeOnlineUrl + encodeURIComponent(fileUrl);
 		# console.log("-----openUrl------: ",openUrl);
 		return Steedos.openWindow(openUrl);
+	
+	Creator.isImageAttachment = (filename)->
+		#无文件类型时
+		if filename.split('.').length < 2
+			return false
+		# 获取文件类型
+		_exp = filename.split('.').pop().toLowerCase()
+		type = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff']
+		return type.indexOf(_exp) != -1
+
+	Creator.isHtmlAttachment = (filename)->
+		#无文件类型时
+		if filename.split('.').length < 2
+			return false
+		# 获取文件类型
+		_exp = filename.split('.').pop().toLowerCase()
+		type = ['html','htm']
+		return type.indexOf(_exp) != -1
 
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->

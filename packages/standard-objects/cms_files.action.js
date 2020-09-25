@@ -28,14 +28,20 @@ module.exports = {
     return true;
   },
 
-  office_online_preview: function (object_name, record_id) {
+  online_preview: function (object_name, record_id) {
     var file, fileId, ref, url;
     file = this.record;
-    
+    console.log("file ",file);
+
     fileId = file != null ? (ref = file.versions) != null ? ref[0] : void 0 : void 0;
     
     url = window.location.origin + Steedos.absoluteUrl("/api/files/files/" + fileId);
     
-    Creator.officeOnlinePreview(url);
+    // 图片和网页类型附件用浏览器打开
+    if (Creator.isImageAttachment(file.name) || Creator.isHtmlAttachment(file.name)){
+      Steedos.openWindow(url);
+    }else{
+      Creator.officeOnlinePreview(url);
+    }
   }
 }
