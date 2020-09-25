@@ -11665,6 +11665,11 @@ formidable@^1.2.0:
   resolved "https://registry.npm.taobao.org/formidable/download/formidable-1.2.2.tgz#bf69aea2972982675f00865342b982986f6b8dd9"
   integrity sha1-v2muopcpgmdfAIZTQrmCmG9rjdk=
 
+formulon@^6.22.0:
+  version "6.22.0"
+  resolved "https://registry.npm.taobao.org/formulon/download/formulon-6.22.0.tgz#82720e4ffdc1b8719431989bfcb43e85a997dbd6"
+  integrity sha1-gnIOT/3BuHGUMZib/LQ+hamX29Y=
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/forwarded/download/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
@@ -23621,7 +23626,7 @@ typeorm@^0.2.13, typeorm@^0.2.16:
 
 typescript@3.1.x, typescript@3.5.3, typescript@3.9.7, typescript@^3.3.3333, typescript@^3.6.2, typescript@^4.0.2, typescript@~3.7.4:
   version "3.9.7"
-  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.9.7.tgz?cache=0&sync_timestamp=1600687340350&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
+  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.9.7.tgz?cache=0&sync_timestamp=1600930319247&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha1-mNYApevcOPQMsndSLxLcgA6eJfo=
 
 uglify-js@2.7.5:
