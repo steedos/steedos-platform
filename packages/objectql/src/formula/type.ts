@@ -44,6 +44,7 @@ export type SteedosFormulaVarPathTypeConfig = {
  */
 export type SteedosFormulaParamTypeConfig = {
     key: string,
+    path: any,
     value: any
 }
 
