@@ -33,6 +33,23 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 		else
 			return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
 
+Creator.getObjectAbsoluteUrl = (object_name, record_id, app_id) ->
+	if !app_id
+		app_id = Session.get("app_id")
+	if !object_name
+		object_name = Session.get("object_name")
+
+	list_view = Creator.getListView(object_name, null)
+	list_view_id = list_view?._id
+
+	if record_id
+		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id, true)
+	else
+		if object_name is "meeting"
+			return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/calendar/", true)
+		else
+			return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id, true)
+
 Creator.getObjectRouterUrl = (object_name, record_id, app_id) ->
 	if !app_id
 		app_id = Session.get("app_id")
@@ -191,6 +208,15 @@ Creator.getObjectRecord = (object_name, record_id, select_fields, expand)->
 		record = collection.findOne(record_id)
 		return record
 
+Creator.getObjectRecordName = (record, object_name)->
+	unless record
+		record = Creator.getObjectRecord()
+	if record
+		# 显示组织列表时，特殊处理name_field_key为name字段
+		name_field_key = if object_name == "organizations" then "name" else Creator.getObject(object_name)?.NAME_FIELD_KEY
+		if record and name_field_key
+			return record.label || record[name_field_key]
+
 Creator.getApp = (app_id)->
 	if !app_id
 		app_id = Session.get("app_id")
@@ -200,6 +226,8 @@ Creator.getApp = (app_id)->
 
 Creator.getAppDashboard = (app_id)->
 	app = Creator.getApp(app_id)
+	if !app
+		return
 	dashboard = null
 	_.each Creator.Dashboards, (v, k)->
 		if v.apps?.indexOf(app._id) > -1
@@ -208,21 +236,27 @@ Creator.getAppDashboard = (app_id)->
 
 Creator.getAppDashboardComponent = (app_id)->
 	app = Creator.getApp(app_id)
+	if !app
+		return
 	return ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "Dashboard", app._id);
 
 Creator.getAppObjectNames = (app_id)->
 	app = Creator.getApp(app_id)
+	if !app
+		return
 	isMobile = Steedos.isMobile()
 	appObjects = if isMobile then app.mobile_objects else app.objects
 	objects = []
 	if app
 		_.each appObjects, (v)->
 			obj = Creator.getObject(v)
-			if obj?.permissions.get().allowRead and !obj.hidden
+			if obj?.permissions.get().allowRead
 				objects.push v
 	return objects
 
 Creator.getVisibleApps = (includeAdmin)->
+	changeApp = Creator._subApp.get();
+	ReactSteedos.store.getState().entities.apps = Object.assign({}, ReactSteedos.store.getState().entities.apps, {apps: changeApp});
 	return ReactSteedos.visibleAppsSelector(ReactSteedos.store.getState(), includeAdmin)
 
 Creator.getVisibleAppsObjects = ()->
@@ -232,7 +266,7 @@ Creator.getVisibleAppsObjects = ()->
 		if visibleObjectNames.indexOf(obj.name) < 0
 			return false
 		else
-			return !obj.hidden
+			return true
 	objects = objects.sort(Creator.sortingMethod.bind({key:"label"}))
 	objects = _.pluck(objects,'name')
 	return _.uniq objects
@@ -504,13 +538,16 @@ Creator.getListViews = (object_name, spaceId, userId)->
 			spaceId = Session.get("spaceId")
 		if !userId
 			userId = Meteor.userId()
+	
+	unless object_name
+		return
 
 	object = Creator.getObject(object_name)
 
 	if !object
 		return
 
-	disabled_list_views = Creator.getPermissions(object_name, spaceId, userId).disabled_list_views || []
+	disabled_list_views = Creator.getPermissions(object_name, spaceId, userId)?.disabled_list_views || []
 
 	list_views = []
 
@@ -537,7 +574,7 @@ Creator.getFields = (object_name, spaceId, userId)->
 			userId = Meteor.userId()
 
 	fieldsName = Creator.getObjectFieldsName(object_name)
-	unreadable_fields =  Creator.getPermissions(object_name, spaceId, userId).unreadable_fields
+	unreadable_fields =  Creator.getPermissions(object_name, spaceId, userId)?.unreadable_fields
 	return _.difference(fieldsName, unreadable_fields)
 
 Creator.isloading = ()->

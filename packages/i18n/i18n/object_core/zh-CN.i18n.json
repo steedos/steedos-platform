@@ -153,6 +153,7 @@
 	"space_users_error_remove_space_owner": "不能删除工作区拥有者",
 	"space_users_error_remove_space_admins": "不能删除工作区管理员",
 	"space_users_error_phone_already_existed": "该手机号已被其他用户注册",
+	"space_users_error_not_change_contact_id": "不能修改联系人",
 
 	"space_users_aciton_invite_space_users_success": "企业邀请链接已复制到剪贴板，用户点击此链接可以快速加入企业。",
 	"space_users_aciton_invite_space_users_error": "团队邀请链接复制失败",
@@ -184,5 +185,44 @@
 	"web_forms_aciton_copyHtmlCode_success": "表单HTML已复制到剪贴板，复制到网页中即可实现在线填写表单。",
 	"web_forms_aciton_copyHtmlCode_error": "表单HTML复制失败。",
 	"web_forms_default_notification_body": "在线表单有一条新记录提交。",
-	"web_forms_select_option_none": "--无--"
+	"web_forms_select_option_none": "--无--",
+
+	"object_fields_error_option_label_required": "选择项属性中每个选项的显示名不能为空。",
+	"object_fields_error_option_value_required": "选择项属性中每个选项的选项值不能为空。",
+	"object_fields_error_option_color_not_valid": "该字段选择项属性中定义了错误格式的选项颜色值，请输入正确的16进制颜色值，如#ffffff。",
+	"picklist_options_error_color_not_valid": "选项背景色格式不对，请输入正确的16进制颜色代码，如#ffffff。",
+
+	"space_users_method_disable_success": "已成功停用该用户。",
+	"space_users_method_disable_error": "停用用户失败，%s",
+	"space_users_method_enable_success": "已成功启用该用户。",
+	"space_users_method_enable_error": "启用用户失败，%s",
+	"space_users_method_disable_enable_error_only_space_admin": "只有工作区管理员可以启用/停用账户。",
+	"space_users_method_disable_enable_error_can_not_own": "无法启用/停用您自己的帐户。",
+	"space_users_method_disable_error_can_not_disable_disabled": "无法停用已停用的帐户。",
+	"space_users_method_enable_error_can_not_enable_enabled": "无法启用已启用的帐户。",
+	
+
+	"reports_field_report_type_options_tabular": "表格",
+	"reports_field_report_type_options_summary": "摘要",
+	"reports_field_report_type_options_matrix": "矩阵",
+	"reports_field_report_type_options_jsreport": "JsReport",
+	"reports_field_report_type_options_stimulsoft-report": "StimulsoftReport",
+	
+	"object_fields_error_formula_required": "字段类型为自动编号时，必须填写公式字段。",
+	
+	"holidays_error_date_repeated": "此日期已存在。",
+	"business_hours_error_is_default_repeated": "默认工作时间只能有一个，要让当前工作时间生效，请先设置其它工作时间为非默认工作时间。",
+	"business_hours_error_start_format": "开始时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
+	"business_hours_error_end_format": "结束时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
+	"business_hours_error_start_lt_end": "结束时间值必须晚于开始时间。",
+	"business_hours_error_lunch_start_format": "午休开始时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
+	"business_hours_error_lunch_end_format": "午休结束时间格式错误，请输入HH:MM这种格式的24小时制时间字符。",
+	"business_hours_error_lunch_start_lt_lunch_end": "午休结束时间值必须晚于午休开始时间。",
+	"business_hours_error_lunch_start_end_overflow": "午休时间必须在工作时间范围内。",
+
+	"object_fields_function_recomputeFormulaValues_success": "已成功重算该公式字段值。",
+	"object_fields_function_recomputeFormulaValues_error": "未能成功重算该公式字段值，%s",
+
+	"object_fields_function_recomputeSummaryValues_success": "已成功重算该汇总字段值。",
+	"object_fields_function_recomputeSummaryValues_error": "未能成功重算该汇总字段值，%s"
 }

@@ -67,7 +67,6 @@ DataSource.Odata.lookup_options = (options)->
 		if options?.values?.length
 			_.each options.values, (item)->
 				valueFilter.push("(#{idFieldName} eq '#{item}')")
-			filters.push "(#{valueFilter.join(' or ')})"
 		else
 			if selected.length > 0
 				_.each selected, (item)->
@@ -80,6 +79,9 @@ DataSource.Odata.lookup_options = (options)->
 			$top: options_limit,
 			$select: "#{name_field_key}"
 		};
+
+		if options?.values?.length
+			delete odataOptions.$top
 
 		if !object.database_name || object.database_name == 'meteor-mongo'
 			odataOptions.$orderby = 'created desc'
@@ -98,6 +100,12 @@ DataSource.Odata.lookup_options = (options)->
 
 		if filters.length > 0
 			odataOptions.$filter = "(#{filters.join(" and ")})"
+
+		if valueFilter.length > 0
+			if odataOptions.$filter
+				odataOptions.$filter = "(#{odataOptions.$filter} or (#{valueFilter.join(' or ')}))"
+			else
+				odataOptions.$filter = "(#{valueFilter.join(' or ')})"
 
 		result = Creator.odata.query(object.name, odataOptions, true)
 

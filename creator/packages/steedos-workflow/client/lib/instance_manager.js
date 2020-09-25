@@ -348,6 +348,9 @@ function removeMessage(parent_group) {
 }
 
 InstanceManager.checkFormValue = function () {
+	if (InstanceManager.isCC(WorkflowManager.getInstance())) {
+		return;
+	}
 
 	InstanceManager.checkNextStep();
 
@@ -514,7 +517,9 @@ InstanceManager.checkFormFieldValue = function (field) {
 			if (fo) {
 				titleName = fo.name ? fo.name : fo.code;
 			}
-			message = showMessage(parent_group, TAPi18n.__("instance_field") + "‘" + titleName + '’' + TAPi18n.__("instance_is_required"));
+			if (Session.get('judge') != 'rejected') { // 审批节点选择驳回时不校验表单字段必填 #688
+				message = showMessage(parent_group, TAPi18n.__("instance_field") + "‘" + titleName + '’' + TAPi18n.__("instance_is_required"));
+			}
 		}
 	}
 
@@ -522,7 +527,9 @@ InstanceManager.checkFormFieldValue = function (field) {
 		var table_value = AutoForm.getFieldValue(field.dataset.schemaKey, "instanceform");
 		parent_group = jquery_f.parent().parent().parent().parent();
 		if (!table_value || table_value.length < 1) {
-			message = showMessage(parent_group, TAPi18n.__("instance_field") + "‘" + field.dataset.label + '’' + TAPi18n.__("instance_is_required"));
+			if (Session.get('judge') != 'rejected') {
+				message = showMessage(parent_group, TAPi18n.__("instance_field") + "‘" + field.dataset.label + '’' + TAPi18n.__("instance_is_required"));
+			}
 		}
 	}
 
@@ -669,11 +676,17 @@ InstanceManager.getCurrentValues = function () {
 			if (approve && approve.values)
 				return approve.values
 		} else if (box == "inbox") {
+			var c = InstanceManager.getCurrentStep();
 			approve = InstanceManager.getCurrentApprove();
-			if (approve && approve.values) {
-				if (_.isEmpty(approve.values))
-					approve.values = InstanceManager.clone(WorkflowManager.getInstance().values)
+			if (c.step_type == 'counterSign' || InstanceManager.ccHasEditPermission()) {
+				approve.values = InstanceManager.clone(instance.values);
 				return approve.values
+			} else {
+				if (approve && approve.values) {
+					if (_.isEmpty(approve.values))
+						approve.values = InstanceManager.clone(WorkflowManager.getInstance().values)
+					return approve.values
+				}
 			}
 		} else if (box == "outbox" || box == "pending" || box == "completed" || box == "monitor") {
 
@@ -769,7 +782,7 @@ InstanceManager.getMyApprove = function () {
 }
 
 // 申请单暂存
-InstanceManager.saveIns = function () {
+InstanceManager.saveIns = function (noWarn) {
 	$('body').addClass("loading");
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
@@ -779,14 +792,18 @@ InstanceManager.saveIns = function () {
 
 		if (InstanceManager.isCC(instance)) {
 			var description = $("#suggestion").val();
-			Meteor.call('cc_save', instance._id, description, function (error, result) {
+			var ccHasEditPermission = InstanceManager.ccHasEditPermission();
+			var myApprove = InstanceManager.getMyApprove();
+			Meteor.call('cc_save', instance._id, description, myApprove, ccHasEditPermission, function (error, result) {
 				$('body').removeClass("loading");
 				if (error) {
 					toastr.error(error);
 				};
 				if (result == true) {
 					WorkflowManager.instanceModified.set(false);
-					toastr.success(TAPi18n.__('Saved successfully'));
+					if(!noWarn){
+						toastr.success(TAPi18n.__('Saved successfully'));
+					}
 				}
 			})
 			return;
@@ -833,7 +850,9 @@ InstanceManager.saveIns = function () {
 				$('body').removeClass("loading");
 				WorkflowManager.instanceModified.set(false);
 				if (result == true) {
-					toastr.success(TAPi18n.__('Saved successfully'));
+					if(!noWarn){
+						toastr.success(TAPi18n.__('Saved successfully'));
+					}
 				} else if (result == "upgraded") {
 					toastr.info(TAPi18n.__('Flow upgraded'));
 					FlowRouter.go("/workflow/space/" + Session.get('spaceId') + "/draft/" + instance._id);
@@ -853,7 +872,9 @@ InstanceManager.saveIns = function () {
 					$('body').removeClass("loading");
 					WorkflowManager.instanceModified.set(false);
 					if (result == true) {
-						toastr.success(TAPi18n.__('Saved successfully'));
+						if(!noWarn){
+							toastr.success(TAPi18n.__('Saved successfully'));
+						}
 					} else {
 						toastr.error(error.reason);
 						FlowRouter.go("/workflow/space/" + Session.get('spaceId') + "/inbox/");
@@ -908,7 +929,10 @@ InstanceManager.submitIns = function () {
 			Session.set("instance_submitting", true);
 
 			var description = $("#suggestion").val();
-			Meteor.call('cc_submit', instance._id, description, function (error, result) {
+
+			var ccHasEditPermission = InstanceManager.ccHasEditPermission();
+			var myApprove = InstanceManager.getMyApprove();
+			Meteor.call('cc_submit', instance._id, description, myApprove, ccHasEditPermission, function (error, result) {
 				if (error) {
 					toastr.error(error);
 					Session.set("instance_submitting", false);
@@ -1183,32 +1207,12 @@ InstanceManager.uploadAttach = function (files, isAddVersion, isMainAttach) {
 	$('.loading-text').text(TAPi18n.__("workflow_attachment_uploading"));
 
 	var limitSize, warnStr;
-
-	var is_paid = WorkflowManager.isPaidSpace(Session.get('spaceId'));
-
-	if (is_paid) {
-		// 单个附件大小限制: 基础版10M, 专业版50M, 企业版100M
-		// 读取settings中附件最大限制
-		var maximumFileSize = 0;
-		if (Steedos.isLegalVersion('', "workflow.enterprise")) {
-			maximumFileSize = 100;
-		} else if (Steedos.isLegalVersion('', "workflow.professional")) {
-			maximumFileSize = 50;
-		} else if (Steedos.isLegalVersion('', "workflow.standard")) {
-			maximumFileSize = 10;
-		}
-		var ref, ref1, ref2;
-		var attachment_size_limit = ((ref = Meteor.settings) != null ? (ref1 = ref["public"]) != null ? (ref2 = ref1.workflow) != null ? ref2.attachment_size_limit : void 0 : void 0 : void 0);
-		if (attachment_size_limit) {
-			maximumFileSize = attachment_size_limit;
-		}
-		limitSize = maximumFileSize * 1024 * 1024;
-		warnStr = t("workflow_attachment_paid_size_limit") + maximumFileSize + "MB";
-	} else {
-		// 免费版大小不能超过10M
-		limitSize = 10 * 1024 * 1024;
-		warnStr = t("workflow_attachment_free_size_limit");
+	var maximumFileSize = 100;
+	if(Meteor.settings.public && Meteor.settings.public.cfs && Meteor.settings.public.cfs.size_limit){
+		maximumFileSize = Meteor.settings.public.cfs.size_limit;
 	}
+	limitSize = maximumFileSize * 1024 * 1024;
+	warnStr = t("workflow_attachment_paid_size_limit") + maximumFileSize + "MB";
 
 	var fd, file, fileName, i;
 
@@ -1786,5 +1790,15 @@ InstanceManager.pickApproveSteps = function () {
 
 InstanceManager.ccHasEditPermission = function () {
 	var ccStep = InstanceManager.getCCStep();
-	return ccStep.cc_has_edit_permission;
+	// 当传阅步骤已结束时不应该允许编辑字段
+	var currentApprove = InstanceManager.getCurrentApprove();
+	if (!currentApprove)
+		return false;
+	var ins = WorkflowManager.getInstance();
+	if (!ins)
+		return false;
+	var trace = _.find(ins.traces, function (t) {
+		return t._id == currentApprove.trace;
+	})
+	return ccStep.cc_has_edit_permission && !trace.is_finished;
 }

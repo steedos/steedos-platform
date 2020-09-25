@@ -1,0 +1,56 @@
+name: process_flows_criteria_action
+label: process_flows_criteria_action
+icon: record
+hidden: true
+fields:
+  criteria:
+    type: master_detail
+    reference_to: process_flows_criteria 
+  name: 
+    type: text
+  type:
+    type: select
+    options: 
+      - label: Submit for Approval
+        value: submit
+  process_definition:
+    type: lookup
+    label: Approval Process
+    reference_to: process_definition
+  skip_entry_criteria:
+    type: boolean
+    label: Skip the entry criteria for this process?
+    inlineHelpText: If selected, the record is submitted to the specified approval process, regardless of the entry criteria.
+  submitter:
+    type: select
+    options: 
+      - label: Current User
+        value: current_user
+      - label: User Field from a Record
+        value: reference
+      - label: Other User
+        value: user
+  user_field:
+    type: text
+    label: User Field
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    columns:
+      - name
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

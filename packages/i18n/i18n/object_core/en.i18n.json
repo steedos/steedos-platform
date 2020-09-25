@@ -150,6 +150,7 @@
 	"space_users_error_email_already_existed": "The Email is already used.",
 	"space_users_error_remove_space_owner": "The space owner can not be removed",
 	"space_users_error_phone_already_existed": "The phone number is already used.",
+	"space_users_error_not_change_contact_id": "Can not change contact",
 
 	"space_users_aciton_invite_space_users_success": "The invitation link has copied to clipboard. Users can quickly join the company by clicking this link.",
 	"space_users_aciton_invite_space_users_error": "Failed to invite user",
@@ -181,5 +182,43 @@
 	"web_forms_aciton_copyHtmlCode_success": "The form HTML code has been copied to the clipboard and can be copied to the web page to fill in the form online.",
 	"web_forms_aciton_copyHtmlCode_error": "The form HTML code copy failed.",
 	"web_forms_default_notification_body": "The Web form has a new record submission.",
-	"web_forms_select_option_none": "--none--"
+	"web_forms_select_option_none": "--none--",
+
+	"object_fields_error_option_label_required": "The 'Label' of each option in the selection attribute cannot be empty.",
+	"object_fields_error_option_value_required": "The option 'Value' for each option in the option property cannot be empty.",
+	"object_fields_error_option_color_not_valid": "The incorrectly formatted option color value is defined in the field 'Options' attribute. Enter the correct hexadecimal color value, such as #FFFFFF.",
+	"picklist_options_error_color_not_valid": "Background color format incorrect, please enter the correct hexadecimal color code, such as #FFFFFF.",
+
+	"space_users_method_disable_success": "The user was successfully deactivated.",
+	"space_users_method_disable_error": "User deactivation failed, %s",
+	"space_users_method_enable_success": "The user was successfully enabled.",
+	"space_users_method_enable_error": "Enable user failure, %s",
+	"space_users_method_disable_enable_error_only_space_admin": "Only the space admins can enable / disable accounts.",
+	"space_users_method_disable_enable_error_can_not_own": "Unable to enable / disable your own account.",
+	"space_users_method_disable_error_can_not_disable_disabled": "Unable to disable a disabled account.",
+	"space_users_method_enable_error_can_not_enable_enabled": "Unable to enable an enabled account.",
+	
+	"reports_field_report_type_options_tabular": "Tabular",
+	"reports_field_report_type_options_summary": "Summary",
+	"reports_field_report_type_options_matrix": "Matrix",
+	"reports_field_report_type_options_jsreport": "JsReport",
+	"reports_field_report_type_options_stimulsoft-report": "StimulsoftReport",
+	
+	"object_fields_error_formula_required": "When the field type is autonumber, the formula field must be filled in.",
+	
+	"holidays_error_date_repeated": "This date already exists.",
+	"business_hours_error_is_default_repeated": "There can only be one default working time. For the current working time to take effect, please first set other working hours as non-default working hours.",
+	"business_hours_error_start_format": "Start time format error, please enter HH:MM this format of 24 hours time character.",
+	"business_hours_error_end_format": "End time format error, please enter HH:MM this format of 24 hours time character.",
+	"business_hours_error_start_lt_end": "The end time value must be later than the start time.",
+	"business_hours_error_lunch_start_format": "Lunch start time format error, please enter HH:MM this format of 24 hours time character.",
+	"business_hours_error_lunch_end_format": "Lunch end time format error, please enter HH:MM this format of 24 hours time character.",
+	"business_hours_error_lunch_start_lt_lunch_end": "The lunch end time value must be later than the lunch start time.",
+	"business_hours_error_lunch_start_end_overflow": "Lunch breaks must be within working hours.",
+
+	"object_fields_function_recomputeFormulaValues_success": "The formula field value was successfully recomputed.",
+	"object_fields_function_recomputeFormulaValues_error": "Failed to recompute the formula field value, %s",
+
+	"object_fields_function_recomputeSummaryValues_success": "The summary field value was successfully recomputed.",
+	"object_fields_function_recomputeSummaryValues_error": "Failed to recompute the summary field value, %s"
 }

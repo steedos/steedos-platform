@@ -26,16 +26,24 @@ set_sessions = (context, redirect)->
 	app_id = context.params.app_id
 	if (app_id != "-")
 		Session.set("app_id", app_id)
+	oldObjectName = Tracker.nonreactive ()-> return Session.get("object_name")
+	oldRecordId = Tracker.nonreactive ()-> return Session.get("record_id")
 	object_name = context.params.object_name
+	record_id = context.params.record_id
 	Session.set("object_name", object_name)
 	# 手机上record_id从老值变更为新值时，要清除record，否则list组件不会处理加载
-	Template.creator_view.currentInstance?.record.set(null)
-	Session.set("record_id", context.params.record_id)
+	if record_id != oldRecordId
+		Template.creator_view.currentInstance?.record?.set(null)
+	Session.set("record_id", record_id)
+	Session.set("record_name", null)
 	objectHomeComponent = ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", object_name)
 	if objectHomeComponent
 		Session.set("object_home_component", object_name);
 	else
 		Session.set("object_home_component", null)
+	if record_id and ((oldObjectName and oldObjectName != object_name) or (oldRecordId and record_id != oldRecordId))
+		# 切换object_name且是详细界面，说明是点击进入了相关详细记录界面，强制加一条临时导航栏项
+		Session.set("temp_navs_force_create", true)
 
 checkAppPermission = (context, redirect)->
 	app_id = context.params.app_id
@@ -87,6 +95,9 @@ FlowRouter.route '/app/:app_id',
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		if (app_id != "-")
+			# 切换APP时先清除object_name，record_id，否则相关依赖的autorun会以之前错误的值运行
+			Session.set("object_name", null)
+			Session.set("record_id", null)
 			Session.set("app_id", app_id)
 		Session.set("admin_template_name", null)
 		app = Creator.getApp(app_id)
@@ -122,6 +133,19 @@ FlowRouter.route '/app/:app_id/home',
 		if Steedos.isMobile()
 			Session.set("hidden_header", undefined)
 	]
+
+#FlowRouter.route '/app/:app_id/page/:page_id/',
+#	triggersEnter: [ checkUserSigned, checkAppPermission ],
+#	action: (params, queryParams)->
+#		app_id = FlowRouter.getParam("app_id")
+#		Session.set("app_id", app_id)
+#		BlazeLayout.render Creator.getLayout(),
+#			main: 'page'
+
+FlowRouter.route '/page/:page_id/',
+	action: (params, queryParams)->
+		BlazeLayout.render Creator.getLayout(),
+			main: 'page'
 
 FlowRouter.route '/user_settings',
 	triggersEnter: [ checkUserSigned ],
@@ -189,7 +213,8 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 		record_id = FlowRouter.getParam("record_id")
 		Creator.odata.get("instances", "#{record_id}/view?async", null, null, (result)=>
 			if result and result.redirect
-				FlowRouter.go result.redirect
+				# result.redirect返回的是带rootUrl前缀的相对路径，不能用FlowRouter.go
+				FlowRouter.redirect result.redirect
 		)
 
 
@@ -260,7 +285,11 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 		data = {app_id: app_id, object_name: object_name, record_id: record_id, related_object_name: related_object_name}
 		Session.set 'related_object_name', related_object_name
 		BlazeLayout.render Creator.getLayout(),
-			main: "related_object_list"
+			main: 'recordLoading'
+		Meteor.setTimeout ()->
+			BlazeLayout.render Creator.getLayout(),
+				main: "related_object_list"
+		, 10
 
 objectRoutes.route '/view/:record_id',
 	action: (params, queryParams)->
@@ -282,7 +311,11 @@ objectRoutes.route '/view/:record_id',
 		else
 			main = "creator_view"
 		BlazeLayout.render Creator.getLayout(),
-			main: main
+			main: 'recordLoading'
+		Meteor.setTimeout ()->
+			BlazeLayout.render Creator.getLayout(),
+				main: main
+		, 10
 
 objectRoutes.route '/grid/:list_view_id',
 	action: (params, queryParams)->

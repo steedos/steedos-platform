@@ -8,7 +8,7 @@ export function newCollection(tableName: string, datasourceName?: string, option
         datasourceName = 'default'
     }
     let datasourceConfig = config.datasources[datasourceName];
-    let locale = datasourceConfig.locale;
+    let locale = datasourceConfig.locale || 'zh';
     let driver = mongodrivers[datasourceName];
     if (!driver) {
         driver = new SteedosMongoDriver(datasourceConfig.connection);
@@ -21,12 +21,13 @@ export function newCollection(tableName: string, datasourceName?: string, option
                 let db = driver._client.db();
                 db.createCollection(tableName,
                     {
-                        'collation':
-                            { 'locale': locale }
+                        'collation': { 'locale': locale },
                     },
                     function (err, results) {
                         if (err) {
-                            console.error(err);
+                            if (err.code != 48) {
+                                console.error(err);
+                            }
                         }
                         cb();
                     }

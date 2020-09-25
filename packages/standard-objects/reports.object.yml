@@ -2,6 +2,7 @@ name: reports
 label: Report
 icon: report
 enable_space_global: true
+hidden: true
 fields:
   name:
     label: Name
@@ -14,15 +15,37 @@ fields:
     label: Report Type
     type: select
     defaultValue: tabular
-    options:
-      - label: Tabular
-        value: tabular
-      - label: Summary
-        value: summary
-      - label: Matrix
-        value: matrix
-      - label: JsReport
-        value: jsreport
+    options: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        var types = [
+          {
+            "label": t("reports_field_report_type_options_tabular"),
+            "value": "tabular"
+          },
+          {
+            "label": t("reports_field_report_type_options_summary"),
+            "value": "summary"
+          },
+          {
+            "label": t("reports_field_report_type_options_matrix"),
+            "value": "matrix"
+          }
+        ];
+        var plugins = Creator.Plugins;
+        if(plugins["@steedos/plugin-jsreport"]){
+          types.push({
+            "label": "JsReport",
+            "value": "jsreport"
+          });
+        }
+        if(plugins["@steedos/plugin-stimulsoft-report"]){
+          types.push({
+            "label": "StimulsoftReport",
+            "value": "stimulsoft-report"
+          });
+        }
+        return types;
+      }
     name: report_type
     filterable: true
   data_source:
@@ -41,17 +64,8 @@ fields:
     type: lookup
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
-                var _options;
-              _options = [];
-              _.forEach(Creator.Objects, function (o, k) {
-                  return _options.push({
-                    label: o.label,
-                    value: k,
-                    icon: o.icon
-                });
-              });
-              return _options;
-            }
+        return Steedos.getObjectsOptions()
+      }
     required: true
     name: object_name
     filterable: true
@@ -240,12 +254,24 @@ fields:
     hidden: false
     group: JsReport
     name: script
+  mrt:
+    label: Mrt
+    type: textarea
+    is_wide: true
+    hidden: true
+  is_system:
+    type: boolean
+    label: System
+    omit: true
+    hidden: true
+    disabled: true
 list_views:
   default:
     columns:
       - name
       - report_type
       - object_name
+      - is_system
   all:
     label: All Reports
     filter_scope: space
@@ -301,7 +327,7 @@ actions:
                 if (selection && selection.length > 0) {
                     var record = selection[0];
                     var recordId = record._id;
-                    var url = Meteor.absoluteUrl("/api/v4/reports/all/copy");
+                    var url = Steedos.absoluteUrl("/api/v4/reports/all/copy");
                     var data = {
                         recordId: recordId
                     };

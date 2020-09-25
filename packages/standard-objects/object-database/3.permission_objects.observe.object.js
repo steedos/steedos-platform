@@ -1,4 +1,3 @@
-var objectql = require('@steedos/objectql');
 var permissionCore = require('./permission_objects.core.js');
 
 Meteor.startup(function () {
@@ -9,27 +8,22 @@ Meteor.startup(function () {
     _remove = function (document) {
         permissionCore.removeObjectPermission(document);
     };
-    var config = objectql.getSteedosConfig();
-    if(config.tenant && config.tenant.saas){
-        return ;
-    }else{
-        Creator.getCollection("permission_objects").find({}, {
-            fields: {
-                created: 0,
-                created_by: 0,
-                modified: 0,
-                modified_by: 0
-            }
-        }).observe({
-            added: function (newDocument) {
-                return _change(newDocument);
-            },
-            changed: function (newDocument, oldDocument) {
-                return _change(newDocument);
-            },
-            removed: function (oldDocument) {
-                return _remove(oldDocument);
-            }
-        });
-    }
+    Creator.getCollection("permission_objects").find({}, {
+        fields: {
+            created: 0,
+            created_by: 0,
+            modified: 0,
+            modified_by: 0
+        }
+    }).observe({
+        added: function (newDocument) {
+            return _change(newDocument);
+        },
+        changed: function (newDocument, oldDocument) {
+            return _change(newDocument);
+        },
+        removed: function (oldDocument) {
+            return _remove(oldDocument);
+        }
+    });
 });

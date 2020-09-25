@@ -1,8 +1,10 @@
 AutoForm.addInputType('steedosLookups', {
 	template: 'steedosLookups',
 	valueIn: function(val, atts) {
-		atts._value = _.clone(val)
-
+		atts._value = _.clone(val);
+		if(!val){
+			return [];
+		}
 		if(_.isObject(val) && !_.isArray(val)){
 			return AutoForm.valueConverters.stringToStringArray(val.ids)
 		}else{
@@ -63,7 +65,7 @@ AutoForm.addInputType('steedosLookups', {
 		context.atts.removeButton = context.atts.removeButton || context.atts.remove_button; // support for previous version
 
 		context.atts.dataSchemaKey = context.atts['data-schema-key'];
-
+		_.extend(context, context.atts);
 		return context;
 	}
 });
@@ -124,14 +126,14 @@ Template.steedosLookups.onRendered(function () {
 		var data = Template.currentData();
 		var formId = AutoForm.getFormId();
 		var value = data.value;
-
 		if (template.uniSelectize.optionsMethod && !template.uniSelectize.optionsFunction) {
-
-			_getOptions = function () {
-				template.uniSelectize.getOptionsFromMethod(value);
-			};
-
-			Tracker.nonreactive(_getOptions)
+			if(!_.isEqual(value, template.lastValue)){
+				_getOptions = function () {
+					template.uniSelectize.getOptionsFromMethod(value);
+				};
+				template.lastValue = value;
+				Tracker.nonreactive(_getOptions);
+			}
 		} else {
 			var optionsFunction = template.uniSelectize.optionsFunction;
 
@@ -424,7 +426,6 @@ Template.steedosLookups.helpers({
 				return template.uniSelectize.itemsSelected.get().length > 0
 			}
 		}
-
 		return Template.instance().data.objectSwitche && !isReadonly()
 	},
 
@@ -453,7 +454,7 @@ Template.steedosLookups.helpers({
 Template.steedosLookups.events({
     'click .steedos-lookups-input': function (e, template) {
         template.uniSelectize.checkDisabled();
-
+		// console.log('click .steedos-lookups-input');
         var $el = $(e.target);
 
 		if($el.prop("readonly")){
@@ -592,7 +593,7 @@ Template.steedosLookups.events({
     },
     'focus input.steedos-lookups-input': function (e, template) {
         template.uniSelectize.checkDisabled();
-
+		// console.log('focus input.steedos-lookups-input');
 		var $el = $(e.target);
 
 		if($el.prop("readonly")){
@@ -605,9 +606,8 @@ Template.steedosLookups.events({
 		// 	template.uniSelectize.setItems(template.uniSelectize.optionsFunction(_values))
 		// }
 
-        template.uniSelectize.open.set(true);
-
-        Meteor.clearTimeout(template.uniSelectize.timeoutId);
+		template.uniSelectize.open.set(true);
+		Meteor.clearTimeout(template.uniSelectize.timeoutId);
     },
     'change input.steedos-lookups-input': function(e, template) {
         template.uniSelectize.checkDisabled();

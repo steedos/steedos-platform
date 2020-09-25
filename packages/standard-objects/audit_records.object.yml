@@ -1,6 +1,7 @@
 name: audit_records
 label: Audit Record
 icon: record
+hidden: true
 fields:
   related_to:
     label: "Related Object Record"

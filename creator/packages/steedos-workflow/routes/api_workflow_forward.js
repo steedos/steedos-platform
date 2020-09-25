@@ -202,6 +202,10 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 							})
 						}
 
+						if (old_table_row_values._id) {
+							new_table_row_values._id = new Mongo.ObjectID()._str;
+						}
+
 						if (!_.isEmpty(new_table_row_values)) {
 							new_values[field.code].push(new_table_row_values);
 						}

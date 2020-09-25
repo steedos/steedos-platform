@@ -2,6 +2,7 @@ Fiber = require('fibers')
 const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 const _ = require("lodash");
+const steedosLicense = require("@steedos/license");
 db.spaces = core.newCollection('spaces');
 
 db.spaces.helpers({
@@ -90,6 +91,17 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
         return ;
     }
 
+    let profile = 'user';
+
+    let space = db.spaces.findOne(spaceId, {fields: {default_profile: 1, default_organization: 1}})
+    if(space){
+        if(space.default_profile){
+            profile = space.default_profile
+        }
+        if(!organization_id && space.default_organization){
+            organization_id = space.default_organization
+        }
+    }
 
     if(!organization_id){
         let root_org = db.organizations.findOne({
@@ -108,6 +120,7 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
         // organizations_parents: [organization_id],
         // company_id: company_id,
         // company_ids: [company_id],
+        profile: profile,
         space: spaceId,
         owner: userId,
         created_by: userId,
@@ -116,6 +129,10 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
         modified: now
       }
     spaceUsersDB.insert(spaceUsersDoc)
+
+    if(Creator.isSpaceAdmin(spaceId, userId)){
+        spaceUsersDB.direct.update({user: userId, space: spaceId}, {$set: {profile: 'admin'}})
+    }
 }
 
 if (Meteor.isServer) {
@@ -165,6 +182,10 @@ if (Meteor.isServer) {
                 return modifier.$set.admins.push(modifier.$set.owner);
             }
         }
+
+        if(_.has(modifier.$set, 'admins') && _.isEmpty(modifier.$set.admins)){
+            throw new Meteor.Error(400, "spaces_error_space_admins_required");
+        }
     });
     // 管理员不能为空
     // if (!modifier.$set.admins)
@@ -197,13 +218,30 @@ if (Meteor.isServer) {
             children = db.organizations.find({
                 parents: rootOrg._id
             });
-            return children.forEach(function (child) {
-                return db.organizations.direct.update(child._id, {
+            children.forEach(function (child) {
+                db.organizations.direct.update(child._id, {
                     $set: {
                         fullname: child.calculateFullname()
                     }
                 });
             });
+        }
+
+
+        if(_.has(modifier.$set, 'admins')){
+           setAdmins = modifier.$set.admins || []
+           var removedAdmin  =  _.difference(this.previous.admins, setAdmins);
+           if(!_.isEmpty(removedAdmin)){
+                db.space_users.direct.update({space: doc._id, user: {$in: removedAdmin}}, {$set: {profile: 'user'}}, {
+                    multi: true
+                });
+           }
+           var addedAdmin =  _.difference(setAdmins, this.previous.admins);
+           if(!_.isEmpty(addedAdmin)){
+                db.space_users.direct.update({space: doc._id, user: {$in: addedAdmin}}, {$set: {profile: 'admin'}}, {
+                    multi: true
+                });
+           }
         }
     });
     db.spaces.before.remove(function (userId, doc) {
@@ -429,6 +467,38 @@ if (Meteor.isServer) {
     });
 }
 
+//仅考虑mongo-db数据源的对象数据
+function initSpaceData(spaceId, userId){
+    let spacesCollection = Creator.getCollection("spaces")
+    let datas = objectql.getAllObjectData();
+    let now = new Date();
+    let insertMap = {};
+    try {
+        for(let objectName in datas){
+            let records = datas[objectName];
+            if(_.indexOf(["spaces"], objectName) < 0){
+                for(let record of records){
+                    if(Creator.getCollection(objectName)){
+                        let docId = Creator.getCollection(objectName).direct.insert(Object.assign({}, record, {_id: record._id || spacesCollection._makeNewID(), space: spaceId, owner: userId, created: now, modified: now, created_by: userId, modified_by: userId}));
+                        if(insertMap[objectName]){
+                            insertMap[objectName].push(docId)
+                        }else{
+                            insertMap[objectName] = []
+                            insertMap[objectName].push(docId)
+                        }
+                        // await objectql.getObject(objectName).directInsert(Object.assign({}, record, {_id: spacesCollection._makeNewID(), space: spaceId}));
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        _.each(insertMap, function(_ids,objectName){
+            Creator.getCollection(objectName).direct.remove({_id: {$in: _ids}})
+        })
+        throw new Error("初始化数据失败");
+    }
+}
+
 Creator.Objects['spaces'].methods = {
     "tenant": function (req, res) {
         return Fiber(function () {
@@ -470,10 +540,12 @@ Creator.Objects['spaces'].methods = {
                         name: spaceName, 
                         owner: userId
                     }
-                    let newSpace = db.spaces.insert(spaceDoc);
-                    return res.send({
-                        value: newSpace
-                    });
+                    if(!tenant.saas){
+                        initSpaceData(spaceId, userId);
+                    }
+                    let newSpaceId = db.spaces.insert(spaceDoc);
+                    let newSpace = db.spaces.findOne(newSpaceId);
+                    return res.send(newSpace);
                 }else{
                     if(!userSession){
                         return res.status(401).send({
@@ -489,5 +561,34 @@ Creator.Objects['spaces'].methods = {
                 "success": false
             });
         }).run();
+    },
+    "clean_license": function(req, res){
+        return Fiber(function () {
+            let userSession = req.user;
+            let { _id: spaceId } = req.params;
+            let spaceUser = db.space_users.findOne({space: spaceId, user: userSession.userId}, {fields: {_id: 1}})
+            //Creator.isSpaceAdmin(spaceId, userSession.userId)
+            if(spaceUser){
+                steedosLicense.cleanLicenseCache(spaceId);
+            }
+            return res.send({});
+        }).run();
     }
+    // "initSpaceData": function(req, res){
+    //     return Fiber(function () {
+            
+    //         let userSession = req.user;
+    //         let { _id: spaceId } = req.params
+    
+    //         if(!Creator.isSpaceAdmin(spaceId, userSession.userId)){
+    //             return res.status(401).send({
+    //                 "success": false
+    //             });
+    //         }
+    //         initSpaceData(spaceId, userSession.userId);
+    //         return res.send({
+    //             "success": true
+    //         });
+    //     }).run();
+    // }
 }

@@ -1,3 +1,10 @@
+var _ = require("underscore");
+function checkType(name, type){
+    if(_.include(['admin','user','supplier','customer'], name) && type != 'profile'){
+        throw new Meteor.Error(500, "API名称为admin,user,supplier,customer时，类别必须为简档");
+    }
+}
+
 Creator.Objects['permission_set'].triggers = {
     "before.insert.server.check": {
         on: "server",
@@ -14,7 +21,12 @@ Creator.Objects['permission_set'].triggers = {
                         name: 1
                     }
                 })) {
-                throw new Meteor.Error(500, "对象名称不能重复");
+                throw new Meteor.Error(500, "API名称不能重复");
+            }
+            checkType(doc.name, doc.type);
+
+            if(doc.type === 'profile'){
+                delete doc.users
             }
         }
     },
@@ -35,7 +47,38 @@ Creator.Objects['permission_set'].triggers = {
                         name: 1
                     }
                 })) {
-                throw new Meteor.Error(500, "对象名称不能重复");
+                throw new Meteor.Error(500, "API名称不能重复");
+            }
+
+            var set = modifier.$set || {}
+            if(_.has(set, 'name') || _.has(set, 'type')){
+                checkType(set.name || doc.name, set.type || doc.type);
+            }
+
+            if(_.has(set, 'type') || _.has(set, 'users')){
+                var type = set.type || doc.type;
+                var users = set.users || doc.users
+                if(type === 'profile' && users.length > 0){
+                    if(_.has(set, 'users')){
+                        modifier.$set.users = []
+                    }else{
+                        modifier.$unset.users = 1
+                    }
+                }
+            }
+        }
+    },
+    "after.update.server.syncSpaceUserProfile": {
+        on: "server",
+        when: "after.update",
+        todo: function(userId, doc, fieldNames, modifier, options){
+            modifier.$set = modifier.$set || {}
+            if(doc.type === 'profile' && _.has(modifier.$set, 'name') && modifier.$set.name != this.previous.name){
+                if(doc.space){
+                    db.space_users.update({space: doc.space, profile: this.previous.name}, {$set: {profile: doc.name}}, {
+                        multi: true
+                    });
+                }
             }
         }
     },

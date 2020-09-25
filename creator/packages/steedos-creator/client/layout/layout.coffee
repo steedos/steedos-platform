@@ -1,6 +1,15 @@
 Template.creatorLayout.helpers Creator.helpers
 
 Template.creatorLayout.helpers
+	showTrialHearder: ()->
+		return false
+		__l = Creator.__l.get()
+		if !__l
+			return true
+		if __l.is_trial || __l.is_develop
+			return true
+		if __l.verify_status != 'SUCCESS'
+			return true
 	hiddenHeader: ()->
 		if Session.get("hidden_header") and Session.get("hidden_header") == true
 			return true
@@ -43,7 +52,7 @@ Template.creatorLayout.helpers
 
 Template.creatorLayout.events
 	'click .sidebar-show': (e, t)->
-		$("#sidebar-left").addClass('move--right')
+		$("#sidebar-left").removeClass('hidden')
 		$(".steedos").addClass('move--right')
 
 
@@ -75,9 +84,20 @@ AutoForm.hooks creatorEditForm:
 			record_id = result._id
 			url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
 			FlowRouter.go url
+		
+		if this.docId and result.object_name
+			recordUrl = Creator.getObjectUrl(result.object_name, this.docId)
+			recordName = Creator.getObjectRecordName(this.updateDoc.$set, result.object_name)
+			# recordName为空时不会更新TempNavLabel
+			Creator.updateTempNavLabel(result.object_name, recordUrl, recordName)
 ,false
 
 AutoForm.hooks creatorCellEditForm:
-	onSuccess: ()->
+	onSuccess: (formType,result)->
 		$('#afModal').modal 'hide'
+		if this.docId and result.object_name
+			recordUrl = Creator.getObjectUrl(result.object_name, this.docId)
+			recordName = Creator.getObjectRecordName(this.updateDoc.$set, result.object_name)
+			# recordName为空时不会更新TempNavLabel
+			Creator.updateTempNavLabel(result.object_name, recordUrl, recordName)
 ,false

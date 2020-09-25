@@ -14,7 +14,13 @@ Template.creator_app_list_modal.helpers
 				objects.push app_obj
 		return objects
 
-
+	all_objects: ()->
+		objects = []
+		_.each Steedos.getDisplayObjects(), (_object)->
+			object = Creator.getObject(_object.name)
+			if object.permissions.get().allowRead
+				objects.push object
+		return objects
 	app_url: ()->
 		if this?.url
 			if /^http(s?):\/\//.test(this.url)

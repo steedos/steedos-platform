@@ -1,3 +1,4 @@
+clone = require("clone");
 Creator.AuditRecords = {}
 
 getLookupFieldValue = (reference_to, value, space_id)->
@@ -106,11 +107,10 @@ insertRecord = (userId, object_name, new_doc)->
 updateRecord = (userId, object_name, new_doc, previous_doc, modifier)->
 #	if !userId
 #		return
-
 	space_id = new_doc.space
 	record_id = new_doc._id
 
-	fields = Creator.getObject(object_name, space_id)?.fields
+	fields = Creator.convertObject(clone(Creator.getObject(object_name, space_id)), space_id)?.fields
 
 	modifierSet = modifier.$set
 
@@ -198,8 +198,7 @@ updateRecord = (userId, object_name, new_doc, previous_doc, modifier)->
 					db_previous_value = previous_value
 					db_new_value = new_value
 
-
-		if db_new_value != null || db_previous_value != null
+		if (db_new_value != null && db_new_value != undefined) || (db_previous_value != null && db_previous_value != undefined)
 			collection = Creator.getCollection("audit_records")
 			doc = {
 				_id: collection._makeNewID()

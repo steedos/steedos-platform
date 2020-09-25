@@ -1,4 +1,4 @@
-audit_records__object: 字段历史
+audit_records__object: 字段修改历史
 audit_records_field_created: 时间
 audit_records_field_created_by: 用户
 audit_records_field_field_name: 字段

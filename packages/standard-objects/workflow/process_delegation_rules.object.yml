@@ -1,6 +1,7 @@
 name: process_delegation_rules
 icon: metrics
 label: Delegation
+hidden: true
 fields:
   from:
     type: lookup
@@ -26,6 +27,7 @@ fields:
     index: true
     name: to
     filterable: true
+    required: true
   to_name:
     type: text
     label: Trustee Name

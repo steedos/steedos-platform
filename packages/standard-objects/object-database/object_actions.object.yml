@@ -1,6 +1,7 @@
 name: object_actions
 label: Object Action
 icon: marketing_actions
+hidden: true
 fields:
   object:
     type: master_detail
@@ -23,28 +24,32 @@ fields:
 
               return _options;
             }
-  name:
-    type: text
-    label: Name
-    searchable: true
-    index: true
-    required: true
-    # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_][a-zA-Z0-9_]*$/'
   label:
     type: text
     label: Label
+    required: true
+    is_name: true
+  name:
+    type: text
+    label: API Name
+    searchable: true
+    index: true
+    required: true
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   is_enable:
     type: boolean
     label: Enable
   visible:
     type: boolean
     omit: true
+    hidden: true
     label: Visible
   'on':
     type: lookup
     label: 'On'
     is_wide: true
     required: true
+    showIcon: false
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               return [{
@@ -52,21 +57,41 @@ fields:
                 value: "list",
                 icon: "contact_list"
               }, {
-                label: "显示在记录查看页右上角",
+                label: "显示在记录查看页右上角，以及列表视图中每项的下拉菜单中",
                 value: "record",
+                icon: "contact_list"
+              }, {
+                label: "显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中",
+                value: "record_more",
+                icon: "action.more"
+              }, {
+                label: "显示在列表视图中每项的下拉菜单中",
+                value: "list_item",
+                icon: "action_list_component"
+              }, {
+                label: "显示在记录查看页右上角",
+                value: "record_only",
                 icon: "contract"
+              }, {
+                label: "显示在记录查看页右上角的“更多”下拉菜单中",
+                value: "record_only_more",
+                icon: "action.more"
               }];
             }
   todo:
     label: Execute Script
     type: textarea
-    required: true
+    required: false
+    omit: true
+    hidden: true
     is_wide: true
+paging:
+  enabled: false
 list_views:
   all:
     columns:
-      - name
       - label
+      - name
       - object
       - 'on'
       - is_enable

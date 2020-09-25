@@ -1,6 +1,7 @@
 name: permission_shares
 label: Permission Share
 icon: assigned_resource
+hidden: true
 fields:
   name:
     label: Name
@@ -14,21 +15,10 @@ fields:
     multiple: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function () {
-                var _options;
-              _options = [];
-              _.forEach(Creator.objectsByName, function (o, k) {
-                  var enable_share;
-                enable_share = o.enable_share === void 0 ? true : o.enable_share;
-                if (enable_share && !o.hidden) {
-                    return _options.push({
-                      label: o.label,
-                    value: k,
-                    icon: o.icon
-                  });
-                }
-              });
-              return _options;
-            }
+        return Steedos.getObjectsOptions(function(o){
+          return o.enable_share
+        })
+      }
     required: true
     filterable: true
   filters:

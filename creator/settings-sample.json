@@ -6,6 +6,9 @@
             },
             "steedos":{
                 "url": "http://192.168.3.2:5001" //当前服务地址，用于react 组件获取数据
+            },
+            "officeOnline":{
+                "url": "http://127.0.0.1/op/view.aspx?src=" //配置office online服务地址
             }
         },
         "cfs": {
@@ -22,7 +25,8 @@
             "global_opinions": ["同意", "不同意"],   //全局默认意见选项，在签批窗口中始终显示在自定义意见之前
             "instance_batch_approval": false, //批量审批，提供开关 instance_batch_approval，并限制到企业版才开通。
             "instance_allow_distribute": false, //文件分发，提供开关instance_allow_distribute ，并限制到企业版才开通。
-            "hideLastSignApproveDescription": true //不需要默认上次意见
+            "hideLastSignApproveDescription": true, //不需要默认上次意见
+            "autoPickNextStepUsersAtCounterSignStep": true //会签步骤中默认选中下一步骤处理人，默认值为true
         },
         "password": {
             "policy": "^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\\d+$)\\S{8,}$",  //密码格式校验规则，值为正则表达式，如果没有配置，则不校验密码格式
@@ -33,6 +37,10 @@
           "forceAccountBindPhone": false, //强行弹出手机号绑定窗口
           "expiredDays": 30, //失效时间，forceAccountBindPhone为true时失效后重新强行弹出手机号绑定窗口
           "showRemindButton": true //显示催办按钮
+        },
+        //系统设置相关
+        "admin": {
+            "background": "/packages/steedos_theme-qhd/client/background/qhd.jpg", //增加默认背景图
         }
     },
     "cron": {

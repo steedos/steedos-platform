@@ -1,5 +1,4 @@
 Meteor.methods({
-	// ??? 能否传阅给当前步骤处理人 如果当前步骤是会签。
 	cc_do: function (approve, cc_user_ids, description) {
 
 		var setObj = {};
@@ -158,31 +157,42 @@ Meteor.methods({
 		return true;
 	},
 
-	cc_submit: function (ins_id, description) {
+	cc_submit: function (ins_id, description, myApprove, ccHasEditPermission) {
 		var setObj = {};
 
-		var instance = db.instances.findOne(ins_id, {
-			fields: {
-				traces: 1,
-				cc_users: 1,
-				outbox_users: 1
-			}
-		});
+		var instance = db.instances.findOne(ins_id);
 		var traces = instance.traces;
 		var current_user_id = this.userId;
-		var current_approve;
 
-		traces.forEach(function (t) {
+		var flow = uuflowManager.getFlow(instance.flow);
+		var values = myApprove.values || {};
+
+		var approve_id = myApprove._id;
+
+		var myTrace;
+
+		for (let tidx = 0; tidx < traces.length; tidx++) {
+			const t = traces[tidx];
 			if (t.approves) {
-				t.approves.forEach(function (a, idx) {
+				for (let aidx = 0; aidx < t.approves.length; aidx++) {
+					const a = t.approves[aidx];
 					if (a.type == 'cc' && a.handler == current_user_id && a.is_finished == false) {
-						current_approve = a;
 						var upobj = {};
-						upobj['traces.$.approves.' + idx + '.is_finished'] = true;
-						upobj['traces.$.approves.' + idx + '.is_read'] = true;
-						upobj['traces.$.approves.' + idx + '.finish_date'] = new Date();
-						upobj['traces.$.approves.' + idx + '.judge'] = "submitted";
-						upobj['traces.$.approves.' + idx + '.cost_time'] = new Date() - a.start_date;
+						var key_str = 'traces.$.approves.' + aidx + '.';
+						upobj[key_str + 'is_finished'] = true;
+						upobj[key_str + 'is_read'] = true;
+						upobj[key_str + 'finish_date'] = new Date();
+						upobj[key_str + 'judge'] = "submitted";
+						upobj[key_str + 'cost_time'] = new Date() - a.start_date;
+						if (approve_id == a._id && !t.is_finished && ccHasEditPermission) {
+							myTrace = t;
+							var step = uuflowManager.getStep(instance, flow, t.step);
+							upobj[key_str + "values"] = uuflowManager.getApproveValues(values, step["permissions"], instance.form, instance.form_version)
+						}
+						//设置意见，意见只添加到最后一条approve中
+						if (approve_id == a._id) {
+							upobj[key_str + 'description'] = description;
+						}
 						db.instances.update({
 							_id: ins_id,
 							'traces._id': t._id
@@ -190,34 +200,26 @@ Meteor.methods({
 							$set: upobj
 						})
 					}
-				});
-			}
-		});
-
-		if (current_approve) {
-			var index = 0;
-
-			//设置意见，意见只添加到最后一条approve中
-			traces.forEach(function (t) {
-				if (current_approve && t._id === current_approve.trace) {
-					if (t.approves) {
-						t.approves.forEach(function (a, idx) {
-							if (a._id === current_approve._id) {
-								a.description = description;
-								index = idx;
-							}
-						});
-					}
 				}
-			});
+			}
+
+		}
+
+		if (myApprove) {
 
 			setObj.modified = new Date();
 			setObj.modified_by = this.userId;
-			setObj['traces.$.approves.' + index + '.description'] = description;
+
+			if (ccHasEditPermission && myApprove && !myTrace.is_finished) {
+				var ins = uuflowManager.getInstance(ins_id);
+				var updated_values = uuflowManager.getUpdatedValues(ins, approve_id);
+				setObj.values = updated_values;
+				setObj.name = uuflowManager.getInstanceName(instance);
+			}
 
 			db.instances.update({
 				_id: ins_id,
-				'traces._id': current_approve.trace
+				'traces._id': myApprove.trace
 			}, {
 				$set: setObj,
 				$pull: {
@@ -225,7 +227,7 @@ Meteor.methods({
 				},
 				$addToSet: {
 					outbox_users: {
-						$each: [current_user_id, current_approve.user]
+						$each: [current_user_id, myApprove.user]
 					}
 				}
 			});
@@ -234,15 +236,15 @@ Meteor.methods({
 
 			current_user_info = db.users.findOne(current_user_id);
 			//传阅提交不通知传阅者
-			if (false && description && current_approve && current_approve.from_user) {
-				pushManager.send_instance_notification("trace_approve_cc_submit", instance, "", current_user_info, [current_approve.from_user]);
+			if (false && description && myApprove && myApprove.from_user) {
+				pushManager.send_instance_notification("trace_approve_cc_submit", instance, "", current_user_info, [myApprove.from_user]);
 			}
 
 			pushManager.send_message_to_specifyUser("current_user", current_user_id);
 
 			flow_id = instance.flow;
 			// 如果已经配置webhook并已激活则触发
-			pushManager.triggerWebhook(flow_id, instance, current_approve, 'cc_submit', current_user_id, []);
+			pushManager.triggerWebhook(flow_id, instance, myApprove, 'cc_submit', current_user_id, []);
 		}
 
 		return true;
@@ -317,24 +319,19 @@ Meteor.methods({
 		return true;
 	},
 
-	cc_save: function (ins_id, description) {
+	cc_save: function (ins_id, description, myApprove, ccHasEditPermission) {
 		var setObj = {};
 
-		var instance = db.instances.findOne(ins_id, {
-			fields: {
-				traces: 1
-			}
-		});
+		var instance = db.instances.findOne(ins_id);
 		var traces = instance.traces;
 		var current_user_id = this.userId;
 
-		var current_approve;
+		var myTrace;
 
 		traces.forEach(function (t) {
 			if (t.approves) {
 				t.approves.forEach(function (a, idx) {
 					if (a.handler == current_user_id && a.type == 'cc' && a.is_finished == false) {
-						current_approve = a;
 						var upobj = {};
 						upobj['traces.$.approves.' + idx + '.judge'] = "submitted";
 						upobj['traces.$.approves.' + idx + '.read_date'] = new Date();
@@ -351,13 +348,16 @@ Meteor.methods({
 		})
 
 		var index = 0;
+		var currentStepId;
 
 		//设置意见，意见只添加到最后一条approve中
 		traces.forEach(function (t) {
-			if (current_approve && t._id === current_approve.trace) {
+			if (myApprove && t._id === myApprove.trace) {
+				currentStepId = t.step;
+				myTrace = t;
 				if (t.approves) {
 					t.approves.forEach(function (a, idx) {
-						if (a._id === current_approve._id) {
+						if (a._id === myApprove._id) {
 							index = idx;
 						}
 					});
@@ -367,12 +367,40 @@ Meteor.methods({
 
 		setObj['traces.$.approves.' + index + '.description'] = description;
 
+		var updateObj = {};
+
+		if (ccHasEditPermission && myApprove && !myTrace.is_finished) {
+
+			var key_str = 'traces.$.approves.' + index + '.';
+
+			var flow = uuflowManager.getFlow(instance.flow);
+
+			var step = uuflowManager.getStep(instance, flow, currentStepId);
+
+			var permissions_values = uuflowManager.getApproveValues(myApprove.values, step.permissions, instance.form, instance.form_version);
+
+			var change_values = approveManager.getChangeValues(instance.values, permissions_values);
+
+			setObj.values = _.extend((instance.values || {}), permissions_values);
+
+			if (!_.isEmpty(change_values)) {
+				var pushObj = {};
+				pushObj[key_str + 'values_history'] = {
+					values: change_values,
+					create: new Date()
+				}
+				updateObj.$push = pushObj;
+			}
+
+			setObj.name = uuflowManager.getInstanceName(instance)
+		}
+
+		updateObj.$set = setObj;
+
 		db.instances.update({
 			_id: ins_id,
-			'traces._id': current_approve.trace
-		}, {
-			$set: setObj
-		});
+			'traces._id': myApprove.trace
+		}, updateObj);
 
 		return true;
 	}

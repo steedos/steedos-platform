@@ -1,0 +1,4 @@
+permission_set_admin: Admin
+permission_set_user: User
+permission_set_supplier: Supplier
+permission_set_customer: Customer

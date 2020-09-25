@@ -27,7 +27,7 @@ module.exports = {
         let actionUserInfo = await userObj.findOne(userId, {
             fields: ['name']
         });
-        let redirectUrl = Steedos.absoluteUrl(Creator.getObjectUrl(object_name, recordId, object_name));
+        let redirectUrl = Creator.getObjectAbsoluteUrl(object_name, recordId, "-");
         let objWebhooks = await owCollection.find({
             filters: `(object_name eq '${object_name}') and (active eq true) and (events eq '${action}')`
         });
@@ -101,7 +101,7 @@ module.exports = {
         let actionUserInfo = await userObj.findOne(userId, {
             fields: ['name']
         });
-        let redirectUrl = Steedos.absoluteUrl(Creator.getObjectUrl(object_name, recordId, object_name));
+        let redirectUrl = Creator.getObjectAbsoluteUrl(object_name, recordId, "-");
         let objWebhooks = await owCollection.find({
             filters: `(object_name eq '${object_name}') and (active eq true) and (events eq '${action}')`
         });
@@ -176,7 +176,7 @@ module.exports = {
         let actionUserInfo = await userObj.findOne(userId, {
             fields: ['name']
         });
-        let redirectUrl = Steedos.absoluteUrl(Creator.getObjectUrl(object_name, recordId, object_name));
+        let redirectUrl = Creator.getObjectAbsoluteUrl(object_name, recordId, "-");
         let objWebhooks = await owCollection.find({
             filters: `(object_name eq '${object_name}') and (active eq true) and (events eq '${action}')`
         });

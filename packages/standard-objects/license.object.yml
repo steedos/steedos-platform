@@ -1,0 +1,98 @@
+name: license
+label: License
+icon: product_item
+hidden: true
+enable_audit: true
+fields:
+  lid:
+    type: text
+    is_name: true
+  license:
+    type: textarea
+    rows: 8
+    is_wide: true
+    hidden: true
+  key:
+    type: textarea
+    rows: 15
+    is_wide: true
+    hidden: true
+  product:
+    type: text
+    label: Product
+  edition:
+    type: text
+    label: Edition
+  is_trial:
+    type: boolean
+    label: Trial
+  user_number:
+    type: number
+    label: User number
+    scale: 0
+  custom_objects_number:
+    type: number
+    label: Custom objects number
+    scale: 0
+  flow_number:
+    type: number
+    label: Flow number
+    scale: 0
+  end_date:
+    type: date
+    label: 过期
+    required: true
+  verify_status:
+    type: select
+    options: FAIL,SUCCESS
+  verify_error:
+    type: textarea
+    hidden: true
+  license_last_verify:
+    type: datetime
+    omit: true
+    hidden: true
+  is_local:
+    type: boolean
+    hidden: true
+actions:
+  apply:
+    label: Apply
+    on: list
+    visible: true
+  sync:
+    label: Sync
+    on: list
+    visible: true
+  copySpaceId:
+    label: Copy space id
+    on: list
+    visible: true
+list_views:
+  all:
+    label: Al
+    columns:
+      - lid
+      - is_trial
+      - product
+      - edition
+      - end_date
+    filters:
+      - [['lid', '<>', 'None']]
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    viewAllRecords: true
+    modifyAllRecords: false
+
+    

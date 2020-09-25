@@ -1,6 +1,7 @@
 name: object_fields
 icon: orders
 enable_api: true
+hidden: true
 label: Object Fields
 fields:
   object:
@@ -24,92 +25,80 @@ fields:
 
               return _options;
             }
+  label:
+    type: text
+    required: true
+    label: Label
+    is_name: true
   name:
     type: text
-    label: Name
+    label: API Name
     searchable: true
     index: true
     hidden: true
     omit: true
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
-  column_name:
-    type: text
-    label: Database column name
-    inlineHelpText: Only supports relational databases
-    searchable: true
-    index: true
   _name:
     type: text
-    label: Name
+    label: API Name
     searchable: true
     index: true
     required: true
-  label:
-    type: text
-    required: true
-    label: Label
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   type:
     type: select
     label: Type
     required: true
     options: 
-      - label: text
+      - label: Text
         value: text
-      - label: textarea
+      - label: Textarea
         value: textarea
       - label: Html文本
         value: html
-      - label: select
+      - label: Select
         value: select
       - label: Checkbox
         value: boolean
-      - label: date
+      - label: Date
         value: date
-      - label: datetime
+      - label: Datetime
         value: datetime
-      - label: number
+      - label: Number
         value: number
-      - label: currency
+      - label: Currency
         value: currency
-      - label: password
+      - label: Password
         value: password
-      - label: lookup
+      - label: Lookup
         value: lookup
-      - label: master_detail
+      - label: Master Detail
         value: master_detail
-      - label: url
+      - label: Autonumber
+        value: autonumber
+      - label: Url
         value: url
-      - label: email
-        value: email     
-  is_name:
-    type: boolean
-    label: Is Name
-  primary:
-    type: boolean
-    label: Primary Key
-  generated:
-    type: boolean
-    label: Generated
-
+      - label: Email
+        value: email
+      # - label: Formula
+      #   value: formula
+      # - label: Roll-Up Summary
+      #   value: summary
+  defaultValue:
+    type: text
+    label: Default Value
+  group:
+    type: text
+    label: Group
   sort_no:
     label: Sort Number
     type: number
     defaultValue: 100
     scale: 0
     sortable: true
-  group:
-    type: text
-    label: Group
-  defaultValue:
-    type: text
-    label: Default Value
-  allowedValues:
-    type: text
-    multiple: true
-    label: Allowed Values
-  multiple:
+  is_name:
     type: boolean
-    label: Multiple
+    label: Is Name
   required:
     type: boolean
     label: Required
@@ -128,23 +117,20 @@ fields:
   index:
     type: boolean
     label: Is Index Field
-  searchable:
-    type: boolean
-    label: Searchable
   sortable:
     type: boolean
     label: Sortable
-  precision:
-    type: currency
-    label: Precision
-    defaultValue: 18
-  scale:
-    type: currency
-    label: Scale
-    defaultValue: 2
+  searchable:
+    type: boolean
+    label: Searchable
+  filterable:
+    type: boolean
+    label: Filterable
   reference_to:
     type: lookup
     label: Reference to
+    group: Reference
+    is_wide: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -161,23 +147,255 @@ fields:
 
               return _options;
             }
+  filtersFunction:
+    group: Reference
+    label: filters Function
+    type: textarea
+    is_wide: true
+  optionsFunction:
+    group: Reference
+    label: options Function
+    type: textarea
+    is_wide: true
+  precision:
+    type: currency
+    label: Precision
+    defaultValue: 18
+    group: number
+  scale:
+    type: currency
+    label: Scale
+    defaultValue: 2
+    group: number
+    min: 0
   rows:
     type: currency
     label: Rows
+    scale: 0
+    group: Advanced
+  # allowedValues:
+  #   type: text
+  #   multiple: true
+  #   label: Allowed Values
+  #   group: Advanced
+  multiple:
+    type: boolean
+    label: Multiple
+    group: Advanced
   options:
-    type: textarea
+    type: grid
     label: Options
     is_wide: true
+    inlineHelpText: The label and value of each option cannot be empty. Set the background color to FFFFFF in hexadecimal format.
+    group: Advanced
+  options.$:
+    label: Options
+    blackbox: true
+    type: object
+  options.$.label:
+    label: Label
+    type: text
+    required: true
+  options.$.value:
+    label: Value
+    type: text
+    required: true
+  options.$.color:
+    label: Color
+    type: text
+    required: false
+  inlineHelpText:
+    label: Prompt text
+    type: text
+    is_wide: true
+    group: Advanced
   description:
     label: Description
     type: text
     is_wide: true
+    group: Advanced
+  formula:
+    label: Formula
+    type: text
+    inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
+    group: Formula
+    is_wide: true
+  formula_type:
+    type: select
+    label: Formula Return Type
+    inlineHelpText: This field must be filled when the field type is 'Formula'
+    group: Formula
+    hidden: true
+    omit: true
+    options: 
+      - label: Checkbox
+        value: boolean
+      - label: Number
+        value: number
+      - label: Currency
+        value: currency
+      - label: Text
+        value: text
+      - label: Date
+        value: date
+      - label: Datetime
+        value: datetime
+  formula_blank_value:
+    type: select
+    label: Blank Field Handling
+    inlineHelpText: If your formula references any number or currency fields, specify what happens to the formula output when their values are blank.
+    group: Formula
+    hidden: true
+    omit: true
+    options: 
+      - label: Treat blank fields as zeroes
+        value: zeroes
+      - label: Treat blank fields as blanks
+        value: blanks
+    defaultValue: zeroes
+  summary_object:
+    type: lookup
+    label: Object to Summarize
+    inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
+    group: Summary
+    hidden: true
+    omit: true
+    depend_on:
+      - object
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+        if(!values.object){
+          return [];
+        }
+        /*在lookup控件编辑的时候values.object为字符串，在记录详细界面为对象*/
+        var objectName = typeof values.object === "string" ? values.object : values.object.name;
+        var object = Creator.getObject(objectName);
+        if(!object){
+          return [];
+        }
+        var relatedObjects = object.related_objects;
+        var _options = [];
+        _.forEach(relatedObjects, function (item, index) {
+          var relatedObject = Creator.Objects[item.object_name];
+          var relatedField = relatedObject && relatedObject.fields[item.foreign_key];
+          /*只需要支持master_detail类型的相关对象，也不支持multiple（本身就不允许配置master_detail为multiple）*/
+          if(relatedField && relatedField.type === "master_detail" && !relatedField.multiple){
+            _options.push({
+              label: relatedObject.label,
+              value: relatedObject.name,
+              icon: relatedObject.icon
+            });
+          }
+        });
+        return _options;
+      }
+  summary_type:
+    type: select
+    label: Roll-Up Type
+    inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
+    group: Summary
+    options: 
+      - label: COUNT
+        value: count
+      - label: SUM
+        value: sum
+      - label: MIN
+        value: min
+      - label: MAX
+        value: max
+    hidden: true
+    omit: true
+  summary_field:
+    type: lookup
+    label: Field to Aggregate
+    inlineHelpText: If the field type is a 'Roll-Up Summary' and the 'Roll-Up Type' is not COUNT, this field must be filled in, Only fields that aggregate number, currency, date, and datetime types are supported.
+    group: Summary
+    depend_on:
+      - summary_object
+      - summary_type
+    defaultIcon: service_contract
+    hidden: true
+    omit: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
+      function (values) {
+        if(!values.summary_object){
+          return [];
+        }
+        if(values.summary_type && values.summary_type !== "count"){
+          var options = Creator.getObjectLookupFieldOptions(values.summary_object, false, true);
+          var object = Creator.getObject(values.summary_object);
+          var fields = object ? object.fields : null;
+          if(!fields){
+            return [];
+          }
+          if(values.summary_type === "sum"){
+            /*sum类型可以汇总数值、金额字段*/
+            options = options.filter(function(option){
+              var optionFieldType = fields[option.value] && fields[option.value].type;
+              return ["number", "currency"].indexOf(optionFieldType) > -1
+            });
+          }
+          else{
+            /*min、max类型可以汇总数值、金额、日期、日期时间字段*/
+            options = options.filter(function(option){
+              var optionFieldType = fields[option.value] && fields[option.value].type;
+              return ["number", "currency", "date", "datetime"].indexOf(optionFieldType) > -1
+            });
+          }
+          return options;
+        }
+      }
+  filters:
+    label: Filter Criteria
+    type: 'grid'
+    inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
+    group: Summary
+    is_wide: true
+    hidden: true
+    omit: true
+  filters.$:
+    label: Filter Criteria
+    blackbox: true
+    type: object
+    omit: true
+    hidden: true
+  filters.$.field:
+    label: Field
+    type: text
+  filters.$.operation:
+    label: Operator
+    type: select
+    defaultValue: =
+    options: !<tag:yaml.org,2002:js/function> |- 
+      function () {
+              return Creator.getFieldOperation();
+          }
+  filters.$.value:
+    label: Value
+    blackbox: true
+  column_name:
+    type: text
+    label: Database column name
+    inlineHelpText: Only supports relational databases.
+    searchable: true
+    index: true
+    group: External data source
+  primary:
+    type: boolean
+    label: Primary Key
+    group: External data source
+  generated:
+    type: boolean
+    label: Generated
+    group: External data source
+paging:
+  enabled: false
 list_views:
   all:
     columns:
+      - label
       - name
       - column_name
-      - label
       - type
       - object
       - sort_no
@@ -187,6 +405,13 @@ list_views:
         order: asc
     label: All
     filter_scope: space
+actions: 
+  recomputeFormulaValues: 
+    label: Recompute Formula Values
+    on: record_only
+  recomputeSummaryValues: 
+    label: Batch Recompute Summary Values
+    on: record_only
 permission_set:
   user:
     allowCreate: false
@@ -202,3 +427,16 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+form:
+  initialValues: !!js/function |
+    function(){
+      var object = Creator.odata.get('objects', Session.get("record_id"), "fields_serial_number");
+      if(object){
+        let fields_serial_number = object.fields_serial_number
+        if(!fields_serial_number || fields_serial_number < 100){
+          fields_serial_number = 100 + 10
+        }
+        return {sort_no: fields_serial_number}
+      }
+      return {}
+    }

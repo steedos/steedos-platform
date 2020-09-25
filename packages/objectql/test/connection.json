@@ -1,6 +1,6 @@
 {
   "mysql": {
-    "host": "192.168.0.195",
+    "host": "192.168.0.198",
     "username": "admin",
     "password": "hotoainc.",
     "database": "driver-test"
@@ -13,8 +13,8 @@
     "database": "ORCL"
   },
   "postgres": {
-    "url": "postgresql://postgres:hotoainc.@192.168.0.195/driver-test",
-    "host": "192.168.0.195",
+    "url": "postgresql://postgres:hotoainc.@192.168.0.198/driver-test",
+    "host": "192.168.0.198",
     "username": "postgres",
     "password": "hotoainc.",
     "database": "driver-test"

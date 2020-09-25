@@ -7,26 +7,30 @@
     "server"
   ],
   "scripts": {
-    "bootstrap": "lerna bootstrap && yarn run link",
-    "link": "lerna exec -- yarn link",
-    "unlink": "lerna exec -- yarn unlink",
-    "ver": "lerna version --force-publish",
+    "submodules": "git submodule foreach git pull origin master",
+    "bootstrap": "yarn submodules && lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
+    "link": "lerna link --force-local",
+    "ver": "lerna version --skip-git --force-publish",
     "pub": "lerna publish from-package --registry https://registry.npmjs.org",
+    "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
     "compile": "lerna run compile",
     "prepare": "lerna run prepare",
     "clean": "lerna clean",
     "changed": "lerna changed",
     "git": "git config core.autocrlf true && git config core.filemode false",
-    "syncToTaoBao": "cnpm sync @steedos/app-contracts && cnpm sync @steedos/auth && cnpm sync steedos-cli && cnpm sync @steedos/core && cnpm sync @steedos/filters && cnpm sync @steedos/i18n && cnpm sync @steedos/meteor-bundle-dependencies && cnpm sync @steedos/meteor-bundle-runner && cnpm sync @steedos/migrate && cnpm sync @steedos/objectql && cnpm sync @steedos/project-template-empty && cnpm sync @steedos/schemas && cnpm sync @steedos/standard-objects && cnpm sync steedos-server && cnpm sync create-steedos-app"
+    "update-yarn": "curl --compressed -o- -L https://yarnpkg.com/install.sh | bash",
+    "syncToTaoBao": "start https://npm.taobao.org/sync/@steedos/app-contracts && start https://npm.taobao.org/sync/@steedos/auth && start https://npm.taobao.org/sync/steedos-cli && start https://npm.taobao.org/sync/@steedos/core && start https://npm.taobao.org/sync/@steedos/filters && start https://npm.taobao.org/sync/@steedos/i18n && start https://npm.taobao.org/sync/@steedos/meteor-bundle-dependencies && start https://npm.taobao.org/sync/@steedos/meteor-bundle-runner && start https://npm.taobao.org/sync/@steedos/migrate && start https://npm.taobao.org/sync/@steedos/objectql && start https://npm.taobao.org/sync/@steedos/project-template-empty && start https://npm.taobao.org/sync/@steedos/schemas && start https://npm.taobao.org/sync/@steedos/standard-objects && start https://npm.taobao.org/sync/steedos-server && start https://npm.taobao.org/sync/create-steedos-app && start https://npm.taobao.org/sync/@steedos/plugin-enterprise"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
     "**/handlebars": "^4.3.0",
     "**/debug": "^3.1.0",
     "**/hoek": "^5.0.3",
-    "**/cryptiles": "^4.1.2"
+    "**/cryptiles": "^4.1.2",
+    "**/typescript": "3.9.7",
+    "**/odata-v4-parser": "^0.1.29"
   },
   "devDependencies": {
-    "lerna": "^3.22.0"
+    "lerna": "^3.22.1"
   }
 }

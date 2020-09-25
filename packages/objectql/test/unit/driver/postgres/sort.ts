@@ -83,7 +83,7 @@ describe('fetch records for postgres with sort arguments as a string that comply
             objects: {
                 test: {
                     label: 'Postgres Schema',
-                    tableName: tableName,
+                    table_name: tableName,
                     fields: {
                         id: {
                             label: '主键',

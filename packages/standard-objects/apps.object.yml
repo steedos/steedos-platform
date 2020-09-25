@@ -1,6 +1,7 @@
 name: apps
 label: App
 icon: apps
+hidden: true
 fields:
   name:
     label: Name
@@ -48,43 +49,21 @@ fields:
     label: Objects
     type: lookup
     multiple: true
+    group: Business object
     optionsFunction: !!js/function |
       function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, object_name) {
-                return _options.push({
-                  label: o.label,
-                  value: o.name,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
+        return Steedos.getObjectsOptions()
+      }
     filterable: true
   mobile_objects:
     label: Mobile Objects
     type: lookup
     multiple: true
+    group: Business object
     optionsFunction: !!js/function |
       function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, object_name) {
-                return _options.push({
-                  label: o.label,
-                  value: o.name,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
+        return Steedos.getObjectsOptions()
+      }
     filterable: true
   icon:
     label: Icon
@@ -228,16 +207,37 @@ fields:
         value: redirect
       - label: HTTP Post
         value: post
-
+  is_system:
+    type: boolean
+    label: System
+    omit: true
+    hidden: true
+    disabled: true
+  from_code_id:
+    type: text
+    omit: true
+    hidden: true
+    disabled: true
+paging:
+  enabled: false
+actions:
+  customize:
+    label: Customize
+    on: record_only
+  reset:
+    label: Reset
+    on: record_only
 list_views:
   all:
     label: All Apps
     filter_scope: space
     columns:
       - name
+      - code
       - description
       - visible
       - sort
+      - is_system
 permission_set:
   user:
     allowCreate: false

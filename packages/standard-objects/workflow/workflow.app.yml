@@ -7,8 +7,10 @@ admin_menus:
   - _id: menu_workflow
     name: Workflows
     permission_sets:
-      - user
+      - admin
+      - workflow_admin
     expanded: false
+    sort: 500
   - _id: flows
     name: Workflows
     permission_sets:
@@ -69,13 +71,13 @@ admin_menus:
     permission_sets:
       - user
     object_name: process_delegation_rules
+    parent: account
+  - _id: object_workflows
+    name: 对象与流程映射关系
+    permission_sets:
+      - admin
+    object_name: object_workflows
     parent: menu_workflow
-  # - _id: object_workflows
-  #   name: 对象与流程映射关系
-  #   permission_sets:
-  #     - admin
-  #   object_name: object_workflows
-  #   parent: menu_workflow
   - _id: roles
     name: Roles
     permission_sets:

@@ -9,6 +9,7 @@ public:
     store: "local"
     local: 
       folder: "./storage"
+  templateSpaceId: 'template'
 email:
   host:
   port: 465
@@ -29,3 +30,4 @@ tenant:
   enable_bind_mobile: false
 plugins:
   - "@steedos/accounts"
+  - "@steedos/app-crm"

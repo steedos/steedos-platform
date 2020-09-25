@@ -1,0 +1,1 @@
+window._SteedosHiddenObjects = ['core','base','cfs_instances_filerecord'];

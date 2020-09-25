@@ -1,13 +1,15 @@
 Template.creatorHeader.helpers Creator.helpers
 
 Template.creatorHeader.helpers
-	logoUrl: ()->
-		avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar_square
-		if avatar
-			return Steedos.absoluteUrl("/api/files/avatars/#{avatar}")
-		else
-			logo_url = "/packages/steedos_creator/assets/logo-square.png"
-			return Creator.getRelativeUrl(logo_url)
+	space: ()->
+		return db.spaces.findOne(Steedos.getSpaceId())
+
+	logoUrl: (avatar)->
+		return Steedos.absoluteUrl("/api/files/avatars/#{avatar}")
+
+	defaultLogoUrl: ()->
+		logo_url = "/packages/steedos_creator/assets/logo-square.png"
+		return Steedos.absoluteUrl(logo_url)
 	
 	currentUserUser: ()->
 		url = "app/admin/users/view/#{Steedos.userId()}"
@@ -35,7 +37,7 @@ Template.creatorHeader.helpers
 			return " "
 
 	signOutUrl: ()->
-		return Creator.getRelativeUrl("/steedos/logout")
+		return Creator.getRelativeUrl("/accounts/a/#/logout")
 
 	isAdmin: ()->
 		return Steedos.isSpaceAdmin()
@@ -43,18 +45,12 @@ Template.creatorHeader.helpers
 	showShopping: ()->
 		return Steedos.isSpaceAdmin() && !_.isEmpty(Creator?._TEMPLATE?.Apps)
 
-	spaceName: (spaceId)->
-		if !spaceId
-			spaceId = Steedos.getSpaceId()
-		if spaceId
-			space = db.spaces.findOne(spaceId)
-			if space
-				return space.name
 	showViewObject: ()->
 		if !Steedos.isSpaceAdmin()
 			return false
-		objectName = Session.get("object_name")
-		if objectName && window._SteedosHiddenObjects && !_.include(window._SteedosHiddenObjects, objectName)
+		objectName = Session.get("object_name");
+		_object = Creator.getObject(objectName);
+		if objectName && !_object?.hidden && window._SteedosHiddenObjects && !_.include(window._SteedosHiddenObjects, objectName)
 			return true
 		else
 			return false

@@ -6,7 +6,7 @@ function loadObjectPermission(doc){
     var objectDataSourceName = objectCore.getDataSourceName(dbObject);
 
     if(dbObject && !objectCore.canLoadObject(dbObject.name, objectDataSourceName)){
-        console.warn('warn: Not loaded. Invalid custom permission_objects -> ', doc.name);
+        console.warn('warn: Not loaded. Invalid custom permission_objects -> ', doc.name, doc.object_name);
         return;
     }
     const pset = Creator.getCollection("permission_set").findOne({_id: doc.permission_set_id, space: doc.space});

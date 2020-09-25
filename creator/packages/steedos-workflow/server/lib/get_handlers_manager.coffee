@@ -87,8 +87,8 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 	instance = db.instances.findOne(instance_id)
 
 	# 拟稿时, 可以设定后续每个步骤的处理人 #1926
-	if instance.step_approve && instance.step_approve[step_id]
-		return instance.step_approve[step_id]
+	if instance.step_approve && !_.isEmpty(instance.step_approve["#{step_id}_options"])
+		return instance.step_approve["#{step_id}_options"]
 
 	approve_users = new Array
 	space_id = instance.space

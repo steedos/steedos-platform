@@ -1,4 +1,6 @@
 import { Dictionary } from '@salesforce/ts-types';
+import { initObjectFieldsFormulas } from '../formula';
+import { initObjectFieldsSummarys } from '../summary';
 import {
     SteedosDriver,
     SteedosMongoDriver,
@@ -221,12 +223,18 @@ export class SteedosDataSourceType implements Dictionary {
 
         this.initDriver();
 
+        if (config.getRoles && !_.isFunction(config.getRoles)) {
+            throw new Error('getRoles must be a function')
+        }
+        this._getRoles = config.getRoles
+    }
+
+    loadFiles(){
         // 添加对象到缓存
         _.each(this.config.objects, (object, object_name) => {
             object.name = object_name
             addObjectConfig(object, this._name);
         })
-
         // 添加对象到缓存
         _.each(this.config.objectFiles, (objectPath) => {
             let filePath = objectPath;
@@ -235,11 +243,6 @@ export class SteedosDataSourceType implements Dictionary {
             }
             addAllConfigFiles(filePath, this._name)
         })
-
-        if (config.getRoles && !_.isFunction(config.getRoles)) {
-            throw new Error('getRoles must be a function')
-        }
-        this._getRoles = config.getRoles
     }
 
     setObjectPermission(object_name: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {
@@ -290,6 +293,10 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.find(tableName, query, userId)
     }
 
+    async aggregate(tableName: string, query: SteedosQueryOptions, externalPipeline, userId?: SteedosIDType) {
+        return await this._adapter.aggregate(tableName, query, externalPipeline, userId)
+    }
+
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType) {
         return await this._adapter.findOne(tableName, id, query, userId)
     }
@@ -330,6 +337,13 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.directDelete(tableName, id, userId)
     }
 
+    async directAggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[], userId?: SteedosIDType) {
+        return await this._adapter.directAggregate(tableName, query, externalPipeline, userId)
+    }
+
+    async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
+        return await this._adapter.directAggregatePrefixalPipeline(tableName, query, prefixalPipeline, userId)
+    }
 
     public get schema(): SteedosSchema {
         return this._schema;
@@ -374,6 +388,8 @@ export class SteedosDataSourceType implements Dictionary {
     init() {
         this.initObjects();
         this.initTypeORM();
+        initObjectFieldsFormulas(this.name);
+        initObjectFieldsSummarys(this.name);
         // this.schema.transformReferenceOfObject(this);
     }
 

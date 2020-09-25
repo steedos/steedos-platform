@@ -21,8 +21,13 @@ collectionObj = (name) ->
 		o[x]
 	, window
 
-oDataOperation = (type, url, data, object_name)->
-	self = this
+oDataOperation = (type, url, data, object_name, other)->
+	self = this;
+	beforeHook = FormManager.runHook(object_name, Session.get("cmOperation"), 'before', {_id: other._id, formId: other.formId, doc: data})
+	if !beforeHook
+		return false;
+
+	previousDoc = FormManager.getPreviousDoc(object_name, other._id, Session.get("cmOperation"))
 	$.ajax
 		type: type
 		url: url
@@ -34,20 +39,22 @@ oDataOperation = (type, url, data, object_name)->
 			request.setRequestHeader 'X-User-Id', Meteor.userId()
 			request.setRequestHeader 'X-Auth-Token', Accounts._storedLoginToken()
 			request.setRequestHeader 'X-Space-Id', Steedos.spaceId()
-		success: (data) ->
+		success: (result) ->
 #			console.log('oDataOperation success');
 			if Session.get("cmOperation") == "insert"
-				_id = data.value[0]._id
+				_id = result.value[0]._id
 			else if Session.get("cmOperation") == "update"
-				_id = data._id
+				_id = result._id
 			# console.log _id
-			data = {_id: _id}
-			data.type = type
-			data.object_name = object_name
-			self.done(null, data)
+			_data = {_id: _id}
+			_data.type = type
+			_data.object_name = object_name
+			FormManager.runHook(object_name, Session.get("cmOperation"), 'after', {previousDoc: previousDoc, dbDoc: result?.value[0]})
+			self.done(null, _data)
 		error: (jqXHR, textStatus, errorThrown) ->
 			# console.log(errorThrown);
 			console.log('oDataOperation error');
+			FormManager.runHook(object_name, Session.get("cmOperation"), 'error', {_id: other._id, doc: data, error: jqXHR.responseJSON.error})
 			self.done(jqXHR.responseJSON.error)
 
 getObjectName = (collectionName)->
@@ -93,7 +100,9 @@ getSimpleSchema = (collectionName)->
 					type: "hidden"
 					defaultValue: ->
 						return getObjectName collectionName
-
+	if Session.get("cmOperation") == "update" && final_schema._id
+		final_schema._id.autoform?.omit = true
+		delete final_schema._id
 	return new SimpleSchema(final_schema)
 
 
@@ -262,6 +271,10 @@ Template.CreatorAutoformModals.events
 		if(!validate)
 			event.preventDefault()
 			event.stopPropagation()
+		else
+			formId = Session.get('cmFormId') or defaultFormId
+			_doc = AutoForm.getFormValues(formId)?.insertDoc
+			FormManager.runHook(object_name, 'edit', 'after', {schema: template.__schema, record: template.__record, doc: _doc});
 
 
 helpers =
@@ -270,7 +283,7 @@ helpers =
 	cmOperation: () ->
 		Session.get 'cmOperation'
 	cmDoc: () ->
-		Session.get 'cmDoc'
+		return Template.instance().__record.get();
 	cmButtonHtml: () ->
 		Session.get 'cmButtonHtml'
 	cmFields: () ->
@@ -350,19 +363,25 @@ helpers =
 		Session.get('cmTargetIds')
 
 	schema: ()->
-		cmCollection = Session.get 'cmCollection'
-		return getSimpleSchema(cmCollection)
+		return Template.instance().__schema.get();
 
 	schemaFields: ()->
+		if _.has(Template.instance().data, 'schemaFields')
+			return Template.instance().data.schemaFields
 		cmCollection = Session.get 'cmCollection'
+		cmOperation = Session.get 'cmOperation'
 		keys = []
 		if cmCollection
-			schemaInstance = getSimpleSchema(cmCollection)
+			schemaInstance = Template.instance().__schema.get()
 			schema = schemaInstance._schema
 
 			firstLevelKeys = schemaInstance._firstLevelSchemaKeys
 			object_name = getObjectName cmCollection
-			permission_fields = _.clone(Creator.getFields(object_name))
+			_permission_fields = _.clone(Creator.getRecordSafeFields(Session.get('cmDoc'), object_name))
+			permission_fields = []
+			_.each _permission_fields, (_sf, k)->
+				if !_sf.disabled
+					permission_fields.push(k)
 			unless permission_fields
 				permission_fields = []
 
@@ -376,6 +395,13 @@ helpers =
 				firstLevelKeys = _.intersection(firstLevelKeys, cmFields)
 			if Session.get 'cmOmitFields'
 				firstLevelKeys = _.difference firstLevelKeys, [Session.get('cmOmitFields')]
+
+			if cmOperation == "insert"
+				# 新建记录时，把autonumber、formula、summary类型字段视为omit字段
+				# 修改记录时不用处理，由schema中设定的readonly属性控制
+				fields = Creator.getObject(object_name).fields
+				firstLevelKeys = _.filter firstLevelKeys, (firstLevelKey)->
+					return ["autonumber", "formula", "summary"].indexOf(fields[firstLevelKey]?.type) < 0
 
 			_.each schema, (value, key) ->
 				if (_.indexOf firstLevelKeys, key) > -1
@@ -420,7 +446,7 @@ helpers =
 				hiddenFields: hiddenFields
 				disabledFields: disabledFields
 
-#			console.log finalFields
+#			console.log 'finalFields', finalFields
 
 			return finalFields
 
@@ -635,7 +661,7 @@ Template.CreatorAfModal.events
 					if Session.get("cmOperation") == "insert"
 						data = insertDoc
 						type = "post"
-						urls.push Steedos.absoluteUrl("/api/v4/#{object_name}")
+						urls.push {url: Steedos.absoluteUrl("/api/v4/#{object_name}"), formId: t.data.formId}
 						delete data._object_name
 					if Session.get("cmOperation") == "update"
 						if Session.get("cmMeteorMethod")
@@ -669,7 +695,7 @@ Template.CreatorAfModal.events
 
 						_ids = _id.split(",")
 						_.each _ids, (id)->
-							urls.push Steedos.absoluteUrl("/api/v4/#{object_name}/#{id}")
+							urls.push {url: Steedos.absoluteUrl("/api/v4/#{object_name}/#{id}"), _id: id, formId: t.data.formId}
 						data = updateDoc
 						type = "put"
 
@@ -685,14 +711,13 @@ Template.CreatorAfModal.events
 									trigger.todo.apply({object_name: object_name},[userId, data])
 
 
-					_.each urls, (url)->
-						oDataOperation.call(self, type, url, data, object_name)
+					_.each urls, (item)->
+						oDataOperation.call(self, type, item.url, data, object_name, {_id: item._id, formId: item.formId})
 
 					return false
 
 				onSuccess: (operation,result)->
 					Session.set 'cmSaving', false
-					console.log('onSuccess hide......');
 					$('#afModal').modal 'hide'
 					# if result.type == "post"
 					# 	app_id = Session.get("app_id")
@@ -708,7 +733,12 @@ Template.CreatorAfModal.events
 					if error.reason
 						toastr?.error?(TAPi18n.__(error.reason, error.details))
 					else if error.message
-						toastr?.error?(TAPi18n.__(error.message, error.details))
+						if _.isString(error.message) && error.message.startsWith("E11000 duplicate")
+							cmCollection = Session.get 'cmCollection'
+							object_name = getObjectName(cmCollection)
+							toastr?.error?(TAPi18n.__("duplicate_unique_key", Creator.getObject(object_name)?.fields?._id?.label))
+						else
+							toastr?.error?(TAPi18n.__(error.message, error.details))
 					else
 						toastr?.error?(error)
 
@@ -766,9 +796,26 @@ Template.CreatorAfModal.events
 		$('#afModal').data('bs.modal').options.backdrop = t.data.backdrop or 'static'
 		$('#afModal').modal 'show'
 
+Template.CreatorFormField.onCreated ->
+	self = this;
+	this.autorun ()->
+		cmCollection = Session.get 'cmCollection'
+		if cmCollection
+			self.__schema = new ReactiveVar(getSimpleSchema(cmCollection))
 Template.CreatorAutoformModals.onCreated ->
 	self = this;
 	self.shouldUpdateQuickForm = new ReactiveVar(true);
+	self.__schema = new ReactiveVar({})
+	self.__record = new ReactiveVar({});
+	this.autorun ()->
+		cmCollection = Session.get 'cmCollection'
+		if cmCollection
+			self.__schema.set(getSimpleSchema(cmCollection))
+			self.__record.set(Session.get('cmDoc'))
+			object_name = getObjectName(cmCollection)
+			Tracker.nonreactive ()->
+				FormManager.runHook(object_name, 'edit', 'before', {schema: self.__schema, record: self.__record});
+Template.CreatorAutoformModals.onRendered ->
 
 Template.CreatorAutoformModals.onDestroyed ->
 	Session.set 'cmIsMultipleUpdate', false

@@ -10,7 +10,7 @@ Meteor.publish("datasources", function (spaceId) {
         throw new Meteor.Error("401", "Authentication is required and has not been provided.")
 
     if (db.space_users.findOne({ user: userId, space: spaceId })) {
-        return Creator.Collections["datasources"].find({ space: spaceId }, { fields: { _id: 1, space: 1, name: 1 } })
+        return Creator.Collections["datasources"].find({ space: spaceId }, { fields: { _id: 1, space: 1, name: 1, label:1 } })
     }
     return [];
 });
@@ -20,7 +20,7 @@ Creator.Objects['datasources'].methods = {
         var userSession = req.user
             var recordId = req.params._id;
             var spaceId = userSession.spaceId
-            let doc = await objectql.getObject('datasources').findOne(recordId, {filters: `(space eq ${spaceId})`});
+            let doc = await objectql.getObject('datasources').findOne(recordId, {filters: `(space eq \'${spaceId}\')`});
             if(doc){
                 var datasource;
                 try {
@@ -50,10 +50,10 @@ Creator.Objects['datasources'].methods = {
 function checkName(name){
     var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
     if(!reg.test(name)){
-        throw new Error("名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
+        throw new Error("datasources__error_name_invalid_format");
     }
     if(name.length > 20){
-        throw new Error("名称长度不能大于20个字符");
+        throw new Error("API 名称长度不能大于20个字符");
     }
     return true
 }
@@ -104,7 +104,7 @@ Creator.Objects.datasources.triggers = {
         when: "before.insert",
         todo: function (userId, doc) {
             if(!allowChangeDatasource()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义数据源的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义数据源的功能，请部署私有云版本");
             }
             checkName(doc.name);
             if (isRepeatedName(doc._id, doc.name)) {
@@ -124,7 +124,7 @@ Creator.Objects.datasources.triggers = {
         todo: function (userId, doc, fieldNames, modifier, options) {
             modifier.$set = modifier.$set || {}
             if(!allowChangeDatasource()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义数据源的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义数据源的功能，请部署私有云版本");
             }
 
             if(_.has(modifier.$set, "name") && modifier.$set.name != doc.name){
@@ -144,7 +144,7 @@ Creator.Objects.datasources.triggers = {
         when: "before.remove",
         todo: function (userId, doc) {
             if(!allowChangeDatasource()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义数据源的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义数据源的功能，请部署私有云版本");
             }
             var documents = Creator.getCollection("objects").find({datasource: doc._id}, {
                 fields: {

@@ -90,7 +90,11 @@ fields:
         options = {
           $select: 'name'
         };
-        queryFilters = ["site", "=", values.site];
+        var site = values.site;
+        if(_.isObject(site)){
+          site = site._id;
+        }
+        queryFilters = ["site", "=", site];
         var steedosFilters = require("@steedos/filters");
         var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
         options.$filter = odataFilter;

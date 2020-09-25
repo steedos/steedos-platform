@@ -1,6 +1,7 @@
 name: favorites
 label: My Favorite
 icon: custom.custom11
+hidden: true
 fields:
   name: 
     type: text
@@ -51,6 +52,7 @@ list_views:
   all:
     label: All 
     filter_scope: space
+    filters: [["owner", "=", "{userId}"]]
     sort: [["sort_no", "desc"]]
     columns:
       - name
@@ -64,11 +66,11 @@ permission_set:
     allowEdit: true
     allowRead: true
     modifyAllRecords: false
-    viewAllRecords: true
+    viewAllRecords: false
   admin:
     allowCreate: true
     allowDelete: true
     allowEdit: true
     allowRead: true
-    modifyAllRecords: true
-    viewAllRecords: true
+    modifyAllRecords: false
+    viewAllRecords: false

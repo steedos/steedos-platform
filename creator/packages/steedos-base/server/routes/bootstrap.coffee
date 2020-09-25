@@ -1,6 +1,7 @@
 steedosAuth = require("@steedos/auth");
 steedosI18n = require("@steedos/i18n");
 steedosCore = require("@steedos/core");
+steedosLicense = require("@steedos/license");
 clone = require("clone");
 
 _getLocale = (user)->
@@ -52,7 +53,6 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	result.dashboards = clone(Creator.Dashboards)
 	result.object_listviews = Creator.getUserObjectsListViews(userId, spaceId, result.objects)
 	result.object_workflows = Meteor.call 'object_workflows.get', spaceId, userId
-
 	permissions = Meteor.wrapAsync (v, userSession, cb)->
 		v.getUserObjectPermission(userSession).then (resolve, reject)->
 			cb(reject, resolve)
@@ -61,7 +61,7 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 		if name != 'default'
 			datasourceObjects = datasource.getObjects()
 			_.each(datasourceObjects, (v, k)->
-				_obj = Creator.convertObject(v.toConfig())
+				_obj = Creator.convertObject(clone(v.toConfig()), spaceId)
 #				_obj.name = "#{name}.#{k}"
 				_obj.name = k
 				_obj.database_name = name
@@ -107,15 +107,15 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 				_.each objectLayout.fields, (_item)->
 					_fields[_item.field] = _object.fields[_item.field]
 					if _.has(_item, 'group')
-						_fields[_item.field].group = _item.group
+						_fields[_item.field]?.group = _item.group
 					if _item.required
-						_fields[_item.field].readonly = false
-						_fields[_item.field].disabled = false
-						_fields[_item.field].required = true
+						_fields[_item.field]?.readonly = false
+						_fields[_item.field]?.disabled = false
+						_fields[_item.field]?.required = true
 					else if _item.readonly
-						_fields[_item.field].readonly = true
-						_fields[_item.field].disabled = true
-						_fields[_item.field].required = false
+						_fields[_item.field]?.readonly = true
+						_fields[_item.field]?.disabled = true
+						_fields[_item.field]?.required = false
 				_object.fields = _fields
 
 #				_actions = {};
@@ -123,8 +123,12 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 #					_actions[actionName] = _object.actions[actionName]
 #				_object.actions = _actions
 				_object.allow_actions = objectLayout.actions || []
+				_object.allow_relatedList = objectLayout.relatedList || []
 			result.objects[objectLayout.object_name] = _object
-
+	# TODO object layout 是否需要控制审批记录显示？
+	spaceProcessDefinition = Creator.getCollection("process_definition").find({space: spaceId, active: true}, {fields: {object_name: 1}}).fetch();
+	_.each spaceProcessDefinition, (item)->
+		result.objects[item.object_name]?.enable_process = true
 	JsonRoutes.sendResult res,
 		code: 200,
 		data: result

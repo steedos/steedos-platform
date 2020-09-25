@@ -143,6 +143,28 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
+    getAggregateOptions(options: SteedosQueryOptions): any[] {
+        if (_.isUndefined(options)) {
+            return [];
+        }
+        let result = [];
+        let projection: JsonMap = this.getMongoFieldsOptions(options.fields);
+        let sort: JsonMap = this.getMongoSortOptions(options.sort);
+        if (!_.isEmpty(projection)) {
+            result.push({ $project: projection });
+        }
+        if (!_.isEmpty(sort)) {
+            result.push({ $sort: sort });
+        }
+        if (options.skip) {
+            result.push({ $skip: options.skip });
+        }
+        if (options.top) {
+            result.push({ $limit: options.top });
+        }
+        return result;
+    }
+
     collection(name: string) {
         if (!this._collections[name]) {
             let db = this._client.db();
@@ -167,6 +189,23 @@ export class SteedosMongoDriver implements SteedosDriver {
         let mongoFilters = this.getMongoFilters(query.filters);
         let mongoOptions = this.getMongoOptions(query);
         let result = await collection.find(mongoFilters, mongoOptions).toArray();
+
+        return result;
+    }
+
+    async aggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[]) {
+        await this.connect();
+        let collection = this.collection(tableName);
+        let pipeline = [];
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let aggregateOptions = this.getAggregateOptions(query);
+
+        pipeline.push({ $match: mongoFilters });
+
+        pipeline = pipeline.concat(aggregateOptions).concat(externalPipeline);
+
+        let result = await collection.aggregate(pipeline).toArray();
 
         return result;
     }

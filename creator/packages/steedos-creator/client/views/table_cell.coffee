@@ -108,19 +108,25 @@ Template.creator_table_cell.helpers
 	cellData: ()->
 		return Creator.getTableCellData(this)
 	
-	cellColorClass: (cellData)->
-		if this.field.type == "select" and this.val
-			return "creator-cell-color-#{this.object_name}-#{this.field.name} creator-cell-color-#{this.object_name}-#{this.field.name}-#{this.val}"
-
+	selectCellColorClass: (data)->
+		if data.field?.type == "select"
+			result = "creator-cell-color-#{data.object_name}-#{data.field.name} creator-cell-color-#{data.object_name}-#{data.field.name}-#{this.value}"
+			if data.field?.multiple
+				result += " creator-cell-multiple-color"
+			return result
 	editable: ()->
 		if !this.field
 			return false
 		safeField = Creator.getRecordSafeField(this.field, this.doc, this.object_name);
-
+		if !safeField
+			return false
 		if safeField.omit or safeField.readonly
 			return false
 
 		if safeField.type == "filesize"
+			return false
+
+		if safeField.name == '_id'
 			return false
 
 		permission = Creator.getRecordPermissions(this.object_name, this.doc, Meteor.userId())
@@ -143,6 +149,10 @@ Template.creator_table_cell.helpers
 	isExtraField: () ->
 		fieldName = this.field?.name
 		return fieldName == "created_by" or fieldName == "modified_by"
+	eidtIconName: (editable) ->
+		return if editable then 'edit' else 'lock'
+	eidtIconClassName: (editable) ->
+		return if editable then 'slds-button__icon_hint slds-button__icon_edit' else 'slds-button__icon_hint slds-button__icon_lock'
 
 
 Template.creator_table_cell.events

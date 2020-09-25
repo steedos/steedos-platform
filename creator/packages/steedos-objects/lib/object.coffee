@@ -23,6 +23,7 @@ Creator.Object = (options)->
 	self.description = options.description
 	self.is_view = options.is_view
 	self.form = options.form
+	self.relatedList = options.relatedList
 	if !_.isBoolean(options.is_enable)  || options.is_enable == true
 		self.is_enable = true
 	else
@@ -30,6 +31,8 @@ Creator.Object = (options)->
 	if Meteor.isClient
 		if _.has(options, 'allow_actions')
 			self.allow_actions = options.allow_actions
+		if _.has(options, 'allow_relatedList')
+			self.allow_relatedList = options.allow_relatedList
 	self.enable_search = options.enable_search
 	self.enable_files = options.enable_files
 	self.enable_tasks = options.enable_tasks
@@ -42,6 +45,7 @@ Creator.Object = (options)->
 	self.custom = options.custom
 	self.enable_share = options.enable_share
 	self.enable_instances = options.enable_instances
+	self.enable_process = options.enable_process
 	if Meteor.isClient
 		if Creator.isCloudAdminSpace(Session.get("spaceId"))
 			self.enable_tree = false
@@ -72,7 +76,9 @@ Creator.Object = (options)->
 	self.fields = clone(options.fields)
 
 	_.each self.fields, (field, field_name)->
-		if field_name == 'name' || field.is_name
+		if field.is_name
+			self.NAME_FIELD_KEY = field_name
+		else if field_name == 'name' && !self.NAME_FIELD_KEY
 			self.NAME_FIELD_KEY = field_name
 		if field.primary
 			self.idFieldName = field_name
@@ -87,6 +93,14 @@ Creator.Object = (options)->
 			if !self.fields[field_name]
 				self.fields[field_name] = {}
 			self.fields[field_name] = _.extend(_.clone(field), self.fields[field_name])
+
+	_.each self.fields, (field, field_name)->
+		if field.type == 'autonumber'
+			field.readonly = true
+		else if field.type == 'formula'
+			field.readonly = true
+		else if field.type == 'summary'
+			field.readonly = true
 
 	self.list_views = {}
 	defaultView = Creator.getObjectDefaultView(self.name)
@@ -186,7 +200,7 @@ Creator.Object = (options)->
 
 	schema = Creator.getObjectSchema(self)
 	self.schema = new SimpleSchema(schema)
-	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view && !_.contains(["flows", "forms", "instances", "organizations"], self.name)
+	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view && !_.contains(["flows", "forms", "instances", "organizations", "action_field_updates"], self.name)
 		if Meteor.isClient
 			_db.attachSchema(self.schema, {replace: true})
 		else

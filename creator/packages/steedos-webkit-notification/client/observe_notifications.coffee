@@ -23,6 +23,17 @@ Tracker.autorun (c)->
 if !Steedos.isMobile()
 	Steedos.Push = require("push.js");
 
+Steedos.playNodeBadge =  (badgeCount)->
+	if Steedos.isNode()
+		# 新版客户端
+		if (nw.ipcRenderer)
+			unless badgeCount
+				badgeCount = 0
+			nw.ipcRenderer.sendToHost('onBadgeChange', false, 0, badgeCount, false, false)
+		else
+			# 任务栏高亮显示
+			nw.Window.get().requestAttention(3);
+
 Meteor.startup ->
 	if !Steedos.isMobile()
 		if Push.debug
@@ -70,15 +81,7 @@ Meteor.startup ->
 			if options.title
 				Steedos.Push.create(options.title, options);
 
-			if Steedos.isNode()
-				# 新版客户端
-				if (nw.ipcRenderer)
-					if notification.badge != undefined
-						nw.ipcRenderer.sendToHost('onBadgeChange', false, 0, notification.badge, false, false)
-				else
-					# 任务栏高亮显示
-					nw.Window.get().requestAttention(3);
-
+			Steedos.playNodeBadge(notification.badge)
 			return;
 		)
 	else

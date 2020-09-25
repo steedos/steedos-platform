@@ -95,7 +95,7 @@ export async function auth(request: Request, response: Response): Promise<any> {
     }
   }
 
-  let user = await getSession(authToken, spaceId);
+  let user = await getSession(authToken, spaceId as string);
   if (isTemplateSpace(spaceId)) {
     return Object.assign({ authToken: authToken }, user, { spaceId: spaceId });
   } else {

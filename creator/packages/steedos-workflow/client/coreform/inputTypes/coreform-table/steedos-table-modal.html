@@ -22,7 +22,9 @@
                         </div>
                     {{/if}} -->
                     {{#if equals this.method 'edit'}}
+                        {{#if equals this.field.permission 'editable'}}
                         <button type="button" class="btn btn-danger steedos-table-delete-button pull-left">{{_ "workflow_table_delete"}}</button>
+                        {{/if}}
                     {{/if}}
 					{{#if equals this.method 'read'}}
 						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{_ "close"}}</button>

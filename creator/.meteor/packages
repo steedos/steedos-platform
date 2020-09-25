@@ -130,7 +130,7 @@ steedos:odata
 
 steedos:logger@0.0.2
 
-# steedos:object-database
+steedos:object-database
 
 
 # steedos:weixin
@@ -153,7 +153,7 @@ steedos:mailqueue
 steedos:objects
 steedos:objects-core
 steedos:objects-billing
-steedos:sso
+
 steedos:webhookqueue
 
 steedos:creator
@@ -167,7 +167,6 @@ steedos:app-chat
 # steedos:app-mailbase
 
 steedos:users-import
-steedos:app-base
 
 
 # steedos:version
@@ -202,6 +201,5 @@ steedos:slipjs
 react-template-helper
 
 steedos:webkit-notification
-steedos:cms
 
 steedos:huaweipush

@@ -4,6 +4,7 @@ icon: timesheet_entry
 enable_search: true
 enable_files: true
 enable_chatter: true
+hidden: true
 fields:
   name:
     label: Name
@@ -112,10 +113,14 @@ list_views:
       - priority
       - assignees
       - related_to
-    filters:
-      - - assignees
-        - =
-        - '{userId}'
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        if(Steedos.isSpaceAdmin()){
+          /*工作区管理员可以看整个工作区的所有任务*/
+          return [];
+        }
+        return [[["assignees","=","{userId}"],'or',["owner","=","{userId}"]]]
+      }
     filter_scope: space
   created_tasks:
     label: Tasks Assigned to Me

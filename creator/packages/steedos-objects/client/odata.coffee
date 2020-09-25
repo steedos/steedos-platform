@@ -184,7 +184,7 @@ Creator.odata.queryCount = (object_name, options, callback)->
 				callback(false, error)
 			)
 
-Creator.odata.delete = (object_name,record_id,callback)->
+Creator.odata.delete = (object_name,record_id,callback,onError)->
 	_object_name = Creator.formatObjectName(object_name)
 	console.log('odata.delete...');
 	spaceId = Steedos.spaceId()
@@ -211,6 +211,8 @@ Creator.odata.delete = (object_name,record_id,callback)->
 			error: (jqXHR, textStatus, errorThrown) ->
 				error = jqXHR.responseJSON.error
 				console.error error
+				if onError and typeof onError == "function"
+					onError(error)
 				if error.reason
 					if error.details
 						toastr?.error?(TAPi18n.__(error.reason, error.details))

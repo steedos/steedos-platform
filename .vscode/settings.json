@@ -1,11 +1,16 @@
 {
+    "files.exclude": {
+        "**/.dist": true,
+        "**/.meteor/local": true,
+        "**/.npm": true
+    },
     "yaml.completion": true,
     "yaml.customTags": [
         "tag:yaml.org,2002:js/function"
     ],
     "yaml.schemas": {
-        "packages/schemas/app/schema.json": "/*.app.yml",
-        "packages/schemas/object/schema.json": "/*.object.yml",
-        "packages/schemas/dashboard/schema.json": "/*.dashboard.yml"
+        "./packages/schemas/app/schema.json": "/*.app.yml",
+        "./packages/schemas/object/schema.json": "/*.object.yml",
+        "./packages/schemas/dashboard/schema.json": "/*.dashboard.yml"
     }
 }

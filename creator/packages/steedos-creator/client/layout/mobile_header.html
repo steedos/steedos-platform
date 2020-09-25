@@ -1,14 +1,12 @@
 <template name="creatorMobileHeader">
-	<div class="creator-mobile-header">
+	<div class="creator-mobile-header relative flex-none px-4">
 		<div class="row header">
 			<div id="navbar">
-				<nav id="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<nav id="navbar" class="navbar navbar-default w-full relative m-0" role="navigation">
 					<div class="container-fluid theme">
 						<div class="navbar-header">
 							{{#if isInDetail}}
-								<button type="button" class="navbar-toggle sidebar-collapse" id="sidebarCollapse">
-									{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="chevronleft"}}
-								</button>
+								{{> steedos_button id="sidebarCollapse" className="navbar-toggle sidebar-collapse" iconCategory="utility" iconName="chevronleft" variant="icon"}}
 								<div class="navbar-brand">
 									<div class="MenuWrapper detail-title">
 										<a>
@@ -17,9 +15,7 @@
 									</div>
 								</div>
 							{{else}}
-								<button type="button" class="navbar-toggle sidebar-show">
-									{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="rows"}}
-								</button>
+								{{> steedos_button className="navbar-toggle sidebar-show" iconCategory="utility" iconName="rows" variant="icon"}}
 								<div class="navbar-brand">
 									<div class="MenuWrapper ">
 										<a>

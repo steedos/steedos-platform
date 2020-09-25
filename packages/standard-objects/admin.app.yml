@@ -11,6 +11,7 @@ admin_menus:
     name: My Account
     permission_sets:
       - user
+      - customer
     expanded: false
     mobile: false
     sort: 100
@@ -18,17 +19,18 @@ admin_menus:
     name: My Profile
     permission_sets:
       - user
+      - customer
     parent: account
     object_name: users
     mobile: false
     sort: 10
-  - _id: account_background
-    name: Background
-    permission_sets:
-      - user
-    template_name: account_background
-    parent: account
-    sort: 20
+  # - _id: account_background
+  #   name: Background
+  #   permission_sets:
+  #     - user
+  #   template_name: account_background
+  #   parent: account
+  #   sort: 20
   - _id: menu_users
     name: My Company
     permission_sets:
@@ -43,8 +45,16 @@ admin_menus:
     object_name: spaces
     parent: menu_users
     sort: 10
+  - _id: organizations
+    name: Departments
+    permission_sets:
+      - admin
+      - organization_admin
+    object_name: organizations
+    parent: menu_users
+    sort: 12
   - _id: space_users
-    name: Departments & Users
+    name: Users
     permission_sets:
       - admin
       - organization_admin
@@ -56,99 +66,151 @@ admin_menus:
     permission_sets:
       - admin
     object_name: permission_set
+    list_view: permission_set
     parent: menu_users
     sort: 30
-  - _id: apps
-    name: Apps
+  - _id: profile
+    name: Profile
     permission_sets:
       - admin
-    object_name: apps
+    object_name: permission_set
+    list_view: profile
     parent: menu_users
-    sort: 40
-  - _id: dashboard
-    name: Dashboard
-    permission_sets:
-      - admin
-    object_name: dashboard
-    parent: menu_users
-    sort: 50
-  - _id: sessions
-    name: Session
-    permission_sets:
-      - admin
-    object_name: sessions
-    parent: menu_users
-    sort: 60
-
-  - _id: menu_advanced
+    sort: 30
+  - _id: objects_manager
     name: Objects
     permission_sets:
       - admin
     expanded: false
     sort: 300
-  - _id: permission_objects
-    name: Permission
+  # - _id: permission_objects
+  #   name: Permission
+  #   permission_sets:
+  #     - admin
+  #   object_name: permission_objects
+  #   parent: objects_manager
+  #   sort: 10
+  - _id: object_manager
+    name: Object Manager
     permission_sets:
       - admin
-    object_name: permission_objects
-    parent: menu_advanced
-    sort: 10
-  - _id: permission_shares
-    name: Permission Share
+    object_name: objects
+    parent: objects_manager
+    sort: 1
+  - _id: apps
+    name: Apps
     permission_sets:
       - admin
-    object_name: permission_shares
-    parent: menu_advanced
-    sort: 20
-  - _id: audit_records
-    name: Audit Records
+    object_name: apps
+    parent: objects_manager
+    sort: 1.2
+  - _id: datasources_manager
+    name: Datasources
     permission_sets:
       - admin
-    object_name: audit_records
-    parent: menu_advanced
-    sort: 30
+    object_name: datasources
+    parent: objects_manager
+    sort: 2
   # - _id: queue_import
   #   name: 数据导入
   #   permission_sets:
   #     - admin
   #   object_name: queue_import
-  #   parent: menu_advanced
+  #   parent: objects_manager
   #   sort: 40
   - _id: object_webhooks
     name: Object Webhooks
     permission_sets:
       - admin
     object_name: object_webhooks
-    parent: menu_advanced
-    sort: 50
-  - _id: autonumber
-    name: Auto Numbers
-    permission_sets:
-      - admin
-    object_name: autonumber
-    parent: menu_advanced
-    sort: 60
-  - _id: picklists
-    name: Picklist
-    permission_sets:
-      - admin
-    object_name: picklists
-    parent: menu_advanced
-    sort: 70
-  - _id: object_workflows
-    name: Object Synchronization Rules
-    permission_sets:
-      - admin
-    object_name: object_workflows
-    parent: menu_advanced
-    sort: 80
+    parent: objects_manager
+    sort: 150
+  # - _id: object_workflows
+  #   name: Object Synchronization Rules
+  #   permission_sets:
+  #     - admin
+  #   object_name: object_workflows
+  #   parent: objects_manager
+  #   sort: 80
   - _id: web_forms
     name: Web Forms
     permission_sets:
       - admin
     object_name: web_forms
-    parent: menu_advanced
+    parent: objects_manager
     sort: 90
+  - _id: advanced
+    name: Advanced
+    permission_sets:
+      - admin
+    sort: 10000
+  - _id: permission_shares
+    name: Permission Share
+    permission_sets:
+      - admin
+    object_name: permission_shares
+    parent: advanced
+    sort: 25
+  - _id: audit_records
+    name: Audit Records
+    permission_sets:
+      - admin
+    object_name: audit_records
+    parent: advanced
+    sort: 50
+  - _id: dashboard
+    name: Dashboard
+    permission_sets:
+      - admin
+    object_name: dashboard
+    parent: advanced
+    sort: 30
+  - _id: sessions
+    name: Session
+    permission_sets:
+      - admin
+    object_name: sessions
+    parent: advanced
+    sort: 10
+  - _id: autonumber
+    name: Auto Numbers
+    permission_sets:
+      - admin
+    object_name: autonumber
+    parent: advanced
+    sort: 80
+  - _id: picklists
+    name: Picklist
+    permission_sets:
+      - admin
+    object_name: picklists
+    parent: advanced
+    sort: 40
+  - _id: holidays
+    name: Holidays
+    permission_sets:
+      - admin
+    object_name: holidays
+    parent: advanced
+    sort: 90
+  # - _id: license
+  #   name: License
+  #   permission_sets:
+  #     - admin
+  #   sort: 900
+  - _id: license_view
+    name: License View
+    permission_sets:
+      - admin
+    object_name: license
+    parent: menu_users
+  - _id: business_hours
+    name: BusinessHours
+    permission_sets:
+      - admin
+    object_name: business_hours
+    parent: advanced
+    sort: 100
   - _id: about
     name: About Steedos
     permission_sets:

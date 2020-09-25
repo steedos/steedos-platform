@@ -2,27 +2,20 @@ name: web_forms
 label: Web Forms
 icon: account
 enable_api: true
+hidden: true
 fields:
+  name:
+    label: Name
+    type: text
+    required: true
   object_name:
     label: Object
     type: lookup
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
-              var _options;
-              _options = [];
-              _.forEach(Creator.Objects, function (o, k) {
-                if(o.enable_web_forms){
-                  return _options.push({
-                    label: o.label,
-                    value: k,
-                    icon: o.icon
-                  });
-                }
-              });
-              return _options;
-            }
+        return Steedos.getObjectsOptions();
+      }
     required: true
-    is_wide: true
     filterable: true
     index: true
   fields:
@@ -31,6 +24,7 @@ fields:
     multiple: true
     required: true
     is_wide: true
+    inlineHelpText: 'The fields displayed in the online form currently only support text, textarea, and drop-down boxes.'
     depend_on:
       - object_name
     defaultIcon: service_contract
@@ -72,36 +66,36 @@ fields:
               return _options;
             }
     filterable: true
+  return_url:
+    label: Return URL
+    type: text
+    is_wide: true
+    required: true
+    inlineHelpText: 'When the user submits the form, it automatically jumps to this address.'
   record_owner:
-    label: Record Owner
+    label: Default Owner
     type: lookup
     reference_to: users
     sortable: true
     index: true
+    inlineHelpText: 'When a user submits a form, the creator and owner of the corresponding record are automatically updated.'
   notification_users:
     type: lookup
     label: Notification Users
     reference_to: users
     multiple: true
     filterable: true
+    inlineHelpText: 'When a user submits a form, the relevant person is automatically notified.'
   generated_html: 
     label: Generated Html
     type: code
     is_wide: true
     omit: true
-  return_url:
-    label: Return URL
-    type: text
-    is_wide: true
-    required: true
-  description:
-    label: Description
-    type: textarea
-    is_wide: true
 list_views:
   all:
     label: All Web Forms
     columns:
+      - name
       - object_name
       - record_owner
       - modified

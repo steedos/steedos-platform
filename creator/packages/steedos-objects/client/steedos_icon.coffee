@@ -1,3 +1,10 @@
+getSourceName = (source, name)->
+	foo = name?.split(".")
+	if foo and foo.length > 1
+		return foo[0]
+	if source?.endsWith("-sprite")
+		return source.substr(0, source.length-7)
+
 helpers = 
 	getSvgUrl: (source, name)->
 		foo = name?.split(".")
@@ -21,9 +28,11 @@ helpers =
 			return foo[0]
 		if source?.endsWith("-sprite")
 			return source.substr(0, source.length-7)
-		return source
+
+	sourceName: ()->
+		return getSourceName(this.source, this.name)
 
 
-Template.steedos_icon.helpers helpers
+# Template.steedos_icon.helpers helpers
 
 Template.steedos_button_icon.helpers helpers

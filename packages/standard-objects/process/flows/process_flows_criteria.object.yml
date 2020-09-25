@@ -1,0 +1,46 @@
+name: process_flows_criteria
+label: process_flows_criteria
+hidden: true
+icon: record
+fields:
+  process_flow:
+    type: master_detail
+    reference_to: process_flows 
+  name: 
+    type: text
+  executing_actions:
+    type: select
+    options:
+      - label: Conditions are met
+        value: criteria
+      - label: No criteria—just execute the actions!
+        value: always
+  criteria:
+    type: textarea
+    label: Conditions
+    is_wide: true
+  update_once:
+    type: boolean
+    label: Do you want to execute the actions only when specified changes are made to the record?
+    inlineHelpText: When you select yes, the actions are executed only if the record meets the criteria now but the values that the record had immediately before it was saved didn't meet criteria. This means that these actions won't be executed when irrelevant changes are made.
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    columns:
+      - name
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

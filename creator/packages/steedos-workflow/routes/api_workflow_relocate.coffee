@@ -150,7 +150,7 @@ JsonRoutes.add 'post', '/api/workflow/relocate', (req, res, next) ->
 				newTrace.step = relocate_next_step
 				newTrace.name = next_step_name
 				newTrace.start_date = now
-				newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours)
+				newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id)
 				newTrace.approves = []
 				_.each(relocate_inbox_users, (next_step_user_id, idx)->
 					# 插入下一步trace.approve记录

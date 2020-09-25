@@ -157,7 +157,7 @@ TracesTemplate.helpers =
 		if db.instances.find(approve.forward_instance).count() is 0
 			return false
 
-		if approve and approve.type == 'distribute' and !Session.get("instancePrint") and approve.judge isnt 'terminated' and Steedos.isLegalVersion('',"workflow.enterprise")
+		if approve and approve.type == 'distribute' and !Session.get("instancePrint") and approve.judge isnt 'terminated' and Steedos.hasFeature('file_distribution', Steedos.getSpaceId())
 			# 流程管理员和系统管理员，可以执行任何情况下的文件取消分发
 			ins = db.instances.findOne({_id: approve.instance}, {fields: {flow: 1, space: 1}})
 			if ins and ins.flow and ins.space
@@ -269,6 +269,7 @@ TracesTemplate.helpers =
 				user = db.users.findOne({_id: ins.created_by}, {fields: {name: 1}})
 
 			if user.name
+				dis_info.from_user = user._id
 				dis_info.from_user_name = user.name
 				dis_info.created = ins.created
 
@@ -296,10 +297,15 @@ TracesTemplate.helpers =
 			locale = Session.get("TAPi18n::loaded_lang")
 
 		return TAPi18n.__('process_delegation_rules_description', {userName: userName}, locale)
+	
 	traceName: (instance_id, traceId)->
 		return _.find(db.instances.findOne(instance_id, {fields: {traces: 1}})?.traces, (trace)->
 					return trace._id ==  traceId
 		)?.name
+
+	objectUrl: (object_name, record_id, app_id)->
+		return Creator.getObjectUrl(object_name, record_id, app_id)
+
 if Meteor.isServer
 	TracesTemplate.helpers.dateFormat = (date)->
 		if date
@@ -352,17 +358,29 @@ TracesTemplate.events =
 		return
 
 	'click .approve-item,.approve-description': (event, template) ->
-		Modal.show "instance_trace_detail_modal", this
+		# PC上链接允许直接点开，不再打开签批历程详细
+		unless $(event.target).closest("a.btn-link").length
+			Modal.show "instance_trace_detail_modal", this
 
 	'taphold .approve-item,.approve-description': (event, template) ->
-		Modal.show "instance_trace_detail_modal", this
+		# 手机上长按打开签批历程详细，如果是链接长按打开后一放手窗口就又关掉了，所以不让链接打开签批历程详细
+		unless $(event.target).closest("a.btn-link").length
+			Modal.show "instance_trace_detail_modal", this
+
+	'click .approve-item a.btn-link,.approve-description a.btn-link,.approve-item-distribute a.btn-link': (event, template) ->
+		# 手机上点击链接，弹出新窗口，不支持，因为android上会弹出登录界面
+		if Steedos.isMobile()
+			userId = event.target.dataset?.target_user_id
+			Creator.openSafeObjectUrl('users', userId)
 
 	'tapend .approve-item,.approve-description': (event, template) ->
 		# 上述长按打开approve详细窗口的事件taphold会触发打开窗口后的touchend事件，造成长按打开窗口后一放手窗口就又关掉了
 		# 这里只能通过阻止tapend事件(不可以用touchend事件，因为会影响taphold功能，造成没有长按效果时也会触发taphold事件)冒泡来避免问题。
-		event.stopPropagation()
-		event.preventDefault()
-		return false
+		# 链接允许直接点开
+		unless $(event.target).closest("a.btn-link").length
+			event.stopPropagation()
+			event.preventDefault()
+			return false
 
 	'click .instance-trace-detail-modal .btn-forward-approve-remove': (event, template) ->
 		instanceId = Session.get('instanceId')

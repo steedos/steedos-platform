@@ -1,21 +1,25 @@
 name: datasources
 label: DataSource
 icon: entity
+hidden: true
 fields:
   driver:
     type: select
     label: Driver
     options: Mongo:mongo,Mssql:sqlserver,Postgres:postgres,Oracle:oracle,Mysql:mysql,Sqlite:sqlite
     required: true
+  label:
+    type: text
+    label: Label
+    required: true
+    is_name: true
   name:
     type: text
     label: Name
     searchable: true
     index: true
     required: true
-  label:
-    type: text
-    label: Label
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   url:
     type: text
     label: Url
@@ -74,8 +78,8 @@ fields:
 list_views:
   all:
     columns:
-      - name
       - label
+      - name
       - is_enable
       - driver
     label: All

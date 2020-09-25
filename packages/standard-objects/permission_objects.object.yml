@@ -1,14 +1,15 @@
 name: permission_objects
 label: Permission
 icon: user
+hidden: true
 fields:
-  name:
-    label: Name
-    type: text
-    searchable: true
-    index: true
-    required: true
-    name: name
+  # name:
+  #   label: Name
+  #   type: text
+  #   searchable: true
+  #   index: true
+  #   required: true
+  #   name: name
   permission_set_id:
     label: Permission Set
     type: master_detail
@@ -88,7 +89,11 @@ fields:
               var _object, _options, list_views;
 
               _options = [];
-              _object = Creator.getObject(values.object_name);
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              _object = Creator.getObject(objectName);
               list_views = _object.list_views;
 
               _.forEach(list_views, function (f, k) {
@@ -116,7 +121,11 @@ fields:
               var _object, _options, actions;
 
               _options = [];
-              _object = Creator.getObject(values.object_name);
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              _object = Creator.getObject(objectName);
               actions = _object.actions;
 
               _.forEach(actions, function (f, k) {
@@ -149,7 +158,11 @@ fields:
               }
 
               _options = [];
-              _object = Creator.getObject(object_name);
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              _object = Creator.getObject(objectName);
               fields = _object.fields;
               icon = _object.icon;
 
@@ -171,7 +184,6 @@ fields:
     multiple: true
     depend_on:
       - object_name
-      - unreadable_fields
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               var _object, _options, fields, icon, object_name;
@@ -183,25 +195,24 @@ fields:
               }
 
               _options = [];
-              _object = Creator.getObject(object_name);
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              _object = Creator.getObject(objectName);
               fields = _object.fields;
               icon = _object.icon;
 
               _.forEach(fields, function (f, k) {
-                if (!f.omit) {
-                  if (_.indexOf(values.unreadable_fields, k) < 0) {
-                    return _options.push({
-                      label: f.label || k,
-                      value: k,
-                      icon: icon
-                    });
-                  }
-                }
+                return _options.push({
+                  label: f.label || k,
+                  value: k,
+                  icon: icon
+                });
               });
 
               return _options;
             }
-    name: uneditable_fields
     filterable: true
   unrelated_objects:
     type: lookup
@@ -214,7 +225,11 @@ fields:
               var _options, related_object_names, related_objects;
 
               _options = [];
-              related_objects = Creator.getObject(values.object_name).related_objects;
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              related_objects = Creator.getObject(objectName).related_objects;
               related_object_names = _.uniq(_.pluck(related_objects, "object_name"));
 
               _.forEach(related_object_names, function (i) {
@@ -232,11 +247,17 @@ fields:
             }
     name: unrelated_objects
     filterable: true
+  is_system:
+    type: boolean
+    label: 系统
+    omit: true
+    hidden: true
+    disabled: true
+paging:
+  enabled: false
 list_views:
-  all:
-    label: All
+  customize:
     columns:
-      - name
       - permission_set_id
       - object_name
       - allowCreate
@@ -247,7 +268,47 @@ list_views:
       - viewAllRecords
       - modifyCompanyRecords
       - viewCompanyRecords
+      - is_system
+    label: Customize
+    filters:
+      - ["is_system","<>",true]
     filter_scope: space
+  system:
+    columns:
+      - permission_set_id
+      - object_name
+      - allowCreate
+      - allowDelete
+      - allowEdit
+      - allowRead
+      - modifyAllRecords
+      - viewAllRecords
+      - modifyCompanyRecords
+      - viewCompanyRecords
+      - is_system
+    label: System
+    filters:
+      - ["is_system","=",true]
+    filter_scope: space
+  all:
+    label: All
+    columns:
+      - permission_set_id
+      - object_name
+      - allowCreate
+      - allowDelete
+      - allowEdit
+      - allowRead
+      - modifyAllRecords
+      - viewAllRecords
+      - modifyCompanyRecords
+      - viewCompanyRecords
+      - is_system
+    filter_scope: space
+actions:
+  customize:
+    label: Customize
+    on: record
 permission_set:
   user:
     allowCreate: false

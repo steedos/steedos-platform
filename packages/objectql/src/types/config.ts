@@ -2,7 +2,7 @@ import path = require('path')
 import _ = require('lodash')
 import {loadJsonFiles} from '../util'
 import { addAppConfigFiles } from './app';
-import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectI18nFiles } from '.';
+import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectI18nFiles, addObjectDataFiles, addRouterFiles } from '.';
 
 export const LOADED_OBJECT_RECORDS = {}
 
@@ -49,6 +49,7 @@ export function addConfigFiles(objectName: string, filePath: string){
 
 export const addConfig = (objectName: string, record: any) => {
     if(!record._id){
+        console.log("addConfig", objectName, record);
         throw new Error(`Error adding record to ${objectName}, record._id required`);
     }
     let records = getConfigs(objectName);
@@ -58,10 +59,24 @@ export const addConfig = (objectName: string, record: any) => {
 
 export const removeConfig = (objectName: string, record: any) => {
     if(!record._id){
-        throw new Error(`Error adding record to ${objectName}, record._id required`);
+        throw new Error(`Error removing record of ${objectName}, record._id required`);
     }
     let records = getConfigs(objectName);
     _.remove(records, {_id: record._id});
+}
+
+export const removeManyConfigs = (objectName: string, query?: object) => {
+    let records = getConfigs(objectName);
+    if(query ){
+        if(typeof query !== "object"){
+            throw new Error(`Error removing config of ${objectName}, query should be an object as {properyName: properyValue} just like {type:'abc'}`);
+        }
+        _.remove(records, query);
+    }
+    else{
+        // 移除objectName关联的所有数据
+        _.remove(records);
+    }
 }
 
 export const getConfigDatabase = (objectName: string) => {
@@ -85,10 +100,12 @@ export const addAllConfigFiles = (filePath, datasource) => {
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     addObjectI18nFiles(filePath);
-    addConfigDataFiles(filePath);
+    addRouterFiles(filePath);
+    // addConfigDataFiles(filePath);
     addConfigFiles('report', filePath);
     addConfigFiles('flow', filePath);
     addConfigFiles('form', filePath);
     addConfigFiles('dashboard', filePath);
+    addObjectDataFiles(filePath);
 }
 

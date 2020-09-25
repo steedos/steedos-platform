@@ -121,7 +121,7 @@ Creator.evaluateFilters = (filters, context)->
 			value = Creator.evaluateFormula(filter[2], context)
 			selector[name] = {}
 			selector[name][action] = value
-	console.log("evaluateFilters-->selector", selector)
+	# console.log("evaluateFilters-->selector", selector)
 	return selector
 
 Creator.isCommonSpace = (spaceId) ->
@@ -242,6 +242,8 @@ Creator.getObjectRelateds = (object_name)->
 		related_objects.push {object_name:"instances", foreign_key: "record_ids"}
 	if _object.enable_approvals
 		related_objects.push {object_name:"approvals", foreign_key: "related_to"}
+	if _object.enable_process
+		related_objects.push {object_name:"process_instance_history", foreign_key: "target_object"}
 	#record 详细下的audit_records仅modifyAllRecords权限可见
 	if Meteor.isClient
 		permissions = Creator.getPermissions(object_name)

@@ -1,6 +1,7 @@
 name: flow_positions
 icon: metrics
 label: Workflow Position
+hidden: true
 fields:
   role:
     type: master_detail
@@ -17,6 +18,7 @@ fields:
     required: true
     name: users
     filterable: true
+    is_company_limited: false
   org:
     type: lookup
     label: Department

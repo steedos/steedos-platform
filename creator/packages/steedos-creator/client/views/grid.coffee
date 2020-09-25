@@ -51,7 +51,7 @@ _itemClick = (e, curObjectName, list_view_id)->
 		actionSheetOption.itemTemplate = (itemData, itemIndex, itemElement)->
 			itemElement.html "<span class='text-muted'>#{itemData.text}</span>"
 
-	actionSheet = $(".action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
+	actionSheet = this.$(".action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
 
 	actionSheet.option("target", e.event.target);
 	actionSheet.option("visible", true);
@@ -168,7 +168,8 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 
 	return columnItem;
 
-_columns = (object_name, columns, list_view_id, is_related, relatedSort)->
+_columns = (object_name, columns, list_view_id, is_related, related_list_item_props)->
+	relatedSort = related_list_item_props.sort
 	object = Creator.getObject(object_name)
 	grid_settings = Creator.getCollection("settings").findOne({object_name: object_name, record_id: "object_gridviews"})
 	column_default_sort = Creator.transformSortToDX(Creator.getObjectDefaultSort(object_name))
@@ -188,6 +189,8 @@ _columns = (object_name, columns, list_view_id, is_related, relatedSort)->
 		list_view_sort = column_default_sort
 	result = columns.map (n,i)->
 		defaultWidth = _defaultWidth(columns, object.enable_tree, i)
+		if is_related && related_list_item_props.customRelatedListObject && related_list_item_props.columns
+			list_view.columns = related_list_item_props.columns
 		return getColumnItem(object, list_view, n, list_view_sort, column_default_sort, column_sort_settings, is_related, defaultWidth)
 	if !_.isEmpty(list_view_sort)
 		_.each list_view_sort, (sort,index)->
@@ -209,7 +212,7 @@ _getShowColumns = (curObject, selectColumns, is_related, list_view_id, related_l
 	self = this
 	curObjectName = curObject.name
 	# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
-	showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related, related_list_item_props.sort)
+	showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related, related_list_item_props)
 	actions = Creator.getActions(curObjectName)
 	if true || !Steedos.isMobile() && actions.length
 		showColumns.push
@@ -242,18 +245,20 @@ _getShowColumns = (curObject, selectColumns, is_related, list_view_id, related_l
 		needToShowLinkForIndexColumn = false
 		if selectColumns.indexOf(nameFieldKey) < 0
 			needToShowLinkForIndexColumn = true
-		if  true || !Steedos.isMobile()
-			showColumns.splice 0, 0,
-				dataField: "_id_checkbox"
-				width: 30
-				allowResizing: false
-				allowExporting: false
-				allowSorting: false
-				allowReordering: false
-				headerCellTemplate: (container) ->
-					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
-				cellTemplate: (container, options) ->
-					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
+		if !Steedos.isMobile()
+			isDetailView = self.data.recordsTotal and is_related; #详细界面相关列表
+			if !isDetailView
+				showColumns.splice 0, 0,
+					dataField: "_id_checkbox"
+					width: 30
+					allowResizing: false
+					allowExporting: false
+					allowSorting: false
+					allowReordering: false
+					headerCellTemplate: (container) ->
+						Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
+					cellTemplate: (container, options) ->
+						Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 
 			showColumns.splice 0, 0,
 				dataField: "_index"
@@ -268,11 +273,15 @@ _getShowColumns = (curObject, selectColumns, is_related, list_view_id, related_l
 					pageSize = self.dxDataGridInstance.pageSize()
 					pageIndex = self.dxDataGridInstance.pageIndex()
 					htmlText = options.rowIndex + 1 + pageSize * pageIndex
-					if needToShowLinkForIndexColumn
+					showLink = needToShowLinkForIndexColumn
+					unless showLink
+						# 当没配置name字段显示在列表视图中时，默认是不给序号列加链接的，但是如果配置了，要不要加链接显示取决于当前记录的name字段是否有值
+						showLink = !options.data?[nameFieldKey]
+					if showLink
 						href = Creator.getObjectUrl(curObjectName, options.data._id)
 						htmlText = $("<a href=\"#{href}\" class=\"grid-index-link\">#{htmlText}</a>")
-						if is_related
-							htmlText.attr("onclick", Steedos.getOpenWindowScript(href))
+						# if is_related
+						# 	htmlText.attr("onclick", Steedos.getOpenWindowScript(href))
 						$("<div>").append(htmlText).appendTo(container)
 					else
 						$("<div>").append(htmlText).appendTo(container)
@@ -602,7 +611,7 @@ Template.creator_grid.helpers
 		related_object_name = Template.instance().data.related_object_name
 		result = if is_related then related_object_name else object_name
 		# 文件版本为"cfs.files.filerecord"，需要替换为"cfs-files-filerecord"
-		return result.replace(/\./g,"-")
+		return result?.replace(/\./g,"-")
 
 Template.creator_grid.events
 
@@ -662,27 +671,46 @@ Template.creator_grid.events
 Template.creator_grid.onCreated ->
 	self = this
 	self.list_view_id = Session.get("list_view_id")
-	AutoForm.hooks creatorAddForm:
-		onSuccess: (formType,result)->
+	self.creatorAddFormOnSuccess = (formType,result)->
+		if self.data.related_object_name
+			if self.data.related_object_name == result.object_name
+				FlowRouter.reload();
+		else
 			self.dxDataGridInstance?.refresh().done (result)->
 				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+	self.creatorEditFormOnSuccess = (formType,result)->
+		if self.data.related_object_name
+			if self.data.related_object_name == result.object_name
+				FlowRouter.reload();
+		else
+			self.dxDataGridInstance?.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+	self.creatorCellEditFormOnSuccess = (formType,result)->
+		if self.data.related_object_name
+			if self.data.related_object_name == result.object_name
+				FlowRouter.reload();
+		else
+			self.dxDataGridInstance?.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+	self.creatorAddRelatedFormOnSuccess = (formType,result)->
+		if self.data.related_object_name
+			if self.data.related_object_name == result.object_name
+				FlowRouter.reload();
+		else
+			self.dxDataGridInstance?.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+	AutoForm.hooks creatorAddForm:
+		onSuccess: self.creatorAddFormOnSuccess
 	,false
 	AutoForm.hooks creatorEditForm:
-		onSuccess: (formType,result)->
-			self.dxDataGridInstance?.refresh().done (result)->
-				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+		onSuccess: self.creatorEditFormOnSuccess
 	,false
 	AutoForm.hooks creatorCellEditForm:
-		onSuccess: (formType,result)->
-			self.dxDataGridInstance?.refresh().done (result)->
-				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
+		onSuccess: self.creatorCellEditFormOnSuccess
 	,false
-
 	AutoForm.hooks creatorAddRelatedForm:
-		onSuccess: (formType,result)->
-			self.dxDataGridInstance?.refresh().done (result)->
-				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
-
+		onSuccess: self.creatorAddRelatedFormOnSuccess
+	,false
 # Template.creator_grid.onDestroyed ->
 # 	#离开界面时，清除hooks为空函数
 # 	AutoForm.hooks creatorAddForm:
@@ -726,3 +754,20 @@ Template.creator_grid.onDestroyed ->
 			paging.object_name = this.data.object_name
 			paging.list_view_id = this.list_view_id
 			Session.set("grid_paging", paging)
+	self = this
+	_.each(AutoForm._hooks.creatorAddForm.onSuccess, (fn, index)->
+		if fn == self.creatorAddFormOnSuccess
+			delete AutoForm._hooks.creatorAddForm.onSuccess[index]
+	)
+	_.each(AutoForm._hooks.creatorEditForm.onSuccess, (fn, index)->
+		if fn == self.creatorEditFormOnSuccess
+			delete AutoForm._hooks.creatorEditForm.onSuccess[index]
+	)
+	_.each(AutoForm._hooks.creatorCellEditForm.onSuccess, (fn, index)->
+		if fn == self.creatorCellEditFormOnSuccess
+			delete AutoForm._hooks.creatorCellEditForm.onSuccess[index]
+	)
+	_.each(AutoForm._hooks.creatorAddRelatedForm.onSuccess, (fn, index)->
+		if fn == self.creatorAddRelatedFormOnSuccess
+			delete AutoForm._hooks.creatorAddRelatedForm.onSuccess[index]
+	)

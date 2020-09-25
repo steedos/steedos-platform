@@ -77,9 +77,6 @@ Template.instance_list_wrapper.events
 		InstanceManager.exportIns(event.currentTarget.type);
 
 	'click .dropdown-menu li a.export-pro': (event) ->
-		if !Steedos.isLegalVersion('',"workflow.professional")
-			Steedos.spaceUpgradedModal()
-			return;
 		InstanceManager.exportIns(event.currentTarget.type);
 
 	'click #instance_search_button': (event) ->
@@ -102,8 +99,8 @@ Template.instance_list_wrapper.events
 
 	'click .list-action-custom-standard_new': (event) ->
 		#判断是否为欠费工作区
-		if WorkflowManager.isArrearageSpace()
-			toastr.error(t("spaces_isarrearageSpace"));
+		if !Steedos.hasFeature('workflow', Steedos.getSpaceId())
+			Steedos.spaceUpgradedModal();
 			return;
 
 		WorkflowManager.alertFlowListModel
@@ -194,9 +191,6 @@ Template.instance_list_wrapper.events
 
 
 	'click .set-process-delegation-rules': ()->
-		if !Steedos.isLegalVersion('',"workflow.professional")
-			Steedos.spaceUpgradedModal()
-			return;
 		FlowRouter.go('/admin/workflow/process_delegation_rules')
 	
 	'click .slds-page-header--object-home .slds-page-header__title .dx-treeview-toggle-item-visibility': (event) ->

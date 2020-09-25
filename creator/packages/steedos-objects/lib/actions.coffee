@@ -56,23 +56,10 @@ if Meteor.isClient
 			Meteor.defer ()->
 				$(".creator-add").click()
 			return 
-			
-		"standard_open_view": (object_name, record_id, fields)->
-			href = Creator.getObjectUrl(object_name, record_id)
-			window.open(
-				href,
-				'_blank',
-				'width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes'
-			)
-			return false
 
 		"standard_open_view": (object_name, record_id, fields)->
 			href = Creator.getObjectUrl(object_name, record_id)
-			window.open(
-				href,
-				'_blank',
-				'width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes'
-			)
+			FlowRouter.redirect(href)
 			return false
 
 		"standard_edit": (object_name, record_id, fields)->
@@ -97,6 +84,9 @@ if Meteor.isClient
 
 		"standard_delete": (object_name, record_id, record_title, list_view_id, record, call_back)->
 			console.log("standard_delete", object_name, record_id, record_title, list_view_id)
+			beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
+			if !beforeHook
+				return false;
 			object = Creator.getObject(object_name)
 
 			if(!_.isString(record_title) && record_title?.name)
@@ -115,6 +105,7 @@ if Meteor.isClient
 				cancelButtonText: t('Cancel')
 				(option) ->
 					if option
+						previousDoc = FormManager.getPreviousDoc(object_name, record_id, 'delete')
 						Creator.odata.delete object_name, record_id, ()->
 							if record_title
 								# info = object.label + "\"#{record_title}\"" + "已删除"
@@ -138,16 +129,27 @@ if Meteor.isClient
 								if object.enable_tree
 									dxDataGridInstance.refresh()
 								else
-									Template.creator_grid.refresh(dxDataGridInstance)
+									if object_name != Session.get("object_name")
+										FlowRouter.reload();
+									else
+										Template.creator_grid.refresh(dxDataGridInstance)
+							recordUrl = Creator.getObjectUrl(object_name, record_id)
+							tempNavRemoved = Creator.removeTempNavItem(object_name, recordUrl) #无论是在记录详细界面还是列表界面执行删除操作，都会把临时导航删除掉
 							if isOpenerRemove or !dxDataGridInstance
 								if isOpenerRemove
 									window.close()
-								else if record_id == Session.get("record_id") and !Steedos.isMobile() and list_view_id != 'calendar'
+								else if record_id == Session.get("record_id") and list_view_id != 'calendar'
 									appid = Session.get("app_id")
 									unless list_view_id
 										list_view_id = Session.get("list_view_id")
 									unless list_view_id
 										list_view_id = "all"
-									FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
+									unless tempNavRemoved
+										# 如果确实删除了临时导航，就可能已经重定向到上一个页面了，没必要再重定向一次
+										FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
 							if call_back and typeof call_back == "function"
 								call_back()
+
+							FormManager.runHook(object_name, 'delete', 'after', {_id: record_id, previousDoc: previousDoc})
+						, (error)->
+							FormManager.runHook(object_name, 'delete', 'error', {_id: record_id, error: error})

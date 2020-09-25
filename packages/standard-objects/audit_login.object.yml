@@ -1,6 +1,7 @@
 name: audit_login
 label: Log
 icon: record
+hidden: true
 fields:
   username:
     label: Username

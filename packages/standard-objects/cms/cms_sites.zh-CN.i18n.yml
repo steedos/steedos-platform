@@ -1,5 +1,5 @@
 cms_sites__object: 站点
-cms_sites_field_admins: 站点成员
+cms_sites_field_admins: 站点成员（私有）
 cms_sites_field_avatar: Logo图片
 cms_sites_field_cover: 封面图片
 cms_sites_field_description: 描述
@@ -12,7 +12,7 @@ cms_sites_field_type_options_space: 工作区
 cms_sites_field_type_options_user: 用户
 cms_sites_field_visibility: 可见性
 cms_sites_field_visibility_options_private: 私有 - 只有站点成员可见
-cms_sites_field_visibility_options_public: 网站 - 匿名可访问，只有站点成员可编辑
-cms_sites_field_visibility_options_team: 公开 - 所有用户可见，只有站点成员可编辑
+cms_sites_field_visibility_options_public: 网站 - 匿名可访问
+cms_sites_field_visibility_options_team: 公开 - 所有用户可见
 cms_sites_group_Site: 网站
 cms_sites_listview_all: 所有

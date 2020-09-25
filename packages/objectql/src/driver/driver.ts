@@ -69,6 +69,7 @@ export interface SteedosDriver {
     close();
     getSupportedColumnTypes(): SteedosFieldDBType[];
     find(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
+    aggregate?(tableName: string, query: SteedosQueryOptions, externalPipeline: any, userId?: SteedosIDType): any;
     findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     insert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType): any;
     update(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType): any;
@@ -78,6 +79,8 @@ export interface SteedosDriver {
     directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType): any;
     directInsert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType): any;
     directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType): any;
+    directAggregate?(tableName: string, query: SteedosQueryOptions, externalPipeline: any, userId?: SteedosIDType): any;
+    directAggregatePrefixalPipeline?(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     dropEntities?(): any;
     registerEntities?(objects: Dictionary<SteedosObjectType>): any;

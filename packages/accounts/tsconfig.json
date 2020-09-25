@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib",
+    "target": "es5",
+    "allowJs": true,
+    "lib": ["es2015", "esnext.asynciterable"],
+    "sourceMap": true,
+    "importHelpers": true,
+    "skipLibCheck": true
+  },
+  "include": ["./src/**/*"]
+}

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { List, Bootstrap, store } from '@steedos/react';
 
 function ListContainer(prop){
-	console.log('ListContainer prop', prop);
+	const Provider = ReactRedux.Provider;
 	if(!prop.listProps){
 		return null;
 	}

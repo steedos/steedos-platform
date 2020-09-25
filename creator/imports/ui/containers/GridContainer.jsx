@@ -1,5 +1,4 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { Grid, store } from '@steedos/react';
 
 var iconPath = `/assets/icons`;
@@ -37,6 +36,7 @@ var gridColumns = [
 ];
 
 function GridContainer(){
+	const Provider = ReactRedux.Provider;
 	return 
 			<Provider store={store}>
 				<Grid objectName={gridObjectName} columns={gridColumns} selectRows='checkbox' enableSearch={true}></Grid>

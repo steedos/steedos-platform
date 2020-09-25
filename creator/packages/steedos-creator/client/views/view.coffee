@@ -15,19 +15,38 @@ getRelatedListTemplateId = (related_object_name)->
 Template.creator_view.onCreated ->
 	Template.creator_view.currentInstance = this
 	this.recordsTotal = new ReactiveVar({})
+	this.__record = new ReactiveVar({})
+	this.__schema = new ReactiveVar({})
 	# this.recordLoad = new ReactiveVar(false)
 	this.record = new ReactiveVar()
 	this.agreement = new ReactiveVar()
+	this.object_name = Session.get "object_name"
 	object_name = Session.get "object_name"
 	object = Creator.getObject(object_name)
 	template = Template.instance()
 	this.onEditSuccess = onEditSuccess = (formType,result)->
-		loadRecordFromOdata(template, Session.get("object_name"), Session.get("record_id"))
+#		loadRecordFromOdata(template, Session.get("object_name"), Session.get("record_id"))
 		$('#afModal').modal('hide')
+		FlowRouter.reload()
 	this.agreement.set('odata')
 	AutoForm.hooks creatorEditForm:
 		onSuccess: onEditSuccess
 	,false
+	self = this
+	getSchema = ()->
+		schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(Session.get("object_name"))))
+		#在只读页面将omit字段设置为false
+		_.forEach schema._schema, (f, key)->
+			if f.autoform?.omit
+				f.autoform.omit = false
+		return schema
+	this.autorun ()->
+		if self.object_name == Session.get("object_name")
+			self.__record.set(Creator.getObjectRecord());
+			self.__schema.set(getSchema());
+			Tracker.nonreactive ()->
+				if !_.isEmpty(self.__record.get())
+					FormManager.runHook(Session.get("object_name"), 'view', 'before', {schema: self.__schema, record: self.__record});
 #	if object.database_name && object.database_name != 'meteor-mongo'
 #		this.agreement.set('odata')
 #		AutoForm.hooks creatorEditForm:
@@ -61,6 +80,8 @@ loadRecord = ()->
 		loadRecordFromOdata(Template.instance(), object_name, record_id)
 
 addFieldInfo = (element)->
+	if element.view?.isDestroyed
+		return
 	element.$(".has-inline-text").each ->
 		id = "info_" + $(this).attr("for").replace(".", "_")
 		html = """
@@ -112,6 +133,13 @@ Template.creator_view.onRendered ->
 		record_id = Session.get("record_id")
 		if record_id
 			Tracker.nonreactive(loadRecord)
+
+	this.autorun ()->
+		Meteor.setTimeout ()->
+			Tracker.nonreactive ()->
+				FormManager.runHook(Session.get("object_name"), 'view', 'after', {schema: self.__schema, record: self.__record});
+		,10
+
 	# if Steedos.isMobile()
 	# 	this.autorun ->
 	# 		loadRecord()
@@ -146,7 +174,7 @@ Template.creator_view.helpers
 					return
 				field = _object.fields[fieldKey]
 				if field
-					if _object.schema._schema[fieldKey]?.type.name != 'Object'
+					if _object.schema._schema[fieldKey]?.type?.name != 'Object'
 						r = true;
 					if field.type == 'lookup' || field.type == 'master_detail'
 						reference_to = field.reference_to
@@ -161,7 +189,7 @@ Template.creator_view.helpers
 		if !fieldKey
 			return
 		_object = Creator.getObject(Session.get("object_name"))
-		return _object.schema._schema[fieldKey]?.type.name == 'Object' && _object.fields[fieldKey].type != 'lookup' && _object.fields[fieldKey].type != 'master_detail'
+		return _object.schema._schema[fieldKey]?.type?.name == 'Object' && _object.fields[fieldKey].type != 'lookup' && _object.fields[fieldKey].type != 'master_detail'
 
 	objectField: (fieldKey)->
 		schema = Creator.getObject(Session.get("object_name")).schema
@@ -187,19 +215,14 @@ Template.creator_view.helpers
 		}
 
 	collection: ()->
-		return "Creator.Collections." + Creator.getObject(Session.get("object_name"))._collection_name
+		return "Creator.Collections." + Creator.getObject(Session.get("object_name"))?._collection_name
 
 	schema: ()->
-		schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(Session.get("object_name"))))
-		#在只读页面将omit字段设置为false
-		_.forEach schema._schema, (f, key)->
-			if f.autoform?.omit
-				f.autoform.omit = false
-		return schema
+		return Template.instance().__schema?.get()
 
 	schemaFields: ()->
 		object = Creator.getObject(Session.get("object_name"))
-		simpleSchema = new SimpleSchema(Creator.getObjectSchema(object))
+		simpleSchema = Template.instance().__schema?.get()
 		schema = simpleSchema._schema
 		# 不显示created/modified，因为它们显示在created_by/modified_by字段后面
 		firstLevelKeys = _.without simpleSchema._firstLevelSchemaKeys, "created", "modified"
@@ -246,8 +269,8 @@ Template.creator_view.helpers
 		, record
 
 	keyField: (key) ->
-		fields = Creator.getObject().fields
-		return fields[key]
+		fields = Creator.getObject()?.fields
+		return fields?[key]
 
 	is_wide: (key) ->
 		fields = Creator.getObject().fields
@@ -269,7 +292,11 @@ Template.creator_view.helpers
 	# 		return permissions[permissionName]
 
 	record: ()->
-		return Creator.getObjectRecord()
+		record = Template.instance().__record?.get();
+		if _.isEmpty(record)
+			return false
+		else
+			return record
 
 	record_name: ()->
 		record = Creator.getObjectRecord()
@@ -357,6 +384,20 @@ Template.creator_view.helpers
 
 	allowCreate: ()->
 		return Creator.getRecordRelatedListPermissions(Session.get('object_name'), this).allowCreate
+	relatedActions: ()->
+		if this.actions || this.object_name == 'process_instance_history'
+			relatedActionsName = this.actions || ['approve', 'reject', 'reassign', 'recall']
+			objectName = this.object_name
+			actions = Creator.getActions(objectName);
+			actions = _.filter actions, (action)->
+				if _.include(relatedActionsName, action.name)
+					if typeof action.visible == "function"
+						return action.visible(objectName)
+					else
+						return action.visible
+				else
+					return false
+			return actions
 
 	isUnlocked: ()->
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
@@ -439,7 +480,7 @@ Template.creator_view.helpers
 			related_list_item_props: related_list_item_props
 		}
 		if object_name == 'objects'
-			data.record_id = Creator.getObjectRecord().name
+			data.record_id = Creator.getObjectRecord()?.name
 		else
 			data.record_id = Session.get("record_id")
 		return data
@@ -463,18 +504,6 @@ Template.creator_view.helpers
 		object_name = Session.get "object_name"
 		fields = Creator.getObject(object_name).fields
 		return fields[key]?.inlineHelpText
-
-	illustration: ()->
-		return ReactDesignSystem.Illustration
-
-	notFoundPath: ()->
-		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
-
-	notFoundHeading: ()->
-		return "似乎出现了一个问题。"
-
-	notFoundMessageBody: ()->
-		return "我们无法找到您尝试访问的记录。此记录可能已被其他用户删除，或您没有此记录的访问权限，也可能发生了系统错误。请向您的管理员寻求帮助。"
 
 	showBack: ()->
 		if Session.get("record_id") && (_.has(FlowRouter.current()?.queryParams, 'ref'))
@@ -515,9 +544,12 @@ Template.creator_view.events
 
 
 	'click .slds-truncate > a': (event) ->
+		template = Template.instance()
 		Session.set("detail_info_visible", false)
 		Tracker.afterFlush ()->
 			Session.set("detail_info_visible", true)
+			Meteor.defer ()->
+				addFieldInfo(template)
 
 	'dblclick .slds-table td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click();
@@ -587,7 +619,7 @@ Template.creator_view.events
 		Session.set("action_fields", undefined)
 		Session.set("action_collection", collection)
 		Session.set("action_collection_name", collection_name)
-		Session.set("action_save_and_insert", true)
+		Session.set("action_save_and_insert", false)
 		Meteor.defer ()->
 			$(".creator-add-related").click()
 		return
@@ -701,8 +733,11 @@ Template.creator_view.events
 			FlowRouter.go "/app/#{app_id}"
 		else
 			FlowRouter.go "/app"
+	'click .relate-action-custom': (event, template)->
+		this.todo(Session.get("object_name"), Session.get("record_id"));
 
 Template.creator_view.onDestroyed ()->
+	console.log('Template.creator_view.onDestroyed...');
 	self = this
 	_.each(AutoForm._hooks.creatorEditForm.onSuccess, (fn, index)->
 		if fn == self.onEditSuccess

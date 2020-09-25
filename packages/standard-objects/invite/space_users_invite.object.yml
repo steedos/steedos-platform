@@ -1,0 +1,11 @@
+name: space_users_invite
+icon: link
+hidden: true
+fields:
+  valid:
+    type: boolean
+  invited_users:
+    type: lookup
+    multiple: true
+    reference_to: users
+    label: Invited users

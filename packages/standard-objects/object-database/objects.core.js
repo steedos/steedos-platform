@@ -101,14 +101,17 @@ function loadObject(doc, oldDoc){
 
     //继承base
     objectql.addObjectConfig(doc, datasourceName);
+    objectql.loadObjectLazyListenners(doc.name);
+    objectql.loadObjectLazyActions(doc.name);
+    objectql.loadObjectLazyMethods(doc.name);
     //获取到继承后的对象
     const _doc = objectql.getObjectConfig(doc.name);
     datasource.setObject(doc.name, _doc);
     datasource.init();
     try {
         if(!datasourceName || datasourceName == defaultDatasourceName){
-            Creator.Objects[doc.name] = doc;
-            Creator.loadObjects(doc, doc.name);
+            Creator.Objects[doc.name] = _doc;
+            Creator.loadObjects(_doc, _doc.name);
         }
     } catch (error) {
         console.log('error', error);

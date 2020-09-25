@@ -1,3 +1,9 @@
+Creator.Pages = {}
+
+Steedos.addPage = (page_id, page )->
+	if (page_id)
+		Creator.Pages[page_id] = page;
+
 Creator.getLayout = (app_id)->
 	if !app_id
 		app_id = Session.get("app_id")
@@ -316,7 +322,7 @@ if Meteor.isClient
 	Creator.getJsReportUrlQuery = ()->
 		urlQuery = "?space_id=#{Steedos.getSpaceId()}"
 		filter_items = Tracker.nonreactive ()->
-			return Session.get("filter_items")
+			return Creator.getListViewFilters(Session.get("object_name"), Session.get("list_view_id"))
 		if filter_items
 			filterQuery = encodeURI JSON.stringify(filter_items)
 			urlQuery += "&user_filters=#{filterQuery}"
@@ -369,7 +375,8 @@ if Meteor.isClient
 					if _.isFunction(ref)
 						ref = ref()
 				else
-					ref = fields[n].optionsFunction({}).getProperty("value")
+					if(_.isFunction(fields[n].optionsFunction))
+						ref = fields[n].optionsFunction({}).getProperty("value")
 
 				if !_.isArray(ref)
 					ref = [ref]
@@ -591,17 +598,39 @@ if Meteor.isClient
 
 		if !_field
 			return
+		
+		_filedType = _field.type
+		if _field.type == "formula"
+			# 公式类型字段，其字段类型按formula_type来
+			_filedType = _field.formula_type
+		else if _field.type == "summary"
+			# 汇总类型字段，其字段类型按summary_type和summary_count来
+			if _field.summary_type == "count"
+				_filedType = "number"
+			else
+				# max/min/sum类型等于要聚合的字段的类型
+				summaryObject = Creator.getObject(_field.summary_object)
+				unless summaryObject
+					throw new Meteor.Error 500, "The summary_object '#{_field.summary_object}' is not found for the field '#{_field.name}'"
+				
+				summaryField = summaryObject.fields[_field.summary_field]
+				unless summaryField
+					throw new Meteor.Error 500, "The summary_field '#{_field.summary_field}' is not found for the field '#{_field.name}'"
+				_filedType = summaryField.type
+				if _filedType == "formula"
+					# 公式类型按其公式返回值类型处理
+					_filedType = summaryField.formula_type
 
 		reference_to = props.field?.reference_to
 
 		if _.isFunction(reference_to)
 			reference_to = reference_to()
 
-		if _field.type == "grid"
+		if _filedType == "grid"
 			data.push {isTable: true}
-		else if _field.type == "location"
+		else if _filedType == "location"
 			data.push {value: val?.address || '', id: props._id}
-		else if (_field.type == "lookup" || _field.type == "master_detail") && !_.isEmpty(val)
+		else if (_filedType == "lookup" || _filedType == "master_detail") && !_.isEmpty(val)
 			# 有optionsFunction的情况下，reference_to不考虑数组
 			if _.isFunction(_field.optionsFunction) && reference_to != 'company'
 				_values = props.doc || {}
@@ -666,45 +695,65 @@ if Meteor.isClient
 					href = Creator.getSafeObjectUrl(reference_to, rid)
 					data.push {reference_to: reference_to, rid: rid, value: rvalue, href: href, id: props._id}
 
-		else if _field.type == "image"
+		else if _filedType == "image"
 			if typeof val is "string"
 				data.push {value: val, id: props._id, isImage: true, baseUrl: Creator.getRelativeUrl("/api/files/images")}
 			else
 				data.push {value: val, id: props._id, isImages: true, baseUrl: Creator.getRelativeUrl("/api/files/images")}
-		else if _field.type == "avatar"
+		else if _filedType == "avatar"
 			if typeof val is "string"
 				data.push {value: val, id: props._id, isImage: true, baseUrl: Creator.getRelativeUrl("/api/files/avatars")}
 			else
 				data.push {value: val, id: props._id, isImages: true, baseUrl: Creator.getRelativeUrl("/api/files/avatars")}
-		else if _field.type == "code"
+		else if _filedType == "code"
 			if val
 				val = '...'
 			else
 				val = ''
 			data.push {value: val, id: props._id}
-		else if _field.type == "password"
+		else if _filedType == "password"
 			if val
 				val = '******'
 			else
 				val = ''
 			data.push {value: val, id: props._id}
-		else if _field.type == "url"
+		else if _filedType == "url"
 			href = val
 			if !href?.startsWith("http")
 				href = Steedos.absoluteUrl(encodeURI(href))
 			data.push({value: val, href: href, id: props._id, isUrl: true})
-		else if _field.type == "email"
+		else if _filedType == "email"
 			data.push({value: val, href: href, id: props._id, isEmail: true})
-		else if _field.type == "textarea"
-			if val
-				val = val.replace(/\n/g, '\n<br>');
-				val = val.replace(/ /g, '&nbsp;');
-			data.push {value: val, id: props._id, type: _field.type}
+		else if _filedType == "boolean" || _filedType == "toggle"
+			if props.val
+				val = t "YES"
+			else
+				val = t "NO"
+			data.push {value: val, checked: props.val, id: props._id, isBoolean: true}
+		else if _filedType == "select"
+			_options = _field.allOptions || _field.options
+			_values = props.doc || {}
+			_record_val = props.record_val
+			if _.isFunction(_field.options)
+				_options = _field.options(_record_val || _values)
+			if _.isFunction(_field.optionsFunction)
+				_options = _field.optionsFunction(_record_val || _values)
+			self_val = props.val
+			unless _.isArray(self_val)
+				self_val = [self_val]
+			items = []
+			_.each _options, (_o)->
+				if _.indexOf(self_val, _o.value) > -1
+					items.push {label: _o.label, value: _o.value}
+			val = items.map (item)->
+				return item.label
+			val = val.join(",")
+			data.push({value: val, items: items, id: props._id, isSelects: true})
 		else
-			if (val && ["datetime", "date"].indexOf(_field.type) >= 0)
+			if (val && ["datetime", "date"].indexOf(_filedType) >= 0)
 				if props.agreement == "odata"
 					# 老的datatable列表界面，现在没有在用了，都用DevExtreme的grid列表代替了
-					if _field.type == "datetime"
+					if _filedType == "datetime"
 						if typeof props.val == "string" and /\d+Z$/.test(props.val)
 							# "2009-12-11T00:00:00.000Z"这种以Z结尾的值本身就带了时区信息，不需要再add offset了
 							val = moment(props.val).format('YYYY-MM-DD H:mm')
@@ -712,7 +761,7 @@ if Meteor.isClient
 							# DevExtreme的grid列表中this.val是Date类型，需要add offset
 							utcOffset = moment().utcOffset() / 60
 							val = moment(props.val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
-					else if _field.type == "date"
+					else if _filedType == "date"
 						if typeof props.val == "string" and /\d+Z$/.test(props.val)
 							# "2009-12-11T00:00:00.000Z"这种以Z结尾的值本身就带了时区信息，不需要再add offset了
 							# 日期字段类型统一存储为utc的0点，所以显示的时候也需要按utc时间直接显示
@@ -721,37 +770,29 @@ if Meteor.isClient
 							# DevExtreme的grid列表中this.val是Date类型，本身已经做了时区转换，所以不能用utc时间显示
 							val = moment(props.val).format('YYYY-MM-DD')
 				else
-					if _field.type == "datetime"
+					if _filedType == "datetime"
 						val = moment(props.val).format('YYYY-MM-DD H:mm')
-					else if _field.type == "date"
+					else if _filedType == "date"
 						val = moment.utc(props.val).format('YYYY-MM-DD')
 			else if (props.val == null)
 				val = ""
-			else if _field.type == "boolean"
-				if props.val
-					val = t "YES"
-				else
-					val = t "NO"
-			else if _field.type == "select"
-				_options = _field.allOptions || _field.options
-				_values = props.doc || {}
-				_record_val = props.record_val
-				if _.isFunction(_field.options)
-					_options = _field.options(_record_val || _values)
-				if _.isFunction(_field.optionsFunction)
-					_options = _field.optionsFunction(_record_val || _values)
-				if _.isArray(props.val)
-					self_val = props.val
-					_val = []
-					_.each _options, (_o)->
-						if _.indexOf(self_val, _o.value) > -1
-							_val.push _o.label
-					val = _val.join(",")
-				else
-					val = _.findWhere(_options, {value: props.val})?.label
-				unless val
-					val = props.val
-			else if _field.type == "lookup"
+			# else if _filedType == "select"
+			# 	debugger;
+			# 	_options = _field.allOptions || _field.options
+			# 	_values = props.doc || {}
+			# 	_record_val = props.record_val
+			# 	if _.isFunction(_field.options)
+			# 		_options = _field.options(_record_val || _values)
+			# 	if _.isFunction(_field.optionsFunction)
+			# 		_options = _field.optionsFunction(_record_val || _values)
+			# 	self_val = props.val
+			# 	unless _.isArray(self_val)
+			# 		self_val = [self_val]
+			# 	val = []
+			# 	_.each _options, (_o)->
+			# 		if _.indexOf(self_val, _o.value) > -1
+			# 			val.push {label: _o.label, value: _o.value}
+			else if _filedType == "lookup"
 				if _.isFunction(_field.optionsFunction)
 					_values = props.doc || {}
 					_val = val
@@ -762,29 +803,83 @@ if Meteor.isClient
 							return _val.indexOf(_o.value) > -1
 						if selectedOptions
 							val = selectedOptions.getProperty("label")
-			else if _field.type == "filesize"
+			else if _filedType == "filesize"
 				val = Creator.formatFileSize(val)
-			else if ["number", "currency"].indexOf(_field.type) > -1 && _.isNumber(val)
+			else if ["number", "currency"].indexOf(_filedType) > -1 && _.isNumber(val)
 				fieldScale = 0
 				if _field.scale
 					fieldScale = _field.scale
 				else if _field.scale != 0
-					fieldScale = if _field.type == "currency" then 2 else 0
+					fieldScale = if _filedType == "currency" then 2 else 0
 				val = Steedos.numberToString(val, fieldScale)
-			else if _field.type == "markdown"
+			else if _filedType == "markdown"
 				if !_.isEmpty(val)
 					val = Spacebars.SafeString(marked(val))
-			else if _field.type == "html"
+			else if _filedType == "html"
 				if !_.isEmpty(val)
 					val = Spacebars.SafeString(val)
+			else if _filedType == "textarea"
+				if val
+					val = val.replace(/\n/g, '\n<br>');
+					val = val.replace(/ /g, '&nbsp;');
 
 			if props.parent_view != 'record_details' && props.field_name == this_name_field_key
 				href = Creator.getObjectUrl(props.object_name, props._id)
 
-			data.push({value: val, href: href, id: props._id})
+			data.push({value: val, href: href, id: props._id, type: _filedType})
 
 		return data;
 
+	Creator.openSafeObjectUrl = (object_name, record_id)->
+		unless Steedos.isMobile()
+			# 手机端不支持是因为
+			# 1.配置了带后缀的roolURL时，通过代码`Steedos.absoluteUrl(Creator.getSafeObjectUrl(object_name, record_id, '-'))`拿到的值是错的，因为会返回两层带后缀名的url，如：/xxx/creator/creator/app/oa/users/...
+			# 2.android手机APP上window.open会进入登录界面，所以该函数应该只在PC上调用
+			url = Creator.getSafeObjectUrl(object_name, record_id, '-')
+			if url
+				window.open(url, '_blank', 'width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');
+		event?.stopPropagation();
+		event?.preventDefault();
+		return false;
+
+	Creator.getAppLabel = (app)->
+		unless app
+			app = Creator.getApp()
+		unless app
+			return ""
+		return if app.label then t(app.label) else t(app.name)
+	
+	Creator.measureWidth = _.memoize (text, font, maxWidth)->
+		# maxWidth是考虑文字超长时显示了省略号的情况
+		canvas = arguments.callee.canvas
+		unless canvas
+			canvas = document.createElement('canvas')
+			docFragment = document.createDocumentFragment()
+			docFragment.appendChild(canvas)
+			arguments.callee.canvas = canvas
+		canvasContext = canvas.getContext('2d')
+		canvasContext.font = font
+		result = canvasContext.measureText(text).width
+		if maxWidth and result > maxWidth
+			return maxWidth
+		else
+			return result
+	
+	Creator.showPreviewButton = (fileName)->
+		# 配置webservices.officeOnline.url并且是office类型文件或pdf类型文件，显示预览按钮
+		if Meteor.settings?.public?.webservices?.officeOnline?.url && (Steedos.isPdfFile(fileName) || Steedos.isOfficeFile(fileName))
+			return true
+		
+		return false
+
+	Creator.officeOnlinePreview = (fileUrl)->
+		officeOnlineUrl = Meteor.settings?.public?.webservices?.officeOnline?.url
+		if !officeOnlineUrl || (officeOnlineUrl == "")
+			toastr.error TAPi18n.__("creator_office_online_web_url_required")
+			return false
+		openUrl = officeOnlineUrl + encodeURIComponent(fileUrl);
+		# console.log("-----openUrl------: ",openUrl);
+		return Steedos.openWindow(openUrl);
 
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->

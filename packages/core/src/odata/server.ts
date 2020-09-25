@@ -60,10 +60,7 @@ export async function deleteObjectData(req, res) {
    }
 }
 export async function excuteObjectMethod(req, res) {
-   if (_isMeteorDriver(req)) {
-      return await meteorODataExpressMiddleware.excuteObjectMethod(req, res);
-   }
-
+   return await meteorODataExpressMiddleware.excuteObjectMethod(req, res);
 }
 
 function _isMeteorDriver(req) {

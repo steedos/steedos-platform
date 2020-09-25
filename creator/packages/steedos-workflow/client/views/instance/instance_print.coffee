@@ -177,13 +177,13 @@ Template.instancePrint.onRendered ->
 	# if window.navigator.userAgent.toLocaleLowerCase().indexOf("chrome") < 0
 	# 	toastr.warning(TAPi18n.__("instance_chrome_print_warning"))
 
-	if localStorage.getItem "print_is_show_attachments"
+	if localStorage.getItem("print_is_show_attachments") == 'true'
 		Template.instance().isShowAttachments.set(true)
 		$(".instance-print .cbx-print-attachments").attr("checked",true)
-	if localStorage.getItem "print_is_show_traces"
+	if localStorage.getItem("print_is_show_traces") == 'true'
 		Template.instance().isShowTraces.set(true)
 		$(".instance-print .cbx-print-traces").attr("checked",true)
-	if localStorage.getItem "print_is_show_traces_simplify"
+	if localStorage.getItem("print_is_show_traces_simplify") == 'true'
 		Template.instance().isShowTracesSimplify.set(true)
 		$(".instance-print .cbx-print-traces-simplify").attr("checked",true)
 

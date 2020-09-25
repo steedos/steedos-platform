@@ -100,7 +100,10 @@ Creator.convertListView = (default_view, list_view, list_view_name)->
 
 if Meteor.isClient
 	Creator.getRelatedList = (object_name)->
+		unless object_name
+			return
 		relatedListObjects = {}
+		relatedListNames = []
 		_object = Creator.Objects[object_name]
 		if _object
 			relatedList = _object.relatedList
@@ -110,17 +113,24 @@ if Meteor.isClient
 						related =
 							object_name: objOrName.objectName
 							columns: objOrName.columns
+							mobile_columns: objOrName.mobile_columns
 							is_file: objOrName.objectName == "cms_files"
 							filtersFunction: objOrName.filters
 							sort: objOrName.sort
 							related_field_name: ''
 							customRelatedListObject: true
 							label: objOrName.label
+							actions: objOrName.actions
 						relatedListObjects[objOrName.objectName] = related
+						relatedListNames.push objOrName.objectName
+					else if _.isString objOrName
+						relatedListNames.push objOrName
 
-		list = []
+		mapList = {}
 		related_objects = Creator.getRelatedObjects(object_name)
 		_.each related_objects, (related_object_item) ->
+			if !related_object_item?.object_name
+				return
 			related_object_name = related_object_item.object_name
 			related_field_name = related_object_item.foreign_key
 			sharing = related_object_item.sharing
@@ -129,6 +139,8 @@ if Meteor.isClient
 				return
 			columns = Creator.getObjectDefaultColumns(related_object_name) || ["name"]
 			columns = _.without(columns, related_field_name)
+			mobile_columns = Creator.getObjectDefaultColumns(related_object_name, true) || ["name"]
+			mobile_columns = _.without(mobile_columns, related_field_name)
 
 			order = Creator.getObjectDefaultSort(related_object_name)
 			tabular_order = Creator.transformSortToTabular(order, columns)
@@ -139,6 +151,7 @@ if Meteor.isClient
 			related =
 				object_name: related_object_name
 				columns: columns
+				mobile_columns: mobile_columns
 				related_field_name: related_field_name
 				is_file: related_object_name == "cms_files"
 				sharing: sharing
@@ -147,6 +160,8 @@ if Meteor.isClient
 			if relatedObject
 				if relatedObject.columns
 					related.columns = relatedObject.columns
+				if relatedObject.mobile_columns
+					related.mobile_columns = relatedObject.mobile_columns
 				if relatedObject.sort
 					related.sort = relatedObject.sort
 				if relatedObject.filtersFunction
@@ -157,7 +172,7 @@ if Meteor.isClient
 					related.label = relatedObject.label
 				delete relatedListObjects[related_object_name]
 
-			list.push related
+			mapList[related.object_name] = related
 
 
 		spaceId = Session.get("spaceId")
@@ -170,7 +185,19 @@ if Meteor.isClient
 			isActive = related_object_names.indexOf(related_object_name) > -1
 			allowRead = Creator.getPermissions(related_object_name, spaceId, userId)?.allowRead
 			if isActive && allowRead
-				list.push v
+				mapList[related_object_name] = v
+
+		list = []
+		if _.isEmpty relatedListNames
+			list =  _.values mapList
+		else
+			_.each relatedListNames, (objectName) ->
+				if mapList[objectName]
+					list.push mapList[objectName]
+
+		if _.has(_object, 'allow_relatedList')
+			list = _.filter list, (item)->
+				return _.include(_object.allow_relatedList, item.object_name)
 
 		return list
 

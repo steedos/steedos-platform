@@ -96,6 +96,14 @@ Template.admin_import_flow_modal.events
 					_.each _.keys(fail), (k)->
 						failElement.push("<p>#{k}: #{fail[k]}</p>")
 					$('.help-block', template.find(".import-files")).append("<div class='callout callout-danger'><h4>导入失败的文件(#{failElement.length}条)：</h4>#{failElement.join('')}</div>")
-				toastr.error(t("workflow_import_flow_error"));
+				if (e.responseJSON.fail)
+					fail = e.responseJSON.fail
+					_.each fail, (v, k)->
+						if _.isString(v)
+							toastr.error(v, k);
+						else
+							toastr.error(t(v.reason, v.details) , k);
+				else
+					toastr.error(t("workflow_import_flow_error"));
 				console.error e
 

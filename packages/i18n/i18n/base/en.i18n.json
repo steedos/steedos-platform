@@ -393,6 +393,7 @@
 
 	"space_users_error_roles_used": "User has been used by roles：{$names}",
 	"space_users_error_flows_used": "User has been used by flows：{$names}",
+	"space_users_error_can_not_remove": "Cannot delete user.",
 	"contact_need_phone_or_email": "You should fill in phone-number or email-address",
 
 	"organizations_error_is_company_false_in_root": "IsCompany property can't be false in the root organization",
@@ -494,5 +495,6 @@
 	"menu_account_background": "Background",
 
 	"notifications__object": "Notifications",
-	"favorites__object": "My Favorite"
+	"favorites__object": "My Favorite",
+  	"duplicate_unique_key": "Duplicate unique key: %s"
 }

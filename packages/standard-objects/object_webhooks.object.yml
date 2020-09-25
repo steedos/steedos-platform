@@ -1,7 +1,11 @@
 name: object_webhooks
 label: Object Webhook
 icon: account
+hidden: true
 fields:
+  name:
+    type: text
+    label: Name
   object_name:
     type: lookup
     label: Object
@@ -10,18 +14,7 @@ fields:
     index: true
     optionsFunction: !!js/function |
       function () {
-        var _options;
-        _options = [];
-        _.forEach(Creator.objectsByName, function(o, k) {
-          if (!o.hidden) {
-            _options.push({
-              label: o.label,
-              value: k,
-              icon: o.icon
-            });
-          }
-        });
-        return _options;
+        return Steedos.getObjectsOptions();
       }
   events:
     type: select
@@ -76,9 +69,6 @@ fields:
     label: Active
     type: boolean
     defaultValue: false
-  description:
-    type: text
-    label: Description
   space:
     type: text
     label: Company
@@ -89,11 +79,11 @@ fields:
 list_views:
   all:
     columns:
+      - name
       - object_name
       - events
       - payload_url
       - active
-      - description
     label: All Object Webhooks
     filter_scope: space
 permission_set:

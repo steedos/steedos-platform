@@ -12,6 +12,7 @@ getObjectRecord = ()->
 
 Template.user.onCreated ->
 	this.record = new ReactiveVar()
+	this.isSubscribing = new ReactiveVar(true)
 	template = Template.instance()
 	this.onEditSuccess = onEditSuccess = (formType,result)->
 		spaceId = Session.get "spaceId"
@@ -24,6 +25,7 @@ Template.user.onCreated ->
 	,false
 
 Template.user.onRendered ->
+	self = this
 	this.autorun ->
 		spaceId = Session.get "spaceId"
 		userId = Session.get "record_id"
@@ -35,14 +37,20 @@ Template.user.onRendered ->
 		space_record = Creator.getCollection("space_users").findOne({space: spaceId, user: userId})
 		if space_record?._id
 			loadRecordFromOdata(Template.instance(), "space_users", space_record._id)
+			self.isSubscribing.set(false);
 
 Template.user.helpers 
 	doc: ()->
 		return getObjectRecord()
 
+	isSubscribing: ()->
+		return Template.instance().isSubscribing.get()
+
 	fields: ()->
-		schema = Creator.getSchema("space_users")._schema
-		fields = Creator.getSchema("space_users")._firstLevelSchemaKeys
+		object = Creator.getObject("space_users")
+		simpleSchema = new SimpleSchema(Creator.getObjectSchema(object))
+		schema = simpleSchema._schema
+		fields = simpleSchema._firstLevelSchemaKeys
 		fields.splice(_.indexOf(fields, "instances"), 1)
 		fields.splice(_.indexOf(fields, "sharing"), 1)
 		fields.splice(_.indexOf(fields, "avatar"), 1)
@@ -76,7 +84,6 @@ Template.user.helpers
 			return Steedos.absoluteUrl("avatar/#{userId}?w=220&h=200&fs=160&avatar=#{avatar}")
 		else
 			return Creator.getRelativeUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
-
 
 Template.user.events 
 	'click .profile-pic': (event, template)->

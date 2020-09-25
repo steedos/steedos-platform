@@ -1,6 +1,7 @@
 name: settings
 label: Setting
 icon: custom
+hidden: true
 fields:
   type:
     label: Type

@@ -1,6 +1,7 @@
 name: spaces
 label: Company
 icon: groups
+hidden: true
 fields:
   name:
     label: Name
@@ -11,16 +12,18 @@ fields:
     required: true
     searchable: true
     index: true
+  avatar:
+    label: Logo
+    type: avatar
   avatar_square:
     label: Square Logo
     type: avatar
-  avatar:
-    label: Light Logo
-    type: avatar
     hidden: true
   avatar_dark:
+    # avatar_dark旧版本的wokflow中在用，所以隐藏掉，暂时不能删除
     label: Dark Logo
     type: avatar
+    hidden: true
   owner:
     label: Owner
     type: lookup
@@ -35,6 +38,10 @@ fields:
     index: true
     multiple: true
     filterable: true
+  account_logo:
+    label: Account logo
+    type: avatar
+    group: Logon
   background:
     label: Background
     type: avatar
@@ -42,35 +49,57 @@ fields:
   enable_register:
     label: Enable User Registration
     type: boolean
-    group: Logon
-  is_paid:
-    label: Paid
-    type: boolean
-    group: Payment
-    omit: true
-    readonly: true
-    
-  hostname:
-    label: Hostname
-    type: 'text'
-    group: Payment
-  modules:
-    label: Paid Apps
-    type: select
-    multiple: true
-    group: Payment
+    group: Register account
+  default_profile:
+    label: Default profile
+    type: lookup
+    showIcon: false
     optionsFunction: !!js/function |
       function () {
-        var modules = db.modules.find().fetch() || [];
-        var options = [];
-        var locale = Steedos.locale();
-        modules.forEach(function(m) {
-          options.push({label: locale=='zh-cn' ? m.name_zh : m.name_en, value: m._id})
-        })
-        return options;
+        var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
+        var result = [];
+        profiles.forEach(function (item) {
+          result.push({
+            label: item.label,
+            value: item.name
+          });
+        });
+        return result;
       }
-    omit: true
-    hidden: false
+    group: Register account
+  default_organization:
+    label: Default organization
+    type: lookup
+    reference_to: organizations
+    group: Register account
+  # is_paid:
+  #   label: Paid
+  #   type: boolean
+  #   group: Payment
+  #   omit: true
+  #   readonly: true
+    
+  # hostname:
+  #   label: Hostname
+  #   type: 'text'
+  #   group: Payment
+  # modules:
+  #   label: Paid Apps
+  #   type: select
+  #   multiple: true
+  #   group: Payment
+  #   optionsFunction: !!js/function |
+  #     function () {
+  #       var modules = db.modules.find().fetch() || [];
+  #       var options = [];
+  #       var locale = Steedos.locale();
+  #       modules.forEach(function(m) {
+  #         options.push({label: locale=='zh-cn' ? m.name_zh : m.name_en, value: m._id})
+  #       })
+  #       return options;
+  #     }
+  #   omit: true
+  #   hidden: false
   balance:
     label: Account Balance
     type: number
@@ -86,21 +115,21 @@ fields:
     type: number
     omit: true
     hidden: true
-  user_limit:
-    label: Number of Authorized Users
-    type: number
-    omit: true
-    group: Payment
-  start_date:
-    label: Start Time of Authorization
-    type: datetime
-    omit: true
-    group: Payment
-  end_date:
-    label: End Time of Authorization
-    type: datetime
-    omit: true
-    group: Payment
+  # user_limit:
+  #   label: Number of Authorized Users
+  #   type: number
+  #   omit: true
+  #   group: Payment
+  # start_date:
+  #   label: Start Time of Authorization
+  #   type: datetime
+  #   omit: true
+  #   group: Payment
+  # end_date:
+  #   label: End Time of Authorization
+  #   type: datetime
+  #   omit: true
+  #   group: Payment
   company_id:
     defaultValue: !!js/function |
       function () {
@@ -123,6 +152,11 @@ fields:
       }
     omit: true
     hidden: true
+  features:
+    type: "[text]"
+    hidden: true
+    omit: true
+    readonly: true
 list_views:
   all:
     label: All Companies
@@ -134,26 +168,33 @@ list_views:
         - =
         - '{spaceId}'
 actions:
-  pay_records:
-    label: Order
-    'on': record
-    visible: true
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var url;
-              url = Creator.getListViewRelativeUrl("billing_pay_records", "admin", "all");
-              return FlowRouter.go(url);
-            }
-  upgrade:
-    label: Upgrade
-    'on': record
-    visible: true
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              return Modal.show('space_recharge_modal');
-            }
+  # pay_records:
+  #   label: Order
+  #   'on': record
+  #   visible: true
+  #   todo: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             var url;
+  #             url = Creator.getListViewRelativeUrl("billing_pay_records", "admin", "all");
+  #             return FlowRouter.go(url);
+  #           }
+  # upgrade:
+  #   label: Upgrade
+  #   'on': record
+  #   visible: true
+  #   todo: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             return Modal.show('space_recharge_modal');
+  #           }
   standard_new:
     visible: false
+  invite_space_users: 
+    label: Invite Users
+    'on': record
+  # initSpaceData:
+  #   label: Init Space Data
+  #   'on': record
+  #   visible: true
 permission_set:
   user:
     allowCreate: true

@@ -1,6 +1,7 @@
 name: flows
 icon: timesheet
 label: Workflow
+hidden: true
 enable_files: true
 fields:
   name:
@@ -262,7 +263,7 @@ fields:
     group: Script
     name: events
   distribute_optional_users:
-    type: lookup
+    type: object
     label: Users to be Distributed
     reference_to: users
     multiple: true
@@ -367,9 +368,9 @@ actions:
             var flow = selection[0];
             var templateFlowId = flow._id;
             if(templateFlowId){
-              Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {name: flow.name}, function(error, result){
+              Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {name: flow.name, from: 'template'}, function(error, result){
                 if(error){
-                  toastr.error('error');
+                   toastr.error(t(error.reason, error.details), t('import_flows_error_title'));
                 }else{
                   toastr.success(t('workflow_copy_flow_success'));
                   if (result.length > 0) {
@@ -432,6 +433,84 @@ actions:
       function (object_name, record_id, fields) {
               return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.form, Creator.getUserCompanyId());
             }
+  enableFlow:
+    label: Enable Flow
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions) {
+        var record = Creator.getObjectRecord(object_name, record_id, 'state');
+        if (record && record.state == 'disabled') {
+          return true;
+        }
+        return false;
+      }
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        $("body").addClass("loading");
+        var record = Creator.getObjectRecord(object_name, record_id, 'space,form,state');
+        var userSession = Creator.USER_CONTEXT;
+        var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+        var formId = _.isObject(record.form) ? record.form._id : record.form;
+        $.ajax({
+          type: "POST",
+          url: Steedos.absoluteUrl("/am/flows/state?methodOverride=PUT"),
+          data: JSON.stringify({ 'Flows': [{id: record._id, space: record.space, state: 'enabled', form: formId }] }),
+          dataType: "json",
+          contentType: 'application/json',
+          beforeSend: function (XHR) {
+            XHR.setRequestHeader('Content-Type', 'application/json');
+            XHR.setRequestHeader('Authorization', authorization);
+          },
+          success: function (data) {
+            $("body").removeClass("loading");
+            toastr.success("操作已成功！");
+            Template.creator_view.currentInstance.onEditSuccess();
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $("body").removeClass("loading");
+            toastr.error(XMLHttpRequest.responseJSON);
+          }
+        });
+      }
+  disableFlow:
+    label: Disable Flow
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions) {
+        var record = Creator.getObjectRecord(object_name, record_id, 'state');
+        if (record && record.state == 'enabled') {
+          return true;
+        }
+        return false;
+      }
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        $("body").addClass("loading");
+        var record = Creator.getObjectRecord(object_name, record_id, 'space,form,state');
+        var userSession = Creator.USER_CONTEXT;
+        var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+        var formId = _.isObject(record.form) ? record.form._id : record.form;
+        $.ajax({
+          type: "POST",
+          url: Steedos.absoluteUrl("/am/flows/state?methodOverride=PUT"),
+          data: JSON.stringify({ 'Flows': [{id: record._id, space: record.space, state: 'disabled', form: formId }] }),
+          dataType: "json",
+          contentType: 'application/json',
+          beforeSend: function (XHR) {
+            XHR.setRequestHeader('Content-Type', 'application/json');
+            XHR.setRequestHeader('Authorization', authorization);
+          },
+          success: function (data) {
+            $("body").removeClass("loading");
+            toastr.success("操作已成功！");
+            Template.creator_view.currentInstance.onEditSuccess();
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $("body").removeClass("loading");
+            toastr.error(XMLHttpRequest.responseJSON);
+          }
+        });
+      }
   export_default_template:
     label: Export Default Template
     'on': record_more
@@ -612,6 +691,9 @@ actions:
           sweetAlert.close();
         })
       }
+relatedList:
+  - cms_files
+  - object_workflows
 permission_set:
   user:
     allowCreate: false

@@ -17,7 +17,7 @@ Template.creatorSidebarLeft.helpers
 		if app
 			_.each app.mobile_objects, (v)->
 				obj = Creator.getObject(v)
-				if obj?.permissions.get().allowRead and !obj.hidden
+				if obj?.permissions.get().allowRead
 					objects.push v
 		return objects
 
@@ -65,9 +65,9 @@ Template.creatorSidebarLeft.events
 	"click .settings-btn": (e, t)->
 		FlowRouter.go '/user_settings'
 	'click .sidebar-backdrop': (e, t)->
-		$("#sidebar-left").removeClass('move--right')
+		$("#sidebar-left").addClass('hidden')
 		$(".steedos").removeClass('move--right')
-	'click .sidebar--left': (e, t)->
-		$("#sidebar-left").removeClass('move--right')
+	'click #sidebar-left': (e, t)->
+		$("#sidebar-left").addClass('hidden')
 		$(".steedos").removeClass('move--right')
 		

@@ -14,6 +14,8 @@ flows_action_standard_edit:
 flows_action_standard_new: 新建
 flows_action_standard_new_by_template: 从模板新建
 flows_action_upgradeFlow: 导入流程(升级)
+flows_action_enableFlow: 启用
+flows_action_disableFlow: 停用
 flows_field_allow_select_step: 申请人指定步骤、审批人
 flows_field_app: 所属应用
 flows_field_auto_remind: 自动催办
@@ -73,3 +75,7 @@ flows_group_script: 脚本
 flows_group_others: 高级
 flows_field_allow_select_step_inlineHelpText: 允许申请人提交申请单时指定流转步骤及步骤处理人, 需要通过流程设计器修改步骤上的属性
 flows_listview_all: 所有
+import_flows_error_title: 导入失败
+import_flows_error_not_find_object: 未找到对象[ %s ]
+import_flows_error_not_allow_enable_workflow: 对象[ %s ]未启用配置对象流程
+import_flows_error_not_find_fields: 缺少字段[ %s ]

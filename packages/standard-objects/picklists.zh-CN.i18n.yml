@@ -1,4 +1,4 @@
-picklists__object: 选项列表值集
+picklists__object: 下拉框列表
 picklists_field_code: 唯一编码
 picklists_field_description: 描述
 picklists_field_name: 名称

@@ -193,6 +193,13 @@ Template.instance_attachment.helpers({
 		return false;
 	},
 
+	canOfficeOnlinePreview: function(filename) {
+		var ins = WorkflowManager.getInstance();
+		if (!ins)
+			return false;
+		return Creator.showPreviewButton(filename);
+	},
+
 	IsImageAttachment: function(attachment) {
 		if (!attachment)
 			return;
@@ -317,6 +324,15 @@ Template.instance_attachment.events({
 
 	"click .ins-attach-unlock": function(event, template) {
 		InstanceManager.unlockAttach(event.target.id);
+	},
+
+	"click [name='ins_attach_office_online_preview']": function(event, template){
+		if (event.target.id) {
+			// 考虑rootUrl带路由和内外网服务地址一样等问题
+			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id;
+
+			Creator.officeOnlinePreview(url);
+		}
 	}
 })
 
@@ -616,6 +632,13 @@ Template.ins_attach_version_modal.helpers({
 		return false;
 	},
 
+	canOfficeOnlinePreview: function(filename) {
+		var ins = WorkflowManager.getInstance();
+		if (!ins)
+			return false;
+		return Creator.showPreviewButton(filename);
+	},
+
 	getUrl: function(_rev, isPreview) {
 		// url = Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename;
 		if (Steedos.isNode())
@@ -827,6 +850,15 @@ Template.ins_attach_version_modal.events({
 			})
 			return true;
 		});
+	},
+
+	"click [name='ins_attach_office_online_preview']": function(event, template){
+		if (event.target.id) {
+			// 考虑rootUrl带路由和内外网服务地址一样等问题
+			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id;
+
+			Creator.officeOnlinePreview(url);
+		}
 	}
 
 })

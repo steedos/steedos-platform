@@ -8,7 +8,7 @@
 import { isJsonMap, JsonMap } from '@salesforce/ts-types';
 import { Validators } from '../validators';
 const Future  = require('fibers/future');
-
+const crypto = require('crypto')
 const yaml = require('js-yaml');
 const fs = require("fs");
 const path = require("path");
@@ -18,6 +18,7 @@ var clone = require("clone")
 import { has, getJsonMap } from '@salesforce/ts-types';
 let STEEDOSCONFIG:any = {};
 const configName = 'steedos-config.yml'
+const licenseName = '.license'
 
 export * from './transform'
 export * from './permission_shares'
@@ -114,6 +115,19 @@ export const loadI18n = (filePath: string)=>{
     return results
 }
 
+export const loadRouters = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.router.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let router = loadFile(matchedPath);
+        results.push(router);
+    })
+    return results
+}
+
 export const loadTriggers = (filePath: string)=>{
     let results = []
     const filePatten = [
@@ -134,6 +148,22 @@ export const loadActions = (filePath: string)=>{
     let results = []
     const filePatten = [
         path.join(filePath, "*.action.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!_.has(json, 'listenTo')){
+            json.listenTo = path.basename(matchedPath).split('.')[0]
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadMethods = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.function.js")
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
@@ -240,6 +270,20 @@ export function loadAppFiles(filePath: string) {
     return loadApps(filePath);
 }
 
+export function loadObjectDataFiles(filePath: string){
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.data.json")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let records = loadFile(matchedPath);
+        let objectName = path.basename(matchedPath).split('.')[0];
+        results.push({objectName: objectName, records: records});
+    })
+    return results
+}
+
 export function getBaseDirectory(){
     //return require('app-root-path').path
     let cwd = process.cwd();
@@ -320,6 +364,20 @@ export function getSteedosConfig(){
     return STEEDOSCONFIG;
 }
 
+export function getLicense(){
+    let license = ""
+    let licensePath = path.join(getBaseDirectory(), licenseName)
+    if (fs.existsSync(licensePath) && !fs.statSync(licensePath).isDirectory()) {
+        license = clone(fs.readFileSync(licensePath, 'utf-8'));
+    }
+    return license;
+}
+
+export function writeLicense(license){
+    let licensePath = path.join(getBaseDirectory(), licenseName)
+    fs.writeFileSync(licensePath, license, "utf8")
+}
+
 export function getRandomString(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -384,4 +442,23 @@ export function isCloudAdminSpace(spaceId){
         return true
     }
     return false
+}
+
+export function getMD5(data){
+    let md5 = crypto.createHash('md5');
+    return md5.update(data).digest('hex');
+}
+
+export function JSONStringify(data) {
+    return JSON.stringify(data, function (key, val) {
+        if (typeof val === 'function') {
+            return val + '';
+        }
+        return val;
+    })
+}
+
+export function isSystemObject(object_name: string) {
+    // 以c结尾的都是零代码上定义的对象
+    return !object_name.endsWith("__c")
 }

@@ -29,14 +29,11 @@ reports_field_name: 名称
 reports_field_object_name: 对象名
 reports_field_options: 操作
 reports_field_report_type: 报表类型
-reports_field_report_type_options_jsreport: JsReport
-reports_field_report_type_options_matrix: 矩阵
-reports_field_report_type_options_summary: 摘要
-reports_field_report_type_options_tabular: 表格
 reports_field_rows: 行
 reports_field_script: Script
 reports_field_totaling: 显示总计
 reports_field_values: 统计
+reports_field_is_system: 系统
 reports_group_jsreport: JsReport
 reports_listview_all: 所有报表
 reports_listview_application: 应用报表

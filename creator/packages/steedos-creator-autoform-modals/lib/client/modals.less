@@ -320,6 +320,21 @@
 	}
 }
 
+#afModal form .view-page-section-row .uiInput .form-control[disabled] {
+	background-color: transparent;
+}
+
+#afModal form .view-page-section-row .uiInput [readonly] {
+	cursor: not-allowed;
+}
+
+// lookups字段比较特别，其readonly样式单独在控件内处理
+#afModal form .view-page-section-row .uiInput .steedos-lookups{
+	[readonly]{
+		cursor: text;
+	}
+}
+
 /* safari hack......start:IPAD,iPhone，新建编辑窗口lookup文本框行高没对齐，PC上是好的 #1595*/
 /* 注意该hack语法不支持less嵌套*/
 _::-webkit-full-page-media,_:future, :root #afModal .view-page-section-row .uiInput.slds-form-element .steedos-lookups .steedos-lookups-input{ 

@@ -45,7 +45,7 @@ Creator.Objects.object_triggers.triggers = {
         var ref;
         check(userId, doc);
         if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && isRepeatedName(doc, modifier.$set.name)) {
-          throw new Meteor.Error(500, `对象名称不能重复${doc.name}`);
+          throw new Meteor.Error(500, `名称不能重复${doc.name}`);
         }
       }
     },
@@ -54,8 +54,11 @@ Creator.Objects.object_triggers.triggers = {
       when: "before.insert",
       todo: function(userId, doc) {
         check(userId, doc);
+        if(true){
+          throw new Meteor.Error(500, "请在代码中定义trigger");
+        }
         if (isRepeatedName(doc)) {
-          throw new Meteor.Error(500, "对象名称不能重复");
+          throw new Meteor.Error(500, "名称不能重复");
         }
       }
     }

@@ -9,10 +9,21 @@ if Meteor.isClient
 			if Session.get("steedos-locale") && Creator.bootstrapLoaded?.get()
 				titleTags = []
 				object = Creator.getObject()
+				unless object
+					return
 				record = Creator.getObjectRecord()
 				listView = Creator.getListView()
-				if record
-					titleTags.push record.name
+				record_name = Session.get('record_name')
+				if record_name
+					label = record_name
+					titleTags.push label
+				else if record
+					if object.name == "cfs.files.filerecord"
+						label = record?.original?.name
+					else
+						nameField = object.NAME_FIELD_KEY || "name"
+						label = record[nameField]
+					titleTags.push label
 				else if listView
 					titleTags.push listView.label
 				if object

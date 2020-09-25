@@ -6,6 +6,8 @@ picklist_options_field_picklist: 选项列表值集
 picklist_options_field_sort_no: 排序号
 picklist_options_field_value: 选项值
 picklist_options_field_value_inlineHelpText: 此字段如果没有值， 选项值 = 选项名称
+picklist_options_field_color: 选项背景色
+picklist_options_field_color_inlineHelpText: 请输入`#bad6f2`这种格式的颜色代码，其#号前缀可省略，选中项会显示为该颜色背景。
 picklist_options_field_sort_no_inlineHelpText: 数值大的显示在前面
 picklist_options_field_default_inlineHelpText: 将此值作为选项列表的默认值
 picklist_options_listview_all: 全部

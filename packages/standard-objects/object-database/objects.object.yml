@@ -1,6 +1,8 @@
 name: objects
 icon: orders
 label: Object
+hidden: true
+enable_trash: true
 fields:
   datasource:
     type: master_detail
@@ -13,29 +15,32 @@ fields:
         var options = [{
             label: t('objects_field_datasource_defaultValue'),
             value: 'default'}];
-        var spaceDatasources = Creator.getCollection("datasources").find({space: Session.get("spaceId")}, {fields: {_id:1, name: 1}}).fetch();
+        var spaceDatasources = Creator.getCollection("datasources").find({space: Session.get("spaceId")}, {fields: {_id:1, name: 1, label:1}}).fetch();
         _.each(spaceDatasources, function(doc){
-            options.push({label: doc.name, value: doc._id})
+            options.push({label: doc.label || doc.name, value: doc._id})
         })
         return options;
       }
     defaultValue: 'default'
+  label:
+    type: text
+    label: Label
+    required: true
+    is_name: true
   name:
     type: text
-    label: Name
+    label: API Name
     searchable: true
     index: true
     required: true
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   table_name:
     type: text
     label: Table Name
     index: true
     searchable: true
     inlineHelpText: The default data source does not support this property
-  label:
-    type: text
-    label: Label
-    required: true
+    group: External data source
   icon:
     type: lookup
     label: Icon
@@ -72,49 +77,60 @@ fields:
   enable_search:
     type: boolean
     label: Enable Search
+    group: Switch
   enable_files:
     type: boolean
     label: Enable Files
+    group: Switch
   enable_tasks:
     type: boolean
     label: Enable Tasks
+    group: Switch
   enable_notes:
     type: boolean
     label: Enable Notes
+    group: Switch
   enable_events:
     type: boolean
     label: Enable Events
+    group: Switch
   enable_api:
     type: boolean
     defaultValue: true
     hidden: true
     label: Enable API
+    group: Switch
   enable_share:
     type: boolean
     defaultValue: false
     label: Enable Share
+    group: Switch
+  enable_workflow:
+    type: boolean
+    label: Enable Workflow
+    group: Switch
   enable_instances:
     type: boolean
     label: Enable Instances
+    group: Switch
   enable_chatter:
     type: boolean
     label: Enable Chatter
+    group: Switch
   enable_audit:
     type: boolean
     label: Enable Audit
+    group: Switch
   # enable_trash:
   #   type: boolean
   # enable_space_global:
   #   type: boolean
   #   defaultValue: false
-  enable_approvals:
-    type: boolean
-    defaultValue: false
-    label: Enable Approvals
-  enable_web_forms:
-    type: boolean
-    defaultValue: fasle
-    label: Enable Web Forms
+  # enable_web_forms:
+  #   type: boolean
+  #   defaultValue: fasle
+  #   label: Enable Web Forms
+  #   group: Switch
   # is_view:
   #   type: boolean
   #   defaultValue: false
@@ -151,6 +167,12 @@ fields:
     blackbox: true
     omit: true
     hidden: true
+  relatedList:
+    type: grid
+    label: Related List
+    blackbox: true
+    omit: true
+    hidden: true
   permission_set:
     type: object
     label: Permission Set
@@ -179,49 +201,130 @@ fields:
     type: text
     hidden: true
     label: App Version 
-  # relatedList:
-  #   type: lookup
-  #   label: 相关子表
-  #   multiple: true
-  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
-  #     function () {
-  #             var _options;
-
-  #             _options = [];
-
-  #             _.forEach(Creator.objectsByName, function (o, k) {
-  #               return _options.push({
-  #                 label: o.label,
-  #                 value: k,
-  #                 icon: o.icon
-  #               });
-  #             });
-
-  #             return _options;
-  #           }
+  is_system:
+    type: boolean
+    label: System
+    omit: true
+    hidden: true
+    disabled: true
+  fields_serial_number:
+    type: number
+    scale: 0
+    omit: true
+    hidden: true
+    disabled: true
+  is_deleted:
+    hidden: false
+    omit: false
+    disabled: false
+    readonly: false
+paging:
+  enabled: false
 relatedList:
-  - object_fields
-  - object_listviews
-  - object_actions
-  - object_triggers
+  - objectName: object_fields
+    columns:
+      - label
+      - name
+      - type
+      - object
+      - group
+      - sort_no
+  - objectName: object_listviews
+    columns:
+      - label
+      - name
+      - shared
+  - objectName: object_actions
+    columns:
+      - label
+      - name
+      - object
+      - 'on'
+      - is_enable
+  - objectName: object_layouts
+    columns:
+      - label
+      - object_name
+      - profiles
+  - object_related_list
   - permission_objects
+  - object_workflows
+  - process_definition
 list_views:
   all:
     columns:
-      - name
-      - table_name
       - label
-      - datasource
-      - is_enable
+      - name
+      # - table_name
+      # - datasource
       - in_development
-      - modified
+      - is_enable
+      - is_system
     label: All
     filter_scope: space
+    extra_columns:
+      - datasource
+      - fields
+  customize:
+    columns:
+      - label
+      - name
+      # - table_name
+      # - datasource
+      - in_development
+      - is_enable
+      - is_system
+    label: Customize
+    filters:
+      - ["is_system","<>",true]
+    filter_scope: space
+    extra_columns:
+      - datasource
+      - fields
+  system:
+    columns:
+      - label
+      - name
+      # - table_name
+      # - datasource
+      - in_development
+      - is_enable
+      - is_system
+    label: System
+    filters:
+      - ["is_system","=",true]
+    filter_scope: space
+    extra_columns:
+      - datasource
+      - fields
+  deleted:
+    columns:
+      - label
+      - name
+      # - table_name
+      # - datasource
+      - in_development
+      - is_enable
+      - is_system
+    label: Deleted
+    filters:
+      - ["is_system","<>",true]
+      - ["is_deleted","=",true]
+    filter_scope: space
+    extra_columns:
+      - datasource
+      - fields
 actions: 
   show_object: 
     label: Preview
+    on: record
   copy_odata: 
     label: Copy OData URL
+    on: record
+  # export:
+  #   label: Export
+  #   visible: true
+  #   on: record
 permission_set:
   user:
     allowCreate: false

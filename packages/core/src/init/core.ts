@@ -1,9 +1,11 @@
 const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
+const steedosProcess = require("@steedos/process");
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
 const app = express();
+const routersApp = express();
 const router = express.Router();
 var path = require('path');
 import fs = require('fs')
@@ -106,7 +108,8 @@ export class Core {
     static run() {
         this.initGraphqlAPI();
         this.initPublishAPI()
-        this.initRoutes();
+        this.initCoreRoutes();
+        this.initRouters();
     }
 
     transformTriggerWhen(triggerWhen: string){
@@ -164,9 +167,10 @@ export class Core {
         Publish.init();
     }
 
-    private static initRoutes() {
+    private static initCoreRoutes() {
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
+        app.use(steedosProcess.processExpress)
         app.use(coreExpress);
         
         let routers = objectql.getRouterConfigs()
@@ -177,17 +181,39 @@ export class Core {
         WebApp.connectHandlers.use(app);
     }
 
+    private static initRouters(){
+        let routers = objectql.getRouters()
+        _.each(routers, (router)=>{
+            routersApp.use('', router.default)
+        })
+        WebApp.connectHandlers.use(routersApp);
+    }
+}
+
+export const initPublic = () => {
+    const router = express.Router()
+
+    let publicPath = require.resolve("@steedos/webapp/package.json")
+    publicPath = publicPath.replace("package.json", 'build')
+    let routerPath = "/"
+    if(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX){
+        routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
+    }
+    const cacheTime = 86400000*1; // one day
+    router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
+    WebApp.rawConnectHandlers.use(router);
+    // WebApp.connectHandlers.use(router);
 }
 
 export const initDesignSystem = () => {
-    const router = express.Router()
+    // const router = express.Router()
 
-    let dsPath = require.resolve("@salesforce-ux/design-system/package.json")
-    dsPath = dsPath.replace("package.json", 'assets')
-    let routerPath = "/assets/"
-    if (__meteor_runtime_config__ && __meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
-        routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + "/assets/";
-    const cacheTime = 86400000*1; // one day
-    router.use(routerPath, express.static(dsPath, { maxAge: cacheTime }));
-    WebApp.rawConnectHandlers.use(router);
+    // let dsPath = require.resolve("@salesforce-ux/design-system/package.json")
+    // dsPath = dsPath.replace("package.json", 'assets')
+    // let routerPath = "/assets/"
+    // if (__meteor_runtime_config__ && __meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
+    //     routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + "/assets/";
+    // const cacheTime = 86400000*1; // one day
+    // router.use(routerPath, express.static(dsPath, { maxAge: cacheTime }));
+    // WebApp.rawConnectHandlers.use(router);
 }

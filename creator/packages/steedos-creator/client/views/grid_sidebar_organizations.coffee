@@ -93,7 +93,7 @@ _itemDropdownClick = (e, selectionInfo)->
 		actionSheetOption.itemTemplate = (itemData, itemIndex, itemElement)->
 			itemElement.html "<span class='text-muted'>#{itemData.text}</span>"
 
-	actionSheet = $(".action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
+	actionSheet = this.$(".action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
 
 	actionSheet.option("target", e.target);
 	actionSheet.option("visible", true);
@@ -204,6 +204,8 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 					Session.set "organization", selectionItemData
 				else
 					Session.set "organization", null
+					selectionInfo.itemElement?.parent().removeClass("dx-state-focused")
+					selectionInfo.component?._cleanFocusState()
 				resetFilters()
 				setGridSidebarFilters(selectionItemData)
 

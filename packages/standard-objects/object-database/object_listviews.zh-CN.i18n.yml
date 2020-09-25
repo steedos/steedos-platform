@@ -1,0 +1,39 @@
+object_listviews__object: 列表视图
+object_listviews_field_columns: 显示的列
+object_listviews_field_columns_$: 显示的列
+object_listviews_field_columns_$_field: 字段
+object_listviews_field_columns_$_width: 宽度
+object_listviews_field_columns_$_wrap: 是否换行
+object_listviews_field_filter_fields: 默认过滤字段
+object_listviews_field_filter_logic: 过滤逻辑
+object_listviews_field_filter_scope: 过滤范围
+object_listviews_field_filters: 过滤器
+object_listviews_field_filters.$: 过滤条件
+object_listviews_field_filters_$_field: 字段
+object_listviews_field_filters_$_operation: 运算符
+object_listviews_field_filters_$_value: 值
+object_listviews_field_label: 显示名称
+object_listviews_field_name: API 名称
+object_listviews_field_object_name: 对象
+object_listviews_field_scrolling_mode: 滚动条样式
+object_listviews_field_scrolling_mode_options_infinite: ' 滚动刷新，初始只加载第一页，一边滚动一边加载下一页'
+object_listviews_field_scrolling_mode_options_standard: 按照传统的分页显示，点击页码加载对应页面的数据
+object_listviews_field_scrolling_mode_options_virtual: ' 通过滚动条切换页面，当滚动到对应页面时，会远程加载数据'
+object_listviews_field_shared: 共享视图到工作区
+object_listviews_field_show_count: 显示条目数
+object_listviews_field_sort: 默认排序规则
+object_listviews_field_sort.$: 排序条件
+object_listviews_field_sort_$_field_name: 排序字段
+object_listviews_field_sort_$_order: 排序方式
+object_listviews_field_sort_$_order_options_asc: 正序
+object_listviews_field_sort_$_order_options_desc: 倒序
+object_listviews_field_type: 视图类型
+object_listviews_field_type_options_calendar: ' 日历视图'
+object_listviews_field_type_options_grid: 列表
+object_listviews_field_scrolling_mode_inlineHelpText: 定义数据列表的滚动条显示样式
+object_listviews_listview_all: 全部
+object_listviews_field_mobile_columns: 手机端显示的列
+object_listviews_field_mobile_columns_$: 手机端显示的列
+object_listviews_field_mobile_columns_$_field: 字段
+object_listviews_field_name_inlineHelpText: $t(object_listviews__error_name_invalid_format)
+object_listviews__error_name_invalid_format: $t(object_listviews_field_name)只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符

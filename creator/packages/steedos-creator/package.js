@@ -88,7 +88,6 @@ Package.onUse(function (api) {
 	api.use('blaze-html-templates@1.1.2');
 	api.use('steedos:lightning-design-system@0.0.2');
 	api.use('universe:i18n');
-	api.use('steedos:app-base');
 
 	api.addFiles('checkNpm.js', "server");
 
@@ -141,6 +140,10 @@ Package.onUse(function (api) {
 	api.addFiles('client/layout/mobile_header.less', 'client');
 	api.addFiles('client/layout/mobile_header.coffee', 'client');
 
+	api.addFiles('client/layout/trial_header.html', 'client');
+	api.addFiles('client/layout/trial_header.less', 'client');
+	api.addFiles('client/layout/trial_header.coffee', 'client');
+
 	api.addFiles('client/layout/layout.html', 'client');
 	api.addFiles('client/layout/layout.less', 'client');
 	api.addFiles('client/layout/layout.coffee', 'client');
@@ -152,6 +155,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/layout/header.less', 'client');
 	api.addFiles('client/layout/navigation.html', 'client');
 	api.addFiles('client/layout/navigation.coffee', 'client');
+	api.addFiles('client/layout/navigation.less', 'client');
 	api.addFiles('client/layout/sidebar.html', 'client');
 	api.addFiles('client/layout/sidebar.coffee', 'client');
 	api.addFiles('client/layout/sidebar.less', 'client');
@@ -202,6 +206,7 @@ Package.onUse(function (api) {
 
 	api.addFiles('client/core.coffee', 'client');
 	api.addFiles('client/colors.coffee', 'client');
+	api.addFiles('client/temp_navs.coffee', 'client');
 	api.addFiles('client/favorites.coffee', 'client');
 	api.addFiles('client/router.coffee', 'client');
 	api.addFiles('client/subscribe.coffee', 'client');
@@ -355,7 +360,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/theme.less', 'client');
 	api.addFiles('client/i18n.coffee', 'client');
 
-	api.addAssets('assets/logo.png', 'client');
+	// api.addAssets('assets/logo.png', 'client');
 	api.addAssets('assets/logo-square.png', 'client');
 
 	api.export(['permissionManagerForInitApproval', 'uuflowManagerForInitApproval'], ['server']);

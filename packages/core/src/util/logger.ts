@@ -23,7 +23,7 @@ import {
 // @ts-ignore No typings available for our copy of bunyan
 import * as Bunyan from 'bunyan-sfdx-no-dtrace';
 import * as Debug from 'debug';
-import * as EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import * as os from 'os';
 import * as path from 'path';
 import { Writable } from 'stream';

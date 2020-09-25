@@ -265,19 +265,12 @@ actions:
     'on': record
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-              var uobj, workflowUrl;
+              var uobj;
               uobj = {};
               uobj["box"] = 'monitor';
               uobj["print_is_show_traces"] = '1';
               uobj["print_is_show_attachments"] = '1';
               uobj["X-User-Id"] = Meteor.userId();
               uobj["X-Auth-Token"] = Accounts._storedLoginToken();
-              var settings = Meteor.settings["public"].webservices;
-              workflowUrl = settings && settings.workflow && settings.workflow.url;
-              if(workflowUrl){
-                return Steedos.openWindow(workflowUrl + "workflow/space/" + Session.get("spaceId") + "/print/" + record_id + "?" + $.param(uobj), "", 'width=900,height=750,scrollbars=yes,EnableViewPortScale=yes,toolbarposition=top,transitionstyle=fliphorizontal,menubar=yes,closebuttoncaption=  x  ');
-              }
-              else{
-                return toastr && toastr.error && toastr.error("Settings中缺失参数'public.webservices.workflow.url',请联系系统管理员");
-              }
+              return Steedos.openWindow(Steedos.absoluteUrl() + "workflow/space/" + Session.get("spaceId") + "/print/" + record_id + "?" + $.param(uobj), "", 'width=900,height=750,scrollbars=yes,EnableViewPortScale=yes,toolbarposition=top,transitionstyle=fliphorizontal,menubar=yes,closebuttoncaption=  x  ');
             }

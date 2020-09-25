@@ -1,0 +1,82 @@
+<template name="trialHearder">
+	{{#if showTrialHearder}}
+	<div class="trial-header slds-builder-header_container">
+		<header class="slds-builder-header">
+			<div class="slds-builder-header__item">
+				<div class="slds-builder-header__item-label slds-media slds-media_center">
+					<a class="trial-guide">{{t "license_trial_guide"}}</a>
+				</div>
+			</div>
+			<!--				<nav class="slds-builder-header__item slds-builder-header__nav">-->
+			<!--					<ul class="slds-builder-header__nav-list">-->
+			<!--						<li class="slds-builder-header__nav-item">-->
+			<!--							<a href="javascript:void(0);"-->
+			<!--								class="slds-builder-header__item-action slds-media slds-media_center">-->
+			<!--								<span class="slds-media__figure">-->
+			<!--									<span class="slds-icon_container slds-icon-utility-settings slds-current-color">-->
+			<!--										<svg class="slds-icon slds-icon_x-small" aria-hidden="true">-->
+			<!--											<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#settings">-->
+			<!--											</use>-->
+			<!--										</svg>-->
+			<!--									</span>-->
+			<!--								</span>-->
+			<!--								<span class="slds-media__body">-->
+			<!--									<span class="slds-truncate" title="Link">Link</span>-->
+			<!--								</span>-->
+			<!--							</a>-->
+			<!--						</li>-->
+			<!--						<li class="slds-builder-header__nav-item">-->
+			<!--							<button class="slds-button slds-builder-header__item-action slds-media slds-media_center"-->
+			<!--								aria-haspopup="true" title="Click to open menu">-->
+			<!--								<span class="slds-media__figure">-->
+			<!--									<span class="slds-icon_container slds-icon-utility-page slds-current-color">-->
+			<!--										<svg class="slds-icon slds-icon_x-small" aria-hidden="true">-->
+			<!--											<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#page"></use>-->
+			<!--										</svg>-->
+			<!--									</span>-->
+			<!--								</span>-->
+			<!--								<span class="slds-media__body">-->
+			<!--									<span class="slds-truncate" title="Dropdown">Dropdown</span>-->
+			<!--									<span-->
+			<!--										class="slds-icon_container slds-icon-utility-chevrondown slds-current-color slds-m-left_small">-->
+			<!--										<svg class="slds-icon slds-icon_x-small" aria-hidden="true">-->
+			<!--											<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown">-->
+			<!--											</use>-->
+			<!--										</svg>-->
+			<!--									</span>-->
+			<!--								</span>-->
+			<!--							</button>-->
+			<!--						</li>-->
+			<!--					</ul>-->
+			<!--				</nav>-->
+			<!--				<div class="slds-builder-header__item slds-has-flexi-truncate">-->
+			<!--					<h1 class="slds-builder-header__item-label">-->
+			<!--						<span class="slds-truncate" title="Page Type">Page Type</span>-->
+			<!--					</h1>-->
+			<!--				</div>-->
+			<div class="slds-builder-header__item slds-builder-header__utilities">
+				<div class="slds-builder-header__utilities-item">
+					<div class="slds-builder-header__item-action slds-media slds-media_center">
+						<a class="trial-feedback">{{t "license_trial_feedback"}}</a>
+					</div>
+				</div>
+				{{#if hasLicense}}
+					<div class="slds-builder-header__utilities-item">
+						<div class="slds-builder-header__item-action slds-media slds-media_center">
+							<span class="days-remaining" data-aura-rendered-by="39:778;a">{{t "license_trial_day_left"}}</span>
+							<span id="trial-countdown" data-aura-rendered-by="41:778;a">{{days_left}}</span>
+						</div>
+					</div>
+				{{/if}}
+				{{#unless hasLicense}}
+				<div class="slds-builder-header__utilities-item">
+					<div class="slds-builder-header__item-action slds-media slds-media_center">
+						<button class="slds-button slds-button_destructive" id="subscribeNow">{{t "license_trial_subscribeNow"}}</button>
+					</div>
+				</div>
+				{{/unless}}
+			</div>
+		</header>
+	</div>
+	{{/if}}
+</template>

@@ -27,6 +27,15 @@ const getDefaultCount = async function(getObject, spaceId, picklist, id){
     return await getObject('picklist_options').count({filters: filters});
 }
 
+const validateColorValue = (value)=>{
+    if(value){
+        const reg = /^(#)?[\da-f]{3}([\da-f]{3})?$/i;
+        if(!reg.test(value)){
+            throw new Error("picklist_options_error_color_not_valid");
+        }
+    }
+}
+
 module.exports = {
 
     listenTo: 'picklist_options',
@@ -46,6 +55,7 @@ module.exports = {
                 throw new Error("默认值只能有一个");
             }
         }
+        validateColorValue(doc.color);
     },
     beforeUpdate: async function () {
         var doc = this.doc
@@ -72,5 +82,6 @@ module.exports = {
                 throw new Error("默认值只能有一个");
             }
         }
+        validateColorValue(doc.color);
     }
 }

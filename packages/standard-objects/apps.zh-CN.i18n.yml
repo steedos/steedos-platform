@@ -4,14 +4,14 @@ apps_field_code: API 名称
 apps_field_description: 描述
 apps_field_icon: 旧版图标
 apps_field_icon_slds: 图标
-apps_field_is_creator: 显示在应用菜单中
+apps_field_is_creator: 显示在桌面菜单中
 apps_field_is_new_window: 在新窗口打开
 apps_field_is_use_ie: 使用IE打开(需使用Steedos桌面客户端)
 apps_field_is_use_iframe: 使用iframe打开
 apps_field_members: 授权对象
 apps_field_members_organizations: 授权部门
 apps_field_members_users: 授权人员
-apps_field_mobile: 显示在移动应用中
+apps_field_mobile: 显示在手机菜单中
 apps_field_name: 名称
 apps_field_oauth2_callback_url: 回调 URL
 apps_field_oauth2_enabled: 启用 OAuth2
@@ -21,8 +21,8 @@ apps_field_oauth2_scopes: 范围
 apps_field_oauth2_scopes_options_full: 完全访问权限 (full)
 apps_field_oauth2_scopes_options_openid: 允许访问您的唯一标志符 (openid)
 apps_field_oauth2_scopes_options_profile: '访问基本信息 (id, profile, email, address, phone)'
-apps_field_objects: 主菜单项
-apps_field_mobile_objects: 移动端菜单项
+apps_field_objects: 桌面主菜单
+apps_field_mobile_objects: 手机主菜单
 apps_field_on_click: 链接脚本
 apps_field_saml_acs_url: ACS Url
 apps_field_saml_enabled: 启用 SAML
@@ -39,7 +39,11 @@ apps_field_secret: API 密钥
 apps_field_sort: 排序
 apps_field_url: 外部链接
 apps_field_visible: 启用
+apps_field_is_system: 系统
 apps_group_oauth2: OAuth2
 apps_group_saml: SAML
+apps_group_business_object: 业务对象
 apps_group_external_application: 外接应用
 apps_listview_all: 所有
+apps_action_customize: 自定义
+apps_action_reset: 重置

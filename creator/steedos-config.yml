@@ -1,12 +1,14 @@
 datasources:
   default:
     connection: 
-      url: mongodb://127.0.0.1/steedos
+      url: ${MONGO_URL}
 public:
   cfs:
     store: "local"
     local: 
       folder: "./storage"
+  templateSpaceId: template
 plugins:
-  - "@steedos/app-contracts"
+  - "@steedos/app-crm"
   - "@steedos/steedos-plugin-workflow"
+enable_holidays: true

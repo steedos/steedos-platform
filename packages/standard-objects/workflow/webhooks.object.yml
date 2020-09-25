@@ -1,6 +1,7 @@
 name: webhooks
 icon: metrics
 label: Webhook
+hidden: true
 fields:
   name:
     label: Name

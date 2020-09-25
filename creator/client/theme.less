@@ -1,3 +1,12 @@
+input::-webkit-contacts-auto-fill-button {
+    // 隐藏safari浏览器中新建记录时文本框会出现的自动填充人按钮
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+}
+
 .steedos.creator .creator-content-wrapper .content-wrapper {
     top: 0;
 }
@@ -51,5 +60,35 @@
         // 参考saleforce这块是用的12px
         font-size: 12px;
         min-width: 172px;
+    }
+
+    .creator-mobile-header{
+        .steedos-header-favorites, .header-notifications{
+            section.slds-popover {
+                position: fixed !important;
+                top: 44px !important;
+                left: 10px !important;
+                right: 10px !important;
+                bottom: auto;
+                width: auto;
+                left: 0 !important;
+                right: 0 !important;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-radius: 0;
+                &:after,&:before{
+                    visibility: hidden;
+                }
+            }
+        }
+    }
+
+    #chooseFlowTree-myFavorite__label{
+        a{
+            svg{
+                display: inline;
+            }
+        }
     }
 }

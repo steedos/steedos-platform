@@ -69,9 +69,12 @@ workflowSpaceRoutes.route '/print/:instanceId',
 		Session.set("box", queryParams.box);
 		Session.set("instance_change", false);
 
-		localStorage.setItem "print_is_show_attachments", !!queryParams.show_attachments
-		localStorage.setItem "print_is_show_traces", !!queryParams.show_traces
-		localStorage.setItem "print_is_show_traces_simplify", !!queryParams.show_traces_simplify
+		if _.has(queryParams, 'show_attachments')
+			localStorage.setItem "print_is_show_attachments", !!queryParams.show_attachments
+		if _.has(queryParams, 'show_traces')
+			localStorage.setItem "print_is_show_traces", !!queryParams.show_traces
+		if _.has(queryParams, 'show_traces_simplify')
+			localStorage.setItem "print_is_show_traces_simplify", !!queryParams.show_traces_simplify
 
 		BlazeLayout.render 'printLayout',
 			main: "instancePrint"
@@ -130,53 +133,3 @@ workflowSpaceRoutes.route '/:box/:instanceId',
 		Session.set("instanceId", null);
 		Session.set('flow_selected_opinion', undefined);
 	]
-
-FlowRouter.route '/workflow/designer',
-	triggersEnter: [checkUserSigned],
-	action: (params, queryParams)->
-		Steedos.openWindow Steedos.absoluteUrl("/packages/steedos_admin/assets/designer/index.html?locale=#{Steedos.locale()}&space=#{Steedos.spaceId()}")
-		Meteor.setTimeout ->
-			FlowRouter.go "/admin/home/"
-
-FlowRouter.route '/admin/flows',
-	triggersEnter: [checkUserSigned],
-	action: (params, queryParams)->
-		BlazeLayout.render 'adminLayout',
-			main: "admin_flows"
-
-FlowRouter.route '/admin/importorexport/flows',
-	triggersEnter: [checkUserSigned],
-	action: (params, queryParams)->
-		BlazeLayout.render 'adminLayout',
-			main: "admin_import_export_flows"
-
-FlowRouter.route '/admin/categories',
-	triggersEnter: [checkUserSigned],
-	action: (params, queryParams)->
-		BlazeLayout.render 'adminLayout',
-			main: "admin_categories"
-
-
-FlowRouter.route '/admin/instance_number_rules',
-	triggersEnter: [checkUserSigned],
-	action: (params, queryParams)->
-		BlazeLayout.render 'adminLayout',
-			main: "admin_instance_number_rules"
-
-FlowRouter.route '/admin/workflow/flow_positions',
-	triggersEnter: [checkUserSigned],
-	action: (params, queryParams)->
-		BlazeLayout.render 'adminLayout',
-			main: "admin_flow_positions"
-
-FlowRouter.route '/admin/workflow/flow_roles',
-	triggersEnter: [checkUserSigned],
-	action: (params, queryParams)->
-		BlazeLayout.render 'adminLayout',
-			main: "admin_flow_roles"
-
-FlowRouter.route '/admin/workflow/process_delegation_rules',
-	triggersEnter: [checkUserSigned],
-	action: (params, queryParams)->
-		BlazeLayout.render 'adminLayout',
-			main: "admin_process_delegation_rules"

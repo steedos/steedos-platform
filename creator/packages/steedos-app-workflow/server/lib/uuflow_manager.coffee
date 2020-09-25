@@ -1,5 +1,6 @@
 Cookies = require("cookies")
-_eval = require('eval');
+_eval = require('eval')
+steedosCore = require('@steedos/core')
 
 uuflowManager = {}
 
@@ -524,16 +525,21 @@ uuflowManager.getNextSteps = (instance, flow, step, judge) ->
 	rev_nextSteps = _.uniq(rev_nextSteps)
 	return rev_nextSteps
 
-uuflowManager.getUpdatedValues = (instance) ->
-
+uuflowManager.getUpdatedValues = (instance, approve_id) ->
 	# 取得最新的approve
 	trace_approve = null
 	_.each(instance.traces, (trace) ->
 		if trace.is_finished is false
-			trace_approve = _.find(trace.approves, (approve) ->
-				return approve.is_finished is false and approve.type isnt 'cc' and approve.type isnt 'distribute'
-			)
+			if approve_id
+				trace_approve = _.find(trace.approves, (approve) ->
+					return approve._id == approve_id
+				)
+			else
+				trace_approve = _.find(trace.approves, (approve) ->
+					return approve.is_finished is false and approve.type isnt 'cc' and approve.type isnt 'distribute'
+				)
 	)
+
 	# 取得最新的values
 	newest_values = null
 	if not instance.values
@@ -963,7 +969,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 					newTrace.step = next_step_id
 					newTrace.name = next_step_name
 					newTrace.start_date = new Date
-					newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours)
+					newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id)
 					newTrace.approves = new Array
 
 					updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))
@@ -1171,7 +1177,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 							newTrace.step = next_step_id
 							newTrace.name = next_step_name
 							newTrace.start_date = new Date
-							newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours)
+							newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id)
 							newTrace.approves = new Array
 
 							updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))
@@ -1376,7 +1382,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 								newTrace.step = next_step_id
 								newTrace.name = next_step_name
 								newTrace.start_date = new Date
-								newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours)
+								newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id)
 								newTrace.approves = new Array
 
 								updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))
@@ -1537,7 +1543,9 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 				setObj.traces = instance_traces
 				setObj.finish_date = new Date
 
-				setObj.values = instance.values
+				updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id), approve_id)
+				setObj.values = updated_values
+				setObj.name = uuflowManager.getInstanceName(instance)
 				if instance.cc_users
 					setObj.cc_users = instance.cc_users
 
@@ -1568,7 +1576,7 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 							newTrace.step = next_step_id
 							newTrace.name = next_step_name
 							newTrace.start_date = new Date
-							newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours)
+							newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id)
 							newTrace.approves = new Array
 							_.each next_step_users, (next_step_user_id, idx) ->
 								# 插入下一步trace.approve记录
@@ -1629,7 +1637,10 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 							setObj.traces = instance_traces
 
 							setObj.state = "pending"
-							setObj.values = instance.values
+
+							updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id), approve_id)
+							setObj.values = updated_values
+							setObj.name = uuflowManager.getInstanceName(instance)
 							if instance.cc_users
 								setObj.cc_users = instance.cc_users
 
@@ -1655,7 +1666,10 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 			setObj.traces = instance_traces
 
 			setObj.state = "pending"
-			setObj.values = instance.values
+
+			updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id), approve_id)
+			setObj.values = updated_values
+			setObj.name = uuflowManager.getInstanceName(instance)
 			if instance.cc_users
 				setObj.cc_users = instance.cc_users
 
@@ -1943,11 +1957,12 @@ uuflowManager.getCurrentStepAutoSubmit = (timeout_auto_submit, lines)->
 
 	return false
 
-uuflowManager.getDueDate = (hours)->
+uuflowManager.getDueDate = (hours, spaceId) ->
 	if hours
-		due_time = new Date().getTime() + (1000 * 60 * 60 * hours)
-		return new Date(due_time)
-
+		return Meteor.wrapAsync((start, hours, spaceId, cb) ->
+				steedosCore.getTimeoutDateWithoutHolidays(start, hours, spaceId).then (resolve, reject) ->
+					cb(reject, resolve)
+			)(new Date(), hours, spaceId)
 	return undefined
 
 
@@ -2186,7 +2201,7 @@ uuflowManager.submit_instance = (instance_from_client, user_info) ->
 					nextTrace.step = next_step._id
 					nextTrace.name = next_step.name
 					nextTrace.start_date = new Date
-					nextTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours)
+					nextTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id)
 					nextTrace.approves = new Array
 
 					updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))

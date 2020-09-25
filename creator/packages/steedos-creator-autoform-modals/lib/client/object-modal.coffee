@@ -22,7 +22,7 @@ oDataOperation = (type, url, data, object_name, operation)->
 			result.value = value
 			self.done(null, result)
 		error: (jqXHR, textStatus, errorThrown) ->
-			self.done(jqXHR.responseJSON)
+			self.done(jqXHR.responseJSON.error)
 
 getObjectName = (collectionName)->
 	return collectionName.replace(/Creator.Collections./, "")
@@ -32,8 +32,7 @@ getSimpleSchema = (collectionName)->
 		object_name = getObjectName collectionName
 		object_fields = Creator.getObject(object_name).fields
 		_fields = Creator.getFields(object_name)
-		schema = Creator.getObject(object_name).schema._schema
-
+		schema = Creator.getRecordSafeObjectSchema({}, object_name)
 		final_schema = schema
 
 		if true
@@ -66,6 +65,10 @@ Template.CreatorObjectModal.onCreated ()->
 
 	if !@data.operation
 		throw new Meteor.Error("500", "缺少参数operation")
+	collection = Template.instance().data.collection
+	this.__schema = new ReactiveVar(getSimpleSchema(collection))
+	this.__record = new ReactiveVar(this.doc || {});
+	FormManager.runHook(@data.object_name, 'edit', 'before', {schema: this.__schema, record: this.__record});
 
 Template.CreatorObjectModal.onRendered ()->
 	template = @
@@ -192,9 +195,10 @@ Template.CreatorObjectModal.onRendered ()->
 
 
 Template.CreatorObjectModal.helpers
+	doc: ()->
+		return Template.instance().__record.get();
 	schema: ()->
-		collection = Template.instance().data.collection
-		return getSimpleSchema(collection)
+		return Template.instance().__schema.get()
 	title: ()->
 		data_title = Template.instance().data.title
 		if data_title
@@ -216,12 +220,16 @@ Template.CreatorObjectModal.helpers
 		object_name = Template.instance().data.object_name
 		keys = []
 		if cmCollection
-			schemaInstance = getSimpleSchema(object_name)
+			schemaInstance = Template.instance().__schema.get()
 			schema = schemaInstance._schema
 
 			firstLevelKeys = schemaInstance._firstLevelSchemaKeys
 
-			permission_fields = _.clone(Creator.getFields(object_name))
+			_permission_fields = _.clone(Creator.getRecordSafeFields({}, object_name))
+			permission_fields = []
+			_.each _permission_fields, (_sf, k)->
+				if !_sf.disabled
+					permission_fields.push(k)
 			unless permission_fields
 				permission_fields = []
 
@@ -277,8 +285,29 @@ Template.CreatorObjectModal.helpers
 Template.CreatorObjectModal.events
 	'click button.btn-insert': (event,template) ->
 		$("#"+template.data.formId, "#creatorObjectModal").submit()
+	'change form': (event, template)->
+		object_name = template.data.object_name
+		formId = template.data.formId
+		validate = FormManager.validate(object_name, formId);
+		if(!validate)
+			event.preventDefault()
+			event.stopPropagation()
+		else
+			_doc = AutoForm.getFormValues(formId)?.insertDoc
+			FormManager.runHook(object_name, 'edit', 'after', {schema: template.__schema, record: template.__record, doc: _doc});
 
 Template.CreatorObjectFields.helpers
 	isDisabled :(key)->
 		fields = Template.instance().data.fields
 		return fields[key].disabled
+	getLabel: (key)->
+		return AutoForm.getLabelForField(key)
+	disabledFieldsValue: (key)->
+		cmCollection = Template.instance().data.collection
+		object_name = Template.instance().data.object_name
+		if cmCollection
+			fields = Creator.getObject(object_name).fields
+			defaultValue = fields[key].defaultValue
+			if _.isFunction(defaultValue)
+				defaultValue = defaultValue()
+			return defaultValue

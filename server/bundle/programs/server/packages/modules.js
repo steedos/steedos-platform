@@ -241,18 +241,17 @@ install("meteorhacks:meteorx");
 install("meteorhacks:unblock");
 install("steedos:lightning-design-system");
 install("steedos:odata");
+install("steedos:object-database");
 install("steedos:mailqueue");
-install("chuangbo:cookie");
-install("steedos:sso");
 install("steedos:webhookqueue");
-install("steedos:api-authenticate-user");
 install("steedos:huaweipush");
 install("steedos:api");
 install("meteorhacks:ssr");
 install("steedos:autoform-filesize");
 install("steedos:autoform-location");
+install("chuangbo:cookie");
+install("steedos:sso");
 install("steedos:autoform");
-install("steedos:app-base");
 install("steedos:creator");
 install("steedos:instance-record-queue");
 install("steedos:app-chat");
@@ -271,8 +270,6 @@ install("jeremy:selectize");
 install("comerc:autoform-selectize");
 install("react-template-helper");
 install("steedos:webkit-notification");
-install("vazco:universe-selectize");
-install("steedos:cms");
 install("hot-code-push");
 install("launch-screen");
 install("autoupdate", "meteor/autoupdate/autoupdate_server.js");
@@ -456,34 +453,7 @@ module.useNode();
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}}},"bcrypt":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/bcrypt/package.json                                                                 //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "bcrypt",
-  "version": "3.0.6",
-  "main": "./bcrypt"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"bcrypt.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/bcrypt/bcrypt.js                                                                    //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}},"length-stream":{"package.json":function(require,exports,module){
+}}}},"length-stream":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -843,7 +813,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.20.14",
+  "version": "1.22.0-alpha.9",
   "main": "lib/index.js"
 };
 
@@ -860,6 +830,33 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+}}},"objectql":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/@steedos/objectql/package.json                                                      //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "@steedos/objectql",
+  "version": "1.22.0-alpha.9",
+  "main": "lib/index.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/@steedos/objectql/lib/index.js                                                      //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }}},"i18n":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -870,7 +867,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.20.14",
+  "version": "1.22.0-alpha.9",
   "main": "lib/index.js"
 };
 
@@ -897,7 +894,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.20.14",
+  "version": "1.22.0-alpha.9",
   "main": "lib/index.js"
 };
 
@@ -914,7 +911,34 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"filters":{"package.json":function(require,exports,module){
+}}},"license":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/@steedos/license/package.json                                                       //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "@steedos/license",
+  "version": "1.22.0-alpha.13",
+  "main": "main.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"main.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/@steedos/license/main.js                                                            //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}},"filters":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -924,7 +948,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.20.14",
+  "version": "1.22.0-alpha.9",
   "main": "lib/index.js"
 };
 
@@ -1005,7 +1029,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "moment",
-  "version": "2.26.0",
+  "version": "2.28.0",
   "main": "./moment.js"
 };
 
@@ -1485,7 +1509,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "jszip",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "main": "./lib/index"
 };
 

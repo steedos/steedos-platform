@@ -1,7 +1,7 @@
 
 import { Response } from 'express';
 import steedosAuth = require("@steedos/auth");
-import { getObjectList, getObjectRecent, createObjectData, getObjectData, updateObjectData, deleteObjectData } from './server';
+import { getObjectList, getObjectRecent, createObjectData, getObjectData, updateObjectData, deleteObjectData, excuteObjectMethod } from './server';
 
 
 var express = require('express');
@@ -31,5 +31,5 @@ router.post('/:spaceId/:objectName', createObjectData)
 router.get('/:spaceId/:objectName/:_id', getObjectData)
 router.put('/:spaceId/:objectName/:_id', updateObjectData)
 router.delete('/:spaceId/:objectName/:_id', deleteObjectData)
-
+router.all('/:spaceId/:objectName/:_id/:methodName', excuteObjectMethod);
 export default router

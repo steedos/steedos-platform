@@ -26,5 +26,16 @@ module.exports = {
       }
     }
     return true;
+  },
+
+  office_online_preview: function (object_name, record_id) {
+    var file, fileId, ref, url;
+    file = this.record;
+    
+    fileId = file != null ? (ref = file.versions) != null ? ref[0] : void 0 : void 0;
+    
+    url = window.location.origin + Steedos.absoluteUrl("/api/files/files/" + fileId);
+    
+    Creator.officeOnlinePreview(url);
   }
 }

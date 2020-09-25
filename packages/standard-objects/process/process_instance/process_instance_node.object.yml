@@ -1,0 +1,59 @@
+name: process_instance_node
+label: process_instance_node
+hidden: true
+icon: record
+fields:
+  process_node_name:
+    type: text
+    is_name: true
+  process_instance:
+    type: lookup
+    reference_to: process_instance
+  process_node:
+    type: lookup
+    reference_to: process_node
+  node_status:
+    type: select
+    options:
+      - approved
+      - fault
+      - held
+      - no_response
+      - pending
+      - reassigned
+      - rejected
+      - removed
+      - started
+  completed_date:
+    type: datetime
+    label: Completed Date
+  last_actorId:
+    type: lookup
+    reference_to: users
+  elapsed_time_in_days:
+    type: number
+    precision: 18
+    scale: 0
+  elapsed_time_in_hours:
+    type: number
+    precision: 5
+    scale: 2
+  elapsed_time_in_minutes:
+    type: number
+    precision: 8
+    scale: 0
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true

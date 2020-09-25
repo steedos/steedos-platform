@@ -6,7 +6,10 @@ import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
+import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
+import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
+const clone = require('clone')
 
 abstract class SteedosObjectProperties {
     _id?: string
@@ -57,9 +60,9 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
 
-const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterInsert', 'afterUpdate', 'afterDelete']
+const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
 
-const properties = ['label', 'icon', 'enable_search', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_trash', 'enable_space_global', 'enable_tree', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods']
+const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList']
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -244,7 +247,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     registerTrigger(trigger: SteedosTriggerType) {
         //如果是meteor mongo 则不做任何处理
-        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo || trigger.when === 'beforeFind') {
+        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo || trigger.when === 'beforeFind' || trigger.when === 'afterFind' || trigger.when === 'afterFindOne' || trigger.when === 'afterCount' || trigger.when === 'beforeAggregate' || trigger.when === 'afterAggregate') {
             if (!this._triggersQueue[trigger.when]) {
                 this._triggersQueue[trigger.when] = {}
             }
@@ -351,7 +354,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         }
 
-        if (field_name == 'name' || field.is_name) {
+        if(field.is_name){
+            this._NAME_FIELD_KEY = field_name
+        }else if(field_name == 'name' && !this._NAME_FIELD_KEY){
             this._NAME_FIELD_KEY = field_name
         }
     }
@@ -426,11 +431,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
             modifyAllRecords: false,
             viewCompanyRecords: false,
             modifyCompanyRecords: false,
-            disabled_list_views: [],
-            disabled_actions: [],
-            unreadable_fields: [],
-            uneditable_fields: [],
-            unrelated_objects: []
+            disabled_list_views: null,
+            disabled_actions: null,
+            unreadable_fields: null,
+            uneditable_fields: null,
+            unrelated_objects: null
         }
 
         if (_.isEmpty(roles)) {
@@ -446,12 +451,26 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         if (v === false && _v === true) {
                             userObjectPermission[k] = _v
                         }
-                    } else if (_.isArray(v) && _.isArray(_v)) {
-                        userObjectPermission[k] = _.union(v, _v)
+                    } else if ((_.isArray(v) || _.isNull(v))) {
+                        if(!_.isArray(_v)){
+                            _v = []
+                        }
+                        if(_.isNull(v)){
+                            userObjectPermission[k] = _v
+                        }else{
+                            userObjectPermission[k] = _.intersection(v, _v)
+                        }
                     }
                 })
             }
         })
+
+
+        userObjectPermission.disabled_list_views = userObjectPermission.disabled_list_views || []
+        userObjectPermission.disabled_actions = userObjectPermission.disabled_actions || []
+        userObjectPermission.unreadable_fields = userObjectPermission.unreadable_fields || []
+        userObjectPermission.uneditable_fields = userObjectPermission.uneditable_fields || []
+        userObjectPermission.unrelated_objects = userObjectPermission.unrelated_objects || []
 
         let spaceId = userSession.spaceId
         if (isTemplateSpace(spaceId)) {
@@ -509,6 +528,27 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let clonedQuery = Object.assign({}, query);
         await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('find', this.table_name, clonedQuery, userSession)
+    }
+
+    // 此函数支持driver: MeteorMongo
+    async aggregate(query: SteedosQueryOptions, externalPipeline, userSession?: SteedosUserSession) {
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('aggregate', this.table_name, clonedQuery, externalPipeline, userSession)
+    }
+
+    // 此函数支持driver: MeteorMongo
+    async directAggregate(query: SteedosQueryOptions, externalPipeline: any[], userSession?: SteedosUserSession) {
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('directAggregate', this.table_name, clonedQuery, externalPipeline, userSession)
+    }
+
+    // 此函数支持driver: MeteorMongo，类似于aggregate，其参数externalPipeline放在最前面而已
+    async directAggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline: any[], userSession?: SteedosUserSession) {
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('directAggregatePrefixalPipeline', this.table_name, clonedQuery, prefixalPipeline, userSession)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession) {
@@ -573,7 +613,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (_.isNull(userSession) || _.isUndefined(userSession)) {
             return true
         }
-        if (method === 'find' || method === 'findOne' || method === 'count') {
+        if (method === 'find' || method === 'findOne' || method === 'count' || method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
             return await this.allowFind(userSession)
         } else if (method === 'insert') {
             return await this.allowInsert(userSession)
@@ -607,6 +647,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
             context.query = args[args.length - 2]
         }
 
+        if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
+            context.query = args[args.length - 3]
+        }
+
         if (method === 'findOne' || method === 'update' || method === 'delete') {
             context.id = args[1]
         }
@@ -631,16 +675,21 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (userObjectUnreadableFields.length > 0) {
             let queryFields = [];
 
-            if (!(query.fields && query.fields.length)) {
-                queryFields = _.keys(this.toConfig().fields)
-            }
-
             if (_.isArray(query.fields)) {
                 queryFields = query.fields
             } else if (_.isString(query.fields)) {
                 queryFields = query.fields.split(',')
             }
 
+            if (!(query.fields && query.fields.length)) {
+                queryFields = _.keys(this.toConfig().fields)
+                _.each(queryFields, function(fieldName, index){
+                    if(fieldName && fieldName.indexOf("$") > -1){
+                        delete queryFields[index];
+                    }
+                })
+                queryFields = _.compact(queryFields)
+            }
             queryFields = _.difference(queryFields, userObjectUnreadableFields)
 
             if (queryFields.length < 1) {
@@ -693,25 +742,90 @@ export class SteedosObjectType extends SteedosObjectProperties {
             await this.dealWithMethodPermission(method, args);
         }
 
-        let returnValue;
-
-
+        let returnValue: any;
+        let userSession: SteedosUserSession;
         if (this.isDirectCRUD(method)) {
-            let userSession = args[args.length - 1]
+            userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
         } else {
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             await this.runBeforeTriggers(method, beforeTriggerContext)
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
-            let userSession = args[args.length - 1]
+            let previousDoc = clone(afterTriggerContext.previousDoc);
+            userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
+            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
+                let values = returnValue || {}
+                if(method === 'count'){
+                    values = returnValue || 0
+                }
+                Object.assign(afterTriggerContext, {data: {values: values}})
+            }
             await this.runAfterTriggers(method, afterTriggerContext)
+            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
+                if(_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))){
+                    return returnValue
+                }else{
+                    return afterTriggerContext.data.values
+                }
+            }
+            // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
+            await this.runRecordFormula(method, args, userSession ? userSession.userId : undefined);
+            await this.runRecordSummaries(method, args, previousDoc, userSession);
         }
-
         return returnValue
     };
+
+    private async runRecordFormula(method: string, args: Array<any>, currentUserId: any) {
+        if(["insert", "update", "updateMany"].indexOf(method) > -1){
+            if(method === "updateMany"){
+                // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
+                // let filters: SteedosQueryFilters = args[1];
+                // await runManyCurrentObjectFieldFormulas(objectName, filters, userSession);
+            }
+            else{
+                let objectName = args[0], recordId: string, doc: JsonMap;
+                if(method === "insert"){
+                    doc = args[1];
+                    recordId = <string>doc._id;
+                }
+                else{
+                    recordId = args[1];
+                    doc = args[2];
+                }
+                await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
+                if(method === "update"){
+                    // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
+                    await runQuotedByObjectFieldFormulas(objectName, recordId, currentUserId);
+                }
+            }
+        }
+    }
+
+    private async runRecordSummaries(method: string, args: Array<any>, previousDoc: any, userSession: any) {
+        if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
+            if(method === "updateMany"){
+                // TODO:暂时不支持updateMany汇总计算，因为拿不到修改了哪些数据
+            }
+            else{
+                let objectName = args[0], recordId: string, doc: JsonMap;
+                if(method === "insert"){
+                    doc = args[1];
+                    recordId = <string>doc._id;
+                }
+                else{
+                    recordId = args[1];
+                    doc = args[2];
+                }
+                if(method === "insert"){
+                    await runCurrentObjectFieldSummaries(objectName, recordId);
+                }
+                await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, userSession);
+            }
+        }
+    }
 
     /**
      * 把query.filters用formatFiltersToODataQuery转为odata query
@@ -720,8 +834,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private dealWithFilters(method: string, args: any[]) {
         let userSession = args[args.length - 1];
         if (userSession) {
-            if (method === 'find' || method === 'count') {
+            if (method === 'find' || method === 'count' || method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                 let query = args[args.length - 2];
+                if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
+                    query = args[args.length - 3];
+                }
                 if (query.filters && !_.isString(query.filters)) {
                     query.filters = formatFiltersToODataQuery(query.filters, userSession);
                 }
@@ -735,8 +852,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let spaceId = userSession.spaceId;
             let userId = userSession.userId;
             let objPm = await this.getUserObjectPermission(userSession);
-            if (method === 'find' || method === 'count' || method === 'findOne') {
+            if (method === 'find' || method === 'count' || method === 'findOne' || method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                 let query = args[args.length - 2];
+                if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
+                    query = args[args.length - 3];
+                }
+
                 if (query.filters && !_.isString(query.filters)) {
                     query.filters = formatFiltersToODataQuery(query.filters);
                 }

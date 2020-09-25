@@ -62,19 +62,19 @@ if Meteor.isClient
 
 		url = accountBgBodyValue.url
 		avatar = accountBgBodyValue.avatar
-		if accountBgBodyValue.url
-			if url == avatar
-				avatarUrl = 'api/files/avatars/' + avatar
-				$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(avatarUrl)})"
-			else
-				$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(url)})"
-		else
-			background = Meteor.settings?.public?.admin?.background
-			if background
-				$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(background)})"
-			else
-				background = "/packages/steedos_theme/client/background/sea.jpg"
-				$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(background)})"
+		# if accountBgBodyValue.url
+		# 	if url == avatar
+		# 		avatarUrl = 'api/files/avatars/' + avatar
+		# 		$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(avatarUrl)})"
+		# 	else
+		# 		$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(url)})"
+		# else
+		# 	background = Meteor.settings?.public?.admin?.background
+		# 	if background
+		# 		$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(background)})"
+		# 	else
+		# 		background = "/packages/steedos_theme/client/background/sea.jpg"
+		# 		$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(background)})"
 
 		if isNeedToLocal
 			if Meteor.loggingIn()

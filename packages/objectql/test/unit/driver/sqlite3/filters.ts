@@ -4,6 +4,9 @@ import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
+const connectConfig = {
+    url: databaseUrl
+};
 let tableName = "TestFiltersForSqlite3";
 let driver: SteedosSqlite3Driver;
 
@@ -23,7 +26,7 @@ describe('filters for sqlite3 database', () => {
             title: "filter records with filters",
             options: {
                 fields: ["id", "name"],
-                filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
+                filters: [["name", "=", "ptr"], ["title", "=", "This is PTR"]]
             },
             expected: {
                 length: 1
@@ -33,7 +36,7 @@ describe('filters for sqlite3 database', () => {
             title: "filter records with odata query string",
             options: {
                 fields: ["id", "name"],
-                filters: "(name eq 'ptr') and (title eq 'PTR')"
+                filters: "(name eq 'ptr') and (title eq 'This is PTR')"
             },
             expected: {
                 length: 1
@@ -160,6 +163,16 @@ describe('filters for sqlite3 database', () => {
             }
         },
         {
+            title: "filter records with operator: eq and contains",
+            options: {
+                fields: ["id", "name"],
+                filters: [["title", "=", "This is PTR"], ["name", "contains", "p"]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        {
             title: "filter records with operator: notcontains",
             options: {
                 fields: ["id", "name"],
@@ -174,7 +187,7 @@ describe('filters for sqlite3 database', () => {
             function: "count",
             options: {
                 fields: ["id", "name"],
-                filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
+                filters: [["name", "=", "ptr"], ["title", "=", "This is PTR"]]
             },
             expected: {
                 eq: 1
@@ -185,7 +198,7 @@ describe('filters for sqlite3 database', () => {
             function: "count",
             options: {
                 fields: ["id", "name"],
-                filters: "(name eq 'ptr') and (title eq 'PTR')"
+                filters: "(name eq 'ptr') and (title eq 'This is PTR')"
             },
             expected: {
                 eq: 1
@@ -194,37 +207,38 @@ describe('filters for sqlite3 database', () => {
     ];
 
     before(async () => {
-        let mySchema = new SteedosSchema({
-            datasources: {
-                default: {
-                    driver: SteedosDatabaseDriverType.Sqlite,
-                    url: databaseUrl,
-                    objects: {
-                        test: {
-                            label: 'Sqlite3 Schema',
-                            table_name: tableName,
-                            fields: {
-                                id: {
-                                    label: '主键',
-                                    type: 'text',
-                                    primary: true
-                                },
-                                name: {
-                                    label: '名称',
-                                    type: 'text'
-                                },
-                                title: {
-                                    label: '标题',
-                                    type: 'text'
-                                },
-                                count: {
-                                    label: '数量',
-                                    type: 'number'
-                                }
-                            }
+        let datasourceDefault: any = {
+            driver: SteedosDatabaseDriverType.Sqlite,
+            objects: {
+                test: {
+                    label: 'Sqlite3 Schema',
+                    table_name: tableName,
+                    fields: {
+                        id: {
+                            label: '主键',
+                            type: 'text',
+                            primary: true
+                        },
+                        name: {
+                            label: '名称',
+                            type: 'text'
+                        },
+                        title: {
+                            label: '标题',
+                            type: 'text'
+                        },
+                        count: {
+                            label: '数量',
+                            type: 'number'
                         }
                     }
                 }
+            }
+        };
+        datasourceDefault = { ...datasourceDefault, ...connectConfig };
+        let mySchema = new SteedosSchema({
+            datasources: {
+                DatasourcesDriverTest: datasourceDefault
             }
         });
         const datasource = mySchema.getDataSource("DatasourcesDriverTest");
@@ -234,8 +248,8 @@ describe('filters for sqlite3 database', () => {
     });
 
     beforeEach(async () => {
-        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR", count: 120 });
-        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC", count: 18 });
+        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "This is PTR", count: 120 });
+        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "This is CNPC", count: 18 });
 
         let queryOptions: SteedosQueryOptions = tests[testIndex].options;
         expected = tests[testIndex].expected;

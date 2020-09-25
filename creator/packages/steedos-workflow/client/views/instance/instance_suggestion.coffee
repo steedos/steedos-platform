@@ -141,8 +141,10 @@ Template.instance_suggestion.helpers
 
 		currentApprove = Tracker.nonreactive(InstanceManager.getCurrentApprove);
 		currentStep = InstanceManager.getCurrentStep();
-		# if (currentStep?.step_type == 'start' || !currentApprove?.next_steps) && nextStep?.step_type == 'counterSign' && !_.isEmpty(getStepApproves(nextStep._id))
-		# 	selectedUser = users
+		if Meteor.settings.public?.workflow?.autoPickNextStepUsersAtCounterSignStep != false
+			# 会签步骤中默认选中下一步骤处理人，除非开关量设置为false
+			if (currentStep?.step_type == 'start' || !currentApprove?.next_steps) && nextStep?.step_type == 'counterSign' && !_.isEmpty(getStepApproves(nextStep._id))
+				selectedUser = users
 
 		if next_user && next_user.length > 0
 
@@ -378,10 +380,10 @@ Template.instance_suggestion.events
 	'click #instance_submit': (event)->
 		if Session.get("box") == "draft" && !Template.instance_pick_approve_users.validate()
 			return
-		if WorkflowManager.isArrearageSpace()
+		if !Steedos.hasFeature('workflow', Steedos.getSpaceId())
 			ins = WorkflowManager.getInstance();
 			if ins.state == "draft"
-				toastr.error(t("spaces_isarrearageSpace"));
+				Steedos.spaceUpgradedModal()
 				return
 
 		if InstanceManager.isAttachLocked(Session.get('instanceId'), Meteor.userId())

@@ -1,6 +1,7 @@
 name: cms_sites
 icon: app
 label: Site
+hidden: true
 fields:
   type:
     label: Type
@@ -44,11 +45,10 @@ fields:
     type: number
   admins:
     type: lookup
-    label: Site Members
+    label: Site Members(Private)
     is_wide: true
     reference_to: users
     multiple: true
-    required: true
     defaultValue: "[{userId}]"
   description:
     label: Description

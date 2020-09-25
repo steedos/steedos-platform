@@ -74,6 +74,7 @@ Template.new_flow_modal.events
 				Modal.hide(template)
 
 			error: (jqXHR, textStatus, errorThrown) ->
+				toastr.error(jqXHR.responseText);
 				event.currentTarget.disabled = false;
 				console.error errorThrown
 

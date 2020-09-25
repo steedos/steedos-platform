@@ -1,4 +1,4 @@
-object_workflows__object: 对象流程
+object_workflows__object: 对象流程映射
 object_workflows_field_field_map: 字段映射关系（对象至表单）
 object_workflows_field_field_map_$_object_field: 对象字段
 object_workflows_field_field_map_$_workflow_field: 表单字段
@@ -31,3 +31,4 @@ object_workflows_field_field_map_$_workflow_field_final_decision: 最终意见
 object_workflows_group_script: 脚本
 object_workflows_listview_all: 全部
 object_workflows_listview_default: 默认
+object_workflows_action_forceSync: 同步历史申请单

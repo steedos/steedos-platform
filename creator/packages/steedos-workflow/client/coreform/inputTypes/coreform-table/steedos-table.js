@@ -2,14 +2,14 @@ SteedosTable = {};
 
 SteedosTable.formId = "instanceform";
 
-SteedosTable.checkItem = function(field, item_index) {
+SteedosTable.checkItem = function (field, item_index) {
     var fieldObj = SteedosTable.getField(field);
 
     var fieldVal = SteedosTable.getItemModalValue(field, item_index);
 
     var sf_name = '';
     var rev = true;
-    fieldObj.sfields.forEach(function(sf) {
+    fieldObj.sfields.forEach(function (sf) {
         if (sf.permission == 'editable') {
             sf_name = fieldObj.code + "." + sf.code;
             if (!InstanceManager.checkFormFieldValue($("[name='" + sf_name + "']")[0])) {
@@ -21,32 +21,32 @@ SteedosTable.checkItem = function(field, item_index) {
     return rev;
 }
 
-SteedosTable.setTableItemValue = function(field, item_index, item_value) {
+SteedosTable.setTableItemValue = function (field, item_index, item_value) {
 
     var tableValue = SteedosTable.getTableValue(field);
     tableValue[item_index] = item_value;
 }
 
-SteedosTable.getTableItemValue = function(field, item_index) {
+SteedosTable.getTableItemValue = function (field, item_index) {
     return SteedosTable.getTableValue(field)[item_index];
 }
 
-SteedosTable.removeTableItem = function(field, item_index) {
+SteedosTable.removeTableItem = function (field, item_index) {
     var item_value = SteedosTable.getTableItemValue(field, item_index);
     item_value.removed = true;
 }
 
-SteedosTable.setTableValue = function(field, value) {
+SteedosTable.setTableValue = function (field, value) {
     $("table[name='" + field + "']").val({
         val: value
     });
 }
 
-SteedosTable.getTableValue = function(field) {
+SteedosTable.getTableValue = function (field) {
     return $("table[name='" + field + "']").val().val;
 }
 
-SteedosTable.getValidValue = function(field) {
+SteedosTable.getValidValue = function (field) {
     var value = SteedosTable.getTableValue(field);
 
     if (!value) {
@@ -55,7 +55,7 @@ SteedosTable.getValidValue = function(field) {
 
     var validValue = [];
 
-    value.forEach(function(v) {
+    value.forEach(function (v) {
         if (!v.removed) {
             validValue.push(v);
         }
@@ -64,7 +64,7 @@ SteedosTable.getValidValue = function(field) {
 }
 
 
-SteedosTable.handleData = function(field, values) {
+SteedosTable.handleData = function (field, values) {
 
     if (!values || !(values instanceof Array)) {
         return values;
@@ -72,16 +72,16 @@ SteedosTable.handleData = function(field, values) {
 
     var fieldObj = SteedosTable.getField(field);
 
-    values.forEach(function(v) {
-        fieldObj.sfields.forEach(function(f) {
+    values.forEach(function (v) {
+        fieldObj.sfields.forEach(function (f) {
             if (f.type == 'user' || f.type == 'group') {
                 var value = v[f.code]
                 if (f.is_multiselect) {
-                    if (value && value.length > 0 && typeof(value[0]) == 'object') {
+                    if (value && value.length > 0 && typeof (value[0]) == 'object') {
                         v[f.code] = v[f.code].getProperty("id");
                     }
                 } else {
-                    if (value && typeof(value) == 'object') {
+                    if (value && typeof (value) == 'object') {
                         v[f.code] = v[f.code].id;
                     }
                 }
@@ -109,7 +109,7 @@ SteedosTable.handleData = function(field, values) {
     return values;
 }
 
-SteedosTable.getField = function(field) {
+SteedosTable.getField = function (field) {
     var instanceFields = WorkflowManager.getInstanceFields();
     if (!instanceFields)
         return;
@@ -120,7 +120,7 @@ SteedosTable.getField = function(field) {
 }
 
 
-SteedosTable.getModalData = function(field, index) {
+SteedosTable.getModalData = function (field, index) {
 
     var data = {};
 
@@ -145,7 +145,7 @@ SteedosTable.getModalData = function(field, index) {
 
 
 
-SteedosTable.getItemModalValue = function(field, item_index) {
+SteedosTable.getItemModalValue = function (field, item_index) {
 
     if (!AutoForm.getFormValues("steedos_table_modal_" + field + "_" + item_index)) {
         return {}
@@ -156,14 +156,14 @@ SteedosTable.getItemModalValue = function(field, item_index) {
 }
 
 
-SteedosTable.addItem = function(field, index, _item_value) {
+SteedosTable.addItem = function (field, index, _item_value) {
     var keys = SteedosTable.getKeys(field);
     var item_value = _item_value || SteedosTable.getItemModalValue(field, index);
     $("tbody[name='" + field + "Tbody']").append(SteedosTable.getTr(keys, item_value, index, field, true))
 
 }
 
-SteedosTable.updateItem = function(field, index, _item_value) {
+SteedosTable.updateItem = function (field, index, _item_value) {
 
     var item = $("tr[name='" + field + "_item_" + index + "']");
 
@@ -175,7 +175,7 @@ SteedosTable.updateItem = function(field, index, _item_value) {
 
         var sfields = SteedosTable.getField(field).sfields;
 
-        keys.forEach(function(key) {
+        keys.forEach(function (key) {
             var sfield = sfields.findPropertyByPK("code", key);
 
             var value = item_value[key];
@@ -211,7 +211,7 @@ SteedosTable.updateItem = function(field, index, _item_value) {
 
 }
 
-SteedosTable.removeItem = function(field, index) {
+SteedosTable.removeItem = function (field, index) {
 
     $("tr[name='" + field + "_item_" + index + "']").hide();
 
@@ -220,7 +220,7 @@ SteedosTable.removeItem = function(field, index) {
     InstanceManager.runFormula(field);
 }
 
-SteedosTable.showModal = function(field, index, method) {
+SteedosTable.showModal = function (field, index, method) {
 
 
     var modalData = SteedosTable.getModalData(field, index);
@@ -231,7 +231,7 @@ SteedosTable.showModal = function(field, index, method) {
 
 }
 
-SteedosTable.getKeys = function(field) {
+SteedosTable.getKeys = function (field) {
     if (!AutoForm.getCurrentDataForForm(SteedosTable.formId)) {
         return [];
     }
@@ -248,7 +248,7 @@ SteedosTable.getKeys = function(field) {
 
 }
 
-SteedosTable.getThead = function(field, editable) {
+SteedosTable.getThead = function (field, editable) {
 
     var fieldObj = field;
     if (!_.isObject(field))
@@ -265,14 +265,14 @@ SteedosTable.getThead = function(field, editable) {
 
     if (editable) {
         // trs = "<th class='removed'></th>"
-		trs = ""
+        trs = ""
     }
 
     var sfields = fieldObj.sfields;
 
-    if(!sfields){
-    	return thead;
-	}
+    if (!sfields) {
+        return thead;
+    }
 
     var sf_length = sfields.length;
 
@@ -282,7 +282,7 @@ SteedosTable.getThead = function(field, editable) {
         width = 100 / (sf_length + wide_fields.length);
     }
 
-    sfields.forEach(function(sf, index) {
+    sfields.forEach(function (sf, index) {
 
         label = (sf.name != null && sf.name.length > 0) ? sf.name : sf.code;
 
@@ -306,19 +306,19 @@ SteedosTable.getThead = function(field, editable) {
     return thead;
 }
 
-SteedosTable.getTbody = function(keys, field, values, editable) {
+SteedosTable.getTbody = function (keys, field, values, editable, sfieldsEditable) {
     var tbody = "";
 
     if (values instanceof Array) {
-        values.forEach(function(value, index) {
-            tbody = tbody + SteedosTable.getTr(keys, value, index, field, editable);
+        values.forEach(function (value, index) {
+            tbody = tbody + SteedosTable.getTr(keys, value, index, field, editable, sfieldsEditable);
         });
     }
 
     return tbody;
 }
 
-SteedosTable.getTr = function(keys, item_value, index, field, editable) {
+SteedosTable.getTr = function (keys, item_value, index, field, editable, sfieldsEditable) {
 
     var fieldObj = field;
     if (!_.isObject(field))
@@ -326,13 +326,13 @@ SteedosTable.getTr = function(keys, item_value, index, field, editable) {
 
     var tr = "<tr id='" + fieldObj.code + "_item_" + index + "' name='" + fieldObj.code + "_item_" + index + "' data-index='" + index + "'"
 
-    if (editable) {
+    if (editable || sfieldsEditable) {
         tr = tr + "' class='item edit'"
     } else {
-        if(Steedos.isMobile()){
-			tr = tr + " class='item item-readonly'"
-        }else{
-			tr = tr + " class='item '"
+        if (Steedos.isMobile()) {
+            tr = tr + " class='item item-readonly'"
+        } else {
+            tr = tr + " class='item '"
         }
     }
 
@@ -350,7 +350,7 @@ SteedosTable.getTr = function(keys, item_value, index, field, editable) {
 
     var sfields = fieldObj.sfields;
 
-    keys.forEach(function(key) {
+    keys.forEach(function (key) {
         var sfield = sfields.findPropertyByPK("code", key);
 
         var value = item_value[key];
@@ -363,21 +363,21 @@ SteedosTable.getTr = function(keys, item_value, index, field, editable) {
     return tr;
 }
 
-SteedosTable.getRemoveTd = function(field, index) {
+SteedosTable.getRemoveTd = function (field, index) {
     // return "<td class='steedosTable-item-remove removed' data-index='" + index + "'><i class='fa fa-times' aria-hidden='true'></td>";
-	return ""
+    return ""
 }
 
-SteedosTable.getTd = function(field, index, value) {
+SteedosTable.getTd = function (field, index, value) {
     var td = "<td ";
 
     td = td + " class='steedosTable-item-field " + field.type + "' ";
 
     var td_value = "";
 
-    if(Meteor.isClient){
+    if (Meteor.isClient) {
         td_value = SteedosTable.getTDValue(field, value)
-    }else{
+    } else {
         locale = Template.instance().view.template.steedosData.locale
 
         utcOffset = Template.instance().view.template.steedosData.utcOffset
@@ -391,7 +391,7 @@ SteedosTable.getTd = function(field, index, value) {
 }
 
 
-SteedosTable.getTDValue = function(field, value) {
+SteedosTable.getTDValue = function (field, value) {
     var td_value = "";
     if (!field) {
         return td_value
@@ -403,14 +403,14 @@ SteedosTable.getTDValue = function(field, value) {
                 if (value) {
                     if (field.is_multiselect) {
                         if (value.length > 0) {
-                            if ("string" == typeof(value[0])) {
+                            if ("string" == typeof (value[0])) {
                                 td_value = CFDataManager.getFormulaSpaceUsers(value).getProperty("name").toString();
                             } else {
                                 td_value = value.getProperty("name").toString();
                             }
                         }
                     } else {
-                        if ("string" == typeof(value)) {
+                        if ("string" == typeof (value)) {
                             var u = CFDataManager.getFormulaSpaceUsers(value);
                             td_value = u ? u.name : '';
                         } else {
@@ -423,14 +423,14 @@ SteedosTable.getTDValue = function(field, value) {
                 if (value) {
                     if (field.is_multiselect) {
                         if (value.length > 0) {
-                            if ("string" == typeof(value[0])) {
+                            if ("string" == typeof (value[0])) {
                                 td_value = CFDataManager.getFormulaOrganizations(value).getProperty("name").toString();
                             } else {
                                 td_value = value.getProperty("name").toString();
                             }
                         }
                     } else {
-                        if ("string" == typeof(value)) {
+                        if ("string" == typeof (value)) {
                             var o = CFDataManager.getFormulaOrganization(value);
                             td_value = o ? o.name : '';
                         } else {
@@ -450,18 +450,18 @@ SteedosTable.getTDValue = function(field, value) {
                 td_value = value ? "<a href='mailto:" + value + "'>" + value + "</a>" : "";
                 break;
             case 'url':
-                if(value){
-                    if(value.indexOf("http") == 0){
+                if (value) {
+                    if (value.indexOf("http") == 0) {
                         try {
                             td_value = "<a href='" + encodeURI(value) + "' target='_blank'>" + value + "</a>";
                         } catch (e) {
                             td_value = "<a href='' target='_blank'>" + value + "</a>";
                         }
 
-                    }else{
+                    } else {
                         td_value = "<a href='http://" + encodeURI(value) + "' target='_blank'>http://" + value + "</a>";
                     }
-                }else{
+                } else {
                     td_value = "";
                 }
                 break;
@@ -510,12 +510,12 @@ SteedosTable.getTDValue = function(field, value) {
                 }
                 break;
             case 'odata':
-                if(value){
-					if (field.is_multiselect){
-						td_value = _.pluck(value, '@label').toString()
-					}else{
-						td_value = value['@label']
-					}
+                if (value) {
+                    if (field.is_multiselect) {
+                        td_value = _.pluck(value, '@label').toString()
+                    } else {
+                        td_value = value['@label']
+                    }
                 }
                 break;
             default:
@@ -530,10 +530,10 @@ SteedosTable.getTDValue = function(field, value) {
     return td_value;
 };
 
-if(Meteor.isClient){
+if (Meteor.isClient) {
     AutoForm.addInputType("table", {
         template: "afTable",
-        valueOut: function() {
+        valueOut: function () {
             var name = this.data("schemaKey");
             return SteedosTable.getValidValue(name);
         },
@@ -546,7 +546,7 @@ if(Meteor.isClient){
             "date": AutoForm.valueConverters.stringToDate,
             "dateArray": AutoForm.valueConverters.stringToDateArray
         },
-        contextAdjust: function(context) {
+        contextAdjust: function (context) {
             if (typeof context.atts.maxlength === 'undefined' && typeof context.max === 'number') {
                 context.atts.maxlength = context.max;
             }
@@ -555,7 +555,7 @@ if(Meteor.isClient){
     });
 
     Template.afTable.events({
-        'tap .steedos-table .steedosTable-item-add,.add-item-tr': function(event, template) {
+        'tap .steedos-table .steedosTable-item-add,.add-item-tr': function (event, template) {
             var name = template.data.name;
 
             var tableValue = SteedosTable.getTableValue(name);
@@ -565,15 +565,15 @@ if(Meteor.isClient){
             SteedosTable.showModal(name, new_item_index, "add");
         },
 
-        'tap .steedos-table .steedosTable-item-field': function(event, template) {
-            if (template.data.atts.editable) {
+        'tap .steedos-table .steedosTable-item-field': function (event, template) {
+            if (template.data.atts.editable || template.data.atts.sfieldsEditable) {
                 var field = template.data.name;
                 var index = event.currentTarget.dataset.index;
                 SteedosTable.showModal(field, index, "edit");
             }
         },
 
-        'tap .steedos-table .steedosTable-item-remove': function(event, template) {
+        'tap .steedos-table .steedosTable-item-remove': function (event, template) {
             var field = template.data.name;
             var item_index = event.currentTarget.dataset.index;
             Session.set("instance_change", true);
@@ -581,19 +581,21 @@ if(Meteor.isClient){
         },
 
         'tap .steedos-table .item-readonly': function (event, template) {
-			if (!template.data.atts.editable) {
-				var field = template.data.name;
-				var index = event.currentTarget.dataset.index;
-				SteedosTable.showModal(field, index, "read");
-			}
-		}
+            if (!template.data.atts.editable) {
+                var field = template.data.name;
+                var index = event.currentTarget.dataset.index;
+                SteedosTable.showModal(field, index, "read");
+            }
+        }
     });
 
 
 
-    Template.afTable.rendered = function() {
+    Template.afTable.rendered = function () {
 
         var field = this.data.name;
+
+        var sfieldsEditable = this.data.atts.sfieldsEditable;
 
         var keys = SteedosTable.getKeys(field);
         var validValue = SteedosTable.handleData(field, this.data.value);
@@ -601,13 +603,26 @@ if(Meteor.isClient){
 
         $("thead[name='" + field + "Thead']").html(SteedosTable.getThead(field, this.data.atts.editable));
 
-        $("tbody[name='" + field + "Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), this.data.atts.editable));
-        
+        $("tbody[name='" + field + "Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), this.data.atts.editable, sfieldsEditable));
+
         str = t("steedos_table_add_item");
-        addItemTr = "<tr class='add-item-tr'><td colspan='"+keys.length+"'><i class='ion ion-plus-round'></i>"+str+"</td></tr>";
+        addItemTr = "<tr class='add-item-tr'><td colspan='" + keys.length + "'><i class='ion ion-plus-round'></i>" + str + "</td></tr>";
 
         if (this.data.atts.editable) {
-           $("tfoot[name='" + field + "Tfoot']").append(addItemTr);
+            $("tfoot[name='" + field + "Tfoot']").append(addItemTr);
         }
+
+        var c = InstanceManager.getCurrentStep();
+        if (c.step_type == 'counterSign' || InstanceManager.ccHasEditPermission()) {
+            this.autorun(function () {
+                var data = Template.currentData();
+                var field = data.name;
+                var keys = SteedosTable.getKeys(field);
+                var validValue = SteedosTable.handleData(field, data.value);
+                SteedosTable.setTableValue(field, validValue);
+                $("tbody[name='" + field + "Tbody']").html(SteedosTable.getTbody(keys, field, SteedosTable.getTableValue(field), data.atts.editable, sfieldsEditable));
+            })
+        }
+
     };
 }

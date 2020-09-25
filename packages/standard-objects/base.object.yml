@@ -1,4 +1,5 @@
 name: base
+hidden: true
 fields:
   owner:
     label: Owner
@@ -286,6 +287,21 @@ fields:
         value: terminated
     omit: true
     hidden: true
+  _table:
+    label: Object Workflow Related Form Table Item Info
+    type: object
+    omit: true
+    hidden: true
+  _table._id:
+    type: text
+    label: Object Workflow Related Form Table Item ID
+    omit: true
+    hidden: true
+  _table._code:
+    type: text
+    label: Object Workflow Related Form Table Code
+    omit: true
+    hidden: true
 actions: 
   standard_query:
     label: Search
@@ -303,6 +319,8 @@ actions:
     label: View Instance
   standard_follow: 
     label: Follow
+  standard_submit_for_approval:
+    label: Submit for Approval
 permission_set:
   none:
     allowCreate: false

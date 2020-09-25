@@ -48,3 +48,4 @@ forms_field_state: 表单状态
 forms_field_state_options_disabled: 停用
 forms_field_state_options_enabled: 启用
 forms_listview_all: 所有
+_forms_field_code_error: 字段名 %s 不能包含'.'

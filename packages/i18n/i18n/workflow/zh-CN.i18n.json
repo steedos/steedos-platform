@@ -662,8 +662,8 @@
 
 	"chart_traces": "图形化历程",
 	"cc_tag": "（传阅中）",
-	"workflow_batch_approval": "批量审批",
-	"workflow_batch_approval_btn": "批量<br/>审批",
+	"workflow_batch_approval": "批量核准",
+	"workflow_batch_approval_btn": "批量<br/>核准",
 	"workflow_batch_approval_processing": "处理中",
 	"workflow_batch_approval_message": "本次处理文件%s份",
 	"workflow_error_multiple_next_step_users": "「{$insname}」的下一步处理人有多个",
@@ -719,6 +719,7 @@
 	"process_delegation_rules_to_name": "被委托人",
 	"process_delegation_rules_start_must_lt_end": "开始时间应小于结束时间",
 	"process_delegation_rules_description": "{$userName}委托",
+	"process_delegation_rules_cannot_deltegation_eachother": "只允许单向委托， 请更换被委托人或者调整委托时间",
   	"instance_handler_name": "处理人",
 	"instance_handler_organization_fullname": "部门",
 
@@ -739,5 +740,10 @@
 
 	"instance_print_traces_simplify": "精简",
 	"instance_print_a4_vertical": "A4纵向",
-	"instance_print_a4_horizontal": "A4横向"
+	"instance_print_a4_horizontal": "A4横向",
+
+	"object_workflows_sync_history_instances_success": "同步完成",
+	"object_workflows_sync_history_instances_failed": "请处理以下同步失败申请单",
+
+	"workflow_attachment_office_online_preview": "预览"
 }

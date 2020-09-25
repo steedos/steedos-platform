@@ -1,0 +1,5 @@
+{
+    "accounts_email_subject": "【华炎魔方】验证码：{$code}",
+    "accounts_email_body": "您的验证码为：{$code}，{$EFFECTIVE_TIME}分钟内有效，请勿泄漏给他人！",
+    "accounts_sms_message": "您的验证码为：{$code}，该验证码{$EFFECTIVE_TIME}分钟内有效，请勿泄漏于他人！"
+}

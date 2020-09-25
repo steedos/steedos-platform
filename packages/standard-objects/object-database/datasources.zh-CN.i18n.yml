@@ -13,7 +13,7 @@ datasources_field_host: 服务器地址
 datasources_field_is_enable: 启用
 datasources_field_label: 显示名称
 datasources_field_locale: 语言
-datasources_field_name: 名称
+datasources_field_name: API 名称
 datasources_field_options: Options
 datasources_field_password: 密码
 datasources_field_port: 端口
@@ -24,7 +24,9 @@ datasources_field_mssql_options: 连接选项
 datasources_group_other_connection_options: 其他连接选项 (请注意，其他连接选项将覆盖从URL设置的参数)
 datasources_group_mssql: Mssql
 datasources_listview_all: 所有
-datasources_action_testConnection: 测试链接
+datasources_action_testConnection: 测试连接
+datasources_field_name_inlineHelpText: $t(datasources__error_name_invalid_format)
+datasources__error_name_invalid_format: $t(datasources_field_name)只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
 _datasources_testConnection_ok: 连接成功
 _datasources_driver_error_notFind_mssql: 未找到Mssql驱动，请在项目中安装(`yarn add mssql`)并重启服务
 _datasources_driver_error_notFind_pg: 未找到Postgres驱动，请在项目中安装(`yarn add pg`)并重启服务

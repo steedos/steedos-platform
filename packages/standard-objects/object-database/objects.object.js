@@ -1,4 +1,5 @@
 var objectql = require('@steedos/objectql');
+var yaml = require('js-yaml');
 const _ = require('underscore');
 var objectCore = require('./objects.core.js');
 const internalBaseObjects = ['base', 'core'];
@@ -44,7 +45,7 @@ function checkName(name){
     }
     var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
     if(!reg.test(name)){
-        throw new Error("名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
+        throw new Error("API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
     }
     if(name.length > 20){
         throw new Error("名称长度不能大于20个字符");
@@ -52,20 +53,20 @@ function checkName(name){
     return true
 }
 
-function initObjectPermission(doc){
-
+function initObjectPermission(userId, doc){
+    let lng = Steedos.locale(userId, true)
     let spaceId =  doc.space;
     let psetsAdminId = null;
     let psetsAdmin = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'});
     if(!psetsAdmin){
-        psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin'});
+        psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin', type: 'profile', label: TAPi18n.__(`permission_set_admin`, {}, lng)});
     }else{
         psetsAdminId = psetsAdmin._id
     }
     let psetsUserId = null;
     let psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'});
     if(!psetsUser){
-        psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user'});
+        psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user', type: 'profile', label: TAPi18n.__(`permission_set_user`, {}, lng)});
     }else{
         psetsUserId = psetsUser._id;
     }
@@ -107,7 +108,7 @@ function isRelationalDatabase(object){
 
 function canEnable(object){
     if(isRelationalDatabase(object)){
-        if(!object.fields || !_.isArray(object.fields)){
+        if(!object.fields || !_.isObject(object.fields)){
             return false
         }else{
             var hasPrimary = false;
@@ -116,82 +117,79 @@ function canEnable(object){
                     hasPrimary = true;
                 }
             })
-            console.log('hasPrimary', hasPrimary);
+            // console.log('hasPrimary', hasPrimary);
             return hasPrimary
         }
     }
     return true;
 }
 
-Creator.Objects.objects.actions = {
-    show_object: {
-        label: "Preview",
-        visible: true,
-        on: "record",
-        todo: function (object_name, record_id, item_element) {
-            var record = this.record || Creator.getObjectById(record_id);
-            if(!record){
-                return toastr.error("未找到记录");
-            }
+// Creator.Objects.objects.actions = {
+//     show_object: {
+//         label: "Preview",
+//         visible: true,
+//         on: "record",
+//         todo: function (object_name, record_id, item_element) {
+//             var record = this.record || Creator.getObjectById(record_id);
+//             if(!record){
+//                 return toastr.error("未找到记录");
+//             }
 
-            if(record.is_enable === false){
-                return toastr.warning("请先启动对象");
-            }
+//             if(record.is_enable === false){
+//                 return toastr.warning("请先启动对象");
+//             }
 
-            if(record.datasource && record.datasource != 'default'){
-                var datasource = Creator.odata.get('datasources', record.datasource, 'is_enable');
-                if(!datasource){
-                    return toastr.error("未找到数据源");
-                }
-                if(!datasource.is_enable){
-                    return toastr.warning("请先启动数据源");
-                }
-            }
+//             if(record.datasource && record.datasource != 'default'){
+//                 var datasource = Creator.odata.get('datasources', record.datasource, 'is_enable');
+//                 if(!datasource){
+//                     return toastr.error("未找到数据源");
+//                 }
+//                 if(!datasource.is_enable){
+//                     return toastr.warning("请先启动数据源");
+//                 }
+//             }
 
-            var allViews = Creator.odata.query('object_listviews', {$select: '_id', $filter: `(((contains(tolower(object_name),'${record.name}'))) and ((contains(tolower(name),'all'))))`}, true);
+//             var allViews = Creator.odata.query('object_listviews', {$select: '_id', $filter: `(((contains(tolower(object_name),'${record.name}'))) and ((contains(tolower(name),'all'))))`}, true);
 
-            if(allViews && allViews.length > 0){
-                Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/" + allViews[0]._id))
-            }else{
-                Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
-            }
-
-
-            
-        }
-    },
-    copy_odata: {
-        label: "Copy OData URL",
-        visible: true,
-        on: "record",
-        todo: function (object_name, record_id, item_element) {
-            var clipboard, o_name, path, record;
-            record = this.record || Creator.getObjectById(record_id);
-            //enable_api 属性未开放
-            if ((record != null ? record.enable_api : void 0) || true) {
-                o_name = record != null ? record.name : void 0;
-                path = SteedosOData.getODataPath(Session.get("spaceId"), o_name);
-                item_element.attr('data-clipboard-text', path);
-                if (!item_element.attr('data-clipboard-new')) {
-                    clipboard = new Clipboard(item_element[0]);
-                    item_element.attr('data-clipboard-new', true);
-                    clipboard.on('success', function (e) {
-                        return toastr.success('复制成功');
-                    });
-                    clipboard.on('error', function (e) {
-                        toastr.error('复制失败');
-                        return console.error("e");
-                    });
-                    if (item_element[0].tagName === 'LI' || item_element.hasClass('view-action')) {
-                        return item_element.trigger("click");
-                    }
-                }
-            } else {
-                return toastr.error('复制失败: 未启用API');
-            }
-        }
-    }
-}
+//             if(allViews && allViews.length > 0){
+//                 Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/" + allViews[0]._id))
+//             }else{
+//                 Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
+//             }
+//         }
+//     },
+//     copy_odata: {
+//         label: "Copy OData URL",
+//         visible: true,
+//         on: "record",
+//         todo: function (object_name, record_id, item_element) {
+//             var clipboard, o_name, path, record;
+//             record = this.record || Creator.getObjectById(record_id);
+//             //enable_api 属性未开放
+//             if ((record != null ? record.enable_api : void 0) || true) {
+//                 o_name = record != null ? record.name : void 0;
+//                 path = SteedosOData.getODataPath(Session.get("spaceId"), o_name);
+//                 item_element.attr('data-clipboard-text', path);
+//                 if (!item_element.attr('data-clipboard-new')) {
+//                     clipboard = new Clipboard(item_element[0]);
+//                     item_element.attr('data-clipboard-new', true);
+//                     clipboard.on('success', function (e) {
+//                         return toastr.success('复制成功');
+//                     });
+//                     clipboard.on('error', function (e) {
+//                         toastr.error('复制失败');
+//                         return console.error("e");
+//                     });
+//                     if (item_element[0].tagName === 'LI' || item_element.hasClass('view-action')) {
+//                         return item_element.trigger("click");
+//                     }
+//                 }
+//             } else {
+//                 return toastr.error('复制失败: 未启用API');
+//             }
+//         }
+//     }
+// }
 
 function allowChangeObject(){
     var config = objectql.getSteedosConfig();
@@ -235,14 +233,14 @@ Creator.Objects.objects.triggers = {
         when: "before.insert",
         todo: function (userId, doc) {
             if(!allowChangeObject()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
             }
             checkName(doc.name);
             doc.name = getObjectName(doc.datasource, doc.name);
             if (isRepeatedName(doc)) {
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
-
+            doc.fields_serial_number = 100;
             if(isRelationalDatabase(doc)){
                 doc.is_enable = false;
             }
@@ -287,7 +285,7 @@ Creator.Objects.objects.triggers = {
                 columns:  [{field: 'name'}]
             });
             
-            initObjectPermission(doc);
+            initObjectPermission(userId, doc);
         }
     },
     "before.update.server.objects": {
@@ -295,7 +293,7 @@ Creator.Objects.objects.triggers = {
         when: "before.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
             if(!allowChangeObject()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
             }
             modifier.$set = modifier.$set || {}
 
@@ -335,7 +333,7 @@ Creator.Objects.objects.triggers = {
         when: "before.remove",
         todo: function (userId, doc) {
             if(!allowChangeObject()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
             }
             // var documents, object_collections;
             // if (doc.app_unique_id && doc.app_version) {
@@ -405,3 +403,18 @@ Creator.Objects.objects.triggers = {
     // }
 
 }
+
+// Creator.Objects['objects'].methods = {
+//     export_yml: async function (req, res) {
+//         return Fiber(function () {
+//             let { _id } = req.params
+//             let obj =  Creator.getCollection("objects").findOne({_id: _id})
+//             let dataStr = yaml.safeDump(obj);
+//             let fileName = obj.name;
+//             res.setHeader('Content-type', 'application/x-msdownload');
+//             res.setHeader('Content-Disposition', 'attachment;filename='+encodeURI(fileName)+'.object.yml');
+//             res.end(dataStr);
+//         }).run();
+        
+//     }
+// }

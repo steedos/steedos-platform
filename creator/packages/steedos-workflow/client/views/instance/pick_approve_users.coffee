@@ -90,8 +90,9 @@ Template.instance_pick_approve_users.helpers
 		return rvalue
 
 	getOpenWindowScript: (userId)->
-		href = Creator.getSafeObjectUrl('users', userId);
-		return "window.open('#{href}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false"
+		unless Steedos.isMobile()
+			href = Creator.getSafeObjectUrl('users', userId);
+			return "window.open('#{href}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false"
 
 	hasSelectedUser: ()->
 		selectedStepApproves = getStepApproves(this.stepId)
@@ -123,6 +124,7 @@ Template.instance_pick_approve_users.events
 	'change .selectUser': (event, template)->
 		formValue = AutoForm.getFormValues("pick_approve_users").insertDoc
 		stepsApprovesOptions = getStepsApprovesOptions();
+		InstanceManager.saveIns(true);
 		Meteor.call 'set_instance_step_approve', Session.get("instanceId"), formValue, stepsApprovesOptions, ()->
 			Meteor.setTimeout ()->
 				uuidv1 = require('uuid/v1');
@@ -152,6 +154,7 @@ Template.instance_pick_approve_users.events
 		action = 'pull';
 		if skip
 			action = 'push';
+		InstanceManager.saveIns(true);
 		Meteor.call 'set_instance_skip_steps', Session.get("instanceId"), stepId, action, ()->
 			Meteor.setTimeout ()->
 				uuidv1 = require('uuid/v1');

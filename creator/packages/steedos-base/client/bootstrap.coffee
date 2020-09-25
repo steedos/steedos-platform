@@ -9,29 +9,43 @@ getCookie = (name)->
 	return false
 
 @Setup = {}
+Creator.__l = new ReactiveVar({})
 
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
+
+getRedirectUrl = ()->
+	redirect = location.href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "");
+	u = new URL(redirect);
+	u.searchParams.delete('no_redirect');
+	u.searchParams.delete('X-Space-Id');
+	u.searchParams.delete('X-Auth-Token');
+	u.searchParams.delete('X-User-Id');
+	return u.toString();
+
+
+Steedos.logout = (redirect)->
+	Accounts._unstoreLoginToken();
+	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
+	if accountsUrl
+		if !redirect
+			redirect = getRedirectUrl();
+	window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout?redirect_uri="+ redirect);
 
 Steedos.goResetPassword = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
 		if !redirect
-			redirect = location.href.replace("/steedos/sign-in", "").replace("/steedos/logout", "")
-		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
-			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
-			accountsUrl = rootUrl.origin + accountsUrl
-		window.location.href = accountsUrl + "/a/#/update-password?redirect_uri=" + redirect;
+			redirect = getRedirectUrl();
+		Accounts._unstoreLoginToken();
+		window.location.href = Steedos.absoluteUrl(accountsUrl + "/a/#/update-password?redirect_uri=" + redirect);
 
 Steedos.redirectToSignIn = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl 
 		if !redirect
-			redirect = location.href.replace("/steedos/sign-in", "").replace("/steedos/logout", "")
-		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
-			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
-			accountsUrl = rootUrl.origin + accountsUrl
-		window.location.href = accountsUrl + "/authorize?redirect_uri=" + redirect;
+			redirect = getRedirectUrl();
+		window.location.href = Steedos.absoluteUrl(accountsUrl + "/authorize?redirect_uri=" + redirect);
 
 Setup.validate = (onSuccess)->
 
@@ -53,7 +67,9 @@ Setup.validate = (onSuccess)->
 	if (!userId or !loginToken)
 		loginToken = getCookie("X-Auth-Token");
 		userId = getCookie("X-User-Id");
-	spaceId = localStorage.getItem("spaceId")
+	spaceId = searchParams.get("X-Space-Id");
+	if (!spaceId)
+		spaceId = localStorage.getItem("spaceId")
 	if (!spaceId)
 		spaceId = getCookie("X-Space-Id");
 	headers = {}
@@ -81,7 +97,7 @@ Setup.validate = (onSuccess)->
 			Accounts.loginWithToken data.authToken, (err) ->
 				if (err)
 					Meteor._debug("Error logging in with token: " + err);
-					FlowRouter.go "/steedos/logout"
+					Steedos.logout();
 					return
 
 		if data.webservices
@@ -184,6 +200,7 @@ Meteor.startup ->
 Creator.bootstrapLoaded = new ReactiveVar(false)
 
 handleBootstrapData = (result, callback)->
+	requestLicense(result?.space?._id);
 	Creator._recordSafeObjectCache = []; # 切换工作区时，情况object缓存
 	Creator.Objects = result.objects;
 	Creator.baseObject = Creator.Objects.base;
@@ -238,6 +255,33 @@ handleBootstrapData = (result, callback)->
 		else
 			FlowRouter.go("/")
 
+requestLicense = (spaceId)->
+	unless spaceId and Meteor.userId()
+		return
+	userId = Meteor.userId()
+	authToken = Accounts._storedLoginToken()
+	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
+	headers = {}
+	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
+	headers['X-User-Id'] = userId
+	headers['X-Auth-Token'] = authToken
+	$.ajax
+		type: "get"
+		url: Steedos.absoluteUrl("/api/license/#{spaceId}"),
+		dataType: "json"
+		headers: headers
+		error: (jqXHR, textStatus, errorThrown) ->
+			error = jqXHR.responseJSON
+			console.error error
+			if error?.reason
+				toastr?.error?(TAPi18n.__(error.reason))
+			else if error?.message
+				toastr?.error?(TAPi18n.__(error.message))
+			else
+				toastr?.error?(error)
+		success: (result) ->
+			Creator.__l.set result
+
 requestBootstrapDataUseAjax = (spaceId, callback)->
 	unless spaceId and Meteor.userId()
 		return
@@ -269,7 +313,7 @@ requestBootstrapDataUseAjax = (spaceId, callback)->
 
 requestBootstrapDataUseAction = (spaceId)->
 	SteedosReact = require('@steedos/react');
-	store.dispatch(SteedosReact.loadBootstrapEntitiesData({spaceId: spaceId}))
+	SteedosReact.store.dispatch(SteedosReact.loadBootstrapEntitiesData({spaceId: spaceId}))
 
 requestBootstrapData = (spaceId, callback)->
 	SteedosReact = require('@steedos/react');
@@ -282,13 +326,6 @@ Setup.bootstrap = (spaceId, callback)->
 	requestBootstrapData(spaceId, callback)
 
 
-FlowRouter.route '/steedos/logout',
-	action: (params, queryParams)->
-		#AccountsTemplates.logout();
-		$("body").addClass('loading')
-		Meteor.logout ()->
-#			FlowRouter.go("/steedos/sign-in")
-			return
 
 Meteor.startup ()->
 	SteedosReact = require('@steedos/react');

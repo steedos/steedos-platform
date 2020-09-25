@@ -1,6 +1,7 @@
 name: picklist_options
 label: Picklist Options
 icon: order_item
+hidden: true
 fields:
   picklist:
     type: master_detail
@@ -15,6 +16,10 @@ fields:
     type: text
     label: Value
     inlineHelpText: Default Value = Name
+  color:
+    type: text
+    label: Background Color
+    inlineHelpText: Please enter a color code in the format '#bad6f2', with the prefix '#' omitted, and the selection will appear as the color background.
   sort_no:
     type: number
     label: Sort Number

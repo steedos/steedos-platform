@@ -85,7 +85,7 @@ Meteor.methods
 		newTrace.step = pre_trace.step
 		newTrace.name = pre_trace.name
 		newTrace.start_date = now
-		newTrace.due_date = uuflowManager.getDueDate(pre_step.timeout_hours)
+		newTrace.due_date = uuflowManager.getDueDate(pre_step.timeout_hours, space_id)
 		newTrace.approves = []
 		_.each new_inbox_users, (next_step_user_id, idx)->
 			# 插入下一步trace.approve记录

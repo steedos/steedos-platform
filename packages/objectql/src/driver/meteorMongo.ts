@@ -118,6 +118,28 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         return result;
     }
 
+    getAggregateOptions(options: SteedosQueryOptions): any[] {
+        if (_.isUndefined(options)) {
+            return [];
+        }
+        let result = [];
+        let projection: JsonMap = this.getMongoFieldsOptions(options.fields);
+        let sort: JsonMap = this.getMongoSortOptions(options.sort);
+        if (!_.isEmpty(projection)) {
+            result.push({ $project: projection });
+        }
+        if (!_.isEmpty(sort)) {
+            result.push({ $sort: sort });
+        }
+        if (options.skip) {
+            result.push({ $skip: options.skip });
+        }
+        if (options.top) {
+            result.push({ $limit: options.top });
+        }
+        return result;
+    }
+
     collection(name: string) {
         return Creator.Collections[name];
     };
@@ -141,6 +163,91 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         return collection.find(mongoFilters, mongoOptions).fetch();
                     })
                     resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
+    }
+
+    async aggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[], userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let rawCollection = collection.rawCollection();
+        let pipeline = [];
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let aggregateOptions = this.getAggregateOptions(query);
+
+        pipeline.push({ $match: mongoFilters });
+
+        pipeline = pipeline.concat(aggregateOptions).concat(externalPipeline);
+
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    rawCollection.aggregate(pipeline).toArray(function (err, data) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(data);
+                    });
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
+    }
+
+    async directAggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[], userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let rawCollection = collection.rawCollection();
+        let pipeline = [];
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let aggregateOptions = this.getAggregateOptions(query);
+
+        pipeline.push({ $match: mongoFilters });
+
+        pipeline = pipeline.concat(aggregateOptions).concat(externalPipeline);
+
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    rawCollection.aggregate(pipeline).toArray(function (err, data) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(data);
+                    });
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
+    }
+
+    async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let rawCollection = collection.rawCollection();
+        let pipeline = [];
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let aggregateOptions = this.getAggregateOptions(query);
+
+        pipeline.push({ $match: mongoFilters });
+
+        // pipeline中的次序不能错，一定要先$lookup，再$match，再$project、$sort、$skip、$limit等，否则查询结果可能为空，比如公式字段中就用到了$lookup
+        pipeline = prefixalPipeline.concat(pipeline).concat(aggregateOptions);
+
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    rawCollection.aggregate(pipeline).toArray(function (err, data) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(data);
+                    });
                 } catch (error) {
                     reject(error)
                 }

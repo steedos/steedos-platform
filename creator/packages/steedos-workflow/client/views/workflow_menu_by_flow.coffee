@@ -143,8 +143,8 @@ Template.workflowMenuByFlow.events
 		event.stopPropagation()
 		event.preventDefault()
 		#判断是否为欠费工作区
-		if WorkflowManager.isArrearageSpace()
-			toastr.error(t("spaces_isarrearageSpace"))
+		if !Steedos.hasFeature('workflow', Steedos.getSpaceId())
+			Steedos.spaceUpgradedModal()
 			return;
 		
 		WorkflowManager.alertFlowListModel
