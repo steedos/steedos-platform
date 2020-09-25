@@ -9,7 +9,7 @@ getCookie = (name)->
 	return false
 
 @Setup = {}
-Creator.__l = new ReactiveVar()
+Creator.__l = new ReactiveVar({})
 
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
