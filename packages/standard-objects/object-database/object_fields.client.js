@@ -58,6 +58,8 @@ function getFieldsByType(type, dataType) {
       fields.push({ name: 'summary_type', required: true });
       fields.push({ name: 'summary_field', required: true });
       // fields.push({ name: 'data_type', required: true });
+      fields.push({ name: 'precision', required: true });
+      fields.push({ name: 'scale', required: true });
       fields.push({ name: 'filters' });
       fields.push({ name: 'filters.$' });
       fields.push({ name: 'filters.$.field' });

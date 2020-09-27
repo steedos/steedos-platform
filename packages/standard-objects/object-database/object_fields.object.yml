@@ -90,58 +90,19 @@ fields:
   group:
     type: text
     label: Group
-  sort_no:
-    label: Sort Number
-    type: number
-    defaultValue: 100
-    scale: 0
-    sortable: true
-  is_name:
-    type: boolean
-    label: Is Name
-  required:
-    type: boolean
-    label: Required
-  is_wide:
-    type: boolean
-    label: Is Wide
-  readonly:
-    type: boolean
-    label: Readonly
-  hidden:
-    type: boolean
-    label: Hidden
-  omit:
-    type: boolean
-    label: Omit
-  index:
-    type: boolean
-    label: Is Index Field
-  sortable:
-    type: boolean
-    label: Sortable
-  searchable:
-    type: boolean
-    label: Searchable
-  filterable:
-    type: boolean
-    label: Filterable
   reference_to:
     type: lookup
     label: Reference to
-    group: Reference
     is_wide: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
         return Steedos.getObjectsOptions();
       }
   filtersFunction:
-    group: Reference
     label: filters Function
     type: textarea
     is_wide: true
   optionsFunction:
-    group: Reference
     label: options Function
     type: textarea
     is_wide: true
@@ -149,18 +110,15 @@ fields:
     type: currency
     label: Precision
     defaultValue: 18
-    group: number
   scale:
     type: currency
     label: Scale
     defaultValue: 2
-    group: number
     min: 0
   rows:
     type: currency
     label: Rows
     scale: 0
-    group: Advanced
   # allowedValues:
   #   type: text
   #   multiple: true
@@ -169,13 +127,11 @@ fields:
   multiple:
     type: boolean
     label: Multiple
-    group: Advanced
   options:
     type: grid
     label: Options
     is_wide: true
     inlineHelpText: The label and value of each option cannot be empty. Set the background color to FFFFFF in hexadecimal format.
-    group: Advanced
   options.$:
     label: Options
     blackbox: true
@@ -192,27 +148,15 @@ fields:
     label: Color
     type: text
     required: false
-  inlineHelpText:
-    label: Prompt text
-    type: text
-    is_wide: true
-    group: Advanced
-  description:
-    label: Description
-    type: text
-    is_wide: true
-    group: Advanced
   formula:
     label: Formula
     type: text
     inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
-    group: Formula
     is_wide: true
   data_type:
     type: select
     label: Data Type
     inlineHelpText: This field must be filled when the field type is 'Formula'
-    group: Formula
     options: 
       - label: Checkbox
         value: boolean
@@ -230,7 +174,6 @@ fields:
     type: select
     label: Blank Field Handling
     inlineHelpText: If your formula references any number or currency fields, specify what happens to the formula output when their values are blank.
-    group: Formula
     options: 
       - label: Treat blank fields as zeroes
         value: zeroes
@@ -241,7 +184,6 @@ fields:
     type: lookup
     label: Object to Summarize
     inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
-    group: Summary
     depend_on:
       - object
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -275,7 +217,6 @@ fields:
     type: select
     label: Roll-Up Type
     inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
-    group: Summary
     options: 
       - label: COUNT
         value: count
@@ -289,7 +230,6 @@ fields:
     type: lookup
     label: Field to Aggregate
     inlineHelpText: If the field type is a 'Roll-Up Summary' and the 'Roll-Up Type' is not COUNT, this field must be filled in, Only fields that aggregate number, currency, date, and datetime types are supported.
-    group: Summary
     depend_on:
       - summary_object
       - summary_type
@@ -327,7 +267,6 @@ fields:
     label: Filter Criteria
     type: 'grid'
     inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
-    group: Summary
     is_wide: true
   filters.$:
     label: Filter Criteria
@@ -393,6 +332,63 @@ fields:
     type: boolean
     label: Generated
     group: External data source
+  sort_no:
+    label: Sort Number
+    type: number
+    defaultValue: 100
+    scale: 0
+    sortable: true
+    group: Advanced
+  is_name:
+    type: boolean
+    label: Is Name
+    group: Advanced
+  required:
+    type: boolean
+    label: Required
+    group: Advanced
+  is_wide:
+    type: boolean
+    label: Is Wide
+    group: Advanced
+  readonly:
+    type: boolean
+    label: Readonly
+    group: Advanced
+  hidden:
+    type: boolean
+    label: Hidden
+    group: Advanced
+  omit:
+    type: boolean
+    label: Omit
+    group: Advanced
+  index:
+    type: boolean
+    label: Is Index Field
+    group: Advanced
+  sortable:
+    type: boolean
+    label: Sortable
+    group: Advanced
+  searchable:
+    type: boolean
+    label: Searchable
+    group: Advanced
+  filterable:
+    type: boolean
+    label: Filterable
+    group: Advanced
+  inlineHelpText:
+    label: Prompt text
+    type: text
+    is_wide: true
+    group: Advanced
+  description:
+    label: Description
+    type: text
+    is_wide: true
+    group: Advanced
 paging:
   enabled: false
 list_views:

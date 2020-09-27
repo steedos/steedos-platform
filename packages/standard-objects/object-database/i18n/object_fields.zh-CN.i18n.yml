@@ -15,7 +15,7 @@ object_fields_field_label: 显示名称
 object_fields_field_multiple: 多选
 object_fields_field_name: API 名称
 object_fields_field_object: 所属对象
-object_fields_field_omit: 忽略
+object_fields_field_omit: 新建、编辑时隐藏
 object_fields_field_options: 选择项
 object_fields_field_options_$: Options
 object_fields_field_options_$_label: 显示名
