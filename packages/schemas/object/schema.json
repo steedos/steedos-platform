@@ -558,7 +558,7 @@
                     "type": "string",
                     "description": "公式"
                 },
-                "formula_type": {
+                "formula_data_type": {
                     "type": "string",
                     "description": "公式返回类型",
                     "anyOf": [
