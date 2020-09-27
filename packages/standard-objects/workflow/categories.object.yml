@@ -1,5 +1,5 @@
 name: categories
-icon: metrics
+icon: hierarchy
 label: Workflow Category
 hidden: true
 fields:

@@ -1,6 +1,6 @@
 name: object_actions
 label: Object Action
-icon: marketing_actions
+icon: actions_and_buttons
 hidden: true
 fields:
   object:

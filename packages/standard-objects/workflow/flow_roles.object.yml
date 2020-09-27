@@ -1,5 +1,5 @@
 name: flow_roles
-icon: metrics
+icon: queue
 label: Workflow Role
 hidden: true
 fields:

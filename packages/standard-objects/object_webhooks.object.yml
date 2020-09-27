@@ -1,6 +1,6 @@
 name: object_webhooks
 label: Object Webhook
-icon: account
+icon: output
 hidden: true
 fields:
   name:

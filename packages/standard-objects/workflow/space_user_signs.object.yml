@@ -1,5 +1,5 @@
 name: space_user_signs
-icon: metrics
+icon: carousel
 label: User Sign
 hidden: true
 fields:

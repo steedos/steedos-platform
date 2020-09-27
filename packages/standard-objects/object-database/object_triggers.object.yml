@@ -1,5 +1,5 @@
 name: object_triggers
-icon: asset_relationship
+icon: apex
 label: Object Triggers
 hidden: true
 fields:

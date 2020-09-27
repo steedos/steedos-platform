@@ -1,6 +1,6 @@
 name: sessions
 label: Session
-icon: report
+icon: user_activation
 hidden: true
 fields:
   name:
