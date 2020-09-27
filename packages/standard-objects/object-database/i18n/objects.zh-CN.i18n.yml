@@ -1,7 +1,7 @@
 objects__object: 业务对象
 objects_action_copy_odata: 复制OData网址
 objects_action_show_object: 预览
-objects_field_actions: 操作
+objects_field_actions: 操作按钮
 objects_field_app_unique_id: App Unique ID
 objects_field_app_version: App Version
 objects_field_custom: 自定义

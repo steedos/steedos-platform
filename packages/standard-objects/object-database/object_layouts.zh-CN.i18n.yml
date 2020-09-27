@@ -1,5 +1,5 @@
 object_layouts__object: 页面布局
-object_layouts_field_actions: 操作
+object_layouts_field_actions: 操作按钮
 object_layouts_field_fields: 字段
 object_layouts_field_fields_$: Field
 object_layouts_field_fields_$_field: 字段

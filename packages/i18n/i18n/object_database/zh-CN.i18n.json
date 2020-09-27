@@ -54,7 +54,7 @@
 	"object_triggers_is_enable": "已启用",
 	"object_triggers_todo": "执行的脚本",
 
-	"object_actions": "操作",
+	"object_actions": "操作按钮",
 	"object_actions_name": "名称",
 	"object_actions_label": "显示名称",
 	"object_actions_object": "所属对象",
