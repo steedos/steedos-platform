@@ -80,10 +80,10 @@ fields:
         value: url
       - label: Email
         value: email
-      # - label: Formula
-      #   value: formula
-      # - label: Roll-Up Summary
-      #   value: summary
+      - label: Formula
+        value: formula
+      - label: Roll-Up Summary
+        value: summary
   defaultValue:
     type: text
     label: Default Value
@@ -133,20 +133,8 @@ fields:
     is_wide: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.Objects, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
+        return Steedos.getObjectsOptions();
+      }
   filtersFunction:
     group: Reference
     label: filters Function
@@ -225,8 +213,6 @@ fields:
     label: Formula Return Type
     inlineHelpText: This field must be filled when the field type is 'Formula'
     group: Formula
-    hidden: true
-    omit: true
     options: 
       - label: Checkbox
         value: boolean
@@ -245,8 +231,6 @@ fields:
     label: Blank Field Handling
     inlineHelpText: If your formula references any number or currency fields, specify what happens to the formula output when their values are blank.
     group: Formula
-    hidden: true
-    omit: true
     options: 
       - label: Treat blank fields as zeroes
         value: zeroes
@@ -258,8 +242,6 @@ fields:
     label: Object to Summarize
     inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
     group: Summary
-    hidden: true
-    omit: true
     depend_on:
       - object
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -303,8 +285,6 @@ fields:
         value: min
       - label: MAX
         value: max
-    hidden: true
-    omit: true
   summary_field:
     type: lookup
     label: Field to Aggregate
@@ -314,8 +294,6 @@ fields:
       - summary_object
       - summary_type
     defaultIcon: service_contract
-    hidden: true
-    omit: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function (values) {
         if(!values.summary_object){
