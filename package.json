@@ -7,7 +7,7 @@
     "server"
   ],
   "scripts": {
-    "submodules": "git submodule foreach git pull origin master",
+    "submodules": "git submodule foreach git checkout master && git pull ",
     "bootstrap": "yarn submodules && lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
     "link": "lerna link --force-local",
     "ver": "lerna version --skip-git --force-publish",
