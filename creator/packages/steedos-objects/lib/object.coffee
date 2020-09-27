@@ -71,7 +71,7 @@ Creator.Object = (options)->
 		self.database_name = options.database_name
 	if (!options.fields)
 		console.error(options)
-		throw new Error('Creator.Object options must specify name');
+		throw new Error('Creator.Object options must specify fields');
 
 	self.fields = clone(options.fields)
 
