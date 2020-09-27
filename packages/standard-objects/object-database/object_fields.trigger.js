@@ -1,4 +1,5 @@
 const InternalData = require('../core/internalData');
+const { getSummaryDataType, getObjectConfig } = require('@steedos/objectql');
 
 const validateOptionValue = (value)=>{
     let color = value && value.split(":")[2];
@@ -59,6 +60,22 @@ const validateDoc = (doc)=>{
     // }
 }
 
+const initSummaryDoc = (doc)=>{
+    if(!doc.summary_object){
+        throw new Error("summary_object is required");
+    }
+    let summaryObject = getObjectConfig(doc.summary_object);
+    let summaryConfig = { 
+        summary_object: doc.summary_object, 
+        summary_type: doc.summary_type, 
+        summary_field: doc.summary_field, 
+        field_name: doc._name + "__c", 
+        object_name: doc.object
+    };
+    const dataType = getSummaryDataType(summaryConfig, summaryObject);
+    doc.data_type = dataType;
+}
+
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
@@ -102,9 +119,16 @@ module.exports = {
     beforeInsert: async function () {
         let doc = this.doc;
         validateDoc(doc);
+        // if(doc.type === "summary"){
+        //     console.log("===beforeInsert==this.doc==", this.doc);
+        //     initSummaryDoc(doc);
+        // }
     },
     beforeUpdate: async function () {
         let doc = this.doc;
         validateDoc(doc);
+        if(doc.type === "summary"){
+            initSummaryDoc(doc);
+        }
     }
 }

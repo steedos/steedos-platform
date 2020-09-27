@@ -15,7 +15,7 @@ const enum FormulonDataType {
 
 function getFieldSteedosType(field: any){
     if(_.include(['formula', 'summary'], field.type)){
-        return field.formula_data_type
+        return field.data_type
     }
     return field.type
 }

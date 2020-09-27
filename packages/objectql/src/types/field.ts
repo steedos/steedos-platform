@@ -87,7 +87,7 @@ abstract class SteedosFieldProperties{
     system?: string;
     fieldDBType?: SteedosFieldDBType | string
     formula?: string
-    formula_data_type?: string
+    data_type?: string
     formula_blank_value?: string
     summary_object?: string
     summary_type?: string
@@ -130,8 +130,8 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
 
         this.name = name
 
-        if(this.type === "formula" && !this.formula_data_type){
-            throw new Error(`${this._object.name}.${this.name} invalid field type formula, miss formula_data_type property`)
+        if(this.type === "formula" && !this.data_type){
+            throw new Error(`${this._object.name}.${this.name} invalid field type formula, miss data_type property`)
         }
 
         this.setDBType()
@@ -294,7 +294,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
            case 'markdown':
                return SteedosFieldDBType.varchar
            case 'formula':
-               return this.getDBType(this.formula_data_type);
+               return this.getDBType(this.data_type);
            case 'summary':
                 //汇总不需要check类型
                 return SteedosFieldDBType.varchar;

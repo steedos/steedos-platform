@@ -601,8 +601,8 @@ if Meteor.isClient
 		
 		_filedType = _field.type
 		if _field.type == "formula"
-			# 公式类型字段，其字段类型按formula_type来
-			_filedType = _field.formula_type
+			# 公式类型字段，其字段类型按data_type来
+			_filedType = _field.data_type
 		else if _field.type == "summary"
 			# 汇总类型字段，其字段类型按summary_type和summary_count来
 			if _field.summary_type == "count"
@@ -619,7 +619,7 @@ if Meteor.isClient
 				_filedType = summaryField.type
 				if _filedType == "formula"
 					# 公式类型按其公式返回值类型处理
-					_filedType = summaryField.formula_type
+					_filedType = summaryField.data_type
 
 		reference_to = props.field?.reference_to
 
