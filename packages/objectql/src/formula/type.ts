@@ -71,7 +71,7 @@ export type SteedosFieldFormulaTypeConfig = {
     _id: string, //低代码值为${objectConfig.name}.${fieldConfig.name}，零代码为数据库中的_id值
     object_name: string,
     field_name: string,
-    formula_data_type: string,
+    data_type: string,
     formula_blank_value: SteedosFormulaBlankValue,
     formula: string,
     quotes: Array<SteedosFieldFormulaQuoteTypeConfig>,
