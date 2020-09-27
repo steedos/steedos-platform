@@ -62,7 +62,7 @@ const validateDoc = (doc)=>{
 
 const initSummaryDoc = (doc)=>{
     if(!doc.summary_object){
-        throw new Error("summary_object is required");
+        throw new Error("object_fields_error_summary_object_required");
     }
     let summaryObject = getObjectConfig(doc.summary_object);
     let summaryConfig = { 

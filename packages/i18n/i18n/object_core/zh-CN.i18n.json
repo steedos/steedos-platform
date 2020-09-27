@@ -224,5 +224,7 @@
 	"object_fields_function_recomputeFormulaValues_error": "未能成功重算该公式字段值，%s",
 
 	"object_fields_function_recomputeSummaryValues_success": "已成功重算该汇总字段值。",
-	"object_fields_function_recomputeSummaryValues_error": "未能成功重算该汇总字段值，%s"
+	"object_fields_function_recomputeSummaryValues_error": "未能成功重算该汇总字段值，%s",
+
+	"object_fields_error_summary_object_required": "字段类型为累计汇总时，必须填写要汇总的对象。"
 }

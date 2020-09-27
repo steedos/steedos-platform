@@ -220,5 +220,7 @@
 	"object_fields_function_recomputeFormulaValues_error": "Failed to recompute the formula field value, %s",
 
 	"object_fields_function_recomputeSummaryValues_success": "The summary field value was successfully recomputed.",
-	"object_fields_function_recomputeSummaryValues_error": "Failed to recompute the summary field value, %s"
+	"object_fields_function_recomputeSummaryValues_error": "Failed to recompute the summary field value, %s",
+
+	"object_fields_error_summary_object_required": "When the field type is 'Roll-Up Summary', the 'Object to Summarize' must be filled in."
 }
