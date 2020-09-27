@@ -558,7 +558,7 @@
                     "type": "string",
                     "description": "公式"
                 },
-                "formula_type": {
+                "data_type": {
                     "type": "string",
                     "description": "公式返回类型",
                     "anyOf": [
@@ -595,6 +595,22 @@
                 "summary_field": {
                     "type": "string",
                     "description": "要聚合的字段"
+                },
+                "summary_data_type": {
+                    "type": "string",
+                    "description": "公式返回类型",
+                    "anyOf": [
+                        {
+                            "enum": [
+                                "text",
+                                "boolean",
+                                "date",
+                                "datetime",
+                                "number",
+                                "currency"
+                            ]
+                        }
+                    ]
                 },
                 "formula_blank_value": {
                     "type": "string",

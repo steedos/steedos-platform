@@ -134,10 +134,10 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
     if (!currentUserId) {
         checkCurrentUserIdNotRequiredForFieldFormulas(fieldFormulaConfig);
     }
-    const { formula, vars, formula_type, formula_blank_value } = fieldFormulaConfig;
+    const { formula, vars, data_type, formula_blank_value } = fieldFormulaConfig;
     let params = await computeFormulaParams(doc, vars, currentUserId);
     return runFormula(formula, params, {
-        returnType: formula_type,
+        returnType: data_type,
         blankValue: formula_blank_value
     });
 }

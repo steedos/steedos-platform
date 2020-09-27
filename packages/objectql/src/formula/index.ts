@@ -179,7 +179,7 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
         object_name: objectConfig.name,
         field_name: fieldConfig.name,
         formula: formula,
-        formula_type: fieldConfig.formula_type,
+        data_type: fieldConfig.data_type,
         formula_blank_value: <SteedosFormulaBlankValue>fieldConfig.formula_blank_value,
         quotes: result.quotes,
         vars: result.vars

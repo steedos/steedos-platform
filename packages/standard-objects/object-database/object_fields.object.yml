@@ -208,9 +208,9 @@ fields:
     inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
     group: Formula
     is_wide: true
-  formula_type:
+  data_type:
     type: select
-    label: Formula Return Type
+    label: Data Type
     inlineHelpText: This field must be filled when the field type is 'Formula'
     group: Formula
     options: 
