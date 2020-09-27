@@ -178,6 +178,9 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     let result = evalFieldFormula(formula, formulaParams);
     let formulaValue = result.value;
     let formulaValueType = result.dataType;
+    if(result.type === 'error'){
+        throw new Error(result.message);
+    }
     // console.log("==runFieldFormular==result===", result);
     if (formulaValue === null || formulaValue === undefined || _.isNaN(formulaValue)) {
         if (["number", "currency"].indexOf(returnType) > -1) {
