@@ -59,7 +59,8 @@ function getSubstitutionDataType(objectName: string, fieldName: string){
             if(field.multiple){
                 return FormulonDataType.Multipicklist;
             }else{
-                return FormulonDataType.Picklist;
+                return FormulonDataType.Text;
+                // return FormulonDataType.Picklist;
             }
         case 'lookup':
             if(field.multiple){
@@ -92,6 +93,24 @@ function getSubstitutionOptions(objectName: string, fieldName: string, dataType:
     }
 }
 
+function getSubstitutionValue(dataType: string, value: any){
+    switch (dataType) {
+        case FormulonDataType.Text:
+            if(value === null || value === undefined){
+                return '';
+            }
+            break;
+        case FormulonDataType.Number:
+            if(value === null || value === undefined){
+                return 0;
+            }
+            break;
+        default:
+            break;
+    }
+    return value;
+}
+
 export function getFieldSubstitution(objectName: string, fieldName: string, value: any){
     let fieldSubstitution: any = {
         type: 'literal',
@@ -99,5 +118,6 @@ export function getFieldSubstitution(objectName: string, fieldName: string, valu
     }
     fieldSubstitution.dataType = getSubstitutionDataType(objectName, fieldName);
     fieldSubstitution.options = getSubstitutionOptions(objectName, fieldName, fieldSubstitution.dataType);
+    fieldSubstitution.value  = getSubstitutionValue(fieldSubstitution.dataType, value);
     return fieldSubstitution;
 }
