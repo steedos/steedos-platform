@@ -15,5 +15,9 @@
     "interactive",
     "components"
   ],
-  "main": "design-system-react.js"
+  "main": "design-system-react.js",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }
