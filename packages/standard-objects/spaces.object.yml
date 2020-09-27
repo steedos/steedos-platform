@@ -1,6 +1,6 @@
 name: spaces
 label: Company
-icon: groups
+icon: account
 hidden: true
 fields:
   name:

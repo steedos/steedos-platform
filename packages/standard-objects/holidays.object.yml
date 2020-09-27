@@ -1,6 +1,6 @@
 name: holidays
 label: Holidays
-icon: groups
+icon: event
 hidden: true
 fields:
   name:

@@ -1,7 +1,7 @@
 name: process_definition
 label: process_definition
 hidden: true
-icon: record
+icon: approval
 fields:
   name:
     type: text

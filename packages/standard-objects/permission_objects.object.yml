@@ -1,6 +1,6 @@
 name: permission_objects
 label: Permission
-icon: user
+icon: omni_supervisor
 hidden: true
 fields:
   # name:

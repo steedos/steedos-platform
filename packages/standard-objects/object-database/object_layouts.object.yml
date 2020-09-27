@@ -1,6 +1,6 @@
 name: object_layouts
 label: Object Layouts
-icon: custom.custom104
+icon: dashboard_ea
 hidden: true
 fields:
   label:

@@ -1,5 +1,5 @@
 name: object_fields
-icon: orders
+icon: textbox
 enable_api: true
 hidden: true
 label: Object Fields

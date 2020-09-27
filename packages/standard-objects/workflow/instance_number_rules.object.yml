@@ -1,5 +1,5 @@
 name: instance_number_rules
-icon: metrics
+icon: topic2
 label: Instance Number Rule
 hidden: true
 fields:

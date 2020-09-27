@@ -1,6 +1,6 @@
 name: object_workflows
 label: Object Synchronization Rule
-icon: apps
+icon: link
 hidden: true
 fields:
   name:

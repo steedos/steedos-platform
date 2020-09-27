@@ -1,6 +1,6 @@
 name: business_hours
 label: Business Hours
-icon: groups
+icon: date_time
 hidden: true
 fields:
   name:
