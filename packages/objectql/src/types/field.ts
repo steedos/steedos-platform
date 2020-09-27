@@ -47,6 +47,7 @@ const FIELDTYPES = [
 ]
 
 abstract class SteedosFieldProperties{
+    _id?: string
     object_name?: string
     name?: string
     column_name?: string

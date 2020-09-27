@@ -5,7 +5,6 @@ import { SteedosQueryFilters } from '../types';
  * 低代码/零代码中可以配置object_name、field_name、summary_object、summary_type、summary_field属性，其他属性都是算出来的
  */
 export type SteedosFieldSummaryTypeConfig = {
-    // TODO:零代码_id为数据库中的_id值未处理
     _id: string, //低代码值为${objectConfig.name}.${fieldConfig.name}，零代码为数据库中的_id值
     object_name: string, //主表对象
     field_name: string, //主表上的汇总字段

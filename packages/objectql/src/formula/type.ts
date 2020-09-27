@@ -67,7 +67,6 @@ export type SteedosFormulaVarTypeConfig = {
 }
 
 export type SteedosFieldFormulaTypeConfig = {
-    // TODO:零代码_id为数据库中的_id值未处理
     _id: string, //低代码值为${objectConfig.name}.${fieldConfig.name}，零代码为数据库中的_id值
     object_name: string,
     field_name: string,
