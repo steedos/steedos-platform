@@ -329,28 +329,55 @@ fields:
     inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
     group: Summary
     is_wide: true
-    hidden: true
-    omit: true
   filters.$:
     label: Filter Criteria
     blackbox: true
     type: object
-    omit: true
-    hidden: true
   filters.$.field:
     label: Field
-    type: text
+    type: lookup
+    showIcon: false
+    depend_on:
+      - summary_object
+    optionsFunction: !!js/function |
+      function(values){
+        if(values.summary_object){
+          return Creator.getObjectFilterFieldOptions(values.summary_object)
+        }
+        return []
+      }
   filters.$.operation:
     label: Operator
-    type: select
-    defaultValue: =
-    options: !<tag:yaml.org,2002:js/function> |- 
-      function () {
-              return Creator.getFieldOperation();
+    type: lookup
+    showIcon: false
+    optionsFunction: !!js/function |
+      function(values){
+        if(values.summary_object){
+          if(!this.template){
+            let options = Creator.getFieldOperation();
+            Creator.pushBetweenBuiltinOptionals('date', options);
+            return options;
           }
+          var index = Number(this.template.data.name.split('.')[1]);
+          var filters = values.filters
+          if(filters && filters.length > index){
+            var filter = filters[index];
+            var field = filter.field;
+            if(field){
+              var object_fields = Creator.getObject(values.summary_object).fields
+              var filter_field_type;
+              if(object_fields[field]){
+                filter_field_type = object_fields[field].type
+                return Creator.getFieldOperation(filter_field_type);
+              }
+            }
+          }
+        }
+        return [];
+      }
   filters.$.value:
     label: Value
-    blackbox: true
+    type: text
   column_name:
     type: text
     label: Database column name
@@ -417,4 +444,20 @@ form:
         return {sort_no: fields_serial_number}
       }
       return {}
+    }
+  beforeEdit: !!js/function |
+    function(){
+      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema);
+    }
+  afterEdit: !!js/function |
+    function(){
+      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema);
+    }
+  beforeView: !!js/function |
+    function(){
+      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema);
+    }
+  afterView: !!js/function |
+    function(){
+      $(".table-cell-edit").remove();
     }

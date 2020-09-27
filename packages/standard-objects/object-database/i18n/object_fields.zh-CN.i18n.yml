@@ -50,6 +50,11 @@ object_fields_field_type_options_url: 网址
 object_fields_field_type_options_autonumber: 自动编号
 object_fields_field_type_options_formula: 公式
 object_fields_field_type_options_summary: 累计汇总
+object_fields_field_filters: 过滤器
+object_fields_field_filters.$: 过滤条件
+object_fields_field_filters_$_field: 字段
+object_fields_field_filters_$_operation: 运算符
+object_fields_field_filters_$_value: 值
 object_fields_field_inlineHelpText: 提示文本
 object_fields_field_filterable: 过滤器默认字段
 object_fields_field_filtersFunction: 过滤器函数
