@@ -92,7 +92,6 @@ Steedos.ObjectFieldManager.changeSchema = function (doc, schema) {
     if(showField){
       Object.assign(field, showField)
     }else{
-      console.log('hidden', field);
       Object.assign(field, {omit: true, hidden: true})
     }
   })
