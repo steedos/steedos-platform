@@ -119,10 +119,9 @@ module.exports = {
     beforeInsert: async function () {
         let doc = this.doc;
         validateDoc(doc);
-        // if(doc.type === "summary"){
-        //     console.log("===beforeInsert==this.doc==", this.doc);
-        //     initSummaryDoc(doc);
-        // }
+        if(doc.type === "summary"){
+            initSummaryDoc(doc);
+        }
     },
     beforeUpdate: async function () {
         let doc = this.doc;
