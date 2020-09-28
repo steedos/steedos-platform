@@ -223,7 +223,9 @@ const checkFormulaInfiniteLoop = function(_doc){
       objectql.addObjectFieldFormulaConfig(doc, objectConfig);
     } catch (error) {
       if(error.message.startsWith('Infinite Loop')){
-        throw new Error('公式配置异常，禁止循环引用对象字段');
+        throw new Error('字段公式配置异常，禁止循环引用对象字段');
+      }else{
+        throw error;
       }
     }
   }
