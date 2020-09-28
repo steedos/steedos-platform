@@ -210,6 +210,25 @@ function handleFieldProps(field){
 
 }
 
+const checkFormulaInfiniteLoop = function(_doc){
+  if(_doc.type === "formula"){
+    doc = clone(_doc)
+    delete doc._id
+    let objectConfig = Creator.getCollection("objects").findOne({
+      space: doc.space,
+      name: doc.object
+    });
+    delete objectConfig._id;
+    try {
+      objectql.addObjectFieldFormulaConfig(doc, objectConfig);
+    } catch (error) {
+      if(error.message.startsWith('Infinite Loop')){
+        throw new Error('公式配置异常，禁止循环引用对象字段');
+      }
+    }
+  }
+}
+
 var triggers = {
   "after.insert.server.object_fields": {
     on: "server",
@@ -315,6 +334,7 @@ var triggers = {
         let defProps = getFieldDefaultProps(Object.assign(clone(doc), modifier.$set));
         Object.assign(modifier.$set, defProps);
       }
+      checkFormulaInfiniteLoop(modifier.$set);
     }
   },
   //					if modifier?.$set?.reference_to
@@ -352,6 +372,8 @@ var triggers = {
       if ((doc != null ? doc.index : void 0) && ((doc != null ? doc.type : void 0) === 'textarea' || (doc != null ? doc.type : void 0) === 'html')) {
         throw new Meteor.Error(500, '多行文本不支持建立索引');
       }
+
+      checkFormulaInfiniteLoop(doc);
     }
   },
   "before.remove.server.object_fields": {

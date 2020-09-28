@@ -1,9 +1,10 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs, getObjectConfig, getSteedosSchema } from '../types';
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions } from './type';
-import { addFieldFormulaConfig, getFieldFormulaConfigs, clearFieldFormulaConfigs } from './field_formula';
+import { addFieldFormulaConfig, clearFieldFormulaConfigs } from './field_formula';
 import { pickFormulaVars, computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
-import { isFieldFormulaConfigQuotedTwoWays, isCurrentUserIdRequiredForFormulaVars } from './util';
+import { isCurrentUserIdRequiredForFormulaVars } from './util';
 import { isSystemObject } from '../util';
+import { addFormulaReferenceMaps, removeFormulaReferenceMaps } from './check';
 import _ = require('lodash')
 const clone = require('clone')
 
@@ -184,10 +185,18 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
         quotes: result.quotes,
         vars: result.vars
     };
-    const isQuotedTwoWays = isFieldFormulaConfigQuotedTwoWays(formulaConfig, getFieldFormulaConfigs());
-    if (!isQuotedTwoWays) {
-        addFieldFormulaConfig(formulaConfig);
-    }
+
+    
+    _.each(result.quotes, (quote)=>{
+        addFormulaReferenceMaps(`${objectConfig.name}.${fieldConfig.name}`, `${quote.object_name}.${quote.field_name}`);
+    })
+
+    addFieldFormulaConfig(formulaConfig);
+
+    // const isQuotedTwoWays = isFieldFormulaConfigQuotedTwoWays(formulaConfig, getFieldFormulaConfigs());
+    // if (!isQuotedTwoWays) {
+        
+    // }
 }
 
 export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig, datasource: string) => {
@@ -196,7 +205,11 @@ export const addObjectFieldsFormulaConfig = (config: SteedosObjectTypeConfig, da
             if(datasource !== "default"){
                 throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'formula', because it is not in the default datasource.`);
             }
-            addObjectFieldFormulaConfig(clone(field), config);
+            try {
+                addObjectFieldFormulaConfig(clone(field), config);
+            } catch (error) {
+                console.error(error);
+            }
         }
     })
 }
@@ -205,7 +218,8 @@ export const initObjectFieldsFormulas = (datasource: string) => {
     if(datasource === "default"){
         // 因为要考虑对象和字段可能被禁用、删除的情况，所以需要先清除下原来的内存数据
         // 暂时只支持默认数据源，后续如果要支持多数据源时需要传入datasource参数清除数据
-        clearFieldFormulaConfigs()
+        clearFieldFormulaConfigs();
+        removeFormulaReferenceMaps();
     }
     const objectConfigs = getObjectConfigs(datasource);
     // console.log("===initObjectFieldsFormulas==objectConfigs=", JSON.stringify(_.map(objectConfigs, 'name')));

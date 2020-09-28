@@ -10,7 +10,8 @@ const enum FormulonDataType {
     Checkbox = 'checkbox',
     Picklist = 'picklist',
     Multipicklist = 'multipicklist',
-    Geolocation = 'geolocation'
+    Geolocation = 'geolocation',
+    Null = 'null'
 }
 
 function getFieldSteedosType(field: any){
@@ -21,12 +22,15 @@ function getFieldSteedosType(field: any){
 }
 
 function getField(objectName: string, fieldName: string){
+    if(fieldName === '_id'){
+        return {type: 'text'}
+    }
     return getObject(objectName).getField(fieldName);
 }
 
 function getSubstitutionDataType(objectName: string, fieldName: string){
 
-    const field = getField(objectName, fieldName);
+    const field: any = getField(objectName, fieldName);
 
     const steedosType = getFieldSteedosType(field);
 
@@ -72,13 +76,15 @@ function getSubstitutionDataType(objectName: string, fieldName: string){
             return FormulonDataType.Picklist;
         case 'geolocation':
             return FormulonDataType.Geolocation;
+        case 'null':
+            return FormulonDataType.Null
         default:
             break;
     }
 }
 
 function getSubstitutionOptions(objectName: string, fieldName: string, dataType: string){
-    const field = getField(objectName, fieldName);
+    const field: any = getField(objectName, fieldName);
     switch (dataType) {
         case 'number':
             if(_.has(field, 'scale')){
