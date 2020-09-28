@@ -73,6 +73,9 @@ const initSummaryDoc = (doc)=>{
         object_name: doc.object
     };
     const dataType = getSummaryDataType(summaryConfig, summaryObject);
+    if(!dataType){
+        throw new Error("object_fields_error_summary_data_type_not_found");
+    }
     doc.data_type = dataType;
 }
 
