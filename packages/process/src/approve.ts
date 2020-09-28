@@ -23,6 +23,7 @@ export const approve = async (req: Request, res: express.Response) => {
         }
         throw new Error("process_approval_error_NoApproval");
     } catch (error) {
+        console.log(error)
         return res.status(200).send({state: 'FAILURE', error: error.message});
     }
 }
