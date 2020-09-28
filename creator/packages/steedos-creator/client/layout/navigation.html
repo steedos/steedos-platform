@@ -53,8 +53,8 @@
 									<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>
 								{{/with}}
 								{{#if this.is_temp}}
-									<div class="slds-context-bar__icon-action slds-p-right_none">
-										{{> steedos_button className="slds-button_icon-current-color btn-close-nav" 
+									<div class="slds-context-bar__icon-action slds-p-right_none btn-close-nav">
+										{{> steedos_button className="slds-button_icon-current-color" 
 											iconClassName="slds-icon-text-default slds-icon--xx-small"
 											iconCategory="utility" iconName="close" variant="icon" title=(btnCloseTempNavTitle this.label)}}
 									</div>
