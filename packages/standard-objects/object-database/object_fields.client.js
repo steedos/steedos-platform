@@ -2,10 +2,10 @@ Steedos.ObjectFieldManager = {};
 
 const baseFieldsName = [{ "name": "object", "required": true }, { "name": "label", "required": true }, { "name": "name" }, { "name": "_name", "required": true }, { "name": "type", "required": true }, { "name": "defaultValue" }, { "name": "group" }, { "name": "sort_no" }, { "name": "is_name" }, { "name": "required" }, { "name": "is_wide" }, { "name": "readonly" }, { "name": "hidden" }, { "name": "omit" }, { "name": "index" }, { "name": "sortable" }, { "name": "searchable" }, { "name": "filterable" }, {"name":"inlineHelpText"},{"name":"description"}];
 
-function getFieldsByType(type, dataType) {
+function getFieldsByType(doc, type, dataType) {
   let fields = [];
   if(dataType){
-    fields = fields.concat(getFieldsByType(dataType))
+    fields = fields.concat(getFieldsByType(doc, dataType))
   }
   switch (type) {
     case 'textarea':{
@@ -56,7 +56,9 @@ function getFieldsByType(type, dataType) {
     case 'summary': {
       fields.push({ name: 'summary_object', required: true });
       fields.push({ name: 'summary_type', required: true });
-      fields.push({ name: 'summary_field', required: true });
+      if(doc.summary_type != 'count'){
+        fields.push({ name: 'summary_field', required: true });
+      }
       // fields.push({ name: 'data_type', required: true });
       fields.push({ name: 'precision', required: true });
       fields.push({ name: 'scale', required: true });
@@ -77,7 +79,7 @@ function getFieldsByType(type, dataType) {
 Steedos.ObjectFieldManager.changeSchema = function (doc, schema) {
   var clone = require('clone');
   var fields = clone(Creator.getObject("object_fields").fields);
-  var showFields = baseFieldsName.concat(getFieldsByType(doc.type, doc.data_type));
+  var showFields = baseFieldsName.concat(getFieldsByType(doc, doc.type, doc.data_type));
   var objectName = doc.object;
   if(_.isObject(objectName)){
     objectName = objectName.name
