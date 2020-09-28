@@ -210,12 +210,44 @@ FlowRouter.route '/app/:app_id/instances/grid/all',
 FlowRouter.route '/app/:app_id/instances/view/:record_id',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		record_id = FlowRouter.getParam("record_id")
-		Creator.odata.get("instances", "#{record_id}/view?async", null, null, (result)=>
-			if result and result.redirect
-				# result.redirect返回的是带rootUrl前缀的相对路径，不能用FlowRouter.go
-				FlowRouter.redirect result.redirect
-		)
+		instanceId = FlowRouter.getParam("record_id")
+		uobj = {}
+		uobj['X-User-Id'] = Meteor.userId()
+		uobj['X-Auth-Token'] = Accounts._storedLoginToken()
+		data = {
+			object_name: "",
+			record_id: "",
+			space_id: Session.get("spaceId")
+		}
+		url = Steedos.absoluteUrl() + ("api/workflow/view/" + instanceId + "?") + $.param(uobj)
+		data = JSON.stringify(data)
+		$(document.body).addClass('loading')
+		$.ajax({
+			url: url,
+			type: 'POST',
+			async: true,
+			data: data,
+			dataType: 'json',
+			processData: false,
+			contentType: 'application/json',
+			success:  (responseText, status) -> 
+				$(document.body).removeClass('loading')
+				if responseText.errors
+					responseText.errors.forEach (e) -> 
+						toastr.error(e.errorMessage)
+					Template.creator_view.currentInstance.onEditSuccess()
+					return
+				else if responseText.redirect_url
+					if Meteor.settings.public.webservices?.workflow?.url
+						Steedos.openWindow(responseText.redirect_url);
+					else
+						Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
+			,
+			error:  (xhr, msg, ex) -> 
+				$(document.body).removeClass('loading')
+				toastr.error(msg)
+				Template.creator_view.currentInstance.onEditSuccess()
+		})
 
 
 # FlowRouter.route '/app/:app_id/cms_posts/grid/all',

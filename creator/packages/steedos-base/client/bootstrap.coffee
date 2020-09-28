@@ -148,7 +148,13 @@ Setup.logout = (callback) ->
 		if callback
 			callback()
 
+Setup.setGlobalAjaxHeader = () ->
+	$.ajaxSetup
+		beforeSend: (request) ->
+			request.setRequestHeader('X-User-Id', Meteor.userId())
+
 Meteor.startup ->
+	Setup.setGlobalAjaxHeader()
 
 	Setup.validate();
 	Accounts.onLogin ()->

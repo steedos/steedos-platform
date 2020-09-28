@@ -155,7 +155,7 @@ module.exports = {
         standard_approve: {
             label: "Initiate Approval",
             visible: function (object_name, record_id, record_permissions) {
-                if(!Session.get("record_id")) {
+                if (!Session.get("record_id")) {
                     /*只在详细界面显示这个action*/
                     return false;
                 }
@@ -190,7 +190,7 @@ module.exports = {
         standard_view_instance: {
             label: "View Instance",
             visible: function (object_name, record_id, record_permissions) {
-                if(!Session.get("record_id")) {
+                if (!Session.get("record_id")) {
                     /*只在详细界面显示这个action*/
                     return false;
                 }
@@ -237,7 +237,12 @@ module.exports = {
                             Template.creator_view.currentInstance.onEditSuccess();
                             return;
                         } else if (responseText.redirect_url) {
-                            Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
+                            if (Meteor.settings.public.webservices && Meteor.settings.public.webservices.workflow && Meteor.settings.public.webservices.workflow.url) {
+                                Steedos.openWindow(responseText.redirect_url);
+                            } else {
+                                Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
+                            }
+
                         }
                     },
                     error: function (xhr, msg, ex) {
@@ -299,7 +304,7 @@ module.exports = {
                     /* company_ids/company_id默认值逻辑*/
                     if (!doc.company_id || !doc.company_ids) {
                         var su;
-                        if(userId){
+                        if (userId) {
                             su = Creator.getCollection("space_users").findOne({ space: doc.space, user: userId }, {
                                 fields: { company_id: 1 }
                             });
