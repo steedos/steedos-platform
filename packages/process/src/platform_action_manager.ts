@@ -47,10 +47,11 @@ export const runProcessNodeAction = async (processNodeId: string, when: string, 
         default:
             throw new Error(`无效的参数when: ${when}`, );
     }
-    
-    const actions = await objectql.getObject("action_field_updates").find({filters: filters})
-    for (const action of actions) {
-        await runAction(action, recordId, userSession)
+    if(!_.isEmpty(filters)){
+        const actions = await objectql.getObject("action_field_updates").find({filters: filters})
+        for (const action of actions) {
+            await runAction(action, recordId, userSession)
+        }
     }
 }
 
@@ -81,8 +82,10 @@ export const runProcessAction = async (processId: string, when: string, recordId
         default:
             throw new Error(`无效的参数when: ${when}`, );
     }
-    const actions = await objectql.getObject("action_field_updates").find({filters: filters})
-    for (const action of actions) {
-        await runAction(action, recordId, userSession)
+    if(!_.isEmpty(filters)){
+        const actions = await objectql.getObject("action_field_updates").find({filters: filters})
+        for (const action of actions) {
+            await runAction(action, recordId, userSession)
+        }
     }
 }
