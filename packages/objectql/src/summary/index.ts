@@ -90,7 +90,7 @@ export const isSummaryFieldTypeSupported = (summaryType: string, summaryFieldTyp
 
 export const addObjectFieldSummaryConfig = (fieldConfig: SteedosFieldTypeConfig, objectConfig: SteedosObjectTypeConfig) => {
     let summaryConfig: SteedosFieldSummaryTypeConfig = {
-        _id: fieldConfig._id ? fieldConfig._id : `${objectConfig.name}.${fieldConfig.name}`,
+        _id: `${objectConfig.name}.${fieldConfig.name}`,
         object_name: objectConfig.name,
         field_name: fieldConfig.name,
         summary_object: fieldConfig.summary_object,

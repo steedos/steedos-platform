@@ -176,7 +176,7 @@ export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig,
     const formula = fieldConfig.formula;
     let result = computeFormulaVarsAndQuotes(formula, objectConfig, objectConfigs);
     let formulaConfig: SteedosFieldFormulaTypeConfig = {
-        _id: fieldConfig._id ? fieldConfig._id : `${objectConfig.name}.${fieldConfig.name}`,
+        _id: `${objectConfig.name}.${fieldConfig.name}`,
         object_name: objectConfig.name,
         field_name: fieldConfig.name,
         formula: formula,
