@@ -4,9 +4,6 @@ Meteor.startup ()->
         Meteor.settings.public.webservices = {
             "creator": {
                 "url": rootURL
-            },
-            "workflow": {
-                "url": rootURL
             }
         }
 
@@ -14,12 +11,6 @@ Meteor.startup ()->
         Meteor.settings.public.webservices.creator = {
             "url": rootURL
         }
-    if !Meteor.settings.public.webservices.workflow
-        Meteor.settings.public.webservices.workflow = {
-            "url": rootURL
-        }
 
     if !Meteor.settings.public.webservices.creator.url
         Meteor.settings.public.webservices.creator.url = rootURL
-    if !Meteor.settings.public.webservices.workflow.url
-        Meteor.settings.public.webservices.workflow.url = rootURL
