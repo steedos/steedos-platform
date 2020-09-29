@@ -19,9 +19,9 @@
     ```
         cd steedos-platform
     ```
-3. 通常情况下在develop分支进行开发，从master分支发布版本，因此，需要在本地拷贝远程develop分支
+3. 通常情况下在develop分支进行开发，从master分支发布版本，因此，需要在本地拷贝远程master分支
     ```
-        git checkout -t origin/develop
+        git checkout -t origin/master
     ```
 4. 在当前的Lerna存储库中引导软件包并安装所有依赖包。
     ```
