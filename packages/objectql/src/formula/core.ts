@@ -166,37 +166,37 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     if (!options) {
         options = {};
     }
+    // console.log("===runFormula===formula====", formula);
+    // console.log("===runFormula===params====", params);
     let { returnType, blankValue } = options;
     let formulaParams = {};
     params.forEach(({ key, path, value }) => {
         // formulaParams[key] = value;
         // 把{}括起来的变量替换为计算得到的变量值
         // formula = formula.replace(`{${key}}`, `__params["${key}"]`);
-        formulaParams[key] = getFieldSubstitution(path.reference_from, path.field_name, value);
+        formulaParams[key] = getFieldSubstitution(path.reference_from, path.field_name, value, blankValue);
     });
     
     let result = evalFieldFormula(formula, formulaParams);
+    // console.log("===runFormula===result====", result);
     let formulaValue = result.value;
     let formulaValueType = result.dataType;
     if(result.type === 'error'){
-        throw new Error(result.message);
-    }
-    // console.log("==runFieldFormular==result===", result);
-    if (formulaValue === null || formulaValue === undefined || _.isNaN(formulaValue)) {
-        if (["number", "currency"].indexOf(returnType) > -1) {
-            if (blankValue === SteedosFormulaBlankValue.blanks) {
-                return null;
-            }
-            else {
-                // 默认为按0值处理
-                return 0;
-            }
+        if(blankValue === SteedosFormulaBlankValue.blanks && result.errorType === "ArgumentError"){
+            // 配置了空参数视为空值时会直接返回空值类型，这里就会报错，直接返回空值，而不是抛错
+            // TODO:result.errorType === "ArgumentError"不够细化，下一版本应该视错误情况优化返回空值的条件
+            formulaValue = null;
         }
-        else {
-            return null;
+        else{
+            throw new Error(result.message);
         }
     }
-    if (returnType) {
+    if (formulaValueType === "number" && _.isNaN(formulaValue)){
+        // 数值类型计算结果为NaN时，保存为空值
+        formulaValue = null;
+    }
+
+    if (returnType && formulaValueType && formulaValueType != "null") {
         switch (returnType) {
             case "boolean":
                 if (formulaValueType !== "checkbox") {
@@ -232,6 +232,7 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
                 break;
         }
     }
+    // console.log("===runFormula===formulaValue====", formulaValue);
     return formulaValue;
 }
 

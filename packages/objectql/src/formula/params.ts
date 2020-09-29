@@ -1,5 +1,6 @@
 import _ = require('underscore');
 import { getObject } from '../types/object';
+import { SteedosFormulaBlankValue } from './type';
 
 const enum FormulonDataType {
     Text = 'text',
@@ -28,59 +29,81 @@ function getField(objectName: string, fieldName: string){
     return getObject(objectName).getField(fieldName);
 }
 
-function getSubstitutionDataType(objectName: string, fieldName: string){
-
+function getSubstitutionDataType(objectName: string, fieldName: string, value: any, blankValue: SteedosFormulaBlankValue){
     const field: any = getField(objectName, fieldName);
-
     const steedosType = getFieldSteedosType(field);
-
+    let dateType: FormulonDataType;
     switch (steedosType) {
         case 'text':
-            return FormulonDataType.Text;
+            dateType = FormulonDataType.Text;
+            break;
         case 'textarea':
-            return FormulonDataType.Text;
+            dateType = FormulonDataType.Text;
+            break;
         case 'html':
-            return FormulonDataType.Text;
+            dateType = FormulonDataType.Text;
+            break;
         case 'password':
-            return FormulonDataType.Text;
+            dateType = FormulonDataType.Text;
+            break;
         case 'autonumber':
-            return FormulonDataType.Text;
+            dateType = FormulonDataType.Text;
+            break;
         case 'url':
-            return FormulonDataType.Text;
+            dateType = FormulonDataType.Text;
+            break;
         case 'email':
-            return FormulonDataType.Text;
+            dateType = FormulonDataType.Text;
+            break;
         case 'number':
-            return FormulonDataType.Number;
+            dateType = FormulonDataType.Number;
+            break;
         case 'currency':
-            return FormulonDataType.Number;
+            dateType = FormulonDataType.Number;
+            break;
         case 'date':
-            return FormulonDataType.Date;
+            dateType = FormulonDataType.Date;
+            break;
         case 'datetime':
-            return FormulonDataType.Datetime;
+            dateType = FormulonDataType.Datetime;
+            break;
         case 'boolean':
-            return FormulonDataType.Checkbox;
+            dateType = FormulonDataType.Checkbox;
+            break;
         case 'select':
             if(field.multiple){
-                return FormulonDataType.Multipicklist;
+                dateType = FormulonDataType.Multipicklist;
             }else{
-                return FormulonDataType.Text;
-                // return FormulonDataType.Picklist;
+                dateType = FormulonDataType.Text;
+                // dateType = FormulonDataType.Picklist;
             }
+            break;
         case 'lookup':
             if(field.multiple){
-                return FormulonDataType.Multipicklist;
+                dateType = FormulonDataType.Multipicklist;
             }else{
-                return FormulonDataType.Picklist;
+                dateType = FormulonDataType.Picklist;
             }
+            break;
         case 'master_detail':
-            return FormulonDataType.Picklist;
+            dateType = FormulonDataType.Picklist;
+            break;
         case 'geolocation':
-            return FormulonDataType.Geolocation;
+            dateType = FormulonDataType.Geolocation;
+            break;
         case 'null':
-            return FormulonDataType.Null
+            dateType = FormulonDataType.Null
+            break;
         default:
             break;
     }
+
+    if(dateType == FormulonDataType.Number && (value === null || value === undefined)){
+        if(blankValue === SteedosFormulaBlankValue.blanks){
+            return FormulonDataType.Null;
+        }
+    }
+    return dateType;
 }
 
 function getSubstitutionOptions(objectName: string, fieldName: string, dataType: string){
@@ -117,12 +140,12 @@ function getSubstitutionValue(dataType: string, value: any){
     return value;
 }
 
-export function getFieldSubstitution(objectName: string, fieldName: string, value: any){
+export function getFieldSubstitution(objectName: string, fieldName: string, value: any, blankValue: SteedosFormulaBlankValue){
     let fieldSubstitution: any = {
         type: 'literal',
         value: value
     }
-    fieldSubstitution.dataType = getSubstitutionDataType(objectName, fieldName);
+    fieldSubstitution.dataType = getSubstitutionDataType(objectName, fieldName, value, blankValue);
     fieldSubstitution.options = getSubstitutionOptions(objectName, fieldName, fieldSubstitution.dataType);
     fieldSubstitution.value  = getSubstitutionValue(fieldSubstitution.dataType, value);
     return fieldSubstitution;
