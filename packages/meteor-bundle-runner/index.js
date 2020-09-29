@@ -5,6 +5,14 @@ var _ = require("underscore")
 var yaml = require("js-yaml")
 var objectql = require("@steedos/objectql");
 
+var versions = process.versions;
+if(versions.node){
+  var nodeVersion = versions.node.split('.');
+  if(Number.parseInt(nodeVersion[0]) < 11){
+   console.error('The engine "node" is incompatible with this module. Expected version ">=11". Got "'+ versions.node +'"');
+   process.exit(1);
+  }
+}
 
 var getServerDir = function(){
   var serverDir = process.env.SERVER_DIR;  
