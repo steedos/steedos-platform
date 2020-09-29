@@ -16,7 +16,7 @@ fields:
     is_wide: true
     filterable: true
     create: false
-    reference_to: objects
+    # reference_to: objects
     optionsFunction: !!js/function |
       function(){
         return Steedos.getObjectsOptions();
