@@ -420,9 +420,9 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == 'autonumber'
 			fs.type = String
 		else if field.type == 'formula'
-			fs = Creator.getObjectSchema({fields: {field: Object.assign(field, {type: field.data_type})}})[field.name]
+			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
 		else if field.type == 'summary'
-			fs = Creator.getObjectSchema({fields: {field: Object.assign(field, {type: field.data_type})}})[field.name]
+			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
 		else
 			fs.type = field.type
 
