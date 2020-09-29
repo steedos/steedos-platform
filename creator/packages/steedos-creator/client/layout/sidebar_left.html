@@ -6,13 +6,6 @@
 					<div class="absolute inset-0 bg-gray-600 opacity-75"></div>
 				</div>
 				<div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white overflow-auto">
-					<!-- <div class="absolute top-0 right-0 -mr-14 p-1" id="closeSidebar">
-						<button class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600" aria-label="Close sidebar">
-							<svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-							</svg>
-						</button>
-					</div> -->
 					<div class="flex items-center flex-shrink-0 px-4">
 						<img class="h-10 w-auto" src="{{logoUrl}}">
 					</div>
@@ -58,9 +51,15 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="flex-shrink-0 w-14">
 					<!-- Dummy element to force sidebar to shrink to fit close icon -->
+					<div class="absolute top-0 right-0 p-1" id="closeSidebar">
+						<button class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600" aria-label="Close sidebar">
+							<svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+							</svg>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
