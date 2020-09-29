@@ -35,8 +35,6 @@ fields:
     label: API Name
     searchable: true
     index: true
-    hidden: true
-    omit: true
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
   _name:
     type: text
@@ -44,6 +42,8 @@ fields:
     searchable: true
     index: true
     required: true
+    hidden: true
+    omit: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   type:
     type: select
@@ -443,15 +443,15 @@ form:
     }
   beforeEdit: !!js/function |
     function(){
-      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema);
+      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
     }
   afterEdit: !!js/function |
     function(){
-      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema);
+      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
     }
   beforeView: !!js/function |
     function(){
-      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema);
+      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'view');
     }
   afterView: !!js/function |
     function(){

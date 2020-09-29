@@ -1,6 +1,6 @@
 Steedos.ObjectFieldManager = {};
 
-const baseFieldsName = [{ "name": "object", "required": true }, { "name": "label", "required": true }, { "name": "name" }, { "name": "_name", "required": true }, { "name": "type", "required": true }, { "name": "defaultValue" }, { "name": "group" }, { "name": "sort_no" }, { "name": "is_name" }, { "name": "required" }, { "name": "is_wide" }, { "name": "readonly" }, { "name": "hidden" }, { "name": "omit" }, { "name": "index" }, { "name": "sortable" }, { "name": "searchable" }, { "name": "filterable" }, {"name":"inlineHelpText"},{"name":"description"}];
+const baseFieldsName = [{ "name": "object", "required": true }, { "name": "label", "required": true }, { "name": "type", "required": true }, { "name": "defaultValue" }, { "name": "group" }, { "name": "sort_no" }, { "name": "is_name" }, { "name": "required" }, { "name": "is_wide" }, { "name": "readonly" }, { "name": "hidden" }, { "name": "omit" }, { "name": "index" }, { "name": "sortable" }, { "name": "searchable" }, { "name": "filterable" }, {"name":"inlineHelpText"},{"name":"description"}];
 
 function getFieldsByType(doc, type, dataType) {
   let fields = [];
@@ -76,10 +76,15 @@ function getFieldsByType(doc, type, dataType) {
 }
 
 
-Steedos.ObjectFieldManager.changeSchema = function (doc, schema) {
+Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
   var clone = require('clone');
   var fields = clone(Creator.getObject("object_fields").fields);
   var showFields = baseFieldsName.concat(getFieldsByType(doc, doc.type, doc.data_type));
+  if(when === 'view'){
+    showFields.push({ "name": "name" })
+  }else if(when === 'edit'){
+    showFields.push({name: '_name', required: true, hidden: false, omit: false})
+  }
   var objectName = doc.object;
   if(_.isObject(objectName)){
     objectName = objectName.name
