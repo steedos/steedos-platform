@@ -33,6 +33,7 @@ fields:
     type: textarea
     label: Entry criteria
     is_wide: true
+    required: true
     group: Specify Step Criteria
   if_criteria_not_met: # https://help.salesforce.com/articleView?err=1&id=approvals_step_entrycriteria.htm&type=5
     type: select

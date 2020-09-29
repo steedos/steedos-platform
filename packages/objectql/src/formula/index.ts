@@ -171,6 +171,15 @@ const computeFormulaVarsAndQuotes = (formula: string, objectConfig: SteedosObjec
     return { quotes, vars };
 }
 
+export function checkFormula(formula: string, mainObjectName: string){
+
+    const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs("default");
+
+    const mainObjectConfig = getObjectConfig(mainObjectName);
+
+    computeFormulaVarsAndQuotes(formula, mainObjectConfig, objectConfigs);
+}
+
 export const addObjectFieldFormulaConfig = (fieldConfig: SteedosFieldTypeConfig, objectConfig: SteedosObjectTypeConfig) => {
     const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs("default")
     const formula = fieldConfig.formula;
