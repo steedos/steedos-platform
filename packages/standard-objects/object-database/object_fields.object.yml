@@ -54,11 +54,11 @@ fields:
         value: text
       - label: Textarea
         value: textarea
-      - label: Html文本
+      - label: Html
         value: html
       - label: Select
         value: select
-      - label: Checkbox
+      - label: Boolean
         value: boolean
       - label: Date
         value: date
