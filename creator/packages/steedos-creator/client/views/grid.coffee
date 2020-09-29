@@ -1,4 +1,4 @@
-_itemClick = (e, curObjectName, list_view_id)->
+_itemClick = (e, curObjectName, list_view_id, is_related)->
 	self = this
 	record = e.data
 	if !record
@@ -34,7 +34,7 @@ _itemClick = (e, curObjectName, list_view_id)->
 			Session.set("action_fields", undefined)
 			Session.set("action_collection", "Creator.Collections.#{objectName}")
 			Session.set("action_collection_name", collectionName)
-			Session.set("action_save_and_insert", true)
+			Session.set("action_save_and_insert", if is_related then false else true)
 			if action.todo == "standard_delete"
 				action_record_title = value.itemData.record[name_field_key]
 				Creator.executeAction objectName, action, recordId, action_record_title, list_view_id, value.itemData.record, ()->
@@ -506,7 +506,7 @@ Template.creator_grid.onRendered ->
 											r.values[index] = valOpt.label
 				onCellClick: (e)->
 					if e.column?.dataField ==  "_id_actions"
-						_itemClick.call(self, e, curObjectName, list_view_id)
+						_itemClick.call(self, e, curObjectName, list_view_id, is_related)
 
 				onContentReady: (e)->
 					if self.data.total
