@@ -71,6 +71,7 @@ class Login extends React.Component {
         // samlEnabled: this.props.isLicensed && this.props.enableSaml,
         spaceId,
         email,
+        username: '',
         mobile: '',
         loginId: '',
         userId: '',
@@ -150,14 +151,28 @@ class Login extends React.Component {
       this.setState({
         loginId,
         email: e.target.value,
+        username: null,
+        mobile: null,
         loginBy: 'email'
       });
     } else {
-      this.setState({
-        loginId,
-        mobile: e.target.value,
-        loginBy: 'mobile'
-      });
+      if(new RegExp('^[0-9]{11}$').test(e.target.value)){
+        this.setState({
+          loginId,
+          mobile: e.target.value,
+          username: null,
+          email: null,
+          loginBy: 'mobile'
+        });
+      }else{
+        this.setState({
+          loginId,
+          username: e.target.value,
+          mobile: null,
+          email: null,
+          loginBy: 'username'
+        });
+      }
     }
   }
 
@@ -260,6 +275,7 @@ class Login extends React.Component {
     const user = {
       email: this.state.loginBy === 'email'?this.state.email.trim():'',
       mobile: this.state.loginBy === 'mobile'?this.state.mobile.trim():'',
+      username: (this.state.loginWith === 'password' && this.state.loginBy === 'username')?this.state.username.trim():'',
       spaceId: this.state.spaceId,
     }
     this.props.actions.login(user, this.state.password?this.state.password.trim():this.state.password, this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode).then(async ({error}) => {
