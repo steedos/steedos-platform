@@ -487,7 +487,7 @@ export const processInstanceWorkitemReject = async (instanceHistoryId: string, u
     if(currentProcessNode.reject_behavior === 'back_to_previous'){
         nextNodeOptions = {}
         nextNodeOptions.node = await getPreviousNode(instanceId, currentProcessNode, userSession)
-        nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.nextNode, userSession, null, true);
+        nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.node, userSession, null, true);
     }
 
     await handleProcessInstanceWorkitem(currentInstanceNode, 'rejected', instanceHistoryId, userSession, comment, nextNodeOptions);
