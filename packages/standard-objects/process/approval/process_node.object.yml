@@ -67,15 +67,11 @@ fields:
     reference_to: roles
     multiple: true
     group: Select Assigned Approver
-    omit: true
-    hidden: true
   assigned_approver_flow_roles: 
     type: lookup
     reference_to: flow_roles
     multiple: true
     group: Select Assigned Approver
-    omit: true
-    hidden: true
   assigned_approver_user_field: 
     type: lookup
     multiple: true

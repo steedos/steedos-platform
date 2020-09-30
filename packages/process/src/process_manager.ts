@@ -4,6 +4,7 @@ const Fiber = require('fibers');
 const _ = require("underscore");
 
 declare var Creator;
+declare var getHandlersManager;
 
 const lockObjectRecord = async (objectName, reocrdId)=>{
     await objectql.getObject(objectName).directUpdate(reocrdId, {locked: true});
@@ -59,12 +60,35 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
                 nodeApprover = nodeApprover.concat(processNode.assigned_approver_users)
             }
     
-            if(!_.isEmpty(processNode.assigned_approver_roles)){
+            if (!_.isEmpty(processNode.assigned_approver_roles)) {
                 //TODO
+                for (const roleId of processNode.assigned_approver_roles) {
+                    let role = await objectql.getObject('roles').findOne(roleId);
+                    if (role && !_.isEmpty(role.users)) {
+                        nodeApprover = nodeApprover.concat(role.users);
+                    }
+                }
             }
-    
-            if(!_.isEmpty(processNode.assigned_approver_flow_roles)){
+
+            if (!_.isEmpty(processNode.assigned_approver_flow_roles)) {
                 //TODO
+                let submitted_by = userSession.userId;
+                let spaceId = userSession.spaceId;
+                if (instanceId) {
+                    let processInstance = await objectql.getObject("process_instance").findOne(instanceId);
+                    submitted_by = processInstance.submitted_by;
+                }
+                let handlers = await new Promise((resolve, reject) => {
+                    Fiber(function () {
+                        try {
+                            let handlers = getHandlersManager.getHandlersByUserAndRoles(submitted_by, processNode.assigned_approver_flow_roles, spaceId);
+                            resolve(handlers);
+                        } catch (error) {
+                            reject(error)
+                        }
+                    }).run()
+                });
+                nodeApprover = nodeApprover.concat(handlers);
             }
     
             if(!_.isEmpty(processNode.assigned_approver_user_field)){
