@@ -61,7 +61,6 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
             }
     
             if (!_.isEmpty(processNode.assigned_approver_roles)) {
-                //TODO
                 for (const roleId of processNode.assigned_approver_roles) {
                     let role = await objectql.getObject('roles').findOne(roleId);
                     if (role && !_.isEmpty(role.users)) {
@@ -71,7 +70,6 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
             }
 
             if (!_.isEmpty(processNode.assigned_approver_flow_roles)) {
-                //TODO
                 let submitted_by = userSession.userId;
                 let spaceId = userSession.spaceId;
                 if (instanceId) {
