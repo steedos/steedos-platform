@@ -283,6 +283,10 @@ Template.CreatorObjectModal.helpers
 			return finalFields
 
 Template.CreatorObjectModal.events
+	'click .group-section-control': (event, template) ->
+		event.preventDefault()
+		event.stopPropagation()
+		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 	'click button.btn-insert': (event,template) ->
 		$("#"+template.data.formId, "#creatorObjectModal").submit()
 	'change form': (event, template)->
