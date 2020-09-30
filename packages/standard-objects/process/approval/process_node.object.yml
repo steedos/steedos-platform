@@ -1,7 +1,7 @@
 name: process_node
 label: process_node
 hidden: true
-icon: record
+icon: steps
 fields:
   name:
     type: text
