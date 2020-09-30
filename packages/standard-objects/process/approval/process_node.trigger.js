@@ -73,7 +73,9 @@ const allowEdit = async function(recordId, doc){
 
 const getProcessNodeObjectName = async function(processId){
     const process = await objectql.getObject("process_definition").findOne(processId);
-    return process.object_name
+    if(process){
+        return process.object_name
+    }
 }
 
 module.exports = {
@@ -98,7 +100,9 @@ module.exports = {
         await util.checkAPIName(this.object_name, 'name', this.doc.name);
         if(!this.doc.filtrad){
             const objectName = await getProcessNodeObjectName(this.doc.process_definition);
-            objectql.checkFormula(this.doc.entry_criteria, objectName)
+            if(objectName){
+                objectql.checkFormula(this.doc.entry_criteria, objectName)
+            }
         }
 
     },
@@ -122,9 +126,11 @@ module.exports = {
             await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id);
         }
 
-        if(!this.doc.filtrad){
+        if(!this.doc.filtrad && this.doc.process_definition){
             const objectName = await getProcessNodeObjectName(this.doc.process_definition);
-            objectql.checkFormula(this.doc.entry_criteria, objectName)
+            if(objectName){
+                objectql.checkFormula(this.doc.entry_criteria, objectName)
+            }
         }
     },
     afterUpdate: async function () {
