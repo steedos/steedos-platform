@@ -70,8 +70,8 @@ export const runProcessAction = async (processId: string, when: string, recordId
             }
             break;
         case 'final_rejection':
-            if(!_.isEmpty(process.final_rejection_record_lock) && _.isArray(process.final_rejection_record_lock)){
-                filters.push(['_id', 'in', process.final_rejection_record_lock])
+            if(!_.isEmpty(process.final_rejection_updates_field_actions) && _.isArray(process.final_rejection_updates_field_actions)){
+                filters.push(['_id', 'in', process.final_rejection_updates_field_actions])
             }
             break;
         case 'recall':
