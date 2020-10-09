@@ -1,9 +1,9 @@
 import {runProcessAction, runProcessNodeAction} from './platform_action_manager';
+import { sendNotifications } from './notifications';
 const objectql = require('@steedos/objectql');
 const Fiber = require('fibers');
 const _ = require("underscore");
 
-declare var Creator;
 declare var getHandlersManager;
 
 const lockObjectRecord = async (objectName, reocrdId)=>{
@@ -12,32 +12,6 @@ const lockObjectRecord = async (objectName, reocrdId)=>{
 
 const unlockObjectRecord = async (objectName, reocrdId)=>{
     await objectql.getObject(objectName).directUpdate(reocrdId, {locked: false});
-}
-
-const sendNotifications = async (instanceHistory, from, to)=>{
-    if(!to){
-        return;
-    }
-    var instance = await objectql.getObject("process_instance").findOne(instanceHistory.process_instance);
-    var fromUser =  await objectql.getObject("users").findOne(to);
-    var relatedDoc = await objectql.getObject(instance.target_object.o).findOne(instance.target_object.ids[0]);
-    let relatedDocName = relatedDoc.name; //TODO
-    var notificationTitle = `${fromUser.name} 正在请求批准 ${relatedDocName}`;
-    var notificationDoc = {
-        name: notificationTitle,
-        body: relatedDocName,
-        related_to: {
-            o: "process_instance_history",
-            ids: [instanceHistory._id]
-        },
-        related_name: relatedDocName,
-        from: null,
-        space: instanceHistory.space
-    };
-
-    Fiber(function () {
-        Creator.addNotifications(notificationDoc, null, [to]);
-    }).run();
 }
 
 const getProcessNodeApprover = async (instanceId: string, processNode: any, userSession: any, chooseApprover: any , isBack: boolean, record?:any)=>{
