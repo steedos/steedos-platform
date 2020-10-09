@@ -1,5 +1,5 @@
 name: process_instance_history
-label: 批准历史
+label: Approval History
 hidden: true
 icon: approval
 # paging:
@@ -10,7 +10,7 @@ fields:
     label: Step Name
     hidden: true
   created_by:
-    label: 提交人
+    label: Submitter
     is_wide: true
   process_instance:
     type: lookup
