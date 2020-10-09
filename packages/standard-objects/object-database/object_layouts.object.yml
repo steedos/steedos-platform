@@ -86,6 +86,13 @@ fields:
                 let _object = Creator.getObject(item.object_name) || {}
                 _options.push({label: _object.label || _object.name, value: item.object_name});
               })
+
+              if(!_.find(_options, function(option){
+                return option.value === 'process_instance_history'
+              })){
+                let _object = Creator.getObject("process_instance_history") || {}
+                _options.push({label: _object.label || _object.name, value: "process_instance_history"});
+              }
               return _options;
             }
   fields:
