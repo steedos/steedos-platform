@@ -32,6 +32,7 @@ abstract class SteedosObjectProperties {
     enable_trash?: boolean
     enable_space_global?: boolean
     enable_tree?: boolean
+    enable_field_edit?: boolean
     is_view?: boolean
     hidden?: boolean
     description?: string

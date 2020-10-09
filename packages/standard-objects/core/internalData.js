@@ -13,8 +13,7 @@ const objectBaseFields = {
     is_enable: true,
     record_permissions: permissions, 
     is_system:true, 
-    in_development: '0',
-    enable_field_edit: true
+    in_development: '0'
 }
 
 const hiddenObjects = ['core','base','cfs_instances_filerecord'];
@@ -68,6 +67,10 @@ function getObjects(userId){
                 delete _obj.triggers
                 delete _obj.list_views
                 delete _obj.permission_set
+                if(_obj.enable_field_edit !== false){
+                    // 默认值配置为true
+                    _obj.enable_field_edit = true;
+                }
                 objects[_obj.name] = Object.assign({}, _obj, objectBaseFields)
             }
           });
@@ -106,6 +109,10 @@ function getObject(id, userId){
         object._id = object.name;
         object.datasource = _object.datasource.name;
         steedosI18n.translationObject(lng, object.name, object)
+        if(object.enable_field_edit !== false){
+            // 默认值配置为true
+            object.enable_field_edit = true;
+        }
         return Object.assign({}, object, objectBaseFields);
     } catch (error) {
         return null;
