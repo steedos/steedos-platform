@@ -7,7 +7,7 @@ import _ = require('lodash');
 import { JsonMap } from '@salesforce/ts-types';
 
 /**
- * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在insert/update的对象字段的公式字段并更新其字段值
+ * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在insert/update的对象字段的汇总字段并更新其字段值
  * @param objectName 
  * @param recordId 
  * @param userSession 
@@ -73,7 +73,7 @@ export const getSummaryAggregateGroups = (summary_type: SteedosSummaryTypeValue,
 }
 
 /**
- * 修改记录时，根据查到的引用了该记录相关字段公式配置，重新计算字段公式，并把计算结果更新到数据库相关记录中
+ * 新建或修改记录时，根据查到的引用了该记录相关字段汇总配置，重新计算字段值，并把计算结果更新到数据库相关记录中
  * @param objectName 当前修改的记录所属对象名称
  * @param recordId 当前修改的记录ID
  * @param fieldSummaryConfig 查到的引用了该记录所属对象的汇总字段配置之一
@@ -135,6 +135,12 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
     await updateReferenceTosFieldSummaryValue(referenceToIds, fieldSummaryConfig, userSession);
 }
 
+/**
+ * 执行聚合计算，并把聚合汇总后的值更新到数据库中
+ * @param referenceToIds 子表上的master_detail关联到主表对象的字段值集合，是多条子表记录上的关联id值组成的数组
+ * @param fieldSummaryConfig 
+ * @param userSession 
+ */
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
     const { reference_to_field, summary_type, summary_field, summary_object, object_name, filters } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
