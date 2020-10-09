@@ -11,8 +11,7 @@ admin_menus:
   #   expanded: false
   #   sort: 500
   - _id: process_definition
-    label: 批准过程
-    name: process_definition
+    name: Process Definition
     permission_sets:
       - admin
     object_name: process_definition

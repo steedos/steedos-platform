@@ -22,7 +22,7 @@ fields:
         return Steedos.getObjectsOptions();
       }
   description:
-    label: 描述
+    label: Description
     type: textarea
     is_wide: true
   order: #TODO 必须是连续的数字
@@ -41,7 +41,7 @@ fields:
     label: Specify Entry Criteria
     is_wide: true
     required: true
-    group: 指定条目条件
+    # group: Specify Entry Criteria
     inlineHelpText: If only certain types of records should enter this approval process, enter that criteria below. For example, only expense reports from employees at headquarters should use this approval process.
   # user_hierarchy_field:
   #   type: text
@@ -90,7 +90,7 @@ fields:
     type: boolean
     is_wide: true
     label: Allow submitters to recall approval requests
-    group: 提交设置
+    # group: 提交设置
   initial_submission_record_lock:
     type: select
     required: true
@@ -102,8 +102,8 @@ fields:
         value: unlock
     defaultValue: lock
     readonly: true
-    label: 锁定记录
-    group: 初始提交操作
+    label: Record Lock
+    group: Initial Submission Actions
   initial_submission_updates_field_actions:
     type: lookup
     multiple: true
@@ -117,7 +117,7 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
-    group: 初始提交操作
+    group: Initial Submission Actions
   final_approval_record_lock:
     type: select
     required: true

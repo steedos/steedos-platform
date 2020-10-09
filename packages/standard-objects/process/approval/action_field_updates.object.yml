@@ -126,7 +126,7 @@ fields:
     omit: true
     label: 通知被分配人(仅修改拥有者时由此选项)
   description:
-    label: description
+    label: Description
     type: textarea
     is_wide: true
   # todo:

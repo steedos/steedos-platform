@@ -16,7 +16,7 @@ fields:
     scale: 0
     min: 1
   description:
-    label: description
+    label: Description
     type: textarea
     is_wide: true
   process_definition:
