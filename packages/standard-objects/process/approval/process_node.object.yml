@@ -1,5 +1,5 @@
 name: process_node
-label: process_node
+label: Approval Steps
 hidden: true
 icon: steps
 fields:
@@ -25,7 +25,7 @@ fields:
     reference_to: process_definition
   filtrad:
     type: boolean
-    label: 所有记录都应进入此步骤
+    label: All records should enter this step
     group: Specify Step Criteria
     defaultValue: false
     is_wide: true
@@ -126,7 +126,7 @@ fields:
   approval_updates_field_actions:
     type: lookup
     multiple: true
-    label: 字段更新
+    label: Field Update
     reference_to: action_field_updates
     depend_on:
       - process_definition
@@ -141,11 +141,11 @@ fields:
           return "object_name eq '" + object_name + "'";
         }
       }
-    group: 批准操作
+    group: Approval Actions
   rejection_updates_field_actions:
     type: lookup
     multiple: true
-    label: 字段更新
+    label: Field Update
     reference_to: action_field_updates
     depend_on:
       - process_definition
@@ -160,7 +160,7 @@ fields:
           return "object_name eq '" + object_name + "'";
         }
       }
-    group: 拒绝操作
+    group: Rejection Actions
 form:
   beforeInsert:
     function(){

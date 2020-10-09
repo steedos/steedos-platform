@@ -1,5 +1,5 @@
 name: action_field_updates
-label: action_field_updates
+label: Field Updates
 icon: record
 hidden: true
 fields:
@@ -86,16 +86,16 @@ fields:
           var field = object.fields[doc.field_name];
           if(field && field.type != 'boolean'){
             _options.push({
-                label: 'Null',
+                label: TAPi18n.__("action_field_updates_field_operation_options_null"),
                 value: 'null',
             }) 
           }
           _options.push({
-              label: 'Formula',
+              label: TAPi18n.__("action_field_updates_field_operation_options_formula"),
               value: 'formula',
           });
           _options.push({
-              label: '特定值',
+              label: TAPi18n.__("action_field_updates_field_operation_options_literal"),
               value: 'literal',
           })
           return _options;

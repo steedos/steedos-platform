@@ -1,10 +1,25 @@
 process_definition__object: 批准过程
+process_definition_action_disable: 停用
+process_definition_action_enable: 启用
+process_definition_field_active: 启用
 process_definition_field_approval_page_fields: 批准页面字段
 process_definition_field_approval_page_fields_inlineHelpText: 批准页面是批准人实际批准或拒绝请求的地方。使用下面的选项，选择要在此页面上显示的字段。
 process_definition_field_show_approval_history: 除以上所选取字段以外，也显示批准历史信息。
 process_definition_field_entry_criteria: 指定条目条件
 process_definition_group_specify_entry_criteria: 指定条目条件
 process_definition_field_entry_criteria_inlineHelpText: 如果只有某些类型的记录能够进入此批准过程，请在下面输入条件。例如，只有总部员工的费用报表应该使用此批准过程。
+process_definition_field_final_approval_record_lock: 锁定记录
+process_definition_field_final_approval_record_lock_options_lock: 锁定记录以免进行编辑
+process_definition_field_final_approval_record_lock_options_unlock: 取消锁定可以进行编辑
+process_definition_field_final_approval_updates_field_actions: 字段更新
+process_definition_field_final_rejection_record_lock: 锁定记录
+process_definition_field_final_rejection_record_lock_options_lock: 锁定记录以免进行编辑
+process_definition_field_final_rejection_record_lock_options_unlock: 取消锁定可以进行编辑
+process_definition_field_final_rejection_updates_field_actions: 字段更新
+process_definition_field_initial_submission_record_lock: Record Lock
+process_definition_field_initial_submission_record_lock_options_lock: 锁定记录以免进行编辑
+process_definition_field_initial_submission_record_lock_options_unlock: 取消锁定可以进行编辑
+process_definition_field_initial_submission_updates_field_actions: 字段更新
 process_definition_field_label: 显示名称
 process_definition_field_record_editability: 记录可编辑性属性
 process_definition_field_record_editability_inlineHelpText: 当记录在批准过程中时，它总是锁定的 -- 只有管理员可以对其进行编辑
@@ -14,13 +29,15 @@ process_definition_field_record_editability_options_admin_or_current_approver: �
 process_definition_field_user_hierarchy_field: 下一个批准人的自动确定方式
 process_definition_group_next_automated_approver: 选择用于自动传送批准的字段 TODO
 process_definition_group_initial_submission_actions: 初始提交操作
+process_definition_group_final_approval_actions: 最终批准操作
+process_definition_group_final_rejection_actions: 最终拒绝操作
+process_definition_group_recall_actions: 调回操作
 process_definition_field_user_hierarchy_field_inlineHelpText: 可选项为审批岗位？
 process_definition_field_use_approver_field_of_record_owner: 使用记录所有人的批准人字段
 process_definition_field_name: API 名称
 process_definition_field_object_name: 对象
 process_definition_field_order: 序号
 process_definition_field_allow_recall: 允许提交人调回批准请求
-process_definition_field_active: 启用
 process_definition_field_description: 描述
 process_definition_field_allowed_submitters: 初始提交人
 process_definition_field_allowed_submitters_inlineHelpText: 对象上的人员字段及角色

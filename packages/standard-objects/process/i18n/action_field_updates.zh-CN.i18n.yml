@@ -17,5 +17,8 @@ action_field_updates_field_when_options_initial_submission: 首次提交
 action_field_updates_field_formula: 公式
 action_field_updates_field_target_object: 要更新的对象
 action_field_updates_field_operation: 新字段值类型
+action_field_updates_field_operation_options_null: 空值 (null)
+action_field_updates_field_operation_options_formula: 使用公式设置新值
+action_field_updates_field_operation_options_literal: 特定值
 action_field_updates_field_literal_value: 指定新字段值
-action_field_updates_listview_all: All
+action_field_updates_listview_all: 所有
