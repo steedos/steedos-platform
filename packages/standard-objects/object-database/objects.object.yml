@@ -121,6 +121,11 @@ fields:
     type: boolean
     label: Enable Audit
     group: Switch
+  enable_field_edit:
+    type: boolean
+    defaultValue: true
+    label: Enable Single Field Edit
+    group: Switch
   # enable_trash:
   #   type: boolean
   # enable_space_global:

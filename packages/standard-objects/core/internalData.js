@@ -13,7 +13,8 @@ const objectBaseFields = {
     is_enable: true,
     record_permissions: permissions, 
     is_system:true, 
-    in_development: '0'
+    in_development: '0',
+    enable_field_edit: true
 }
 
 const hiddenObjects = ['core','base','cfs_instances_filerecord'];

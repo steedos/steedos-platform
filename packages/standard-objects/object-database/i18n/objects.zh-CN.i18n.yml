@@ -21,6 +21,7 @@ objects_field_enable_share: 允许共享记录
 objects_field_enable_space_global: 跨工作区访问数据
 objects_field_enable_tasks: 允许添加任务
 objects_field_enable_web_forms: 允许在线表单
+objects_field_enable_field_edit: 允许编辑单个字段
 objects_field_is_enable: 启用
 objects_field_fields: 字段
 objects_field_icon: 图标
