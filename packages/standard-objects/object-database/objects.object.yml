@@ -121,7 +121,7 @@ fields:
     type: boolean
     label: Enable Audit
     group: Switch
-  enable_field_edit:
+  enable_inline_edit:
     type: boolean
     defaultValue: true
     label: Enable Single Field Edit

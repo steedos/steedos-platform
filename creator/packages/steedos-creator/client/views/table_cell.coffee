@@ -118,7 +118,7 @@ Template.creator_table_cell.helpers
 		obj = Creator.getObject(this.object_name)
 		if !obj
 			return false
-		if obj.enable_field_edit == false
+		if obj.enable_inline_edit == false
 			return false
 		if !this.field
 			return false

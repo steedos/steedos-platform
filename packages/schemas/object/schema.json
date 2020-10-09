@@ -128,7 +128,7 @@
             "type": "boolean",
             "description": "允许在线表单"
         },
-        "enable_field_edit": {
+        "enable_inline_edit": {
             "type": "boolean",
             "description": "允许单个字段编辑"
         },
