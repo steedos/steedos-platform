@@ -128,6 +128,10 @@
             "type": "boolean",
             "description": "允许在线表单"
         },
+        "enable_field_edit": {
+            "type": "boolean",
+            "description": "允许单个字段编辑"
+        },
         "is_view": {
             "type": "boolean",
             "description": "此对象是否对应数据库中的视图"
