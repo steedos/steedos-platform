@@ -1,5 +1,4 @@
 import { _t, exists, addResourceBundle } from './index';
-const yaml = require('js-yaml')
 const _ = require("underscore");
 const clone = require("clone");
 
@@ -277,8 +276,4 @@ export const getObjectI18nTemplate = function(lng: string ,objectName: string, _
     })
 
     return template;
-}
-
-export const toYml = function(date: StringMap){
-    return yaml.dump(date, {sortKeys: true}).replace(/: ''/g, ': ');
 }

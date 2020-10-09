@@ -11,6 +11,7 @@ export async function CliLogic(lng) {
 async function updateObjectsI18n(lng){
     const objectql = require(require.resolve('@steedos/objectql', {paths: [process.cwd()]}));
     const I18n = require(require.resolve('@steedos/i18n', {paths: [process.cwd()]}));
+    const I18nExport = require(require.resolve('@steedos/i18n/lib/export_object_i18n', {paths: [process.cwd()]}));
     var steedosSchema = objectql.getSteedosSchema();
     for (let dataSource in steedosSchema.getDataSources()) {
         await steedosSchema.getDataSource(dataSource).init();
@@ -47,10 +48,10 @@ async function updateObjectsI18n(lng){
                 _.each(newKeys, function(key){
                     _i18nData[key] = data[key];
                 })
-                fs.outputFileSync(filePath, I18n.toYml(_i18nData));
+                fs.outputFileSync(filePath, I18nExport.toYml(_i18nData));
                 console.info(`${colors.magenta('Modify: ')} ${filePath}`);
             }else{
-                fs.outputFileSync(filePath, I18n.toYml(data));
+                fs.outputFileSync(filePath, I18nExport.toYml(data));
                 console.info(`${colors.cyan('Add   : ')} ${filePath}`);
             }
             
