@@ -141,14 +141,12 @@
 										{{!----}}
 										{{#if isShowIcon}}
 											<span class="slds-avatar slds-avatar_x-small slds-pill__icon_container">
-											<span class="slds-icon_container slds-icon_object steedos-icon-{{selectedReferenceObject}}">
-												{{> steedos_icon class="slds-icon" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
-											</span>
+											{{> steedos_icon class="slds-icon" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
 										</span>
 										{{/if}}
 										<span class="slds-pill__label" title="{{label}}">{{label}}</span>
 										{{#unless fieldReadonly}}
-										<span class="slds-icon_container slds-pill__remove" title="{{_ "Delete"}}">
+										<span class="slds-pill__remove" title="{{_ "Delete"}}">
 											{{> steedos_icon class="slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="close"}}
 										</span>
 										{{/unless}}
