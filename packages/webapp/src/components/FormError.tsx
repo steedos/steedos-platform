@@ -1,9 +1,12 @@
 import React, { SyntheticEvent } from 'react';
-import { Typography, IconButton, Snackbar, SnackbarContent, Button } from '@material-ui/core';
+import { SnackbarContent } from '@material-ui/core';
 import { amber, green } from '@material-ui/core/colors';
 import {FormattedMessage} from 'react-intl';
 import clsx from 'clsx';
-import {CheckCircleOutline, ErrorOutline, InfoOutlined, CloseOutlined, WarningOutlined} from '@material-ui/icons';
+import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
+import ErrorOutline from '@material-ui/icons/ErrorOutline';
+import InfoOutlined from '@material-ui/icons/InfoOutlined';
+import WarningOutlined from '@material-ui/icons/WarningOutlined';
 import { makeStyles, Theme, withStyles, lighten, darken } from '@material-ui/core/styles';
 
 const variantIcon:any = {
