@@ -20,10 +20,7 @@
 							<a class="slds-button slds-button_icon" aria-haspopup="true"
 							   title="Select object to search in" href="javascript:void(0);" data-toggle="dropdown">
 								{{#with getSelectedReference}}
-									<span class="slds-icon_container slds-icon_object steedos-icon-{{object}}"
-										  title="{{object}}">
-										{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon)}}
-									</span>
+									{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon) title=object}}
 								{{/with}}
 								{{> steedos_icon class="slds-icon slds-icon_xx-small" source="utility-sprite" name="down"}}
 							</a>
@@ -33,10 +30,8 @@
 									{{#each getReferences}}
 										<li class="slds-dropdown__item references-item" role="presentation">
 											<a role="option" tabindex="-1" class="item-edit-action"
-											   data-id="{{object}}">
-										<span class="slds-icon_container reference-icon slds-icon_object steedos-icon-{{object}}">
-											{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon)}}
-										</span>
+												data-id="{{object}}">
+												{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon)}}
 												<span class="reference-name" title="{{#if label}}{{label}}{{else}}{{_
 													object}}{{/if}}">{{#if label}}{{label}}{{else}}{{_
 														object}}{{/if}}</span>
@@ -65,9 +60,7 @@
 							 role="none">
 							{{#if isShowIcon}}
 							{{#if isReadOnly}}
-								<span class="slds-icon_container slds-combobox__input-entity-icon slds-icon_object steedos-icon-{{selectedReferenceObject}}">
-									{{> steedos_icon class="slds-icon slds-icon_smal" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
-								</span>
+								{{> steedos_icon class="slds-icon slds-icon_smal" wrapClassName="slds-combobox__input-entity-icon" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
 							{{/if}}
 							{{/if}}
 							{{#with _value}}
@@ -87,9 +80,7 @@
 											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="close"}}
 										</a>
 									{{else}}
-										<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
-											{{> steedos_icon class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="search"}}
-										</span>
+										{{> steedos_icon class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" wrapClassName="slds-input__icon slds-input__icon_right" source="utility-sprite" name="search"}}
 									{{/if}}
 								{{/unless}}
 							{{/with}}
@@ -109,9 +100,7 @@
 												{{!----}}
 												{{#if isShowIcon}}
 													<span class="slds-media__figure">
-													<span class="slds-icon_container slds-icon_object steedos-icon-{{selectedReferenceObject}}">
-														{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
-													</span>
+													{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
 												</span>
 												{{/if}}
 
@@ -129,7 +118,7 @@
 												{{> steedos_icon class="slds-icon slds-icon_x-small" source="utility-sprite" name="add"}}
 											</span>
 
-											<span class="slds-m-left--smalllabels slds-truncate slds-media__body media__body-center">
+											<span class="slds-m-left--smalllabels slds-truncate slds-media__body media__body-center mt-0">
 												<span class="slds-listbox__option-text slds-listbox__option-text_entity">{{_ 'New'}} {{createTitle}}</span>
 											</span>
 										</span>
