@@ -38,7 +38,7 @@
 							{{#with (record_object this._object_name)}}
 								<li role="presentation">
 									<a class="slds-lookup__item-action slds-media" id="option-{{@index}}" role="option" href="{{record_href ../_object_name ../_id}}">
-										{{> steedos_icon class="slds-icon slds-icon_small slds-media__figure" source="standard-sprite" name=icon}}
+										{{> steedos_icon class="slds-icon slds-icon_small" wrapClassName="slds-media__figure" source="standard-sprite" name=icon}}
 										<span class="slds-media__body">
 											<span class="slds-lookup__result-text">{{{highlight ../_name}}}</span>
 											<span class="slds-lookup__result-meta slds-text-body_small">{{label}}</span>
@@ -56,7 +56,7 @@
 							{{#with (record_object this._object_name)}}
 								<li role="presentation">
 									<a class="slds-lookup__item-action slds-media" id="option-{{@index}}" role="option" href="{{record_href ../_object_name ../_id}}">
-										{{> steedos_icon class="slds-icon slds-icon_small slds-media__figure" source="standard-sprite" name=icon}}
+										{{> steedos_icon class="slds-icon slds-icon_small" wrapClassName="slds-media__figure" source="standard-sprite" name=icon}}
 										<span class="slds-media__body">
 											<span class="slds-lookup__result-text">{{../_name}}</span>
 											<span class="slds-lookup__result-meta slds-text-body_small">{{label}}</span>
