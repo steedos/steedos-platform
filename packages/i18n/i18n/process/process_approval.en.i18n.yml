@@ -10,3 +10,6 @@ process_approval_confirmBtnText_approve: $t(process_instance_history_action_appr
 process_approval_approver_label: Choose Next Approver
 process_approval_confirmBtnText_reject: $t(process_instance_history_action_reject)
 process_approval_empty_node_title: Approval Request Submitted
+process_approval_error_notFindProcessDefinition: No applicable approval process was found.
+process_approval_error_NoApproval: Another user recalled or responded to this request.
+process_approval_error_processInstancePending: This record is currently in an approval process. A record can be in only one approval process at a time.
