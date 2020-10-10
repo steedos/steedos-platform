@@ -103,7 +103,7 @@ JsonRoutes.add 'get', '/api/creator/:space/objects/:_id', (req, res, next) ->
 						v.getUserObjectPermission(userSession).then (resolve, reject)->
 							cb(reject, resolve)
 					object = Creator.convertObject(clone(objectql.getObject(_object.name).toConfig()), spaceId)
-					object.database_name = Creator.getObject("datasources").findOne({_id: _object.datasource})?.label
+					object.database_name = Creator.getCollection("datasources").findOne({_id: _object.datasource})?.label
 					object.permissions = permissions(objectql.getObject(_object.name), userSession)
 				else
 
