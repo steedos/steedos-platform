@@ -2,6 +2,7 @@ import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaParamTypeConfig, SteedosFormulaVarPathTypeConfig, 
     FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions, SteedosQuotedByFieldFormulasTypeConfig } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
+import { runQuotedByObjectFieldSummaries, getObjectQuotedByFieldSummaryConfigs } from '../summary';
 import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndFields } from './util';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
@@ -259,11 +260,12 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFormulaVarPat
  * @param options.escapeConfigs 传入该参数时，将额外跳过这些公式字段配置的运算，提高性能
  * @param options.quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, currentUserId: string, options: {
+export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, userSession: any, options: {
     fieldNames?: Array<string>,
     escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>,
     quotedByConfigs?: SteedosQuotedByFieldFormulasTypeConfig
 } = {}) {
+    let currentUserId = userSession ? userSession.userId : undefined;
     let { fieldNames, escapeConfigs, quotedByConfigs } = options;
     if (!quotedByConfigs) {
         quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs);
@@ -278,7 +280,7 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
     }
     // 要排除allConfigs中的ownConfigs，因为allConfigs中已经（按依赖关系先后次序）执行过的当前objectName引用自身的公式字段，不需要在下次级联调用runQuotedByObjectFieldFormulas时再次执行
     for (const config of quotedByConfigs.allConfigs) {
-        await updateQuotedByObjectFieldFormulaValue(objectName, recordId, config, currentUserId, quotedByConfigs.ownConfigs);
+        await updateQuotedByObjectFieldFormulaValue(objectName, recordId, config, userSession, quotedByConfigs.ownConfigs);
     }
 }
 
@@ -340,7 +342,7 @@ export const runManyCurrentObjectFieldFormulas = async function (objectName: str
  * @param recordId 当前修改的记录ID
  * @param fieldFormulaConfig 查到的引用了该记录所属对象的相关字段公式配置之一
  */
-export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, currentUserId: string, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
+export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
     // console.log("===updateQuotedByObjectFieldFormulaValue===", objectName, recordId, JSON.stringify(fieldFormulaConfig));
     const { vars, object_name: fieldFormulaObjectName } = fieldFormulaConfig;
     let toAggregatePaths: Array<Array<SteedosFormulaVarPathTypeConfig>> = [];
@@ -378,12 +380,12 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
             if (fieldFormulaObjectName === objectName && tempPath.reference_from === objectName) {
                 // 如果修改的是当前对象本身的公式字段值时，只需要更新当前记录的公式字段值就行
                 let doc = await getSteedosSchema().getObject(fieldFormulaObjectName).findOne(recordId, { fields: formulaVarFields })
-                await updateDocsFieldFormulaValue(doc, fieldFormulaConfig, currentUserId, escapeConfigs);
+                await updateDocsFieldFormulaValue(doc, fieldFormulaConfig, userSession, escapeConfigs);
             }
             else {
                 // 修改的是其他对象上的字段值（包括修改的是其他对象上的公式字段值），则需要按recordId值查出哪些记录需要更新重算公式字段值
                 let docs = await getSteedosSchema().getObject(fieldFormulaObjectName).find({ filters: [[tempPath.field_name, "=", recordId]], fields: formulaVarFields })
-                await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, currentUserId, escapeConfigs);
+                await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, userSession, escapeConfigs);
             }
         }
         else {
@@ -395,26 +397,36 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
                 filters: aggregateFilters,
                 fields: formulaVarFields
             }, aggregateLookups);
-            await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, currentUserId, escapeConfigs);
+            await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, userSession, escapeConfigs);
         }
     }
 }
 
-export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, currentUserId: string, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
+export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
     const { object_name: fieldFormulaObjectName } = fieldFormulaConfig;
     if (!_.isArray(docs)) {
         docs = [docs];
     }
+    const fieldNames = [fieldFormulaConfig.field_name];
+    const formulaQuotedByConfigs = getObjectQuotedByFieldFormulaConfigs(fieldFormulaObjectName, fieldNames, escapeConfigs);
+    const summaryQuotedByConfigs = getObjectQuotedByFieldSummaryConfigs(fieldFormulaObjectName, fieldNames);
+    let currentUserId = userSession ? userSession.userId : undefined;
     for (let doc of docs) {
         let value = await computeFieldFormulaValue(doc, fieldFormulaConfig, currentUserId);
         let setDoc = {};
         setDoc[fieldFormulaConfig.field_name] = value;
         await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
         // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
-        await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, currentUserId, {
-            fieldNames: [fieldFormulaConfig.field_name], 
+        await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, userSession, {
+            fieldNames, 
+            quotedByConfigs: formulaQuotedByConfigs,
             escapeConfigs
         })
+        // 公式字段修改后，需要找到引用了该公式字段的其他汇总字段并更新其值
+        await runQuotedByObjectFieldSummaries(fieldFormulaObjectName, doc._id, null, userSession, {
+            fieldNames, 
+            quotedByConfigs: summaryQuotedByConfigs
+        });
     }
 }
 

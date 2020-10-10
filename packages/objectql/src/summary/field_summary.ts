@@ -1,6 +1,6 @@
 import { addConfig, removeManyConfigs, getConfigs, getConfig } from '../types';
-// import { getConfigs, getConfig } from '../types/config';
 import { SteedosFieldSummaryTypeConfig } from './type';
+import { SteedosFieldFormulaTypeConfig } from '../formula';
 
 export const addFieldSummaryConfig = (config: SteedosFieldSummaryTypeConfig) => {
     addConfig('field_summary', config);
@@ -67,6 +67,6 @@ export const getObjectQuotedByFieldSummaryConfigs = (objectName: string, fieldNa
  * 获取参数config在哪些累计汇总中被引用
  * @param config 
  */
-// export const getQuotedByFieldSummaryConfigs = (config: SteedosFieldSummaryTypeConfig): Array<SteedosFieldSummaryTypeConfig> => {
-//     return getObjectQuotedByFieldSummaryConfigs(config.object_name, [config.field_name]);
-// }
+export const getQuotedByFieldSummaryConfigs = (config: SteedosFieldFormulaTypeConfig): Array<SteedosFieldSummaryTypeConfig> => {
+    return getObjectQuotedByFieldSummaryConfigs(config.object_name, [config.field_name]);
+}

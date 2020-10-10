@@ -8,13 +8,17 @@ import { JsonMap } from '@salesforce/ts-types';
 
 /**
  * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在insert/update的对象字段的汇总字段并更新其字段值
- * @param objectName 
- * @param recordId 
+ * @param objectName 当前正在insert/update的对象
+ * @param recordId 当前正在insert/update的记录id
  * @param userSession 
  * @param fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
  * @param quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runQuotedByObjectFieldSummaries = async function (objectName: string, recordId: string, previousDoc: any, userSession: any, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldSummaryTypeConfig>) {
+export const runQuotedByObjectFieldSummaries = async function (objectName: string, recordId: string, previousDoc: any, userSession: any, options: {
+    fieldNames?: Array<string>,
+    quotedByConfigs?: Array<SteedosFieldSummaryTypeConfig>
+} = {}) {
+    let { fieldNames, quotedByConfigs } = options;
     if (!quotedByConfigs) {
         quotedByConfigs = getObjectQuotedByFieldSummaryConfigs(objectName, fieldNames);
     }
@@ -199,7 +203,7 @@ export const updateReferenceToFieldSummaryValue = async (referenceToId: string, 
     await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
     // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
     // console.log("===updateReferenceToFieldSummaryValue====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
-    await runQuotedByObjectFieldFormulas(object_name, referenceToId, userSession ? userSession.userId : undefined, {
+    await runQuotedByObjectFieldFormulas(object_name, referenceToId, userSession, {
         fieldNames:[field_name]
     })
 }

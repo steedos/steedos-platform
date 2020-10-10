@@ -13,7 +13,7 @@ module.exports = {
             throw new Error(`recomputeFormulaValues:${fieldId} not found.`);
         }
         fieldId = `${fieldDoc.object}.${fieldDoc.name}`;
-        const result = await objectql.recomputeFormulaValues(fieldId, userId);
+        const result = await objectql.recomputeFormulaValues(fieldId, req.user);
         if(result){
             res.status(200).send({ success: true });
         }
