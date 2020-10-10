@@ -12,7 +12,7 @@ export type SteedosFieldSummaryTypeConfig = {
     summary_type: SteedosSummaryTypeValue, //要汇总的类型
     data_type: string, //数据类型，summary_type为count则为number，其他类型则关联到summary_field的数据类型
     summary_field?: string, //要聚合的字段，只能是数值、金额、日期、日期时间字段类型
-    filters?: SteedosQueryFilters, //要汇总子表记录的过滤条件
+    summary_filters?: SteedosQueryFilters, //要汇总的子表记录的过滤条件
     reference_to_field?: string //子表上的master_detail关联到主表对象的字段，必须能找到且只能找到一个
 }
 

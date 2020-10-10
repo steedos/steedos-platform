@@ -600,6 +600,13 @@
                     "type": "string",
                     "description": "要聚合的字段"
                 },
+                "summary_filters": {
+                    "type": [
+                        "array",
+                        "string"
+                    ],
+                    "description": "要汇总的子表记录的过滤条件"
+                },
                 "formula_blank_value": {
                     "type": "string",
                     "description": "空白字段处理，zeroes表示将空白字段视为零，blanks表示将空白字段视为空白，默认为zeroes",

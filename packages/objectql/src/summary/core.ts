@@ -146,7 +146,7 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
  * @param userSession 
  */
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
-    const { reference_to_field, summary_type, summary_field, summary_object, object_name, filters } = fieldSummaryConfig;
+    const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
     }
@@ -158,14 +158,14 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
         }
         let referenceToFilters:any = [[reference_to_field, "=", referenceToId]];
         let aggregateFilters:any = referenceToFilters;
-        if(filters && filters.length){
-            if(typeof filters === "string"){
+        if(summary_filters && summary_filters.length){
+            if(typeof summary_filters === "string"){
                 // 传入的过滤条件为odata字符串时，需要把aggregateFilters也解析为odata串并取AND
                 aggregateFilters = formatFiltersToODataQuery(referenceToFilters);
-                aggregateFilters = `(${aggregateFilters}) and (${filters})`;
+                aggregateFilters = `(${aggregateFilters}) and (${summary_filters})`;
             }
             else{
-                aggregateFilters = [referenceToFilters, filters];
+                aggregateFilters = [referenceToFilters, summary_filters];
             }
         }
 

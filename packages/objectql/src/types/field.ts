@@ -93,6 +93,7 @@ abstract class SteedosFieldProperties{
     summary_object?: string
     summary_type?: string
     summary_field?: string
+    summary_filters?: SteedosQueryFilters
     filters?: SteedosQueryFilters
 }
 
