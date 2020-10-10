@@ -12,8 +12,8 @@ export const sendNotifications = async (instanceHistory, from, to)=>{
     var fromUser =  await objectql.getObject("users").findOne(to);
     var relatedDoc = await objectql.getObject(instance.target_object.o).findOne(instance.target_object.ids[0]);
     let relatedDocName = relatedDoc.name; //TODO
-    const lang = Util.getUserLocale(fromUser);
-    var notificationTitle = TAPi18n.__('process_notification_submit_title', {submitter: fromUser.name, recordName: relatedDocName}, lang);
+    const lng = Util.getUserLocale(fromUser);
+    var notificationTitle = TAPi18n.__('process_notification_submit_title', {submitter: fromUser.name, recordName: relatedDocName}, lng);
     var notificationDoc = {
         name: notificationTitle,
         body: relatedDocName,

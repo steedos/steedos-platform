@@ -1,3 +1,4 @@
+import { SteedosError } from '@steedos/core'
 const objectql = require('@steedos/objectql');
 const _ = require("underscore");
 
@@ -20,7 +21,7 @@ const runAction = async (action: any, recordId: any, userSession: any)=>{
     if(action.target_object && action.target_object != action.object_name){
         mainObjectName = objectql.getObject(action.object_name).getField(action.target_object).reference_to;
         if(!_.isString(mainObjectName)){
-            throw new Error('target_object must be a string');
+            throw new SteedosError('target_object must be a string');
         }
         const fieldValue = await getFieldValue(action, recordId, userSession);
         await objectql.getObject(mainObjectName).directUpdate(record[action.target_object], {[action.field_name]: fieldValue});
@@ -45,7 +46,7 @@ export const runProcessNodeAction = async (processNodeId: string, when: string, 
             }
             break;
         default:
-            throw new Error(`无效的参数when: ${when}`, );
+            throw new SteedosError(`无效的参数when: ${when}`, );
     }
     if(!_.isEmpty(filters)){
         const actions = await objectql.getObject("action_field_updates").find({filters: filters})
@@ -80,7 +81,7 @@ export const runProcessAction = async (processId: string, when: string, recordId
             }
             break;
         default:
-            throw new Error(`无效的参数when: ${when}`, );
+            throw new SteedosError(`无效的参数when: ${when}`, );
     }
     if(!_.isEmpty(filters)){
         const actions = await objectql.getObject("action_field_updates").find({filters: filters})

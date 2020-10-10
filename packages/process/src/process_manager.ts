@@ -1,5 +1,7 @@
 import {runProcessAction, runProcessNodeAction} from './platform_action_manager';
 import { sendNotifications } from './notifications';
+import { SteedosError } from '@steedos/core'
+
 const objectql = require('@steedos/objectql');
 const Fiber = require('fibers');
 const _ = require("underscore");
@@ -88,10 +90,10 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
                 }else if(_.isArray(chooseApprover)){
                     return _.uniq(_.compact(chooseApprover));
                 }else{
-                    throw new Error('process_approval_error_invalidChooseApprover');
+                    throw new SteedosError('process_approval_error_invalidChooseApprover');
                 }
             }else{
-                throw new Error('process_approval_error_needToChooseApprover');
+                throw new SteedosError('process_approval_error_needToChooseApprover');
             }
         }
     }
@@ -216,7 +218,7 @@ const getPreviousNode = async (instanceId: string, currentNode: any, userSession
         const previousNode = await objectql.getObject("process_node").findOne(previousInstanceNode.process_node);
         return previousNode;
     }else{
-        throw new Error('not find previous node')
+        throw new SteedosError('not find previous node')
     }
 }
 
@@ -227,7 +229,7 @@ const getPreviousNode = async (instanceId: string, currentNode: any, userSession
 //         const previousNode = await objectql.getObject("process_node").findOne(previousInstanceNode.process_node)
 //         await addInstanceNode(instanceId, previousNode, userSession, true);
 //     }else{
-//         throw new Error('not find previous node')
+//         throw new SteedosError('not find previous node')
 //     }
 // }
 
@@ -255,7 +257,7 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
 
     const pendingInstanceCount = await objectql.getObject("process_instance").count({filters: [['target_object.o', '=', objectName],['target_object.ids', '=', recordId],['status', '=', 'pending']]});
     if(pendingInstanceCount > 0){
-        throw new Error('process_approval_error_processInstancePending');
+        throw new SteedosError('process_approval_error_processInstancePending');
     }
 
     const nodes = await getProcessNodes(processDefinitionId, userSession.spaceId);
@@ -491,10 +493,10 @@ export const processInstanceWorkitemReject = async (instanceHistoryId: string, u
 
 export const processInstanceWorkitemReassign = async (instanceHistoryId: string, userSession: any, comment: string, chooseApprover: string)=>{
     if(_.isEmpty(chooseApprover)){
-        throw new Error('process_approval_error_reassign_approver_notFind');
+        throw new SteedosError('process_approval_error_reassign_approver_notFind');
     }
     if(!_.isString(chooseApprover)){
-        throw new Error('process_approval_error_reassign_approver_mustBeString');
+        throw new SteedosError('process_approval_error_reassign_approver_mustBeString');
     }
 
     const history = await objectql.getObject("process_instance_history").update(instanceHistoryId, {
