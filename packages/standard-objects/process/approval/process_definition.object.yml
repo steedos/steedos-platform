@@ -219,6 +219,9 @@ actions:
   disable:
     label: Disable
     on: record
+  copy:
+    label: Copy
+    on: record
 permission_set:
   user:
     allowCreate: false

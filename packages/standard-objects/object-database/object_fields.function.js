@@ -1,5 +1,6 @@
 
 const objectql = require('@steedos/objectql');
+const getSteedosSchema = objectql.getSteedosSchema;
 
 module.exports = {
   recomputeFormulaValues: async function(req, res){
