@@ -2,6 +2,7 @@ name: process_definition
 label: Approval Processes
 hidden: true
 icon: approval
+enable_inline_edit: false
 fields:
   name:
     type: text
@@ -233,8 +234,3 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-form:
-  afterView: !!js/function |
-    function(){
-      $(".table-cell-edit").remove();
-    }

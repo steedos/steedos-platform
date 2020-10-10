@@ -2,6 +2,7 @@ name: action_field_updates
 label: Field Updates
 icon: record
 hidden: true
+enable_inline_edit: false
 fields:
   name:
     type: text
@@ -142,10 +143,6 @@ form:
   beforeView: !!js/function |
     function(){
       Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
-    }
-  afterView: !!js/function |
-    function(){
-      $(".table-cell-edit").remove();
     }
 list_views:
   all:

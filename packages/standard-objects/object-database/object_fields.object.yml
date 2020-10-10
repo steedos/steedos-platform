@@ -1,6 +1,7 @@
 name: object_fields
 icon: textbox
 enable_api: true
+enable_inline_edit: false
 hidden: true
 label: Object Fields
 fields:
@@ -450,8 +451,4 @@ form:
   beforeView: !!js/function |
     function(){
       Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'view');
-    }
-  afterView: !!js/function |
-    function(){
-      $(".table-cell-edit").remove();
     }
