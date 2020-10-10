@@ -4,8 +4,8 @@
         "tag:yaml.org,2002:js/function"
     ],
     "yaml.schemas": {
-        "https://steedos.github.io/steedos-platform/packages/schemas/app/schema.json": "/*.app.yml",
-        "https://steedos.github.io/steedos-platform/packages/schemas/object/schema.json": "/*.object.yml",
-        "https://steedos.github.io/steedos-platform/packages/schemas/dashboard/schema.json": "/*.dashboard.yml"
+        "./node_modules/@steedos/schemas/app/schema.json": "/*.app.yml",
+        "./node_modules/@steedos/schemas/object/schema.json": "/*.object.yml",
+        "./node_modules/@steedos/schemas/dashboard/schema.json": "/*.dashboard.yml"
     }
 }
