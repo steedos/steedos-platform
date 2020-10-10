@@ -1,6 +1,6 @@
 name: sessions
 label: Session
-icon: user_activation
+icon: queue
 hidden: true
 fields:
   name:
