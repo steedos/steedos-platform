@@ -574,7 +574,8 @@
                                 "date",
                                 "datetime",
                                 "number",
-                                "currency"
+                                "currency",
+                                "percent"
                             ]
                         }
                     ]
