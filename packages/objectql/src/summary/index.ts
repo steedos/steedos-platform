@@ -60,11 +60,18 @@ export const getSummaryDataType = (summaryConfig: SteedosFieldSummaryTypeConfig,
         if (field) {
             let fieldType = field.type;
             if(fieldType === "formula"){
+                // 要聚合的是公式，则其数据类型为公式字段的数据类型
+                // 因公式字段可能再引用当前汇总字段，所以要判断下不允许互相引用
                 fieldType = field.data_type;
                 const isQuotingTwoWay = isFormulaFieldQuotingObjectAndFields(summary_object, summary_field, object_name, [field_name]);
                 if(isQuotingTwoWay){
                     throw new Error(`Do not refer to each other, the field '${field_name}' of the master object '${object_name}' is summarizing a formula type summary_field '${summary_field}' of the detail object '${summary_object}', but the formula type field of the detail object exactly quoting the field of the master object, which is not allowed.`);
                 }
+            }
+            if(fieldType === "summary"){
+                // 要聚合的是汇总字段，则其数据类型为汇总字段的数据类型
+                // 因两个对象之前不可能互为子表关系，所以汇总字段不存在互为汇总聚合关系，不需要进一步判断它们是否互相引用
+                fieldType = field.data_type;
             }
             if(!isSummaryFieldTypeSupported(summary_type, fieldType)){
                 throw new Error(`The summary data_type '${fieldType}' on the field '${field_name}' of the object '${object_name}' is not supported for the summary_type '${summary_type}' which only support these types: ${SupportedSummaryFieldTypes[summary_type]}.`);
