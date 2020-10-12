@@ -61,6 +61,9 @@ function getSubstitutionDataType(objectName: string, fieldName: string, value: a
         case 'currency':
             dateType = FormulonDataType.Number;
             break;
+        case 'percent':
+            dateType = FormulonDataType.Number;
+            break;
         case 'date':
             dateType = FormulonDataType.Date;
             break;

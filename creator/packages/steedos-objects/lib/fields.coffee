@@ -428,7 +428,7 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = "steedosNumber"
 			fs.autoform.precision = field.precision || 18
 			unless _.isNumber(field.scale)
-				# 没配置小数位数则按小数位数0来处理
+				# 没配置小数位数则按小数位数0来处理，即默认显示为整数的百分比，比如20%，此时控件可以输入2位小数，转成百分比就是整数
 				field.scale = 0
 			# autoform控件中小数位数始终比配置的位数多2位
 			fs.autoform.scale = field.scale + 2
