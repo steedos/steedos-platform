@@ -313,6 +313,7 @@
                                 "datetime",
                                 "number",
                                 "currency",
+                                "percent",
                                 "password",
                                 "lookup",
                                 "master_detail",

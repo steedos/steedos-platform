@@ -43,7 +43,8 @@ const FIELDTYPES = [
     "autonumber",
     "markdown",
     "formula",
-    "summary"
+    "summary",
+    "percent"
 ]
 
 abstract class SteedosFieldProperties{
@@ -300,6 +301,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
            case 'summary':
                 //汇总不需要check类型
                 return SteedosFieldDBType.varchar;
+           case 'percent':
+                //百分比字段按数值类型处理
+                return this.getDBType("number");
            default:
                throw new Error(`${this._object.name}.${this.name} invalid field type ${type}`)
         }

@@ -805,13 +805,17 @@ if Meteor.isClient
 							val = selectedOptions.getProperty("label")
 			else if _filedType == "filesize"
 				val = Creator.formatFileSize(val)
-			else if ["number", "currency"].indexOf(_filedType) > -1 && _.isNumber(val)
+			else if ["number", "currency", "percent"].indexOf(_filedType) > -1 && _.isNumber(val)
 				fieldScale = 0
 				if _field.scale
 					fieldScale = _field.scale
 				else if _field.scale != 0
 					fieldScale = if _filedType == "currency" then 2 else 0
+				if _filedType == "percent"
+					val = val * 100
 				val = Steedos.numberToString(val, fieldScale)
+				if _filedType == "percent"
+					val += "%"
 			else if _filedType == "markdown"
 				if !_.isEmpty(val)
 					val = Spacebars.SafeString(marked(val))

@@ -423,6 +423,16 @@ Creator.getObjectSchema = (obj) ->
 			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
 		else if field.type == 'summary'
 			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
+		else if field.type == 'percent'
+			fs.type = Number
+			fs.autoform.type = "steedosNumber"
+			fs.autoform.precision = field.precision || 18
+			unless _.isNumber(field.scale)
+				# 没配置小数位数则按小数位数0来处理
+				field.scale = 0
+			# autoform控件中小数位数始终比配置的位数多2位
+			fs.autoform.scale = field.scale + 2
+			fs.decimal = true
 		else
 			fs.type = field.type
 
