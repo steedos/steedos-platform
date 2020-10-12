@@ -10,11 +10,12 @@ const isAPIName = function(apiName){
     return true
 }
 
-exports.checkAPIName = async function(objectName, fieldName, fieldValue, recordId){
+exports.checkAPIName = async function(objectName, fieldName, fieldValue, recordId, filters){
     isAPIName(fieldValue);
-
-    var filters = [[fieldName,'=', fieldValue]]
-
+    if(!filters){
+        filters = []
+    }
+    filters.push([fieldName,'=', fieldValue])
     if(recordId){
         filters.push(['_id','!=', recordId])
     }
