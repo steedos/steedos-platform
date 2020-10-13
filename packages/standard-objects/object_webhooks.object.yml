@@ -6,11 +6,13 @@ fields:
   name:
     type: text
     label: Name
+    required: true
   object_name:
     type: lookup
+    reference_to: objects
+    reference_to_field: name
     label: Object
     required: true
-    is_name: true
     index: true
     optionsFunction: !!js/function |
       function () {

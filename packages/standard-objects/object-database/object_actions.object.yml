@@ -6,6 +6,7 @@ fields:
   object:
     type: master_detail
     reference_to: objects
+    reference_to_field: name
     required: true
     label: Object
     optionsFunction: !<tag:yaml.org,2002:js/function> |-

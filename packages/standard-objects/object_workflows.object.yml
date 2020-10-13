@@ -12,6 +12,7 @@ fields:
     type: master_detail
     required: true
     reference_to: objects
+    reference_to_field: name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;

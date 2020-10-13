@@ -304,7 +304,7 @@ export class ODataManager {
             from: field.reference_to,
             localField: refFieldName,
             foreignField: foreignFieldName,
-            as: `${refFieldName}`
+            as: `${refFieldName}_$lookup`
           };
 
           pipeline.push({ $lookup: lookup });
@@ -356,6 +356,8 @@ export class ODataManager {
                 if (o) { return o[x] }
               }, entities[idx])
               if (!_.isEmpty(entityValues) || _.isNumber(entityValues)) {
+                let tempLookupKey = navigationProperty + '_$lookup';
+
                 if (field.multiple) {
                   let originalData = _.clone(entityValues);
 
@@ -368,10 +370,10 @@ export class ODataManager {
                       queryOptions.fields = [_ro_NAME_FIELD_KEY]
                     }
 
-                    if (_.isEmpty(entities[idx][navigationProperty])) {
+                    if (_.isEmpty(entities[idx][tempLookupKey])) {
                       entities[idx][navigationProperty] = originalData;
                     } else {
-                      entities[idx][navigationProperty] = _.map(entities[idx][navigationProperty], function (o: any) {
+                      entities[idx][navigationProperty] = _.map(entities[idx][tempLookupKey], function (o: any) {
                         let tempId = o._id;
                         o = _.pick(o, queryOptions.fields);
                         o['reference_to.o'] = referenceToCollection._name;
@@ -400,14 +402,14 @@ export class ODataManager {
                       queryOptions.fields = [_ro_NAME_FIELD_KEY];
                     }
 
-                    if (_.isEmpty(entities[idx][navigationProperty]) || !_.isArray(entities[idx][navigationProperty])) {
+                    if (_.isEmpty(entities[idx][tempLookupKey]) || !_.isArray(entities[idx][tempLookupKey])) {
                       entities[idx][navigationProperty] = originalData;
                     } else {
-                      let refId = entities[idx][navigationProperty][0]._id;
+                      let refId = entities[idx][tempLookupKey][0]._id;
                       if (field.reference_to_field) {
-                        refId = entities[idx][navigationProperty][0][field.reference_to_field];
+                        refId = entities[idx][tempLookupKey][0][field.reference_to_field];
                       }
-                      entities[idx][navigationProperty] = _.pick(entities[idx][navigationProperty][0], queryOptions.fields);
+                      entities[idx][navigationProperty] = _.pick(entities[idx][tempLookupKey][0], queryOptions.fields);
                       entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                       entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
                       entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
@@ -422,6 +424,8 @@ export class ODataManager {
                   }
 
                 }
+
+                delete entities[idx][tempLookupKey];
               } else {
                 delete entities[idx][navigationProperty];
               }
