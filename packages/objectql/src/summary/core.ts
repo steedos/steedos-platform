@@ -146,12 +146,14 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
  * @param userSession 
  */
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
+    // console.log("===updateReferenceTosFieldSummaryValue====referenceToIds, fieldSummaryConfig==", referenceToIds, fieldSummaryConfig);
     const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
     }
     // 需要使用aggregate来汇总计算
     let aggregateGroups = getSummaryAggregateGroups(summary_type, summary_field);
+    // console.log("===updateReferenceTosFieldSummaryValue====aggregateGroups==", aggregateGroups);
     for (let referenceToId of referenceToIds) {
         if(typeof referenceToId !== "string"){
             referenceToId = <string>referenceToId._id;
@@ -173,6 +175,7 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
             // 过滤器中支持userSession变量的写法，比如[["owner", "=", "{userId}"]]
             aggregateFilters = formatFiltersToODataQuery(aggregateFilters, userSession);
         }
+        // console.log("===aggregateFilters===", aggregateFilters);
         const aggregateResults = await getSteedosSchema().getObject(summary_object).directAggregate({
             filters: aggregateFilters
         }, aggregateGroups);

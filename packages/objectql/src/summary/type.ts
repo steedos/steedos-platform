@@ -28,11 +28,12 @@ export enum SteedosSummaryTypeValue {
 
 /**
  * 累计汇总字段支持的字段类型（特指数据库中最终保存的结果类型）
- * 注意公式也是支持的，不过最终使用的是公式字段本身的数据类型
+ * 注意这时也是支持公式类型字段的，不过最终使用的是公式字段本身的数据类型
  */
 export enum SteedosSummaryDataTypeValue {
     Number = "number",
     Currency = "currency",
+    Percent = "percent",
     Date = "date",
     Datetime = "datetime"
 }
@@ -41,9 +42,9 @@ export enum SteedosSummaryDataTypeValue {
  * 各个累计汇总计算类型支持的字段类型，用于判断SteedosFieldSummaryTypeConfig中配置的summary_field所指向的字段类型是否符合规范
  */
 export const SupportedSummaryFieldTypes = {
-    "sum": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency],
-    "min": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency, SteedosSummaryDataTypeValue.Date, SteedosSummaryDataTypeValue.Datetime],
-    "max": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency, SteedosSummaryDataTypeValue.Date, SteedosSummaryDataTypeValue.Datetime]
+    "sum": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency, SteedosSummaryDataTypeValue.Percent],
+    "min": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency, SteedosSummaryDataTypeValue.Percent, SteedosSummaryDataTypeValue.Date, SteedosSummaryDataTypeValue.Datetime],
+    "max": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency, SteedosSummaryDataTypeValue.Percent, SteedosSummaryDataTypeValue.Date, SteedosSummaryDataTypeValue.Datetime]
 };
 
 /**
