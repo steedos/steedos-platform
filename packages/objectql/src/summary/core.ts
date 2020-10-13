@@ -197,6 +197,7 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
 
         }
     }
+    await updateQuotedByReferenceTosForSummaryType(referenceToIds, fieldSummaryConfig, userSession);
 }
 
 export const updateReferenceToFieldSummaryValue = async (referenceToId: string, value: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
@@ -204,16 +205,28 @@ export const updateReferenceToFieldSummaryValue = async (referenceToId: string, 
     let setDoc = {};
     setDoc[field_name] = value;
     await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
-    // console.log("===updateReferenceToFieldSummaryValue====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
+}
+
+export const updateQuotedByReferenceTosForSummaryType = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
+    const { field_name, object_name } = fieldSummaryConfig;
+    if (!_.isArray(referenceToIds)) {
+        referenceToIds = [referenceToIds];
+    }
     const fieldNames = [field_name];
-    // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
-    await runQuotedByObjectFieldFormulas(object_name, referenceToId, userSession, {
-        fieldNames
-    });
-    // 汇总字段修改后，需要找到引用了该字段的其他汇总字段并更新其值
-    await runQuotedByObjectFieldSummaries(object_name, referenceToId, null, userSession, {
-        fieldNames
-    });
+    for (let referenceToId of referenceToIds) {
+        if(typeof referenceToId !== "string"){
+            referenceToId = <string>referenceToId._id;
+        }
+        // console.log("===updateQuotedByReferenceTosForSummaryType====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
+        // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
+        await runQuotedByObjectFieldFormulas(object_name, <string>referenceToId, userSession, {
+            fieldNames
+        });
+        // 汇总字段修改后，需要找到引用了该字段的其他汇总字段并更新其值
+        await runQuotedByObjectFieldSummaries(object_name, <string>referenceToId, null, userSession, {
+            fieldNames
+        });
+    }
 }
 
 /**
