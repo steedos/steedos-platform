@@ -620,6 +620,18 @@ if Meteor.isClient
 				if _filedType == "formula" || _filedType == "summary"
 					# 要聚合的是公式类型或汇总类型则按其返回值类型处理
 					_filedType = summaryField.data_type
+				if !_.isNumber(_field.scale)
+					# 汇总字段本身没设置小数位数时，默认取其聚合字段的小数位数
+					__getDefaultSummaryFieldScale = (f)->
+						# 如果汇总的是另一个汇总字段，则进一步取其聚合字段的小数位数
+						if _.isNumber(f.scale)
+							return f.scale
+						if f.type == "summary"
+							_fso = Creator.getObject(f.summary_object)
+							if _fso
+								_fsf = _fso.fields[f.summary_field]
+								return if _fsf then __getDefaultSummaryFieldScale(_fsf) else null
+					_field.scale = __getDefaultSummaryFieldScale(summaryField)
 
 		reference_to = props.field?.reference_to
 
@@ -807,9 +819,9 @@ if Meteor.isClient
 				val = Creator.formatFileSize(val)
 			else if ["number", "currency", "percent"].indexOf(_filedType) > -1 && _.isNumber(val)
 				fieldScale = 0
-				if _field.scale
+				if _.isNumber(_field.scale)
 					fieldScale = _field.scale
-				else if _field.scale != 0
+				else
 					fieldScale = if _filedType == "currency" then 2 else 0
 				if _filedType == "percent"
 					val = val * 100
