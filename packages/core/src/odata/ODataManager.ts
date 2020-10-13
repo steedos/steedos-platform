@@ -404,6 +404,9 @@ export class ODataManager {
                       entities[idx][navigationProperty] = originalData;
                     } else {
                       let refId = entities[idx][navigationProperty][0]._id;
+                      if (field.reference_to_field) {
+                        refId = entities[idx][navigationProperty][0][field.reference_to_field];
+                      }
                       entities[idx][navigationProperty] = _.pick(entities[idx][navigationProperty][0], queryOptions.fields);
                       entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                       entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
