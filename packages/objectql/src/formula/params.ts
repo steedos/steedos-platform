@@ -111,13 +111,21 @@ function getSubstitutionDataType(objectName: string, fieldName: string, value: a
 
 function getSubstitutionOptions(objectName: string, fieldName: string, dataType: string){
     const field: any = getField(objectName, fieldName);
+    const steedosType = getFieldSteedosType(field);
     switch (dataType) {
         case 'number':
+            let scale = 0;
             if(_.has(field, 'scale')){
-                return {scale: field.scale}
+                scale = field.scale;
             }else{
-                return {scale: 2}
+                // 数值类型默认按2位小数来计算
+                scale = 2;
             }
+            if(steedosType === "percent"){
+                // 百分比类型参数，scale配置的是百分比的小数位数，计算时需要额外增加2位小数，比如scale配置为1时，像20.2%这样的数值计算时应该按0.202是三位小数参与计算。
+                scale += 2;
+            }
+            return { scale };
         case 'text':
             return {length: Number.MAX_VALUE};
         default:
