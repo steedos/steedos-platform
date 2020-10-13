@@ -73,6 +73,7 @@ abstract class SteedosFieldProperties{
     precision?: number
     scale?: number
     reference_to?: string | string[] | Function
+    reference_to_field?: string
     rows?: number
     options?: string | []
     description?: string

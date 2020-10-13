@@ -417,6 +417,10 @@
                     ],
                     "description": "引用的对象"
                 },
+                "reference_to_field": {
+                    "type": "string",
+                    "description": "引用的对象的字段，按照此字段去查找相关记录"
+                },
                 "rows": {
                     "type": "integer",
                     "description": "多行文本默认行数"

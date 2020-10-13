@@ -22,6 +22,7 @@ fields:
     label: Object
     type: lookup
     reference_to: objects
+    reference_to_field: name
     index: true
     required: true
     create: false

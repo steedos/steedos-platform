@@ -293,7 +293,7 @@ export class ODataManager {
       navigationProperty = navigationProperty.replace('/', '.')
       let field = obj.fields[navigationProperty].toConfig();
       if (field && (field.type === 'lookup' || field.type === 'master_detail')) {
-
+        let foreignFieldName = field.reference_to_field || '_id';
 
         if (_.isFunction(field.reference_to)) {
           field.reference_to = field.reference_to();
@@ -303,7 +303,7 @@ export class ODataManager {
           let lookup = {
             from: field.reference_to,
             localField: refFieldName,
-            foreignField: '_id',
+            foreignField: foreignFieldName,
             as: `${refFieldName}`
           };
 
@@ -315,7 +315,7 @@ export class ODataManager {
             let lookup = {
               from: relatedObjName,
               localField: refFieldName + '.ids',
-              foreignField: '_id',
+              foreignField: foreignFieldName,
               as: `${refFieldName}` + '_$lookup' + `_${relatedObjName}`
             };
 
@@ -397,7 +397,7 @@ export class ODataManager {
 
                     let queryFields = _.clone(queryOptions.fields);
                     if (_.isEmpty(queryFields)) {
-                      queryOptions.fields = [_ro_NAME_FIELD_KEY]
+                      queryOptions.fields = [_ro_NAME_FIELD_KEY];
                     }
 
                     if (_.isEmpty(entities[idx][navigationProperty]) || !_.isArray(entities[idx][navigationProperty])) {
