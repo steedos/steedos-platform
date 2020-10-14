@@ -197,6 +197,7 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
 
         }
     }
+    // 这里特意重新遍历一次referenceToIds而不是直接在updateReferenceToFieldSummaryValue函数中每次更新一条记录后立即处理被引用字段的级联变更，见：公式或汇总触发级联重算时，数据类型变更可能会造成无法重算 #965
     await updateQuotedByReferenceTosForSummaryType(referenceToIds, fieldSummaryConfig, userSession);
 }
 
