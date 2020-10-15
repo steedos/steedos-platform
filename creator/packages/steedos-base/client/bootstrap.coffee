@@ -26,6 +26,7 @@ getRedirectUrl = ()->
 
 Steedos.logout = (redirect)->
 	Accounts._unstoreLoginToken();
+	Setup.clearAuthLocalStorage()
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
 		if !redirect
@@ -36,8 +37,9 @@ Steedos.goResetPassword = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
 		if !redirect
-			redirect = getRedirectUrl();
+			redirect = getRedirectUrl()
 		Accounts._unstoreLoginToken();
+		Setup.clearAuthLocalStorage()
 		window.location.href = Steedos.absoluteUrl(accountsUrl + "/a/#/update-password?redirect_uri=" + redirect);
 
 Steedos.redirectToSignIn = (redirect)->
@@ -127,13 +129,16 @@ Setup.validate = (onSuccess)->
 		return
 
 Setup.clearAuthLocalStorage = ()->
+	keysforRemove = []
 	localStorage = window.localStorage;
 	i = 0
 	while i < localStorage.length
 		key = localStorage.key(i)
 		if key?.startsWith("Meteor.loginToken") || key?.startsWith("Meteor.userId")  || key?.startsWith("Meteor.loginTokenExpires") || key?.startsWith('accounts:')
-			localStorage.removeItem(key)
+			keysforRemove.push(key)
 		i++
+	keysforRemove.forEach (k) ->
+		localStorage.removeItem(k)
 
 Setup.logout = (callback) ->
 	$.ajax
@@ -144,6 +149,7 @@ Setup.logout = (callback) ->
 		   withCredentials: true
 		crossDomain: true,
 	.always ( data ) ->
+		debugger
 		Setup.clearAuthLocalStorage()
 		if callback
 			callback()
@@ -175,6 +181,7 @@ Meteor.startup ->
 		return
 
 	Accounts.onLogout ()->
+		debugger
 		console.log("onLogout")
 		Setup.logout ()-> 
 			Creator.bootstrapLoaded.set(false)
