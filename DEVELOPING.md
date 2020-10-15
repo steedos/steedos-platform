@@ -26,8 +26,7 @@ export http_proxy=http://192.168.0.88:7890
 export https_proxy=http://192.168.0.88:7890
 git config --global https.proxy http://192.168.0.88:7890
 git config --global https.proxy http://192.168.0.88:7890
-yarn config set http.proxy http://192.168.0.88:7890
-yarn config set https.proxy http://192.168.0.88:7890
+yarn config registry https://registry.npm.taobao.org
 ```
 
 4. 在当前的Lerna存储库中引导软件包并安装所有依赖包。
