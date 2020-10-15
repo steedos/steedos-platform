@@ -8,9 +8,10 @@ import {buildQueryString} from './utils/helpers';
 import { UserProfile } from './types/users';
 import { ServerError } from './types/errors';
 import { Space } from './types/spaces';
+import SObject from './sobject';
 
 const HEADER_AUTH = 'Authorization';
-const HEADER_BEARER = 'BEARER';
+const HEADER_BEARER = 'Bearer';
 const HEADER_REQUESTED_WITH = 'X-Requested-With';
 const HEADER_USER_AGENT = 'User-Agent';
 const HEADER_X_CLUSTER_ID = 'X-Cluster-Id';
@@ -51,11 +52,13 @@ export default class SteedosClient {
         unknownError: 'We received an unexpected status code from the server.',
     };
     userRoles?: string;
+
+    sobjects = {};
     
     getUrl() {
-        var href = new URL(window.location.href);
-        var foo = href.pathname.split('/accounts');
         if(!this.url){
+            var href = new URL(window.location.href);
+            var foo = href.pathname.split('/accounts');
             var ROOT_URL_PATH_PREFIX = '';
             if(foo.length > 1){
                 ROOT_URL_PATH_PREFIX = foo[0];
@@ -366,7 +369,9 @@ export default class SteedosClient {
             };
         }
 
-        const msg = data.message || '';
+    
+        const error = data && data.error ? data.error : data
+        const msg = error.message || '';
 
         if (this.logToConsole) {
             console.error(msg); // eslint-disable-line no-console
@@ -375,7 +380,7 @@ export default class SteedosClient {
         throw new ClientError(this.getUrl(), {
             message: msg,
             server_error_id: data.id,
-            status_code: data.status_code,
+            status_code: error.code,
             url,
         });
     };
@@ -437,6 +442,12 @@ export default class SteedosClient {
             })},
         );
     }
+
+    sobject = function(objectName) {
+        this.sobjects = this.sobjects || {};
+        var sobject = this.sobjects[objectName] = this.sobjects[objectName] || new SObject(this, objectName);
+        return sobject;
+    };
 
     // _initLocalStorage(ROOT_URL_PATH_PREFIX){
     //     if (ROOT_URL_PATH_PREFIX) {
