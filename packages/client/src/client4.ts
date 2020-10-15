@@ -35,6 +35,8 @@ export default class SteedosClient {
     serverVersion = '';
     clusterId = '';
     token = '';
+    spaceId = '';
+    authToken = '';
     csrf = '';
     url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL)? process.env.REACT_APP_API_URL as string : '';
     urlVersion = '';
@@ -89,6 +91,21 @@ export default class SteedosClient {
 
     setToken(token: string) {
         this.token = token;
+        this.authToken = this.getSpaceId() + ',' + token;
+    }
+
+    getSpaceId(){
+        return this.spaceId;
+    }
+
+    setSpaceId(spaceId){
+        this.spaceId = spaceId;
+        this.authToken = spaceId + ',' + this.getToken();
+    }
+
+    getAuthToken(){
+        // return this.getSpaceId() + ',' + this.getToken();
+        return this.authToken;
     }
 
     setCSRF(csrfToken: string) {
@@ -160,8 +177,8 @@ export default class SteedosClient {
             ...this.defaultHeaders,
         };
 
-        if (this.token) {
-            headers[HEADER_AUTH] = `${HEADER_BEARER} ${this.token}`;
+        if (this.authToken) {
+            headers[HEADER_AUTH] = `${HEADER_BEARER} ${this.authToken}`;
         }
 
         const csrfToken = this.csrf || this.getCSRFFromCookie();
