@@ -20,6 +20,7 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@salesforce-ux/design-system": "^2.11.0",
+    "@steedos/accounts": "^1.22.0-alpha.15",
     "@steedos/auth": "^1.22.0-alpha.15",
     "@steedos/core": "^1.22.0-alpha.15",
     "@steedos/filters": "^1.22.0-alpha.15",
