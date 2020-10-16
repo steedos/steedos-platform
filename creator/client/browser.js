@@ -15,7 +15,7 @@ if(browser){
     //     }
     // }
     let isValidBrowser = true;
-    if(browserName === "ie" && parseInt(browser.version) < 11){
+    if(browserName === "ie" && parseInt(browser.version) <= 11){
         isValidBrowser = false;
     }
     if(!isValidBrowser){
