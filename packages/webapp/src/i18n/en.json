@@ -96,5 +96,7 @@
     "accounts.disableUnverifiedEmailPasswordLogin": "Your email is not verified, please login with the verify code",
     "accounts.invalidRequest": "Invalid request",
     "accounts.serverError": "Server error",
-    "accounts.tooManyFailures": "Too many failures, please try again in 10 minutes."
+    "accounts.tooManyFailures": "Too many failures, please try again in 10 minutes.",
+    "accounts.copyright": "© 2020 steedos.com, inc.",
+    "accounts.privacy": "Privacy"
 }
