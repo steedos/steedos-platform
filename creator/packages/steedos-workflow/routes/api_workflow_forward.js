@@ -419,8 +419,7 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 				// try {
 
 				instanceHtml = InstanceReadOnlyTemplate.getInstanceHtml(user_info, space_id, ins, {
-					absolute: true,
-					showTrace: true
+					absolute: true
 				})
 				var instanceFile = new FS.File();
 				instanceFile.attachData(Buffer.from(instanceHtml, "utf-8"), {
