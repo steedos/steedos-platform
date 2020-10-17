@@ -254,6 +254,8 @@ list_views:
       - email
       - position
       - sort_no
+      - username
+      - organization
     filter_scope: space
     filters: [["user_accepted","=",true]]
     sort:
@@ -269,6 +271,8 @@ list_views:
       - email
       - position
       - user_accepted
+      - username
+      - organization
     filter_scope: space
     filters: [["user_accepted","!=",true]]
     sort:
@@ -282,6 +286,8 @@ list_views:
       - mobile
       - email
       - user_accepted
+      - username
+      - organization
     filter_scope: space
     filters: [["is_supplier","=",true]]
     sort:
@@ -295,6 +301,8 @@ list_views:
       - mobile
       - email
       - user_accepted
+      - username
+      - organization
     filter_scope: space
     filters: [["is_customer","=",true]]
     sort:
