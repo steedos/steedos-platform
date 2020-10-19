@@ -47,7 +47,7 @@ JsonRoutes.add 'post', '/api/workflow/view/:instanceId', (req, res, next) ->
 			if box
 				redirect_url = (workflowUrl || '') + "workflow/space/#{spaceId}/#{box}/#{insId}?X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
 			else
-				redirect_url = (workflowUrl || '')"workflow/space/#{spaceId}/print/#{insId}?box=monitor&print_is_show_traces=1&print_is_show_attachments=1&X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
+				redirect_url = (workflowUrl || '') + "workflow/space/#{spaceId}/print/#{insId}?box=monitor&print_is_show_traces=1&print_is_show_attachments=1&X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
 
 			JsonRoutes.sendResult res, {
 				code: 200
