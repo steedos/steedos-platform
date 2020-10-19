@@ -38,10 +38,10 @@ JsonRoutes.add 'post', '/api/workflow/view/:instanceId', (req, res, next) ->
 			else if ins.state is 'completed' and ins.submitter is current_user_id
 				box = 'completed'
 			else
-				# 验证login user_id对该流程有管理申请单的权限
+				# 验证login user_id对该流程有管理、观察申请单的权限
 				permissions = permissionManager.getFlowPermissions(flowId, current_user_id)
 				space = db.spaces.findOne(spaceId, { fields: { admins: 1 } })
-				if permissions.includes("admin") or space.admins.includes(current_user_id)
+				if permissions.includes("admin") or permissions.includes("monitor") or space.admins.includes(current_user_id)
 					box = 'monitor'
 			workflowUrl = Meteor.settings.public.webservices?.workflow?.url
 			if box
