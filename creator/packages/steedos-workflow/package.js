@@ -201,6 +201,8 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/instance/traces_table_modal.html', 'client');
 	api.addFiles('client/views/instance/traces_table_modal.coffee', 'client');
 
+	api.addFiles('client/views/instance/traces.less', 'client');
+
 	api.addAssets('client/views/instance/traces.html', 'server');
 	api.addAssets('client/views/instance/traces_table.html', 'server');
 
