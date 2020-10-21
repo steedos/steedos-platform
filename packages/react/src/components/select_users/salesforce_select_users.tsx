@@ -100,7 +100,7 @@ class SelectUsers extends React.Component {
 
         let onClick = function(event: any, data: any){
             return (dispatch: any, getState: any)=>{
-                dispatch(createGridAction("filters", [["organizations", "=", data.node.id]], {id: gridId, objectName: gridObjectName, columns: gridColumns, searchMode, pageSize}))
+                dispatch(createGridAction("filters", [["organizations", "=", data.node.id]], {id: gridId, objectName: gridObjectName, columns: gridColumns, searchMode, pageSize, baseFilters: [["user_accepted", "=", true]]}))
                 dispatch({
                     type: 'TREE_STATE_CHANGE',
                     payload: {
