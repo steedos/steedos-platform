@@ -844,7 +844,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.21.15",
+  "version": "1.20.0",
   "main": "lib/index.js"
 };
 
@@ -871,7 +871,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "1.21.15",
+  "version": "1.20.0",
   "main": "lib/index.js"
 };
 
@@ -898,7 +898,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.21.15",
+  "version": "1.20.0",
   "main": "lib/index.js"
 };
 
@@ -925,7 +925,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.21.15",
+  "version": "1.20.0",
   "main": "lib/index.js"
 };
 
@@ -952,7 +952,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.21.15",
+  "version": "1.20.0",
   "main": "lib/index.js"
 };
 
