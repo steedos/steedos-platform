@@ -250,6 +250,10 @@ fields:
             /*sum类型可以汇总数值、金额字段*/
             options = options.filter(function(option){
               var optionFieldType = fields[option.value] && fields[option.value].type;
+              if(["formula", "summary"].indexOf(optionFieldType) > -1){
+                /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
+                optionFieldType = fields[option.value].data_type;
+              }
               return ["number", "currency"].indexOf(optionFieldType) > -1
             });
           }
@@ -257,6 +261,10 @@ fields:
             /*min、max类型可以汇总数值、金额、日期、日期时间字段*/
             options = options.filter(function(option){
               var optionFieldType = fields[option.value] && fields[option.value].type;
+              if(["formula", "summary"].indexOf(optionFieldType) > -1){
+                /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
+                optionFieldType = fields[option.value].data_type;
+              }
               return ["number", "currency", "date", "datetime"].indexOf(optionFieldType) > -1
             });
           }
