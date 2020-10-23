@@ -67,6 +67,8 @@ Meteor.methods
 		if !this.userId
 			return
 
+		trimDescription = description.trim()
+
 		session_userId = this.userId
 
 		if lastSignApprove
@@ -87,7 +89,7 @@ Meteor.methods
 				lastTrace?.approves.forEach (a, idx) ->
 					if a._id == lastSignApprove._id
 						if sign_type == "update"
-							setObj["traces.$.approves.#{idx}.sign_show"] = false
+							setObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription then false else true
 							setObj["traces.$.approves.#{idx}.modified"] = new Date()
 							setObj["traces.$.approves.#{idx}.modified_by"] = session_userId
 
@@ -110,7 +112,7 @@ Meteor.methods
 					if sign_field_code
 						upObj["traces.$.approves.#{idx}.sign_field_code"] = sign_field_code
 					upObj["traces.$.approves.#{idx}.description"] = description
-					upObj["traces.$.approves.#{idx}.sign_show"] = true
+					upObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription then true else false
 					upObj["traces.$.approves.#{idx}.modified"] = new Date()
 					upObj["traces.$.approves.#{idx}.modified_by"] = session_userId
 					upObj["traces.$.approves.#{idx}.read_date"] = new Date()

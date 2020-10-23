@@ -85,7 +85,7 @@ InstanceSignText.helpers =
 #			有输入意见 或 最新一条并且用户没有输入过意见
 #			if !approve.is_finished || approve.description || (!hasNext(approve, approvesGroup) && !haveDescriptionApprove(approve, approvesGroup))
 #			if !hasNext(approve, approvesGroup)
-			if approve.sign_show != false && (approve.description || (!approve.description && !hasNext(approve, approvesGroup)) )
+			if approve.sign_show != false && (approve.description || (!approve.description && !hasNext(approve, approvesGroup) && !approve.is_finished) )
 				if approve.judge isnt 'terminated'
 					approve._display = true
 
