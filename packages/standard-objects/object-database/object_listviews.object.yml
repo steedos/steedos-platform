@@ -192,6 +192,7 @@ fields:
     label: Filters
     type: grid
     is_wide: true
+    hidden: true
   filters.$:
     label: Filter
     blackbox: true
@@ -240,7 +241,7 @@ fields:
       }
   filters.$.value:
     label: Value
-    type: text
+    blackbox: true
   filter_logic:
     label: Logic
     type: text
