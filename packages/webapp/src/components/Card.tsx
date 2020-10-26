@@ -11,7 +11,7 @@ class Card extends React.Component {
   <div className="relative rounded p-11 sm:shadow-md bg-white w-screen max-w-md">
     {this.props.children}
   </div>
-  <div className="absolute bottom-0 m-1 text-gray-500 text-sm">
+  <div className="absolute bottom-0 left-0 right-0 text-center m-2 text-gray-500 text-sm">
     <FormattedMessage
       id='accounts.copyright'
       defaultMessage='© 2020 salesforce.com, inc.'
