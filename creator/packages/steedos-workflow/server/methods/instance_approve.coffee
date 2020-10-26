@@ -67,12 +67,14 @@ Meteor.methods
 		if !this.userId
 			return
 
+		trimDescription = description.trim()
+
 		session_userId = this.userId
 
 		if lastSignApprove
-
-			if lastSignApprove.custom_sign_show
-				return
+			if Meteor.settings.public.workflow?.keepLastSignApproveDescription != false
+				if lastSignApprove.custom_sign_show
+					return
 
 			instance = db.instances.findOne({
 				_id: instanceId,
@@ -87,7 +89,7 @@ Meteor.methods
 				lastTrace?.approves.forEach (a, idx) ->
 					if a._id == lastSignApprove._id
 						if sign_type == "update"
-							setObj["traces.$.approves.#{idx}.sign_show"] = false
+							setObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription then false else true
 							setObj["traces.$.approves.#{idx}.modified"] = new Date()
 							setObj["traces.$.approves.#{idx}.modified_by"] = session_userId
 
@@ -105,15 +107,36 @@ Meteor.methods
 
 			trace = instance.traces[0]
 			upObj = {}
+			currentApproveDescription = ''
 			trace.approves.forEach (approve, idx) ->
 				if approve._id == approveId
+					currentApproveDescription = approve.description
 					if sign_field_code
 						upObj["traces.$.approves.#{idx}.sign_field_code"] = sign_field_code
 					upObj["traces.$.approves.#{idx}.description"] = description
-					upObj["traces.$.approves.#{idx}.sign_show"] = true
+					upObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription then true else false
 					upObj["traces.$.approves.#{idx}.modified"] = new Date()
 					upObj["traces.$.approves.#{idx}.modified_by"] = session_userId
 					upObj["traces.$.approves.#{idx}.read_date"] = new Date()
+
+			if Meteor.settings.public.workflow?.keepLastSignApproveDescription == false && !!currentApproveDescription != !!trimDescription
+				ins = db.instances.findOne({ _id: instanceId }, { fields: { "traces": 1 } })
+				traces = ins.traces
+				currentTrace = _.find traces, (t) ->
+					return t._id == traceId
+				currentStep = currentTrace.step
+				traces.forEach (t, tIdx) ->
+					if t.step == currentStep
+						t?.approves.forEach (appr, aIdx) ->
+							if appr.handler == session_userId && appr.is_finished && appr._id != approveId
+								if trimDescription && appr.sign_show == true
+									upObj["traces.#{tIdx}.approves.#{aIdx}.sign_show"] = false
+									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = false
+									if appr.custom_sign_show == true
+										upObj["traces.#{tIdx}.approves.#{aIdx}.custom_sign_show"] = false
+								else if appr.keepLastSignApproveDescription == false
+									upObj["traces.#{tIdx}.approves.#{aIdx}.sign_show"] = true
+									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = undefined
 
 			if not _.isEmpty(upObj)
 				db.instances.update({

@@ -26,6 +26,7 @@
             "instance_batch_approval": false, //批量审批，提供开关 instance_batch_approval，并限制到企业版才开通。
             "instance_allow_distribute": false, //文件分发，提供开关instance_allow_distribute ，并限制到企业版才开通。
             "hideLastSignApproveDescription": true, //不需要默认上次意见
+            "keepLastSignApproveDescription": false, // 不保留上次意见，默认保留
             "autoPickNextStepUsersAtCounterSignStep": true //会签步骤中默认选中下一步骤处理人，默认值为true
         },
         "password": {

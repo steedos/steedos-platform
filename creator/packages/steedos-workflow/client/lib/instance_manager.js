@@ -1708,7 +1708,7 @@ InstanceManager.getCCStep = function () {
 
 InstanceManager.updateApproveSign = function (sign_field_code, description, sign_type, lastSignApprove) {
 	myApprove = InstanceManager.getCurrentApprove()
-	if (myApprove && myApprove.sign_show != true) {
+	if (myApprove && (myApprove.sign_show != true || !description)) {
 		Meteor.call('update_approve_sign', myApprove.instance, myApprove.trace, myApprove._id, sign_field_code, description, sign_type || "update", lastSignApprove)
 	}
 }
