@@ -2,6 +2,7 @@ name: permission_set
 label: Permission Set
 icon: groups
 hidden: true
+enable_inline_edit: false
 fields:
   name:
     label: Name
@@ -19,8 +20,17 @@ fields:
   type:
     label: Type
     type: select
+    firstOption: false
     options: Profile:profile,Permission set:permission_set
     defaultValue: permission_set
+  license:
+    label: License
+    type: lookup
+    optionsFunction: !!js/function 
+      function(){
+        return Steedos.getLicenseOptions();
+      }
+    showIcon: false
   assigned_apps:
     label: Assigned Apps
     type: lookup
@@ -68,6 +78,7 @@ list_views:
       - name
       - users
       - type
+      - license
       - is_system
   permission_set:
     label: Permission Set
@@ -79,6 +90,7 @@ list_views:
       - name
       - users
       - type
+      - license
       - is_system
   profile:
     label: Profile
@@ -89,6 +101,7 @@ list_views:
       - label
       - name
       - type
+      - license
       - is_system
 actions:
   customize:
@@ -136,11 +149,27 @@ form:
       }
       return {}
     }
-#   validate: !!js/function |
-#     function(formValues){
-#       if(formValues && formValues.type === 'profile'){
-#         if(formValues.users && formValues.users.length > 0){
-#           toastr.warning("简档不需要设置成员")
-#         }
-#       }
-#     }
+  beforeEdit: !!js/function |
+    function(){
+      Steedos.PermissionSetManager.changeSchema(this.doc, this.schema);
+    }
+  afterEdit: !!js/function |
+    function(){
+      Steedos.PermissionSetManager.changeSchema(this.doc, this.schema);
+    }
+  beforeView: !!js/function |
+    function(){
+      Steedos.PermissionSetManager.changeSchema(this.doc, this.schema);
+    }
+  beforeInsert: !!js/function |
+    function(){
+      if(this.doc && _.isString(this.doc.users)){
+        this.doc.users = this.doc.users.split(',');
+      }
+    }
+  beforeUpdate: !!js/function |
+    function(){
+      if(this.doc && _.isString(this.doc.users)){
+        this.doc.users = this.doc.users.split(',');
+      }
+    }

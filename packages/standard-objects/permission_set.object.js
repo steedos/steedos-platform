@@ -24,6 +24,21 @@ Creator.Objects['permission_set'].triggers = {
                 throw new Meteor.Error(500, "API名称不能重复");
             }
             checkType(doc.name, doc.type);
+            if(doc.type === 'profile'){
+                if(!doc.license){
+                    throw new Meteor.Error(500, "请指定许可证");
+                }else{
+                    if(_.indexOf(_.pluck(Steedos.getLicenseOptions(doc.space), 'value'), doc.license) < 0){
+                        throw new Meteor.Error(500, "无效的许可证");
+                    }
+                }
+            }
+
+            if(doc.license){
+                if(_.indexOf(_.pluck(Steedos.getLicenseOptions(doc.space), 'value'), doc.license) < 0){
+                    throw new Meteor.Error(500, "无效的许可证");
+                }
+            }
 
             if(doc.type === 'profile'){
                 delete doc.users
@@ -58,13 +73,31 @@ Creator.Objects['permission_set'].triggers = {
             if(_.has(set, 'type') || _.has(set, 'users')){
                 var type = set.type || doc.type;
                 var users = set.users || doc.users
-                if(type === 'profile' && users.length > 0){
+                if(type === 'profile'){
                     if(_.has(set, 'users')){
                         modifier.$set.users = []
                     }else{
+                        if(!modifier.$unset){
+                            modifier.$unset = {}  
+                        }
                         modifier.$unset.users = 1
                     }
                 }
+            }
+            var unset = modifier.$unset || {}
+            if((_.has(set, 'license') && set.license != doc.license)){
+                throw new Meteor.Error(500, '禁止修改许可证');
+                // let _type = set.type || doc.type;
+                // if(_type === 'profile'){
+                //     if(!set.license){
+                //         throw new Meteor.Error(500, "请指定许可证");
+                //     }else{
+                        
+                //         if(_.indexOf(_.pluck(Steedos.getLicenseOptions(doc.space), 'value'), set.license) < 0){
+                //             throw new Meteor.Error(500, "无效的许可证");
+                //         }
+                //     }
+                // }
             }
         }
     },
