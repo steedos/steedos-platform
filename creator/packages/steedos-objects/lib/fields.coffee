@@ -46,11 +46,21 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = Date
 			if Meteor.isClient
 				if Steedos.isMobile() || Steedos.isPad()
-					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-					fs.autoform.afFieldInput =
-						type: "steedos-date-mobile"
-						dateMobileOptions:
-							type: "date"
+					if Steedos.isiOS()
+						# Fix ios 14, 手机客户端待审核文件日期控件显示故障 #991，ios统一用PC端一样的js控件
+						fs.autoform.afFieldInput =
+							type: "dx-date-box"
+							timezoneId: "utc"
+							dxDateBoxOptions:
+								type: "date"
+								displayFormat: "yyyy-MM-dd"
+								pickerType: "rollers"
+					else
+						# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+						fs.autoform.afFieldInput =
+							type: "steedos-date-mobile"
+							dateMobileOptions:
+								type: "date"
 				else
 					fs.autoform.outFormat = 'yyyy-MM-dd';
 					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
@@ -65,11 +75,20 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = Date
 			if Meteor.isClient
 				if Steedos.isMobile() || Steedos.isPad()
-					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-					fs.autoform.afFieldInput =
-						type: "steedos-date-mobile"
-						dateMobileOptions:
-							type: "datetime"
+					if Steedos.isiOS()
+						# Fix ios 14, 手机客户端待审核文件日期控件显示故障 #991，ios统一用PC端一样的js控件
+						fs.autoform.afFieldInput =
+							type: "dx-date-box"
+							dxDateBoxOptions:
+								type: "datetime"
+								displayFormat: "yyyy-MM-dd HH:mm"
+								pickerType: "rollers"
+					else
+						# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+						fs.autoform.afFieldInput =
+							type: "steedos-date-mobile"
+							dateMobileOptions:
+								type: "datetime"
 				else
 					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
 					fs.autoform.afFieldInput =
