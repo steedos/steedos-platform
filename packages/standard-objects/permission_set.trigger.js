@@ -101,7 +101,7 @@ module.exports = {
                     })
                 }
 
-                this.data.values = this.data.values.concat()
+                this.data.values = this.data.values.concat(records)
             }
             
         }
