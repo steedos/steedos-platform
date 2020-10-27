@@ -129,9 +129,6 @@ var s_autoform = function (schema, field) {
                             type: "date",
                             displayFormat: "yyyy-MM-dd",
                             pickerType: "rollers",
-                            elementAttr: {
-                                class: "w-full p-0 pl-3"
-                            },
                             onOpened: function(){
                                 // fix dx-date-box控件pickerType为rollers时，打开后，滚动控件时，审批界面会触发审批单界面滚动
                                 $("body").addClass("dx-date-box-opened");
@@ -170,10 +167,7 @@ var s_autoform = function (schema, field) {
                     timezoneId: "utc",
                     dxDateBoxOptions: {
                         type: "date",
-                        displayFormat: "yyyy-MM-dd",
-                        elementAttr: {
-                            class: "w-full p-0 pl-3"
-                        }
+                        displayFormat: "yyyy-MM-dd"
                     }
                 };
             }
@@ -191,9 +185,6 @@ var s_autoform = function (schema, field) {
                             type: "datetime",
                             displayFormat: "yyyy-MM-dd HH:mm",
                             pickerType: "rollers",
-                            elementAttr: {
-                                class: "w-full p-0 pl-3"
-                            },
                             onOpened: function(){
                                 // fix dx-date-box控件pickerType为rollers时，打开后，滚动控件时，审批界面会触发审批单界面滚动
                                 $("body").addClass("dx-date-box-opened");
@@ -228,10 +219,7 @@ var s_autoform = function (schema, field) {
                     type: "dx-date-box",
                     dxDateBoxOptions: {
                         type: "datetime",
-                        displayFormat: "yyyy-MM-dd HH:mm",
-                        elementAttr: {
-                            class: "w-full p-0 pl-3"
-                        }
+                        displayFormat: "yyyy-MM-dd HH:mm"
                     }
                 };
             }
