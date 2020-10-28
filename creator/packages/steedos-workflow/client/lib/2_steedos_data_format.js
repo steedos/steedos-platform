@@ -167,13 +167,14 @@ var s_autoform = function (schema, field) {
                     timezoneId: "utc",
                     dxDateBoxOptions: {
                         type: "date",
-                        displayFormat: "yyyy-MM-dd"
+                        displayFormat: "yyyy-MM-dd",
+                        dateSerializationFormat: "yyyy-MM-dd"
                     }
                 };
             }
             break;
         case 'dateTime':
-            schema.type = Date;
+            schema.type = String;
             autoform.disabled = (permission == 'readonly');
             if (Steedos.isMobile() || Steedos.isPad()){
                 // autoform.type = 'datetime-local';
@@ -219,7 +220,8 @@ var s_autoform = function (schema, field) {
                     type: "dx-date-box",
                     dxDateBoxOptions: {
                         type: "datetime",
-                        displayFormat: "yyyy-MM-dd HH:mm"
+                        displayFormat: "yyyy-MM-dd HH:mm",
+                        dateSerializationFormat: "yyyy-MM-ddTHH:mm:ssZ"
                     }
                 };
             }
