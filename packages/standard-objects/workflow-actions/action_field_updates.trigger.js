@@ -1,5 +1,5 @@
 const _ = require("underscore");
-const util = require('./util');
+const util = require('../util');
 
 
 module.exports = {

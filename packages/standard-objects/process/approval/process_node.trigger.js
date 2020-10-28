@@ -1,6 +1,6 @@
 const _ = require("underscore");
 const objectql = require('@steedos/objectql');
-const util = require('./util');
+const util = require('../../util');
 
 const reviseRecordOrder = async function (processId, record) {
     let processNodes = await objectql.getObject("process_node").find({ filters: ['process_definition', '=', processId], sort: 'order asc' });
