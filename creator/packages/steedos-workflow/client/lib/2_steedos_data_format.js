@@ -128,6 +128,7 @@ var s_autoform = function (schema, field) {
                         dxDateBoxOptions: {
                             type: "date",
                             displayFormat: "yyyy-MM-dd",
+                            dateSerializationFormat: "yyyy-MM-dd",
                             pickerType: "rollers",
                             onOpened: function(){
                                 // fix dx-date-box控件pickerType为rollers时，打开后，滚动控件时，审批界面会触发审批单界面滚动
@@ -185,6 +186,7 @@ var s_autoform = function (schema, field) {
                         dxDateBoxOptions: {
                             type: "datetime",
                             displayFormat: "yyyy-MM-dd HH:mm",
+                            dateSerializationFormat: "yyyy-MM-ddTHH:mm:ssZ",
                             pickerType: "rollers",
                             onOpened: function(){
                                 // fix dx-date-box控件pickerType为rollers时，打开后，滚动控件时，审批界面会触发审批单界面滚动
