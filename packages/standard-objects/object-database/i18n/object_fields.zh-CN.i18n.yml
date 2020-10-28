@@ -85,6 +85,10 @@ object_fields_field_summary_type_options_max: MAX
 object_fields_field_summary_field: 要聚合的字段
 object_fields_field_summary_field_inlineHelpText: 字段类型为累计汇总且汇总类型不是COUNT时，必须填写此字段，只支持聚合数值、金额、日期、日期时间类型的字段。
 object_fields_field_summary_filters: 过滤条件
+object_fields_field_summary_filters.$: 过滤条件
+object_fields_field_summary_filters_$_field: 字段
+object_fields_field_summary_filters_$_operation: 运算符
+object_fields_field_summary_filters_$_value: 值
 object_fields_field_summary_filters_inlineHelpText: 此计算仅应包括符合特定条件的记录，当过滤条件为空时，所有记录都应包括在计算中。
 object_fields_listview_all: 所有
 object_fields_action_recomputeFormulaValues: 重算公式值

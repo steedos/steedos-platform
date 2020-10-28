@@ -271,16 +271,16 @@ fields:
           return options;
         }
       }
-  filters:
+  summary_filters:
     label: Filter Criteria
     type: 'grid'
     inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
     is_wide: true
-  filters.$:
+  summary_filters.$:
     label: Filter Criteria
     blackbox: true
     type: object
-  filters.$.field:
+  summary_filters.$.field:
     label: Field
     type: lookup
     showIcon: false
@@ -293,20 +293,20 @@ fields:
         }
         return []
       }
-  filters.$.operation:
+  summary_filters.$.operation:
     label: Operator
     type: lookup
     showIcon: false
     optionsFunction: !!js/function |
       function(values){
+        console.log("===this.template===", this.template);
         if(values.summary_object){
           if(!this.template){
-            let options = Creator.getFieldOperation();
-            Creator.pushBetweenBuiltinOptionals('date', options);
+            let options = Steedos.ObjectFieldManager.getSummaryFiltersOperation();
             return options;
           }
           var index = Number(this.template.data.name.split('.')[1]);
-          var filters = values.filters
+          var filters = values.summary_filters
           if(filters && filters.length > index){
             var filter = filters[index];
             var field = filter.field;
@@ -315,14 +315,14 @@ fields:
               var filter_field_type;
               if(object_fields[field]){
                 filter_field_type = object_fields[field].type
-                return Creator.getFieldOperation(filter_field_type);
+                return Steedos.ObjectFieldManager.getSummaryFiltersOperation(filter_field_type);
               }
             }
           }
         }
         return [];
       }
-  filters.$.value:
+  summary_filters.$.value:
     label: Value
     type: text
   column_name:

@@ -62,11 +62,11 @@ function getFieldsByType(doc, type, dataType) {
       // fields.push({ name: 'data_type', required: true });
       fields.push({ name: 'precision', required: true });
       fields.push({ name: 'scale', required: true });
-      fields.push({ name: 'filters' });
-      fields.push({ name: 'filters.$' });
-      fields.push({ name: 'filters.$.field' });
-      fields.push({ name: 'filters.$.operation' });
-      fields.push({ name: 'filters.$.value' });
+      fields.push({ name: 'summary_filters' });
+      fields.push({ name: 'summary_filters.$' });
+      fields.push({ name: 'summary_filters.$.field' });
+      fields.push({ name: 'summary_filters.$.operation' });
+      fields.push({ name: 'summary_filters.$.value' });
       break;
     }
     default:
@@ -109,3 +109,65 @@ Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
 
   Object.assign(schema, new SimpleSchema(objectSchema)) 
 }
+
+Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
+  var operations, optionals;
+  optionals = {
+    equal: {
+      label: t("creator_filter_operation_equal"),
+      value: "="
+    },
+    unequal: {
+      label: t("creator_filter_operation_unequal"),
+      value: "<>"
+    },
+    less_than: {
+      label: t("creator_filter_operation_less_than"),
+      value: "<"
+    },
+    greater_than: {
+      label: t("creator_filter_operation_greater_than"),
+      value: ">"
+    },
+    less_or_equal: {
+      label: t("creator_filter_operation_less_or_equal"),
+      value: "<="
+    },
+    greater_or_equal: {
+      label: t("creator_filter_operation_greater_or_equal"),
+      value: ">="
+    },
+    contains: {
+      label: t("creator_filter_operation_contains"),
+      value: "contains"
+    },
+    not_contain: {
+      label: t("creator_filter_operation_does_not_contain"),
+      value: "notcontains"
+    },
+    starts_with: {
+      label: t("creator_filter_operation_starts_with"),
+      value: "startswith"
+    }
+  };
+  if (field_type === void 0) {
+    return _.values(optionals);
+  }
+  operations = [];
+  if (field_type === "text" || field_type === "textarea" || field_type === "html" || field_type === "code") {
+    operations.push(optionals.equal, optionals.unequal, optionals.contains, optionals.not_contain, optionals.starts_with);
+  } else if (field_type === "lookup" || field_type === "master_detail" || field_type === "select") {
+    operations.push(optionals.equal, optionals.unequal);
+  } else if (field_type === "currency" || field_type === "number" || field_type === "date" || field_type === "datetime") {
+    operations.push(optionals.equal, optionals.unequal, optionals.less_than, optionals.greater_than, optionals.less_or_equal, optionals.greater_or_equal);
+  } else if (field_type === "boolean") {
+    operations.push(optionals.equal, optionals.unequal);
+  } else if (field_type === "checkbox") {
+    operations.push(optionals.equal, optionals.unequal);
+  } else if (field_type === "[text]") {
+    operations.push(optionals.equal, optionals.unequal);
+  } else {
+    operations.push(optionals.equal, optionals.unequal);
+  }
+  return operations;
+};
