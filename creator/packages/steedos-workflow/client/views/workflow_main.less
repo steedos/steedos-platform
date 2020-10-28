@@ -580,6 +580,11 @@
 			background-color: #fff;
 			padding-bottom: 20px;
 
+			body.dx-date-box-opened &{
+				// fix ios设备上dx-date-box控件弹出后滚动日期时间控件会触发申请单界面一起滚动。
+				overflow: hidden!important;
+			}
+
 			.row {
 				margin-right: 0px;
 				margin-left: 0px;
