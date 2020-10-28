@@ -59,14 +59,14 @@ function initObjectPermission(userId, doc){
     let psetsAdminId = null;
     let psetsAdmin = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'});
     if(!psetsAdmin){
-        psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin', type: 'profile', label: TAPi18n.__(`permission_set_admin`, {}, lng)});
+        psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin', type: 'profile', license: 'platform', label: TAPi18n.__(`permission_set_admin`, {}, lng)});
     }else{
         psetsAdminId = psetsAdmin._id
     }
     let psetsUserId = null;
     let psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'});
     if(!psetsUser){
-        psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user', type: 'profile', label: TAPi18n.__(`permission_set_user`, {}, lng)});
+        psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user', type: 'profile', license: 'platform', label: TAPi18n.__(`permission_set_user`, {}, lng)});
     }else{
         psetsUserId = psetsUser._id;
     }
