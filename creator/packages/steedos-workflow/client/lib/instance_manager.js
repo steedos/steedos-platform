@@ -363,7 +363,7 @@ InstanceManager.checkFormValue = function () {
 
 	for (var k in fieldsPermision) {
 		if (fieldsPermision[k] == 'editable') {
-			InstanceManager.checkFormFieldValue($("[name='" + k + "']")[0]);
+			InstanceManager.checkFormFieldValue($("[name='" + k + "']")[0], k);
 		}
 	}
 }
@@ -486,10 +486,14 @@ InstanceManager.checkSuggestion = function (alter) {
 	}
 }
 
-InstanceManager.checkFormFieldValue = function (field) {
+InstanceManager.checkFormFieldValue = function (field, fieldName) {
 
 	if (!field)
 		return;
+
+	if (!field.name && fieldName) {
+		field.name = fieldName;
+	}
 
 	var reg_email = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
 	var parent_group = $("#" + field.id).parent();
@@ -509,6 +513,11 @@ InstanceManager.checkFormFieldValue = function (field) {
 			fileValue = $("[name='" + field.name + "']:checked").val();
 		} else {
 			fileValue = field.value;
+		}
+
+		if (!fileValue && fieldName) {
+			// dx-date-box时间控件会拿不到field.value，需要额外写代码取出来
+			fileValue = InstanceManager.getInstanceValuesByAutoForm()[fieldName]
 		}
 
 		if (!fileValue || fileValue == '' || fileValue.length < 1) {
