@@ -124,7 +124,8 @@ Creator.getListViewFilters = (object_name, list_view_id, is_related, related_obj
 				# value为undefined时不应该生成过滤条件，dev过滤器不支持
 				return
 			_f = _objFields[fi?.field]
-			if ["text", "textarea", "html", "code"].includes(_f?.type)
+			_fieldType = Creator.getFieldTypeForFilter(_objFields, fi?.field)
+			if ["text", "textarea", "html", "code"].includes(_fieldType)
 				if _.isString(fi.value)
 					vals = fi.value.trim().split(" ")
 					query_or = []
@@ -136,7 +137,7 @@ Creator.getListViewFilters = (object_name, list_view_id, is_related, related_obj
 						if ['<>','notcontains'].includes(fi.operation)
 							is_logic_or = false
 						_filters.push Creator.formatFiltersToDev(query_or, object_name, {is_logic_or: is_logic_or})
-			else if ["lookup", "master_detail"].includes(_f?.type)
+			else if ["lookup", "master_detail"].includes(_fieldType)
 				_reference_to = _f?.reference_to
 				if _.isFunction(_reference_to)
 					_reference_to = _reference_to()

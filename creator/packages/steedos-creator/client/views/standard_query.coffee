@@ -41,7 +41,8 @@ Template.standard_query_modal.helpers
 		canSearchFields = []
 		clone = require('clone')
 		_.each object_fields, (field, key)->
-			if !field.hidden and !["grid", "image", "avatar"].includes(field.type)
+			_fieldType = Creator.getFieldTypeForFilter(object_fields, key)
+			if !field.hidden and !["grid", "image", "avatar"].includes(_fieldType)
 				canSearchFields.push(key)
 		schema = {}
 		canSearchFields = _.intersection(first_level_keys, canSearchFields)
@@ -54,7 +55,8 @@ Template.standard_query_modal.helpers
 				schema[field].autoform.group = t "standard_query_more"
 			if object_fields[field].searchable || object_fields[field].filterable
 				delete schema[field].autoform.group
-			if ["lookup", "master_detail", "select", "checkbox"].includes(object_fields[field].type)
+			_fieldType = Creator.getFieldTypeForFilter(object_fields, field)
+			if ["lookup", "master_detail", "select", "checkbox"].includes(_fieldType)
 				schema[field].autoform.multiple = true
 				schema[field].type = [String]
 				if schema[field].autoform.create
@@ -62,11 +64,11 @@ Template.standard_query_modal.helpers
 
 				_field = object_fields[field]
 
-				if _field.type == "select"
+				if _fieldType == "select"
 					schema[field].autoform.type = "steedosLookups"
 					schema[field].autoform.showIcon = false
 
-				if _field.type == 'lookup' || _field.type == 'master_detail'
+				if _fieldType == 'lookup' || _fieldType == 'master_detail'
 					_reference_to = _field.reference_to
 					if _.isFunction(_reference_to)
 						_reference_to = _reference_to()
@@ -76,7 +78,7 @@ Template.standard_query_modal.helpers
 					if !_.isEmpty(_reference_to)
 						delete schema[field].optionsFunction
 
-			if Creator.checkFieldTypeSupportBetweenQuery(object_fields[field].type)
+			if Creator.checkFieldTypeSupportBetweenQuery(_fieldType)
 				schema[field + "_endLine"] =  clone(obj_schema[field])
 				obj_schema[field].autoform.is_range = true
 				if schema[field + "_endLine"].defaultValue
@@ -88,26 +90,26 @@ Template.standard_query_modal.helpers
 					schema[field + "_endLine"].autoform.is_range = false
 					schema[field + "_endLine"].autoform.label = '至'
 					delete schema[field + "_endLine"].autoform.defaultValue
-					if object_fields[field].type == 'date'
+					if _fieldType == 'date'
 						schema[field + "_endLine"].autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
 						schema[field + "_endLine"].autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
 						if schema[field + "_endLine"].autoform.afFieldInput?.dxDateBoxOptions
 							# dx-date-box控件不支持outFormat，需要单独处理
 							# 注意不可以用'yyyy-MM-ddT23:59:59Z'，因日期类型字段已经用timezoneId: "utc"处理了时区问题，后面带Z的话，会做时区转换
 							schema[field + "_endLine"].autoform.afFieldInput.dxDateBoxOptions.dateSerializationFormat = 'yyyy-MM-ddT23:59:59';
-			if ["boolean"].includes(object_fields[field].type)
+			if ["boolean"].includes(_fieldType)
 				group = schema[field].autoform?.group
 				schema[field].autoform = {group: group}
 				schema[field].autoform.type = "boolean-select"
 				schema[field].autoform.trueLabel = t("True")
 				schema[field].autoform.falseLabel = t("False")
 
-			if ["code", "textarea"].includes(object_fields[field].type)
+			if ["code", "textarea"].includes(_fieldType)
 				group = schema[field].autoform?.group
 				schema[field].autoform = {group: group}
 				schema[field].autoform.type = "text"
 			
-			if ["html"].includes(object_fields[field].type)
+			if ["html"].includes(_fieldType)
 				schema[field].autoform.type = "textarea"
 				delete schema[field].autoform.afFieldInput
 
@@ -132,8 +134,9 @@ Template.standard_query_modal.helpers
 		object_fields = object.fields
 		searchable_fields = []
 		_.each object_fields, (field, key)->
-			if !field.hidden and !["grid", "image", "avatar"].includes(field.type) and first_level_keys.includes(key)
-				if ["date", "datetime", "currency", "number"].includes(field.type)
+			_fieldType = Creator.getFieldTypeForFilter(object_fields, key)
+			if !field.hidden and !["grid", "image", "avatar"].includes(_fieldType) and first_level_keys.includes(key)
+				if ["date", "datetime", "currency", "number"].includes(_fieldType)
 					searchable_fields.push([key, key + "_endLine"])
 				else
 					searchable_fields.push(key)

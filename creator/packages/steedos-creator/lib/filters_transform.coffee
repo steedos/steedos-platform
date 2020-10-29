@@ -17,7 +17,8 @@ FiltersTransform.queryToFilters = (standard_query)->
 	filters = []
 	_.each query, (v, k)->
 		if object_fields[k]
-			type = object_fields[k].type
+			# type = object_fields[k].type
+			type = Creator.getFieldTypeForFilter(object_fields, k)
 			if ["date", "datetime", "currency", "number"].includes(type)
 				filters.push({field: k, operation: getOperation(type), start_value: v, value: [v, null]})
 			else if ["text", "textarea", "html"].includes(type)
@@ -31,7 +32,8 @@ FiltersTransform.queryToFilters = (standard_query)->
 				filters.push({field: k, operation: getOperation(type), value: v})
 		else
 			k = k.replace(/(_endLine)$/, "")
-			type = object_fields[k].type
+			# type = object_fields[k].type
+			type = Creator.getFieldTypeForFilter(object_fields, k)
 			if object_fields[k] and ["date", "datetime", "currency", "number"].includes(type)
 				filter = _.find(filters, (f)->
 					return f.field == k
