@@ -255,6 +255,7 @@ relatedList:
   - permission_objects
   - object_workflows
   - process_definition
+  - object_validation_rules
 list_views:
   all:
     columns:
