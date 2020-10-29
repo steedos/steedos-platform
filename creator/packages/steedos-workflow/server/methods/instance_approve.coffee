@@ -89,9 +89,10 @@ Meteor.methods
 				lastTrace?.approves.forEach (a, idx) ->
 					if a._id == lastSignApprove._id
 						if sign_type == "update"
-							setObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription then false else true
-							setObj["traces.$.approves.#{idx}.modified"] = new Date()
-							setObj["traces.$.approves.#{idx}.modified_by"] = session_userId
+							if !_.has lastSignApprove, 'custom_sign_show'
+								setObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription then false else true
+								setObj["traces.$.approves.#{idx}.modified"] = new Date()
+								setObj["traces.$.approves.#{idx}.modified_by"] = session_userId
 
 				if not _.isEmpty(setObj)
 					db.instances.update({
@@ -128,12 +129,10 @@ Meteor.methods
 				traces.forEach (t, tIdx) ->
 					if t.step == currentStep
 						t?.approves.forEach (appr, aIdx) ->
-							if appr.handler == session_userId && appr.is_finished && appr._id != approveId
+							if appr.handler == session_userId && appr.is_finished && appr._id != approveId && !_.has(lastSignApprove, 'custom_sign_show')
 								if trimDescription && appr.sign_show == true
 									upObj["traces.#{tIdx}.approves.#{aIdx}.sign_show"] = false
 									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = false
-									if appr.custom_sign_show == true
-										upObj["traces.#{tIdx}.approves.#{aIdx}.custom_sign_show"] = false
 								else if appr.keepLastSignApproveDescription == false
 									upObj["traces.#{tIdx}.approves.#{aIdx}.sign_show"] = true
 									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = undefined
