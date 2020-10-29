@@ -140,7 +140,7 @@ function getObjectFields(objectName, userId){
 exports.getObjectFields = getObjectFields
 
 exports.getDefaultSysFields = function(object, userId){
-    if(!object.datasource || object.datasource === 'default'){
+    if(object && (!object.datasource || object.datasource === 'default')){
         let baseObject = getObject('base', userId)
         return _.pick(baseObject.fields, 'created_by', 'modified_by');
     }
