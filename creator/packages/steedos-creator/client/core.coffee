@@ -915,15 +915,6 @@ if Meteor.isClient
 		type = ['html','htm']
 		return type.indexOf(_exp) != -1
 
-	Creator.getFieldTypeForFilter = (objectFields, key)->
-		if objectFields and key
-			result = objectFields[key]?.type
-			if ["formula", "summary"].indexOf(result) > -1
-				result = objectFields[key].data_type
-			return result
-		else
-			return "text"
-
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->
 	Tracker.autorun ()->
