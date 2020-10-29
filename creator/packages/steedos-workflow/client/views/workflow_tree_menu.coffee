@@ -204,7 +204,7 @@ getStoreItems = ()->
 
 selectMenu = (_id)->
 	# 选中dxTreeView中某项
-	this.dxTreeViewInstance.selectItem(this.$(".dx-treeview-node[data-item-id=#{_id}]"))
+	this.dxTreeViewInstance?.selectItem(this.$(".dx-treeview-node[data-item-id=#{_id}]"))
 
 Template.workflowTreeMenu.onCreated ->
 
@@ -301,6 +301,7 @@ Template.workflowTreeMenu.onRendered ->
 			selectMenu = selectMenu.bind(self)
 	
 	self.autorun (c)->
-		selectMenu Session.get("box")
+		Meteor.defer ()->
+			selectMenu Session.get("box")
 
 	
