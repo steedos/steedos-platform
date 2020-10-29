@@ -150,6 +150,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                                 }
                             }
                         } else {
+                            // contains、startswith、endswith等，如果value为空数组，不加任何条件，即查找所有数据
                             _.each(value, function (v) {
                                 return sub_selector.push([field, option, v], "or");
                             });

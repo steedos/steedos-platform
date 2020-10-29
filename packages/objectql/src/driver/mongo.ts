@@ -70,6 +70,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     formatFiltersToMongoQuery(filters: any): JsonMap {
+        let emptyFilters = {};
         let odataQuery: string = "";
         if (_.isString(filters)) {
             odataQuery = filters;
@@ -77,7 +78,10 @@ export class SteedosMongoDriver implements SteedosDriver {
         else {
             odataQuery = formatFiltersToODataQuery(filters)
         }
-        let query: JsonMap = createFilter(odataQuery)
+        if(!odataQuery){
+            return emptyFilters;
+        }
+        let query: JsonMap = createFilter(odataQuery);
         return query;
     }
 
