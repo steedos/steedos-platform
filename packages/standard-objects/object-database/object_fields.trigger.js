@@ -1,5 +1,5 @@
 const InternalData = require('../core/internalData');
-const { getSummaryDataType, getObjectConfig, getFieldDataType } = require('@steedos/objectql');
+const { getSummaryDataType, getObjectConfig, validateFilters } = require('@steedos/objectql');
 
 const validateOptionValue = (value)=>{
     let color = value && value.split(":")[2];
@@ -77,6 +77,7 @@ const initSummaryDoc = (doc)=>{
         throw new Error("object_fields_error_summary_data_type_not_found");
     }
     doc.data_type = dataType;
+    validateFilters(doc.summary_filters, summaryObject.fields);
 }
 
 module.exports = {

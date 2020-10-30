@@ -510,7 +510,9 @@ export function processFilters(filters: [], objectFields: any) {
 
             }
             else if(dataType === "date"){
-                if(!isValidDate(filter.value)){
+                if(typeof filter.value === "string"){
+                    // 这里转换为按utc的0点时间值来过滤
+                    // 实测输入2020-02-12,new Date结果为2020-02-12T00:00:00.000Z
                     filter.value = new Date(filter.value);
                     if(!isValidDate(filter.value)){
                         throw new Error("object_fields_error_filter_item_invalid_date");
@@ -518,7 +520,9 @@ export function processFilters(filters: [], objectFields: any) {
                 }
             }
             else if(dataType === "datetime"){
-                if(!isValidDate(filter.value)){
+                if(typeof filter.value === "string"){
+                    // 这里转换为按utc时间值来过滤
+                    // 实测输入2020-02-12 12:00,new Date结果为2020-02-12T04:00:00.000Z
                     filter.value = new Date(filter.value);
                     if(!isValidDate(filter.value)){
                         throw new Error("object_fields_error_filter_item_invalid_date");
@@ -527,4 +531,8 @@ export function processFilters(filters: [], objectFields: any) {
             }
         });
     }
+}
+
+export function validateFilters(filters: [], objectFields: any) {
+    processFilters(clone(filters), objectFields);
 }
