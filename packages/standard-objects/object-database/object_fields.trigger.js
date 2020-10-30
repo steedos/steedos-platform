@@ -60,30 +60,6 @@ const validateDoc = (doc)=>{
     // }
 }
 
-const processFilters = (filters, objectFields)=>{
-    if(filters && filters.length){
-        filters.forEach((filter)=>{
-            // "text","boolean","date","datetime","number","currency","percent"
-            let dataType = getFieldDataType(objectFields, filter.field);
-            if(["number", "currency", "percent"].indexOf(dataType) > -1){
-                filter.value = Number(filter.value);
-                if(isNaN(filter.value)){
-                    throw new Error("object_fields_error_filter_item_is_not_a_number", filter.field, filter.value);
-                }
-            }
-            else if(dataType === "boolean"){
-
-            }
-            else if(dataType === "date"){
-
-            }
-            else if(dataType === "datetime"){
-
-            }
-        });
-    }
-}
-
 const initSummaryDoc = (doc)=>{
     if(!doc.summary_object){
         throw new Error("object_fields_error_summary_object_required");
@@ -101,7 +77,6 @@ const initSummaryDoc = (doc)=>{
         throw new Error("object_fields_error_summary_data_type_not_found");
     }
     doc.data_type = dataType;
-    processFilters(doc.summary_filters, summaryObject.fields);
 }
 
 module.exports = {
