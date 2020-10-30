@@ -227,5 +227,7 @@
 	"object_fields_function_recomputeSummaryValues_error": "未能成功重算该汇总字段值，%s",
 
 	"object_fields_error_summary_object_required": "字段类型为累计汇总时，必须填写要汇总的对象。",
-	"object_fields_error_summary_data_type_not_found": "未找到该累计汇总字段对应的数据类型。"
+	"object_fields_error_summary_data_type_not_found": "未找到该累计汇总字段对应的数据类型。",
+
+	"object_fields_error_filter_item_is_not_a_number": "过滤条件设置有误, 数值类型字段值必须是一个有效的数值"
 }

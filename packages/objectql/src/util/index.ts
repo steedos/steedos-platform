@@ -462,3 +462,29 @@ export function isSystemObject(object_name: string) {
     // 以c结尾的都是零代码上定义的对象
     return !object_name.endsWith("__c")
 }
+
+/**
+ * 获取对象字段的基本数据类型，目前支持以下数据类型：
+ * "text",
+ * "boolean",
+ * "date",
+ * "datetime",
+ * "number",
+ * "currency",
+ * "percent"
+ * @param objectFields 对象字段集合，即getObjectConfig(object_name)得到的结果
+ * @param key 字段名
+ */
+export function getFieldDataType(objectFields: any, key: string): string {
+    var field: any, result: string;
+    if (objectFields && key) {
+        field = objectFields[key];
+        result = field && field.type;
+        if (["formula", "summary"].indexOf(result) > -1) {
+            result = field.data_type;
+        }
+        return result;
+    } else {
+        return "text";
+    }
+}

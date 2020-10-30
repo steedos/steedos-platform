@@ -223,5 +223,7 @@
 	"object_fields_function_recomputeSummaryValues_error": "Failed to recompute the summary field value, %s",
 
 	"object_fields_error_summary_object_required": "When the field type is 'Roll-Up Summary', the 'Object to Summarize' must be filled in.",
-	"object_fields_error_summary_data_type_not_found": "The data type for this 'Roll-Up Summary' field was not found."
+	"object_fields_error_summary_data_type_not_found": "The data type for this 'Roll-Up Summary' field was not found.",
+
+	"object_fields_error_filter_item_is_not_a_number": "The filter condition is set incorrectly. The value of the numeric type field must be a valid value"
 }
