@@ -499,7 +499,7 @@ export function processFilters(filters: [], objectFields: any) {
             // "text","boolean","date","datetime","number","currency","percent"
             let dataType = getFieldDataType(objectFields, filter.field);
             if(["number", "currency", "percent"].indexOf(dataType) > -1){
-                if(!_.isNumber(filter.value)){
+                if(typeof filter.value === "string"){
                     filter.value = Number(filter.value);
                     if(isNaN(filter.value)){
                         throw new Error("object_fields_error_filter_item_invalid_number");
@@ -507,7 +507,17 @@ export function processFilters(filters: [], objectFields: any) {
                 }
             }
             else if(dataType === "boolean"){
-
+                if(typeof filter.value === "string"){
+                    if(["true", "True", "TRUE", "真", "1"].indexOf(filter.value.trim()) > -1){
+                        filter.value = true;
+                    }
+                    else if(["false", "False", "FALSE", "0"].indexOf(filter.value.trim()) > -1){
+                        filter.value = false;
+                    }
+                    else{
+                        throw new Error("object_fields_error_filter_item_invalid_boolean");
+                    }
+                }
             }
             else if(dataType === "date"){
                 if(typeof filter.value === "string"){
