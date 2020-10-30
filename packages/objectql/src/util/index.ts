@@ -496,8 +496,18 @@ export function isValidDate(date: any): boolean {
 export function processFilters(filters: [], objectFields: any) {
     if(filters && filters.length){
         filters.forEach((filter: any)=>{
-            if(!filter.field){
+            if(!(!_.isArray(filter) && _.isObject(filter))){
+                // 只有{field:xx,operation:xx,value:xx}格式的才支持转换
                 return;
+            }
+            if(!filter.field){
+                throw new Error("object_fields_error_filter_item_field_required");
+            }
+            if(!filter.operation){
+                throw new Error("object_fields_error_filter_item_operation_required");
+            }
+            if(!filter.value){
+                throw new Error("object_fields_error_filter_item_value_required");
             }
             // "text","boolean","date","datetime","number","currency","percent"
             let dataType = getFieldDataType(objectFields, filter.field);

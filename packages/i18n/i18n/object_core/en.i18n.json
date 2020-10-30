@@ -227,5 +227,8 @@
 
 	"object_fields_error_filter_item_invalid_number": "The filter condition is set incorrectly. The value of the numeric type field must be a valid value.",
 	"object_fields_error_filter_item_invalid_date": "The filter condition is set incorrectly. The date, date-time type field value must be a valid date value. Enter a character in the format 2020-01-01 to represent a date, and a character in the format 2020-01-01 12:00 to represent a date time.",
-	"object_fields_error_filter_item_invalid_boolean": "The filter condition is set incorrectly. The Boolean type field has an invalid value, please enter '1/true/True/TRUE/真 'to indicate true or '0/false/False/FALSE/假' to indicate false."
+	"object_fields_error_filter_item_invalid_boolean": "The filter condition is set incorrectly. The Boolean type field has an invalid value, please enter '1/true/True/TRUE/真 'to indicate true or '0/false/False/FALSE/假' to indicate false.",
+	"object_fields_error_filter_item_field_required": "The filter condition is set incorrectly. 'Field' is required.",
+	"object_fields_error_filter_item_operation_required": "The filter condition is set incorrectly. 'Operator' is required.",
+	"object_fields_error_filter_item_value_required": "The filter condition is set incorrectly. 'Value' is required."
 }
