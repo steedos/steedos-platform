@@ -76,32 +76,6 @@ Meteor.methods
 				if lastSignApprove.custom_sign_show
 					return
 
-			instance = db.instances.findOne({
-				_id: instanceId,
-				"traces._id": lastSignApprove.trace
-			}, { fields: { "traces.$": 1 } })
-
-			lastTrace = _.find instance?.traces, (t) ->
-				return t._id = lastSignApprove.trace
-
-			if lastTrace
-				setObj = {}
-				lastTrace?.approves.forEach (a, idx) ->
-					if a._id == lastSignApprove._id
-						if sign_type == "update"
-							if !_.has lastSignApprove, 'custom_sign_show'
-								setObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription then false else true
-								setObj["traces.$.approves.#{idx}.modified"] = new Date()
-								setObj["traces.$.approves.#{idx}.modified_by"] = session_userId
-
-				if not _.isEmpty(setObj)
-					db.instances.update({
-						_id: instanceId,
-						"traces._id": lastTrace._id
-					}, {
-						$set: setObj
-					})
-
 		instance = db.instances.findOne({ _id: instanceId, "traces._id": traceId }, { fields: { "traces.$": 1 } })
 
 		if instance?.traces?.length > 0
@@ -129,13 +103,13 @@ Meteor.methods
 				traces.forEach (t, tIdx) ->
 					if t.step == currentStep
 						t?.approves.forEach (appr, aIdx) ->
-							if appr.handler == session_userId && appr.is_finished && appr._id != approveId && !_.has(lastSignApprove, 'custom_sign_show')
-								if trimDescription && appr.sign_show == true
+							if appr.handler == session_userId && appr.is_finished && appr._id != approveId && !_.has(appr, 'custom_sign_show')
+								if trimDescription && appr.sign_show == true && (sign_field_code == "" || !appr.sign_field_code || sign_field_code == appr.sign_field_code)
 									upObj["traces.#{tIdx}.approves.#{aIdx}.sign_show"] = false
-									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = false
-								else if appr.keepLastSignApproveDescription == false
+									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = approveId
+								else if appr.keepLastSignApproveDescription == approveId
 									upObj["traces.#{tIdx}.approves.#{aIdx}.sign_show"] = true
-									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = undefined
+									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = null
 
 			if not _.isEmpty(upObj)
 				db.instances.update({
