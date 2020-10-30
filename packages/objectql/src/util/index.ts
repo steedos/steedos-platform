@@ -496,6 +496,9 @@ export function isValidDate(date: any): boolean {
 export function processFilters(filters: [], objectFields: any) {
     if(filters && filters.length){
         filters.forEach((filter: any)=>{
+            if(!filter.field){
+                return;
+            }
             // "text","boolean","date","datetime","number","currency","percent"
             let dataType = getFieldDataType(objectFields, filter.field);
             if(["number", "currency", "percent"].indexOf(dataType) > -1){
