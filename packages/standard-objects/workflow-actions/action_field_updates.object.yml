@@ -148,9 +148,16 @@ list_views:
   all:
     label: All
     filter_scope: space
+    filter_fields:
+      - object_name
     columns:
       - label
       - object_name
+      - target_object
+      - field_name
+      - operation
+      - formula
+      - literal_value
       - description
 permission_set:
   user:

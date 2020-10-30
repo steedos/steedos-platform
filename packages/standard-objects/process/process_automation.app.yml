@@ -12,10 +12,11 @@ admin_menus:
   #   sort: 500
   - _id: process_definition
     name: Approval Processes
+    sort: 400
     permission_sets:
       - admin
     object_name: process_definition
-    parent: objects_manager
+    parent: process_automation
   # - _id: process_actions
   #   name: process_actions
   #   permission_sets:

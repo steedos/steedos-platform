@@ -36,6 +36,7 @@ admin_menus:
     permission_sets:
       - admin
       - organization_admin
+      - workflow_admin
     expanded: false
     sort: 200
   - _id: spaces
@@ -202,6 +203,7 @@ admin_menus:
     name: License View
     permission_sets:
       - admin
+    sort: 10000
     object_name: license
     parent: menu_users
   - _id: business_hours
@@ -216,3 +218,26 @@ admin_menus:
     permission_sets:
       - user
     template_name: creator_about
+  - _id: process_automation
+    name: Process Automation
+    sort: 500
+    permission_sets:
+      - admin
+      - workflow_admin
+  - _id: workflow_rules
+    name: Workflow Rules
+    permission_sets:
+      - admin
+    object_name: workflow_rule
+    parent: process_automation
+  - _id: workflow_actions
+    name: Workflow Actions
+    permission_sets:
+      - admin
+    parent: process_automation
+  - _id: field_updates
+    name: Field Updates
+    permission_sets:
+      - admin
+    object_name: action_field_updates
+    parent: workflow_actions
