@@ -229,5 +229,6 @@
 	"object_fields_error_summary_object_required": "字段类型为累计汇总时，必须填写要汇总的对象。",
 	"object_fields_error_summary_data_type_not_found": "未找到该累计汇总字段对应的数据类型。",
 
-	"object_fields_error_filter_item_is_not_a_number": "过滤条件设置有误, 数值类型字段值必须是一个有效的数值"
+	"object_fields_error_filter_item_invalid_number": "过滤条件设置有误, 数值类型字段值必须是一个有效的数值。",
+	"object_fields_error_filter_item_invalid_date": "过滤条件设置有误, 日期、日期时间类型字段值必须是一个有效的日期值，请输入2020-01-01这种格式的字符表示日期，2020-01-01 12:00这种格式的字符表示日期时间。"
 }

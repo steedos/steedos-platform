@@ -488,3 +488,43 @@ export function getFieldDataType(objectFields: any, key: string): string {
         return "text";
     }
 }
+
+export function isValidDate(date: any): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
+}
+
+export function processFilters(filters: [], objectFields: any) {
+    if(filters && filters.length){
+        filters.forEach((filter: any)=>{
+            // "text","boolean","date","datetime","number","currency","percent"
+            let dataType = getFieldDataType(objectFields, filter.field);
+            if(["number", "currency", "percent"].indexOf(dataType) > -1){
+                if(!_.isNumber(filter.value)){
+                    filter.value = Number(filter.value);
+                    if(isNaN(filter.value)){
+                        throw new Error("object_fields_error_filter_item_invalid_number");
+                    }
+                }
+            }
+            else if(dataType === "boolean"){
+
+            }
+            else if(dataType === "date"){
+                if(!isValidDate(filter.value)){
+                    filter.value = new Date(filter.value);
+                    if(!isValidDate(filter.value)){
+                        throw new Error("object_fields_error_filter_item_invalid_date");
+                    }
+                }
+            }
+            else if(dataType === "datetime"){
+                if(!isValidDate(filter.value)){
+                    filter.value = new Date(filter.value);
+                    if(!isValidDate(filter.value)){
+                        throw new Error("object_fields_error_filter_item_invalid_date");
+                    }
+                }
+            }
+        });
+    }
+}
