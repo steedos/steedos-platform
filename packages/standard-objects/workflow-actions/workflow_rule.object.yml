@@ -21,7 +21,7 @@ fields:
     is_name: true
   active:
     type: boolean
-    hidden: true
+    # hidden: true
   trigger_type:
     type: select
     is_wide: true
@@ -29,6 +29,7 @@ fields:
       - onCreateOnly
       - onAllChanges
       - onCreateOrTriggeringUpdate
+    defaultValue: onCreateOrTriggeringUpdate
   formula:
     type: textarea
     is_wide: true
@@ -59,6 +60,8 @@ list_views:
   all:
     label: All
     filter_scope: space
+    filter_fields:
+      - object_name
     columns:
       - label
       - object_name
