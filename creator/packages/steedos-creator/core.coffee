@@ -708,7 +708,7 @@ Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 Creator.isFilterValueEmpty = (v) ->
 	return typeof v == "undefined" || v == null || Number.isNaN(v) || v.length == 0
 
-Creator.getFieldTypeForFilter = (objectFields, key)->
+Creator.getFieldDataType = (objectFields, key)->
 	if objectFields and key
 		result = objectFields[key]?.type
 		if ["formula", "summary"].indexOf(result) > -1

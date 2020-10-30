@@ -105,7 +105,7 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 	field = object.fields[column]
 	listViewColumns = list_view.columns
 	listViewColumn = {field: column};
-	_fieldType = Creator.getFieldTypeForFilter(object.fields, column)
+	_fieldType = Creator.getFieldDataType(object.fields, column)
 
 	_.every listViewColumns, (_column)->
 		if _.isObject(_column)
@@ -491,7 +491,7 @@ Template.creator_grid.onRendered ->
 								else if val.constructor == Date
 									dataField = col[index]?.dataField
 									if fields and fields[dataField]
-										_fieldType = Creator.getFieldTypeForFilter(fields, dataField)
+										_fieldType = Creator.getFieldDataType(fields, dataField)
 									if _fieldType == "date"
 										val = moment(val).format('YYYY-MM-DD')
 										r.values[index] = val

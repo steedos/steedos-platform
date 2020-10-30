@@ -41,7 +41,7 @@ Template.standard_query_modal.helpers
 		canSearchFields = []
 		clone = require('clone')
 		_.each object_fields, (field, key)->
-			_fieldType = Creator.getFieldTypeForFilter(object_fields, key)
+			_fieldType = Creator.getFieldDataType(object_fields, key)
 			if !field.hidden and !["grid", "image", "avatar"].includes(_fieldType)
 				canSearchFields.push(key)
 		schema = {}
@@ -55,7 +55,7 @@ Template.standard_query_modal.helpers
 				schema[field].autoform.group = t "standard_query_more"
 			if object_fields[field].searchable || object_fields[field].filterable
 				delete schema[field].autoform.group
-			_fieldType = Creator.getFieldTypeForFilter(object_fields, field)
+			_fieldType = Creator.getFieldDataType(object_fields, field)
 			if ["lookup", "master_detail", "select", "checkbox"].includes(_fieldType)
 				schema[field].autoform.multiple = true
 				schema[field].type = [String]
@@ -134,7 +134,7 @@ Template.standard_query_modal.helpers
 		object_fields = object.fields
 		searchable_fields = []
 		_.each object_fields, (field, key)->
-			_fieldType = Creator.getFieldTypeForFilter(object_fields, key)
+			_fieldType = Creator.getFieldDataType(object_fields, key)
 			if !field.hidden and !["grid", "image", "avatar"].includes(_fieldType) and first_level_keys.includes(key)
 				if ["date", "datetime", "currency", "number"].includes(_fieldType)
 					searchable_fields.push([key, key + "_endLine"])

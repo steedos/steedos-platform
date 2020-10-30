@@ -488,7 +488,7 @@ if Meteor.isClient
 			if standard_query.is_mini
 				_.each query, (val, key)->
 					if object_fields[key]
-						_fieldType = Creator.getFieldTypeForFilter(object_fields, key)
+						_fieldType = Creator.getFieldDataType(object_fields, key)
 						if ["currency", "number"].includes(_fieldType)
 							query_arr.push([key, "=", val])
 						else if ["text", "textarea", "html", "select"].includes(_fieldType)
@@ -506,7 +506,7 @@ if Meteor.isClient
 			else
 				_.each query, (val, key)->
 					if object_fields[key]
-						_fieldType = Creator.getFieldTypeForFilter(object_fields, key)
+						_fieldType = Creator.getFieldDataType(object_fields, key)
 						if ["date", "datetime", "currency", "number"].includes(_fieldType)
 							query_arr.push([key, ">=", val])
 						else if ["text", "textarea", "html"].includes(_fieldType)
@@ -550,7 +550,7 @@ if Meteor.isClient
 							query_arr.push([key, "=", val])
 					else
 						key = key.replace(/(_endLine)$/, "")
-						_fieldType = Creator.getFieldTypeForFilter(object_fields, key)
+						_fieldType = Creator.getFieldDataType(object_fields, key)
 						if object_fields[key] and ["date", "datetime", "currency", "number"].includes(_fieldType)
 							query_arr.push([key, "<=", val])
 

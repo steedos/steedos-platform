@@ -124,7 +124,7 @@ Creator.getListViewFilters = (object_name, list_view_id, is_related, related_obj
 				# value为undefined时不应该生成过滤条件，dev过滤器不支持
 				return
 			_f = _objFields[fi?.field]
-			_fieldType = Creator.getFieldTypeForFilter(_objFields, fi?.field)
+			_fieldType = Creator.getFieldDataType(_objFields, fi?.field)
 			if ["text", "textarea", "html", "code"].includes(_fieldType)
 				if _.isString(fi.value)
 					vals = fi.value.trim().split(" ")

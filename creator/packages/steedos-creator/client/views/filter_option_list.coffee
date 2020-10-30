@@ -187,7 +187,7 @@ Template.filter_option_list.onCreated ->
 				filter.valuelabel = filterValue
 				field = fields[fieldKey]
 				# fieldType = field?.type
-				fieldType = Creator.getFieldTypeForFilter(fields, fieldKey)
+				fieldType = Creator.getFieldDataType(fields, fieldKey)
 				if fieldType == 'lookup' or fieldType =='master_detail' or fieldType=='select'
 					if field?.reference_to && filter.value
 						reference_to_object = field?.reference_to
