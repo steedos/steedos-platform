@@ -299,7 +299,6 @@ fields:
     showIcon: false
     optionsFunction: !!js/function |
       function(values){
-        console.log("===this.template===", this.template);
         if(values.summary_object){
           if(!this.template){
             let options = Steedos.ObjectFieldManager.getSummaryFiltersOperation();
