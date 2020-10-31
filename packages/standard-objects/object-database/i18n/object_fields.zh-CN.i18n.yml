@@ -59,7 +59,7 @@ object_fields_field_inlineHelpText: 提示文本
 object_fields_field_filterable: 过滤器默认字段
 object_fields_field_filtersFunction: 过滤器函数
 object_fields_field_optionsFunction: 选择项函数
-object_fields_field__name_inlineHelpText: $t(object_fields__error_name_invalid_format)
+object_fields_field_name_inlineHelpText: $t(object_fields__error_name_invalid_format)
 object_fields_field_formula: 公式
 object_fields_field_formula_inlineHelpText: 字段类型为自动编号或公式时，必须填写此字段。
 object_fields_field_data_type: 数据类型
