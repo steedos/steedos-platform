@@ -137,6 +137,7 @@ standard-minifier-css@1.5.2
 standard-minifier-js@2.4.0
 steedos:adminlte@2.3.12_3
 steedos:api@0.0.1
+steedos:api-authenticate-user@1.0.0
 steedos:app-chat@0.0.1
 steedos:app-workflow@0.0.15
 steedos:application-package@0.0.1
