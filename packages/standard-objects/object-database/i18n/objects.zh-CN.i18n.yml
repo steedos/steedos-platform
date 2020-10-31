@@ -10,7 +10,7 @@ objects_field_description: 备注
 objects_field_enable_api: 允许 API 访问
 objects_field_enable_approvals: 显示申请单历史步骤
 objects_field_enable_audit: 记录字段历史
-objects_field_enable_chatter: 允许添加评论
+objects_field_enable_chatter: 允许添加留言
 objects_field_enable_events: 允许添加事件
 objects_field_enable_files: 允许上传附件
 objects_field_enable_instances: 允许查看申请单

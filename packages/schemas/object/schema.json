@@ -94,7 +94,7 @@
         },
         "enable_chatter": {
             "type": "boolean",
-            "description": "允许评论"
+            "description": "允许留言"
         },
         "enable_audit": {
             "type": "boolean",
