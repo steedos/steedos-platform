@@ -19,27 +19,27 @@ AutoForm.addInputType("boolean-radios", {
 
 Template.afBooleanRadioGroup.helpers({
   falseAtts: function falseAtts() {
-    var atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'nullLabel', 'data-schema-key');
+    var atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'nullLabel', 'data-schema-key', 'class');
     if (this.value === false) {
       atts.checked = "";
     }
     return atts;
   },
   trueAtts: function trueAtts() {
-    var atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'nullLabel', 'data-schema-key');
+    var atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'nullLabel', 'data-schema-key', 'class');
     if (this.value === true) {
       atts.checked = "";
     }
     return atts;
   },
   nullAtts: function nullAtts() {
-    var atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'nullLabel', 'data-schema-key');
+    var atts = _.omit(this.atts, 'trueLabel', 'falseLabel', 'nullLabel', 'data-schema-key', 'class');
     if (this.value !== true && this.value !== false) {
       atts.checked = "";
     }
     return atts;
   },
   dsk: function () {
-    return {'data-schema-key': this.atts['data-schema-key']};
+    return {'data-schema-key': this.atts['data-schema-key'], 'class': "steedos-boolean-radios grid grid-cols-2 gap-8 " + this.atts.class};
   }
 });

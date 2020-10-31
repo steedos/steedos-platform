@@ -339,6 +339,13 @@ Creator.getObjectSchema = (obj) ->
 			if field.readonly
 				fs.autoform.disabled = true
 			fs.autoform.type = "steedos-boolean-toggle"
+		else if field.type == "boolean-radios"
+			fs.type = Boolean
+			fs.autoform.type = "boolean-radios"
+			fs.autoform.trueLabel =  t('true')
+			fs.autoform.falseLabel =  t('false')
+			if field.readonly
+				fs.autoform.disabled = true
 		else if field.type == "reference"
 			fs.type = String
 		else if field.type == "checkbox"

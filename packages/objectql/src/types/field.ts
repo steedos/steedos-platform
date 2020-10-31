@@ -13,6 +13,7 @@ const FIELDTYPES = [
     "select",
     "boolean",
     "toggle",
+    "boolean-radios",
     "date",
     "datetime",
     "number",
