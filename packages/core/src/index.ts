@@ -23,5 +23,3 @@ export * from './plugins'
 export { coreExpress } from "./express-middleware";
 
 export * from './holidays'
-
-export * from './errors'

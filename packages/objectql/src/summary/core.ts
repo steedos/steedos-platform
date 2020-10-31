@@ -1,4 +1,4 @@
-import { getSteedosSchema } from '../index';
+import { getSteedosSchema, processFilters, getObjectConfig } from '../index';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryTypeBlankValue } from './type';
 import { getObjectQuotedByFieldSummaryConfigs, getObjectFieldSummaryConfigs } from './field_summary';
 import { runQuotedByObjectFieldFormulas } from '../formula';
@@ -147,7 +147,7 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
  */
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
     // console.log("===updateReferenceTosFieldSummaryValue====referenceToIds, fieldSummaryConfig==", referenceToIds, fieldSummaryConfig);
-    const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters } = fieldSummaryConfig;
+    const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters, field_name } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
     }
@@ -167,6 +167,11 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
                 aggregateFilters = `(${aggregateFilters}) and (${summary_filters})`;
             }
             else{
+                const summaryObject = getObjectConfig(summary_object);
+                if(!summaryObject){
+                    throw new Error(`The summary_object '${summary_object}' of the field '${field_name}' on the object '${object_name}' is not found in the default datasource.`);
+                }
+                processFilters(summary_filters, summaryObject.fields);
                 aggregateFilters = [referenceToFilters, summary_filters];
             }
         }

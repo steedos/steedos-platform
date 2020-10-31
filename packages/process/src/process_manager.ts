@@ -1,6 +1,6 @@
 import {runProcessAction, runProcessNodeAction} from './platform_action_manager';
 import { sendNotifications } from './notifications';
-import { SteedosError } from '@steedos/core'
+import { SteedosError } from '@steedos/objectql'
 
 const objectql = require('@steedos/objectql');
 const Fiber = require('fibers');

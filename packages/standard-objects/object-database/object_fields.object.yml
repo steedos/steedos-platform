@@ -299,7 +299,6 @@ fields:
     showIcon: false
     optionsFunction: !!js/function |
       function(values){
-        console.log("===this.template===", this.template);
         if(values.summary_object){
           if(!this.template){
             let options = Steedos.ObjectFieldManager.getSummaryFiltersOperation();
@@ -314,7 +313,12 @@ fields:
               var object_fields = Creator.getObject(values.summary_object).fields
               var filter_field_type;
               if(object_fields[field]){
-                filter_field_type = object_fields[field].type
+                if(Creator.getFieldDataType){
+                  filter_field_type = Creator.getFieldDataType(object_fields, field);
+                }
+                else{
+                  filter_field_type = object_fields[field].type;
+                }
                 return Steedos.ObjectFieldManager.getSummaryFiltersOperation(filter_field_type);
               }
             }

@@ -17,7 +17,7 @@ fields:
     is_wide: true
     filterable: true
     create: false
-    reference_to: objects
+    # reference_to: objects
     reference_to_field: name
     optionsFunction: !!js/function |
       function(){
@@ -207,6 +207,8 @@ list_views:
   all:
     label: All
     filter_scope: space
+    filter_fields:
+      - object_name
     columns:
       - label
       - object_name

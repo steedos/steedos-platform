@@ -488,9 +488,10 @@ if Meteor.isClient
 			if standard_query.is_mini
 				_.each query, (val, key)->
 					if object_fields[key]
-						if ["currency", "number"].includes(object_fields[key].type)
+						_fieldType = Creator.getFieldDataType(object_fields, key)
+						if ["currency", "number"].includes(_fieldType)
 							query_arr.push([key, "=", val])
-						else if ["text", "textarea", "html", "select"].includes(object_fields[key].type)
+						else if ["text", "textarea", "html", "select"].includes(_fieldType)
 							if _.isString(val)
 								vals = val.trim().split(" ")
 								query_or = []
@@ -505,9 +506,10 @@ if Meteor.isClient
 			else
 				_.each query, (val, key)->
 					if object_fields[key]
-						if ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
+						_fieldType = Creator.getFieldDataType(object_fields, key)
+						if ["date", "datetime", "currency", "number"].includes(_fieldType)
 							query_arr.push([key, ">=", val])
-						else if ["text", "textarea", "html"].includes(object_fields[key].type)
+						else if ["text", "textarea", "html"].includes(_fieldType)
 							if _.isString(val)
 								vals = val.trim().split(" ")
 								query_or = []
@@ -520,10 +522,10 @@ if Meteor.isClient
 							else if _.isArray(val)
 								query_arr.push([key, "=", val])
 
-						else if ["boolean"].includes(object_fields[key].type)
+						else if ["boolean"].includes(_fieldType)
 							query_arr.push([key, "=", JSON.parse(val)])
 
-						else if ["lookup", "master_detail"].includes(object_fields[key].type)
+						else if ["lookup", "master_detail"].includes(_fieldType)
 							_f = object_fields[key]
 							_reference_to = _f?.reference_to
 							if _.isFunction(_reference_to)
@@ -548,7 +550,8 @@ if Meteor.isClient
 							query_arr.push([key, "=", val])
 					else
 						key = key.replace(/(_endLine)$/, "")
-						if object_fields[key] and ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
+						_fieldType = Creator.getFieldDataType(object_fields, key)
+						if object_fields[key] and ["date", "datetime", "currency", "number"].includes(_fieldType)
 							query_arr.push([key, "<=", val])
 
 			is_logic_or = if standard_query.is_mini then true else false

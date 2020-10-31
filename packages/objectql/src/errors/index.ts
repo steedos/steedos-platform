@@ -1,5 +1,4 @@
-import { SteedosUserSession } from '@steedos/objectql'
-import util from '../util'
+import { SteedosUserSession } from '../'
 declare var TAPi18n;
 
 const hasOwn = Object.prototype.hasOwnProperty;
@@ -23,12 +22,24 @@ const inherits = function (Child, Parent) {
     return Child;
 };
 
+const getLocale = (userLocale: string)=>{
+    let locale: string;
+    if (userLocale === 'zh-cn') {
+      locale = "zh-CN";
+    } else if (userLocale == 'en-us') {
+      locale = "en";
+    } else {
+      locale = "zh-CN";
+    }
+    return locale;
+  }
+
 // declare type SteedosFunctionErrorType = (error: string, reason: string, details: string) => void;
 const i18nError = function (key?: string, userSession?: SteedosUserSession, i18nOptions?: any){
     if(key){
         let lng = 'en';
         if(userSession){
-            lng = util.getLocale(userSession.locale);
+            lng = getLocale(userSession.locale);
             return TAPi18n.__(key, i18nOptions, lng);
         }
     }

@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { getObjectProcessDefinition, recordSubmit } from './process_manager'
 import * as core from "express-serve-static-core";
-import { SteedosError, sendError } from '@steedos/core'
+import { SteedosError, sendError } from '@steedos/objectql'
 interface Request extends core.Request {
     user: any;
 }

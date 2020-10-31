@@ -708,6 +708,15 @@ Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 Creator.isFilterValueEmpty = (v) ->
 	return typeof v == "undefined" || v == null || Number.isNaN(v) || v.length == 0
 
+Creator.getFieldDataType = (objectFields, key)->
+	if objectFields and key
+		result = objectFields[key]?.type
+		if ["formula", "summary"].indexOf(result) > -1
+			result = objectFields[key].data_type
+		return result
+	else
+		return "text"
+
 # END
 
 if Meteor.isServer

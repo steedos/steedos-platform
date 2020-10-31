@@ -5,6 +5,8 @@ import { pickFormulaVars, computeFormulaParams, pickFormulaVarFields, runFormula
 import { isCurrentUserIdRequiredForFormulaVars } from './util';
 import { isSystemObject } from '../util';
 import { addFormulaReferenceMaps, removeFormulaReferenceMaps } from './check';
+import { JsonMap } from "@salesforce/ts-types";
+
 import _ = require('lodash')
 const clone = require('clone')
 
@@ -239,7 +241,9 @@ export const initObjectFieldsFormulas = (datasource: string) => {
     // console.log("===initObjectFieldsFormulas===", JSON.stringify(getFieldFormulaConfigs()))
 }
 
-export const computeFormula = async (formula: string, objectName:string, recordId: string, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions) => {
+async function _computeFormula(formula: string, objectName:string, record: JsonMap, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions)
+async function _computeFormula(formula: string, objectName:string, recordId: string, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions)
+async function _computeFormula(formula: string, objectName:string, data: any, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions) {
     const objectConfigs: Array<SteedosObjectTypeConfig> = getObjectConfigs("default")
     // 允许参数objectName为空，此时formula应该最多只引用了$user变量，未引用任何对象字段相关变量。
     const objectConfig = objectName ? getObjectConfig(objectName) : null;
@@ -252,13 +256,21 @@ export const computeFormula = async (formula: string, objectName:string, recordI
         }
     }
     let doc: any = {};
-    if(objectName && recordId){
-        const formulaVarFields = pickFormulaVarFields(vars);
-        doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
+
+    if(typeof data == "object" && data){
+        doc = data;
+    }else if(typeof data == "string"){
+        if(objectName && data){
+            const formulaVarFields = pickFormulaVarFields(vars);
+            doc = await getSteedosSchema().getObject(objectName).findOne(data, { fields: formulaVarFields });
+        }
     }
+
     if(spaceId){
         doc.space = spaceId;
     }
     let params = await computeFormulaParams(doc, vars, currentUserId);
     return runFormula(formula, params, options);
 }
+
+export const computeFormula = _computeFormula 

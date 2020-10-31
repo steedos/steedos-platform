@@ -26,6 +26,17 @@ Steedos.ProcessFieldUpdatesManager.changeSchema = function(doc, schema){
       doc.object_name = object_name;
     }
 
+    if(Session.get("object_name") == 'workflow_rule'){
+      var object_name = null;
+      if(Session.get("record_id")){
+        object_name = Creator.odata.get("workflow_rule", Session.get("record_id"), "object_name").object_name;
+      }else{
+        object_name = AutoForm.getFormValues("creatorAddForm").insertDoc.object_name
+      }
+      schema._schema.object_name.autoform.readonly = true;
+      doc.object_name = object_name;
+    }
+
     // if(doc.process_definition){
     //   hiddenField('process_node');
     //   schema._schema.when.autoform.options = _.filter(objectSchema.when.autoform.options, function(option){return _.include(['final_approval','final_rejection','recall','initial_submission'], option.value)});

@@ -462,3 +462,100 @@ export function isSystemObject(object_name: string) {
     // 以c结尾的都是零代码上定义的对象
     return !object_name.endsWith("__c")
 }
+
+/**
+ * 获取对象字段的基本数据类型，目前支持以下数据类型：
+ * "text",
+ * "boolean",
+ * "date",
+ * "datetime",
+ * "number",
+ * "currency",
+ * "percent"
+ * @param objectFields 对象字段集合，即getObjectConfig(object_name)得到的结果
+ * @param key 字段名
+ */
+export function getFieldDataType(objectFields: any, key: string): string {
+    var field: any, result: string;
+    if (objectFields && key) {
+        field = objectFields[key];
+        result = field && field.type;
+        if (["formula", "summary"].indexOf(result) > -1) {
+            result = field.data_type;
+        }
+        return result;
+    } else {
+        return "text";
+    }
+}
+
+export function isValidDate(date: any): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
+}
+
+export function processFilters(filters: [], objectFields: any) {
+    if(filters && filters.length){
+        filters.forEach((filter: any)=>{
+            if(!(!_.isArray(filter) && _.isObject(filter))){
+                // 只有{field:xx,operation:xx,value:xx}格式的才支持转换
+                return;
+            }
+            if(!filter.field){
+                throw new Error("object_fields_error_filter_item_field_required");
+            }
+            if(!filter.operation){
+                throw new Error("object_fields_error_filter_item_operation_required");
+            }
+            if(!filter.value){
+                throw new Error("object_fields_error_filter_item_value_required");
+            }
+            // "text","boolean","date","datetime","number","currency","percent"
+            let dataType = getFieldDataType(objectFields, filter.field);
+            if(["number", "currency", "percent"].indexOf(dataType) > -1){
+                if(typeof filter.value === "string"){
+                    filter.value = Number(filter.value);
+                    if(isNaN(filter.value)){
+                        throw new Error("object_fields_error_filter_item_invalid_number");
+                    }
+                }
+            }
+            else if(dataType === "boolean"){
+                if(typeof filter.value === "string"){
+                    if(["true", "True", "TRUE", "真", "1"].indexOf(filter.value.trim()) > -1){
+                        filter.value = true;
+                    }
+                    else if(["false", "False", "FALSE", "0"].indexOf(filter.value.trim()) > -1){
+                        filter.value = false;
+                    }
+                    else{
+                        throw new Error("object_fields_error_filter_item_invalid_boolean");
+                    }
+                }
+            }
+            else if(dataType === "date"){
+                if(typeof filter.value === "string"){
+                    // 这里转换为按utc的0点时间值来过滤
+                    // 实测输入2020-02-12,new Date结果为2020-02-12T00:00:00.000Z
+                    filter.value = new Date(filter.value);
+                    if(!isValidDate(filter.value)){
+                        throw new Error("object_fields_error_filter_item_invalid_date");
+                    }
+                }
+            }
+            else if(dataType === "datetime"){
+                if(typeof filter.value === "string"){
+                    // 这里转换为按utc时间值来过滤
+                    // 实测输入2020-02-12 12:00,new Date结果为2020-02-12T04:00:00.000Z
+                    filter.value = new Date(filter.value);
+                    if(!isValidDate(filter.value)){
+                        throw new Error("object_fields_error_filter_item_invalid_date");
+                    }
+                }
+            }
+        });
+    }
+}
+
+export function validateFilters(filters: [], objectFields: any) {
+    processFilters(clone(filters), objectFields);
+}

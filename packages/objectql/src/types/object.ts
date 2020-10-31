@@ -9,6 +9,7 @@ import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
 import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
+import { runObjectWorkflowRules } from '../actions';
 const clone = require('clone')
 
 abstract class SteedosObjectProperties {
@@ -772,6 +773,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return afterTriggerContext.data.values
                 }
             }
+            await runObjectWorkflowRules(this.name, method, returnValue, userSession, afterTriggerContext.previousDoc);
             // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
             await this.runRecordFormula(method, args, userSession);
             await this.runRecordSummaries(method, args, previousDoc, userSession);
