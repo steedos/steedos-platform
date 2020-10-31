@@ -203,6 +203,8 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                return SteedosFieldDBType.boolean
            case 'toggle':
                return SteedosFieldDBType.boolean
+           case 'boolean-radios':
+               return SteedosFieldDBType.boolean
            case 'date':
                return SteedosFieldDBType.date
            case 'datetime':
