@@ -62,6 +62,7 @@
 	"object_actions_visible": "visible",
 	"object_actions_on": "显示位置",
 	"object_actions_todo": "执行的脚本",
-	"view_object": "查看对象"
-
+	"view_object": "查看对象",
+	
+	"object_validation_rules_wrong_formula": "公式错误，请检查错误条件公式。"
 }

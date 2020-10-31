@@ -62,5 +62,7 @@
 	"object_actions_visible": "visible",
 	"object_actions_on": "显示位置",
 	"object_actions_todo": "执行的脚本",
-	"view_object": "View object"
+	"view_object": "View object",
+	
+	"object_validation_rules_wrong_formula": "Wrong formula."
 }
