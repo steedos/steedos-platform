@@ -21,7 +21,9 @@
     "@steedos/accounts": "^1.22.0-alpha.5",
     "@steedos/app-admin": "../apps/steedos-app-admin",
     "@steedos/app-contracts": "^1.22.0-alpha.5",
+    "@steedos/design-system-react": "^1.22.0-alpha.5",
     "@steedos/app-crm": "../apps/steedos-app-crm",
+
     "@steedos/auth": "^1.22.0-alpha.5",
     "@steedos/core": "^1.22.0-alpha.5",
     "@steedos/filters": "^1.22.0-alpha.5",
