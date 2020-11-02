@@ -283,6 +283,7 @@ requestLicense = (spaceId)->
 		url: Steedos.absoluteUrl("/api/license/#{spaceId}"),
 		dataType: "json"
 		headers: headers
+		async: false,
 		error: (jqXHR, textStatus, errorThrown) ->
 			error = jqXHR.responseJSON
 			console.error error
