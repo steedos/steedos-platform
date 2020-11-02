@@ -8,11 +8,7 @@ fields:
     label: Name
     required: true
 
-<<<<<<< HEAD
-  fullName:
-=======
   object_name:
->>>>>>> 1.22
     type: master_detail
     label: Object
     reference_to: objects
@@ -20,35 +16,13 @@ fields:
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
-<<<<<<< HEAD
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
-=======
         return Steedos.getObjectsOptions();
       }
->>>>>>> 1.22
 
   active:
     type: boolean
     label: Active
     inlineHelpText: Indicates whether this validation rule is active, (true), or not active (false).
-<<<<<<< HEAD
-  
-  errorConditionFormula:
-    type: textarea
-=======
 
   description:
     type: textarea
@@ -58,26 +32,10 @@ fields:
   error_condition_formula:
     type: textarea
     is_wide: true
->>>>>>> 1.22
     label: errorConditionFormula
     inlineHelpText: The formula defined in the validation rule. If the formula returns a value of true, an error message is displayed.
     required: true
 
-<<<<<<< HEAD
-  errorDisplayField:
-    type: text
-    label: errorDisplayField
-    inlineHelpText: The fully specified name of a field in the application. If a value is supplied, the error message appears next to the specified field. If you do not specify a value or the field isn’t visible on the page layout, the value changes automatically to Top of Page.
-
-  errorMessage:
-    type: textarea
-    label: errorMessage
-    inlineHelpText: The message that appears if the validation rule fails. The message must be 255 characters or less.
-
-  description:
-    type: textarea
-    label: description
-=======
   error_message:
     type: textarea
     is_wide: true
@@ -109,18 +67,13 @@ fields:
   #       return [];
   #     }
 
->>>>>>> 1.22
 list_views:
   all:
     columns:
       - name
       - active
       - description
-<<<<<<< HEAD
-      - fullName
-=======
       - object_name
->>>>>>> 1.22
     label: All
     filter_scope: space
 permission_set:
@@ -137,8 +90,4 @@ permission_set:
     allowEdit: true
     allowRead: true
     modifyAllRecords: true
-<<<<<<< HEAD
     viewAllRecords: true
-=======
-    viewAllRecords: true
->>>>>>> 1.22

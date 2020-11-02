@@ -3,15 +3,6 @@ object_validation_rules_field_name: 规则名
 object_validation_rules_field_active: 已启用
 object_validation_rules_field_active_inlineHelpText: 指明规则是否启用。
 object_validation_rules_field_description: 说明
-<<<<<<< HEAD
-object_validation_rules_field_errorConditionFormula: 错误条件公式
-object_validation_rules_field_errorConditionFormula_inlineHelpText: 用于验证字段的表达式。
-object_validation_rules_field_errorMessage: 错误消息
-object_validation_rules_field_errorMessage_inlineHelpText: 当字段未通过验证规则时向用户显示的消息。
-object_validation_rules_field_errorDisplayField: 错误位置
-object_validation_rules_field_errorDisplayField_inlineHelpText: 确定错误消息显示在页面上的位置。要在某个字段旁显示错误消息，请选择字段并选取该字段。如果错误消息位置是字段，则验证规则也会列在该字段的详细信息页上。如果错误位置所设置的字段以后被删除或该字段为只读或在页面布局上不可见，系统会自动将错误位置更改为页首。
-object_validation_rules_field_fullName: 所属对象
-=======
 object_validation_rules_field_error_condition_formula: 错误条件公式
 object_validation_rules_field_error_condition_formula_inlineHelpText: 用于验证字段的表达式。
 object_validation_rules_field_error_message: 错误消息
@@ -19,4 +10,3 @@ object_validation_rules_field_error_message_inlineHelpText: 当字段未通过�
 object_validation_rules_field_error_display_field: 错误位置
 object_validation_rules_field_error_display_field_inlineHelpText: 确定错误消息显示在页面上的位置。要在某个字段旁显示错误消息，请选择字段并选取该字段。如果错误消息位置是字段，则验证规则也会列在该字段的详细信息页上。如果错误位置所设置的字段以后被删除或该字段为只读或在页面布局上不可见，系统会自动将错误位置更改为页首。
 object_validation_rules_field_object_name: 所属对象
->>>>>>> 1.22
