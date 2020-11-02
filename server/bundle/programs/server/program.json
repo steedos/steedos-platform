@@ -760,6 +760,10 @@
       "path": "packages/steedos_webkit-notification.js"
     },
     {
+      "sourceMap": "packages/steedos_api-authenticate-user.js.map",
+      "path": "packages/steedos_api-authenticate-user.js"
+    },
+    {
       "path": "packages/hot-code-push.js"
     },
     {

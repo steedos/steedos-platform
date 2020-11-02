@@ -60,6 +60,7 @@ Package.onUse(function(api) {
     'inputTypes/boolean-checkbox/boolean-checkbox.js',
     'inputTypes/boolean-radios/boolean-radios.html',
     'inputTypes/boolean-radios/boolean-radios.js',
+    'inputTypes/boolean-radios/boolean-radios.css',
     'inputTypes/boolean-select/boolean-select.html',
     'inputTypes/boolean-select/boolean-select.js',
     'inputTypes/button/button.html',

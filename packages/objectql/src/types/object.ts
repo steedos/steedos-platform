@@ -10,6 +10,7 @@ import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '.
 import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { runObjectWorkflowRules } from '../actions';
+import { runValidationRules } from './validation_rules';
 const clone = require('clone')
 
 abstract class SteedosObjectProperties {
@@ -751,11 +752,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
         } else {
+            userSession = args[args.length - 1]
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             await this.runBeforeTriggers(method, beforeTriggerContext)
+            await runValidationRules(method, beforeTriggerContext, args[0], userSession)
+
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
             let previousDoc = clone(afterTriggerContext.previousDoc);
-            userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
             if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){

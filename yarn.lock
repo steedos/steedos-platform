@@ -3493,10 +3493,10 @@
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/license@1.22.0-alpha.14":
-  version "1.22.0-alpha.14"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.14.tgz#6e7b26dff8ce54c8f9e24b3ba3fed633f6f2f748"
-  integrity sha1-bnsm3/jOVMj54ks7o/7WM/by90g=
+"@steedos/license@1.22.0-alpha.16":
+  version "1.22.0-alpha.16"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.16.tgz#833e71edd58bf0f3438840301ec3785bc7036dd4"
+  integrity sha1-gz5x7dWL8PNDiEAwHsN4W8cDbdQ=
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
