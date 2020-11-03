@@ -451,7 +451,7 @@ Template.steedosLookups.helpers({
 });
 
 Template.steedosLookups.events({
-    'click .steedos-lookups-input': function (e, template) {
+    'tap .steedos-lookups-input': function (e, template) {
         template.uniSelectize.checkDisabled();
 
         var $el = $(e.target);
@@ -654,7 +654,7 @@ Template.steedosLookups.events({
 	//
     //     template.uniSelectize.activeOption.set(elIndex);
     // },
-    'click .createNew': function (e, template) {
+    'tap .createNew': function (e, template) {
         e.preventDefault();
         template.uniSelectize.checkDisabled();
         var $input = $(template.find('input'));
@@ -663,7 +663,7 @@ Template.steedosLookups.events({
         template.uniSelectize.searchText.set('');
         $input.val('');
     },
-    'click .slds-pill__remove': function (e, template) {
+    'tap .slds-pill__remove': function (e, template) {
         e.preventDefault();
         template.uniSelectize.checkDisabled();
 
@@ -676,7 +676,7 @@ Template.steedosLookups.events({
 			template.uniSelectize.inputFocus();
 		}
     },
-	'click .listbox__item': function (e, template) {
+	'tap .listbox__item': function (e, template) {
 		e.preventDefault();
 		template.uniSelectize.checkDisabled();
 		var $input = $(template.find('input'));
@@ -694,12 +694,12 @@ Template.steedosLookups.events({
 		}
 	},
 
-	'click .references-item': function (e, template) {
+	'tap .references-item': function (e, template) {
 		template.uniSelectize.clearItem()
 		template.uniSelectize.selectedReference.set(this)
 	},
 
-	'click .steedos-lookups-object-switche': function (e, template) {
+	'tap .steedos-lookups-object-switche': function (e, template) {
 		template.uniSelectize.open.set(false);
 	}
 });
