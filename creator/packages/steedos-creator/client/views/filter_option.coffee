@@ -225,7 +225,12 @@ Template.filter_option.events
 				filter.operation = "between"
 				filter.value = currentBuiltinValue.key
 			else
-				filter.value = [filter.start_value, filter.end_value]
+				if filter.start_value || filter.end_value
+					filter.value = [filter.start_value, filter.end_value]
+				else
+					delete filter.value 
+			delete filter.start_value
+			delete filter.end_value
 		index = this.index
 		filter_items = Session.get("filter_items")
 		filter_items[index] = filter
@@ -316,6 +321,9 @@ Template.filter_option.onCreated ->
 			if builtinOperation
 				operation = builtinOperation
 				filter_item.operation = builtinOperation
+			else if filter_item.value?.length
+				filter_item.start_value = filter_item.value[0]
+				filter_item.end_value = filter_item.value[1]
 		
 		Meteor.defer ->
 			focusFieldValueInput filter_field_type
