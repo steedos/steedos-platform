@@ -149,7 +149,6 @@ Setup.logout = (callback) ->
 		   withCredentials: true
 		crossDomain: true,
 	.always ( data ) ->
-		debugger
 		Setup.clearAuthLocalStorage()
 		if callback
 			callback()
@@ -181,7 +180,6 @@ Meteor.startup ->
 		return
 
 	Accounts.onLogout ()->
-		debugger
 		console.log("onLogout")
 		Setup.logout ()-> 
 			Creator.bootstrapLoaded.set(false)
