@@ -217,6 +217,7 @@ Template.CreatorObjectModal.helpers
 		return Creator.getObject(object_name).fields
 	objectSchema: ()->
 		cmCollection = Template.instance().data.collection
+		cmOperation = Template.instance().data.operation
 		object_name = Template.instance().data.object_name
 		keys = []
 		if cmCollection
@@ -236,6 +237,13 @@ Template.CreatorObjectModal.helpers
 			if true
 				permission_fields.push "_ids"
 				permission_fields.push "_object_name"
+
+			if cmOperation == "insert"
+				# 新建记录时，把autonumber、formula、summary类型字段视为omit字段
+				# 修改记录时不用处理，由schema中设定的readonly属性控制
+				fields = Creator.getObject(object_name).fields
+				firstLevelKeys = _.filter firstLevelKeys, (firstLevelKey)->
+					return ["autonumber", "formula", "summary"].indexOf(fields[firstLevelKey]?.type) < 0
 
 			_.each schema, (value, key) ->
 				if (_.indexOf firstLevelKeys, key) > -1

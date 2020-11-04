@@ -1,7 +1,7 @@
 getInboxCategory = (category_id)->
 	inboxInstancesFlow = []
 	category = db.categories.findOne({_id: category_id})
-	if category_id
+	if category_id && category_id != '-1'
 		category_forms = db.forms.find({category: category_id}, {fields: {_id:1}}).fetch();
 	else
 		category_forms = db.forms.find({category: {
@@ -118,7 +118,9 @@ getBoxs = ()->
 	return boxs
 
 getCategories = ()->
-	return WorkflowManager.getSpaceCategories(Session.get("spaceId"), Session.get("workflow_categories"))
+	categories = WorkflowManager.getSpaceCategories(Session.get("spaceId"), Session.get("workflow_categories"))
+	categories.push({ _id: "-1", name: TAPi18n.__("workflow_no_category"), space: Session.get('spaceId') })
+	return categories
 
 getStoreItems = ()->
 	boxs = getBoxs()

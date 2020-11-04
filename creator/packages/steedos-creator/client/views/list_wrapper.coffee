@@ -393,6 +393,9 @@ Template.creator_list_wrapper.events
 		format_logic = template.$("#filter-logic").val()
 		if Creator.validateFilters(filter_items, format_logic)
 			Session.set "list_view_visible", false
+			filter_items.forEach (item)->
+				delete item.start_value
+				delete item.end_value
 			Meteor.call "update_filters", list_view_id, filter_items, filter_scope, format_logic, (error, result) ->
 				Session.set "list_view_visible", true
 				if error 
