@@ -95,3 +95,16 @@ Template.steedosTableModal.create = function () {
 Template.steedosTableModal.rendered = function(){
     Form_formula.runFormScripts(this.data.field.code, "onload");
 }
+
+Template.steedosTableModal.rendered = function () {
+    Form_formula.runFormScripts(this.data.field.code, "onload");
+    // 设置dxOverlay的zIndex值，解决dxOverlay弹出窗口被creator-auotform-modals窗口覆盖的问题
+    // 比如弹出的时间、日期控件，popup控件等
+    // 因creator-auotform-modals的z-index值为2000，所以这里要比它大
+    DevExpress.ui.dxOverlay.baseZIndex(2100);
+}
+
+Template.steedosTableModal.destroyed = function () {
+    // 还原dxOverlay原来默认的zIndex值
+    DevExpress.ui.dxOverlay.baseZIndex(1500);
+}
