@@ -121,7 +121,7 @@ function getObject(id, userId){
 exports.getObject = getObject
 
 function getOriginalObjectFields(objectName){
-    return objectql.getOriginalObjectConfig(objectName).fields
+    return objectql.getOriginalObjectConfig(objectName).fields || {}
 }
 
 function getObjectFields(objectName, userId){
