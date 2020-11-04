@@ -40,7 +40,7 @@ module.exports = {
           toastr.error(TAPi18n.__(result.error));
         }else{
             Modal.hide(t);
-            FlowRouter.reload();
+            window.location.reload();
         }
       }
     }, {
