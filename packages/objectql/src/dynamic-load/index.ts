@@ -1,3 +1,6 @@
 export * from './field'
 export * from './list-view'
 export * from './button'
+export * from './method'
+export * from './actions'
+export * from './trigger'
