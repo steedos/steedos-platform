@@ -816,7 +816,7 @@ InstanceManager.saveIns = function (noWarn) {
 				};
 				if (result == true) {
 					WorkflowManager.instanceModified.set(false);
-					if(!noWarn){
+					if (!noWarn) {
 						toastr.success(TAPi18n.__('Saved successfully'));
 					}
 				}
@@ -865,7 +865,7 @@ InstanceManager.saveIns = function (noWarn) {
 				$('body').removeClass("loading");
 				WorkflowManager.instanceModified.set(false);
 				if (result == true) {
-					if(!noWarn){
+					if (!noWarn) {
 						toastr.success(TAPi18n.__('Saved successfully'));
 					}
 				} else if (result == "upgraded") {
@@ -887,7 +887,7 @@ InstanceManager.saveIns = function (noWarn) {
 					$('body').removeClass("loading");
 					WorkflowManager.instanceModified.set(false);
 					if (result == true) {
-						if(!noWarn){
+						if (!noWarn) {
 							toastr.success(TAPi18n.__('Saved successfully'));
 						}
 					} else {
@@ -1223,7 +1223,7 @@ InstanceManager.uploadAttach = function (files, isAddVersion, isMainAttach) {
 
 	var limitSize, warnStr;
 	var maximumFileSize = 100;
-	if(Meteor.settings.public && Meteor.settings.public.cfs && Meteor.settings.public.cfs.size_limit){
+	if (Meteor.settings.public && Meteor.settings.public.cfs && Meteor.settings.public.cfs.size_limit) {
 		maximumFileSize = Meteor.settings.public.cfs.size_limit;
 	}
 	limitSize = maximumFileSize * 1024 * 1024;
@@ -1816,4 +1816,23 @@ InstanceManager.ccHasEditPermission = function () {
 		return t._id == currentApprove.trace;
 	})
 	return ccStep.cc_has_edit_permission && !trace.is_finished;
+}
+
+InstanceManager.getOpinionFieldsCode = function () {
+	let sign_field_code = '';
+	let opinion_fields_codes = $('[name=opinion_fields_code]');
+	if (opinion_fields_codes && opinion_fields_codes.length > 0) {
+		let i = 0;
+		let l = opinion_fields_codes.length;
+		while (i < l) {
+			let ofc = opinion_fields_codes[i];
+			if (ofc.checked && ofc.value) {
+				sign_field_code = ofc.value;
+				break
+			}
+			i++;
+		}
+	}
+
+	return sign_field_code;
 }
