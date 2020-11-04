@@ -25,6 +25,8 @@ fields:
   trigger_type:
     type: select
     is_wide: true
+    required: true
+    firstOption: false
     options: 
       - onCreateOnly
       - onAllChanges
@@ -33,6 +35,8 @@ fields:
   formula:
     type: textarea
     is_wide: true
+    required: true
+    group: Rule Criteria
   updates_field_actions:
     group: Immediate Actions
     type: lookup

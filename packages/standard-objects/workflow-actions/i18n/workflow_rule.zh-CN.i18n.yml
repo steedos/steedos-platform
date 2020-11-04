@@ -10,5 +10,6 @@ workflow_rule_field_label: 显示名称
 workflow_rule_field_object_name: 对象
 workflow_rule_field_formula: 公式
 workflow_rule_group_immediate_actions: 即时操作
+workflow_rule_group_rule_criteria: 规则条件
 workflow_rule_field_updates_field_actions: 字段更新
 workflow_rule_listview_all: 所有
