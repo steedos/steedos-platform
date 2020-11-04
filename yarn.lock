@@ -3485,6 +3485,103 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
+"@steedos/accounts@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.22.0-alpha.17.tgz#8ab6ac4f98b0190285a1c46a70470f3b2e80dd48"
+  integrity sha1-irasT5iwGQKFocRqcEcPOy6A3Ug=
+  dependencies:
+    "@accounts/mongo" "^0.19.0"
+    "@accounts/rest-express" "^0.19.0"
+    "@accounts/server" "^0.19.0"
+    "@accounts/two-factor" "^0.20.1"
+    "@babel/runtime" "^7.6.0"
+    app-root-path "^2.2.1"
+    bcryptjs "^2.4.3"
+    body-parser "1.19.0"
+    chalk "^2.4.2"
+    cookies "^0.8.0"
+    cors "2.8.5"
+    crypto "^1.0.1"
+    express "4.17.1"
+    js-yaml "^3.13.1"
+    mem "^5.1.1"
+    mongoose "5.6.6"
+    nodemailer "^6.3.0"
+    oauth2-server "^2.4.1"
+    redux-thunk "^2.3.0"
+    saml-idp "^1.1.0"
+    tslib "1.10.0"
+    validator "^12.2.0"
+
+"@steedos/app-crm@^1.22.0-alpha.17":
+  version "1.22.0-alpha.18"
+  resolved "https://registry.npm.taobao.org/@steedos/app-crm/download/@steedos/app-crm-1.22.0-alpha.18.tgz#953ef23c9b5bf2f9be5f41ac8112370547fda2cb"
+  integrity sha1-lT7yPJtb8vm+X0GsgRI3BUf9oss=
+  dependencies:
+    "@steedos/plugin-enterprise" "^1.22.0-alpha.17"
+    dotenv-flow "^3.2.0"
+    underscore "1.9.2"
+
+"@steedos/auth@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/auth/download/@steedos/auth-1.22.0-alpha.17.tgz#8cb35b18de007b00112487155b8f64fe3f419759"
+  integrity sha1-jLNbGN4AewARJIcVW49k/j9Bl1k=
+  dependencies:
+    "@steedos/objectql" "^1.22.0-alpha.17"
+    cookies "^0.7.3"
+    express "^4.16.4"
+    express-jwt "^5.3.1"
+    jsonwebtoken "^8.5.1"
+    sha256 "^0.2.0"
+    underscore "^1.9.1"
+
+"@steedos/core@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/core/download/@steedos/core-1.22.0-alpha.17.tgz#7014e3e4434f56b12151febadc485d05c9b04640"
+  integrity sha1-cBTj5ENPVrEhUf663EhdBcmwRkA=
+  dependencies:
+    "@salesforce/dev-config" "^1.4.4"
+    "@salesforce/kit" "^1.0.4"
+    "@salesforce/ts-types" "^1.1.1"
+    "@steedos/auth" "^1.22.0-alpha.17"
+    "@steedos/migrate" "^1.22.0-alpha.17"
+    "@steedos/objectql" "^1.22.0-alpha.17"
+    "@steedos/standard-objects" "^1.22.0-alpha.17"
+    "@steedos/steedos-plugin-schema-builder" "^1.0.4"
+    "@types/express" "^4.16.1"
+    "@types/mongodb" "^3.1.22"
+    "@types/node" "^11.10.4"
+    "@types/underscore" "^1.8.13"
+    body-parser "^1.18.1"
+    bunyan-sfdx-no-dtrace "^1.8.2"
+    chai "^4.2.0"
+    clone "^2.1.2"
+    cookies "^0.6.1"
+    express "^4.15.4"
+    express-graphql "^0.7.1"
+    fibers "^4.0.3"
+    globby "^9.1.0"
+    graphql "^14.1.1"
+    graphql-type-json "^0.2.2"
+    js-yaml ">=3.13.1"
+    jsen "^0.6.6"
+    mongodb "^3.0.8"
+    odata-v4-mongodb "^0.1.12"
+    pg "^7.8.2"
+    reflect-metadata "^0.1.10"
+    routing-controllers "^0.7.7"
+    simpl-schema "^1.5.5"
+    uglify-js "^3.6.0"
+    underscore "1.5.2"
+
+"@steedos/filters@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/filters/download/@steedos/filters-1.22.0-alpha.17.tgz#105c3b377378f199c765ded2177ebdf9ff5e29e6"
+  integrity sha1-EFw7N3N48ZnHZd7SF369+f9eKeY=
+  dependencies:
+    moment "^2.24.0"
+    underscore "^1.9.1"
+
 "@steedos/filters@^1.7.4":
   version "1.21.20"
   resolved "https://registry.npm.taobao.org/@steedos/filters/download/@steedos/filters-1.21.20.tgz#0234f5903935c76d4d2b75502fad8af4150def87"
@@ -3492,6 +3589,15 @@
   dependencies:
     moment "^2.24.0"
     underscore "^1.9.1"
+
+"@steedos/i18n@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/i18n/download/@steedos/i18n-1.22.0-alpha.17.tgz#17ba6ff3f6ca9de35c0fdfe71e12638486216f33"
+  integrity sha1-F7pv8/bKneNcD9/nHhJjhIYhbzM=
+  dependencies:
+    i18next "^19.3.4"
+    i18next-sprintf-postprocessor "^0.2.2"
+    i18next-xhr-backend "^3.2.2"
 
 "@steedos/license@1.22.0-alpha.16":
   version "1.22.0-alpha.16"
@@ -3503,6 +3609,116 @@
     node-fetch "^2.6.0"
     systeminformation "^4.26.10"
 
+"@steedos/meteor-bundle-dependencies@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/meteor-bundle-dependencies/download/@steedos/meteor-bundle-dependencies-1.22.0-alpha.17.tgz#15bd842075b93d62a25b56a1276e8781b3c5e193"
+  integrity sha1-Fb2EIHW5PWKiW1ahJ26HgbPF4ZM=
+  dependencies:
+    apn "1.6.2"
+    arson "0.2.6"
+    basic-auth-connect "1.0.0"
+    bcryptjs "^2.4.3"
+    cli-color "0.2.3"
+    combined-stream2 "1.1.2"
+    compression "1.7.1"
+    connect "3.6.5"
+    cookie-parser "1.4.3"
+    cookies "0.6.1"
+    core-js "2.5.7"
+    decimal.js "^10.0.2"
+    errorhandler "1.5.0"
+    es5-shim "4.5.10"
+    faye-websocket "0.11.1"
+    install "0.12.2"
+    json5 "2.1.0"
+    lolex "2.3.1"
+    meteor-babel "7.2.0"
+    meteor-babel-helpers "0.0.3"
+    meteor-deque "2.1.0"
+    meteor-promise "0.8.7"
+    mongodb "3.1.6"
+    mongodb-uri "0.9.7"
+    node-fetch "2.1.2"
+    node-gcm "0.14.4"
+    node4mailer "4.0.3"
+    parseurl "1.3.2"
+    permessage-deflate "0.1.6"
+    phone "1.0.3"
+    promise "8.0.2"
+    qs-middleware "1.0.3"
+    reify "0.17.3"
+    request "2.83.0"
+    semver "5.4.1"
+    send "0.16.1"
+    sha256 "0.2.0"
+    sockjs "0.3.19"
+    stream-buffers "0.2.5"
+    stream-to-string "1.1.0"
+    uglify-js "3.4.9"
+    useragent "2.3.0"
+    uuid "3.3.2"
+    whatwg-fetch "2.0.4"
+
+"@steedos/meteor-bundle-runner@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/meteor-bundle-runner/download/@steedos/meteor-bundle-runner-1.22.0-alpha.17.tgz#ee42ada3e1a20d6bbc68b09732a71c1cd06c7826"
+  integrity sha1-7kKto+GiDWu8aLCXMqccHNBseCY=
+  dependencies:
+    fibers "4.0.3"
+    meteor-promise "0.8.5"
+    node-pre-gyp "0.6.34"
+    promise "8.0.1"
+    semver "5.3.0"
+    source-map-support "^0.5.10"
+    underscore "1.5.2"
+
+"@steedos/migrate@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/migrate/download/@steedos/migrate-1.22.0-alpha.17.tgz#91ae6acadd6be76ea474ba2059fb582dfd0dc307"
+  integrity sha1-ka5qyt1r526kdLogWftYLf0Nwwc=
+  dependencies:
+    migrate "^1.6.2"
+
+"@steedos/objectql@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/objectql/download/@steedos/objectql-1.22.0-alpha.17.tgz#2560e2c64e453484e87a7e36e1220dad3ed90c75"
+  integrity sha1-JWDixk5FNIToen424SINrT7ZDHU=
+  dependencies:
+    "@salesforce/dev-config" "^1.4.4"
+    "@salesforce/kit" "^1.0.4"
+    "@salesforce/ts-types" "^1.1.1"
+    "@steedos/filters" "^1.22.0-alpha.17"
+    "@steedos/odata-v4-typeorm" "^1.20.1"
+    "@steedos/schemas" "^1.22.0-alpha.17"
+    "@steedos/standard-objects" "^1.22.0-alpha.17"
+    "@types/express" "^4.16.1"
+    "@types/mongodb" "^3.1.22"
+    "@types/node" "^11.10.4"
+    "@types/underscore" "^1.8.13"
+    app-root-path "^2.2.1"
+    body-parser "^1.18.1"
+    bunyan-sfdx-no-dtrace "^1.8.2"
+    chai "^4.2.0"
+    clone "^2.1.2"
+    cookies "^0.6.1"
+    eval "^0.1.4"
+    express "^4.15.4"
+    express-graphql "^0.7.1"
+    fibers "^4.0.3"
+    formulon "^6.22.0"
+    globby "^9.1.0"
+    graphql "^14.1.1"
+    graphql-type-json "^0.2.2"
+    jsen "^0.6.6"
+    lodash "^4.17.15"
+    mongodb "^3.0.8"
+    odata-v4-mongodb "^0.1.12"
+    odata-v4-sql "^0.1.2"
+    reflect-metadata "^0.1.10"
+    routing-controllers "^0.7.7"
+    typeorm "^0.2.16"
+    underscore "1.5.2"
+
 "@steedos/odata-v4-typeorm@^1.20.1":
   version "1.20.1"
   resolved "https://registry.npm.taobao.org/@steedos/odata-v4-typeorm/download/@steedos/odata-v4-typeorm-1.20.1.tgz#66405daa7359905a3255b13ef6e6c323d7a635b1"
@@ -3510,6 +3726,28 @@
   dependencies:
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
+
+"@steedos/plugin-enterprise@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/plugin-enterprise/download/@steedos/plugin-enterprise-1.22.0-alpha.17.tgz#1c05d78b05d5f9b8293722710cd653fb6083d6f1"
+  integrity sha1-HAXXiwXV+bgpNyJxDNZT+2CD1vE=
+
+"@steedos/process@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/process/download/@steedos/process-1.22.0-alpha.17.tgz#6e9c9c0cde9001f19de499c88b35d2938a9eb42d"
+  integrity sha1-bpycDN6QAfGd5JnIizXSk4qetC0=
+  dependencies:
+    "@steedos/core" "^1.22.0-alpha.17"
+
+"@steedos/schemas@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/schemas/download/@steedos/schemas-1.22.0-alpha.17.tgz#54f9062c95c8e3a10590cef59b7b9a9609767ba7"
+  integrity sha1-VPkGLJXI46EFkM71m3ualgl2e6c=
+
+"@steedos/standard-objects@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/standard-objects/download/@steedos/standard-objects-1.22.0-alpha.17.tgz#8bb60c1a5b351637bd5c3ffbac95cd1707d35597"
+  integrity sha1-i7YMGls1Fje9XD/7rJXNFwfTVZc=
 
 "@steedos/steedos-model-generator@^1.20.0":
   version "1.20.0"
@@ -3553,6 +3791,27 @@
     body-parser "^1.19.0"
     express "^4.17.1"
     underscore "^1.9.1"
+
+"@steedos/webapp@^1.22.0-alpha.17":
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/@steedos/webapp/download/@steedos/webapp-1.22.0-alpha.17.tgz#1582d8e75cc63f03664aa92656841ada97dd9ff4"
+  integrity sha1-FYLY51zGPwNmSqkmVoQa2pfdn/Q=
+  dependencies:
+    "@accounts/client" "^0.19.0"
+    "@accounts/client-password" "^0.19.0"
+    "@accounts/rest-client" "^0.19.0"
+    "@tailwindui/react" "^0.1.1"
+    qrcode.react "0.9.3"
+    react "^16.13.1"
+    react-app-polyfill "^1.0.4"
+    react-dom "^16.13.1"
+    react-intl "^3.1.13"
+    react-redux "^7.1.0"
+    react-router-dom "^5.2.0"
+    react-scripts "^3.4.3"
+    redux "^4.0.4"
+    redux-devtools-extension "^2.13.8"
+    redux-thunk "^2.3.0"
 
 "@storybook/addon-actions@^5.3.0-alpha.22":
   version "5.3.21"
@@ -22309,6 +22568,83 @@ stealthy-require@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/stealthy-require/download/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
+
+steedos-server@^1.22.0-alpha.17:
+  version "1.22.0-alpha.17"
+  resolved "https://registry.npm.taobao.org/steedos-server/download/steedos-server-1.22.0-alpha.17.tgz#eb7fb5b483275e3a799cdcef3560256efb6af493"
+  integrity sha1-63+1tIMnXjp5nNzvNWAlbvtq9JM=
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    "@salesforce-ux/design-system" "^2.11.0"
+    "@steedos/accounts" "^1.22.0-alpha.17"
+    "@steedos/auth" "^1.22.0-alpha.17"
+    "@steedos/core" "^1.22.0-alpha.17"
+    "@steedos/filters" "^1.22.0-alpha.17"
+    "@steedos/i18n" "^1.22.0-alpha.17"
+    "@steedos/license" "1.22.0-alpha.16"
+    "@steedos/meteor-bundle-dependencies" "^1.22.0-alpha.17"
+    "@steedos/meteor-bundle-runner" "^1.22.0-alpha.17"
+    "@steedos/objectql" "^1.22.0-alpha.17"
+    "@steedos/process" "^1.22.0-alpha.17"
+    "@steedos/standard-objects" "^1.22.0-alpha.17"
+    "@steedos/webapp" "^1.22.0-alpha.17"
+    basic-auth "^2.0.1"
+    bcrypt "3.0.6"
+    body-parser "^1.18.3"
+    buffer-stream-reader "^0.1.1"
+    busboy "^0.2.13"
+    chalk "^1.1.3"
+    clone "2.1.1"
+    combined-stream "0.0.4"
+    connect "^3.6.6"
+    connect-route "^0.1.5"
+    cookies "^0.6.2"
+    core-js "^2.5.3"
+    cors "^2.8.5"
+    csv "^5.1.3"
+    ejs "^2.5.5"
+    ejs-lint "^0.2.0"
+    eval "0.1.2"
+    express "^4.16.4"
+    fibers "^4.0.3"
+    gm "^1.17.0"
+    gridfs-stream "^1.1.1"
+    js-yaml "^3.13.1"
+    jszip "^3.1.5"
+    knockout "^3.4.2"
+    length-stream "^0.1.1"
+    lodash "^4.17.15"
+    md5 "^2.2.1"
+    meteor-node-stubs "^0.4.1"
+    mime "^2.0.2"
+    mkdirp "^0.3.5"
+    mongodb "^3.1.13"
+    negotiator "^0.6.1"
+    node-rsa "1.0.0"
+    node-schedule "^1.3.1"
+    node-xlsx "^0.12.0"
+    oauth2-server "2.4.1"
+    odata-v4-mongodb "^0.1.12"
+    odata-v4-parser "^0.1.29"
+    odata-v4-service-document "0.0.3"
+    odata-v4-service-metadata "^0.1.6"
+    phone "^1.0.12"
+    qs "^6.6.0"
+    querystring "^0.2.0"
+    request "2.81.0"
+    requestretry "1.12.2"
+    sha256 "^0.2.0"
+    socket.io "^2.3.0"
+    socket.io-client "^2.3.0"
+    stream-buffers "^0.2.5"
+    strip-json-comments "2.0.1"
+    superagent "^3.5.2"
+    temp "^0.7.0"
+    uglify-js "^3.4.9"
+    unpipe "1.0.0"
+    url-search-params-polyfill "^7.0.0"
+    weixin-pay "1.1.7"
+    xml2js "^0.4.19"
 
 store2@^2.7.1:
   version "2.12.0"
