@@ -483,7 +483,7 @@ InstanceManager.checkSuggestion = function (alter) {
 	}
 }
 
-InstanceManager.checkFormFieldValue = function (field, fieldName) {
+InstanceManager.checkFormFieldValue = function (field, fieldName, fieldValue) {
 
 	if (!field)
 		return;
@@ -514,7 +514,13 @@ InstanceManager.checkFormFieldValue = function (field, fieldName) {
 
 		if (!fileValue && fieldName) {
 			// dx-date-box时间控件会拿不到field.value，需要额外写代码取出来
-			fileValue = InstanceManager.getInstanceValuesByAutoForm()[fieldName]
+			if (fieldValue) {
+				// 子表不可以从getInstanceValuesByAutoForm中取值，只能传过来
+				fileValue = fieldValue;
+			}
+			else {
+				fileValue = InstanceManager.getInstanceValuesByAutoForm()[fieldName];
+			}
 		}
 
 		if (!fileValue || fileValue == '' || fileValue.length < 1) {
