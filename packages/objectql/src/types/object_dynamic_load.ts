@@ -1,8 +1,7 @@
-import { SteedosActionTypeConfig } from './action'
 import _ = require('lodash')
 import path = require('path')
 import { getMD5, JSONStringify } from '../util'
-import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles } from '.'
+import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles, SteedosFieldTypeConfig, SteedosObjectListViewTypeConfig, SteedosActionTypeConfig } from '.'
 import { isMeteor, transformListenersToTriggers } from '../util'
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
 
@@ -20,6 +19,9 @@ const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
 const _routers: Array<any> = [];
+const _lazyLoadFields: Dictionary<any> = {};
+const _lazyLoadListViews: Dictionary<any> = {};
+const _lazyLoadButtons: Dictionary<any> = {};
 const _lazyLoadListeners: Dictionary<any> = {};
 const _lazyLoadActions: Dictionary<any> = {};
 const _lazyLoadMethods: Dictionary<any> = {};
@@ -65,6 +67,61 @@ export const loadObjectLazyActions = function(objectName: string){
         addObjectActionConfig(clone(action));
     })
 }
+
+const addLazyLoadFields = function(objectName: string, json: SteedosFieldTypeConfig){
+    if(!_lazyLoadFields[objectName]){
+        _lazyLoadFields[objectName] = []
+    }
+    _lazyLoadFields[objectName].push(json)
+}
+
+const getLazyLoadFields = function(objectName: string){
+    return _lazyLoadFields[objectName]
+}
+
+export const loadObjectLazyFields = function(objectName: string){
+    let actions = getLazyLoadFields(objectName);
+    _.each(actions, function(action){
+        addObjectFieldConfig(objectName, clone(action));
+    })
+}
+
+const addLazyLoadListViews = function(objectName: string, json: SteedosObjectListViewTypeConfig){
+    if(!_lazyLoadListViews[objectName]){
+        _lazyLoadListViews[objectName] = []
+    }
+    _lazyLoadListViews[objectName].push(json)
+}
+
+const getLazyLoadListViews = function(objectName: string){
+    return _lazyLoadListViews[objectName]
+}
+
+export const loadObjectLazyListViews = function(objectName: string){
+    let listViews = getLazyLoadListViews(objectName);
+    _.each(listViews, function(listView){
+        addObjectListViewConfig(objectName, clone(listView));
+    })
+}
+
+const addLazyLoadButtons = function(objectName: string, json: SteedosActionTypeConfig){
+    if(!_lazyLoadButtons[objectName]){
+        _lazyLoadButtons[objectName] = []
+    }
+    _lazyLoadButtons[objectName].push(json)
+}
+
+const getLazyLoadButtons = function(objectName: string){
+    return _lazyLoadButtons[objectName]
+}
+
+export const loadObjectLazyButtons = function(objectName: string){
+    let buttons = getLazyLoadButtons(objectName);
+    _.each(buttons, function(button){
+        addObjectButtonsConfig(objectName, clone(button));
+    })
+}
+
 
 const addLazyLoadListeners = function(objectName: string, json: SteedosListenerConfig){
     if(!_lazyLoadListeners[objectName]){
@@ -147,6 +204,22 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
         addObjectConfig(element, datasource);
     });
 
+    let fieldJsons = util.loadFields(filePath);
+    fieldJsons.forEach(element => {
+        addObjectFieldConfig(element.object_name, element);
+    });
+
+    let listViewJsons = util.loadListViews(filePath);
+    listViewJsons.forEach(element => {
+        addObjectListViewConfig(element.object_name, element);
+    });
+
+    let buttonJsons = util.loadButtons(filePath);
+    buttonJsons.forEach(element => {
+        addObjectListViewConfig(element.object_name, element);
+    });
+
+
     let triggerJsons = util.loadTriggers(filePath)
     _.each(triggerJsons, (json: SteedosListenerConfig) => {
         addObjectListenerConfig(json);
@@ -155,6 +228,11 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
     let actions = util.loadActions(filePath)
 
     _.each(actions, (json: SteedosActionTypeConfig) => {
+        addObjectActionConfig(json);
+    })
+
+    let buttonScripts = util.loadButtonScripts(filePath)
+    _.each(buttonScripts, (json: SteedosActionTypeConfig) => {
         addObjectActionConfig(json);
     })
 
@@ -338,9 +416,60 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
     }
 }
 
+export const addObjectFieldConfig = (objectName: string, json: SteedosFieldTypeConfig) => {
+    if (!json.name) {
+        throw new Error('missing attribute name')
+    }
+
+    let object = getObjectConfig(objectName);
+    if (object) {
+        if(!object.fields){
+            object.fields = {}
+        }
+        util.extend(object.fields, {[json.name]: json})
+    } else {
+        addLazyLoadFields(objectName, json);
+    }
+}
+
+export const addObjectListViewConfig = (objectName: string, json: SteedosObjectListViewTypeConfig) => {
+    if (!json.name) {
+        throw new Error('missing attribute name')
+    }
+
+    let object = getObjectConfig(objectName);
+    if (object) {
+        if(!object.list_views){
+            object.list_views = {}
+        }
+        util.extend(object.list_views, {[json.name]: json})
+    } else {
+        addLazyLoadListViews(objectName, json);
+    }
+}
+
+export const addObjectButtonsConfig = (objectName: string, json: SteedosFieldTypeConfig) => {
+    if (!json.name) {
+        throw new Error('missing attribute name')
+    }
+
+    let object = getObjectConfig(objectName);
+    if (object) {
+        if(!object.actions){
+            object.actions = {}
+        }
+        util.extend(object.actions, {[json.name]: json})
+    } else {
+        addLazyLoadButtons(objectName, json);
+    }
+}
+
+
+
 export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
     if (!json.listenTo) {
-        throw new Error('missing attribute listenTo')
+        console.log('json', json);
+        throw new Error('missing attribute listenTo');
     }
 
     if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo)) {

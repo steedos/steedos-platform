@@ -179,12 +179,71 @@ export const loadMethods = (filePath: string)=>{
 export const loadFields = (filePath: string)=>{
     let results = []
     const filePatten = [
-        path.join(filePath, "*.field.yml"),
-        path.join(filePath, "*.field.js")
+        path.join(filePath, "*.field.yml")
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
+        if(!json.name){
+            json.name = path.basename(matchedPath).split('.')[0]
+        }
+        if(!json.object_name){
+            json.object_name =  path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadListViews = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.listView.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!json.name){
+            json.name = path.basename(matchedPath).split('.')[0]
+        }
+        if(!json.object_name){
+            json.object_name =  path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadButtons = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.button.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!json.name){
+            json.name = path.basename(matchedPath).split('.')[0]
+        }
+        if(!json.object_name){
+            json.object_name =  path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadButtonScripts = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.button.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!_.has(json, 'listenTo')){
+            json.listenTo = path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
         results.push(json)
     })
     return results
