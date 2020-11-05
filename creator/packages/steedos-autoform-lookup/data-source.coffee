@@ -102,10 +102,7 @@ DataSource.Odata.lookup_options = (options)->
 			odataOptions.$filter = "(#{filters.join(" and ")})"
 
 		if valueFilter.length > 0
-			if odataOptions.$filter
-				odataOptions.$filter = "(#{odataOptions.$filter} or (#{valueFilter.join(' or ')}))"
-			else
-				odataOptions.$filter = "(#{valueFilter.join(' or ')})"
+			odataOptions.$filter = "(#{valueFilter.join(' or ')})"
 
 		result = Creator.odata.query(object.name, odataOptions, true)
 
