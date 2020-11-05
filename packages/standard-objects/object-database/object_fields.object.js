@@ -4,7 +4,7 @@ var clone = require('clone');
 
 function canRemoveNameFileld(doc){
   var object = Creator.getCollection("objects").findOne({name: doc.object}, {fields: {datasource: 1}});
-  if(object.datasource && object.datasource != 'default'){
+  if(object && object.datasource && object.datasource != 'default'){
     return true;
   }
   return false;
@@ -12,7 +12,7 @@ function canRemoveNameFileld(doc){
 
 function getFieldName(objectName, fieldName){
   var object = Creator.getCollection("objects").findOne({name: objectName}, {fields: {datasource: 1}})
-  if(object.datasource && object.datasource != 'default'){
+  if(object && object.datasource && object.datasource != 'default'){
     return fieldName;
   }else{
     if(fieldName != 'name'){
@@ -84,6 +84,15 @@ function _syncToObject(doc, isInsert) {
       }
 
       objectSet.fields_serial_number = fields_serial_number;
+    }else{
+      objectql.addObjectFieldConfig(doc.object, doc);
+
+      const datasource = objectql.getDataSource();
+      const _doc = objectql.getObjectConfig(doc.object);
+      datasource.setObject(doc.object, _doc);
+      datasource.init();
+      Creator.Objects[doc.object] = _doc;
+      Creator.loadObjects(_doc, _doc.name);
     }
   }
 
