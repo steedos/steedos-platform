@@ -12,7 +12,7 @@ SteedosTable.checkItem = function (field, item_index) {
     fieldObj.sfields.forEach(function (sf) {
         if (sf.permission == 'editable') {
             sf_name = fieldObj.code + "." + sf.code;
-            if (!InstanceManager.checkFormFieldValue($("[name='" + sf_name + "']")[0])) {
+            if (!InstanceManager.checkFormFieldValue($("[name='" + sf_name + "']")[0], sf_name, fieldVal[sf.code])) {
                 rev = false;
             }
         }

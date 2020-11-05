@@ -35,3 +35,4 @@ menu_process_automation: 流程自动化
 menu_workflow_rules: 工作流规则
 menu_workflow_actions: 工作流操作
 menu_field_updates: $t(action_field_updates__object)
+menu_object_validation_rules: $t(object_validation_rules__object)
