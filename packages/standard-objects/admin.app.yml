@@ -223,7 +223,7 @@ admin_menus:
     sort: 500
     permission_sets:
       - admin
-      - workflow_admin
+      # - workflow_admin
   - _id: workflow_rules
     name: Workflow Rules
     permission_sets:

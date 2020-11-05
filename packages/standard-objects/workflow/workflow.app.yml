@@ -11,7 +11,7 @@ admin_menus:
       - workflow_admin
     expanded: false
     sort: 500
-    parent: process_automation
+    # parent: process_automation
   - _id: flows
     name: Workflows
     permission_sets:
