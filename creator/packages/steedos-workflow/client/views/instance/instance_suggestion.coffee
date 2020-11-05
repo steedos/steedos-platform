@@ -373,7 +373,9 @@ Template.instance_suggestion.events
 		Session.set("instance_change", true);
 		InstanceManager.checkSuggestion();
 
-		InstanceManager.updateApproveSign('', $("#suggestion").val(), "update", InstanceSignText.helpers.getLastSignApprove())
+		sign_field_code = InstanceManager.getOpinionFieldsCode()
+
+		InstanceManager.updateApproveSign(sign_field_code, $("#suggestion").val(), "update", InstanceSignText.helpers.getLastSignApprove())
 
 		Session.set("instance_my_approve_description", $("#suggestion").val())
 
