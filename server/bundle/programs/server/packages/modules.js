@@ -814,7 +814,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.22.0-alpha.17",
+  "version": "1.22.0-alpha.19",
   "main": "lib/index.js"
 };
 
@@ -841,7 +841,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "1.22.0-alpha.17",
+  "version": "1.22.0-alpha.19",
   "main": "lib/index.js"
 };
 
@@ -868,7 +868,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.22.0-alpha.17",
+  "version": "1.22.0-alpha.19",
   "main": "lib/index.js"
 };
 
@@ -895,7 +895,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.22.0-alpha.17",
+  "version": "1.22.0-alpha.19",
   "main": "lib/index.js"
 };
 
@@ -912,34 +912,7 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"license":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/@steedos/license/package.json                                                       //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "@steedos/license",
-  "version": "1.22.0-alpha.16",
-  "main": "main.js"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"main.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/@steedos/license/main.js                                                            //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}},"filters":{"package.json":function(require,exports,module){
+}}},"filters":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -949,7 +922,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.22.0-alpha.17",
+  "version": "1.22.0-alpha.19",
   "main": "lib/index.js"
 };
 
