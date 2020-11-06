@@ -227,7 +227,7 @@ function onChangeObjectName(oldName, newDoc){
     });
 }
 
-Creator.Objects.objects.triggers = {
+let objectTriggers = {
     "before.insert.server.objects": {
         on: "server",
         when: "before.insert",
@@ -252,6 +252,7 @@ Creator.Objects.objects.triggers = {
         on: "server",
         when: "after.insert",
         todo: function (userId, doc) {
+            console.log('1111 after.insert.server.objects');
             //新增object时，默认新建一个name字段
             Creator.getCollection("object_fields").insert({
                 object: doc.name,
@@ -403,6 +404,13 @@ Creator.Objects.objects.triggers = {
     // }
 
 }
+_.each(Creator.Objects.objects.triggers, function(v, k){
+    if(k.endsWith('_afterInsert')){
+        objectTriggers[k] = v
+    }
+})
+
+Creator.Objects.objects.triggers = objectTriggers
 
 // Creator.Objects['objects'].methods = {
 //     export_yml: async function (req, res) {

@@ -8,5 +8,8 @@ object_layouts_field_fields_$_required: 必填
 object_layouts_field_fields_$_readonly: 只读
 object_layouts_field_label: 页面布局名
 object_layouts_field_object_name: 对象
+object_layouts_group_field_info: 字段信息
+object_layouts_group_appendToLayouts: 选择应包含该字段的页面布局（如果不选择布局，该字段在任何页面上都不会显示）
+object_layouts_title_appendField: 将字段添加到页面布局
 object_layouts_field_profiles: 简档
 object_layouts_listview_all: 所有

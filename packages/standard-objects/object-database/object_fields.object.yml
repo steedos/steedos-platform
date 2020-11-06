@@ -466,3 +466,7 @@ form:
     function(){
       Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'view');
     }
+  afterInsert: !!js/function |
+    function(){
+      Creator.objectLayoutMananger.appendField(this.doc);
+    }
