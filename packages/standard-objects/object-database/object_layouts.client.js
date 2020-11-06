@@ -63,6 +63,9 @@ Creator.objectLayoutMananger.appendField = function(field){
             field: field.name,
             layouts: insertDoc.appendToLayouts
         }
+        if(_.isEmpty(insertDoc.appendToLayouts)){
+            return Modal.hide(template);
+        }
         var result = Steedos.authRequest(`/api/v4/object_fields/${field.name}/append_to_layouts`, { type: 'post', async: false, data: JSON.stringify(data)});
         if (result && result.state === 'SUCCESS') {
             Modal.hide(template);
