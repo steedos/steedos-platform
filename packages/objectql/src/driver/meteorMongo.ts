@@ -492,6 +492,32 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
+    async directFind(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let mongoOptions = this.getMongoOptions(query);
+
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        return collection.direct.find(mongoFilters, mongoOptions).fetch();
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
+    }
+
     async directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         let selector;

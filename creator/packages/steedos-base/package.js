@@ -98,7 +98,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/publications/modules.coffee', 'server');
 	api.addFiles('server/publications/weixin_pay_code_url.coffee', 'server');
 
-	api.addFiles('server/routes/bootstrap.coffee', 'server');
+	// api.addFiles('server/routes/bootstrap.coffee', 'server');
 	api.addFiles('server/routes/api_billing_recharge_notify.coffee', 'server');
 
 	api.addFiles('server/methods/my_contacts_limit.coffee', 'server');

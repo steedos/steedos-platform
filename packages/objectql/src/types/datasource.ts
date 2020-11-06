@@ -325,6 +325,10 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.count(tableName, query, userId)
     }
 
+    async directFind(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType) {
+        return await this._adapter.find(tableName, query, userId)
+    }
+
     async directInsert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType) {
         return await this._adapter.directInsert(tableName, doc, userId)
     }

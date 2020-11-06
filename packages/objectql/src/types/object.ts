@@ -587,6 +587,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('delete', this.table_name, clonedId, userSession)
     }
 
+    async directFind(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('directFind', this.table_name, clonedQuery, userSession)
+    }
+
     async directInsert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
         return await this.callAdapter('directInsert', this.table_name, doc, userSession)
     }

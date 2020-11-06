@@ -324,6 +324,10 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         await repository.delete(id);
     }
 
+    async directFind(tableName: string, query: SteedosQueryOptions) {
+        return this.find(tableName, query)
+    }
+
     async directInsert(tableName: string, data: Dictionary<any>) {
         return this.insert(tableName, data)
     }

@@ -307,6 +307,10 @@ export class SteedosMongoDriver implements SteedosDriver {
         await collection.deleteOne(selector);
     }
 
+    async directFind(tableName: string, query: SteedosQueryOptions) {
+        return this.directFind(tableName, query)
+    }
+
     async directInsert(tableName: string, data: Dictionary<any>) {
         return this.insert(tableName, data)
     }
