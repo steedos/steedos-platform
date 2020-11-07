@@ -10,13 +10,13 @@ function canRemoveNameFileld(doc){
   return false;
 }
 
-function getFieldName(objectName, fieldName){
+function getFieldName(objectName, fieldName, spaceId){
   var object = Creator.getCollection("objects").findOne({name: objectName}, {fields: {datasource: 1}})
   if(object && object.datasource && object.datasource != 'default'){
     return fieldName;
   }else{
     if(fieldName != 'name'){
-      return `${fieldName}__c`;
+      return `${fieldName}${objectql.getFieldSuffix(spaceId)}`;
     }else{
       return fieldName
     }
@@ -57,7 +57,7 @@ function _syncToObject(doc, isInsert) {
     }
   });
   _.each(table_fields, function (f, k) {
-    k = getFieldName(doc.object, k);
+    k = getFieldName(doc.object, k, doc.space);
     if (fields[k].type === "grid") {
       if (!_.size(fields[k].fields)) {
         fields[k].fields = {};
@@ -300,7 +300,7 @@ var triggers = {
 
       if(_.has(modifier.$set, "_name")){
         checkName(modifier.$set._name)
-        modifier.$set.name = getFieldName(doc.object, modifier.$set._name);
+        modifier.$set.name = getFieldName(doc.object, modifier.$set._name, doc.space);
       }
 
       var _reference_to, object, object_documents, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7;
@@ -362,7 +362,7 @@ var triggers = {
       if(doc._name === 'name'){
         doc.name = doc._name;
       }else{
-        doc.name = getFieldName(doc.object,doc._name);
+        doc.name = getFieldName(doc.object,doc._name,doc.space);
       }
 
       if(doc.name === 'name' || doc.is_name){

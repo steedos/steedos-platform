@@ -69,7 +69,7 @@ const initSummaryDoc = (doc)=>{
         summary_object: doc.summary_object, 
         summary_type: doc.summary_type, 
         summary_field: doc.summary_field, 
-        field_name: doc._name + "__c", 
+        field_name: doc._name + objectql.getFieldSuffix(doc.space), 
         object_name: doc.object
     };
     const dataType = getSummaryDataType(summaryConfig, summaryObject);

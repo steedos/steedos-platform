@@ -4,15 +4,16 @@ var triggerCore = require('./object_triggers.core.js');
 var permissionCore = require('./permission_objects.core.js');
 
 function canLoadObject(name, datasource){
-    if(!datasource || datasource === defaultDatasourceName){
-        if(!name.endsWith('__c')){
-            return false;
-        }else{
-            return true;
-        }
-    }else{
-        return true;
-    }
+    // if(!datasource || datasource === defaultDatasourceName){
+    //     if(!name.endsWith('__c')){
+    //         return false;
+    //     }else{
+    //         return true;
+    //     }
+    // }else{
+    //     return true;
+    // }
+    return true;
 }
 
 function getDataSource(doc){
@@ -123,7 +124,7 @@ function loadObject(doc, oldDoc){
 }
 
 function removeObject(doc){
-    if(!doc.name.endsWith("__c") && !doc.datasource){
+    if(!objectql.hasObjectSuffix(doc.name, doc.space) && !doc.datasource){
         console.warn('warn: Not deleted. Invalid custom object -> ', doc.name);
         return;
     }

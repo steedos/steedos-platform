@@ -6,16 +6,16 @@ function canLoadObject(name, datasource){
     if(config.tenant && config.tenant.saas){
         return false;
     }
-
-    if(!datasource || datasource === defaultDatasourceName){
-        if(!name.endsWith('__c')){
-            return false;
-        }else{
-            return true;
-        }
-    }else{
-        return true;
-    }
+    return true;
+    // if(!datasource || datasource === defaultDatasourceName){
+    //     if(name.endsWith('__c')){
+    //         return false;
+    //     }else{
+    //         return true;
+    //     }
+    // }else{
+    //     return true;
+    // }
 }
 
 function getDataSourceName(doc){
