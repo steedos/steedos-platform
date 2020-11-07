@@ -3485,6 +3485,15 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
+"@steedos/app-crm@^1.22.0-alpha.19":
+  version "1.22.0-alpha.19"
+  resolved "https://registry.npm.taobao.org/@steedos/app-crm/download/@steedos/app-crm-1.22.0-alpha.19.tgz#d261d35a994ce47a3417b43e49ba1bd72f3d8e7c"
+  integrity sha1-0mHTWplM5Ho0F7Q+Sbob1y89jnw=
+  dependencies:
+    "@steedos/plugin-enterprise" "^1.22.0-alpha.19"
+    dotenv-flow "^3.2.0"
+    underscore "1.9.2"
+
 "@steedos/filters@^1.7.4":
   version "1.21.20"
   resolved "https://registry.npm.taobao.org/@steedos/filters/download/@steedos/filters-1.21.20.tgz#0234f5903935c76d4d2b75502fad8af4150def87"
@@ -3493,10 +3502,10 @@
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/license@1.22.0-alpha.16":
-  version "1.22.0-alpha.16"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.0-alpha.16.tgz#833e71edd58bf0f3438840301ec3785bc7036dd4"
-  integrity sha1-gz5x7dWL8PNDiEAwHsN4W8cDbdQ=
+"@steedos/license@1.22.1":
+  version "1.22.1"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.1.tgz#f4bca68c64722551b40cfcb9db78b6bde496612e"
+  integrity sha1-9LymjGRyJVG0DPy523i2veSWYS4=
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
