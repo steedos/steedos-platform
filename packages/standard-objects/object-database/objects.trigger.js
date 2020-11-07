@@ -26,7 +26,6 @@ module.exports = {
         }
     },
     afterInsert: async function(){
-        console.log('object afterInsert....');
         let spaceProfiles = await objectql.getObject('permission_set').find({space: this.spaceId, type: 'profile'});
         await objectql.getObject('object_layouts').insert({
             label: 'default',
