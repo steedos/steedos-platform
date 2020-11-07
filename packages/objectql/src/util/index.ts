@@ -525,7 +525,7 @@ export function JSONStringify(data) {
 // }
 export function isCodeObject(objectName: string){
     let objectConfig = getObjectConfig(objectName);
-    if(objectConfig.__filename){
+    if(objectConfig && objectConfig.__filename){
         return true;
     }
 }
