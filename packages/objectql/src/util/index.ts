@@ -197,6 +197,27 @@ export const loadFields = (filePath: string)=>{
     return results
 }
 
+export const loadLayouts = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.layout.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[1]
+        }
+        if(!json.object_name){
+            json.object_name = names[0]
+        }
+        results.push(json)
+    })
+    return results
+}
+
 export const loadListViews = (filePath: string)=>{
     let results = []
     const filePatten = [

@@ -1,7 +1,7 @@
 import steedosI18n = require("@steedos/i18n");
 import { getPlugins } from '../';
 import { requireAuthentication } from './auth'
-import { getObject } from '@steedos/objectql'
+import { getObject, getLayout } from '@steedos/objectql'
 require("@steedos/license");
 const Fiber = require('fibers')
 const clone = require("clone");
@@ -133,12 +133,22 @@ export async function getSapceBootStrap(req, res) {
 
         let objectsLayout = getUserProfileObjectsLayout(userId, spaceId);
 
-        if(objectsLayout){
-            _.each(objectsLayout, function(objectLayout){
-                let _object = clone(result.objects[objectLayout.object_name]);
+        _.each(result.objects, function(_object, objectName){
+            let userObjectLayout = null;
+            if(objectsLayout){
+                userObjectLayout = _.find(objectsLayout, function(objectLayout){
+                    return objectLayout.object_name === objectName
+                })
+            }
+            if(!userObjectLayout){
+                userObjectLayout = getLayout(objectName, 'default');
+            }
+
+            if(userObjectLayout){
+                let _object = clone(result.objects[userObjectLayout.object_name]);
                 if(_object){
                     let _fields = {};
-                    _.each(objectLayout.fields, function(_item){
+                    _.each(userObjectLayout.fields, function(_item){
                         _fields[_item.field] = _object.fields[_item.field]
                         if(_fields[_item.field]){
                             if(_.has(_item, 'group')){
@@ -157,12 +167,13 @@ export async function getSapceBootStrap(req, res) {
                         }
                     })
                     _object.fields = _fields
-                    _object.allow_actions = objectLayout.actions || []
-				    _object.allow_relatedList = objectLayout.relatedList || []
+                    _object.allow_actions = userObjectLayout.actions || []
+				    _object.allow_relatedList = userObjectLayout.relatedList || []
                 }
-                result.objects[objectLayout.object_name] = _object
-            })
-        }
+                result.objects[userObjectLayout.object_name] = _object
+            }
+        })
+        
         // TODO object layout 是否需要控制审批记录显示？
         let spaceProcessDefinition = await getObject("process_definition").directFind({filters: [['space', '=', spaceId], ['active', '=', true]]})
         _.each(spaceProcessDefinition, function(item){
