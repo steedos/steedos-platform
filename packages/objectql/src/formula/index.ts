@@ -3,7 +3,7 @@ import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, Stee
 import { addFieldFormulaConfig, clearFieldFormulaConfigs } from './field_formula';
 import { pickFormulaVars, computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
 import { isCurrentUserIdRequiredForFormulaVars } from './util';
-import { isSystemObject } from '../util';
+import { isCodeObject } from '../util';
 import { addFormulaReferenceMaps, removeFormulaReferenceMaps } from './check';
 import { JsonMap } from "@salesforce/ts-types";
 
@@ -146,7 +146,7 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         if (!tempObjectConfig) {
             // 没找到相关引用对象，直接退出
             // 如果不是零代码对象，直接报错，否则直接返回，待相关零代码对象加载进来时，会再进入该函数
-            if(isSystemObject(tempFieldConfig.reference_to)){
+            if(isCodeObject(tempFieldConfig.reference_to)){
                 throw new Error(`computeFormulaVarAndQuotes:Can't find the object reference_to '${tempFieldConfig.reference_to}' by the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
             }
             else{

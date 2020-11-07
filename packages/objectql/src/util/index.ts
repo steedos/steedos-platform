@@ -19,6 +19,7 @@ import { has, getJsonMap } from '@salesforce/ts-types';
 let STEEDOSCONFIG:any = {};
 const configName = 'steedos-config.yml'
 const licenseName = '.license'
+import { getObjectConfig } from '../types'
 
 export * from './transform'
 export * from './permission_shares'
@@ -517,9 +518,16 @@ export function JSONStringify(data) {
     })
 }
 
-export function isSystemObject(object_name: string) {
-    // 以c结尾的都是零代码上定义的对象
-    return !object_name.endsWith("__c")
+//此函数判断不准确
+// export function isSystemObject(object_name: string) {
+//     // 以c结尾的都是零代码上定义的对象
+//     return !object_name.endsWith("__c")
+// }
+export function isCodeObject(objectName: string){
+    let objectConfig = getObjectConfig(objectName);
+    if(objectConfig.__filename){
+        return true;
+    }
 }
 
 /**

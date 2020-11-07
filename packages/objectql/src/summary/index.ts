@@ -1,7 +1,7 @@
 import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryDataTypeValue, SupportedSummaryFieldTypes } from './type';
 import { addFieldSummaryConfig, clearFieldSummaryConfigs } from './field_summary';
-import { isSystemObject } from '../util';
+import { isCodeObject } from '../util';
 import { isFormulaFieldQuotingObjectAndFields } from '../formula';
 import _ = require('lodash')
 const clone = require('clone')
@@ -24,7 +24,7 @@ export const initSummaryConfig = (summaryConfig: SteedosFieldSummaryTypeConfig) 
     });
     if (!summaryObject) {
         // 如果不是零代码对象，直接报错，否则直接返回，待相关零代码对象加载进来时，会再进入该函数
-        if(isSystemObject(summary_object)){
+        if(isCodeObject(summary_object)){
             throw new Error(`The summary_object '${summary_object}' of the field '${field_name}' on the object '${object_name}' is not found in the default datasource.`);
         }
         else{
