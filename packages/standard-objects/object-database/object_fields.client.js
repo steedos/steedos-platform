@@ -18,6 +18,7 @@ function getFieldsByType(doc, type, dataType) {
       fields.push({ name: 'options.$.label', required: true });
       fields.push({ name: 'options.$.value', required: true });
       fields.push({ name: 'options.$.color', required: false });
+      fields.push({ name: 'multiple'});
       break;
     }
     case 'number':{
