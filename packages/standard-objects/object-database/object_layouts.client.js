@@ -5,6 +5,10 @@ Creator.objectLayoutMananger.appendField = function(field){
         $filter: "(object_name eq '".concat(field.object, "')")
     }, true);
 
+    if(objectLayouts.length == 0){
+        return ;
+    }
+
     var schema = Creator.getObjectSchema({
         fields: {
             fieldLabel: Object.assign({}, Creator.getObject('object_fields').fields.label, {
