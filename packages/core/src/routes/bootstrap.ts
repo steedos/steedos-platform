@@ -167,7 +167,8 @@ export async function getSapceBootStrap(req, res) {
                         }
                     })
                     _object.fields = _fields
-                    _object.allow_actions = userObjectLayout.actions || []
+                    _object.allow_customActions = userObjectLayout.actions || []
+                    _object.exclude_actions = userObjectLayout.exclude_actions || []
 				    _object.allow_relatedList = userObjectLayout.relatedList || []
                 }
                 result.objects[userObjectLayout.object_name] = _object

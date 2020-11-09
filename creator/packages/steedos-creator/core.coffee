@@ -504,6 +504,13 @@ Creator.getActions = (object_name, spaceId, userId)->
 	disabled_actions = permissions.disabled_actions
 	actions = _.sortBy(_.values(obj.actions) , 'sort');
 
+	if _.has(obj, 'allow_customActions')
+		actions = _.filter actions, (action)->
+			return _.include(obj.allow_actions, action.name) || _.include(_.keys(Creator.getObject('base').actions) || {}, action.name)
+	if _.has(obj, 'exclude_actions')
+		actions = _.filter actions, (action)->
+			return !_.include(obj.exclude_actions, action.name)
+
 	if _.has(obj, 'allow_actions')
 		actions = _.filter actions, (action)->
 			return _.include(obj.allow_actions, action.name)

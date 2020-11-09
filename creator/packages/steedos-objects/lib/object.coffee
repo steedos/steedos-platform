@@ -29,8 +29,10 @@ Creator.Object = (options)->
 	else
 		self.is_enable = false
 	if Meteor.isClient
-		if _.has(options, 'allow_actions')
-			self.allow_actions = options.allow_actions
+		if _.has(options, 'allow_customActions')
+			self.allow_customActions = options.allow_customActions
+		if _.has(options, 'exclude_actions')
+			self.exclude_actions = options.exclude_actions
 		if _.has(options, 'allow_relatedList')
 			self.allow_relatedList = options.allow_relatedList
 	self.enable_search = options.enable_search
