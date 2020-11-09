@@ -3,7 +3,7 @@ import path = require('path')
 import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles, SteedosActionTypeConfig } from '.'
 import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
-import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts } from '../dynamic-load'
+import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields } from '../dynamic-load'
 
 var util = require('../util')
 var clone = require('clone')
@@ -86,6 +86,10 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
 
     let objectJsons = util.loadObjects(filePath)
     objectJsons.forEach(element => {
+        _.each(getLazyLoadFields(element.name), function(field){
+            util.extend(element.fields, {[field.name]: field})
+        })
+
         addObjectConfig(element, datasource);
     });
 
