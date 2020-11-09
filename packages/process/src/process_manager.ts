@@ -411,6 +411,7 @@ const getProcessNode = async(processNodeId: string)=>{
 const handleProcessInstanceNode = async(instanceId: string, currentInstanceNode, processStatus: string, nextNodeOptions: any, userSession: any)=>{
     let otherPendingInstanceHistoryCount = await objectql.getObject("process_instance_history").count({filters: [['process_instance', '=', instanceId], ['step_status', '=', 'pending']]})
     if(otherPendingInstanceHistoryCount === 0){
+        let finalProcessStatus = processStatus;
         await objectql.getObject("process_instance_node").updateMany([['process_instance', '=', instanceId], ['node_status', '=', 'pending']], {node_status: processStatus, completed_date: new Date(), last_actor: userSession.userId})
         let when = getProcessNodeActionWhenByStatus(processStatus);
         if(when){
@@ -419,10 +420,23 @@ const handleProcessInstanceNode = async(instanceId: string, currentInstanceNode,
         }
 
         if(nextNodeOptions){
-            await toNextNode(instanceId, nextNodeOptions.node, nextNodeOptions.approve, userSession);
+            let to_final_rejection = false;
+            let to_final_approval = false;
+            if(nextNodeOptions.node.to_final_rejection){
+                to_final_rejection = true;
+                finalProcessStatus = 'rejected';
+            }else if(nextNodeOptions.node.to_final_approval){
+                to_final_approval = true;
+                finalProcessStatus = 'approved';
+            }
+            if(to_final_rejection){
+            }else if(to_final_approval){
+            }else{
+                await toNextNode(instanceId, nextNodeOptions.node, nextNodeOptions.approve, userSession);
+            }
         }
 
-        await handleProcessInstance(instanceId, processStatus, userSession);
+        await handleProcessInstance(instanceId, finalProcessStatus, userSession);
     }
 }
 
@@ -436,7 +450,6 @@ const getPendingInstanceHistoryCount = async (instanceId: string)=>{
 
 const handleProcessInstanceWorkitem = async (currentInstanceNode, processStatus: string, instanceHistoryId: string, userSession: any, comment: string, nextNodeOptions?: string)=>{
     let instanceHistory = await getInstanceHistory(instanceHistoryId);
-    //TODO 处理下一步需要选人的情况，如果需要选择，则return;
     if(processStatus === 'rejected' || processStatus === 'approved'){
         await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comment, actor: userSession.userId});
         let when_multiple_approvers = 'first_response';
