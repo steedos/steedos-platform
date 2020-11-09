@@ -34,6 +34,21 @@ const reviseRecordOrder = async function (processId, record) {
             await objectql.getObject("process_node").directUpdate(processNode._id, { reject_behavior: 'reject_request' });
         }
     }
+
+    const newProcessNodes = await objectql.getObject("process_node").find({ filters: ['process_definition', '=', processId], sort: 'order asc' });
+    for (const processNode of newProcessNodes) {
+        if (processNode.order != 1) {
+            if(processNode.order == newProcessNodes.length){
+                if(processNode.if_criteria_not_met != 'approve'){
+                    await objectql.getObject("process_node").directUpdate(processNode._id, { if_criteria_not_met: 'approve' });
+                }
+            }else{
+                if(processNode.if_criteria_not_met === 'reject'){
+                    await objectql.getObject("process_node").directUpdate(processNode._id, { if_criteria_not_met: 'approve' });
+                }
+            }
+        }
+    }
 }
 
 const allowChange = async function(processId){
