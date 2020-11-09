@@ -50,8 +50,6 @@ export async function getSapceBootStrap(req, res) {
 
         let lng = _getLocale(db.users.findOne(userId, { fields: { locale: 1 } }))
 
-        console.log('lng', lng)
-
         steedosI18n.translationObjects(lng, result.objects);
 
         result.user = userSession
@@ -167,7 +165,7 @@ export async function getSapceBootStrap(req, res) {
                         }
                     })
                     _object.fields = _fields
-                    _object.allow_customActions = userObjectLayout.actions || []
+                    _object.allow_customActions = userObjectLayout.custom_actions || []
                     _object.exclude_actions = userObjectLayout.exclude_actions || []
 				    _object.allow_relatedList = userObjectLayout.relatedList || []
                 }

@@ -506,14 +506,10 @@ Creator.getActions = (object_name, spaceId, userId)->
 
 	if _.has(obj, 'allow_customActions')
 		actions = _.filter actions, (action)->
-			return _.include(obj.allow_actions, action.name) || _.include(_.keys(Creator.getObject('base').actions) || {}, action.name)
+			return _.include(obj.allow_customActions, action.name) || _.include(_.keys(Creator.getObject('base').actions) || {}, action.name)
 	if _.has(obj, 'exclude_actions')
 		actions = _.filter actions, (action)->
 			return !_.include(obj.exclude_actions, action.name)
-
-	if _.has(obj, 'allow_actions')
-		actions = _.filter actions, (action)->
-			return _.include(obj.allow_actions, action.name)
 
 	_.each actions, (action)->
 		# 手机上只显示编辑按钮，其他的放到折叠下拉菜单中
