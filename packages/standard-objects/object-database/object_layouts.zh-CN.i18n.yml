@@ -1,6 +1,8 @@
 object_layouts__object: 页面布局
-object_layouts_field_actions: 操作按钮
+object_layouts_field_custom_actions: 自定义操作
+object_layouts_field_exclude_actions: 排除的标准操作
 object_layouts_field_fields: 字段
+object_layouts_field_relatedList: 相关列表
 object_layouts_field_fields_$: Field
 object_layouts_field_fields_$_field: 字段
 object_layouts_field_fields_$_group: 分组
