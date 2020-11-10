@@ -4,7 +4,7 @@ process_instance_history_action_reassign: 重新分配
 process_instance_history_action_reject: 拒绝
 process_instance_history_action_recall: 调回
 process_instance_history_field_actor: 实际审批人
-process_instance_history_field_comments: 评论
+process_instance_history_field_comments: 备注
 process_instance_history_field_created_by: 提交人
 process_instance_history_field_elapsed_time_in_days: 
 process_instance_history_field_elapsed_time_in_hours: 
