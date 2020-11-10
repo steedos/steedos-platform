@@ -129,8 +129,7 @@ export async function getSapceBootStrap(req, res) {
 
         result.plugins = getPlugins ? getPlugins() : null
 
-        let objectsLayout = getUserProfileObjectsLayout(userId, spaceId);
-
+        let objectsLayout = await getUserProfileObjectsLayout(userId, spaceId);
         _.each(result.objects, function(_object, objectName){
             let userObjectLayout = null;
             if(objectsLayout){
@@ -167,7 +166,7 @@ export async function getSapceBootStrap(req, res) {
                     _object.fields = _fields
                     _object.allow_customActions = userObjectLayout.custom_actions || []
                     _object.exclude_actions = userObjectLayout.exclude_actions || []
-				    _object.allow_relatedList = userObjectLayout.relatedList || []
+                    _object.allow_relatedList = userObjectLayout.relatedList || []
                 }
                 result.objects[userObjectLayout.object_name] = _object
             }
