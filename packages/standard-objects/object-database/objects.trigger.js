@@ -26,24 +26,24 @@ module.exports = {
         }
     },
     afterInsert: async function(){
-        let spaceProfiles = await objectql.getObject('permission_set').find({space: this.spaceId, type: 'profile'});
-        await objectql.getObject('object_layouts').insert({
-            label: 'default',
-            object_name: this.doc.name,
-            actions: _.keys(Creator.getObject('base').actions),
-            profiles: _.pluck(spaceProfiles, 'name'),
-            fields: [{
-                field: 'name',
-            },{
-                field: 'created',
-            },{
-                field: 'created_by',
-            },{
-                field: 'modified',
-            },{
-                field: 'modified_by',
-            }],
-            space: this.spaceId
-        })
+        // let spaceProfiles = await objectql.getObject('permission_set').find({space: this.spaceId, type: 'profile'});
+        // await objectql.getObject('object_layouts').insert({
+        //     label: 'default',
+        //     object_name: this.doc.name,
+        //     actions: _.keys(Creator.getObject('base').actions),
+        //     profiles: _.pluck(spaceProfiles, 'name'),
+        //     fields: [{
+        //         field: 'name',
+        //     },{
+        //         field: 'created',
+        //     },{
+        //         field: 'created_by',
+        //     },{
+        //         field: 'modified',
+        //     },{
+        //         field: 'modified_by',
+        //     }],
+        //     space: this.spaceId
+        // })
     }
 }
