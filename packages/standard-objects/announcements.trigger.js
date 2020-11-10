@@ -13,8 +13,8 @@ const addNotifications = function (userId, doc, members) {
         });
     const notificationTitle = fromUser.name;
     let notificationDoc = {
-        name: notificationTitle,
-        body: doc.name,
+        name: doc.name,
+        body: notificationTitle,
         related_to: {
             o: "announcements",
             ids: [doc._id]
