@@ -1,31 +1,32 @@
 var _ = require("underscore");
 var objectql = require('@steedos/objectql');
-
+var objectCore = require('./objects.core.js');
 function _syncToObject(doc) {
-  var relatedList = Creator.getCollection("object_related_list").find({
-    space: doc.space,
-    object_name: doc.object_name
-  }, {
-    sort: {sort_no: -1},
-    fields: {
-      _id: 0,
-      space: 0,
-      object_name: 0,
-      created: 0,
-      modified: 0,
-      owner: 0,
-      created_by: 0,
-      modified_by: 0
-    }
-  }).fetch();
-  return Creator.getCollection("objects").update({
-    space: doc.space,
-    name: doc.object_name
-  }, {
-    $set: {
-      relatedList: relatedList
-    }
-  });
+  objectCore.reloadObject(doc.object_name);
+  // var relatedList = Creator.getCollection("object_related_list").find({
+  //   space: doc.space,
+  //   object_name: doc.object_name
+  // }, {
+  //   sort: {sort_no: -1},
+  //   fields: {
+  //     _id: 0,
+  //     space: 0,
+  //     object_name: 0,
+  //     created: 0,
+  //     modified: 0,
+  //     owner: 0,
+  //     created_by: 0,
+  //     modified_by: 0
+  //   }
+  // }).fetch();
+  // return Creator.getCollection("objects").update({
+  //   space: doc.space,
+  //   name: doc.object_name
+  // }, {
+  //   $set: {
+  //     relatedList: relatedList
+  //   }
+  // });
 };
 
 function check(object_name, objectName, _id){

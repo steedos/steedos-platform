@@ -1,32 +1,33 @@
 var objectql = require('@steedos/objectql');
-
+var objectCore = require('./objects.core.js');
 function _syncToObject(doc) {
-  var actions, object_actions;
-  object_actions = Creator.getCollection("object_actions").find({
-    object: doc.object,
-    space: doc.space,
-    is_enable: true
-  }, {
-    fields: {
-      created: 0,
-      modified: 0,
-      owner: 0,
-      created_by: 0,
-      modified_by: 0
-    }
-  }).fetch();
-  actions = {};
-  _.forEach(object_actions, function (f) {
-    return actions[f.name] = f;
-  });
-  return Creator.getCollection("objects").update({
-    space: doc.space,
-    name: doc.object
-  }, {
-    $set: {
-      actions: actions
-    }
-  });
+  objectCore.reloadObject(doc.object);
+  // var actions, object_actions;
+  // object_actions = Creator.getCollection("object_actions").find({
+  //   object: doc.object,
+  //   space: doc.space,
+  //   is_enable: true
+  // }, {
+  //   fields: {
+  //     created: 0,
+  //     modified: 0,
+  //     owner: 0,
+  //     created_by: 0,
+  //     modified_by: 0
+  //   }
+  // }).fetch();
+  // actions = {};
+  // _.forEach(object_actions, function (f) {
+  //   return actions[f.name] = f;
+  // });
+  // return Creator.getCollection("objects").update({
+  //   space: doc.space,
+  //   name: doc.object
+  // }, {
+  //   $set: {
+  //     actions: actions
+  //   }
+  // });
 };
 
 function isRepeatedName(doc, name) {

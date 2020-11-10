@@ -223,6 +223,12 @@ fields:
     omit: false
     disabled: false
     readonly: false
+  reload_time:
+    type: datetime
+    hidden: true
+    omit: true
+    disabled: true
+    readonly: true
 paging:
   enabled: false
 relatedList:

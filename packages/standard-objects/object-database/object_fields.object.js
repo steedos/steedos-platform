@@ -1,6 +1,7 @@
 var _ = require("underscore");
 var objectql = require('@steedos/objectql');
 var clone = require('clone');
+var objectCore = require('./objects.core.js');
 
 function canRemoveNameFileld(doc){
   var object = Creator.getCollection("objects").findOne({name: doc.object}, {fields: {datasource: 1}});
@@ -24,51 +25,47 @@ function getFieldName(objectName, fieldName, spaceId){
 }
 
 function _syncToObject(doc, isInsert) {
-  var fields, object_fields, table_fields;
-  object_fields = Creator.getCollection("object_fields").find({
-    space: doc.space,
-    object: doc.object
-  }, {
-    fields: {
-      created: 0,
-      modified: 0,
-      owner: 0,
-      created_by: 0,
-      modified_by: 0
-    },
-    sort: {
-      sort_no: 1
-    }
-  }).fetch();
-  fields = {};
-  table_fields = {};
-  _.forEach(object_fields, function (f) {
-    var cf_arr, child_fields;
-    if (/^[a-zA-Z_]\w*(\.\$\.\w+){1}[a-zA-Z0-9]*$/.test(f.name)) {
-      cf_arr = f.name.split(".$.");
-      child_fields = {};
-      child_fields[cf_arr[1]] = f;
-      if (!_.size(table_fields[cf_arr[0]])) {
-        table_fields[cf_arr[0]] = {};
-      }
-      return _.extend(table_fields[cf_arr[0]], child_fields);
-    } else {
-      return fields[f.name] = f;
-    }
-  });
-  _.each(table_fields, function (f, k) {
-    k = getFieldName(doc.object, k, doc.space);
-    if (fields[k].type === "grid") {
-      if (!_.size(fields[k].fields)) {
-        fields[k].fields = {};
-      }
-      return _.extend(fields[k].fields, f);
-    }
-  });
-
-  let objectSet = {
-    fields: fields
-  }
+  // var fields, object_fields, table_fields;
+  // object_fields = Creator.getCollection("object_fields").find({
+  //   space: doc.space,
+  //   object: doc.object
+  // }, {
+  //   fields: {
+  //     created: 0,
+  //     modified: 0,
+  //     owner: 0,
+  //     created_by: 0,
+  //     modified_by: 0
+  //   },
+  //   sort: {
+  //     sort_no: 1
+  //   }
+  // }).fetch();
+  // fields = {};
+  // table_fields = {};
+  // _.forEach(object_fields, function (f) {
+  //   var cf_arr, child_fields;
+  //   if (/^[a-zA-Z_]\w*(\.\$\.\w+){1}[a-zA-Z0-9]*$/.test(f.name)) {
+  //     cf_arr = f.name.split(".$.");
+  //     child_fields = {};
+  //     child_fields[cf_arr[1]] = f;
+  //     if (!_.size(table_fields[cf_arr[0]])) {
+  //       table_fields[cf_arr[0]] = {};
+  //     }
+  //     return _.extend(table_fields[cf_arr[0]], child_fields);
+  //   } else {
+  //     return fields[f.name] = f;
+  //   }
+  // });
+  // _.each(table_fields, function (f, k) {
+  //   k = getFieldName(doc.object, k, doc.space);
+  //   if (fields[k].type === "grid") {
+  //     if (!_.size(fields[k].fields)) {
+  //       fields[k].fields = {};
+  //     }
+  //     return _.extend(fields[k].fields, f);
+  //   }
+  // });
 
   if(isInsert){
     const objectRecord = Creator.getCollection("objects").findOne({
@@ -83,26 +80,26 @@ function _syncToObject(doc, isInsert) {
         fields_serial_number = objectRecord.fields_serial_number + 10
       }
 
-      objectSet.fields_serial_number = fields_serial_number;
-    }else{
-      objectql.addObjectFieldConfig(doc.object, doc);
+      return Creator.getCollection("objects").update({
+        space: doc.space,
+        name: doc.object
+      }, {
+        $set: {fields_serial_number: fields_serial_number}
+      });
 
-      const datasource = objectql.getDataSource();
-      const _doc = objectql.getObjectConfig(doc.object);
-      datasource.setObject(doc.object, _doc);
-      datasource.init();
-      Creator.Objects[doc.object] = _doc;
-      Creator.loadObjects(_doc, _doc.name);
+    }else{
+      // objectql.addObjectFieldConfig(doc.object, doc);
+
+      // const datasource = objectql.getDataSource();
+      // const _doc = objectql.getObjectConfig(doc.object);
+      // datasource.setObject(doc.object, _doc);
+      // datasource.init();
+      // Creator.Objects[doc.object] = _doc;
+      // Creator.loadObjects(_doc, _doc.name);
     }
   }
 
-
-  return Creator.getCollection("objects").update({
-    space: doc.space,
-    name: doc.object
-  }, {
-    $set: objectSet
-  });
+  objectCore.reloadObject(doc.object);
 };
 
 function isRepeatedName(doc, name) {

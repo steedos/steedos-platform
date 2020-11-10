@@ -24,11 +24,11 @@ Meteor.startup(function () {
             }
         }).observe({
             added: function (newDocument) {
-                if (!server_objects_init || _.has(newDocument, "fields")) {
+                // if (!server_objects_init || _.has(newDocument, "fields")) {
                     if(newDocument.is_enable != false){
                         return _changeServerObjects(newDocument, null);
                     }
-                }
+                // }
             },
             changed: function (newDocument, oldDocument) {
                 if(newDocument.is_enable === false){
