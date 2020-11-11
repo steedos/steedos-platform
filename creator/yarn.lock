@@ -1722,7 +1722,7 @@
     validator "^12.2.0"
 
 "@steedos/app-admin@../apps/steedos-app-admin":
-  version "1.22.0-alpha.19"
+  version "1.22.0-alpha.11"
 
 "@steedos/app-contracts@^1.22.0-alpha.5":
   version "1.22.0"
@@ -1732,9 +1732,8 @@
     dotenv-flow "^3.1.0"
 
 "@steedos/app-crm@../apps/steedos-app-crm":
-  version "1.22.0-alpha.15"
+  version "1.22.0-alpha.11"
   dependencies:
-    "@steedos/plugin-enterprise" "^1.22.0-alpha.15"
     dotenv-flow "^3.2.0"
     underscore "1.9.2"
 
@@ -1882,11 +1881,6 @@
   dependencies:
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
-
-"@steedos/plugin-enterprise@^1.22.0-alpha.15":
-  version "1.22.0-alpha.15"
-  resolved "https://registry.npm.taobao.org/@steedos/plugin-enterprise/download/@steedos/plugin-enterprise-1.22.0-alpha.15.tgz#21da24f2ee5836e8d4648d43d0290b030f5e1bf6"
-  integrity sha1-Idok8u5YNujUZI1D0CkLAw9eG/Y=
 
 "@steedos/process@^1.22.0-alpha.7":
   version "1.22.0-alpha.7"
@@ -3009,6 +3003,14 @@ autoprefixer@^9.6.1:
     num2fraction "^1.2.2"
     postcss "^7.0.32"
     postcss-value-parser "^4.1.0"
+
+aws-sdk@2.0.23:
+  version "2.0.23"
+  resolved "https://registry.npm.taobao.org/aws-sdk/download/aws-sdk-2.0.23.tgz#be21cab88609918699e79b380e060e02f4c89ba9"
+  integrity sha1-viHKuIYJkYaZ55s4DgYOAvTIm6k=
+  dependencies:
+    xml2js "0.2.6"
+    xmlbuilder "0.4.2"
 
 aws-sign2@~0.6.0:
   version "0.6.0"
@@ -12557,6 +12559,11 @@ sass-loader@8.0.2:
     schema-utils "^2.6.1"
     semver "^6.3.0"
 
+sax@0.4.2:
+  version "0.4.2"
+  resolved "https://registry.npm.taobao.org/sax/download/sax-0.4.2.tgz#39f3b601733d6bec97105b242a2a40fd6978ac3c"
+  integrity sha1-OfO2AXM9a+yXEFskKipA/Wl4rDw=
+
 sax@0.6.x:
   version "0.6.1"
   resolved "https://registry.npm.taobao.org/sax/download/sax-0.6.1.tgz#563b19c7c1de892e09bfc4f2fc30e3c27f0952b9"
@@ -14900,6 +14907,13 @@ xml-parser-xo@^3.0.0:
   resolved "https://registry.npm.taobao.org/xml-parser-xo/download/xml-parser-xo-3.0.0.tgz#4d46f1962e5100f228b5f73f34c61bb798430195"
   integrity sha1-TUbxli5RAPIotfc/NMYbt5hDAZU=
 
+xml2js@0.2.6:
+  version "0.2.6"
+  resolved "https://registry.npm.taobao.org/xml2js/download/xml2js-0.2.6.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fxml2js%2Fdownload%2Fxml2js-0.2.6.tgz#d209c4e4dda1fc9c452141ef41c077f5adfdf6c4"
+  integrity sha1-0gnE5N2h/JxFIUHvQcB39a399sQ=
+  dependencies:
+    sax "0.4.2"
+
 xml2js@0.4.4:
   version "0.4.4"
   resolved "https://registry.npm.taobao.org/xml2js/download/xml2js-0.4.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fxml2js%2Fdownload%2Fxml2js-0.4.4.tgz#3111010003008ae19240eba17497b57c729c555d"
@@ -14915,6 +14929,11 @@ xml2js@^0.4.17, xml2js@^0.4.19, xml2js@^0.4.6:
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "~11.0.0"
+
+xmlbuilder@0.4.2:
+  version "0.4.2"
+  resolved "https://registry.npm.taobao.org/xmlbuilder/download/xmlbuilder-0.4.2.tgz#1776d65f3fdbad470a08d8604cdeb1c4e540ff83"
+  integrity sha1-F3bWXz/brUcKCNhgTN6xxOVA/4M=
 
 xmlbuilder@>=1.0.0:
   version "15.1.1"
