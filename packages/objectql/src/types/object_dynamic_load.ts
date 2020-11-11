@@ -86,9 +86,11 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
 
     let objectJsons = util.loadObjects(filePath)
     objectJsons.forEach(element => {
+        let startNo = 10;
         _.each(element.fields, function(field){
             if(!_.has(field, 'sort_no')){
-                field.sort_no = 100;
+                field.sort_no = startNo;
+                startNo = startNo + 10;
             }
         })
         _.each(getLazyLoadFields(element.name), function(field){
