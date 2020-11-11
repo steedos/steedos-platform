@@ -1,8 +1,8 @@
 var _ = require("underscore");
 var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.core.js');
-function _syncToObject(doc) {
-  objectCore.reloadObject(doc.object_name);
+function _syncToObject(doc, event) {
+  objectCore.triggerReloadObject(doc.object_name, 'related_list', doc, event);
   // var relatedList = Creator.getCollection("object_related_list").find({
   //   space: doc.space,
   //   object_name: doc.object_name
@@ -90,21 +90,21 @@ Creator.Objects.object_related_list.triggers = {
     on: "server",
     when: "after.insert",
     todo: function (userId, doc) {
-      _syncToObject(doc);
+      _syncToObject(doc, 'insert');
     }
   },
   "after.update.server.object_related_list": {
     on: "server",
     when: "after.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
-      _syncToObject(doc);
+      _syncToObject(doc, 'update');
     }
   },
   "after.remove.server.object_related_list": {
     on: "server",
     when: "after.remove",
     todo: function (userId, doc) {
-      return _syncToObject(doc);
+      return _syncToObject(doc, 'remove');
     }
   }
 }

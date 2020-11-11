@@ -242,10 +242,86 @@ function getObjectFromDB(objectName) {
     return Creator.getCollection("objects").findOne({ name: objectName })
 }
 
-function reloadObject(objectName){
-    Creator.getCollection("objects").update({name: objectName}, {$set: {reload_time: new Date()}})
+function reloadObject(changeLog){
+    var objectName = changeLog.object_name;
+    var data = changeLog.change_date;
+    const objectRecord = Creator.getCollection("objects").findOne({
+        name: objectName
+      })
+    var objectDataSourceName = '';
+    if(objectRecord){
+        objectDataSourceName = getDataSourceName(objectRecord);
+    }else{
+        objectDataSourceName = objectql.getObject(objectName).datasource.name;
+    }
+    
+    if(!objectRecord && objectDataSourceName){
+
+        switch (data.type) {
+            case 'field':
+                if(data.event === 'remove'){
+                    objectql.removeObjectFieldConfig(objectName, data.value);
+                }else{
+                    objectql.addObjectFieldConfig(objectName, data.value);
+                }
+                break;
+            case 'action':
+                objectql.addObjectButtonsConfig(objectName, data.value);
+                break;
+            case 'related_list':
+                console.log('TODO related_list');
+                // objectql.addObjectFieldConfig(objectName, data.value);
+                break;
+            default:
+                break;
+        }
+
+        const datasource = objectql.getDataSource(objectDataSourceName);
+        if(!datasource){
+            return 
+        }
+        //获取到最新的对象
+        const object = objectql.getObjectConfig(objectName);
+
+        let _mf =  _.max(_.values(object.fields), function (field) { return field.sort_no; });
+        if(_mf && object.name){
+            object.fields_serial_number = _mf.sort_no + 10;
+        }
+
+        datasource.setObject(object.name, object);
+        try {
+            if(!objectDataSourceName || objectDataSourceName == defaultDatasourceName){
+                Creator.Objects[object.name] = object;
+                Creator.loadObjects(object, object.name);
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+
+}
+
+function triggerReloadObject(objectName, type, value, event){
+    const objectRecord = Creator.getCollection("objects").findOne({
+        name: objectName
+      })
+    if(objectRecord){
+        //TODO 待支持动态加载related_list后， 删除此行代码
+        Creator.getCollection("objects").update({name: objectName}, {$set: {reload_time: new Date()}})
+    }else{
+        Creator.getCollection("reload_object_logs").insert({
+            object_name: objectName,
+            change_date: {
+                type: type,
+                event: event,
+                value: value
+            },
+            change_time: new Date(),
+            space: value.space
+        })
+    }
 }
 
 module.exports = {
-    loadObject, removeObject, getDataSourceName, canLoadObject, getObjectFromDB, getDataSource, reloadObject
+    loadObject, removeObject, getDataSourceName, canLoadObject, getObjectFromDB, getDataSource, reloadObject, triggerReloadObject
 }

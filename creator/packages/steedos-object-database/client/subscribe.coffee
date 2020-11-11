@@ -46,6 +46,11 @@ _removeClientApps = (document)->
 #_loadObjectsPremissions = ()->
 #	Creator.bootstrap()
 
+reloadObject  = () ->
+	Setup.bootstrap(Steedos.getSpaceId());
+	Meteor.setTimeout ()->
+		Creator.deps.object.changed()
+	, 3000
 
 _getObject = (objectId, type, callback)->
 	if !objectId || !_.isString(objectId)
@@ -77,6 +82,7 @@ Meteor.startup ()->
 		if spaceId
 #			subs_objects.subscribe "creator_apps", spaceId
 			subs_objects.subscribe "creator_objects", spaceId
+			subs_objects.subscribe "creator_reload_object_logs", spaceId
 
 
 	Tracker.autorun (c) ->
@@ -113,6 +119,14 @@ Meteor.startup ()->
 						_removeClientApps(oldDocument)
 			}
 			apps_observer_init = true
+
+			reload_objects_observer_init = false
+			Creator.getCollection("reload_object_logs").find({}).observe {
+				added: (newDocument)->
+					if reload_objects_observer_init
+						reloadObject newDocument
+			}
+			reload_objects_observer_init = true
 
 Meteor.startup ()->
 	Tracker.autorun (c)->

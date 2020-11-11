@@ -86,10 +86,18 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
 
     let objectJsons = util.loadObjects(filePath)
     objectJsons.forEach(element => {
+        _.each(element.fields, function(field){
+            if(!_.has(field, 'sort_no')){
+                field.sort_no = 100;
+            }
+        })
         _.each(getLazyLoadFields(element.name), function(field){
             util.extend(element.fields, {[field.name]: field})
         })
-
+        let _mf =  _.maxBy(_.values(element.fields), function (field) { return field.sort_no; });
+        if(_mf && element.name){
+            element.fields_serial_number = _mf.sort_no + 10;
+        }
         addObjectConfig(element, datasource);
     });
 

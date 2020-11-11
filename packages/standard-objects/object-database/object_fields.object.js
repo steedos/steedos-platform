@@ -24,7 +24,7 @@ function getFieldName(objectName, fieldName, spaceId){
   }
 }
 
-function _syncToObject(doc, isInsert) {
+function _syncToObject(doc, event) {
   // var fields, object_fields, table_fields;
   // object_fields = Creator.getCollection("object_fields").find({
   //   space: doc.space,
@@ -67,7 +67,7 @@ function _syncToObject(doc, isInsert) {
   //   }
   // });
 
-  if(isInsert){
+  if('insert' === event){
     const objectRecord = Creator.getCollection("objects").findOne({
       space: doc.space,
       name: doc.object
@@ -98,8 +98,8 @@ function _syncToObject(doc, isInsert) {
       // Creator.loadObjects(_doc, _doc.name);
     }
   }
-
-  objectCore.reloadObject(doc.object);
+  console.log('reloadObject', doc.object);
+  objectCore.triggerReloadObject(doc.object, 'field', doc, event);
 };
 
 function isRepeatedName(doc, name) {
@@ -242,14 +242,14 @@ var triggers = {
     on: "server",
     when: "after.insert",
     todo: function (userId, doc) {
-      _syncToObject(doc, true);
+      _syncToObject(doc, 'insert');
     }
   },
   "after.update.server.object_fields": {
     on: "server",
     when: "after.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
-      _syncToObject(doc);
+      _syncToObject(doc, 'update');
       var set = modifier.$set || {}
       if(set._name && this.previous.name != doc.name){
         onChangeName(this.previous.name, doc);
@@ -260,7 +260,7 @@ var triggers = {
     on: "server",
     when: "after.remove",
     todo: function (userId, doc) {
-      return _syncToObject(doc);
+      return _syncToObject(doc, 'remove');
     }
   },
   "before.update.server.object_fields": {

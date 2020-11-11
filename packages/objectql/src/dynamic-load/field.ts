@@ -46,6 +46,18 @@ export const addObjectFieldConfig = (objectName: string, json: SteedosFieldTypeC
     }
 }
 
+export const removeObjectFieldConfig = (objectName: string, json: SteedosFieldTypeConfig)=>{
+    if (!json.name) {
+        throw new Error('missing attribute name')
+    }
+    let object = getObjectConfig(objectName);
+    if (object) {
+        if(object.fields){
+            delete object.fields[json.name]
+        }
+    }
+}
+
 export const loadObjectFields = function (filePath: string){
     let fieldJsons = util.loadFields(filePath);
     fieldJsons.forEach(element => {
@@ -77,7 +89,7 @@ async function meteorFind(name, query?, options?){
 export const loadDBObjectFields = async function(){
     let fields: any = await meteorFind("object_fields", {});
     fields.forEach(element => {
-        delete element.sort_no
+        // delete element.sort_no
         addObjectFieldConfig(element.object, element);
     });
 }

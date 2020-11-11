@@ -1,7 +1,7 @@
 var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.core.js');
-function _syncToObject(doc) {
-  objectCore.reloadObject(doc.object);
+function _syncToObject(doc, event) {
+  objectCore.triggerReloadObject(doc.object, 'action', doc, event);
   // var actions, object_actions;
   // object_actions = Creator.getCollection("object_actions").find({
   //   object: doc.object,
@@ -75,21 +75,21 @@ Creator.Objects.object_actions.triggers = {
     on: "server",
     when: "after.insert",
     todo: function (userId, doc) {
-      return _syncToObject(doc);
+      return _syncToObject(doc, 'insert');
     }
   },
   "after.update.server.object_actions": {
     on: "server",
     when: "after.update",
     todo: function (userId, doc) {
-      return _syncToObject(doc);
+      return _syncToObject(doc, 'update');
     }
   },
   "after.remove.server.object_actions": {
     on: "server",
     when: "after.remove",
     todo: function (userId, doc) {
-      return _syncToObject(doc);
+      return _syncToObject(doc, 'remove');
     }
   },
   "before.update.server.object_actions": {
