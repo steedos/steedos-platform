@@ -32,7 +32,7 @@ process_definition_group_next_automated_approver: 选择用于自动传送批准
 process_definition_group_initial_submission_actions: 初始提交操作
 process_definition_group_final_approval_actions: 最终批准操作
 process_definition_group_final_rejection_actions: 最终拒绝操作
-process_definition_group_recall_actions: 调回操作
+process_definition_group_recall_actions: 取消申请操作
 process_definition_field_recall_record_lock: 锁定记录
 process_definition_field_recall_record_lock_options_lock: 锁定记录以免进行编辑
 process_definition_field_recall_record_lock_options_unlock: 取消锁定可以进行编辑
@@ -42,7 +42,7 @@ process_definition_field_use_approver_field_of_record_owner: 使用记录所有�
 process_definition_field_name: API 名称
 process_definition_field_object_name: 对象
 process_definition_field_order: 序号
-process_definition_field_allow_recall: 允许提交人调回批准请求
+process_definition_field_allow_recall: 允许提交人取消申请
 process_definition_field_description: 描述
 process_definition_field_allowed_submitters: 初始提交人
 process_definition_field_allowed_submitters_inlineHelpText: 对象上的人员字段及角色
