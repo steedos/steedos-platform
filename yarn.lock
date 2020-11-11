@@ -3485,14 +3485,6 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
-"@steedos/filters@^1.7.4":
-  version "1.21.20"
-  resolved "https://registry.npm.taobao.org/@steedos/filters/download/@steedos/filters-1.21.20.tgz#0234f5903935c76d4d2b75502fad8af4150def87"
-  integrity sha1-AjT1kDk1x21NK3VQL62K9BUN74c=
-  dependencies:
-    moment "^2.24.0"
-    underscore "^1.9.1"
-
 "@steedos/license@1.22.1":
   version "1.22.1"
   resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.1.tgz#f4bca68c64722551b40cfcb9db78b6bde496612e"
