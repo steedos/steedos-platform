@@ -262,11 +262,29 @@ function reloadObject(changeLog){
                 if(data.event === 'remove'){
                     objectql.removeObjectFieldConfig(objectName, data.value);
                 }else{
+                    if(data.event === 'update'){
+                        if(data.value._previousName != data.value.name){
+                            objectql.removeObjectFieldConfig(objectName, {name: data.value._previousName});
+                        }
+                    }
                     objectql.addObjectFieldConfig(objectName, data.value);
                 }
                 break;
             case 'action':
-                objectql.addObjectButtonsConfig(objectName, data.value);
+                if(data.event === 'remove'){
+                    objectql.removeObjectButtonsConfig(objectName, data.value);
+                }else{
+                    if(data.event === 'update'){
+                        if(data.value._previousName != data.value.name){
+                            objectql.removeObjectButtonsConfig(objectName, {name: data.value._previousName});
+                        }
+                    }
+                    if(data.value.is_enable){
+                        objectql.addObjectButtonsConfig(objectName, data.value);
+                    }else{
+                        objectql.removeObjectButtonsConfig(objectName, data.value);
+                    }
+                }
                 break;
             case 'related_list':
                 console.log('TODO related_list');

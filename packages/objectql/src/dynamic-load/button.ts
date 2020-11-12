@@ -14,7 +14,7 @@ const addLazyLoadButtons = function(objectName: string, json: SteedosActionTypeC
     _lazyLoadButtons[objectName].push(json)
 }
 
-const getLazyLoadButtons = function(objectName: string){
+export const getLazyLoadButtons = function(objectName: string){
     return _lazyLoadButtons[objectName]
 }
 
@@ -39,6 +39,16 @@ export const addObjectButtonsConfig = (objectName: string, json: SteedosActionTy
         util.extend(object.actions, {[json.name]: json})
     } else {
         addLazyLoadButtons(objectName, json);
+    }
+}
+
+export const removeObjectButtonsConfig = (objectName: string, json: SteedosActionTypeConfig)=>{
+    if (!json.name) {
+        throw new Error('missing attribute name')
+    }
+    let object = getObjectConfig(objectName);
+    if(object.actions){
+        delete object.actions[json.name]
     }
 }
 

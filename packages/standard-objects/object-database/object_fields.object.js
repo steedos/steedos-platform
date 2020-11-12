@@ -249,6 +249,7 @@ var triggers = {
     on: "server",
     when: "after.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
+      doc._previousName = this.previous.name
       _syncToObject(doc, 'update');
       var set = modifier.$set || {}
       if(set._name && this.previous.name != doc.name){

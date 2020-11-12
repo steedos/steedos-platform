@@ -3,7 +3,7 @@ import path = require('path')
 import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles, SteedosActionTypeConfig } from '.'
 import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
-import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields } from '../dynamic-load'
+import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons } from '../dynamic-load'
 
 var util = require('../util')
 var clone = require('clone')
@@ -93,8 +93,17 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
                 startNo = startNo + 10;
             }
         })
+        if(!element.fields){
+            element.fields = {}
+        }
         _.each(getLazyLoadFields(element.name), function(field){
             util.extend(element.fields, {[field.name]: field})
+        })
+        if(!element.actions){
+            element.actions = {}
+        }
+        _.each(getLazyLoadButtons(element.name), function(action){
+            util.extend(element.actions, {[action.name]: action})
         })
         let _mf =  _.maxBy(_.values(element.fields), function (field) { return field.sort_no; });
         if(_mf && element.name){

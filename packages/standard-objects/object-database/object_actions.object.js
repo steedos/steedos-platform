@@ -82,6 +82,7 @@ Creator.Objects.object_actions.triggers = {
     on: "server",
     when: "after.update",
     todo: function (userId, doc) {
+      doc._previousName = this.previous.name
       return _syncToObject(doc, 'update');
     }
   },

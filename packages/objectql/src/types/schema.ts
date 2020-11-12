@@ -5,7 +5,7 @@ import _ = require("underscore");
 import { getFromContainer } from 'typeorm';
 import { loadCoreValidators } from '../validators';
 import { loadStandardObjects } from './object_dynamic_load';
-import { loadDBObjectFields } from '../dynamic-load';
+import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
 
 const defaultDatasourceName = 'default';
 
@@ -55,7 +55,8 @@ export class SteedosSchema {
         
         loadCoreValidators();
 
-        wrapAsync(loadDBObjectFields, {});
+        wrapAsync(preloadDBObjectFields, {});
+        wrapAsync(preloadDBObjectButtons, {});
 
         if (isMeteor())
             loadStandardObjects();

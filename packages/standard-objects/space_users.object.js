@@ -375,6 +375,7 @@ Meteor.startup(function () {
             }
 
             if(_.has(modifier.$set, 'contact_id') && doc.contact_id != modifier.$set.contact_id){
+                console.log('contact_id', doc.contact_id , modifier.$set.contact_id);
                 throw new Meteor.Error(400, "space_users_error_not_change_contact_id");
             }
 
