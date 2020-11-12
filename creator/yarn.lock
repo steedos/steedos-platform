@@ -1635,6 +1635,11 @@
   resolved "https://registry.npm.taobao.org/@salesforce-ux/design-system/download/@salesforce-ux/design-system-2.13.1.tgz#0024b4fa6ab308189741e23b3dae54b7d85286b4"
   integrity sha1-ACS0+mqzCBiXQeI7Pa5Ut9hShrQ=
 
+"@salesforce-ux/icons@^9.38.0":
+  version "9.39.0"
+  resolved "https://registry.yarnpkg.com/@salesforce-ux/icons/-/icons-9.39.0.tgz#37c0dd1a95afb0bd5e4aa3bf1d51b3ea2569544e"
+  integrity sha512-K0P/teSd6Gu/Q78hder+7Egvp4bOAJaxp7Q7b7Lzp4lJmGBjMky+vC6vdHGHeKQ66YQOFbJuIWxgADixEH4AMg==
+
 "@salesforce/babel-preset-design-system-react@^3.0.0":
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/@salesforce/babel-preset-design-system-react/download/@salesforce/babel-preset-design-system-react-3.0.0.tgz#b8334d14fc3801064ac5b6e5349145dc057bc17f"
@@ -1693,10 +1698,10 @@
   dependencies:
     tslib "^1.10.0"
 
-"@steedos/accounts@^1.22.0-alpha.5":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.22.0-alpha.7.tgz#01b29c602857ac6206c681d987c1235ebac54665"
-  integrity sha1-AbKcYChXrGIGxoHZh8EjXrrFRmU=
+"@steedos/accounts@^1.22.1":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.22.2.tgz#0df5f3b58c0e02c6c2b680844cba516fcca268e3"
+  integrity sha512-DnpJVWxic9V6dB/Chu7NnwM2WThV3Yh+/EeXRyNoIko52xnvdYC00ie7ugFGqz97yywk4g8PxXN2y4yyg/u9uw==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
@@ -1722,14 +1727,15 @@
     validator "^12.2.0"
 
 "@steedos/app-admin@../apps/steedos-app-admin":
-  version "1.22.0-alpha.19"
+  version "1.22.2"
 
-"@steedos/app-contracts@^1.22.0-alpha.5":
-  version "1.22.0"
-  resolved "https://registry.npm.taobao.org/@steedos/app-contracts/download/@steedos/app-contracts-1.22.0.tgz#3fec34dbf767de0e5b921996927b46214ce02b9c"
-  integrity sha1-P+w02/dn3g5bkhmWkntGIUzgK5w=
+"@steedos/app-contracts@^1.22.1":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.22.2.tgz#14c1cc22f70e68c580f9ceac395d8c5e6a10e34e"
+  integrity sha512-axNoQ4WwxaWLIVzoqOxRw4zIP73aCqk64NiY1xgWnqSnwoSG7JTVlDRJpP8j5LFVQ/wrMlw659pu1t1yZCvUoA==
   dependencies:
-    dotenv-flow "^3.1.0"
+    dotenv-flow "^3.2.0"
+    underscore "1.9.2"
 
 "@steedos/app-crm@../apps/steedos-app-crm":
   version "1.22.0-alpha.15"
@@ -1738,12 +1744,12 @@
     dotenv-flow "^3.2.0"
     underscore "1.9.2"
 
-"@steedos/auth@^1.22.0-alpha.5", "@steedos/auth@^1.22.0-alpha.7":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/auth/download/@steedos/auth-1.22.0-alpha.7.tgz#3d6a3e228c14b44a072e8c8cd7bfcdc9244eaf93"
-  integrity sha1-PWo+IowUtEoHLoyM17/NySROr5M=
+"@steedos/auth@^1.22.1", "@steedos/auth@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-1.22.2.tgz#74878ba63199708fc4851b0ac25780d47c31deb3"
+  integrity sha512-n6odHFEu+zgItP+4v6pmGxRSZP3U9pkHDyZvUKjrXovOSNMfpp6GdTtDoHzw11vTOQODJrOJ7WAYprdwxtkIWg==
   dependencies:
-    "@steedos/objectql" "^1.22.0-alpha.7"
+    "@steedos/objectql" "^1.22.2"
     cookies "^0.7.3"
     express "^4.16.4"
     express-jwt "^5.3.1"
@@ -1751,18 +1757,19 @@
     sha256 "^0.2.0"
     underscore "^1.9.1"
 
-"@steedos/core@^1.22.0-alpha.5":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/core/download/@steedos/core-1.22.0-alpha.7.tgz#046fe7644aa290e93c02dd99e7fb64f417833ab4"
-  integrity sha1-BG/nZEqikOk8At2Z5/tk9BeDOrQ=
+"@steedos/core@^1.22.1", "@steedos/core@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/core/-/core-1.22.2.tgz#323958626f3250d2a7c0af589da8a96f9903f852"
+  integrity sha512-Rb10O9dF+S/SbC+te0a3WWVu1rQjgr6DH5IeUZbW9e/PSpWcXphq6nxBN3jxsDfWx0gxT1Qbawm06gH0VvnX8Q==
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/auth" "^1.22.0-alpha.7"
-    "@steedos/migrate" "^1.22.0-alpha.7"
-    "@steedos/objectql" "^1.22.0-alpha.7"
-    "@steedos/standard-objects" "^1.22.0-alpha.7"
+    "@steedos/auth" "^1.22.2"
+    "@steedos/migrate" "^1.22.2"
+    "@steedos/objectql" "^1.22.2"
+    "@steedos/standard-objects" "^1.22.2"
+    "@steedos/steedos-plugin-schema-builder" "^1.0.4"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -1789,23 +1796,23 @@
     uglify-js "^3.6.0"
     underscore "1.5.2"
 
-"@steedos/design-system-react@^1.22.0-alpha.5":
-  version "1.22.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@steedos/design-system-react/-/design-system-react-1.22.0-alpha.11.tgz#9634646b54cf1aa09fe5a24bb01890b111a31762"
-  integrity sha512-YdQlZEQgbyic3gj+T/wnDjCTDQ7TxevYaBOPFnpAKGjCQ6VQfnzIsMVKvnyJLo/9XYWboQ6E1KXRm2JZY5CNFQ==
+"@steedos/design-system-react@^1.22.1", "@steedos/design-system-react@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/design-system-react/-/design-system-react-1.22.2.tgz#044f5d00811e08046fc2cb1595f01b131f383587"
+  integrity sha512-ajn17oRb7AllxVvK02dlCLhxpL9FlfWSXf7Xy3IJDs+orpqM1MS3jj+27ATW7BiJP6xXEYGlSrv39NR1y27LVQ==
 
-"@steedos/filters@^1.22.0-alpha.5", "@steedos/filters@^1.22.0-alpha.7":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/filters/download/@steedos/filters-1.22.0-alpha.7.tgz#cb155eb2444cb168e971f52cebd46795e37491f1"
-  integrity sha1-yxVeskRMsWjpcfUs69RnleN0kfE=
+"@steedos/filters@^1.22.1", "@steedos/filters@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.22.2.tgz#85351b76092ee38beb7a1b757385a50a930394d7"
+  integrity sha512-mEZm6tNU996i0d6amV33GKBkuG304QP2cgBiWeBEXJUVgGW6LfAhZtA0Klxuk88471YxXY9g7lhi1nCs7J5C0Q==
   dependencies:
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/i18n@^1.22.0-alpha.5":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/i18n/download/@steedos/i18n-1.22.0-alpha.7.tgz#e5e4a72b6255dafe40ee06bbb1674563bd9f15bb"
-  integrity sha1-5eSnK2JV2v5A7ga7sWdFY72fFbs=
+"@steedos/i18n@^1.22.1":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/i18n/-/i18n-1.22.2.tgz#e569f3c20b53483e72722f881cd117a993ea56c9"
+  integrity sha512-HXDoC3KBBFrgSf3BTaLh0Yy9ZBelwuwJnTH0FJ9huTPSHPRXi9om/UQuGdIylwsuBG/4BuYptZt3NLmtLeErwg==
   dependencies:
     i18next "^19.3.4"
     i18next-sprintf-postprocessor "^0.2.2"
@@ -1821,25 +1828,25 @@
     node-fetch "^2.6.0"
     systeminformation "^4.26.10"
 
-"@steedos/migrate@^1.22.0-alpha.7":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/migrate/download/@steedos/migrate-1.22.0-alpha.7.tgz#3e95cec4d8ed9dd44109decb1bf43716560c18c4"
-  integrity sha1-PpXOxNjtndRBCd7LG/Q3FlYMGMQ=
+"@steedos/migrate@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/migrate/-/migrate-1.22.2.tgz#fe62e021eda7bfc9890e7cb302e8172d23923757"
+  integrity sha512-V92GZbBtCvVavhWdyY2O3R4aBsc8dQFs/rIqDnuNT4PsDWtz6hnY8w46VlyFnwBlYiYGTZbHjX7ks4zGeTSM4Q==
   dependencies:
     migrate "^1.6.2"
 
-"@steedos/objectql@^1.22.0-alpha.5", "@steedos/objectql@^1.22.0-alpha.7":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/objectql/download/@steedos/objectql-1.22.0-alpha.7.tgz#479850f47384086ff90bf8d90f5a9537fcbf1213"
-  integrity sha1-R5hQ9HOECG/5C/jZD1qVN/y/EhM=
+"@steedos/objectql@^1.22.1", "@steedos/objectql@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.22.2.tgz#ceb0be174f1b812f8a72403498041e054b070ef3"
+  integrity sha512-0cVIS7drxpdcy2ft+06NWDzBuMrWpXNYglPJ+ILHqwUNCIEWzZqyqga6doxBHmNoChYEbkLjqFLp3QjXHZ6RgQ==
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "^1.22.0-alpha.7"
+    "@steedos/filters" "^1.22.2"
     "@steedos/odata-v4-typeorm" "^1.20.1"
-    "@steedos/schemas" "^1.22.0-alpha.7"
-    "@steedos/standard-objects" "^1.22.0-alpha.7"
+    "@steedos/schemas" "^1.22.2"
+    "@steedos/standard-objects" "^1.22.2"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -1854,6 +1861,7 @@
     express "^4.15.4"
     express-graphql "^0.7.1"
     fibers "^4.0.3"
+    formulon "^6.22.0"
     globby "^9.1.0"
     graphql "^14.1.1"
     graphql-type-json "^0.2.2"
@@ -1888,19 +1896,23 @@
   resolved "https://registry.npm.taobao.org/@steedos/plugin-enterprise/download/@steedos/plugin-enterprise-1.22.0-alpha.15.tgz#21da24f2ee5836e8d4648d43d0290b030f5e1bf6"
   integrity sha1-Idok8u5YNujUZI1D0CkLAw9eG/Y=
 
-"@steedos/process@^1.22.0-alpha.7":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/process/download/@steedos/process-1.22.0-alpha.7.tgz#ba6cbc03f3af2157b7c8ea90eaaf800b3c3ade81"
-  integrity sha1-umy8A/OvIVe3yOqQ6q+ACzw63oE=
+"@steedos/process@^1.22.1":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/process/-/process-1.22.2.tgz#b4584c64b3a49a63b8008327f10ab02312008d57"
+  integrity sha512-f/xzacAfQSqEAHKu95Dmcrhv7sdDqUiHgFhKKbUelZUBTyLJICu8aJPRsnUdL2d1wu1AIfA1o3XrXc7aQtA1vg==
+  dependencies:
+    "@steedos/core" "^1.22.2"
+    "@steedos/objectql" "^1.22.2"
 
-"@steedos/react@^1.22.0-alpha.7":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/react/download/@steedos/react-1.22.0-alpha.7.tgz#fc2919d4ddfdcd852c7da2eb8208b611f384b5e0"
-  integrity sha1-/CkZ1N39zYUsfaLrggi2EfOEteA=
+"@steedos/react@^1.22.1":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.22.2.tgz#07e0a9b044644fc3746e800056e8dde475078a3c"
+  integrity sha512-/V3Bt+qkleh0F/U9FKnmHsdKLqb+rA97MXZyPcnz8QCJHydHmlPM9ooJIGKppd8kQuYmAHktL5aICIQXVzdtQw==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
-    "@salesforce/design-system-react" "^0.10.17"
+    "@salesforce-ux/icons" "^9.38.0"
+    "@steedos/design-system-react" "^1.22.2"
     dotenv-flow "^3.1.0"
     immer "^4.0.1"
     marked "^0.8.0"
@@ -1917,15 +1929,20 @@
     underscore "^1.9.1"
     whatwg-fetch "^3.0.0"
 
-"@steedos/schemas@^1.22.0-alpha.5", "@steedos/schemas@^1.22.0-alpha.7":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/schemas/download/@steedos/schemas-1.22.0-alpha.7.tgz#3b4d1aae334e1b985b4f693d8a064a07f15c6941"
-  integrity sha1-O00arjNOG5hbT2k9igZKB/FcaUE=
+"@steedos/schemas@^1.22.1", "@steedos/schemas@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.22.2.tgz#b4619a37bff53e9e1111eb41f97af40db055212b"
+  integrity sha512-I8oyrK0LsGJ2PpxuzL7uqmuUvy67U4T8cbhQLjfRHrs51k/5cDWz/WyzHOtYCBSL8QYtnhsYsbwa1avLLN86qw==
 
-"@steedos/standard-objects@^1.22.0-alpha.5", "@steedos/standard-objects@^1.22.0-alpha.7":
-  version "1.22.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/standard-objects/download/@steedos/standard-objects-1.22.0-alpha.7.tgz#2a2e12f7348a71f4c2e49eacab6447cdd3bccdc8"
-  integrity sha1-Ki4S9zSKcfTC5J6sq2RHzdO8zcg=
+"@steedos/standard-objects@^1.22.1", "@steedos/standard-objects@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.22.2.tgz#aa1f24083ab10e167122f24533461c3c06f4bece"
+  integrity sha512-Ri/DtLBmKyEHVhf53Nj5wi8+X8F8qYhs7eMqndxmiSV+1aHQnDzqG7m8aEdjsUuMfc6LI106eBPGKRFDJMQ+0g==
+
+"@steedos/steedos-plugin-schema-builder@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-schema-builder/-/steedos-plugin-schema-builder-1.0.4.tgz#3c71b303cc8668adc5bd5dba7b8f83b8f2351e31"
+  integrity sha512-6r+BKYENeWWBB9P/mu7/UQ/hwSD7dKDpYpFWQhpXSg8FpRbHCHNBoTZCx6TsWEQGC6bmeAAcjbgI1mZPg4Y1zg==
 
 "@steedos/steedos-plugin-workflow@^2.1.1":
   version "2.1.1"
@@ -1936,10 +1953,10 @@
     express "^4.17.1"
     underscore "^1.9.1"
 
-"@steedos/webapp@^1.22.0-alpha.7":
-  version "1.22.0-alpha.8"
-  resolved "https://registry.npm.taobao.org/@steedos/webapp/download/@steedos/webapp-1.22.0-alpha.8.tgz#ce6c56b4c245da91e49ffe79f3e71552efb8b90f"
-  integrity sha1-zmxWtMJF2pHkn/558+cVUu+4uQ8=
+"@steedos/webapp@^1.22.1":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/webapp/-/webapp-1.22.2.tgz#ce93d20063452d7fe7157a2b58b11e1169794919"
+  integrity sha512-0Jrx4Td7YWuSd0F/DrUU334Di8yUL+9YXElkmq4Y3esYNTm/4n5nAP4ldXxH/F4IxlyTOzeaHeWLYFRx2b9c7w==
   dependencies:
     "@accounts/client" "^0.19.0"
     "@accounts/client-password" "^0.19.0"
@@ -6445,6 +6462,11 @@ formidable@^1.2.0:
   version "1.2.2"
   resolved "https://registry.npm.taobao.org/formidable/download/formidable-1.2.2.tgz#bf69aea2972982675f00865342b982986f6b8dd9"
   integrity sha1-v2muopcpgmdfAIZTQrmCmG9rjdk=
+
+formulon@^6.22.0:
+  version "6.22.0"
+  resolved "https://registry.yarnpkg.com/formulon/-/formulon-6.22.0.tgz#82720e4ffdc1b8719431989bfcb43e85a997dbd6"
+  integrity sha512-gu6rYDOwws2jABs1OzNvKwII9pON1wBJHme8vpWGmBsaIE/Y6o1NeRPswY0515po1uYdWMuxoRZ5Sia4hbdKiw==
 
 forwarded@~0.1.2:
   version "0.1.2"
