@@ -1,6 +1,6 @@
 import { SteedosFieldTypeConfig } from '../types'
 import { Dictionary } from '@salesforce/ts-types';
-import { getObjectConfig } from '../types'
+import { getObjectConfig, getOriginalObjectConfig } from '../types'
 import _ = require('lodash');
 var util = require('../util');
 var clone = require('clone');
@@ -30,11 +30,19 @@ export const addObjectFieldConfig = (objectName: string, json: SteedosFieldTypeC
         throw new Error('missing attribute name')
     }
     let object = getObjectConfig(objectName);
+    let originalObject = getOriginalObjectConfig(objectName);
     if (object) {
         if(!object.fields){
             object.fields = {}
         }
         util.extend(object.fields, {[json.name]: json})
+        util.extend(originalObject.fields, {[json.name]: json})
+        
+        let _mf =  _.maxBy(_.values(object.fields), function (field) { return field.sort_no; });
+        if(_mf && object.name){
+            object.fields_serial_number = _mf.sort_no + 10;
+        }
+
     } else {
         addLazyLoadFields(objectName, json);
     }
@@ -45,9 +53,11 @@ export const removeObjectFieldConfig = (objectName: string, json: SteedosFieldTy
         throw new Error('missing attribute name')
     }
     let object = getObjectConfig(objectName);
+    let originalObject = getOriginalObjectConfig(objectName);
     if (object) {
         if(object.fields){
             delete object.fields[json.name]
+            delete originalObject.fields[json.name]
         }
     }
 }
