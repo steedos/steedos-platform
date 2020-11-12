@@ -22,18 +22,22 @@ function _getLocale(user) {
     return locale;
 };
 
-async function getUserProfileObjectsLayout(userId, spaceId) {
+async function getUserProfileObjectsLayout(userId, spaceId, objectName?) {
     let spaceUser;
     let spaceUsers = await getObject("space_users").directFind({filters: [['space', '=', spaceId], ['user', '=', userId]]});
     if(spaceUsers.length > 0){
         spaceUser = spaceUsers[0];
     }
     if (spaceUser && spaceUser.profile) {
-        return await getObject("object_layouts").directFind({filters: [['space', '=', spaceId],['profiles', '=', spaceUser.profile]]})
+        let filters = [['space', '=', spaceId],['profiles', '=', spaceUser.profile]];
+        if(objectName){
+            filters.push(['object_name', '=', objectName])
+        }
+        return await getObject("object_layouts").directFind({filters: filters})
     }
 };
 
-export async function getSapceBootStrap(req, res) {
+export async function getSpaceBootStrap(req, res) {
     return Fiber(async function () {
         let userSession = req.user;
         let userId = userSession.userId;
@@ -183,5 +187,98 @@ export async function getSapceBootStrap(req, res) {
     }).run();
 }
 
-bootStrapExpress.use('/api/bootstrap/:spaceId/', requireAuthentication, getSapceBootStrap)
+async function getObjectConfig(objectName, spaceId, userSession) {
+    let objectConfig: any = {}
+    try {
+        let object = getObject(objectName)
+        objectConfig = Creator.convertObject(clone(object.toConfig()), spaceId);
+        objectConfig.name = objectName
+        objectConfig.datasource = object.datasource.name;
+        objectConfig.permissions = await object.getUserObjectPermission(userSession);
+        return objectConfig;
+    } catch (error) {
+        console.warn('not load object', objectName)
+    }
+}
+export async function getSpaceObjectBootStrap(req, res) {
+    return Fiber(async function () {
+        let userSession = req.user;
+        let userId = userSession.userId;
+        let urlParams = req.params;
+        const objectName = urlParams.objectName
+        let spaceId = req.headers['x-space-id'] || urlParams.spaceId
+        if (!userSession) {
+            return res.status(500).send();
+        }
+        let _object = Creator.getCollection('objects').findOne({ name: objectName }) || {}
+        let lng = _getLocale(db.users.findOne(userId, { fields: { locale: 1 } }))
+        let objectConfig: any = {}
+        if (_.isEmpty(_object)) {
+            objectConfig = Creator.getAllPermissions(spaceId, userId).objects[objectName];
+            if (_.isEmpty(objectConfig)) {
+                objectConfig = await getObjectConfig(objectName, spaceId, userSession);
+            }
+        } else {
+            if (userSession.is_space_admin || _object.in_development == '0' && _object.is_enable) {
+                if (_object.datasource == 'default') {
+                    objectConfig = Creator.getAllPermissions(spaceId, userId).objects[objectName]
+                } else {
+                    objectConfig = await getObjectConfig(objectName, spaceId, userSession);
+                }
+            }
+        }
+        if (objectConfig) {
+            delete objectConfig.db
+            // objectConfig.list_views = Creator.getUserObjectListViews(userId, spaceId, objectName)
+            steedosI18n.translationObject(lng, objectConfig.name, objectConfig)
+
+            let objectsLayout = await getUserProfileObjectsLayout(userId, spaceId, objectName);
+
+            let userObjectLayout = null;
+            if (objectsLayout) {
+                userObjectLayout = _.find(objectsLayout, function (objectLayout) {
+                    return objectLayout.object_name === objectName
+                })
+            }
+            if (!userObjectLayout) {
+                userObjectLayout = getLayout(objectName, 'default');
+            }
+
+            if (userObjectLayout) {
+                let _fields = {};
+                _.each(userObjectLayout.fields, function (_item) {
+                    _fields[_item.field] = objectConfig.fields[_item.field]
+                    if (_fields[_item.field]) {
+                        if (_.has(_item, 'group')) {
+                            _fields[_item.field].group = _item.group
+                        }
+                        if (_item.required) {
+                            _fields[_item.field].readonly = false
+                            _fields[_item.field].disabled = false
+                            _fields[_item.field].required = true
+                        } else if (_item.readonly) {
+                            _fields[_item.field].readonly = true
+                            _fields[_item.field].disabled = true
+                            _fields[_item.field].required = false
+                        }
+                    }
+                })
+                objectConfig.fields = _fields
+                objectConfig.allow_customActions = userObjectLayout.custom_actions || []
+                objectConfig.exclude_actions = userObjectLayout.exclude_actions || []
+                objectConfig.allow_relatedList = userObjectLayout.relatedList || []
+            }
+
+            // TODO object layout 是否需要控制审批记录显示？
+            let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', spaceId], ['object_name', '=', objectName], ['active', '=', true]] })
+            if (spaceProcessDefinition.length > 0) {
+                objectConfig.enable_process = true
+            }
+        }
+        return res.status(200).send(objectConfig);
+    }).run();
+}
+
+bootStrapExpress.use('/api/bootstrap/:spaceId/:objectName', requireAuthentication, getSpaceObjectBootStrap)
+bootStrapExpress.use('/api/bootstrap/:spaceId/', requireAuthentication, getSpaceBootStrap)
 

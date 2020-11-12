@@ -13,15 +13,15 @@ _changeClientObjects = (document)->
 	if !Steedos.isSpaceAdmin() && document.in_development != '0'
 		return ;
 
-	type = "added"
-	if !_.isEmpty(_.findWhere(Creator.objectsByName, {_id: document._id}))
-		type = "changed"
+#	type = "added"
+#	if !_.isEmpty(_.findWhere(Creator.objectsByName, {_id: document._id}))
+#		type = "changed"
 
-	_getObject document._id, type, (result)->
+	_getObject document.name, (result)->
 		if _.size(result.fields) > 0
 			old_obj = Creator.Objects[result.name]
-			if type != "added"
-				result.permissions = old_obj?.permissions || {}
+#			if type != "added"
+#				result.permissions = old_obj?.permissions || {}
 			delete Creator._recordSafeObjectCache[result.name]
 			Creator.Objects[result.name] = result
 			Creator.loadObjects result
@@ -51,14 +51,13 @@ reloadObject  = () ->
 	Meteor.setTimeout ()->
 		Creator.deps.object.changed()
 	, 3000
-
-_getObject = (objectId, type, callback)->
+_getObject = (objectId, callback)->
 	if !objectId || !_.isString(objectId)
 		return
 	spaceId = Session.get("spaceId")
 	$.ajax
 		type: "get"
-		url: Steedos.absoluteUrl "/api/creator/#{spaceId}/objects/#{objectId}?type=#{type}"
+		url: Steedos.absoluteUrl "/api/bootstrap/#{spaceId}/#{objectId}"
 		dataType: "json"
 		beforeSend: (request) ->
 			request.setRequestHeader('X-User-Id', Meteor.userId())
@@ -124,7 +123,7 @@ Meteor.startup ()->
 			Creator.getCollection("reload_object_logs").find({}).observe {
 				added: (newDocument)->
 					if reload_objects_observer_init
-						reloadObject newDocument
+						_changeClientObjects({name: newDocument.object_name})
 			}
 			reload_objects_observer_init = true
 
@@ -147,6 +146,6 @@ Meteor.startup ()->
 					if layouts_observer_init
 						_object = Creator.getObject(oldDocument.object_name)
 						if _object
-							_changeClientObjects {_id: _object._id}
+							_changeClientObjects {_id: _object._id, name: oldDocument.object_name}
 			}
 			layouts_observer_init = true
