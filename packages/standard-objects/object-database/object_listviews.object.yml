@@ -18,6 +18,7 @@ fields:
   object_name:
     label: Object
     type: master_detail
+    sharing: masterRead
     required: true
     reference_to: objects
     reference_to_field: name
