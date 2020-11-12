@@ -32,7 +32,16 @@ function removeObjectPermission(doc){
     var dbObject = objectCore.getObjectFromDB(doc.object_name);
     var objectDataSourceName = objectCore.getDataSourceName(dbObject);
 
-    if(!objectCore.canLoadObject(dbObject.name, objectDataSourceName)){
+    if(!dbObject){
+        try {
+            objectDataSourceName = objectql.getObject(doc.object_name).datasource.name;
+        } catch (error) {
+            console.warn('warn: Not loaded. Invalid custom permission_objects -> ', doc.name, doc.object_name);
+            return;
+        }
+    }
+
+    if(dbObject && !objectCore.canLoadObject(dbObject.name, objectDataSourceName)){
         console.warn('warn: Not deleted. Invalid custom permission_objects -> ', doc.name);
         return;
     }
