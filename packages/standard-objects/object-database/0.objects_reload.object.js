@@ -7,7 +7,7 @@ Meteor.startup(function () {
         return ;
     }else{
         var _init = false;
-        Creator.getCollection("reload_object_logs").find({change_time: {$gte:new Date()}}, {
+        Creator.getCollection("_object_reload_logs").find({change_time: {$gte:new Date()}}, {
             fields: {
                 created: 0,
                 created_by: 0,

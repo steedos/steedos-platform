@@ -96,9 +96,10 @@ Meteor.startup ()->
 						if !Steedos.isSpaceAdmin() && (newDocument.is_enable == false || newDocument.in_development != '0')
 							_removeClientObjects newDocument
 						else
-							Meteor.setTimeout ()->
-								_changeClientObjects newDocument
-							, 5000
+							_changeClientObjects newDocument
+#							Meteor.setTimeout ()->
+#								_changeClientObjects newDocument
+#							, 5000
 				removed: (oldDocument)->
 					if objects_observer_init
 						_removeClientObjects oldDocument
@@ -120,7 +121,7 @@ Meteor.startup ()->
 			apps_observer_init = true
 
 			reload_objects_observer_init = false
-			Creator.getCollection("reload_object_logs").find({}).observe {
+			Creator.getCollection("_object_reload_logs").find({}).observe {
 				added: (newDocument)->
 					if reload_objects_observer_init
 						_changeClientObjects({name: newDocument.object_name})

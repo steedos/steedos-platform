@@ -327,7 +327,7 @@ function triggerReloadObject(objectName, type, value, event){
         //TODO 待支持动态加载related_list后， 删除此行代码
         Creator.getCollection("objects").update({name: objectName}, {$set: {reload_time: new Date()}})
     }else{
-        Creator.getCollection("reload_object_logs").insert({
+        Creator.getCollection("_object_reload_logs").insert({
             object_name: objectName,
             change_date: {
                 type: type,

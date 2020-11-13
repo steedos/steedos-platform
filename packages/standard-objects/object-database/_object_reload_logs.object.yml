@@ -1,4 +1,4 @@
-name: reload_object_logs
+name: _object_reload_logs
 hidden: true
 fields:
   object_name:
