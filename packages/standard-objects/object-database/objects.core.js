@@ -341,5 +341,5 @@ function triggerReloadObject(objectName, type, value, event){
 }
 
 module.exports = {
-    loadObject, removeObject, getDataSourceName, canLoadObject, getObjectFromDB, getDataSource, reloadObject, triggerReloadObject
+    loadObject, removeObject, getDataSourceName, canLoadObject, getObjectFromDB, getDataSource, reloadObject, triggerReloadObject, loadDBObject
 }
