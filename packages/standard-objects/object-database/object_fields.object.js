@@ -26,21 +26,21 @@ function getFieldName(objectName, fieldName, spaceId){
 
 function _syncToObject(doc, event) {
   // var fields, object_fields, table_fields;
-  // object_fields = Creator.getCollection("object_fields").find({
-  //   space: doc.space,
-  //   object: doc.object
-  // }, {
-  //   fields: {
-  //     created: 0,
-  //     modified: 0,
-  //     owner: 0,
-  //     created_by: 0,
-  //     modified_by: 0
-  //   },
-  //   sort: {
-  //     sort_no: 1
-  //   }
-  // }).fetch();
+  var object_field = Creator.getCollection("object_fields").findOne({
+    space: doc.space,
+    object: doc.object
+  }, {
+    fields: {
+      created: 0,
+      modified: 0,
+      owner: 0,
+      created_by: 0,
+      modified_by: 0
+    },
+    sort: {
+      sort_no: -1
+    }
+  });
   // fields = {};
   // table_fields = {};
   // _.forEach(object_fields, function (f) {
@@ -75,7 +75,7 @@ function _syncToObject(doc, event) {
     if(objectRecord){
       let fields_serial_number = null;
       if(!objectRecord.fields_serial_number || objectRecord.fields_serial_number < 100){
-        fields_serial_number = 100 + _.keys(fields).length * 10
+        fields_serial_number = object_field.sort_no + 10
       }else{
         fields_serial_number = objectRecord.fields_serial_number + 10
       }
