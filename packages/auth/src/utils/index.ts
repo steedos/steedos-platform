@@ -80,3 +80,5 @@ export const clearAuthCookies = function (req, res) {
 export function isExpried(expiredAt: number) {
   return expiredAt <= new Date().getTime();
 }
+
+export * from './encryption';

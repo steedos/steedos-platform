@@ -9,6 +9,8 @@ permission_set_field_users_inlineHelpText: 类别为简档时，不需要选择�
 permission_set_field_type: 类别
 permission_set_field_type_options_profile: 简档
 permission_set_field_type_options_permission_set: 权限集
+permission_set_group_profile_password_policy: 密码策略
+permission_set_field_password_history_options: 记住 %s 个密码
 permission_set_listview_all: 全部
 permission_set_listview_permission_set: 权限集
 permission_set_listview_profile: 简档

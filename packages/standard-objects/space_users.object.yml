@@ -237,7 +237,12 @@ fields:
     omit: true
     hidden: true
     name: last_logon 
-    label: Last Logon Date   
+    label: Last Logon Date
+  password_expired:
+    label: Password expired
+    type: boolean
+    omit: false
+    hidden: false
 list_views:
   all:
     label: All Valid Users
@@ -311,6 +316,12 @@ actions:
     label: Invite Users
   setPassword: 
     label: Change Password
+  lockout:
+    label: Lockout
+    on: record_only
+  unlock:
+    label: Unlock
+    on: record_only
   disable: 
     label: Disable
     on: record_only

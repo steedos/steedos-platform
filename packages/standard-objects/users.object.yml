@@ -108,6 +108,18 @@ fields:
       }
     omit: true
     hidden: true
+  login_failed_number:
+    type: number
+    omit: true
+    hidden: true
+  login_failed_lockout_time:
+    type: datetime
+    omit: true
+    hidden: true
+  lockout:
+    type: boolean
+    omit: true
+    hidden: true
 list_views:
   all:
     label: All

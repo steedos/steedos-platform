@@ -200,7 +200,12 @@
 	"space_users_method_disable_enable_error_can_not_own": "无法启用/停用您自己的帐户。",
 	"space_users_method_disable_error_can_not_disable_disabled": "无法停用已停用的帐户。",
 	"space_users_method_enable_error_can_not_enable_enabled": "无法启用已启用的帐户。",
-	
+
+	"space_users_method_unlock_success": "已成功解除锁定该用户。",
+	"space_users_method_unlock_error": "解除锁定用户失败，%s",
+	"space_users_method_lockout_success": "已成功锁定该用户。",
+	"space_users_method_lockout_error": "锁定用户失败，%s",
+	"space_users_method_unlock_lockout_error_only_space_admin": "只有工作区管理员可以解除锁定/锁定账户。",
 
 	"reports_field_report_type_options_tabular": "表格",
 	"reports_field_report_type_options_summary": "摘要",

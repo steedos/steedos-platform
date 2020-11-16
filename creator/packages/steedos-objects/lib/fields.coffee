@@ -306,7 +306,10 @@ Creator.getObjectSchema = (obj) ->
 			else
 				fs.autoform.type = "select"
 				fs.autoform.options = field.options
-				fs.autoform.firstOption = ""
+				if _.has(field, 'firstOption')
+					fs.autoform.firstOption = field.firstOption
+				else
+					fs.autoform.firstOption = ""
 		else if field.type == "currency"
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"
