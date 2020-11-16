@@ -1910,10 +1910,10 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
 
-"@steedos/accounts@^1.19.10":
-  version "1.19.10"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.19.10.tgz#6eda5d9ac94345d7e8847d39e5f28951bac7711e"
-  integrity sha1-btpdmslDRdfohH055fKJUbrHcR4=
+"@steedos/accounts@^1.12.1":
+  version "1.22.2"
+  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.22.2.tgz#0df5f3b58c0e02c6c2b680844cba516fcca268e3"
+  integrity sha1-DfXztYwOAsbCtoCETLpRb8yiaOM=
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
@@ -1923,7 +1923,8 @@
     app-root-path "^2.2.1"
     bcryptjs "^2.4.3"
     body-parser "1.19.0"
-    cookies "^0.7.3"
+    chalk "^2.4.2"
+    cookies "^0.8.0"
     cors "2.8.5"
     crypto "^1.0.1"
     express "4.17.1"
@@ -4271,6 +4272,14 @@ cookies@^0.7.3:
   dependencies:
     depd "~1.1.2"
     keygrip "~1.0.3"
+
+cookies@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.npm.taobao.org/cookies/download/cookies-0.8.0.tgz#1293ce4b391740a8406e3c9870e828c4b54f3f90"
+  integrity sha1-EpPOSzkXQKhAbjyYcOgoxLVPP5A=
+  dependencies:
+    depd "~2.0.0"
+    keygrip "~1.1.0"
 
 copy-concurrently@^1.0.0:
   version "1.0.5"
@@ -7396,6 +7405,13 @@ kareem@2.3.0:
 keygrip@~1.0.0, keygrip@~1.0.1, keygrip@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
+
+keygrip@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/keygrip/download/keygrip-1.1.0.tgz#871b1681d5e159c62a445b0c74b615e0917e7226"
+  integrity sha1-hxsWgdXhWcYqRFsMdLYV4JF+ciY=
+  dependencies:
+    tsscmp "1.0.6"
 
 keyv@^3.0.0:
   version "3.1.0"
@@ -12205,6 +12221,11 @@ tslint@^5, tslint@^5.13.1, tslint@^5.18.0:
     semver "^5.3.0"
     tslib "^1.8.0"
     tsutils "^2.29.0"
+
+tsscmp@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npm.taobao.org/tsscmp/download/tsscmp-1.0.6.tgz#85b99583ac3589ec4bfef825b5000aa911d605eb"
+  integrity sha1-hbmVg6w1iexL/vgltQAKqRHWBes=
 
 "tsutils@^2.27.2 <2.29.0":
   version "2.28.0"
