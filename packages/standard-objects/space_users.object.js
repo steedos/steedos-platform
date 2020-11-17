@@ -1091,7 +1091,7 @@ let methods = {
                 return;
             }
             const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"]});
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile"]});
             if (spaceUser.user === user.userId){
                 res.status(400).send({
                     success: false,
@@ -1110,7 +1110,7 @@ let methods = {
                 });
                 return;
             }
-            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: false });
+            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: false, profile: spaceUser.profile});
             if(result){
                 res.status(200).send({ success: true });
             }
@@ -1148,7 +1148,7 @@ let methods = {
                 return;
             }
             const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile"] });
             if (spaceUser.user === user.userId) {
                 res.status(400).send({
                     success: false,
@@ -1167,7 +1167,7 @@ let methods = {
                 });
                 return;
             }
-            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: true });
+            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: true, profile: spaceUser.profile });
             if(result){
                 res.status(200).send({ success: true });
             }
