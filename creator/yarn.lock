@@ -1727,7 +1727,7 @@
     validator "^12.2.0"
 
 "@steedos/app-admin@../apps/steedos-app-admin":
-  version "1.22.1"
+  version "1.22.2"
 
 "@steedos/app-contracts@^1.22.1":
   version "1.22.1"
@@ -1738,9 +1738,9 @@
     underscore "1.9.2"
 
 "@steedos/app-crm@../apps/steedos-app-crm":
-  version "1.22.1"
+  version "1.22.0-alpha.15"
   dependencies:
-    "@steedos/plugin-enterprise" "^1.22.1"
+    "@steedos/plugin-enterprise" "^1.22.0-alpha.15"
     dotenv-flow "^3.2.0"
     underscore "1.9.2"
 
@@ -1891,10 +1891,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/plugin-enterprise@^1.22.1":
-  version "1.22.1"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-enterprise/-/plugin-enterprise-1.22.1.tgz#185ac275a8cf46ad2ebb2a81c2e1d2d279074a2c"
-  integrity sha512-duJeNkqM7DTFYfv9tMXwhg96jSHPSNYgnAkUjWbabWRSQ1NHkR+jrCTHDDyUTUPg6G6n/9AFvhjckqohcEy5Qg==
+"@steedos/plugin-enterprise@^1.22.0-alpha.15":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/plugin-enterprise/-/plugin-enterprise-1.22.2.tgz#7183de10820ccff0109951f0475b1fc75eb5cd23"
+  integrity sha512-SuqExEIxOD2yLrCfo0q/9PlzvVvZ5o2nVXC90vLges9weUPvg4YMi++0G67gyc82lVYnDUSIepCw0ndGOU9TLA==
 
 "@steedos/process@^1.22.1":
   version "1.22.1"
