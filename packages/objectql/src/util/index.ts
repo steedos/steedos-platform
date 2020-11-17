@@ -610,7 +610,7 @@ export function processFilters(filters: [], objectFields: any) {
             }
             else if(dataType === "boolean"){
                 if(typeof filter.value === "string"){
-                    if(["true", "True", "TRUE", "真", "1"].indexOf(filter.value.trim()) > -1){
+                    if(["true", "True", "TRUE", "1"].indexOf(filter.value.trim()) > -1){
                         filter.value = true;
                     }
                     else if(["false", "False", "FALSE", "0"].indexOf(filter.value.trim()) > -1){

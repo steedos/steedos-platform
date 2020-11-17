@@ -16,7 +16,7 @@ function getFieldName(objectName, fieldName, spaceId){
   if(object && object.datasource && object.datasource != 'default'){
     return fieldName;
   }else{
-    if(fieldName != 'name'){
+    if(fieldName != 'name' && fieldName != 'owner'){
       return `${fieldName}${objectql.getFieldSuffix(spaceId)}`;
     }else{
       return fieldName
@@ -358,7 +358,7 @@ var triggers = {
         throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
       checkName(doc._name);
-      if(doc._name === 'name'){
+      if(doc._name === 'name' || doc._name === 'owner'){
         doc.name = doc._name;
       }else{
         doc.name = getFieldName(doc.object,doc._name,doc.space);

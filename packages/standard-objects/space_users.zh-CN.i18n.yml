@@ -8,7 +8,6 @@ space_users_field_email_verified: 邮件已验证
 space_users_field_hr: HR
 space_users_field_invite_state: 邀请状态
 space_users_field_last_logon: 最近登陆
-space_users_field_password_expired: 密码过期
 space_users_field_locale: 语言
 space_users_field_locale_options_en-us: English
 space_users_field_locale_options_zh-cn: 简体中文
@@ -34,6 +33,7 @@ space_users_field_user_accepted: 有效
 space_users_field_username: 用户名
 space_users_field_work_phone: 工作电话
 space_users_field_contact_id: 联系人
+space_users_field_password_expired: 密码已过期
 space_users_group_-: '-'
 space_users_listview_all: 有效用户
 space_users_listview_disabled: 离职停用人员
@@ -41,3 +41,5 @@ space_users_action_invite_space_users: 邀请注册
 space_users_action_setPassword: 修改密码
 space_users_action_disable: 停用
 space_users_action_enable: 启用
+space_users_action_lockout: 锁定
+space_users_action_unlock: 解除锁定

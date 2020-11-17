@@ -22,10 +22,12 @@ import {
 } from './utils';
 import { PasswordCreateUserType, PasswordLoginType, PasswordType, ErrorMessages } from './types';
 import { errors } from './errors';
-import { getSteedosConfig } from '@steedos/objectql';
+import { getSteedosConfig, getObject } from '@steedos/objectql';
 const EFFECTIVE_TIME = 10; //10分钟
 const CODE_LENGTH = 6;
 const MAX_FAILURE_COUNT = 10;
+const _ = require('underscore');
+const moment = require('moment');
 export interface AccountsPasswordOptions {
   /**
    * Two factor options passed down to the @accounts/two-factor service.
@@ -137,12 +139,15 @@ const getPathFragmentPrefix = function(){
   return pathFragmentPrefix;
 }
 
+interface MyDatabaseInterface extends DatabaseInterface{
+  updateUser?(userId: string, options: any): Promise<void>;
+}
 export default class AccountsPassword implements AuthenticationService {
   public serviceName = 'password';
   public server!: AccountsServer;
   public twoFactor: TwoFactor;
   private options: AccountsPasswordOptions & typeof defaultOptions;
-  private db!: DatabaseInterface;
+  private db!: MyDatabaseInterface;
 
   constructor(options: AccountsPasswordOptions = {}) {
     this.options = { ...defaultOptions, ...options };
@@ -351,6 +356,31 @@ export default class AccountsPassword implements AuthenticationService {
     return null;
   }
 
+  public async getUserProfile(userId){
+    const spaceId = getSteedosConfig().tenant._id;
+    let password_history = 3;
+    let max_login_attempts = 10;
+    let lockout_interval = 15;
+    const spaceUsers = await getObject('space_users').find({filters: `(user eq '${userId}') and (space eq '${spaceId}')`})
+    if(spaceUsers.length > 0){
+      const spaceUser = spaceUsers[0];
+      const profiles = await getObject('permission_set').find({filters: `(name eq '${spaceUser.profile}') and (type eq 'profile') and (space eq '${spaceId}')`})
+      if(profiles.length > 0){
+        const userProfile = profiles[0]
+        if(_.has(userProfile, 'password_history')){
+          password_history = Number(userProfile.password_history)
+        }
+        if(_.has(userProfile, 'max_login_attempts')){
+          max_login_attempts = Number(userProfile.max_login_attempts)
+        }
+        if(_.has(userProfile, 'lockout_interval')){
+          lockout_interval = Number(userProfile.lockout_interval)
+        }
+      }
+    }
+    return Object.assign({password_history: password_history, max_login_attempts: max_login_attempts, lockout_interval: lockout_interval})
+  }
+
   /**
    * @description Change the password for a user.
    * @param {string} userId - User id.
@@ -379,7 +409,21 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.invalidPassword);
     }
 
-    const user = await this.passwordAuthenticator({ id: userId }, oldPassword);
+    const user: any = await this.passwordAuthenticator({ id: userId }, oldPassword);
+    const saas = getSteedosConfig().tenant.saas;
+    if(!saas){
+      const passwordHistory = user.services.password_history || []
+
+      const userProfile = await this.getUserProfile(userId);
+      
+      const validPasswordHistory = _.last(passwordHistory, userProfile.password_history);
+      for (const item of validPasswordHistory) {
+        var verify = await verifyPassword(newPassword, item)
+        if(verify){
+          throw new Error('最近 ' + userProfile.password_history + ' 次密码不能相同');
+        }
+      }
+    }
 
     const password = await bcryptPassword(newPassword);
     await this.db.setPassword(userId, password);
@@ -608,7 +652,7 @@ export default class AccountsPassword implements AuthenticationService {
       ? this.toMobileAndEmail({ user })
       : this.toMobileAndEmail({ ...user });
 
-    let foundUser: User | null = null;
+    let foundUser: any | null = null;
 
     if (id) {
       // this._validateLoginWithField('id', user);
@@ -636,17 +680,49 @@ export default class AccountsPassword implements AuthenticationService {
     if (!hash) {
       throw new Error(this.options.errors.noPasswordSet);
     }
-
+    const saas = getSteedosConfig().tenant.saas;
+    if(!saas){
+      const locked = foundUser.lockout;
+      const login_failed_lockout_time = foundUser.login_failed_lockout_time;
+      if(locked){
+        if(!login_failed_lockout_time){
+          throw new Error('账户已锁定，请联系管理员');
+        }else{
+          if(moment(login_failed_lockout_time).isAfter(new Date())){
+            throw new Error('账户已锁定，请联系管理员');
+          }
+        }
+      }
+    }
     const hashAlgorithm = this.options.passwordHashAlgorithm;
     const pass: any = hashAlgorithm ? hashPassword(password, hashAlgorithm) : password;
     const isPasswordValid = await verifyPassword(pass, hash);
 
     if (!isPasswordValid) {
+      if(!saas){
+        const userProfile = await this.getUserProfile(foundUser.id);
+
+        await this.db.updateUser(foundUser.id, {$inc: {login_failed_number: 1}});
+
+        const user: any = await this.db.findUserById(foundUser.id);
+        if(user.login_failed_number >= userProfile.max_login_attempts){
+          let lockout_interval = userProfile.lockout_interval;
+          let login_failed_lockout_time = null;
+          if(lockout_interval === 0){
+            login_failed_lockout_time = null;
+          }else{
+            login_failed_lockout_time = new Date(moment().add(userProfile.lockout_interval, 'm'))
+          }
+          await this.db.updateUser(foundUser.id, {$set: {lockout: true, login_failed_lockout_time: login_failed_lockout_time}});
+        }
+      }
       throw new Error(
         this.server.options.ambiguousErrorMessages
           ? this.options.errors.invalidCredentials
           : this.options.errors.incorrectPassword
       );
+    }else{
+      await this.db.updateUser(foundUser.id, {$set: {lockout: false, login_failed_number: 0}, $unset: {login_failed_lockout_time: 1}});
     }
 
     return foundUser;
