@@ -676,7 +676,34 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"connect":{"package.json":function(require,exports,module){
+}},"aws-sdk":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/aws-sdk/package.json                                                                //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "aws-sdk",
+  "version": "2.0.23",
+  "main": "lib/aws.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"aws.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/aws-sdk/lib/aws.js                                                                  //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}},"connect":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -814,7 +841,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.22.0-alpha.19",
+  "version": "1.22.2",
   "main": "lib/index.js"
 };
 
@@ -841,7 +868,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "1.22.0-alpha.19",
+  "version": "1.22.2",
   "main": "lib/index.js"
 };
 
@@ -868,7 +895,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.22.0-alpha.19",
+  "version": "1.22.2",
   "main": "lib/index.js"
 };
 
@@ -895,7 +922,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.22.0-alpha.19",
+  "version": "1.22.2",
   "main": "lib/index.js"
 };
 
@@ -949,7 +976,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.22.0-alpha.19",
+  "version": "1.22.2",
   "main": "lib/index.js"
 };
 

@@ -3485,13 +3485,14 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
-"@steedos/filters@^1.7.4":
-  version "1.21.20"
-  resolved "https://registry.npm.taobao.org/@steedos/filters/download/@steedos/filters-1.21.20.tgz#0234f5903935c76d4d2b75502fad8af4150def87"
-  integrity sha1-AjT1kDk1x21NK3VQL62K9BUN74c=
+"@steedos/app-crm@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/app-crm/-/app-crm-1.22.2.tgz#4b0216781066fff85793c5893440466cbaed93e7"
+  integrity sha512-sVEUJrYP078+wRzNVw9IJGxBbFAZIca/qoigzJhp3gNcU+yHjzVqX2J5NAu4+CWSVNivq7pBWxQh6a+UejDvzw==
   dependencies:
-    moment "^2.24.0"
-    underscore "^1.9.1"
+    "@steedos/plugin-enterprise" "^1.22.2"
+    dotenv-flow "^3.2.0"
+    underscore "1.9.2"
 
 "@steedos/license@1.22.1":
   version "1.22.1"

@@ -10,7 +10,10 @@ const permissions = {
 const baseRecord = {
     is_system:true,
     type: 'profile',
-    record_permissions:permissions
+    record_permissions:permissions,
+    password_history: '3',
+    max_login_attempts: '10',
+    lockout_interval: '15'
 }
 
 const internalPermissionSet = [

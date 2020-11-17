@@ -2,6 +2,7 @@ name: space_users
 label: User
 icon: user
 enable_search: true
+enable_inline_edit: false
 sidebar:
   template_name: creator_grid_sidebar_organizations
   hidden: true
@@ -242,9 +243,10 @@ fields:
     name: last_logon 
     label: Last Logon Date
   password_expired:
+    label: Password expired
     type: boolean
-    omit: true
-    hidden: true
+    omit: false
+    hidden: false
 list_views:
   all:
     label: All Valid Users
@@ -331,6 +333,12 @@ actions:
     on: record_only
   enable: 
     label: Enable
+    on: record_only
+  lockout:
+    label: Lockout
+    on: record_only
+  unlock:
+    label: Unlock
     on: record_only
 permission_set:
   user:

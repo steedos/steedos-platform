@@ -1,8 +1,8 @@
 license__object: 许可证
-license_action_apply: 升级许可证
+license_action_apply: 购买许可证
 license_action_sync: 同步许可证
 license_action_copySpaceId: 复制魔方ID
-license_action_changeSpaceLicense: 添加许可证
+license_action_changeSpaceLicense: 导入许可证
 license_action_changeSpaceLicense_confirmBtnText: 确定
 license_field_lid: 许可证ID
 license_field_product_label: 产品

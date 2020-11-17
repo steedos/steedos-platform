@@ -1,15 +1,19 @@
 name: chat_messages
 label: Chat Message
-icon: live-chat
-hidden: true
+icon: rtc_presence
+hidden: false
 fields:
   related_to:
     label: Related Object Record
     type: lookup
     reference_to: !<tag:yaml.org,2002:js/function> |-
       function () {
-              return _.keys(Creator.Objects);
-            }
+        if(Meteor.isClient){
+          Steedos.getObjectsOptions();
+        }else{
+          return _.keys(Creator.Objects);
+        }
+      }
     name: related_to
     filterable: true
   name:
@@ -41,8 +45,9 @@ list_views:
     columns:
       - related_to
       - name
-      - type
-    filter_scope: space
+      - created
+      - created_by
+    filter_scope: mine
 permission_set:
   user:
     allowCreate: true
