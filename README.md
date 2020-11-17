@@ -8,7 +8,7 @@
 
 - [华炎魔方平台概览](https://www.steedos.com/platform/?from=github)
 - [视频演示](https://www.steedos.com/videos/)
-- [安装部署](https://www.steedos.com/developer/deploy)
+- [安装部署](https://www.steedos.com/help/deploy)
 - [开发向导](https://www.steedos.com/developer/)
 - [用户手册](https://www.steedos.com/help/user/)
 - [管理员手册](https://www.steedos.com/help/admin/)
