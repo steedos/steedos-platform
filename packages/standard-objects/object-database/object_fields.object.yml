@@ -468,5 +468,5 @@ form:
     }
   afterInsert: !!js/function |
     function(){
-      Creator.objectLayoutMananger.appendField(this.doc);
+      // Creator.objectLayoutMananger.appendField(this.doc);
     }

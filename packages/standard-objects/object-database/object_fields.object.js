@@ -2,7 +2,6 @@ var _ = require("underscore");
 var objectql = require('@steedos/objectql');
 var clone = require('clone');
 var objectCore = require('./objects.core.js');
-
 function canRemoveNameFileld(doc){
   var object = Creator.getCollection("objects").findOne({name: doc.object}, {fields: {datasource: 1}});
   if(object && object.datasource && object.datasource != 'default'){
@@ -11,13 +10,15 @@ function canRemoveNameFileld(doc){
   return false;
 }
 
-function getFieldName(objectName, fieldName, spaceId){
+function getFieldName(objectName, fieldName, spaceId, oldFieldName){
   var object = Creator.getCollection("objects").findOne({name: objectName}, {fields: {datasource: 1}})
   if(object && object.datasource && object.datasource != 'default'){
     return fieldName;
   }else{
     if(fieldName != 'name' && fieldName != 'owner'){
-      return `${fieldName}${objectql.getFieldSuffix(spaceId)}`;
+      console.log('fieldName, spaceId, oldFieldName', fieldName, spaceId, oldFieldName);
+      console.log('_makeNewFieldName', objectql._makeNewFieldName(fieldName, spaceId, oldFieldName));
+      return objectql._makeNewFieldName(fieldName, spaceId, oldFieldName);
     }else{
       return fieldName
     }
@@ -211,11 +212,6 @@ function getFieldDefaultProps(field){
   return prosp;
 }
 
-//TODO 清理不匹配的属性
-function handleFieldProps(field){
-
-}
-
 const checkFormulaInfiniteLoop = function(_doc){
   if(_doc.type === "formula"){
     doc = clone(_doc)
@@ -236,6 +232,26 @@ const checkFormulaInfiniteLoop = function(_doc){
       }
     }
   }
+}
+
+const initSummaryDoc = (doc)=>{
+  if(!doc.summary_object){
+      throw new Error("object_fields_error_summary_object_required");
+  }
+  let summaryObject = objectql.getObjectConfig(doc.summary_object);
+  let summaryConfig = { 
+      summary_object: doc.summary_object, 
+      summary_type: doc.summary_type, 
+      summary_field: doc.summary_field, 
+      field_name: doc.name, 
+      object_name: doc.object
+  };
+  const dataType = objectql.getSummaryDataType(summaryConfig, summaryObject);
+  if(!dataType){
+      throw new Error("object_fields_error_summary_data_type_not_found");
+  }
+  doc.data_type = dataType;
+  objectql.validateFilters(doc.summary_filters, summaryObject.fields);
 }
 
 var triggers = {
@@ -299,7 +315,7 @@ var triggers = {
 
       if(_.has(modifier.$set, "_name")){
         checkName(modifier.$set._name)
-        modifier.$set.name = getFieldName(doc.object, modifier.$set._name, doc.space);
+        modifier.$set.name = getFieldName(doc.object, modifier.$set._name, doc.space, doc.name);
       }
 
       var _reference_to, object, object_documents, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7;
@@ -345,6 +361,9 @@ var triggers = {
         Object.assign(modifier.$set, defProps);
       }
       checkFormulaInfiniteLoop(modifier.$set);
+      if(modifier.$set.type === "summary"){
+        initSummaryDoc(modifier.$set);
+      }
     }
   },
   //					if modifier?.$set?.reference_to
@@ -384,6 +403,9 @@ var triggers = {
       }
 
       checkFormulaInfiniteLoop(doc);
+      if(doc.type === "summary"){
+        initSummaryDoc(doc);
+      }
     }
   },
   "before.remove.server.object_fields": {

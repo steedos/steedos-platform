@@ -1,5 +1,4 @@
 const InternalData = require('../core/internalData');
-const { getSummaryDataType, getObjectConfig, validateFilters } = require('@steedos/objectql');
 
 const validateOptionValue = (value)=>{
     let color = value && value.split(":")[2];
@@ -60,25 +59,6 @@ const validateDoc = (doc)=>{
     // }
 }
 
-const initSummaryDoc = (doc)=>{
-    if(!doc.summary_object){
-        throw new Error("object_fields_error_summary_object_required");
-    }
-    let summaryObject = getObjectConfig(doc.summary_object);
-    let summaryConfig = { 
-        summary_object: doc.summary_object, 
-        summary_type: doc.summary_type, 
-        summary_field: doc.summary_field, 
-        field_name: doc._name + objectql.getFieldSuffix(doc.space), 
-        object_name: doc.object
-    };
-    const dataType = getSummaryDataType(summaryConfig, summaryObject);
-    if(!dataType){
-        throw new Error("object_fields_error_summary_data_type_not_found");
-    }
-    doc.data_type = dataType;
-    validateFilters(doc.summary_filters, summaryObject.fields);
-}
 
 module.exports = {
     afterFind: async function(){
@@ -123,15 +103,9 @@ module.exports = {
     beforeInsert: async function () {
         let doc = this.doc;
         validateDoc(doc);
-        if(doc.type === "summary"){
-            initSummaryDoc(doc);
-        }
     },
     beforeUpdate: async function () {
         let doc = this.doc;
         validateDoc(doc);
-        if(doc.type === "summary"){
-            initSummaryDoc(doc);
-        }
     }
 }

@@ -6,7 +6,7 @@ import { runFieldUpdateActions } from './field_updates'
 import _ = require('underscore');
 
 export async function runObjectWorkflowRules(objectName, event, record, userSession, previousRecord) {
-    if(!_.include(['insert', 'update'], event)){
+    if(!_.include(['insert', 'update'], event) || !record){
         return ;
     }
 

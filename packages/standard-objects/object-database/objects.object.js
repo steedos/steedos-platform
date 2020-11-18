@@ -40,8 +40,8 @@ function isRepeatedName(doc) {
 };
 
 function checkName(name,spaceId){
-    if(objectql.hasObjectSuffix(name,spaceId)){
-        name = name.replace(objectql.getObjectSuffix(spaceId), '')
+    if(objectql.hasObjectSuffix(name, spaceId, true)){
+        name = name.replace(objectql.getObjectSuffix(spaceId, true), '')
     }
     var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
     if(!reg.test(name)){
@@ -86,14 +86,14 @@ function initObjectPermission(userId, doc){
     }));
 }
 
-function getObjectName(datasource, objectName, spaceId){
+function getObjectName(datasource, objectName, spaceId, oldObjectName){
     if(datasource && datasource != 'default'){
         return objectName;
       }else{
           if(objectql.hasObjectSuffix(objectName, spaceId)){
             return objectName;
           }else{
-            return `${objectName}${objectql.getObjectSuffix(spaceId)}`;
+            return objectql._makeNewObjectName(objectName, spaceId, oldObjectName);
           }
       }
 }
@@ -318,7 +318,7 @@ let objectTriggers = {
 
             if ((modifier.$set.name && doc.name !== modifier.$set.name) || modifier.$set.datasource && doc.datasource !== modifier.$set.datasource) {
                 checkName(modifier.$set.name || doc.name);
-                modifier.$set.name = getObjectName(modifier.$set.datasource || doc.datasource, modifier.$set.name || doc.name, doc.space);
+                modifier.$set.name = getObjectName(modifier.$set.datasource || doc.datasource, modifier.$set.name || doc.name, doc.space, doc.name);
                 if (isRepeatedName({_id: doc._id, name: modifier.$set.name || doc.name, datasource: modifier.$set.datasource || doc.datasource})) {
                     throw new Meteor.Error(500, "对象名称不能重复");
                 }
