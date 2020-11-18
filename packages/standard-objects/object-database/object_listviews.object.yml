@@ -193,6 +193,7 @@ fields:
     type: grid
     is_wide: true
     hidden: true
+    omit: true
   filters.$:
     label: Filter
     blackbox: true
