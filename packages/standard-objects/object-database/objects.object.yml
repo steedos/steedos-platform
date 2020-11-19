@@ -128,8 +128,6 @@ fields:
     group: Switch
   # enable_trash:
   #   type: boolean
-  #   omit: true
-  #   hidden: true
   # enable_space_global:
   #   type: boolean
   #   defaultValue: false
