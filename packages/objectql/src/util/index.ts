@@ -388,11 +388,10 @@ function calcString(str: string, content: any = process.env): string{
     })
     eval(`calcFun = function(args){return \`${rev}\`}`);
     let val = calcFun.call({}, content);
-
     if(_.isString(val) && val){
-        return val.replace(/\\r/g, '\r').replace(/\\n/g, '\n')
+        return val.replace(/\\r/g, '\r').replace(/\\n/g, '\n').replace(/undefined/g, '')
     }else{
-        return rev;
+        return null;
     }
 }
 
