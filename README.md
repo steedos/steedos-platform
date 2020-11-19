@@ -7,11 +7,11 @@
 ## 什么是华炎魔方？
 
 - [华炎魔方平台概览](https://www.steedos.com/platform/?from=github)
+- [华炎魔方技术白皮书](http://oss.steedos.com/apps/pdfviewer/web/viewer.html?file=http://oss.steedos.com/docs/%E5%8D%8E%E7%82%8E%E9%AD%94%E6%96%B9%E6%8A%80%E6%9C%AF%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf)
 - [视频演示](https://www.steedos.com/videos/)
 - [安装部署](https://www.steedos.com/help/deploy)
 - [开发向导](https://www.steedos.com/developer/)
-- [用户手册](https://www.steedos.com/help/user/)
-- [管理员手册](https://www.steedos.com/help/admin/)
+- [文档](https://www.steedos.com/help/)
 
 ## 开发进度
 
