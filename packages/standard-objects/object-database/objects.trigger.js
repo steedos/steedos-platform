@@ -1,7 +1,6 @@
 const InternalData = require('../core/internalData');
 const _ = require('underscore');
 const objectql = require('@steedos/objectql');
-console.log('load objects.trigger.js');
 module.exports = {
     afterFind: async function(){
         let userId = this.userId
