@@ -1,3 +1,4 @@
+//TODO 将此代码转移到license项目
 const customObjectNameSuffix = '__c';
 const customFieldNameSuffix = '__c';
 declare var Steedos: any;
