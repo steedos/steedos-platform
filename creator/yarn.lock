@@ -1737,9 +1737,18 @@
     dotenv-flow "^3.2.0"
     underscore "1.9.2"
 
+"@steedos/app-contracts@^1.22.2":
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.22.2.tgz#14c1cc22f70e68c580f9ceac395d8c5e6a10e34e"
+  integrity sha512-axNoQ4WwxaWLIVzoqOxRw4zIP73aCqk64NiY1xgWnqSnwoSG7JTVlDRJpP8j5LFVQ/wrMlw659pu1t1yZCvUoA==
+  dependencies:
+    dotenv-flow "^3.2.0"
+    underscore "1.9.2"
+
 "@steedos/app-crm@../apps/steedos-app-crm":
   version "1.22.0-alpha.15"
   dependencies:
+    "@steedos/app-contracts" "^1.22.2"
     "@steedos/plugin-enterprise" "^1.22.0-alpha.15"
     dotenv-flow "^3.2.0"
     underscore "1.9.2"
