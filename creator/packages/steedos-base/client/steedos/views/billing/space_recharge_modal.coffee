@@ -84,7 +84,7 @@ Template.space_recharge_modal.events
 			if module and module.listprice_rmb
 				listprices += module.listprice_rmb
 
-		if space.is_paid
+		if space && Steedos.hasFeature('paid', space._id)
 
 			balance = 0
 			old_listprices = 0
@@ -222,7 +222,7 @@ Template.space_recharge_modal.events
 
 		$("#space_recharge_price").text(listprices)
 
-		if space.is_paid
+		if space &&  Steedos.hasFeature('paid', space._id)
 			console.log "is_paid"
 			balance = 0
 			old_listprices = 0
