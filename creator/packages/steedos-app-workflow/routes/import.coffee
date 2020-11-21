@@ -54,9 +54,9 @@ JsonRoutes.add "post", "/api/workflow/import/form", (req, res, next) ->
 		if flow
 			company_id = flow.company_id
 
-	space = db.spaces.findOne(spaceId, { fields: { is_paid: 1 } })
+	space = db.spaces.findOne(spaceId, { fields: { _id: 1 } })
 
-	if !space?.is_paid
+	if !space || !Steedos.hasFeature('paid', space._id)
 		JsonRoutes.sendResult res,
 			code: 404,
 			data:
