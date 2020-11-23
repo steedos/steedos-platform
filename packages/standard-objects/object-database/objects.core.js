@@ -327,7 +327,9 @@ function reloadObject(changeLog){
                 Creator.Objects[object.name] = object;
                 Creator.loadObjects(object, object.name);
             }
-            buildGraphQLSchema();
+            if(data.type == 'field' || data.type == 'object'){
+                buildGraphQLSchema();
+            }
         } catch (error) {
             console.log('error', error);
         }
