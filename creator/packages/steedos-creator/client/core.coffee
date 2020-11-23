@@ -896,6 +896,11 @@ if Meteor.isClient
 		if !officeOnlineUrl || (officeOnlineUrl == "")
 			toastr.error TAPi18n.__("creator_office_online_web_url_required")
 			return false
+		userId = Meteor.userId();
+		spaceId = Steedos.spaceId();
+		token = Accounts._storedLoginToken();
+		# url添加验证参数
+		fileUrl = fileUrl + "?X-Space-Id=" + spaceId + "&X-User-Id=" + userId + "&X-Auth-Token=" + token;
 		openUrl = officeOnlineUrl + encodeURIComponent(fileUrl);
 		# console.log("-----openUrl------: ",openUrl);
 		return Steedos.openWindow(openUrl);

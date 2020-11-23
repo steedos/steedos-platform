@@ -327,9 +327,10 @@ Template.instance_attachment.events({
 	},
 
 	"click [name='ins_attach_office_online_preview']": function(event, template){
+		var file_name = event.target.dataset.name;
 		if (event.target.id) {
 			// 考虑rootUrl带路由和内外网服务地址一样等问题
-			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id;
+			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id + "/" + file_name;
 
 			Creator.officeOnlinePreview(url);
 		}
@@ -853,9 +854,10 @@ Template.ins_attach_version_modal.events({
 	},
 
 	"click [name='ins_attach_office_online_preview']": function(event, template){
+		var file_name = event.target.dataset.name;
 		if (event.target.id) {
 			// 考虑rootUrl带路由和内外网服务地址一样等问题
-			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id;
+			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id + "/" + file_name;
 
 			Creator.officeOnlinePreview(url);
 		}
