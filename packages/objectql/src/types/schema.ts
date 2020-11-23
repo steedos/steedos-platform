@@ -6,6 +6,7 @@ import { getFromContainer } from 'typeorm';
 import { loadCoreValidators } from '../validators';
 import { loadStandardObjects } from './object_dynamic_load';
 import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
+import { buildGraphQLSchema } from '../graphql';
 
 const defaultDatasourceName = 'default';
 
@@ -15,7 +16,8 @@ export type SteedosSchemaConfig = {
 
 export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
-    private _objectsMap: Dictionary<{datasourceName: string, filePath?: string}> = {}
+    private _objectsMap: Dictionary<{datasourceName: string, filePath?: string}> = {};
+    private graphQLSchema: any = null;
     
     setObjectMap(objectName:string, options){
         let objectMap = this.getObjectMap(objectName);
@@ -154,6 +156,18 @@ export class SteedosSchema {
     getDataSources(){
         return this._datasources
     }
+
+    buildGraphQLSchema(){
+        this.graphQLSchema = buildGraphQLSchema(this);
+    }
+
+    getGraphQLSchema(){
+        if(!this.graphQLSchema){
+            this.buildGraphQLSchema();
+        }
+        return this.graphQLSchema;
+    }
+
 }
 
 export function getSteedosSchema(): SteedosSchema {

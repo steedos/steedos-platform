@@ -26,8 +26,6 @@ import {
     getSteedosSchema
 } from '.';
 import { SteedosDriverConfig } from '../driver';
-import { buildGraphQLSchema } from '../graphql';
-import { GraphQLSchema } from 'graphql';
 import { getObjectConfigs, addObjectConfig, addAllConfigFiles } from '.';
 let Fiber = require('fibers');
 var path = require('path')
@@ -91,7 +89,6 @@ export class SteedosDataSourceType implements Dictionary {
     private _objectsSpaceRolesPermission: Dictionary<Dictionary<Dictionary<SteedosObjectPermissionType>>> = {};
     private _driver: SteedosDatabaseDriverType | string | SteedosDriver;
     private _logging: boolean | Array<any>;
-    private _graphQLSchema: GraphQLSchema;
     private _config: SteedosDataSourceTypeConfig;
     private _enable_space: boolean;
     public get enable_space(): boolean {
@@ -354,15 +351,11 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     buildGraphQLSchema() {
-        this._graphQLSchema = buildGraphQLSchema(this._schema, this);
-        return this._graphQLSchema;
+        return this._schema.buildGraphQLSchema();
     }
 
     getGraphQLSchema() {
-        if (this._graphQLSchema) {
-            return this._graphQLSchema;
-        }
-        return buildGraphQLSchema(this._schema, this);
+        return this._schema.getGraphQLSchema();
     }
 
     async dropEntities() {

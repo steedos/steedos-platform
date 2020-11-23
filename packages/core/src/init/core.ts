@@ -156,10 +156,12 @@ export class Core {
             }
         });
 
-        router.use("/", graphqlHTTP({
-            schema: objectql.buildGraphQLSchema(objectql.getSteedosSchema()),
-            graphiql: true
-        }));
+        router.use('/', graphqlHTTP(async (request, response, graphQLParams) => ({
+              schema: objectql.getSteedosSchema().getGraphQLSchema(),
+              graphiql: true,
+            })),
+        );
+
         app.use('/graphql', router);
         return WebApp.connectHandlers.use(app);
     }

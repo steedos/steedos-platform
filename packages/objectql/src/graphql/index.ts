@@ -1,4 +1,4 @@
-import { SteedosSchema, SteedosDataSourceType } from "../types";
+import { SteedosSchema } from "../types";
 import {
     GraphQLList,
     GraphQLSchema,
@@ -113,7 +113,7 @@ function buildGraphQLObjectType(obj, steedosSchema, knownTypes) {
     })
 }
 
-export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: SteedosDataSourceType): GraphQLSchema {
+export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema {
     let rootQueryfields = {};
     _.each(steedosSchema.getDataSources(), function (datasource) {
         _.each(datasource.getObjects(), function (obj, object_name) {
