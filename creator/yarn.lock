@@ -1737,19 +1737,10 @@
     dotenv-flow "^3.2.0"
     underscore "1.9.2"
 
-"@steedos/app-contracts@^1.22.2":
-  version "1.22.2"
-  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.22.2.tgz#14c1cc22f70e68c580f9ceac395d8c5e6a10e34e"
-  integrity sha512-axNoQ4WwxaWLIVzoqOxRw4zIP73aCqk64NiY1xgWnqSnwoSG7JTVlDRJpP8j5LFVQ/wrMlw659pu1t1yZCvUoA==
-  dependencies:
-    dotenv-flow "^3.2.0"
-    underscore "1.9.2"
-
 "@steedos/app-crm@../apps/steedos-app-crm":
-  version "1.22.0-alpha.15"
+  version "1.22.2"
   dependencies:
-    "@steedos/app-contracts" "^1.22.2"
-    "@steedos/plugin-enterprise" "^1.22.0-alpha.15"
+    "@steedos/plugin-enterprise" "^1.22.2"
     dotenv-flow "^3.2.0"
     underscore "1.9.2"
 
@@ -1900,10 +1891,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/plugin-enterprise@^1.22.0-alpha.15":
+"@steedos/plugin-enterprise@^1.22.2":
   version "1.22.2"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-enterprise/-/plugin-enterprise-1.22.2.tgz#7183de10820ccff0109951f0475b1fc75eb5cd23"
-  integrity sha512-SuqExEIxOD2yLrCfo0q/9PlzvVvZ5o2nVXC90vLges9weUPvg4YMi++0G67gyc82lVYnDUSIepCw0ndGOU9TLA==
+  resolved "https://registry.npm.taobao.org/@steedos/plugin-enterprise/download/@steedos/plugin-enterprise-1.22.2.tgz#7183de10820ccff0109951f0475b1fc75eb5cd23"
+  integrity sha1-cYPeEIIMz/AQmVHwR1sfx161zSM=
 
 "@steedos/process@^1.22.1":
   version "1.22.1"
