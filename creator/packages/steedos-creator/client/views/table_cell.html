@@ -1,5 +1,5 @@
 <template name="creator_table_cell">
-	<span class="creator_table_cell slds-grid slds-grid_align-spread field-{{field.type}}">
+	<span class="creator_table_cell slds-grid slds-grid_align-spread field-{{fieldDataType}}">
 		<div class="{{#unless is_detail_view}}slds-truncate {{/unless}}{{#unless isMarkdown field.type}}cell-container {{else}}editor-preview-side {{/unless}}">
 			{{#each cellData}}
 				{{#if isTable}}
