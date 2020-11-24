@@ -85,7 +85,7 @@ InstanceSignText.helpers =
 #			有输入意见 或 最新一条并且用户没有输入过意见
 #			if !approve.is_finished || approve.description || (!hasNext(approve, approvesGroup) && !haveDescriptionApprove(approve, approvesGroup))
 #			if !hasNext(approve, approvesGroup)
-			if approve.sign_show != false && (approve.description || (!approve.description && !hasNext(approve, approvesGroup) && !approve.is_finished) )
+			if approve.sign_show != false && (approve.description || (!approve.description && !hasNext(approve, approvesGroup) && !approve.is_finished) || Meteor.settings.public.workflow?.showBlankApproveDescription)
 				if approve.judge isnt 'terminated'
 					approve._display = true
 
@@ -94,14 +94,13 @@ InstanceSignText.helpers =
 				return a._display == true && a.is_finished && a.finish_date?.getTime() <= completed_date
 			else
 				return a._display == true
-
 		return approves_sorted
 
 	include: (a, b) ->
 		return InstanceformTemplate.helpers.include(a, b)
 
 	unempty: (val)->
-		return InstanceformTemplate.helpers.unempty(val)
+		return InstanceformTemplate.helpers.unempty(val) || Meteor.settings.public.workflow?.showBlankApproveDescription
 
 	formatDate: (date, options)->
 		if !options
@@ -178,8 +177,10 @@ InstanceSignText.helpers =
 	imageSignData: (handler) ->
 		return {user: handler}
 
-	showSignImage: (handler, image_sign) ->
-		spaceUserSign = ImageSign.helpers.spaceUserSign(handler);
+	showSignImage: (handler, image_sign, judge) ->
+		if ['returned', 'terminated', 'retrieved'].includes(judge)
+			return false
+		spaceUserSign = ImageSign.helpers.spaceUserSign(handler)
 
 		if spaceUserSign?.sign && image_sign
 			return true
