@@ -272,6 +272,55 @@ export const loadButtonScripts = (filePath: string)=>{
     return results
 }
 
+export const loadPermissions = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.permission.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!_.has(json, 'object_name')){
+            json.object_name = path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
+        json.name = path.basename(matchedPath).split('.')[0]
+        results.push(json)
+    })
+    return results
+}
+
+export const loadProfiles = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.profile.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        json.name = path.basename(matchedPath).split('.')[0];
+        json._id = json.name;
+        json.type = 'profile';
+        results.push(json)
+    })
+    return results
+}
+
+export const loadPermissionsets = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.permissionset.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        json.name = path.basename(matchedPath).split('.')[0];
+        json._id = json.name;
+        json.type = 'permission_set';
+        results.push(json)
+    })
+    return results
+}
+
 export const loadJsonFiles = (filePatten: Array<string>)=>{
     let results = []
     const matchedPaths:[string] = globby.sync(filePatten);

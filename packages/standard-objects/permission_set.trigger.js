@@ -1,53 +1,55 @@
 const _ = require('underscore');
 const InternalData = require('./core/internalData');
-
-const permissions = {
-    allowEdit: false,
-    allowDelete: false,
-    allowRead: true,
-}
-
-const baseRecord = {
-    is_system:true,
-    type: 'profile',
-    record_permissions:permissions,
-    password_history: '3',
-    max_login_attempts: '10',
-    lockout_interval: '15'
-}
-
-const internalPermissionSet = [
-    {_id: 'admin', name: 'admin',label: 'admin', license: 'platform', ...baseRecord},
-    {_id: 'user', name: 'user',label: 'user', license: 'platform', ...baseRecord},
-    {_id: 'supplier', name: 'supplier',label: 'supplier', license: 'community', ...baseRecord},
-    {_id: 'customer', name: 'customer', label: 'customer', license: 'community',...baseRecord}
-];
-
+const objectql = require('@steedos/objectql');
 const getLng = function(userId){
     return Steedos.locale(userId, true);
 }
 
-const getLngInternalPermissionSet = function(lng){
+const getSourcePermissionSets = function(type){
+    switch (type) {
+        case 'permission_set':
+            return objectql.getSourcePermissionsets();
+        case 'profile':
+            return objectql.getSourceProfiles();
+        default:
+            return objectql.getSourceProfiles().concat(objectql.getSourcePermissionsets());
+    }
+    
+}
 
+const getSourcePermissionSetsKeys = function(type){
+    switch (type) {
+        case 'permission_set':
+            return objectql.getSourcePermissionsetKeys();
+        case 'profile':
+            return objectql.getSourceProfilesKeys();
+        default:
+            return objectql.getSourceProfilesKeys().concat(objectql.getSourcePermissionsetKeys())
+    }
+}
+
+
+const getLngInternalPermissionSet = function(lng, type){
+    const internalPermissionSet = getSourcePermissionSets(type);
     if(!lng){
         return internalPermissionSet;
     }
 
     let lngInternalPermissionSet = [];
     _.each(internalPermissionSet, function(ps){
-        lngInternalPermissionSet.push(Object.assign({}, ps, {label: TAPi18n.__(`permission_set_${ps.name}`, {}, lng)}))
+        lngInternalPermissionSet.push(Object.assign({}, ps, {label: ps.label || TAPi18n.__(`permission_set_${ps.name}`, {}, lng)}))
     })
     return lngInternalPermissionSet;
 }
 
-const getInternalPermissionSet = function(spaceId, lng){
+const getInternalPermissionSet = function(spaceId, lng, type){
     
-    let lngInternalPermissionSet = getLngInternalPermissionSet(lng);
+    let lngInternalPermissionSet = getLngInternalPermissionSet(lng, type);
 
     if(!spaceId){
         return lngInternalPermissionSet;
     }
-    let dbPerms = Creator.getCollection("permission_set").find({space: spaceId, name: {$in: ['admin','user','supplier','customer']}}, {fields:{_id:1, name:1}}).fetch();
+    let dbPerms = Creator.getCollection("permission_set").find({space: spaceId, name: {$in: getSourcePermissionSetsKeys(type) || []}}, {fields:{_id:1, name:1}}).fetch();
     let perms = [];
     _.forEach(lngInternalPermissionSet, function(doc){
         if(!_.find(dbPerms, function(p){
@@ -89,9 +91,9 @@ module.exports = {
     afterFind: async function () {
         if(_.isArray(this.data.values)){
             let filters = InternalData.parserFilters(this.query.filters);
-            if(!_.has(filters, 'type') || (_.has(filters, 'type') && filters.type === 'profile')){
+            if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
                 let lng = getLng(this.userId);
-                let records = getInternalPermissionSet(this.spaceId, lng);
+                let records = getInternalPermissionSet(this.spaceId, lng, filters.type);
                 if(_.has(filters, 'name')){
                     records = _.filter(records, function(record){
                         return record.name == filters.name
@@ -112,24 +114,24 @@ module.exports = {
     afterAggregate: async function () {
         if(_.isArray(this.data.values)){
             let filters = InternalData.parserFilters(this.query.filters);
-            if(!_.has(filters, 'type') || (_.has(filters, 'type') && filters.type === 'profile')){
+            if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
                 let lng = getLng(this.userId);
-                this.data.values = this.data.values.concat(getInternalPermissionSet(this.spaceId, lng))
+                this.data.values = this.data.values.concat(getInternalPermissionSet(this.spaceId, lng, filters.type))
             }
             
         }
     },
     afterCount: async function () {
         let filters = InternalData.parserFilters(this.query.filters);
-        if(!_.has(filters, 'type') || (_.has(filters, 'type') && filters.type === 'profile')){
-            this.data.values = this.data.values + getInternalPermissionSet(this.spaceId, null).length
+        if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
+            this.data.values = this.data.values + getInternalPermissionSet(this.spaceId, null, filters.type).length
         }
     },
     afterFindOne: async function () {
         let id = this.id;
         let spaceId = this.spaceId;
         if(id && _.isEmpty(this.data.values)){
-            if(_.include(['admin','user','supplier','customer'], id) && spaceId){
+            if(_.include(getSourcePermissionSetsKeys(), id) && spaceId){
                 let dbPerms = Creator.getCollection("permission_set").findOne({space: spaceId, name: id});
                 if(dbPerms){
                     this.data.values = dbPerms
