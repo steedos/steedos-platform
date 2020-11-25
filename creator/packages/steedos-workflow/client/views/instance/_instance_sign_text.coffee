@@ -210,8 +210,6 @@ InstanceSignText.helpers =
 			if approve?.is_read
 				if approve.is_finished
 					return ["approved", "rejected", "submitted", "readed"].includes(approve.judge)
-				else
-					return true;
 		return false;
 
 	judge_description: (judge)->
