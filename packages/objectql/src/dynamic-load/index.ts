@@ -1,5 +1,5 @@
 export * from './field'
-export * from './list-view'
+export * from './listview'
 export * from './button'
 export * from './method'
 export * from './actions'
