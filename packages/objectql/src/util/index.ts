@@ -221,7 +221,7 @@ export const loadLayouts = (filePath: string)=>{
 export const loadListViews = (filePath: string)=>{
     let results = []
     const filePatten = [
-        path.join(filePath, "*.listView.yml")
+        path.join(filePath, "*.listview.yml")
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
