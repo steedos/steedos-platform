@@ -220,7 +220,7 @@ const checkFormulaInfiniteLoop = function(_doc){
       space: doc.space,
       name: doc.object
     });
-    loadDBObject(objectConfig)
+    objectCore.loadDBObject(objectConfig)
     delete objectConfig._id;
     try {
       objectql.addObjectFieldFormulaConfig(doc, objectConfig);
