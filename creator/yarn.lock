@@ -1727,7 +1727,7 @@
     validator "^12.2.0"
 
 "@steedos/app-admin@../apps/steedos-app-admin":
-  version "1.22.0-alpha.11"
+  version "1.22.3"
 
 "@steedos/app-contracts@^1.22.1":
   version "1.22.1"
@@ -1738,8 +1738,9 @@
     underscore "1.9.2"
 
 "@steedos/app-crm@../apps/steedos-app-crm":
-  version "1.22.0-alpha.11"
+  version "1.22.3"
   dependencies:
+    "@steedos/plugin-enterprise" "^1.22.3"
     dotenv-flow "^3.2.0"
     underscore "1.9.2"
 
@@ -1889,6 +1890,11 @@
   dependencies:
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
+
+"@steedos/plugin-enterprise@^1.22.3":
+  version "1.22.3"
+  resolved "https://registry.npm.taobao.org/@steedos/plugin-enterprise/download/@steedos/plugin-enterprise-1.22.3.tgz#fce92323b2cebc08648937eae668ab21e5ff2118"
+  integrity sha1-/OkjI7LOvAhkiTfq5mirIeX/IRg=
 
 "@steedos/process@^1.22.1":
   version "1.22.1"
