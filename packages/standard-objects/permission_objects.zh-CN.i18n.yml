@@ -10,7 +10,7 @@ permission_objects_field_modifyAllRecords: 修改所有记录
 permission_objects_field_modifyCompanyRecords: 修改本分部
 permission_objects_field_name: 名称
 permission_objects_field_object_name: 对象
-permission_objects_field_permission_set_id: 权限组
+permission_objects_field_permission_set_id: 权限集
 permission_objects_field_uneditable_fields: 不可编辑字段
 permission_objects_field_unreadable_fields: 不可见字段
 permission_objects_field_unrelated_objects: 禁用关联对象
