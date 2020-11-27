@@ -100,11 +100,11 @@ fields:
     filterable: true
     defaultValue: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
     optionsFunction: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
   company_id:
     label: Main Division
@@ -114,11 +114,11 @@ fields:
     # hidden: false
     defaultValue: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
     optionsFunction: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
 
   position:
@@ -172,7 +172,7 @@ fields:
     name: work_phone
   # company:
   #   type: text
-  #   label: 单位
+  #   label: 分部
   #   group: '-'
   #   hidden: true
   #   name: company

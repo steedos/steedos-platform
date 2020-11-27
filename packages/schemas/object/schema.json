@@ -797,11 +797,11 @@
                 },
                 "viewCompanyRecords": {
                     "type": "boolean",
-                    "description": "查看本单位"
+                    "description": "查看本分部"
                 },
                 "modifyCompanyRecords": {
                     "type": "boolean",
-                    "description": "修改本单位"
+                    "description": "修改本分部"
                 },
                 "disabled_list_views": {
                     "type": "array",
