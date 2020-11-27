@@ -1,5 +1,7 @@
 Steedos.ObjectFieldManager = {};
 
+Steedos.ObjectFieldManager.__lastDoc = null;
+
 const baseFieldsName = [{ "name": "object", "required": true }, { "name": "label", "required": true }, {name: '_name', required: true}, { "name": "type", "required": true }, { "name": "defaultValue" }, { "name": "group" }, { "name": "sort_no" }, { "name": "is_name" }, { "name": "required" }, { "name": "is_wide" }, { "name": "readonly" }, { "name": "hidden" }, { "name": "omit" }, { "name": "index" }, { "name": "sortable" }, { "name": "searchable" }, { "name": "filterable" }, {"name":"inlineHelpText"},{"name":"description"}];
 
 function getFieldsByType(doc, type, dataType) {
@@ -78,6 +80,13 @@ function getFieldsByType(doc, type, dataType) {
 
 
 Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
+  var __lastDoc = Steedos.ObjectFieldManager.__lastDoc;
+  if(__lastDoc && __lastDoc._id == doc._id && __lastDoc.type == doc.type && __lastDoc.data_type == doc.data_type){
+    return false;
+  }else{
+    Steedos.ObjectFieldManager.__lastDoc = doc;
+  }
+
   var clone = require('clone');
   var fields = clone(Creator.getObject("object_fields").fields);
   var showFields = baseFieldsName.concat(getFieldsByType(doc, doc.type, doc.data_type));
@@ -107,7 +116,6 @@ Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
   })
 
   var objectSchema = Creator.getObjectSchema({fields: fields});
-
   Object.assign(schema, new SimpleSchema(objectSchema)) 
 }
 

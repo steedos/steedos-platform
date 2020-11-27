@@ -95,8 +95,10 @@ if(Meteor.isClient){
         'click .add-item-tr': function(event, template) {
             var field = template.data.name;
 			fieldValues = AutoForm.getFieldValue(field, template.formId);
-            var index = fieldValues ? fieldValues.length : 0;
-			Blaze.renderWithData(Template.creatorTableTr, {index: index, value: [], name: field, formId: template.formId}, $("#"+field+"Tbody", $("#"+template.data.atts.id))[0], null, template.view)
+			var trTable = $('[data-schema-key="'+field+'"]');
+			var index = Number(trTable[0].dataset.maxIndex);
+			trTable[0].dataset.maxIndex = Number(trTable[0].dataset.maxIndex) + 1;
+			Blaze.renderWithData(Template.creatorTableTr, {index: index, value: [], name: field, formId: template.formId}, $("#"+field+"Tbody", $("#"+template.data.atts.id))[0], null, template.view);
         },
         
         'click .delete-row': function(event, template) {
@@ -139,6 +141,15 @@ if(Meteor.isClient){
     };
 
     Template.creatorTable.helpers({
+		maxIndex: function(){
+			if($('[data-schema-key="'+Template.instance().data.name+'"]').length > 0 && _.has($('[data-schema-key="'+Template.instance().data.name+'"]')[0].dataset, 'maxIndex')){
+				return $('[data-schema-key="'+Template.instance().data.name+'"]')[0].dataset.maxIndex;
+			}
+			if(Template.instance().data && _.isArray(Template.instance().data.value)){
+				return Template.instance().data.value.length;
+			}
+			return 0;
+		},
         trField: function() {
             if (Template.instance().trField) {
                 return Template.instance().trField.get();
@@ -150,10 +161,8 @@ if(Meteor.isClient){
         }
     });
 
-
 	Template.creatorTableTr.helpers({
 		fieldName: function(index, value){
-
 			var field = Template.instance().data.name;
 
 			var formId = Template.instance().data.formId || AutoForm.getFormId();
@@ -172,7 +181,7 @@ if(Meteor.isClient){
 				}
 				return _value
 			});
-			return keys
+			return keys;
 		},
 		isHiddenField: function(key) {
 			var formId = Template.instance().data.formId || AutoForm.getFormId();

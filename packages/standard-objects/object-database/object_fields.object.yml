@@ -456,11 +456,11 @@ form:
     }
   beforeEdit: !!js/function |
     function(){
-      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
+      return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
     }
   afterEdit: !!js/function |
     function(){
-      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
+      return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
     }
   beforeView: !!js/function |
     function(){
