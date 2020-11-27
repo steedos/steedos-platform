@@ -180,7 +180,7 @@ if Meteor.isClient
 		# if permissions.viewAllRecords
 		# 	# 有所有权限则不另外加过虑条件
 		# else if permissions.viewCompanyRecords
-		# 	# 限制查看本单位时另外加过虑条件
+		# 	# 限制查看本分部时另外加过虑条件
 		# 	if selector.length > 0
 		# 		selector.push "and"
 		# 	userCompanyIds = Creator.getUserCompanyIds()
@@ -299,7 +299,7 @@ if Meteor.isClient
 		# if permissions.viewAllRecords
 		# 	# 有所有权限则不另外加过虑条件
 		# else if permissions.viewCompanyRecords
-		# 	# 限制查看本单位时另外加过虑条件
+		# 	# 限制查看本分部时另外加过虑条件
 		# 	if selector.length > 0
 		# 		selector.push "and"
 		# 	userCompanyIds = Creator.getUserCompanyIds()

@@ -5,10 +5,10 @@ CFDataManager = {};
 // DataManager.flowRoleRemote = new AjaxCollection("flow_roles");
 /*
 * options: {
-* isSelf: 用于生成另外一个树, 用户所属单位
-* isNeedtoSelDefault: 是否默认选中展开的节点， 因为有两棵树， 用户所属单位那棵树不应该默认选中
+* isSelf: 用于生成另外一个树, 用户所属分部
+* isNeedtoSelDefault: 是否默认选中展开的节点， 因为有两棵树， 用户所属分部那棵树不应该默认选中
 * rootOrg: 允许支持组织树上的根节点, 值为organization _id
-* showLimitedCompanyOnly: 是否只显示本单位公司级别的部门
+* showLimitedCompanyOnly: 是否只显示本分部公司级别的部门
 * }
 * */
 //TODO: 选人,选组控件中应该去掉 通讯录的权限限制功能
@@ -21,20 +21,20 @@ CFDataManager.getNode = function (spaceId, node, options) {
 	// console.log("CFDataManager.getNode=>options=", options);
 	
 	if (showLimitedCompanyOnly) {
-		// 限制显示本单位数据时，不考虑通讯录的权限限制功能逻辑
+		// 限制显示本分部数据时，不考虑通讯录的权限限制功能逻辑
 		myContactsLimit = null;
 	}
 	if (node.id == '#') {
-		// 限制显示本单位数据时，第一棵树不显示
+		// 限制显示本分部数据时，第一棵树不显示
 		var selfCompanyOrganizationIds = (showLimitedCompanyOnly) ? null : Steedos.selfCompanyOrganizationIds();
-		//第一棵树: 只显示顶部所属单位，可能是多个单位，之前是显示主部门
+		//第一棵树: 只显示顶部所属分部，可能是多个分部，之前是显示主部门
 		if(options.isSelf){
 			if (showLimitedCompanyOnly) {
-				console.error("限制显示本单位数据时，不应该加载顶部所属单位树")
+				console.error("限制显示本分部数据时，不应该加载顶部所属分部树")
 				return
 			}
 			if (selfCompanyOrganizationIds) {
-				// 只显示顶部所属单位，强制showLimitedCompanyOnly为true调用getRoot，即可得到本单位组织
+				// 只显示顶部所属分部，强制showLimitedCompanyOnly为true调用getRoot，即可得到本分部组织
 				orgs = CFDataManager.getRoot(spaceId, { showLimitedCompanyOnly: true });
 				if (orgs.length) {
 					orgs[0].open = true;
@@ -86,7 +86,7 @@ CFDataManager.getNode = function (spaceId, node, options) {
 				if (orgs.length > 0) {
 					orgs[0].open = true;
 					orgs[0].select = true;
-					// 有所属单位的时候不应该再选中根节点
+					// 有所属分部的时候不应该再选中根节点
 					if (selfCompanyOrganizationIds) {
 						orgs[0].select = false;
 					}
@@ -94,8 +94,8 @@ CFDataManager.getNode = function (spaceId, node, options) {
 			} else {
 				orgs = CFDataManager.getRoot(spaceId, options);
 				if(orgs.length){
-					// 当没有限制查看本部门的时候，顶部有所属单位树时，根节点中应该排除掉所属单位树中已存在的组织Id
-					// 限制显示本单位数据时，不加载selfCompanyOrganizationIds
+					// 当没有限制查看本部门的时候，顶部有所属分部树时，根节点中应该排除掉所属分部树中已存在的组织Id
+					// 限制显示本分部数据时，不加载selfCompanyOrganizationIds
 					if (!showLimitedCompanyOnly && selfCompanyOrganizationIds){
 						orgs = _.filter(orgs, function(n){
 							return selfCompanyOrganizationIds.indexOf(n._id) < 0;
@@ -104,7 +104,7 @@ CFDataManager.getNode = function (spaceId, node, options) {
 					if(orgs.length){
 						orgs[0].open = true;
 						orgs[0].select = true;
-						// 顶部有所属单位树时不应该再选中根节点，且所属单位可能自动展开，所以根节点也不应该再自动展开
+						// 顶部有所属分部树时不应该再选中根节点，且所属分部可能自动展开，所以根节点也不应该再自动展开
 						if (selfCompanyOrganizationIds) {
 							orgs[0].open = false;
 							orgs[0].select = false;
@@ -436,8 +436,8 @@ CFDataManager.getRoot = function (spaceId, options) {
 		}
 		else{
 			query._id = "-1";
-			toastr.error("您的单位信息未设置，请联系系统管理员。");
-			console.error("只显示本单位的部门时要求当前用户的company_ids不为空，请联系管理员修正相关数据");
+			toastr.error("您的分部信息未设置，请联系系统管理员。");
+			console.error("只显示本分部的部门时要求当前用户的company_ids不为空，请联系管理员修正相关数据");
 		}
 	}
 
