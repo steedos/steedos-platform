@@ -180,7 +180,7 @@ if Meteor.isClient
 		# if permissions.viewAllRecords
 		# 	# 有所有权限则不另外加过虑条件
 		# else if permissions.viewCompanyRecords
-		# 	# 限制查看本单位时另外加过虑条件
+		# 	# 限制查看本分部时另外加过虑条件
 		# 	if selector.length > 0
 		# 		selector.push "and"
 		# 	userCompanyIds = Creator.getUserCompanyIds()
@@ -299,7 +299,7 @@ if Meteor.isClient
 		# if permissions.viewAllRecords
 		# 	# 有所有权限则不另外加过虑条件
 		# else if permissions.viewCompanyRecords
-		# 	# 限制查看本单位时另外加过虑条件
+		# 	# 限制查看本分部时另外加过虑条件
 		# 	if selector.length > 0
 		# 		selector.push "and"
 		# 	userCompanyIds = Creator.getUserCompanyIds()
@@ -896,6 +896,11 @@ if Meteor.isClient
 		if !officeOnlineUrl || (officeOnlineUrl == "")
 			toastr.error TAPi18n.__("creator_office_online_web_url_required")
 			return false
+		userId = Meteor.userId();
+		spaceId = Steedos.spaceId();
+		token = Accounts._storedLoginToken();
+		# url添加验证参数
+		fileUrl = fileUrl + "?X-Space-Id=" + spaceId + "&X-User-Id=" + userId + "&X-Auth-Token=" + token;
 		openUrl = officeOnlineUrl + encodeURIComponent(fileUrl);
 		# console.log("-----openUrl------: ",openUrl);
 		return Steedos.openWindow(openUrl);

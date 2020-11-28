@@ -40,7 +40,7 @@ getObjectsPermissionObjects = (space_id, objects_name)->
 				objectsPermissionObjects.push permission_object._id
 	return objectsPermissionObjects
 
-#获取对象下权限集对应的权限组
+#获取对象下权限集对应的权限集
 getObjectsPermissionSet = (space_id, objects_name)->
 	objectsPermissionSet = []
 	if objects_name && _.isArray(objects_name) && objects_name.length > 0

@@ -3,7 +3,7 @@
 
 /packages/**/node_modules
 /apps/**/node_modules
-/apps/contracts/src/_test
+/apps/contracts
 /server/node_modules
 /node_modules
 

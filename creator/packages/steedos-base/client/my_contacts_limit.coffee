@@ -1,6 +1,6 @@
 Meteor.startup ->
 	if Meteor.isClient
-		# 默认配置为限制在本单位范围
+		# 默认配置为限制在本分部范围
 		Steedos.my_contacts_limit = 
 			isLimit: true
 			outside_organizations: []

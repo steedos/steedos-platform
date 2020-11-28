@@ -60,7 +60,7 @@ let upBySpace = async function (spaceId) {
     }
 
     if (orgs.length === 1){
-        // 工作区只有一个单位时，应该自动把 space_users.company_id, company_ids, organizations.company_id 都设置为单位的ID值
+        // 工作区只有一个分部时，应该自动把 space_users.company_id, company_ids, organizations.company_id 都设置为分部的ID值
         let rootOrgId = orgs[0]._id;
         console.log("ONLYONE COMPANY:", rootOrgId);
         let updatedDoc = await db.updateMany("organizations", [["space", "=", spaceId]], {
@@ -81,7 +81,7 @@ let upBySpace = async function (spaceId) {
     }
 
     // 因为is_group属性作废，所以需要把is_group为true及is_company为true的organizations应该更新is_company为false
-    // 否则会留下原来is_group为true的组织为"单位级组织"，但其实它们不是单位级的
+    // 否则会留下原来is_group为true的组织为"分部级组织"，但其实它们不是分部级的
     // is_group值保持不变，方便执行migrate down
     let groupOrgs = await db.find("organizations", {
         filters: [["space", "=", spaceId], ["is_company", "=", true], ["is_group", "=", true]],

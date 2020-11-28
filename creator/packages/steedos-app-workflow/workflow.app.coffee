@@ -7,7 +7,7 @@
 # 	# - template_name 指向 Meteor Template, url=/app/admin/page/{template_name}/
 # 	# - object_name 指向对象, url=/app/admin/{object_name}/grid/all/	
 # 	admin_menus: [
-# 		# 单位管理员可以创建和设置流程及相关参数。
+# 		# 分部管理员可以创建和设置流程及相关参数。
 # 		{ _id: 'menu_workflow', name: '审批', permission_sets: ["user"], expanded: false },
 # 		{ _id: 'flows', name: '流程', permission_sets: ["admin", "workflow_admin"], object_name: "flows", parent: 'menu_workflow' },
 # 		{ _id: 'flow_roles', name: '审批岗位', permission_sets: ["admin", "workflow_admin"], object_name: "flow_roles", parent: 'menu_workflow' },

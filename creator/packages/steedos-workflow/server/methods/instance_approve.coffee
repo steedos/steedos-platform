@@ -69,6 +69,8 @@ Meteor.methods
 
 		trimDescription = description.trim()
 
+		showBlankApproveDescription = Meteor.settings.public.workflow?.showBlankApproveDescription
+
 		session_userId = this.userId
 
 		if lastSignApprove
@@ -89,12 +91,12 @@ Meteor.methods
 					if sign_field_code
 						upObj["traces.$.approves.#{idx}.sign_field_code"] = sign_field_code
 					upObj["traces.$.approves.#{idx}.description"] = description
-					upObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription then true else false
+					upObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription || showBlankApproveDescription then true else false
 					upObj["traces.$.approves.#{idx}.modified"] = new Date()
 					upObj["traces.$.approves.#{idx}.modified_by"] = session_userId
 					upObj["traces.$.approves.#{idx}.read_date"] = new Date()
 
-			if Meteor.settings.public.workflow?.keepLastSignApproveDescription == false && !!currentApproveDescription != !!trimDescription
+			if Meteor.settings.public.workflow?.keepLastSignApproveDescription == false && (!!currentApproveDescription != !!trimDescription || showBlankApproveDescription)
 				ins = db.instances.findOne({ _id: instanceId }, { fields: { "traces": 1 } })
 				traces = ins.traces
 				currentTrace = _.find traces, (t) ->
@@ -104,7 +106,7 @@ Meteor.methods
 					if t.step == currentStep
 						t?.approves.forEach (appr, aIdx) ->
 							if appr.handler == session_userId && appr.is_finished && appr._id != approveId && !_.has(appr, 'custom_sign_show')
-								if trimDescription && appr.sign_show == true && (sign_field_code == "" || !appr.sign_field_code || sign_field_code == appr.sign_field_code)
+								if (trimDescription && appr.sign_show == true && (sign_field_code == "" || !appr.sign_field_code || sign_field_code == appr.sign_field_code)) || showBlankApproveDescription
 									upObj["traces.#{tIdx}.approves.#{aIdx}.sign_show"] = false
 									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = approveId
 								else if appr.keepLastSignApproveDescription == approveId
