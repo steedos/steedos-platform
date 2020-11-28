@@ -104,7 +104,10 @@ Creator.getRecordSafeObject = (record, object_name)->
 
 Creator.getRecordSafeFields = (record, object_name)->
 	safeObject = Creator.getRecordSafeObject(record, object_name)
-	return 	_.sortBy(safeObject.fields, "sort_no")
+	fields = {};
+	_.each _.sortBy(safeObject.fields, "sort_no"), (v)->
+		fields[v.name] = v
+	return fields;
 
 Creator.getRecordSafeField = (field, record, object_name)->
 	safeFields = Creator.getRecordSafeFields(record, object_name);
