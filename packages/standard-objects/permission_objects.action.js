@@ -18,7 +18,7 @@ module.exports = {
             }
             
             if(_.include(['admin','user','supplier','customer'], permissionSetId)){
-                return toastr.error("请先自定义权限组")
+                return toastr.error("请先自定义权限集")
             }
         }
         Creator.odata.insert(object_name, Object.assign(newDoc, {permission_set_id: permissionSetId}), function(result, error){

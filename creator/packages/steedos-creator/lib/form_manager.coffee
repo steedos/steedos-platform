@@ -152,9 +152,10 @@ FormManager.runViewEditHook = (object_name, hookName, schema, record, doc)->
 			doc: _record,
 			schema: _schema
 		}
-		fun.apply(context)
-		schema.set(_schema)
-		record.set(_record)
+		_goOn = fun.apply(context);
+		if _goOn != false
+			schema.set(_schema)
+			record.set(_record)
 
 #FormManager.afterView = (object_name, schema, record)->
 #	object = Creator.getObject(object_name);

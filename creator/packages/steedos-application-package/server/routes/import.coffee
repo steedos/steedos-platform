@@ -172,17 +172,17 @@ Creator.import_app_package = (userId, space_id, imp_data, from_template)->
 				if !_.include(object_names, list_view.object_name) && !_.include(imp_object_names, list_view.object_name)
 					throw new Meteor.Error("500", "列表视图'#{list_view.name}'中指定的对象'#{list_view.object_name}'不存在")
 
-		# 5 permission_set校验：判断权限组中的授权应用assigned_apps; 权限组的名称不允许重复
+		# 5 permission_set校验：判断权限集中的授权应用assigned_apps; 权限集的名称不允许重复
 		permission_set_ids = _.pluck(imp_data.permission_set, "_id")
 		if _.isArray(imp_data.permission_set) && imp_data.permission_set.length > 0
 			_.each imp_data.permission_set, (permission_set)->
 				if Creator.getCollection("permission_set").findOne({space: space_id, name: permission_set.name},{fields:{_id:1}})
-					throw new Meteor.Error 500, "权限组名称'#{permission_set.name}'不能重复"
+					throw new Meteor.Error 500, "权限集名称'#{permission_set.name}'不能重复"
 				_.each permission_set.assigned_apps, (app_id)->
 					if !_.include(_.keys(Creator.Apps), app_id) && !_.include(imp_app_ids, app_id)
-						throw new Meteor.Error("500", "权限组'#{permission_set.name}'的授权应用'#{app_id}'不存在")
+						throw new Meteor.Error("500", "权限集'#{permission_set.name}'的授权应用'#{app_id}'不存在")
 
-		# 6 permission_objects校验：判断权限集中指定的object是否存在；判断权限组标识是是否有效
+		# 6 permission_objects校验：判断权限集中指定的object是否存在；判断权限集标识是是否有效
 		if _.isArray(imp_data.permission_objects) && imp_data.permission_objects.length > 0
 			_.each imp_data.permission_objects, (permission_object)->
 				if !permission_object.object_name || !_.isString(permission_object.object_name)
@@ -193,7 +193,7 @@ Creator.import_app_package = (userId, space_id, imp_data, from_template)->
 				if !_.has(permission_object, "permission_set_id") || !_.isString(permission_object.permission_set_id)
 					throw new Meteor.Error("500", "权限集'#{permission_object.name}'的permission_set_id属性无效")
 				else if !_.include(permission_set_ids, permission_object.permission_set_id)
-					throw new Meteor.Error("500", "权限集'#{permission_object.name}'指定的权限组'#{permission_object.permission_set_id}'值不在导入的permission_set中")
+					throw new Meteor.Error("500", "权限集'#{permission_object.name}'指定的权限集'#{permission_object.permission_set_id}'值不在导入的permission_set中")
 
 		# 7 reports校验：判断报表中指定的object是否存在
 		if _.isArray(imp_data.reports) && imp_data.reports.length > 0

@@ -151,6 +151,9 @@ Template.creator_table_cell.helpers
 	isType: (type) ->
 		return this.type is type
 
+	fieldDataType: () ->
+		return this.field.data_type || this.field.type
+
 	isExtraField: () ->
 		fieldName = this.field?.name
 		return fieldName == "created_by" or fieldName == "modified_by"

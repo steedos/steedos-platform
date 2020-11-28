@@ -134,11 +134,11 @@ if Meteor.isServer
 			objects: {}
 			assigned_apps: []
 		###
-		权限组说明:
-		内置权限组-admin,user,member,guest,workflow_admin,organization_admin
-		自定义权限组-数据库中新建的除内置权限组以外的其他权限组
-		特定用户集合权限组（即users属性不可配置）-admin,user,member,guest
-		可配置用户集合权限组（即users属性可配置）-workflow_admin,organization_admin以及自定义权限组
+		权限集说明:
+		内置权限集-admin,user,member,guest,workflow_admin,organization_admin
+		自定义权限集-数据库中新建的除内置权限集以外的其他权限集
+		特定用户集合权限集（即users属性不可配置）-admin,user,member,guest
+		可配置用户集合权限集（即users属性可配置）-workflow_admin,organization_admin以及自定义权限集
 		###
 
 		isSpaceAdmin = false
@@ -256,13 +256,13 @@ if Meteor.isServer
 			if psetBase?.assigned_apps?.length
 				apps = _.union apps, psetBase.assigned_apps
 			else
-				# user权限组中的assigned_apps表示所有用户具有的apps权限，为空则表示有所有apps权限，不需要作权限判断了
+				# user权限集中的assigned_apps表示所有用户具有的apps权限，为空则表示有所有apps权限，不需要作权限判断了
 				return []
 			_.each psets, (pset)->
 				if !pset.assigned_apps
 					return
 				if pset.name == "admin" ||  pset.name == "user" || pset.name == 'supplier' || pset.name == 'customer'
-					# 这里之所以要排除admin/user，是因为这两个权限组是所有权限组中users属性无效的权限组，特指工作区管理员和所有用户
+					# 这里之所以要排除admin/user，是因为这两个权限集是所有权限集中users属性无效的权限集，特指工作区管理员和所有用户
 					return
 				apps = _.union apps, pset.assigned_apps
 			return _.without(_.uniq(apps),undefined,null)
@@ -323,7 +323,7 @@ if Meteor.isServer
 		# 把db及yml中的permission_objects合并，优先取db中的
 		result = []
 		_.each object.permission_set, (ops, ops_key)->
-			# 把yml中除了特定用户集合权限组"admin", "user", "member", "guest"外的其他对象权限先存入result
+			# 把yml中除了特定用户集合权限集"admin", "user", "member", "guest"外的其他对象权限先存入result
 			# if ["admin", "user", "member", "guest", "workflow_admin", "organization_admin"].indexOf(ops_key) < 0
 			if ["admin", "user", "member", "guest"].indexOf(ops_key) < 0
 				currentPset = psets.find (pset)-> return pset.name == ops_key

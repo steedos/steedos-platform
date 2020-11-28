@@ -1,7 +1,7 @@
 instances__object: 审批
 instances_action_view_instance: 查看审批单
 instances_field_applicant: 申请人
-instances_field_applicant_company: 申请人所属单位
+instances_field_applicant_company: 申请人所属分部
 instances_field_applicant_name: 申请人
 instances_field_applicant_organization: 申请人部门
 instances_field_applicant_organization_fullname: 申请人部门全称

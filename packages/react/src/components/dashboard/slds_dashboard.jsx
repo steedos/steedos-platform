@@ -285,7 +285,7 @@ class Dashboard extends React.Component {
                     {
                         value.panels.map((panel, index) => {
                             // panel.assistiveText一般为空，继承相关类型的assistiveText即可，不过panel本身定义的assistiveText优先
-                            panel.assistiveText = Object.assign({}, value.assistiveText[panel.type], panel.assistiveText);
+                            panel.assistiveText = Object.assign({}, value.assistiveText && value.assistiveText[panel.type], panel.assistiveText);
                             let panelLabel = panel.label;
                             if(!panelLabel){
                                 panelLabel = panel.assistiveText.label;
