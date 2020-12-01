@@ -275,7 +275,7 @@ export async function getSpaceObjectBootStrap(req, res) {
                 objectConfig.enable_process = true
             }
         }
-        return res.status(200).send(objectConfig);
+        return res.status(200).send(objectConfig || {});
     }).run();
 }
 
