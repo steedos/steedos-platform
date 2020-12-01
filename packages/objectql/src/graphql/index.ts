@@ -29,6 +29,8 @@ const BASIC_TYPE_MAPPING = {
 }
 
 const knownTypes = {};
+const relatedObjects = {};
+const RELATEDPREFIX = 'related__';
 
 function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
     let objTypeFields = {};
@@ -88,6 +90,28 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 }
             }
         }
+        else if (v.type == RELATEDPREFIX) {
+            let objectName = v.reference_to;
+            let corName = correctName(objectName);
+            if (!knownTypes[corName]) {
+                let object = steedosSchema.getObject(objectName);
+                if (object) {
+                    knownTypes[corName] = buildGraphQLObjectType(object, steedosSchema, knownTypes)
+                }
+            }
+            objTypeFields[k] = {
+                type: new GraphQLList(knownTypes[corName]),
+                args: {},
+                resolve: async function (source, args, context, info) {
+                    let field = relatedObjects[corName].fields[info.fieldName];
+                    let relatedObjName = info.fieldName.replace(RELATEDPREFIX, '');
+                    let object = steedosSchema.getObject(relatedObjName);
+                    let userSession = context ? context.user : null;
+                    let filters = [[field.name, "=", source._id]];
+                    return object.find({ filters: filters }, userSession);
+                }
+            };
+        }
         else {
             objTypeFields[k] = {
                 type: GraphQLJSON
@@ -106,14 +130,46 @@ function buildGraphQLObjectType(obj, steedosSchema, knownTypes) {
 
     let corName = correctName(obj.name);
 
+    let relatedFields = relatedObjects[corName].fields;
+
     return new GraphQLObjectType({
         name: corName, fields: function () {
-            return convertFields(steedosSchema, obj.fields, knownTypes);
+            return convertFields(steedosSchema, _.extend(obj.fields, relatedFields), knownTypes);
         }
     })
 }
 
 export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: SteedosDataSourceType): GraphQLSchema {
+    _.each(steedosSchema.getDataSources(), function (datasource) {
+        _.each(datasource.getObjects(), function (obj, object_name) {
+            if (!obj.name || !obj.fields) {
+                return;
+            }
+            let objName: string = correctName(obj.name);
+
+            if (!relatedObjects[objName]) {
+                relatedObjects[objName] = { fields: {} };
+            }
+
+            _.each(obj.fields, function (v, k) {
+                if (v.type == 'master_detail' && v.reference_to && _.isString(v.reference_to)) {
+                    let refName = correctName(v.reference_to);
+                    if (!relatedObjects[refName]) {
+                        relatedObjects[refName] = { fields: {} };
+                    }
+
+                    relatedObjects[refName].fields[`${RELATEDPREFIX}${objName}`] = {
+                        type: RELATEDPREFIX,
+                        multiple: v.multiple,
+                        reference_to: v.reference_to,
+                        name: v.name
+                    }
+
+                }
+            })
+        })
+    })
+
     let rootQueryfields = {};
     _.each(steedosSchema.getDataSources(), function (datasource) {
         _.each(datasource.getObjects(), function (obj, object_name) {
