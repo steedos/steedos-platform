@@ -91,16 +91,17 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
             }
         }
         else if (v.type == RELATEDPREFIX) {
-            let objectName = v.reference_to;
-            let corName = correctName(objectName);
-            if (!knownTypes[corName]) {
-                let object = steedosSchema.getObject(objectName);
+            let corName = v.reference_to;
+            let objName = v.objectName;
+            if (!knownTypes[objName]) {
+                let object = steedosSchema.getObject(objName);
                 if (object) {
-                    knownTypes[corName] = buildGraphQLObjectType(object, steedosSchema, knownTypes)
+                    knownTypes[objName] = buildGraphQLObjectType(object, steedosSchema, knownTypes)
                 }
             }
+
             objTypeFields[k] = {
-                type: new GraphQLList(knownTypes[corName]),
+                type: new GraphQLList(knownTypes[objName]),
                 args: {},
                 resolve: async function (source, args, context, info) {
                     let field = relatedObjects[corName].fields[info.fieldName];
@@ -160,14 +161,36 @@ function collectRelatedObjects(steedosSchema: SteedosSchema) {
 
                     relatedObjects[refName].fields[`${RELATEDPREFIX}${objName}`] = {
                         type: RELATEDPREFIX,
-                        multiple: v.multiple,
-                        reference_to: v.reference_to,
-                        name: v.name
+                        reference_to: refName,
+                        name: v.name,
+                        objectName: objName
                     }
 
                 }
             })
-            
+            let enabledRefNames = [];
+            if (obj.enable_files) {
+                enabledRefNames.push('cms_files');
+            }
+            if (obj.enable_tasks) {
+                enabledRefNames.push('tasks');
+            }
+            if (obj.enable_events) {
+                enabledRefNames.push('events');
+            }
+            if (obj.enable_audit) {
+                enabledRefNames.push('audit_records');
+            }
+            _.each(enabledRefNames, function (refName) {
+                relatedObjects[objName].fields[`${RELATEDPREFIX}${refName}`] = {
+                    type: RELATEDPREFIX,
+                    reference_to: objName,
+                    name: refName == 'cms_files' ? 'parent' : 'related_to',
+                    objectName: refName,
+                    by_enabled: true // 通过enable方式关联的子表打上标记供查询时判断
+                }
+            })
+
         })
     })
 }
