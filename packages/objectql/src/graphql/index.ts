@@ -105,10 +105,16 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 args: {},
                 resolve: async function (source, args, context, info) {
                     let field = relatedObjects[corName].fields[info.fieldName];
-                    let relatedObjName = info.fieldName.replace(RELATEDPREFIX, '');
+                    let relatedObjName = field.objectName;
                     let object = steedosSchema.getObject(relatedObjName);
                     let userSession = context ? context.user : null;
-                    let filters = [[field.name, "=", source._id]];
+                    let filters = [];
+                    if (field.by_enabled) {
+                        filters = [[`${field.name}.o`, "=", corName], [`${field.name}.ids`, "=", source._id]];
+                    }
+                    else {
+                        filters = [[field.name, "=", source._id]];
+                    }
                     return object.find({ filters: filters }, userSession);
                 }
             };
