@@ -139,7 +139,7 @@ function buildGraphQLObjectType(obj, steedosSchema, knownTypes) {
     })
 }
 
-export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: SteedosDataSourceType): GraphQLSchema {
+function collectRelatedObjects(steedosSchema: SteedosSchema) {
     _.each(steedosSchema.getDataSources(), function (datasource) {
         _.each(datasource.getObjects(), function (obj, object_name) {
             if (!obj.name || !obj.fields) {
@@ -167,8 +167,13 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
 
                 }
             })
+            
         })
     })
+}
+
+export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: SteedosDataSourceType): GraphQLSchema {
+    collectRelatedObjects(steedosSchema);
 
     let rootQueryfields = {};
     _.each(steedosSchema.getDataSources(), function (datasource) {
