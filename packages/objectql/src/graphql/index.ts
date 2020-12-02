@@ -68,6 +68,9 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 resolve: async function (source, args, context, info) {
                     let object = steedosSchema.getObject(objectName);
                     let userSession = context ? context.user : null;
+                    if (object.name == 'users') {
+                        userSession = null;
+                    }
                     let record = await object.findOne(source[info.fieldName], {}, userSession);
                     return record;
                 }
