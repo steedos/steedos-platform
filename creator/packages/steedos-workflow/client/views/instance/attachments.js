@@ -332,7 +332,7 @@ Template.instance_attachment.events({
 			// 考虑rootUrl带路由和内外网服务地址一样等问题
 			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id + "/" + file_name;
 
-			Creator.officeOnlinePreview(url);
+			Creator.officeOnlinePreview(url,file_name);
 		}
 	}
 })
@@ -859,7 +859,7 @@ Template.ins_attach_version_modal.events({
 			// 考虑rootUrl带路由和内外网服务地址一样等问题
 			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id + "/" + file_name;
 
-			Creator.officeOnlinePreview(url);
+			Creator.officeOnlinePreview(url,file_name);
 		}
 	}
 
