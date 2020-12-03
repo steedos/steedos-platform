@@ -144,7 +144,7 @@ function buildGraphQLObjectType(obj, steedosSchema, knownTypes) {
 
     return new GraphQLObjectType({
         name: corName, fields: function () {
-            return convertFields(steedosSchema, _.extend(obj.fields, relatedFields), knownTypes);
+            return convertFields(steedosSchema, _.extend({}, obj.fields, relatedFields), knownTypes);
         }
     })
 }
