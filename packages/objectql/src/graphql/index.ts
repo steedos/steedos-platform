@@ -108,15 +108,20 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 args: {},
                 resolve: async function (source, args, context, info) {
                     let field = relatedObjects[corName].fields[info.fieldName];
+                    let referenceToField = field.reference_to_field;
                     let relatedObjName = field.objectName;
                     let object = steedosSchema.getObject(relatedObjName);
                     let userSession = context ? context.user : null;
                     let filters = [];
+                    let _idValue = source._id;
+                    if (referenceToField) {
+                        _idValue = source[referenceToField];
+                    }
                     if (field.by_enabled) {
                         filters = [[`${field.name}.o`, "=", corName], [`${field.name}.ids`, "=", source._id]];
                     }
                     else {
-                        filters = [[field.name, "=", source._id]];
+                        filters = [[field.name, "=", _idValue]];
                     }
                     return object.find({ filters: filters }, userSession);
                 }
@@ -171,6 +176,7 @@ function collectRelatedObjects(steedosSchema: SteedosSchema) {
                     relatedObjects[refName].fields[`${RELATEDPREFIX}${objName}`] = {
                         type: RELATEDPREFIX,
                         reference_to: refName,
+                        reference_to_field: v.reference_to_field,
                         name: v.name,
                         objectName: objName
                     }
