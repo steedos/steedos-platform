@@ -87,6 +87,9 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                         return null;
                     }
                     let userSession = context ? context.user : null;
+                    if (object.name == 'users') {
+                        userSession = null;
+                    }
                     return await object.find({
                         filters: filters.join(' or ')
                     }, userSession);
