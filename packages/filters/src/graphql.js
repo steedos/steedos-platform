@@ -89,7 +89,7 @@ let formatFieldsToGraphqlQuery = (fields) => {
  * @param {*} filters ,请求的过滤条件
  * @param {*} fields ,请求的字段，支持["a.b.c","m","n"]或"a.b.c,m,n"这种语法
  */
-let formatFiltersToGraphqlQuery = (filters, fields, userContext, odataProtocolVersion, forceLowerCase) => {
+let formatFiltersToGraphqlQuery = (objectName, filters, fields, userContext, odataProtocolVersion, forceLowerCase) => {
     if(!_.isString(filters)){
         filters = formatFiltersToODataQuery(filters, userContext, odataProtocolVersion, forceLowerCase);
     }
@@ -97,7 +97,7 @@ let formatFiltersToGraphqlQuery = (filters, fields, userContext, odataProtocolVe
     let graphqlFields = formatFieldsToGraphqlQuery(fields);
     let graphqlQuery = `
         query {
-            contracts${filtersWrap}${graphqlFields}
+            ${objectName}${filtersWrap}${graphqlFields}
         }
     `;
     return graphqlQuery;
