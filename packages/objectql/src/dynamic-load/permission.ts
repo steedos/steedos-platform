@@ -1,5 +1,5 @@
 import { Dictionary } from '@salesforce/ts-types';
-import { getObjectConfig, getDataSource, SteedosObjectPermissionTypeConfig } from '../types'
+import { getObjectConfig, SteedosObjectPermissionTypeConfig } from '../types'
 import _ = require('lodash');
 var util = require('../util');
 var clone = require('clone');
@@ -30,7 +30,11 @@ export const addPermissionConfig = (objectName: string, json: SteedosObjectPermi
     }
     let object = getObjectConfig(json.object_name);
     if (object) {
-        getDataSource(object.datasource).setObjectPermission(objectName, json);
+        if(!object.permission_set){
+            object.permission_set = {}
+        }
+        util.extend(object.permission_set, {[json.name]: json})
+        // getDataSource(object.datasource).setObjectPermission(objectName, json);
     } else {
         addLazyLoad(objectName, json);
     }
