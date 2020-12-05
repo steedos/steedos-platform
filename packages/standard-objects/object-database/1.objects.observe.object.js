@@ -4,10 +4,18 @@ var objectCore = require('./objects.core.js');
 Meteor.startup(function () {
     var server_objects_init;
     var _changeServerObjects = function (document, oldDocument) {
-        objectCore.loadObject(document, oldDocument)
+        try {
+            objectCore.loadObject(document, oldDocument)
+        } catch (error) {
+            throw error
+        }
     };
     var _removeServerObjects = function (document) {
-        objectCore.removeObject(document);
+        try {
+            objectCore.removeObject(document);
+        } catch (error) {
+            throw error
+        }
     };
 
     var config = objectql.getSteedosConfig();
