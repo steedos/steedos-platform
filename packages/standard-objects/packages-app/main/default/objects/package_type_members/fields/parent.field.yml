@@ -1,0 +1,8 @@
+name: parent
+label: 父对象
+is_wide: true
+hidden: true
+reference_to: objects
+reference_to_field: name
+sort_no: 140
+type: lookup

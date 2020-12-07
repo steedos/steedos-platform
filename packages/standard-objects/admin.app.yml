@@ -98,13 +98,6 @@ admin_menus:
     object_name: objects
     parent: objects_manager
     sort: 1
-  - _id: apps
-    name: Apps
-    permission_sets:
-      - admin
-    object_name: apps
-    parent: objects_manager
-    sort: 1.2
   - _id: datasources_manager
     name: Datasources
     permission_sets:

@@ -1,0 +1,20 @@
+name: package_type
+filterable: false
+hidden: true
+index: false
+is_name: false
+is_wide: false
+label: 软件包类型
+multiple: false
+omit: false
+options:
+  - label: 受管
+    value: managed
+  - label: 不受管
+    value: unmanaged
+readonly: false
+required: false
+searchable: false
+sort_no: 140
+sortable: false
+type: select

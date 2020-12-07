@@ -1,0 +1,5 @@
+name: install
+is_enable: true
+label: 安装
+'on': list
+visible: true

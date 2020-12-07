@@ -1,0 +1,5 @@
+name: view_components
+is_enable: false
+label: 查看组件
+'on': record_only
+visible: true

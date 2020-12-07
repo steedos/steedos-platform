@@ -1,0 +1,4 @@
+name: fields.$.component_type
+label: Component Type
+readonly: true
+type: text

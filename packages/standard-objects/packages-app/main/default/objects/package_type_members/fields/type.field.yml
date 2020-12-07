@@ -1,0 +1,34 @@
+name: type
+defaultValue: null
+description: null
+filterable: false
+group: null
+index: false
+inlineHelpText: null
+is_name: false
+is_wide: false
+label: 类型
+multiple: false
+hidden: true
+omit: true
+options:
+  - label: 对象权限
+    value: permissions
+  - label: 报表
+    value: reports
+  - label: 自定义对象
+    value: objects
+  - label: 列表视图
+    value: object_listviews
+  - label: 自定义字段
+    value: object_fields
+  - label: 权限集
+    value: permissionsets
+  - label: 简档
+    value: profiles
+readonly: false
+required: false
+searchable: false
+sort_no: 130
+sortable: false
+type: select

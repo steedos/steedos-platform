@@ -1,0 +1,9 @@
+name: name
+index: true
+label: 名称
+hidden: true
+omit: true
+required: false
+searchable: true
+sort_no: 100
+type: text
