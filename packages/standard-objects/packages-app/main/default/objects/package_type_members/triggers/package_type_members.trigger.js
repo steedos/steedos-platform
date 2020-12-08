@@ -1,5 +1,5 @@
 const objectql = require('@steedos/objectql');
-
+//TODO 待优化
 async function getParent(member){
     let memberId = member.ids[0];
     switch (member.o) {
