@@ -12,6 +12,7 @@ import {
 var _ = require("underscore");
 import { ObjectId } from 'mongodb';
 var GraphQLJSON = require('graphql-type-json');
+import { getFieldLabel } from './utils';
 
 /** Maps basic creator field types to basic GraphQL types */
 const BASIC_TYPE_MAPPING = {
@@ -31,6 +32,7 @@ const BASIC_TYPE_MAPPING = {
 const knownTypes = {};
 const relatedObjects = {};
 const RELATEDPREFIX = 'related__';
+const LABELSUFFIX = '__label';
 
 function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
     let objTypeFields = {};
@@ -130,6 +132,16 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 }
             };
         }
+        else if (v.type == LABELSUFFIX) {
+            objTypeFields[k] = {
+                type: GraphQLJSON,
+                resolve: function (source, args, context, info) {
+                    let field = relatedObjects[info.parentType.name].fields[info.fieldName];
+                    let userSession = context ? context.user : null;
+                    return getFieldLabel(field, source[field.name], userSession);
+                }
+            };
+        }
         else {
             objTypeFields[k] = {
                 type: GraphQLJSON
@@ -180,10 +192,19 @@ function collectRelatedObjects(steedosSchema: SteedosSchema) {
                         type: RELATEDPREFIX,
                         reference_to: refName,
                         reference_to_field: v.reference_to_field,
-                        name: v.name,
+                        name: k,
                         objectName: objName
                     }
 
+                }
+                else if (['boolean', 'date', 'datetime', 'select', 'percent'].includes(v.type)) {
+                    relatedObjects[objName].fields[`${k}${LABELSUFFIX}`] = {
+                        type: LABELSUFFIX,
+                        name: k,
+                        dataType: v.type,
+                        options: v.options,
+                        multiple: v.multiple
+                    }
                 }
             })
             let enabledRefNames = [];
@@ -199,7 +220,7 @@ function collectRelatedObjects(steedosSchema: SteedosSchema) {
             if (obj.enable_audit) {
                 enabledRefNames.push('audit_records');
             }
-            _.each(enabledRefNames, function (refName) {
+            _.forEach(enabledRefNames, function (refName) {
                 relatedObjects[objName].fields[`${RELATEDPREFIX}${refName}`] = {
                     type: RELATEDPREFIX,
                     reference_to: objName,
