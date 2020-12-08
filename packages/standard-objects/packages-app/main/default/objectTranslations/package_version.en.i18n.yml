@@ -22,3 +22,5 @@ package_version_field_status: Status
 package_version_field_status_options_uploaded: uploaded
 package_version_field_version: Version Number
 package_version_group_package_components: Package Components
+package_version_listview_all: All
+package_version_listview_recent: Recent

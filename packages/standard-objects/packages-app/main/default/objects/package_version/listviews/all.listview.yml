@@ -1,6 +1,8 @@
 name: all
 columns:
+  - field: version
   - field: name
+  - field: status
 filter_scope: space
 filters: []
 label: 所有

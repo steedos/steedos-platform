@@ -7,6 +7,8 @@ package_field_owner: 所有者
 package_field_package_type: 软件包类型
 package_field_package_type_options_managed: 受管
 package_field_package_type_options_unmanaged: 不受管
+package_listview_all: 所有
+package_listview_recent: 最近查看
 package_action_upload: 上载
 package_action_upload_form_title: 上载软件包
 package_action_upload_form_name: 版本名称

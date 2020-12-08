@@ -11,3 +11,5 @@ imported_package_field_package_type: Package Type
 imported_package_field_publisher: Publisher
 imported_package_field_version: Version Number
 imported_package_field_version_name: Version Name
+imported_package_listview_all: All
+imported_package_listview_recent: Recent

@@ -12,3 +12,5 @@ package_type_members_field_type_options_object_listviews: List View
 package_type_members_field_type_options_permissionsets: Permission Set
 package_type_members_field_type_options_profiles: Profile Settings
 package_type_members_field_type_options_reports: Report
+package_type_members_listview_all: All
+package_type_members_listview_recent: Recent

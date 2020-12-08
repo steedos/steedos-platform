@@ -11,3 +11,5 @@ imported_package_field_package_type: 软件包类型
 imported_package_field_publisher: 发布者
 imported_package_field_version: 版本号
 imported_package_field_version_name: 版本名称
+imported_package_listview_all: 所有
+imported_package_listview_recent: 最近查看

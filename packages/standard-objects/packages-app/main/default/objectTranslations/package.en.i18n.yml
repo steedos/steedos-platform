@@ -7,6 +7,8 @@ package_field_owner: Owner
 package_field_package_type: Type
 package_field_package_type_options_managed: Managed
 package_field_package_type_options_unmanaged: Unmanaged
+package_listview_all: All
+package_listview_recent: Recent
 package_action_upload: Upload
 package_action_upload_form_title: Upload Package
 package_action_upload_form_name: Version Name

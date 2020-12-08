@@ -22,3 +22,5 @@ package_version_field_status: 状态
 package_version_field_status_options_uploaded: 已上载
 package_version_field_version: 版本号
 package_version_group_package_components: 软件包组件
+package_version_listview_all: 所有
+package_version_listview_recent: 最近查看
