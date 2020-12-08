@@ -1,0 +1,24 @@
+package_version__object: Package Version
+package_version_field_created_by: Uploaded By
+package_version_field_description: Description
+package_version_field_fields: Fields
+package_version_field_fields_$_component_name: Component Name
+package_version_field_fields_$_component_parent_object: Parent Object
+package_version_field_fields_$_component_type: Component Type
+package_version_field_installation_id: Installation ID
+package_version_field_name: Version Name
+package_version_field_objects: Objects
+package_version_field_objects_$_component_name: Component Name
+package_version_field_objects_$_component_parent_object: Parent Object
+package_version_field_objects_$_component_type: Component Type
+package_version_field_owner: Owner
+package_version_field_package: Package Name
+package_version_field_password_protected: Password Protected
+package_version_field_resources: Resources
+package_version_field_resources_$_component_name: Component Name
+package_version_field_resources_$_component_parent_object: Parent Object
+package_version_field_resources_$_component_type: Component Type
+package_version_field_status: Status
+package_version_field_status_options_uploaded: uploaded
+package_version_field_version: Version Number
+package_version_group_package_components: Package Components

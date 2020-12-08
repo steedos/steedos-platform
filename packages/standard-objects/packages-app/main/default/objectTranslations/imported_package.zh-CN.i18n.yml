@@ -1,0 +1,13 @@
+imported_package__object: 已安装的软件包
+imported_package_field_apps: 应用
+imported_package_field_description: 描述
+imported_package_field_first_installed_version: 首个安装版本编号
+imported_package_field_installed_by: 安装者
+imported_package_field_name: 软件包名称
+imported_package_field_namespace: 命名空间前缀
+imported_package_field_objects: 对象
+imported_package_field_owner: 所有者
+imported_package_field_package_type: 软件包类型
+imported_package_field_publisher: 发布者
+imported_package_field_version: 版本号
+imported_package_field_version_name: 版本名称

@@ -4,40 +4,40 @@ module.exports = {
             fields: {
                 name: {
                     type: 'text',
-                    label: '版本名称'
+                    label: TAPi18n.__('package_action_upload_form_name')
                 },
                 version: {
                     type: 'text',
-                    label: '版本号'
+                    label: TAPi18n.__('package_action_upload_form_version')
                 },
                 release_notes: {
                     type: 'textarea',
                     is_wide: true,
-                    label: '发行说明'
+                    label: TAPi18n.__('package_action_upload_form_release_notes')
                 },
                 post_install: {
                     type: 'textarea',
                     is_wide: true,
-                    label: '发布安装说明'
+                    label: TAPi18n.__('package_action_upload_form_post_install')
                 },
                 description: {
                     type: 'textarea',
                     is_wide: true,
                     inlineHelpText: "inlineHelpText",
-                    label: '描述'
+                    label: TAPi18n.__('package_action_upload_form_description')
                 },
                 install_password: {
                     type: 'password',
-                    inlineHelpText: "Password protect this Package by entering a password below. Leave blank if you do not want to require a password.",
+                    inlineHelpText: TAPi18n.__('package_action_upload_form_install_password_inlineHelpText'),
                     is_wide: true,
-                    label: '密码',
-                    group: 'Password (Optional)'
+                    label: TAPi18n.__('package_action_upload_form_install_password'),
+                    group: TAPi18n.__('package_action_upload_form_group_password')
                 },
                 confirm_install_password: {
                     type: 'password',
                     is_wide: true,
-                    label: '确认密码',
-                    group: 'Password (Optional)'
+                    label: TAPi18n.__('package_action_upload_form_confirm_install_password'),
+                    group: TAPi18n.__('package_action_upload_form_group_password')
                 }
             }
         }
@@ -47,15 +47,14 @@ module.exports = {
             $("body").addClass('loading');
             if(formValues.insertDoc.install_password && formValues.insertDoc.install_password != formValues.insertDoc.confirm_install_password){
                 $("body").removeClass('loading');
-                return toastr.error('密码不一致');
+                return toastr.error(TAPi18n.__('package_action_upload_form__error_password_ne'));
             }
-            toastr.success('上载中，请稍等...');
             var result = Steedos.authRequest(`/api/package/upload_to_store/${record_id}`, {type: 'post', async: false, data: JSON.stringify({version_info: formValues.insertDoc})})
             console.log('result', result);
             $("body").removeClass('loading');
         }
         let doc = {};
-        Modal.show("quickFormModal", {formId: formId, title: TAPi18n.__(`上载软件包`), confirmBtnText: `上载`, schema: schema, doc: doc, onConfirm: onConfirm}, {
+        Modal.show("quickFormModal", {formId: formId, title: TAPi18n.__('package_action_upload_form_title'), confirmBtnText: TAPi18n.__('package_action_upload'), schema: schema, doc: doc, onConfirm: onConfirm}, {
             backdrop: 'static',
             keyboard: true
         });
