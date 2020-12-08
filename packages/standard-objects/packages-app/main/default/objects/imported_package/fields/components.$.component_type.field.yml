@@ -1,0 +1,4 @@
+name: components.$.component_type
+label: Component Type
+readonly: true
+type: text
