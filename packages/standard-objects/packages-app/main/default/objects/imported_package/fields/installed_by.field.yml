@@ -6,9 +6,10 @@ is_name: false
 is_wide: false
 label: 安装者
 omit: false
-readonly: false
+readonly: true
+reference_to: users
 required: false
 searchable: false
 sort_no: 200
 sortable: false
-type: text
+type: lookup

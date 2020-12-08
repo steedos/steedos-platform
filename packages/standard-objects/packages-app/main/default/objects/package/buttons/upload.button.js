@@ -42,6 +42,7 @@ module.exports = {
             }
         }
         let schema = Creator.getObjectSchema(object);
+        schema.install_password.autoform.autocomplete='new-password';
         let formId = 'uploadPackageForm';
         let onConfirm = function(formValues){
             $("body").addClass('loading');
