@@ -3,13 +3,15 @@ label: Permission
 icon: omni_supervisor
 hidden: true
 fields:
-  # name:
-  #   label: Name
-  #   type: text
-  #   searchable: true
-  #   index: true
-  #   required: true
-  #   name: name
+  name:
+    label: Name
+    type: formula
+    data_type: text
+    formula: object_name.label + '.' + permission_set_id.label
+    searchable: true
+    index: true
+    required: true
+    name: name
   permission_set_id:
     label: Permission Set
     type: master_detail
