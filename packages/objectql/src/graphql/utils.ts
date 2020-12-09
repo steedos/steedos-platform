@@ -14,10 +14,10 @@ export function getFieldLabel(field, value, userSession) {
     let type = field.dataType;
     let label = '';
     if (type === 'boolean') {
-        if (value === false) {
-            label = t('NO', null, locale);
-        } else if (value === true) {
+        if (value === true) {
             label = t('YES', null, locale);
+        } else {
+            label = t('NO', null, locale);
         }
     } else if (type === 'date' && value) {
         label = moment(value).utcOffset(utcOffset).format("YYYY-MM-DD")
