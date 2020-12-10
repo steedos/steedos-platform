@@ -68,5 +68,15 @@ module.exports = {
         let doc = this.doc;
         doc.parent = await getParent(doc.member);
         doc.type = doc.member.o;
+    },
+    afterDelete: async function(){
+        const memberId = this.id;
+        if(memberId){
+            const relatedMembers = await objectql.getObject('package_type_members').find(['_relatedFrom', '=', memberId]);
+            for (const member of relatedMembers) {
+                await objectql.getObject('package_type_members').directDelete(member._id);
+            }
+            
+        }
     }
 }
