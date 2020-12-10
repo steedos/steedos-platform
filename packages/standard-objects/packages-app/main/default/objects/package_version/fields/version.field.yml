@@ -2,7 +2,7 @@ name: version
 filterable: false
 hidden: false
 index: false
-is_name: false
+is_name: true
 is_wide: false
 label: 版本号
 omit: false

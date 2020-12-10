@@ -1,9 +1,12 @@
 name: recent
 columns:
-  - field: version
   - field: name
-  - field: status
-  - field: created
+  - field: publisher
+  - field: version
+  - field: namespace
+  - field: modified
+  - field: apps
+  - field: objects
 filter_scope: space
 filters: []
 label: 最近查看
