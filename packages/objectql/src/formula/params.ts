@@ -103,11 +103,12 @@ function getSubstitutionDataType(objectName: string, fieldName: string, value: a
 
     if(dateType == FormulonDataType.Number && (value === null || value === undefined)){
         if(blankValue === SteedosFormulaBlankValue.blanks){
-            // 当值为空且配置为按空值处理时按Date类型来处理空值
-            // 因为Number类型在公式引擎包中当值为空时始终ISBLANK及BLANKVALUE始终被判断为非空值，而Date类型没这个问题
-            // 这里不可以用返回FormulonDataType.Null，因为目前ISBLANK只支持字符串参数，只能用ISBLANK(TEXT(Amount))这种写法代替
-            // 返回FormulonDataType.Null的话，ISBLANK(TEXT(Amount))将始终被判定为false，因为公式TEXT(null)运行结果为"NULL"
-            return FormulonDataType.Date;
+            // 当值为空且配置为按空值处理时按NULL类型来处理空值
+            // 因为Number类型在公式引擎包中当值为空时始终ISBLANK及BLANKVALUE始终被判断为非空值
+            // 目前ISBLANK只支持字符串参数，只能用ISBLANK(TEXT(Amount))这种写法代替，但是这种写法又始终被判定为false，因为公式TEXT(null)运行结果为"NULL"
+            // 所以对于数值类型，即不能用ISBLANK(TEXT(Amount))也不能用ISBLANK(Amount)，
+            // 而应该用Amount > 0，当Amount为空时，即使设置formula_blank_value为"blanks"，其返回值也是false
+            return FormulonDataType.Null;
         }
     }
     return dateType;
@@ -137,7 +138,7 @@ function getSubstitutionOptions(objectName: string, fieldName: string, dataType:
     }
 }
 
-function getSubstitutionValue(dataType: string, value: any, blankValue: SteedosFormulaBlankValue){
+function getSubstitutionValue(dataType: string, value: any){
     switch (dataType) {
         case FormulonDataType.Text:
             if(value === null || value === undefined){
@@ -146,13 +147,7 @@ function getSubstitutionValue(dataType: string, value: any, blankValue: SteedosF
             break;
         case FormulonDataType.Number:
             if(value === null || value === undefined){
-                if(blankValue === SteedosFormulaBlankValue.blanks){
-                    // 如果配置为按空值处理，则返回null
-                    return null;
-                }
-                else{
-                    return 0;
-                }
+                return 0;
             }
             break;
         default:
@@ -168,6 +163,6 @@ export function getFieldSubstitution(objectName: string, fieldName: string, valu
     }
     fieldSubstitution.dataType = getSubstitutionDataType(objectName, fieldName, value, blankValue);
     fieldSubstitution.options = getSubstitutionOptions(objectName, fieldName, fieldSubstitution.dataType);
-    fieldSubstitution.value  = getSubstitutionValue(fieldSubstitution.dataType, value, blankValue);
+    fieldSubstitution.value  = getSubstitutionValue(fieldSubstitution.dataType, value);
     return fieldSubstitution;
 }
