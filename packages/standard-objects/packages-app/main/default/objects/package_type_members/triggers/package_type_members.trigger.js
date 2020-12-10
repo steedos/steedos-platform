@@ -40,6 +40,17 @@ async function isMemberExist(packageId, member){
     return existRecords.length > 0;
 }
 
+async function getMemberCollectionName(member){
+    let tableName = member.o
+    let info = await objectql.getObject(tableName).findOne(member.ids[0], {});
+    if(info && tableName == 'permission_set'){
+        if(info.type == 'profile'){
+            tableName = 'profiles';
+        }
+    }
+    return tableName;
+}
+
 module.exports = {
     beforeInsert: async function () {
         let doc = this.doc;
@@ -51,15 +62,18 @@ module.exports = {
             throw new Error('组件已存在');
         }
         doc.parent = await getParent(doc.member);
-        doc.type = metadataCore.getMetadataName(doc.member.o);
+        const collectionName = await getMemberCollectionName(doc.member);
+        doc.type = metadataCore.getMetadataName(collectionName);
     },
     afterInsert: async function(){
-        const components = await metadata.getPackageMemberComponents(this.doc._id, this.spaceId);
-        for (const metadataName in components) {
-            if (components.hasOwnProperty(metadataName)) {
-                const members = components[metadataName];
-                for (const member of members) {
-                    await saveRelatedMember(this.doc._id, member, this.doc.package, this.userId, this.spaceId);
+        if(this.doc.member.o === 'objects'){
+            const components = await metadata.getPackageMemberComponents(this.doc._id, this.spaceId);
+            for (const metadataName in components) {
+                if (components.hasOwnProperty(metadataName)) {
+                    const members = components[metadataName];
+                    for (const member of members) {
+                        await saveRelatedMember(this.doc._id, member, this.doc.package, this.userId, this.spaceId);
+                    }
                 }
             }
         }
@@ -72,7 +86,7 @@ module.exports = {
     afterDelete: async function(){
         const memberId = this.id;
         if(memberId){
-            const relatedMembers = await objectql.getObject('package_type_members').find(['_relatedFrom', '=', memberId]);
+            const relatedMembers = await objectql.getObject('package_type_members').find({filters:['_relatedFrom', '=', memberId]});
             for (const member of relatedMembers) {
                 await objectql.getObject('package_type_members').directDelete(member._id);
             }
