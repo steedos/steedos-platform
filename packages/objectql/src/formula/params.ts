@@ -108,6 +108,7 @@ function getSubstitutionDataType(objectName: string, fieldName: string, value: a
             // 目前ISBLANK只支持字符串参数，只能用ISBLANK(TEXT(Amount))这种写法代替，但是这种写法又始终被判定为false，因为公式TEXT(null)运行结果为"NULL"
             // 所以对于数值类型，即不能用ISBLANK(TEXT(Amount))也不能用ISBLANK(Amount)，
             // 而应该用Amount > 0，当Amount为空时，即使设置formula_blank_value为"blanks"，其返回值也是false
+            // 实在要判断空值，可以用TEXT(Amount) == "NULL"来判断，而不可以用ISBLANK(TEXT(Amount))或ISBLANK(Amount)
             return FormulonDataType.Null;
         }
     }
