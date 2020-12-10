@@ -3,6 +3,7 @@ imported_package_field_apps: 应用
 imported_package_field_description: 描述
 imported_package_field_first_installed_version: 首个安装版本编号
 imported_package_field_installed_by: 安装者
+imported_package_field_installed: 安装日期
 imported_package_field_name: 软件包名称
 imported_package_field_namespace: 命名空间前缀
 imported_package_field_objects: 对象

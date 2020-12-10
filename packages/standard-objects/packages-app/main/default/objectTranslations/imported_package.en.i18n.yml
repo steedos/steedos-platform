@@ -3,6 +3,7 @@ imported_package_field_apps: Apps
 imported_package_field_description: Description
 imported_package_field_first_installed_version: First Installed Version Number
 imported_package_field_installed_by: Installed By
+imported_package_field_installed: Installed Date
 imported_package_field_name: Package Name
 imported_package_field_namespace: Namespace Prefix
 imported_package_field_objects: Objects

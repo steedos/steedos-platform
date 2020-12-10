@@ -4,7 +4,7 @@ columns:
   - field: publisher
   - field: version
   - field: namespace
-  - field: modified
+  - field: installed
   - field: apps
   - field: objects
 filter_scope: space
