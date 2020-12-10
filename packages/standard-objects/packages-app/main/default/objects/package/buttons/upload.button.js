@@ -44,15 +44,20 @@ module.exports = {
         let schema = Creator.getObjectSchema(object);
         schema.install_password.autoform.autocomplete='new-password';
         let formId = 'uploadPackageForm';
-        let onConfirm = function(formValues){
+        let onConfirm = function(formValues, e, t){
             $("body").addClass('loading');
             if(formValues.insertDoc.install_password && formValues.insertDoc.install_password != formValues.insertDoc.confirm_install_password){
                 $("body").removeClass('loading');
                 return toastr.error(TAPi18n.__('package_action_upload_form__error_password_ne'));
             }
             var result = Steedos.authRequest(`/api/package/upload_to_store/${record_id}`, {type: 'post', async: false, data: JSON.stringify({version_info: formValues.insertDoc})})
-            console.log('result', result);
+            if(result.error){
+                return toastr.error(result.error);
+            }
+            toastr.success(TAPi18n.__('package_action_upload_success'));
             $("body").removeClass('loading');
+            Modal.hide(t);
+            FlowRouter.reload();
         }
         let doc = {};
         Modal.show("quickFormModal", {formId: formId, title: TAPi18n.__('package_action_upload_form_title'), confirmBtnText: TAPi18n.__('package_action_upload'), schema: schema, doc: doc, onConfirm: onConfirm}, {
