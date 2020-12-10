@@ -27,7 +27,7 @@ async function saveRelatedMember(parent, componentMember, packageId, userId, spa
             },
             owner: userId,
             package: packageId,
-            parent: componentMember.component_parent_object,
+            parent: componentMember.component_parent_object_id,
             type: componentMember.component_type,
             space: spaceId,
             _relatedFrom: parent
