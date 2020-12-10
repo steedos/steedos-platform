@@ -33,12 +33,11 @@ module.exports = {
             Meteor.setTimeout(function(){
                 const installPackage = function(formValues, e, t){
                     var result = Steedos.authRequest(`/api/package/installing_from_store/file/${data.packageVersionId}`, {type: 'post', async: false, data: JSON.stringify({password: data.password})});
-                    console.log('result', result);
                     if(result.error){
                         return toastr.error(result.error);
                     }
                     toastr.success('安装成功');
-                    FlowRouter.reload();
+                    FlowRouter.go("/app/-/imported_package/view/" + result._id);
                     Modal.hide(t);
                 }
                 Modal.show("quickFormModal", {formId: formId, formType: 'readonly', modalSize: 'modal-lg', title: TAPi18n.__(`安装软件包`), confirmBtnText: `确认`, schema: _schema, doc: _doc, onConfirm: installPackage}, {

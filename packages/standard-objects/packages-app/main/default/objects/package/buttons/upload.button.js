@@ -56,8 +56,8 @@ module.exports = {
             }
             toastr.success(TAPi18n.__('package_action_upload_success'));
             $("body").removeClass('loading');
+            FlowRouter.go("/app/-/package_version/view/" + result._id);
             Modal.hide(t);
-            FlowRouter.reload();
         }
         let doc = {};
         Modal.show("quickFormModal", {formId: formId, title: TAPi18n.__('package_action_upload_form_title'), confirmBtnText: TAPi18n.__('package_action_upload'), schema: schema, doc: doc, onConfirm: onConfirm}, {
