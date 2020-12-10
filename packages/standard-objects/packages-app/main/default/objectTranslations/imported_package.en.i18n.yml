@@ -1,4 +1,6 @@
 imported_package__object: Installed Packages
+imported_package_action_install: Install Package
+imported_package_action_install_success: Installed
 imported_package_field_apps: Apps
 imported_package_field_description: Description
 imported_package_field_first_installed_version: First Installed Version Number

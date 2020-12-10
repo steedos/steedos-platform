@@ -1,4 +1,6 @@
 package_version__object: 软件包版本
+package_version_action_copyInstallationID: 复制软件包ID
+package_version_action_copyInstallationID_success: 复制成功
 package_version_field_created_by: 上载人
 package_version_field_description: 描述
 package_version_field_fields: 字段
@@ -16,7 +18,7 @@ package_version_field_fields_$_component_type_options_CustomProfile: 简档
 package_version_field_fields_$_component_type_options_CustomReport: 报表
 package_version_field_fields_$_component_type_options_CustomValidationRule: 验证规则
 package_version_field_fields_$_component_type_options_Layout: 页面布局
-package_version_field_installation_id: 安装版本Id
+package_version_field_installation_id: 软件包ID
 package_version_field_name: 版本名称
 package_version_field_objects: 对象
 package_version_field_objects_$_component_name: 名称

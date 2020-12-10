@@ -1,4 +1,6 @@
 package_version__object: Package Version
+package_version_action_copyInstallationID: Copy Package ID
+package_version_action_copyInstallationID_success: Copied to clipboard
 package_version_field_created_by: Uploaded By
 package_version_field_description: Description
 package_version_field_fields: Fields
@@ -16,7 +18,7 @@ package_version_field_fields_$_component_type_options_CustomProfile: Profile
 package_version_field_fields_$_component_type_options_CustomReport: Report
 package_version_field_fields_$_component_type_options_CustomValidationRule: Validation Rule
 package_version_field_fields_$_component_type_options_Layout: Layout
-package_version_field_installation_id: Installation ID
+package_version_field_installation_id: Package ID
 package_version_field_name: Version Name
 package_version_field_objects: Objects
 package_version_field_objects_$_component_name: Component Name

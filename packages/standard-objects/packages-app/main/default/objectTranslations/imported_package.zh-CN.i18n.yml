@@ -1,4 +1,6 @@
 imported_package__object: 已安装的软件包
+imported_package_action_install: 安装软件包
+imported_package_action_install_success: 安装成功
 imported_package_field_apps: 应用
 imported_package_field_description: 描述
 imported_package_field_first_installed_version: 首个安装版本编号

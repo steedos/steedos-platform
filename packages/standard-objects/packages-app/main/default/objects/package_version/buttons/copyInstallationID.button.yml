@@ -1,0 +1,5 @@
+name: copyInstallationID
+is_enable: true
+label: 复制软件包ID
+'on': record_only
+visible: true

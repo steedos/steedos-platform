@@ -1,5 +1,5 @@
 name: installation_id
-label: 安装版本Id
+label: 软件包ID
 type: text
 omit: false
 is_wide: true

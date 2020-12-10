@@ -4,13 +4,13 @@ module.exports = {
             fields: {
                 packageVersionId: {
                     type: 'text',
-                    label: '软件包版本Id',
-                    is_wide: true
+                    label: TAPi18n.__('package_version_field_installation_id'),
+                    is_wide: true,
+                    required: true
                 },
                 password: {
                     type: 'password',
-                    label: '密码',
-                    inlineHelpText: '如果不需要密码，请将其留空。',
+                    label: TAPi18n.__('package_action_upload_form_install_password'),
                     is_wide: true
                 }
             }
@@ -36,18 +36,18 @@ module.exports = {
                     if(result.error){
                         return toastr.error(result.error);
                     }
-                    toastr.success('安装成功');
+                    toastr.success(TAPi18n.__('imported_package_action_install_success'));
                     FlowRouter.go("/app/-/imported_package/view/" + result._id);
                     Modal.hide(t);
                 }
-                Modal.show("quickFormModal", {formId: formId, formType: 'readonly', modalSize: 'modal-lg', title: TAPi18n.__(`安装软件包`), confirmBtnText: `确认`, schema: _schema, doc: _doc, onConfirm: installPackage}, {
+                Modal.show("quickFormModal", {formId: formId, formType: 'readonly', modalSize: 'modal-lg', title: TAPi18n.__(`imported_package_action_install`), confirmBtnText: TAPi18n.__("Confirm"), schema: _schema, doc: _doc, onConfirm: installPackage}, {
                     backdrop: 'static',
                     keyboard: true
                 });
             }, 800)
         }
         let doc = {};
-        Modal.show("quickFormModal", {formId: formId, title: TAPi18n.__(`安装软件包`), confirmBtnText: `下一步`, schema: schema, doc: doc, onConfirm: onConfirm}, {
+        Modal.show("quickFormModal", {formId: formId, title: TAPi18n.__(`imported_package_action_install`), confirmBtnText: TAPi18n.__("Next"), schema: schema, doc: doc, onConfirm: onConfirm}, {
             backdrop: 'static',
             keyboard: true
         });

@@ -13,17 +13,19 @@ module.exports = {
                 release_notes: {
                     type: 'textarea',
                     is_wide: true,
+                    rows:2,
                     label: TAPi18n.__('package_action_upload_form_release_notes')
                 },
                 post_install: {
                     type: 'textarea',
                     is_wide: true,
+                    rows:2,
                     label: TAPi18n.__('package_action_upload_form_post_install')
                 },
                 description: {
                     type: 'textarea',
                     is_wide: true,
-                    inlineHelpText: "inlineHelpText",
+                    rows:2,
                     label: TAPi18n.__('package_action_upload_form_description')
                 },
                 install_password: {
