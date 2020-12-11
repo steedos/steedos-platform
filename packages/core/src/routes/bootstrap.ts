@@ -95,9 +95,10 @@ export async function getSpaceBootStrap(req, res) {
         _.each(_dbApps, function(dbApp){
             return dbApps[dbApp._id] = dbApp;
         })
-        result.apps = _.extend( result.apps || {}, dbApps)
 
-        var _dbDashboards = await getObject("apps").directFind({filters: [['space', '=', spaceId]]});
+        result.apps = _.extend( result.apps || {}, dbApps);
+
+        var _dbDashboards = await getObject("dashboard").directFind({filters: [['space', '=', spaceId]]});
         let dbDashboards = {};
         _.each(_dbDashboards, function(dashboard){
             dbDashboards[dashboard._id] = dashboard;
@@ -114,9 +115,14 @@ export async function getSpaceBootStrap(req, res) {
                 app._id = app.code
             }
             _Apps[app._id] = app
-        })
-        steedosI18n.translationApps(lng, _Apps);
+        });
 
+        var unvisibleApps = await getObject("apps").directFind({filters: [['space', '=', spaceId],['is_creator', '=', true],['visible', '=', false]]});
+        _.each(unvisibleApps, function(unvisibleApp){
+            delete _Apps[unvisibleApp.code];
+        });
+
+        steedosI18n.translationApps(lng, _Apps);
         result.apps = _Apps;
         let assigned_menus = clone(result.assigned_menus);
         steedosI18n.translationMenus(lng, assigned_menus);
