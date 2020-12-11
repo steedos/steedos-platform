@@ -32,7 +32,7 @@
 
 ## 学习华炎魔方
 
-- 学习华炎魔方文档<https://www.steedos.com/help/>位于此处。您还可以按照有关如何使用华炎魔方视频教程快速构建应用程序进行操作。
+- <a href="https://www.steedos.com/help/">  学习华炎魔方</a> 位于此处。您还可以按照有关如何使用华炎魔方视频教程快速构建应用程序进行操作。
 
 - 视频演示<https://www.steedos.com/videos/>
 - 使用入门<https://www.steedos.com/help/user/>
