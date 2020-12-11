@@ -26,9 +26,9 @@
 
 ## 安装部署
 
-本项目是华炎魔方的内核源码，我们会定期编译并发布为npm package (链接 <https://www.npmjs.com/package/steedos-server> ) ，只需在项目中引入相关的包，既可启用华炎魔方的各项功能。
+本项目是华炎魔方的内核源码，我们会定期编译并发布为npm package (<a href="https://www.npmjs.com/package/steedos-server">  链接</a>)，只需在项目中引入相关的包，既可启用华炎魔方的各项功能。
 
-具体如何安装部署华炎魔方，请参考官网安装部署文档<https://www.steedos.com/help/deploy/>
+具体如何安装部署华炎魔方，请参考官网安装部署文档 <a href="https://www.steedos.com/help/deploy/">  部署文档</a> 
 
 ## 学习华炎魔方
 
