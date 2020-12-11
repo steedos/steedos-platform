@@ -7,7 +7,7 @@
 
 <center>
 <a href="https://www.steedos.com/help/">文档</a>
-<a href="https://github.com/steedos/steedos-platform/discussions?discussions_q=category%3AIdeas/">新功能请求</a>
+<a href="https://github.com/steedos/steedos-platform/discussions?discussions_q=category%3AIdeas/">新需求</a>
 <a href="https://github.com/steedos/steedos-platform/issues/">报告错误</a>
 <a href="https://github.com/steedos/steedos-platform/discussions">讨论</a>
 </center>
