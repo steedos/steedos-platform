@@ -5,7 +5,7 @@
 
 ![项目对象](/docs/images/Project_object.png)
 
-<center>[文档](https://www.steedos.com/help/)  [新功能请求](https://github.com/steedos/steedos-platform/discussions?discussions_q=category%3AIdeas)- **支持**：[报告错误](https://github.com/steedos/steedos-platform/issues)  [讨论](https://github.com/steedos/steedos-platform/discussions)</center>
+<center>[文档]("http://www.steedos.com/help/">W3School1</a>)  [新功能请求](https://github.com/steedos/steedos-platform/discussions?discussions_q=category%3AIdeas)- **支持**：[报告错误](https://github.com/steedos/steedos-platform/issues)  [讨论](https://github.com/steedos/steedos-platform/discussions)</center>
 
 ## 华炎魔方功能
 
