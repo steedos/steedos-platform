@@ -6,9 +6,9 @@
 ![项目对象](/docs/images/Project_object.png)
 
 <center>
-<a href="https://www.steedos.com/help/">文档</a>
-<a href="https://github.com/steedos/steedos-platform/issues/">报告错误</a>
-<a href="https://github.com/steedos/steedos-platform/discussions">讨论</a>
+<a href="https://www.steedos.com/help/">  文档</a>
+<a href="https://github.com/steedos/steedos-platform/issues/"> · 报告错误</a>
+<a href="https://github.com/steedos/steedos-platform/discussions"> · 讨论</a>
 </center>
 
 ## 华炎魔方功能
