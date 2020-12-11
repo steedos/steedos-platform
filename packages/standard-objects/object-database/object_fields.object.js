@@ -218,6 +218,9 @@ const checkFormulaInfiniteLoop = function(_doc){
       space: doc.space,
       name: doc.object
     });
+    if(!objectConfig){
+      objectConfig = objectql.getObjectConfig(doc.object);
+    }
     objectCore.loadDBObject(objectConfig)
     delete objectConfig._id;
     try {
