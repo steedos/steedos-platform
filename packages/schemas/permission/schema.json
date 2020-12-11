@@ -1,0 +1,89 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "name": "steedos-schema_object_field",
+    "type": "object",
+    "additionalProperties": false,
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "library"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "not": {
+                        "enum": [
+                            "library"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "properties": {
+        "allowRead": {
+            "type": "boolean",
+            "description": "允许查看"
+        },
+        "allowCreate": {
+            "type": "boolean",
+            "description": "允许创建"
+        },
+        "allowEdit": {
+            "type": "boolean",
+            "description": "允许修改"
+        },
+        "allowDelete": {
+            "type": "boolean",
+            "description": "允许删除"
+        },
+        "viewAllRecords": {
+            "type": "boolean",
+            "description": "查看所有记录"
+        },
+        "modifyAllRecords": {
+            "type": "boolean",
+            "description": "修改所有记录"
+        },
+        "viewCompanyRecords": {
+            "type": "boolean",
+            "description": "查看本分部"
+        },
+        "modifyCompanyRecords": {
+            "type": "boolean",
+            "description": "修改本分部"
+        },
+        "disabled_list_views": {
+            "type": "array",
+            "description": "禁用对象列表视图"
+        },
+        "disabled_actions": {
+            "type": "array",
+            "description": "禁用操作按钮"
+        },
+        "unreadable_fields": {
+            "type": "array",
+            "description": "不可见字段"
+        },
+        "uneditable_fields": {
+            "type": "array",
+            "description": "不可编辑字段"
+        },
+        "unrelated_objects": {
+            "type": "array",
+            "description": "禁用关联对象"
+        },
+        "uneditable_related_list": {
+            "type": "array",
+            "description": "关联对象只读"
+        }
+    }
+}
