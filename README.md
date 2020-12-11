@@ -5,7 +5,7 @@
 
 ![项目对象](/docs/images/Project_object.png)
 
-- [文档](https://www.steedos.com/help/)   [新功能请求](https://github.com/steedos/steedos-platform/discussions?discussions_q=category%3AIdeas) - **支持**：[新功能请求](https://github.com/steedos/steedos-platform/issues)   [讨论](https://github.com/steedos/steedos-platform/discussions)
+- [文档](https://www.steedos.com/help/)     [新功能请求](https://github.com/steedos/steedos-platform/discussions?discussions_q=category%3AIdeas)   **支持**：[新功能请求](https://github.com/steedos/steedos-platform/issues)   [讨论](https://github.com/steedos/steedos-platform/discussions)
 
 ## 华炎魔方功能
 
