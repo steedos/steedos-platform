@@ -45,4 +45,4 @@
 ## 保持联系 
 
 如果您有任何疑问或想与其他华炎魔方用户交谈，请跳至Github讨论<https://github.com/steedos/steedos-platform/discussions> 或加入我们的开发人员微信群。
-![开发人员微信群](/docs/images/Wechat_group of developers.png)
+![开发人员微信群](/docs/images/QR_wechat_developers.png)
