@@ -58,9 +58,14 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
             let objectName = v.reference_to;
             let corName = correctName(objectName);
             if (!knownTypes[corName]) {
-                let object = steedosSchema.getObject(objectName);
-                if (object) {
-                    knownTypes[corName] = buildGraphQLObjectType(object, steedosSchema, knownTypes)
+                try {
+                    let object = steedosSchema.getObject(objectName);
+                    if (object) {
+                        knownTypes[corName] = buildGraphQLObjectType(object, steedosSchema, knownTypes)
+                    }
+                } catch (error) {
+                    console.error(error);
+                    return;
                 }
             }
 
