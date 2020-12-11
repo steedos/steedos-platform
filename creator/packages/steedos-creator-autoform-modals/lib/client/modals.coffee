@@ -44,7 +44,7 @@ oDataOperation = (type, url, data, object_name, other)->
 			if Session.get("cmOperation") == "insert"
 				_id = result.value[0]._id
 			else if Session.get("cmOperation") == "update"
-				_id = result._id
+				_id = result._id || result.value[0]._id
 			# console.log _id
 			_data = {_id: _id}
 			_data.type = type
@@ -586,7 +586,7 @@ Template.CreatorAfModal.events
 		Session.set 'cmUseOdataApi', t.data.useOdataApi
 		cmOnSuccessCallback = t.data.onSuccess
 
-		if not _.contains registeredAutoFormHooks, t.data.formId
+		if t.data.operation != "remove" && not _.contains registeredAutoFormHooks, t.data.formId
 			# userId = Meteor.userId()
 			# cmCollection = Session.get 'cmCollection'
 			# object_name = getObjectName(cmCollection)
