@@ -3,7 +3,7 @@
 
 华炎魔方是一套可视化建模、描述式编程的低代码开发平台，只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。
 
-![项目对象](/docs/images/Project_object.png)
+![华炎魔方项目对象](/docs/images/project_object.jpg)
 
 <center>
 <a href="https://www.steedos.com/help/">  文档</a>
