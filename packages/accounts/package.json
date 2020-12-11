@@ -18,6 +18,7 @@
     "cstart": "yarn build && yarn start",
     "server": "cross-env NODE_ENV=development nodemon -w src -x ts-node server.ts",
     "build": "tsc",
+    "compile": "tsc",
     "prepare": "tsc",
     "osy": "cd ../object-server/ && yarn",
     "os": "npm run osy && cp -r ../object-server/packages/* node_modules/@steedos/ && cp -r ../object-server/apps/contracts/src/* node_modules/@steedos/app-contracts/src/",

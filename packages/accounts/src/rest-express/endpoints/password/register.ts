@@ -5,7 +5,7 @@ import { sendError } from '../../utils/send-error';
 import { errors } from '../../../password/errors';
 import { canRegister } from '../../../core';
 import { setAuthCookies } from '../../utils/steedos-auth';
-
+import { db } from '../../../db';
 declare var Creator;
 
 export const registerPassword = (accountsServer: AccountsServer) => async (
@@ -51,10 +51,13 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
       }
     }
 
+    const space = await db.findOne("spaces", req.body.spaceId, {fields: ["name"]});
+
     const userId = await password.createUser(req.body);
+    
     if(inviteInfo && inviteInfo.space){
       Creator.addSpaceUsers(inviteInfo.space, userId, true)
-    }else if(req.body.spaceId){
+    }else if(req.body.spaceId && space){
       Creator.addSpaceUsers(req.body.spaceId, userId, true)
     }
 
