@@ -34,7 +34,7 @@
 
 ## 学习华炎魔方
 
-您还可以按照有关如何使用华炎魔方视频教程快速构建应用程序进行操作。
+您还可以根据华炎魔方快速构建应用程序的视频教程进行操作。
 
 - <a href="https://www.steedos.com/videos/">  视频演示</a> 
 - <a href="https://www.steedos.com/help/user/">  使用入门</a> 
