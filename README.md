@@ -3,8 +3,6 @@
 
 华炎魔方是一套可视化建模、描述式编程的低代码开发平台，只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。
 
-![华炎魔方项目对象](/docs/images/project_object.jpg)
-
 <center>
 <a href="https://www.steedos.com/help/">  文档</a>
 <a href="https://github.com/steedos/steedos-platform/issues/"> · 报告错误</a>
@@ -50,4 +48,3 @@
 ## 保持联系 
 
 如果您有任何疑问或想与其他华炎魔方用户交谈，请跳至Github讨论 <a href="https://github.com/steedos/steedos-platform/discussions">  点击进入讨论</a> 或加入我们的开发人员微信群。
-![开发人员微信群](/docs/images/QR_wechat_developers.png)
