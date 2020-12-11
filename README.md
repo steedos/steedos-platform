@@ -8,6 +8,7 @@
 <a href="https://github.com/steedos/steedos-platform/issues/"> · 报告错误</a>
 <a href="https://github.com/steedos/steedos-platform/discussions"> · 讨论</a>
 </center>
+<br/>
 
 ![华炎魔方项目概览](/docs/images-1/project_object.jpg)
 
