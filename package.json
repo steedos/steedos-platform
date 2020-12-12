@@ -9,7 +9,7 @@
   "scripts": {
     "initSubmodules": "git submodule init && git submodule update",
     "submodules": "git submodule foreach git checkout master && git pull ",
-    "bootstrap": "yarn submodules && lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
+    "bootstrap": "lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
     "link": "lerna link --force-local",
     "ver": "lerna version --skip-git --force-publish",
     "pub": "lerna publish from-package --registry https://registry.npmjs.org",
