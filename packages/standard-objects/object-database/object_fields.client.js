@@ -77,7 +77,11 @@ function getFieldsByType(doc, type, dataType) {
   }
   return fields;
 }
-
+Meteor.startup(function(){
+  $('body').on('hidden.bs.modal', '#afModal', function(){
+    Steedos.ObjectFieldManager.__lastDoc = null;
+  });
+});
 
 Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
   var __lastDoc = Steedos.ObjectFieldManager.__lastDoc;
