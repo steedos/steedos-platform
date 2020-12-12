@@ -279,7 +279,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
                 console.log('args: ', args);
                 var data = args['data'];
                 data._id = data._id || new ObjectId().toHexString();
-                let object = steedosSchema.getObject(`${type.name}`);
+                let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
                 return object.insert(data, userSession);
             }
@@ -291,7 +291,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
                 console.log('args: ', args);
                 let data = args['data'];
                 let _id = args['_id'];
-                let object = steedosSchema.getObject(`${type.name}`);
+                let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
                 return object.update(_id, data, userSession);
             }
@@ -302,7 +302,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
             resolve: async function (source, args, context, info) {
                 console.log('args: ', args);
                 let _id = args['_id'];
-                let object = steedosSchema.getObject(`${type.name}`);
+                let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
                 return object.delete(_id, userSession);
             }

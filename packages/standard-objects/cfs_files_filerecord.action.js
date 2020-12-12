@@ -10,7 +10,7 @@ module.exports = {
     if (Creator.isImageAttachment(file.original.name) || Creator.isHtmlAttachment(file.original.name)){
       Steedos.openWindow(url);
     }else{
-      Creator.officeOnlinePreview(url);
+      Creator.officeOnlinePreview(url,file.original.name);
     }
   }
 }
