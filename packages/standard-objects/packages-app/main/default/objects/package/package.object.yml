@@ -1,5 +1,6 @@
 name: package
 custom: true
+hidden: true
 enable_api: true
 enable_audit: true
 enable_chatter: false
