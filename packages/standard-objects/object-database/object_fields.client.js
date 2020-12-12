@@ -80,7 +80,7 @@ function getFieldsByType(doc, type, dataType) {
 
 Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
   var __lastDoc = Steedos.ObjectFieldManager.__lastDoc;
-  if(__lastDoc && __lastDoc._id == doc._id && __lastDoc.type == doc.type && __lastDoc.data_type == doc.data_type){
+  if(doc.type && __lastDoc && __lastDoc._id == doc._id && __lastDoc.type == doc.type && __lastDoc.data_type == doc.data_type){
     return false;
   }else{
     Steedos.ObjectFieldManager.__lastDoc = doc;

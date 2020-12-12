@@ -1,6 +1,6 @@
 {
   "name": "@steedos/meteor-bundle-runner",
-  "version": "1.22.4",
+  "version": "1.22.7",
   "description": "Run meteor bundles and inject your own nodejs code.",
   "main": "index.js",
   "private": false,
@@ -16,6 +16,7 @@
     "fibers": "4.0.3",
     "meteor-promise": "0.8.5",
     "node-pre-gyp": "0.6.34",
+    "open": "^7.3.0",
     "promise": "8.0.1",
     "semver": "5.3.0",
     "source-map-support": "^0.5.10",
