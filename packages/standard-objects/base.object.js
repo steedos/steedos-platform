@@ -8,7 +8,7 @@ const objectWebhooksPreSend = function (userId, doc, object_name, action) {
         return;
     }
     if (!spaceId) {
-        console.error('not found spaceId');
+        // console.error('not found spaceId');
         return;
     }
     var actionUserInfo, obj, owCollection, redirectUrl;

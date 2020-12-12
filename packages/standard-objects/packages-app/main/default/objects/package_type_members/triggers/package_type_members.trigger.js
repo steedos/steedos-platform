@@ -1,6 +1,7 @@
 const objectql = require('@steedos/objectql');
 const metadata = require('@steedos/metadata-api');
 const metadataCore = require('@steedos/metadata-core');
+const auth = require('@steedos/auth');
 //TODO 待优化
 async function getParent(member){
     let memberId = member.ids[0];
@@ -67,7 +68,8 @@ module.exports = {
     },
     afterInsert: async function(){
         if(this.doc.member.o === 'objects'){
-            const components = await metadata.getPackageMemberComponents(this.doc._id, this.spaceId);
+            const userSession = await auth.getSessionByUserId(this.userId, this.spaceId);
+            const components = await metadata.getPackageMemberComponents(this.doc._id, userSession);
             for (const metadataName in components) {
                 if (components.hasOwnProperty(metadataName)) {
                     const members = components[metadataName];

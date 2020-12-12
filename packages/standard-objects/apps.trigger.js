@@ -3,7 +3,7 @@ const clone = require("clone");
 const objectql = require("@steedos/objectql");
 const i18n = require("@steedos/i18n");
 const auth = require("@steedos/auth");
-
+const InternalData = require('./core/internalData');
 const permissions = {
     allowEdit: false,
     allowDelete: false,
@@ -22,6 +22,13 @@ const getLng = function(userId){
 
 module.exports = {
     afterFind: async function () {
+        let query = InternalData.parserFilters(this.query.filters);
+        let isSystem = query.is_system;
+        if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
+            if(_.isObject(isSystem) && isSystem["$ne"]){
+                return;
+            }
+        }
         if(_.isArray(this.data.values)){
             let lng = getLng(this.userId);
             let self = this;
@@ -42,6 +49,13 @@ module.exports = {
         }
     },
     afterAggregate: async function () {
+        let query = InternalData.parserFilters(this.query.filters);
+        let isSystem = query.is_system;
+        if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
+            if(_.isObject(isSystem) && isSystem["$ne"]){
+                return;
+            }
+        }
         if(_.isArray(this.data.values)){
             let lng = getLng(this.userId);
             let self = this;
