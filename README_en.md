@@ -1,5 +1,10 @@
 ## Steedos Platform
 
+<center>
+<a href="https://github.com/steedos/steedos-platform">  中文</ a>
+<a href="https://github.com/steedos/steedos-platform/discussions"> · English</ a>
+</center>
+
 Steedos Platform  is a set of low code development platform with visual modeling and descriptive programming. It can easily create intelligent and mobile enterprise applications by clicking the mouse.
 
 ## Features
