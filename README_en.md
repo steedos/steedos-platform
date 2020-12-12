@@ -33,10 +33,10 @@ For details on how to install and deploySteedos Platform , please refer to the o
 
 You can also follow a video tutorial on how to quickly build an app for Steedos.
 
-[Video Demonstration](https://www.steedos.com/videos)
-[Getting Started](https://www.steedos.com/help/user)
-[Set Up and Maintain Steedos Platform](https://www.npmjs.com/package/steedos-server)
-[Developers](https://www.steedos.com/videos)
+- [Video Demonstration](https://www.steedos.com/videos)
+- [Getting Started](https://www.steedos.com/help/user)
+- [Set Up and Maintain Steedos Platform](https://www.npmjs.com/package/steedos-server)
+- [Developers](https://www.steedos.com/videos)
 
 ## Contribute to Steedos Platform
 
