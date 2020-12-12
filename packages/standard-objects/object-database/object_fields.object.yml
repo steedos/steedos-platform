@@ -81,6 +81,8 @@ fields:
         value: url
       - label: Email
         value: email
+      - label: Image
+        value: image
       - label: Formula
         value: formula
       - label: Roll-Up Summary

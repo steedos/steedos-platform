@@ -154,7 +154,7 @@ Creator.getObjectFieldOptions = (object_name)->
 	permission_fields = Creator.getFields(object_name)
 	icon = _object?.icon
 	_.forEach fields, (f, k)->
-		if !_.include(["grid","object", "[Object]", "[object]", "Object", "avatar", "image", "markdown", "html"], f.type)
+		if !_.include(["grid","object", "[Object]", "[object]", "Object", "markdown", "html"], f.type)
 			if !/\w+\./.test(k) and _.indexOf(permission_fields, k) > -1
 				_options.push {label: f.label || k, value: k, icon: icon}
 	return _options

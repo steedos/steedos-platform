@@ -72,6 +72,10 @@ function getFieldsByType(doc, type, dataType) {
       fields.push({ name: 'summary_filters.$.value' });
       break;
     }
+    case 'image': {
+      // fields.push({ name: 'multiple'}); image多选时，单个字段编辑窗口样式异常,暂时不支持
+      break;
+    }
     default:
       break;
   }
