@@ -1,6 +1,8 @@
 
 ## 华炎魔方概览
 
+[English](https://github.com/steedos/steedos-platform/blob/1.22/README_en.md) / [中文](https://github.com/steedos/steedos-platform)
+
 华炎魔方是一套可视化建模、描述式编程的低代码开发平台，只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。
 
 <center>
@@ -28,7 +30,7 @@
 
 ## 安装部署
 
-本项目是华炎魔方的内核源码，我们会定期编译并发布为npm package (<a href="https://www.npmjs.com/package/steedos-server">  链接</a>)，只需在项目中引入相关的包，既可启用华炎魔方的各项功能。
+本项目是华炎魔方的内核源码，我们会定期编译并发布为 (<a href="https://www.npmjs.com/package/steedos-server">  npm package</a>)，只需在项目中引入相关的包，既可启用华炎魔方的各项功能。
 
 具体如何安装部署华炎魔方，请参考官网安装部署文档 <a href="https://www.steedos.com/help/deploy/">  部署文档</a> 
 
