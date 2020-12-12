@@ -24,12 +24,12 @@ Steedos Platform  is a set of low code development platform with visual modeling
 
 - **Advanced business logic Development** Steedos Platform  provides an entry point for code development. Developers can realize high-level business logic such as automatic operation, stop and rollback under specific conditions by writing code. Or develop interfaces with third-party systems.
 
-- **Open Source, Customizable** Steedos Platform  is open source. This will make you confident that Steedos Platform  will exist forever. You can also code or fork Steedos Platform  and make changes as needed to provide a developer friendly experience.
+- **Open Source, Customizable** Steedos Platform  is open source. This will make you confident that Steedos Platform will exist forever. You can also fork the source code down and make changes as needed.
 
 ## Installation and Deployment
 
 This project is the kernel source code of Steedos Platform . We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly ,By introducing relevant packages into the project, all the functions of Steedos Platform  can be enabled.
-For details on how to install and deploySteedos Platform , please refer to the official website installation and [Deployment Document](https://www.steedos.com/help/deploy/)
+For details on how to install and deploySteedos Platform , please refer to the [Official Website Installation and Deployment Document](https://www.steedos.com/help/deploy/)
 
 ## Learn Steedos Platform
 
