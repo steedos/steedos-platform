@@ -59,7 +59,7 @@
 ![开发者微信交流群](/docs/images/QR_wechat_developers.jpg)
 
 ## 商务咨询
-![商务咨询群](/docs/images/Business_Consulting.jpg)
+![商务咨询](/docs/images/Business_Consulting.jpg)
 
 ## 微信公众号
 ![微信公众号](/docs/images/Public_Number.jpg)
