@@ -24,6 +24,7 @@ import { getObjectConfig } from '../types'
 export * from './transform'
 export * from './permission_shares'
 export * from './suffix'
+export * from './locale'
 
 exports.loadJSONFile = (filePath: string)=>{
     return JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));

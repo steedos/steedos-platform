@@ -141,9 +141,16 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
             objTypeFields[k] = {
                 type: GraphQLJSON,
                 resolve: function (source, args, context, info) {
-                    let field = relatedObjects[info.parentType.name].fields[info.fieldName];
+                    // let field = relatedObjects[info.parentType.name].fields[info.fieldName];
+                    // return getFieldLabel(field, source[field.name], userSession);
                     let userSession = context ? context.user : null;
-                    return getFieldLabel(field, source[field.name], userSession);
+                    let objectName = info.parentType.name;
+                    let fieldName = info.fieldName;
+                    let field = relatedObjects[objectName].fields[fieldName];
+                    let fieldValue = source[field.name];
+                    let relatedFields = relatedObjects[objectName].fields;
+                    let object = steedosSchema.getObject(objectName);
+                    return getFieldLabel(fieldName, fieldValue, relatedFields, object, userSession);
                 }
             };
         }
