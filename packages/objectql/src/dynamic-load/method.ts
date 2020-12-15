@@ -51,9 +51,8 @@ export const addObjectMethodConfig = (json: JsonMap)=>{
 
         Object.assign(object.methods, json);
 
-    } else {
-        addLazyLoadMethods(object_name, json)
     }
+    addLazyLoadMethods(object_name, Object.assign({}, json, {listenTo: object_name}));
 }
 
 export const loadObjectMethods = function (filePath: string){
