@@ -29,6 +29,12 @@
         }
     ],
     "properties": {
+        "name":{
+            "type": "string"
+        },
+        "permission_set_id":{
+            "type": "string"
+        },
         "allowRead": {
             "type": "boolean",
             "description": "允许查看"
