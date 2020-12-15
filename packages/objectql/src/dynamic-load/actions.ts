@@ -7,6 +7,31 @@ var clone = require('clone');
 
 const _lazyLoadActions: Dictionary<any> = {};
 
+const _actionScripts: Dictionary<any> = {};
+
+const addActionScripts = function(json: SteedosActionTypeConfig){
+    if (!json.listenTo) {
+        console.log('json', json);
+        throw new Error('missing attribute listenTo');
+    }
+    let object_name = getListenTo(json);
+    if(!_actionScripts[object_name]){
+        _actionScripts[object_name] = []
+    }
+    _actionScripts[object_name].push(json)
+}
+
+const getActionScripts = function(objectName: string){
+    return _actionScripts[objectName]
+}
+
+export const loadActionScripts = function(objectName: string){
+    let scripts = getActionScripts(objectName);
+    _.each(scripts, function(script){
+        addObjectActionConfig(clone(script));
+    })
+}
+
 const addLazyLoadActions = function(objectName: string, json: SteedosActionTypeConfig){
     if(!_lazyLoadActions[objectName]){
         _lazyLoadActions[objectName] = []
@@ -18,14 +43,7 @@ const getLazyLoadActions = function(objectName: string){
     return _lazyLoadActions[objectName]
 }
 
-export const loadObjectLazyActions = function(objectName: string){
-    let actions = getLazyLoadActions(objectName);
-    _.each(actions, function(action){
-        addObjectActionConfig(clone(action));
-    })
-}
-
-export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
+const getListenTo = function(json: SteedosActionTypeConfig){
     if (!json.listenTo) {
         console.log('json', json);
         throw new Error('missing attribute listenTo');
@@ -35,14 +53,25 @@ export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
         throw new Error('listenTo must be a function or string')
     }
 
-    let object_name = '';
+    let listenTo: string = '';
 
     if (_.isString(json.listenTo)) {
-        object_name = json.listenTo
+        listenTo = json.listenTo
     } else if (_.isFunction(json.listenTo)) {
-        object_name = json.listenTo()
+        listenTo = json.listenTo()
     }
+    return listenTo;
+}
 
+export const loadObjectLazyActions = function(objectName: string){
+    let actions = getLazyLoadActions(objectName);
+    _.each(actions, function(action){
+        addObjectActionConfig(clone(action));
+    })
+}
+
+export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
+    let object_name = getListenTo(json);
     let object = getObjectConfig(object_name);
     if (object) {
         if(!object.listeners){
@@ -70,5 +99,6 @@ export const loadObjectActions = function (filePath: string){
     let buttonScripts = util.loadButtonScripts(filePath)
     _.each(buttonScripts, (json: SteedosActionTypeConfig) => {
         addObjectActionConfig(json);
+        addActionScripts(json);
     })
 }
