@@ -125,7 +125,7 @@ Setup.validate = (onSuccess)->
 			onSuccess()
 	.fail ( e ) ->
 		if (e.status == 401)
-			Steedos.redirectToSignIn()
+			Steedos.logout()
 		return
 
 Setup.clearAuthLocalStorage = ()->
