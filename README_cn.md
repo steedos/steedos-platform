@@ -17,9 +17,9 @@
 
 元数据是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
 
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
-
 元数据可以导入到华炎魔方中，可以在可视化界面中进行修改，也可以通过Steedos Metadata API进行操作。
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 华炎魔方支持几十种元数据类型，每种元数据用来定义一种业务功能。 以下是元数据类型的几大类：
 
