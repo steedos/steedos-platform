@@ -12,6 +12,21 @@ Steedos Platform  is a low code development platform with visual modeling and de
 </center>
 
 ![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/Project_object.jpg)
+
+## Steedos Metadata
+
+Metadata is core to the Steedos infrastructure. Metadata are core components or features in Steedos. Without Metadata most of the magic just isn’t possible!
+
+Metadata relates to the fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your Steedos environment.
+
+Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.
+
+There are several types of Metadata, with each one representing a unique way a business function can be customized. Here are a few broad categories for Metadata types:
+
+- **Data**: the core components of the data structure on which most customization is built. E.g. Custom Objects, Fields, and Custom Apps.
+- **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
+- **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
+
 ## Features
 
 - **Visual Modeling**: Based on metadata driven, Steedos Platform abstracts the traditional business requirements realized by code into configurable metadata. By simply clicking the  tag to modify the configuration item, the vast majority of business requirements can be realized, and the code can be written if necessary.
