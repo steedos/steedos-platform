@@ -37,16 +37,17 @@ Steedos Platform  is a low code development platform with visual modeling and de
 ## Installation and Deployment
 
 This project is the kernel source code of Steedos Platform . We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly ,By introducing relevant packages into the project, all the functions of Steedos Platform  can be enabled.
-For details on how to install and deploySteedos Platform , please refer to the [Official Website Installation and Deployment Document](https://www.steedos.com/help/deploy/)
+<!-- For details on how to install and deploySteedos Platform , please refer to the [Official Website Installation and Deployment Document](https://www.steedos.com/help/deploy/) -->
 
 ## Learn Steedos Platform
 
-You can also follow a video tutorial on how to quickly build an app for Steedos.
+For more information, please refer to the official website of [Steedos](https://www.steedos.org/)
+<!-- You can also follow a video tutorial on how to quickly build an app for Steedos.
 
 - [Video Demonstration](https://www.steedos.com/videos)
 - [Getting Started](https://www.steedos.com/help/user)
 - [Set Up and Maintain Steedos Platform](https://www.npmjs.com/package/steedos-server)
-- [Developers](https://www.steedos.com/videos)
+- [Developers](https://www.steedos.com/videos) -->
 
 ## Contribute to Steedos Platform
 
