@@ -14,6 +14,7 @@
 
 ![华炎魔方项目对象界面](https://www.steedos.com/assets/github/platform/cn/Project_object.jpg)
 
+<img src="https://www.steedos.com/assets/github/platform/cn/QR_wechat_developers.jpg" alt="开发者微信交流群" style="max-width:100%;">
 
 ## 华炎魔方功能
 
