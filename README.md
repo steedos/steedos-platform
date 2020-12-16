@@ -10,7 +10,7 @@ Steedos Platform  is a low code development platform with visual modeling and de
 <a href="https://github.com/steedos/steedos-platform/blob/1.22/README_cn.m"> · 中文</a>
 </center>
 
-<br></br>
+<br>
 
 ![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/Project_object.jpg)
 
