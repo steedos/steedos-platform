@@ -1,0 +1,7 @@
+_id: apps_user_apikey
+name: Apps
+admin_menus:
+  - _id: api_keys
+    name: API key
+    object_name: api_keys
+    parent: account

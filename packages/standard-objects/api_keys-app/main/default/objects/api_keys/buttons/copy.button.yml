@@ -1,0 +1,5 @@
+name: copy
+is_enable: false
+label: 复制API Key
+'on': record_only
+visible: true

@@ -1,0 +1,5 @@
+name: generator
+is_enable: true
+label: 创建API Key
+'on': list
+visible: true
