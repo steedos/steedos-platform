@@ -27,7 +27,7 @@
     "@steedos/design-system-react": "^1.22.1",
     "@steedos/filters": "^1.22.1",
     "@steedos/i18n": "^1.22.1",
-    "@steedos/license": "^1.22.1",
+    "@steedos/license": "^1.22.2",
     "@steedos/objectql": "^1.22.1",
     "@steedos/odata-v4-typeorm": "^0.1.0",
     "@steedos/process": "^1.22.1",
