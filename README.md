@@ -1,17 +1,31 @@
 
 ## Steedos Platform
 
-[中文](https://github.com/steedos/steedos-platform/blob/1.22/README_cn.md) / [English](https://github.com/steedos/steedos-platform/blob/1.22/README.md)
-
 Steedos Platform  is a low code development platform with visual modeling and descriptive programming. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
 
 <center style="margin:20px 0;">
-<a href="https://www.steedos.com/help/">  Docs</a>
+<a href="http://www.steedos.org/docs/overview">  Docs</a>
 <a href="https://github.com/steedos/steedos-platform/issues/"> · Report a bug</a>
 <a href="https://github.com/steedos/steedos-platform/discussions"> · Discussions</a>
+<a href="https://github.com/steedos/steedos-platform/blob/1.22/README_cn.md"> · 中文</a>
 </center>
 
-![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/Project_object.jpg)
+## Based on Metadata
+
+Metadata is core to the Steedos infrastructure. Metadata are core components or features in Steedos. Without Metadata most of the magic just isn’t possible!
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+
+Metadata relates to the fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your Steedos environment.
+
+Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.
+
+There are several types of Metadata, with each one representing a unique way a business function can be customized. Here are a few broad categories for Metadata types:
+
+- **Data**: the core components of the data structure on which most customization is built. E.g. Custom Objects, Fields, and Custom Apps.
+- **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
+- **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
+
 ## Features
 
 - **Visual Modeling**: Based on metadata driven, Steedos Platform abstracts the traditional business requirements realized by code into configurable metadata. By simply clicking the  tag to modify the configuration item, the vast majority of business requirements can be realized, and the code can be written if necessary.
