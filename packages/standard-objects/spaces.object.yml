@@ -157,6 +157,10 @@ fields:
     hidden: true
     omit: true
     readonly: true
+  api_key:
+    type: 'text'
+    label: API Key
+    group: Developer
 list_views:
   all:
     label: All Companies
