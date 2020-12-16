@@ -2,7 +2,7 @@
 
 [English](https://github.com/steedos/steedos-platform/blob/1.22/README.md) / [中文](https://github.com/steedos/steedos-platform/blob/1.22/README_cn.md)
 
-华炎魔方是一套可视化建模、描述式编程的低代码开发平台，只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。华炎魔方使用元数据配置文件定义数据模型、界面、自动化规则，业务人员使用可视化界面进行零代码/无代码开发，开发人员使用代码编写高级业务逻辑。
+华炎魔方是一套可视化建模、描述式编程的低代码开发平台，只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。
 
 <center>
 <a href="https://www.steedos.com/help/">  文档</a>
@@ -13,6 +13,19 @@
 
 ![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/Project_object.jpg)
 
+## 基于元数据
+
+元数据是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+
+元数据可以导入到华炎魔方中，可以在可视化界面中进行修改，也可以通过Steedos Metadata API进行操作。
+
+华炎魔方支持几十种元数据类型，每种元数据用来定义一种业务功能。 以下是元数据类型的几大类：
+
+-**数据**：构建大多数定制的数据结构的核心组成部分。 例如：自定义对象，字段和自定义应用。
+-**业务逻辑**：在平台中开发的自定义代码。 例如：验证规则、工作流规则，按钮，表单事件，触发器，批准过程。
+-**界面**：定制用户与平台的交互方式。 例如：组件，列表视图和页面布局。
 
 ## 华炎魔方功能
 
