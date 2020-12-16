@@ -6,10 +6,10 @@ module.exports = {
         var clipboard = new Clipboard(item_element[0]);
         item_element.attr('data-clipboard-new', true);
         clipboard.on('success', function (e) {
-            return toastr.success(TAPi18n.__('复制成功'));
+            return toastr.success(TAPi18n.__('copy_success'));
         });
         clipboard.on('error', function (e) {
-            toastr.error('复制失败');
+            toastr.error('copy_failed');
             return console.error("e");
         });
         if (item_element[0].tagName === 'LI' || item_element.hasClass('view-action')) {

@@ -496,5 +496,7 @@
 
 	"notifications__object": "Notifications",
 	"favorites__object": "My Favorite",
-  	"duplicate_unique_key": "Duplicate unique key: %s"
+	"duplicate_unique_key": "Duplicate unique key: %s",
+	"copy_success": "Copied to clipboard",
+	"copy_failed": "copy failed"
 }
