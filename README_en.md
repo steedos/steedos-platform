@@ -10,7 +10,7 @@ Steedos Platform  is a low code development platform with visual modeling and de
 <a href="https://github.com/steedos/steedos-platform/discussions"> · Discussions</a>
 </center>
 
-![华炎魔方项目对象界面](/docs/images/Project_object.jpg)
+![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/Project_object.jpg)
 ## Features
 
 - **Visual Modeling**: Based on metadata driven, Steedos Platform abstracts the traditional business requirements realized by code into configurable metadata. By simply clicking the  tag to modify the configuration item, the vast majority of business requirements can be realized, and the code can be written if necessary.
