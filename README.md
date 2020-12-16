@@ -10,13 +10,11 @@ Steedos Platform  is a low code development platform with visual modeling and de
 <a href="https://github.com/steedos/steedos-platform/blob/1.22/README_cn.m"> · 中文</a>
 </center>
 
-<p/>
-
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
-
 ## Based on Metadata
 
 Metadata is core to the Steedos infrastructure. Metadata are core components or features in Steedos. Without Metadata most of the magic just isn’t possible!
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 Metadata relates to the fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your Steedos environment.
 
