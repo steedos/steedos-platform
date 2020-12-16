@@ -4,11 +4,13 @@ module.exports = {
             fields: {
                 name: {
                     type: 'text',
-                    label: TAPi18n.__('package_action_upload_form_name')
+                    label: TAPi18n.__('package_action_upload_form_name'),
+                    required: true
                 },
                 version: {
                     type: 'text',
-                    label: TAPi18n.__('package_action_upload_form_version')
+                    label: TAPi18n.__('package_action_upload_form_version'),
+                    required: true
                 },
                 release_notes: {
                     type: 'textarea',
@@ -53,7 +55,11 @@ module.exports = {
                 return toastr.error(TAPi18n.__('package_action_upload_form__error_password_ne'));
             }
             var result = Steedos.authRequest(`/api/package/upload_to_store/${record_id}`, {type: 'post', async: false, data: JSON.stringify({version_info: formValues.insertDoc})})
+            if(!result){
+                return $("body").removeClass('loading');
+            }
             if(result.error){
+                $("body").removeClass('loading');
                 return toastr.error(result.error);
             }
             toastr.success(TAPi18n.__('package_action_upload_success'));
