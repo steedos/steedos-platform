@@ -1,3 +1,4 @@
+![封面图片](https://www-steedos-com.oss-accelerate.aliyuncs.com/videos/steedos/steedos-open-source.jpg)
 
 ## 华炎魔方概览
 
