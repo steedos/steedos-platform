@@ -5,6 +5,7 @@ import { getUserSession } from './userSession'
 import { getSpaceUserSession } from './spaceUserSession'
 
 import * as core from "express-serve-static-core";
+import { isAPIKey, verifyAPIKey } from './apikey';
 interface Request extends core.Request {
   user?: any;
 }
@@ -54,12 +55,19 @@ export async function getSession(token: string, spaceId?: string): Promise<Steed
   if (!token) {
     return
   }
-
-  let userId = await getUserIdByToken(token);
+  let userId = null;
+  if(isAPIKey(token)){
+    const apiKeyInfo = await verifyAPIKey(token);
+    if(apiKeyInfo){
+      userId = apiKeyInfo.userId;
+      spaceId = apiKeyInfo.spaceId;
+    }
+  }else{
+    userId = await getUserIdByToken(token);
+  }
   if (!userId) {
     return
   }
-
   let userSession = await getUserSession(userId);
   if (!userSession) {
     return;
@@ -80,10 +88,14 @@ export async function auth(request: Request, response: Response): Promise<any> {
     || request.headers['x-space-id'];
   if (authorization && authorization.split(' ')[0] == 'Bearer') {
     let spaceAuthToken = authorization.split(' ')[1];
-    if (!spaceId) {
-      spaceId = spaceAuthToken.split(',')[0];
+    if(isAPIKey(spaceAuthToken)){
+      authToken = spaceAuthToken;
+    }else{
+      if (!spaceId) {
+        spaceId = spaceAuthToken.split(',')[0];
+      }
+      authToken = spaceAuthToken.split(',')[1];
     }
-    authToken = spaceAuthToken.split(',')[1];
   }
 
   if (spaceToken) {
