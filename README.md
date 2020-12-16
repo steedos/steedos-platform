@@ -1,5 +1,3 @@
-![封面图片](https://www-steedos-com.oss-accelerate.aliyuncs.com/videos/steedos/steedos-open-source.jpg)
-
 ## 华炎魔方概览
 
 [English](https://github.com/steedos/steedos-platform/blob/1.22/README_en.md) / [中文](https://github.com/steedos/steedos-platform)
@@ -13,9 +11,8 @@
 </center>
 <br/><br/>
 
-![华炎魔方项目对象界面](https://www.steedos.com/assets/github/platform/cn/Project_object.jpg)
+![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/Project_object.jpg)
 
-<img src="https://www.steedos.com/assets/github/platform/cn/QR_wechat_developers.jpg" alt="开发者微信交流群" style="max-width:100%;">
 
 ## 华炎魔方功能
 
