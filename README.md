@@ -72,13 +72,13 @@ There are several types of Metadata, with each one representing a unique way a b
 
 A package is a container for something as small as an individual component or as large as a set of related apps. After creating a package, you can distribute it to other Steedos users and organizations, including those outside your company.
 
-## Source-Driven Development
+## Steedos DX
 
-Steedos DX introduces a new way to organize your metadata and distribute your apps. You can now benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
-
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
 
 To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 Steedos DX are licenced by developers. We provide Steedos DX free license for open source projects and educational institutions.
 
