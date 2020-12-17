@@ -91,7 +91,7 @@ You can create a new steedos project or install the following open source steedo
 
 ## Learn more
 
-For more information, please refer to the official website of [Steedos](https://www.steedos.org/)
+For more information, please refer to the official website of [www.steedos.org](https://www.steedos.org/)
 
 ## Contribute to Steedos Platform
 
