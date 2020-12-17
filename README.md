@@ -5,7 +5,7 @@
 
 ## Steedos Platform
 
-Steedos Platform  is a low code development platform with visual modeling and descriptive programming. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
+Steedos Platform is a low code development platform with visual modeling and descriptive programming. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
 
 <center style="margin:20px 0;">
 <a href="http://www.steedos.org/docs/overview">  Docs</a>
@@ -16,11 +16,9 @@ Steedos Platform  is a low code development platform with visual modeling and de
 
 ## Based on Metadata
 
-Metadata is core to the Steedos infrastructure. Metadata are core components or features in Steedos. Without Metadata most of the magic just isn’t possible!
+Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
 
 ![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
-
-Metadata relates to the fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your Steedos environment.
 
 Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.
 
