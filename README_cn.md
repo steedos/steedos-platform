@@ -1,6 +1,6 @@
 
 <center>
-<img src="https://steedos.github.io/assets/logo.png" style="width:200px" />
+<img src="https://steedos.github.io/assets/logo.png" style="width:100px" />
 </center>
 
 ## 华炎魔方概览
