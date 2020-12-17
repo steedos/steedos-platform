@@ -5,10 +5,8 @@
   </a>
 </p>
 <h1 align="center">
-  Steedos
+  Steedos Platform
 </h1>
-
-## Steedos Platform
 
 Steedos Platform is a low code development platform with visual modeling and descriptive programming. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
 
