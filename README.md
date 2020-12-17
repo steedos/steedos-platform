@@ -80,7 +80,7 @@ To make this possible, we're enabling you to export your metadata, define data i
 
 ![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
-Steedos DX are licenced by developers. We provide Steedos DX free license for open source projects and educational institutions.
+Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
 
 ## Installation and Deployment
 
