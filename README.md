@@ -1,7 +1,12 @@
 
-<center>
-<img src="https://steedos.github.io/assets/logo.png" style="width:100px" />
-</center>
+<p align="center">
+  <a href="https://www.steedos.com/cn">
+    <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="120" />
+  </a>
+</p>
+<h1 align="center">
+  Steedos
+</h1>
 
 ## Steedos Platform
 
