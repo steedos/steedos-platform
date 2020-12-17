@@ -1,14 +1,20 @@
+const validator = require('validator');
 //TODO 将此代码转移到license项目
 const customObjectNameSuffix = '__c';
 const customFieldNameSuffix = '__c';
 declare var Steedos: any;
+
+function standardObject(spaceId){
+    console.log('process.env.DEVELOPER_STANDARD_OBJECTS', validator.toBoolean(process.env.DEVELOPER_STANDARD_OBJECTS, true), typeof validator.toBoolean(process.env.DEVELOPER_STANDARD_OBJECTS, true));
+    return validator.toBoolean(process.env.DEVELOPER_STANDARD_OBJECTS, true) && Steedos.hasFeature('standard_object', spaceId);
+}
 
 export const getObjectSuffix = (spaceId: string, internal?: boolean)=>{
     if(internal){
         return customObjectNameSuffix
     }
 
-    if(Steedos.hasFeature('standard_object', spaceId)){
+    if(standardObject(spaceId)){
         return '';
     }
     return customObjectNameSuffix;
@@ -38,7 +44,7 @@ export const getFieldSuffix = (spaceId: string, internal?: boolean)=>{
     if(internal){
         return customFieldNameSuffix
     }
-    if(Steedos.hasFeature('standard_object', spaceId)){
+    if(standardObject(spaceId)){
         return '';
     }
     return customFieldNameSuffix;
