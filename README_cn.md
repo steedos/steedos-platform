@@ -1,8 +1,8 @@
 
 
 <p align="center">
-  <a href="https://www.steedos.com/cn">
-    <img alt="华炎魔方概览" src="https://steedos.github.io/assets/logo.png" width="120" />
+  <a href="https://www.steedos.com/platform/">
+    <img alt="华炎魔方概览" src="https://steedos.github.io/assets/logo.png" width="80" />
   </a>
 </p>
 <h1 align="center">
