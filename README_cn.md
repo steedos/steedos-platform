@@ -5,9 +5,6 @@
     <img alt="华炎魔方概览" src="https://steedos.github.io/img/logo_platform.png" height="80" />
   </a>
 </p>
-
-<hr>
-
 <p align="center">
 <a href="https://github.com/steedos/steedos-platform/blob/1.22/README.md">English</a>
 <a href="https://www.steedos.com/help/"> · 文档</a>
@@ -15,7 +12,7 @@
 <a href="https://github.com/steedos/steedos-platform/discussions"> · 讨论</a>
 </p>
 
-<p align="center">
+<p align="center" style="border-top: solid 1px #cccccc">
   华炎魔方是一套可视化建模、描述式编程的低代码开发平台，只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。
 </p>
 
