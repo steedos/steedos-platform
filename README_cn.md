@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://www.steedos.com/platform/">
-    <img alt="华炎魔方概览" src="https://steedos.github.io/img/logo_platform.png" width="80" />
+    <img alt="华炎魔方概览" src="https://steedos.github.io/img/logo_platform.png" height="80" />
   </a>
 </p>
 
