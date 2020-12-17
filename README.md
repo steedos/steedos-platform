@@ -80,6 +80,8 @@ Steedos DX introduces a new way to organize your metadata and distribute your ap
 
 To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
 
+Steedos DX are licenced by developers. We provide Steedos DX free license for open source projects and educational institutions.
+
 ## Installation and Deployment
 
 This project is the kernel source code of Steedos Platform. We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly.
