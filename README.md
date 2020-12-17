@@ -19,6 +19,10 @@
 Steedos Platform is a low code development platform with visual modeling and descriptive programming. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
 </p>
 
+<h3 align="center">
+ 🤖 🎨 🚀
+</h3>
+
 ## Click, Not Code
 
 Traditional programming, denotes the means of programming by using certain coding languages, to tell a computer exactly how to perform an action. 
