@@ -34,8 +34,6 @@ With drag-and-drop simplicity, just about anyone can create apps that automate b
 
 Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
 
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
-
 Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.
 
 There are several types of Metadata, with each one representing a unique way a business function can be customized. Here are a few broad categories for Metadata types:
@@ -47,6 +45,8 @@ There are several types of Metadata, with each one representing a unique way a b
 ## SOURCE-DRIVEN DEVELOPMENT
 
 Steedos DX introduces a new way to organize your metadata and distribute your apps. You can now benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
 
