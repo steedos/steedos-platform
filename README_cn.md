@@ -1,10 +1,14 @@
 
 
 <p align="center">
-  <a href="https://www.steedos.com/platform/">
-    <img alt="华炎魔方概览" src="https://steedos.github.io/img/logo_platform.png" height="80" />
+  <a href="https://www.steedos.com/cn">
+    <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
   </a>
 </p>
+<h1 align="center">
+  华炎魔方
+</h1>
+
 <p align="center">
 <a href="https://github.com/steedos/steedos-platform/blob/1.22/README.md">English</a>
 <a href="https://www.steedos.com/help/"> · 文档</a>
