@@ -1,3 +1,8 @@
+
+<center>
+<img src="https://steedos.github.io/assets/logo.png" style="width:200px" />
+</center>
+
 ## 华炎魔方概览
 
 华炎魔方是一套可视化建模、描述式编程的低代码开发平台，只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。
@@ -10,7 +15,7 @@
 </center>
 <br/><br/>
 
-![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/Project_object.jpg)
+![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/project_object.jpg)
 
 ## 基于元数据
 
@@ -73,8 +78,8 @@
 
 #### 商务咨询
 
-![商务咨询](https://steedos.github.io/assets/github/platform/cn/Business_Consulting.jpg)
+![商务咨询](https://steedos.github.io/assets/github/platform/cn/business_consulting.jpg)
 
 #### 微信公众号
 
-![微信公众号](https://www.steedos.com/assets/github/platform/cn/Public_Number.jpg)
+![微信公众号](https://www.steedos.com/assets/github/platform/cn/public_number.jpg)

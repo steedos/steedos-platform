@@ -1,6 +1,6 @@
 
-
-![logo](https://steedos.github.io/assets/logo.png)
+<center>
+<img src="https://steedos.github.io/assets/logo.png" style="width:200px" />
 </center>
 
 ## Steedos Platform
