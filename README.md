@@ -19,7 +19,18 @@ Steedos Platform is a low code development platform with visual modeling and des
 <a href="https://github.com/steedos/steedos-platform/blob/1.22/README_cn.md"> · 中文</a>
 </center>
 
-## Based on Metadata
+## Click, Not Code
+
+Traditional programming, denotes the means of programming by using certain coding languages, to tell a computer exactly how to perform an action. 
+
+On the other hand, declarative programming accomplishes the same results by basically telling the computer the end result and letting the computer figure out how to get there.
+
+Steedos is such an declarative programming platform.  Steedos empowers business owners with all of the tools of a developer, without requiring an advanced skill set. 
+
+With drag-and-drop simplicity, just about anyone can create apps that automate business processes. The apps you create for your business can be deployed on mobile, tablet and web, be simple or complex, and connect to nearly any data source. 
+
+
+## BASED ON METADATA
 
 Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
 
@@ -33,7 +44,13 @@ There are several types of Metadata, with each one representing a unique way a b
 - **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
 - **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
 
-## Features
+## SOURCE-DRIVEN DEVELOPMENT
+
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can now benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
+
+To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
+
+## FEATURES
 
 - **Visual Modeling**: Based on metadata driven, Steedos Platform abstracts the traditional business requirements realized by code into configurable metadata. By simply clicking the  tag to modify the configuration item, the vast majority of business requirements can be realized, and the code can be written if necessary.
 
