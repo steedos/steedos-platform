@@ -74,7 +74,7 @@ To make this possible, we're enabling you to export your metadata, define data i
 
 ## Installation and Deployment
 
-This project is the kernel source code of Steedos Platform . We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly ,By introducing relevant packages into the project, all the functions of Steedos Platform  can be enabled.
+This project is the kernel source code of Steedos Platform . We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly.
 <!-- For details on how to install and deploySteedos Platform , please refer to the [Official Website Installation and Deployment Document](https://www.steedos.com/help/deploy/) -->
 
 ## Learn Steedos Platform
@@ -93,7 +93,7 @@ From reporting bugs to proposing improvement suggestions, every contribution is 
 
 ## Licence
 
-Steedos Platform open source version based on MIT protocol, built-in Steedos Platform en engines, completely free. The solution based on Steedos Platform can be sold at a separate price.
+Steedos Platform is licensed under the MIT. Everyone can build and distribute steedos apps for free. 
 
 ## Keep in Contact
 
