@@ -46,14 +46,6 @@ There are several types of Metadata, with each one representing a unique way a b
 - **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
 - **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
 
-## Source-Driven Development
-
-Steedos DX introduces a new way to organize your metadata and distribute your apps. You can now benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
-
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
-
-To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
-
 ## Features
 
 - **Visual Modeling**: Based on metadata driven, Steedos Platform abstracts the traditional business requirements realized by code into configurable metadata. By simply clicking the  tag to modify the configuration item, the vast majority of business requirements can be realized, and the code can be written if necessary.
@@ -76,20 +68,30 @@ To make this possible, we're enabling you to export your metadata, define data i
 
 - **Open Source, Customizable**: Steedos Platform  is open source. This will make you confident that Steedos Platform will exist forever. You can also fork the source code down and make changes as needed.
 
+## Steedos Package
+
+A package is a container for something as small as an individual component or as large as a set of related apps. After creating a package, you can distribute it to other Steedos users and organizations, including those outside your company.
+
+## Source-Driven Development
+
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can now benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+
+To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
+
 ## Installation and Deployment
 
-This project is the kernel source code of Steedos Platform . We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly.
-<!-- For details on how to install and deploySteedos Platform , please refer to the [Official Website Installation and Deployment Document](https://www.steedos.com/help/deploy/) -->
+This project is the kernel source code of Steedos Platform. We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly.
 
-## Learn Steedos Platform
+You can create a new steedos project or install the following open source steedos projects.
+
+- [Project Management App](https://github.com/steedos/project-management-app)
+- [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
+
+## Learn more
 
 For more information, please refer to the official website of [Steedos](https://www.steedos.org/)
-<!-- You can also follow a video tutorial on how to quickly build an app for Steedos.
-
-- [Video Demonstration](https://www.steedos.com/videos)
-- [Getting Started](https://www.steedos.com/help/user)
-- [Set Up and Maintain Steedos Platform](https://www.npmjs.com/package/steedos-server)
-- [Developers](https://www.steedos.com/videos) -->
 
 ## Contribute to Steedos Platform
 
