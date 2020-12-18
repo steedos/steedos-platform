@@ -6,3 +6,5 @@ api_keys_field_api_key: API Key
 api_keys_field_last_use_time: Last Use Time
 api_keys_field_name: Name
 api_keys_field_owner: Owner
+objects_listview_all: All
+objects_listview_recent: Recent
