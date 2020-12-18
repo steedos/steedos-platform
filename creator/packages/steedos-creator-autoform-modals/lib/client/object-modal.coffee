@@ -1,5 +1,9 @@
-oDataOperation = (type, url, data, object_name, operation)->
+oDataOperation = (type, url, data, object_name, operation, other)->
 	self = this
+	beforeHook = FormManager.runHook(object_name, operation, 'before', {_id: other._id, formId: other.formId, doc: data})
+	if !beforeHook
+		return false;
+	previousDoc = FormManager.getPreviousDoc(object_name, other._id, operation)
 	$.ajax
 		type: type
 		url: url
@@ -20,8 +24,10 @@ oDataOperation = (type, url, data, object_name, operation)->
 			result.type = type
 			result.object_name = object_name
 			result.value = value
+			FormManager.runHook(object_name, operation, 'after', {previousDoc: previousDoc, dbDoc: result?.value[0]})
 			self.done(null, result)
 		error: (jqXHR, textStatus, errorThrown) ->
+			FormManager.runHook(object_name, operation, 'error', {_id: other._id, doc: data, error: jqXHR.responseJSON.error})
 			self.done(jqXHR.responseJSON.error)
 
 getObjectName = (collectionName)->
@@ -131,7 +137,7 @@ Template.CreatorObjectModal.onRendered ()->
 			if operation == "insert"
 				data = insertDoc
 				type = "post"
-				urls.push Steedos.absoluteUrl("/api/v4/#{object_name}")
+				urls.push {url: Steedos.absoluteUrl("/api/v4/#{object_name}"), formId: formId}
 				delete data._object_name
 			if operation == "update"
 				if Session.get("cmMeteorMethod")
@@ -156,7 +162,7 @@ Template.CreatorObjectModal.onRendered ()->
 
 				_ids = _id.split(",")
 				_.each _ids, (id)->
-					urls.push Steedos.absoluteUrl("/api/v4/#{object_name}/#{id}")
+					urls.push  {url: Steedos.absoluteUrl("/api/v4/#{object_name}/#{id}"), _id: id, formId: formId}
 				data = updateDoc
 				type = "put"
 
@@ -171,8 +177,8 @@ Template.CreatorObjectModal.onRendered ()->
 							trigger.todo.apply({object_name: object_name},[userId, data])
 
 
-			_.each urls, (url)->
-				oDataOperation.call(self, type, url, data, object_name, operation)
+			_.each urls, (item)->
+				oDataOperation.call(self, type, item.url, data, object_name, operation, {_id: item._id, formId: item.formId})
 
 			return false
 

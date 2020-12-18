@@ -10,7 +10,7 @@ fields:
     formula: object_name.label + '.' + permission_set_id.label
     searchable: true
     index: true
-    required: true
+    required: false
     name: name
   permission_set_id:
     label: Permission Set
