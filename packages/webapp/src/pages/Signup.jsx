@@ -278,7 +278,7 @@ class Signup extends React.Component {
     const user = {
       password: this.state.password?this.state.password.trim():this.state.password,
       name: this.state.name.trim(),
-      locale: 'zh-cn',
+      locale: Utils.getBrowserLocale(),
       verifyCode: this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode,
     }
 

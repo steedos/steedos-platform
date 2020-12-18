@@ -8,6 +8,7 @@ import {buildQueryString} from '../utils/helpers';
 import { UserProfile } from '../types/users';
 import { ServerError } from '../types/errors';
 import { Space } from '../types/spaces';
+import { getBrowserLocale } from '../utils/utils';
 
 const FormData = require('form-data');
 const HEADER_AUTH = 'Authorization';
@@ -213,13 +214,12 @@ export default class Client4 {
 
     login = (user: string | object, password: string, token = '', deviceId = '') => {
         this.trackEvent('api', 'api_users_login');
-
         const body: any = {
             device_id: deviceId,
             user,
             password,
             token,
-            locale: "zh-cn"
+            locale: getBrowserLocale()
         };
 
         return this.doFetch<UserProfile>(
