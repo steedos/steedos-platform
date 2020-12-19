@@ -6,7 +6,15 @@ declare var Creator: any;
 declare var DDP: any;
 declare var DDPCommon: any;
 
+const hasCreator = function(){
+    return (typeof Creator != "undefined");
+}
+
 async function meteorFind(name, query?, options?){
+    if(!hasCreator()){
+        return [];
+    }
+
     Creator.Collections[name] = Creator.createCollection({name: name});
     return await new Promise((resolve, reject) => {
         Fiber(function () {
