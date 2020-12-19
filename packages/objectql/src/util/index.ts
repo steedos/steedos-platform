@@ -327,6 +327,9 @@ export const loadJsonFiles = (filePatten: Array<string>)=>{
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
+        if(json){
+            json.__filename = matchedPath
+        }
         results.push({file: matchedPath, data: json})
     })
     return results

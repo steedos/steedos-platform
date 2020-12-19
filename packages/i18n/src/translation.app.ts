@@ -1,5 +1,6 @@
 import { _t, exists } from './index';
 const _ = require("underscore");
+const clone = require("clone");
 
 const APP_NS = 'translation';
 const KEYSEPARATOR: string = '_';
@@ -60,4 +61,16 @@ export const translationApps = function(lng: string, apps: StringMap){
     _.each(apps, function(app, name){
         translationApp(lng, name, app);
     })
+}
+
+export const getAppI18nTemplate = function(lng: string, appId: string, _app: StringMap){
+    let app = clone(_app);
+    let template = {};
+    template[getAppLabelKey(appId)] = getAppLabel(lng, appId, app.label || app.name);
+    template[getAppDescriptionKey(appId)] = getAppDescription(lng, appId, app.description);
+
+    _.each(app.admin_menus, function(menu){
+        template[getMenuLabelKey( menu._id)] = getMenuLabel(lng, menu._id, menu.label || menu.name);
+    })
+    return template;
 }
