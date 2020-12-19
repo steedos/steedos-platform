@@ -49,15 +49,14 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
             object.listeners = {}
         }
         delete json.listenTo
-        json.name = json._id || getMD5(JSONStringify(json));
-        object.listeners[json.name] = json
+        const license = clone(json);
+        license.name = json._id || getMD5(JSONStringify(json));
+        object.listeners[license.name] = license
         if(object.datasource === 'default'){
-            util.extend(object, {triggers: transformListenersToTriggers(object, json)})
+            util.extend(object, {triggers: transformListenersToTriggers(object, license)})
         }
-    } else {
-        addLazyLoadListeners(object_name, json);
-        // throw new Error(`Error add listener, object not found: ${object_name}`);
     }
+    addLazyLoadListeners(object_name, Object.assign({}, json, {listenTo: object_name}));
 }
 
 export const loadObjectTriggers = function (filePath: string){

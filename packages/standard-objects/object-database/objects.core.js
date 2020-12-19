@@ -171,67 +171,72 @@ function loadDBObject(object){
 
 
 function loadObject(doc, oldDoc) {
-    if (!canLoadObject(doc.name, doc.datasource)) {
-        console.warn('warn: Not loaded. Invalid custom object -> ', doc.name);
-        return;
-    }
-
-    var datasourceDoc = getDataSource(doc);
-    if (doc.datasource && doc.datasource != defaultDatasourceName && (!datasourceDoc || !datasourceDoc.is_enable)) {
-        console.warn('warn: Not loaded. Invalid custom object -> ', doc.name, doc.datasource);
-        return;
-    }
-
-    var datasourceName = getDataSourceName(doc);
-    const datasource = objectql.getDataSource(datasourceName);
-
-    if (!datasource) {
-        console.warn(`warn: Not loaded object [${doc.name}]. Cant not find datasource -> `, datasourceName);
-        return;
-    }
-
-    if (oldDoc) {
-        var oldDatasourceName = getDataSourceName(oldDoc);
-        if (datasourceName != oldDatasourceName) {
-            const oldDatasource = objectql.getDataSource(oldDatasourceName);
-            if (oldDatasource) {
-                oldDatasource.removeObject(oldDoc.name);
-                objectql.removeObjectConfig(oldDoc.name, oldDatasourceName);
+    try {
+        if (!canLoadObject(doc.name, doc.datasource)) {
+            console.warn('warn: Not loaded. Invalid custom object -> ', doc.name);
+            return;
+        }
+    
+        var datasourceDoc = getDataSource(doc);
+        if (doc.datasource && doc.datasource != defaultDatasourceName && (!datasourceDoc || !datasourceDoc.is_enable)) {
+            console.warn('warn: Not loaded. Invalid custom object -> ', doc.name, doc.datasource);
+            return;
+        }
+    
+        var datasourceName = getDataSourceName(doc);
+        const datasource = objectql.getDataSource(datasourceName);
+    
+        if (!datasource) {
+            console.warn(`warn: Not loaded object [${doc.name}]. Cant not find datasource -> `, datasourceName);
+            return;
+        }
+    
+        if (oldDoc) {
+            var oldDatasourceName = getDataSourceName(oldDoc);
+            if (datasourceName != oldDatasourceName) {
+                const oldDatasource = objectql.getDataSource(oldDatasourceName);
+                if (oldDatasource) {
+                    oldDatasource.removeObject(oldDoc.name);
+                    objectql.removeObjectConfig(oldDoc.name, oldDatasourceName);
+                }
             }
         }
-    }
-
-    if (oldDoc && doc.name != oldDoc.name) {
-        datasource.removeObject(oldDoc.name);
-    }
-
-    if (datasourceName === defaultDatasourceName) {
-        delete doc.table_name
-    }
-
-    //继承base
-    loadDBObject(doc);
-    objectql.addObjectConfig(doc, datasourceName);
-    objectql.loadObjectLazyListenners(doc.name);
-    objectql.loadObjectLazyActions(doc.name);
-    objectql.loadActionScripts(doc.name);
-    objectql.loadObjectLazyMethods(doc.name);
-    //获取到继承后的对象
-    const _doc = objectql.getObjectConfig(doc.name);
-    datasource.setObject(doc.name, _doc);
-    datasource.init();
-    try {
-        if (!datasourceName || datasourceName == defaultDatasourceName) {
-            Creator.Objects[doc.name] = _doc;
-            Creator.loadObjects(_doc, _doc.name);
+    
+        if (oldDoc && doc.name != oldDoc.name) {
+            datasource.removeObject(oldDoc.name);
         }
-        buildGraphQLSchema();
+    
+        if (datasourceName === defaultDatasourceName) {
+            delete doc.table_name
+        }
+    
+        //继承base
+        loadDBObject(doc);
+        objectql.addObjectConfig(doc, datasourceName);
+        objectql.loadObjectLazyListenners(doc.name);
+        objectql.loadObjectLazyActions(doc.name);
+        objectql.loadActionScripts(doc.name);
+        objectql.loadObjectLazyMethods(doc.name);
+        objectql.loadObjectLazyListenners(doc.name);
+        //获取到继承后的对象
+        const _doc = objectql.getObjectConfig(doc.name);
+        datasource.setObject(doc.name, _doc);
+        datasource.init();
+        try {
+            if (!datasourceName || datasourceName == defaultDatasourceName) {
+                Creator.Objects[doc.name] = _doc;
+                Creator.loadObjects(_doc, _doc.name);
+            }
+            buildGraphQLSchema();
+        } catch (error) {
+            console.log('error', error);
+        }
+        if (!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)) {
+            loadObjectTriggers(doc);
+            loadObjectPermission(doc);
+        }
     } catch (error) {
-        console.log('error', error);
-    }
-    if (!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)) {
-        loadObjectTriggers(doc);
-        loadObjectPermission(doc);
+        console.error(error)
     }
 }
 
