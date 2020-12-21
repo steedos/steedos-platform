@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "9c8b2d66f84a62519b1b4bc6fa5e9f36ffc21dea.js",
+      "path": "a570514d797515c44d6ad21a4687021d26393a08.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/9c8b2d66f84a62519b1b4bc6fa5e9f36ffc21dea.js?meteor_js_resource=true",
-      "size": 8432977,
-      "hash": "9c8b2d66f84a62519b1b4bc6fa5e9f36ffc21dea",
-      "sri": "GVvRqHnUUsSzkQIQtkY9hXghOLOrknG3vUlZYQiffHcUKdxHE/7uY9wvpbuX7Aau3uLPo98Xf3bou/QMt+J4AQ=="
+      "url": "/a570514d797515c44d6ad21a4687021d26393a08.js?meteor_js_resource=true",
+      "size": 8433163,
+      "hash": "a570514d797515c44d6ad21a4687021d26393a08",
+      "sri": "tNt32UNOn9GsL/mnFAIccimLQNcRmicwYVNKzQM3dGp0O2iQHi4VgzYVxIHkXE9qBWQ8MDTmD9uc2ORhEpDWUw=="
     },
     {
-      "path": "9c8b2d66f84a62519b1b4bc6fa5e9f36ffc21dea.stats.json",
+      "path": "a570514d797515c44d6ad21a4687021d26393a08.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/9c8b2d66f84a62519b1b4bc6fa5e9f36ffc21dea.stats.json?meteor_js_resource=true",
+      "url": "/a570514d797515c44d6ad21a4687021d26393a08.stats.json?meteor_js_resource=true",
       "size": 148789,
-      "hash": "ebfe2bcae9796de51308c7c07bde46fde6434d45",
-      "sri": "tK2T+pJ38VjL4vuSMM3xskhkv7r1Bxjmg+cEZxlsjv8ASYAtu29KhqTSueYEpucK91/5YGgm6IKjJI4trmXgGg=="
+      "hash": "834c8a41eabdd086364cc1698426099401906d11",
+      "sri": "HoB9lVC7fsF7l9kBPDyM+naWo/oIKD3VzdkLqCWWzNmJWDnsogqgooQ5eUK1TwV6pvTC1VsM1GrD4gEdVuOXdQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4030,6 +4030,16 @@
       "size": 11690,
       "hash": "64004a554239896538cb4b92a9272b4255086b4f",
       "sri": "tBt0KSmXEPbOXAP8mPgdp+Zbsf1h8+DCkyTMFaN9AR9ohnpuddjGHCi/HmPr/DZMzL8SGt/CAoGkqBGeGNhp0w=="
+    },
+    {
+      "path": "packages/steedos_creator/assets/logo-square.en-us.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/steedos_creator/assets/logo-square.en-us.png",
+      "size": 15294,
+      "hash": "563568609e446146f3ddc44368bcad43de10165f",
+      "sri": "FHY37rVUVS3d6DRq2ImEQQTJKTIpFNa8LObnx0Jvk9fDkMatx/6opYCIIT1Rm2FEQJroHeu2wQciQhRQGRha/Q=="
     },
     {
       "path": "packages/steedos_users-import/assets/excel/steedos_import_users_simple.xls",
