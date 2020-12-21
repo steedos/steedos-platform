@@ -24,6 +24,7 @@
  🤖 🎨 🚀
 </h3>
 
+![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/project_object.jpg)
 
 ## 点击鼠标，就能编程
 
@@ -99,3 +100,12 @@
 
 #### 开发人员微信群
 
+![开发者微信交流群](https://steedos.github.io/assets/github/platform/cn/QR_wechat_developers.jpg)
+
+#### 商务咨询
+
+![商务咨询](https://steedos.github.io/assets/github/platform/cn/business_consulting.jpg)
+
+#### 微信公众号
+
+![微信公众号](https://www.steedos.com/assets/github/platform/cn/public_number.jpg)
