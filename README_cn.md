@@ -25,8 +25,6 @@
 </h3>
 
 
-![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/project_object.jpg)
-
 ## 点击鼠标，就能编程
 
 使用传统的命令式编程语言开发企业应用程序极其复杂，需要使用精确的指令控制计算机执行的每一步操作。使用描述式编程工具，您只需告诉计算机想要的结果，计算机会按照您的需求自动完成编程，生成你想要的应用程序。
@@ -101,12 +99,3 @@
 
 #### 开发人员微信群
 
-![开发者微信交流群](https://steedos.github.io/assets/github/platform/cn/QR_wechat_developers.jpg)
-
-#### 商务咨询
-
-![商务咨询](https://steedos.github.io/assets/github/platform/cn/business_consulting.jpg)
-
-#### 微信公众号
-
-![微信公众号](https://www.steedos.com/assets/github/platform/cn/public_number.jpg)
