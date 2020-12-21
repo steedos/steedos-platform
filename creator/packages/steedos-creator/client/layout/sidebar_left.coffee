@@ -57,6 +57,8 @@ Template.creatorSidebarLeft.helpers
 			return Steedos.absoluteUrl("/api/files/avatars/#{avatar}")
 		else
 			logo_url = "/packages/steedos_creator/assets/logo-square.png"
+			if(Meteor.user()?.locale != 'zh-cn')
+				logo_url = "/packages/steedos_creator/assets/logo-square.en-us.png"
 			return Creator.getRelativeUrl(logo_url)
 
 Template.creatorSidebarLeft.events

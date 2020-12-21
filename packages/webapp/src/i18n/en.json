@@ -98,5 +98,7 @@
     "accounts.serverError": "Server error",
     "accounts.tooManyFailures": "Too many failures, please try again in 10 minutes.",
     "accounts.copyright": "© 2020 steedos.com, inc.",
-    "accounts.privacy": "Privacy"
+    "accounts.privacy": "Privacy",
+    "accounts.privacyURL": "https://www.steedos.org/docs/steedos/privacy/",
+    "accounts.logoURL":"/images/logo_platform.en-us.png"
 }

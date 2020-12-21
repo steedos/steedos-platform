@@ -362,6 +362,7 @@ Package.onUse(function (api) {
 
 	// api.addAssets('assets/logo.png', 'client');
 	api.addAssets('assets/logo-square.png', 'client');
+	api.addAssets('assets/logo-square.en-us.png', 'client');
 
 	api.export(['permissionManagerForInitApproval', 'uuflowManagerForInitApproval'], ['server']);
 

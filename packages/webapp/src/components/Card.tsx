@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import Logo from './Logo';
+import { localizeMessage } from '../utils/utils';
 
 class Card extends React.Component {
   render() {
@@ -30,7 +31,7 @@ class Card extends React.Component {
   }
 
   openPrivacyPage = async () => {
-    const href="https://www.steedos.com/cn/steedos/privacy/";
+    const href=localizeMessage('accounts.privacyURL');
     if(window && window.AppBrowserOpen){
       // TODO:暂时没效果，等webapp包整合到meteor中再处理
       window.AppBrowserOpen(href, "_blank");

@@ -9,6 +9,8 @@ Template.creatorHeader.helpers
 
 	defaultLogoUrl: ()->
 		logo_url = "/packages/steedos_creator/assets/logo-square.png"
+		if(Meteor.user()?.locale != 'zh-cn')
+			logo_url = "/packages/steedos_creator/assets/logo-square.en-us.png"
 		return Steedos.absoluteUrl(logo_url)
 	
 	currentUserUser: ()->
