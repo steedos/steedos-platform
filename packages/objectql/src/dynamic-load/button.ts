@@ -2,6 +2,7 @@ import { SteedosActionTypeConfig } from '../types'
 import { Dictionary } from '@salesforce/ts-types';
 import { getObjectConfig } from '../types'
 import _ = require('lodash');
+import { overrideOriginalObject } from './originalObject';
 var util = require('../util');
 var clone = require('clone');
 
@@ -36,7 +37,8 @@ export const addObjectButtonsConfig = (objectName: string, json: SteedosActionTy
         if(!object.actions){
             object.actions = {}
         }
-        util.extend(object.actions, {[json.name]: json})
+        util.extend(object.actions, {[json.name]: json});
+        overrideOriginalObject(objectName, {actions: {[json.name]: json}});
     } else {
         addLazyLoadButtons(objectName, json);
     }

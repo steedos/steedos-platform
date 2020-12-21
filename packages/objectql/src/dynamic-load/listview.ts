@@ -1,6 +1,7 @@
 import { SteedosObjectListViewTypeConfig } from '../types'
 import { Dictionary } from '@salesforce/ts-types';
-import { getObjectConfig } from '../types'
+import { getObjectConfig } from '../types';
+import { overrideOriginalObject } from './originalObject';
 import _ = require('lodash');
 var util = require('../util');
 var clone = require('clone');
@@ -35,7 +36,8 @@ export const addObjectListViewConfig = (objectName: string, json: SteedosObjectL
         if(!object.list_views){
             object.list_views = {}
         }
-        util.extend(object.list_views, {[json.name]: json})
+        util.extend(object.list_views, {[json.name]: json});
+        overrideOriginalObject(objectName, {list_views: {[json.name]: json}});
     } else {
         addLazyLoadListViews(objectName, json);
     }
