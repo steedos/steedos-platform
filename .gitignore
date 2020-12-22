@@ -16,7 +16,7 @@
 /packages/**/lib
 
 **/.vscode/launch.*
-
+!packages/project-template-empty/.vscode/launch.*
 settings.yml
 
 

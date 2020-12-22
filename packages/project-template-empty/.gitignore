@@ -10,8 +10,6 @@
 
 **/lib
 
-**/.vscode/launch.*
-
 .DS_Store
 
 storage/**
