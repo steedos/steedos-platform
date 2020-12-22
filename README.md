@@ -85,7 +85,7 @@ Steedos DX is licenced per developer. We provide Steedos DX free license for ope
 
 - [Meteor](https://www.meteor.com/) Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
 
-> You need to install Meteor only when you run the source code of our platform, not if you are using Steedos as A development tool.
+> Only when you run the source code of our platform, you need to install Meteor. If you use Steedos as a development tool, you do not need to install Meteor.
 
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
