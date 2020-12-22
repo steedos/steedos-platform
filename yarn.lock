@@ -3381,15 +3381,6 @@
     tslib "1.10.0"
     validator "^12.2.0"
 
-"@steedos/app-crm@^1.22.7":
-  version "1.22.7"
-  resolved "https://registry.npm.taobao.org/@steedos/app-crm/download/@steedos/app-crm-1.22.7.tgz#4f89bff935f07a1f7d691ff2fa71302995dc70bd"
-  integrity sha1-T4m/+TXweh99aR/y+nEwKZXccL0=
-  dependencies:
-    "@steedos/plugin-enterprise" "^1.22.7"
-    dotenv-flow "^3.2.0"
-    underscore "1.9.2"
-
 "@steedos/auth@^1.22.7":
   version "1.22.7"
   resolved "https://registry.npm.taobao.org/@steedos/auth/download/@steedos/auth-1.22.7.tgz#3f4cbca5f8fa7a0d1c7476b15c80d9b4f9c97957"
@@ -3618,7 +3609,7 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/plugin-enterprise@^1.22.0-alpha.15", "@steedos/plugin-enterprise@^1.22.7":
+"@steedos/plugin-enterprise@^1.22.0-alpha.15":
   version "1.22.7"
   resolved "https://registry.npm.taobao.org/@steedos/plugin-enterprise/download/@steedos/plugin-enterprise-1.22.7.tgz#ae1bee47421c67aa053a46ba5600ca3dbd06bde9"
   integrity sha1-rhvuR0IcZ6oFOka6VgDKPb0Gvek=
@@ -21273,7 +21264,7 @@ stealthy-require@^1.1.1:
   resolved "https://registry.npm.taobao.org/stealthy-require/download/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
 
-steedos-server@^1.22.0-alpha.15, steedos-server@^1.22.7:
+steedos-server@^1.22.0-alpha.15:
   version "1.22.7"
   resolved "https://registry.npm.taobao.org/steedos-server/download/steedos-server-1.22.7.tgz#f91000b2adfdbb84e372e0b833abe4f251219fb0"
   integrity sha1-+RAAsq39u4TjcuC4M6vk8lEhn7A=
