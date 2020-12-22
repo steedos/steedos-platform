@@ -70,6 +70,12 @@
 
 华炎魔方DX工具按开发者收费，我们为开源项目和教育机构免费提供华炎魔方DX工具。
 
+## 依赖包
+
+- [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
+- [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
+- [Yarn](https://yarnpkg.com/en/) version >= 1.5 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
+
 ## 安装华炎魔方平台
 
 本项目是华炎魔方的内核源码，我们会定期编译并发布为 [npm package](https://www.npmjs.com/package/steedos-server)，只需在项目中引入相关的包，既可启用华炎魔方的各项功能。
