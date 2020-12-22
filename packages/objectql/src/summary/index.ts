@@ -117,7 +117,11 @@ export const addObjectFieldsSummaryConfig = (config: SteedosObjectTypeConfig, da
             if (datasource !== "default") {
                 throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'summary', because it is not in the default datasource.`);
             }
-            addObjectFieldSummaryConfig(clone(field), config);
+            try {
+                addObjectFieldSummaryConfig(clone(field), config);
+            } catch (error) {
+                console.error(error);
+            }
         }
     })
 }
