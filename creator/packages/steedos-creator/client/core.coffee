@@ -887,7 +887,7 @@ if Meteor.isClient
 	Creator.showPreviewButton = (fileName)->
 		# 配置webservices.officeOnline.url并且是office类型文件或pdf类型文件，显示预览按钮
 		webservices = Meteor.settings?.public?.webservices;
-		if (webservices?.officeOnline?.url && Steedos.isOfficeFile(fileName)) || Steedos.isPdfFile(fileName)
+		if (webservices?.officeOnline?.url && Steedos.isOfficeFile(fileName)) || (webservices?.pdfOnline?.url && Steedos.isPdfFile(fileName))
 			return true
 		
 		return false
@@ -895,7 +895,7 @@ if Meteor.isClient
 	Creator.officeOnlinePreview = (fileUrl,fileName)->
 		officeOnlineUrl = Meteor.settings?.public?.webservices?.officeOnline?.url
 		pdfOnlineUrl = Meteor.settings?.public?.webservices?.pdfOnline?.url
-		if !officeOnlineUrl || (officeOnlineUrl == "")
+		if (!officeOnlineUrl || (officeOnlineUrl == "")) && (!pdfOnlineUrl || (pdfOnlineUrl == ""))
 			toastr.error TAPi18n.__("creator_office_online_web_url_required")
 			return false
 		userId = Meteor.userId();

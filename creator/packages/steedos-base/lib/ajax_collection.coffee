@@ -14,7 +14,6 @@ AjaxCollection::_send = (selector, options, api) ->
     selector: selector
     options: options
     space: selector?.space || Session.get('spaceId')
-    "X-User-Id": Meteor.userId()
     "X-Auth-Token": Accounts._storedLoginToken()
   rev = undefined
   settings = 
