@@ -304,8 +304,12 @@ class Login extends React.Component {
 
   goSignup = ()=>{
     let state = {};
-    if(this.state.email.trim().length > 0){
+    if(this.state.email && this.state.email.trim().length > 0){
       state =  { email: this.state.email.trim() }
+    }
+
+    if(this.state.mobile && this.state.mobile.trim().length > 0){
+      state =  { mobile: this.state.mobile.trim() }
     }
     this.props.history.push({
       pathname: `/signup`,

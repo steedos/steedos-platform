@@ -887,7 +887,7 @@ if Meteor.isClient
 	Creator.showPreviewButton = (fileName)->
 		# 配置webservices.officeOnline.url并且是office类型文件或pdf类型文件，显示预览按钮
 		webservices = Meteor.settings?.public?.webservices;
-		if (webservices?.officeOnline?.url && Steedos.isOfficeFile(fileName)) || (webservices?.pdfOnline?.url && Steedos.isPdfFile(fileName))
+		if (webservices?.officeOnline?.url && Steedos.isOfficeFile(fileName)) || Steedos.isPdfFile(fileName)
 			return true
 		
 		return false
@@ -895,18 +895,22 @@ if Meteor.isClient
 	Creator.officeOnlinePreview = (fileUrl,fileName)->
 		officeOnlineUrl = Meteor.settings?.public?.webservices?.officeOnline?.url
 		pdfOnlineUrl = Meteor.settings?.public?.webservices?.pdfOnline?.url
-		if !officeOnlineUrl || (officeOnlineUrl == "") || !pdfOnlineUrl || (pdfOnlineUrl == "")
+		if !officeOnlineUrl || (officeOnlineUrl == "")
 			toastr.error TAPi18n.__("creator_office_online_web_url_required")
 			return false
 		userId = Meteor.userId();
 		spaceId = Steedos.spaceId();
 		token = Accounts._storedLoginToken();
+
 		# url添加验证参数
 		fileUrl = fileUrl + "?X-Space-Id=" + spaceId + "&X-User-Id=" + userId + "&X-Auth-Token=" + token;
-		
+
 		# pdf类型文件调用pdfjs进行在线预览
 		if Steedos.isPdfFile(fileName)
-			openUrl = pdfOnlineUrl + encodeURIComponent(fileUrl);
+			openUrl = fileUrl;
+			if pdfOnlineUrl && (pdfOnlineUrl != "")
+				openUrl = pdfOnlineUrl + encodeURIComponent(fileUrl);
+			
 			return Steedos.openWindow(openUrl);
 
 		openUrl = officeOnlineUrl + encodeURIComponent(fileUrl);

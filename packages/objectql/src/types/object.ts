@@ -746,6 +746,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('not find permission')
         }
 
+        let objectName = args[0], recordId: string, doc: JsonMap;
+        if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
+            // 因下面的代码，比如函数dealWithMethodPermission可能改写args变量，所以需要提前从args取出对应变量值。
+            if(method === "insert"){
+                doc = args[1];
+                recordId = <string>doc._id;
+            }
+            else{
+                recordId = args[1];
+                doc = args[2];
+            }
+        }
+
         // 判断处理工作区权限，公司级权限，owner权限
         if (this._datasource.enable_space) {
             this.dealWithFilters(method, args);
@@ -775,7 +788,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
                 Object.assign(afterTriggerContext, {data: {values: values}})
             }
-            await this.runAfterTriggers(method, afterTriggerContext)
+            // console.log("==returnValue==", returnValue);
+            if(method == "update"){
+                if(returnValue){
+                    await this.runAfterTriggers(method, afterTriggerContext)
+                }
+            }
+            else{
+                await this.runAfterTriggers(method, afterTriggerContext)
+            }
             if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
                 if(_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))){
                     return returnValue
@@ -784,14 +805,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             await runObjectWorkflowRules(this.name, method, returnValue, userSession, afterTriggerContext.previousDoc);
-            // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
-            await this.runRecordFormula(method, args, userSession);
-            await this.runRecordSummaries(method, args, previousDoc, userSession);
+            if(returnValue){
+                // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
+                await this.runRecordFormula(method, objectName, recordId, doc, userSession);
+                await this.runRecordSummaries(method, objectName, recordId, doc, previousDoc, userSession);
+            }
         }
         return returnValue
     };
 
-    private async runRecordFormula(method: string, args: Array<any>, userSession: any) {
+    private async runRecordFormula(method: string, objectName: string, recordId: string, doc: any, userSession: any) {
         if(["insert", "update", "updateMany"].indexOf(method) > -1){
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
@@ -800,15 +823,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
             else{
                 let currentUserId = userSession ? userSession.userId : undefined;
-                let objectName = args[0], recordId: string, doc: JsonMap;
-                if(method === "insert"){
-                    doc = args[1];
-                    recordId = <string>doc._id;
-                }
-                else{
-                    recordId = args[1];
-                    doc = args[2];
-                }
                 await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
                 if(method === "update"){
                     // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
@@ -818,21 +832,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async runRecordSummaries(method: string, args: Array<any>, previousDoc: any, userSession: any) {
+    private async runRecordSummaries(method: string, objectName: string, recordId: string, doc: any, previousDoc: any, userSession: any) {
         if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany汇总计算，因为拿不到修改了哪些数据
             }
             else{
-                let objectName = args[0], recordId: string, doc: JsonMap;
-                if(method === "insert"){
-                    doc = args[1];
-                    recordId = <string>doc._id;
-                }
-                else{
-                    recordId = args[1];
-                    doc = args[2];
-                }
                 if(method === "insert"){
                     await runCurrentObjectFieldSummaries(objectName, recordId);
                 }

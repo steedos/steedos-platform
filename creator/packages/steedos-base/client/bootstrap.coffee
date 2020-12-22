@@ -49,6 +49,10 @@ Steedos.redirectToSignIn = (redirect)->
 			redirect = getRedirectUrl();
 		window.location.href = Steedos.absoluteUrl(accountsUrl + "/authorize?redirect_uri=" + redirect);
 
+Steedos.clearAuth = ()->
+	Accounts._unstoreLoginToken()
+	Setup.clearAuthLocalStorage()
+
 Setup.validate = (onSuccess)->
 
 	# if window.location.pathname.indexOf('/steedos/sign-in')>=0
@@ -125,6 +129,7 @@ Setup.validate = (onSuccess)->
 			onSuccess()
 	.fail ( e ) ->
 		if (e.status == 401)
+			Steedos.clearAuth()
 			Steedos.redirectToSignIn()
 		return
 

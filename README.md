@@ -1,55 +1,114 @@
 
-## 华炎魔方概览
+<p align="center">
+  <a href="https://www.steedos.org">
+    <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
+  </a>
+</p>
+<h1 align="center">
+  Steedos Platform
+</h1>
 
-华炎魔方是一套可视化建模、描述式编程的低代码开发平台，只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。
+<p align="center">
+<a href="https://github.com/steedos/steedos-platform/blob/1.22/README_cn.md">中文</a>
+<a href="http://www.steedos.org/docs/overview"> · Docs</a>
+<a href="https://github.com/steedos/steedos-platform/issues/"> · Report a bug</a>
+<a href="https://github.com/steedos/steedos-platform/discussions"> · Discussions</a>
+</p>
 
-<center>
-<a href="https://www.steedos.com/help/">  文档</a>
-<a href="https://github.com/steedos/steedos-platform/issues/"> · 报告错误</a>
-<a href="https://github.com/steedos/steedos-platform/discussions"> · 讨论</a>
-</center>
-<br/><br/>
+<p align="center">
+Steedos Platform is a low code development platform with visual modeling and descriptive programming. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
+</p>
 
-![华炎魔方项目概览](/docs/images-1/project_object.jpg)
+<h3 align="center">
+ 🤖 🎨 🚀
+</h3>
+
+## Click, Not Code
+
+Traditional programming, denotes the means of programming by using certain coding languages, to tell a computer exactly how to perform an action. 
+
+On the other hand, declarative programming accomplishes the same results by basically telling the computer the end result and letting the computer figure out how to get there.
+
+Steedos is such an declarative programming platform.  Steedos empowers business owners with all of the tools of a developer, without requiring an advanced skill set. 
+
+With drag-and-drop simplicity, just about anyone can create apps that automate business processes. The apps you create for your business can be deployed on mobile, tablet and web, be simple or complex, and connect to nearly any data source. 
 
 
-## 华炎魔方功能
+## Based on Metadata
 
-- **可视化建模**：华炎魔方基于元数据驱动，把传统通过代码实现的业务需求抽象为可配置的元数据 ，只需点击⿏标修改配置项，就能实现绝⼤多数业务需求 ，必要时仍可编写代码。
-- **定义用户界面**：使用华炎魔方，你可以快速构建列表视页面布局、报表、仪表盘，真正实现界面自定义。
-- **配置验证规则**：在华炎魔⽅中，⽤户可以为每⼀个对象创建验证规则。验证规则主要⽤于验证该对象的数据是否符合特定的规则。当⽤户对于对象的某个字段的更改不符合⽤户创建的验证规则时，华炎魔⽅会拒绝保存⽤户的输⼊。
-- **公式引擎**：华炎魔方内置了与Excel同级别的公式引擎，可通过配置公式实现自动化条件判断、数据计算、引用关联表的数据，或是汇总子表中的相关数据。
-- **工作流规则**：通过设定工作流规则，记录在满⾜指定条件时，华炎魔方将会执⾏规则的⾃动化操作，让业务在无人值守的情况下自动运转，驱动效率提升。
-- **自动化操作**：通过设定自动化操作，可以在特定条件下自动化创建和更新记录、发送邮件、短信或系统内通知，也可以自动调用第三方系统的接口。
-- **批准过程**：系统内置了流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务审批过程。  
-- **可视化报表工具**：使用华炎魔方的报表引擎，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。
-- **高级业务逻辑开发**：华炎魔方提供了代码开发的入口，开发人员通过编写代码，实现特定条件下的自动运行、截停、回滚等高级业务逻辑。或是开发与第三方系统的接口。
-- **开源、可定制**：华炎魔方是开源的。这会让您充满信心，华炎魔方将永远存在。您还可以针对华炎魔方进行编码或将其Fork下来并根据需要进行更改，以提供开发人员友好的体验。
+Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
 
-## 安装部署
+Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.
 
-本项目是华炎魔方的内核源码，我们会定期编译并发布为npm package (<a href="https://www.npmjs.com/package/steedos-server">  链接</a>)，只需在项目中引入相关的包，既可启用华炎魔方的各项功能。
+There are several types of Metadata, with each one representing a unique way a business function can be customized. Here are a few broad categories for Metadata types:
 
-具体如何安装部署华炎魔方，请参考官网安装部署文档 <a href="https://www.steedos.com/help/deploy/">  部署文档</a> 
+- **Data**: the core components of the data structure on which most customization is built. E.g. Custom Objects, Fields, and Custom Apps.
+- **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
+- **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
 
-## 学习华炎魔方
+## Features
 
-您还可以根据华炎魔方快速构建应用程序的视频教程进行操作。
+- **Visual Modeling**: Based on metadata driven, Steedos Platform abstracts the traditional business requirements realized by code into configurable metadata. By simply clicking the  tag to modify the configuration item, the vast majority of business requirements can be realized, and the code can be written if necessary.
 
-- <a href="https://www.steedos.com/videos/">  视频演示</a> 
-- <a href="https://www.steedos.com/help/user/">  使用入门</a> 
-- <a href="https://www.steedos.com/help/admin/"> 设置和维护华炎魔方 </a> 
-- <a href="https://www.steedos.com/developer/">  开发人员</a>
+- **Define User Interface**: With Steedos Platform, you can quickly build list view page layout, reports, and dashboards to truly realize user-defined interface.
 
-## 为华炎魔方做贡献
+- **Configure Validation Rules**: In Steedos Platform, users can create validation rules for each object. Validation rules are mainly used to verify whether the data of the object conforms to specific rules. When a user changes a field of an object that does not conform to the validation rules created by the user, Hua will refuse to save the user's input.
 
-从上报BUG到提出改善建议，每一个贡献都值得赞赏和欢迎。如果您打算动手修改代码来修正BUG或实现某个新功能，请先创建一个ISSUE，这样我们可以确保您的工作没有白费。 
+- **Formula Engine**: Steedos Platform has built-in formula engine of the same level as Excel, which can realize automatic condition judgment, data calculation, reference of data in associated table or summary of relevant data in sub table by configuring formula.
+
+- **Workflow Rules**: By setting workflow rules and recording that when the specified conditions are met, Steedos Platform will implement the automatic operation of the rules, so that the business can operate automatically without being on duty and drive efficiency improvement.
+
+- **Automatic Operation**: By setting the automatic operation, you can automatically create and update records, send e-mail, SMS or notification in the system under specific conditions, and can also call the interface of the third-party system automatically.
+
+- **Approval Process**: The system has built-in various tools, such as process design, process operation, management and maintenance, statistical analysis and process optimization, to help enterprises quickly deploy, effectively monitor and continuously optimize the business approval process.
+
+- **Visual Report Tool**: With the report engine of Steedos Platform , you can quickly configure statistical charts, including data list, group report, PivotChart, bar chart, pie chart, etc., for easy viewing, analysis and decision-making.
+
+- **Advanced Business logic Development**: Steedos Platform  provides an entry point for code development. Developers can realize high-level business logic such as automatic operation, stop and rollback under specific conditions by writing code. Or develop interfaces with third-party systems.
+
+- **Open Source, Customizable**: Steedos Platform  is open source. This will make you confident that Steedos Platform will exist forever. You can also fork the source code down and make changes as needed.
+
+## Steedos Package
+
+A package is a container for something as small as an individual component or as large as a set of related apps. After creating a package, you can distribute it to other Steedos users and organizations, including those outside your company.
+
+## Steedos DX
+
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
+
+To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+
+Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
+
+## Requirements
+
+- [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
+- [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
+- [Yarn](https://yarnpkg.com/en/) version >= 1.5 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
+
+## Installation and Deployment
+
+This project is the kernel source code of Steedos Platform. We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly.
+
+You can create a new steedos project or install the following open source steedos projects.
+
+- [Project Management App](https://github.com/steedos/project-management-app)
+- [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
+
+## Learn more
+
+For more information, please refer to the official website of [www.steedos.org](https://www.steedos.org/)
+
+## Contribute to Steedos Platform
+
+From reporting bugs to proposing improvement suggestions, every contribution is worthy of appreciation and welcome. If you are going to modify the code to fix a bug or implement a new function, please create an issue first, so that we can ensure that your work is not wasted.
 
 ## Licence
 
-华炎魔方开源版基于MIT协议，内置华炎魔方十大引擎，完全免费。基于华炎魔方开发的解决方案，可以单独定价销售。
+Steedos Platform is licensed under the MIT. Everyone can build and distribute steedos apps for free. 
 
-## 保持联系 
+## Keep in Contact
 
-如果您有任何疑问或想与其他华炎魔方用户交谈，请跳至Github讨论 <a href="https://github.com/steedos/steedos-platform/discussions">  点击进入讨论</a> 或加入我们的开发人员微信群。
-![开发者微信交流群](/docs/images-1/QR_Wechat.png)
+If you have any questions or want to talk to other users of Steedos Platform , please jump to GitHub for discussion [Click to Discuss](https://github.com/steedos/steedos-platform/discussions) or [Join me on Slack-it's a faster,simpler way to work](https://join.slack.com/t/steedos/shared_invite/zt-jq7eupr9-cgKrUOyWb1zymniRzhH4jg).
