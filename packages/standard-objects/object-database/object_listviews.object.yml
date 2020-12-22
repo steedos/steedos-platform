@@ -286,6 +286,7 @@ list_views:
       - modified
     label: All List View
     filter_scope: space
+    filters: [["shared", "=", true]]
 permission_set:
   user:
     allowCreate: true
