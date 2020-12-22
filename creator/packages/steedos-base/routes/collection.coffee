@@ -1,177 +1,168 @@
 Cookies = require("cookies")
+steedosAuth = require("@steedos/auth")
 
 JsonRoutes.add "post", "/api/collection/find", (req, res, next) ->
     try
-        # TODO 用户登录验证
-        cookies = new Cookies( req, res );
+        cookies = new Cookies( req, res )
+        authToken = req.body["X-Auth-Token"] || cookies.get("X-Auth-Token")
 
-        # first check request body
-        if req.body
-            userId = req.body["X-User-Id"]
-            authToken = req.body["X-Auth-Token"]
-
-        # then check cookie
-        if !userId or !authToken
-            userId = cookies.get("X-User-Id")
-            authToken = cookies.get("X-Auth-Token")
-
-        if !(userId and authToken)
-            JsonRoutes.sendResult res, 
+        if !authToken
+            JsonRoutes.sendResult res,
             code: 401,
-            data: 
-                "error": "Validate Request -- Missing X-Auth-Token", 
-                "instance": "1329598861", 
+            data:
+                "error": "Validate Request -- Missing X-Auth-Token",
+                "instance": "1329598861",
                 "success": false
-            return;
+            return
 
-        model = req.body.model;
-        selector = req.body.selector;
-        options = req.body.options;
-        space = req.body.space;
-        data = [];
+        model = req.body.model
+        selector = req.body.selector
+        options = req.body.options
+        space = req.body.space
+        data = []
         allow_models = ['space_users', 'organizations', 'flow_roles', 'roles']
 
         if !space
-            JsonRoutes.sendResult res, 
+            JsonRoutes.sendResult res,
             code: 403,
-            data: 
-                "error": "invalid space " + space, 
+            data:
+                "error": "invalid space " + space,
                 "success": false
-            return;
+            return
 
-        # TODO 用户是否属于space
-        space_user = db.space_users.findOne({user: userId, space: space})
-        
-        if !space_user
-            JsonRoutes.sendResult res, 
-            code: 403,
-            data: 
-                "error": "invalid space " + space, 
-                "success": false
-            return;
+        # 用户登录验证
+        check(space, String)
+        check(authToken, String)
+        userSession = Meteor.wrapAsync((authToken, spaceId, cb) ->
+            steedosAuth.getSession(authToken, spaceId).then (resolve, reject) ->
+                cb(reject, resolve)
+            )(authToken, space)
+        unless userSession
+            JsonRoutes.sendResult res,
+                code: 500,
+                data:
+                    "error": "auth failed",
+                    "success": false
+            return
+        userId = userSession.userId
 
         if !allow_models.includes(model)
-            JsonRoutes.sendResult res, 
+            JsonRoutes.sendResult res,
             code: 403,
-            data: 
-                "error": "invalid model " + model, 
+            data:
+                "error": "invalid model " + model,
                 "success": false
-            return;
+            return
 
         if !db[model]
-            JsonRoutes.sendResult res, 
+            JsonRoutes.sendResult res,
             code: 403,
-            data: 
-                "error": "invalid model " + model, 
+            data:
+                "error": "invalid model " + model,
                 "success": false
-            return;
+            return
 
         if !selector
-            selector = {};
+            selector = {}
 
         if !options
-            options = {};
+            options = {}
 
         selector.space = space
 
-        data = db[model].find(selector, options).fetch();
+        data = db[model].find(selector, options).fetch()
 
-        JsonRoutes.sendResult res, 
+        JsonRoutes.sendResult res,
             code: 200,
-            data: data;
+            data: data
     catch e
         console.error e.stack
-        JsonRoutes.sendResult res, 
+        JsonRoutes.sendResult res,
             code: 200,
-            data: [];
+            data: []
 
 
 JsonRoutes.add "post", "/api/collection/findone", (req, res, next) ->
     try
-        # TODO 用户登录验证
-        cookies = new Cookies( req, res );
+        cookies = new Cookies( req, res )
+        authToken = req.body["X-Auth-Token"] || cookies.get("X-Auth-Token")
 
-        # first check request body
-        if req.body
-            userId = req.body["X-User-Id"]
-            authToken = req.body["X-Auth-Token"]
-
-        # then check cookie
-        if !userId or !authToken
-            userId = cookies.get("X-User-Id")
-            authToken = cookies.get("X-Auth-Token")
-
-        if !(userId and authToken)
-            JsonRoutes.sendResult res, 
+        if !authToken
+            JsonRoutes.sendResult res,
             code: 401,
-            data: 
-                "error": "Validate Request -- Missing X-Auth-Token", 
-                "instance": "1329598861", 
+            data:
+                "error": "Validate Request -- Missing X-Auth-Token",
+                "instance": "1329598861",
                 "success": false
-            return;
+            return
 
-        model = req.body.model;
-        selector = req.body.selector;
-        options = req.body.options;
-        space = req.body.space;
-        data = [];
+        model = req.body.model
+        selector = req.body.selector
+        options = req.body.options
+        space = req.body.space
+        data = []
         allow_models = ['space_users', 'organizations', 'flow_roles', 'mail_accounts', 'roles']
 
         if !space
-            JsonRoutes.sendResult res, 
+            JsonRoutes.sendResult res,
             code: 403,
-            data: 
-                "error": "invalid space " + space, 
+            data:
+                "error": "invalid space " + space,
                 "success": false
-            return;
+            return
 
-        # TODO 用户是否属于space
-        space_user = db.space_users.findOne({user: userId, space: space})
-        
-        if !space_user
-            JsonRoutes.sendResult res, 
-            code: 403,
-            data: 
-                "error": "invalid space " + space, 
-                "success": false
-            return;
+        # 用户登录验证
+        check(space, String)
+        check(authToken, String)
+        userSession = Meteor.wrapAsync((authToken, spaceId, cb) ->
+            steedosAuth.getSession(authToken, spaceId).then (resolve, reject) ->
+                cb(reject, resolve)
+            )(authToken, space)
+        unless userSession
+            JsonRoutes.sendResult res,
+                code: 500,
+                data:
+                    "error": "auth failed",
+                    "success": false
+            return
+        userId = userSession.userId
 
         if !allow_models.includes(model)
-            JsonRoutes.sendResult res, 
+            JsonRoutes.sendResult res,
             code: 403,
-            data: 
-                "error": "invalid model " + model, 
+            data:
+                "error": "invalid model " + model,
                 "success": false
-            return;
+            return
 
         if !db[model]
-            JsonRoutes.sendResult res, 
+            JsonRoutes.sendResult res,
             code: 403,
-            data: 
-                "error": "invalid model " + model, 
+            data:
+                "error": "invalid model " + model,
                 "success": false
-            return;
+            return
 
         if !selector
-            selector = {};
+            selector = {}
 
         if !options
-            options = {};
+            options = {}
 
         if model == 'mail_accounts'
-            selector = {};
+            selector = {}
             selector.owner = userId
-            data = db[model].findOne(selector);
+            data = db[model].findOne(selector)
         else
             selector.space = space
-        
-            data = db[model].findOne(selector, options);
 
-        JsonRoutes.sendResult res, 
+            data = db[model].findOne(selector, options)
+
+        JsonRoutes.sendResult res,
             code: 200,
-            data: data;
+            data: data
     catch e
         console.error e.stack
-        JsonRoutes.sendResult res, 
+        JsonRoutes.sendResult res,
             code: 200,
             data: {}
