@@ -204,7 +204,7 @@ Creator.getObjectRelateds = (object_name)->
 		_.each Creator.Objects, (related_object, related_object_name)->
 			_.each related_object.fields, (related_field, related_field_name)->
 				if (related_field.type == "master_detail" || related_field.type == "lookup") and related_field.reference_to and related_field.reference_to == object_name and relatedListMap[related_object_name]
-					relatedListMap[related_object_name] = { object_name: related_object_name, foreign_key: related_field_name, sharing: related_field.sharing }
+					relatedListMap[related_object_name] = { object_name: related_object_name, foreign_key: related_field_name, write_requires_master_read: related_field.write_requires_master_read }
 		if relatedListMap['cms_files']
 			relatedListMap['cms_files'] = { object_name: "cms_files", foreign_key: "parent" }
 		if relatedListMap['instances']
@@ -230,7 +230,7 @@ Creator.getObjectRelateds = (object_name)->
 					#TODO 待相关列表支持排序后，删除此判断
 					related_objects.splice(0, 0, {object_name:related_object_name, foreign_key: related_field_name})
 				else
-					related_objects.push {object_name:related_object_name, foreign_key: related_field_name, sharing: related_field.sharing}
+					related_objects.push {object_name:related_object_name, foreign_key: related_field_name, write_requires_master_read: related_field.write_requires_master_read}
 
 	if _object.enable_tasks
 		related_objects.push {object_name:"tasks", foreign_key: "related_to"}

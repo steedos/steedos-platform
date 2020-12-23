@@ -441,23 +441,28 @@
                         {
                             "items": {
                                 "type": "object",
-                                "required": ["label", "value"],
+                                "required": [
+                                    "label",
+                                    "value"
+                                ],
                                 "additionalProperties": false,
                                 "properties": {
-                                    "label" : {
+                                    "label": {
                                         "type": "string",
                                         "title": "Options display name"
                                     },
-                                    "value" : {
+                                    "value": {
                                         "type": "string",
                                         "title": "Options value saved as"
                                     },
-                                    "color" : {
+                                    "color": {
                                         "title": "Options color showed as background",
-                                        "anyOf": [{
-                                            "type": "string",
-                                            "pattern": "^[0-9a-fA-F]{6}$"
-                                        }]
+                                        "anyOf": [
+                                            {
+                                                "type": "string",
+                                                "pattern": "^[0-9a-fA-F]{6}$"
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -492,11 +497,17 @@
                     "description": "字段选项函数名称"
                 },
                 "min": {
-                    "type": ["integer", "string"],
+                    "type": [
+                        "integer",
+                        "string"
+                    ],
                     "description": "最小长度。支持字符串，数字，金额，日期类型字段"
                 },
                 "max": {
-                    "type": ["integer", "string"],
+                    "type": [
+                        "integer",
+                        "string"
+                    ],
                     "description": "最大长度。支持字符串，数字，金额，日期类型字段"
                 },
                 "blackbox": {
@@ -520,7 +531,10 @@
                     "description": "本公司"
                 },
                 "is_company_limited": {
-                    "type": ["boolean", "string"],
+                    "type": [
+                        "boolean",
+                        "string"
+                    ],
                     "description": "本公司"
                 },
                 "system": {
@@ -636,17 +650,13 @@
                     "type": "string",
                     "description": "过滤条件函数名称"
                 },
-                "sharing": {
-                    "type": "string",
-                    "description": "配置当用户对主表记录有何种权限时对本表记录可以增删改",
-                    "enum": [
-                        "masterRead",
-                        "masterWrite"
-                    ]
-                },
                 "relatedList": {
                     "type": "boolean",
                     "description": "用于表示是否在相关表的详细页面中作为子表显示"
+                },
+                "write_requires_master_read": {
+                    "type": "boolean",
+                    "description": "设置主记录上创建、编辑或删除子记录所需的最低访问级别。此字段仅适用于master_detail字段类型。true--允许具有'读取'访问权限的用户创建、编辑或删除子记录。false = 允许具有'读取/写入'访问权限的用户创建、编辑或删除子记录的权限。此设置比 true 更严格，并且是默认值。"
                 }
             }
         },

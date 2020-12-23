@@ -276,7 +276,7 @@ module.exports = {
                 return Steedos.ProcessManager.allowSubmit(object_name, record_id);
             },
             on: "record_only_more",
-            todo: function(object_name, record_id){
+            todo: function (object_name, record_id) {
                 Steedos.ProcessManager.submit(object_name, record_id);
             }
         }
@@ -607,13 +607,13 @@ function setDetailOwner(doc, object_name, userId) {
                 let masterRecord = masterCollection.findOne(doc[k]);
                 if (masterRecord) {
                     if (userId && masterRecord.space) { /* 新增和修改子表记录中的master_detial字段时需要根据sharing校验是否有权限新增和修改 */
-                        let sharing = f.sharing || 'masterWrite'; /* 默认对主表有编辑权限才可新建或者编辑子表 */
+                        let write_requires_master_read = f.write_requires_master_read || false; /* 默认对主表有编辑权限才可新建或者编辑子表 */
                         let masterAllow = false;
                         let masterRecordPerm = Creator.getRecordPermissions(masterObjectName, masterRecord, userId, masterRecord.space);
-                        if (sharing == 'masterRead') {
+                        if (write_requires_master_read == true) {
                             masterAllow = masterRecordPerm.allowRead;
                         }
-                        else if (sharing == 'masterWrite') {
+                        else if (write_requires_master_read == false) {
                             masterAllow = masterRecordPerm.allowEdit;
                         }
                         if (!masterAllow) {

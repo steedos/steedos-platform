@@ -133,7 +133,7 @@ if Meteor.isClient
 				return
 			related_object_name = related_object_item.object_name
 			related_field_name = related_object_item.foreign_key
-			sharing = related_object_item.sharing
+			write_requires_master_read = related_object_item.write_requires_master_read
 			related_object = Creator.getObject(related_object_name)
 			unless related_object
 				return
@@ -154,7 +154,7 @@ if Meteor.isClient
 				mobile_columns: mobile_columns
 				related_field_name: related_field_name
 				is_file: related_object_name == "cms_files"
-				sharing: sharing
+				write_requires_master_read: write_requires_master_read
 
 			relatedObject = relatedListObjects[related_object_name]
 			if relatedObject

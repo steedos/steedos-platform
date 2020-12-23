@@ -110,12 +110,12 @@ if Meteor.isClient
 		if !spaceId and Meteor.isClient
 			spaceId = Session.get("spaceId")
 
-		sharing = relatedListItem.sharing || 'masterWrite'
+		write_requires_master_read = relatedListItem.write_requires_master_read || false
 		masterAllow = false
 		masterRecordPerm = Creator.getRecordPermissions(currentObjectName, currentRecord, userId, spaceId)
-		if sharing == 'masterRead'
+		if write_requires_master_read == true
 			masterAllow = masterRecordPerm.allowRead
-		else if sharing == 'masterWrite'
+		else if write_requires_master_read == false
 			masterAllow = masterRecordPerm.allowEdit
 
 		uneditable_related_list = Creator.getRecordSafeRelatedList(currentRecord, currentObjectName)

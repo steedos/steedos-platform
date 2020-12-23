@@ -24,7 +24,7 @@ fields:
     label: Object
     type: lookup
     reference_to: objects
-    sharing: masterRead
+    write_requires_master_read: true
     reference_to_field: name
     index: true
     required: true
