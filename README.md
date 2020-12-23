@@ -29,10 +29,9 @@ Traditional programming, denotes the means of programming by using certain codin
 
 On the other hand, declarative programming accomplishes the same results by basically telling the computer the end result and letting the computer figure out how to get there.
 
-Steedos is such an declarative programming platform.  Steedos empowers business owners with all of the tools of a developer, without requiring an advanced skill set. 
+Steedos is such an declarative programming platform.  Steedos empowers business owners with all of the tools of a developer, without requiring an advanced skill set.
 
-With drag-and-drop simplicity, just about anyone can create apps that automate business processes. The apps you create for your business can be deployed on mobile, tablet and web, be simple or complex, and connect to nearly any data source. 
-
+With drag-and-drop simplicity, just about anyone can create apps that automate business processes. The apps you create for your business can be deployed on mobile, tablet and web, be simple or complex, and connect to nearly any data source.
 
 ## Based on Metadata
 
@@ -83,6 +82,10 @@ To make this possible, we're enabling you to export your metadata, define data i
 Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
 
 ## Requirements
+
+- [Meteor](https://www.meteor.com/) Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
+
+> Only when you run the source code of our platform, you need to install Meteor. If you use Steedos as a development tool, you do not need to install Meteor.
 
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
