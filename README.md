@@ -108,6 +108,8 @@ For more information, please refer to the official website of [www.steedos.org](
 
 From reporting bugs to proposing improvement suggestions, every contribution is worthy of appreciation and welcome. If you are going to modify the code to fix a bug or implement a new function, please create an issue first, so that we can ensure that your work is not wasted.
 
+See [Development Guide](/CONTRIBUTING) for how to run and build our platform source code.
+
 ## Licence
 
 Steedos Platform is licensed under the MIT. Everyone can build and distribute steedos apps for free. 
