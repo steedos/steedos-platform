@@ -1824,10 +1824,10 @@
     i18next-sprintf-postprocessor "^0.2.2"
     i18next-xhr-backend "^3.2.2"
 
-"@steedos/license@^1.22.2":
-  version "1.22.2"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.2.tgz#516aee686228fed0aae980dea2bf728f2e0c6a15"
-  integrity sha1-UWruaGIo/tCq6YDeor9yjy4MahU=
+"@steedos/license@^1.22.3":
+  version "1.22.3"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.3.tgz#3a5dfeab45f21d38bd3efa5c6b73093942174f73"
+  integrity sha1-Ol3+q0XyHTi9Pvpca3MJOUIXT3M=
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
