@@ -76,7 +76,7 @@ yarn run build
 
 ### Test Creator Code After Build
 
-After the command line shell execution of [Build Creator](#Build_Creator) above, the built code will be copied automatically to the [/server](https://github.com/steedos/steedos-platform/tree/develop/server) folder.
+After the command line shell execution of [Build Creator](#build-creator) above, the built code will be copied automatically to the [/server](https://github.com/steedos/steedos-platform/tree/develop/server) folder.
 
 You can simply [Run One App That Linked To Source Code](#run-one-app-that-linked-to-source-code) to test the code that has just been built from the source code in the '/ Creator 'folder.
 
