@@ -3460,13 +3460,13 @@
     node-fetch "^2.6.0"
     systeminformation "^4.26.10"
 
-"@steedos/metadata-api@^1.23.0-alpha.7":
-  version "1.23.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/metadata-api/download/@steedos/metadata-api-1.23.0-alpha.7.tgz#83853c952fc63b368825c0d66c8b7ba281a0ba49"
-  integrity sha1-g4U8lS/GOzaIJcDWbIt7ooGgukk=
+"@steedos/metadata-api@^1.23.0-alpha.8":
+  version "1.23.0-alpha.8"
+  resolved "https://registry.npm.taobao.org/@steedos/metadata-api/download/@steedos/metadata-api-1.23.0-alpha.8.tgz#679b77332fc6a1a192d220319d11cc5177b7432a"
+  integrity sha1-Z5t3My/GoaGS0iAxnRHMUXe3Qyo=
   dependencies:
     "@salesforce/dev-config" "^2.0.0"
-    "@steedos/metadata-core" "^1.23.0-alpha.7"
+    "@steedos/metadata-core" "^1.23.0-alpha.8"
     chalk "^4.1.0"
     compressing "^1.5.1"
     dotenv-flow "^3.1.0"
@@ -3476,10 +3476,10 @@
     node-fetch "^2.6.1"
     underscore "^1.11.0"
 
-"@steedos/metadata-core@^1.23.0-alpha.7":
-  version "1.23.0-alpha.7"
-  resolved "https://registry.npm.taobao.org/@steedos/metadata-core/download/@steedos/metadata-core-1.23.0-alpha.7.tgz#82887c34c73fd7632d8f5c7ece072e0e6e90da29"
-  integrity sha1-goh8NMc/12Mtj1x+zgcuDm6Q2ik=
+"@steedos/metadata-core@^1.23.0-alpha.8":
+  version "1.23.0-alpha.8"
+  resolved "https://registry.npm.taobao.org/@steedos/metadata-core/download/@steedos/metadata-core-1.23.0-alpha.8.tgz#73ba4c35545a99755b380c57a35fd6a67bbc4a5b"
+  integrity sha1-c7pMNVRamXVbOAxXo1/Wpnu8Sls=
   dependencies:
     archiver "^5.1.0"
     chalk "^4.1.0"
@@ -3487,6 +3487,7 @@
     compressing "^1.5.1"
     dotenv-flow "^3.2.0"
     glob "^7.1.6"
+    ini "^2.0.0"
     js-yaml "^3.14.0"
     underscore "^1.11.0"
 
@@ -12689,6 +12690,11 @@ ini@^1.3.2, ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
   version "1.3.5"
   resolved "https://registry.npm.taobao.org/ini/download/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha1-7uJfVtscnsYIXgwid4CD9Zar+Sc=
+
+ini@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/ini/download/ini-2.0.0.tgz?cache=0&sync_timestamp=1607907874824&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fini%2Fdownload%2Fini-2.0.0.tgz#e5fd556ecdd5726be978fa1001862eacb0a94bc5"
+  integrity sha1-5f1Vbs3VcmvpePoQAYYurLCpS8U=
 
 init-package-json@^1.10.3:
   version "1.10.3"
