@@ -74,7 +74,7 @@
 
 - [Meteor](https://www.meteor.com/) Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
 
-> 只有当您运行我们的平台源码时才需要安装Meteor，使用华炎魔方作为开发工具并不需要安装Meteor。
+> 只有当您运行我们平台creator文件夹下的源码时才需要安装Meteor，使用华炎魔方作为开发工具并不需要安装Meteor，请参考 [Development Guide](/Development_Guide)。
 
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
