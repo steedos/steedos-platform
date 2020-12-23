@@ -99,7 +99,7 @@
 
 从上报BUG到提出改善建议，每一个贡献都值得赞赏和欢迎。如果您打算动手修改代码来修正BUG或实现某个新功能，请先创建一个 [ISSUE](https://github.com/steedos/steedos-platform/issues)，这样我们可以确保您的工作没有白费。
 
-请可以参阅 [开发指南](/CONTRIBUTING) 来了解如何运行和编译我们的平台源代码。
+请可以参阅 [开发指南](/CONTRIBUTING.md) 来了解如何运行和编译我们的平台源代码。
 
 ## Licence
 
