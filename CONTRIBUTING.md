@@ -29,7 +29,7 @@ The code in the folder '/creator' of this repository is the souce code of a Mete
 
 The code in '/packages' is our souce code of some core NPM packages on which the Meteor application above based on.
 
-If you only need to debug the source code in the '/packages', you shoud just [Run One App That Linked To Source Code](#Run_One_App_That_Linked_To_Source_Code).
+If you only need to debug the source code in the '/packages', you shoud just [Run One App That Linked To Source Code](#run-one-app-that-linked-to-source-code).
 
 You will need to read the tutorial bellow only when you need to debug the source code of Meteor application in the '/creator' folder.
 
@@ -78,7 +78,7 @@ yarn run build
 
 After the command line shell execution of [Build Creator](#Build_Creator) above, the built code will be copied automatically to the [/server](https://github.com/steedos/steedos-platform/tree/develop/server) folder.
 
-You can simply [Run One App That Linked To Source Code](#Run_One_App_That_Linked_To_Source_Code) to test the code that has just been built from the source code in the '/ Creator 'folder.
+You can simply [Run One App That Linked To Source Code](#run-one-app-that-linked-to-source-code) to test the code that has just been built from the source code in the '/ Creator 'folder.
 
 ### Publish
 
