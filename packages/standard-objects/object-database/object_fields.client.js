@@ -44,6 +44,7 @@ function getFieldsByType(doc, type, dataType) {
       fields.push({ name: 'reference_to'});
       fields.push({ name: 'filtersFunction'});
       fields.push({ name: 'optionsFunction'});
+      fields.push({ name: 'write_requires_master_read'});
       break;
     }
     case 'autonumber': {
