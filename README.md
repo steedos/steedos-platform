@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-Steedos Platform is a low code development platform with visual modeling and descriptive programming. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
+Steedos Platform is an open source alternative to salesforce low code development platform. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
 </p>
 
 <h3 align="center">
