@@ -67,7 +67,17 @@ A package is a container for something as small as an individual component or as
 
 Every steedos package is an native nodejs project, developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
 
+
+## Technology Architecture
+
+Steedos is an native nodejs project, Use mongodb to save metadata and data. 
+
+- [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
+- [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
+
 ## Steedos DX
+
+Steedos DX enable synchronize metadata between the database and the project source code.
 
 Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
 
@@ -76,12 +86,6 @@ To make this possible, we're enabling you to export your metadata, define data i
 ![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
-
-## Development Requirements
-
-- [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
-- [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
-- [Yarn](https://yarnpkg.com/en/) version >= 1.5 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
 
 ## Installation and Deployment
 
