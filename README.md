@@ -37,8 +37,6 @@ With drag-and-drop simplicity, just about anyone can create apps that automate b
 
 Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
 
-Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.
-
 There are several types of Metadata, with each one representing a unique way a business function can be customized. Here are a few broad categories for Metadata types:
 
 - **Data**: the core components of the data structure on which most customization is built. E.g. Custom Objects, Fields, and Custom Apps.
@@ -61,23 +59,9 @@ There are several types of Metadata, with each one representing a unique way a b
 
 - **Report & Dashboard**: Steedos offers a powerful suite of reporting tools that work together to help you understand and act on your data.
 
-## Steedos Package
-
-A package is a container for something as small as an individual component or as large as a set of related apps. After creating a package, you can distribute it to other Steedos users and organizations, including those outside your company.
-
-Every steedos package is an native nodejs project, developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
-
-
-## Technology Architecture
-
-Steedos is an native nodejs project, Use mongodb to save metadata and data. 
-
-- [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
-- [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
-
 ## Steedos DX
 
-Steedos DX enable synchronize metadata between the database and the project source code.
+With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
 
 Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
 
@@ -87,7 +71,14 @@ To make this possible, we're enabling you to export your metadata, define data i
 
 Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
 
-## Installation
+## Technology Architecture
+
+Steedos is an native nodejs project, Use mongodb to save metadata and data. 
+
+- [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
+- [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
+
+### Installation
 
 Steedos is essentially a set of npm packages that can be installed over npm.
 
@@ -100,10 +91,49 @@ yarn
 yarn start
 ```
 
-## Steedos App Samples
+or you can run the steedos sample projects.
 
 - [Project Management App](https://github.com/steedos/project-management-app)
 - [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
+
+## Project Structure
+
+```sh
+project-management-app
+├── steedos-app/main/default
+│   ├── applications
+│   │   └── project.app.yml
+│   └── objects
+│       └──project__c
+│           ├── buttons
+│           │   └── print.button.yml
+│           │   └── print.button.js
+│           ├── fields
+│           │   └── name.field.yml
+│           │   └── description.field.yml
+│           │   └── isDone.field.yml
+│           │   └── status__c.field
+│           │   └── ...
+│           ├── listviews
+│           │   └── all.listview.yml
+│           │   └── recent.listview.yml
+│           │   └── my.listview.yml
+│           ├── permissions
+│           │   └── user.permission.yml
+│           │   └── admin.permission.yml
+│           │   └── project_manager.permission.yml
+│           └── project.object.yml
+│           └──...
+├── .env
+├── .gitignore
+├── package.json
+├── README.md
+├── server.js
+├── steedos-config.yml
+└── yarn.lock
+```
+
+Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
 
 ## Docs
 
