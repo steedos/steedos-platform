@@ -89,9 +89,20 @@ Steedos DX is licenced per developer. We provide Steedos DX free license for ope
 
 ## Installation and Deployment
 
-This project is the kernel source code of Steedos Platform. We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly.
+Steedos is essentially a set of npm packages that can be installed over npm.
 
-You can create a new steedos project or install the following open source steedos projects.
+### Create Steedos App
+
+The easiest way to install Steedos is to use the command line tool that helps you create a template project. You can run this command anywhere in a new empty repository or within an existing repository, it will create a new directory containing the scaffolded files.
+
+```bash
+npx create-steedos-app my-app
+cd my-app
+yarn
+yarn start
+```
+
+### App Samples
 
 - [Project Management App](https://github.com/steedos/project-management-app)
 - [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
