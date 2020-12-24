@@ -1,4 +1,4 @@
-# Development Guide
+# CONTRIBUTING GUIDE
 
 ## Prepare For Development
 
