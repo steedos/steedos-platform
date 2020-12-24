@@ -87,11 +87,9 @@ To make this possible, we're enabling you to export your metadata, define data i
 
 Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
 
-## Installation and Deployment
+## Installation
 
 Steedos is essentially a set of npm packages that can be installed over npm.
-
-### Create Steedos App
 
 The easiest way to install Steedos is to use the command line tool that helps you create a template project. You can run this command anywhere in a new empty repository or within an existing repository, it will create a new directory containing the scaffolded files.
 
@@ -102,7 +100,7 @@ yarn
 yarn start
 ```
 
-### App Samples
+## Steedos App Samples
 
 - [Project Management App](https://github.com/steedos/project-management-app)
 - [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
