@@ -47,9 +47,11 @@ There are several types of Metadata, with each one representing a unique way a b
 
 ## Features
 
-- **Validation Rules**: In Steedos Platform, users can create validation rules for each object. Validation rules are mainly used to verify whether the data of the object conforms to specific rules. When a user changes a field of an object that does not conform to the validation rules created by the user, Hua will refuse to save the user's input.
+- **Custom Objects**: Create custom objects to store information that’s unique to your organization. Choose whether your custom objects are searchable, support sharing, or include access to the Bulk API and Streaming API.
 
-- **Formula Engine**: Steedos Platform has built-in formula engine of the same level as Excel, which can realize automatic condition judgment, data calculation, reference of data in associated table or summary of relevant data in sub table by configuring formula.
+- **Formula**: A formula is an algorithm that derives its value from other fields, expressions, or values. Formulas can help you automatically calculate the value of a field based on other fields.
+
+- **Validation Rules**: Improve the quality of your data using validation rules. Validation rules verify that the data a user enters in a record meets the standards you specify before the user can save the record. 
 
 - **Workflow Rules**: Workflow lets you automate standard internal procedures and processes to save time across your org. A workflow rule is the main container for a set of workflow instructions. These instructions can always be summed up in an if/then statement.
 
