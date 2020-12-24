@@ -3470,13 +3470,13 @@
     node-fetch "^2.6.0"
     systeminformation "^4.26.10"
 
-"@steedos/metadata-api@^1.23.0-alpha.8":
-  version "1.23.0-alpha.8"
-  resolved "https://registry.npm.taobao.org/@steedos/metadata-api/download/@steedos/metadata-api-1.23.0-alpha.8.tgz#679b77332fc6a1a192d220319d11cc5177b7432a"
-  integrity sha1-Z5t3My/GoaGS0iAxnRHMUXe3Qyo=
+"@steedos/metadata-api@^1.23.0-alpha.9":
+  version "1.23.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/@steedos/metadata-api/-/metadata-api-1.23.0-alpha.9.tgz#c9ac420c46e5992f1e346ecee4a7ca714aa42906"
+  integrity sha512-s8qYH7JXQhlNzKlkQEhV864eAjxyM7GLa4BdfrDPqWcYANrVt/FOQXZLG9rwbpSYl8Lh1UZSBfwC73lPvhRXDA==
   dependencies:
     "@salesforce/dev-config" "^2.0.0"
-    "@steedos/metadata-core" "^1.23.0-alpha.8"
+    "@steedos/metadata-core" "^1.23.0-alpha.10"
     chalk "^4.1.0"
     compressing "^1.5.1"
     dotenv-flow "^3.1.0"
@@ -3486,11 +3486,12 @@
     node-fetch "^2.6.1"
     underscore "^1.11.0"
 
-"@steedos/metadata-core@^1.23.0-alpha.8":
-  version "1.23.0-alpha.8"
-  resolved "https://registry.npm.taobao.org/@steedos/metadata-core/download/@steedos/metadata-core-1.23.0-alpha.8.tgz#73ba4c35545a99755b380c57a35fd6a67bbc4a5b"
-  integrity sha1-c7pMNVRamXVbOAxXo1/Wpnu8Sls=
+"@steedos/metadata-core@^1.23.0-alpha.10":
+  version "1.23.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@steedos/metadata-core/-/metadata-core-1.23.0-alpha.10.tgz#2acee8c0b0cf83a0c9a3d1936d085544811d6728"
+  integrity sha512-W0O54kpV2dn9yHozfRIxdqqesu2xJVkYXMdniFqGMZa61rB1VzQjvCvyQU+TnbZyhlocAsYGczGXRatps8Cs7Q==
   dependencies:
+    "@steedos/client" "^1.23.0-alpha.10"
     archiver "^5.1.0"
     chalk "^4.1.0"
     clone "^2.1.2"
