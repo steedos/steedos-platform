@@ -47,29 +47,25 @@ There are several types of Metadata, with each one representing a unique way a b
 
 ## Features
 
-- **Visual Modeling**: Based on metadata driven, Steedos Platform abstracts the traditional business requirements realized by code into configurable metadata. By simply clicking the  tag to modify the configuration item, the vast majority of business requirements can be realized, and the code can be written if necessary.
-
-- **Define User Interface**: With Steedos Platform, you can quickly build list view page layout, reports, and dashboards to truly realize user-defined interface.
-
-- **Configure Validation Rules**: In Steedos Platform, users can create validation rules for each object. Validation rules are mainly used to verify whether the data of the object conforms to specific rules. When a user changes a field of an object that does not conform to the validation rules created by the user, Hua will refuse to save the user's input.
+- **Validation Rules**: In Steedos Platform, users can create validation rules for each object. Validation rules are mainly used to verify whether the data of the object conforms to specific rules. When a user changes a field of an object that does not conform to the validation rules created by the user, Hua will refuse to save the user's input.
 
 - **Formula Engine**: Steedos Platform has built-in formula engine of the same level as Excel, which can realize automatic condition judgment, data calculation, reference of data in associated table or summary of relevant data in sub table by configuring formula.
 
-- **Workflow Rules**: By setting workflow rules and recording that when the specified conditions are met, Steedos Platform will implement the automatic operation of the rules, so that the business can operate automatically without being on duty and drive efficiency improvement.
+- **Workflow Rules**: Workflow lets you automate standard internal procedures and processes to save time across your org. A workflow rule is the main container for a set of workflow instructions. These instructions can always be summed up in an if/then statement.
 
-- **Automatic Operation**: By setting the automatic operation, you can automatically create and update records, send e-mail, SMS or notification in the system under specific conditions, and can also call the interface of the third-party system automatically.
+- **Automated Actions**: An automated action is a reusable component that performs some sort of action behind the scenes—like updating a field or sending an email. Once you create an automated action, add it to a process, milestone, or other automated process.
 
-- **Approval Process**: The system has built-in various tools, such as process design, process operation, management and maintenance, statistical analysis and process optimization, to help enterprises quickly deploy, effectively monitor and continuously optimize the business approval process.
+- **Approval Process**:  Different from process automation in the form of workflow rules. Approvals take automation one step further, letting you specify a sequence of steps that are required to approve a record.
 
-- **Visual Report Tool**: With the report engine of Steedos Platform , you can quickly configure statistical charts, including data list, group report, PivotChart, bar chart, pie chart, etc., for easy viewing, analysis and decision-making.
-
-- **Advanced Business logic Development**: Steedos Platform  provides an entry point for code development. Developers can realize high-level business logic such as automatic operation, stop and rollback under specific conditions by writing code. Or develop interfaces with third-party systems.
+- **Report & Dashboard**: Steedos offers a powerful suite of reporting tools that work together to help you understand and act on your data.
 
 - **Open Source, Customizable**: Steedos Platform  is open source. This will make you confident that Steedos Platform will exist forever. You can also fork the source code down and make changes as needed.
 
 ## Steedos Package
 
 A package is a container for something as small as an individual component or as large as a set of related apps. After creating a package, you can distribute it to other Steedos users and organizations, including those outside your company.
+
+Every steedos package is an native nodejs project, developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
 
 ## Steedos DX
 
