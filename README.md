@@ -59,16 +59,9 @@ There are several types of Metadata, with each one representing a unique way a b
 
 - **Report & Dashboard**: Steedos offers a powerful suite of reporting tools that work together to help you understand and act on your data.
 
-## Technology Architecture
-
-Steedos is an native nodejs project, Use mongodb to save metadata and data. 
-
-- [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
-- [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
-
 ## Installation
 
-Steedos is essentially a set of npm packages that can be installed over npm.
+Steedos is essentially a set of npm packages that can be installed over npm. 
 
 The easiest way to install Steedos is to use the command line tool that helps you create a template project. You can run this command anywhere in a new empty repository or within an existing repository, it will create a new directory containing the scaffolded files.
 
@@ -84,7 +77,15 @@ or you can run the steedos sample projects.
 - [Project Management App](https://github.com/steedos/project-management-app)
 - [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
 
-## Project Structure
+## Steedos Project
+
+Steedos project is native [Node.js] project, require nodejs version >= 10.15.1.
+ 
+Steedos use [MongoDB](https://www.mongodb.com/try/download/) (version >= 4.2) to save metadata and data.
+
+Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
+
+### Project Structure
 
 ```sh
 project-management-app
@@ -121,7 +122,6 @@ project-management-app
 └── yarn.lock
 ```
 
-Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
 
 ## Object Field Metadata Excample
 
