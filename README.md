@@ -45,7 +45,7 @@ There are several types of Metadata, with each one representing a unique way a b
 - **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
 - **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
 
-## Features
+## Supported Metadata Types
 
 - **Custom Objects**: Create custom objects to store information that’s unique to your organization. Choose whether your custom objects are searchable, support sharing, or include access to the Bulk API and Streaming API.
 
@@ -60,8 +60,6 @@ There are several types of Metadata, with each one representing a unique way a b
 - **Approval Process**:  Different from process automation in the form of workflow rules. Approvals take automation one step further, letting you specify a sequence of steps that are required to approve a record.
 
 - **Report & Dashboard**: Steedos offers a powerful suite of reporting tools that work together to help you understand and act on your data.
-
-- **Open Source, Customizable**: Steedos Platform  is open source. This will make you confident that Steedos Platform will exist forever. You can also fork the source code down and make changes as needed.
 
 ## Steedos Package
 
@@ -79,11 +77,7 @@ To make this possible, we're enabling you to export your metadata, define data i
 
 Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
 
-## Requirements
-
-- [Meteor](https://www.meteor.com/) Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
-
-> Only when you run the source code in the '/creator' folder of our platform, you need to install Meteor. If you use Steedos as a development tool, you do not need to install Meteor, see [Development Guide](/Development_Guide) for more.
+## Development Requirements
 
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
@@ -98,7 +92,7 @@ You can create a new steedos project or install the following open source steedo
 - [Project Management App](https://github.com/steedos/project-management-app)
 - [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
 
-## Learn more
+## Docs
 
 For more information, please refer to the official website of [www.steedos.org](https://www.steedos.org/)
 
