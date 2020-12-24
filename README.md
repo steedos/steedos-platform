@@ -59,6 +59,24 @@ There are several types of Metadata, with each one representing a unique way a b
 
 - **Report & Dashboard**: Steedos offers a powerful suite of reporting tools that work together to help you understand and act on your data.
 
+## Metadata Sample
+
+```yml
+name: rating
+label: Rating
+type: select
+sortable: true
+options:
+  - label: Hot
+    value: hot
+  - label: Warm
+    value: warm
+  - label: Cold
+    value: cold
+inlineHelpText: How do you classify this customer level, for example, ordinary, important.
+sort_no: 270
+```
+
 ## Steedos DX
 
 With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
@@ -78,7 +96,7 @@ Steedos is an native nodejs project, Use mongodb to save metadata and data.
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
 
-### Installation
+## Installation
 
 Steedos is essentially a set of npm packages that can be installed over npm.
 
@@ -135,7 +153,8 @@ project-management-app
 
 Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
 
-## Docs
+
+## Developer Docs
 
 For more information, please refer to the official website of [www.steedos.org](https://www.steedos.org/)
 
