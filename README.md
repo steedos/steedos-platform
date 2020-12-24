@@ -72,7 +72,7 @@ yarn
 yarn start
 ```
 
-or you can run the steedos sample projects.
+or you can try the following sample projects.
 
 - [Project Management App](https://github.com/steedos/project-management-app)
 - [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
