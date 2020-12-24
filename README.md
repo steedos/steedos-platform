@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-Steedos Platform is a low code development platform with visual modeling and descriptive programming. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
+Steedos Platform is an open source alternative to salesforce low code development platform. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
 </p>
 
 <h3 align="center">
@@ -37,41 +37,111 @@ With drag-and-drop simplicity, just about anyone can create apps that automate b
 
 Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
 
-Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.
-
 There are several types of Metadata, with each one representing a unique way a business function can be customized. Here are a few broad categories for Metadata types:
 
 - **Data**: the core components of the data structure on which most customization is built. E.g. Custom Objects, Fields, and Custom Apps.
 - **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
 - **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
 
-## Features
+## Supported Metadata Types
 
-- **Visual Modeling**: Based on metadata driven, Steedos Platform abstracts the traditional business requirements realized by code into configurable metadata. By simply clicking the  tag to modify the configuration item, the vast majority of business requirements can be realized, and the code can be written if necessary.
+- **Custom Objects**: Create custom objects to store information that’s unique to your organization. Choose whether your custom objects are searchable, support sharing, or include access to the Bulk API and Streaming API.
 
-- **Define User Interface**: With Steedos Platform, you can quickly build list view page layout, reports, and dashboards to truly realize user-defined interface.
+- **Formula**: A formula is an algorithm that derives its value from other fields, expressions, or values. Formulas can help you automatically calculate the value of a field based on other fields.
 
-- **Configure Validation Rules**: In Steedos Platform, users can create validation rules for each object. Validation rules are mainly used to verify whether the data of the object conforms to specific rules. When a user changes a field of an object that does not conform to the validation rules created by the user, Hua will refuse to save the user's input.
+- **Validation Rules**: Improve the quality of your data using validation rules. Validation rules verify that the data a user enters in a record meets the standards you specify before the user can save the record. 
 
-- **Formula Engine**: Steedos Platform has built-in formula engine of the same level as Excel, which can realize automatic condition judgment, data calculation, reference of data in associated table or summary of relevant data in sub table by configuring formula.
+- **Workflow Rules**: Workflow lets you automate standard internal procedures and processes to save time across your org. A workflow rule is the main container for a set of workflow instructions. These instructions can always be summed up in an if/then statement.
 
-- **Workflow Rules**: By setting workflow rules and recording that when the specified conditions are met, Steedos Platform will implement the automatic operation of the rules, so that the business can operate automatically without being on duty and drive efficiency improvement.
+- **Automated Actions**: An automated action is a reusable component that performs some sort of action behind the scenes—like updating a field or sending an email. Once you create an automated action, add it to a process, milestone, or other automated process.
 
-- **Automatic Operation**: By setting the automatic operation, you can automatically create and update records, send e-mail, SMS or notification in the system under specific conditions, and can also call the interface of the third-party system automatically.
+- **Approval Process**:  Different from process automation in the form of workflow rules. Approvals take automation one step further, letting you specify a sequence of steps that are required to approve a record.
 
-- **Approval Process**: The system has built-in various tools, such as process design, process operation, management and maintenance, statistical analysis and process optimization, to help enterprises quickly deploy, effectively monitor and continuously optimize the business approval process.
+- **Report & Dashboard**: Steedos offers a powerful suite of reporting tools that work together to help you understand and act on your data.
 
-- **Visual Report Tool**: With the report engine of Steedos Platform , you can quickly configure statistical charts, including data list, group report, PivotChart, bar chart, pie chart, etc., for easy viewing, analysis and decision-making.
+## Installation
 
-- **Advanced Business logic Development**: Steedos Platform  provides an entry point for code development. Developers can realize high-level business logic such as automatic operation, stop and rollback under specific conditions by writing code. Or develop interfaces with third-party systems.
+Steedos is essentially a set of npm packages that can be installed over npm. 
 
-- **Open Source, Customizable**: Steedos Platform  is open source. This will make you confident that Steedos Platform will exist forever. You can also fork the source code down and make changes as needed.
+The easiest way to install Steedos is to use the command line tool that helps you create a template project. You can run this command anywhere in a new empty repository or within an existing repository, it will create a new directory containing the scaffolded files.
 
-## Steedos Package
+```bash
+npx create-steedos-app my-app
+cd my-app
+yarn
+yarn start
+```
 
-A package is a container for something as small as an individual component or as large as a set of related apps. After creating a package, you can distribute it to other Steedos users and organizations, including those outside your company.
+or you can try the following sample projects.
+
+- [Project Management App](https://github.com/steedos/project-management-app)
+- [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
+
+## Steedos Project
+
+Steedos project is native [Node.js](https://nodejs.org/en/download/) (version >= 10.15.1) project, use [MongoDB](https://www.mongodb.com/try/download/) (version >= 4.2) to save metadata and data.
+
+Developers can define metadata in project source code, or via product interface.
+
+Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
+
+### Project Structure
+
+```sh
+my-app
+├── steedos-app/main/default
+│   ├── applications
+│   │   └── myApp.app.yml
+│   └── objects
+│       └──todo__c
+│           ├── buttons
+│           │   └── markDown.button.yml
+│           │   └── markDown.button.js
+│           ├── fields
+│           │   └── name.field.yml
+│           │   └── description.field.yml
+│           │   └── isDone.field.yml
+│           │   └── ...
+│           ├── listviews
+│           │   └── all.listview.yml
+│           │   └── recent.listview.yml
+│           │   └── my.listview.yml
+│           ├── permissions
+│           │   └── user.permission.yml
+│           │   └── admin.permission.yml
+│           └── todo.object.yml
+│           └──...
+├── .env
+├── .gitignore
+├── package.json
+├── README.md
+├── server.js
+├── steedos-config.yml
+└── yarn.lock
+```
+
+
+### Object Field Metadata Excample
+
+```yml
+name: rating
+label: Rating
+type: select
+sortable: true
+options:
+  - label: Hot
+    value: hot
+  - label: Warm
+    value: warm
+  - label: Cold
+    value: cold
+inlineHelpText: How do you classify this customer level, for example, ordinary, important.
+sort_no: 270
+```
 
 ## Steedos DX
+
+With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
 
 Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
 
@@ -81,32 +151,15 @@ To make this possible, we're enabling you to export your metadata, define data i
 
 Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
 
-## Requirements
-
-- [Meteor](https://www.meteor.com/) Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
-
-> Only when you run the source code of our platform, you need to install Meteor. If you use Steedos as a development tool, you do not need to install Meteor.
-
-- [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
-- [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
-- [Yarn](https://yarnpkg.com/en/) version >= 1.5 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
-
-## Installation and Deployment
-
-This project is the kernel source code of Steedos Platform. We will compile and release it as [NPM package](https://www.npmjs.com/package/steedos-server) regularly.
-
-You can create a new steedos project or install the following open source steedos projects.
-
-- [Project Management App](https://github.com/steedos/project-management-app)
-- [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
-
-## Learn more
+## Steedos Docs
 
 For more information, please refer to the official website of [www.steedos.org](https://www.steedos.org/)
 
 ## Contribute to Steedos Platform
 
 From reporting bugs to proposing improvement suggestions, every contribution is worthy of appreciation and welcome. If you are going to modify the code to fix a bug or implement a new function, please create an issue first, so that we can ensure that your work is not wasted.
+
+See [Contributing Guide](/CONTRIBUTING.md) for how to run and build our platform source code.
 
 ## Licence
 

@@ -17,7 +17,7 @@
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是一套可视化建模、描述式编程的低代码开发平台，只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。
+  华炎魔方是Salesforce低代码开发平台的开源替代方案，你只需点击鼠标，就能轻松便捷地创建智能化、移动化的企业应用程序。
 </p>
 
 <h3 align="center">
@@ -70,19 +70,16 @@
 
 华炎魔方DX工具按开发者收费，我们为开源项目和教育机构免费提供华炎魔方DX工具。
 
-## 依赖包
+## 技术架构
 
-- [Meteor](https://www.meteor.com/) Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
-
-> 只有当您运行我们的平台源码时才需要安装Meteor，使用华炎魔方作为开发工具并不需要安装Meteor。
+华炎魔方服务端使用nodejs开发，您定义的元数据，和系统中录入的业务数据均保存在mongodb中。
 
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
-- [Yarn](https://yarnpkg.com/en/) version >= 1.5 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
 
-## 安装华炎魔方平台
+## 安装
 
-本项目是华炎魔方的内核源码，我们会定期编译并发布为 [npm package](https://www.npmjs.com/package/steedos-server)，只需在项目中引入相关的包，既可启用华炎魔方的各项功能。
+华炎魔方是一组 [npm package](https://www.npmjs.com/package/steedos-server) 软件包，直接在nodejs项目中安装引用即可。
 
 具体如何安装部署华炎魔方，请参考[官网安装部署文档](https://www.steedos.com/help/deploy)
 
@@ -97,7 +94,9 @@
 
 ## 为华炎魔方做贡献
 
-从上报BUG到提出改善建议，每一个贡献都值得赞赏和欢迎。如果您打算动手修改代码来修正BUG或实现某个新功能，请先创建一个 [ISSUE](https://github.com/steedos/steedos-platform/issues)，这样我们可以确保您的工作没有白费。 
+从上报BUG到提出改善建议，每一个贡献都值得赞赏和欢迎。如果您打算动手修改代码来修正BUG或实现某个新功能，请先创建一个 [ISSUE](https://github.com/steedos/steedos-platform/issues)，这样我们可以确保您的工作没有白费。
+
+请可以参阅 [开发指南](/CONTRIBUTING.md) 来了解如何运行和编译我们的平台源代码。
 
 ## Licence
 
