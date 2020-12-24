@@ -154,7 +154,7 @@ project-management-app
 Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
 
 
-## Developer Docs
+## Steedos Docs
 
 For more information, please refer to the official website of [www.steedos.org](https://www.steedos.org/)
 
@@ -162,7 +162,7 @@ For more information, please refer to the official website of [www.steedos.org](
 
 From reporting bugs to proposing improvement suggestions, every contribution is worthy of appreciation and welcome. If you are going to modify the code to fix a bug or implement a new function, please create an issue first, so that we can ensure that your work is not wasted.
 
-See [Development Guide](/CONTRIBUTING.md) for how to run and build our platform source code.
+See [Contributing Guide](/CONTRIBUTING.md) for how to run and build our platform source code.
 
 ## Licence
 
