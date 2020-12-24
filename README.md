@@ -79,9 +79,9 @@ or you can run the steedos sample projects.
 
 ## Steedos Project
 
-Steedos project is native [Node.js] project, require nodejs version >= 10.15.1.
- 
-Steedos use [MongoDB](https://www.mongodb.com/try/download/) (version >= 4.2) to save metadata and data.
+Steedos project is native [Node.js](https://nodejs.org/en/download/) (version >= 10.15.1) project, use [MongoDB](https://www.mongodb.com/try/download/) (version >= 4.2) to save metadata and data.
+
+Developers can define metadata in project source code, or via product interface.
 
 Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
 
