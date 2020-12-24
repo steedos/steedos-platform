@@ -70,19 +70,16 @@
 
 华炎魔方DX工具按开发者收费，我们为开源项目和教育机构免费提供华炎魔方DX工具。
 
-## 依赖包
+## 技术架构
 
-- [Meteor](https://www.meteor.com/) Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
-
-> 只有当您运行我们平台creator文件夹下的源码时才需要安装Meteor，使用华炎魔方作为开发工具并不需要安装Meteor，请参考 [Development Guide](/Development_Guide)。
+华炎魔方服务端使用nodejs开发，您定义的元数据，和系统中录入的业务数据均保存在mongodb中。
 
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
-- [Yarn](https://yarnpkg.com/en/) version >= 1.5 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
 
-## 安装华炎魔方平台
+## 安装
 
-本项目是华炎魔方的内核源码，我们会定期编译并发布为 [npm package](https://www.npmjs.com/package/steedos-server)，只需在项目中引入相关的包，既可启用华炎魔方的各项功能。
+华炎魔方是一组 [npm package](https://www.npmjs.com/package/steedos-server) 软件包，直接在nodejs项目中安装引用即可。
 
 具体如何安装部署华炎魔方，请参考[官网安装部署文档](https://www.steedos.com/help/deploy)
 
