@@ -1727,7 +1727,7 @@
     validator "^12.2.0"
 
 "@steedos/app-admin@../apps/steedos-app-admin":
-  version "1.22.6"
+  version "1.22.8"
 
 "@steedos/app-contracts@^1.22.1":
   version "1.22.1"
@@ -1738,9 +1738,9 @@
     underscore "1.9.2"
 
 "@steedos/app-crm@../apps/steedos-app-crm":
-  version "1.22.6"
+  version "1.22.8"
   dependencies:
-    "@steedos/plugin-enterprise" "^1.22.5"
+    "@steedos/plugin-enterprise" "^1.22.8"
     dotenv-flow "^3.2.0"
     underscore "1.9.2"
 
@@ -1818,10 +1818,10 @@
     i18next-sprintf-postprocessor "^0.2.2"
     i18next-xhr-backend "^3.2.2"
 
-"@steedos/license@^1.22.1":
-  version "1.22.1"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.1.tgz#f4bca68c64722551b40cfcb9db78b6bde496612e"
-  integrity sha1-9LymjGRyJVG0DPy523i2veSWYS4=
+"@steedos/license@^1.22.2":
+  version "1.22.3"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.3.tgz#3a5dfeab45f21d38bd3efa5c6b73093942174f73"
+  integrity sha1-Ol3+q0XyHTi9Pvpca3MJOUIXT3M=
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
@@ -1891,10 +1891,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/plugin-enterprise@^1.22.5":
-  version "1.22.6"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-enterprise/-/plugin-enterprise-1.22.6.tgz#6da11be70a6c4ea22cc86b3e7d29d544707d7acf"
-  integrity sha512-3XYV30a2NHQPZvgBvoCPrxR9zSYICUPT5SFi6L7nUBPW+7+rFRHUSPWFxBvYUsbN/yDO8Bhgi3IbRKhtud6Zlg==
+"@steedos/plugin-enterprise@^1.22.8":
+  version "1.22.8"
+  resolved "https://registry.npm.taobao.org/@steedos/plugin-enterprise/download/@steedos/plugin-enterprise-1.22.8.tgz#0101f69c116d0c96c7579eea38f7930ac7c5b7dc"
+  integrity sha1-AQH2nBFtDJbHV57qOPeTCsfFt9w=
 
 "@steedos/process@^1.22.1":
   version "1.22.1"
