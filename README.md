@@ -88,20 +88,19 @@ Developers can add business logic to most system events, including button clicks
 ### Project Structure
 
 ```sh
-project-management-app
+my-app
 ├── steedos-app/main/default
 │   ├── applications
-│   │   └── project.app.yml
+│   │   └── myApp.app.yml
 │   └── objects
-│       └──project__c
+│       └──todo__c
 │           ├── buttons
-│           │   └── print.button.yml
-│           │   └── print.button.js
+│           │   └── markDown.button.yml
+│           │   └── markDown.button.js
 │           ├── fields
 │           │   └── name.field.yml
 │           │   └── description.field.yml
 │           │   └── isDone.field.yml
-│           │   └── status__c.field
 │           │   └── ...
 │           ├── listviews
 │           │   └── all.listview.yml
@@ -110,8 +109,7 @@ project-management-app
 │           ├── permissions
 │           │   └── user.permission.yml
 │           │   └── admin.permission.yml
-│           │   └── project_manager.permission.yml
-│           └── project.object.yml
+│           └── todo.object.yml
 │           └──...
 ├── .env
 ├── .gitignore
@@ -123,7 +121,7 @@ project-management-app
 ```
 
 
-## Object Field Metadata Excample
+### Object Field Metadata Excample
 
 ```yml
 name: rating
