@@ -59,36 +59,6 @@ There are several types of Metadata, with each one representing a unique way a b
 
 - **Report & Dashboard**: Steedos offers a powerful suite of reporting tools that work together to help you understand and act on your data.
 
-## Metadata Sample
-
-```yml
-name: rating
-label: Rating
-type: select
-sortable: true
-options:
-  - label: Hot
-    value: hot
-  - label: Warm
-    value: warm
-  - label: Cold
-    value: cold
-inlineHelpText: How do you classify this customer level, for example, ordinary, important.
-sort_no: 270
-```
-
-## Steedos DX
-
-With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
-
-Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
-
-To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
-
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
-
-Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
-
 ## Technology Architecture
 
 Steedos is an native nodejs project, Use mongodb to save metadata and data. 
@@ -153,6 +123,35 @@ project-management-app
 
 Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
 
+## Object Field Metadata Excample
+
+```yml
+name: rating
+label: Rating
+type: select
+sortable: true
+options:
+  - label: Hot
+    value: hot
+  - label: Warm
+    value: warm
+  - label: Cold
+    value: cold
+inlineHelpText: How do you classify this customer level, for example, ordinary, important.
+sort_no: 270
+```
+
+## Steedos DX
+
+With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
+
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
+
+To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+
+Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
 
 ## Steedos Docs
 
