@@ -106,14 +106,29 @@
 
 如果您有任何疑问或想与其他华炎魔方用户交谈，请[点击进入讨论](https://steedos.github.io/steedos/steedos-platform/discussions)或扫码添加以下联系方式与我们联系。
 
-### 开发人员微信群
-
-![开发者微信交流群](https://steedos.github.io/assets/github/platform/cn/QR_wechat_developers.jpg)
-
-### 商务咨询
-
-![商务咨询](https://steedos.github.io/assets/github/platform/cn/business_consulting.jpg)
-
-### 微信公众号
-
-![微信公众号](https://www.steedos.com/assets/github/platform/cn/public_number.jpg)
+<div style="display: flex;">
+  <div style="margin-right: 20px;">
+    <div style="margin: 0 auto;">
+      <img src="https://steedos.github.io/assets/github/platform/cn/QR_wechat_developers.jpg" alt="开发者微信交流群"/>
+    </div>
+    <div style="text-align: center;">
+      开发人员微信群
+    </div>
+  </div>
+  <div style="margin-right: 20px;">
+    <div style="margin: 0 auto;">
+      <img src="https://steedos.github.io/assets/github/platform/cn/business_consulting.jpg" alt="商务咨询"/>
+    </div>
+    <div style="text-align: center;">
+      商务咨询
+    </div>
+  </div>
+  <div style="margin-right: 20px;">
+    <div style="margin: 0 auto;">
+      <img src="https://www.steedos.com/assets/github/platform/cn/public_number.jpg" alt="微信公众号"/>
+    </div>
+    <div style="text-align: center;">
+      微信公众号
+    </div>
+  </div>
+</div>
