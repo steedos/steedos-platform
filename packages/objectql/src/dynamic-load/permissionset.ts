@@ -15,6 +15,17 @@ const BASERECORD = {
   record_permissions: PERMISSIONS
 };
 
+const STANDARD_PERMISSIONSETS = {
+    none: {_id: 'none', name: 'none', label: 'none', license: '', ...BASERECORD}
+}
+
+const getStandardpPermissionset = function(name){
+    return getStandardpPermissionsets()[name];
+}
+
+const getStandardpPermissionsets = function(){
+    return clone(STANDARD_PERMISSIONSETS);
+}
 
 const PERMISSION_SET_KEY = 'STANDARD_PERMISSION_SETS';
 
@@ -22,7 +33,18 @@ const addPermissionset = function(json: SteedosPermissionsetTypeConfig){
     if(!json.name){
         throw new Error('missing attribute name');
     }
-    addConfig(PERMISSION_SET_KEY, Object.assign({}, json, clone(BASERECORD)));
+
+    if(_.include(_.keys(STANDARD_PERMISSIONSETS), json.name)){
+        addConfig(PERMISSION_SET_KEY, Object.assign({}, getStandardpPermissionset(json.name), json, clone(BASERECORD)));
+    }else{
+        addConfig(PERMISSION_SET_KEY, Object.assign({}, json, clone(BASERECORD)));
+    }
+}
+
+export const loadStandardPermissionsets = function(){
+    _.each(STANDARD_PERMISSIONSETS, function(standardPermissionset: SteedosPermissionsetTypeConfig){
+        addConfig(PERMISSION_SET_KEY, standardPermissionset);
+    })
 }
 
 export const loadSourcePermissionset = function (filePath: string){
