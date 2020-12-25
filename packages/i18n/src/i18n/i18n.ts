@@ -200,7 +200,7 @@ const convertObject = function (object: StringMap) {
 }
 
 //TODO 处理继承字段base, core 的字段
-export const translationObject = function(lng: string, objectName: string, object: StringMap){
+export const translationI18nObject = function(lng: string, objectName: string, object: StringMap){
     object.label = getObjectLabel(lng, objectName, object.label);
     _.each(object.fields, function(field, fieldName){
         field.label = getObjectFieldLabel(lng, objectName, fieldName, field.label, object.datasource);
@@ -239,9 +239,9 @@ export const addObjectsI18n = function(i18nArray){
     })
 }
 
-export const translationObjects = function(lng: string, objects: StringMap){
+export const translationI18nObjects = function(lng: string, objects: StringMap){
     _.each(objects, function(object, name){
-        translationObject(lng, name, object);
+        translationI18nObject(lng, name, object);
     })
 }
 
@@ -276,4 +276,14 @@ export const getObjectI18nTemplate = function(lng: string ,objectName: string, _
     })
 
     return template;
+}
+
+export const fallbackKeys = {
+    getObjectLabelKey,
+    getObjectFieldLabelKey,
+    getObjectFieldInlineHelpTextLabelKey,
+    getObjectFieldGroupKey,
+    getObjectFieldOptionsLabelKey,
+    getObjectActionLabelKey,
+    getObjectListviewLabelKey,
 }

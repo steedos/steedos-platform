@@ -19,5 +19,5 @@ export const exportObjectI18n = async (req: any, res: any)=>{
 
 export const toYml = function(date: StringMap){
     const yaml = require('js-yaml');
-    return yaml.dump(date, {sortKeys: true}).replace(/: ''/g, ': ');
+    return yaml.dump(date).replace(/: ''/g, ': '); //, {sortKeys: true}
 }

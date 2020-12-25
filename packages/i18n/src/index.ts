@@ -163,3 +163,5 @@ export const off = function(event: string, listener: (...args: any[]) => void){
 export * from './i18n/i18n'
 
 export * from './i18n/i18n.app'
+
+export * from './translations'
