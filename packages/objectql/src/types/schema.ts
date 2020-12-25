@@ -7,7 +7,7 @@ import { loadCoreValidators } from '../validators';
 import { loadStandardObjects } from './object_dynamic_load';
 import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
 import { buildGraphQLSchema } from '../graphql';
-import { loadStandardProfiles } from '../dynamic-load';
+import { loadStandardProfiles, loadStandardPermissionsets } from '../dynamic-load';
 const defaultDatasourceName = 'default';
 
 export type SteedosSchemaConfig = {
@@ -61,6 +61,7 @@ export class SteedosSchema {
         wrapAsync(preloadDBObjectButtons, {});
 
         loadStandardProfiles();
+        loadStandardPermissionsets();
 
         if (isMeteor())
             loadStandardObjects();

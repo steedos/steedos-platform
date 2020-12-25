@@ -30,7 +30,7 @@ const STANDARD_PROFILES = {
 
 const PROFILES_KEY = 'STANDARD_PROFILES';
 
-const getStandardpProfile = function(name){
+const getStandardProfile = function(name){
     return getStandardProfiles()[name];
 }
 
@@ -43,7 +43,7 @@ const addProfile = function(json: SteedosProfileTypeConfig){
         throw new Error('missing attribute name');
     }
     if(_.include(_.keys(STANDARD_PROFILES), json.name)){
-        addConfig(PROFILES_KEY, Object.assign({}, getStandardpProfile(json.name), json, clone(BASERECORD)));
+        addConfig(PROFILES_KEY, Object.assign({}, getStandardProfile(json.name), json, clone(BASERECORD)));
     }else{
         addConfig(PROFILES_KEY, Object.assign({}, clone(DEFAULTRECORD), json, clone(BASERECORD)));
     }

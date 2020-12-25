@@ -70,12 +70,23 @@ function parserFilters(filters){
     return query;
 }
 
+const getSourcePermissionSetsKeys = function(type){
+    switch (type) {
+        case 'permission_set':
+            return objectql.getSourcePermissionsetKeys();
+        case 'profile':
+            return objectql.getSourceProfilesKeys();
+        default:
+            return objectql.getSourceProfilesKeys().concat(objectql.getSourcePermissionsetKeys())
+    }
+}
+
 const find = function(query){
     let filters = parserFilters(odataMongodb.createFilter(query.filters));
     let permissionSetId = filters.permission_set_id;
-    if(permissionSetId && !_.include(['admin','user','supplier','customer'], permissionSetId)){
+    if(permissionSetId && !_.include(getSourcePermissionSetsKeys(), permissionSetId)){
         var dbPerm = Creator.getCollection("permission_set").findOne({_id: permissionSetId}, {fields:{_id:1, name:1}});
-        if(dbPerm && _.include(['admin','user','supplier','customer'], dbPerm.name)){
+        if(dbPerm && _.include(getSourcePermissionSetsKeys(), dbPerm.name)){
             permissionSetId = dbPerm.name
         }
     }
