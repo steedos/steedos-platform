@@ -1,4 +1,4 @@
-import { getObjectI18nTemplate } from './translation';
+import { getObjectI18nTemplate } from './i18n/i18n';
 const objectql = require('@steedos/objectql');
 
 

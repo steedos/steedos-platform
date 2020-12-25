@@ -160,6 +160,6 @@ export const off = function(event: string, listener: (...args: any[]) => void){
     return i18next.off(event, listener)
 }
 
-export * from './translation'
+export * from './i18n/i18n'
 
-export * from './translation.app'
+export * from './i18n/i18n.app'

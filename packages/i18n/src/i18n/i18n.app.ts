@@ -1,4 +1,4 @@
-import { _t, exists } from './index';
+import { _t, exists } from '../index';
 const _ = require("underscore");
 const clone = require("clone");
 
