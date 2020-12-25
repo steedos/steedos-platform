@@ -226,7 +226,7 @@ const translationListviewLabel = function(lng, objectName, name, def, datasource
 
 export const translationObject = function(lng: string, objectName: string, object: StringMap){
     object.label = translationObjectLabel(lng, objectName, object.label);
-    object.description = translationObjectDescription(lng, objectName, object.label);
+    object.description = translationObjectDescription(lng, objectName, object.description);
     _.each(object.fields, function(field, fieldName){
         field.label = translationFieldLabel(lng, objectName, fieldName, field.label, object.datasource);
         if(field.inlineHelpText){
@@ -269,7 +269,7 @@ export const getObjectTranslationTemplate = function(lng: string ,objectName: st
     convertObject(object);
     let template = {};
     template[getObjectLabelKey(objectName)] = translationObjectLabel(lng, objectName, object.label);
-    template[getObjectDescriptionKey(objectName)] = translationObjectDescription(lng, objectName, object.label);
+    template[getObjectDescriptionKey(objectName)] = translationObjectDescription(lng, objectName, object.description);
     _.each(object.fields, function(field, fieldName){
         template[getFieldLabelKey(objectName, fieldName)] = translationFieldLabel(lng, objectName, fieldName, field.label);
         if(field.inlineHelpText){

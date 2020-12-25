@@ -1,58 +1,34 @@
 import * as _ from 'underscore';
-// import { _t, exists } from '../index';
-
+import { translationObject } from '../index';
 const clone = require("clone");
 
-
-// const KEYSEPARATOR: string = '.';
-
-// const BASE_OBJECT = 'base';
-// const CORE_OBJECT = 'core';
-
-// const OBJECT_NS = 'translation';
-
-// const objectTranslation = function(key , lng){
-//     let options: any = {lng: lng, ns: OBJECT_NS}
-//     if(KEYSEPARATOR === '.'){
-//         options.keySeparator = false
-//     }
-//     if(exists(key, options)){
-//         return _t(key, options)
-//     }
-// }
-
-// const getObjectLabelKey = function(objectName){
-//     return `${objectName}__object`;
-// }
-
-function keysToJSON(keys){
+function keysToJSON(keys, source){
     const json = {};
     _.each(keys, function(key){
-        json[key] = '';
+        json[key] = source[key] || '';
     })
+    return json;
 }
 
-function getObjectTranslationKeys(){
-    return keysToJSON(['label', 'description']);
+function getObjectTranslationTemplate(object){
+    return keysToJSON(['label', 'description'], object);
 }
 
 function getFieldTranslationKeys(field){
     switch (field.type) {
         case 'select':
-            //TODO 考虑选择项
-            return {}
-            // break;
+            return keysToJSON(['label', 'help', 'options', 'description'], field);
         default:
-            return keysToJSON(['label', 'help', 'description']);
+            return keysToJSON(['label', 'help', 'description'], field);
     }
 }
 
-function getListViewTranslationKeys(){
-    return keysToJSON(['label']);
+function getListViewTranslationKeys(listView){
+    return keysToJSON(['label'], listView);
 }
 
-function getActionsTranslationKeys(){
-    return keysToJSON(['label']);
+function getActionTranslationKeys(action){
+    return keysToJSON(['label'], action);
 }
 
 function getFieldsTranslationTemplate(lng: string, fields){
@@ -66,7 +42,7 @@ function getFieldsTranslationTemplate(lng: string, fields){
 function getActionsTranslationTemplate(lng: string, actions){
     const template = {};
     _.each(actions, function(action, actionName){
-        template[actionName] = getActionsTranslationKeys();
+        template[actionName] = getActionTranslationKeys(action);
     })
     return template;
 }
@@ -74,14 +50,15 @@ function getActionsTranslationTemplate(lng: string, actions){
 function getListviewsTranslationTemplate(lng: string, listviews){
     const template = {};
     _.each(listviews, function(list_view, viewName){
-        template[viewName] = getListViewTranslationKeys();
+        template[viewName] = getListViewTranslationKeys(list_view);
     })
     return template;
 }
 
 export const getObjectMetadataTranslationTemplate = function(lng: string , objectName: string, _object: StringMap){
-    let template = Object.assign({}, getObjectTranslationKeys());
     let object = clone(_object);
+    translationObject(lng, objectName, object);
+    let template = Object.assign({}, getObjectTranslationTemplate(object));
     template = Object.assign({}, template, {fields: getFieldsTranslationTemplate(lng, object.fields)});
     template = Object.assign({}, template, {listviews: getListviewsTranslationTemplate(lng, object.list_views)});
     template = Object.assign({}, template, {actions: getActionsTranslationTemplate(lng, object.actions)});
