@@ -117,6 +117,7 @@ fields:
     label: Scale
     defaultValue: 2
     min: 0
+    inlineHelpText: If the field type is a Percent, this indicates the number of decimal places the field will display, for example, two decimal places will display as 10.20%.
   rows:
     type: currency
     label: Rows
