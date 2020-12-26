@@ -1,6 +1,7 @@
 import { _t, exists } from '../index';
 import * as _ from 'underscore';
 import { SteedosMetadataTypeInfoKeys } from '@steedos/metadata-core';
+import { appFallbackKeys } from '../i18n/i18n.app';
 
 const clone = require("clone");
 
@@ -48,17 +49,32 @@ const getMenuLabelKey = function(menuId){
 
 const translationAppName = function(lng, appId, def){
     let key = getAppNameKey(appId);
-    return translation(key, lng) || def || '' 
+    let keys = [key];
+    let fallbackKey = appFallbackKeys.getAppLabelKey(appId);
+    if(fallbackKey){
+        keys.push(fallbackKey);
+    }
+    return translation(keys, lng) || def || '' 
 }
 
 const translationAppDescription = function(lng, appId, def){
     let key = getAppDescriptionKey(appId);
-    return translation(key, lng) || def || '' 
+    let keys = [key];
+    let fallbackKey = appFallbackKeys.getAppDescriptionKey(appId);
+    if(fallbackKey){
+        keys.push(fallbackKey);
+    }
+    return translation(keys, lng) || def || '' 
 }
 
 const translationMenuLabel = function(lng, menuId, def){
     let key = getMenuLabelKey(menuId);
-    return translation(key, lng) || def || '' 
+    let keys = [key];
+    let fallbackKey = appFallbackKeys.getMenuLabelKey(menuId);
+    if(fallbackKey){
+        keys.push(fallbackKey);
+    }
+    return translation(keys, lng) || def || '' 
 }
 
 export const translationApp = function(lng: string, appId: string, app: StringMap){

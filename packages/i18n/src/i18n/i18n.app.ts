@@ -74,3 +74,9 @@ export const getAppI18nTemplate = function(lng: string, appId: string, _app: Str
     })
     return template;
 }
+
+export const appFallbackKeys = {
+    getAppLabelKey,
+    getAppDescriptionKey,
+    getMenuLabelKey
+}
