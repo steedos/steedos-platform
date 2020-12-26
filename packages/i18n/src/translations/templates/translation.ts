@@ -26,7 +26,7 @@ const getMenuTranslationTemplate = function(menus){
     return template;
 }
 
-export const getAppI18nTemplate = function(lng: string, appId: string, _app: StringMap){
+export const getAppMetadataTranslationTemplate = function(lng: string, appId: string, _app: StringMap){
     let app = clone(_app);
     translationApp(lng, appId, app);
     let template = Object.assign({}, {CustomApplications: {[appId]: getAppTranslationTemplate(app)}});

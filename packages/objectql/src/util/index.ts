@@ -112,7 +112,7 @@ export const loadI18n = (filePath: string)=>{
         let json = loadFile(matchedPath);
         let lng = getI18nLng(matchedPath);
         if(lng){
-            results.push({lng: lng, data: json})
+            results.push({lng: lng, __filename: matchedPath, data: json})
         }
     })
     return results
