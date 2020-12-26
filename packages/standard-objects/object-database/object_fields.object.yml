@@ -68,6 +68,8 @@ fields:
         value: number
       - label: Currency
         value: currency
+      - label: Percent
+        value: percent
       - label: Password
         value: password
       - label: Lookup

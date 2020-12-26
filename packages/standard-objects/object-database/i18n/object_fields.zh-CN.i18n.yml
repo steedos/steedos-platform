@@ -35,6 +35,7 @@ object_fields_field_sortable: 可排序
 object_fields_field_type: 字段类型
 object_fields_field_type_options_boolean: 布尔
 object_fields_field_type_options_currency: 金额
+object_fields_field_type_options_percent: 百分比
 object_fields_field_type_options_date: 日期
 object_fields_field_type_options_datetime: 日期时间
 object_fields_field_type_options_email: 邮件地址

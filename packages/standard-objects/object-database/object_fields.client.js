@@ -32,6 +32,11 @@ function getFieldsByType(doc, type, dataType) {
       fields.push({ name: 'scale', required: true });
       break;
     }
+    case 'percent':{
+      fields.push({ name: 'precision', required: true });
+      fields.push({ name: 'scale', required: true });
+      break;
+    }
     case 'lookup': {
       fields.push({ name: 'reference_to'});
       fields.push({ name: 'filtersFunction'});
@@ -166,7 +171,7 @@ Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
     operations.push(optionals.equal, optionals.unequal, optionals.contains, optionals.not_contain, optionals.starts_with);
   } else if (field_type === "lookup" || field_type === "master_detail" || field_type === "select") {
     operations.push(optionals.equal, optionals.unequal);
-  } else if (field_type === "currency" || field_type === "number" || field_type === "date" || field_type === "datetime") {
+  } else if (["currency", "number", "percent", "date", "datetime"].indexOf(field_type) > -1){
     operations.push(optionals.equal, optionals.unequal, optionals.less_than, optionals.greater_than, optionals.less_or_equal, optionals.greater_or_equal);
   } else if (field_type === "boolean") {
     operations.push(optionals.equal, optionals.unequal);
