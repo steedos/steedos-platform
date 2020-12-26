@@ -1,6 +1,6 @@
 import { _t, exists } from '../index';
 const _ = require("underscore");
-const clone = require("clone");
+// const clone = require("clone");
 
 const APP_NS = 'translation';
 const KEYSEPARATOR: string = '_';
@@ -42,14 +42,14 @@ const getMenuLabel = function(lng, menuId, def){
     return appT(key, lng) || def || '' 
 }
 
-const translationApp = function(lng: string, appId: string, app: StringMap){
+const translationI18nApp = function(lng: string, appId: string, app: StringMap){
     app.label = getAppLabel(lng, appId, app.label || app.name);
     // app.name = app.label
     app.description = getAppDescription(lng, appId, app.description);
-    translationMenus(lng, app.admin_menus);
+    translationI18nMenus(lng, app.admin_menus);
 }
 
-export const translationMenus = function(lng: string, menus: Array<any>){
+export const translationI18nMenus = function(lng: string, menus: Array<any>){
     _.each(menus, function(menu){
         let label = getMenuLabel(lng, menu._id, menu.label || menu.name);
         menu.label = label;
@@ -57,20 +57,20 @@ export const translationMenus = function(lng: string, menus: Array<any>){
     })
 }
 
-export const translationApps = function(lng: string, apps: StringMap){
+export const translationI18nApps = function(lng: string, apps: StringMap){
     _.each(apps, function(app, name){
-        translationApp(lng, name, app);
+        translationI18nApp(lng, name, app);
     })
 }
 
-export const getAppI18nTemplate = function(lng: string, appId: string, _app: StringMap){
-    let app = clone(_app);
-    let template = {};
-    template[getAppLabelKey(appId)] = getAppLabel(lng, appId, app.label || app.name);
-    template[getAppDescriptionKey(appId)] = getAppDescription(lng, appId, app.description);
+// export const getAppI18nTemplate = function(lng: string, appId: string, _app: StringMap){
+//     let app = clone(_app);
+//     let template = {};
+//     template[getAppLabelKey(appId)] = getAppLabel(lng, appId, app.label || app.name);
+//     template[getAppDescriptionKey(appId)] = getAppDescription(lng, appId, app.description);
 
-    _.each(app.admin_menus, function(menu){
-        template[getMenuLabelKey( menu._id)] = getMenuLabel(lng, menu._id, menu.label || menu.name);
-    })
-    return template;
-}
+//     _.each(app.admin_menus, function(menu){
+//         template[getMenuLabelKey( menu._id)] = getMenuLabel(lng, menu._id, menu.label || menu.name);
+//     })
+//     return template;
+// }

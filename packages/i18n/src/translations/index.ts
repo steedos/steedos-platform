@@ -1,7 +1,9 @@
 import * as _ from 'underscore';
 
 export * from './objectTranslation';
+export * from './translation';
 export * from './templates/objectTranslation';
+export * from './templates/translation';
 
 
 const getOption = function (option) {

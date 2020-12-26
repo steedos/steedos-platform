@@ -31,7 +31,7 @@ function getActionTranslationKeys(action){
     return keysToJSON(['label'], action);
 }
 
-function getFieldsTranslationTemplate(lng: string, fields){
+function getFieldsTranslationTemplate(fields){
     const template = {};
     _.each(fields, function(field, fieldName){
         template[fieldName] = getFieldTranslationKeys(field);
@@ -39,7 +39,7 @@ function getFieldsTranslationTemplate(lng: string, fields){
     return template;
 }
 
-function getActionsTranslationTemplate(lng: string, actions){
+function getActionsTranslationTemplate(actions){
     const template = {};
     _.each(actions, function(action, actionName){
         template[actionName] = getActionTranslationKeys(action);
@@ -47,7 +47,7 @@ function getActionsTranslationTemplate(lng: string, actions){
     return template;
 }
 
-function getListviewsTranslationTemplate(lng: string, listviews){
+function getListviewsTranslationTemplate(listviews){
     const template = {};
     _.each(listviews, function(list_view, viewName){
         template[viewName] = getListViewTranslationKeys(list_view);
@@ -59,8 +59,8 @@ export const getObjectMetadataTranslationTemplate = function(lng: string , objec
     let object = clone(_object);
     translationObject(lng, objectName, object);
     let template = Object.assign({}, getObjectTranslationTemplate(object));
-    template = Object.assign({}, template, {fields: getFieldsTranslationTemplate(lng, object.fields)});
-    template = Object.assign({}, template, {listviews: getListviewsTranslationTemplate(lng, object.list_views)});
-    template = Object.assign({}, template, {actions: getActionsTranslationTemplate(lng, object.actions)});
+    template = Object.assign({}, template, {fields: getFieldsTranslationTemplate(object.fields)});
+    template = Object.assign({}, template, {listviews: getListviewsTranslationTemplate(object.list_views)});
+    template = Object.assign({}, template, {actions: getActionsTranslationTemplate(object.actions)});
     return Object.assign({name: objectName}, template)
 }

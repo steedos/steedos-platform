@@ -55,7 +55,7 @@ const getPrefix = function(key){
         case ACTION_KEY:
             return SteedosMetadataTypeInfoKeys.Action
         default:
-            throw new Error(`objectTranslation Error: not find ${key} prefix`);
+            return 'customLabels';
     }
 }
 
