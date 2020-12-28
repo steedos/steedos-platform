@@ -1,0 +1,36 @@
+name: process_delegation_rules
+label: Delegation
+description: 
+fields:
+  enabled:
+    label: Enabled
+    help: 
+    description: 
+  end_time:
+    label: End Time
+    help: 
+    description: 
+  from:
+    label: Client
+    help: 
+    description: 
+  from_name:
+    label: Client Name
+    help: 
+    description: 
+  start_time:
+    label: Start Time
+    help: 
+    description: 
+  to:
+    label: Trustee
+    help: 
+    description: 
+  to_name:
+    label: Trustee Name
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Delegation
+actions: {}

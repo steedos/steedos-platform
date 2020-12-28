@@ -1,0 +1,50 @@
+name: company
+label: Division
+description: 
+fields:
+  admins:
+    label: Admin Users
+    help: 
+    description: 
+  code:
+    label: Code
+    help: 
+    description: 
+  company_id:
+    label: 
+    help: 
+    description: 
+  company_ids:
+    label: 
+    help: 
+    description: 
+  currency_type:
+    label: Currency Type
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  organization:
+    label: Corresponding Department
+    help: 
+    description: 
+  parent:
+    label: Parent
+    help: 
+    description: 
+  sort_no:
+    label: Sort Number
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Divisions
+actions: {}
+CustomLabels:
+  company_action_updateOrgs: company_action_updateOrgs

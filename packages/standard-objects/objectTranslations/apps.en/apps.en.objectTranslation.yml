@@ -1,0 +1,172 @@
+name: apps
+label: App
+description: 
+fields:
+  auth_name:
+    label: Auth Name
+    help: 
+    description: 
+  code:
+    label: Code (API Name)
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  from_code_id:
+    label: 
+    help: 
+    description: 
+  icon:
+    label: Icon
+    help: 
+    description: 
+  icon_slds:
+    label: SLDS Icon
+    help: 
+    description: 
+  is_creator:
+    label: Item of Menu
+    help: 
+    description: 
+  is_new_window:
+    label: Open in New Window
+    help: 
+    description: 
+  is_system:
+    label: System
+    help: 
+    description: 
+  is_use_ie:
+    label: Open in IE (Using Steedos Desktop)
+    help: 
+    description: 
+  is_use_iframe:
+    label: Open with iframe
+    help: 
+    description: 
+  members:
+    label: Members
+    help: 
+    description: 
+  members.organizations:
+    label: Department Members
+    help: 
+    description: 
+  members.users:
+    label: User Members
+    help: 
+    description: 
+  mobile:
+    label: Mobile App
+    help: 
+    description: 
+  mobile_objects:
+    label: Mobile Objects
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  oauth2_callback_url:
+    label: Callback URL
+    help: 
+    description: 
+  oauth2_enabled:
+    label: OAuth2 Enabled
+    help: 
+    description: 
+  oauth2_logout_enabled:
+    label: OAuth2 Logout Enabled
+    help: 
+    description: 
+  oauth2_logout_url:
+    label: OAuth2 Logout URL
+    help: 
+    description: 
+  oauth2_scopes:
+    label: Scopes
+    help: 
+    options:
+      - label: Access to Your Unique Identifier (openid)
+        value: openid
+      - label: 'Access Basic Information (id, profile, email, address, phone)'
+        value: profile
+      - label: Access Fully (full)
+        value: full
+    description: 
+  objects:
+    label: Objects
+    help: 
+    description: 
+  on_click:
+    label: onClick
+    help: 
+    description: 
+  saml_acs_url:
+    label: ACS URL
+    help: 
+    description: 
+  saml_enabled:
+    label: SAML Enabled
+    help: 
+    description: 
+  saml_entity_id:
+    label: Entity Id
+    help: 
+    description: 
+  saml_idp_cert:
+    label: IDP Cert
+    help: 
+    description: 
+  saml_issuer:
+    label: Issuer
+    help: 
+    description: 
+  saml_logout_block:
+    label: SAML Logout Block
+    help: 
+    options:
+      - label: HTTP Redirect
+        value: redirect
+      - label: HTTP Post
+        value: post
+    description: 
+  saml_logout_enabled:
+    label: SAML Logout Enabled
+    help: 
+    description: 
+  saml_logout_url:
+    label: SAML Logout URL
+    help: 
+    description: 
+  saml_name_id_format:
+    label: Name
+    help: 
+    description: 
+  secret:
+    label: API Secret Key
+    help: 
+    description: 
+  sort:
+    label: Sort Number
+    help: 
+    description: 
+  url:
+    label: URL
+    help: 
+    description: 
+  visible:
+    label: Visible
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Apps
+actions:
+  customize:
+    label: Customize
+  reset:
+    label: Reset

@@ -1,0 +1,54 @@
+name: process_flows
+label: process_flows
+description: 
+fields:
+  description:
+    label: description
+    help: 
+    description: 
+  enable_recursion_check:
+    label: >-
+      Recursion - Allow process to evaluate a record multiple times in a single
+      save operation?
+    help: 
+    description: 
+  name:
+    label: 
+    help: 
+    description: 
+  object_name:
+    label: 
+    help: 
+    description: 
+  start:
+    label: 
+    help: 
+    options:
+      - label: only when a record is created
+        value: create
+      - label: when a record is created or edited
+        value: changes
+    description: 
+  when:
+    label: The process starts when
+    help: 
+    options:
+      - r
+      - e
+      - c
+      - o
+      - r
+      - d
+      - _
+      - c
+      - h
+      - a
+      - 'n'
+      - g
+      - e
+      - s
+    description: 
+listviews:
+  all:
+    label: All
+actions: {}

@@ -1,0 +1,48 @@
+name: holidays
+label: 节假日
+description: 
+fields:
+  adjusted_to:
+    label: 对应工作日
+    help: 
+    options:
+      - 'Sunday:0'
+      - 'Monday:1'
+      - 'Tuesday:2'
+      - 'Wednesday:3'
+      - 'Thursday:4'
+      - 'Friday:5'
+      - 'Saturday:6'
+    description: 
+  date:
+    label: 日期
+    help: 
+    description: 
+  name:
+    label: 名称
+    help: 
+    description: 
+  type:
+    label: 类型
+    help: 
+    options:
+      - label: 公众假日
+        value: public
+      - label: 调配休息日
+        value: adjusted_holiday
+      - label: 调配工作日
+        value: adjusted_working_day
+    description: 
+listviews:
+  all:
+    label: 全部
+actions: {}
+CustomLabels:
+  holidays_field_object_name: 节假日
+  holidays_field_adjusted_to_options_0: 星期日
+  holidays_field_adjusted_to_options_1: 星期一
+  holidays_field_adjusted_to_options_2: 星期二
+  holidays_field_adjusted_to_options_3: 星期三
+  holidays_field_adjusted_to_options_4: 星期四
+  holidays_field_adjusted_to_options_5: 星期五
+  holidays_field_adjusted_to_options_6: 星期六

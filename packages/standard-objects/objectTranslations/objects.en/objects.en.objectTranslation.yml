@@ -1,0 +1,169 @@
+name: objects
+label: Object
+description: 
+fields:
+  actions:
+    label: Actions
+    help: 
+    description: 
+  app_unique_id:
+    label: App Unique ID
+    help: 
+    description: 
+  app_version:
+    label: App Version
+    help: 
+    description: 
+  custom:
+    label: Custom
+    help: 
+    description: 
+  datasource:
+    label: Datasource
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  enable_api:
+    label: Enable API
+    help: 
+    description: 
+  enable_audit:
+    label: Enable Audit
+    help: 
+    description: 
+  enable_chatter:
+    label: Enable Chatter
+    help: 
+    description: 
+  enable_events:
+    label: Enable Events
+    help: 
+    description: 
+  enable_files:
+    label: Enable Files
+    help: 
+    description: 
+  enable_inline_edit:
+    label: Enable Single Field Edit
+    help: 
+    description: 
+  enable_instances:
+    label: Enable Instances
+    help: 
+    description: 
+  enable_notes:
+    label: Enable Notes
+    help: 
+    description: 
+  enable_search:
+    label: Enable Search
+    help: 
+    description: 
+  enable_share:
+    label: Enable Share
+    help: 
+    description: 
+  enable_tasks:
+    label: Enable Tasks
+    help: 
+    description: 
+  enable_workflow:
+    label: Enable Workflow
+    help: 
+    description: 
+  fields:
+    label: Fields
+    help: 
+    description: 
+  fields_serial_number:
+    label: 
+    help: 
+    description: 
+  icon:
+    label: Icon
+    help: 
+    description: 
+  in_development:
+    label: Development State
+    help: 
+    options:
+      - label: Developing ( Only administrators can access. )
+        value: '1'
+      - label: Deployed
+        value: '0'
+    description: 
+  is_deleted:
+    label: 
+    help: 
+    description: 
+  is_enable:
+    label: Enable
+    help: 
+    description: 
+  is_system:
+    label: System
+    help: 
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  list_views:
+    label: ListViews
+    help: 
+    description: 
+  name:
+    label: API Name
+    help: 
+    description: 
+  owner:
+    label: 
+    help: 
+    description: 
+  permission_set:
+    label: Permission Set
+    help: 
+    description: 
+  relatedList:
+    label: Related List
+    help: 
+    description: 
+  reload_time:
+    label: 
+    help: 
+    description: 
+  sidebar:
+    label: Sidebar
+    help: 
+    description: 
+  table_name:
+    label: Table Name
+    help: 
+    description: 
+  triggers:
+    label: Triggers
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+  customize:
+    label: Customize
+  deleted:
+    label: Deleted
+  system:
+    label: System
+actions:
+  copy_odata:
+    label: Copy OData URL
+  show_object:
+    label: Preview
+CustomLabels:
+  objects_field_datasource_defaultValue: Default data source
+  objects_field_enable_approvals: objects_field_enable_approvals
+  objects_field_enable_space_global: objects_field_enable_space_global
+  objects_field_enable_web_forms: objects_field_enable_web_forms
+  object_object__error_name_invalid_format: object_object__error_name_invalid_format

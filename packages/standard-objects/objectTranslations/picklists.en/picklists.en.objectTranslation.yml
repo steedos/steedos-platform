@@ -1,0 +1,20 @@
+name: picklists
+label: Picklist
+description: 
+fields:
+  code:
+    label: Code
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Picklists
+actions: {}

@@ -1,0 +1,941 @@
+name: reports
+label: 报表
+description: 
+fields:
+  charting:
+    label: 显示图表
+    help: 
+    description: 
+  columns:
+    label: 列
+    help: 
+    description: 
+  counting:
+    label: 显示记录计数
+    help: 
+    description: 
+  data_source:
+    label: 报表数据来源
+    help: 
+    options:
+      - label: OData
+        value: odata
+      - label: Graphql
+        value: graphql
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  fields:
+    label: 字段
+    help: 
+    description: 
+  filters.$.field:
+    label: 字段名
+    help: 
+    description: 
+  filters.$:
+    label: Filter
+    help: 
+    description: 
+  filters.$.operation:
+    label: 操作符
+    help: 
+    options:
+      - f
+      - u
+      - 'n'
+      - c
+      - t
+      - i
+      - o
+      - 'n'
+      - ' '
+      - a
+      - 'n'
+      - o
+      - 'n'
+      - 'y'
+      - m
+      - o
+      - u
+      - s
+      - (
+      - |+
+
+      - )
+      - ' '
+      - '{'
+      - |+
+
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - r
+      - e
+      - t
+      - u
+      - r
+      - 'n'
+      - ' '
+      - C
+      - r
+      - e
+      - a
+      - t
+      - o
+      - r
+      - .
+      - g
+      - e
+      - t
+      - F
+      - i
+      - e
+      - l
+      - d
+      - O
+      - p
+      - e
+      - r
+      - a
+      - t
+      - i
+      - o
+      - 'n'
+      - (
+      - )
+      - ;
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - |+
+
+      - '}'
+    description: 
+  filters.$.value:
+    label: 字段值
+    help: 
+    description: 
+  filters:
+    label: 过滤条件
+    help: 
+    description: 
+  filter_fields.$.field:
+    label: 字段名称
+    help: 
+    description: 
+  filter_fields.$:
+    label: Filter Field
+    help: 
+    description: 
+  filter_fields.$.required:
+    label: 必填
+    help: 
+    description: 
+  filter_fields:
+    label: 过滤字段
+    help: 
+    description: 
+  filter_logic:
+    label: 过滤逻辑
+    help: 
+    description: 
+  filter_scope:
+    label: 过虑范围
+    help: 
+    options:
+      - label: 所有
+        value: space
+      - label: 与我相关
+        value: mine
+    description: 
+  graphql:
+    label: Graphql
+    help: 
+    description: 
+  grouping:
+    label: 显示小计
+    help: 
+    description: 
+  helper:
+    label: Helper
+    help: 
+    description: 
+  html:
+    label: Html
+    help: 
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+  mrt:
+    label: Mrt
+    help: 
+    description: 
+  name:
+    label: 名称
+    help: 
+    description: 
+  object_name:
+    label: 对象名
+    help: 
+    description: 
+  options:
+    label: 操作
+    help: 
+    description: 
+  report_type:
+    label: 报表类型
+    help: 
+    options:
+      - f
+      - u
+      - 'n'
+      - c
+      - t
+      - i
+      - o
+      - 'n'
+      - ' '
+      - a
+      - 'n'
+      - o
+      - 'n'
+      - 'y'
+      - m
+      - o
+      - u
+      - s
+      - (
+      - |+
+
+      - )
+      - ' '
+      - '{'
+      - |+
+
+      - |+
+
+      - ' '
+      - ' '
+      - v
+      - a
+      - r
+      - ' '
+      - t
+      - 'y'
+      - p
+      - e
+      - s
+      - ' '
+      - '='
+      - ' '
+      - '['
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '{'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - l
+      - a
+      - b
+      - e
+      - l
+      - '"'
+      - ':'
+      - ' '
+      - t
+      - (
+      - '"'
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - s
+      - _
+      - f
+      - i
+      - e
+      - l
+      - d
+      - _
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - _
+      - t
+      - 'y'
+      - p
+      - e
+      - _
+      - o
+      - p
+      - t
+      - i
+      - o
+      - 'n'
+      - s
+      - _
+      - t
+      - a
+      - b
+      - u
+      - l
+      - a
+      - r
+      - '"'
+      - )
+      - ','
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - v
+      - a
+      - l
+      - u
+      - e
+      - '"'
+      - ':'
+      - ' '
+      - '"'
+      - t
+      - a
+      - b
+      - u
+      - l
+      - a
+      - r
+      - '"'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '}'
+      - ','
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '{'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - l
+      - a
+      - b
+      - e
+      - l
+      - '"'
+      - ':'
+      - ' '
+      - t
+      - (
+      - '"'
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - s
+      - _
+      - f
+      - i
+      - e
+      - l
+      - d
+      - _
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - _
+      - t
+      - 'y'
+      - p
+      - e
+      - _
+      - o
+      - p
+      - t
+      - i
+      - o
+      - 'n'
+      - s
+      - _
+      - s
+      - u
+      - m
+      - m
+      - a
+      - r
+      - 'y'
+      - '"'
+      - )
+      - ','
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - v
+      - a
+      - l
+      - u
+      - e
+      - '"'
+      - ':'
+      - ' '
+      - '"'
+      - s
+      - u
+      - m
+      - m
+      - a
+      - r
+      - 'y'
+      - '"'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '}'
+      - ','
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '{'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - l
+      - a
+      - b
+      - e
+      - l
+      - '"'
+      - ':'
+      - ' '
+      - t
+      - (
+      - '"'
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - s
+      - _
+      - f
+      - i
+      - e
+      - l
+      - d
+      - _
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - _
+      - t
+      - 'y'
+      - p
+      - e
+      - _
+      - o
+      - p
+      - t
+      - i
+      - o
+      - 'n'
+      - s
+      - _
+      - m
+      - a
+      - t
+      - r
+      - i
+      - x
+      - '"'
+      - )
+      - ','
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - v
+      - a
+      - l
+      - u
+      - e
+      - '"'
+      - ':'
+      - ' '
+      - '"'
+      - m
+      - a
+      - t
+      - r
+      - i
+      - x
+      - '"'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '}'
+      - |+
+
+      - ' '
+      - ' '
+      - ']'
+      - ;
+      - |+
+
+      - ' '
+      - ' '
+      - v
+      - a
+      - r
+      - ' '
+      - p
+      - l
+      - u
+      - g
+      - i
+      - 'n'
+      - s
+      - ' '
+      - '='
+      - ' '
+      - C
+      - r
+      - e
+      - a
+      - t
+      - o
+      - r
+      - .
+      - P
+      - l
+      - u
+      - g
+      - i
+      - 'n'
+      - s
+      - ;
+      - |+
+
+      - ' '
+      - ' '
+      - i
+      - f
+      - (
+      - p
+      - l
+      - u
+      - g
+      - i
+      - 'n'
+      - s
+      - '['
+      - '"'
+      - '@'
+      - s
+      - t
+      - e
+      - e
+      - d
+      - o
+      - s
+      - /
+      - p
+      - l
+      - u
+      - g
+      - i
+      - 'n'
+      - '-'
+      - j
+      - s
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - '"'
+      - ']'
+      - )
+      - '{'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - t
+      - 'y'
+      - p
+      - e
+      - s
+      - .
+      - p
+      - u
+      - s
+      - h
+      - (
+      - '{'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - l
+      - a
+      - b
+      - e
+      - l
+      - '"'
+      - ':'
+      - ' '
+      - '"'
+      - J
+      - s
+      - R
+      - e
+      - p
+      - o
+      - r
+      - t
+      - '"'
+      - ','
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - v
+      - a
+      - l
+      - u
+      - e
+      - '"'
+      - ':'
+      - ' '
+      - '"'
+      - j
+      - s
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - '"'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '}'
+      - )
+      - ;
+      - |+
+
+      - ' '
+      - ' '
+      - '}'
+      - |+
+
+      - ' '
+      - ' '
+      - i
+      - f
+      - (
+      - p
+      - l
+      - u
+      - g
+      - i
+      - 'n'
+      - s
+      - '['
+      - '"'
+      - '@'
+      - s
+      - t
+      - e
+      - e
+      - d
+      - o
+      - s
+      - /
+      - p
+      - l
+      - u
+      - g
+      - i
+      - 'n'
+      - '-'
+      - s
+      - t
+      - i
+      - m
+      - u
+      - l
+      - s
+      - o
+      - f
+      - t
+      - '-'
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - '"'
+      - ']'
+      - )
+      - '{'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - t
+      - 'y'
+      - p
+      - e
+      - s
+      - .
+      - p
+      - u
+      - s
+      - h
+      - (
+      - '{'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - l
+      - a
+      - b
+      - e
+      - l
+      - '"'
+      - ':'
+      - ' '
+      - '"'
+      - S
+      - t
+      - i
+      - m
+      - u
+      - l
+      - s
+      - o
+      - f
+      - t
+      - R
+      - e
+      - p
+      - o
+      - r
+      - t
+      - '"'
+      - ','
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '"'
+      - v
+      - a
+      - l
+      - u
+      - e
+      - '"'
+      - ':'
+      - ' '
+      - '"'
+      - s
+      - t
+      - i
+      - m
+      - u
+      - l
+      - s
+      - o
+      - f
+      - t
+      - '-'
+      - r
+      - e
+      - p
+      - o
+      - r
+      - t
+      - '"'
+      - |+
+
+      - ' '
+      - ' '
+      - ' '
+      - ' '
+      - '}'
+      - )
+      - ;
+      - |+
+
+      - ' '
+      - ' '
+      - '}'
+      - |+
+
+      - ' '
+      - ' '
+      - r
+      - e
+      - t
+      - u
+      - r
+      - 'n'
+      - ' '
+      - t
+      - 'y'
+      - p
+      - e
+      - s
+      - ;
+      - |+
+
+      - |+
+
+      - '}'
+    description: 
+  rows:
+    label: 行
+    help: 
+    description: 
+  script:
+    label: Script
+    help: 
+    description: 
+  totaling:
+    label: 显示总计
+    help: 
+    description: 
+  values:
+    label: 统计
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有报表
+  application:
+    label: 应用报表
+  default:
+    label: 
+  global:
+    label: 标准报表
+  mine:
+    label: 我的报表
+actions: {}
+CustomLabels:
+  reports_action_standard_new_by_template: 从模板新建
+  reports_field_filter_fields.$: reports_field_filter_fields.$
+  reports_field_filters.$: reports_field_filters.$

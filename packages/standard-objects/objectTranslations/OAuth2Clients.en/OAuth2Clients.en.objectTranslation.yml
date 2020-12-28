@@ -1,0 +1,32 @@
+name: OAuth2Clients
+label: OAuth2 Client
+description: 
+fields:
+  active:
+    label: Active
+    help: 
+    description: 
+  clientId:
+    label: Client ID
+    help: 
+    description: 
+  clientName:
+    label: Name
+    help: 
+    description: 
+  clientSecret:
+    label: Secret
+    help: 
+    description: 
+  expires:
+    label: Term of Validity（HOUR）
+    help: 
+    description: 
+  redirectUri:
+    label: Callback URL
+    help: 
+    description: 
+listviews:
+  all:
+    label: All OAuth2 Clients
+actions: {}

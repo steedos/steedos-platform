@@ -1,0 +1,42 @@
+name: events
+label: Event
+description: 
+fields:
+  assignees:
+    label: Assignees
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  end:
+    label: End Time
+    help: 
+    description: 
+  is_all_day:
+    label: All Day Event
+    help: 
+    description: 
+  location:
+    label: Location
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  related_to:
+    label: Related to
+    help: 
+    description: 
+  start:
+    label: Start Timne
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Events
+  calendar_view:
+    label: Calendar View
+actions: {}

@@ -1,0 +1,20 @@
+name: picklists
+label: 下拉框列表
+description: 
+fields:
+  code:
+    label: 唯一编码
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  name:
+    label: 名称
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部
+actions: {}

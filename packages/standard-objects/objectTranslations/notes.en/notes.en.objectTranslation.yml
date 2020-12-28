@@ -1,0 +1,24 @@
+name: notes
+label: Notes
+description: 
+fields:
+  description:
+    label: Description
+    help: 
+    description: 
+  name:
+    label: Title
+    help: 
+    description: 
+  related_to:
+    label: Related Object Record
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Notes
+  mine:
+    label: My Notes
+  recent:
+    label: Recently Viewed Notes
+actions: {}

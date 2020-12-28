@@ -1,0 +1,32 @@
+name: announcements
+label: 公告
+description: 
+fields:
+  body:
+    label: 正文
+    help: 
+    description: 
+  created:
+    label: 发布时间
+    help: 
+    description: 
+  created_by:
+    label: 发布人
+    help: 
+    description: 
+  members:
+    label: 发布对象
+    help: 
+    description: 
+  modified_by:
+    label: 修改人
+    help: 
+    description: 
+  name:
+    label: 标题
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有公告
+actions: {}

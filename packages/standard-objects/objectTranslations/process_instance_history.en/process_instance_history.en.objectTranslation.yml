@@ -1,0 +1,96 @@
+name: process_instance_history
+label: Approval History
+description: 
+fields:
+  actor:
+    label: Actual Approver
+    help: 
+    description: 
+  comments:
+    label: Comments
+    help: 
+    description: 
+  created_by:
+    label: Submitter
+    help: 
+    description: 
+  elapsed_time_in_days:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_hours:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_minutes:
+    label: 
+    help: 
+    description: 
+  modified:
+    label: 
+    help: 
+    description: 
+  modified_by:
+    label: 
+    help: 
+    description: 
+  name:
+    label: Step Name
+    help: 
+    description: 
+  original_actor:
+    label: Assigned To
+    help: 
+    description: 
+  process_instance:
+    label: 
+    help: 
+    description: 
+  process_instance_node:
+    label: 
+    help: 
+    description: 
+  step_node:
+    label: 
+    help: 
+    description: 
+  step_status:
+    label: Status
+    help: 
+    options:
+      - approved
+      - fault
+      - held
+      - no_response
+      - pending
+      - reassigned
+      - rejected
+      - removed
+      - started
+    description: 
+  target_object:
+    label: Approval Details
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+actions:
+  approve:
+    label: Approve
+  reassign:
+    label: Reassign
+  recall:
+    label: Recall
+  reject:
+    label: Reject
+CustomLabels:
+  process_instance_history_field_step_status_options_started: Submitted
+  process_instance_history_field_step_status_options_pending: Pending
+  process_instance_history_field_step_status_options_no_response: No Response
+  process_instance_history_field_step_status_options_approved: Approved
+  process_instance_history_field_step_status_options_rejected: Rejected
+  process_instance_history_field_step_status_options_reassigned: Reassigned
+  process_instance_history_field_step_status_options_removed: Recalled
+  process_instance_history_field_step_status_options_fault: Fault
+  process_instance_history_field_step_status_options_held: Held

@@ -1,0 +1,123 @@
+name: process_definition
+label: Approval Processes
+description: 
+fields:
+  active:
+    label: Active
+    help: 
+    description: 
+  allow_recall:
+    label: Allow submitters to recall approval requests
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  entry_criteria:
+    label: Specify Entry Criteria
+    help: 
+    description: 
+  final_approval_record_lock:
+    label: Record Lock
+    help: 
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    description: 
+  final_approval_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  final_rejection_record_lock:
+    label: Record Lock
+    help: 
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    description: 
+  final_rejection_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  initial_submission_record_lock:
+    label: Record Lock
+    help: 
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    description: 
+  initial_submission_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  label:
+    label: 
+    help: 
+    description: 
+  name:
+    label: 
+    help: 
+    description: 
+  object_name:
+    label: 
+    help: 
+    description: 
+  order:
+    label: 
+    help: 
+    description: 
+  recall_record_lock:
+    label: Record Lock
+    help: 
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    description: 
+  recall_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  record_editability:
+    label: Record Editability Properties
+    help: 
+    options:
+      - label: Administrators ONLY can edit records during the approval process
+        value: admin_only
+    description: 
+listviews:
+  all:
+    label: All
+actions:
+  copy:
+    label: Copy
+  disable:
+    label: Disable
+  enable:
+    label: Enable
+CustomLabels:
+  process_definition_field_approval_page_fields: process_definition_field_approval_page_fields
+  process_definition_field_approval_page_fields_inlineHelpText: process_definition_field_approval_page_fields_inlineHelpText
+  process_definition_field_show_approval_history: process_definition_field_show_approval_history
+  process_definition_group_specify_entry_criteria: process_definition_group_specify_entry_criteria
+  process_definition_field_record_editability_inlineHelpText-TODO: process_definition_field_record_editability_inlineHelpText-TODO
+  process_definition_field_record_editability_options_admin_or_current_approver: >-
+    process_definition_field_record_editability_options_admin_or_current_approver
+  process_definition_field_user_hierarchy_field: process_definition_field_user_hierarchy_field
+  process_definition_group_next_automated_approver: process_definition_group_next_automated_approver
+  process_definition_field_user_hierarchy_field_inlineHelpText: process_definition_field_user_hierarchy_field_inlineHelpText
+  process_definition_field_use_approver_field_of_record_owner: process_definition_field_use_approver_field_of_record_owner
+  process_definition_field_allowed_submitters: process_definition_field_allowed_submitters
+  process_definition_field_allowed_submitters_inlineHelpText: process_definition_field_allowed_submitters_inlineHelpText
+  process_definition_group_approval_page_fields: process_definition_group_approval_page_fields
+  process_definition_group_select_field_used_for_automated_approval_routing: process_definition_group_select_field_used_for_automated_approval_routing
+  process_definition_group_record_lock: process_definition_group_record_lock
+  menu_process_definition: menu_process_definition

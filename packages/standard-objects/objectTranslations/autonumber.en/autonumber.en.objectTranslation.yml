@@ -1,0 +1,28 @@
+name: autonumber
+label: Auto Number
+description: 
+fields:
+  current_no:
+    label: Current Number
+    help: 
+    description: 
+  date_from:
+    label: Start Date
+    help: 
+    description: 
+  date_to:
+    label: End Date
+    help: 
+    description: 
+  field_name:
+    label: Field Name
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Auto Numbers
+actions: {}

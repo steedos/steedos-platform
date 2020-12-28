@@ -1,0 +1,35 @@
+name: process_flows_criteria
+label: process_flows_criteria
+description: 
+fields:
+  criteria:
+    label: Conditions
+    help: 
+    description: 
+  executing_actions:
+    label: 
+    help: 
+    options:
+      - label: Conditions are met
+        value: criteria
+      - label: No criteria—just execute the actions!
+        value: always
+    description: 
+  name:
+    label: 
+    help: 
+    description: 
+  process_flow:
+    label: 
+    help: 
+    description: 
+  update_once:
+    label: >-
+      Do you want to execute the actions only when specified changes are made to
+      the record?
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+actions: {}

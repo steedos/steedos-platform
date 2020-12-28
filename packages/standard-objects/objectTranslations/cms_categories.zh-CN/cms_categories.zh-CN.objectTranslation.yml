@@ -1,0 +1,36 @@
+name: cms_categories
+label: 栏目
+description: 
+fields:
+  description:
+    label: 描述
+    help: 
+    description: 
+  featured:
+    label: 
+    help: 
+    description: 
+  name:
+    label: 名称
+    help: 
+    description: 
+  order:
+    label: 排序号
+    help: 
+    description: 
+  parent:
+    label: 上级栏目
+    help: 
+    description: 
+  parents:
+    label: 上级栏目（多层）
+    help: 
+    description: 
+  site:
+    label: 站点
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+actions: {}

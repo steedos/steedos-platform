@@ -1,0 +1,64 @@
+name: tasks
+label: Task
+description: 
+fields:
+  assignees:
+    label: Assignees
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  due_date:
+    label: Due Date
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  priority:
+    label: Priority
+    help: 
+    options:
+      - label: High
+        value: high
+      - label: Normal
+        value: normal
+      - label: Low
+        value: low
+    description: 
+  related_to:
+    label: Related to
+    help: 
+    description: 
+  state:
+    label: State
+    help: 
+    options:
+      - label: not Started
+        value: not_started
+      - label: in Progress
+        value: in_progress
+      - label: Completed
+        value: completed
+      - label: Waiting
+        value: waiting
+      - label: Deferred
+        value: deferred
+    description: 
+listviews:
+  all:
+    label: All Tasks
+  calendar_view:
+    label: Calendar View
+  created_tasks:
+    label: Tasks Assigned to Me
+  my_closed_tasks:
+    label: My Closed Tasks
+  my_open_tasks:
+    label: My Open Tasks
+  recent:
+    label: Recently Viewed Tasks
+actions: {}

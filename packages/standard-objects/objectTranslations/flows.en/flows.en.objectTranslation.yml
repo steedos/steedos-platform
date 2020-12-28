@@ -1,0 +1,232 @@
+name: flows
+label: Workflow
+description: 
+fields:
+  allow_select_step:
+    label: Applicant can Select Steps and Handlers
+    help: 
+    description: 
+  app:
+    label: App
+    help: 
+    description: 
+  auto_remind:
+    label: Auto Remind
+    help: 
+    description: 
+  category:
+    label: Category
+    help: 
+    description: 
+  code_formula:
+    label: Formula of Code
+    help: 
+    description: 
+  company_id:
+    label: Main Division
+    help: 
+    description: 
+  created_by:
+    label: Created by
+    help: 
+    description: 
+  current.created:
+    label: Creation Time of Current
+    help: 
+    description: 
+  current.created_by:
+    label: Created Currently by
+    help: 
+    description: 
+  current:
+    label: Current
+    help: 
+    description: 
+  current.modified:
+    label: Modification Time of Current
+    help: 
+    description: 
+  current.modified_by:
+    label: Modified Currently by
+    help: 
+    description: 
+  current.steps.$.allowBatch:
+    label: Batch Processing
+    help: 
+    description: 
+  current.steps.$.allowDistribute:
+    label: Can Distribute Instance
+    help: 
+    description: 
+  current.steps.$.can_edit_main_attach:
+    label: Can Edit Main Attach
+    help: 
+    description: 
+  current.steps.$.can_edit_normal_attach:
+    label: Can Edit Normal Attach
+    help: 
+    description: 
+  current.steps.$.cc_alert:
+    label: Pop up CC Alert
+    help: 
+    description: 
+  current.steps.$.cc_must_finished:
+    label: Must Wait for CC finished
+    help: 
+    description: 
+  current.steps.$.disableCC:
+    label: Disable CC
+    help: 
+    description: 
+  current.steps.$.distribute_optional_flows:
+    label: Workflows of Distribution
+    help: 
+    description: 
+  current.steps.$.name:
+    label: Name
+    help: 
+    description: 
+  current.steps.$.oneClickApproval:
+    label: One Click Approval
+    help: 
+    description: 
+  current.steps.$.oneClickRejection:
+    label: One Click Rejection
+    help: 
+    description: 
+  current.steps.$._id:
+    label: 
+    help: 
+    description: 
+  current.steps:
+    label: Current Steps
+    help: 
+    description: 
+  current_no:
+    label: Current Number
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  distribute_optional_users:
+    label: Users to be Distributed
+    help: 
+    description: 
+  distribute_to_self:
+    label: Distribute to myself
+    help: 
+    description: 
+  events:
+    label: Events
+    help: 
+    description: 
+  field_map:
+    label: Mapping
+    help: 
+    description: 
+  form:
+    label: Form
+    help: 
+    description: 
+  help_text:
+    label: Help
+    help: 
+    description: 
+  historys:
+    label: History Workflows
+    help: 
+    description: 
+  instance_template:
+    label: Instance Template
+    help: 
+    description: 
+  is_valid:
+    label: Valid
+    help: 
+    description: 
+  modified_by:
+    label: Modified by
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  name_formula:
+    label: Formula of Title
+    help: 
+    description: 
+  perms:
+    label: Permissions
+    help: 
+    description: 
+  perms.orgs_can_add:
+    label: Departments that Can Initiate New Request
+    help: 
+    description: 
+  perms.orgs_can_admin:
+    label: 'Departments that Can Read , Relocat, Reassign or Delete  All the Reqests'
+    help: 
+    description: 
+  perms.orgs_can_monitor:
+    label: Departments that Can Read All the Reqests
+    help: 
+    description: 
+  perms.users_can_add:
+    label: Users that Can Initiate New Request
+    help: 
+    description: 
+  perms.users_can_admin:
+    label: 'Users that Can Read , Relocat, Reassign or Delete  All the Reqests'
+    help: 
+    description: 
+  perms.users_can_monitor:
+    label: Users that Can Read All the Reqests
+    help: 
+    description: 
+  print_template:
+    label: Print Template
+    help: 
+    description: 
+  sort_no:
+    label: Sort Number
+    help: 
+    description: 
+  state:
+    label: State
+    help: 
+    options:
+      - label: Enabled
+        value: enabled
+      - label: Disabled
+        value: disabled
+    description: 
+  timeout_auto_submit:
+    label: Auto Commit if Time Out
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Workflows
+actions: {}
+CustomLabels:
+  flows_action_designFlow: Flow Designer
+  import_flows_error_title: Import Error
+  import_flows_error_not_find_object: 'Not find object [ %s ]'
+  import_flows_error_not_allow_enable_workflow: 'object [ %s ] not enable workflow'
+  import_flows_error_not_find_fields: 'Missing field [ %s ]'
+  flows_action_copyFlow: flows_action_copyFlow
+  flows_action_design: flows_action_design
+  flows_action_designForm: flows_action_designForm
+  flows_action_distributeAdmin: flows_action_distributeAdmin
+  flows_action_exportFlow: flows_action_exportFlow
+  flows_action_exportFlows: flows_action_exportFlows
+  flows_action_export_default_template: flows_action_export_default_template
+  flows_action_importFlow: flows_action_importFlow
+  flows_action_removeFlow: flows_action_removeFlow
+  flows_action_standard_new_by_template: flows_action_standard_new_by_template
+  flows_action_upgradeFlow: flows_action_upgradeFlow
+  flows_action_enableFlow: flows_action_enableFlow
+  flows_action_disableFlow: flows_action_disableFlow

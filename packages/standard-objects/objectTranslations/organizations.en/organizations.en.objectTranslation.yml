@@ -1,0 +1,55 @@
+name: organizations
+label: Department
+description: 
+fields:
+  children:
+    label: Subordinates
+    help: 
+    description: 
+  company_id:
+    label: Main Division
+    help: 
+    description: 
+  company_ids:
+    label: All Divisions
+    help: 
+    description: 
+  fullname:
+    label: Fullname
+    help: 
+    description: 
+  hidden:
+    label: Hidden
+    help: 
+    description: 
+  is_company:
+    label: Divisional
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  parent:
+    label: Superior
+    help: 
+    description: 
+  parents:
+    label: All Superiors
+    help: 
+    description: 
+  sort_no:
+    label: Sort Number
+    help: 
+    description: 
+  users:
+    label: Members
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Departments
+actions: {}
+CustomLabels:
+  organizations_action_addSubOrganization: organizations_action_addSubOrganization
+  organizations_group_系统: organizations_group_系统

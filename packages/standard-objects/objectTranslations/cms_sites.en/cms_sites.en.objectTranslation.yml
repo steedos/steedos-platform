@@ -1,0 +1,62 @@
+name: cms_sites
+label: Site
+description: 
+fields:
+  admins:
+    label: Site Members(Private)
+    help: 
+    description: 
+  avatar:
+    label: Avatar
+    help: 
+    description: 
+  cover:
+    label: Cover
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  enable_post_permissions:
+    label: Enable Article Level Permissions
+    help: 
+    description: 
+  layout:
+    label: Layout
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  order:
+    label: Sort Number
+    help: 
+    description: 
+  type:
+    label: Type
+    help: 
+    options:
+      - label: Space
+        value: space
+      - label: User
+        value: user
+    description: 
+  visibility:
+    label: Visibility
+    help: 
+    options:
+      - label: Private - Only members can see .
+        value: private
+      - label: 'Team - Users accessible , only members can edit .'
+        value: team
+      - label: 'Public - Anonymous accessible, only members can edit .'
+        value: public
+    description: 
+listviews:
+  all:
+    label: All Sites
+actions: {}
+CustomLabels:
+  cms_sites_group_Site: cms_sites_group_Site

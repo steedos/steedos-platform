@@ -1,0 +1,31 @@
+name: chat_messages
+label: Chat Message
+description: 
+fields:
+  name:
+    label: Content
+    help: 
+    description: 
+  related_to:
+    label: Related Object Record
+    help: 
+    description: 
+  type:
+    label: Type
+    help: 
+    options:
+      - label: text
+        value: text
+      - label: image
+        value: image
+      - label: video
+        value: video
+      - label: href
+        value: href
+      - label: system
+        value: system
+    description: 
+listviews:
+  all:
+    label: All Chat Messages
+actions: {}

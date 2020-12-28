@@ -1,0 +1,90 @@
+name: license
+label: License
+description: 
+fields:
+  edition:
+    label: Edition
+    help: 
+    description: 
+  edition_label:
+    label: Edition
+    help: 
+    description: 
+  end_date:
+    label: 过期
+    help: 
+    description: 
+  invalid:
+    label: Invalid
+    help: 
+    description: 
+  is_local:
+    label: 
+    help: 
+    description: 
+  is_trial:
+    label: Trial
+    help: 
+    description: 
+  key:
+    label: 
+    help: 
+    description: 
+  license:
+    label: 
+    help: 
+    description: 
+  license_last_verify:
+    label: 
+    help: 
+    description: 
+  lid:
+    label: 
+    help: 
+    description: 
+  product:
+    label: Product
+    help: 
+    description: 
+  product_label:
+    label: Product
+    help: 
+    description: 
+  user_number:
+    label: User number
+    help: 
+    description: 
+  verify_error:
+    label: 
+    help: 
+    description: 
+  verify_status:
+    label: 
+    help: 
+    options:
+      - F
+      - A
+      - I
+      - L
+      - ','
+      - S
+      - U
+      - C
+      - C
+      - E
+      - S
+      - S
+    description: 
+listviews:
+  all:
+    label: Al
+actions: {}
+CustomLabels:
+  license_action_apply: license_action_apply
+  license_action_sync: license_action_sync
+  license_action_copySpaceId: license_action_copySpaceId
+  license_action_changeSpaceLicense: license_action_changeSpaceLicense
+  license_action_changeSpaceLicense_confirmBtnText: license_action_changeSpaceLicense_confirmBtnText
+  license_field_custom_objects_number: license_field_custom_objects_number
+  license_field_flow_number: license_field_flow_number
+  license_field_end_invalid: license_field_end_invalid

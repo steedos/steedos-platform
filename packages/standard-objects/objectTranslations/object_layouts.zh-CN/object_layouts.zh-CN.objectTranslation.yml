@@ -1,0 +1,60 @@
+name: object_layouts
+label: 页面布局
+description: 
+fields:
+  custom_actions:
+    label: 自定义操作
+    help: 
+    description: 
+  exclude_actions:
+    label: 排除的标准操作
+    help: 
+    description: 
+  fields.$.field:
+    label: 字段
+    help: 
+    description: 
+  fields.$:
+    label: Field
+    help: 
+    description: 
+  fields.$.group:
+    label: 分组
+    help: 
+    description: 
+  fields.$.readonly:
+    label: 只读
+    help: 
+    description: 
+  fields.$.required:
+    label: 必填
+    help: 
+    description: 
+  fields:
+    label: 字段
+    help: 
+    description: 
+  label:
+    label: 页面布局名
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  profiles:
+    label: 简档
+    help: 
+    description: 
+  relatedList:
+    label: 相关列表
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+actions: {}
+CustomLabels:
+  object_layouts_group_field_info: 字段信息
+  object_layouts_group_appendToLayouts: 选择应包含该字段的页面布局（如果不选择布局，该字段在任何页面上都不会显示）
+  object_layouts_title_appendField: 将字段添加到页面布局

@@ -1,0 +1,46 @@
+name: process_flows_criteria_action
+label: process_flows_criteria_action
+description: 
+fields:
+  criteria:
+    label: 
+    help: 
+    description: 
+  name:
+    label: 
+    help: 
+    description: 
+  process_definition:
+    label: Approval Process
+    help: 
+    description: 
+  skip_entry_criteria:
+    label: Skip the entry criteria for this process?
+    help: 
+    description: 
+  submitter:
+    label: 
+    help: 
+    options:
+      - label: Current User
+        value: current_user
+      - label: User Field from a Record
+        value: reference
+      - label: Other User
+        value: user
+    description: 
+  type:
+    label: 
+    help: 
+    options:
+      - label: Submit for Approval
+        value: submit
+    description: 
+  user_field:
+    label: User Field
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+actions: {}

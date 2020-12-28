@@ -1,0 +1,16 @@
+name: space_user_signs
+label: 图片签名
+description: 
+fields:
+  sign:
+    label: 签名
+    help: 
+    description: 
+  user:
+    label: 用户
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+actions: {}

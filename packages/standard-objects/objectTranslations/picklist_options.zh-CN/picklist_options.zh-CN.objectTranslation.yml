@@ -1,0 +1,36 @@
+name: picklist_options
+label: 选项列表值
+description: 
+fields:
+  color:
+    label: 选项背景色
+    help: 
+    description: 
+  default:
+    label: 默认
+    help: 
+    description: 
+  enable:
+    label: 启用
+    help: 
+    description: 
+  name:
+    label: 选项名称
+    help: 
+    description: 
+  picklist:
+    label: 选项列表值集
+    help: 
+    description: 
+  sort_no:
+    label: 排序号
+    help: 
+    description: 
+  value:
+    label: 选项值
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部
+actions: {}

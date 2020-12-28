@@ -1,0 +1,85 @@
+name: queue_import
+label: Data Import Queue
+description: 
+fields:
+  description:
+    label: Description
+    help: 
+    description: 
+  encoding:
+    label: Character Code
+    help: 
+    options:
+      - label: 'GB2312 , Simplified Chinese'
+        value: GB2312
+      - label: Unicode (UTF8)
+        value: UTF8
+      - label: Unicode (UTF16)
+        value: UTF16
+      - label: 'Big5 , Traditional Chinese'
+        value: Big5
+      - label: 'Big5 , Traditional Chinese  (HKSCS)'
+        value: HKSCS
+      - label: Windows Japanese
+        value: Windows 日语
+      - label: Japanese (Shift_JIS-2004)
+        value: Shift_JIS-2004
+      - label: KS C 5601 Korean
+        value: KS C 5601
+      - label: ISO-8859-1（ISO-LATIN-1）
+        value: ISO
+    description: 
+  end_time:
+    label: End Time
+    help: 
+    description: 
+  error:
+    label: Error Message
+    help: 
+    description: 
+  external_id_name:
+    label: External_id (Based on this when executing again)
+    help: 
+    description: 
+  failure_count:
+    label: Number of Failed Records
+    help: 
+    description: 
+  field_mapping:
+    label: Field Mappings
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  start_time:
+    label: Start Time
+    help: 
+    description: 
+  state:
+    label: State
+    help: 
+    options: 
+    description: 
+  success_count:
+    label: Number of Successful Records
+    help: 
+    description: 
+  total_count:
+    label: Total Number
+    help: 
+    description: 
+  value_separator:
+    label: Separator
+    help: 
+    options:
+      - label: ','
+        value: ','
+    description: 
+listviews:
+  all:
+    label: All Queues
+actions: {}
+CustomLabels:
+  queue_import_action_import: queue_import_action_import

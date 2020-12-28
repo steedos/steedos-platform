@@ -1,0 +1,278 @@
+name: object_fields
+label: Object Fields
+description: 
+fields:
+  column_name:
+    label: Database column name
+    help: 
+    description: 
+  data_type:
+    label: Data Type
+    help: 
+    options:
+      - label: Checkbox
+        value: boolean
+      - label: Number
+        value: number
+      - label: Currency
+        value: currency
+      - label: Text
+        value: text
+      - label: Date
+        value: date
+      - label: Datetime
+        value: datetime
+    description: 
+  defaultValue:
+    label: Default Value
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  filterable:
+    label: Filterable
+    help: 
+    description: 
+  filtersFunction:
+    label: filters Function
+    help: 
+    description: 
+  formula:
+    label: Formula
+    help: 
+    description: 
+  formula_blank_value:
+    label: Blank Field Handling
+    help: 
+    options:
+      - label: Treat blank fields as zeroes
+        value: zeroes
+      - label: Treat blank fields as blanks
+        value: blanks
+    description: 
+  generated:
+    label: Generated
+    help: 
+    description: 
+  group:
+    label: Group
+    help: 
+    description: 
+  hidden:
+    label: Hidden
+    help: 
+    description: 
+  index:
+    label: Is Index Field
+    help: 
+    description: 
+  inlineHelpText:
+    label: Prompt text
+    help: 
+    description: 
+  is_name:
+    label: Is Name
+    help: 
+    description: 
+  is_wide:
+    label: Is Wide
+    help: 
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  multiple:
+    label: Multiple
+    help: 
+    description: 
+  name:
+    label: API Name
+    help: 
+    description: 
+  object:
+    label: Object
+    help: 
+    description: 
+  omit:
+    label: Omit
+    help: 
+    description: 
+  options.$.color:
+    label: Color
+    help: 
+    description: 
+  options.$:
+    label: Options
+    help: 
+    description: 
+  options.$.label:
+    label: Label
+    help: 
+    description: 
+  options.$.value:
+    label: Value
+    help: 
+    description: 
+  options:
+    label: Options
+    help: 
+    description: 
+  optionsFunction:
+    label: options Function
+    help: 
+    description: 
+  precision:
+    label: Precision
+    help: 
+    description: 
+  primary:
+    label: Primary Key
+    help: 
+    description: 
+  readonly:
+    label: Readonly
+    help: 
+    description: 
+  reference_to:
+    label: Reference to
+    help: 
+    description: 
+  required:
+    label: Required
+    help: 
+    description: 
+  rows:
+    label: Rows
+    help: 
+    description: 
+  scale:
+    label: Scale
+    help: 
+    description: 
+  searchable:
+    label: Searchable
+    help: 
+    description: 
+  sortable:
+    label: Sortable
+    help: 
+    description: 
+  sort_no:
+    label: Sort Number
+    help: 
+    description: 
+  summary_field:
+    label: Field to Aggregate
+    help: 
+    description: 
+  summary_filters.$.field:
+    label: Field
+    help: 
+    description: 
+  summary_filters.$:
+    label: Filter Criteria
+    help: 
+    description: 
+  summary_filters.$.operation:
+    label: Operator
+    help: 
+    description: 
+  summary_filters.$.value:
+    label: Value
+    help: 
+    description: 
+  summary_filters:
+    label: Filter Criteria
+    help: 
+    description: 
+  summary_object:
+    label: Object to Summarize
+    help: 
+    description: 
+  summary_type:
+    label: Roll-Up Type
+    help: 
+    options:
+      - label: COUNT
+        value: count
+      - label: SUM
+        value: sum
+      - label: MIN
+        value: min
+      - label: MAX
+        value: max
+    description: 
+  type:
+    label: Type
+    help: 
+    options:
+      - label: Text
+        value: text
+      - label: Textarea
+        value: textarea
+      - label: Html
+        value: html
+      - label: Select
+        value: select
+      - label: Boolean
+        value: boolean
+      - label: Date
+        value: date
+      - label: Datetime
+        value: datetime
+      - label: Number
+        value: number
+      - label: Currency
+        value: currency
+      - label: Password
+        value: password
+      - label: Lookup
+        value: lookup
+      - label: Master Detail
+        value: master_detail
+      - label: Autonumber
+        value: autonumber
+      - label: Url
+        value: url
+      - label: Email
+        value: email
+      - label: Image
+        value: image
+      - label: Formula
+        value: formula
+      - label: Roll-Up Summary
+        value: summary
+    description: 
+  write_requires_master_read:
+    label: Write requires master read
+    help: 
+    description: 
+  _name:
+    label: Field Name
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+actions:
+  recomputeFormulaValues:
+    label: Recompute Formula Values
+  recomputeSummaryValues:
+    label: Batch Recompute Summary Values
+CustomLabels:
+  object_fields_field_allowedValues: object_fields_field_allowedValues
+  object_fields_field_filters: object_fields_field_filters
+  object_fields_field_filters.$: object_fields_field_filters.$
+  object_fields_field_filters_$_field: object_fields_field_filters_$_field
+  object_fields_field_filters_$_operation: object_fields_field_filters_$_operation
+  object_fields_field_filters_$_value: object_fields_field_filters_$_value
+  object_fields_field_summary_filters.$: object_fields_field_summary_filters.$
+  object_fields_group_reference: object_fields_group_reference
+  object_fields_group_number: object_fields_group_number
+  object_fields_group_formula: object_fields_group_formula
+  object_fields_group_summary: object_fields_group_summary
+  object_fields__error_name_invalid_format: object_fields__error_name_invalid_format
+  object_fields__error_name_max_length: object_fields__error_name_max_length

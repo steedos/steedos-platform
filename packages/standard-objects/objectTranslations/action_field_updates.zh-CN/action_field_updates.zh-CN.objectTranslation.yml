@@ -1,0 +1,62 @@
+name: action_field_updates
+label: 字段更新
+description: 
+fields:
+  description:
+    label: 描述
+    help: 
+    description: 
+  field_name:
+    label: 要更新的字段
+    help: 
+    description: 
+  formula:
+    label: 公式
+    help: 
+    description: 
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  literal_value:
+    label: 指定新字段值
+    help: 
+    description: 
+  name:
+    label: API 名称
+    help: 
+    description: 
+  notify_assignee:
+    label: 通知被分配人(仅修改拥有者时由此选项)
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  operation:
+    label: 新字段值类型
+    help: 
+    description: 
+  target_object:
+    label: 要更新的对象
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+actions: {}
+CustomLabels:
+  action_field_updates_field_operation_options_null: 空值 (null)
+  action_field_updates_field_operation_options_formula: 使用公式设置新值
+  action_field_updates_field_operation_options_literal: 特定值
+  action_field_updates_field_field_new_value: 值
+  action_field_updates_field_process_definition: 批准过程
+  action_field_updates_field_process_node: 批准步骤
+  action_field_updates_field_when: 运行时
+  action_field_updates_field_when_options_final_approval: 最终批准操作
+  action_field_updates_field_when_options_final_rejection: 最终拒绝操作
+  action_field_updates_field_when_options_recall: 取消申请操作
+  action_field_updates_field_when_options_rejection: 拒绝操作
+  action_field_updates_field_when_options_approval: 批准操作
+  action_field_updates_field_when_options_initial_submission: 首次提交

@@ -1,0 +1,89 @@
+name: users
+label: User
+description: 
+fields:
+  avatar:
+    label: Avatar
+    help: 
+    description: 
+  company_id:
+    label: 
+    help: 
+    description: 
+  company_ids:
+    label: 
+    help: 
+    description: 
+  email:
+    label: Email
+    help: 
+    description: 
+  email_notification:
+    label: Recieve Email Notifications
+    help: 
+    description: 
+  is_cloudadmin:
+    label: is CloudAdmin
+    help: 
+    description: 
+  is_deleted:
+    label: Deleted
+    help: 
+    description: 
+  last_logon:
+    label: Last Logon Date
+    help: 
+    description: 
+  locale:
+    label: Language
+    help: 
+    options:
+      - label: Simplified Chinese
+        value: zh-cn
+      - label: English
+        value: en-us
+    description: 
+  lockout:
+    label: 
+    help: 
+    description: 
+  login_failed_lockout_time:
+    label: 
+    help: 
+    description: 
+  login_failed_number:
+    label: 
+    help: 
+    description: 
+  mobile:
+    label: Mobile
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  password_expired:
+    label: Password expired
+    help: 
+    description: 
+  primary_email_verified:
+    label: Primary Email Verified
+    help: 
+    description: 
+  steedos_id:
+    label: Steedos ID
+    help: 
+    description: 
+  username:
+    label: Username
+    help: 
+    description: 
+  utcOffset:
+    label: Time Zone
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+actions: {}

@@ -1,0 +1,48 @@
+name: sessions
+label: Session
+description: 
+fields:
+  client_id:
+    label: Client ID
+    help: 
+    description: 
+  connected_app_id:
+    label: connected App ID
+    help: 
+    description: 
+  created:
+    label: First Login Time
+    help: 
+    description: 
+  ip:
+    label: IP Address
+    help: 
+    description: 
+  modified:
+    label: Last Login Time
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  token:
+    label: Token
+    help: 
+    description: 
+  userAgent:
+    label: User Agent
+    help: 
+    description: 
+  userId:
+    label: User
+    help: 
+    description: 
+  valid:
+    label: valid
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Session
+actions: {}

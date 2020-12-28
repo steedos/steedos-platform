@@ -1,0 +1,121 @@
+name: process_node
+label: Approval Steps
+description: 
+fields:
+  approval_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  approver:
+    label: Select Approver
+    help: 
+    options:
+      - label: Let the submitter choose the approver manually
+        value: submitter_choose
+      - label: Automatically assign to approver(s)
+        value: auto_assign
+    description: 
+  assigned_approver_flow_roles:
+    label: 
+    help: 
+    description: 
+  assigned_approver_roles:
+    label: 
+    help: 
+    description: 
+  assigned_approver_users:
+    label: 
+    help: 
+    description: 
+  assigned_approver_user_field:
+    label: 
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  entry_criteria:
+    label: Entry criteria
+    help: 
+    description: 
+  filtrad:
+    label: All records should enter this step
+    help: 
+    description: 
+  if_criteria_not_met:
+    label: 
+    help: 
+    options:
+      - a
+      - p
+      - p
+      - r
+      - o
+      - v
+      - e
+      - ','
+      - r
+      - e
+      - j
+      - e
+      - c
+      - t
+      - ','
+      - s
+      - k
+      - i
+      - p
+    description: 
+  label:
+    label: 
+    help: 
+    description: 
+  name:
+    label: 
+    help: 
+    description: 
+  order:
+    label: 
+    help: 
+    description: 
+  process_definition:
+    label: 
+    help: 
+    description: 
+  rejection_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  reject_behavior:
+    label: Reject Behavior
+    help: 
+    options:
+      - label: >-
+          Perform all rejection actions for this step AND all final rejection
+          actions. (Final Rejection)
+        value: reject_request
+      - label: >-
+          Perform ONLY the rejection actions for this step and send the approval
+          request back to the most recent approver. (Go Back 1 Step)
+        value: back_to_previous
+    description: 
+  when_multiple_approvers:
+    label: When multiple approvers are selected
+    help: 
+    options:
+      - label: Approve or reject based on the FIRST response.
+        value: first_response
+      - label: Require UNANIMOUS approval from all selected approvers.
+        value: unanimous
+    description: 
+listviews:
+  all:
+    label: All
+actions: {}
+CustomLabels:
+  process_node_field_approver_options_auto_queue: process_node_field_approver_options_auto_queue
+  process_node_field_approver_options_role: process_node_field_approver_options_role
+  process_node_field_auto_approver: process_node_field_auto_approver
+  process_node_field_auto_approver_$_type: process_node_field_auto_approver_$_type
+  process_node_field_auto_approver_$_value: process_node_field_auto_approver_$_value

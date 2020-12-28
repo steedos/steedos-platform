@@ -1,0 +1,62 @@
+name: object_layouts
+label: Object Layouts
+description: 
+fields:
+  custom_actions:
+    label: Custom Actions
+    help: 
+    description: 
+  exclude_actions:
+    label: Exclude Standard Actions
+    help: 
+    description: 
+  fields.$.field:
+    label: Field
+    help: 
+    description: 
+  fields.$:
+    label: Field
+    help: 
+    description: 
+  fields.$.group:
+    label: Group
+    help: 
+    description: 
+  fields.$.readonly:
+    label: Readonly
+    help: 
+    description: 
+  fields.$.required:
+    label: Required
+    help: 
+    description: 
+  fields:
+    label: 
+    help: 
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  profiles:
+    label: Profile
+    help: 
+    description: 
+  relatedList:
+    label: Related list
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+actions: {}
+CustomLabels:
+  object_layouts_group_field_info: Field Info
+  object_layouts_group_appendToLayouts: >-
+    Select the page layout that should contain the field (if you don’t select a
+    layout, the field will not be displayed on any page)
+  object_layouts_title_appendField: Add fields to the page layout

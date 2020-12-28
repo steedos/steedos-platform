@@ -1,0 +1,40 @@
+name: dashboard
+label: Dashboard
+description: 
+fields:
+  apps:
+    label: Apps
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  widgets.$.html:
+    label: HTML
+    help: 
+    description: 
+  widgets.$.label:
+    label: label
+    help: 
+    description: 
+  widgets.$.position:
+    label: position
+    help: 
+    description: 
+  widgets.$.type:
+    label: type
+    help: 
+    description: 
+  widgets:
+    label: Widgets
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Dashboard
+actions: {}

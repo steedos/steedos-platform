@@ -1,0 +1,38 @@
+name: web_forms
+label: Web Forms
+description: 
+fields:
+  fields:
+    label: Fields
+    help: 
+    description: 
+  generated_html:
+    label: Generated Html
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  notification_users:
+    label: Notification Users
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  record_owner:
+    label: Default Owner
+    help: 
+    description: 
+  return_url:
+    label: Return URL
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Web Forms
+actions:
+  copyHtmlCode:
+    label: Copy Html Code

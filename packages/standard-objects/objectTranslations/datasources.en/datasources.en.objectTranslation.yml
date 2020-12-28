@@ -1,0 +1,186 @@
+name: datasources
+label: DataSource
+description: 
+fields:
+  connectString:
+    label: connectString
+    help: 
+    description: 
+  database:
+    label: Database name
+    help: 
+    description: 
+  driver:
+    label: Driver
+    help: 
+    options:
+      - M
+      - o
+      - 'n'
+      - g
+      - o
+      - ':'
+      - m
+      - o
+      - 'n'
+      - g
+      - o
+      - ','
+      - M
+      - s
+      - s
+      - q
+      - l
+      - ':'
+      - s
+      - q
+      - l
+      - s
+      - e
+      - r
+      - v
+      - e
+      - r
+      - ','
+      - P
+      - o
+      - s
+      - t
+      - g
+      - r
+      - e
+      - s
+      - ':'
+      - p
+      - o
+      - s
+      - t
+      - g
+      - r
+      - e
+      - s
+      - ','
+      - O
+      - r
+      - a
+      - c
+      - l
+      - e
+      - ':'
+      - o
+      - r
+      - a
+      - c
+      - l
+      - e
+      - ','
+      - M
+      - 'y'
+      - s
+      - q
+      - l
+      - ':'
+      - m
+      - 'y'
+      - s
+      - q
+      - l
+      - ','
+      - S
+      - q
+      - l
+      - i
+      - t
+      - e
+      - ':'
+      - s
+      - q
+      - l
+      - i
+      - t
+      - e
+    description: 
+  enable_space:
+    label: Enable Space
+    help: 
+    description: 
+  host:
+    label: Database host
+    help: 
+    description: 
+  is_enable:
+    label: Enable
+    help: 
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  locale:
+    label: Locale
+    help: 
+    description: 
+  logging:
+    label: Debug
+    help: 
+    description: 
+  mssql_options:
+    label: Mssql connection options
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  options:
+    label: Options
+    help: 
+    description: 
+  password:
+    label: Database password
+    help: 
+    description: 
+  port:
+    label: Database host port
+    help: 
+    description: 
+  timezone:
+    label: Timezone
+    help: 
+    description: 
+  url:
+    label: Url
+    help: 
+    description: 
+  username:
+    label: Database username
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+actions:
+  testConnection:
+    label: Test connection
+CustomLabels:
+  datasources__error_name_invalid_format: >-
+    Can only contain lowercase letters and numbers, must start with a letter,
+    cannot end with an underscore character or contain two consecutive
+    underscore characters
+  _datasources_testConnection_ok: Test OK
+  _datasources_driver_error_notFind_mssql: >-
+    Mssql driver not found, please install (`yarn add mssql`) in the project and
+    restart the service
+  _datasources_driver_error_notFind_pg: >-
+    Postgres driver not found, please install (`yarn add pg`) in the project and
+    restart the service
+  _datasources_driver_error_notFind_oracledb: >-
+    Oracle driver not found, please install (`yarn add oracledb`) in the project
+    and restart the service
+  _datasources_driver_error_notFind_mysql: >-
+    Mysql driver not found, please install (`yarn add mysql`) in the project and
+    restart the service
+  _datasources_driver_error_notFind_sqlite3: >-
+    Sqlite driver not found, please install (`yarn add sqlite3`) in the project
+    and restart the service
+  datasources_field_driver_options_meteor-mongo: datasources_field_driver_options_meteor-mongo

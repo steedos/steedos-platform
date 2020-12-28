@@ -1,0 +1,38 @@
+name: web_forms
+label: 在线表单
+description: 
+fields:
+  fields:
+    label: 显示字段
+    help: 
+    description: 
+  generated_html:
+    label: 表单HTML
+    help: 
+    description: 
+  name:
+    label: 名称
+    help: 
+    description: 
+  notification_users:
+    label: 通知用户
+    help: 
+    description: 
+  object_name:
+    label: 关联对象
+    help: 
+    description: 
+  record_owner:
+    label: 记录所有人
+    help: 
+    description: 
+  return_url:
+    label: 返回地址
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部表单
+actions:
+  copyHtmlCode:
+    label: 复制表单HTML

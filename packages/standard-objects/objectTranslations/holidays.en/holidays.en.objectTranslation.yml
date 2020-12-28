@@ -1,0 +1,48 @@
+name: holidays
+label: Holidays
+description: 
+fields:
+  adjusted_to:
+    label: Corresponding working day
+    help: 
+    options:
+      - 'Sunday:0'
+      - 'Monday:1'
+      - 'Tuesday:2'
+      - 'Wednesday:3'
+      - 'Thursday:4'
+      - 'Friday:5'
+      - 'Saturday:6'
+    description: 
+  date:
+    label: Date
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  type:
+    label: Type
+    help: 
+    options:
+      - label: Public
+        value: public
+      - label: Adjusted Holiday
+        value: adjusted_holiday
+      - label: Adjusted Working Day
+        value: adjusted_working_day
+    description: 
+listviews:
+  all:
+    label: All
+actions: {}
+CustomLabels:
+  holidays_field_object_name: holidays_field_object_name
+  holidays_field_adjusted_to_options_0: holidays_field_adjusted_to_options_0
+  holidays_field_adjusted_to_options_1: holidays_field_adjusted_to_options_1
+  holidays_field_adjusted_to_options_2: holidays_field_adjusted_to_options_2
+  holidays_field_adjusted_to_options_3: holidays_field_adjusted_to_options_3
+  holidays_field_adjusted_to_options_4: holidays_field_adjusted_to_options_4
+  holidays_field_adjusted_to_options_5: holidays_field_adjusted_to_options_5
+  holidays_field_adjusted_to_options_6: holidays_field_adjusted_to_options_6
