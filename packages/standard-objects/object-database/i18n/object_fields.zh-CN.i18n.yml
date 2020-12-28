@@ -29,12 +29,14 @@ object_fields_field_reference_to: 引用对象
 object_fields_field_required: 必填
 object_fields_field_rows: 多行文本行数
 object_fields_field_scale: 小数位数
+object_fields_field_scale_inlineHelpText: 如果字段类型为百分比，此处表示字段显示时的小数位数，比如2位小数会显示为10.20%。
 object_fields_field_searchable: 可搜索
 object_fields_field_sort_no: 排序号
 object_fields_field_sortable: 可排序
 object_fields_field_type: 字段类型
 object_fields_field_type_options_boolean: 布尔
 object_fields_field_type_options_currency: 金额
+object_fields_field_type_options_percent: 百分比
 object_fields_field_type_options_date: 日期
 object_fields_field_type_options_datetime: 日期时间
 object_fields_field_type_options_email: 邮件地址
