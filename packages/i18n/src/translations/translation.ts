@@ -1,29 +1,32 @@
-import { _t, exists } from '../index';
+import { _t, exists, addResourceBundle } from '../index';
 import * as _ from 'underscore';
 import { SteedosMetadataTypeInfoKeys } from '@steedos/metadata-core';
 import { appFallbackKeys } from '../i18n/i18n.app';
 
 const clone = require("clone");
 
-const APP_NS = 'translation';
-const KEYSEPARATOR: string = '_';
+const NAMESPACE = 'translation';
+const KEYSEPARATOR: string = '.';
 
 const CUSTOMAPPLICATIONS_KEY = 'app';
 const MENU_KEY = 'menu';
 
-const getPrefix = function(key){
+const getPrefix = function(key?){
     switch (key) {
         case CUSTOMAPPLICATIONS_KEY:
             return SteedosMetadataTypeInfoKeys.Application
-        case MENU_KEY:
-            return 'CustomMenus'
         default:
             return 'CustomLabels';
     }
 }
 
+const getCustomLabelKey = function(key){
+    const prefix = getPrefix();
+    return [prefix, key].join(KEYSEPARATOR);
+}
+
 const translation = function(key , lng){
-    let options: any = {lng: lng, ns: APP_NS}
+    let options: any = {lng: lng, ns: NAMESPACE}
     if(KEYSEPARATOR === '.'){
         options.keySeparator = false
     }
@@ -44,7 +47,7 @@ const getAppDescriptionKey = function(appId){
 
 const getMenuLabelKey = function(menuId){
     const prefix = getPrefix(MENU_KEY);
-    return [prefix, menuId].join(KEYSEPARATOR);
+    return [prefix, `menu_${menuId}`].join(KEYSEPARATOR);
 }
 
 const translationAppName = function(lng, appId, def){
@@ -74,6 +77,9 @@ const translationMenuLabel = function(lng, menuId, def){
     if(fallbackKey){
         keys.push(fallbackKey);
     }
+
+    console.log('translationMenuLabel', keys, translation(keys, lng));
+
     return translation(keys, lng) || def || '' 
 }
 
@@ -108,4 +114,30 @@ export const getAppTranslationTemplate = function(lng: string, appId: string, _a
         template[getMenuLabelKey( menu._id)] = translationMenuLabel(lng, menu._id, menu.label || menu.name);
     })
     return template;
+}
+
+export const convertTranslation = function(_translation){
+    let translation = clone(_translation);
+    let template = {};
+
+    _.each(translation.CustomApplications, function(app, appId){
+        template[getAppNameKey(appId)] = app.name;
+        template[getAppDescriptionKey(appId)] = app.description;
+    })
+
+    // _.each(translation.CustomMenus, function(menu, menuId){
+    //     template[getMenuLabelKey(menuId)] = menu.label;
+    // })
+
+    _.each(translation.CustomLabels, function(labelValue, labelKey){
+        template[getCustomLabelKey(labelKey)] = labelValue;
+    })
+    return template;
+}
+
+export const addTranslations = function(translations){
+    _.each(translations, function(item){
+        let data = convertTranslation(item.data);
+        addResourceBundle(item.lng, NAMESPACE, data, true, true);
+    })
 }

@@ -55,11 +55,23 @@ function getListviewsTranslationTemplate(listviews){
     return template;
 }
 
+function getFieldGroupsTemplate(fields){
+    const template = {};
+    _.each(fields, function(field, fieldName){
+        if(field.group){
+            let groupKey = field.group.toLocaleLowerCase().replace(/\%/g, '_').replace(/\./g, '_').replace(/\ /g, '_')
+            template[groupKey] = field.group;
+        }
+    })
+    return template;
+}
+
 export const getObjectMetadataTranslationTemplate = function(lng: string , objectName: string, _object: StringMap){
     let object = clone(_object);
     translationObject(lng, objectName, object);
     let template = Object.assign({}, getObjectTranslationTemplate(object));
     template = Object.assign({}, template, {fields: getFieldsTranslationTemplate(object.fields)});
+    template = Object.assign({}, template, {groups: getFieldGroupsTemplate(object.fields)});
     template = Object.assign({}, template, {listviews: getListviewsTranslationTemplate(object.list_views)});
     template = Object.assign({}, template, {actions: getActionsTranslationTemplate(object.actions)});
     return Object.assign({name: objectName}, template)

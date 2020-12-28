@@ -1,6 +1,6 @@
 import * as _ from 'underscore';
 import { SteedosMetadataTypeInfoKeys } from '@steedos/metadata-core';
-import { _t, exists } from '../index';
+import { _t, exists, addResourceBundle } from '../index';
 import { convertObject } from './index';
 import { fallbackKeys } from '../i18n/i18n';
 
@@ -44,7 +44,7 @@ const getBaseObjectName = function(datasource){
     return baseObjectName;
 }
 
-const getPrefix = function(key){
+const getPrefix = function(key?){
     switch (key) {
         case OBJECT_KEY:
             return SteedosMetadataTypeInfoKeys.Object
@@ -55,8 +55,14 @@ const getPrefix = function(key){
         case ACTION_KEY:
             return SteedosMetadataTypeInfoKeys.Action
         default:
-            return 'customLabels';
+            return 'CustomLabels';
     }
+}
+
+const getObjectcustomLabelKey = function(key){
+    const prefix = getPrefix();
+    //objectName, 
+    return [prefix, key].join(KEYSEPARATOR);
 }
 
 const getObjectLabelKey = function(objectName){
@@ -84,16 +90,19 @@ const getFieldHelpKey = function(objectName, name){
     const prefix = getPrefix(FIELD_KEY);
     return [prefix, objectName, name, 'help'].join(KEYSEPARATOR);
 }
-
-const getFieldGroupKey = function(objectName, name){
-    //转小写后，替换掉 % . 空格
-    let groupKey = name.toLocaleLowerCase().replace(/\%/g, '_').replace(/\./g, '_').replace(/\ /g, '_')
-
+const getFieldDescriptionKey = function(objectName, name){
     if(name){
         name = name.replace(/\./g, '_');
     }
     const prefix = getPrefix(FIELD_KEY);
-    return [prefix, objectName, name, 'group', groupKey].join(KEYSEPARATOR);
+    return [prefix, objectName, name, 'description'].join(KEYSEPARATOR);
+}
+
+const getFieldGroupKey = function(objectName, name){
+    //转小写后，替换掉 % . 空格
+    let groupKey = name.toLocaleLowerCase().replace(/\%/g, '_').replace(/\./g, '_').replace(/\ /g, '_')
+    const prefix = getPrefix(FIELD_KEY);
+    return [prefix, objectName, 'group', groupKey].join(KEYSEPARATOR);
 }
 
 const getFieldOptionsLabelKey = function(objectName, name, value){
@@ -158,6 +167,19 @@ const translationFieldHelp = function(lng, objectName, name, def, datasource?){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
             label = translationFieldHelp(lng, baseObjectName, name, def, datasource)
+        }
+    }
+    return label || def || ''
+}
+
+const translationFieldDescription = function(lng, objectName, name, def, datasource?){
+    let key = getFieldDescriptionKey(objectName, name);
+    let keys = [key];
+    let label = translation(keys, lng);
+    if(!label){
+        let baseObjectName = getBaseObjectName(datasource);
+        if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
+            label = translationFieldDescription(lng, baseObjectName, name, def, datasource)
         }
     }
     return label || def || ''
@@ -275,6 +297,9 @@ export const getObjectTranslationTemplate = function(lng: string ,objectName: st
         if(field.inlineHelpText){
             template[getFieldHelpKey(objectName, fieldName)] = translationFieldHelp(lng, objectName, fieldName, field.inlineHelpText, object.datasource)
         }
+        if(field.description){
+            template[getFieldDescriptionKey(objectName, fieldName)] = translationFieldDescription(lng, objectName, fieldName, field.description, object.datasource)
+        }
         if(field.group){
             template[getFieldGroupKey(objectName, field.group)] = translationFieldGroup(lng, objectName, field.group, field.group);
         }
@@ -296,4 +321,60 @@ export const getObjectTranslationTemplate = function(lng: string ,objectName: st
     })
 
     return template;
+}
+
+function convertObjectTranslation(objectTranslation, filePath){
+    let object = clone(objectTranslation);
+    convertObject(object);
+    let template = {};
+    let objectName = object.name;
+    if(!objectName){
+        console.error('Error: Invalid objectTranslation:' + filePath);
+    }
+    template[getObjectLabelKey(objectName)] = object.label;
+    template[getObjectDescriptionKey(objectName)] = object.description;
+    _.each(object.fields, function(field, fieldName){
+        template[getFieldLabelKey(objectName, fieldName)] = field.label;
+        if(field.inlineHelpText){
+            template[getFieldHelpKey(objectName, fieldName)] = field.help;
+        }
+        if(field.description){
+            template[getFieldDescriptionKey(objectName, fieldName)] = field.description;
+        }
+        if(field.group){
+            template[getFieldGroupKey(objectName, field.group)] = field.group;
+        }
+        if(field.options){
+            _.each(field.options, function(op){
+                if(_.has(op, 'value')){
+                    template[getFieldOptionsLabelKey(objectName, fieldName, op.value)] = op.label;
+                }
+            })
+        }
+    })
+
+    _.each(object.actions, function(action, actionName){
+        template[getActionLabelKey( objectName, actionName)] = action.label;
+    })
+
+    _.each(object.list_views, function(list_view, viewName){
+        template[getListviewLabelKey(objectName, viewName)] = list_view.label;
+    })
+
+
+    _.each(object.CustomLabels, function(value, key){
+        template[getObjectcustomLabelKey(key)] = value;
+    })
+    return template;
+}
+
+export const addObjectsTranslation = function(i18nArray){
+    _.each(i18nArray, function(item){
+        let translation = convertObjectTranslation(item.data, item.__filename);
+        if(item.data.name === 'base'){
+            console.log('base item.data', item.data);
+            console.log('base translation', translation);
+        }
+        addResourceBundle(item.lng, OBJECT_NS, translation, true, true);
+    })
 }

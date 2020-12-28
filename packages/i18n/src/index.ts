@@ -36,10 +36,16 @@ export const t = function(key: any, parameters: any, locale: string){
     if (locale === "zh-cn") {
         locale = "zh-CN";
     }
+    let keys;
+    if(_.isArray(key)){
+        keys = key;
+    }else{
+        keys = [`CustomLabels.${key}`, key];
+    }
     if ((parameters != null) && !(_.isObject(parameters))) {
-        return _t(key, { lng: locale, postProcess: 'sprintf', sprintf: [parameters] });
+        return _t(keys, { lng: locale, postProcess: 'sprintf', sprintf: [parameters], keySeparator: false});
     } else {
-        return _t(key, Object.assign({lng: locale}, parameters));
+        return _t(keys, Object.assign({lng: locale}, {keySeparator: false}, parameters));
     }
 }
 

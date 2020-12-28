@@ -102,10 +102,43 @@ function getI18nLng(filePath){
 }
 
 export const loadI18n = (filePath: string)=>{
+    throw new Error('loadI18n...');
     let results = []
     const filePatten = [
         path.join(filePath, "*.i18n.yml"),
         path.join(filePath, "*.i18n.json")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let lng = getI18nLng(matchedPath);
+        if(lng){
+            results.push({lng: lng, __filename: matchedPath, data: json})
+        }
+    })
+    return results
+}
+
+export const loadObjectTranslations = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.objectTranslation.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let lng = getI18nLng(matchedPath);
+        if(lng){
+            results.push({lng: lng, __filename: matchedPath, data: json})
+        }
+    })
+    return results
+}
+
+export const loadTranslations = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.translation.yml")
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
