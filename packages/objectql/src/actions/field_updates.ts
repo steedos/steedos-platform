@@ -22,10 +22,10 @@ export async function runFieldUpdateAction(action: any, recordId: any, userSessi
             throw new SteedosError('target_object must be a string');
         }
         const fieldValue = await getFieldValue(action, recordId, userSession);
-        await getObject(mainObjectName).update(record[action.target_object], {[action.field_name]: fieldValue});
+        await getObject(mainObjectName).directUpdate(record[action.target_object], {[action.field_name]: fieldValue});
     }else{
         const fieldValue = await getFieldValue(action, recordId, userSession);
-        await getObject(action.object_name).update(record._id, {[action.field_name]: fieldValue});
+        await getObject(action.object_name).directUpdate(record._id, {[action.field_name]: fieldValue});
     }
 }
 
