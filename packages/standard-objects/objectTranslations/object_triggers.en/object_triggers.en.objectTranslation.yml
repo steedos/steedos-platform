@@ -2,16 +2,20 @@ name: object_triggers
 label: Object Triggers
 description: 
 fields:
-  is_enable:
-    label: Enable
-    help: 
-    description: 
   name:
     label: Name
     help: 
     description: 
   object:
     label: Object
+    help: 
+    description: 
+  when:
+    label: Execution Time Option
+    help: 
+    description: 
+  is_enable:
+    label: Enable
     help: 
     description: 
   todo:
@@ -21,11 +25,6 @@ fields:
       Help</a>
     help: 
     description: 
-  when:
-    label: Execution Time Option
-    help: 
-    description: 
 listviews:
   all:
     label: All
-actions: {}

@@ -2,6 +2,14 @@ name: autonumber
 label: 自动编号
 description: 
 fields:
+  object_name:
+    label: 对象名
+    help: 
+    description: 
+  field_name:
+    label: 自动编号字段
+    help: 
+    description: 
   current_no:
     label: 当前编号值
     help: 
@@ -14,15 +22,6 @@ fields:
     label: 日期范围截止日期
     help: 
     description: 
-  field_name:
-    label: 自动编号字段
-    help: 
-    description: 
-  object_name:
-    label: 对象名
-    help: 
-    description: 
 listviews:
   all:
     label: 所有
-actions: {}

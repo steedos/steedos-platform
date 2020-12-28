@@ -2,28 +2,28 @@ name: audit_records
 label: Audit Record
 description: 
 fields:
-  created:
-    label: 时间
+  related_to:
+    label: Related Object Record
     help: 
     description: 
-  created_by:
-    label: Created by
+  created:
+    label: 时间
     help: 
     description: 
   field_name:
     label: Field Name
     help: 
     description: 
-  new_value:
-    label: New Value
+  created_by:
+    label: Created by
     help: 
     description: 
   previous_value:
     label: Previous Value
     help: 
     description: 
-  related_to:
-    label: Related Object Record
+  new_value:
+    label: New Value
     help: 
     description: 
 listviews:
@@ -31,4 +31,3 @@ listviews:
     label: All Audit Records
   recent:
     label: Recently Viewed Audit Records
-actions: {}

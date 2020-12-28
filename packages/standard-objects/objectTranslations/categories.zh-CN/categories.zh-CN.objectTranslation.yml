@@ -2,10 +2,6 @@ name: categories
 label: 流程分类
 description: 
 fields:
-  app:
-    label: 所属应用
-    help: 
-    description: 
   name:
     label: 名称
     help: 
@@ -14,7 +10,10 @@ fields:
     label: 排序号
     help: 
     description: 
+  app:
+    label: 所属应用
+    help: 
+    description: 
 listviews:
   all:
     label: 所有
-actions: {}

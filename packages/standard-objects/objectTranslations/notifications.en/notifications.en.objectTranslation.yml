@@ -2,43 +2,42 @@ name: notifications
 label: Notifications
 description: 
 fields:
-  body:
-    label: Body
-    help: 
-    description: 
-  created:
-    label: Notification Time
-    help: 
-    description: 
-  from:
-    label: From
-    help: 
-    description: 
-  is_read:
-    label: Readed
-    help: 
-    description: 
   name:
     label: Title
     help: 
     description: 
-  owner:
-    label: Owner
-    help: 
-    description: 
-  related_name:
-    label: Name of Related Object Record
+  body:
+    label: Body
     help: 
     description: 
   related_to:
     label: Related Object Record
     help: 
     description: 
+  related_name:
+    label: Name of Related Object Record
+    help: 
+    description: 
   url:
     label: URL
+    help: 
+    description: 
+  from:
+    label: From
+    help: 
+    description: 
+  owner:
+    label: Owner
+    help: 
+    description: 
+  is_read:
+    label: Readed
+    help: 
+    description: 
+  created:
+    label: Notification Time
     help: 
     description: 
 listviews:
   all:
     label: All Notifications
-actions: {}

@@ -2,12 +2,12 @@ name: chat_rooms
 label: 房间
 description: 
 fields:
-  members:
-    label: 成员
-    help: 
-    description: 
   name:
     label: 内容
+    help: 
+    description: 
+  members:
+    label: 成员
     help: 
     description: 
   owner:
@@ -28,4 +28,3 @@ fields:
 listviews:
   all:
     label: 所有
-actions: {}

@@ -10,35 +10,11 @@ fields:
     label: Edition
     help: 
     description: 
-  end_date:
-    label: 过期
-    help: 
-    description: 
-  invalid:
-    label: Invalid
-    help: 
-    description: 
-  is_local:
-    label: 
-    help: 
-    description: 
-  is_trial:
-    label: Trial
-    help: 
-    description: 
-  key:
-    label: 
-    help: 
-    description: 
   license:
     label: 
     help: 
     description: 
-  license_last_verify:
-    label: 
-    help: 
-    description: 
-  lid:
+  key:
     label: 
     help: 
     description: 
@@ -50,12 +26,16 @@ fields:
     label: Product
     help: 
     description: 
+  is_trial:
+    label: Trial
+    help: 
+    description: 
   user_number:
     label: User number
     help: 
     description: 
-  verify_error:
-    label: 
+  end_date:
+    label: 过期
     help: 
     description: 
   verify_status:
@@ -75,15 +55,38 @@ fields:
       - S
       - S
     description: 
+  invalid:
+    label: Invalid
+    help: 
+    description: 
+  lid:
+    label: 
+    help: 
+    description: 
+  verify_error:
+    label: 
+    help: 
+    description: 
+  license_last_verify:
+    label: 
+    help: 
+    description: 
+  is_local:
+    label: 
+    help: 
+    description: 
 listviews:
   all:
     label: Al
-actions: {}
+actions:
+  apply:
+    label: Apply
+  changeSpaceLicense:
+    label: 更新许可证
+  copySpaceId:
+    label: Copy space id
 CustomLabels:
-  license_action_apply: license_action_apply
   license_action_sync: license_action_sync
-  license_action_copySpaceId: license_action_copySpaceId
-  license_action_changeSpaceLicense: license_action_changeSpaceLicense
   license_action_changeSpaceLicense_confirmBtnText: license_action_changeSpaceLicense_confirmBtnText
   license_field_custom_objects_number: license_field_custom_objects_number
   license_field_flow_number: license_field_flow_number

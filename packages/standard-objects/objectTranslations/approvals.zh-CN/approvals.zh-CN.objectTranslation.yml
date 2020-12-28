@@ -2,20 +2,24 @@ name: approvals
 label: 历史步骤
 description: 
 fields:
-  cost_time:
-    label: 历时时间
+  from_user:
+    label: 发送人
     help: 
     description: 
-  description:
-    label: 批语
+  start_date:
+    label: 发送时间
+    help: 
+    description: 
+  user:
+    label: 审批人
     help: 
     description: 
   finish_date:
     label: 审批时间
     help: 
     description: 
-  from_user:
-    label: 发送人
+  cost_time:
+    label: 历时时间
     help: 
     description: 
   judge:
@@ -39,14 +43,6 @@ fields:
       - label: 已取回
         value: terminated
     description: 
-  related_to:
-    label: 相关项
-    help: 
-    description: 
-  start_date:
-    label: 发送时间
-    help: 
-    description: 
   state:
     label: 审核状态
     help: 
@@ -58,13 +54,16 @@ fields:
       - label: 已结束
         value: completed
     description: 
-  user:
-    label: 审批人
+  description:
+    label: 批语
+    help: 
+    description: 
+  related_to:
+    label: 相关项
     help: 
     description: 
 listviews:
   all:
     label: 所有
-actions: {}
 CustomLabels:
   approvals_field_judge_options_approved: 核准

@@ -157,6 +157,8 @@ fields:
     label: Version Number
     help: 
     description: 
+groups:
+  package_components: Package Components
 listviews:
   all:
     label: All

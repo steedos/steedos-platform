@@ -2,16 +2,32 @@ name: object_workflows
 label: Object Synchronization Rule
 description: 
 fields:
-  field_map.$.object_field:
-    label: Field of Object
+  name:
+    label: Name
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  flow_id:
+    label: Workflow
+    help: 
+    description: 
+  field_map:
+    label: Field Mappings（from Object to Workflow）
     help: 
     description: 
   field_map.$.workflow_field:
     label: Field of Workflow
     help: 
     description: 
-  field_map:
-    label: Field Mappings（from Object to Workflow）
+  field_map.$.object_field:
+    label: Field of Object
+    help: 
+    description: 
+  field_map_back:
+    label: Field Mappings（from Workflow to Object）
     help: 
     description: 
   field_map_back.$.object_field:
@@ -22,28 +38,12 @@ fields:
     label: Field of Workflow
     help: 
     description: 
-  field_map_back:
-    label: Field Mappings（from Workflow to Object）
-    help: 
-    description: 
-  field_map_back_script:
-    label: Synchronization Script（from Workflow to Object）
-    help: 
-    description: 
   field_map_script:
     label: Synchronization Script（from Object to Workflow）
     help: 
     description: 
-  flow_id:
-    label: Workflow
-    help: 
-    description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  object_name:
-    label: Object
+  field_map_back_script:
+    label: Synchronization Script（from Workflow to Object）
     help: 
     description: 
   sync_attachment:
@@ -57,12 +57,16 @@ fields:
       - label: Synchronize All Versions
         value: all
     description: 
+groups:
+  script: Script
 listviews:
-  all:
-    label: All Rules
   default:
     label: 
-actions: {}
+  all:
+    label: All Rules
+actions:
+  forceSync:
+    label: sync history approvals
 CustomLabels:
   object_workflows_field_field_map_$_workflow_field_instance_name: Request Name
   object_workflows_field_field_map_$_workflow_field_submitter_name: Submitter Name
@@ -78,4 +82,3 @@ CustomLabels:
   object_workflows_field_field_map_$_workflow_field_submit_date: Submit Date
   object_workflows_field_field_map_$_workflow_field_finish_date: Finish Date
   object_workflows_field_field_map_$_workflow_field_final_decision: Final Decision
-  object_workflows_action_forceSync: object_workflows_action_forceSync

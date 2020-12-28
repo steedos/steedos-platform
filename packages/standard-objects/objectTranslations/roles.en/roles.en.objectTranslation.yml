@@ -2,10 +2,6 @@ name: roles
 label: Role
 description: 
 fields:
-  description:
-    label: Description
-    help: 
-    description: 
   name:
     label: Name
     help: 
@@ -18,7 +14,10 @@ fields:
     label: Users
     help: 
     description: 
+  description:
+    label: Description
+    help: 
+    description: 
 listviews:
   all:
     label: All Roles
-actions: {}

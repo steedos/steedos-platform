@@ -2,24 +2,24 @@ name: billing_pay_records
 label: Bill
 description: 
 fields:
-  end_date:
-    label: End Date
-    help: 
-    description: 
   info:
     label: Info
     help: 
     description: 
-  modules:
-    label: Paid Apps
+  total_fee:
+    label: Total Fee
     help: 
     description: 
   paid:
     label: Paid
     help: 
     description: 
-  total_fee:
-    label: Total Fee
+  modules:
+    label: Paid Apps
+    help: 
+    description: 
+  end_date:
+    label: End Date
     help: 
     description: 
   user_count:
@@ -29,4 +29,3 @@ fields:
 listviews:
   all:
     label: All Bills
-actions: {}

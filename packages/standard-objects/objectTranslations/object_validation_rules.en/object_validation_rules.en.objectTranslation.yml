@@ -2,6 +2,14 @@ name: object_validation_rules
 label: Object Validation Rules
 description: 
 fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
   active:
     label: Active
     help: 
@@ -18,18 +26,9 @@ fields:
     label: errorMessage
     help: 
     description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  object_name:
-    label: Object
-    help: 
-    description: 
 listviews:
   all:
     label: All
-actions: {}
 CustomLabels:
   object_validation_rules_field_error_display_field: object_validation_rules_field_error_display_field
   object_validation_rules_field_error_display_field_inlineHelpText: object_validation_rules_field_error_display_field_inlineHelpText

@@ -2,12 +2,36 @@ name: company
 label: 分部
 description: 
 fields:
-  admins:
-    label: 管理员
+  name:
+    label: 分部名称
     help: 
     description: 
   code:
     label: 分部代码
+    help: 
+    description: 
+  parent:
+    label: 上级分部
+    help: 
+    description: 
+  organization:
+    label: 关联部门
+    help: 
+    description: 
+  currency_type:
+    label: 本位币
+    help: 
+    description: 
+  admins:
+    label: 管理员
+    help: 
+    description: 
+  description:
+    label: 备注
+    help: 
+    description: 
+  sort_no:
+    label: 排序号
     help: 
     description: 
   company_id:
@@ -18,33 +42,9 @@ fields:
     label: 所属分部
     help: 
     description: 
-  currency_type:
-    label: 本位币
-    help: 
-    description: 
-  description:
-    label: 备注
-    help: 
-    description: 
-  name:
-    label: 分部名称
-    help: 
-    description: 
-  organization:
-    label: 关联部门
-    help: 
-    description: 
-  parent:
-    label: 上级分部
-    help: 
-    description: 
-  sort_no:
-    label: 排序号
-    help: 
-    description: 
 listviews:
   all:
     label: 所有
-actions: {}
-CustomLabels:
-  company_action_updateOrgs: 更新组织
+actions:
+  updateOrgs:
+    label: 更新组织

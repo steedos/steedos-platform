@@ -2,20 +2,16 @@ name: cms_categories
 label: Category
 description: 
 fields:
-  description:
-    label: Description
-    help: 
-    description: 
-  featured:
-    label: 
-    help: 
-    description: 
   name:
     label: Name
     help: 
     description: 
-  order:
-    label: Sort Number
+  description:
+    label: Description
+    help: 
+    description: 
+  site:
+    label: Site
     help: 
     description: 
   parent:
@@ -26,11 +22,14 @@ fields:
     label: All Parent Categories
     help: 
     description: 
-  site:
-    label: Site
+  order:
+    label: Sort Number
+    help: 
+    description: 
+  featured:
+    label: 
     help: 
     description: 
 listviews:
   all:
     label: All Categories
-actions: {}

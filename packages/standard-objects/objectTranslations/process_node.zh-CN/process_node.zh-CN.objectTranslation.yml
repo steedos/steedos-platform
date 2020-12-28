@@ -2,45 +2,32 @@ name: process_node
 label: 批准步骤
 description: 
 fields:
-  approval_updates_field_actions:
-    label: 字段更新
+  name:
+    label: API 名称
     help: 
     description: 
-  approver:
-    label: 选择批准人
-    help: 
-    options:
-      - label: 允许提交人手动选择批准人。
-        value: submitter_choose
-      - label: 自动分配至批准人。
-        value: auto_assign
-    description: 
-  assigned_approver_flow_roles:
-    label: 指定审批岗位
+  label:
+    label: 显示名称
     help: 
     description: 
-  assigned_approver_roles:
-    label: 指定审批角色
-    help: 
-    description: 
-  assigned_approver_users:
-    label: 指定用户处理
-    help: 
-    description: 
-  assigned_approver_user_field:
-    label: 指定相关用户字段
+  order:
+    label: 序号
     help: 
     description: 
   description:
     label: 描述
     help: 
     description: 
-  entry_criteria:
-    label: 如果满足以下条件，则进入此步骤
+  process_definition:
+    label: 批准过程
     help: 
     description: 
   filtrad:
     label: 所有记录都应进入此步骤
+    help: 
+    description: 
+  entry_criteria:
+    label: 如果满足以下条件，则进入此步骤
     help: 
     description: 
   if_criteria_not_met:
@@ -67,34 +54,30 @@ fields:
       - i
       - p
     description: 
-  label:
-    label: 显示名称
-    help: 
-    description: 
-  name:
-    label: API 名称
-    help: 
-    description: 
-  order:
-    label: 序号
-    help: 
-    description: 
-  process_definition:
-    label: 批准过程
-    help: 
-    description: 
-  rejection_updates_field_actions:
-    label: 字段更新
-    help: 
-    description: 
-  reject_behavior:
-    label: 拒绝行为
+  approver:
+    label: 选择批准人
     help: 
     options:
-      - label: 执行此步骤的所有拒绝操作和所有最终拒绝操作。（最终拒绝）
-        value: reject_request
-      - label: 只执行此步骤的拒绝操作并将批准请求发回到最近的批准人。（返回 1 步）
-        value: back_to_previous
+      - label: 允许提交人手动选择批准人。
+        value: submitter_choose
+      - label: 自动分配至批准人。
+        value: auto_assign
+    description: 
+  assigned_approver_users:
+    label: 指定用户处理
+    help: 
+    description: 
+  assigned_approver_roles:
+    label: 指定审批角色
+    help: 
+    description: 
+  assigned_approver_flow_roles:
+    label: 指定审批岗位
+    help: 
+    description: 
+  assigned_approver_user_field:
+    label: 指定相关用户字段
+    help: 
     description: 
   when_multiple_approvers:
     label: 当选择多个批准人时
@@ -105,10 +88,31 @@ fields:
       - label: 要求所有选定批准人的 一致 批准
         value: unanimous
     description: 
+  reject_behavior:
+    label: 拒绝行为
+    help: 
+    options:
+      - label: 执行此步骤的所有拒绝操作和所有最终拒绝操作。（最终拒绝）
+        value: reject_request
+      - label: 只执行此步骤的拒绝操作并将批准请求发回到最近的批准人。（返回 1 步）
+        value: back_to_previous
+    description: 
+  approval_updates_field_actions:
+    label: 字段更新
+    help: 
+    description: 
+  rejection_updates_field_actions:
+    label: 字段更新
+    help: 
+    description: 
+groups:
+  specify_step_criteria: 指定步骤条件
+  select_assigned_approver: 选择分配的批准人
+  approval_actions: 批准操作
+  rejection_actions: 拒绝操作
 listviews:
   all:
     label: 所有
-actions: {}
 CustomLabels:
   process_node_field_approver_options_auto_queue: 自动分配至队列。
   process_node_field_approver_options_role: 使用之前选择的用户字段自动分配

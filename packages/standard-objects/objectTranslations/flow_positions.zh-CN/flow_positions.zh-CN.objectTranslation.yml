@@ -2,10 +2,6 @@ name: flow_positions
 label: 岗位成员
 description: 
 fields:
-  org:
-    label: 管辖范围
-    help: 
-    description: 
   role:
     label: 岗位
     help: 
@@ -14,7 +10,10 @@ fields:
     label: 成员
     help: 
     description: 
+  org:
+    label: 管辖范围
+    help: 
+    description: 
 listviews:
   all:
     label: 所有
-actions: {}

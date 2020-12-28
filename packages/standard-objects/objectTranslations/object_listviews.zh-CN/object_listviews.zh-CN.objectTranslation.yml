@@ -2,72 +2,8 @@ name: object_listviews
 label: 列表视图
 description: 
 fields:
-  columns.$.field:
-    label: 字段
-    help: 
-    description: 
-  columns.$:
-    label: 显示的列
-    help: 
-    description: 
-  columns.$.width:
-    label: 宽度
-    help: 
-    description: 
-  columns.$.wrap:
-    label: 是否换行
-    help: 
-    description: 
-  columns:
-    label: 显示的列
-    help: 
-    description: 
-  filters.$.field:
-    label: 字段
-    help: 
-    description: 
-  filters.$:
-    label: Filter
-    help: 
-    description: 
-  filters.$.operation:
-    label: 运算符
-    help: 
-    description: 
-  filters.$.value:
-    label: 值
-    help: 
-    description: 
-  filters:
-    label: 过滤器
-    help: 
-    description: 
-  filter_fields:
-    label: 默认过滤字段
-    help: 
-    description: 
-  filter_logic:
-    label: 过滤逻辑
-    help: 
-    description: 
-  filter_scope:
-    label: 过滤范围
-    help: 
-    description: 
   label:
     label: 显示名称
-    help: 
-    description: 
-  mobile_columns.$.field:
-    label: 字段
-    help: 
-    description: 
-  mobile_columns.$:
-    label: 手机端显示的列
-    help: 
-    description: 
-  mobile_columns:
-    label: 手机端显示的列
     help: 
     description: 
   name:
@@ -77,6 +13,27 @@ fields:
   object_name:
     label: 对象
     help: 
+    description: 
+  filter_scope:
+    label: 过滤范围
+    help: 
+    description: 
+  shared:
+    label: 共享视图到工作区
+    help: 
+    description: 
+  show_count:
+    label: 显示条目数
+    help: 
+    description: 
+  type:
+    label: 视图类型
+    help: 
+    options:
+      - label: 列表
+        value: grid
+      - label: ' 日历视图'
+        value: calendar
     description: 
   scrolling_mode:
     label: 滚动条样式
@@ -89,12 +46,32 @@ fields:
       - label: ' 滚动刷新，初始只加载第一页，一边滚动一边加载下一页'
         value: infinite
     description: 
-  shared:
-    label: 共享视图到工作区
+  columns:
+    label: 显示的列
     help: 
     description: 
-  show_count:
-    label: 显示条目数
+  columns.$:
+    label: 显示的列
+    help: 
+    description: 
+  columns.$.field:
+    label: 字段
+    help: 
+    description: 
+  columns.$.width:
+    label: 宽度
+    help: 
+    description: 
+  columns.$.wrap:
+    label: 是否换行
+    help: 
+    description: 
+  filter_fields:
+    label: 默认过滤字段
+    help: 
+    description: 
+  sort:
+    label: 默认排序规则
     help: 
     description: 
   sort.$:
@@ -114,23 +91,45 @@ fields:
       - label: 倒序
         value: desc
     description: 
-  sort:
-    label: 默认排序规则
+  filters:
+    label: 过滤器
     help: 
     description: 
-  type:
-    label: 视图类型
+  filters.$:
+    label: Filter
     help: 
-    options:
-      - label: 列表
-        value: grid
-      - label: ' 日历视图'
-        value: calendar
+    description: 
+  filters.$.field:
+    label: 字段
+    help: 
+    description: 
+  filters.$.operation:
+    label: 运算符
+    help: 
+    description: 
+  filters.$.value:
+    label: 值
+    help: 
+    description: 
+  filter_logic:
+    label: 过滤逻辑
+    help: 
+    description: 
+  mobile_columns:
+    label: 手机端显示的列
+    help: 
+    description: 
+  mobile_columns.$:
+    label: 手机端显示的列
+    help: 
+    description: 
+  mobile_columns.$.field:
+    label: 字段
+    help: 
     description: 
 listviews:
   all:
     label: 全部
-actions: {}
 CustomLabels:
   object_listviews_field_filters.$: object_listviews_field_filters.$
   object_listviews_field_sort.$: object_listviews_field_sort.$

@@ -6,6 +6,10 @@ fields:
     label: Description
     help: 
     description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
   encoding:
     label: Character Code
     help: 
@@ -29,47 +33,6 @@ fields:
       - label: ISO-8859-1（ISO-LATIN-1）
         value: ISO
     description: 
-  end_time:
-    label: End Time
-    help: 
-    description: 
-  error:
-    label: Error Message
-    help: 
-    description: 
-  external_id_name:
-    label: External_id (Based on this when executing again)
-    help: 
-    description: 
-  failure_count:
-    label: Number of Failed Records
-    help: 
-    description: 
-  field_mapping:
-    label: Field Mappings
-    help: 
-    description: 
-  object_name:
-    label: Object
-    help: 
-    description: 
-  start_time:
-    label: Start Time
-    help: 
-    description: 
-  state:
-    label: State
-    help: 
-    options: 
-    description: 
-  success_count:
-    label: Number of Successful Records
-    help: 
-    description: 
-  total_count:
-    label: Total Number
-    help: 
-    description: 
   value_separator:
     label: Separator
     help: 
@@ -77,9 +40,46 @@ fields:
       - label: ','
         value: ','
     description: 
+  field_mapping:
+    label: Field Mappings
+    help: 
+    description: 
+  external_id_name:
+    label: External_id (Based on this when executing again)
+    help: 
+    description: 
+  success_count:
+    label: Number of Successful Records
+    help: 
+    description: 
+  failure_count:
+    label: Number of Failed Records
+    help: 
+    description: 
+  total_count:
+    label: Total Number
+    help: 
+    description: 
+  start_time:
+    label: Start Time
+    help: 
+    description: 
+  end_time:
+    label: End Time
+    help: 
+    description: 
+  state:
+    label: State
+    help: 
+    options: 
+    description: 
+  error:
+    label: Error Message
+    help: 
+    description: 
 listviews:
   all:
     label: All Queues
-actions: {}
-CustomLabels:
-  queue_import_action_import: queue_import_action_import
+actions:
+  import:
+    label: Perform Import

@@ -2,12 +2,12 @@ name: object_webhooks
 label: WebHooks
 description: 
 fields:
-  active:
-    label: 激活
+  name:
+    label: 名称
     help: 
     description: 
-  content_type:
-    label: 请求数据格式
+  object_name:
+    label: 对象
     help: 
     description: 
   events:
@@ -25,16 +25,16 @@ fields:
     label: 推送字段
     help: 
     description: 
-  name:
-    label: 名称
-    help: 
-    description: 
-  object_name:
-    label: 对象
-    help: 
-    description: 
   payload_url:
     label: URL
+    help: 
+    description: 
+  content_type:
+    label: 请求数据格式
+    help: 
+    description: 
+  active:
+    label: 激活
     help: 
     description: 
   space:
@@ -44,4 +44,3 @@ fields:
 listviews:
   all:
     label: 所有
-actions: {}

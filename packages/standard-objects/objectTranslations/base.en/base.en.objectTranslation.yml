@@ -2,12 +2,12 @@ name: base
 label: 
 description: 
 fields:
-  company_id:
-    label: Division
+  owner:
+    label: Owner
     help: 
     description: 
-  company_ids:
-    label: All Divisions
+  space:
+    label: Space
     help: 
     description: 
   created:
@@ -18,6 +18,18 @@ fields:
     label: Created by
     help: 
     description: 
+  modified:
+    label: Modification Time
+    help: 
+    description: 
+  modified_by:
+    label: Modified by
+    help: 
+    description: 
+  is_deleted:
+    label: Deleted
+    help: 
+    description: 
   deleted:
     label: Deletion Time
     help: 
@@ -26,16 +38,52 @@ fields:
     label: Deleted by
     help: 
     description: 
-  instances.$.state:
-    label: State
+  instances:
+    label: Instances
     help: 
     description: 
   instances.$._id:
     label: Instance ID
     help: 
     description: 
-  instances:
-    label: Instances
+  instances.$.state:
+    label: State
+    help: 
+    description: 
+  sharing:
+    label: Record Level Permission
+    help: 
+    description: 
+  sharing.$:
+    label: Authorization
+    help: 
+    description: 
+  sharing.$.u:
+    label: Authorized Users
+    help: 
+    description: 
+  sharing.$.o:
+    label: Authorized Departments
+    help: 
+    description: 
+  sharing.$.r:
+    label: Rule
+    help: 
+    description: 
+  message_count:
+    label: Number of Messages
+    help: 
+    description: 
+  locked:
+    label: Locked
+    help: 
+    description: 
+  company_id:
+    label: Division
+    help: 
+    description: 
+  company_ids:
+    label: All Divisions
     help: 
     description: 
   instance_state:
@@ -55,81 +103,34 @@ fields:
       - label: Terminated
         value: terminated
     description: 
-  is_deleted:
-    label: Deleted
-    help: 
-    description: 
-  locked:
-    label: Locked
-    help: 
-    description: 
-  message_count:
-    label: Number of Messages
-    help: 
-    description: 
-  modified:
-    label: Modification Time
-    help: 
-    description: 
-  modified_by:
-    label: Modified by
-    help: 
-    description: 
-  owner:
-    label: Owner
-    help: 
-    description: 
-  sharing.$:
-    label: Authorization
-    help: 
-    description: 
-  sharing.$.o:
-    label: Authorized Departments
-    help: 
-    description: 
-  sharing.$.r:
-    label: Rule
-    help: 
-    description: 
-  sharing.$.u:
-    label: Authorized Users
-    help: 
-    description: 
-  sharing:
-    label: Record Level Permission
-    help: 
-    description: 
-  space:
-    label: Space
-    help: 
-    description: 
   _table:
     label: Object Workflow Related Form Table Item Info
-    help: 
-    description: 
-  _table._code:
-    label: Object Workflow Related Form Table Code
     help: 
     description: 
   _table._id:
     label: Object Workflow Related Form Table Item ID
     help: 
     description: 
-listviews: {}
-actions: 
-  standard_query:  
+  _table._code:
+    label: Object Workflow Related Form Table Code
+    help: 
+    description: 
+actions:
+  standard_query:
     label: Search
-  standard_new:  
+  standard_new:
     label: New
-  standard_open_view:  
+  standard_open_view:
     label: Open View
-  standard_edit:  
+  standard_edit:
     label: Edit
-  standard_delete:  
+  standard_delete:
     label: Delete
-  standard_approve:  
+  standard_approve:
     label: New Instance
-  standard_view_instance:  
+  standard_view_instance:
     label: View Instance
-  standard_follow:  
+  standard_follow:
     label: Follow
+  standard_submit_for_approval:
+    label: Submit for Approval

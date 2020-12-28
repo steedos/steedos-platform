@@ -6,32 +6,24 @@ fields:
     label: 头像
     help: 
     description: 
-  company_id:
-    label: 主分部
+  name:
+    label: 姓名
     help: 
     description: 
-  company_ids:
-    label: 所属分部
+  mobile:
+    label: 手机
     help: 
     description: 
   email:
     label: 邮件
     help: 
     description: 
-  email_notification:
-    label: 接收邮件通知
+  username:
+    label: 用户名
     help: 
     description: 
-  is_cloudadmin:
-    label: 是云管理员
-    help: 
-    description: 
-  is_deleted:
-    label: 已删除
-    help: 
-    description: 
-  last_logon:
-    label: 最近登陆
+  steedos_id:
+    label: Steedos ID
     help: 
     description: 
   locale:
@@ -43,7 +35,43 @@ fields:
       - label: English
         value: en-us
     description: 
-  lockout:
+  utcOffset:
+    label: 时区
+    help: 
+    description: 
+  email_notification:
+    label: 接收邮件通知
+    help: 
+    description: 
+  primary_email_verified:
+    label: 主邮箱已验证
+    help: 
+    description: 
+  last_logon:
+    label: 最近登陆
+    help: 
+    description: 
+  is_cloudadmin:
+    label: 是云管理员
+    help: 
+    description: 
+  is_deleted:
+    label: 已删除
+    help: 
+    description: 
+  password_expired:
+    label: Password expired
+    help: 
+    description: 
+  company_id:
+    label: 主分部
+    help: 
+    description: 
+  company_ids:
+    label: 所属分部
+    help: 
+    description: 
+  login_failed_number:
     label: 
     help: 
     description: 
@@ -51,39 +79,12 @@ fields:
     label: 
     help: 
     description: 
-  login_failed_number:
+  lockout:
     label: 
     help: 
     description: 
-  mobile:
-    label: 手机
-    help: 
-    description: 
-  name:
-    label: 姓名
-    help: 
-    description: 
-  password_expired:
-    label: Password expired
-    help: 
-    description: 
-  primary_email_verified:
-    label: 主邮箱已验证
-    help: 
-    description: 
-  steedos_id:
-    label: Steedos ID
-    help: 
-    description: 
-  username:
-    label: 用户名
-    help: 
-    description: 
-  utcOffset:
-    label: 时区
-    help: 
-    description: 
+groups:
+  '-': '-'
 listviews:
   all:
     label: 所有
-actions: {}

@@ -2,48 +2,82 @@ name: forms
 label: 表单
 description: 
 fields:
-  approve_on_create:
-    label: 是否同意审批
+  name:
+    label: 表单
     help: 
     description: 
-  approve_on_delete:
-    label: 是否删除审批
+  state:
+    label: 表单状态
     help: 
+    options:
+      - label: 启用
+        value: enabled
+      - label: 停用
+        value: disabled
     description: 
-  approve_on_modify:
-    label: 是否修改审批
+  description:
+    label: 表单描述
     help: 
     description: 
   category:
     label: 表单分类
     help: 
     description: 
+  is_valid:
+    label: 是否有效
+    help: 
+    description: 
+  instance_style:
+    label: 样式
+    help: 
+    options:
+      - label: 表格
+        value: table
+      - label: 默认
+        value: default
+    description: 
+  historys:
+    label: 历史版本
+    help: 
+    description: 
+  approve_on_create:
+    label: 是否同意审批
+    help: 
+    description: 
+  approve_on_modify:
+    label: 是否修改审批
+    help: 
+    description: 
+  approve_on_delete:
+    label: 是否删除审批
+    help: 
+    description: 
+  enable_workflow:
+    label: 是否启用工作流
+    help: 
+    description: 
+  enable_view_others:
+    label: 是否查看其它表单
+    help: 
+    description: 
   current:
     label: 当前版本
     help: 
     description: 
+  current.form_script:
+    label: Form Script
+    help: 
+    description: 
+  current.name_forumla:
+    label: Name Forumla
+    help: 
+    description: 
+  current.fields:
+    label: Fields
+    help: 
+    description: 
   current.fields.$.code:
     label: Code
-    help: 
-    description: 
-  current.fields.$.is_list_display:
-    label: Display in List
-    help: 
-    description: 
-  current.fields.$.is_multiselect:
-    label: Multiselect
-    help: 
-    description: 
-  current.fields.$.is_required:
-    label: Required
-    help: 
-    description: 
-  current.fields.$.is_searchable:
-    label: Searchable
-    help: 
-    description: 
-  current.fields.$.is_wide:
-    label: Wide
     help: 
     description: 
   current.fields.$.name:
@@ -86,67 +120,40 @@ fields:
       - label: GeolocationR
         value: geolocationR
     description: 
-  current.fields:
-    label: Fields
+  current.fields.$.is_required:
+    label: Required
     help: 
     description: 
-  current.form_script:
-    label: Form Script
+  current.fields.$.is_wide:
+    label: Wide
     help: 
     description: 
-  current.name_forumla:
-    label: Name Forumla
+  current.fields.$.is_list_display:
+    label: Display in List
     help: 
     description: 
-  description:
-    label: 表单描述
+  current.fields.$.is_searchable:
+    label: Searchable
     help: 
     description: 
-  enable_view_others:
-    label: 是否查看其它表单
+  current.fields.$.is_multiselect:
+    label: Multiselect
     help: 
-    description: 
-  enable_workflow:
-    label: 是否启用工作流
-    help: 
-    description: 
-  historys:
-    label: 历史版本
-    help: 
-    description: 
-  instance_style:
-    label: 样式
-    help: 
-    options:
-      - label: 表格
-        value: table
-      - label: 默认
-        value: default
-    description: 
-  is_valid:
-    label: 是否有效
-    help: 
-    description: 
-  name:
-    label: 表单
-    help: 
-    description: 
-  state:
-    label: 表单状态
-    help: 
-    options:
-      - label: 启用
-        value: enabled
-      - label: 停用
-        value: disabled
     description: 
 listviews:
   all:
     label: 所有
-actions: {}
+actions:
+  standard_new:
+    label: 新建
+  standard_edit:
+    label: 编辑
+  standard_delete:
+    label: 删除
+  designForm:
+    label: 表单设计器
 CustomLabels:
   _forms_field_code_error: 字段名 %s 不能包含'.'
-  forms_action_designForm: 表单设计器
   forms_field_current.fields: forms_field_current.fields
   forms_field_current.fields_$_code: forms_field_current.fields_$_code
   forms_field_current.fields_$_is_list_display: forms_field_current.fields_$_is_list_display

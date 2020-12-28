@@ -2,35 +2,16 @@ name: tasks
 label: Task
 description: 
 fields:
-  assignees:
-    label: Assignees
-    help: 
-    description: 
-  description:
-    label: Description
-    help: 
-    description: 
-  due_date:
-    label: Due Date
-    help: 
-    description: 
   name:
     label: Name
     help: 
     description: 
-  priority:
-    label: Priority
+  assignees:
+    label: Assignees
     help: 
-    options:
-      - label: High
-        value: high
-      - label: Normal
-        value: normal
-      - label: Low
-        value: low
     description: 
-  related_to:
-    label: Related to
+  due_date:
+    label: Due Date
     help: 
     description: 
   state:
@@ -48,17 +29,35 @@ fields:
       - label: Deferred
         value: deferred
     description: 
+  priority:
+    label: Priority
+    help: 
+    options:
+      - label: High
+        value: high
+      - label: Normal
+        value: normal
+      - label: Low
+        value: low
+    description: 
+  related_to:
+    label: Related to
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
 listviews:
-  all:
-    label: All Tasks
-  calendar_view:
-    label: Calendar View
-  created_tasks:
-    label: Tasks Assigned to Me
-  my_closed_tasks:
-    label: My Closed Tasks
   my_open_tasks:
     label: My Open Tasks
+  my_closed_tasks:
+    label: My Closed Tasks
+  all:
+    label: All Tasks
+  created_tasks:
+    label: Tasks Assigned to Me
   recent:
     label: Recently Viewed Tasks
-actions: {}
+  calendar_view:
+    label: Calendar View

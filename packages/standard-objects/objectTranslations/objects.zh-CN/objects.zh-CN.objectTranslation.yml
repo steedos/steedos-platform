@@ -2,88 +2,28 @@ name: objects
 label: 对象
 description: 
 fields:
-  actions:
-    label: 操作按钮
-    help: 
-    description: 
-  app_unique_id:
-    label: App Unique ID
-    help: 
-    description: 
-  app_version:
-    label: App Version
-    help: 
-    description: 
-  custom:
-    label: 自定义
-    help: 
-    description: 
   datasource:
     label: 数据源
     help: 
     description: 
-  description:
-    label: 备注
+  label:
+    label: 显示名
     help: 
     description: 
-  enable_api:
-    label: 允许 API 访问
+  name:
+    label: API 名称
     help: 
     description: 
-  enable_audit:
-    label: 记录字段历史
-    help: 
-    description: 
-  enable_chatter:
-    label: 允许添加留言
-    help: 
-    description: 
-  enable_events:
-    label: 允许添加事件
-    help: 
-    description: 
-  enable_files:
-    label: 允许上传附件
-    help: 
-    description: 
-  enable_inline_edit:
-    label: 允许编辑单个字段
-    help: 
-    description: 
-  enable_instances:
-    label: 允许查看申请单
-    help: 
-    description: 
-  enable_notes:
-    label: 允许添加备注
-    help: 
-    description: 
-  enable_search:
-    label: 允许搜索
-    help: 
-    description: 
-  enable_share:
-    label: 允许共享记录
-    help: 
-    description: 
-  enable_tasks:
-    label: 允许添加任务
-    help: 
-    description: 
-  enable_workflow:
-    label: 允许配置对象流程
-    help: 
-    description: 
-  fields:
-    label: 字段
-    help: 
-    description: 
-  fields_serial_number:
-    label: 
+  table_name:
+    label: 数据库表名称
     help: 
     description: 
   icon:
     label: 图标
+    help: 
+    description: 
+  is_enable:
+    label: 启用
     help: 
     description: 
   in_development:
@@ -95,72 +35,135 @@ fields:
       - label: 已部署
         value: '0'
     description: 
-  is_deleted:
-    label: 已删除
+  enable_search:
+    label: 允许搜索
     help: 
     description: 
-  is_enable:
-    label: 启用
+  enable_files:
+    label: 允许上传附件
     help: 
     description: 
-  is_system:
-    label: 系统
+  enable_tasks:
+    label: 允许添加任务
     help: 
     description: 
-  label:
-    label: 显示名
+  enable_notes:
+    label: 允许添加备注
     help: 
     description: 
-  list_views:
-    label: 列表视图
+  enable_events:
+    label: 允许添加事件
     help: 
     description: 
-  name:
-    label: API 名称
+  enable_api:
+    label: 允许 API 访问
     help: 
     description: 
-  owner:
-    label: 拥有者
+  enable_share:
+    label: 允许共享记录
     help: 
     description: 
-  permission_set:
-    label: 权限设置
+  enable_workflow:
+    label: 允许配置对象流程
     help: 
     description: 
-  relatedList:
-    label: Related List
+  enable_instances:
+    label: 允许查看申请单
     help: 
     description: 
-  reload_time:
-    label: 
+  enable_chatter:
+    label: 允许添加留言
+    help: 
+    description: 
+  enable_audit:
+    label: 记录字段历史
+    help: 
+    description: 
+  enable_inline_edit:
+    label: 允许编辑单个字段
+    help: 
+    description: 
+  description:
+    label: 备注
     help: 
     description: 
   sidebar:
     label: 左侧列表
     help: 
     description: 
-  table_name:
-    label: 数据库表名称
+  fields:
+    label: 字段
+    help: 
+    description: 
+  list_views:
+    label: 列表视图
+    help: 
+    description: 
+  actions:
+    label: 操作按钮
+    help: 
+    description: 
+  relatedList:
+    label: Related List
+    help: 
+    description: 
+  permission_set:
+    label: 权限设置
     help: 
     description: 
   triggers:
     label: 触发器
     help: 
     description: 
+  custom:
+    label: 自定义
+    help: 
+    description: 
+  owner:
+    label: 拥有者
+    help: 
+    description: 
+  app_unique_id:
+    label: App Unique ID
+    help: 
+    description: 
+  app_version:
+    label: App Version
+    help: 
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+  fields_serial_number:
+    label: 
+    help: 
+    description: 
+  is_deleted:
+    label: 已删除
+    help: 
+    description: 
+  reload_time:
+    label: 
+    help: 
+    description: 
+groups:
+  external_data_source: 外部数据源
+  switch: 功能开关
 listviews:
   all:
     label: 全部
   customize:
     label: 自定义
-  deleted:
-    label: 已删除
   system:
     label: 系统
+  deleted:
+    label: 已删除
 actions:
-  copy_odata:
-    label: 复制OData网址
   show_object:
     label: 预览
+  copy_odata:
+    label: 复制OData网址
 CustomLabels:
   objects_field_datasource_defaultValue: 默认数据源
   objects_field_enable_approvals: 显示申请单历史步骤

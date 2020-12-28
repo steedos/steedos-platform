@@ -2,28 +2,28 @@ name: audit_records
 label: 字段修改历史
 description: 
 fields:
-  created:
-    label: 时间
+  related_to:
+    label: 相关项
     help: 
     description: 
-  created_by:
-    label: 用户
+  created:
+    label: 时间
     help: 
     description: 
   field_name:
     label: 字段
     help: 
     description: 
-  new_value:
-    label: 新值
+  created_by:
+    label: 用户
     help: 
     description: 
   previous_value:
     label: 原始值
     help: 
     description: 
-  related_to:
-    label: 相关项
+  new_value:
+    label: 新值
     help: 
     description: 
 listviews:
@@ -31,4 +31,3 @@ listviews:
     label: 全部
   recent:
     label: 最近查看
-actions: {}

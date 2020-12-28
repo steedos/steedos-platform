@@ -2,16 +2,24 @@ name: events
 label: Event
 description: 
 fields:
-  assignees:
-    label: Assignees
+  name:
+    label: Name
     help: 
     description: 
-  description:
-    label: Description
+  start:
+    label: Start Timne
     help: 
     description: 
   end:
     label: End Time
+    help: 
+    description: 
+  assignees:
+    label: Assignees
+    help: 
+    description: 
+  related_to:
+    label: Related to
     help: 
     description: 
   is_all_day:
@@ -22,21 +30,12 @@ fields:
     label: Location
     help: 
     description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  related_to:
-    label: Related to
-    help: 
-    description: 
-  start:
-    label: Start Timne
+  description:
+    label: Description
     help: 
     description: 
 listviews:
-  all:
-    label: All Events
   calendar_view:
     label: Calendar View
-actions: {}
+  all:
+    label: All Events

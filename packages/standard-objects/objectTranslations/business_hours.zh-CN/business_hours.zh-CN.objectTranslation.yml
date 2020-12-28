@@ -2,32 +2,28 @@ name: business_hours
 label: 工作时间
 description: 
 fields:
-  end:
-    label: 结束时间
+  name:
+    label: 名称
     help: 
     description: 
   is_default:
     label: 默认工作时间
     help: 
     description: 
-  lunch_end:
-    label: 午休结束时间
+  start:
+    label: 开始时间
+    help: 
+    description: 
+  end:
+    label: 结束时间
     help: 
     description: 
   lunch_start:
     label: 午休开始时间
     help: 
     description: 
-  name:
-    label: 名称
-    help: 
-    description: 
-  start:
-    label: 开始时间
-    help: 
-    description: 
-  utc_offset:
-    label: GMT时差
+  lunch_end:
+    label: 午休结束时间
     help: 
     description: 
   working_days:
@@ -42,10 +38,13 @@ fields:
       - 'Friday:5'
       - 'Saturday:6'
     description: 
+  utc_offset:
+    label: GMT时差
+    help: 
+    description: 
 listviews:
   all:
     label: 全部
-actions: {}
 CustomLabels:
   business_hours_field_working_days_options_0: 星期日
   business_hours_field_working_days_options_1: 星期一

@@ -2,13 +2,11 @@ name: space_users_invite
 label: 
 description: 
 fields:
-  invited_users:
-    label: Invited users
-    help: 
-    description: 
   valid:
     label: 
     help: 
     description: 
-listviews: {}
-actions: {}
+  invited_users:
+    label: Invited users
+    help: 
+    description: 

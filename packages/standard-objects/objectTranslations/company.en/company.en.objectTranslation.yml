@@ -2,12 +2,36 @@ name: company
 label: Division
 description: 
 fields:
-  admins:
-    label: Admin Users
+  name:
+    label: Name
     help: 
     description: 
   code:
     label: Code
+    help: 
+    description: 
+  parent:
+    label: Parent
+    help: 
+    description: 
+  organization:
+    label: Corresponding Department
+    help: 
+    description: 
+  currency_type:
+    label: Currency Type
+    help: 
+    description: 
+  admins:
+    label: Admin Users
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  sort_no:
+    label: Sort Number
     help: 
     description: 
   company_id:
@@ -18,33 +42,9 @@ fields:
     label: 
     help: 
     description: 
-  currency_type:
-    label: Currency Type
-    help: 
-    description: 
-  description:
-    label: Description
-    help: 
-    description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  organization:
-    label: Corresponding Department
-    help: 
-    description: 
-  parent:
-    label: Parent
-    help: 
-    description: 
-  sort_no:
-    label: Sort Number
-    help: 
-    description: 
 listviews:
   all:
     label: All Divisions
-actions: {}
-CustomLabels:
-  company_action_updateOrgs: company_action_updateOrgs
+actions:
+  updateOrgs:
+    label: Update The Whole Company

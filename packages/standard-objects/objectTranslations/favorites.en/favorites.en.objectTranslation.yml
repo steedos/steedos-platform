@@ -10,10 +10,6 @@ fields:
     label: Object
     help: 
     description: 
-  record_id:
-    label: Record ID or List View ID（code）
-    help: 
-    description: 
   record_type:
     label: Type
     help: 
@@ -23,6 +19,10 @@ fields:
       - label: List View
         value: LIST_VIEW
     description: 
+  record_id:
+    label: Record ID or List View ID（code）
+    help: 
+    description: 
   sort_no:
     label: Sort Number
     help: 
@@ -30,4 +30,6 @@ fields:
 listviews:
   all:
     label: All
-actions: {}
+actions:
+  standard_new:
+    label: New

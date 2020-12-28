@@ -2,20 +2,20 @@ name: chat_subscriptions
 label: Chat Subscription
 description: 
 fields:
-  last_message_date:
-    label: Send Time of Last Message
-    help: 
-    description: 
-  last_message_text:
-    label: Last Message
-    help: 
-    description: 
   name:
     label: Name
     help: 
     description: 
   related_to:
     label: Related Object Record
+    help: 
+    description: 
+  last_message_text:
+    label: Last Message
+    help: 
+    description: 
+  last_message_date:
+    label: Send Time of Last Message
     help: 
     description: 
   unread:
@@ -25,4 +25,3 @@ fields:
 listviews:
   all:
     label: All
-actions: {}

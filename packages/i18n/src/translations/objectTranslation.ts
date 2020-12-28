@@ -353,6 +353,10 @@ function convertObjectTranslation(objectTranslation, filePath){
         }
     })
 
+    _.each(object.groups, function(value, key){
+        template[getFieldGroupKey(objectName, key)] = value;
+    })
+
     _.each(object.actions, function(action, actionName){
         template[getActionLabelKey( objectName, actionName)] = action.label;
     })

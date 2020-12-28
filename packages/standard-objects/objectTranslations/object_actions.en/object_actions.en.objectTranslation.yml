@@ -2,8 +2,8 @@ name: object_actions
 label: Object Action
 description: 
 fields:
-  is_enable:
-    label: Enable
+  object:
+    label: Object
     help: 
     description: 
   label:
@@ -14,8 +14,12 @@ fields:
     label: API Name
     help: 
     description: 
-  object:
-    label: Object
+  is_enable:
+    label: Enable
+    help: 
+    description: 
+  visible:
+    label: Visible
     help: 
     description: 
   'on':
@@ -26,14 +30,9 @@ fields:
     label: Execute Script
     help: 
     description: 
-  visible:
-    label: Visible
-    help: 
-    description: 
 listviews:
   all:
     label: All
-actions: {}
 CustomLabels:
   _object_actions_none_todo: >-
     The action instance is not configured, please configure it in the code.<a

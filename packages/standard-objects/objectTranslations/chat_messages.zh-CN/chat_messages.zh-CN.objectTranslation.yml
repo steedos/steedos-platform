@@ -2,12 +2,12 @@ name: chat_messages
 label: 消息
 description: 
 fields:
-  name:
-    label: 内容
-    help: 
-    description: 
   related_to:
     label: 相关
+    help: 
+    description: 
+  name:
+    label: 内容
     help: 
     description: 
   type:
@@ -28,4 +28,3 @@ fields:
 listviews:
   all:
     label: 所有
-actions: {}

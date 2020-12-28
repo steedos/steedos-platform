@@ -2,12 +2,12 @@ name: notes
 label: Notes
 description: 
 fields:
-  description:
-    label: Description
-    help: 
-    description: 
   name:
     label: Title
+    help: 
+    description: 
+  description:
+    label: Description
     help: 
     description: 
   related_to:
@@ -17,8 +17,7 @@ fields:
 listviews:
   all:
     label: All Notes
-  mine:
-    label: My Notes
   recent:
     label: Recently Viewed Notes
-actions: {}
+  mine:
+    label: My Notes

@@ -2,24 +2,24 @@ name: billing_pay_records
 label: 订单
 description: 
 fields:
-  end_date:
-    label: 租用日期至
-    help: 
-    description: 
   info:
     label: 详单详情
     help: 
     description: 
-  modules:
-    label: 模块
+  total_fee:
+    label: 金额￥
     help: 
     description: 
   paid:
     label: 已付款
     help: 
     description: 
-  total_fee:
-    label: 金额￥
+  modules:
+    label: 模块
+    help: 
+    description: 
+  end_date:
+    label: 租用日期至
     help: 
     description: 
   user_count:
@@ -29,4 +29,3 @@ fields:
 listviews:
   all:
     label: 所有
-actions: {}

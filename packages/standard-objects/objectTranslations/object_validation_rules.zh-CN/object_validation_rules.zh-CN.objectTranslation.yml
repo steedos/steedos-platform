@@ -2,6 +2,14 @@ name: object_validation_rules
 label: 对象验证规则
 description: 
 fields:
+  name:
+    label: 规则名
+    help: 
+    description: 
+  object_name:
+    label: 所属对象
+    help: 
+    description: 
   active:
     label: 已启用
     help: 
@@ -18,18 +26,9 @@ fields:
     label: 错误消息
     help: 
     description: 
-  name:
-    label: 规则名
-    help: 
-    description: 
-  object_name:
-    label: 所属对象
-    help: 
-    description: 
 listviews:
   all:
     label: All
-actions: {}
 CustomLabels:
   object_validation_rules_field_error_display_field: 错误位置
   object_validation_rules_field_error_display_field_inlineHelpText: >-

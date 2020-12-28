@@ -97,6 +97,8 @@ fields:
     label: 版本名称
     help: 
     description: 
+groups:
+  package_components: 软件包组件
 listviews:
   all:
     label: 所有

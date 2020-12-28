@@ -2,20 +2,12 @@ name: OAuth2Clients
 label: OAuth2 Client
 description: 
 fields:
-  active:
-    label: Active
-    help: 
-    description: 
-  clientId:
-    label: Client ID
-    help: 
-    description: 
   clientName:
     label: Name
     help: 
     description: 
-  clientSecret:
-    label: Secret
+  active:
+    label: Active
     help: 
     description: 
   expires:
@@ -26,7 +18,14 @@ fields:
     label: Callback URL
     help: 
     description: 
+  clientId:
+    label: Client ID
+    help: 
+    description: 
+  clientSecret:
+    label: Secret
+    help: 
+    description: 
 listviews:
   all:
     label: All OAuth2 Clients
-actions: {}

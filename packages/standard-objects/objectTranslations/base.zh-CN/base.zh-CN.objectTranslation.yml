@@ -2,12 +2,12 @@ name: base
 label: base
 description: 
 fields:
-  company_id:
-    label: 主分部
+  owner:
+    label: 所有者
     help: 
     description: 
-  company_ids:
-    label: 所属分部
+  space:
+    label: 所属工作区
     help: 
     description: 
   created:
@@ -18,6 +18,18 @@ fields:
     label: 创建人
     help: 
     description: 
+  modified:
+    label: 修改时间
+    help: 
+    description: 
+  modified_by:
+    label: 修改人
+    help: 
+    description: 
+  is_deleted:
+    label: 已删除
+    help: 
+    description: 
   deleted:
     label: 删除时间
     help: 
@@ -26,16 +38,52 @@ fields:
     label: 删除人
     help: 
     description: 
-  instances.$.state:
-    label: 申请单状态
+  instances:
+    label: 申请单
     help: 
     description: 
   instances.$._id:
     label: 申请单ID
     help: 
     description: 
-  instances:
-    label: 申请单
+  instances.$.state:
+    label: 申请单状态
+    help: 
+    description: 
+  sharing:
+    label: 记录级权限
+    help: 
+    description: 
+  sharing.$:
+    label: 授权条件
+    help: 
+    description: 
+  sharing.$.u:
+    label: 授权用户
+    help: 
+    description: 
+  sharing.$.o:
+    label: 授权组织
+    help: 
+    description: 
+  sharing.$.r:
+    label: 来自规则
+    help: 
+    description: 
+  message_count:
+    label: 留言数
+    help: 
+    description: 
+  locked:
+    label: 已锁定
+    help: 
+    description: 
+  company_id:
+    label: 主分部
+    help: 
+    description: 
+  company_ids:
+    label: 所属分部
     help: 
     description: 
   instance_state:
@@ -55,83 +103,34 @@ fields:
       - label: 已取消
         value: terminated
     description: 
-  is_deleted:
-    label: 已删除
-    help: 
-    description: 
-  locked:
-    label: 已锁定
-    help: 
-    description: 
-  message_count:
-    label: 留言数
-    help: 
-    description: 
-  modified:
-    label: 修改时间
-    help: 
-    description: 
-  modified_by:
-    label: 修改人
-    help: 
-    description: 
-  owner:
-    label: 所有者
-    help: 
-    description: 
-  sharing.$:
-    label: 授权条件
-    help: 
-    description: 
-  sharing.$.o:
-    label: 授权组织
-    help: 
-    description: 
-  sharing.$.r:
-    label: 来自规则
-    help: 
-    description: 
-  sharing.$.u:
-    label: 授权用户
-    help: 
-    description: 
-  sharing:
-    label: 记录级权限
-    help: 
-    description: 
-  space:
-    label: 所属工作区
-    help: 
-    description: 
   _table:
     label: 记录对象流程映射功能中表单中表格行信息
-    help: 
-    description: 
-  _table._code:
-    label: Object Workflow Related Form Table Code
     help: 
     description: 
   _table._id:
     label: Object Workflow Related Form Table Item ID
     help: 
     description: 
-listviews: {}
+  _table._code:
+    label: Object Workflow Related Form Table Code
+    help: 
+    description: 
 actions:
-  standard_approve: 
-    label: 发起审批
-  standard_delete:  
-    label: 删除
-  standard_edit:  
-    label: 编辑
-  standard_follow:  
-    label: 关注
-  standard_new:  
-    label: 新建
-  standard_open_view:  
-    label: 查看
-  standard_query:  
+  standard_query:
     label: 查找
-  standard_view_instance:  
+  standard_new:
+    label: 新建
+  standard_open_view:
+    label: 查看
+  standard_edit:
+    label: 编辑
+  standard_delete:
+    label: 删除
+  standard_approve:
+    label: 发起审批
+  standard_view_instance:
     label: 查看审批单
-  standard_submit_for_approval:  
+  standard_follow:
+    label: 关注
+  standard_submit_for_approval:
     label: 提请批准

@@ -2,10 +2,6 @@ name: object_recent_viewed
 label: View Log
 description: 
 fields:
-  count:
-    label: 
-    help: 
-    description: 
   record:
     label: Record
     help: 
@@ -14,7 +10,10 @@ fields:
     label: 
     help: 
     description: 
+  count:
+    label: 
+    help: 
+    description: 
 listviews:
   all:
     label: 
-actions: {}

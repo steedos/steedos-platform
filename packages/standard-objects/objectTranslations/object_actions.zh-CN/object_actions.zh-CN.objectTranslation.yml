@@ -2,8 +2,8 @@ name: object_actions
 label: 操作按钮
 description: 
 fields:
-  is_enable:
-    label: 启用
+  object:
+    label: 所属对象
     help: 
     description: 
   label:
@@ -14,8 +14,12 @@ fields:
     label: API 名称
     help: 
     description: 
-  object:
-    label: 所属对象
+  is_enable:
+    label: 启用
+    help: 
+    description: 
+  visible:
+    label: 可见
     help: 
     description: 
   'on':
@@ -26,14 +30,9 @@ fields:
     label: 执行的脚本
     help: 
     description: 
-  visible:
-    label: 可见
-    help: 
-    description: 
 listviews:
   all:
     label: 所有
-actions: {}
 CustomLabels:
   _object_actions_none_todo: >-
     未配置操作按钮实例，请在代码中配置。<a target='_blank'

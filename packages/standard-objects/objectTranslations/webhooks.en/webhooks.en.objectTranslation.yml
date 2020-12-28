@@ -2,31 +2,30 @@ name: webhooks
 label: Webhook
 description: 
 fields:
-  active:
-    label: Active
-    help: 
-    description: 
-  content_type:
-    label: Format of Request
-    help: 
-    description: 
-  description:
-    label: Description
+  name:
+    label: Name
     help: 
     description: 
   flow:
     label: Workflow
     help: 
     description: 
-  name:
-    label: Name
-    help: 
-    description: 
   payload_url:
     label: Payload URL
+    help: 
+    description: 
+  content_type:
+    label: Format of Request
+    help: 
+    description: 
+  active:
+    label: Active
+    help: 
+    description: 
+  description:
+    label: Description
     help: 
     description: 
 listviews:
   all:
     label: All Webhooks
-actions: {}

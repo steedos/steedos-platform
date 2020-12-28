@@ -2,88 +2,28 @@ name: objects
 label: Object
 description: 
 fields:
-  actions:
-    label: Actions
-    help: 
-    description: 
-  app_unique_id:
-    label: App Unique ID
-    help: 
-    description: 
-  app_version:
-    label: App Version
-    help: 
-    description: 
-  custom:
-    label: Custom
-    help: 
-    description: 
   datasource:
     label: Datasource
     help: 
     description: 
-  description:
-    label: Description
+  label:
+    label: Label
     help: 
     description: 
-  enable_api:
-    label: Enable API
+  name:
+    label: API Name
     help: 
     description: 
-  enable_audit:
-    label: Enable Audit
-    help: 
-    description: 
-  enable_chatter:
-    label: Enable Chatter
-    help: 
-    description: 
-  enable_events:
-    label: Enable Events
-    help: 
-    description: 
-  enable_files:
-    label: Enable Files
-    help: 
-    description: 
-  enable_inline_edit:
-    label: Enable Single Field Edit
-    help: 
-    description: 
-  enable_instances:
-    label: Enable Instances
-    help: 
-    description: 
-  enable_notes:
-    label: Enable Notes
-    help: 
-    description: 
-  enable_search:
-    label: Enable Search
-    help: 
-    description: 
-  enable_share:
-    label: Enable Share
-    help: 
-    description: 
-  enable_tasks:
-    label: Enable Tasks
-    help: 
-    description: 
-  enable_workflow:
-    label: Enable Workflow
-    help: 
-    description: 
-  fields:
-    label: Fields
-    help: 
-    description: 
-  fields_serial_number:
-    label: 
+  table_name:
+    label: Table Name
     help: 
     description: 
   icon:
     label: Icon
+    help: 
+    description: 
+  is_enable:
+    label: Enable
     help: 
     description: 
   in_development:
@@ -95,72 +35,135 @@ fields:
       - label: Deployed
         value: '0'
     description: 
-  is_deleted:
-    label: 
+  enable_search:
+    label: Enable Search
     help: 
     description: 
-  is_enable:
-    label: Enable
+  enable_files:
+    label: Enable Files
     help: 
     description: 
-  is_system:
-    label: System
+  enable_tasks:
+    label: Enable Tasks
     help: 
     description: 
-  label:
-    label: Label
+  enable_notes:
+    label: Enable Notes
     help: 
     description: 
-  list_views:
-    label: ListViews
+  enable_events:
+    label: Enable Events
     help: 
     description: 
-  name:
-    label: API Name
+  enable_api:
+    label: Enable API
     help: 
     description: 
-  owner:
-    label: 
+  enable_share:
+    label: Enable Share
     help: 
     description: 
-  permission_set:
-    label: Permission Set
+  enable_workflow:
+    label: Enable Workflow
     help: 
     description: 
-  relatedList:
-    label: Related List
+  enable_instances:
+    label: Enable Instances
     help: 
     description: 
-  reload_time:
-    label: 
+  enable_chatter:
+    label: Enable Chatter
+    help: 
+    description: 
+  enable_audit:
+    label: Enable Audit
+    help: 
+    description: 
+  enable_inline_edit:
+    label: Enable Single Field Edit
+    help: 
+    description: 
+  description:
+    label: Description
     help: 
     description: 
   sidebar:
     label: Sidebar
     help: 
     description: 
-  table_name:
-    label: Table Name
+  fields:
+    label: Fields
+    help: 
+    description: 
+  list_views:
+    label: ListViews
+    help: 
+    description: 
+  actions:
+    label: Actions
+    help: 
+    description: 
+  relatedList:
+    label: Related List
+    help: 
+    description: 
+  permission_set:
+    label: Permission Set
     help: 
     description: 
   triggers:
     label: Triggers
     help: 
     description: 
+  custom:
+    label: Custom
+    help: 
+    description: 
+  owner:
+    label: 
+    help: 
+    description: 
+  app_unique_id:
+    label: App Unique ID
+    help: 
+    description: 
+  app_version:
+    label: App Version
+    help: 
+    description: 
+  is_system:
+    label: System
+    help: 
+    description: 
+  fields_serial_number:
+    label: 
+    help: 
+    description: 
+  is_deleted:
+    label: 
+    help: 
+    description: 
+  reload_time:
+    label: 
+    help: 
+    description: 
+groups:
+  external_data_source: External data source
+  switch: Switch
 listviews:
   all:
     label: All
   customize:
     label: Customize
-  deleted:
-    label: Deleted
   system:
     label: System
+  deleted:
+    label: Deleted
 actions:
-  copy_odata:
-    label: Copy OData URL
   show_object:
     label: Preview
+  copy_odata:
+    label: Copy OData URL
 CustomLabels:
   objects_field_datasource_defaultValue: Default data source
   objects_field_enable_approvals: objects_field_enable_approvals

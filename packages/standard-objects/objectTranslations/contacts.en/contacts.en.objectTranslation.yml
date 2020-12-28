@@ -2,32 +2,37 @@ name: contacts
 label: 联系人
 description: 
 fields:
+  name:
+    label: 姓名
+    help: 
+    description: 
+  owner:
+    label: 我方客户经理
+    help: 
+    description: 
   account:
     label: 所属客户
     help: 
     description: 
-  assistant:
-    label: 助理
+  reports_to_id:
+    label: 直属上司
     help: 
     description: 
-  asst_phone:
-    label: 助理电话
+  salutation:
+    label: 性别
     help: 
+    options:
+      - label: 男
+        value: Male
+      - label: 女
+        value: Female
     description: 
-  birthdate:
-    label: 生日
+  title:
+    label: 职务
     help: 
     description: 
   department:
     label: 部门
-    help: 
-    description: 
-  description:
-    label: 备注
-    help: 
-    description: 
-  do_not_call:
-    label: 请勿致电
     help: 
     description: 
   email:
@@ -38,32 +43,84 @@ fields:
     label: 传真
     help: 
     description: 
-  fax_opt_out:
-    label: 退出传真列表
+  phone:
+    label: 工作电话
     help: 
     description: 
-  has_opted_out_of_email:
-    label: 退出邮件列表
-    help: 
-    description: 
-  hoddy:
-    label: 爱好
+  mobile:
+    label: 手机
     help: 
     description: 
   home_phone:
     label: 家庭电话
     help: 
     description: 
-  individual:
-    label: 个人
+  birthdate:
+    label: 生日
+    help: 
+    description: 
+  mailing_address:
+    label: 邮寄地址
+    help: 
+    description: 
+  user:
+    label: 外部用户
+    help: 
+    description: 
+  hoddy:
+    label: 爱好
+    help: 
+    description: 
+  description:
+    label: 备注
+    help: 
+    description: 
+  last_save_date:
+    label: 上次保持联系保存日期
     help: 
     description: 
   last_request_date:
     label: 上次保持联系请求日期
     help: 
     description: 
-  last_save_date:
-    label: 上次保持联系保存日期
+  individual:
+    label: 个人
+    help: 
+    description: 
+  other_city:
+    label: 其他地址-城市
+    help: 
+    description: 
+  other_street:
+    label: 其他地址-街道
+    help: 
+    description: 
+  other_zip:
+    label: 其他地址-邮政编码
+    help: 
+    description: 
+  other_phone:
+    label: 其他电话
+    help: 
+    description: 
+  assistant:
+    label: 助理
+    help: 
+    description: 
+  asst_phone:
+    label: 助理电话
+    help: 
+    description: 
+  do_not_call:
+    label: 请勿致电
+    help: 
+    description: 
+  has_opted_out_of_email:
+    label: 退出邮件列表
+    help: 
+    description: 
+  fax_opt_out:
+    label: 退出传真列表
     help: 
     description: 
   lead_source:
@@ -91,80 +148,26 @@ fields:
       - label: 网站
         value: Website
     description: 
-  mailing_address:
-    label: 邮寄地址
-    help: 
-    description: 
-  mobile:
-    label: 手机
-    help: 
-    description: 
-  name:
-    label: 姓名
-    help: 
-    description: 
-  other_city:
-    label: 其他地址-城市
-    help: 
-    description: 
-  other_phone:
-    label: 其他电话
-    help: 
-    description: 
-  other_street:
-    label: 其他地址-街道
-    help: 
-    description: 
-  other_zip:
-    label: 其他地址-邮政编码
-    help: 
-    description: 
-  owner:
-    label: 我方客户经理
-    help: 
-    description: 
-  phone:
-    label: 工作电话
-    help: 
-    description: 
-  reports_to_id:
-    label: 直属上司
-    help: 
-    description: 
-  salutation:
-    label: 性别
-    help: 
-    options:
-      - label: 男
-        value: Male
-      - label: 女
-        value: Female
-    description: 
-  title:
-    label: 职务
-    help: 
-    description: 
-  user:
-    label: 外部用户
-    help: 
-    description: 
+groups:
+  地址信息: 地址信息
+  其他地址信息: 其他地址信息
 listviews:
+  recent:
+    label: 最近查看
   all:
     label: 所有联系人
   mine:
     label: 我的联系人
-  recent:
-    label: 最近查看
 actions:
-  createCustomerSpaceUser:
-    label: 创建客户用户
   createSupplierSpaceUser:
     label: 创建供应商用户
-  disableCustomerSpaceUser:
-    label: 禁用客户用户
-  disableSupplierSpaceUser:
-    label: 禁用供应商用户
-  viewCustomerSpaceUser:
-    label: 查看客户用户
   viewSupplierSpaceUser:
     label: 查看供应商用户
+  disableSupplierSpaceUser:
+    label: 禁用供应商用户
+  createCustomerSpaceUser:
+    label: 创建客户用户
+  viewCustomerSpaceUser:
+    label: 查看客户用户
+  disableCustomerSpaceUser:
+    label: 禁用客户用户

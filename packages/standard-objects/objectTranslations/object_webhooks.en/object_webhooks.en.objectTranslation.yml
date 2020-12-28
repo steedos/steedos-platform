@@ -2,12 +2,12 @@ name: object_webhooks
 label: Object Webhook
 description: 
 fields:
-  active:
-    label: Active
+  name:
+    label: Name
     help: 
     description: 
-  content_type:
-    label: Format of Request
+  object_name:
+    label: Object
     help: 
     description: 
   events:
@@ -25,16 +25,16 @@ fields:
     label: Fields
     help: 
     description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  object_name:
-    label: Object
-    help: 
-    description: 
   payload_url:
     label: Payload URL
+    help: 
+    description: 
+  content_type:
+    label: Format of Request
+    help: 
+    description: 
+  active:
+    label: Active
     help: 
     description: 
   space:
@@ -44,4 +44,3 @@ fields:
 listviews:
   all:
     label: All Object Webhooks
-actions: {}

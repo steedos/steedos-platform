@@ -2,6 +2,10 @@ name: settings
 label: Setting
 description: 
 fields:
+  type:
+    label: Type
+    help: 
+    description: 
   object_name:
     label: Object
     help: 
@@ -14,9 +18,3 @@ fields:
     label: Settings
     help: 
     description: 
-  type:
-    label: Type
-    help: 
-    description: 
-listviews: {}
-actions: {}

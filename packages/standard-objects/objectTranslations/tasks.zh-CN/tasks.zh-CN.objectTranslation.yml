@@ -2,35 +2,16 @@ name: tasks
 label: 任务
 description: 
 fields:
-  assignees:
-    label: 分派给
-    help: 
-    description: 
-  description:
-    label: 描述
-    help: 
-    description: 
-  due_date:
-    label: 到期日期
-    help: 
-    description: 
   name:
     label: 主题
     help: 
     description: 
-  priority:
-    label: 优先级
+  assignees:
+    label: 分派给
     help: 
-    options:
-      - label: 高
-        value: high
-      - label: 中
-        value: normal
-      - label: 低
-        value: low
     description: 
-  related_to:
-    label: 相关项
+  due_date:
+    label: 到期日期
     help: 
     description: 
   state:
@@ -48,17 +29,35 @@ fields:
       - label: 延期
         value: deferred
     description: 
+  priority:
+    label: 优先级
+    help: 
+    options:
+      - label: 高
+        value: high
+      - label: 中
+        value: normal
+      - label: 低
+        value: low
+    description: 
+  related_to:
+    label: 相关项
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
 listviews:
-  all:
-    label: 所有任务
-  calendar_view:
-    label: 日历视图
-  created_tasks:
-    label: 交办任务
-  my_closed_tasks:
-    label: 已办任务
   my_open_tasks:
     label: 待办任务
+  my_closed_tasks:
+    label: 已办任务
+  all:
+    label: 所有任务
+  created_tasks:
+    label: 交办任务
   recent:
     label: 最近查看
-actions: {}
+  calendar_view:
+    label: 日历视图

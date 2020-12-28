@@ -2,6 +2,14 @@ name: connected_apps
 label: External Application
 description: 
 fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  code:
+    label: Code ( API Name )
+    help: 
+    description: 
   active:
     label: Active
     help: 
@@ -10,8 +18,20 @@ fields:
     label: Logo
     help: 
     description: 
+  description:
+    label: Description
+    help: 
+    description: 
   app_website:
     label: Official Website
+    help: 
+    description: 
+  start_url:
+    label: Start URL
+    help: 
+    description: 
+  mobile_start_url:
+    label: Start URL of Mobile
     help: 
     description: 
   client_id:
@@ -22,36 +42,12 @@ fields:
     label: Client Secret
     help: 
     description: 
-  code:
-    label: Code ( API Name )
-    help: 
-    description: 
-  description:
-    label: Description
-    help: 
-    description: 
-  mobile_start_url:
-    label: Start URL of Mobile
-    help: 
-    description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  oauth2_callback_url:
-    label: Callback URL
-    help: 
-    description: 
   oauth2_enabled:
     label: OAuth2 Enabled
     help: 
     description: 
-  oauth2_logout_enabled:
-    label: OAuth2 Logout Enabled
-    help: 
-    description: 
-  oauth2_logout_url:
-    label: OAuth2 Logout URL
+  oauth2_callback_url:
+    label: Callback URL
     help: 
     description: 
   oauth2_scopes:
@@ -65,8 +61,12 @@ fields:
       - label: Access Fully (full)
         value: full
     description: 
-  saml_acs_url:
-    label: ACS URL
+  oauth2_logout_enabled:
+    label: OAuth2 Logout Enabled
+    help: 
+    description: 
+  oauth2_logout_url:
+    label: OAuth2 Logout URL
     help: 
     description: 
   saml_enabled:
@@ -77,12 +77,28 @@ fields:
     label: Entity Id
     help: 
     description: 
+  saml_issuer:
+    label: Issuer
+    help: 
+    description: 
   saml_idp_cert:
     label: IDP Cert
     help: 
     description: 
-  saml_issuer:
-    label: Issuer
+  saml_acs_url:
+    label: ACS URL
+    help: 
+    description: 
+  saml_name_id_format:
+    label: Name
+    help: 
+    description: 
+  saml_logout_enabled:
+    label: SAML Logout Enabled
+    help: 
+    description: 
+  saml_logout_url:
+    label: SAML Logout URL
     help: 
     description: 
   saml_logout_block:
@@ -94,23 +110,10 @@ fields:
       - label: HTTP Post
         value: post
     description: 
-  saml_logout_enabled:
-    label: SAML Logout Enabled
-    help: 
-    description: 
-  saml_logout_url:
-    label: SAML Logout URL
-    help: 
-    description: 
-  saml_name_id_format:
-    label: Name
-    help: 
-    description: 
-  start_url:
-    label: Start URL
-    help: 
-    description: 
+groups:
+  api: API
+  oauth2: OAuth2
+  saml: SAML
 listviews:
   all:
     label: All External Applications
-actions: {}

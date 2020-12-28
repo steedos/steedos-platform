@@ -2,10 +2,6 @@ name: object_recent_viewed
 label: 最近查看
 description: 
 fields:
-  count:
-    label: 次数
-    help: 
-    description: 
   record:
     label: 记录
     help: 
@@ -14,7 +10,10 @@ fields:
     label: 公司
     help: 
     description: 
+  count:
+    label: 次数
+    help: 
+    description: 
 listviews:
   all:
     label: 所有
-actions: {}

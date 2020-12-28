@@ -2,12 +2,12 @@ name: notes
 label: 备忘
 description: 
 fields:
-  description:
-    label: 内容
-    help: 
-    description: 
   name:
     label: 标题
+    help: 
+    description: 
+  description:
+    label: 内容
     help: 
     description: 
   related_to:
@@ -17,8 +17,7 @@ fields:
 listviews:
   all:
     label: 全部
-  mine:
-    label: 我的备忘
   recent:
     label: 最近查看
-actions: {}
+  mine:
+    label: 我的备忘

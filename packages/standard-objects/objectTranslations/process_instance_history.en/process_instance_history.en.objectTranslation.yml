@@ -2,16 +2,54 @@ name: process_instance_history
 label: Approval History
 description: 
 fields:
+  name:
+    label: Step Name
+    help: 
+    description: 
+  created_by:
+    label: Submitter
+    help: 
+    description: 
+  process_instance:
+    label: 
+    help: 
+    description: 
+  process_instance_node:
+    label: 
+    help: 
+    description: 
+  step_status:
+    label: Status
+    help: 
+    options:
+      - approved
+      - fault
+      - held
+      - no_response
+      - pending
+      - reassigned
+      - rejected
+      - removed
+      - started
+    description: 
+  original_actor:
+    label: Assigned To
+    help: 
+    description: 
   actor:
     label: Actual Approver
+    help: 
+    description: 
+  target_object:
+    label: Approval Details
     help: 
     description: 
   comments:
     label: Comments
     help: 
     description: 
-  created_by:
-    label: Submitter
+  step_node:
+    label: 
     help: 
     description: 
   elapsed_time_in_days:
@@ -34,56 +72,18 @@ fields:
     label: 
     help: 
     description: 
-  name:
-    label: Step Name
-    help: 
-    description: 
-  original_actor:
-    label: Assigned To
-    help: 
-    description: 
-  process_instance:
-    label: 
-    help: 
-    description: 
-  process_instance_node:
-    label: 
-    help: 
-    description: 
-  step_node:
-    label: 
-    help: 
-    description: 
-  step_status:
-    label: Status
-    help: 
-    options:
-      - approved
-      - fault
-      - held
-      - no_response
-      - pending
-      - reassigned
-      - rejected
-      - removed
-      - started
-    description: 
-  target_object:
-    label: Approval Details
-    help: 
-    description: 
 listviews:
   all:
     label: All
 actions:
   approve:
     label: Approve
+  reject:
+    label: Reject
   reassign:
     label: Reassign
   recall:
     label: Recall
-  reject:
-    label: Reject
 CustomLabels:
   process_instance_history_field_step_status_options_started: Submitted
   process_instance_history_field_step_status_options_pending: Pending

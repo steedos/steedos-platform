@@ -2,8 +2,12 @@ name: process_flows_criteria
 label: process_flows_criteria
 description: 
 fields:
-  criteria:
-    label: Conditions
+  process_flow:
+    label: 
+    help: 
+    description: 
+  name:
+    label: 
     help: 
     description: 
   executing_actions:
@@ -15,12 +19,8 @@ fields:
       - label: No criteria—just execute the actions!
         value: always
     description: 
-  name:
-    label: 
-    help: 
-    description: 
-  process_flow:
-    label: 
+  criteria:
+    label: Conditions
     help: 
     description: 
   update_once:
@@ -32,4 +32,3 @@ fields:
 listviews:
   all:
     label: All
-actions: {}

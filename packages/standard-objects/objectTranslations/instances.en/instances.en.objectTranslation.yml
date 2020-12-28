@@ -2,56 +2,12 @@ name: instances
 label: Request
 description: 
 fields:
-  applicant:
-    label: Applicant
-    help: 
-    description: 
-  applicant_company:
-    label: Applicant's Division
-    help: 
-    description: 
-  applicant_name:
-    label: Applicant's Name
-    help: 
-    description: 
-  applicant_organization:
-    label: Applicant Department
-    help: 
-    description: 
-  applicant_organization_fullname:
-    label: Applicant Department's Fullname
-    help: 
-    description: 
-  applicant_organization_name:
-    label: Applicant Department's Name
-    help: 
-    description: 
-  attachments:
-    label: Attachments
-    help: 
-    description: 
-  category:
-    label: Category
-    help: 
-    description: 
-  category_name:
-    label: Category Name
-    help: 
-    description: 
-  code:
-    label: Code
-    help: 
-    description: 
-  current_step_auto_submit:
-    label: Auto Submit if Time Out
+  name:
+    label: Name
     help: 
     description: 
   flow:
     label: Workflow
-    help: 
-    description: 
-  flow_name:
-    label: Workflow Name
     help: 
     description: 
   flow_version:
@@ -66,48 +22,72 @@ fields:
     label: Form Version
     help: 
     description: 
+  submitter:
+    label: Submitter
+    help: 
+    description: 
+  submitter_name:
+    label: Submitter's Name
+    help: 
+    description: 
+  submit_date:
+    label: Submit Date
+    help: 
+    description: 
+  applicant:
+    label: Applicant
+    help: 
+    description: 
+  applicant_name:
+    label: Applicant's Name
+    help: 
+    description: 
+  applicant_organization:
+    label: Applicant Department
+    help: 
+    description: 
+  applicant_organization_name:
+    label: Applicant Department's Name
+    help: 
+    description: 
+  applicant_organization_fullname:
+    label: Applicant Department's Fullname
+    help: 
+    description: 
+  code:
+    label: Code
+    help: 
+    description: 
+  values:
+    label: Field Values
+    help: 
+    description: 
   inbox_users:
     label: Inbox Users
-    help: 
-    description: 
-  is_archived:
-    label: Archived
-    help: 
-    description: 
-  is_deleted:
-    label: Deleted
-    help: 
-    description: 
-  is_recorded:
-    label: Recorded
-    help: 
-    description: 
-  is_recorded_creator:
-    label: Synced
-    help: 
-    description: 
-  name:
-    label: Name
     help: 
     description: 
   outbox_users:
     label: Outbox Users
     help: 
     description: 
-  record_ids.$.ids:
-    label: 
+  traces:
+    label: Processing Traces
     help: 
     description: 
-  record_ids.$.o:
-    label: 
+  attachments:
+    label: Attachments
     help: 
     description: 
-  record_ids:
-    label: Record IDs
+  flow_name:
+    label: Workflow Name
     help: 
     description: 
-  related_instances:
-    label: Related Instances
+  category_name:
+    label: Category Name
+    help: 
+    description: 
+  category:
+    label: Category
     help: 
     description: 
   state:
@@ -121,24 +101,44 @@ fields:
       - label: Completed
         value: completed
     description: 
-  submitter:
-    label: Submitter
+  is_recorded:
+    label: Recorded
     help: 
     description: 
-  submitter_name:
-    label: Submitter's Name
+  is_archived:
+    label: Archived
     help: 
     description: 
-  submit_date:
-    label: Submit Date
+  is_deleted:
+    label: Deleted
     help: 
     description: 
-  traces:
-    label: Processing Traces
+  is_recorded_creator:
+    label: Synced
     help: 
     description: 
-  values:
-    label: Field Values
+  related_instances:
+    label: Related Instances
+    help: 
+    description: 
+  record_ids:
+    label: Record IDs
+    help: 
+    description: 
+  record_ids.$.o:
+    label: 
+    help: 
+    description: 
+  record_ids.$.ids:
+    label: 
+    help: 
+    description: 
+  current_step_auto_submit:
+    label: Auto Submit if Time Out
+    help: 
+    description: 
+  applicant_company:
+    label: Applicant's Division
     help: 
     description: 
 listviews:
@@ -148,6 +148,6 @@ listviews:
     label: Inbox
   outbox:
     label: Outbox
-actions: {}
-CustomLabels:
-  instances_action_view_instance: instances_action_view_instance
+actions:
+  view_instance:
+    label: View Instance

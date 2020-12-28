@@ -6,32 +6,24 @@ fields:
     label: Avatar
     help: 
     description: 
-  company_id:
-    label: 
+  name:
+    label: Name
     help: 
     description: 
-  company_ids:
-    label: 
+  mobile:
+    label: Mobile
     help: 
     description: 
   email:
     label: Email
     help: 
     description: 
-  email_notification:
-    label: Recieve Email Notifications
+  username:
+    label: Username
     help: 
     description: 
-  is_cloudadmin:
-    label: is CloudAdmin
-    help: 
-    description: 
-  is_deleted:
-    label: Deleted
-    help: 
-    description: 
-  last_logon:
-    label: Last Logon Date
+  steedos_id:
+    label: Steedos ID
     help: 
     description: 
   locale:
@@ -43,11 +35,39 @@ fields:
       - label: English
         value: en-us
     description: 
-  lockout:
+  utcOffset:
+    label: Time Zone
+    help: 
+    description: 
+  email_notification:
+    label: Recieve Email Notifications
+    help: 
+    description: 
+  primary_email_verified:
+    label: Primary Email Verified
+    help: 
+    description: 
+  last_logon:
+    label: Last Logon Date
+    help: 
+    description: 
+  is_cloudadmin:
+    label: is CloudAdmin
+    help: 
+    description: 
+  is_deleted:
+    label: Deleted
+    help: 
+    description: 
+  password_expired:
+    label: Password expired
+    help: 
+    description: 
+  company_id:
     label: 
     help: 
     description: 
-  login_failed_lockout_time:
+  company_ids:
     label: 
     help: 
     description: 
@@ -55,35 +75,16 @@ fields:
     label: 
     help: 
     description: 
-  mobile:
-    label: Mobile
+  login_failed_lockout_time:
+    label: 
     help: 
     description: 
-  name:
-    label: Name
+  lockout:
+    label: 
     help: 
     description: 
-  password_expired:
-    label: Password expired
-    help: 
-    description: 
-  primary_email_verified:
-    label: Primary Email Verified
-    help: 
-    description: 
-  steedos_id:
-    label: Steedos ID
-    help: 
-    description: 
-  username:
-    label: Username
-    help: 
-    description: 
-  utcOffset:
-    label: Time Zone
-    help: 
-    description: 
+groups:
+  '-': '-'
 listviews:
   all:
     label: All
-actions: {}

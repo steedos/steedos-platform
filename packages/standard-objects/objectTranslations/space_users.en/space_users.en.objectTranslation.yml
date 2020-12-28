@@ -2,52 +2,76 @@ name: space_users
 label: User
 description: 
 fields:
-  avatar:
-    label: Avatar
+  name:
+    label: Name
     help: 
     description: 
-  company_id:
-    label: Main Division
-    help: 
-    description: 
-  company_ids:
-    label: All Divisions
-    help: 
-    description: 
-  contact_id:
-    label: Contact
+  username:
+    label: Username
     help: 
     description: 
   email:
     label: Email
     help: 
     description: 
-  email_notification:
-    label: Recieve Email Notifications
-    help: 
-    description: 
   email_verified:
     label: Email Verified
     help: 
     description: 
-  hr:
-    label: HR
+  mobile:
+    label: Mobile
     help: 
     description: 
-  invite_state:
-    label: Invitation Status
+  mobile_verified:
+    label: Mobile Verified
     help: 
     description: 
-  is_customer:
-    label: Customer
+  organizations:
+    label: All Departments
+    help: 
+    description: 
+  organizations_parents:
+    label: All Departments and Superiors
+    help: 
+    description: 
+  organization:
+    label: Main Department
+    help: 
+    description: 
+  company_ids:
+    label: All Divisions
+    help: 
+    description: 
+  company_id:
+    label: Main Division
+    help: 
+    description: 
+  position:
+    label: Title
+    help: 
+    description: 
+  manager:
+    label: Superior
+    help: 
+    description: 
+  profile:
+    label: Profile
+    help: 
+    description: 
+  contact_id:
+    label: Contact
     help: 
     description: 
   is_supplier:
     label: Supplier
     help: 
     description: 
-  last_logon:
-    label: Last Logon Date
+  is_customer:
+    label: Customer
+    help: 
+    description: 
+  work_phone:
+    label: Work Phone Number
     help: 
     description: 
   locale:
@@ -59,90 +83,68 @@ fields:
       - label: English
         value: en-us
     description: 
-  manager:
-    label: Superior
+  sort_no:
+    label: Sort Number
     help: 
     description: 
-  mobile:
-    label: Mobile
-    help: 
-    description: 
-  mobile_verified:
-    label: Mobile Verified
-    help: 
-    description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  organization:
-    label: Main Department
-    help: 
-    description: 
-  organizations:
-    label: All Departments
-    help: 
-    description: 
-  organizations_parents:
-    label: All Departments and Superiors
-    help: 
-    description: 
-  password_expired:
-    label: Password expired
-    help: 
-    description: 
-  position:
-    label: Title
-    help: 
-    description: 
-  profile:
-    label: Profile
+  email_notification:
+    label: Recieve Email Notifications
     help: 
     description: 
   sms_notification:
     label: Recieve SMS Notifications
     help: 
     description: 
-  sort_no:
-    label: Sort Number
+  user_accepted:
+    label: Valid
+    help: 
+    description: 
+  invite_state:
+    label: Invitation Status
     help: 
     description: 
   user:
     label: User
     help: 
     description: 
-  username:
-    label: Username
+  avatar:
+    label: Avatar
     help: 
     description: 
-  user_accepted:
-    label: Valid
+  hr:
+    label: HR
     help: 
     description: 
-  work_phone:
-    label: Work Phone Number
+  last_logon:
+    label: Last Logon Date
     help: 
     description: 
+  password_expired:
+    label: Password expired
+    help: 
+    description: 
+groups:
+  '-': '-'
 listviews:
   all:
     label: All Valid Users
-  customer:
-    label: 客户用户
   disabled:
     label: Invalid Users
   supplier:
     label: 供应商用户
+  customer:
+    label: 客户用户
 actions:
+  invite_space_users:
+    label: Invite Users
+  setPassword:
+    label: Change Password
   disable:
     label: Disable
   enable:
     label: Enable
-  invite_space_users:
-    label: Invite Users
   lockout:
     label: Lockout
-  setPassword:
-    label: Change Password
   unlock:
     label: Unlock
 CustomLabels:

@@ -2,10 +2,6 @@ name: flow_positions
 label: Workflow Position
 description: 
 fields:
-  org:
-    label: Department
-    help: 
-    description: 
   role:
     label: Flow Role
     help: 
@@ -14,7 +10,10 @@ fields:
     label: Users
     help: 
     description: 
+  org:
+    label: Department
+    help: 
+    description: 
 listviews:
   all:
     label: All Workflow Positions
-actions: {}

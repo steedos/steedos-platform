@@ -2,20 +2,56 @@ name: process_definition
 label: Approval Processes
 description: 
 fields:
-  active:
-    label: Active
+  name:
+    label: 
     help: 
     description: 
-  allow_recall:
-    label: Allow submitters to recall approval requests
+  label:
+    label: 
+    help: 
+    description: 
+  object_name:
+    label: 
     help: 
     description: 
   description:
     label: Description
     help: 
     description: 
+  order:
+    label: 
+    help: 
+    description: 
+  active:
+    label: Active
+    help: 
+    description: 
   entry_criteria:
     label: Specify Entry Criteria
+    help: 
+    description: 
+  record_editability:
+    label: Record Editability Properties
+    help: 
+    options:
+      - label: Administrators ONLY can edit records during the approval process
+        value: admin_only
+    description: 
+  allow_recall:
+    label: Allow submitters to recall approval requests
+    help: 
+    description: 
+  initial_submission_record_lock:
+    label: Record Lock
+    help: 
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    description: 
+  initial_submission_updates_field_actions:
+    label: Field Update
     help: 
     description: 
   final_approval_record_lock:
@@ -44,35 +80,6 @@ fields:
     label: Field Update
     help: 
     description: 
-  initial_submission_record_lock:
-    label: Record Lock
-    help: 
-    options:
-      - label: Lock the record from being edited
-        value: lock
-      - label: Unlock the record for editing
-        value: unlock
-    description: 
-  initial_submission_updates_field_actions:
-    label: Field Update
-    help: 
-    description: 
-  label:
-    label: 
-    help: 
-    description: 
-  name:
-    label: 
-    help: 
-    description: 
-  object_name:
-    label: 
-    help: 
-    description: 
-  order:
-    label: 
-    help: 
-    description: 
   recall_record_lock:
     label: Record Lock
     help: 
@@ -86,23 +93,21 @@ fields:
     label: Field Update
     help: 
     description: 
-  record_editability:
-    label: Record Editability Properties
-    help: 
-    options:
-      - label: Administrators ONLY can edit records during the approval process
-        value: admin_only
-    description: 
+groups:
+  initial_submission_actions: Initial Submission Actions
+  final_approval_actions: Final Approval Actions
+  final_rejection_actions: Final Rejection Actions
+  recall_actions: Recall Actions
 listviews:
   all:
     label: All
 actions:
-  copy:
-    label: Copy
-  disable:
-    label: Disable
   enable:
     label: Enable
+  disable:
+    label: Disable
+  copy:
+    label: Copy
 CustomLabels:
   process_definition_field_approval_page_fields: process_definition_field_approval_page_fields
   process_definition_field_approval_page_fields_inlineHelpText: process_definition_field_approval_page_fields_inlineHelpText

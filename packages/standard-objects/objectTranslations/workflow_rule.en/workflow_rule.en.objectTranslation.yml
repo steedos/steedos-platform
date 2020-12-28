@@ -2,15 +2,11 @@ name: workflow_rule
 label: Workflow Rule
 description: 
 fields:
-  active:
-    label: 
+  object_name:
+    label: Object Name
     help: 
     description: 
-  description:
-    label: 
-    help: 
-    description: 
-  formula:
+  name:
     label: 
     help: 
     description: 
@@ -18,12 +14,8 @@ fields:
     label: 
     help: 
     description: 
-  name:
+  active:
     label: 
-    help: 
-    description: 
-  object_name:
-    label: Object Name
     help: 
     description: 
   trigger_type:
@@ -34,14 +26,24 @@ fields:
       - onAllChanges
       - onCreateOrTriggeringUpdate
     description: 
+  formula:
+    label: 
+    help: 
+    description: 
   updates_field_actions:
     label: Field Update
     help: 
     description: 
+  description:
+    label: 
+    help: 
+    description: 
+groups:
+  rule_criteria: Rule Criteria
+  immediate_actions: Immediate Actions
 listviews:
   all:
     label: All
-actions: {}
 CustomLabels:
   workflow_rule_field_trigger_type_options_onAllChanges: workflow_rule_field_trigger_type_options_onAllChanges
   workflow_rule_field_trigger_type_options_onCreateOnly: workflow_rule_field_trigger_type_options_onCreateOnly

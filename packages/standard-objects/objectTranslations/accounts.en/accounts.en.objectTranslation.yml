@@ -2,72 +2,69 @@ name: accounts
 label: 客户
 description: 
 fields:
-  account_division:
-    label: 客户分部
+  name:
+    label: 客户名
     help: 
     description: 
-  account_number:
-    label: 客户编号
+  owner:
+    label: 我方客户经理
     help: 
     description: 
-  account_source:
-    label: 客户来源
+  is_supplier:
+    label: 供应商
     help: 
     description: 
-  annual_revenue:
-    label: 年收入
+  is_customer:
+    label: 客户
     help: 
     description: 
-  assistant:
-    label: 助理
+  type:
+    label: 类型
     help: 
+    options:
+      - label: 分析师
+        value: Analyst
+      - label: 竞争者
+        value: Competitor
+      - label: 顾客
+        value: Customer
+      - label: 集成商
+        value: Integrator
+      - label: 投资者
+        value: Investor
+      - label: 合作伙伴
+        value: Partner
+      - label: 公关媒体
+        value: Press
+      - label: 潜在
+        value: Prospect
+      - label: 代理商
+        value: Reseller
+      - label: 其他
+        value: Other
     description: 
-  asst_phone:
-    label: 助理电话
-    help: 
-    description: 
-  billing_address:
-    label: 开单地址
-    help: 
-    description: 
-  birthdate:
-    label: 生日
+  parent_id:
+    label: 母公司
     help: 
     description: 
   credit_code:
     label: 纳税人识别号（身份证/其他）
     help: 
     description: 
-  department:
-    label: 部门
+  website:
+    label: 网站
     help: 
     description: 
-  description:
-    label: 描述
-    help: 
-    description: 
-  do_not_call:
-    label: 请勿致电
-    help: 
-    description: 
-  email:
-    label: 电子邮件
+  phone:
+    label: 电话
     help: 
     description: 
   fax:
     label: 传真
     help: 
     description: 
-  fax_opt_out:
-    label: 退出传真列表
-    help: 
-    description: 
-  has_opted_out_of_email:
-    label: 退出邮件列表
-    help: 
-    description: 
-  home_phone:
-    label: 家庭电话
+  description:
+    label: 描述
     help: 
     description: 
   industry:
@@ -139,150 +136,8 @@ fields:
       - label: 公用事业
         value: Utilities
     description: 
-  invoice_address:
-    label: 开票地址
-    help: 
-    description: 
-  invoice_bank:
-    label: 开户行
-    help: 
-    description: 
-  invoice_combinenum:
-    label: 账号
-    help: 
-    description: 
-  invoice_phone:
-    label: 开票电话
-    help: 
-    description: 
-  is_customer:
-    label: 客户
-    help: 
-    description: 
-  is_supplier:
-    label: 供应商
-    help: 
-    description: 
-  lead_source:
-    label: 潜在客户来源
-    help: 
-    options:
-      - label: 广告
-        value: Advertisement
-      - label: 客户活动
-        value: Customer_Event
-      - label: 员工推荐
-        value: Employee_Referral
-      - label: 百度搜索
-        value: Baidu_AdWords
-      - label: 其他
-        value: Other
-      - label: 合作伙伴
-        value: Partner
-      - label: 采购清单
-        value: Purchased_List
-      - label: 贸易展览
-        value: Trade_Show
-      - label: 线上研讨
-        value: Webinar
-      - label: 网站
-        value: Website
-    description: 
-  mailing_city:
-    label: 邮寄地址-城市
-    help: 
-    description: 
-  mailing_street:
-    label: 邮寄地址-街道
-    help: 
-    description: 
-  mailing_zip:
-    label: 邮寄地址-邮政编码
-    help: 
-    description: 
-  mobile:
-    label: 手机
-    help: 
-    description: 
-  name:
-    label: 客户名
-    help: 
-    description: 
   number_of_employees:
     label: 员工人数
-    help: 
-    description: 
-  other_city:
-    label: 其他地址-城市
-    help: 
-    description: 
-  other_phone:
-    label: 其他电话
-    help: 
-    description: 
-  other_street:
-    label: 其他地址-街道
-    help: 
-    description: 
-  other_zip:
-    label: 其他地址-邮政编码
-    help: 
-    description: 
-  owner:
-    label: 我方客户经理
-    help: 
-    description: 
-  ownership:
-    label: 所有权
-    help: 
-    options:
-      - label: 国营
-        value: National
-      - label: 私营
-        value: Private
-      - label: 子公司
-        value: Subcompany
-      - label: 其他
-        value: Others
-    description: 
-  parent_id:
-    label: 母公司
-    help: 
-    description: 
-  partner_account:
-    label: 合作伙伴客户
-    help: 
-    description: 
-  phone:
-    label: 电话
-    help: 
-    description: 
-  rating:
-    label: 分级
-    help: 
-    options:
-      - label: 非常重要
-        value: Hot
-      - label: 重要
-        value: Warm
-      - label: 普通
-        value: Cold
-    description: 
-  salutation:
-    label: 性别
-    help: 
-    options:
-      - label: 男
-        value: Male
-      - label: 女
-        value: Female
-    description: 
-  shipping_address:
-    label: 发货地址
-    help: 
-    description: 
-  site:
-    label: 客户地点
     help: 
     description: 
   state:
@@ -358,36 +213,187 @@ fields:
       - label: 台湾
         value: TW
     description: 
-  type:
-    label: 类型
+  billing_address:
+    label: 开单地址
+    help: 
+    description: 
+  shipping_address:
+    label: 发货地址
+    help: 
+    description: 
+  account_number:
+    label: 客户编号
+    help: 
+    description: 
+  rating:
+    label: 分级
     help: 
     options:
-      - label: 分析师
-        value: Analyst
-      - label: 竞争者
-        value: Competitor
-      - label: 顾客
-        value: Customer
-      - label: 集成商
-        value: Integrator
-      - label: 投资者
-        value: Investor
-      - label: 合作伙伴
-        value: Partner
-      - label: 公关媒体
-        value: Press
-      - label: 潜在
-        value: Prospect
-      - label: 代理商
-        value: Reseller
-      - label: 其他
-        value: Other
+      - label: 非常重要
+        value: Hot
+      - label: 重要
+        value: Warm
+      - label: 普通
+        value: Cold
     description: 
-  website:
-    label: 网站
+  invoice_address:
+    label: 开票地址
     help: 
     description: 
+  invoice_phone:
+    label: 开票电话
+    help: 
+    description: 
+  invoice_bank:
+    label: 开户行
+    help: 
+    description: 
+  invoice_combinenum:
+    label: 账号
+    help: 
+    description: 
+  account_source:
+    label: 客户来源
+    help: 
+    description: 
+  site:
+    label: 客户地点
+    help: 
+    description: 
+  annual_revenue:
+    label: 年收入
+    help: 
+    description: 
+  ownership:
+    label: 所有权
+    help: 
+    options:
+      - label: 国营
+        value: National
+      - label: 私营
+        value: Private
+      - label: 子公司
+        value: Subcompany
+      - label: 其他
+        value: Others
+    description: 
+  account_division:
+    label: 客户分部
+    help: 
+    description: 
+  partner_account:
+    label: 合作伙伴客户
+    help: 
+    description: 
+  assistant:
+    label: 助理
+    help: 
+    description: 
+  asst_phone:
+    label: 助理电话
+    help: 
+    description: 
+  birthdate:
+    label: 生日
+    help: 
+    description: 
+  department:
+    label: 部门
+    help: 
+    description: 
+  email:
+    label: 电子邮件
+    help: 
+    description: 
+  do_not_call:
+    label: 请勿致电
+    help: 
+    description: 
+  has_opted_out_of_email:
+    label: 退出邮件列表
+    help: 
+    description: 
+  fax_opt_out:
+    label: 退出传真列表
+    help: 
+    description: 
+  home_phone:
+    label: 家庭电话
+    help: 
+    description: 
+  lead_source:
+    label: 潜在客户来源
+    help: 
+    options:
+      - label: 广告
+        value: Advertisement
+      - label: 客户活动
+        value: Customer_Event
+      - label: 员工推荐
+        value: Employee_Referral
+      - label: 百度搜索
+        value: Baidu_AdWords
+      - label: 其他
+        value: Other
+      - label: 合作伙伴
+        value: Partner
+      - label: 采购清单
+        value: Purchased_List
+      - label: 贸易展览
+        value: Trade_Show
+      - label: 线上研讨
+        value: Webinar
+      - label: 网站
+        value: Website
+    description: 
+  mailing_city:
+    label: 邮寄地址-城市
+    help: 
+    description: 
+  mailing_street:
+    label: 邮寄地址-街道
+    help: 
+    description: 
+  mailing_zip:
+    label: 邮寄地址-邮政编码
+    help: 
+    description: 
+  other_city:
+    label: 其他地址-城市
+    help: 
+    description: 
+  other_street:
+    label: 其他地址-街道
+    help: 
+    description: 
+  other_zip:
+    label: 其他地址-邮政编码
+    help: 
+    description: 
+  mobile:
+    label: 手机
+    help: 
+    description: 
+  salutation:
+    label: 性别
+    help: 
+    options:
+      - label: 男
+        value: Male
+      - label: 女
+        value: Female
+    description: 
+  other_phone:
+    label: 其他电话
+    help: 
+    description: 
+groups:
+  地址信息: 地址信息
+  开票信息: 开票信息
+  其他地址信息: 其他地址信息
 listviews:
+  recent:
+    label: 最近查看
   all:
     label: 所有客户
   allCustomers:
@@ -396,14 +402,12 @@ listviews:
     label: 非常重要的客户
   mine:
     label: 我的客户
-  recent:
-    label: 最近查看
 actions:
-  disableCustomer:
-    label: 禁用客户账户
+  enableSupplier:
+    label: 作为供应商启用
   disableSupplier:
     label: 禁用供应商账户
   enableCustomer:
     label: 作为客户启用
-  enableSupplier:
-    label: 作为供应商启用
+  disableCustomer:
+    label: 禁用客户账户

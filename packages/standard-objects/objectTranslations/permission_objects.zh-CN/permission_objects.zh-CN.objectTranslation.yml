@@ -2,81 +2,81 @@ name: permission_objects
 label: 对象权限
 description: 
 fields:
-  allowCreate:
-    label: 允许创建
-    help: 
-    description: 
-  allowDelete:
-    label: 允许删除
-    help: 
-    description: 
-  allowEdit:
-    label: 允许编辑
-    help: 
-    description: 
-  allowRead:
-    label: 允许查看
-    help: 
-    description: 
-  disabled_actions:
-    label: 禁用操作
-    help: 
-    description: 
-  disabled_list_views:
-    label: 禁用列表视图
-    help: 
-    description: 
-  is_system:
-    label: 系统
-    help: 
-    description: 
-  modifyAllRecords:
-    label: 修改所有记录
-    help: 
-    description: 
-  modifyCompanyRecords:
-    label: 修改本分部
-    help: 
-    description: 
   name:
     label: 名称
-    help: 
-    description: 
-  object_name:
-    label: 对象
     help: 
     description: 
   permission_set_id:
     label: 权限集
     help: 
     description: 
-  uneditable_fields:
-    label: 不可编辑字段
+  object_name:
+    label: 对象
     help: 
     description: 
-  unreadable_fields:
-    label: 不可见字段
+  allowRead:
+    label: 允许查看
     help: 
     description: 
-  unrelated_objects:
-    label: 禁用关联对象
+  allowCreate:
+    label: 允许创建
+    help: 
+    description: 
+  allowEdit:
+    label: 允许编辑
+    help: 
+    description: 
+  allowDelete:
+    label: 允许删除
     help: 
     description: 
   viewAllRecords:
     label: 查看所有记录
     help: 
     description: 
+  modifyAllRecords:
+    label: 修改所有记录
+    help: 
+    description: 
   viewCompanyRecords:
     label: 查看本分部
     help: 
     description: 
+  modifyCompanyRecords:
+    label: 修改本分部
+    help: 
+    description: 
+  disabled_list_views:
+    label: 禁用列表视图
+    help: 
+    description: 
+  disabled_actions:
+    label: 禁用操作
+    help: 
+    description: 
+  unreadable_fields:
+    label: 不可见字段
+    help: 
+    description: 
+  uneditable_fields:
+    label: 不可编辑字段
+    help: 
+    description: 
+  unrelated_objects:
+    label: 禁用关联对象
+    help: 
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
 listviews:
-  all:
-    label: 全部
   customize:
     label: 自定义
   system:
     label: 系统
+  all:
+    label: 全部
 actions:
   customize:
     label: 自定义

@@ -2,12 +2,12 @@ name: chat_rooms
 label: Chat Room
 description: 
 fields:
-  members:
-    label: Members
-    help: 
-    description: 
   name:
     label: Name
+    help: 
+    description: 
+  members:
+    label: Members
     help: 
     description: 
   owner:
@@ -28,4 +28,3 @@ fields:
 listviews:
   all:
     label: All Chat Rooms
-actions: {}

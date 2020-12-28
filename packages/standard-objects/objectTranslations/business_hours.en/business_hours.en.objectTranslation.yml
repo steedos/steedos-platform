@@ -2,32 +2,28 @@ name: business_hours
 label: Business Hours
 description: 
 fields:
-  end:
-    label: End Time
+  name:
+    label: Name
     help: 
     description: 
   is_default:
     label: Use as default
     help: 
     description: 
-  lunch_end:
-    label: Lunch End Time
+  start:
+    label: Start Time
+    help: 
+    description: 
+  end:
+    label: End Time
     help: 
     description: 
   lunch_start:
     label: Lunch Start Time
     help: 
     description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  start:
-    label: Start Time
-    help: 
-    description: 
-  utc_offset:
-    label: GMT Offset
+  lunch_end:
+    label: Lunch End Time
     help: 
     description: 
   working_days:
@@ -42,10 +38,13 @@ fields:
       - 'Friday:5'
       - 'Saturday:6'
     description: 
+  utc_offset:
+    label: GMT Offset
+    help: 
+    description: 
 listviews:
   all:
     label: All
-actions: {}
 CustomLabels:
   business_hours_field_working_days_options_0: business_hours_field_working_days_options_0
   business_hours_field_working_days_options_1: business_hours_field_working_days_options_1

@@ -2,32 +2,12 @@ name: organizations
 label: Department
 description: 
 fields:
-  children:
-    label: Subordinates
-    help: 
-    description: 
-  company_id:
-    label: Main Division
-    help: 
-    description: 
-  company_ids:
-    label: All Divisions
+  name:
+    label: Name
     help: 
     description: 
   fullname:
     label: Fullname
-    help: 
-    description: 
-  hidden:
-    label: Hidden
-    help: 
-    description: 
-  is_company:
-    label: Divisional
-    help: 
-    description: 
-  name:
-    label: Name
     help: 
     description: 
   parent:
@@ -38,6 +18,10 @@ fields:
     label: All Superiors
     help: 
     description: 
+  children:
+    label: Subordinates
+    help: 
+    description: 
   sort_no:
     label: Sort Number
     help: 
@@ -46,10 +30,31 @@ fields:
     label: Members
     help: 
     description: 
+  company_id:
+    label: Main Division
+    help: 
+    description: 
+  company_ids:
+    label: All Divisions
+    help: 
+    description: 
+  is_company:
+    label: Divisional
+    help: 
+    description: 
+  hidden:
+    label: Hidden
+    help: 
+    description: 
+groups:
+  systemfields: systemfields
 listviews:
   all:
     label: All Departments
-actions: {}
+actions:
+  standard_query:
+    label: Search
+  addSubOrganization:
+    label: Add a Branch
 CustomLabels:
-  organizations_action_addSubOrganization: organizations_action_addSubOrganization
   organizations_group_系统: organizations_group_系统

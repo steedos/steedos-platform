@@ -2,12 +2,24 @@ name: object_related_list
 label: Object Related List
 description: 
 fields:
-  columns.$.field:
-    label: Field
+  object_name:
+    label: To Object
+    help: 
+    description: 
+  objectName:
+    label: Related Object
+    help: 
+    description: 
+  columns:
+    label: Columns
     help: 
     description: 
   columns.$:
     label: Column
+    help: 
+    description: 
+  columns.$.field:
+    label: Field
     help: 
     description: 
   columns.$.width:
@@ -18,32 +30,20 @@ fields:
     label: Wrap
     help: 
     description: 
-  columns:
-    label: Columns
-    help: 
-    description: 
-  filters:
-    label: Filters
-    help: 
-    description: 
-  mobile_columns.$.field:
-    label: Field
+  mobile_columns:
+    label: Mobile Columns
     help: 
     description: 
   mobile_columns.$:
     label: Column
     help: 
     description: 
-  mobile_columns:
-    label: Mobile Columns
+  mobile_columns.$.field:
+    label: Field
     help: 
     description: 
-  objectName:
-    label: Related Object
-    help: 
-    description: 
-  object_name:
-    label: To Object
+  sort:
+    label: Default Sort Order
     help: 
     description: 
   sort.$:
@@ -63,8 +63,8 @@ fields:
       - label: DESC
         value: desc
     description: 
-  sort:
-    label: Default Sort Order
+  filters:
+    label: Filters
     help: 
     description: 
   sort_no:
@@ -74,7 +74,6 @@ fields:
 listviews:
   all:
     label: All List View
-actions: {}
 CustomLabels:
   object_related_list_error_unique: Related object cannot be repeated
   object_related_list_field_label: object_related_list_field_label

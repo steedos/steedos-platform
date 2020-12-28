@@ -2,35 +2,34 @@ name: picklist_options
 label: Picklist Options
 description: 
 fields:
-  color:
-    label: Background Color
-    help: 
-    description: 
-  default:
-    label: Default
-    help: 
-    description: 
-  enable:
-    label: Enable
+  picklist:
+    label: Picklist
     help: 
     description: 
   name:
     label: Name
     help: 
     description: 
-  picklist:
-    label: Picklist
+  value:
+    label: Value
+    help: 
+    description: 
+  color:
+    label: Background Color
     help: 
     description: 
   sort_no:
     label: Sort Number
     help: 
     description: 
-  value:
-    label: Value
+  enable:
+    label: Enable
+    help: 
+    description: 
+  default:
+    label: Default
     help: 
     description: 
 listviews:
   all:
     label: All Picklist Options
-actions: {}

@@ -2,10 +2,6 @@ name: categories
 label: Workflow Category
 description: 
 fields:
-  app:
-    label: Apps
-    help: 
-    description: 
   name:
     label: Name
     help: 
@@ -14,7 +10,10 @@ fields:
     label: Sort Number
     help: 
     description: 
+  app:
+    label: Apps
+    help: 
+    description: 
 listviews:
   all:
     label: All Workflow Categories
-actions: {}

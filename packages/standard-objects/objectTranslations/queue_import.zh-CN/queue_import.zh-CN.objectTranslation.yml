@@ -6,6 +6,10 @@ fields:
     label: 导入描述
     help: 
     description: 
+  object_name:
+    label: 导入对象
+    help: 
+    description: 
   encoding:
     label: 字符代码
     help: 
@@ -29,47 +33,6 @@ fields:
       - label: ISO-8859-1（通用美语和西欧语言，ISO-LATIN-1）
         value: ISO
     description: 
-  end_time:
-    label: 结束时间
-    help: 
-    description: 
-  error:
-    label: 错误信息
-    help: 
-    description: 
-  external_id_name:
-    label: 表示数据唯一性字段(重复执行导入时根据此字段更新记录)
-    help: 
-    description: 
-  failure_count:
-    label: 失败个数
-    help: 
-    description: 
-  field_mapping:
-    label: 映射关系
-    help: 
-    description: 
-  object_name:
-    label: 导入对象
-    help: 
-    description: 
-  start_time:
-    label: 开始时间
-    help: 
-    description: 
-  state:
-    label: 状态
-    help: 
-    options: 
-    description: 
-  success_count:
-    label: 成功个数
-    help: 
-    description: 
-  total_count:
-    label: 导入总个数
-    help: 
-    description: 
   value_separator:
     label: 值分隔符
     help: 
@@ -77,9 +40,46 @@ fields:
       - label: 逗号
         value: ','
     description: 
+  field_mapping:
+    label: 映射关系
+    help: 
+    description: 
+  external_id_name:
+    label: 表示数据唯一性字段(重复执行导入时根据此字段更新记录)
+    help: 
+    description: 
+  success_count:
+    label: 成功个数
+    help: 
+    description: 
+  failure_count:
+    label: 失败个数
+    help: 
+    description: 
+  total_count:
+    label: 导入总个数
+    help: 
+    description: 
+  start_time:
+    label: 开始时间
+    help: 
+    description: 
+  end_time:
+    label: 结束时间
+    help: 
+    description: 
+  state:
+    label: 状态
+    help: 
+    options: 
+    description: 
+  error:
+    label: 错误信息
+    help: 
+    description: 
 listviews:
   all:
     label: 全部
-actions: {}
-CustomLabels:
-  queue_import_action_import: 执行导入
+actions:
+  import:
+    label: 执行导入

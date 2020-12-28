@@ -2,14 +2,6 @@ name: datasources
 label: DataSource
 description: 
 fields:
-  connectString:
-    label: connectString
-    help: 
-    description: 
-  database:
-    label: Database name
-    help: 
-    description: 
   driver:
     label: Driver
     help: 
@@ -100,20 +92,56 @@ fields:
       - t
       - e
     description: 
-  enable_space:
-    label: Enable Space
+  label:
+    label: Label
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  url:
+    label: Url
     help: 
     description: 
   host:
     label: Database host
     help: 
     description: 
-  is_enable:
-    label: Enable
+  port:
+    label: Database host port
     help: 
     description: 
-  label:
-    label: Label
+  database:
+    label: Database name
+    help: 
+    description: 
+  username:
+    label: Database username
+    help: 
+    description: 
+  password:
+    label: Database password
+    help: 
+    description: 
+  mssql_options:
+    label: Mssql connection options
+    help: 
+    description: 
+  connectString:
+    label: connectString
+    help: 
+    description: 
+  timezone:
+    label: Timezone
+    help: 
+    description: 
+  options:
+    label: Options
+    help: 
+    description: 
+  enable_space:
+    label: Enable Space
     help: 
     description: 
   locale:
@@ -124,38 +152,16 @@ fields:
     label: Debug
     help: 
     description: 
-  mssql_options:
-    label: Mssql connection options
+  is_enable:
+    label: Enable
     help: 
     description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  options:
-    label: Options
-    help: 
-    description: 
-  password:
-    label: Database password
-    help: 
-    description: 
-  port:
-    label: Database host port
-    help: 
-    description: 
-  timezone:
-    label: Timezone
-    help: 
-    description: 
-  url:
-    label: Url
-    help: 
-    description: 
-  username:
-    label: Database username
-    help: 
-    description: 
+groups:
+  other_connection_options: >-
+    Other connection options (Please note that other connection options will
+    override parameters set from url.)
+  mssql: Mssql
+  oracle: Oracle
 listviews:
   all:
     label: All

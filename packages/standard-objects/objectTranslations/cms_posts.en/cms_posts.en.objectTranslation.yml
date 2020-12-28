@@ -2,40 +2,40 @@ name: cms_posts
 label: Knowledge
 description: 
 fields:
-  body:
-    label: Body
+  name:
+    label: Title
     help: 
     description: 
-  category:
-    label: Category
+  summary:
+    label: Summary
+    help: 
+    description: 
+  body:
+    label: Body
     help: 
     description: 
   htmlBody:
     label: Main Body
     help: 
     description: 
-  members:
-    label: Members
+  site:
+    label: Site
     help: 
     description: 
-  members.organizations:
-    label: Organization Members
+  category:
+    label: Category
+    help: 
+    description: 
+  members:
+    label: Members
     help: 
     description: 
   members.users:
     label: User Members
     help: 
     description: 
-  name:
-    label: Title
-    help: 
-    description: 
-  site:
-    label: Site
-    help: 
-    description: 
-  summary:
-    label: Summary
+  members.organizations:
+    label: Organization Members
     help: 
     description: 
   viewCount:
@@ -45,4 +45,3 @@ fields:
 listviews:
   all:
     label: All Knowledge
-actions: {}

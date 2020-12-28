@@ -97,6 +97,8 @@ fields:
     label: Version Name
     help: 
     description: 
+groups:
+  package_components: Package Components
 listviews:
   all:
     label: All

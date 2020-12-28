@@ -2,12 +2,24 @@ name: object_related_list
 label: 相关子表
 description: 
 fields:
-  columns.$.field:
-    label: 字段
+  object_name:
+    label: 所属对象
+    help: 
+    description: 
+  objectName:
+    label: 相关对象
+    help: 
+    description: 
+  columns:
+    label: 显示的列
     help: 
     description: 
   columns.$:
     label: 显示的列
+    help: 
+    description: 
+  columns.$.field:
+    label: 字段
     help: 
     description: 
   columns.$.width:
@@ -18,32 +30,20 @@ fields:
     label: 是否换行
     help: 
     description: 
-  columns:
-    label: 显示的列
-    help: 
-    description: 
-  filters:
-    label: 过滤器
-    help: 
-    description: 
-  mobile_columns.$.field:
-    label: 字段
+  mobile_columns:
+    label: 手机端显示的列
     help: 
     description: 
   mobile_columns.$:
     label: 手机端显示的列
     help: 
     description: 
-  mobile_columns:
-    label: 手机端显示的列
+  mobile_columns.$.field:
+    label: 字段
     help: 
     description: 
-  objectName:
-    label: 相关对象
-    help: 
-    description: 
-  object_name:
-    label: 所属对象
+  sort:
+    label: 默认排序规则
     help: 
     description: 
   sort.$:
@@ -63,8 +63,8 @@ fields:
       - label: 倒序
         value: desc
     description: 
-  sort:
-    label: 默认排序规则
+  filters:
+    label: 过滤器
     help: 
     description: 
   sort_no:
@@ -74,7 +74,6 @@ fields:
 listviews:
   all:
     label: 全部
-actions: {}
 CustomLabels:
   object_related_list_error_unique: 相关对象不能重复
   object_related_list_field_label: 显示名称

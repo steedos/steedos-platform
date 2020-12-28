@@ -2,16 +2,32 @@ name: object_workflows
 label: 对象流程映射
 description: 
 fields:
-  field_map.$.object_field:
-    label: 对象字段
+  name:
+    label: 名称
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  flow_id:
+    label: 流程
+    help: 
+    description: 
+  field_map:
+    label: 字段映射关系（对象至表单）
     help: 
     description: 
   field_map.$.workflow_field:
     label: 表单字段
     help: 
     description: 
-  field_map:
-    label: 字段映射关系（对象至表单）
+  field_map.$.object_field:
+    label: 对象字段
+    help: 
+    description: 
+  field_map_back:
+    label: 字段映射关系（表单至对象）
     help: 
     description: 
   field_map_back.$.object_field:
@@ -22,28 +38,12 @@ fields:
     label: 表单字段
     help: 
     description: 
-  field_map_back:
-    label: 字段映射关系（表单至对象）
-    help: 
-    description: 
-  field_map_back_script:
-    label: 表单至对象
-    help: 
-    description: 
   field_map_script:
     label: 对象至表单
     help: 
     description: 
-  flow_id:
-    label: 流程
-    help: 
-    description: 
-  name:
-    label: 名称
-    help: 
-    description: 
-  object_name:
-    label: 对象
+  field_map_back_script:
+    label: 表单至对象
     help: 
     description: 
   sync_attachment:
@@ -57,12 +57,16 @@ fields:
       - label: 同步所有版本
         value: all
     description: 
+groups:
+  script: 脚本
 listviews:
-  all:
-    label: 全部
   default:
     label: 默认
-actions: {}
+  all:
+    label: 全部
+actions:
+  forceSync:
+    label: 同步历史申请单
 CustomLabels:
   object_workflows_field_field_map_$_workflow_field_instance_name: 申请单名称
   object_workflows_field_field_map_$_workflow_field_submitter_name: 提交人姓名
@@ -78,4 +82,3 @@ CustomLabels:
   object_workflows_field_field_map_$_workflow_field_submit_date: 提交时间
   object_workflows_field_field_map_$_workflow_field_finish_date: 结束时间
   object_workflows_field_field_map_$_workflow_field_final_decision: 最终意见
-  object_workflows_action_forceSync: 同步历史申请单

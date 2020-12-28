@@ -2,6 +2,10 @@ name: settings
 label: 设置
 description: 
 fields:
+  type:
+    label: 类型
+    help: 
+    description: 
   object_name:
     label: 对象名
     help: 
@@ -14,9 +18,3 @@ fields:
     label: 设置
     help: 
     description: 
-  type:
-    label: 类型
-    help: 
-    description: 
-listviews: {}
-actions: {}

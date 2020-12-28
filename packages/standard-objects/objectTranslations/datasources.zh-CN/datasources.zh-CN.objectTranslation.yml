@@ -2,14 +2,6 @@ name: datasources
 label: 外部数据源
 description: 
 fields:
-  connectString:
-    label: connectString
-    help: 
-    description: 
-  database:
-    label: 数据库
-    help: 
-    description: 
   driver:
     label: 数据库类型
     help: 
@@ -100,20 +92,56 @@ fields:
       - t
       - e
     description: 
-  enable_space:
-    label: 启用工作区
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  name:
+    label: API 名称
+    help: 
+    description: 
+  url:
+    label: 连接数据库的URL
     help: 
     description: 
   host:
     label: 服务器地址
     help: 
     description: 
-  is_enable:
-    label: 启用
+  port:
+    label: 端口
     help: 
     description: 
-  label:
-    label: 显示名称
+  database:
+    label: 数据库
+    help: 
+    description: 
+  username:
+    label: 用户名
+    help: 
+    description: 
+  password:
+    label: 密码
+    help: 
+    description: 
+  mssql_options:
+    label: 连接选项
+    help: 
+    description: 
+  connectString:
+    label: connectString
+    help: 
+    description: 
+  timezone:
+    label: 时区
+    help: 
+    description: 
+  options:
+    label: Options
+    help: 
+    description: 
+  enable_space:
+    label: 启用工作区
     help: 
     description: 
   locale:
@@ -124,38 +152,14 @@ fields:
     label: Debug
     help: 
     description: 
-  mssql_options:
-    label: 连接选项
+  is_enable:
+    label: 启用
     help: 
     description: 
-  name:
-    label: API 名称
-    help: 
-    description: 
-  options:
-    label: Options
-    help: 
-    description: 
-  password:
-    label: 密码
-    help: 
-    description: 
-  port:
-    label: 端口
-    help: 
-    description: 
-  timezone:
-    label: 时区
-    help: 
-    description: 
-  url:
-    label: 连接数据库的URL
-    help: 
-    description: 
-  username:
-    label: 用户名
-    help: 
-    description: 
+groups:
+  other_connection_options: 其他连接选项 (请注意，其他连接选项将覆盖从URL设置的参数)
+  mssql: Mssql
+  oracle: Oracle
 listviews:
   all:
     label: 所有

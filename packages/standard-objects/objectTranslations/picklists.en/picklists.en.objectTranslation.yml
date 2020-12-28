@@ -2,6 +2,10 @@ name: picklists
 label: Picklist
 description: 
 fields:
+  name:
+    label: Name
+    help: 
+    description: 
   code:
     label: Code
     help: 
@@ -10,11 +14,6 @@ fields:
     label: Description
     help: 
     description: 
-  name:
-    label: Name
-    help: 
-    description: 
 listviews:
   all:
     label: All Picklists
-actions: {}

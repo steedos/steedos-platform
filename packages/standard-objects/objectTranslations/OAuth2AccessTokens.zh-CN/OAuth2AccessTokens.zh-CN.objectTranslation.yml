@@ -2,23 +2,22 @@ name: OAuth2AccessTokens
 label: OAuth2 Token
 description: 
 fields:
-  accessToken:
-    label: Token
-    help: 
-    description: 
-  clientId:
-    label: Client ID
+  userId:
+    label: 用户
     help: 
     description: 
   expires:
     label: 有效期限
     help: 
     description: 
-  userId:
-    label: 用户
+  clientId:
+    label: Client ID
+    help: 
+    description: 
+  accessToken:
+    label: Token
     help: 
     description: 
 listviews:
   all:
     label: 全部
-actions: {}

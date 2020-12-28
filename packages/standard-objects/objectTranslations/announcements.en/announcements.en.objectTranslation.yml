@@ -2,8 +2,16 @@ name: announcements
 label: Announcement
 description: 
 fields:
+  name:
+    label: Title
+    help: 
+    description: 
   body:
     label: Main Body
+    help: 
+    description: 
+  members:
+    label: Members
     help: 
     description: 
   created:
@@ -14,19 +22,10 @@ fields:
     label: Created by
     help: 
     description: 
-  members:
-    label: Members
-    help: 
-    description: 
   modified_by:
     label: Modified by
-    help: 
-    description: 
-  name:
-    label: Title
     help: 
     description: 
 listviews:
   all:
     label: All Announcements
-actions: {}

@@ -10,10 +10,6 @@ fields:
     label: 对象
     help: 
     description: 
-  record_id:
-    label: 记录ID或者视图ID（code）
-    help: 
-    description: 
   record_type:
     label: 类型
     help: 
@@ -23,6 +19,10 @@ fields:
       - label: 列表
         value: LIST_VIEW
     description: 
+  record_id:
+    label: 记录ID或者视图ID（code）
+    help: 
+    description: 
   sort_no:
     label: 排序号
     help: 
@@ -30,4 +30,6 @@ fields:
 listviews:
   all:
     label: 全部
-actions: {}
+actions:
+  standard_new:
+    label: 新建

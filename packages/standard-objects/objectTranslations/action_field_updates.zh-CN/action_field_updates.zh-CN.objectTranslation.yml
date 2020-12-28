@@ -2,50 +2,49 @@ name: action_field_updates
 label: 字段更新
 description: 
 fields:
-  description:
-    label: 描述
-    help: 
-    description: 
-  field_name:
-    label: 要更新的字段
-    help: 
-    description: 
-  formula:
-    label: 公式
+  name:
+    label: API 名称
     help: 
     description: 
   label:
     label: 显示名称
     help: 
     description: 
-  literal_value:
-    label: 指定新字段值
-    help: 
-    description: 
-  name:
-    label: API 名称
-    help: 
-    description: 
-  notify_assignee:
-    label: 通知被分配人(仅修改拥有者时由此选项)
-    help: 
-    description: 
   object_name:
     label: 对象
-    help: 
-    description: 
-  operation:
-    label: 新字段值类型
     help: 
     description: 
   target_object:
     label: 要更新的对象
     help: 
     description: 
+  field_name:
+    label: 要更新的字段
+    help: 
+    description: 
+  operation:
+    label: 新字段值类型
+    help: 
+    description: 
+  formula:
+    label: 公式
+    help: 
+    description: 
+  literal_value:
+    label: 指定新字段值
+    help: 
+    description: 
+  notify_assignee:
+    label: 通知被分配人(仅修改拥有者时由此选项)
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
 listviews:
   all:
     label: 所有
-actions: {}
 CustomLabels:
   action_field_updates_field_operation_options_null: 空值 (null)
   action_field_updates_field_operation_options_formula: 使用公式设置新值

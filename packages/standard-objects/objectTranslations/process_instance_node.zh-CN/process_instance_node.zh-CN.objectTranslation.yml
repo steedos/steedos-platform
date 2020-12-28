@@ -2,23 +2,15 @@ name: process_instance_node
 label: process_instance_node
 description: 
 fields:
-  completed_date:
-    label: Completed Date
-    help: 
-    description: 
-  elapsed_time_in_days:
+  process_node_name:
     label: 
     help: 
     description: 
-  elapsed_time_in_hours:
+  process_instance:
     label: 
     help: 
     description: 
-  elapsed_time_in_minutes:
-    label: 
-    help: 
-    description: 
-  last_actorId:
+  process_node:
     label: 
     help: 
     description: 
@@ -36,17 +28,23 @@ fields:
       - removed
       - started
     description: 
-  process_instance:
+  completed_date:
+    label: Completed Date
+    help: 
+    description: 
+  last_actorId:
     label: 
     help: 
     description: 
-  process_node:
+  elapsed_time_in_days:
     label: 
     help: 
     description: 
-  process_node_name:
+  elapsed_time_in_hours:
     label: 
     help: 
     description: 
-listviews: {}
-actions: {}
+  elapsed_time_in_minutes:
+    label: 
+    help: 
+    description: 

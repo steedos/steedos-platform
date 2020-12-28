@@ -2,6 +2,10 @@ name: picklists
 label: 下拉框列表
 description: 
 fields:
+  name:
+    label: 名称
+    help: 
+    description: 
   code:
     label: 唯一编码
     help: 
@@ -10,11 +14,6 @@ fields:
     label: 描述
     help: 
     description: 
-  name:
-    label: 名称
-    help: 
-    description: 
 listviews:
   all:
     label: 全部
-actions: {}

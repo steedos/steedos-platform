@@ -2,20 +2,24 @@ name: approvals
 label: Approval
 description: 
 fields:
-  cost_time:
-    label: Duration
+  from_user:
+    label: From
     help: 
     description: 
-  description:
-    label: Comments
+  start_date:
+    label: Send Time
+    help: 
+    description: 
+  user:
+    label: Handler
     help: 
     description: 
   finish_date:
     label: Completion time
     help: 
     description: 
-  from_user:
-    label: From
+  cost_time:
+    label: Duration
     help: 
     description: 
   judge:
@@ -39,14 +43,6 @@ fields:
       - label: Terminated
         value: terminated
     description: 
-  related_to:
-    label: Related to
-    help: 
-    description: 
-  start_date:
-    label: Send Time
-    help: 
-    description: 
   state:
     label: State
     help: 
@@ -58,13 +54,16 @@ fields:
       - label: Completed
         value: completed
     description: 
-  user:
-    label: Handler
+  description:
+    label: Comments
+    help: 
+    description: 
+  related_to:
+    label: Related to
     help: 
     description: 
 listviews:
   all:
     label: All
-actions: {}
 CustomLabels:
   approvals_field_judge_options_approved: approvals_field_judge_options_approved

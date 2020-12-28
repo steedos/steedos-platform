@@ -2,6 +2,10 @@ name: _object_reload_logs
 label: 
 description: 
 fields:
+  object_name:
+    label: 
+    help: 
+    description: 
   change_date:
     label: 
     help: 
@@ -10,9 +14,3 @@ fields:
     label: 
     help: 
     description: 
-  object_name:
-    label: 
-    help: 
-    description: 
-listviews: {}
-actions: {}

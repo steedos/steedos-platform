@@ -2,6 +2,46 @@ name: audit_login
 label: Log
 description: 
 fields:
+  username:
+    label: Username
+    help: 
+    description: 
+  login_time:
+    label: Login Time
+    help: 
+    description: 
+  source_ip:
+    label: IP
+    help: 
+    description: 
+  location:
+    label: Location
+    help: 
+    description: 
+  login_type:
+    label: Login Type
+    help: 
+    description: 
+  status:
+    label: Status
+    help: 
+    description: 
+  browser:
+    label: Browser
+    help: 
+    description: 
+  platform:
+    label: Platform
+    help: 
+    description: 
+  application:
+    label: Application
+    help: 
+    description: 
+  client_version:
+    label: Client Version
+    help: 
+    description: 
   api_type:
     label: API Type
     help: 
@@ -10,48 +50,8 @@ fields:
     label: API Version
     help: 
     description: 
-  application:
-    label: Application
-    help: 
-    description: 
-  browser:
-    label: Browser
-    help: 
-    description: 
-  client_version:
-    label: Client Version
-    help: 
-    description: 
-  location:
-    label: Location
-    help: 
-    description: 
-  login_time:
-    label: Login Time
-    help: 
-    description: 
-  login_type:
-    label: Login Type
-    help: 
-    description: 
   login_url:
     label: Login URL
-    help: 
-    description: 
-  platform:
-    label: Platform
-    help: 
-    description: 
-  source_ip:
-    label: IP
-    help: 
-    description: 
-  status:
-    label: Status
-    help: 
-    description: 
-  username:
-    label: Username
     help: 
     description: 
 listviews:
@@ -59,4 +59,3 @@ listviews:
     label: All Logs
   recent:
     label: Recently Viewed Logs
-actions: {}

@@ -2,6 +2,14 @@ name: connected_apps
 label: 外部应用
 description: 
 fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  code:
+    label: API 名称
+    help: 
+    description: 
   active:
     label: 激活
     help: 
@@ -10,8 +18,20 @@ fields:
     label: 图标
     help: 
     description: 
+  description:
+    label: 描述
+    help: 
+    description: 
   app_website:
     label: 应用官网
+    help: 
+    description: 
+  start_url:
+    label: 开始 URL
+    help: 
+    description: 
+  mobile_start_url:
+    label: 移动开始 URL
     help: 
     description: 
   client_id:
@@ -22,36 +42,12 @@ fields:
     label: Client Secret
     help: 
     description: 
-  code:
-    label: API 名称
-    help: 
-    description: 
-  description:
-    label: 描述
-    help: 
-    description: 
-  mobile_start_url:
-    label: 移动开始 URL
-    help: 
-    description: 
-  name:
-    label: 名称
-    help: 
-    description: 
-  oauth2_callback_url:
-    label: 回调 URL
-    help: 
-    description: 
   oauth2_enabled:
     label: 启用 OAuth2
     help: 
     description: 
-  oauth2_logout_enabled:
-    label: 启用单点注销
-    help: 
-    description: 
-  oauth2_logout_url:
-    label: 单点注销 URL
+  oauth2_callback_url:
+    label: 回调 URL
     help: 
     description: 
   oauth2_scopes:
@@ -65,8 +61,12 @@ fields:
       - label: 完全访问权限 (full)
         value: full
     description: 
-  saml_acs_url:
-    label: ACS URL
+  oauth2_logout_enabled:
+    label: 启用单点注销
+    help: 
+    description: 
+  oauth2_logout_url:
+    label: 单点注销 URL
     help: 
     description: 
   saml_enabled:
@@ -77,12 +77,28 @@ fields:
     label: Entity ID
     help: 
     description: 
+  saml_issuer:
+    label: Issuer
+    help: 
+    description: 
   saml_idp_cert:
     label: IDP Cert
     help: 
     description: 
-  saml_issuer:
-    label: Issuer
+  saml_acs_url:
+    label: ACS URL
+    help: 
+    description: 
+  saml_name_id_format:
+    label: Name
+    help: 
+    description: 
+  saml_logout_enabled:
+    label: 启用单点注销
+    help: 
+    description: 
+  saml_logout_url:
+    label: 单点注销 URL
     help: 
     description: 
   saml_logout_block:
@@ -94,23 +110,10 @@ fields:
       - label: HTTP Post
         value: post
     description: 
-  saml_logout_enabled:
-    label: 启用单点注销
-    help: 
-    description: 
-  saml_logout_url:
-    label: 单点注销 URL
-    help: 
-    description: 
-  saml_name_id_format:
-    label: Name
-    help: 
-    description: 
-  start_url:
-    label: 开始 URL
-    help: 
-    description: 
+groups:
+  api: API
+  oauth2: OAuth2
+  saml: SAML
 listviews:
   all:
     label: 所有
-actions: {}

@@ -2,48 +2,82 @@ name: forms
 label: Form
 description: 
 fields:
-  approve_on_create:
-    label: Approve on Create
+  name:
+    label: Name
     help: 
     description: 
-  approve_on_delete:
-    label: Approve on Delete
+  state:
+    label: State
     help: 
+    options:
+      - label: Enabled
+        value: enabled
+      - label: Disabled
+        value: disabled
     description: 
-  approve_on_modify:
-    label: Approve on Modify
+  description:
+    label: Description
     help: 
     description: 
   category:
     label: Category
     help: 
     description: 
+  is_valid:
+    label: Valid
+    help: 
+    description: 
+  instance_style:
+    label: Instance Style
+    help: 
+    options:
+      - label: Table
+        value: table
+      - label: Default
+        value: default
+    description: 
+  historys:
+    label: historys
+    help: 
+    description: 
+  approve_on_create:
+    label: Approve on Create
+    help: 
+    description: 
+  approve_on_modify:
+    label: Approve on Modify
+    help: 
+    description: 
+  approve_on_delete:
+    label: Approve on Delete
+    help: 
+    description: 
+  enable_workflow:
+    label: Enable Workflow
+    help: 
+    description: 
+  enable_view_others:
+    label: Enable View Others
+    help: 
+    description: 
   current:
     label: current
     help: 
     description: 
+  current.form_script:
+    label: Form Script
+    help: 
+    description: 
+  current.name_forumla:
+    label: Name Forumla
+    help: 
+    description: 
+  current.fields:
+    label: Fields
+    help: 
+    description: 
   current.fields.$.code:
     label: Code
-    help: 
-    description: 
-  current.fields.$.is_list_display:
-    label: Display in List
-    help: 
-    description: 
-  current.fields.$.is_multiselect:
-    label: Multiselect
-    help: 
-    description: 
-  current.fields.$.is_required:
-    label: Required
-    help: 
-    description: 
-  current.fields.$.is_searchable:
-    label: Searchable
-    help: 
-    description: 
-  current.fields.$.is_wide:
-    label: Wide
     help: 
     description: 
   current.fields.$.name:
@@ -86,67 +120,40 @@ fields:
       - label: GeolocationR
         value: geolocationR
     description: 
-  current.fields:
-    label: Fields
+  current.fields.$.is_required:
+    label: Required
     help: 
     description: 
-  current.form_script:
-    label: Form Script
+  current.fields.$.is_wide:
+    label: Wide
     help: 
     description: 
-  current.name_forumla:
-    label: Name Forumla
+  current.fields.$.is_list_display:
+    label: Display in List
     help: 
     description: 
-  description:
-    label: Description
+  current.fields.$.is_searchable:
+    label: Searchable
     help: 
     description: 
-  enable_view_others:
-    label: Enable View Others
+  current.fields.$.is_multiselect:
+    label: Multiselect
     help: 
-    description: 
-  enable_workflow:
-    label: Enable Workflow
-    help: 
-    description: 
-  historys:
-    label: historys
-    help: 
-    description: 
-  instance_style:
-    label: Instance Style
-    help: 
-    options:
-      - label: Table
-        value: table
-      - label: Default
-        value: default
-    description: 
-  is_valid:
-    label: Valid
-    help: 
-    description: 
-  name:
-    label: Name
-    help: 
-    description: 
-  state:
-    label: State
-    help: 
-    options:
-      - label: Enabled
-        value: enabled
-      - label: Disabled
-        value: disabled
     description: 
 listviews:
   all:
     label: All Forms
-actions: {}
+actions:
+  standard_new:
+    label: New
+  standard_edit:
+    label: Edit
+  standard_delete:
+    label: Delete
+  designForm:
+    label: Form Designer
 CustomLabels:
   _forms_field_code_error: Code %s must not contain '.'
-  forms_action_designForm: forms_action_designForm
   forms_field_current.fields: forms_field_current.fields
   forms_field_current.fields_$_code: forms_field_current.fields_$_code
   forms_field_current.fields_$_is_list_display: forms_field_current.fields_$_is_list_display

@@ -55,12 +55,12 @@ function getListviewsTranslationTemplate(listviews){
     return template;
 }
 
-function getFieldGroupsTemplate(fields){
+function getFieldGroupsTemplate(fields, tFields){
     const template = {};
     _.each(fields, function(field, fieldName){
         if(field.group){
             let groupKey = field.group.toLocaleLowerCase().replace(/\%/g, '_').replace(/\./g, '_').replace(/\ /g, '_')
-            template[groupKey] = field.group;
+            template[groupKey] = tFields[fieldName].group;
         }
     })
     return template;
@@ -71,8 +71,17 @@ export const getObjectMetadataTranslationTemplate = function(lng: string , objec
     translationObject(lng, objectName, object);
     let template = Object.assign({}, getObjectTranslationTemplate(object));
     template = Object.assign({}, template, {fields: getFieldsTranslationTemplate(object.fields)});
-    template = Object.assign({}, template, {groups: getFieldGroupsTemplate(object.fields)});
-    template = Object.assign({}, template, {listviews: getListviewsTranslationTemplate(object.list_views)});
-    template = Object.assign({}, template, {actions: getActionsTranslationTemplate(object.actions)});
+    const groupsTemplate = getFieldGroupsTemplate(_object.fields, object.fields);
+    if(!_.isEmpty(groupsTemplate)){
+        template = Object.assign({}, template, {groups: groupsTemplate});
+    }
+    const listViewsTemplate = getListviewsTranslationTemplate(object.list_views);
+    if(!_.isEmpty(listViewsTemplate)){
+        template = Object.assign({}, template, {listviews: listViewsTemplate});
+    }
+    const actionsTemplate = getActionsTranslationTemplate(object.actions);
+    if(!_.isEmpty(actionsTemplate)){
+        template = Object.assign({}, template, {actions: actionsTemplate});
+    }
     return Object.assign({name: objectName}, template)
 }
