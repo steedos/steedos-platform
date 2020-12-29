@@ -129,3 +129,5 @@ Template.range_field.helpers
 		return this.toString()
 	endName: ()->
 		return this.toString() + '_endLine'
+	getClass: (key)->
+		return 'form-control';
