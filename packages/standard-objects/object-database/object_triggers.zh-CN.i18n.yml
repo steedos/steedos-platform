@@ -1,9 +1,0 @@
-object_triggers__object: 对象触发器
-object_triggers_field_is_enable: 已启用
-object_triggers_field_name: 名称
-object_triggers_field_object: 所属对象
-object_triggers_field_todo: >-
-  执行的脚本 <a target="_blank"
-  href="https://developer.steedos.com/developer/object_trigger">查看帮助</a>
-object_triggers_field_when: 运行时
-object_triggers_listview_all: 所有
