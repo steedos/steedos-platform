@@ -1,5 +1,5 @@
 import * as _ from 'underscore';
-import { SteedosMetadataTypeInfoKeys } from '@steedos/metadata-core';
+import { SteedosTranslationPrefixKeys } from './';
 import { _t, exists, addResourceBundle } from '../index';
 import { convertObject } from './index';
 import { fallbackKeys } from '../i18n/i18n';
@@ -47,13 +47,13 @@ const getBaseObjectName = function(datasource){
 const getPrefix = function(key?){
     switch (key) {
         case OBJECT_KEY:
-            return SteedosMetadataTypeInfoKeys.Object
+            return SteedosTranslationPrefixKeys.Object
         case FIELD_KEY:
-            return SteedosMetadataTypeInfoKeys.Field
+            return SteedosTranslationPrefixKeys.Field
         case LISTVIEW_KEY:
-            return SteedosMetadataTypeInfoKeys.Listview
+            return SteedosTranslationPrefixKeys.Listview
         case ACTION_KEY:
-            return SteedosMetadataTypeInfoKeys.Action
+            return SteedosTranslationPrefixKeys.Action
         default:
             return 'CustomLabels';
     }
@@ -361,7 +361,7 @@ function convertObjectTranslation(objectTranslation, filePath){
         template[getActionLabelKey( objectName, actionName)] = action.label;
     })
 
-    _.each(object.list_views, function(list_view, viewName){
+    _.each(object.listviews, function(list_view, viewName){
         template[getListviewLabelKey(objectName, viewName)] = list_view.label;
     })
 

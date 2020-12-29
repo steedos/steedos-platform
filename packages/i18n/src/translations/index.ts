@@ -54,3 +54,23 @@ export const convertObject = function (object: StringMap) {
         }
     })
 }
+
+export enum SteedosTranslationPrefixKeys {
+    Object = 'CustomObject',
+    Field = 'CustomField',
+    Action = 'CustomAction',
+    Listview = 'CustomListview',
+    Permission = 'CustomPermission',
+    ValidationRule = 'CustomValidationRule',
+    Application = 'CustomApplication',
+    Permissionset = 'CustomPermissionset',
+    Profile = 'CustomProfile',
+    Report = 'CustomReport',
+    Workflow = 'Workflow',
+    Layout = 'Layout',
+    Client = 'Client',
+    Server = 'Server',
+    Function = 'Function',
+    Router = 'Router',
+    Trigger = 'Trigger'
+}

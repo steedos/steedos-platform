@@ -1,6 +1,6 @@
 import { _t, exists, addResourceBundle } from '../index';
 import * as _ from 'underscore';
-import { SteedosMetadataTypeInfoKeys } from '@steedos/metadata-core';
+import { SteedosTranslationPrefixKeys } from './';
 import { appFallbackKeys } from '../i18n/i18n.app';
 
 const clone = require("clone");
@@ -14,7 +14,7 @@ const MENU_KEY = 'menu';
 const getPrefix = function(key?){
     switch (key) {
         case CUSTOMAPPLICATIONS_KEY:
-            return SteedosMetadataTypeInfoKeys.Application
+            return SteedosTranslationPrefixKeys.Application
         default:
             return 'CustomLabels';
     }

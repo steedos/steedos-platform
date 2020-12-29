@@ -2,14 +2,14 @@ CustomLabels:
   process_approval_comment: Comments
   process_approval_title_reassign: Reassign Approval Request
   process_approval_approver_label_reassign: Reassign To
-  process_approval_confirmBtnText_reassign: Reassign
+  process_approval_confirmBtnText_reassign: process_instance_history_action_reassign
   process_approval_title_recall: Reject
-  process_approval_confirmBtnText_recall: Recall
+  process_approval_confirmBtnText_recall: process_instance_history_action_recall
   process_approval_title_submit: Submit for Approval
   process_approval_confirmBtnText_submit: Submit
-  process_approval_confirmBtnText_approve: Approve
+  process_approval_confirmBtnText_approve: process_instance_history_action_approve
   process_approval_approver_label: Choose Next Approver
-  process_approval_confirmBtnText_reject: Reject
+  process_approval_confirmBtnText_reject: process_instance_history_action_reject
   process_approval_empty_node_title: Approval Request Submitted
   process_approval_error_notFindProcessDefinition: No applicable approval process was found.
   process_approval_error_NoApproval: Another user recalled or responded to this request.
@@ -25,7 +25,29 @@ CustomLabels:
   accounts-sign-in: Sign In
   accounts-sign-out: Sign Out
   accounts-sign-up: Sign Up
-  dataTables: key 'dataTables (undefined)' returned an object instead of string.
+  dataTables:
+    emptyTable: '&nbsp;'
+    info: Showing _START_ to _END_ of _TOTAL_ entries
+    infoEmpty: Showing 0 to 0 of 0 entries
+    infoFiltered: (filtered from _MAX_ total entries)
+    infoPostFix: 
+    infoThousands: ','
+    lengthMenu: Show _MENU_ entries
+    loadingRecords: Loading...
+    processing: Loading...
+    search: 'Search:'
+    zeroRecords: No matching records found
+    zero: 'None '
+    paginate:
+      first: First
+      last: Last
+      next: Next
+      previous: Previous
+    aria:
+      sortAscending: ': activate to sort column ascending'
+      sortDescending: ': activate to sort column descending'
+    select:
+      rows: '%d row(s) selected'
   tabbar_workflow: Workflow
   tabbar_cms: Messages
   tabbar_apps: Apps
@@ -193,7 +215,8 @@ CustomLabels:
   Edit: Edit
   Delete: Delete
   Spaces_isPaid: Is Paid
-  users_error: key 'users_error (undefined)' returned an object instead of string.
+  users_error:
+    steedos_id_required: Steedos ID is required
   personalization: Personalization
   bg_body: Backgrounds
   bg_body_setting: Background Setting
@@ -230,7 +253,12 @@ CustomLabels:
   billings_balance: Balance
   billings: Billing
   billings_transaction_i18n(): Transaction Details
-  billing_tranDetail: key 'billing_tranDetail (undefined)' returned an object instead of string.
+  billing_tranDetail:
+    starting: Starting balance
+    payment: Payment
+    workflow: Workflow Professional
+    chat: Chat Professional
+    adjustment: Service adjustment
   spaces_edit: Edit Space
   spaces_edit_help: 'Edit the name,owner and admins of space.'
   spaces_new: Create Space
@@ -327,7 +355,21 @@ CustomLabels:
   steedos_desktop_edit_warning: >-
     The current document has been unlocked by the administrator, please edit and
     upload again!
-  billing: key 'billing (undefined)' returned an object instead of string.
+  billing:
+    upgrade: Upgrade
+    total_user_count: Tolal user count
+    accepted_user_count: Accepted user count
+    paid_user_count: Paid user count
+    paid_modules: Paid modules
+    expire_date: Expiration date
+    buy_modules: Modules
+    buy_user_count: User count
+    buy_additional_user_count: The number of users to purchase additional (not required)
+    buy_date: Expiration date
+    amount: Amount ￥
+    had_paid: Finished
+    not_paid: Not finished
+    price: Price
   billing_pay_records: Orders
   billing_pay_records_order_created(): Created time
   billing_pay_records_modules: Modules
@@ -430,7 +472,22 @@ CustomLabels:
   download_progress: Download progress
   'True': 'YES'
   'False': 'NO'
-  sms: key 'sms (undefined)' returned an object instead of string.
+  sms:
+    remind:
+      code: SMS_67200967
+      template: 催办通知：，办结时限：。申请单：
+    notify_wenshu:
+      code: SMS_61725087
+      template: 您好，用户在申请单中填写的批阅意见为：。
+    chnage_mobile:
+      code: SMS_67660108
+      template: 通讯录中您的手机号已被修改为。
+    mobile_verification_code:
+      code: SMS_63370455
+      template: 您的验证码为：。如非本人操作，请忽略本短信。
+    change_password:
+      code: SMS_67200967
+      template: 系统通知：您的登录密码已被修改
   standard_query: Search
   standard_query_more: More
   app_admin_name: Setup
@@ -1067,7 +1124,60 @@ CustomLabels:
   object_actions_todo: 执行的脚本
   view_object: View object
   object_validation_rules_wrong_formula: Wrong formula.
-  simpleschema: key 'simpleschema (undefined)' returned an object instead of string.
+  simpleschema:
+    messages:
+      required: '[label] is required'
+      minString: '[label] must be at least [min] characters'
+      maxString: '[label] cannot exceed [max] characters'
+      minNumber: '[label] must be at least [min]'
+      maxNumber: '[label] cannot exceed [max]'
+      minNumberExclusive: '[label] must be greater than [min]'
+      maxNumberExclusive: '[label] must be less than [max]'
+      minDate: '[label] must be on or after [min]'
+      maxDate: '[label] cannot be after [max]'
+      badDate: '[label] is not a valid date'
+      minCount: 'You must specify at least [minCount] values'
+      maxCount: 'You cannot specify more than [maxCount] values'
+      noDecimal: '[label] must be an integer'
+      notAllowed: '[value] is not an allowed value'
+      expectedString: '[label] must be a string'
+      expectedNumber: '[label] must be a number'
+      expectedBoolean: '[label] must be a boolean'
+      expectedArray: '[label] must be an array'
+      expectedObject: '[label] must be an object'
+      expectedConstructor: '[label] must be a [type]'
+      keyNotInSchema: '[key] is not allowed by the schema'
+      notUnique: '[label] must be unique'
+      regEx:
+        '0':
+          msg: '[label] failed regular expression validation'
+        '1':
+          exp: SimpleSchema.RegEx.Email
+          msg: '[label] must be a valid e-mail address'
+        '2':
+          exp: SimpleSchema.RegEx.WeakEmail
+          msg: '[label] must be a valid e-mail address'
+        '3':
+          exp: SimpleSchema.RegEx.Domain
+          msg: '[label] must be a valid domain'
+        '4':
+          exp: SimpleSchema.RegEx.WeakDomain
+          msg: '[label] must be a valid domain'
+        '5':
+          exp: SimpleSchema.RegEx.IP
+          msg: '[label] must be a valid IPv4 or IPv6 address'
+        '6':
+          exp: SimpleSchema.RegEx.IPv4
+          msg: '[label] must be a valid IPv4 address'
+        '7':
+          exp: SimpleSchema.RegEx.IPv6
+          msg: '[label] must be a valid IPv6 address'
+        '8':
+          exp: SimpleSchema.RegEx.Url
+          msg: '[label] must be a valid URL'
+        '9':
+          exp: SimpleSchema.RegEx.Id
+          msg: '[label] must be a valid alphanumeric ID'
   steedos_tableau: Tableau
   steedos_tableau_workflow: Flow List
   steedos_tableau_info: Steedos Tableau
@@ -1347,13 +1457,231 @@ CustomLabels:
   instance_search_end: End
   instance_search_result_tip: Filtered Result
   instance_search_state: Request State
-  instance_search_state_options: >-
-    key 'instance_search_state_options (undefined)' returned an object instead
-    of string.
-  instance: key 'instance (undefined)' returned an object instead of string.
-  flow: key 'flow (undefined)' returned an object instead of string.
-  help: key 'help (undefined)' returned an object instead of string.
-  export: key 'export (undefined)' returned an object instead of string.
+  instance_search_state_options:
+    pending: Pending
+    completed: Completed
+  instance:
+    formatter:
+      date:
+        simple_date: 'bb DD, YYYY'
+        simple_datetime: 'bb DD, YYYY HH:MM'
+        export_date: YYYY-MM-DD
+        export_datetime: 'YYYY-MM-DD HH:MM'
+      checkbox:
+        checked: 'YES'
+        unchecked: 'NO'
+    instance_view: >-
+      <br/><br/>Following are the contents of the request:<br/>Space :
+      ;<br/>Initiator : ;<br/>Submit Date : ;
+    push:
+      final_decision_approved: Approved
+      final_decision_rejected: Rejected
+      final_decision_nil: 
+      title:
+        first_submit_applicant: 
+        first_submit_inbox: 
+        submit_pending_rejected_applicant_inbox: 
+        submit_pending_rejected_applicant: 
+        submit_pending_rejected_approve: 
+        submit_pending_rejected_inbox: 
+        submit_pending_inbox: 
+        submit_terminate_applicant: 
+        submit_terminate_approve: 
+        monitor_delete_applicant: 
+        submit_completed_applicant: 
+        submit_completed_approve: 
+        approved_completed_applicant: 
+        approved_completed_approve: 
+        rejected_completed_applicant: 
+        rejected_completed_approve: 
+        reassign_new_inbox_users: 
+        trace_approve_cc: 
+        trace_approve_cc_submit: 
+        auto_submit_pending_inbox: 
+        return_pending_inbox: 
+      body:
+        input: input
+        approval: approval
+        first_submit_applicant: I have submitted a  request for you
+        first_submit_inbox: 'My  request needs your '
+        submit_pending_rejected_applicant_inbox: Request for  has been rejected
+        submit_pending_rejected_applicant: 'Request for  has been rejected to '
+        submit_pending_rejected_approve: 
+        submit_pending_rejected_inbox: 'My  request needs your '
+        submit_pending_inbox: 'My  request needs your '
+        submit_terminate_applicant: Request for  has been cancelled
+        submit_terminate_approve: 
+        monitor_delete_applicant: Request for  has been deleted
+        submit_completed_applicant: Request for  has been approved
+        submit_completed_approve: 
+        approved_completed_applicant: Request for  has been approved
+        approved_completed_approve: 
+        rejected_completed_applicant: Request for  has been rejected
+        rejected_completed_approve: 
+        reassign_new_inbox_users: 'My  request needs your '
+        trace_approve_cc: 'My  request needs your '
+        remind: 'Remind：, Deadline：'
+        trace_approve_cc_submit: 'I have submitted a cc '
+        distribute_remind: My  has been end
+        auto_submit_pending_inbox: 'Your  auto submitted to '
+        return_pending_inbox: Request for  has been returned
+    email:
+      final_decision_approved: Approved
+      final_decision_rejected: Rejected
+      final_decision_nil: 
+      inscribed: '<br/><br/>Sincerely,<br/>'
+      footnote: 'This is an automatically generated email, please do not reply to it.'
+      title:
+        input: input
+        approval: approval
+        first_submit_applicant: I have submitted a  request for you
+        first_submit_inbox: 'My  request needs your '
+        submit_pending_rejected_applicant_inbox: Request for  has been rejected
+        submit_pending_rejected_applicant: 'Request for  has been rejected to '
+        submit_pending_rejected_approve: 
+        submit_pending_rejected_inbox: 'My  request needs your '
+        submit_pending_inbox: 'My  request needs your '
+        submit_terminate_applicant: Request for  has been cancelled
+        submit_terminate_approve: 
+        monitor_delete_applicant: ' has been deleted'
+        submit_completed_applicant: 'I have approved your request for '
+        submit_completed_approve: 
+        approved_completed_applicant: 'I have approved your request for '
+        approved_completed_approve: 
+        rejected_completed_applicant: 'I have rejected your request for '
+        rejected_completed_approve: 
+        reassign_new_inbox_users: 'My  request needs your '
+        trace_approve_cc: 'My  request needs your '
+        auto_submit_pending_inbox: Your  has been submitted automatically
+        return_pending_inbox: 'I have returned your request for '
+      body:
+        url_input: input
+        url_approval: approval
+        input: input
+        approval: approval
+        judge_approved: approved
+        judge_submitted: provided his input for
+        email_description: 'Comments : .'
+        first_submit_applicant: >-
+          Hi ,<br/><br/>I have submitted a  request on behalf of you.<br/><a
+          href = >Please click here to view this request.</a>
+        first_submit_applicant_beApproveDescription: >-
+          Hi ,<br/><br/>I have submitted a  request on behalf of you, and
+          attached the following comments with the request.<br/>Comments :
+          <br/><a href = >Please click here to view this request.</a>
+        first_submit_inbox: >-
+          Hi ,<br/><br/> has submitted a  request, which needs your .<br/><a
+          href = >Please click here to view this request.</a>
+        first_submit_inbox_beApproveDescription: >-
+          Hi ,<br/><br/> has submitted a  request, which needs your . He / she
+          has attached the following comments with the request.<br/>Comments :
+          <br/><a href = >Please click here to view this request.</a>
+        submit_pending_rejected_applicant_inbox: >-
+          Hi ,<br/><br/>Your request for  has been rejected by  with the
+          following comments.<br/><br/><a href = >Please click here to view this
+          request.</a>
+        submit_pending_rejected_applicant: >-
+          Hi ,<br/><br/>Your request for  has been rejected by .He / She has
+          attached the following comments with the request, and has sent it to
+          <br/><br/><a href = >Please click here to view this request.</a>
+        submit_pending_rejected_approve: 
+        submit_pending_rejected_inbox: >-
+          Hi ,<br/><br/>'s request for  needs your , which has been rejected by 
+          with the following comments.<br/><br/><a href = >Please click here to
+          view this request.</a>
+        submit_pending_inbox: >-
+          Hi ,<br/><br/> has submitted a  request, which needs your .  has  this
+          request.<br/><a href = >Please click here to view this request.</a>
+        submit_pending_inbox_beApproveDescription: >-
+          Hi ,<br/><br/> has submitted a  request, which needs your .  has  this
+          request with the following comments.<br/>Comments : <br/><a href =
+          >Please click here to view this request.</a>
+        submit_pending_inbox_beApproveDescription_counterSign: >-
+          Hi ,<br/><br/> has submitted a  request, which needs your .  has
+          provided their input for this request with the following
+          comments.<br/>Comments : <br/>
+        submit_terminate_applicant: >-
+          Hi ,<br/><br/>Your request for  has been cancelled by .He / She has
+          attached the following comments with the request.<br/>Comments : .
+        submit_terminate_approve: 
+        monitor_delete_applicant: 'Hi ,<br/><br/>Your request for  has been deleted.'
+        submit_completed_applicant: >-
+          Hi ,<br/><br/>Your request for  has been completed by .<br/><a href =
+          >Please click here to view this request.</a>
+        submit_completed_applicant_beApproveDescription: >-
+          Hi ,<br/><br/>Your request for  has been completed by . He / she has
+          attached the following comments with the request. <br/>Comments :
+          <br/><a href = >Please click here to view this request.</a>
+        submit_completed_applicant_beApproveDescription_counterSign: >-
+          Hi ,<br/><br/>Your request for  has been completed by . They has
+          attached the following comments with the request. <br/>Comments :<br/>
+        submit_completed_approve: 
+        approved_completed_applicant: >-
+          Hi ,<br/><br/>Your request for  has been final approved by .<br/><a
+          href = >Please click here to view this request.</a>
+        approved_completed_applicant_beApproveDescription: >-
+          Hi ,<br/><br/>Your request for  has been final approved by . He / she
+          has attached the following comments with the request. <br/>Comments :
+          <br/><a href = >Please click here to view this request.</a>
+        approved_completed_approve: 
+        rejected_completed_applicant: >-
+          Hi ,<br/><br/>Your request for  has been final rejected by . He / She
+          has attached the following comments with the request.<br/><br/><a href
+          = >Please click here to view this request.</a>
+        rejected_completed_approve: 
+        reassign_new_inbox_users: >-
+          Hi ,<br/><br/> has transferred 's  to you with the following comments.
+          <br/>Comments : <br/><a href = >Please click here to view this
+          request.</a>。
+        trace_approve_cc: >-
+          Hi ,<br/><br/> has cc a  request, which needs your .<br/><a href =
+          >Please click here to view this request.</a>
+        auto_submit_pending_inbox: 'Hi ,<br/><br/>Your  has been submitted to  automatically.'
+        return_pending_inbox: >-
+          Hi ,<br/><br/>Your request for  has been returned by .He / She has
+          attached the following comments with the request.<br/>Comments : .
+    sms:
+      submit_pending_inbox: 您有新的待审核：，提交人：
+    remindMessage:
+      update_failed: 'Requested action not taken, because this request has been updated.'
+      has_deleted: This report has been deleted.
+    judge:
+      approved: approved
+      rejected: rejected
+  flow:
+    point_upgraded: >-
+      The workflow has been upgraded. Please make sure this request meet the
+      requirements of the new version.
+    print_select_template_alert: Please upgraded to Professional Version.
+    print_select_title: Select Template
+    print_default_print_title: Default
+    print_custom_print_title: Custom
+    print_button_title: Print
+    print_html_title: SteedOS
+    template_files: Template
+  help:
+    href: <a href = >Please click here to view this request.</a>
+    approves: Approval History
+    initiator: 'Initiator : '
+    attachment: Attachment
+  export:
+    code: Code
+    name: Name
+    initiator: Initiator
+    initiator_org: Initiator's Organization
+    submit_date: Submit Time
+    status: Status
+    current_step_name: Current Step Name
+    current_step_start_date: Current Step Start Time
+    state:
+      pending: In Progress
+      approved: Approved
+      rejected: Rejected
+      terminated: Cancelled
+      finished: Completed
+      reassigned: Reassigned
+      inhand: In Progress
+      relocated: Relocated
   steedos: Steedos
   cc: cc
   saveInstanceToAttachment: Save request form as an attachment.
@@ -1451,17 +1779,26 @@ CustomLabels:
   instance_remind_need_remind_users: Need users
   instance_remind_need_remind_count: Need mode
   instance_remind_need_remind_deadline: Need deadline
-  instance_remind_count_options: >-
-    key 'instance_remind_count_options (undefined)' returned an object instead
-    of string.
+  instance_remind_count_options:
+    single: single
+    multi: multi
   instance_opinion_title_select: Select opinions
   categories: Workflow categories
   categories_name: Name
   categories_sort_no: Sort no
   not_found_user: Not Found User
-  next_step_users_not_found: >-
-    key 'next_step_users_not_found (undefined)' returned an object instead of
-    string.
+  next_step_users_not_found:
+    aplicant_superior: >-
+      The applicant's superior is not configured, please contact the
+      Administrator.
+    applicant_role: >-
+      The <> you are looking for have not configured,Please contact the
+      administrator.
+    hr_role: >-
+      The <> you are looking for have not configured,Please contact the
+      administrator.
+    field_value_empty: Please enter the value of the <>field
+    org_no_members: 'The next step need <> processing,Please contact the administrator.'
   instanc_admin_role_text: <a href='%s' target='_blank'> configuration in position</a>
   instanc_user_role_text: ' configuration in position'
   instanc_set_applicant_role_text: set positions users

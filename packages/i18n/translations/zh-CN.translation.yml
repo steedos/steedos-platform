@@ -2,14 +2,14 @@ CustomLabels:
   process_approval_comment: 评论
   process_approval_title_reassign: 转签核批准请求
   process_approval_approver_label_reassign: 转签核处理人
-  process_approval_confirmBtnText_reassign: 转签核
+  process_approval_confirmBtnText_reassign: process_instance_history_action_reassign
   process_approval_title_recall: 取消申请
-  process_approval_confirmBtnText_recall: 取消申请
+  process_approval_confirmBtnText_recall: process_instance_history_action_recall
   process_approval_title_submit: 提交待审核
   process_approval_confirmBtnText_submit: 提交
-  process_approval_confirmBtnText_approve: 批准
+  process_approval_confirmBtnText_approve: process_instance_history_action_approve
   process_approval_approver_label: 选择下一位批准人
-  process_approval_confirmBtnText_reject: 拒绝
+  process_approval_confirmBtnText_reject: process_instance_history_action_reject
   process_approval_empty_node_title: 已提交的批准请求
   process_approval_error_notFindProcessDefinition: 未找到适用批准流程。
   process_approval_error_NoApproval: 其他用户已取消申请或响应此请求。
@@ -23,7 +23,30 @@ CustomLabels:
   accounts-sign-in: 登录
   accounts-sign-out: 退出
   accounts-sign-up: 注册
-  dataTables: key 'dataTables (undefined)' returned an object instead of string.
+  dataTables:
+    none: None
+    emptyTable: '&nbsp;'
+    info: 显示第 _START_ 至 _END_ 项记录，共 _TOTAL_ 项
+    infoEmpty: 显示第 0 至 0 项记录，共 0 项
+    infoFiltered: (由 _MAX_ 项记录过滤)
+    infoPostFix: 
+    infoThousands: ','
+    lengthMenu: 显示 _MENU_ 项记录
+    loadingRecords: 载入中...
+    processing: 加载中...
+    search: '搜索:'
+    zeroRecords: 没有记录
+    zero: 没有
+    paginate:
+      first: 首页
+      last: 末页
+      next: 下页
+      previous: 上页
+    aria:
+      sortAscending: ': 以升序排列此列'
+      sortDescending: ': 以降序排列此列'
+    select:
+      rows: 选中%d行
   tabbar_workflow: 审批
   tabbar_cms: 信息
   tabbar_apps: 工作台
@@ -187,7 +210,8 @@ CustomLabels:
   Edit: 编辑
   Delete: 删除
   Spaces_isPaid: 已付费
-  users_error: key 'users_error (undefined)' returned an object instead of string.
+  users_error:
+    steedos_id_required: Steedos ID 不能为空
   personalization: 个性化
   bg_body: 背景
   bg_body_setting: 设置背景
@@ -222,7 +246,12 @@ CustomLabels:
   billings_balance: 余额
   billings: 账务
   billings_transaction_i18n(): 交易说明
-  billing_tranDetail: key 'billing_tranDetail (undefined)' returned an object instead of string.
+  billing_tranDetail:
+    starting: 初始化账户
+    payment: 付款
+    workflow: 审批王专业版
+    chat: 享聊专业版
+    adjustment: 账单调整
   spaces_edit: 编辑工作区
   spaces_edit_help: 修改工作区名称、所有者及管理员。
   spaces_new: 新建工作区
@@ -301,7 +330,21 @@ CustomLabels:
   steedos_desktop_update_info: 当前客户端版本过旧，请下载安装最新客户端！
   steedos_desktop_edit_office_info: 您正在编辑文档，请关闭后再打开新公文！
   steedos_desktop_edit_warning: 当前文档已被管理员解锁，请重新编辑后上传！
-  billing: key 'billing (undefined)' returned an object instead of string.
+  billing:
+    upgrade: 升级
+    total_user_count: 总用户数
+    accepted_user_count: 已启用用户
+    paid_user_count: 已购买用户
+    paid_modules: 已购买应用
+    expire_date: 购买日期至
+    buy_modules: 购买应用
+    buy_user_count: 用户数
+    buy_additional_user_count: 购买额外用户数(非必填)
+    buy_date: 购买日期至
+    amount: 付款金额 ￥
+    has_paid: 支付成功
+    not_paid: 未支付
+    price: 单价
   billing_pay_records: 订单
   billing_pay_records_order_created(): 创建时间
   billing_pay_records_modules: 模块
@@ -384,7 +427,22 @@ CustomLabels:
   download_progress: 进度
   'True': 是
   'False': 否
-  sms: key 'sms (undefined)' returned an object instead of string.
+  sms:
+    remind:
+      code: SMS_67200967
+      template: 催办通知：，办结时限：。申请单：
+    notify_wenshu:
+      code: SMS_61725087
+      template: 您好，用户在申请单中填写的批阅意见为：。
+    chnage_mobile:
+      code: SMS_67660108
+      template: 通讯录中您的手机号已被修改为。
+    mobile_verification_code:
+      code: SMS_63370455
+      template: 您的验证码为：。如非本人操作，请忽略本短信。
+    change_password:
+      code: SMS_67200967
+      template: 系统通知：您的登录密码已被修改
   standard_query: 查找
   standard_query_more: 高级
   app_admin_name: 设置
@@ -974,7 +1032,60 @@ CustomLabels:
   object_actions_todo: 执行的脚本
   view_object: 查看对象
   object_validation_rules_wrong_formula: 公式错误，请检查错误条件公式。
-  simpleschema: key 'simpleschema (undefined)' returned an object instead of string.
+  simpleschema:
+    messages:
+      required: '必须填写[label]'
+      minString: '[label]最短[min]字符长'
+      maxString: '[label]不能超过[max]字符'
+      minNumber: '[label]至少是[min]'
+      maxNumber: '[label]不能超过[max]'
+      minNumberExclusive: '[label]必须大于[min]'
+      maxNumberExclusive: '[label]必须小于[max]'
+      minDate: '[label]必须在[min]时或之后'
+      maxDate: '[label]不能在[max]之后'
+      badDate: '[label]不是一个正确的日期'
+      minCount: '至少包含[minCount]项'
+      maxCount: '不能超过[maxCount]项'
+      noDecimal: '[label]必须是整数'
+      notAllowed: '[value]填写不正确'
+      expectedString: '[label]必须是字符串'
+      expectedNumber: '[label]必须是数字'
+      expectedBoolean: '[label]必须是是/否类型'
+      expectedArray: '[label]必须是一组值'
+      expectedObject: '[label]必须是一个对象'
+      expectedConstructor: '[label]必须是[type]'
+      keyNotInSchema: '[key]不符合结构规则'
+      notUnique: '[label]必须是唯一的'
+      regEx:
+        '0':
+          msg: '[label]正则校验失败'
+        '1':
+          exp: SimpleSchema.RegEx.Email
+          msg: '[label]必须是合法的电邮地址'
+        '2':
+          exp: SimpleSchema.RegEx.WeakEmail
+          msg: '[label]必须是合法的电邮地址'
+        '3':
+          exp: SimpleSchema.RegEx.Domain
+          msg: '[label]必须是合法的域名'
+        '4':
+          exp: SimpleSchema.RegEx.WeakDomain
+          msg: '[label]必须是合法的域名'
+        '5':
+          exp: SimpleSchema.RegEx.IP
+          msg: '[label]必须是一个合法的 IPv4 或 IPv6 地址'
+        '6':
+          exp: SimpleSchema.RegEx.IPv4
+          msg: '[label]必须是一个合法的 IPv4地址'
+        '7':
+          exp: SimpleSchema.RegEx.IPv6
+          msg: '[label]必须是一个合法的 IPv6 地址'
+        '8':
+          exp: SimpleSchema.RegEx.Url
+          msg: '[label]必须是一个合法的 URL'
+        '9':
+          exp: SimpleSchema.RegEx.Id
+          msg: '[label]必须是一个数字序号'
   steedos_tableau: 统计分析
   steedos_tableau_workflow: 流程列表
   steedos_tableau_info: Steedos Tableau
@@ -1242,13 +1353,186 @@ CustomLabels:
   instance_search_end: 至
   instance_search_result_tip: 过滤的结果
   instance_search_state: 申请单状态
-  instance_search_state_options: >-
-    key 'instance_search_state_options (undefined)' returned an object instead
-    of string.
-  instance: key 'instance (undefined)' returned an object instead of string.
-  flow: key 'flow (undefined)' returned an object instead of string.
-  help: key 'help (undefined)' returned an object instead of string.
-  export: key 'export (undefined)' returned an object instead of string.
+  instance_search_state_options:
+    pending: 流转中
+    completed: 已结束
+  instance:
+    formatter:
+      date:
+        simple_date: YYYY年MM月DD日
+        simple_datetime: 'YYYY年MM月DD日 HH:mm'
+        export_date: YYYY-MM-DD
+        export_datetime: 'YYYY-MM-DD HH:mm'
+      checkbox:
+        checked: 是
+        unchecked: 否
+    instance_view: '<br/><br/>申请单内容摘要如下:<br/>工作区 : ;<br/>提交 : ;<br/>提交日期 : ;'
+    push:
+      final_decision_approved: 被核准，
+      final_decision_rejected: 被驳回，
+      final_decision_nil: 
+      title:
+        first_submit_applicant: 
+        first_submit_inbox: 
+        submit_pending_rejected_applicant_inbox: 
+        submit_pending_rejected_applicant: 
+        submit_pending_rejected_approve: 
+        submit_pending_rejected_inbox: 
+        submit_pending_inbox: 
+        submit_terminate_applicant: 
+        submit_terminate_approve: 
+        monitor_delete_applicant: 
+        submit_completed_applicant: 
+        submit_completed_approve: 
+        approved_completed_applicant: 
+        approved_completed_approve: 
+        rejected_completed_applicant: 
+        rejected_completed_approve: 
+        reassign_new_inbox_users: 
+        trace_approve_cc: 
+        trace_approve_cc_submit: 
+        auto_submit_pending_inbox: 
+        return_pending_inbox: 
+      body:
+        input: 确认
+        approval: 审批
+        first_submit_applicant: '请确认:我已代您提交了'
+        first_submit_inbox: 
+        submit_pending_rejected_applicant_inbox: '请修改:'
+        submit_pending_rejected_applicant: 您的已驳回给
+        submit_pending_rejected_approve: 
+        submit_pending_rejected_inbox: 
+        submit_pending_inbox: 
+        submit_terminate_applicant: 被我取消申请了
+        submit_terminate_approve: 
+        monitor_delete_applicant: 您的已被删除
+        submit_completed_applicant: 您的已被确认
+        submit_completed_approve: 
+        approved_completed_applicant: 您的已被核准
+        approved_completed_approve: 
+        rejected_completed_applicant: 您的已被驳回
+        rejected_completed_approve: 
+        reassign_new_inbox_users: 
+        trace_approve_cc: 
+        remind: 催办通知：，办结时限：。
+        trace_approve_cc_submit: 我已提交了传阅的申请单
+        distribute_remind: 您分发的申请单已结束。
+        auto_submit_pending_inbox: 您的申请单处理已超时，现已自动发送至
+        return_pending_inbox: 您的已被退回
+    email:
+      final_decision_approved: 被核准，
+      final_decision_rejected: 被驳回，
+      final_decision_nil: 
+      inscribed: <br/><br/>
+      footnote: '这是由审批王自动发送的邮件, 请不要直接回复。'
+      title:
+        input: 确认
+        approval: 审批
+        first_submit_applicant: 代您提交了
+        first_submit_inbox: '请:'
+        submit_pending_rejected_applicant_inbox: '请修改:'
+        submit_pending_rejected_applicant: 您的已驳回给
+        submit_pending_rejected_approve: 
+        submit_pending_rejected_inbox: '请重新:'
+        submit_pending_inbox: '请:'
+        submit_terminate_applicant: 被我取消申请了
+        submit_terminate_approve: 
+        monitor_delete_applicant: 删除了您的
+        submit_completed_applicant: 确认了您的
+        submit_completed_approve: 
+        approved_completed_applicant: 核准了您的
+        approved_completed_approve: 
+        rejected_completed_applicant: 驳回了您的
+        rejected_completed_approve: 
+        reassign_new_inbox_users: '请:'
+        trace_approve_cc: '请:'
+        auto_submit_pending_inbox: 您的已超时自动流转
+        return_pending_inbox: 退回了您的
+      body:
+        url_input: 查看并确认
+        url_approval: 进行审批
+        input: 确认
+        approval: 审批
+        judge_approved: 核准
+        judge_submitted: 确认
+        email_description: '驳回理由是: 。'
+        first_submit_applicant: ':<br/><br/>您好！<br/><br/>我已代您提交了。<br/><a href = >请点击查看</a>。'
+        first_submit_applicant_beApproveDescription: ':<br/><br/>您好！<br/><br/>我已代您提交了。<br/>备注是 : <br/><a href = >请点击查看</a>。'
+        first_submit_inbox: ':<br/><br/>您好！<br/><br/>提交了。<br/><a href = >请点击</a>。'
+        first_submit_inbox_beApproveDescription: ':<br/><br/>您好！<br/><br/>提交了。<br/>备注是 : <br/><a href = >请点击</a>。'
+        submit_pending_rejected_applicant_inbox: >-
+          :<br/><br/>您好！<br/><br/>您的申请单被驳回，请确认是否要修改。<br/><br/><a href =
+          >请点击查看</a>。
+        submit_pending_rejected_applicant: >-
+          :<br/><br/>您好！<br/><br/>您的被驳回, 目前正在处理中。<br/> <br/><a href =
+          >请点击查看</a>。
+        submit_pending_rejected_approve: 
+        submit_pending_rejected_inbox: ':<br/><br/>您好！<br/><br/>请重新 : 的, 此申请单被驳回。<br/><br/><a href = >请点击</a>。'
+        submit_pending_inbox: ':<br/><br/>您好！<br/><br/>请 : 的。已此申请单。<br/><a href = >请点击</a>。'
+        submit_pending_inbox_beApproveDescription: >-
+          :<br/><br/>您好！<br/><br/>请 : 的。已此申请单。<br/>他/她的意见是 : <br/><a href =
+          >请点击</a>。
+        submit_pending_inbox_beApproveDescription_counterSign: ':<br/><br/>您好！<br/><br/>请 : 的。已确认此申请单。<br/>他/她们的意见是 : <br/>'
+        submit_terminate_applicant: ':<br/><br/>您好！<br/><br/>您的被取消申请。<br/>取消申请的理由是：。'
+        submit_terminate_approve: 
+        monitor_delete_applicant: ':<br/><br/>您好！<br/><br/>您的已被删除。'
+        submit_completed_applicant: ':<br/><br/>您好！<br/><br/>您的已被确认, 完成审核。<br/><a href = >请点击查看</a>。'
+        submit_completed_applicant_beApproveDescription: >-
+          :<br/><br/>您好！<br/><br/>您的已被确认, 完成审核。<br/>他/她的意见是 : <br/><a href =
+          >请点击查看</a>。
+        submit_completed_applicant_beApproveDescription_counterSign: ':<br/><br/>您好！<br/><br/>您的已被确认, 完成审核。<br/>他/她们的意见是 :<br/> '
+        submit_completed_approve: 
+        approved_completed_applicant: ':<br/><br/>您好！<br/><br/>您的已被核准, 完成审核。<br/><a href = >请点击查看</a>。'
+        approved_completed_applicant_beApproveDescription: >-
+          :<br/><br/>您好！<br/><br/>您的已被核准, 完成审核。<br/>他/她的意见是 : <br/><a href =
+          >请点击查看</a>。
+        approved_completed_approve: 
+        rejected_completed_applicant: ':<br/><br/>您好！<br/><br/>您的已被驳回。<br/><br/><a href = >请点击查看</a>。'
+        rejected_completed_approve: 
+        reassign_new_inbox_users: ':<br/><br/>您好！<br/><br/>将的转发给您。<br/>转发的理由是：<br/><a href = >请点击</a>。'
+        trace_approve_cc: ':<br/><br/>您好！<br/><br/>传阅了。<br/><a href = >请点击</a>。'
+        auto_submit_pending_inbox: 您的申请单处理已超时，现已自动发送至
+        return_pending_inbox: ':<br/><br/>您好！<br/><br/>您的被退回。<br/>退回的理由是：。'
+    sms:
+      submit_pending_inbox: 您有新的待审核：，提交人：
+    remindMessage:
+      update_failed: 申请单状态已更新，您的操作未能执行。
+      has_deleted: 申请单已删除。
+    judge:
+      approved: 核准
+      rejected: 驳回
+  flow:
+    point_upgraded: 流程已升级，请检查您填写的内容是否符合修改后的要求。
+    print_select_template_alert: 只有专业版才有自定义模板功能，如有需要请升级到专业版或联系客服
+    print_select_title: 打印样式
+    print_default_print_title: 默认
+    print_custom_print_title: 自定义
+    print_button_title: 打印
+    print_html_title: 审批王
+    template_files: 模板
+  help:
+    href: <a href = >请点击查看</a>。
+    approves: 签核历程
+    initiator: '提交人 : '
+    attachment: 附件
+  export:
+    code: 编号
+    name: 名称
+    initiator: 提交人
+    initiator_org: 提交人所属部门
+    submit_date: 提交日期
+    status: 状态
+    current_step_name: 当前步骤
+    current_step_start_date: 当前步骤开始日期
+    state:
+      pending: 审核中
+      approved: 已核准
+      rejected: 已驳回
+      terminated: 被取回
+      finished: 已完成
+      reassigned: 转签核
+      inhand: 处理中
+      relocated: 重定位
   steedos: 华炎云
   cc: 传阅
   saveInstanceToAttachment: 将原表单存储为附件
@@ -1338,17 +1622,20 @@ CustomLabels:
   instance_remind_need_remind_users: 缺少催办对象
   instance_remind_need_remind_count: 缺少催办方式
   instance_remind_need_remind_deadline: 缺少办结时限
-  instance_remind_count_options: >-
-    key 'instance_remind_count_options (undefined)' returned an object instead
-    of string.
+  instance_remind_count_options:
+    single: 单次提醒
+    multi: 多次提醒
   instance_opinion_title_select: 其他常用意见
   categories: 流程分类
   categories_name: 名称
   categories_sort_no: 排序号
   not_found_user: 未找到处理人
-  next_step_users_not_found: >-
-    key 'next_step_users_not_found (undefined)' returned an object instead of
-    string.
+  next_step_users_not_found:
+    aplicant_superior: 申请人上级未配置，请联系管理员。
+    applicant_role: 您要找的「」还未配置，请联系管理员。
+    hr_role: 您要找的「」角色还未配置，请联系管理员。
+    field_value_empty: 获取处理人，请先填写「」。
+    org_no_members: 下一步需「」处理，请联系管理员。
   instanc_admin_role_text: <a href='%s' target='_blank'>岗位中进行配置。</a>
   instanc_user_role_text: 岗位中进行配置
   instanc_set_applicant_role_text: 设置

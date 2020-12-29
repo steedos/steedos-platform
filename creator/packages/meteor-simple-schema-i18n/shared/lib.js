@@ -3,7 +3,7 @@ Meteor.startup(function(){
 	if (Meteor.isClient) {
 		I18n.on('languageChanged', function(){
 			var lang = TAPi18n.getLanguage();
-			var localMessages = TAPi18n.__("simpleschema.messages", {returnObjects: true});
+			var localMessages = TAPi18n.__("CustomLabels.simpleschema", {returnObjects: true}).messages
 			if(_.isString(localMessages)){return;}
 			localMessages.regEx = _.map(localMessages.regEx, function (item) {
 				if (item.exp) {
