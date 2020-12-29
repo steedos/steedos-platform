@@ -335,14 +335,11 @@ function convertObjectTranslation(objectTranslation, filePath){
     template[getObjectDescriptionKey(objectName)] = object.description;
     _.each(object.fields, function(field, fieldName){
         template[getFieldLabelKey(objectName, fieldName)] = field.label;
-        if(field.inlineHelpText){
+        if(field.help){
             template[getFieldHelpKey(objectName, fieldName)] = field.help;
         }
         if(field.description){
             template[getFieldDescriptionKey(objectName, fieldName)] = field.description;
-        }
-        if(field.group){
-            template[getFieldGroupKey(objectName, field.group)] = field.group;
         }
         if(field.options){
             _.each(field.options, function(op){

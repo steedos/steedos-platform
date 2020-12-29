@@ -5,7 +5,11 @@ const clone = require("clone");
 function keysToJSON(keys, source){
     const json = {};
     _.each(keys, function(key){
-        json[key] = source[key] || '';
+        if(key === 'help'){
+            json[key] = source['inlineHelpText'] || '';
+        }else{
+            json[key] = source[key] || '';
+        }
     })
     return json;
 }
