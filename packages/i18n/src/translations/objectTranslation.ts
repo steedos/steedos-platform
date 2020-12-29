@@ -372,10 +372,6 @@ function convertObjectTranslation(objectTranslation, filePath){
 export const addObjectsTranslation = function(i18nArray){
     _.each(i18nArray, function(item){
         let translation = convertObjectTranslation(item.data, item.__filename);
-        if(item.data.name === 'base'){
-            console.log('base item.data', item.data);
-            console.log('base translation', translation);
-        }
         addResourceBundle(item.lng, OBJECT_NS, translation, true, true);
     })
 }

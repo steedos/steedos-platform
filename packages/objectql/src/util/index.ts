@@ -102,7 +102,6 @@ function getI18nLng(filePath){
 }
 
 export const loadI18n = (filePath: string)=>{
-    throw new Error('loadI18n...');
     let results = []
     const filePatten = [
         path.join(filePath, "*.i18n.yml"),

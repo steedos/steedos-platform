@@ -6,13 +6,9 @@ const objectql = require('@steedos/objectql')
 const app = express();
 
 export const InitTranslations = function(){
-    console.log('InitTranslations....');
     InitCoreTranslations();
-    console.log('loadObjectTranslations....');
     loadObjectTranslations();
-    console.log('loadTranslations....');
     loadTranslations();
-    console.log('InitTranslationRouter....');
     InitTranslationRouter();
 }
 

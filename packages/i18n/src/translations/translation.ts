@@ -77,9 +77,6 @@ const translationMenuLabel = function(lng, menuId, def){
     if(fallbackKey){
         keys.push(fallbackKey);
     }
-
-    console.log('translationMenuLabel', keys, translation(keys, lng));
-
     return translation(keys, lng) || def || '' 
 }
 
@@ -165,7 +162,6 @@ export const convertTranslation = function(_translation){
 
     _.each(translation.CustomLabels, function(labelValue, labelKey){
         if(labelKey != 'simpleschema' && _.isObject(labelValue)){
-            console.log('labelKey', labelKey);
             const levelData = convertTranslationData({[labelKey]: labelValue});
             _.each(levelData, function(value, key){
                 if(!_.isObject(value)){
