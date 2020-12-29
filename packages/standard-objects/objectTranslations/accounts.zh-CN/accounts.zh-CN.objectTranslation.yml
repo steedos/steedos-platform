@@ -45,7 +45,7 @@ fields:
     description: 
   parent_id:
     label: 母公司
-    help: 
+    help: 作为大公司或组织的子公司的母公司。父级客户必须是华炎魔方中的现有客户。您可输入客户名，或使用查找图标选择（或创建）客户。
     description: 
   credit_code:
     label: 纳税人识别号（身份证/其他）
@@ -142,7 +142,7 @@ fields:
     description: 
   state:
     label: 区域
-    help: 
+    help: 客户被分配至的区域。
     options:
       - label: 北京
         value: BJ
@@ -227,7 +227,7 @@ fields:
     description: 
   rating:
     label: 分级
-    help: 
+    help: 您如何划分此客户等级的分类，例如，普通、重要。
     options:
       - label: 非常重要
         value: Hot
@@ -258,7 +258,7 @@ fields:
     description: 
   site:
     label: 客户地点
-    help: 
+    help: 可用客户地点字段来指定同一公司的不同位置。例如，假设百度在北京和上海均设有办公室。创建两个名为百度的客户，但是客户地点的值分别为北京和上海。
     description: 
   annual_revenue:
     label: 年收入
@@ -266,7 +266,7 @@ fields:
     description: 
   ownership:
     label: 所有权
-    help: 
+    help: 公司的所有权，例如，公有或私有。
     options:
       - label: 国营
         value: National
@@ -307,15 +307,15 @@ fields:
     description: 
   do_not_call:
     label: 请勿致电
-    help: 
+    help: 是否想要通过电话联系联系人。
     description: 
   has_opted_out_of_email:
     label: 退出邮件列表
-    help: 
+    help: 是否将联系人包含在群发邮件列表中。
     description: 
   fax_opt_out:
     label: 退出传真列表
-    help: 
+    help: 是否将联系人包含在传真中。
     description: 
   home_phone:
     label: 家庭电话
@@ -323,7 +323,7 @@ fields:
     description: 
   lead_source:
     label: 潜在客户来源
-    help: 
+    help: 潜在客户来源，例如，广告、合作伙伴或 Web。
     options:
       - label: 广告
         value: Advertisement

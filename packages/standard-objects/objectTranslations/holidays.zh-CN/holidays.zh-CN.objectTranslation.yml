@@ -23,7 +23,7 @@ fields:
     description: 
   adjusted_to:
     label: 对应工作日
-    help: 
+    help: 当选择了“调配工作日”类型时，需要选择对应工作日是星期几。
     options:
       - 'Sunday:0'
       - 'Monday:1'

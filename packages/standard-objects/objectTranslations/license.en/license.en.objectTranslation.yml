@@ -86,8 +86,8 @@ actions:
   copySpaceId:
     label: Copy space id
 CustomLabels:
-  license_action_sync: license_action_sync
-  license_action_changeSpaceLicense_confirmBtnText: license_action_changeSpaceLicense_confirmBtnText
-  license_field_custom_objects_number: license_field_custom_objects_number
-  license_field_flow_number: license_field_flow_number
-  license_field_end_invalid: license_field_end_invalid
+  license_action_sync: 
+  license_action_changeSpaceLicense_confirmBtnText: 
+  license_field_custom_objects_number: 
+  license_field_flow_number: 
+  license_field_end_invalid: 

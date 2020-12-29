@@ -69,14 +69,14 @@ fields:
     description: 
   sort_no:
     label: Sort Number
-    help: 
+    help: High Value First.
     description: 
 listviews:
   all:
     label: All List View
 CustomLabels:
   object_related_list_error_unique: Related object cannot be repeated
-  object_related_list_field_label: object_related_list_field_label
-  object_related_list_field_name: object_related_list_field_name
-  object_related_list_field_sort.$: object_related_list_field_sort.$
-  object_related_list_field_type: object_related_list_field_type
+  object_related_list_field_label: 
+  object_related_list_field_name: 
+  object_related_list_field_sort.$: 
+  object_related_list_field_type: 

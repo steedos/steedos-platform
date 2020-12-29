@@ -66,4 +66,4 @@ listviews:
   all:
     label: All
 CustomLabels:
-  approvals_field_judge_options_approved: approvals_field_judge_options_approved
+  approvals_field_judge_options_approved: 

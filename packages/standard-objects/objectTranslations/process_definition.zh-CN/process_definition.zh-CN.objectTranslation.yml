@@ -28,11 +28,11 @@ fields:
     description: 
   entry_criteria:
     label: 指定条目条件
-    help: 
+    help: 如果只有某些类型的记录能够进入此批准过程，请在下面输入条件。例如，只有总部员工的费用报表应该使用此批准过程。
     description: 
   record_editability:
     label: 记录可编辑性属性
-    help: 
+    help: 当记录在批准过程中时，它总是锁定的 -- 只有管理员可以对其进行编辑
     options:
       - label: 仅管理员可在批准过程中编辑记录。
         value: admin_only

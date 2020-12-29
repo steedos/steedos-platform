@@ -155,5 +155,5 @@ actions:
   standard_new_by_template:
     label: 从模板新建
 CustomLabels:
-  reports_field_filter_fields.$: reports_field_filter_fields.$
-  reports_field_filters.$: reports_field_filters.$
+  reports_field_filter_fields.$: 
+  reports_field_filters.$: 

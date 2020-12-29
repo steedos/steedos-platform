@@ -8,7 +8,7 @@ fields:
     description: 
   name:
     label: API 名称
-    help: 
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
     description: 
   object_name:
     label: 对象
@@ -37,7 +37,7 @@ fields:
     description: 
   scrolling_mode:
     label: 滚动条样式
-    help: 
+    help: 定义数据列表的滚动条显示样式
     options:
       - label: 按照传统的分页显示，点击页码加载对应页面的数据
         value: standard
@@ -131,6 +131,6 @@ listviews:
   all:
     label: 全部
 CustomLabels:
-  object_listviews_field_filters.$: object_listviews_field_filters.$
-  object_listviews_field_sort.$: object_listviews_field_sort.$
+  object_listviews_field_filters.$: 
+  object_listviews_field_sort.$: 
   object_listviews__error_name_invalid_format: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符

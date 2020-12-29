@@ -8,23 +8,23 @@ fields:
     description: 
   is_default:
     label: 默认工作时间
-    help: 
+    help: 是否将该工作时间用作默认设置，只有勾选时该时间设置才能生效。
     description: 
   start:
     label: 开始时间
-    help: 
+    help: '请输入HH:MM这种格式的24小时制时间字符。'
     description: 
   end:
     label: 结束时间
-    help: 
+    help: '请输入HH:MM这种格式的24小时制时间字符，必须大于开始时间。'
     description: 
   lunch_start:
     label: 午休开始时间
-    help: 
+    help: '请输入HH:MM这种格式的24小时制时间字符。'
     description: 
   lunch_end:
     label: 午休结束时间
-    help: 
+    help: '请输入HH:MM这种格式的24小时制时间字符，必须大于午休开始时间，午休时间段将从工作时间内排除。'
     description: 
   working_days:
     label: 工作日
@@ -40,7 +40,7 @@ fields:
     description: 
   utc_offset:
     label: GMT时差
-    help: 
+    help: 工作时间基于该GMT时差，其值为用户本身所处时区的GMT时差值。
     description: 
 listviews:
   all:

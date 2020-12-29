@@ -60,4 +60,4 @@ listviews:
   all:
     label: All Sites
 CustomLabels:
-  cms_sites_group_Site: cms_sites_group_Site
+  cms_sites_group_Site: 

@@ -8,7 +8,9 @@ fields:
     description: 
   flow:
     label: Workflow
-    help: 
+    help: >-
+      If no workflow is selected, the scope of webhook will be all the workflows
+      of this company.
     description: 
   payload_url:
     label: Payload URL

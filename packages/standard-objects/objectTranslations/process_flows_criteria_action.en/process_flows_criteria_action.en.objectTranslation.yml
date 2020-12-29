@@ -23,7 +23,9 @@ fields:
     description: 
   skip_entry_criteria:
     label: Skip the entry criteria for this process?
-    help: 
+    help: >-
+      If selected, the record is submitted to the specified approval process,
+      regardless of the entry criteria.
     description: 
   submitter:
     label: 

@@ -16,7 +16,7 @@ fields:
     description: 
   name:
     label: API 名称
-    help: 
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
     description: 
   type:
     label: 字段类型
@@ -97,7 +97,7 @@ fields:
     description: 
   options:
     label: 选择项
-    help: 
+    help: 选择项的每个选项显示名及选项值不能为空，背景颜色请设置为ffffff这种格式的16进制数值。
     description: 
   options.$:
     label: Options
@@ -117,11 +117,11 @@ fields:
     description: 
   formula:
     label: 公式
-    help: 
+    help: 字段类型为自动编号或公式时，必须填写此字段。
     description: 
   data_type:
     label: 数据类型
-    help: 
+    help: 字段类型为公式时，必须填写此字段。
     options:
       - label: 勾选框
         value: boolean
@@ -138,7 +138,7 @@ fields:
     description: 
   formula_blank_value:
     label: 空白字段处理
-    help: 
+    help: 如果您的公式引用了任何数字和货币字段，请指定当这些字段值为空时如何处理公式输出。
     options:
       - label: 将空白字段视为零
         value: zeroes
@@ -147,11 +147,11 @@ fields:
     description: 
   summary_object:
     label: 要汇总的对象
-    help: 
+    help: 字段类型为累计汇总时，必须填写此字段。
     description: 
   summary_type:
     label: 汇总类型
-    help: 
+    help: 字段类型为累计汇总时，必须填写此字段。
     options:
       - label: COUNT
         value: count
@@ -164,11 +164,11 @@ fields:
     description: 
   summary_field:
     label: 要聚合的字段
-    help: 
+    help: 字段类型为累计汇总且汇总类型不是COUNT时，必须填写此字段，只支持聚合数值、金额、日期、日期时间类型的字段。
     description: 
   summary_filters:
     label: 过滤条件
-    help: 
+    help: 此计算仅应包括符合特定条件的记录，当过滤条件为空时，所有记录都应包括在计算中。
     description: 
   summary_filters.$:
     label: Filter Criteria
@@ -188,7 +188,7 @@ fields:
     description: 
   column_name:
     label: 数据库字段名
-    help: 
+    help: 仅支持关系型数据库
     description: 
   primary:
     label: 主键
@@ -252,7 +252,8 @@ fields:
     description: 
   write_requires_master_read:
     label: 当用户对主表记录有读取权限时对子表记录可以增删改
-    help: 
+    help: >-
+      设置主记录上创建、编辑或删除子记录所需的最低访问级别。此字段仅适用于·主表/子表·字段类型。勾选表示允许具有'读取'访问权限的用户创建、编辑或删除子记录。反之表示允许具有'读取/写入'访问权限的用户创建、编辑或删除子记录的权限。
     description: 
 groups:
   external_data_source: 外部数据源
@@ -268,11 +269,11 @@ actions:
 CustomLabels:
   object_fields_field_allowedValues: 允许的值
   object_fields_field_filters: 过滤器
-  object_fields_field_filters.$: object_fields_field_filters.$
+  object_fields_field_filters.$: 
   object_fields_field_filters_$_field: 字段
   object_fields_field_filters_$_operation: 运算符
   object_fields_field_filters_$_value: 值
-  object_fields_field_summary_filters.$: object_fields_field_summary_filters.$
+  object_fields_field_summary_filters.$: 
   object_fields_group_reference: 相关表、主表/子表
   object_fields_group_number: 金额、数值
   object_fields_group_formula: 公式

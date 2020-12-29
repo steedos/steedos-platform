@@ -12,11 +12,14 @@ fields:
     description: 
   name:
     label: API Name
-    help: 
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
     description: 
   table_name:
     label: Table Name
-    help: 
+    help: The default data source does not support this property
     description: 
   icon:
     label: Icon
@@ -166,7 +169,7 @@ actions:
     label: Copy OData URL
 CustomLabels:
   objects_field_datasource_defaultValue: Default data source
-  objects_field_enable_approvals: objects_field_enable_approvals
-  objects_field_enable_space_global: objects_field_enable_space_global
-  objects_field_enable_web_forms: objects_field_enable_web_forms
-  object_object__error_name_invalid_format: object_object__error_name_invalid_format
+  objects_field_enable_approvals: 
+  objects_field_enable_space_global: 
+  objects_field_enable_web_forms: 
+  object_object__error_name_invalid_format: 

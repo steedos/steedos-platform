@@ -8,7 +8,10 @@ fields:
     description: 
   name:
     label: API Name
-    help: 
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
     description: 
   object_name:
     label: Object
@@ -37,7 +40,7 @@ fields:
     description: 
   scrolling_mode:
     label: Scrolling Mode
-    help: 
+    help: Define the scroll bar display style for the data list.
     options:
       - label: >-
           Standard ( Click the page number to load the data of the corresponding
@@ -137,6 +140,6 @@ listviews:
   all:
     label: All List View
 CustomLabels:
-  object_listviews_field_filters.$: object_listviews_field_filters.$
-  object_listviews_field_sort.$: object_listviews_field_sort.$
-  object_listviews__error_name_invalid_format: object_listviews__error_name_invalid_format
+  object_listviews_field_filters.$: 
+  object_listviews_field_sort.$: 
+  object_listviews__error_name_invalid_format: 

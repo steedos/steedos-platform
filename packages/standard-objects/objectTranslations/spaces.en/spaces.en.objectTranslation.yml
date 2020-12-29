@@ -87,12 +87,12 @@ actions:
   invite_space_users:
     label: Invite Users
 CustomLabels:
-  spaces_action_pay_records: spaces_action_pay_records
-  spaces_action_upgrade: spaces_action_upgrade
-  spaces_field_end_date: spaces_field_end_date
-  spaces_field_hostname: spaces_field_hostname
-  spaces_field_is_paid: spaces_field_is_paid
-  spaces_field_modules: spaces_field_modules
-  spaces_field_start_date: spaces_field_start_date
-  spaces_field_user_limit: spaces_field_user_limit
-  spaces_group_payment: spaces_group_payment
+  spaces_action_pay_records: 
+  spaces_action_upgrade: 
+  spaces_field_end_date: 
+  spaces_field_hostname: 
+  spaces_field_is_paid: 
+  spaces_field_modules: 
+  spaces_field_start_date: 
+  spaces_field_user_limit: 
+  spaces_group_payment: 

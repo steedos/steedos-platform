@@ -205,7 +205,7 @@ fields:
     description: 
   allow_select_step:
     label: 申请人指定步骤、审批人
-    help: 
+    help: '允许申请人提交申请单时指定流转步骤及步骤处理人, 需要通过流程设计器修改步骤上的属性'
     description: 
 groups:
   template: 模板

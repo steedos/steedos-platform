@@ -57,4 +57,4 @@ actions:
   addSubOrganization:
     label: Add a Branch
 CustomLabels:
-  organizations_group_系统: organizations_group_系统
+  organizations_group_系统: 

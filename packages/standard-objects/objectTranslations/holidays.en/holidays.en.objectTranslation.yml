@@ -23,7 +23,9 @@ fields:
     description: 
   adjusted_to:
     label: Corresponding working day
-    help: 
+    help: >-
+      When the "Adjusted Working Day" type is selected, you need to select the
+      day of the week.
     options:
       - 'Sunday:0'
       - 'Monday:1'
@@ -37,11 +39,11 @@ listviews:
   all:
     label: All
 CustomLabels:
-  holidays_field_object_name: holidays_field_object_name
-  holidays_field_adjusted_to_options_0: holidays_field_adjusted_to_options_0
-  holidays_field_adjusted_to_options_1: holidays_field_adjusted_to_options_1
-  holidays_field_adjusted_to_options_2: holidays_field_adjusted_to_options_2
-  holidays_field_adjusted_to_options_3: holidays_field_adjusted_to_options_3
-  holidays_field_adjusted_to_options_4: holidays_field_adjusted_to_options_4
-  holidays_field_adjusted_to_options_5: holidays_field_adjusted_to_options_5
-  holidays_field_adjusted_to_options_6: holidays_field_adjusted_to_options_6
+  holidays_field_object_name: 
+  holidays_field_adjusted_to_options_0: 
+  holidays_field_adjusted_to_options_1: 
+  holidays_field_adjusted_to_options_2: 
+  holidays_field_adjusted_to_options_3: 
+  holidays_field_adjusted_to_options_4: 
+  holidays_field_adjusted_to_options_5: 
+  holidays_field_adjusted_to_options_6: 

@@ -90,7 +90,7 @@ fields:
     description: 
   reject_behavior:
     label: Reject Behavior
-    help: 
+    help: What should happen if the approver rejects this request?
     options:
       - label: >-
           Perform all rejection actions for this step AND all final rejection
@@ -118,8 +118,8 @@ listviews:
   all:
     label: All
 CustomLabels:
-  process_node_field_approver_options_auto_queue: process_node_field_approver_options_auto_queue
-  process_node_field_approver_options_role: process_node_field_approver_options_role
-  process_node_field_auto_approver: process_node_field_auto_approver
-  process_node_field_auto_approver_$_type: process_node_field_auto_approver_$_type
-  process_node_field_auto_approver_$_value: process_node_field_auto_approver_$_value
+  process_node_field_approver_options_auto_queue: 
+  process_node_field_approver_options_role: 
+  process_node_field_auto_approver: 
+  process_node_field_auto_approver_$_type: 
+  process_node_field_auto_approver_$_value: 

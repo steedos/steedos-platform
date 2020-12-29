@@ -25,7 +25,7 @@ fields:
     description: 
   sort_no:
     label: Sort Number
-    help: 
+    help: High Value First
     description: 
 listviews:
   all:

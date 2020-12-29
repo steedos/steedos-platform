@@ -12,7 +12,7 @@ fields:
     description: 
   filters:
     label: 过滤条件
-    help: 
+    help: 格式为odata filters
     description: 
   organizations:
     label: 授权组织

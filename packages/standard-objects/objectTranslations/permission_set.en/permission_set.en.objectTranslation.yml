@@ -70,7 +70,7 @@ fields:
     description: 
   users:
     label: Users
-    help: 
+    help: 'When the type is a profile, no user needs to be selected'
     description: 
   is_system:
     label: System
@@ -123,6 +123,6 @@ CustomLabels:
   permission_set_user: User
   permission_set_supplier: Supplier
   permission_set_customer: Customer
-  permission_set_field_license_options_platform: permission_set_field_license_options_platform
-  permission_set_field_license_options_community: permission_set_field_license_options_community
-  permission_set_field_password_history_options: permission_set_field_password_history_options
+  permission_set_field_license_options_platform: 
+  permission_set_field_license_options_community: 
+  permission_set_field_password_history_options: 

@@ -8,7 +8,7 @@ fields:
     description: 
   flow:
     label: 流程
-    help: 
+    help: 如果未选择流程则应用范围为此工作区全部流程
     description: 
   payload_url:
     label: URL

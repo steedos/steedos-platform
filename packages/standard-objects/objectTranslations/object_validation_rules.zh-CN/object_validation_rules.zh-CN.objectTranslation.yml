@@ -12,7 +12,7 @@ fields:
     description: 
   active:
     label: 已启用
-    help: 
+    help: 指明规则是否启用。
     description: 
   description:
     label: 说明
@@ -20,11 +20,11 @@ fields:
     description: 
   error_condition_formula:
     label: 错误条件公式
-    help: 
+    help: 用于验证字段的表达式。
     description: 
   error_message:
     label: 错误消息
-    help: 
+    help: 当字段未通过验证规则时向用户显示的消息。
     description: 
 listviews:
   all:

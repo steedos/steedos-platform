@@ -90,7 +90,7 @@ fields:
     description: 
   reject_behavior:
     label: 拒绝行为
-    help: 
+    help: 如果批准人拒绝此请求会怎样？
     options:
       - label: 执行此步骤的所有拒绝操作和所有最终拒绝操作。（最终拒绝）
         value: reject_request

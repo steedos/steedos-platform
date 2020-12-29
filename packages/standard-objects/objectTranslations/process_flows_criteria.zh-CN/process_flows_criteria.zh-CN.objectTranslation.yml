@@ -27,7 +27,11 @@ fields:
     label: >-
       Do you want to execute the actions only when specified changes are made to
       the record?
-    help: 
+    help: >-
+      When you select yes, the actions are executed only if the record meets the
+      criteria now but the values that the record had immediately before it was
+      saved didn't meet criteria. This means that these actions won't be
+      executed when irrelevant changes are made.
     description: 
 listviews:
   all:

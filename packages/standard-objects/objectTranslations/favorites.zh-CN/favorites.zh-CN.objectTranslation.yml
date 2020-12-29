@@ -25,7 +25,7 @@ fields:
     description: 
   sort_no:
     label: 排序号
-    help: 
+    help: 数值大的显示在前面
     description: 
 listviews:
   all:

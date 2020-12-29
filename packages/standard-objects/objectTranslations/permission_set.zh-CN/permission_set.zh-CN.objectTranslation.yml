@@ -70,7 +70,7 @@ fields:
     description: 
   users:
     label: 成员
-    help: 
+    help: 类别为简档时，不需要选择成员
     description: 
   is_system:
     label: 系统

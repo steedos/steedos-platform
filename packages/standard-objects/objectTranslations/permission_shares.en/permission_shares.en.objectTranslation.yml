@@ -12,7 +12,7 @@ fields:
     description: 
   filters:
     label: Filters
-    help: 
+    help: Format of OData Filters Required.
     description: 
   organizations:
     label: Departments

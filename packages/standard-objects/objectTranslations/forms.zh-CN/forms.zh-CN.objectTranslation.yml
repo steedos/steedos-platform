@@ -154,30 +154,30 @@ actions:
     label: 表单设计器
 CustomLabels:
   _forms_field_code_error: 字段名 %s 不能包含'.'
-  forms_field_current.fields: forms_field_current.fields
-  forms_field_current.fields_$_code: forms_field_current.fields_$_code
-  forms_field_current.fields_$_is_list_display: forms_field_current.fields_$_is_list_display
-  forms_field_current.fields_$_is_multiselect: forms_field_current.fields_$_is_multiselect
-  forms_field_current.fields_$_is_required: forms_field_current.fields_$_is_required
-  forms_field_current.fields_$_is_searchable: forms_field_current.fields_$_is_searchable
-  forms_field_current.fields_$_is_wide: forms_field_current.fields_$_is_wide
-  forms_field_current.fields_$_name: forms_field_current.fields_$_name
-  forms_field_current.fields_$_type: forms_field_current.fields_$_type
-  forms_field_current.fields_$_type_options_checkbox: forms_field_current.fields_$_type_options_checkbox
-  forms_field_current.fields_$_type_options_date: forms_field_current.fields_$_type_options_date
-  forms_field_current.fields_$_type_options_dateTime: forms_field_current.fields_$_type_options_dateTime
-  forms_field_current.fields_$_type_options_email: forms_field_current.fields_$_type_options_email
-  forms_field_current.fields_$_type_options_geolocation: forms_field_current.fields_$_type_options_geolocation
-  forms_field_current.fields_$_type_options_group: forms_field_current.fields_$_type_options_group
-  forms_field_current.fields_$_type_options_input: forms_field_current.fields_$_type_options_input
-  forms_field_current.fields_$_type_options_multiSelect: forms_field_current.fields_$_type_options_multiSelect
-  forms_field_current.fields_$_type_options_number: forms_field_current.fields_$_type_options_number
-  forms_field_current.fields_$_type_options_password: forms_field_current.fields_$_type_options_password
-  forms_field_current.fields_$_type_options_radio: forms_field_current.fields_$_type_options_radio
-  forms_field_current.fields_$_type_options_section: forms_field_current.fields_$_type_options_section
-  forms_field_current.fields_$_type_options_select: forms_field_current.fields_$_type_options_select
-  forms_field_current.fields_$_type_options_table: forms_field_current.fields_$_type_options_table
-  forms_field_current.fields_$_type_options_url: forms_field_current.fields_$_type_options_url
-  forms_field_current.fields_$_type_options_user: forms_field_current.fields_$_type_options_user
-  forms_field_current.form_script: forms_field_current.form_script
-  forms_field_current.name_forumla: forms_field_current.name_forumla
+  forms_field_current.fields: 
+  forms_field_current.fields_$_code: 
+  forms_field_current.fields_$_is_list_display: 
+  forms_field_current.fields_$_is_multiselect: 
+  forms_field_current.fields_$_is_required: 
+  forms_field_current.fields_$_is_searchable: 
+  forms_field_current.fields_$_is_wide: 
+  forms_field_current.fields_$_name: 
+  forms_field_current.fields_$_type: 
+  forms_field_current.fields_$_type_options_checkbox: 
+  forms_field_current.fields_$_type_options_date: 
+  forms_field_current.fields_$_type_options_dateTime: 
+  forms_field_current.fields_$_type_options_email: 
+  forms_field_current.fields_$_type_options_geolocation: 
+  forms_field_current.fields_$_type_options_group: 
+  forms_field_current.fields_$_type_options_input: 
+  forms_field_current.fields_$_type_options_multiSelect: 
+  forms_field_current.fields_$_type_options_number: 
+  forms_field_current.fields_$_type_options_password: 
+  forms_field_current.fields_$_type_options_radio: 
+  forms_field_current.fields_$_type_options_section: 
+  forms_field_current.fields_$_type_options_select: 
+  forms_field_current.fields_$_type_options_table: 
+  forms_field_current.fields_$_type_options_url: 
+  forms_field_current.fields_$_type_options_user: 
+  forms_field_current.form_script: 
+  forms_field_current.name_forumla: 

@@ -28,11 +28,18 @@ fields:
     description: 
   entry_criteria:
     label: Specify Entry Criteria
-    help: 
+    help: >-
+      If only certain types of records should enter this approval process, enter
+      that criteria below. For example, only expense reports from employees at
+      headquarters should use this approval process.
     description: 
   record_editability:
     label: Record Editability Properties
-    help: 
+    help: >-
+      When a record is submitted for approval, it’s locked to prevent users from
+      editing it during the approval process. Use the record editability
+      properties to determine who can edit records that are locked in this
+      approval process.
     options:
       - label: Administrators ONLY can edit records during the approval process
         value: admin_only
@@ -109,20 +116,19 @@ actions:
   copy:
     label: Copy
 CustomLabels:
-  process_definition_field_approval_page_fields: process_definition_field_approval_page_fields
-  process_definition_field_approval_page_fields_inlineHelpText: process_definition_field_approval_page_fields_inlineHelpText
-  process_definition_field_show_approval_history: process_definition_field_show_approval_history
-  process_definition_group_specify_entry_criteria: process_definition_group_specify_entry_criteria
-  process_definition_field_record_editability_inlineHelpText-TODO: process_definition_field_record_editability_inlineHelpText-TODO
-  process_definition_field_record_editability_options_admin_or_current_approver: >-
-    process_definition_field_record_editability_options_admin_or_current_approver
-  process_definition_field_user_hierarchy_field: process_definition_field_user_hierarchy_field
-  process_definition_group_next_automated_approver: process_definition_group_next_automated_approver
-  process_definition_field_user_hierarchy_field_inlineHelpText: process_definition_field_user_hierarchy_field_inlineHelpText
-  process_definition_field_use_approver_field_of_record_owner: process_definition_field_use_approver_field_of_record_owner
-  process_definition_field_allowed_submitters: process_definition_field_allowed_submitters
-  process_definition_field_allowed_submitters_inlineHelpText: process_definition_field_allowed_submitters_inlineHelpText
-  process_definition_group_approval_page_fields: process_definition_group_approval_page_fields
-  process_definition_group_select_field_used_for_automated_approval_routing: process_definition_group_select_field_used_for_automated_approval_routing
-  process_definition_group_record_lock: process_definition_group_record_lock
-  menu_process_definition: menu_process_definition
+  process_definition_field_approval_page_fields: 
+  process_definition_field_approval_page_fields_inlineHelpText: 
+  process_definition_field_show_approval_history: 
+  process_definition_group_specify_entry_criteria: 
+  process_definition_field_record_editability_inlineHelpText-TODO: 
+  process_definition_field_record_editability_options_admin_or_current_approver: 
+  process_definition_field_user_hierarchy_field: 
+  process_definition_group_next_automated_approver: 
+  process_definition_field_user_hierarchy_field_inlineHelpText: 
+  process_definition_field_use_approver_field_of_record_owner: 
+  process_definition_field_allowed_submitters: 
+  process_definition_field_allowed_submitters_inlineHelpText: 
+  process_definition_group_approval_page_fields: 
+  process_definition_group_select_field_used_for_automated_approval_routing: 
+  process_definition_group_record_lock: 
+  menu_process_definition: 

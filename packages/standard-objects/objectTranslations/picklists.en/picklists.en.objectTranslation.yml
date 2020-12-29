@@ -8,7 +8,9 @@ fields:
     description: 
   code:
     label: Code
-    help: 
+    help: >-
+      Object field options can be overridden in the format of
+      `ObjectName.FieldName` 
     description: 
   description:
     label: Description

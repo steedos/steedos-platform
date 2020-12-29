@@ -40,7 +40,7 @@ actions:
   upload:
     label: Upload
 CustomLabels:
-  Next: Next
+  Next: 
   steedos_developer_service_exception: Steedos Developer Service Exception
   package_action_upload_success: Upload Success
   package_action_upload_form_title: Upload Package

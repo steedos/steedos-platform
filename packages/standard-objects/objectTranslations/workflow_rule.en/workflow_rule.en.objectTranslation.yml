@@ -45,6 +45,6 @@ listviews:
   all:
     label: All
 CustomLabels:
-  workflow_rule_field_trigger_type_options_onAllChanges: workflow_rule_field_trigger_type_options_onAllChanges
-  workflow_rule_field_trigger_type_options_onCreateOnly: workflow_rule_field_trigger_type_options_onCreateOnly
-  workflow_rule_field_trigger_type_options_onCreateOrTriggeringUpdate: workflow_rule_field_trigger_type_options_onCreateOrTriggeringUpdate
+  workflow_rule_field_trigger_type_options_onAllChanges: 
+  workflow_rule_field_trigger_type_options_onCreateOnly: 
+  workflow_rule_field_trigger_type_options_onCreateOrTriggeringUpdate: 

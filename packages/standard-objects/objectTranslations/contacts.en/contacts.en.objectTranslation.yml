@@ -12,11 +12,11 @@ fields:
     description: 
   account:
     label: 所属客户
-    help: 
+    help: 联系人所链接的客户。输入客户名称、从列表中选择客户或创建客户。
     description: 
   reports_to_id:
     label: 直属上司
-    help: 
+    help: 联系人管理员的姓名。输入联系人名称，或从列表中选择联系人。
     description: 
   salutation:
     label: 性别
@@ -33,7 +33,7 @@ fields:
     description: 
   department:
     label: 部门
-    help: 
+    help: 关联的业务或组织单元。
     description: 
   email:
     label: 邮件
@@ -113,19 +113,19 @@ fields:
     description: 
   do_not_call:
     label: 请勿致电
-    help: 
+    help: 是否想要通过电话联系联系人。
     description: 
   has_opted_out_of_email:
     label: 退出邮件列表
-    help: 
+    help: 是否将联系人包含在群发邮件列表中。
     description: 
   fax_opt_out:
     label: 退出传真列表
-    help: 
+    help: 是否将联系人包含在传真中。
     description: 
   lead_source:
     label: 潜在客户来源
-    help: 
+    help: 潜在客户来源，例如，广告、合作伙伴或 Web。
     options:
       - label: 广告
         value: Advertisement

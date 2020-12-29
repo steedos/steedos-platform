@@ -12,19 +12,23 @@ fields:
     description: 
   fields:
     label: Fields
-    help: 
+    help: >-
+      The fields displayed in the online form currently only support text,
+      textarea, and drop-down boxes.
     description: 
   return_url:
     label: Return URL
-    help: 
+    help: 'When the user submits the form, it automatically jumps to this address.'
     description: 
   record_owner:
     label: Default Owner
-    help: 
+    help: >-
+      When a user submits a form, the creator and owner of the corresponding
+      record are automatically updated.
     description: 
   notification_users:
     label: Notification Users
-    help: 
+    help: 'When a user submits a form, the relevant person is automatically notified.'
     description: 
   generated_html:
     label: Generated Html
