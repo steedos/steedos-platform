@@ -116,6 +116,40 @@ export const getAppTranslationTemplate = function(lng: string, appId: string, _a
     return template;
 }
 
+let processChildren = (item, parentKey, object) => {
+    if (_.isArray(object)) {
+        _.each(object, function (_citem) {
+            processChildren(_citem, '', _citem);
+        })
+    } else {
+        _.each(_.keys(object), function (k) {
+            let childKey = parentKey ? `${parentKey}.${k}` : k;
+            let childValue = object[k];
+            if (typeof childValue === "object") {
+                if (_.isArray(childValue)) {
+                    _.each(childValue, function (_citem) {
+                        processChildren(_citem, childKey, childValue);
+                    })
+                } else {
+                    processChildren(item, childKey, childValue);
+                }
+            }
+            else {
+                item[childKey] = childValue;
+            }
+        })
+    }
+}
+
+export function convertTranslationData(record) {
+    for (let k in record) {
+        if (typeof record[k] === "object") {
+            processChildren(record, k, record[k]);
+        }
+    }
+    return record;
+}
+
 export const convertTranslation = function(_translation){
     let translation = clone(_translation);
     let template = {};
@@ -130,7 +164,17 @@ export const convertTranslation = function(_translation){
     // })
 
     _.each(translation.CustomLabels, function(labelValue, labelKey){
-        template[getCustomLabelKey(labelKey)] = labelValue;
+        if(labelKey != 'simpleschema' && _.isObject(labelValue)){
+            console.log('labelKey', labelKey);
+            const levelData = convertTranslationData({[labelKey]: labelValue});
+            _.each(levelData, function(value, key){
+                if(!_.isObject(value)){
+                    template[getCustomLabelKey(key)] = value;
+                }
+            })
+        }else{
+            template[getCustomLabelKey(labelKey)] = labelValue;
+        }
     })
     return template;
 }

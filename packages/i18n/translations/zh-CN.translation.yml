@@ -1060,31 +1060,31 @@ CustomLabels:
         '0':
           msg: '[label]正则校验失败'
         '1':
-          exp: SimpleSchema.RegEx.Email
+          exp: 'SimpleSchema.RegEx.Email'
           msg: '[label]必须是合法的电邮地址'
         '2':
-          exp: SimpleSchema.RegEx.WeakEmail
+          exp: 'SimpleSchema.RegEx.WeakEmail'
           msg: '[label]必须是合法的电邮地址'
         '3':
-          exp: SimpleSchema.RegEx.Domain
+          exp: 'SimpleSchema.RegEx.Domain'
           msg: '[label]必须是合法的域名'
         '4':
-          exp: SimpleSchema.RegEx.WeakDomain
+          exp: 'SimpleSchema.RegEx.WeakDomain'
           msg: '[label]必须是合法的域名'
         '5':
-          exp: SimpleSchema.RegEx.IP
+          exp: 'SimpleSchema.RegEx.IP'
           msg: '[label]必须是一个合法的 IPv4 或 IPv6 地址'
         '6':
-          exp: SimpleSchema.RegEx.IPv4
+          exp: 'SimpleSchema.RegEx.IPv4'
           msg: '[label]必须是一个合法的 IPv4地址'
         '7':
-          exp: SimpleSchema.RegEx.IPv6
+          exp: 'SimpleSchema.RegEx.IPv6'
           msg: '[label]必须是一个合法的 IPv6 地址'
         '8':
-          exp: SimpleSchema.RegEx.Url
+          exp: 'SimpleSchema.RegEx.Url'
           msg: '[label]必须是一个合法的 URL'
         '9':
-          exp: SimpleSchema.RegEx.Id
+          exp: 'SimpleSchema.RegEx.Id'
           msg: '[label]必须是一个数字序号'
   steedos_tableau: 统计分析
   steedos_tableau_workflow: 流程列表
