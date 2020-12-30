@@ -3460,10 +3460,10 @@
     node-fetch "^2.6.0"
     systeminformation "^4.26.10"
 
-"@steedos/license@1.22.3":
-  version "1.22.3"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.3.tgz#3a5dfeab45f21d38bd3efa5c6b73093942174f73"
-  integrity sha1-Ol3+q0XyHTi9Pvpca3MJOUIXT3M=
+"@steedos/license@^1.22.4":
+  version "1.22.4"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-1.22.4.tgz#416699c760ab5ac4263334525a83bf3e6c32433d"
+  integrity sha512-WUAbXhzl3zfFJ42wbjZqeop2XCe3Fhck1/hvSGfcsMOiseSgn4+Zn+wx3E8AxzxErSQpJ0uc77hwzJ2rNA4mLQ==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
