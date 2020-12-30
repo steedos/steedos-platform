@@ -40,6 +40,8 @@ fields:
         value: number
       - label: 金额
         value: currency
+      - label: 百分比
+        value: percent
       - label: 密码
         value: password
       - label: 相关表
@@ -85,7 +87,7 @@ fields:
     description: 
   scale:
     label: 小数位数
-    help: 
+    help: 如果字段类型为百分比，此处表示字段显示时的小数位数，比如2位小数会显示为10.20%。
     description: 
   rows:
     label: 多行文本行数
