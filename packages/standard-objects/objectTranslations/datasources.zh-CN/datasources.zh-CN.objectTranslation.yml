@@ -6,91 +6,18 @@ fields:
     label: 数据库类型
     help: 
     options:
-      - M
-      - o
-      - 'n'
-      - g
-      - o
-      - ':'
-      - m
-      - o
-      - 'n'
-      - g
-      - o
-      - ','
-      - M
-      - s
-      - s
-      - q
-      - l
-      - ':'
-      - s
-      - q
-      - l
-      - s
-      - e
-      - r
-      - v
-      - e
-      - r
-      - ','
-      - P
-      - o
-      - s
-      - t
-      - g
-      - r
-      - e
-      - s
-      - ':'
-      - p
-      - o
-      - s
-      - t
-      - g
-      - r
-      - e
-      - s
-      - ','
-      - O
-      - r
-      - a
-      - c
-      - l
-      - e
-      - ':'
-      - o
-      - r
-      - a
-      - c
-      - l
-      - e
-      - ','
-      - M
-      - 'y'
-      - s
-      - q
-      - l
-      - ':'
-      - m
-      - 'y'
-      - s
-      - q
-      - l
-      - ','
-      - S
-      - q
-      - l
-      - i
-      - t
-      - e
-      - ':'
-      - s
-      - q
-      - l
-      - i
-      - t
-      - e
+      - label: Mongo
+        value: mongo
+      - label: SqlServer
+        value: sqlserver
+      - label: Postgres
+        value: postgres
+      - label: Oracle
+        value: oracle
+      - label: MySql
+        value: mysql
+      - label: Sqlite
+        value: sqlite
     description: 
   label:
     label: 显示名称

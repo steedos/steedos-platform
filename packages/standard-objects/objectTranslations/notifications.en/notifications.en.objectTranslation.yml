@@ -1,5 +1,5 @@
 name: notifications
-label: Notifications
+label: Notification
 description: 
 fields:
   name:

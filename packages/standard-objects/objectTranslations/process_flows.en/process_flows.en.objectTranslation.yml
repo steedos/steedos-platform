@@ -14,20 +14,8 @@ fields:
     label: The process starts when
     help: 
     options:
-      - r
-      - e
-      - c
-      - o
-      - r
-      - d
-      - _
-      - c
-      - h
-      - a
-      - 'n'
-      - g
-      - e
-      - s
+      - label: record_changes
+        value: record_changes
     description: 
   start:
     label: 

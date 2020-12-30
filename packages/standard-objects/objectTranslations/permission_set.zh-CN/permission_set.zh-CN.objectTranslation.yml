@@ -14,51 +14,10 @@ fields:
     label: 类别
     help: 
     options:
-      - P
-      - r
-      - o
-      - f
-      - i
-      - l
-      - e
-      - ':'
-      - p
-      - r
-      - o
-      - f
-      - i
-      - l
-      - e
-      - ','
-      - P
-      - e
-      - r
-      - m
-      - i
-      - s
-      - s
-      - i
-      - o
-      - 'n'
-      - ' '
-      - s
-      - e
-      - t
-      - ':'
-      - p
-      - e
-      - r
-      - m
-      - i
-      - s
-      - s
-      - i
-      - o
-      - 'n'
-      - _
-      - s
-      - e
-      - t
+      - label: 简档
+        value: profile
+      - label: 权限集
+        value: permission_set
     description: 
   license:
     label: 许可证

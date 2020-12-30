@@ -34,25 +34,12 @@ fields:
     label: 如果不满足条件，则
     help: 
     options:
-      - a
-      - p
-      - p
-      - r
-      - o
-      - v
-      - e
-      - ','
-      - r
-      - e
-      - j
-      - e
-      - c
-      - t
-      - ','
-      - s
-      - k
-      - i
-      - p
+      - label: 批准记录
+        value: approve
+      - label: 拒绝记录
+        value: reject
+      - label: 转到下一步
+        value: skip
     description: 
   approver:
     label: 选择批准人

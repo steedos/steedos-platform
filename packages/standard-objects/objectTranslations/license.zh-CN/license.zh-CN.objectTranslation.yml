@@ -42,18 +42,10 @@ fields:
     label: 状态
     help: 
     options:
-      - F
-      - A
-      - I
-      - L
-      - ','
-      - S
-      - U
-      - C
-      - C
-      - E
-      - S
-      - S
+      - label: 无效
+        value: FAIL
+      - label: 有效
+        value: SUCCESS
     description: 
   invalid:
     label: Invalid
