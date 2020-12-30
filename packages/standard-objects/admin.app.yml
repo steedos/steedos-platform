@@ -193,7 +193,7 @@ admin_menus:
   #     - admin
   #   sort: 900
   - _id: license_view
-    name: Licenses
+    name: License
     permission_sets:
       - admin
     sort: 10000
