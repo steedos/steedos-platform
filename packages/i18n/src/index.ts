@@ -33,6 +33,9 @@ export const _t = function(key: any, options: StringMap){
 }
 
 export const t = function(key: any, parameters: any, locale: string){
+    if(!key){
+        return key;
+    }
     if (locale === "zh-cn") {
         locale = "zh-CN";
     }
