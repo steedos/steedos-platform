@@ -1,5 +1,5 @@
 name: license
-label: License
+label: Licenses
 description: 
 fields:
   edition:
@@ -74,9 +74,9 @@ actions:
   apply:
     label: Apply
   changeSpaceLicense:
-    label: Update license
+    label: Update License
   copySpaceId:
-    label: Copy space id
+    label: Copy Space ID
 CustomLabels:
   license_action_sync: 
   license_action_changeSpaceLicense_confirmBtnText: 
