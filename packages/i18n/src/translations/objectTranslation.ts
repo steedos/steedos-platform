@@ -246,7 +246,10 @@ const translationListviewLabel = function(lng, objectName, name, def, datasource
     return label || def || ''
 }
 
-export const translationObject = function(lng: string, objectName: string, object: StringMap){
+export const translationObject = function(lng: string, objectName: string, object: StringMap, convert?: boolean){
+    if(convert){
+        convertObject(object);
+    }
     object.label = translationObjectLabel(lng, objectName, object.label);
     object.description = translationObjectDescription(lng, objectName, object.description);
     _.each(object.fields, function(field, fieldName){

@@ -32,11 +32,11 @@ export const convertObject = function (object: StringMap) {
                     var options;
                     if (option.indexOf(",")) {
                         options = option.split(",");
-                        return _.forEach(options, function (_option) {
+                        _.forEach(options, function (_option) {
                             return _options.push(getOption(_option));
                         });
                     } else {
-                        return _options.push(getOption(option));
+                        _options.push(getOption(option));
                     }
                 });
                 field.options = _options;
