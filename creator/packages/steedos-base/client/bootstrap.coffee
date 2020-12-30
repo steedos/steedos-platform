@@ -47,7 +47,7 @@ Steedos.redirectToSignIn = (redirect)->
 	if accountsUrl 
 		if !redirect
 			redirect = getRedirectUrl();
-		window.location.href = Steedos.absoluteUrl(accountsUrl + "/authorize?redirect_uri=" + redirect);
+		window.location.href = Steedos.absoluteUrl(accountsUrl + "/authorize?redirect_uri=" + encodeURIComponent(redirect));
 
 Steedos.clearAuth = ()->
 	Accounts._unstoreLoginToken()
