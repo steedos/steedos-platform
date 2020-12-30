@@ -48,6 +48,7 @@ module.exports = {
                     FlowRouter.go("/app/-/imported_package/view/" + result._id);
                     Modal.hide(t);
                 }
+                $("body").removeClass('loading');
                 Modal.show("quickFormModal", {formId: formId, formType: 'readonly', modalSize: 'modal-lg', title: TAPi18n.__(`imported_package_action_install`), confirmBtnText: TAPi18n.__("Confirm"), schema: _schema, doc: _doc, onConfirm: installPackage}, {
                     backdrop: 'static',
                     keyboard: true
