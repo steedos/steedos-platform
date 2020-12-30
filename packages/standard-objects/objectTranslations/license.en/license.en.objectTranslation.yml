@@ -82,7 +82,7 @@ actions:
   apply:
     label: Apply
   changeSpaceLicense:
-    label: 更新许可证
+    label: Update license
   copySpaceId:
     label: Copy space id
 CustomLabels:
