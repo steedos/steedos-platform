@@ -303,7 +303,8 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
     if (!currentUserId) {
         checkCurrentUserIdNotRequiredForFieldFormulas(configs);
     }
-    if (needRefetchDoc) {
+    // needRefetchDoc默认值为true
+    if (needRefetchDoc !== false) {
         const formulaVarFields = pickFieldFormulaVarFields(configs);
         doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
     }
