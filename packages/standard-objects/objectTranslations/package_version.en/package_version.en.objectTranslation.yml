@@ -169,4 +169,5 @@ actions:
     label: Copy Package ID
 CustomLabels:
   package_version_action_copyInstallationID_success: Copied to clipboard
-  package_version_field_status_options_uploaded: uploaded
+  package_version_field_status_options_uploaded: Uploaded
+  package_version_field_installation_id: Package ID

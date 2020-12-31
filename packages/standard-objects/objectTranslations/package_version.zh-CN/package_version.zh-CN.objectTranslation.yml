@@ -170,3 +170,4 @@ actions:
 CustomLabels:
   package_version_action_copyInstallationID_success: 复制成功
   package_version_field_status_options_uploaded: 已上载
+  package_version_field_installation_id: 软件包ID
