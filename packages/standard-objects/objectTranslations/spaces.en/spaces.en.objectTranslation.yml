@@ -96,3 +96,4 @@ CustomLabels:
   spaces_field_start_date: 
   spaces_field_user_limit: 
   spaces_group_payment: 
+  space_apikey_notfind: Please set your company's API Key

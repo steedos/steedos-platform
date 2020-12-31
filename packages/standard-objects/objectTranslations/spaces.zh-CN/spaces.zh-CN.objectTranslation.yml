@@ -96,3 +96,4 @@ CustomLabels:
   spaces_field_start_date: 付费开始时间
   spaces_field_user_limit: 已购买用户数
   spaces_group_payment: 账务
+  space_apikey_notfind: 请设置您公司的 API Key

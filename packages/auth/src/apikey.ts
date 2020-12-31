@@ -29,7 +29,7 @@ export async function getAPIKey(spaceId) {
 export async function getAPIKeyAuthHeader(spaceId) {
     const api_key = await getAPIKey(spaceId);
     if (!api_key) {
-        throw new SteedosError('404');
+        throw new SteedosError('space_apikey_notfind');
     }else{
         return {[HEADER_AUTH]: `${AUTH_TYPE} apikey,${api_key}`};
     }
