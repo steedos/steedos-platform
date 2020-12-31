@@ -108,4 +108,5 @@ actions:
   install:
     label: Install Package
 CustomLabels:
+  imported_package_action_install: Install Package
   imported_package_action_install_success: Installed

@@ -108,4 +108,5 @@ actions:
   install:
     label: 安装软件包
 CustomLabels:
+  imported_package_action_install: 安装软件包
   imported_package_action_install_success: 安装成功

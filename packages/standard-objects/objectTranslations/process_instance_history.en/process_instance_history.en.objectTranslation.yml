@@ -85,6 +85,10 @@ actions:
   recall:
     label: Recall
 CustomLabels:
+  process_instance_history_action_approve: Approve
+  process_instance_history_action_reassign: Reassign
+  process_instance_history_action_reject: Reject
+  process_instance_history_action_recall: Recall
   process_instance_history_field_step_status_options_started: Submitted
   process_instance_history_field_step_status_options_pending: Pending
   process_instance_history_field_step_status_options_no_response: No Response

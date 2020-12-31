@@ -42,6 +42,7 @@ actions:
 CustomLabels:
   Next: 下一步
   steedos_developer_service_exception: Steedos Developer 服务异常
+  package_action_upload: 上载
   package_action_upload_success: 上载成功
   package_action_upload_form_title: 上载软件包
   package_action_upload_form_name: 版本名称

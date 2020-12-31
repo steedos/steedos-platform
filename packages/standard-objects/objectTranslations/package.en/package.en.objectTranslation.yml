@@ -42,6 +42,7 @@ actions:
 CustomLabels:
   Next: 
   steedos_developer_service_exception: Steedos Developer Service Exception
+  package_action_upload: Upload
   package_action_upload_success: Upload Success
   package_action_upload_form_title: Upload Package
   package_action_upload_form_name: Version Name
