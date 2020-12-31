@@ -17,7 +17,6 @@ const getFieldValue = async (action: any, recordId: string, userSession: any)=>{
 }
 
 export async function runFieldUpdateAction(action: any, recordId: any, userSession: any){
-    console.log("runFieldUpdateAction==", action);
     const record = await getObject(action.object_name).findOne(recordId, null);
     let mainObjectName = null;
     let recordIdToUpdate;
