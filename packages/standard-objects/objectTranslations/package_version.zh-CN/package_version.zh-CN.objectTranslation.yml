@@ -151,7 +151,8 @@ fields:
     label: 状态
     help: 
     options:
-      - uploaded
+      - label: 已上载
+        value: uploaded
     description: 
   version:
     label: 版本号

@@ -43,6 +43,8 @@ fields:
         value: number
       - label: Currency
         value: currency
+      - label: Percent
+        value: percent
       - label: Password
         value: password
       - label: Lookup
@@ -88,7 +90,10 @@ fields:
     description: 
   scale:
     label: Scale
-    help: 
+    help: >-
+      If the field type is a Percent, this indicates the number of decimal
+      places the field will display, for example, two decimal places will
+      display as 10.20%.
     description: 
   rows:
     label: Rows

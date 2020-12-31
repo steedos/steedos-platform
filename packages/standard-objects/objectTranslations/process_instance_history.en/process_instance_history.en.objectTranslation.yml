@@ -22,15 +22,24 @@ fields:
     label: Status
     help: 
     options:
-      - approved
-      - fault
-      - held
-      - no_response
-      - pending
-      - reassigned
-      - rejected
-      - removed
-      - started
+      - label: Approved
+        value: approved
+      - label: Fault
+        value: fault
+      - label: Held
+        value: held
+      - label: No Response
+        value: no_response
+      - label: Pending
+        value: pending
+      - label: Reassigned
+        value: reassigned
+      - label: Rejected
+        value: rejected
+      - label: Recalled
+        value: removed
+      - label: Submitted
+        value: started
     description: 
   original_actor:
     label: Assigned To

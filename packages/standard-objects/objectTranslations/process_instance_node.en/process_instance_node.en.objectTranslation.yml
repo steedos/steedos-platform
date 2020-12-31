@@ -18,15 +18,24 @@ fields:
     label: 
     help: 
     options:
-      - approved
-      - fault
-      - held
-      - no_response
-      - pending
-      - reassigned
-      - rejected
-      - removed
-      - started
+      - label: approved
+        value: approved
+      - label: fault
+        value: fault
+      - label: held
+        value: held
+      - label: no_response
+        value: no_response
+      - label: pending
+        value: pending
+      - label: reassigned
+        value: reassigned
+      - label: rejected
+        value: rejected
+      - label: removed
+        value: removed
+      - label: started
+        value: started
     description: 
   completed_date:
     label: Completed Date

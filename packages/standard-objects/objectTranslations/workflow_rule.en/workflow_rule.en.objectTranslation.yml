@@ -22,9 +22,12 @@ fields:
     label: 
     help: 
     options:
-      - onCreateOnly
-      - onAllChanges
-      - onCreateOrTriggeringUpdate
+      - label: onCreateOnly
+        value: onCreateOnly
+      - label: onAllChanges
+        value: onAllChanges
+      - label: onCreateOrTriggeringUpdate
+        value: onCreateOrTriggeringUpdate
     description: 
   formula:
     label: 

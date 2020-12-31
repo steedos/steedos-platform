@@ -151,7 +151,8 @@ fields:
     label: Status
     help: 
     options:
-      - uploaded
+      - label: uploaded
+        value: uploaded
     description: 
   version:
     label: Version Number

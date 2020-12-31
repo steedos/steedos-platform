@@ -22,15 +22,24 @@ fields:
     label: 状态
     help: 
     options:
-      - approved
-      - fault
-      - held
-      - no_response
-      - pending
-      - reassigned
-      - rejected
-      - removed
-      - started
+      - label: 已批准
+        value: approved
+      - label: Fault
+        value: fault
+      - label: Held
+        value: held
+      - label: 无响应
+        value: no_response
+      - label: 待处理
+        value: pending
+      - label: 已转签核
+        value: reassigned
+      - label: 已拒绝
+        value: rejected
+      - label: 已取消申请
+        value: removed
+      - label: 已提交
+        value: started
     description: 
   original_actor:
     label: 被分配人
