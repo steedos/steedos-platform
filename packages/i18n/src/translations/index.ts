@@ -43,7 +43,20 @@ export const convertObject = function (object: StringMap) {
             } catch (error) {
                 console.error("convertFieldsOptions error: ", field.options, error);
             }
-        } else if (field.options && !_.isFunction(field.options) && !_.isArray(field.options) && _.isObject(field.options)) {
+        }else if(field.options && _.isArray(field.options)){
+            try {
+                _.forEach(field.options, function(option){
+                    if(_.isString(option)){
+                        _options.push(getOption(option))
+                    }else{
+                        _options.push(option)
+                    }
+                })
+                field.options = _options;
+            } catch (error) {
+                console.error("Creator.convertFieldsOptions", field.options, error)
+            }
+        }else if (field.options && !_.isFunction(field.options) && !_.isArray(field.options) && _.isObject(field.options)) {
             _.each(field.options, function (v, k) {
                 return _options.push({
                     label: v,
