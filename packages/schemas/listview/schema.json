@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "name": "steedos-schema_object_field",
+    "name": "steedos-schema_object_listview",
     "type": "object",
     "additionalProperties": false,
     "oneOf": [
