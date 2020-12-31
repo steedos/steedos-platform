@@ -79,6 +79,7 @@ actions:
     label: Copy Space ID
 CustomLabels:
   license_action_sync: 
+  license_action_changeSpaceLicense: Update License
   license_action_changeSpaceLicense_confirmBtnText: 
   license_field_custom_objects_number: 
   license_field_flow_number: 

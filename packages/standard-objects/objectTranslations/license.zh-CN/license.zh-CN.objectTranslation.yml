@@ -79,6 +79,7 @@ actions:
     label: 复制魔方ID
 CustomLabels:
   license_action_sync: 同步许可证
+  license_action_changeSpaceLicense: 导入许可证
   license_action_changeSpaceLicense_confirmBtnText: 确定
   license_field_custom_objects_number: 自定义对象数
   license_field_flow_number: 流程数
