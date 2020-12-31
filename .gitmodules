@@ -10,3 +10,6 @@
 [submodule "apps/project-management-app"]
 	path = apps/project-management-app
 	url = https://github.com/steedos/project-management-app
+[submodule "apps/okr-management-app"]
+	path = apps/okr-management-app
+	url = https://github.com/steedos/okr-management-app
