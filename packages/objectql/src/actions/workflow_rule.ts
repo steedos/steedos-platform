@@ -13,6 +13,10 @@ export type WorkflowRulesConfig = {
     user_session: any,
     previous_record: any
 }
+
+// 同一个流程规则触发的级联流程规则最大循环执行次数
+const MAX_COUNT: number = 5;
+
 export class WorkflowRulesRunner{
 
     private object_name: string;
@@ -20,7 +24,6 @@ export class WorkflowRulesRunner{
     private record: any;
     private user_session: any;
     private previous_record: any;
-    private max_count: number;
     private counter: any;
 
     constructor(config: WorkflowRulesConfig){
@@ -29,7 +32,6 @@ export class WorkflowRulesRunner{
         this.record = config.record
         this.user_session = config.user_session
         this.previous_record = config.previous_record
-        this.max_count = 3;//同一个流程规则触发的级联流程规则最大循环执行次数
         this.counter = {};
     }
 
@@ -74,12 +76,13 @@ export class WorkflowRulesRunner{
             });
             allTargets = allTargets.concat(tempTargets);
         }
+
         if(fromRuleId){
             if(!this.counter[fromRuleId]){
                 this.counter[fromRuleId] = 0;
             }
             this.counter[fromRuleId]++;
-            if(this.counter[fromRuleId] > this.max_count){
+            if(this.counter[fromRuleId] > MAX_COUNT){
                 // 当同一个工作流规则反复多次循环级联调用时直接退出循环。
                 return;
             }
