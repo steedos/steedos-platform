@@ -9,7 +9,7 @@ import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
 import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { runObjectWorkflowRules } from '../actions';
+import { WorkflowRulesRunner } from '../actions';
 import { runValidationRules } from './validation_rules';
 const clone = require('clone')
 
@@ -805,7 +805,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return afterTriggerContext.data.values
                 }
             }
-            await runObjectWorkflowRules(this.name, method, returnValue, userSession, afterTriggerContext.previousDoc);
+            await new WorkflowRulesRunner({
+                object_name: this.name,
+                event: method,
+                record: returnValue,
+                user_session: userSession,
+                previous_record: afterTriggerContext.previousDoc
+            }).run();
             if(returnValue){
                 if(method === "insert"){
                     // 当为insert时，上面代码执行后的doc不带_id，只能从returnValue中取
