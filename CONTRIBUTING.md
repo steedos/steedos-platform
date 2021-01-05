@@ -101,7 +101,7 @@ After passing the test of Creator Code, you should release a new version for bot
 > When the platform vesion is '<= 1.22', this command is invalid, as an alternative, you should `commit && push` every submodule manually one by one in the 'apps' folder.
 
 - Modify the version number in the file 'package.template.json' in the folder 'packages\project-template-empty'.
-- Confirm the 'last line sequence' of the file ‘packages\create-steedos-app\index.js’ is LF.
+- Confirm the 'End-of-line sequence' of the file ‘packages\create-steedos-app\index.js’ is LF.
 - Commit and submit the code to Github.
 - Run the shell `yarn pub` to publish, or the shell `yarn pub_next` for a beta version.
 - After release, you can run the shell `yarn syncToTaoBao` for synchronization of Taobao source.
