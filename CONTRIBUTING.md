@@ -98,14 +98,7 @@ After passing the test of Creator Code, you should release a new version for bot
 - Run the shell `yarn ver` on command line, and select the version number.
 - Run the shell `yarn pubBefore_push_submodules` on command line, you can see [.git_push.js](.scripts/.git_push.js) about this command.
 
-> When the platform vesion is '<= 1.22', this command is invalid, as an alternative, you should cd to the 'apps' folder, and run the shell bellow in all the project folder one by one.
-
-```shell
-git add .
-/*Replace '${versionInfo.version}' to the version number that you want publish to.*/
-git commit -m v${versionInfo.version}
-git push
-```
+> When the platform vesion is '<= 1.22', this command is invalid, as an alternative, you should `commit && push` every submodule manually one by one in the 'apps' folder.
 
 - Modify the version number in the file 'package.template.json' in the folder 'packages\project-template-empty'.
 - Confirm the 'last line sequence' of the file ‘packages\create-steedos-app\index.js’ is LF.
