@@ -130,6 +130,9 @@ fields:
     label: Description
     type: textarea
     is_wide: true
+  reevaluate_on_change:
+    type: boolean
+    label: Re-evaluate Workflow Rules after Field Change
   # todo:
 form:
   beforeEdit: !!js/function |

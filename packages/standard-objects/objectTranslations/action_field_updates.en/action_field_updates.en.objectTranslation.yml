@@ -42,6 +42,10 @@ fields:
     label: Description
     help: 
     description: 
+  reevaluate_on_change:
+    label: Re-evaluate Workflow Rules after Field Change
+    help: If this field update changes the field's value, all workflow rules on the associated object are re-evaluated. Any workflow rules whose criteria are met as a result of the field update will be triggered.
+    description: This check box only identifies whether or not the workflow rules for the object with which the field update is associated are reevaluated. For field updates across objects, these workflow rules are never reevaluated, and all workflow rules for the object to which they are to be updated are always reevaluated.
 listviews:
   all:
     label: All
