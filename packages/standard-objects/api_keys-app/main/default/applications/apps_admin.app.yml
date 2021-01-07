@@ -5,3 +5,5 @@ admin_menus:
     name: API key
     object_name: api_keys
     parent: account
+    permission_sets:
+      - user
