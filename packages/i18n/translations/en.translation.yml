@@ -1,4 +1,5 @@
 CustomLabels:
+  process_notification_submit_title: "{$submitter} 正在请求批准 {$recordName}"
   process_approval_comment: Comments
   process_approval_title_reassign: Reassign Approval Request
   process_approval_approver_label_reassign: Reassign To
