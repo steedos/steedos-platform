@@ -1,5 +1,5 @@
 CustomLabels:
-  process_notification_submit_title: "{$submitter} is requesting approval for {$recordName}"
+  process_notification_submit_title: "{$submitter} 正在请求批准 {$recordName}"
   process_approval_comment: 评论
   process_approval_title_reassign: 转签核批准请求
   process_approval_approver_label_reassign: 转签核处理人
