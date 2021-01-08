@@ -240,3 +240,9 @@ admin_menus:
       - admin
     object_name: action_field_updates
     parent: workflow_actions
+  - _id: workflow_notifications
+    name: Workflow Notifications
+    permission_sets:
+      - admin
+    object_name: workflow_notifications
+    parent: workflow_actions

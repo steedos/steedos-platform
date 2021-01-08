@@ -4,6 +4,7 @@ import { WorkflowRule } from './types/workflow_rule';
 import { JsonMap } from "@salesforce/ts-types";
 import { runFieldUpdateActions } from './field_updates'
 import { FieldUpdateTarget } from './types/field_update_target';
+import { runWorkflowNotifyActions } from './workflow_notifications'
 import _ = require('underscore');
 
 export type WorkflowRulesConfig = {
@@ -128,6 +129,7 @@ async function runWFRule(rule: WorkflowRule, record: JsonMap, userSession, previ
         let isTrue = await computeFormula(rule.formula, rule.object_name, record, userSession.userId, userSession.spaceId)
         if (isTrue) {
             targets = await runFieldUpdateActions(rule.updates_field_actions, record._id, userSession);
+            await runWorkflowNotifyActions(rule.workflow_notifications_actions, record._id, userSession);
         }
     }
     return targets;

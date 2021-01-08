@@ -38,6 +38,7 @@ CustomLabels:
   menu_workflow_rules: 工作流规则
   menu_workflow_actions: 工作流操作
   menu_field_updates: 字段更新
+  menu_workflow_notifications: 工作流通知
   menu_object_validation_rules: 对象验证规则
   menu_api_keys: API key
   menu_app_manager: 应用程序管理器

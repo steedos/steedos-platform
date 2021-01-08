@@ -37,6 +37,10 @@ fields:
     label: 字段更新
     help: 
     description: 
+  workflow_notifications_actions:
+    label: 工作流通知
+    help: 
+    description: 
   description:
     label: 描述
     help: 

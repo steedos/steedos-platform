@@ -6,5 +6,6 @@ export type WorkflowRule = {
     active: boolean,
     trigger_type: string,
     formula: string,
-    updates_field_actions: Array<string>
+    updates_field_actions: Array<string>,
+    workflow_notifications_actions: Array<string>
 }
