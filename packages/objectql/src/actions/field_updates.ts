@@ -44,10 +44,16 @@ export async function runFieldUpdateAction(action: any, recordId: any, userSessi
         //对于非跨对象的字段更新，是否重新评估字段更新关联对象的工作流规则由其属性reevaluate_on_change决定。
         needToReevaluate = action.reevaluate_on_change;
     }
+    const objectToUpdate = getObject(mainObjectName);
+    const fieldToUpdate = objectToUpdate.getField(action.field_name);
+    if(["formula", "summary", "autonumber"].indexOf(fieldToUpdate.type) > -1){
+        // 公式、累计汇总、自动编号三种字段类型是只读的，不允许字段更新来变更其值
+        return null;
+    }
     const newFieldValue = await getFieldValue(action, recordId, userSession);
     if(newFieldValue !== previousRecord[action.field_name]){
         // 只有值变更时才执行字段更新、级联公式重算、级联汇总字段重算、重新评估工作流规则等操作
-        await getObject(mainObjectName).directUpdate(recordIdToUpdate, {[action.field_name]: newFieldValue});
+        await objectToUpdate.directUpdate(recordIdToUpdate, {[action.field_name]: newFieldValue});
 
         // 字段更新后，需要找到引用了该字段的公式字段并更新其值
         await runQuotedByObjectFieldFormulas(mainObjectName, recordIdToUpdate, userSession, {

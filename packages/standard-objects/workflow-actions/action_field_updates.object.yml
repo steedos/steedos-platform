@@ -51,7 +51,7 @@ fields:
       function (doc) {
         var mainObjectName = null;
         if(doc.target_object && doc.target_object != doc.object_name){
-          var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
+          mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
         }else{
           mainObjectName = doc.object_name;
         }
@@ -59,10 +59,13 @@ fields:
         if(object){
           var _options = [];
           _.forEach(object.fields, function (field, fname) {
-            _options.push({
+            if(["formula", "summary", "autonumber"].indexOf(field.type) < 0){
+              /*公式、累计汇总、自动编号三种字段类型是只读的，不允许字段更新来变更其值*/
+              _options.push({
                 label: field.label,
                 value: field.name,
               });
+            }
           });
           return _options;
         }
