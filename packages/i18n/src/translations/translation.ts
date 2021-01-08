@@ -118,7 +118,7 @@ let processChildren = (item, parentKey, object) => {
         _.each(object, function (_citem) {
             processChildren(_citem, '', _citem);
         })
-    } else {
+    } else if(object){
         _.each(_.keys(object), function (k) {
             let childKey = parentKey ? `${parentKey}.${k}` : k;
             let childValue = object[k];
