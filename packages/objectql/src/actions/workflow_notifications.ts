@@ -4,7 +4,7 @@ import { WorkflowNotification } from './types/workflow_notification';
 
 import _ = require('underscore');
 
-declare var Creator: any;;
+declare var Creator: any;
 
 /**
  * 

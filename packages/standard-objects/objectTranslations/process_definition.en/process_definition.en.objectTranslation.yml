@@ -61,6 +61,10 @@ fields:
     label: Field Update
     help: 
     description: 
+  initial_submission_workflow_notifications_actions:
+    label: 
+    help: 
+    description: 
   final_approval_record_lock:
     label: Record Lock
     help: 
@@ -72,6 +76,10 @@ fields:
     description: 
   final_approval_updates_field_actions:
     label: Field Update
+    help: 
+    description: 
+  final_approval_workflow_notifications_actions:
+    label: 
     help: 
     description: 
   final_rejection_record_lock:
@@ -87,6 +95,10 @@ fields:
     label: Field Update
     help: 
     description: 
+  final_rejection_workflow_notifications_actions:
+    label: 
+    help: 
+    description: 
   recall_record_lock:
     label: Record Lock
     help: 
@@ -98,6 +110,10 @@ fields:
     description: 
   recall_updates_field_actions:
     label: Field Update
+    help: 
+    description: 
+  recall_workflow_notifications_actions:
+    label: 
     help: 
     description: 
 groups:

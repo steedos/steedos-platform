@@ -88,8 +88,16 @@ fields:
     label: 字段更新
     help: 
     description: 
+  approval_workflow_notifications_actions:
+    label: 工作流通知
+    help: 
+    description: 
   rejection_updates_field_actions:
     label: 字段更新
+    help: 
+    description: 
+  rejection_workflow_notifications_actions:
+    label: 工作流通知
     help: 
     description: 
 groups:

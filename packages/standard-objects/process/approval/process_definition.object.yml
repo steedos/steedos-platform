@@ -120,6 +120,20 @@ fields:
         }
       }
     group: Initial Submission Actions
+  initial_submission_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Initial Submission Actions
   final_approval_record_lock:
     type: select
     required: true
@@ -137,6 +151,20 @@ fields:
     multiple: true
     label: Field Update
     reference_to: action_field_updates
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Final Approval Actions
+  final_approval_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
     depend_on:
       - object_name
     filtersFunction: !!js/function |
@@ -172,6 +200,20 @@ fields:
         }
       }
     group: Final Rejection Actions
+  final_rejection_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Final Rejection Actions
   recall_record_lock:
     type: select
     required: true
@@ -190,6 +232,20 @@ fields:
     multiple: true
     label: Field Update
     reference_to: action_field_updates
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+    group: Recall Actions
+  recall_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
     depend_on:
       - object_name
     filtersFunction: !!js/function |

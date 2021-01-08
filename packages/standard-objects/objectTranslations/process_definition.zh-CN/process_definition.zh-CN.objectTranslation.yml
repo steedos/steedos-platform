@@ -54,6 +54,10 @@ fields:
     label: 字段更新
     help: 
     description: 
+  initial_submission_workflow_notifications_actions:
+    label: 工作流通知
+    help: 
+    description: 
   final_approval_record_lock:
     label: 锁定记录
     help: 
@@ -65,6 +69,10 @@ fields:
     description: 
   final_approval_updates_field_actions:
     label: 字段更新
+    help: 
+    description: 
+  final_approval_workflow_notifications_actions:
+    label: 工作流通知
     help: 
     description: 
   final_rejection_record_lock:
@@ -80,6 +88,10 @@ fields:
     label: 字段更新
     help: 
     description: 
+  final_rejection_workflow_notifications_actions:
+    label: 工作流通知
+    help: 
+    description: 
   recall_record_lock:
     label: 锁定记录
     help: 
@@ -91,6 +103,10 @@ fields:
     description: 
   recall_updates_field_actions:
     label: 字段更新
+    help: 
+    description: 
+  recall_workflow_notifications_actions:
+    label: 工作流通知
     help: 
     description: 
 groups:

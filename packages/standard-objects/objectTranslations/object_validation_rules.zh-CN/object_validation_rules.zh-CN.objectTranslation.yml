@@ -28,7 +28,7 @@ fields:
     description: 
 listviews:
   all:
-    label: All
+    label: 所有
 CustomLabels:
   object_validation_rules_field_error_display_field: 错误位置
   object_validation_rules_field_error_display_field_inlineHelpText: >-

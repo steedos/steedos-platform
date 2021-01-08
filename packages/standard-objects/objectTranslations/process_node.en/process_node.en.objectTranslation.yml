@@ -92,8 +92,16 @@ fields:
     label: Field Update
     help: 
     description: 
+  approval_workflow_notifications_actions:
+    label: Workflow Notification
+    help: 
+    description: 
   rejection_updates_field_actions:
     label: Field Update
+    help: 
+    description: 
+  rejection_workflow_notifications_actions:
+    label: Workflow Notification
     help: 
     description: 
 groups:
