@@ -117,21 +117,41 @@ insertRow = function (dataRow, objectName, field_mapping, space, external_id_nam
         switch (field != null ? field.type : void 0) {
           case "date":
           case "datetime":
-            return error = converterDate(field_name, dataCell, jsonObj);
+            error = converterDate(field_name, dataCell, jsonObj);
+            break;
           case "number":
-            return error = converteNum(field_name, dataCell, jsonObj);
+            error = converteNum(field_name, dataCell, jsonObj);
+            break;
           case "boolean":
-            return error = converterBool(field_name, dataCell, jsonObj);
+            error = converterBool(field_name, dataCell, jsonObj);
+            break;
           case "select":
-            return error = converterSelect(objectName, field_name, dataCell, jsonObj);
+            error = converterSelect(objectName, field_name, dataCell, jsonObj);
+            break;
           case "lookup":
-            return error = converterLookup(objectName, field_name, dataCell, jsonObj);
+            error = converterLookup(objectName, field_name, dataCell, jsonObj);
+            break;
           case "text":
-            return error = converterString(field_name, dataCell, jsonObj);
+            error = converterString(field_name, dataCell, jsonObj);
+            break;
           case "textarea":
-            return error = converterString(field_name, dataCell, jsonObj);
+            error = converterString(field_name, dataCell, jsonObj);
+            break;
           case "master_detail":
-            return error = converterLookup(objectName, field_name, dataCell, jsonObj);
+            error = converterLookup(objectName, field_name, dataCell, jsonObj);
+            break;
+          case "email":
+            error = converterString(field_name, dataCell, jsonObj);
+            break;
+          case "toggle":
+            error = converterBool(field_name, dataCell, jsonObj);
+            break;
+          case "url":
+            error = converterString(field_name, dataCell, jsonObj);
+            break;
+          case "currency":
+            error = converteNum(field_name, dataCell, jsonObj);
+            break;
         }
       }
     });

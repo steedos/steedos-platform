@@ -173,7 +173,22 @@ actions:
     'on': record
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-                var space;
-              space = Session.get("spaceId");
-              return Meteor.call('startImportJobs', record_id, space);
-            }
+        var files = Creator.odata.query('cms_files', {$filter:`(parent/o eq \'queue_import\') and (parent/ids eq \'${record_id}\')`, $select: "_id"}, true);
+        if (_.isEmpty(files)) {
+          toastr.error(TAPi18n.__("queue_import_action_import_need_files"));
+          return;
+        }
+        if (files.length > 1) {
+          toastr.error(TAPi18n.__("queue_import_action_import_just_need_one_file"));
+          return;
+        }
+
+        $("body").addClass("loading");
+        var space;
+        space = Session.get("spaceId");
+        Meteor.call('startImportJobs', record_id, space, function(result){
+          $("body").removeClass("loading");
+          FlowRouter.reload();
+          toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
+        });
+      }
