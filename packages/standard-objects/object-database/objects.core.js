@@ -213,7 +213,7 @@ function loadObject(doc, oldDoc) {
         //继承base
         loadDBObject(doc);
         objectql.addObjectConfig(doc, datasourceName);
-        objectql.loadObjectLazyListenners(doc.name);
+        objectql.loadObjectLazyListViews(doc.name);
         objectql.loadObjectLazyActions(doc.name);
         objectql.loadActionScripts(doc.name);
         objectql.loadObjectLazyMethods(doc.name);
