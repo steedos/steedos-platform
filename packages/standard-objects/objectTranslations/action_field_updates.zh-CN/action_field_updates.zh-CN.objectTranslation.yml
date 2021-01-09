@@ -63,3 +63,4 @@ CustomLabels:
   action_field_updates_field_when_options_rejection: 拒绝操作
   action_field_updates_field_when_options_approval: 批准操作
   action_field_updates_field_when_options_initial_submission: 首次提交
+  action_field_updates_field__error_reevaluate_parent: 无法为父字段更新指定字段更改后重新评估工作流规则。
