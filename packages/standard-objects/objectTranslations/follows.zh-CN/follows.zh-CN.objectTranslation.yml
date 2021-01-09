@@ -1,0 +1,15 @@
+name: follows
+label: 关注
+description: 
+fields:
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  owner:
+    label: 关注者
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部

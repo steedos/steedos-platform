@@ -1,0 +1,31 @@
+name: OAuth2Clients
+label: OAuth2应用
+description: 
+fields:
+  clientName:
+    label: 名称
+    help: 
+    description: 
+  active:
+    label: 是否激活
+    help: 
+    description: 
+  expires:
+    label: 有效期（小时）
+    help: 
+    description: 
+  redirectUri:
+    label: 回调URL
+    help: 
+    description: 
+  clientId:
+    label: 客户端ID
+    help: 
+    description: 
+  clientSecret:
+    label: 密钥
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部

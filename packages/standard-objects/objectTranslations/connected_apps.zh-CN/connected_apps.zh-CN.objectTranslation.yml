@@ -1,0 +1,119 @@
+name: connected_apps
+label: 外部应用
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  code:
+    label: API 名称
+    help: 
+    description: 
+  active:
+    label: 激活
+    help: 
+    description: 
+  app_logo:
+    label: 图标
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  app_website:
+    label: 应用官网
+    help: 
+    description: 
+  start_url:
+    label: 开始 URL
+    help: 
+    description: 
+  mobile_start_url:
+    label: 移动开始 URL
+    help: 
+    description: 
+  client_id:
+    label: Client ID
+    help: 
+    description: 
+  client_secret:
+    label: Client Secret
+    help: 
+    description: 
+  oauth2_enabled:
+    label: 启用 OAuth2
+    help: 
+    description: 
+  oauth2_callback_url:
+    label: 回调 URL
+    help: 
+    description: 
+  oauth2_scopes:
+    label: 范围
+    help: 
+    options:
+      - label: 允许访问您的唯一标志符 (openid)
+        value: openid
+      - label: '访问基本信息 (id, profile, email, address, phone)'
+        value: profile
+      - label: 完全访问权限 (full)
+        value: full
+    description: 
+  oauth2_logout_enabled:
+    label: 启用单点注销
+    help: 
+    description: 
+  oauth2_logout_url:
+    label: 单点注销 URL
+    help: 
+    description: 
+  saml_enabled:
+    label: 启用 SAML
+    help: 
+    description: 
+  saml_entity_id:
+    label: Entity ID
+    help: 
+    description: 
+  saml_issuer:
+    label: Issuer
+    help: 
+    description: 
+  saml_idp_cert:
+    label: IDP Cert
+    help: 
+    description: 
+  saml_acs_url:
+    label: ACS URL
+    help: 
+    description: 
+  saml_name_id_format:
+    label: Name
+    help: 
+    description: 
+  saml_logout_enabled:
+    label: 启用单点注销
+    help: 
+    description: 
+  saml_logout_url:
+    label: 单点注销 URL
+    help: 
+    description: 
+  saml_logout_block:
+    label: 单点注销绑定
+    help: 
+    options:
+      - label: HTTP Redirect
+        value: redirect
+      - label: HTTP Post
+        value: post
+    description: 
+groups:
+  api: API
+  oauth2: OAuth2
+  saml: SAML
+listviews:
+  all:
+    label: 所有

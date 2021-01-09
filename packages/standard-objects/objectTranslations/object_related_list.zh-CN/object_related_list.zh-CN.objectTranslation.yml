@@ -1,0 +1,82 @@
+name: object_related_list
+label: 相关子表
+description: 
+fields:
+  object_name:
+    label: 所属对象
+    help: 
+    description: 
+  objectName:
+    label: 相关对象
+    help: 
+    description: 
+  columns:
+    label: 显示的列
+    help: 
+    description: 
+  columns.$:
+    label: 显示的列
+    help: 
+    description: 
+  columns.$.field:
+    label: 字段
+    help: 
+    description: 
+  columns.$.width:
+    label: 宽度
+    help: 
+    description: 
+  columns.$.wrap:
+    label: 是否换行
+    help: 
+    description: 
+  mobile_columns:
+    label: 手机端显示的列
+    help: 
+    description: 
+  mobile_columns.$:
+    label: 手机端显示的列
+    help: 
+    description: 
+  mobile_columns.$.field:
+    label: 字段
+    help: 
+    description: 
+  sort:
+    label: 默认排序规则
+    help: 
+    description: 
+  sort.$:
+    label: Order
+    help: 
+    description: 
+  sort.$.field_name:
+    label: 排序字段
+    help: 
+    description: 
+  sort.$.order:
+    label: 排序方式
+    help: 
+    options:
+      - label: 正序
+        value: asc
+      - label: 倒序
+        value: desc
+    description: 
+  filters:
+    label: 过滤器
+    help: 
+    description: 
+  sort_no:
+    label: 排序号
+    help: High Value First.
+    description: 
+listviews:
+  all:
+    label: 全部
+CustomLabels:
+  object_related_list_error_unique: 相关对象不能重复
+  object_related_list_field_label: 显示名称
+  object_related_list_field_name: 列表视图名称
+  object_related_list_field_sort.$: 
+  object_related_list_field_type: 视图类型

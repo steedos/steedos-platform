@@ -9,7 +9,7 @@ import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
 import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { runObjectWorkflowRules } from '../actions';
+import { WorkflowRulesRunner } from '../actions';
 import { runValidationRules } from './validation_rules';
 const clone = require('clone')
 
@@ -750,6 +750,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
             // 因下面的代码，比如函数dealWithMethodPermission可能改写args变量，所以需要提前从args取出对应变量值。
             if(method === "insert"){
+                // 此处doc不带_id值，得执行完adapterMethod.apply后，doc中才有_id属性，所以这里的doc及recordId都不准确
                 doc = args[1];
                 recordId = <string>doc._id;
             }
@@ -804,8 +805,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return afterTriggerContext.data.values
                 }
             }
-            await runObjectWorkflowRules(this.name, method, returnValue, userSession, afterTriggerContext.previousDoc);
+            await new WorkflowRulesRunner({
+                object_name: this.name,
+                event: method,
+                record: returnValue,
+                user_session: userSession,
+                previous_record: afterTriggerContext.previousDoc
+            }).run();
             if(returnValue){
+                if(method === "insert"){
+                    // 当为insert时，上面代码执行后的doc不带_id，只能从returnValue中取
+                    doc = returnValue;
+                    recordId = <string>doc._id;
+                }
                 // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
                 await this.runRecordFormula(method, objectName, recordId, doc, userSession);
                 await this.runRecordSummaries(method, objectName, recordId, doc, previousDoc, userSession);

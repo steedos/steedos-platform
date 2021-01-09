@@ -1,0 +1,109 @@
+name: process_instance_history
+label: Approval History
+description: 
+fields:
+  name:
+    label: Step Name
+    help: 
+    description: 
+  created_by:
+    label: Submitter
+    help: 
+    description: 
+  process_instance:
+    label: 
+    help: 
+    description: 
+  process_instance_node:
+    label: 
+    help: 
+    description: 
+  step_status:
+    label: Status
+    help: 
+    options:
+      - label: Approved
+        value: approved
+      - label: Fault
+        value: fault
+      - label: Held
+        value: held
+      - label: No Response
+        value: no_response
+      - label: Pending
+        value: pending
+      - label: Reassigned
+        value: reassigned
+      - label: Rejected
+        value: rejected
+      - label: Recalled
+        value: removed
+      - label: Submitted
+        value: started
+    description: 
+  original_actor:
+    label: Assigned To
+    help: 
+    description: 
+  actor:
+    label: Actual Approver
+    help: 
+    description: 
+  target_object:
+    label: Approval Details
+    help: 
+    description: 
+  comments:
+    label: Comments
+    help: 
+    description: 
+  step_node:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_days:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_hours:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_minutes:
+    label: 
+    help: 
+    description: 
+  modified:
+    label: 
+    help: 
+    description: 
+  modified_by:
+    label: 
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+actions:
+  approve:
+    label: Approve
+  reject:
+    label: Reject
+  reassign:
+    label: Reassign
+  recall:
+    label: Recall
+CustomLabels:
+  process_instance_history_action_approve: Approve
+  process_instance_history_action_reassign: Reassign
+  process_instance_history_action_reject: Reject
+  process_instance_history_action_recall: Recall
+  process_instance_history_field_step_status_options_started: Submitted
+  process_instance_history_field_step_status_options_pending: Pending
+  process_instance_history_field_step_status_options_no_response: No Response
+  process_instance_history_field_step_status_options_approved: Approved
+  process_instance_history_field_step_status_options_rejected: Rejected
+  process_instance_history_field_step_status_options_reassigned: Reassigned
+  process_instance_history_field_step_status_options_removed: Recalled
+  process_instance_history_field_step_status_options_fault: Fault
+  process_instance_history_field_step_status_options_held: Held

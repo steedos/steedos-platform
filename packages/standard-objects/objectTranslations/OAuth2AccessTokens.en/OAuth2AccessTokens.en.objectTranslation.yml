@@ -1,0 +1,23 @@
+name: OAuth2AccessTokens
+label: OAuth2 Token
+description: 
+fields:
+  userId:
+    label: User
+    help: 
+    description: 
+  expires:
+    label: Expiration Time
+    help: 
+    description: 
+  clientId:
+    label: Client ID
+    help: 
+    description: 
+  accessToken:
+    label: Token
+    help: 
+    description: 
+listviews:
+  all:
+    label: All OAuth2 Access Tokens

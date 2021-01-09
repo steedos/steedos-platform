@@ -1,0 +1,40 @@
+name: object_validation_rules
+label: Object Validation Rules
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  active:
+    label: Active
+    help: >-
+      Indicates whether this validation rule is active, (true), or not active
+      (false).
+    description: 
+  description:
+    label: description
+    help: 
+    description: 
+  error_condition_formula:
+    label: errorConditionFormula
+    help: >-
+      The formula defined in the validation rule. If the formula returns a value
+      of true, an error message is displayed.
+    description: 
+  error_message:
+    label: errorMessage
+    help: >-
+      The message that appears if the validation rule fails. The message must be
+      255 characters or less.
+    description: 
+listviews:
+  all:
+    label: All
+CustomLabels:
+  object_validation_rules_field_error_display_field: 
+  object_validation_rules_field_error_display_field_inlineHelpText: 

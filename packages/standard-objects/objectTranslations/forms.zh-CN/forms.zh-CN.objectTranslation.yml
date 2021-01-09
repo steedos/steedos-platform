@@ -1,0 +1,183 @@
+name: forms
+label: 表单
+description: 
+fields:
+  name:
+    label: 表单
+    help: 
+    description: 
+  state:
+    label: 表单状态
+    help: 
+    options:
+      - label: 启用
+        value: enabled
+      - label: 停用
+        value: disabled
+    description: 
+  description:
+    label: 表单描述
+    help: 
+    description: 
+  category:
+    label: 表单分类
+    help: 
+    description: 
+  is_valid:
+    label: 是否有效
+    help: 
+    description: 
+  instance_style:
+    label: 样式
+    help: 
+    options:
+      - label: 表格
+        value: table
+      - label: 默认
+        value: default
+    description: 
+  historys:
+    label: 历史版本
+    help: 
+    description: 
+  approve_on_create:
+    label: 是否同意审批
+    help: 
+    description: 
+  approve_on_modify:
+    label: 是否修改审批
+    help: 
+    description: 
+  approve_on_delete:
+    label: 是否删除审批
+    help: 
+    description: 
+  enable_workflow:
+    label: 是否启用工作流
+    help: 
+    description: 
+  enable_view_others:
+    label: 是否查看其它表单
+    help: 
+    description: 
+  current:
+    label: 当前版本
+    help: 
+    description: 
+  current.form_script:
+    label: Form Script
+    help: 
+    description: 
+  current.name_forumla:
+    label: Name Forumla
+    help: 
+    description: 
+  current.fields:
+    label: Fields
+    help: 
+    description: 
+  current.fields.$.code:
+    label: Code
+    help: 
+    description: 
+  current.fields.$.name:
+    label: Name
+    help: 
+    description: 
+  current.fields.$.type:
+    label: Type
+    help: 
+    options:
+      - label: Checkbox
+        value: checkbox
+      - label: DateTimeE
+        value: dateTimeD
+      - label: Date
+        value: date
+      - label: EmailGM
+      - label: Group
+        value: group
+      - label: Input
+        value: input
+      - label: MultiSelect
+        value: multiSelect
+      - label: Number
+        value: number
+      - label: Password
+        value: password
+      - label: Radio
+        value: radio
+      - label: Section
+        value: section
+      - label: Select
+        value: select
+      - label: Table
+        value: table
+      - label: URL
+        value: url
+      - label: User
+        value: user
+      - label: GeolocationR
+        value: geolocationR
+    description: 
+  current.fields.$.is_required:
+    label: Required
+    help: 
+    description: 
+  current.fields.$.is_wide:
+    label: Wide
+    help: 
+    description: 
+  current.fields.$.is_list_display:
+    label: Display in List
+    help: 
+    description: 
+  current.fields.$.is_searchable:
+    label: Searchable
+    help: 
+    description: 
+  current.fields.$.is_multiselect:
+    label: Multiselect
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+actions:
+  standard_new:
+    label: 新建
+  standard_edit:
+    label: 编辑
+  standard_delete:
+    label: 删除
+  designForm:
+    label: 表单设计器
+CustomLabels:
+  _forms_field_code_error: 字段名 %s 不能包含'.'
+  forms_field_current.fields: 
+  forms_field_current.fields_$_code: 
+  forms_field_current.fields_$_is_list_display: 
+  forms_field_current.fields_$_is_multiselect: 
+  forms_field_current.fields_$_is_required: 
+  forms_field_current.fields_$_is_searchable: 
+  forms_field_current.fields_$_is_wide: 
+  forms_field_current.fields_$_name: 
+  forms_field_current.fields_$_type: 
+  forms_field_current.fields_$_type_options_checkbox: 
+  forms_field_current.fields_$_type_options_date: 
+  forms_field_current.fields_$_type_options_dateTime: 
+  forms_field_current.fields_$_type_options_email: 
+  forms_field_current.fields_$_type_options_geolocation: 
+  forms_field_current.fields_$_type_options_group: 
+  forms_field_current.fields_$_type_options_input: 
+  forms_field_current.fields_$_type_options_multiSelect: 
+  forms_field_current.fields_$_type_options_number: 
+  forms_field_current.fields_$_type_options_password: 
+  forms_field_current.fields_$_type_options_radio: 
+  forms_field_current.fields_$_type_options_section: 
+  forms_field_current.fields_$_type_options_select: 
+  forms_field_current.fields_$_type_options_table: 
+  forms_field_current.fields_$_type_options_url: 
+  forms_field_current.fields_$_type_options_user: 
+  forms_field_current.form_script: 
+  forms_field_current.name_forumla: 

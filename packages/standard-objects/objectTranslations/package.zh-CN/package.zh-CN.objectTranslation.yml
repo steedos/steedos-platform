@@ -1,0 +1,57 @@
+name: package
+label: 软件包
+description: 
+fields:
+  description:
+    label: 描述
+    help: 
+    description: 
+  label:
+    label: 软件包名称
+    help: 
+    description: 
+  name:
+    label: API 名称
+    help: 
+    description: 
+  namespace:
+    label: 命名空间
+    help: 
+    description: 
+  owner:
+    label: 所有者
+    help: 
+    description: 
+  package_type:
+    label: 软件包类型
+    help: 
+    options:
+      - label: 受管
+        value: managed
+      - label: 不受管
+        value: unmanaged
+    description: 
+listviews:
+  all:
+    label: 所有
+  recent:
+    label: 最近查看
+actions:
+  upload:
+    label: 上载
+CustomLabels:
+  Next: 下一步
+  steedos_developer_service_exception: Steedos Developer 服务异常
+  package_action_upload: 上载
+  package_action_upload_success: 上载成功
+  package_action_upload_form_title: 上载软件包
+  package_action_upload_form_name: 版本名称
+  package_action_upload_form_version: 版本号
+  package_action_upload_form_release_notes: 发行说明
+  package_action_upload_form_post_install: 发布安装说明
+  package_action_upload_form_description: 描述
+  package_action_upload_form_install_password: 密码
+  package_action_upload_form_confirm_install_password: 确认密码
+  package_action_upload_form_group_password: 密码 (选填)
+  package_action_upload_form_install_password_inlineHelpText: 通过在下面输入的密码来保护此软件包。 如果您不需要密码，请留空。
+  package_action_upload_form__error_password_ne: 密码和确认密码必须完全匹配

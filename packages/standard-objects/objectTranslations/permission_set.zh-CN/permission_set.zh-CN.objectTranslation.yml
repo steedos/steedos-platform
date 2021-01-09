@@ -1,0 +1,87 @@
+name: permission_set
+label: 权限集
+description: 
+fields:
+  name:
+    label: API名称
+    help: 
+    description: 
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  type:
+    label: 类别
+    help: 
+    options:
+      - label: 简档
+        value: profile
+      - label: 权限集
+        value: permission_set
+    description: 
+  license:
+    label: 许可证
+    help: 
+    description: 
+  assigned_apps:
+    label: 授权应用
+    help: 
+    description: 
+  users:
+    label: 成员
+    help: 类别为简档时，不需要选择成员
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+  password_history:
+    label: 强制密码历史
+    help: 
+    description: 
+  max_login_attempts:
+    label: 最大无效登录尝试次数
+    help: 
+    options:
+      - label: '3'
+        value: '3'
+      - label: '5'
+        value: '5'
+      - label: '10'
+        value: '10'
+      - label: 无限制
+        value: '0'
+    description: 
+  lockout_interval:
+    label: 锁定有效期间
+    help: 
+    options:
+      - label: 15 分钟
+        value: '15'
+      - label: 30 分钟
+        value: '30'
+      - label: 60 分钟
+        value: '60'
+      - label: 始终(必须由管理员重置)
+        value: '0'
+    description: 
+groups:
+  profile_password_policy: 密码策略
+listviews:
+  all:
+    label: 全部
+  permission_set:
+    label: 权限集
+  profile:
+    label: 简档
+actions:
+  customize:
+    label: 自定义
+CustomLabels:
+  permission_set_admin: 管理员
+  permission_set_user: 用户
+  permission_set_supplier: 供应商
+  permission_set_customer: 客户
+  permission_set_field_license_options_platform: 华炎魔方
+  permission_set_field_license_options_community: 华炎社区
+  permission_set_field_password_history_options: 记住 %s 个密码

@@ -1,11 +1,12 @@
 {
   "name": "@steedos/meteor-bundle-runner",
-  "version": "1.23.0-alpha.8",
+  "version": "1.23.0-alpha.14",
   "description": "Run meteor bundles and inject your own nodejs code.",
   "main": "index.js",
   "private": false,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/meteor-bundle-runner"
   },
   "keywords": [
     "meteor"
@@ -16,6 +17,7 @@
     "fibers": "4.0.3",
     "meteor-promise": "0.8.5",
     "node-pre-gyp": "0.6.34",
+    "open": "^7.3.0",
     "promise": "8.0.1",
     "semver": "5.3.0",
     "source-map-support": "^0.5.10",

@@ -1,0 +1,61 @@
+name: audit_login
+label: 登录日志
+description: 
+fields:
+  username:
+    label: 用户名
+    help: 
+    description: 
+  login_time:
+    label: 登录时间
+    help: 
+    description: 
+  source_ip:
+    label: IP地址
+    help: 
+    description: 
+  location:
+    label: 位置
+    help: 
+    description: 
+  login_type:
+    label: 登录方式
+    help: 
+    description: 
+  status:
+    label: 状态
+    help: 
+    description: 
+  browser:
+    label: 浏览器
+    help: 
+    description: 
+  platform:
+    label: 系统
+    help: 
+    description: 
+  application:
+    label: 应用
+    help: 
+    description: 
+  client_version:
+    label: 客户端版本
+    help: 
+    description: 
+  api_type:
+    label: API类型
+    help: 
+    description: 
+  api_version:
+    label: API版本
+    help: 
+    description: 
+  login_url:
+    label: 登录URL
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部
+  recent:
+    label: 最近查看

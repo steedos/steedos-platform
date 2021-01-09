@@ -112,7 +112,39 @@ export const loadI18n = (filePath: string)=>{
         let json = loadFile(matchedPath);
         let lng = getI18nLng(matchedPath);
         if(lng){
-            results.push({lng: lng, data: json})
+            results.push({lng: lng, __filename: matchedPath, data: json})
+        }
+    })
+    return results
+}
+
+export const loadObjectTranslations = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.objectTranslation.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let lng = getI18nLng(matchedPath);
+        if(lng){
+            results.push({lng: lng, __filename: matchedPath, data: json})
+        }
+    })
+    return results
+}
+
+export const loadTranslations = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.translation.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let lng = getI18nLng(matchedPath);
+        if(lng){
+            results.push({lng: lng, __filename: matchedPath, data: json})
         }
     })
     return results

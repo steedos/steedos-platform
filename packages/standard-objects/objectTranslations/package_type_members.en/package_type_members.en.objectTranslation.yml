@@ -1,0 +1,65 @@
+name: package_type_members
+label: Package Component
+description: 
+fields:
+  member:
+    label: Component
+    help: 
+    description: 
+  name:
+    label: Name
+    help: 
+    description: 
+  owner:
+    label: Owner
+    help: 
+    description: 
+  package:
+    label: Package Name
+    help: 
+    description: 
+  parent:
+    label: Parent Object
+    help: 
+    description: 
+  type:
+    label: Component Type
+    help: 
+    options:
+      - label: Custom Action
+        value: CustomAction
+      - label: Custom Application
+        value: CustomApplication
+      - label: Custom Field
+        value: CustomField
+      - label: Custom Listview
+        value: CustomListview
+      - label: Custom Object
+        value: CustomObject
+      - label: Object Permission
+        value: CustomPermission
+      - label: Permissionset
+        value: CustomPermissionset
+      - label: Profile
+        value: CustomProfile
+      - label: Report
+        value: CustomReport
+      - label: Validation Rule
+        value: CustomValidationRule
+      - label: Layout
+        value: Layout
+    description: 
+  _relatedFrom:
+    label: 
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+  recent:
+    label: Recent
+actions:
+  standard_delete:
+    label: Delete
+  standard_edit:
+    label: Edit

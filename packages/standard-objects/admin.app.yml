@@ -193,7 +193,7 @@ admin_menus:
   #     - admin
   #   sort: 900
   - _id: license_view
-    name: License View
+    name: License
     permission_sets:
       - admin
     sort: 10000
@@ -206,6 +206,13 @@ admin_menus:
     object_name: business_hours
     parent: advanced
     sort: 100
+  - _id: queue_import
+    name: Import Data
+    permission_sets:
+      - admin
+    object_name: queue_import
+    parent: advanced
+    sort: 200
   - _id: about
     name: About Steedos
     permission_sets:
@@ -239,4 +246,10 @@ admin_menus:
     permission_sets:
       - admin
     object_name: action_field_updates
+    parent: workflow_actions
+  - _id: workflow_notifications
+    name: Workflow Notifications
+    permission_sets:
+      - admin
+    object_name: workflow_notifications
     parent: workflow_actions

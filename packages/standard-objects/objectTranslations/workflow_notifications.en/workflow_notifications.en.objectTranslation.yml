@@ -1,0 +1,34 @@
+name: workflow_notifications
+label: Workflow Notifications
+description:
+fields:
+  object_name:
+    label: Object Name
+    help:
+    description:
+  name:
+    label:
+    help:
+    description:
+  title:
+    label: Title Formula
+    help:
+    description:
+  body:
+    label: Body Formula
+    help:
+    description:
+  assigned_users:
+    label:
+    help:
+    description:
+  assigned_user_field:
+    label:
+    help:
+    description:
+groups:
+  select_assigned_user: Select Assigned User
+listviews:
+  all:
+    label: All
+CustomLabels:

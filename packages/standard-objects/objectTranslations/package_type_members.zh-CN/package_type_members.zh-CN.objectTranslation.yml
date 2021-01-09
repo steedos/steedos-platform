@@ -1,0 +1,65 @@
+name: package_type_members
+label: 软件包组件
+description: 
+fields:
+  member:
+    label: 组件
+    help: 
+    description: 
+  name:
+    label: 名称
+    help: 
+    description: 
+  owner:
+    label: 所有者
+    help: 
+    description: 
+  package:
+    label: 软件包名称
+    help: 
+    description: 
+  parent:
+    label: 父对象
+    help: 
+    description: 
+  type:
+    label: 类型
+    help: 
+    options:
+      - label: 自定义按钮
+        value: CustomAction
+      - label: 自定义应用
+        value: CustomApplication
+      - label: 自定义字段
+        value: CustomField
+      - label: 列表视图
+        value: CustomListview
+      - label: 自定义对象
+        value: CustomObject
+      - label: 对象权限
+        value: CustomPermission
+      - label: 权限集
+        value: CustomPermissionset
+      - label: 简档
+        value: CustomProfile
+      - label: 报表
+        value: CustomReport
+      - label: 验证规则
+        value: CustomValidationRule
+      - label: 页面布局
+        value: Layout
+    description: 
+  _relatedFrom:
+    label: 
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+  recent:
+    label: 最近查看
+actions:
+  standard_delete:
+    label: 删除
+  standard_edit:
+    label: 编辑

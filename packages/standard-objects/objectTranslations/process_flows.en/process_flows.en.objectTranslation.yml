@@ -1,0 +1,41 @@
+name: process_flows
+label: process_flows
+description: 
+fields:
+  name:
+    label: 
+    help: 
+    description: 
+  object_name:
+    label: 
+    help: 
+    description: 
+  when:
+    label: The process starts when
+    help: 
+    options:
+      - label: record_changes
+        value: record_changes
+    description: 
+  start:
+    label: 
+    help: 
+    options:
+      - label: only when a record is created
+        value: create
+      - label: when a record is created or edited
+        value: changes
+    description: 
+  enable_recursion_check:
+    label: >-
+      Recursion - Allow process to evaluate a record multiple times in a single
+      save operation?
+    help: 
+    description: 
+  description:
+    label: description
+    help: 
+    description: 
+listviews:
+  all:
+    label: All

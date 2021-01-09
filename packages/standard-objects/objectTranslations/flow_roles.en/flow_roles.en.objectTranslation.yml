@@ -1,0 +1,11 @@
+name: flow_roles
+label: Workflow Role
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Workflow Roles

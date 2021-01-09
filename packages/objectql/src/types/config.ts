@@ -2,7 +2,8 @@ import path = require('path')
 import _ = require('lodash')
 import {loadJsonFiles} from '../util'
 import { addAppConfigFiles } from './app';
-import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectI18nFiles, addObjectDataFiles, addRouterFiles } from '.';
+import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectDataFiles, addRouterFiles } from '.';
+import { addTranslationsFiles, addObjectTranslationsFiles } from '../dynamic-load'
 
 export const LOADED_OBJECT_RECORDS = {}
 
@@ -99,7 +100,9 @@ export const addAllConfigFiles = (filePath, datasource) => {
     addAppConfigFiles(filePath);
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
-    addObjectI18nFiles(filePath);
+    // addObjectI18nFiles(filePath);
+    addTranslationsFiles(filePath);
+    addObjectTranslationsFiles(filePath);
     addRouterFiles(filePath);
     // addConfigDataFiles(filePath);
     addConfigFiles('report', filePath);

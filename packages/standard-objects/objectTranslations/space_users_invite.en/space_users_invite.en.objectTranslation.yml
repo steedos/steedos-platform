@@ -1,0 +1,12 @@
+name: space_users_invite
+label: 
+description: 
+fields:
+  valid:
+    label: 
+    help: 
+    description: 
+  invited_users:
+    label: Invited users
+    help: 
+    description: 

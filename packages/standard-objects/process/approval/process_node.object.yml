@@ -143,11 +143,49 @@ fields:
         }
       }
     group: Approval Actions
+  approval_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
+    depend_on:
+      - process_definition
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.process_definition){
+          var pid = dependValues.process_definition;
+          if(_.isObject(pid)){
+            pid = pid._id;
+          }
+          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
+          return "object_name eq '" + object_name + "'";
+        }
+      }
+    group: Approval Actions
   rejection_updates_field_actions:
     type: lookup
     multiple: true
     label: Field Update
     reference_to: action_field_updates
+    depend_on:
+      - process_definition
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.process_definition){
+          var pid = dependValues.process_definition;
+          if(_.isObject(pid)){
+            pid = pid._id;
+          }
+          var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
+          return "object_name eq '" + object_name + "'";
+        }
+      }
+    group: Rejection Actions
+  rejection_workflow_notifications_actions:
+    type: lookup
+    multiple: true
+    label: Workflow Notification
+    reference_to: workflow_notifications
     depend_on:
       - process_definition
     filtersFunction: !!js/function |

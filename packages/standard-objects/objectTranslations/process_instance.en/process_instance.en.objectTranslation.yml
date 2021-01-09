@@ -1,0 +1,63 @@
+name: process_instance
+label: process_instance
+description: 
+fields:
+  name:
+    label: 
+    help: 
+    description: 
+  process_definition:
+    label: 
+    help: 
+    description: 
+  target_object:
+    label: 
+    help: 
+    description: 
+  status:
+    label: 
+    help: 
+    options:
+      - label: approved
+        value: approved
+      - label: fault
+        value: fault
+      - label: held
+        value: held
+      - label: no_response
+        value: no_response
+      - label: pending
+        value: pending
+      - label: reassigned
+        value: reassigned
+      - label: rejected
+        value: rejected
+      - label: removed
+        value: removed
+      - label: started
+        value: started
+    description: 
+  completed_date:
+    label: Completed Date
+    help: 
+    description: 
+  last_actor:
+    label: 
+    help: 
+    description: 
+  submitted_by:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_days:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_hours:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_minutes:
+    label: 
+    help: 
+    description: 

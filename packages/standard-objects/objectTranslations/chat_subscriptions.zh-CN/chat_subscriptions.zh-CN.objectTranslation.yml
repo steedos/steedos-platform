@@ -1,0 +1,27 @@
+name: chat_subscriptions
+label: 订阅
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  related_to:
+    label: 相关
+    help: 
+    description: 
+  last_message_text:
+    label: 最新消息预览(文本)
+    help: 
+    description: 
+  last_message_date:
+    label: 最新消息发送时间
+    help: 
+    description: 
+  unread:
+    label: 未读数
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有

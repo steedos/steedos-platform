@@ -1,0 +1,27 @@
+name: chat_subscriptions
+label: Chat Subscription
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  related_to:
+    label: Related Object Record
+    help: 
+    description: 
+  last_message_text:
+    label: Last Message
+    help: 
+    description: 
+  last_message_date:
+    label: Send Time of Last Message
+    help: 
+    description: 
+  unread:
+    label: Number of Unread Messages
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
