@@ -83,9 +83,10 @@ fields:
   todo:
     label: Execute Script
     type: textarea
-    required: false
-    omit: true
-    hidden: true
+    required: true
+    rows: 6
+    # omit: true
+    # hidden: true
     is_wide: true
 paging:
   enabled: false
