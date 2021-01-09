@@ -34,6 +34,7 @@ CustomLabels:
   menu_license: 许可
   menu_license_view: 许可证
   menu_business_hours: 工作时间
+  menu_queue_import: 数据导入
   menu_process_automation: 流程自动化
   menu_workflow_rules: 工作流规则
   menu_workflow_actions: 工作流操作

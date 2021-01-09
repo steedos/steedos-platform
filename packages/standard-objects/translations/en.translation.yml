@@ -37,6 +37,7 @@ CustomLabels:
   menu_license: 
   menu_license_view: 
   menu_business_hours: 
+  menu_queue_import: 
   menu_process_automation: 
   menu_workflow_rules: 
   menu_workflow_actions: 
