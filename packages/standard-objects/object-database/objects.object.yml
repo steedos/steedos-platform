@@ -229,6 +229,60 @@ fields:
     omit: true
     disabled: true
     readonly: true
+  created_by:
+    label: Created by
+  modified_by:
+    label: Modified by
+  form:
+    type: object
+    label: Form Events
+    blackbox: true
+    is_wide: true
+  form.initialValues:
+    type: code
+    is_wide: true
+  form.validate:
+    type: code
+    is_wide: true
+  form.beforeInsert:
+    type: code
+    is_wide: true
+  form.beforeUpdate:
+    type: code
+    is_wide: true
+  form.beforeDelete:
+    type: code
+    is_wide: true
+  form.afterInsert:
+    type: code
+    is_wide: true
+  form.afterUpdate:
+    type: code
+    is_wide: true
+  form.afterDelete:
+    type: code
+    is_wide: true
+  form.errorInsert:
+    type: code
+    is_wide: true
+  form.errorUpdate:
+    type: code
+    is_wide: true
+  form.errorDelete:
+    type: code
+    is_wide: true
+  form.beforeView:
+    type: code
+    is_wide: true
+  form.afterView:
+    type: code
+    is_wide: true
+  form.beforeEdit:
+    type: code
+    is_wide: true
+  form.afterEdit:
+    type: code
+    is_wide: true
 paging:
   enabled: false
 relatedList:
