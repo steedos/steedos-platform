@@ -1,9 +1,13 @@
-const i18next = require("i18next");
+let i18next = require("i18next");
 const sprintf  = require("i18next-sprintf-postprocessor");
 const _ = require("underscore");
 // const XHR = require('i18next-xhr-backend');
 
 const loadResources = {};
+
+if(!i18next.use){
+    i18next = i18next.default
+}
 
 i18next.use(sprintf).init({
     lng: 'en',
