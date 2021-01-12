@@ -27,23 +27,23 @@ fields:
     help: 
     description: 
   organizations:
-    label: All Departments
+    label: Departments
     help: 
     description: 
   organizations_parents:
-    label: All Departments and Superiors
+    label: Department Parent Tree
     help: 
     description: 
   organization:
-    label: Main Department
+    label: Primary Department
     help: 
     description: 
   company_ids:
-    label: All Divisions
+    label: Divisions
     help: 
     description: 
   company_id:
-    label: Main Division
+    label: Primary Division
     help: 
     description: 
   position:

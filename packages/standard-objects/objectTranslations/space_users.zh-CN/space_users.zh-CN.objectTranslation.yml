@@ -27,11 +27,11 @@ fields:
     help: 
     description: 
   organizations:
-    label: 所属部门
+    label: 部门(多选)
     help: 
     description: 
   organizations_parents:
-    label: 所属部门（含上级）
+    label: 部门(含上级)
     help: 
     description: 
   organization:
@@ -39,7 +39,7 @@ fields:
     help: 
     description: 
   company_ids:
-    label: 所属分部
+    label: 分部(多选)
     help: 
     description: 
   company_id:
