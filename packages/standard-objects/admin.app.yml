@@ -16,7 +16,7 @@ admin_menus:
     mobile: false
     sort: 100
   - _id: account_profile
-    name: My Profile
+    name: Profile
     permission_sets:
       - user
       - customer
