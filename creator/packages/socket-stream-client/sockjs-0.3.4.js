@@ -822,7 +822,11 @@ AbstractXHRObject.prototype._start = function(method, url, payload, opts) {
     }
 
     let urlParams = new URLSearchParams(window.location.search);
-    let x_user_id = Meteor.userId() || localStorage.getItem("accounts:userId") || urlParams.get('X-User-Id');
+    let meteorUserId = '';
+    if(Meteor && Meteor.userId){
+        meteorUserId = Meteor.userId();
+    }
+    let x_user_id = meteorUserId || localStorage.getItem("accounts:userId") || urlParams.get('X-User-Id');
     that.xhr.setRequestHeader('x-user-id', x_user_id);
 
     that.xhr.onreadystatechange = function() {
