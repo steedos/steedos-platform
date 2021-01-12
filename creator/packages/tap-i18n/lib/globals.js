@@ -13,8 +13,8 @@
 
 TAPi18n = {};
 
-TAPi18n.__ = function(a,b,c,d){
-	console.log('TAPi18n.__', a,b,c,d);
+TAPi18n.__ = function(a){
+	return a;
 };
 
 TAPi18n.setLanguage = function(lng){
