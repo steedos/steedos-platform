@@ -30,7 +30,7 @@ CustomLabels:
   menu_web_forms: 
   menu_about: 
   menu_object_manager: 
-  menu_datasources_manager: 
+  menu_datasources_manager: External Data Sources
   menu_company: 
   menu_advanced: 
   menu_holidays: 
@@ -43,7 +43,7 @@ CustomLabels:
   menu_workflow_actions: 
   menu_field_updates: 
   menu_object_validation_rules: 
-  menu_api_keys: API key
+  menu_api_keys: API Key
   menu_app_manager: App Manager
   menu_packaging: Packaging
   menu_package_manager: Package Manager

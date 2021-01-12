@@ -32,7 +32,7 @@ admin_menus:
   #   parent: account
   #   sort: 20
   - _id: menu_users
-    name: My Company
+    name: Company Settings
     permission_sets:
       - admin
       - organization_admin
@@ -99,7 +99,7 @@ admin_menus:
     parent: objects_manager
     sort: 1
   - _id: datasources_manager
-    name: Datasources
+    name: External Data Sources
     permission_sets:
       - admin
     object_name: datasources

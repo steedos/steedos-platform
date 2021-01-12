@@ -41,7 +41,7 @@ CustomLabels:
   menu_field_updates: 字段更新
   menu_workflow_notifications: 工作流通知
   menu_object_validation_rules: 对象验证规则
-  menu_api_keys: API key
+  menu_api_keys: API Key
   menu_app_manager: 应用程序管理器
   menu_packaging: 软件包
   menu_package_manager: 软件包管理器

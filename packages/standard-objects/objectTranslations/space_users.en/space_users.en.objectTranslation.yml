@@ -63,11 +63,11 @@ fields:
     help: 
     description: 
   is_supplier:
-    label: Supplier
+    label: Is Supplier
     help: 
     description: 
   is_customer:
-    label: Customer
+    label: Is Customer
     help: 
     description: 
   work_phone:

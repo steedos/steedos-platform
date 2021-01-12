@@ -7,7 +7,7 @@ fields:
     help: 
     description: 
   code:
-    label: Code (API Name)
+    label: API Name)
     help: 
     description: 
   icon_slds:

@@ -75,7 +75,7 @@ admin_menus:
     object_name: process_delegation_rules
     parent: account
   - _id: object_workflows
-    name: 对象与流程映射关系
+    name: Object Synchronization Rule
     permission_sets:
       - admin
     object_name: object_workflows

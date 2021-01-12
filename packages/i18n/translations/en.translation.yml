@@ -150,11 +150,10 @@ CustomLabels:
   steedos_quick_guide: Quick Guide
   steedos_help: Help
   steedos_home: Home
-  steedos_apps: Steedos Apps
+  steedos_apps: Steedos Platform
   steedos_about: About
   steedos_info: >-
-    Steedos Apps is a cloud-based productivity suite that helps you and your
-    team connect and get work done from anywhere on any device.
+    Steedos Platform is an open source low code development platform. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
   steedos_version: Version
   steedos_commit_date: Commit Date
   steedos_build_date: Build Date
@@ -281,7 +280,7 @@ CustomLabels:
   username-minrequiredlength: The username minimum length can not be less than 6 digits
   afModal_insert: Save
   afModal_update: Save
-  afModal_save_insert: Save And Insert
+  afModal_save_insert: Save & New
   afModal_multiple_update: Update %d selected records
   afModal_remove: Delete
   afModal_remove_confirm: Are you sure you want to delete this data?
@@ -850,7 +849,7 @@ CustomLabels:
   apps_desktop: Show on desktop
   apps_menu: Show on left menu
   apps_sort_no: Sort No.
-  apps_secret: API key
+  apps_secret: API Key
   apps_internal: Internal
   apps_sort: Sort
   apps_id: ID

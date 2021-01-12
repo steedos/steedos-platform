@@ -63,11 +63,11 @@ fields:
     help: 
     description: 
   is_supplier:
-    label: 供应商
+    label: 是供应商
     help: 
     description: 
   is_customer:
-    label: 客户
+    label: 是客户
     help: 
     description: 
   work_phone:
