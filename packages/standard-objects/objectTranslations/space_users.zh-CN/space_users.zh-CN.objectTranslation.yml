@@ -1,5 +1,5 @@
 name: space_users
-label: 工作区人员
+label: 人员
 description: 
 fields:
   name:
@@ -127,13 +127,13 @@ groups:
   '-': '-'
 listviews:
   all:
-    label: 有效用户
+    label: 有效人员
   disabled:
     label: 离职停用人员
   supplier:
-    label: 供应商用户
+    label: 供应商人员
   customer:
-    label: 客户用户
+    label: 客户人员
 actions:
   invite_space_users:
     label: 邀请注册

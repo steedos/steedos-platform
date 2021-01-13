@@ -131,9 +131,9 @@ listviews:
   disabled:
     label: Invalid Users
   supplier:
-    label: 供应商用户
+    label: Supplier Users
   customer:
-    label: 客户用户
+    label: Customer Users
 actions:
   invite_space_users:
     label: Invite Users
