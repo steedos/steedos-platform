@@ -32,6 +32,7 @@ Meteor.startup ->
 					_key = listview._id
 #				if listview.is_default
 #					_key = "all"
+				_list_view.label = TAPi18n.__(["CustomListview.#{Session.get('object_name')}.#{_key}", _list_view.label]);
 				list_views[_key] = _list_view
 				list_views_byname[_key] = _list_view
 
