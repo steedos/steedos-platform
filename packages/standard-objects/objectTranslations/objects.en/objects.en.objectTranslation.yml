@@ -185,6 +185,7 @@ fields:
 groups:
   external_data_source: External data source
   switch: Switch
+  script: Script
 listviews:
   all:
     label: All

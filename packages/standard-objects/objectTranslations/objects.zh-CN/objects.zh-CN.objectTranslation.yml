@@ -182,6 +182,7 @@ fields:
 groups:
   external_data_source: 外部数据源
   switch: 功能开关
+  script: 脚本
 listviews:
   all:
     label: 全部

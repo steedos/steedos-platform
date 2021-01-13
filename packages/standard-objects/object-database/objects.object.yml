@@ -236,6 +236,7 @@ fields:
   form:
     type: object
     label: Form Events
+    group: script
     blackbox: true
     is_wide: true
   form.initialValues:
