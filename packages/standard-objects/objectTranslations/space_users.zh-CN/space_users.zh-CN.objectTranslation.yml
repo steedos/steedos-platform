@@ -1,5 +1,5 @@
 name: space_users
-label: 人员
+label: 工作区人员
 description: 
 fields:
   name:
