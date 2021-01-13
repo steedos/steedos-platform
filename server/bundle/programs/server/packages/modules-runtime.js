@@ -512,28 +512,28 @@ makeInstaller = function (options) {
       if (seenDirFiles.indexOf(file) < 0) {
         seenDirFiles.push(file);
 
-        var pkgJsonFile = fileAppendIdPart(file, "package.json"), main;
+        var pkgJsonFile = fileAppendIdPart(file, "package.json");
         var pkg = pkgJsonFile && fileEvaluate(pkgJsonFile, parentModule);
-        if (pkg &&
-            mainFields.some(function (name) {
-              return isString(main = pkg[name]);
-            })) {
-          // The "main" field of package.json does not have to begin with
-          // ./ to be considered relative, so first we try simply
-          // appending it to the directory path before falling back to a
-          // full fileResolve, which might return a package from a
-          // node_modules directory.
-          var mainFile = fileAppendId(file, main, extensions) ||
-            fileResolve(file, main, parentModule, seenDirFiles);
-
-          if (mainFile) {
-            file = mainFile;
-            recordChild(parentModule, pkgJsonFile);
-            // The fileAppendId call above may have returned a directory,
-            // so continue the loop to make sure we resolve it to a
-            // non-directory file.
-            continue;
+        var mainFile, resolved = pkg && mainFields.some(function (name) {
+          var main = pkg[name];
+          if (isString(main)) {
+            // The "main" field of package.json does not have to begin
+            // with ./ to be considered relative, so first we try
+            // simply appending it to the directory path before
+            // falling back to a full fileResolve, which might return
+            // a package from a node_modules directory.
+            return mainFile = fileAppendId(file, main, extensions) ||
+              fileResolve(file, main, parentModule, seenDirFiles);
           }
+        });
+
+        if (resolved && mainFile) {
+          file = mainFile;
+          recordChild(parentModule, pkgJsonFile);
+          // The fileAppendId call above may have returned a directory,
+          // so continue the loop to make sure we resolve it to a
+          // non-directory file.
+          continue;
         }
       }
 
