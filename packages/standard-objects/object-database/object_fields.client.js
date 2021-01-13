@@ -113,7 +113,9 @@ Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
   if(_.isObject(objectName)){
     objectName = objectName.name
   }
-  if(Creator.getObject(objectName).database_name){
+  var _object = Creator.getObject(objectName);
+  // 外部数据源对象必须启用后，才可正常显示对象字段属性
+  if(_object && _object.database_name){
     showFields.push({"name":"column_name"})
     showFields.push({"name":"primary"})
     showFields.push({"name":"generated"})
