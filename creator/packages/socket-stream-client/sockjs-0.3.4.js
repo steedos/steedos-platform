@@ -1281,7 +1281,11 @@ var WebSocketTransport = SockJS.websocket = function(ri, trans_url) {
     var Constructor = _window.WebSocket || _window.MozWebSocket;
 
     let urlParams = new URLSearchParams(window.location.search);
-    let x_user_id = Meteor.userId() || localStorage.getItem("accounts:userId") || urlParams.get('X-User-Id');
+    let meteorUserId = "";
+    if(Meteor && Meteor.userId){
+        meteorUserId = Meteor.userId();
+    }
+    let x_user_id = meteorUserId || localStorage.getItem("accounts:userId") || urlParams.get('X-User-Id');
     that.ws = new Constructor(that.url + `?x_user_id=${x_user_id}`);
     that.ws.onmessage = function(e) {
         that.ri._didMessage(e.data);
