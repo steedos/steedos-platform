@@ -3348,23 +3348,23 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
-"@steedos/license@^1.22.4":
-  version "1.22.4"
-  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-1.22.4.tgz#416699c760ab5ac4263334525a83bf3e6c32433d"
-  integrity sha512-WUAbXhzl3zfFJ42wbjZqeop2XCe3Fhck1/hvSGfcsMOiseSgn4+Zn+wx3E8AxzxErSQpJ0uc77hwzJ2rNA4mLQ==
+"@steedos/license@^1.22.6":
+  version "1.22.6"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-1.22.6.tgz#c2801d37f86461aa73d56880c7e72965968a4a5b"
+  integrity sha512-2inizziFbFvoire8cfSMBk7szk43p6xJVlbunyiHAQ0nVr8zXHxv8rfQVeU/eFSEeULhEn7oT9wgKxi01MeuAw==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
     node-fetch "^2.6.0"
-    systeminformation "^4.26.10"
+    systeminformation "^4.34.5"
 
-"@steedos/metadata-api@^1.23.0-alpha.15":
-  version "1.23.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/@steedos/metadata-api/-/metadata-api-1.23.0-alpha.15.tgz#e8ff0b90179ac2657b929d16030808bfaee45626"
-  integrity sha512-uTUqt0c0mrpAr3ZRt+r209sVu6kHgu5tsNMlHoYr3lz7FMLHhJD0xZkkRKp5/VybPswbG069McxQxmHfnfVabQ==
+"@steedos/metadata-api@^1.23.0-alpha.17":
+  version "1.23.0-alpha.17"
+  resolved "https://registry.yarnpkg.com/@steedos/metadata-api/-/metadata-api-1.23.0-alpha.17.tgz#172d3f6dd79a7f9a40943d63e2d174acdb09e5fa"
+  integrity sha512-jg2VtEjyU8AI6foC0iS/bGuQ1DDnim2J7B2YhLrkYp62E0U41IHymr7Pfw56tSJK0mEM3O0tsSyAzc23nw7lBw==
   dependencies:
     "@salesforce/dev-config" "^2.0.0"
-    "@steedos/metadata-core" "^1.23.0-alpha.15"
+    "@steedos/metadata-core" "^1.23.0-alpha.17"
     chalk "^4.1.0"
     compressing "^1.5.1"
     dotenv-flow "^3.1.0"
@@ -3374,12 +3374,12 @@
     node-fetch "^2.6.1"
     underscore "^1.11.0"
 
-"@steedos/metadata-core@^1.23.0-alpha.15":
-  version "1.23.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/@steedos/metadata-core/-/metadata-core-1.23.0-alpha.15.tgz#fdb5250024c7b93d89417e0deaaaf9c14317a55c"
-  integrity sha512-FtJhxcR9+TwOHwoLvB5pdtIdjao4XHB+3mmIT8NDw00gUUr5Xl/Gp7My7sR1X33gDcbLcEcG43w2l06cZ6ylYQ==
+"@steedos/metadata-core@^1.23.0-alpha.17":
+  version "1.23.0-alpha.17"
+  resolved "https://registry.yarnpkg.com/@steedos/metadata-core/-/metadata-core-1.23.0-alpha.17.tgz#087999e2384758e08bf22dd83f05591e90c8b1df"
+  integrity sha512-pOEmLNiUbBNWltgMAkKi5u5MMit5MLvoY0JDuF9WLR9JLNiYfBkeo6iKVuALsDYdZ7d5/gg0+7fwq6IcDXjvPw==
   dependencies:
-    "@steedos/client" "^1.23.0-alpha.15"
+    "@steedos/client" "^1.23.0-alpha.17"
     archiver "^5.1.0"
     chalk "^4.1.0"
     clone "^2.1.2"
@@ -3428,10 +3428,10 @@
     express "^4.17.1"
     underscore "^1.9.1"
 
-"@steedos/word-template@^1.23.0-alpha.11":
-  version "1.23.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@steedos/word-template/-/word-template-1.23.0-alpha.11.tgz#60f22d865cdf5dc5fa8503ed948373a5e0a73107"
-  integrity sha512-jmW66Zypnat6709oD0KkUVOYJzwuQk3HRhO0/9/xZTvxNEUBblZsPeMloB0pArlNIYT48nPMtZcXzUqQTl/kqA==
+"@steedos/word-template@^1.23.0-alpha.16":
+  version "1.23.0-alpha.17"
+  resolved "https://registry.yarnpkg.com/@steedos/word-template/-/word-template-1.23.0-alpha.17.tgz#43290de03ff121e0d9dd5e2614414fb7da77f4c5"
+  integrity sha512-vJq1uJIvhhO4HZCYZoz/p/qbtyySEMRo74M7KGjWSMO/3z4/ul6ULdjd1bBSkqy9qrbMI/6ELq8Uj8qUMVlClQ==
   dependencies:
     docxtemplater "^3.19.7"
     dotenv-flow "^3.2.0"
@@ -21328,10 +21328,10 @@ syntax-error@^1.1.6:
   dependencies:
     acorn-node "^1.2.0"
 
-systeminformation@^4.26.10:
-  version "4.27.9"
-  resolved "https://registry.npm.taobao.org/systeminformation/download/systeminformation-4.27.9.tgz?cache=0&sync_timestamp=1602594720432&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsysteminformation%2Fdownload%2Fsysteminformation-4.27.9.tgz#9f09a79d96f262e62a26eaf4a1c44e5ed13ce327"
-  integrity sha1-nwmnnZbyYuYqJur0ocROXtE84yc=
+systeminformation@^4.34.5:
+  version "4.34.7"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.34.7.tgz#8b4a00c44781349905881c95dded8bafe7aae47f"
+  integrity sha512-cS3FiSZasFgVNjO9CP3aZmTO2VHwXKG+JN6Z85nWRyOzxRMNbZe7Xzwrewp42hj+OPMC3hk7MrAFyu/qLM65Mw==
 
 table@^5.2.3:
   version "5.4.6"
