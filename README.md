@@ -121,7 +121,9 @@ my-app
 ```
 
 
-### Object Field Metadata Excample
+### Metadata Example
+
+Steedos use the following yml file to describe an object field.
 
 ```yml
 name: rating
@@ -135,7 +137,7 @@ options:
     value: warm
   - label: Cold
     value: cold
-inlineHelpText: How do you classify this customer level, for example, ordinary, important.
+inlineHelpText: How do you classify this customer level, for example, hot, warn or cold.
 sort_no: 270
 ```
 
@@ -150,6 +152,18 @@ To make this possible, we're enabling you to export your metadata, define data i
 ![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
+
+## Awesome Steedos Apps
+
+💻 🎉 An awesome & curated list of best applications powered by Steedos Platform.
+
+- [PM (Project Management)](https://github.com/steedos/project-management-app): Track and manage your projects, milestones, tasks, blocked tasks, overdue tasks, time, expense budgets, and has detailed reporting capabilities.
+- [CRM (Customer Relationship Management)](https://github.com/steedos/steedos-app-crm): Salesforce alternative, provides everything you need to manage your business. Generate the best leads, manage opportunities through the sales pipleline, and cultivate relationships with exisiting accounts. Plus, forecast revenues, set up sales territories, and organize your reps into selling teams.
+- [OKR (Objectives and Key Results)](https://github.com/steedos/okr-management-app): Objectives and Key Results (OKR) is a critical thinking framework and goal setting methodology that helps companies to align goals and ensure everyone is working collaboratively on goals that really matter.
+- [B2B Commerce](https://github.com/steedos/b2b-commerce): Design, build, and launch a business-to-business (B2B) commerce solution that enables retailers, wholesalers, or distributors to purchase goods or services from your brand. Powered by Steedos and Next.js Commerce.
+- [Contract Management](https://github.com/steedos/steedos-app-contract): Paper contracts are old school. With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
+
+[Find more](https://github.com/steedos/awesome-steedos-apps)
 
 ## Steedos Docs
 
