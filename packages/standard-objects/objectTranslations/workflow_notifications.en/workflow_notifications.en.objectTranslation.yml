@@ -2,12 +2,16 @@ name: workflow_notifications
 label: Workflow Notifications
 description:
 fields:
+  name:
+    label: API Name
+    help: 
+    description: 
+  label:
+    label: 
+    help: 
+    description: 
   object_name:
     label: Object Name
-    help:
-    description:
-  name:
-    label:
     help:
     description:
   title:
