@@ -7,3 +7,6 @@ admin_menus:
     parent: account
     permission_sets:
       - user
+      - customer
+      - supplier
+      - none

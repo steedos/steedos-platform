@@ -7,11 +7,6 @@ module.exports = {
         const userSession = req.user;
         const spaceId = userSession.spaceId;
         const userId = userSession.userId;
-        const isSpaceAdmin = userSession.is_space_admin;
-
-        if(!isSpaceAdmin){
-            throw new objectql.SteedosError(500, 'No permission.');
-        }
 
         const record = await objectql.getObject('api_keys').insert({
             api_key: Random.secret(),
