@@ -32,6 +32,9 @@ Steedos.ProcessFieldUpdatesManager.changeSchema = function (doc, schema) {
       } else {
         object_name = AutoForm.getFormValues("creatorAddForm").insertDoc.object_name;
       }
+      if(!object_name){
+        toastr.error("请先选择该批准过程的“对象”然后再新建字段更新！");
+      }
     }else{
         // 当前正在新建或编辑批准过程以外其他对象，目前只有批准过程详细界面新建或编辑批准步骤
         if (actionOperation == 'update') {

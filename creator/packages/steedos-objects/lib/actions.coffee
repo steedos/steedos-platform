@@ -42,6 +42,7 @@ if Meteor.isClient
 			Modal.show("standard_query_modal")
 
 		"standard_new": (object_name, record_id, fields)->
+			Session.set 'action_object_name', object_name
 			ids = Creator.TabularSelectedIds[object_name]
 			if ids?.length
 				# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
