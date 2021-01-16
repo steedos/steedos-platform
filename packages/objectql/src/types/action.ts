@@ -2,6 +2,7 @@ import { SteedosObjectType } from "./object";
 import _ = require('underscore')
 
 export type SteedosActionTypeConfig = {
+    _id?: string,
     listenTo?: string | Function,
     name?: string
     label?: string,

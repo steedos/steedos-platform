@@ -78,8 +78,10 @@ export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
             object.listeners = {}
         }
         _.each(object.actions, function(action, key){
-            if(json[key]){
-                action.todo = json[key]
+            if(!_.has(action, '_id') || action._id === key || !action.todo){
+                if (json[key]) {
+                    action.todo = json[key];
+                }
             }
             if(json[`${key}Visible`]){
                 action.visible = json[`${key}Visible`]
