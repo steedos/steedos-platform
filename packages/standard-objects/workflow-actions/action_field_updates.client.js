@@ -16,6 +16,9 @@ Steedos.ProcessFieldUpdatesManager.changeSchema = function (doc, schema) {
     var processDefinitionId = Creator.odata.get("process_node", recordId, "process_definition").process_definition;
     var object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
     schema._schema.object_name.autoform.readonly = true;
+    // if(object_name){
+    //   toastr.error("==");
+    // }
     doc.object_name = object_name;
   }
 
@@ -34,7 +37,12 @@ Steedos.ProcessFieldUpdatesManager.changeSchema = function (doc, schema) {
           var processDefinitionId = AutoForm.getFormValues("creatorEditForm").insertDoc.process_definition;
           object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
         } else {
-          var processDefinitionId = AutoForm.getFormValues("creatorAddRelatedForm").insertDoc.process_definition;
+          var formValues = AutoForm.getFormValues("creatorAddRelatedForm");
+          if(!formValues){
+            // 有可能是在批准过程详细界面点击了批准步骤列表顶部的链接进入了“相关批准步骤列表界面”然后点击的右上角的新建按钮触发的
+            formValues = AutoForm.getFormValues("creatorAddForm");
+          }
+          var processDefinitionId = formValues.insertDoc.process_definition;
           object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
         }
     }
