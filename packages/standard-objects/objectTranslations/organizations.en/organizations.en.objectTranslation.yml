@@ -7,19 +7,19 @@ fields:
     help: 
     description: 
   fullname:
-    label: Fullname
+    label: Full Name
     help: 
     description: 
   parent:
-    label: Superior
+    label: Parent Department
     help: 
     description: 
   parents:
-    label: All Superiors
+    label: All Parents
     help: 
     description: 
   children:
-    label: Subordinates
+    label: Children
     help: 
     description: 
   sort_no:
@@ -27,7 +27,7 @@ fields:
     help: 
     description: 
   users:
-    label: Members
+    label: Department Users
     help: 
     description: 
   company_id:
@@ -39,7 +39,7 @@ fields:
     help: 
     description: 
   is_company:
-    label: Divisional
+    label: is Division
     help: 
     description: 
   hidden:

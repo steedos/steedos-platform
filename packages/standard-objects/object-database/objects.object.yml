@@ -229,6 +229,76 @@ fields:
     omit: true
     disabled: true
     readonly: true
+  created_by:
+    label: Created by
+  modified_by:
+    label: Modified by
+  form:
+    type: object
+    label: Form Events
+    group: script
+    blackbox: true
+    is_wide: true
+  form.initialValues:
+    type: code
+    rows: 3
+    is_wide: true
+  form.validate:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeInsert:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeUpdate:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeDelete:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterInsert:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterUpdate:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterDelete:
+    type: code
+    rows: 3
+    is_wide: true
+  form.errorInsert:
+    type: code
+    rows: 3
+    is_wide: true
+  form.errorUpdate:
+    type: code
+    rows: 3
+    is_wide: true
+  form.errorDelete:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeView:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterView:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeEdit:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterEdit:
+    type: code
+    rows: 3
+    is_wide: true
 paging:
   enabled: false
 relatedList:

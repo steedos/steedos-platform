@@ -2,13 +2,17 @@ name: workflow_notifications
 label: 工作流通知
 description:
 fields:
-  object_name:
-    label: 对象
-    help:
-    description:
   name:
     label: API 名称
     help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+    description:
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help:
     description:
   title:
     label: 标题公式

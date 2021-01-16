@@ -27,11 +27,11 @@ fields:
     help: 
     description: 
   organizations:
-    label: 所属部门
+    label: 部门(多选)
     help: 
     description: 
   organizations_parents:
-    label: 所属部门（含上级）
+    label: 部门(含上级)
     help: 
     description: 
   organization:
@@ -39,7 +39,7 @@ fields:
     help: 
     description: 
   company_ids:
-    label: 所属分部
+    label: 分部(多选)
     help: 
     description: 
   company_id:
@@ -63,11 +63,11 @@ fields:
     help: 
     description: 
   is_supplier:
-    label: 供应商
+    label: 是供应商
     help: 
     description: 
   is_customer:
-    label: 客户
+    label: 是客户
     help: 
     description: 
   work_phone:
@@ -127,13 +127,13 @@ groups:
   '-': '-'
 listviews:
   all:
-    label: 有效用户
+    label: 有效人员
   disabled:
     label: 离职停用人员
   supplier:
-    label: 供应商用户
+    label: 供应商人员
   customer:
-    label: 客户用户
+    label: 客户人员
 actions:
   invite_space_users:
     label: 邀请注册

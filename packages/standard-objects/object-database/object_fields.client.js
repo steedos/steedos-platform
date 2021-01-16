@@ -95,7 +95,12 @@ Meteor.startup(function(){
 
 Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
   var __lastDoc = Steedos.ObjectFieldManager.__lastDoc;
-  if(doc.type && __lastDoc && __lastDoc._id == doc._id && __lastDoc.type == doc.type && __lastDoc.data_type == doc.data_type){
+  var noChange = doc.type && __lastDoc && __lastDoc._id == doc._id && __lastDoc.type == doc.type && __lastDoc.data_type == doc.data_type;
+  if(noChange && doc.type == "summary" && __lastDoc.summary_type != doc.summary_type){
+    // 当字段类型为汇总时，汇总类型如果有变更，有可能“要聚合的字段”属性不一定必填，所以这里强制重新计算Schema
+    noChange = false;
+  }
+  if(noChange){
     return false;
   }else{
     Steedos.ObjectFieldManager.__lastDoc = doc;
@@ -113,7 +118,9 @@ Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
   if(_.isObject(objectName)){
     objectName = objectName.name
   }
-  if(Creator.getObject(objectName).database_name){
+  var _object = Creator.getObject(objectName);
+  // 外部数据源对象必须启用后，才可正常显示对象字段属性
+  if(_object && _object.database_name){
     showFields.push({"name":"column_name"})
     showFields.push({"name":"primary"})
     showFields.push({"name":"generated"})

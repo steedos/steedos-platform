@@ -16,7 +16,7 @@ admin_menus:
     mobile: false
     sort: 100
   - _id: account_profile
-    name: My Profile
+    name: Profile
     permission_sets:
       - user
       - customer
@@ -32,7 +32,7 @@ admin_menus:
   #   parent: account
   #   sort: 20
   - _id: menu_users
-    name: My Company
+    name: Company Settings
     permission_sets:
       - admin
       - organization_admin
@@ -47,7 +47,7 @@ admin_menus:
     parent: menu_users
     sort: 10
   - _id: organizations
-    name: Departments
+    name: Department
     permission_sets:
       - admin
       - organization_admin
@@ -78,6 +78,21 @@ admin_menus:
     list_view: profile
     parent: menu_users
     sort: 30
+  - _id: roles
+    name: Roles
+    permission_sets:
+      - admin
+    object_name: roles
+    parent: menu_users
+    sort: 40
+  - _id: flow_roles
+    name: Approval Roles
+    permission_sets:
+      - admin
+      - workflow_admin
+    object_name: flow_roles
+    parent: menu_users
+    sort: 50
   - _id: objects_manager
     name: Objects
     permission_sets:
@@ -99,7 +114,7 @@ admin_menus:
     parent: objects_manager
     sort: 1
   - _id: datasources_manager
-    name: Datasources
+    name: External Data Sources
     permission_sets:
       - admin
     object_name: datasources

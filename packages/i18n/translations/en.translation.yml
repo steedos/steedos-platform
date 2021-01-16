@@ -150,11 +150,10 @@ CustomLabels:
   steedos_quick_guide: Quick Guide
   steedos_help: Help
   steedos_home: Home
-  steedos_apps: Steedos Apps
+  steedos_apps: Steedos Platform
   steedos_about: About
   steedos_info: >-
-    Steedos Apps is a cloud-based productivity suite that helps you and your
-    team connect and get work done from anywhere on any device.
+    Steedos Platform is an open source low code development platform. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
   steedos_version: Version
   steedos_commit_date: Commit Date
   steedos_build_date: Build Date
@@ -281,7 +280,7 @@ CustomLabels:
   username-minrequiredlength: The username minimum length can not be less than 6 digits
   afModal_insert: Save
   afModal_update: Save
-  afModal_save_insert: Save And Insert
+  afModal_save_insert: Save & New
   afModal_multiple_update: Update %d selected records
   afModal_remove: Delete
   afModal_remove_confirm: Are you sure you want to delete this data?
@@ -331,14 +330,12 @@ CustomLabels:
   meteor_status_waiting: 'Waiting for server connection,'
   meteor_status_offline: Offline mode.
   meteor_status_reconnect_in: trying again in one second...
-  meteor_status_reconnect_in_plural: trying again in {$count} seconds...
+  meteor_status_reconnect_in_plural: "trying again in {$count} seconds..."
   meteor_status_try_now_waiting: Try now
   meteor_status_try_now_offline: Connect again
   btn_back_title: Back
   space_users_remove_mail_subject: Your account has been deleted from the workspace by the administrator
-  space_users_remove_mail_content: >-
-    Hello, <br/><br/>Your account "" has been removed from the workspace "" by
-    the administrator. <br/><br/>Thank you!
+  space_users_remove_mail_content: "Hello, <br/><br/>Your account \"{$steedos_id}\" has been removed from the workspace \"{$space_name}\" by the administrator. <br/><br/>Thank you!"
   steedos_i18n_404_not_found: The page you requested could not be found.
   Steedos Records: Full Text Search
   Client download: Download client
@@ -397,8 +394,8 @@ CustomLabels:
   pay_records: Pay Records
   workflow_designer_use_pc: Please user this function on pc
   customize_apps: Apps
-  space_users_error_roles_used: User has been used by roles：
-  space_users_error_flows_used: User has been used by flows：
+  space_users_error_roles_used: "User has been used by roles：{$names}"
+  space_users_error_flows_used: "User has been used by flows：{$names}"
   space_users_error_can_not_remove: Cannot delete user.
   contact_need_phone_or_email: You should fill in phone-number or email-address
   organizations_error_is_company_false_in_root: IsCompany property can't be false in the root organization
@@ -439,12 +436,8 @@ CustomLabels:
   creator_report_error_object_not_found: >-
     Object '%s' was not found. Make sure the object name specified in this
     report is correct.
-  creator_report_error_object_field_not_found: >-
-    Field '' for object '' was not found, please confirm that the field name
-    specified in this report is correct.
-  creator_report_error_max: >-
-    The statistics are up to  records and have exceeded the limit. The following
-    statistics are based on the previous  records.
+  creator_report_error_object_field_not_found: "Field '{$field_name}' for object '{$object_name}' was not found, please confirm that the field name specified in this report is correct."
+  creator_report_error_max: "The statistics are up to {$count} records and have exceeded the limit. The following statistics are based on the previous {$max} records."
   creator_report_error_tabular_miss_fields: A 'Rabular' type report requires at least a 'Columns' entry
   creator_report_error_summary_miss_fields: A 'Aummary' type report requires at least a 'Columns' entry
   creator_report_error_matrix_miss_fields: A 'Matrix' type report requires at least a 'Rows' or 'Columns' entry
@@ -476,16 +469,16 @@ CustomLabels:
   sms:
     remind:
       code: SMS_67200967
-      template: 催办通知：，办结时限：。申请单：
+      template: 催办通知：{$instance_name}，办结时限：{$deadline}。申请单：{$open_app_url}
     notify_wenshu:
       code: SMS_61725087
-      template: 您好，用户在申请单中填写的批阅意见为：。
+      template: 您好，用户{$handler}在申请单{$instance}中填写的批阅意见为：{$description}。
     chnage_mobile:
       code: SMS_67660108
-      template: 通讯录中您的手机号已被修改为。
+      template: 通讯录中您的手机号已被修改为{$number}。
     mobile_verification_code:
       code: SMS_63370455
-      template: 您的验证码为：。如非本人操作，请忽略本短信。
+      template: 您的验证码为：{$code}。如非本人操作，请忽略本短信。
     change_password:
       code: SMS_67200967
       template: 系统通知：您的登录密码已被修改
@@ -794,7 +787,7 @@ CustomLabels:
   follow: Follow
   unfollow: Unfollow
   following: Following
-  pending_space_invite_info: ' invite you to join '
+  pending_space_invite_info: "{$inviter} invite you to join {$space}"
   creator_list_show_as: Show As
   creator_list_show_as_one_column: List
   creator_list_show_as_two_columns: List ｜ Record
@@ -850,7 +843,7 @@ CustomLabels:
   apps_desktop: Show on desktop
   apps_menu: Show on left menu
   apps_sort_no: Sort No.
-  apps_secret: API key
+  apps_secret: API Key
   apps_internal: Internal
   apps_sort: Sort
   apps_id: ID
@@ -980,7 +973,7 @@ CustomLabels:
   users_email_verify_account: 'To verify your account email,simply click the link below.'
   users_email_verify_email: How to verify email address on Steedos
   users_email_reset_password: How to reset your password on Steedos
-  users_email_reset_password_body: "Your token code is \r\nTo reset your password, input the token code above at the password reset page or simply click the link below."
+  users_email_reset_password_body: "Your token code is {$token_code}\r\nTo reset your password, input the token code above at the password reset page or simply click the link below."
   users_email_hello: Hello
   users_email_thanks: Thanks.
   tasks_js_addNotifications_notificationTitle: ' assigned a task to you'
@@ -1464,97 +1457,100 @@ CustomLabels:
   instance:
     formatter:
       date:
-        simple_date: 'bb DD, YYYY'
-        simple_datetime: 'bb DD, YYYY HH:MM'
+        simple_date: bb DD, YYYY
+        simple_datetime: bb DD, YYYY HH:MM
         export_date: YYYY-MM-DD
-        export_datetime: 'YYYY-MM-DD HH:MM'
+        export_datetime: YYYY-MM-DD HH:MM
       checkbox:
         checked: 'YES'
         unchecked: 'NO'
-    instance_view: >-
-      <br/><br/>Following are the contents of the request:<br/>Space :
-      ;<br/>Initiator : ;<br/>Submit Date : ;
+    instance_view: "<br/><br/>Following are the contents of the request:<br/>Space :
+      {$space_name};<br/>Initiator : {$applicant_name};<br/>Submit Date : {$submit_date};"
     push:
       final_decision_approved: Approved
       final_decision_rejected: Rejected
-      final_decision_nil: 
+      final_decision_nil: ''
       title:
-        first_submit_applicant: 
-        first_submit_inbox: 
-        submit_pending_rejected_applicant_inbox: 
-        submit_pending_rejected_applicant: 
-        submit_pending_rejected_approve: 
-        submit_pending_rejected_inbox: 
-        submit_pending_inbox: 
-        submit_terminate_applicant: 
-        submit_terminate_approve: 
-        monitor_delete_applicant: 
-        submit_completed_applicant: 
-        submit_completed_approve: 
-        approved_completed_applicant: 
-        approved_completed_approve: 
-        rejected_completed_applicant: 
-        rejected_completed_approve: 
-        reassign_new_inbox_users: 
-        trace_approve_cc: 
-        trace_approve_cc_submit: 
-        auto_submit_pending_inbox: 
-        return_pending_inbox: 
+        first_submit_applicant: "{$from_username}"
+        first_submit_inbox: "{$from_username}"
+        submit_pending_rejected_applicant_inbox: "{$from_username}"
+        submit_pending_rejected_applicant: "{$from_username}"
+        submit_pending_rejected_approve: "{$from_username}"
+        submit_pending_rejected_inbox: "{$from_username}"
+        submit_pending_inbox: "{$from_username}"
+        submit_terminate_applicant: "{$from_username}"
+        submit_terminate_approve: "{$from_username}"
+        monitor_delete_applicant: "{$applicant_name}"
+        submit_completed_applicant: "{$applicant_name}"
+        submit_completed_approve: "{$from_username}"
+        approved_completed_applicant: "{$applicant_name}"
+        approved_completed_approve: "{$from_username}"
+        rejected_completed_applicant: "{$applicant_name}"
+        rejected_completed_approve: "{$from_username}"
+        reassign_new_inbox_users: "{$from_username}"
+        trace_approve_cc: "{$from_username}"
+        trace_approve_cc_submit: "{$from_username}"
+        auto_submit_pending_inbox: "{$from_username}"
+        return_pending_inbox: "{$from_username}"
       body:
         input: input
         approval: approval
-        first_submit_applicant: I have submitted a  request for you
-        first_submit_inbox: 'My  request needs your '
-        submit_pending_rejected_applicant_inbox: Request for  has been rejected
-        submit_pending_rejected_applicant: 'Request for  has been rejected to '
-        submit_pending_rejected_approve: 
-        submit_pending_rejected_inbox: 'My  request needs your '
-        submit_pending_inbox: 'My  request needs your '
-        submit_terminate_applicant: Request for  has been cancelled
-        submit_terminate_approve: 
-        monitor_delete_applicant: Request for  has been deleted
-        submit_completed_applicant: Request for  has been approved
-        submit_completed_approve: 
-        approved_completed_applicant: Request for  has been approved
-        approved_completed_approve: 
-        rejected_completed_applicant: Request for  has been rejected
-        rejected_completed_approve: 
-        reassign_new_inbox_users: 'My  request needs your '
-        trace_approve_cc: 'My  request needs your '
-        remind: 'Remind：, Deadline：'
-        trace_approve_cc_submit: 'I have submitted a cc '
-        distribute_remind: My  has been end
-        auto_submit_pending_inbox: 'Your  auto submitted to '
-        return_pending_inbox: Request for  has been returned
+        first_submit_applicant: I have submitted a {$instance_name} request for you
+        first_submit_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_pending_rejected_applicant_inbox: Request for {$instance_name} has been
+          rejected
+        submit_pending_rejected_applicant: Request for {$instance_name} has been rejected
+          to {$nextApprove_usersname}
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_pending_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_terminate_applicant: Request for {$instance_name} has been cancelled
+        submit_terminate_approve: ''
+        monitor_delete_applicant: Request for {$instance_name} has been deleted
+        submit_completed_applicant: Request for {$instance_name} has been approved
+        submit_completed_approve: ''
+        approved_completed_applicant: Request for {$instance_name} has been approved
+        approved_completed_approve: ''
+        rejected_completed_applicant: Request for {$instance_name} has been rejected
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: My {$instance_name} request needs your {$approve_type}
+        trace_approve_cc: My {$instance_name} request needs your {$approve_type}
+        remind: Remind：{$instance_name}, Deadline：{$deadline}
+        trace_approve_cc_submit: I have submitted a cc {$instance_name}
+        distribute_remind: My {$instance_name} has been end
+        auto_submit_pending_inbox: Your {$instance_name} auto submitted to {$current_step_name}
+        return_pending_inbox: Request for {$instance_name} has been returned
     email:
       final_decision_approved: Approved
       final_decision_rejected: Rejected
-      final_decision_nil: 
-      inscribed: '<br/><br/>Sincerely,<br/>'
-      footnote: 'This is an automatically generated email, please do not reply to it.'
+      final_decision_nil: ''
+      inscribed: "<br/><br/>Sincerely,<br/>"
+      footnote: This is an automatically generated email, please do not reply to it.
       title:
         input: input
         approval: approval
-        first_submit_applicant: I have submitted a  request for you
-        first_submit_inbox: 'My  request needs your '
-        submit_pending_rejected_applicant_inbox: Request for  has been rejected
-        submit_pending_rejected_applicant: 'Request for  has been rejected to '
-        submit_pending_rejected_approve: 
-        submit_pending_rejected_inbox: 'My  request needs your '
-        submit_pending_inbox: 'My  request needs your '
-        submit_terminate_applicant: Request for  has been cancelled
-        submit_terminate_approve: 
-        monitor_delete_applicant: ' has been deleted'
-        submit_completed_applicant: 'I have approved your request for '
-        submit_completed_approve: 
-        approved_completed_applicant: 'I have approved your request for '
-        approved_completed_approve: 
-        rejected_completed_applicant: 'I have rejected your request for '
-        rejected_completed_approve: 
-        reassign_new_inbox_users: 'My  request needs your '
-        trace_approve_cc: 'My  request needs your '
-        auto_submit_pending_inbox: Your  has been submitted automatically
-        return_pending_inbox: 'I have returned your request for '
+        first_submit_applicant: I have submitted a {$instance_name} request for you
+        first_submit_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_pending_rejected_applicant_inbox: Request for {$instance_name} has been
+          rejected
+        submit_pending_rejected_applicant: Request for {$instance_name} has been rejected
+          to {$nextApprove_usersname}
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_pending_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_terminate_applicant: Request for {$instance_name} has been cancelled
+        submit_terminate_approve: ''
+        monitor_delete_applicant: "{$instance_name} has been deleted"
+        submit_completed_applicant: I have approved your request for {$instance_name}
+        submit_completed_approve: ''
+        approved_completed_applicant: I have approved your request for {$instance_name}
+        approved_completed_approve: ''
+        rejected_completed_applicant: I have rejected your request for {$instance_name}
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: My {$instance_name} request needs your {$approve_type}
+        trace_approve_cc: My {$instance_name} request needs your {$approve_type}
+        auto_submit_pending_inbox: Your {$instance_name} has been submitted automatically
+        return_pending_inbox: I have returned your request for {$instance_name}
       body:
         url_input: input
         url_approval: approval
@@ -1562,89 +1558,96 @@ CustomLabels:
         approval: approval
         judge_approved: approved
         judge_submitted: provided his input for
-        email_description: 'Comments : .'
-        first_submit_applicant: >-
-          Hi ,<br/><br/>I have submitted a  request on behalf of you.<br/><a
-          href = >Please click here to view this request.</a>
-        first_submit_applicant_beApproveDescription: >-
-          Hi ,<br/><br/>I have submitted a  request on behalf of you, and
-          attached the following comments with the request.<br/>Comments :
-          <br/><a href = >Please click here to view this request.</a>
-        first_submit_inbox: >-
-          Hi ,<br/><br/> has submitted a  request, which needs your .<br/><a
-          href = >Please click here to view this request.</a>
-        first_submit_inbox_beApproveDescription: >-
-          Hi ,<br/><br/> has submitted a  request, which needs your . He / she
-          has attached the following comments with the request.<br/>Comments :
-          <br/><a href = >Please click here to view this request.</a>
-        submit_pending_rejected_applicant_inbox: >-
-          Hi ,<br/><br/>Your request for  has been rejected by  with the
-          following comments.<br/><br/><a href = >Please click here to view this
-          request.</a>
-        submit_pending_rejected_applicant: >-
-          Hi ,<br/><br/>Your request for  has been rejected by .He / She has
-          attached the following comments with the request, and has sent it to
-          <br/><br/><a href = >Please click here to view this request.</a>
-        submit_pending_rejected_approve: 
-        submit_pending_rejected_inbox: >-
-          Hi ,<br/><br/>'s request for  needs your , which has been rejected by 
-          with the following comments.<br/><br/><a href = >Please click here to
-          view this request.</a>
-        submit_pending_inbox: >-
-          Hi ,<br/><br/> has submitted a  request, which needs your .  has  this
-          request.<br/><a href = >Please click here to view this request.</a>
-        submit_pending_inbox_beApproveDescription: >-
-          Hi ,<br/><br/> has submitted a  request, which needs your .  has  this
-          request with the following comments.<br/>Comments : <br/><a href =
-          >Please click here to view this request.</a>
-        submit_pending_inbox_beApproveDescription_counterSign: >-
-          Hi ,<br/><br/> has submitted a  request, which needs your .  has
-          provided their input for this request with the following
-          comments.<br/>Comments : <br/>
-        submit_terminate_applicant: >-
-          Hi ,<br/><br/>Your request for  has been cancelled by .He / She has
-          attached the following comments with the request.<br/>Comments : .
-        submit_terminate_approve: 
-        monitor_delete_applicant: 'Hi ,<br/><br/>Your request for  has been deleted.'
-        submit_completed_applicant: >-
-          Hi ,<br/><br/>Your request for  has been completed by .<br/><a href =
-          >Please click here to view this request.</a>
-        submit_completed_applicant_beApproveDescription: >-
-          Hi ,<br/><br/>Your request for  has been completed by . He / she has
-          attached the following comments with the request. <br/>Comments :
-          <br/><a href = >Please click here to view this request.</a>
-        submit_completed_applicant_beApproveDescription_counterSign: >-
-          Hi ,<br/><br/>Your request for  has been completed by . They has
-          attached the following comments with the request. <br/>Comments :<br/>
-        submit_completed_approve: 
-        approved_completed_applicant: >-
-          Hi ,<br/><br/>Your request for  has been final approved by .<br/><a
-          href = >Please click here to view this request.</a>
-        approved_completed_applicant_beApproveDescription: >-
-          Hi ,<br/><br/>Your request for  has been final approved by . He / she
-          has attached the following comments with the request. <br/>Comments :
-          <br/><a href = >Please click here to view this request.</a>
-        approved_completed_approve: 
-        rejected_completed_applicant: >-
-          Hi ,<br/><br/>Your request for  has been final rejected by . He / She
-          has attached the following comments with the request.<br/><br/><a href
-          = >Please click here to view this request.</a>
-        rejected_completed_approve: 
-        reassign_new_inbox_users: >-
-          Hi ,<br/><br/> has transferred 's  to you with the following comments.
-          <br/>Comments : <br/><a href = >Please click here to view this
-          request.</a>。
-        trace_approve_cc: >-
-          Hi ,<br/><br/> has cc a  request, which needs your .<br/><a href =
-          >Please click here to view this request.</a>
-        auto_submit_pending_inbox: 'Hi ,<br/><br/>Your  has been submitted to  automatically.'
-        return_pending_inbox: >-
-          Hi ,<br/><br/>Your request for  has been returned by .He / She has
-          attached the following comments with the request.<br/>Comments : .
+        email_description: 'Comments : {$description}.'
+        first_submit_applicant: Hi {$to_username},<br/><br/>I have submitted a {$instance_name}
+          request on behalf of you.<br/><a href = {$href}>Please click here to view
+          this request.</a>
+        first_submit_applicant_beApproveDescription: 'Hi {$to_username},<br/><br/>I
+          have submitted a {$instance_name} request on behalf of you, and attached the
+          following comments with the request.<br/>Comments : {$approves_description}<br/><a
+          href = {$href}>Please click here to view this request.</a>'
+        first_submit_inbox: Hi {$to_username},<br/><br/>{$applicant_name} has submitted
+          a {$instance_name} request, which needs your {$approve_type}.<br/><a href
+          = {$href}>Please click here to view this request.</a>
+        first_submit_inbox_beApproveDescription: 'Hi {$to_username},<br/><br/>{$applicant_name}
+          has submitted a {$instance_name} request, which needs your {$approve_type}.
+          He / she has attached the following comments with the request.<br/>Comments
+          : {$approves_description}<br/><a href = {$href}>Please click here to view
+          this request.</a>'
+        submit_pending_rejected_applicant_inbox: Hi {$to_username},<br/><br/>Your request
+          for {$instance_name} has been rejected by {$lastApprove_usersname} with the
+          following comments.<br/>{$description}<br/><a href = {$href}>Please click
+          here to view this request.</a>
+        submit_pending_rejected_applicant: Hi {$to_username},<br/><br/>Your request
+          for {$instance_name} has been rejected by {$lastApprove_usersname}.He / She
+          has attached the following comments with the request, and has sent it to {$nextApprove_usersname}<br/>{$description}<br/><a
+          href = {$href}>Please click here to view this request.</a>
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: Hi {$to_username},<br/><br/>{$applicant_name}'s
+          request for {$instance_name} needs your {$approve_type}, which has been rejected
+          by {$lastApprove_usersname} with the following comments.<br/>{$description}<br/><a
+          href = {$href}>Please click here to view this request.</a>
+        submit_pending_inbox: Hi {$to_username},<br/><br/>{$applicant_name} has submitted
+          a {$instance_name} request, which needs your {$approve_type}. {$lastApprove_usersname}
+          has {$last_approve_judge} this request.<br/><a href = {$href}>Please click
+          here to view this request.</a>
+        submit_pending_inbox_beApproveDescription: 'Hi {$to_username},<br/><br/>{$applicant_name}
+          has submitted a {$instance_name} request, which needs your {$approve_type}.
+          {$lastApprove_usersname} has {$last_approve_judge} this request with the following
+          comments.<br/>Comments : {$approves_description}<br/><a href = {$href}>Please
+          click here to view this request.</a>'
+        submit_pending_inbox_beApproveDescription_counterSign: 'Hi {$to_username},<br/><br/>{$applicant_name}
+          has submitted a {$instance_name} request, which needs your {$approve_type}.
+          {$lastApprove_usersname} has provided their input for this request with the
+          following comments.<br/>Comments : <br/>'
+        submit_terminate_applicant: 'Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been cancelled by {$current_username}.He / She has attached the following
+          comments with the request.<br/>Comments : {$description}.'
+        submit_terminate_approve: ''
+        monitor_delete_applicant: Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been deleted.
+        submit_completed_applicant: Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been completed by {$lastApprove_usersname}.<br/><a href = {$href}>Please
+          click here to view this request.</a>
+        submit_completed_applicant_beApproveDescription: 'Hi {$to_username},<br/><br/>Your
+          request for {$instance_name} has been completed by {$lastApprove_usersname}.
+          He / she has attached the following comments with the request. <br/>Comments
+          : {$approves_description}<br/><a href = {$href}>Please click here to view
+          this request.</a>'
+        submit_completed_applicant_beApproveDescription_counterSign: Hi {$to_username},<br/><br/>Your
+          request for {$instance_name} has been completed by {$lastApprove_usersname}.
+          They has attached the following comments with the request. <br/>Comments :<br/>
+        submit_completed_approve: ''
+        approved_completed_applicant: Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been final approved by {$lastApprove_usersname}.<br/><a href = {$href}>Please
+          click here to view this request.</a>
+        approved_completed_applicant_beApproveDescription: 'Hi {$to_username},<br/><br/>Your
+          request for {$instance_name} has been final approved by {$lastApprove_usersname}.
+          He / she has attached the following comments with the request. <br/>Comments
+          : {$approves_description}<br/><a href = {$href}>Please click here to view
+          this request.</a>'
+        approved_completed_approve: ''
+        rejected_completed_applicant: Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been final rejected by {$lastApprove_usersname}. He / She has attached
+          the following comments with the request.<br/>{$description}<br/><a href =
+          {$href}>Please click here to view this request.</a>
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: 'Hi {$to_username},<br/><br/>{$current_user_name}
+          has transferred {$applicant_name}''s {$instance_name} to you with the following
+          comments. <br/>Comments : {$description}<br/><a href = {$href}>Please click
+          here to view this request.</a>。'
+        trace_approve_cc: Hi {$to_username},<br/><br/>{$applicant_name} has cc a {$instance_name}
+          request, which needs your {$approve_type}.<br/><a href = {$href}>Please click
+          here to view this request.</a>
+        auto_submit_pending_inbox: Hi {$to_username},<br/><br/>Your {$instance_name}
+          has been submitted to {$current_step_name} automatically.
+        return_pending_inbox: 'Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been returned by {$current_username}.He / She has attached the following
+          comments with the request.<br/>Comments : {$description}.'
     sms:
-      submit_pending_inbox: 您有新的待审核：，提交人：
+      submit_pending_inbox: 您有新的待审核：{$instance_name}，提交人：{$applicant_name}
     remindMessage:
-      update_failed: 'Requested action not taken, because this request has been updated.'
+      update_failed: Requested action not taken, because this request has been updated.
       has_deleted: This report has been deleted.
     judge:
       approved: approved
@@ -1661,7 +1664,7 @@ CustomLabels:
     print_html_title: SteedOS
     template_files: Template
   help:
-    href: <a href = >Please click here to view this request.</a>
+    href: "<a href = {$href}>Please click here to view this request.</a>"
     approves: Approval History
     initiator: 'Initiator : '
     attachment: Attachment
@@ -1752,7 +1755,7 @@ CustomLabels:
   workflow_chart: Workflow Chart
   instance_return: Return
   instance_return_success: Return successfully
-  instance_return_confirm: Return the request to ()?
+  instance_return_confirm: "Return the request to {$step_name}({$handlers_name})?"
   Instance State returned: Returned
   instance_main_attachment: Main attach
   flows_field_map: Field Map
@@ -1768,7 +1771,7 @@ CustomLabels:
     the approval process.
   instance_distribute_attachments: Is distribute attachments.
   instance_distribute_success: Distribute success
-  instance_no_add_permission: ' failed, users no create permission: '
+  instance_no_add_permission: "{$actiontype} failed, users no create permission: {$usernames}"
   instance_workflow_chart_ie_warning: >-
     Do not support viewing the workflow chart in IE, please do this on client
     software or chrome.
@@ -1789,17 +1792,14 @@ CustomLabels:
   categories_sort_no: Sort no
   not_found_user: Not Found User
   next_step_users_not_found:
-    aplicant_superior: >-
-      The applicant's superior is not configured, please contact the
+    aplicant_superior: The applicant's superior is not configured, please contact the
       Administrator.
-    applicant_role: >-
-      The <> you are looking for have not configured,Please contact the
-      administrator.
-    hr_role: >-
-      The <> you are looking for have not configured,Please contact the
-      administrator.
-    field_value_empty: Please enter the value of the <>field
-    org_no_members: 'The next step need <> processing,Please contact the administrator.'
+    applicant_role: The <{$role_name}> you are looking for have not configured,Please
+      contact the administrator.
+    hr_role: The <{$role_name}> you are looking for have not configured,Please contact
+      the administrator.
+    field_value_empty: Please enter the value of the <{$field_name}>field
+    org_no_members: The next step need <{$org_name}> processing,Please contact the administrator.
   instanc_admin_role_text: <a href='%s' target='_blank'> configuration in position</a>
   instanc_user_role_text: ' configuration in position'
   instanc_set_applicant_role_text: set positions users
@@ -1808,9 +1808,7 @@ CustomLabels:
   instance_sign_agree: Agree
   instance_sign_period: 。
   instance_cc_alert: Please confirm whether it need to circulate
-  instance_cc_must_finished: >-
-    The cc users： had not deal with this request, so you can not submitt this
-    instance to next step
+  instance_cc_must_finished: "The cc users：{$not_finished_users_name} had not deal with this request, so you can not submitt this instance to next step"
   instance_number_rules: Request number rules
   instance_number_rules_name: Name
   instance_number_rules_year: Year
@@ -1872,8 +1870,8 @@ CustomLabels:
   workflow_batch_approval_btn: Batch<br/>approval
   workflow_batch_approval_processing: Processing
   workflow_batch_approval_message: This processing file %s
-  workflow_error_multiple_next_step_users: ''' the next person can not handle more than one'
-  workflow_error_multiple_next_step: ''' can not have more than one next step'
+  workflow_error_multiple_next_step_users: "'{$insname}' the next person can not handle more than one"
+  workflow_error_multiple_next_step: "'{$insname}' can not have more than one next step"
   workflow_batch_instances_empty: There is no data for batch approval
   workflow_sign_opinion_to_completed_instance: >-
     This document is over and the signed opinion will not be displayed on the
@@ -1897,8 +1895,8 @@ CustomLabels:
   distribute_to_self: can distribute to self
   distribute_end_notification: notificate user after distributed end
   instance_deleted: Deleted
-  workflow_flow_state_disabled: 'The state of flow() is disabled, Administrator can enable flow.'
-  flow_roles_error_flows_used: 'Role has been used by flows: '
+  workflow_flow_state_disabled: "The state of flow({$name}) is disabled, Administrator can enable flow."
+  flow_roles_error_flows_used: "Role has been used by flows: {$names}"
   instance_approve_not_yet_handled: Not yet handled
   instance_approve_distribute_date_label: Distribute date
   flows_auto_remind: Auto remind
@@ -1919,7 +1917,7 @@ CustomLabels:
   process_delegation_rules_from_name: From
   process_delegation_rules_to_name: To
   process_delegation_rules_start_must_lt_end: Strat time must less than end time
-  process_delegation_rules_description: ' delegated'
+  process_delegation_rules_description: "{$userName} delegated"
   process_delegation_rules_cannot_deltegation_eachother: Only allow one-way delegation
   instance_handler_name: Handler
   instance_handler_organization_fullname: Organization

@@ -13,7 +13,7 @@ fields:
     searchable: true
     index: true
   code:
-    label: Code (API Name)
+    label: API Name
     type: text
     required: true
     searchable: true

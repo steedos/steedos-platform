@@ -13,3 +13,6 @@
 [submodule "apps/okr-management-app"]
 	path = apps/okr-management-app
 	url = https://github.com/steedos/okr-management-app
+[submodule "apps/steedos-app-oa"]
+	path = apps/steedos-app-oa
+	url = https://github.com/steedos/steedos-app-oa

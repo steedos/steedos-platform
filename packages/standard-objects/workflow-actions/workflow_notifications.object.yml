@@ -4,6 +4,16 @@ icon: quick_text
 hidden: true
 enable_inline_edit: false
 fields:
+  name:
+    type: text
+    searchable: true
+    index: true
+    required: true
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
+  label:
+    type: text
+    required: true
+    is_name: true
   object_name:
     label: Object Name
     type: lookup
@@ -13,14 +23,6 @@ fields:
       function () {
         return Steedos.getObjectsOptions();
       }
-  name:
-    type: text
-    label: API Name
-    searchable: true
-    index: true
-    required: true
-    is_wide: true
-    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   title:
     label: Title
     type: textarea
@@ -59,6 +61,19 @@ fields:
         }
         return options;
       }
+form:
+  beforeEdit: !!js/function |
+    function(){
+      Steedos.WorkflowNotificationsManager.changeSchema(this.doc, this.schema);
+    }
+  afterEdit: !!js/function |
+    function(){
+      Steedos.WorkflowNotificationsManager.changeSchema(this.doc, this.schema);
+    }
+  beforeView: !!js/function |
+    function(){
+      Steedos.WorkflowNotificationsManager.changeSchema(this.doc, this.schema);
+    }
 list_views:
   all:
     label: All Notifications

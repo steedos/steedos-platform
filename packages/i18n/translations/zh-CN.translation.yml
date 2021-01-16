@@ -315,13 +315,13 @@ CustomLabels:
   meteor_status_failed: 无法连接服务器
   meteor_status_waiting: '等待连接,'
   meteor_status_offline: 离线状态。
-  meteor_status_reconnect_in: 一分钟后再尝试...
-  meteor_status_reconnect_in_plural: 在{$count}秒钟后再尝试...
+  meteor_status_reconnect_in: "{$count}秒后重试..."
+  meteor_status_reconnect_in_plural: "{$count}秒后重试..."
   meteor_status_try_now_waiting: 立即连接
   meteor_status_try_now_offline: 重新连接
   btn_back_title: 返回
   space_users_remove_mail_subject: 您的帐户已被管理员从工作区中删除
-  space_users_remove_mail_content: '您好,<br/><br/>您的帐户""已被管理员从工作区""中删除。<br/><br/>谢谢！'
+  space_users_remove_mail_content: "您好,<br/><br/>您的帐户\"{$steedos_id}\"已被管理员从工作区\"{$space_name}\"中删除。<br/><br/>谢谢！"
   steedos_i18n_404_not_found: 很抱歉，您要访问的网页不存在
   Steedos Records: 全文检索
   Client download: 下载客户端
@@ -370,8 +370,8 @@ CustomLabels:
   pay_records: 购买记录
   workflow_designer_use_pc: 请在PC端打开
   customize_apps: 企业应用
-  space_users_error_roles_used: 已有角色指定该用户：
-  space_users_error_flows_used: 已有流程指定该用户为处理人：
+  space_users_error_roles_used: "已有角色指定该用户：{$names}"
+  space_users_error_flows_used: "已有流程指定该用户为处理人：{$names}"
   space_users_error_can_not_remove: 不能删除用户
   contact_need_phone_or_email: 手机和邮箱不能同时为空
   organizations_error_is_company_false_in_root: 根部门“公司级”属性不能为否
@@ -402,8 +402,8 @@ CustomLabels:
   creator_report_caption_count: 计数
   creator_report_format_sum_count: 总计 (%s条记录)
   creator_report_error_object_not_found: 未找到对象“%s”，请确认该报表指定的对象名是否正确
-  creator_report_error_object_field_not_found: 未找到对象“”的字段“”，请确认该报表中指定的字段名是否正确
-  creator_report_error_max: 统计数据达条记录，已超出限制，以下统计结果基于前条记录
+  creator_report_error_object_field_not_found: "未找到对象“{$object_name}”的字段“{$field_name}”，请确认该报表中指定的字段名是否正确"
+  creator_report_error_max: "统计数据达{$count}条记录，已超出限制，以下统计结果基于前{$max}条记录"
   creator_report_error_tabular_miss_fields: 表格类型报表至少需要填写”列“项
   creator_report_error_summary_miss_fields: 摘要类型报表至少需要填写”列“项
   creator_report_error_matrix_miss_fields: 矩阵类型报表至少需要填写”行“或”列“项
@@ -431,16 +431,16 @@ CustomLabels:
   sms:
     remind:
       code: SMS_67200967
-      template: 催办通知：，办结时限：。申请单：
+      template: 催办通知：{$instance_name}，办结时限：{$deadline}。申请单：{$open_app_url}
     notify_wenshu:
       code: SMS_61725087
-      template: 您好，用户在申请单中填写的批阅意见为：。
+      template: 您好，用户{$handler}在申请单{$instance}中填写的批阅意见为：{$description}。
     chnage_mobile:
       code: SMS_67660108
-      template: 通讯录中您的手机号已被修改为。
+      template: 通讯录中您的手机号已被修改为{$number}。
     mobile_verification_code:
       code: SMS_63370455
-      template: 您的验证码为：。如非本人操作，请忽略本短信。
+      template: 您的验证码为：{$code}。如非本人操作，请忽略本短信。
     change_password:
       code: SMS_67200967
       template: 系统通知：您的登录密码已被修改
@@ -732,7 +732,7 @@ CustomLabels:
   follow: 关注
   unfollow: 取消关注
   following: 已关注
-  pending_space_invite_info: ' 邀请您加入 '
+  pending_space_invite_info: "{$inviter} 邀请您加入 {$space}"
   creator_list_show_as: 显示为
   creator_list_show_as_one_column: 列表
   creator_list_show_as_two_columns: 列表 ｜ 记录
@@ -913,7 +913,7 @@ CustomLabels:
   users_email_verify_account: '您已注册华炎云账号,请点击以下链接进行验证。'
   users_email_verify_email: 验证您的登录邮箱
   users_email_reset_password: 重新设置您的密码
-  users_email_reset_password_body: "您的验证码为：\r\n请在密码重置界面输入上面的验证码，或点击以下链接，重新设置您的登录密码。"
+  users_email_reset_password_body: "您的验证码为：{$token_code}\r\n请在密码重置界面输入上面的验证码，或点击以下链接，重新设置您的登录密码。"
   users_email_hello: 您好
   users_email_thanks: 谢谢！
   tasks_js_addNotifications_notificationTitle: 为您分配了一个任务
@@ -1361,94 +1361,95 @@ CustomLabels:
     formatter:
       date:
         simple_date: YYYY年MM月DD日
-        simple_datetime: 'YYYY年MM月DD日 HH:mm'
+        simple_datetime: YYYY年MM月DD日 HH:mm
         export_date: YYYY-MM-DD
-        export_datetime: 'YYYY-MM-DD HH:mm'
+        export_datetime: YYYY-MM-DD HH:mm
       checkbox:
         checked: 是
         unchecked: 否
-    instance_view: '<br/><br/>申请单内容摘要如下:<br/>工作区 : ;<br/>提交 : ;<br/>提交日期 : ;'
+    instance_view: "<br/><br/>申请单内容摘要如下:<br/>工作区 : {$space_name};<br/>提交 : {$applicant_name};<br/>提交日期
+      : {$submit_date};"
     push:
       final_decision_approved: 被核准，
       final_decision_rejected: 被驳回，
-      final_decision_nil: 
+      final_decision_nil: ''
       title:
-        first_submit_applicant: 
-        first_submit_inbox: 
-        submit_pending_rejected_applicant_inbox: 
-        submit_pending_rejected_applicant: 
-        submit_pending_rejected_approve: 
-        submit_pending_rejected_inbox: 
-        submit_pending_inbox: 
-        submit_terminate_applicant: 
-        submit_terminate_approve: 
-        monitor_delete_applicant: 
-        submit_completed_applicant: 
-        submit_completed_approve: 
-        approved_completed_applicant: 
-        approved_completed_approve: 
-        rejected_completed_applicant: 
-        rejected_completed_approve: 
-        reassign_new_inbox_users: 
-        trace_approve_cc: 
-        trace_approve_cc_submit: 
-        auto_submit_pending_inbox: 
-        return_pending_inbox: 
+        first_submit_applicant: "{$from_username}"
+        first_submit_inbox: "{$from_username}"
+        submit_pending_rejected_applicant_inbox: "{$from_username}"
+        submit_pending_rejected_applicant: "{$from_username}"
+        submit_pending_rejected_approve: "{$from_username}"
+        submit_pending_rejected_inbox: "{$from_username}"
+        submit_pending_inbox: "{$from_username}"
+        submit_terminate_applicant: "{$from_username}"
+        submit_terminate_approve: "{$from_username}"
+        monitor_delete_applicant: "{$applicant_name}"
+        submit_completed_applicant: "{$applicant_name}"
+        submit_completed_approve: "{$from_username}"
+        approved_completed_applicant: "{$applicant_name}"
+        approved_completed_approve: "{$from_username}"
+        rejected_completed_applicant: "{$applicant_name}"
+        rejected_completed_approve: "{$from_username}"
+        reassign_new_inbox_users: "{$from_username}"
+        trace_approve_cc: "{$from_username}"
+        trace_approve_cc_submit: "{$from_username}"
+        auto_submit_pending_inbox: "{$from_username}"
+        return_pending_inbox: "{$from_username}"
       body:
         input: 确认
         approval: 审批
-        first_submit_applicant: '请确认:我已代您提交了'
-        first_submit_inbox: 
-        submit_pending_rejected_applicant_inbox: '请修改:'
-        submit_pending_rejected_applicant: 您的已驳回给
-        submit_pending_rejected_approve: 
-        submit_pending_rejected_inbox: 
-        submit_pending_inbox: 
-        submit_terminate_applicant: 被我取消申请了
-        submit_terminate_approve: 
-        monitor_delete_applicant: 您的已被删除
-        submit_completed_applicant: 您的已被确认
-        submit_completed_approve: 
-        approved_completed_applicant: 您的已被核准
-        approved_completed_approve: 
-        rejected_completed_applicant: 您的已被驳回
-        rejected_completed_approve: 
-        reassign_new_inbox_users: 
-        trace_approve_cc: 
-        remind: 催办通知：，办结时限：。
-        trace_approve_cc_submit: 我已提交了传阅的申请单
-        distribute_remind: 您分发的申请单已结束。
-        auto_submit_pending_inbox: 您的申请单处理已超时，现已自动发送至
-        return_pending_inbox: 您的已被退回
+        first_submit_applicant: 请确认:我已代您提交了{$instance_name}
+        first_submit_inbox: "{$instance_name}"
+        submit_pending_rejected_applicant_inbox: 请修改:{$instance_name}
+        submit_pending_rejected_applicant: 您的{$instance_name}已驳回给{$nextApprove_usersname}
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: "{$instance_name}"
+        submit_pending_inbox: "{$instance_name}"
+        submit_terminate_applicant: "{$instance_name}被我取消申请了"
+        submit_terminate_approve: ''
+        monitor_delete_applicant: 您的{$instance_name}已被删除
+        submit_completed_applicant: 您的{$instance_name}已被确认
+        submit_completed_approve: ''
+        approved_completed_applicant: 您的{$instance_name}已被核准
+        approved_completed_approve: ''
+        rejected_completed_applicant: 您的{$instance_name}已被驳回
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: "{$instance_name}"
+        trace_approve_cc: "{$instance_name}"
+        remind: 催办通知：{$instance_name}，办结时限：{$deadline}。
+        trace_approve_cc_submit: 我已提交了传阅的申请单{$instance_name}
+        distribute_remind: 您分发的{$instance_name}申请单已结束。
+        auto_submit_pending_inbox: 您的申请单{$instance_name}处理已超时，现已自动发送至{$current_step_name}
+        return_pending_inbox: 您的{$instance_name}已被退回
     email:
       final_decision_approved: 被核准，
       final_decision_rejected: 被驳回，
-      final_decision_nil: 
-      inscribed: <br/><br/>
-      footnote: '这是由审批王自动发送的邮件, 请不要直接回复。'
+      final_decision_nil: ''
+      inscribed: "<br/><br/>"
+      footnote: 这是由审批王自动发送的邮件, 请不要直接回复。
       title:
         input: 确认
         approval: 审批
-        first_submit_applicant: 代您提交了
-        first_submit_inbox: '请:'
-        submit_pending_rejected_applicant_inbox: '请修改:'
-        submit_pending_rejected_applicant: 您的已驳回给
-        submit_pending_rejected_approve: 
-        submit_pending_rejected_inbox: '请重新:'
-        submit_pending_inbox: '请:'
-        submit_terminate_applicant: 被我取消申请了
-        submit_terminate_approve: 
-        monitor_delete_applicant: 删除了您的
-        submit_completed_applicant: 确认了您的
-        submit_completed_approve: 
-        approved_completed_applicant: 核准了您的
-        approved_completed_approve: 
-        rejected_completed_applicant: 驳回了您的
-        rejected_completed_approve: 
-        reassign_new_inbox_users: '请:'
-        trace_approve_cc: '请:'
-        auto_submit_pending_inbox: 您的已超时自动流转
-        return_pending_inbox: 退回了您的
+        first_submit_applicant: "{$from_username}代您提交了{$instance_name}"
+        first_submit_inbox: 请{$approve_type}:{$instance_name}
+        submit_pending_rejected_applicant_inbox: 请修改:{$instance_name}
+        submit_pending_rejected_applicant: 您的{$instance_name}已驳回给{$nextApprove_usersname}
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: 请重新{$approve_type}:{$instance_name}
+        submit_pending_inbox: 请{$approve_type}:{$instance_name}
+        submit_terminate_applicant: "{$instance_name}被我取消申请了"
+        submit_terminate_approve: ''
+        monitor_delete_applicant: 删除了您的{$instance_name}
+        submit_completed_applicant: 确认了您的{$instance_name}
+        submit_completed_approve: ''
+        approved_completed_applicant: 核准了您的{$instance_name}
+        approved_completed_approve: ''
+        rejected_completed_applicant: 驳回了您的{$instance_name}
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: 请{$approve_type}:{$instance_name}
+        trace_approve_cc: 请{$approve_type}:{$instance_name}
+        auto_submit_pending_inbox: 您的{$instance_name}已超时自动流转
+        return_pending_inbox: 退回了您的{$instance_name}
       body:
         url_input: 查看并确认
         url_approval: 进行审批
@@ -1456,46 +1457,58 @@ CustomLabels:
         approval: 审批
         judge_approved: 核准
         judge_submitted: 确认
-        email_description: '驳回理由是: 。'
-        first_submit_applicant: ':<br/><br/>您好！<br/><br/>我已代您提交了。<br/><a href = >请点击查看</a>。'
-        first_submit_applicant_beApproveDescription: ':<br/><br/>您好！<br/><br/>我已代您提交了。<br/>备注是 : <br/><a href = >请点击查看</a>。'
-        first_submit_inbox: ':<br/><br/>您好！<br/><br/>提交了。<br/><a href = >请点击</a>。'
-        first_submit_inbox_beApproveDescription: ':<br/><br/>您好！<br/><br/>提交了。<br/>备注是 : <br/><a href = >请点击</a>。'
-        submit_pending_rejected_applicant_inbox: >-
-          :<br/><br/>您好！<br/><br/>您的申请单被驳回，请确认是否要修改。<br/><br/><a href =
-          >请点击查看</a>。
-        submit_pending_rejected_applicant: >-
-          :<br/><br/>您好！<br/><br/>您的被驳回, 目前正在处理中。<br/> <br/><a href =
-          >请点击查看</a>。
-        submit_pending_rejected_approve: 
-        submit_pending_rejected_inbox: ':<br/><br/>您好！<br/><br/>请重新 : 的, 此申请单被驳回。<br/><br/><a href = >请点击</a>。'
-        submit_pending_inbox: ':<br/><br/>您好！<br/><br/>请 : 的。已此申请单。<br/><a href = >请点击</a>。'
-        submit_pending_inbox_beApproveDescription: >-
-          :<br/><br/>您好！<br/><br/>请 : 的。已此申请单。<br/>他/她的意见是 : <br/><a href =
-          >请点击</a>。
-        submit_pending_inbox_beApproveDescription_counterSign: ':<br/><br/>您好！<br/><br/>请 : 的。已确认此申请单。<br/>他/她们的意见是 : <br/>'
-        submit_terminate_applicant: ':<br/><br/>您好！<br/><br/>您的被取消申请。<br/>取消申请的理由是：。'
-        submit_terminate_approve: 
-        monitor_delete_applicant: ':<br/><br/>您好！<br/><br/>您的已被删除。'
-        submit_completed_applicant: ':<br/><br/>您好！<br/><br/>您的已被确认, 完成审核。<br/><a href = >请点击查看</a>。'
-        submit_completed_applicant_beApproveDescription: >-
-          :<br/><br/>您好！<br/><br/>您的已被确认, 完成审核。<br/>他/她的意见是 : <br/><a href =
-          >请点击查看</a>。
-        submit_completed_applicant_beApproveDescription_counterSign: ':<br/><br/>您好！<br/><br/>您的已被确认, 完成审核。<br/>他/她们的意见是 :<br/> '
-        submit_completed_approve: 
-        approved_completed_applicant: ':<br/><br/>您好！<br/><br/>您的已被核准, 完成审核。<br/><a href = >请点击查看</a>。'
-        approved_completed_applicant_beApproveDescription: >-
-          :<br/><br/>您好！<br/><br/>您的已被核准, 完成审核。<br/>他/她的意见是 : <br/><a href =
-          >请点击查看</a>。
-        approved_completed_approve: 
-        rejected_completed_applicant: ':<br/><br/>您好！<br/><br/>您的已被驳回。<br/><br/><a href = >请点击查看</a>。'
-        rejected_completed_approve: 
-        reassign_new_inbox_users: ':<br/><br/>您好！<br/><br/>将的转发给您。<br/>转发的理由是：<br/><a href = >请点击</a>。'
-        trace_approve_cc: ':<br/><br/>您好！<br/><br/>传阅了。<br/><a href = >请点击</a>。'
-        auto_submit_pending_inbox: 您的申请单处理已超时，现已自动发送至
-        return_pending_inbox: ':<br/><br/>您好！<br/><br/>您的被退回。<br/>退回的理由是：。'
+        email_description: 驳回理由是:{$description} 。
+        first_submit_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>我已代您提交了{$instance_name}。<br/><a
+          href = {$href}>请点击查看</a>。"
+        first_submit_applicant_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>我已代您提交了{$instance_name}。<br/>备注是
+          : {$approves_description}<br/><a href = {$href}>请点击查看</a>。"
+        first_submit_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>{$applicant_name}提交了{$instance_name}。<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        first_submit_inbox_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>{$applicant_name}提交了{$instance_name}。<br/>备注是
+          : {$approves_description}<br/><a href = {$href}>请点击{$url_approve_type}</a>。"
+        submit_pending_rejected_applicant_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>您的申请单被{$lastApprove_usersname}驳回，请确认是否要修改。<br/>{$description}<br/><a
+          href = {$href}>请点击查看</a>。"
+        submit_pending_rejected_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}被{$lastApprove_usersname}驳回,
+          目前{$nextApprove_usersname}正在处理中。<br/>{$description} <br/><a href = {$href}>请点击查看</a>。"
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>请重新{$approve_type}
+          : {$applicant_name}的{$instance_name}, 此申请单被{$lastApprove_usersname}驳回。<br/>{$description}<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        submit_pending_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>请{$approve_type}
+          : {$applicant_name}的{$instance_name}。{$lastApprove_usersname}已{$last_approve_judge}此申请单。<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        submit_pending_inbox_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>请{$approve_type}
+          : {$applicant_name}的{$instance_name}。{$lastApprove_usersname}已{$last_approve_judge}此申请单。<br/>他/她的意见是
+          : {$approves_description}<br/><a href = {$href}>请点击{$url_approve_type}</a>。"
+        submit_pending_inbox_beApproveDescription_counterSign: "{$to_username}:<br/><br/>您好！<br/><br/>请{$approve_type}
+          : {$applicant_name}的{$instance_name}。{$lastApprove_usersname}已确认此申请单。<br/>他/她们的意见是
+          : <br/>"
+        submit_terminate_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}被取消申请。<br/>取消申请的理由是：{$description}。"
+        submit_terminate_approve: ''
+        monitor_delete_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被删除。"
+        submit_completed_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}确认,
+          完成审核。<br/><a href = {$href}>请点击查看</a>。"
+        submit_completed_applicant_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}确认,
+          完成审核。<br/>他/她的意见是 : {$approves_description}<br/><a href = {$href}>请点击查看</a>。"
+        submit_completed_applicant_beApproveDescription_counterSign: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}确认,
+          完成审核。<br/>他/她们的意见是 :<br/> "
+        submit_completed_approve: ''
+        approved_completed_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}核准,
+          完成审核。<br/><a href = {$href}>请点击查看</a>。"
+        approved_completed_applicant_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}核准,
+          完成审核。<br/>他/她的意见是 : {$approves_description}<br/><a href = {$href}>请点击查看</a>。"
+        approved_completed_approve: ''
+        rejected_completed_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}驳回。<br/>{$description}<br/><a
+          href = {$href}>请点击查看</a>。"
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: "{$to_username}:<br/><br/>您好！<br/><br/>{$current_user_name}将{$applicant_name}的{$instance_name}转发给您{$approve_type}。<br/>转发的理由是：{$description}<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        trace_approve_cc: "{$to_username}:<br/><br/>您好！<br/><br/>{$applicant_name}传阅了{$instance_name}。<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        auto_submit_pending_inbox: 您的申请单{$instance_name}处理已超时，现已自动发送至{$current_step_name}
+        return_pending_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}被退回。<br/>退回的理由是：{$description}。"
     sms:
-      submit_pending_inbox: 您有新的待审核：，提交人：
+      submit_pending_inbox: 您有新的待审核：{$instance_name}，提交人：{$applicant_name}
     remindMessage:
       update_failed: 申请单状态已更新，您的操作未能执行。
       has_deleted: 申请单已删除。
@@ -1512,7 +1525,7 @@ CustomLabels:
     print_html_title: 审批王
     template_files: 模板
   help:
-    href: <a href = >请点击查看</a>。
+    href: "<a href = {$href}>请点击查看</a>。"
     approves: 签核历程
     initiator: '提交人 : '
     attachment: 附件
@@ -1599,7 +1612,7 @@ CustomLabels:
   workflow_chart: 流程图
   instance_return: 退回
   instance_return_success: 退回成功
-  instance_return_confirm: 确认退回至()?
+  instance_return_confirm: "确认退回至{$step_name}({$handlers_name})?"
   Instance State returned: 已退回
   instance_main_attachment: 正文
   flows_field_map: 归档关系
@@ -1613,7 +1626,7 @@ CustomLabels:
   instance_distribute_note: 将当前选中的文件分发到新的流程，继续执行审批操作
   instance_distribute_attachments: 同时分发原表单附件
   instance_distribute_success: 文件分发成功
-  instance_no_add_permission: 未成功。以下用户没有新建此申请单的权限：
+  instance_no_add_permission: "{$actiontype}未成功。以下用户没有新建此申请单的权限：{$usernames}"
   instance_workflow_chart_ie_warning: 暂不支持在IE中查看流程图，请在客户端软件或chrome上执行该操作。
   instance_remind_title: 催办
   instance_remind_select_users: 催办对象
@@ -1633,10 +1646,10 @@ CustomLabels:
   not_found_user: 未找到处理人
   next_step_users_not_found:
     aplicant_superior: 申请人上级未配置，请联系管理员。
-    applicant_role: 您要找的「」还未配置，请联系管理员。
-    hr_role: 您要找的「」角色还未配置，请联系管理员。
-    field_value_empty: 获取处理人，请先填写「」。
-    org_no_members: 下一步需「」处理，请联系管理员。
+    applicant_role: 您要找的「{$role_name}」还未配置，请联系管理员。
+    hr_role: 您要找的「{$role_name}」角色还未配置，请联系管理员。
+    field_value_empty: 获取处理人，请先填写「{$field_name}」。
+    org_no_members: 下一步需「{$org_name}」处理，请联系管理员。
   instanc_admin_role_text: <a href='%s' target='_blank'>岗位中进行配置。</a>
   instanc_user_role_text: 岗位中进行配置
   instanc_set_applicant_role_text: 设置
@@ -1645,7 +1658,7 @@ CustomLabels:
   instance_sign_agree: 同意
   instance_sign_period: 。
   instance_cc_alert: 还需传阅给其他人员吗？
-  instance_cc_must_finished: 当前步骤被传阅人员： 还未处理，故不能提交至下一步
+  instance_cc_must_finished: "当前步骤被传阅人员：{$not_finished_users_name} 还未处理，故不能提交至下一步"
   instance_number_rules: 流程编号规则
   instance_number_rules_name: 名称
   instance_number_rules_year: 年份
@@ -1707,8 +1720,8 @@ CustomLabels:
   workflow_batch_approval_btn: 批量<br/>核准
   workflow_batch_approval_processing: 处理中
   workflow_batch_approval_message: 本次处理文件%s份
-  workflow_error_multiple_next_step_users: 「」的下一步处理人有多个
-  workflow_error_multiple_next_step: 「」的下一步步骤有多个
+  workflow_error_multiple_next_step_users: "「{$insname}」的下一步处理人有多个"
+  workflow_error_multiple_next_step: "「{$insname}」的下一步步骤有多个"
   workflow_batch_instances_empty: 没有可批量审批的数据
   workflow_sign_opinion_to_completed_instance: 此文件已结束，签署的意见不会显示在申请单上
   workflow_copy_flow: 复制流程
@@ -1730,8 +1743,8 @@ CustomLabels:
   distribute_to_self: 分发时可分发给自己
   distribute_end_notification: 分发结束后提醒发起人
   instance_deleted: 已删除
-  workflow_flow_state_disabled: 此申请单对应流程""已被禁用，如想正常修改及提交请联系管理员启用流程
-  flow_roles_error_flows_used: 已有以下流程使用此角色：
+  workflow_flow_state_disabled: "此申请单对应流程\"{$name}\"已被禁用，如想正常修改及提交请联系管理员启用流程"
+  flow_roles_error_flows_used: "已有以下流程使用此角色：{$names}"
   instance_approve_not_yet_handled: 未处理
   instance_approve_distribute_date_label: 分发时间
   flows_auto_remind: 自动催办
@@ -1752,7 +1765,7 @@ CustomLabels:
   process_delegation_rules_from_name: 委托人
   process_delegation_rules_to_name: 被委托人
   process_delegation_rules_start_must_lt_end: 开始时间应小于结束时间
-  process_delegation_rules_description: 委托
+  process_delegation_rules_description: "{$userName}委托"
   process_delegation_rules_cannot_deltegation_eachother: 只允许单向委托， 请更换被委托人或者调整委托时间
   instance_handler_name: 处理人
   instance_handler_organization_fullname: 部门

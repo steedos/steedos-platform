@@ -52,10 +52,15 @@ export const initSummaryConfig = (summaryConfig: SteedosFieldSummaryTypeConfig) 
 export const getSummaryDataType = (summaryConfig: SteedosFieldSummaryTypeConfig, summaryObject: SteedosObjectTypeConfig) => {
     const { summary_object, summary_type, summary_field, field_name, object_name } = summaryConfig;
     let result: SteedosSummaryDataTypeValue;
-    if (summary_field) {
-        if (summary_type === SteedosSummaryTypeValue.COUNT) {
-            throw new Error(`You can't set a summary_field property for the field '${field_name}' of the object '${object_name}' while the summary_type is set to 'count'.`);
-        }
+    let needSummaryField = true;
+    if(summary_type === SteedosSummaryTypeValue.COUNT){
+        // 如果是COUNT类型，则忽然掉要聚合的字段
+        needSummaryField = false;
+    }
+    else if(!summary_field){
+        throw new Error(`You have to set a summary_field property for the field '${field_name}' of the object '${object_name}' when the summary_type is not set to 'count'.`);
+    }
+    if (summary_field && needSummaryField) {
         const field = summaryObject.fields[summary_field];
         if (field) {
             let fieldType = field.type;
@@ -83,9 +88,6 @@ export const getSummaryDataType = (summaryConfig: SteedosFieldSummaryTypeConfig,
         }
     }
     else {
-        if (summary_type !== "count") {
-            throw new Error(`You have to set a summary_field property for the field '${field_name}' of the object '${object_name}' when the summary_type is not set to 'count'.`);
-        }
         result = SteedosSummaryDataTypeValue.Number;
     }
     return result;

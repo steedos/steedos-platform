@@ -12,6 +12,6 @@ _.each(apps, function(item){
     if(stat.isDirectory() === true) {
         let packagePath = path.join(fPath, "steedos-app")
         
-        execSync(`steedos package:build -n ${item} -p ${packagePath}`);
+        execSync(`cd ${fPath} && steedos package:build -n ${item} -p ${packagePath}`);
     }
 })

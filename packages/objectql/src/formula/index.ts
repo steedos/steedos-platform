@@ -138,7 +138,8 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
         }
         if (typeof tempFieldConfig.reference_to !== "string") {
             // 暂时只支持reference_to为字符的情况，其他类型直接跳过
-            throw new Error(`computeFormulaVarAndQuotes:The reference_to of the field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is not a string type.`);
+            throw new Error(`Field ${tempFieldConfig.name} in formula ${formulaVar} does not define the "Reference Object" property or its "Reference Object" property is a function.`);
+            console.error("computeFormulaVarAndQuotes:The reference_to of the field '" + tempFieldConfig.name + "' for the formula var '" + formulaVar + "' is not a string type.");
         }
         tempObjectConfig = objectConfigs.find((item) => {
             return item.name === tempFieldConfig.reference_to;

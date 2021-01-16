@@ -1,0 +1,14 @@
+name: API Key.用户
+allowCreate: true
+allowDelete: true
+allowEdit: true
+allowRead: true
+modifyAllRecords: false
+modifyCompanyRecords: false
+permission_set_id: supplier
+uneditable_fields:
+  - name
+  - last_use_time
+  - api_key
+viewAllRecords: false
+viewCompanyRecords: false

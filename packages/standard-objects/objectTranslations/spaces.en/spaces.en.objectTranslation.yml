@@ -19,11 +19,11 @@ fields:
     help: 
     description: 
   owner:
-    label: Owner
+    label: Space Owner
     help: 
     description: 
   admins:
-    label: Admin Users
+    label: Admins
     help: 
     description: 
   account_logo:

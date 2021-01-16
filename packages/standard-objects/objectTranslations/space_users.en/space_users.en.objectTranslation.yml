@@ -27,23 +27,23 @@ fields:
     help: 
     description: 
   organizations:
-    label: All Departments
+    label: Departments
     help: 
     description: 
   organizations_parents:
-    label: All Departments and Superiors
+    label: Department Parent Tree
     help: 
     description: 
   organization:
-    label: Main Department
+    label: Primary Department
     help: 
     description: 
   company_ids:
-    label: All Divisions
+    label: Divisions
     help: 
     description: 
   company_id:
-    label: Main Division
+    label: Primary Division
     help: 
     description: 
   position:
@@ -63,11 +63,11 @@ fields:
     help: 
     description: 
   is_supplier:
-    label: Supplier
+    label: Is Supplier
     help: 
     description: 
   is_customer:
-    label: Customer
+    label: Is Customer
     help: 
     description: 
   work_phone:
@@ -131,9 +131,9 @@ listviews:
   disabled:
     label: Invalid Users
   supplier:
-    label: 供应商用户
+    label: Supplier Users
   customer:
-    label: 客户用户
+    label: Customer Users
 actions:
   invite_space_users:
     label: Invite Users

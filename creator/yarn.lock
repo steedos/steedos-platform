@@ -1732,7 +1732,7 @@
     validator "^12.2.0"
 
 "@steedos/app-admin@../apps/steedos-app-admin":
-  version "1.23.0-alpha.14"
+  version "1.23.0-alpha.15"
 
 "@steedos/app-contracts@../apps/steedos-app-crm":
   version "1.23.0-alpha.15"

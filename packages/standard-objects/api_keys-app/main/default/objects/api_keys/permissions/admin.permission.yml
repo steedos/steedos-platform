@@ -9,4 +9,5 @@ uneditable_fields:
   - name
   - last_use_time
   - api_key
+  - owner
 viewAllRecords: true

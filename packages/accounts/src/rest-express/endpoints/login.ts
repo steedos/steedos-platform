@@ -20,7 +20,13 @@ export const login = (accountsServer: AccountsServer) => async (
     });
 
     setAuthCookies(req, res, result.user._id, result.token, result.tokens.accessToken);
-
+    try {
+      if(result && result.user){
+        delete result.user['services']
+      }
+    } catch (error) {
+      
+    }
     res.json(result);
     return;
   } catch (err) {
