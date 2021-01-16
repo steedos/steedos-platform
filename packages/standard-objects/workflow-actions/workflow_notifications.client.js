@@ -11,7 +11,7 @@ Steedos.WorkflowNotificationsManager.changeSchema = function (doc, schema) {
       schema._schema.object_name.autoform.readonly = true;
       doc.object_name = object_name;
     }else{
-      toastr.error("请先选择该批准步骤的“批准过程”然后再新建工作流通知！");
+      toastr.error(t("workflow_notifications_field__error_process_node_process_definition_required"));
     }
   }
 
@@ -25,7 +25,7 @@ Steedos.WorkflowNotificationsManager.changeSchema = function (doc, schema) {
         object_name = AutoForm.getFormValues("creatorAddForm").insertDoc.object_name;
       }
       if(!object_name){
-        toastr.error("请先选择该批准过程的“对象”然后再新建工作流通知！");
+        toastr.error(t("workflow_notifications_field__error_process_definition_object_required"));
       }
     }else{
         // 当前正在新建或编辑批准过程以外其他对象，目前只有批准过程详细界面新建或编辑批准步骤
@@ -35,7 +35,7 @@ Steedos.WorkflowNotificationsManager.changeSchema = function (doc, schema) {
             object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
           }
           else{
-            toastr.error("请先选择该批准步骤的“批准过程”然后再新建工作流通知！");
+            toastr.error(t("workflow_notifications_field__error_process_node_process_definition_required"));
           }
         } else {
           var formValues = AutoForm.getFormValues("creatorAddRelatedForm");
@@ -48,7 +48,7 @@ Steedos.WorkflowNotificationsManager.changeSchema = function (doc, schema) {
             object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
           }
           else{
-            toastr.error("请先选择该批准步骤的“批准过程”然后再新建工作流通知！");
+            toastr.error(t("workflow_notifications_field__error_process_node_process_definition_required"));
           }
         }
     }
@@ -68,7 +68,7 @@ Steedos.WorkflowNotificationsManager.changeSchema = function (doc, schema) {
       doc.object_name = object_name;
     }
     else{
-      toastr.error("请先选择该工作流规则的“对象”然后再新建工作流通知！");
+      toastr.error(t("workflow_notifications_field__error_workflow_rule_object_required"));
     }
   }
 }
