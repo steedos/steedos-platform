@@ -8,7 +8,7 @@ Steedos.ProcessFieldUpdatesManager.changeSchema = function (doc, schema) {
     schema._schema[fieldName].autoform.omit = true;
     schema._schema[fieldName].autoform.type = 'hidden';
   }
-  var recordId = Session.get("record_id");
+  // var recordId = Session.get("record_id");
   var objectName = Session.get("object_name");
   var actionObjectName = Session.get("action_object_name");
   var actionOperation = Session.get("cmOperation");
