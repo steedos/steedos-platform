@@ -13,13 +13,14 @@ Steedos.ProcessFieldUpdatesManager.changeSchema = function (doc, schema) {
   var actionObjectName = Session.get("action_object_name");
   var actionOperation = Session.get("cmOperation");
   if (objectName == 'process_node') {
-    var processDefinitionId = Creator.odata.get("process_node", recordId, "process_definition").process_definition;
-    var object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
-    schema._schema.object_name.autoform.readonly = true;
-    // if(object_name){
-    //   toastr.error("==");
-    // }
-    doc.object_name = object_name;
+    var processDefinitionId = AutoForm.getFormValues("creatorEditForm").insertDoc.process_definition; //Creator.odata.get("process_node", recordId, "process_definition").process_definition;
+    if(processDefinitionId){
+      var object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
+      schema._schema.object_name.autoform.readonly = true;
+      doc.object_name = object_name;
+    }else{
+      toastr.error("请先选择该批准步骤的“批准过程”然后再新建字段更新！");
+    }
   }
 
   if (objectName == 'process_definition') {
@@ -35,7 +36,12 @@ Steedos.ProcessFieldUpdatesManager.changeSchema = function (doc, schema) {
         // 当前正在新建或编辑批准过程以外其他对象，目前只有批准过程详细界面新建或编辑批准步骤
         if (actionOperation == 'update') {
           var processDefinitionId = AutoForm.getFormValues("creatorEditForm").insertDoc.process_definition;
-          object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
+          if(processDefinitionId){
+            object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
+          }
+          else{
+            toastr.error("请先选择该批准步骤的“批准过程”然后再新建字段更新！");
+          }
         } else {
           var formValues = AutoForm.getFormValues("creatorAddRelatedForm");
           if(!formValues){
@@ -43,7 +49,12 @@ Steedos.ProcessFieldUpdatesManager.changeSchema = function (doc, schema) {
             formValues = AutoForm.getFormValues("creatorAddForm");
           }
           var processDefinitionId = formValues.insertDoc.process_definition;
-          object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
+          if(processDefinitionId){
+            object_name = Creator.odata.get("process_definition", processDefinitionId, "object_name").object_name;
+          }
+          else{
+            toastr.error("请先选择该批准步骤的“批准过程”然后再新建字段更新！");
+          }
         }
     }
     schema._schema.object_name.autoform.readonly = true;
@@ -58,7 +69,12 @@ Steedos.ProcessFieldUpdatesManager.changeSchema = function (doc, schema) {
       object_name = AutoForm.getFormValues("creatorAddForm").insertDoc.object_name
     }
     schema._schema.object_name.autoform.readonly = true;
-    doc.object_name = object_name;
+    if(object_name){
+      doc.object_name = object_name;
+    }
+    else{
+      toastr.error("请先选择该工作流规则的“对象”然后再新建字段更新！");
+    }
   }
 
   // if(doc.process_definition){
