@@ -26,6 +26,7 @@ getRedirectUrl = ()->
 
 Steedos.logout = (redirect)->
 	Accounts._unstoreLoginToken();
+	Setup.clearAuthLocalStorage()
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
 		if !redirect
@@ -36,8 +37,9 @@ Steedos.goResetPassword = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
 		if !redirect
-			redirect = getRedirectUrl();
+			redirect = getRedirectUrl()
 		Accounts._unstoreLoginToken();
+		Setup.clearAuthLocalStorage()
 		window.location.href = Steedos.absoluteUrl(accountsUrl + "/a/#/update-password?redirect_uri=" + redirect);
 
 Steedos.redirectToSignIn = (redirect)->
@@ -45,7 +47,11 @@ Steedos.redirectToSignIn = (redirect)->
 	if accountsUrl 
 		if !redirect
 			redirect = getRedirectUrl();
-		window.location.href = Steedos.absoluteUrl(accountsUrl + "/authorize?redirect_uri=" + redirect);
+		window.location.href = Steedos.absoluteUrl(accountsUrl + "/authorize?redirect_uri=" + encodeURIComponent(redirect));
+
+Steedos.clearAuth = ()->
+	Accounts._unstoreLoginToken()
+	Setup.clearAuthLocalStorage()
 
 Setup.validate = (onSuccess)->
 
@@ -123,17 +129,21 @@ Setup.validate = (onSuccess)->
 			onSuccess()
 	.fail ( e ) ->
 		if (e.status == 401)
+			Steedos.clearAuth()
 			Steedos.redirectToSignIn()
 		return
 
 Setup.clearAuthLocalStorage = ()->
+	keysforRemove = []
 	localStorage = window.localStorage;
 	i = 0
 	while i < localStorage.length
 		key = localStorage.key(i)
 		if key?.startsWith("Meteor.loginToken") || key?.startsWith("Meteor.userId")  || key?.startsWith("Meteor.loginTokenExpires") || key?.startsWith('accounts:')
-			localStorage.removeItem(key)
+			keysforRemove.push(key)
 		i++
+	keysforRemove.forEach (k) ->
+		localStorage.removeItem(k)
 
 Setup.logout = (callback) ->
 	$.ajax
@@ -148,7 +158,13 @@ Setup.logout = (callback) ->
 		if callback
 			callback()
 
+Setup.setGlobalAjaxHeader = () ->
+	$.ajaxSetup
+		beforeSend: (request) ->
+			request.setRequestHeader('X-User-Id', Meteor.userId())
+
 Meteor.startup ->
+	Setup.setGlobalAjaxHeader()
 
 	Setup.validate();
 	Accounts.onLogin ()->
@@ -270,6 +286,7 @@ requestLicense = (spaceId)->
 		url: Steedos.absoluteUrl("/api/license/#{spaceId}"),
 		dataType: "json"
 		headers: headers
+		async: false,
 		error: (jqXHR, textStatus, errorThrown) ->
 			error = jqXHR.responseJSON
 			console.error error

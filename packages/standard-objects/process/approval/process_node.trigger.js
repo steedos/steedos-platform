@@ -1,6 +1,6 @@
 const _ = require("underscore");
 const objectql = require('@steedos/objectql');
-const util = require('./util');
+const util = require('../../util');
 
 const reviseRecordOrder = async function (processId, record) {
     let processNodes = await objectql.getObject("process_node").find({ filters: ['process_definition', '=', processId], sort: 'order asc' });
@@ -32,6 +32,21 @@ const reviseRecordOrder = async function (processId, record) {
     for (const processNode of processNodeFirst) {
         if (processNode.reject_behavior != 'reject_request') {
             await objectql.getObject("process_node").directUpdate(processNode._id, { reject_behavior: 'reject_request' });
+        }
+    }
+
+    const newProcessNodes = await objectql.getObject("process_node").find({ filters: ['process_definition', '=', processId], sort: 'order asc' });
+    for (const processNode of newProcessNodes) {
+        if (processNode.order != 1) {
+            if(processNode.order == newProcessNodes.length){
+                if(processNode.if_criteria_not_met != 'approve'){
+                    await objectql.getObject("process_node").directUpdate(processNode._id, { if_criteria_not_met: 'approve' });
+                }
+            }else{
+                if(processNode.if_criteria_not_met === 'reject'){
+                    await objectql.getObject("process_node").directUpdate(processNode._id, { if_criteria_not_met: 'approve' });
+                }
+            }
         }
     }
 }
@@ -71,6 +86,13 @@ const allowEdit = async function(recordId, doc){
     }
 }
 
+const getProcessNodeObjectName = async function(processId){
+    const process = await objectql.getObject("process_definition").findOne(processId);
+    if(process){
+        return process.object_name
+    }
+}
+
 module.exports = {
     beforeInsert: async function () {
 
@@ -90,7 +112,13 @@ module.exports = {
         if (this.doc.order === 1) {
             this.doc.reject_behavior = 'reject_request';
         }
-        await util.checkAPIName(this.object_name, 'name', this.doc.name);
+        await util.checkAPIName(this.object_name, 'name', this.doc.name, null, [['process_definition', '=', this.doc.process_definition]]);
+        if(!this.doc.filtrad){
+            const objectName = await getProcessNodeObjectName(this.doc.process_definition);
+            if(objectName){
+                objectql.checkFormula(this.doc.entry_criteria, objectName)
+            }
+        }
 
     },
     afterInsert: async function () {
@@ -110,7 +138,14 @@ module.exports = {
             }
         }
         if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id);
+            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['process_definition', '=', this.doc.process_definition]]);
+        }
+
+        if(!this.doc.filtrad && this.doc.process_definition){
+            const objectName = await getProcessNodeObjectName(this.doc.process_definition);
+            if(objectName){
+                objectql.checkFormula(this.doc.entry_criteria, objectName)
+            }
         }
     },
     afterUpdate: async function () {

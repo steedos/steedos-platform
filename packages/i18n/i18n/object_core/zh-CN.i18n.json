@@ -201,7 +201,12 @@
 	"space_users_method_disable_error_can_not_disable_disabled": "无法停用已停用的帐户。",
 	"space_users_method_enable_error_can_not_enable_enabled": "无法启用已启用的帐户。",
 	
-
+	"space_users_method_unlock_success": "已成功解除锁定该用户。",
+	"space_users_method_unlock_error": "解除锁定用户失败，%s",
+	"space_users_method_lockout_success": "已成功锁定该用户。",
+	"space_users_method_lockout_error": "锁定用户失败，%s",
+	"space_users_method_unlock_lockout_error_only_space_admin": "只有工作区管理员可以解除锁定/锁定账户。",
+	
 	"reports_field_report_type_options_tabular": "表格",
 	"reports_field_report_type_options_summary": "摘要",
 	"reports_field_report_type_options_matrix": "矩阵",
@@ -224,5 +229,15 @@
 	"object_fields_function_recomputeFormulaValues_error": "未能成功重算该公式字段值，%s",
 
 	"object_fields_function_recomputeSummaryValues_success": "已成功重算该汇总字段值。",
-	"object_fields_function_recomputeSummaryValues_error": "未能成功重算该汇总字段值，%s"
+	"object_fields_function_recomputeSummaryValues_error": "未能成功重算该汇总字段值，%s",
+
+	"object_fields_error_summary_object_required": "字段类型为累计汇总时，必须填写要汇总的对象。",
+	"object_fields_error_summary_data_type_not_found": "未找到该累计汇总字段对应的数据类型。",
+
+	"object_fields_error_filter_item_invalid_number": "过滤条件设置有误, 数值类型字段值必须是一个有效的数值。",
+	"object_fields_error_filter_item_invalid_date": "过滤条件设置有误, 日期、日期时间类型字段值必须是一个有效的日期值，请输入2020-01-01这种格式的字符表示日期，2020-01-01 12:00这种格式的字符表示日期时间。",
+	"object_fields_error_filter_item_invalid_boolean": "过滤条件设置有误, 布尔类型字段值无效，请输入'1/true/True/TRUE/真'表示真，或输入'0/false/False/FALSE/假'表示假。",
+	"object_fields_error_filter_item_field_required": "过滤条件设置有误, 字段不能为空。",
+	"object_fields_error_filter_item_operation_required": "过滤条件设置有误, 运算符不能为空。",
+	"object_fields_error_filter_item_value_required": "过滤条件设置有误, 值不能为空。"
 }

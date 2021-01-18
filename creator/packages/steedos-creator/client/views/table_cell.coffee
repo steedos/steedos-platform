@@ -115,6 +115,11 @@ Template.creator_table_cell.helpers
 				result += " creator-cell-multiple-color"
 			return result
 	editable: ()->
+		obj = Creator.getObject(this.object_name)
+		if !obj
+			return false
+		if obj.enable_inline_edit == false
+			return false
 		if !this.field
 			return false
 		safeField = Creator.getRecordSafeField(this.field, this.doc, this.object_name);
@@ -145,6 +150,9 @@ Template.creator_table_cell.helpers
 
 	isType: (type) ->
 		return this.type is type
+
+	fieldDataType: () ->
+		return this.field.data_type || this.field.type
 
 	isExtraField: () ->
 		fieldName = this.field?.name

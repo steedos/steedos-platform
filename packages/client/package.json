@@ -1,13 +1,18 @@
 {
   "private": true,
   "name": "@steedos/client",
-  "version": "1.22.0-alpha.9",
+  "version": "1.22.10",
   "description": "client lib for steedos",
   "main": "lib/index.js",
   "scripts": {
     "watch": "tsc --watch",
     "compile": "tsc",
-    "prepare": "tsc"
+    "prepare": "tsc",
+    "test": "mocha test/unit/*.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^8.0.3",
+    "typescript": "3.5.3"
   },
   "license": "MIT"
 }

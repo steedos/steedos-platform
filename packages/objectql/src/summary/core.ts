@@ -1,4 +1,4 @@
-import { getSteedosSchema } from '../index';
+import { getSteedosSchema, processFilters, getObjectConfig } from '../index';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryTypeBlankValue } from './type';
 import { getObjectQuotedByFieldSummaryConfigs, getObjectFieldSummaryConfigs } from './field_summary';
 import { runQuotedByObjectFieldFormulas } from '../formula';
@@ -7,14 +7,18 @@ import _ = require('lodash');
 import { JsonMap } from '@salesforce/ts-types';
 
 /**
- * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在insert/update的对象字段的公式字段并更新其字段值
- * @param objectName 
- * @param recordId 
+ * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在insert/update的对象字段的汇总字段并更新其字段值
+ * @param objectName 当前正在insert/update的对象
+ * @param recordId 当前正在insert/update的记录id
  * @param userSession 
  * @param fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
  * @param quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runQuotedByObjectFieldSummaries = async function (objectName: string, recordId: string, previousDoc: any, userSession: any, fieldNames?: Array<string>, quotedByConfigs?: Array<SteedosFieldSummaryTypeConfig>) {
+export const runQuotedByObjectFieldSummaries = async function (objectName: string, recordId: string, previousDoc: any, userSession: any, options: {
+    fieldNames?: Array<string>,
+    quotedByConfigs?: Array<SteedosFieldSummaryTypeConfig>
+} = {}) {
+    let { fieldNames, quotedByConfigs } = options;
     if (!quotedByConfigs) {
         quotedByConfigs = getObjectQuotedByFieldSummaryConfigs(objectName, fieldNames);
     }
@@ -73,7 +77,7 @@ export const getSummaryAggregateGroups = (summary_type: SteedosSummaryTypeValue,
 }
 
 /**
- * 修改记录时，根据查到的引用了该记录相关字段公式配置，重新计算字段公式，并把计算结果更新到数据库相关记录中
+ * 新建或修改记录时，根据查到的引用了该记录相关字段汇总配置，重新计算字段值，并把计算结果更新到数据库相关记录中
  * @param objectName 当前修改的记录所属对象名称
  * @param recordId 当前修改的记录ID
  * @param fieldSummaryConfig 查到的引用了该记录所属对象的汇总字段配置之一
@@ -135,27 +139,40 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
     await updateReferenceTosFieldSummaryValue(referenceToIds, fieldSummaryConfig, userSession);
 }
 
+/**
+ * 执行聚合计算，并把聚合汇总后的值更新到数据库中
+ * @param referenceToIds 子表上的master_detail关联到主表对象的字段值集合，是多条子表记录上的关联id值组成的数组
+ * @param fieldSummaryConfig 
+ * @param userSession 
+ */
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
-    const { reference_to_field, summary_type, summary_field, summary_object, object_name, filters } = fieldSummaryConfig;
+    // console.log("===updateReferenceTosFieldSummaryValue====referenceToIds, fieldSummaryConfig==", referenceToIds, fieldSummaryConfig);
+    const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters, field_name } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
     }
     // 需要使用aggregate来汇总计算
     let aggregateGroups = getSummaryAggregateGroups(summary_type, summary_field);
+    // console.log("===updateReferenceTosFieldSummaryValue====aggregateGroups==", aggregateGroups);
     for (let referenceToId of referenceToIds) {
         if(typeof referenceToId !== "string"){
             referenceToId = <string>referenceToId._id;
         }
         let referenceToFilters:any = [[reference_to_field, "=", referenceToId]];
         let aggregateFilters:any = referenceToFilters;
-        if(filters && filters.length){
-            if(typeof filters === "string"){
+        if(summary_filters && summary_filters.length){
+            if(typeof summary_filters === "string"){
                 // 传入的过滤条件为odata字符串时，需要把aggregateFilters也解析为odata串并取AND
                 aggregateFilters = formatFiltersToODataQuery(referenceToFilters);
-                aggregateFilters = `(${aggregateFilters}) and (${filters})`;
+                aggregateFilters = `(${aggregateFilters}) and (${summary_filters})`;
             }
             else{
-                aggregateFilters = [referenceToFilters, filters];
+                const summaryObject = getObjectConfig(summary_object);
+                if(!summaryObject){
+                    throw new Error(`The summary_object '${summary_object}' of the field '${field_name}' on the object '${object_name}' is not found in the default datasource.`);
+                }
+                processFilters(summary_filters, summaryObject.fields);
+                aggregateFilters = [referenceToFilters, summary_filters];
             }
         }
 
@@ -163,6 +180,7 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
             // 过滤器中支持userSession变量的写法，比如[["owner", "=", "{userId}"]]
             aggregateFilters = formatFiltersToODataQuery(aggregateFilters, userSession);
         }
+        // console.log("===aggregateFilters===", aggregateFilters);
         const aggregateResults = await getSteedosSchema().getObject(summary_object).directAggregate({
             filters: aggregateFilters
         }, aggregateGroups);
@@ -184,6 +202,8 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
 
         }
     }
+    // 这里特意重新遍历一次referenceToIds而不是直接在updateReferenceToFieldSummaryValue函数中每次更新一条记录后立即处理被引用字段的级联变更，见：公式或汇总触发级联重算时，数据类型变更可能会造成无法重算 #965
+    await updateQuotedByReferenceTosForSummaryType(referenceToIds, fieldSummaryConfig, userSession);
 }
 
 export const updateReferenceToFieldSummaryValue = async (referenceToId: string, value: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
@@ -191,11 +211,28 @@ export const updateReferenceToFieldSummaryValue = async (referenceToId: string, 
     let setDoc = {};
     setDoc[field_name] = value;
     await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
-    // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
-    // console.log("===updateReferenceToFieldSummaryValue====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
-    await runQuotedByObjectFieldFormulas(object_name, referenceToId, userSession ? userSession.userId : undefined, {
-        fieldNames:[field_name]
-    })
+}
+
+export const updateQuotedByReferenceTosForSummaryType = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
+    const { field_name, object_name } = fieldSummaryConfig;
+    if (!_.isArray(referenceToIds)) {
+        referenceToIds = [referenceToIds];
+    }
+    const fieldNames = [field_name];
+    for (let referenceToId of referenceToIds) {
+        if(typeof referenceToId !== "string"){
+            referenceToId = <string>referenceToId._id;
+        }
+        // console.log("===updateQuotedByReferenceTosForSummaryType====object_name, referenceToId, field_name===", object_name, referenceToId, field_name);
+        // 汇总字段修改后，需要找到引用了该字段的其他公式字段并更新其值
+        await runQuotedByObjectFieldFormulas(object_name, <string>referenceToId, userSession, {
+            fieldNames
+        });
+        // 汇总字段修改后，需要找到引用了该字段的其他汇总字段并更新其值
+        await runQuotedByObjectFieldSummaries(object_name, <string>referenceToId, null, userSession, {
+            fieldNames
+        });
+    }
 }
 
 /**

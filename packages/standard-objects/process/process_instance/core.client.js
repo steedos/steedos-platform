@@ -60,7 +60,7 @@ Steedos.getDisplayObjects = function(filterFunction){
     _.each(Creator.objectsByName, function (object, k) {
         var filterReturn = true;
         if (filterFunction && _.isFunction(filterFunction)) {
-            filterReturn = filterFunction(v);
+            filterReturn = filterFunction(object);
         }
         if (filterReturn && !object.hidden && !_.include(['cfs_instances_filerecord'], object.name)) {
             objects.push(object)

@@ -93,7 +93,7 @@ class Signup extends React.Component {
 
     
     
-    if (this.props.tenant.enable_mobile_code_login || this.props.tenant.enable_email_code_login) {
+    if (this.props.tenant.enable_mobile_code_login && this.props.tenant.enable_email_code_login) {
       this.state.loginWithCode = true;
       this.state.loginByEmail = true;
       this.state.loginByMobile = true;

@@ -894,7 +894,7 @@ WorkflowManager.isPaidSpace = function(spaceId) {
 		'_id': spaceId
 	});
 	if (s) {
-		is_paid = s.is_paid;
+		is_paid = Steedos.hasFeature('paid', s._id);
 	}
 	return is_paid;
 };
@@ -905,7 +905,7 @@ WorkflowManager.isArrearageSpace = function() {
 		'_id': spaceId
 	});
 	if (space) {
-		if (space.is_paid) {
+		if (Steedos.hasFeature('paid', space._id)) {
 
 			return space.end_date <= new Date ? true : false;
 

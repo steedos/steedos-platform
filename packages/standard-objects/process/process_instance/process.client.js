@@ -4,7 +4,10 @@ Steedos.ProcessManager.showProcessApprovalForm = function(action, fields, formId
 
     var approveSchema = Creator.getObjectSchema({fields: fields})
 
-    Modal.show("quickFormModal", {formId: formId, title: title || TAPi18n.__(`process_approval_title_${action}`), confirmBtnText: `process_approval_confirmBtnText_${action}`, schema: approveSchema, doc: doc, onConfirm: onConfirm});
+    Modal.show("quickFormModal", {formId: formId, title: title || TAPi18n.__(`process_approval_title_${action}`), confirmBtnText: `process_approval_confirmBtnText_${action}`, schema: approveSchema, doc: doc, onConfirm: onConfirm}, {
+        backdrop: 'static',
+        keyboard: true
+    });
 }
 
 Steedos.ProcessManager.allowApprover = function(object_name, record_id){

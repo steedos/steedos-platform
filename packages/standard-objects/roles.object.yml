@@ -1,6 +1,6 @@
 name: roles
 label: Role
-icon: task
+icon: groups
 hidden: true
 fields:
   name:

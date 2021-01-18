@@ -9,6 +9,8 @@ import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
 import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
+import { runObjectWorkflowRules } from '../actions';
+import { runValidationRules } from './validation_rules';
 const clone = require('clone')
 
 abstract class SteedosObjectProperties {
@@ -32,6 +34,7 @@ abstract class SteedosObjectProperties {
     enable_trash?: boolean
     enable_space_global?: boolean
     enable_tree?: boolean
+    enable_inline_edit?: boolean
     is_view?: boolean
     hidden?: boolean
     description?: string
@@ -62,7 +65,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
 
 const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
 
-const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList']
+const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList']
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -736,6 +739,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('not find permission')
         }
 
+        let objectName = args[0], recordId: string, doc: JsonMap;
+        if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
+            // 因下面的代码，比如函数dealWithMethodPermission可能改写args变量，所以需要提前从args取出对应变量值。
+            if(method === "insert"){
+                // 此处doc不带_id值，得执行完adapterMethod.apply后，doc中才有_id属性，所以这里的doc及recordId都不准确
+                doc = args[1];
+                recordId = <string>doc._id;
+            }
+            else{
+                recordId = args[1];
+                doc = args[2];
+            }
+        }
+
         // 判断处理工作区权限，公司级权限，owner权限
         if (this._datasource.enable_space) {
             this.dealWithFilters(method, args);
@@ -749,11 +766,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
         } else {
+            userSession = args[args.length - 1]
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             await this.runBeforeTriggers(method, beforeTriggerContext)
+            await runValidationRules(method, beforeTriggerContext, args[0], userSession)
+
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
             let previousDoc = clone(afterTriggerContext.previousDoc);
-            userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
             if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
@@ -763,7 +782,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
                 Object.assign(afterTriggerContext, {data: {values: values}})
             }
-            await this.runAfterTriggers(method, afterTriggerContext)
+            // console.log("==returnValue==", returnValue);
+            if(method == "update"){
+                if(returnValue){
+                    await this.runAfterTriggers(method, afterTriggerContext)
+                }
+            }
+            else{
+                await this.runAfterTriggers(method, afterTriggerContext)
+            }
             if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
                 if(_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))){
                     return returnValue
@@ -771,14 +798,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return afterTriggerContext.data.values
                 }
             }
-            // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
-            await this.runRecordFormula(method, args, userSession ? userSession.userId : undefined);
-            await this.runRecordSummaries(method, args, previousDoc, userSession);
+            await runObjectWorkflowRules(this.name, method, returnValue, userSession, afterTriggerContext.previousDoc);
+            if(returnValue){
+                if(method === "insert"){
+                    // 当为insert时，上面代码执行后的doc不带_id，只能从returnValue中取
+                    doc = returnValue;
+                    recordId = <string>doc._id;
+                }
+                // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
+                await this.runRecordFormula(method, objectName, recordId, doc, userSession);
+                await this.runRecordSummaries(method, objectName, recordId, doc, previousDoc, userSession);
+            }
         }
         return returnValue
     };
 
-    private async runRecordFormula(method: string, args: Array<any>, currentUserId: any) {
+    private async runRecordFormula(method: string, objectName: string, recordId: string, doc: any, userSession: any) {
         if(["insert", "update", "updateMany"].indexOf(method) > -1){
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
@@ -786,39 +821,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 // await runManyCurrentObjectFieldFormulas(objectName, filters, userSession);
             }
             else{
-                let objectName = args[0], recordId: string, doc: JsonMap;
-                if(method === "insert"){
-                    doc = args[1];
-                    recordId = <string>doc._id;
-                }
-                else{
-                    recordId = args[1];
-                    doc = args[2];
-                }
+                let currentUserId = userSession ? userSession.userId : undefined;
                 await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
                 if(method === "update"){
                     // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
-                    await runQuotedByObjectFieldFormulas(objectName, recordId, currentUserId);
+                    await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
                 }
             }
         }
     }
 
-    private async runRecordSummaries(method: string, args: Array<any>, previousDoc: any, userSession: any) {
+    private async runRecordSummaries(method: string, objectName: string, recordId: string, doc: any, previousDoc: any, userSession: any) {
         if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
             if(method === "updateMany"){
                 // TODO:暂时不支持updateMany汇总计算，因为拿不到修改了哪些数据
             }
             else{
-                let objectName = args[0], recordId: string, doc: JsonMap;
-                if(method === "insert"){
-                    doc = args[1];
-                    recordId = <string>doc._id;
-                }
-                else{
-                    recordId = args[1];
-                    doc = args[2];
-                }
                 if(method === "insert"){
                     await runCurrentObjectFieldSummaries(objectName, recordId);
                 }

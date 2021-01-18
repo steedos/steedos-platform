@@ -1,7 +1,8 @@
 name: process_definition
-label: process_definition
+label: Approval Processes
 hidden: true
-icon: record
+icon: approval
+enable_inline_edit: false
 fields:
   name:
     type: text
@@ -16,13 +17,14 @@ fields:
     is_wide: true
     filterable: true
     create: false
-    reference_to: objects
+    # reference_to: objects
+    reference_to_field: name
     optionsFunction: !!js/function |
       function(){
         return Steedos.getObjectsOptions();
       }
   description:
-    label: 描述
+    label: Description
     type: textarea
     is_wide: true
   order: #TODO 必须是连续的数字
@@ -32,7 +34,7 @@ fields:
     min: 1
   active:
     type: boolean
-    label: State
+    label: Active
     # hidden: true
     omit: true
     defaultValue: false
@@ -41,7 +43,7 @@ fields:
     label: Specify Entry Criteria
     is_wide: true
     required: true
-    group: 指定条目条件
+    # group: Specify Entry Criteria
     inlineHelpText: If only certain types of records should enter this approval process, enter that criteria below. For example, only expense reports from employees at headquarters should use this approval process.
   # user_hierarchy_field:
   #   type: text
@@ -90,24 +92,24 @@ fields:
     type: boolean
     is_wide: true
     label: Allow submitters to recall approval requests
-    group: 提交设置
+    # group: 提交设置
   initial_submission_record_lock:
     type: select
     required: true
     firstOption: false
     options:
-      - label: 锁定记录以免进行编辑
+      - label: Lock the record from being edited
         value: lock
-      - label: 取消锁定可以进行编辑
+      - label: Unlock the record for editing
         value: unlock
     defaultValue: lock
     readonly: true
-    label: 锁定记录
-    group: 初始提交操作
+    label: Record Lock
+    group: Initial Submission Actions
   initial_submission_updates_field_actions:
     type: lookup
     multiple: true
-    label: 字段更新
+    label: Field Update
     reference_to: action_field_updates
     depend_on:
       - object_name
@@ -117,23 +119,23 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
-    group: 初始提交操作
+    group: Initial Submission Actions
   final_approval_record_lock:
     type: select
     required: true
     firstOption: false
     options:
-      - label: 锁定记录以免进行编辑
+      - label: Lock the record from being edited
         value: lock
-      - label: 取消锁定可以进行编辑
+      - label: Unlock the record for editing
         value: unlock
     defaultValue: lock
-    label: 锁定记录
-    group: 最终批准操作
+    label: Record Lock
+    group: Final Approval Actions
   final_approval_updates_field_actions:
     type: lookup
     multiple: true
-    label: 字段更新
+    label: Field Update
     reference_to: action_field_updates
     depend_on:
       - object_name
@@ -143,23 +145,23 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
-    group: 最终批准操作
+    group: Final Approval Actions
   final_rejection_record_lock:
     type: select
     required: true
     firstOption: false
     options:
-      - label: 锁定记录以免进行编辑
+      - label: Lock the record from being edited
         value: lock
-      - label: 取消锁定可以进行编辑
+      - label: Unlock the record for editing
         value: unlock
     defaultValue: unlock
-    label: 锁定记录
-    group: 最终拒绝操作
+    label: Record Lock
+    group: Final Rejection Actions
   final_rejection_updates_field_actions:
     type: lookup
     multiple: true
-    label: 字段更新
+    label: Field Update
     reference_to: action_field_updates
     depend_on:
       - object_name
@@ -169,24 +171,24 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
-    group: 最终拒绝操作
+    group: Final Rejection Actions
   recall_record_lock:
     type: select
     required: true
     firstOption: false
     options:
-      - label: 锁定记录以免进行编辑
+      - label: Lock the record from being edited
         value: lock
-      - label: 取消锁定可以进行编辑
+      - label: Unlock the record for editing
         value: unlock
     defaultValue: unlock
     readonly: true
-    label: 锁定记录
-    group: 调回操作
+    label: Record Lock
+    group: Recall Actions
   recall_updates_field_actions:
     type: lookup
     multiple: true
-    label: 字段更新
+    label: Field Update
     reference_to: action_field_updates
     depend_on:
       - object_name
@@ -196,7 +198,7 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
-    group: 调回操作
+    group: Recall Actions
     
 relatedList:
   - process_node
@@ -205,6 +207,8 @@ list_views:
   all:
     label: All
     filter_scope: space
+    filter_fields:
+      - object_name
     columns:
       - label
       - object_name
@@ -213,10 +217,13 @@ list_views:
       - active
 actions:
   enable:
-    label: 启用
+    label: Enable
     on: record
   disable:
-    label: 停用
+    label: Disable
+    on: record
+  copy:
+    label: Copy
     on: record
 permission_set:
   user:
@@ -233,8 +240,3 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-form:
-  afterView: !!js/function |
-    function(){
-      $(".table-cell-edit").remove();
-    }

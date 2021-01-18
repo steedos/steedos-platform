@@ -270,6 +270,7 @@ install("jeremy:selectize");
 install("comerc:autoform-selectize");
 install("react-template-helper");
 install("steedos:webkit-notification");
+install("steedos:api-authenticate-user");
 install("hot-code-push");
 install("launch-screen");
 install("autoupdate", "meteor/autoupdate/autoupdate_server.js");
@@ -675,7 +676,34 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"connect":{"package.json":function(require,exports,module){
+}},"aws-sdk":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/aws-sdk/package.json                                                                //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "aws-sdk",
+  "version": "2.0.23",
+  "main": "lib/aws.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"aws.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/aws-sdk/lib/aws.js                                                                  //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}},"connect":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -813,7 +841,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.22.0-alpha.9",
+  "version": "1.22.1",
   "main": "lib/index.js"
 };
 
@@ -840,7 +868,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "1.22.0-alpha.9",
+  "version": "1.22.1",
   "main": "lib/index.js"
 };
 
@@ -867,7 +895,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.22.0-alpha.9",
+  "version": "1.22.1",
   "main": "lib/index.js"
 };
 
@@ -894,7 +922,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.22.0-alpha.9",
+  "version": "1.22.1",
   "main": "lib/index.js"
 };
 
@@ -921,7 +949,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/license",
-  "version": "1.22.0-alpha.13",
+  "version": "1.22.3",
   "main": "main.js"
 };
 
@@ -948,7 +976,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.22.0-alpha.9",
+  "version": "1.22.1",
   "main": "lib/index.js"
 };
 

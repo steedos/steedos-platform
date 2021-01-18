@@ -125,7 +125,7 @@
 #
 #		# 新增基本字段，类似子管理员作分级权限
 #		company_id:
-#			label: "所属单位"
+#			label: "所属分部"
 #			type: "lookup"
 #			reference_to: "organizations"
 #			sortable: true

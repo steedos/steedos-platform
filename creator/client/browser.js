@@ -15,12 +15,12 @@ if(browser){
     //     }
     // }
     let isValidBrowser = true;
-    if(browserName === "ie" && parseInt(browser.version) < 11){
+    if(browserName === "ie" && parseInt(browser.version) <= 11){
         isValidBrowser = false;
     }
     if(!isValidBrowser){
         console.error(`Steedos dont support the browser ${browser.name} yet.`);
         // 不支持浏览器时，直接跳转到说明界面
-        window.location.href = "/accounts/a/browsers.html";
+        window.location.href = Steedos.absoluteUrl("/browsers.html");
     }
 }

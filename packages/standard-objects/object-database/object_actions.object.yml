@@ -1,11 +1,12 @@
 name: object_actions
 label: Object Action
-icon: marketing_actions
+icon: actions_and_buttons
 hidden: true
 fields:
   object:
     type: master_detail
     reference_to: objects
+    reference_to_field: name
     required: true
     label: Object
     optionsFunction: !<tag:yaml.org,2002:js/function> |-

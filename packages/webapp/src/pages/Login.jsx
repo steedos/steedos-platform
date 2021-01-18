@@ -71,6 +71,7 @@ class Login extends React.Component {
         // samlEnabled: this.props.isLicensed && this.props.enableSaml,
         spaceId,
         email,
+        username: '',
         mobile: '',
         loginId: '',
         userId: '',
@@ -150,14 +151,28 @@ class Login extends React.Component {
       this.setState({
         loginId,
         email: e.target.value,
+        username: null,
+        mobile: null,
         loginBy: 'email'
       });
     } else {
-      this.setState({
-        loginId,
-        mobile: e.target.value,
-        loginBy: 'mobile'
-      });
+      if(new RegExp('^[0-9]{11}$').test(e.target.value)){
+        this.setState({
+          loginId,
+          mobile: e.target.value,
+          username: null,
+          email: null,
+          loginBy: 'mobile'
+        });
+      }else{
+        this.setState({
+          loginId,
+          username: e.target.value,
+          mobile: null,
+          email: null,
+          loginBy: 'username'
+        });
+      }
     }
   }
 
@@ -260,6 +275,7 @@ class Login extends React.Component {
     const user = {
       email: this.state.loginBy === 'email'?this.state.email.trim():'',
       mobile: this.state.loginBy === 'mobile'?this.state.mobile.trim():'',
+      username: (this.state.loginWith === 'password' && this.state.loginBy === 'username')?this.state.username.trim():'',
       spaceId: this.state.spaceId,
     }
     this.props.actions.login(user, this.state.password?this.state.password.trim():this.state.password, this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode).then(async ({error}) => {
@@ -288,8 +304,12 @@ class Login extends React.Component {
 
   goSignup = ()=>{
     let state = {};
-    if(this.state.email.trim().length > 0){
+    if(this.state.email && this.state.email.trim().length > 0){
       state =  { email: this.state.email.trim() }
+    }
+
+    if(this.state.mobile && this.state.mobile.trim().length > 0){
+      state =  { mobile: this.state.mobile.trim() }
     }
     this.props.history.push({
       pathname: `/signup`,
@@ -336,6 +356,7 @@ class Login extends React.Component {
                   className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
                   placeholder={{id: 'accounts.password_placeholder', defaultMessage: 'Password'}}
                   onChange={this.handlePasswordChange}
+                  autocomplete="new-password"
                 />
               </div>
             )}

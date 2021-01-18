@@ -1,0 +1,3 @@
+action_field_updates_field_operation_options_null: A blank value (null)
+action_field_updates_field_operation_options_formula: Use a formula to set the new value
+action_field_updates_field_operation_options_literal: A specific value

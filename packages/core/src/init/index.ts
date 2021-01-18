@@ -9,9 +9,9 @@ import { InitI18n } from './i18n';
 export async function init() {
     getSteedosSchema();
     WebAppInternals.setInlineScriptsAllowed(false);
+    initPublicStaticRouter();
     initPublic();
     initDesignSystem();
-    initPublicStaticRouter();
     Plugins.init();
     Datasources.loadFiles();
     initCreator();

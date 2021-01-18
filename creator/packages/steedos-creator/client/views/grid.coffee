@@ -1,4 +1,4 @@
-_itemClick = (e, curObjectName, list_view_id)->
+_itemClick = (e, curObjectName, list_view_id, is_related)->
 	self = this
 	record = e.data
 	if !record
@@ -34,7 +34,7 @@ _itemClick = (e, curObjectName, list_view_id)->
 			Session.set("action_fields", undefined)
 			Session.set("action_collection", "Creator.Collections.#{objectName}")
 			Session.set("action_collection_name", collectionName)
-			Session.set("action_save_and_insert", true)
+			Session.set("action_save_and_insert", if is_related then false else true)
 			if action.todo == "standard_delete"
 				action_record_title = value.itemData.record[name_field_key]
 				Creator.executeAction objectName, action, recordId, action_record_title, list_view_id, value.itemData.record, ()->
@@ -105,6 +105,7 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 	field = object.fields[column]
 	listViewColumns = list_view.columns
 	listViewColumn = {field: column};
+	_fieldType = Creator.getFieldDataType(object.fields, column)
 
 	_.every listViewColumns, (_column)->
 		if _.isObject(_column)
@@ -125,7 +126,7 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 		columnWidth = "160px"
 
 	columnItem =
-		cssClass: "slds-cell-edit cell-type-#{field.type} cell-name-#{field.name}"
+		cssClass: "slds-cell-edit cell-type-#{_fieldType} cell-name-#{field.name}"
 		caption: listViewColumn?.label || field.label || TAPi18n.__(object.schema.label(listViewColumn?.field))
 		dataField: listViewColumn?.field
 		alignment: "left"
@@ -138,7 +139,7 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 			# 需要考虑field_name为 a.b.c 这种格式
 			field_val = eval("options.data." + field_name)
 			cellOption = {_id: options.data._id, val: field_val, doc: options.data, field: field, field_name: field_name, object_name: object.name, agreement: "odata", is_related: is_related}
-			if field.type is "markdown"
+			if _fieldType is "markdown"
 				cellOption["full_screen"] = true
 			Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 	if listViewColumn?.wrap
@@ -489,7 +490,9 @@ Template.creator_grid.onRendered ->
 									r.values[index] = _val.join(",")
 								else if val.constructor == Date
 									dataField = col[index]?.dataField
-									if fields and fields[dataField]?.type == "date"
+									if fields and fields[dataField]
+										_fieldType = Creator.getFieldDataType(fields, dataField)
+									if _fieldType == "date"
 										val = moment(val).format('YYYY-MM-DD')
 										r.values[index] = val
 									else
@@ -506,7 +509,7 @@ Template.creator_grid.onRendered ->
 											r.values[index] = valOpt.label
 				onCellClick: (e)->
 					if e.column?.dataField ==  "_id_actions"
-						_itemClick.call(self, e, curObjectName, list_view_id)
+						_itemClick.call(self, e, curObjectName, list_view_id, is_related)
 
 				onContentReady: (e)->
 					if self.data.total

@@ -2,6 +2,7 @@ import * as express from 'express';
 import { getProcessInstanceWorkitem, processInstanceWorkitemApprove } from './process_manager'
 import { allowApprover } from './permission_manager';
 import * as core from "express-serve-static-core";
+import { SteedosError, sendError } from '@steedos/objectql'
 
 interface Request extends core.Request {
     user: any;
@@ -21,8 +22,8 @@ export const approve = async (req: Request, res: express.Response) => {
             await processInstanceWorkitemApprove(workitem._id, userSession, comment, approver);
             return res.status(200).send({state: 'SUCCESS'});
         }
-        throw new Error("process_approval_error_NoApproval");
+        throw new SteedosError("process_approval_error_NoApproval");
     } catch (error) {
-        return res.status(200).send({state: 'FAILURE', error: error.message});
+        return sendError(res, error, 200);
     }
 }

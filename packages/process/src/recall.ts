@@ -2,7 +2,7 @@ import * as express from 'express';
 import { processInstanceWorkitemRemovebyInstance, getReocrdProcessInstance } from './process_manager'
 import * as core from "express-serve-static-core";
 import { allowRecall } from './permission_manager';
-
+import { SteedosError, sendError } from '@steedos/objectql'
 interface Request extends core.Request {
     user: any;
 }
@@ -23,14 +23,14 @@ export const recall = async (req: Request, res: express.Response) => {
                 await processInstanceWorkitemRemovebyInstance(instanceId, userSession, comment);
                 return res.status(200).send({state: 'SUCCESS'});
             }else{
-                throw new Error("process_approval_error_recall_NoPermission");
+                throw new SteedosError("process_approval_error_recall_NoPermission");
             }
         }else{
-            throw new Error("process_approval_error_NoApproval")
+            throw new SteedosError("process_approval_error_NoApproval")
         }
         
     } catch (error) {
-        return res.status(200).send({state: 'FAILURE', error: error.message});
+        return sendError(res, error, 200);
     }
 }
 

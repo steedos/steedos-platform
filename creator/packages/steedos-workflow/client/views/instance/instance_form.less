@@ -849,6 +849,7 @@ textarea {
     .form-group > .checkbox{
       vertical-align: middle;
       margin: 0px;
+      margin-bottom: -4px;
       label{
         margin: 0px;
         min-height: 20px;
@@ -1090,12 +1091,21 @@ textarea {
 }
 
 .instance .form-group .form-control{
-  height: 100%!important;
+  height: 100%;
   min-height: 32px;
   word-break: break-all;
   padding-top: 5px;
   padding-bottom: 6px;
   vertical-align: middle;
+  &.dx-date-box{
+    width: 100%!important;
+    padding: 0 0 0 12px;
+    &.dx-texteditor.dx-state-disabled{
+      &:after{
+        display: none;
+      }
+    }
+  }
 }
 
 /*CSS-Hack for Internet Explorer 11 only edge浏览器垂直居中*/
@@ -1114,6 +1124,16 @@ _:-webkit-full-screen,
 .instance-table.instance .form-group .form-control{
   padding-top: 0;
   padding-bottom: 0;
+  &.dx-date-box{
+    padding-left: 0;
+    margin: -3px 0;
+    .dx-texteditor-container{
+      .dx-texteditor-input{
+        // padding: 0;
+        padding-right: 20px;
+      }
+    }
+  }
 }
 
 .instance .form-group input[type=datetime-local].form-control, .instance .form-group input[type=date].form-control{
@@ -1184,6 +1204,13 @@ _:-ms-fullscreen,
 
   .attachments-list{
     margin-bottom: 10px;
+  }
+  .ins-upload{
+    .steedos-icon-wrap{
+      svg.slds-button__icon{
+        fill: #0070d2;
+      }
+    }
   }
 }
 

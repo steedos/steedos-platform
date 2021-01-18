@@ -38,7 +38,7 @@ Creator.Objects.application_package =
 			optionsMethod: "creator.listviews_options"
 		permission_set:
 			type: "lookup"
-			label: "权限组"
+			label: "权限集"
 			multiple: true
 			reference_to: "permission_set"
 		permission_objects:

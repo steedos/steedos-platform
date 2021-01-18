@@ -1,149 +1,3 @@
-processFormulaType = (field, fs)->
-	if field.formula_type == "text"
-		fs.type = String
-		if field.multiple
-			fs.type = [String]
-			fs.autoform.type = "tags"
-	else if field.formula_type == "date"
-		fs.type = Date
-		if Meteor.isClient
-			if Steedos.isMobile() || Steedos.isPad()
-				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-				fs.autoform.afFieldInput =
-					type: "steedos-date-mobile"
-					dateMobileOptions:
-						type: "date"
-			else
-				fs.autoform.outFormat = 'yyyy-MM-dd';
-				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-				fs.autoform.afFieldInput =
-					type: "dx-date-box"
-					timezoneId: "utc"
-					dxDateBoxOptions:
-						type: "date"
-						displayFormat: "yyyy-MM-dd"
-	else if field.formula_type == "datetime"
-		fs.type = Date
-		if Meteor.isClient
-			if Steedos.isMobile() || Steedos.isPad()
-				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-				fs.autoform.afFieldInput =
-					type: "steedos-date-mobile"
-					dateMobileOptions:
-						type: "datetime"
-			else
-				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-				fs.autoform.afFieldInput =
-					type: "dx-date-box"
-					dxDateBoxOptions:
-						type: "datetime"
-						displayFormat: "yyyy-MM-dd HH:mm"
-	else if field.formula_type == "currency"
-		fs.type = Number
-		fs.autoform.type = "steedosNumber"
-		fs.autoform.precision = field.precision || 18
-		if field?.scale
-			fs.autoform.scale = field.scale
-			fs.decimal = true
-		else if field?.scale != 0
-			fs.autoform.scale = 2
-			fs.decimal = true
-	else if field.formula_type == "number"
-		fs.type = Number
-		fs.autoform.type = "steedosNumber"
-		fs.autoform.precision = field.precision || 18
-		if field?.scale
-			fs.autoform.scale = field.scale
-			fs.decimal = true
-	else if field.formula_type == "boolean"
-		fs.type = Boolean
-		if field.readonly
-			fs.autoform.disabled = true
-		fs.autoform.type = "steedos-boolean-toggle"
-	else
-		fs.type = String
-
-processSummaryType = (field, fs, obj)->
-	unless field.summary_object
-		throw new Error("You have to set a summary_object property for the field '#{field.name}' of the object '#{obj.name}' when the field type is set to '#{field.type}'.")
-
-	if field.summary_type == "count"
-		summaryFieldType = "number"
-	else
-		# max/min/sum类型等于要聚合的字段的类型
-		summaryObject = Creator.Objects[field.summary_object]
-		unless summaryObject
-			throw new Meteor.Error 500, "The summary_object '#{field.summary_object}' is not found for the field '#{field.name}' of the object '#{obj.name}'"
-
-		unless field.summary_field
-			throw new Error("You have to set a summary_field property for the field '#{field.name}' of the object '#{obj.name}' when the summary_type is not set to 'count'.")
-		
-		summaryField = summaryObject.fields[field.summary_field]
-		unless summaryField
-			throw new Meteor.Error 500, "The summary_field '#{field.summary_field}' is not found for the field '#{field.name}' of the object '#{obj.name}'"
-		
-		summaryFieldType = summaryField.type
-		if summaryFieldType == "formula"
-			# 公式类型按其公式返回值类型处理
-			summaryFieldType = summaryField.formula_type
-
-	if summaryFieldType == "date"
-		fs.type = Date
-		if Meteor.isClient
-			if Steedos.isMobile() || Steedos.isPad()
-				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-				fs.autoform.afFieldInput =
-					type: "steedos-date-mobile"
-					dateMobileOptions:
-						type: "date"
-			else
-				fs.autoform.outFormat = 'yyyy-MM-dd';
-				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-				fs.autoform.afFieldInput =
-					type: "dx-date-box"
-					timezoneId: "utc"
-					dxDateBoxOptions:
-						type: "date"
-						displayFormat: "yyyy-MM-dd"
-	else if summaryFieldType == "datetime"
-		fs.type = Date
-		if Meteor.isClient
-			if Steedos.isMobile() || Steedos.isPad()
-				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-				fs.autoform.afFieldInput =
-					type: "steedos-date-mobile"
-					dateMobileOptions:
-						type: "datetime"
-			else
-				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-				fs.autoform.afFieldInput =
-					type: "dx-date-box"
-					dxDateBoxOptions:
-						type: "datetime"
-						displayFormat: "yyyy-MM-dd HH:mm"
-	else if summaryFieldType == "currency"
-		fs.type = Number
-		fs.autoform.type = "steedosNumber"
-		fs.autoform.precision = field.precision || 18
-		if field?.scale
-			fs.autoform.scale = field.scale
-			fs.decimal = true
-		else if field?.scale != 0
-			fs.autoform.scale = 2
-			fs.decimal = true
-	else if summaryFieldType == "number"
-		fs.type = Number
-		fs.autoform.type = "steedosNumber"
-		fs.autoform.precision = field.precision || 18
-		if field?.scale
-			fs.autoform.scale = field.scale
-			fs.decimal = true
-	else
-		fs.type = Number
-		fs.autoform.type = "steedosNumber"
-		fs.autoform.precision = field.precision || 18
-
-
 Creator.getObjectSchema = (obj) ->
 	unless obj
 		return
@@ -194,11 +48,21 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = Date
 			if Meteor.isClient
 				if Steedos.isMobile() || Steedos.isPad()
-					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-					fs.autoform.afFieldInput =
-						type: "steedos-date-mobile"
-						dateMobileOptions:
-							type: "date"
+					if Steedos.isiOS()
+						# Fix ios 14, 手机客户端待审核文件日期控件显示故障 #991，ios统一用PC端一样的js控件
+						fs.autoform.afFieldInput =
+							type: "dx-date-box"
+							timezoneId: "utc"
+							dxDateBoxOptions:
+								type: "date"
+								displayFormat: "yyyy-MM-dd"
+								pickerType: "rollers"
+					else
+						# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+						fs.autoform.afFieldInput =
+							type: "steedos-date-mobile"
+							dateMobileOptions:
+								type: "date"
 				else
 					fs.autoform.outFormat = 'yyyy-MM-dd';
 					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
@@ -213,11 +77,20 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = Date
 			if Meteor.isClient
 				if Steedos.isMobile() || Steedos.isPad()
-					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-					fs.autoform.afFieldInput =
-						type: "steedos-date-mobile"
-						dateMobileOptions:
-							type: "datetime"
+					if Steedos.isiOS()
+						# Fix ios 14, 手机客户端待审核文件日期控件显示故障 #991，ios统一用PC端一样的js控件
+						fs.autoform.afFieldInput =
+							type: "dx-date-box"
+							dxDateBoxOptions:
+								type: "datetime"
+								displayFormat: "yyyy-MM-dd HH:mm"
+								pickerType: "rollers"
+					else
+						# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+						fs.autoform.afFieldInput =
+							type: "steedos-date-mobile"
+							dateMobileOptions:
+								type: "datetime"
 				else
 					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
 					fs.autoform.afFieldInput =
@@ -312,17 +185,17 @@ Creator.getObjectSchema = (obj) ->
 					if field.reference_to == "users"
 						fs.autoform.type = "selectuser"
 						if !field.hidden && !field.omit
-							# is_company_limited表示过滤数据时是否只显示本单位下的数据
+							# is_company_limited表示过滤数据时是否只显示本分部下的数据
 							# is_company_limited可以被改写覆盖成true/false或其他function
 							if field.is_company_limited == undefined
 								# 未定义is_company_limited属性时默认处理逻辑：
-								# 对当前对象有viewAllRecords权限则不限制所属单位列表查看权限，否则只显示当前所属单位
+								# 对当前对象有viewAllRecords权限则不限制所属分部列表查看权限，否则只显示当前所属分部
 								# 注意不是reference_to对象的viewAllRecords权限，而是当前对象的
 								if Meteor.isClient
 									permissions = obj.permissions?.get()
 									isUnLimited = permissions?.viewAllRecords
 									if _.include(["organizations", "users", "space_users"], obj.name)
-										# 如果字段所属对象是用户或组织，则是否限制显示所属单位部门与modifyAllRecords权限关联
+										# 如果字段所属对象是用户或组织，则是否限制显示所属分部部门与modifyAllRecords权限关联
 										isUnLimited = permissions?.modifyAllRecords
 									if isUnLimited
 										fs.autoform.is_company_limited = false
@@ -330,7 +203,7 @@ Creator.getObjectSchema = (obj) ->
 										fs.autoform.is_company_limited = true
 							else if _.isFunction field.is_company_limited
 								if Meteor.isClient
-									# 传入当前对象的权限，在函数中根据权限计算是否要限制只查看本单位
+									# 传入当前对象的权限，在函数中根据权限计算是否要限制只查看本分部
 									fs.autoform.is_company_limited = field.is_company_limited(obj.permissions)
 								else
 									# 服务端用不到is_company_limited
@@ -342,17 +215,17 @@ Creator.getObjectSchema = (obj) ->
 					else if field.reference_to == "organizations"
 						fs.autoform.type = "selectorg"
 						if !field.hidden && !field.omit
-							# is_company_limited表示过滤数据时是否只显示本单位下的数据
+							# is_company_limited表示过滤数据时是否只显示本分部下的数据
 							# is_company_limited可以被改写覆盖成true/false或其他function
 							if field.is_company_limited == undefined
 								# 未定义is_company_limited属性时默认处理逻辑：
-								# 对当前对象有viewAllRecords权限则不限制所属单位列表查看权限，否则只显示当前所属单位
+								# 对当前对象有viewAllRecords权限则不限制所属分部列表查看权限，否则只显示当前所属分部
 								# 注意不是reference_to对象的viewAllRecords权限，而是当前对象的
 								if Meteor.isClient
 									permissions = obj.permissions?.get()
 									isUnLimited = permissions?.viewAllRecords
 									if _.include(["organizations", "users", "space_users"], obj.name)
-										# 如果字段所属对象是用户或组织，则是否限制显示所属单位部门与modifyAllRecords权限关联
+										# 如果字段所属对象是用户或组织，则是否限制显示所属分部部门与modifyAllRecords权限关联
 										isUnLimited = permissions?.modifyAllRecords
 									if isUnLimited
 										fs.autoform.is_company_limited = false
@@ -360,7 +233,7 @@ Creator.getObjectSchema = (obj) ->
 										fs.autoform.is_company_limited = true
 							else if _.isFunction field.is_company_limited
 								if Meteor.isClient
-									# 传入当前对象的权限，在函数中根据权限计算是否要限制只查看本单位
+									# 传入当前对象的权限，在函数中根据权限计算是否要限制只查看本分部
 									fs.autoform.is_company_limited = field.is_company_limited(obj.permissions)
 								else
 									# 服务端用不到is_company_limited
@@ -566,9 +439,19 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == 'autonumber'
 			fs.type = String
 		else if field.type == 'formula'
-			processFormulaType(field, fs)
+			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
 		else if field.type == 'summary'
-			processSummaryType(field, fs, obj)
+			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
+		else if field.type == 'percent'
+			fs.type = Number
+			fs.autoform.type = "steedosNumber"
+			fs.autoform.precision = field.precision || 18
+			unless _.isNumber(field.scale)
+				# 没配置小数位数则按小数位数0来处理，即默认显示为整数的百分比，比如20%，此时控件可以输入2位小数，转成百分比就是整数
+				field.scale = 0
+			# autoform控件中小数位数始终比配置的位数多2位
+			fs.autoform.scale = field.scale + 2
+			fs.decimal = true
 		else
 			fs.type = field.type
 

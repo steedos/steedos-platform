@@ -1,5 +1,5 @@
 name: flows
-icon: timesheet
+icon: environment_hub
 label: Workflow
 hidden: true
 enable_files: true

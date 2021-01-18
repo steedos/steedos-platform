@@ -92,11 +92,10 @@
 				<div class="slds-col slds-no-flex slds-grid slds-align-bottom grid-actions">
 					{{#if enabledExport}}
 						<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small" aria-expanded="false">
-							<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
-								title="{{_ "workflow_export_data"}}" data-toggle="dropdown">
-								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="download"}}
-								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
-							</button>
+							<div data-toggle="dropdown">
+								{{> steedos_button className="slds-button_icon-more"
+									iconCategory="utility" iconName="download" iconVariant="more" variant="icon" title=(_ "workflow_export_data")}}
+							</div>
 							<div class="dropdown-menu dropdown-menu-right" role="menu">
 								<ul class="slds-dropdown__list list-view-controls">
 									<li class="slds-dropdown__header" role="separator">
@@ -126,14 +125,13 @@
 							</div>
 						</div>
 					{{/if}}
-					<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list tabular-filter-by-flow slds-m-left_x-small" title="{{_ "workflow_export_filter"}}">
-						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
-					</button>
+					{{> steedos_button className="slds-button_icon-border-filled btn-filter-list tabular-filter-by-flow slds-m-left_x-small"
+						iconCategory="utility" iconName="filterList" variant="icon" title=(_ "workflow_export_filter")}}
 					<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_xx-small">
-						<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="{{_ "creator_list_show_as"}}" data-toggle="dropdown">
-							{{> steedos_icon class="slds-button__icon" source="utility-sprite" name=btnToggleColumnsIcon}}
-							<!-- {{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}} -->
-						</button>
+						<div aria-haspopup="true" data-toggle="dropdown">
+							{{> steedos_button className="slds-button_icon-more"
+								iconCategory="utility" iconName=btnToggleColumnsIcon variant="icon" title=(_ "creator_list_show_as")}}
+						</div>
 						<div class="dropdown-menu dropdown-menu-right dropdown-menu-redio" role="menu">
 							<ul class="slds-dropdown__list">
 								<li class="slds-dropdown__header" role="separator">
@@ -142,28 +140,28 @@
 								<li class="slds-dropdown__item btn-toggle-show-as {{#if isWorkflowShowAsItemSelected '1'}}slds-is-selected{{/if}}" role="presentation" data-columns="1">
 									<a href="javascript:void(0);" class="" role="option" tabindex="-1">
 										<span class="slds-truncate">
-											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="check"}}
+											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="check" size="xx-small" wrapClassName="float-left"}}
 											{{_ "creator_list_show_as_one_column"}}
 										</span>
-										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="table"}}
+										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="table" size="xx-small"}}
 									</a>
 								</li>
 								<li class="slds-dropdown__item btn-toggle-show-as {{#if isWorkflowShowAsItemSelected '2'}}slds-is-selected{{/if}}" role="presentation" data-columns="2">
 									<a href="javascript:void(0);" class="" role="option" tabindex="-1">
 										<span class="slds-truncate">
-											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="check"}}
+											{{> steedos_icon class="slds-button__icon slds-button_icon-x-small" source="utility-sprite" name="check" size="xx-small" wrapClassName="float-left"}}
 											{{_ "creator_list_show_as_two_columns"}}
 										</span>
-										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="side_list"}}
+										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="side_list" size="xx-small"}}
 									</a>
 								</li>
 								<li class="slds-dropdown__item btn-toggle-show-as {{#if isWorkflowShowAsItemSelected '3'}}slds-is-selected{{/if}}" role="presentation" data-columns="3">
 									<a href="javascript:void(0);" class="" role="option" tabindex="-1">
 										<span class="slds-truncate">
-											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="check"}}
+											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="check" size="xx-small" wrapClassName="float-left"}}
 											{{_ "creator_list_show_as_three_columns"}}
 										</span>
-										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="full_width_view"}}
+										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="full_width_view" size="xx-small"}}
 									</a>
 								</li>
 							</ul>

@@ -1,0 +1,16 @@
+<template name="loginLayout">
+    <div class="skin-blue layout-top-nav steedos login">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <a href="/" class="navbar-brand" id="logo">
+                        <span class=" hidden-xs"><b>&nbsp;{{_ "Steedos"}}</b></span>
+                    </a>
+                </nav>
+            </header>
+            <div class="content-wrapper">
+                {{> Template.dynamic template=main}}
+            </div>
+        </div>
+    </div>
+</template>

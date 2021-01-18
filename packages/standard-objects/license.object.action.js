@@ -1,68 +1,12 @@
 module.exports = {
   apply: function (object_name, record_id, fields) {
-    var licenseServer, spaceId, spaceName;
+    var licenseServer = 'https://huayan.my.steedos.com:8443';
     if (!Creator.isSpaceAdmin()) {
       return toastr.info("请联系管理员");
     }
-    spaceId = Session.get("spaceId");
-    spaceName = Creator.getCollection("spaces").findOne(spaceId).name;
-    licenseServer = 'https://huayan.my.steedos.com:8443';
-    toastr.info("升级完成后，请点击同步按钮");
-    var uri = new URL(window.location.href);
-    window.open(licenseServer + "/accounts/a/#/signup?redirect_uri=" + encodeURIComponent(Meteor.absoluteUrl('/api/v4/license_auth_token/my_token/sync', {rootUrl: Meteor.absoluteUrl(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX, {rootUrl: uri.origin})})));
-  },
-  sync: function (object_name, record_id, fields) {
-    let userSession = Creator.USER_CONTEXT;
-    let spaceId = userSession.spaceId;
-    if (userSession.authToken) {
-      authToken = userSession.authToken;
-    } else {
-      authToken = userSession.user.authToken;
-    }
-    let authorization = "Bearer " + spaceId + "," + authToken;
-    let headers = [
-      {
-        name: 'Content-Type',
-        value: 'application/json'
-      },
-      {
-        name: 'Authorization',
-        value: authorization
-      }
-    ];
-    let url = "/api/v4/license/" + spaceId + "/sync";
-    url = Steedos.absoluteUrl(url);
-    $.ajax({
-      type: "get",
-      url: url,
-      dataType: "json",
-      contentType: 'application/json',
-      beforeSend: function (XHR) {
-        if (headers && headers.length) {
-          return headers.forEach(function (header) {
-            return XHR.setRequestHeader(header.name, header.value);
-          });
-        }
-      },
-      success: function (data) {
-        $("body").removeClass("loading");
-        return window.location.reload();
-      },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        $("body").removeClass("loading");
-        if(XMLHttpRequest.status === 403){
-          return toastr.warning('您尚未购买许可证。')
-        }
-        if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
-          return toastr.error(t(XMLHttpRequest.responseJSON.error.replace(/:/g, '：')));
-        } else {
-          return toastr.error(XMLHttpRequest.responseJSON);
-        }
-      }
-    });
+    window.open(licenseServer + "/accounts/a/");
   },
   copySpaceId: function(object_name, record_id){
-    console.log('copySpaceId');
     var item_element = $('.list-action-custom-copySpaceId')
     item_element.attr('data-clipboard-text', Session.get("spaceId"));
     if (!item_element.attr('data-clipboard-new')) {
@@ -80,5 +24,28 @@ module.exports = {
         return item_element.trigger("click");
       }
     }
+  },
+  changeSpaceLicense: function(){
+    Modal.show("quickFormModal", { 
+      schema: Creator.getObjectSchema({ fields: { license: { type: 'textarea', label: "许可证", rows: 8, required: true} } }),
+      formId: 'changeSpaceLicense', 
+      title: TAPi18n.__('license_action_changeSpaceLicense'), 
+      confirmBtnText: TAPi18n.__('license_action_changeSpaceLicense_confirmBtnText'), 
+      onConfirm: function(formValues, e, t){
+        var license = formValues.insertDoc.license;
+        var licenseInfo = license.split(',');
+        var data = {licenses: [{license: licenseInfo[0], key : licenseInfo[1]}]};
+        var result = Steedos.authRequest("/api/v4/license/" + Session.get("spaceId") + "/sync", {type: 'post', async: false, data: JSON.stringify(data)});
+        if(result.error){
+          toastr.error(TAPi18n.__(result.error));
+        }else{
+            Modal.hide(t);
+            window.location.reload();
+        }
+      }
+    }, {
+      backdrop: 'static',
+      keyboard: true
+    })
   }
 }

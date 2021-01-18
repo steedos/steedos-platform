@@ -1,5 +1,6 @@
 process_node__object: 批准步骤
 process_node_field_approver: 选择批准人
+process_node_field_approval_updates_field_actions: 字段更新
 process_node_field_order: 序号
 process_node_field_approver_options_auto_assign: 自动分配至批准人。
 process_node_field_approver_options_auto_queue: 自动分配至队列。
@@ -22,6 +23,7 @@ process_node_field_assigned_approver_users: 指定用户处理
 process_node_field_assigned_approver_roles: 指定审批角色
 process_node_field_assigned_approver_flow_roles: 指定审批岗位
 process_node_field_assigned_approver_user_field: 指定相关用户字段
+process_node_field_rejection_updates_field_actions: 字段更新
 process_node_field_when_multiple_approvers: 当选择多个批准人时
 process_node_field_when_multiple_approvers_options_first_response: 基于 首次 回复的批准或拒绝
 process_node_field_when_multiple_approvers_options_unanimous: 要求所有选定批准人的 一致 批准
@@ -31,4 +33,6 @@ process_node_field_reject_behavior_options_reject_request: 执行此步骤的所
 process_node_field_reject_behavior_options_back_to_previous: 只执行此步骤的拒绝操作并将批准请求发回到最近的批准人。（返回 1 步）
 process_node_group_select_assigned_approver: 选择分配的批准人
 process_node_group_specify_step_criteria: 指定步骤条件
-process_node_listview_all: All
+process_node_group_approval_actions: 批准操作
+process_node_group_rejection_actions: 拒绝操作
+process_node_listview_all: 所有

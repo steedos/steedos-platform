@@ -10,14 +10,17 @@ const permissions = {
 const baseRecord = {
     is_system:true,
     type: 'profile',
-    record_permissions:permissions
+    record_permissions:permissions,
+    password_history: '3',
+    max_login_attempts: '10',
+    lockout_interval: '15'
 }
 
 const internalPermissionSet = [
-    {_id: 'admin', name: 'admin',label: 'admin', ...baseRecord},
-    {_id: 'user', name: 'user',label: 'user', ...baseRecord},
-    {_id: 'supplier', name: 'supplier',label: 'supplier', ...baseRecord},
-    {_id: 'customer', name: 'customer', label: 'customer',...baseRecord}
+    {_id: 'admin', name: 'admin',label: 'admin', license: 'platform', ...baseRecord},
+    {_id: 'user', name: 'user',label: 'user', license: 'platform', ...baseRecord},
+    {_id: 'supplier', name: 'supplier',label: 'supplier', license: 'community', ...baseRecord},
+    {_id: 'customer', name: 'customer', label: 'customer', license: 'community',...baseRecord}
 ];
 
 const getLng = function(userId){
@@ -88,7 +91,20 @@ module.exports = {
             let filters = InternalData.parserFilters(this.query.filters);
             if(!_.has(filters, 'type') || (_.has(filters, 'type') && filters.type === 'profile')){
                 let lng = getLng(this.userId);
-                this.data.values = this.data.values.concat(getInternalPermissionSet(this.spaceId, lng))
+                let records = getInternalPermissionSet(this.spaceId, lng);
+                if(_.has(filters, 'name')){
+                    records = _.filter(records, function(record){
+                        return record.name == filters.name
+                    })
+                }
+
+                if(_.has(filters, 'license')){
+                    records = _.filter(records, function(record){
+                        return record.license == filters.license
+                    })
+                }
+
+                this.data.values = this.data.values.concat(records)
             }
             
         }

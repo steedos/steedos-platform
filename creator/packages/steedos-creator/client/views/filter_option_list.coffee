@@ -182,10 +182,12 @@ Template.filter_option_list.onCreated ->
 				return
 			filters?.forEach (filter) ->
 				filterValue = filter?.value
-				filter.fieldlabel = fields[filter.field]?.label
+				fieldKey = filter.field
+				filter.fieldlabel = fields[fieldKey]?.label
 				filter.valuelabel = filterValue
-				field = fields[filter.field]
-				fieldType = field?.type
+				field = fields[fieldKey]
+				# fieldType = field?.type
+				fieldType = Creator.getFieldDataType(fields, fieldKey)
 				if fieldType == 'lookup' or fieldType =='master_detail' or fieldType=='select'
 					if field?.reference_to && filter.value
 						reference_to_object = field?.reference_to
@@ -263,7 +265,7 @@ Template.filter_option_list.onCreated ->
 							filter.valuelabel = formatFun(filterValue, fieldType)
 					else
 						filter.valuelabel = ""
-				else if fieldType == 'boolean'
+				else if fieldType == 'boolean' || fieldType == 'toggle'
 					filter.valuelabel = if filterValue == true then "是" else if filterValue == false then "否" else ""
 			self.filterItems.set(filters)
 		else

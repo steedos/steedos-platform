@@ -1,0 +1,15 @@
+workflow_rule__object: 工作流规则
+workflow_rule_field_description: 描述
+workflow_rule_field_active: 启用
+workflow_rule_field_trigger_type: 评估条件
+workflow_rule_field_trigger_type_options_onAllChanges: 新建时，和每次编辑时
+workflow_rule_field_trigger_type_options_onCreateOnly: 新建时
+workflow_rule_field_trigger_type_options_onCreateOrTriggeringUpdate: 新建时，或编辑数据导致条件成立
+workflow_rule_field_name: API 名称
+workflow_rule_field_label: 显示名称
+workflow_rule_field_object_name: 对象
+workflow_rule_field_formula: 公式
+workflow_rule_group_immediate_actions: 即时操作
+workflow_rule_group_rule_criteria: 规则条件
+workflow_rule_field_updates_field_actions: 字段更新
+workflow_rule_listview_all: 所有

@@ -8,6 +8,7 @@ var bootUtils = require('./boot-utils.js');
 var files = require('./mini-files.js');
 var npmRequire = require('./npm-require.js').require;
 var Profile = require('./profile.js').Profile;
+var open = require('open');
 
 // This code is duplicated in tools/main.js.
 var MIN_NODE_VERSION = 'v8.0.0';
@@ -469,6 +470,14 @@ var runMain = Profile("Run main()", function () {
   console.log('');
   console.log(`Project is running at ${process.env.ROOT_URL}`);
   console.log('');
+  if (process.env.STEEDOS_AUTO_OPEN_BROWSER != 'false') { // 默认打开
+    try {
+      open(process.env.ROOT_URL);
+    } catch (error) {
+      console.error(error);
+      console.error('auto open browser failed.');
+    }
+  }
 });
 
 var loadProjectBundles = function(){

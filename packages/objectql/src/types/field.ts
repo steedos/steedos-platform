@@ -43,10 +43,12 @@ const FIELDTYPES = [
     "autonumber",
     "markdown",
     "formula",
-    "summary"
+    "summary",
+    "percent"
 ]
 
 abstract class SteedosFieldProperties{
+    _id?: string
     object_name?: string
     name?: string
     column_name?: string
@@ -71,6 +73,7 @@ abstract class SteedosFieldProperties{
     precision?: number
     scale?: number
     reference_to?: string | string[] | Function
+    reference_to_field?: string
     rows?: number
     options?: string | []
     description?: string
@@ -87,11 +90,12 @@ abstract class SteedosFieldProperties{
     system?: string;
     fieldDBType?: SteedosFieldDBType | string
     formula?: string
-    formula_type?: string
+    data_type?: string
     formula_blank_value?: string
     summary_object?: string
     summary_type?: string
     summary_field?: string
+    summary_filters?: SteedosQueryFilters
     filters?: SteedosQueryFilters
 }
 
@@ -130,8 +134,8 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
 
         this.name = name
 
-        if(this.type === "formula" && !this.formula_type){
-            throw new Error(`${this._object.name}.${this.name} invalid field type formula, miss formula_type property`)
+        if(this.type === "formula" && !this.data_type){
+            throw new Error(`${this._object.name}.${this.name} invalid field type formula, miss data_type property`)
         }
 
         this.setDBType()
@@ -294,10 +298,13 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
            case 'markdown':
                return SteedosFieldDBType.varchar
            case 'formula':
-               return this.getDBType(this.formula_type);
+               return this.getDBType(this.data_type);
            case 'summary':
                 //汇总不需要check类型
                 return SteedosFieldDBType.varchar;
+           case 'percent':
+                //百分比字段按数值类型处理
+                return this.getDBType("number");
            default:
                throw new Error(`${this._object.name}.${this.name} invalid field type ${type}`)
         }

@@ -1,7 +1,7 @@
 app_workflow_name: 审批王
-menu_menu_workflow: 流程设置
+menu_menu_workflow: 审批王
 menu_flows: 流程
-menu_flow_roles: 审批岗位
+menu_flow_roles: $t(flow_roles__object)
 menu_flow_positions: 岗位成员
 menu_categories: 流程分类
 menu_instance_number_rules: 流程编号

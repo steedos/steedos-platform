@@ -1,11 +1,12 @@
 const _ = require("underscore");
-const util = require('./util');
+const util = require('../../util');
 const objectql = require('@steedos/objectql');
 
 module.exports = {
     beforeInsert: async function () {
         await util.checkAPIName(this.object_name, 'name', this.doc.name);
 
+        objectql.checkFormula(this.doc.entry_criteria, this.doc.object_name)
     },
     beforeUpdate: async function () {
         if(_.has(this.doc, 'object_name')){
@@ -17,5 +18,7 @@ module.exports = {
         if (_.has(this.doc, 'name')) {
             await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id);
         }
+
+        objectql.checkFormula(this.doc.entry_criteria, this.doc.object_name)
     }
 }

@@ -367,6 +367,9 @@ export class Mongo implements DatabaseInterface {
           'services.password.bcrypt': newPassword,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
+        $push: {
+          'services.password_history': newPassword
+        },
         $unset: {
           'services.password.reset': '',
         },
@@ -688,10 +691,13 @@ export class Mongo implements DatabaseInterface {
     if (!record) 
       return null;
     
-    if (user.email && (foundedUser.email_verified == false))
+    if (user.email && (foundedUser.email_verified != true)){
       await this.verifyEmail(owner, user.email)
-    else if (user.mobile && foundedUser.mobile_verified == false)
+      foundedUser = await this.findUserById(owner);
+    }else if (user.mobile && foundedUser.mobile_verified != true){
       await this.verifyMobile(owner, user.mobile)
+      foundedUser = await this.findUserById(owner);
+    }
     
     return foundedUser;
   }
@@ -751,5 +757,9 @@ export class Mongo implements DatabaseInterface {
 
   public async getInviteInfo(id: string): Promise<any> {
     return await this.inviteCollection.findOne({_id: id});
+  }
+
+  public async updateUser(userId, options){
+    return this.collection.updateOne({_id: userId}, options);
   }
 }

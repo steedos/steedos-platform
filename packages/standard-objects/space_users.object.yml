@@ -2,6 +2,7 @@ name: space_users
 label: User
 icon: user
 enable_search: true
+enable_inline_edit: false
 sidebar:
   template_name: creator_grid_sidebar_organizations
   hidden: true
@@ -99,11 +100,11 @@ fields:
     filterable: true
     defaultValue: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
     optionsFunction: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
   company_id:
     label: Main Division
@@ -113,11 +114,11 @@ fields:
     # hidden: false
     defaultValue: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
     optionsFunction: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
 
   position:
@@ -171,7 +172,7 @@ fields:
     name: work_phone
   # company:
   #   type: text
-  #   label: 单位
+  #   label: 分部
   #   group: '-'
   #   hidden: true
   #   name: company
@@ -242,9 +243,10 @@ fields:
     name: last_logon 
     label: Last Logon Date
   password_expired:
+    label: Password expired
     type: boolean
-    omit: true
-    hidden: true
+    omit: false
+    hidden: false
 list_views:
   all:
     label: All Valid Users
@@ -254,6 +256,8 @@ list_views:
       - email
       - position
       - sort_no
+      - username
+      - organization
     filter_scope: space
     filters: [["user_accepted","=",true]]
     sort:
@@ -269,6 +273,8 @@ list_views:
       - email
       - position
       - user_accepted
+      - username
+      - organization
     filter_scope: space
     filters: [["user_accepted","!=",true]]
     sort:
@@ -282,6 +288,8 @@ list_views:
       - mobile
       - email
       - user_accepted
+      - username
+      - organization
     filter_scope: space
     filters: [["is_supplier","=",true]]
     sort:
@@ -295,6 +303,8 @@ list_views:
       - mobile
       - email
       - user_accepted
+      - username
+      - organization
     filter_scope: space
     filters: [["is_customer","=",true]]
     sort:
@@ -323,6 +333,12 @@ actions:
     on: record_only
   enable: 
     label: Enable
+    on: record_only
+  lockout:
+    label: Lockout
+    on: record_only
+  unlock:
+    label: Unlock
     on: record_only
 permission_set:
   user:

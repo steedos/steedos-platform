@@ -1,11 +1,16 @@
 name: license
 label: License
-icon: product_item
+icon: webcart
 hidden: true
 enable_audit: true
 fields:
-  lid:
+  edition:
     type: text
+    label: Edition
+    hidden: true
+  edition_label:
+    type: text
+    label: Edition
     is_name: true
   license:
     type: textarea
@@ -20,24 +25,26 @@ fields:
   product:
     type: text
     label: Product
-  edition:
+    hidden: true
+  product_label:
     type: text
-    label: Edition
+    label: Product
   is_trial:
     type: boolean
     label: Trial
+    hidden: true
   user_number:
     type: number
     label: User number
     scale: 0
-  custom_objects_number:
-    type: number
-    label: Custom objects number
-    scale: 0
-  flow_number:
-    type: number
-    label: Flow number
-    scale: 0
+  # custom_objects_number:
+  #   type: number
+  #   label: Custom objects number
+  #   scale: 0
+  # flow_number:
+  #   type: number
+  #   label: Flow number
+  #   scale: 0
   end_date:
     type: date
     label: 过期
@@ -45,6 +52,12 @@ fields:
   verify_status:
     type: select
     options: FAIL,SUCCESS
+  invalid:
+    type: boolean
+    label: Invalid
+    hidden: true
+  lid:
+    type: text
   verify_error:
     type: textarea
     hidden: true
@@ -60,8 +73,8 @@ actions:
     label: Apply
     on: list
     visible: true
-  sync:
-    label: Sync
+  changeSpaceLicense:
+    label: 更新许可证
     on: list
     visible: true
   copySpaceId:
@@ -72,13 +85,13 @@ list_views:
   all:
     label: Al
     columns:
-      - lid
-      - is_trial
-      - product
-      - edition
+      - edition_label
+      - product_label
+      - user_number
+      - verify_status
       - end_date
     filters:
-      - [['lid', '<>', 'None']]
+      - [['lid', '<>', 'None'], ['invalid','!=',true]]
 permission_set:
   user:
     allowCreate: false

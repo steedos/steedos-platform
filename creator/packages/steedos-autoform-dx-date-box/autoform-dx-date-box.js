@@ -82,9 +82,19 @@ AutoForm.addInputType("dx-date-box", {
   },
   valueConverters: {
     "string": function (val) {
-      var format = this.data("displayFormat")
+      if (val instanceof Date) {
+        // 保存为UTC时间值
+        val = new Date(val.getUTCFullYear(), val.getUTCMonth(), val.getUTCDate(), val.getUTCHours(), val.getUTCMinutes(), val.getUTCSeconds())
+      }
+      // var format = this.data("displayFormat");
+      var format = this.data("dateSerializationFormat");
+      if(!format){
+        var dxDateBox = this.data("dxDateBox");
+        format = dxDateBox && dxDateBox._options && dxDateBox._options.dateSerializationFormat;
+      }
       if(format){
-        return (val instanceof Date) ? $.format.date(val,format) : val
+        // 注意这里不可以用moment.utc(val).format，因为它跟$.format.date格式不一样，前者是YYYY-MM-DDTHH:mm:ss[Z]，后者是yyyy-MM-ddTHH:mm:ssZ
+        return (val instanceof Date) ? $.format.date(val,format) : val;
       }else{
         return (val instanceof Date) ? val.toString() : val;
       }

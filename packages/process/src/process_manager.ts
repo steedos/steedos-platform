@@ -1,9 +1,12 @@
 import {runProcessAction, runProcessNodeAction} from './platform_action_manager';
+import { sendNotifications } from './notifications';
+import { SteedosError } from '@steedos/objectql'
+
 const objectql = require('@steedos/objectql');
 const Fiber = require('fibers');
 const _ = require("underscore");
 
-declare var Creator;
+declare var getHandlersManager;
 
 const lockObjectRecord = async (objectName, reocrdId)=>{
     await objectql.getObject(objectName).directUpdate(reocrdId, {locked: true});
@@ -11,32 +14,6 @@ const lockObjectRecord = async (objectName, reocrdId)=>{
 
 const unlockObjectRecord = async (objectName, reocrdId)=>{
     await objectql.getObject(objectName).directUpdate(reocrdId, {locked: false});
-}
-
-const sendNotifications = async (instanceHistory, from, to)=>{
-    if(!to){
-        return;
-    }
-    var instance = await objectql.getObject("process_instance").findOne(instanceHistory.process_instance);
-    var fromUser =  await objectql.getObject("users").findOne(to);
-    var relatedDoc = await objectql.getObject(instance.target_object.o).findOne(instance.target_object.ids[0]);
-    let relatedDocName = relatedDoc.name; //TODO
-    var notificationTitle = `${fromUser.name} 正在请求批准 ${relatedDocName}`;
-    var notificationDoc = {
-        name: notificationTitle,
-        body: relatedDocName,
-        related_to: {
-            o: "process_instance_history",
-            ids: [instanceHistory._id]
-        },
-        related_name: relatedDocName,
-        from: null,
-        space: instanceHistory.space
-    };
-
-    Fiber(function () {
-        Creator.addNotifications(notificationDoc, null, [to]);
-    }).run();
 }
 
 const getProcessNodeApprover = async (instanceId: string, processNode: any, userSession: any, chooseApprover: any , isBack: boolean, record?:any)=>{
@@ -59,12 +36,33 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
                 nodeApprover = nodeApprover.concat(processNode.assigned_approver_users)
             }
     
-            if(!_.isEmpty(processNode.assigned_approver_roles)){
-                //TODO
+            if (!_.isEmpty(processNode.assigned_approver_roles)) {
+                for (const roleId of processNode.assigned_approver_roles) {
+                    let role = await objectql.getObject('roles').findOne(roleId);
+                    if (role && !_.isEmpty(role.users)) {
+                        nodeApprover = nodeApprover.concat(role.users);
+                    }
+                }
             }
-    
-            if(!_.isEmpty(processNode.assigned_approver_flow_roles)){
-                //TODO
+
+            if (!_.isEmpty(processNode.assigned_approver_flow_roles)) {
+                let submitted_by = userSession.userId;
+                let spaceId = userSession.spaceId;
+                if (instanceId) {
+                    let processInstance = await objectql.getObject("process_instance").findOne(instanceId);
+                    submitted_by = processInstance.submitted_by;
+                }
+                let handlers = await new Promise((resolve, reject) => {
+                    Fiber(function () {
+                        try {
+                            let handlers = getHandlersManager.getHandlersByUserAndRoles(submitted_by, processNode.assigned_approver_flow_roles, spaceId);
+                            resolve(handlers);
+                        } catch (error) {
+                            reject(error)
+                        }
+                    }).run()
+                });
+                nodeApprover = nodeApprover.concat(handlers);
             }
     
             if(!_.isEmpty(processNode.assigned_approver_user_field)){
@@ -92,10 +90,10 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
                 }else if(_.isArray(chooseApprover)){
                     return _.uniq(_.compact(chooseApprover));
                 }else{
-                    throw new Error('process_approval_error_invalidChooseApprover');
+                    throw new SteedosError('process_approval_error_invalidChooseApprover');
                 }
             }else{
-                throw new Error('process_approval_error_needToChooseApprover');
+                throw new SteedosError('process_approval_error_needToChooseApprover');
             }
         }
     }
@@ -220,7 +218,7 @@ const getPreviousNode = async (instanceId: string, currentNode: any, userSession
         const previousNode = await objectql.getObject("process_node").findOne(previousInstanceNode.process_node);
         return previousNode;
     }else{
-        throw new Error('not find previous node')
+        throw new SteedosError('not find previous node')
     }
 }
 
@@ -231,7 +229,7 @@ const getPreviousNode = async (instanceId: string, currentNode: any, userSession
 //         const previousNode = await objectql.getObject("process_node").findOne(previousInstanceNode.process_node)
 //         await addInstanceNode(instanceId, previousNode, userSession, true);
 //     }else{
-//         throw new Error('not find previous node')
+//         throw new SteedosError('not find previous node')
 //     }
 // }
 
@@ -259,7 +257,7 @@ export const recordSubmit = async (processDefinitionId: string, objectName: stri
 
     const pendingInstanceCount = await objectql.getObject("process_instance").count({filters: [['target_object.o', '=', objectName],['target_object.ids', '=', recordId],['status', '=', 'pending']]});
     if(pendingInstanceCount > 0){
-        throw new Error('process_approval_error_processInstancePending');
+        throw new SteedosError('process_approval_error_processInstancePending');
     }
 
     const nodes = await getProcessNodes(processDefinitionId, userSession.spaceId);
@@ -413,6 +411,7 @@ const getProcessNode = async(processNodeId: string)=>{
 const handleProcessInstanceNode = async(instanceId: string, currentInstanceNode, processStatus: string, nextNodeOptions: any, userSession: any)=>{
     let otherPendingInstanceHistoryCount = await objectql.getObject("process_instance_history").count({filters: [['process_instance', '=', instanceId], ['step_status', '=', 'pending']]})
     if(otherPendingInstanceHistoryCount === 0){
+        let finalProcessStatus = processStatus;
         await objectql.getObject("process_instance_node").updateMany([['process_instance', '=', instanceId], ['node_status', '=', 'pending']], {node_status: processStatus, completed_date: new Date(), last_actor: userSession.userId})
         let when = getProcessNodeActionWhenByStatus(processStatus);
         if(when){
@@ -421,10 +420,23 @@ const handleProcessInstanceNode = async(instanceId: string, currentInstanceNode,
         }
 
         if(nextNodeOptions){
-            await toNextNode(instanceId, nextNodeOptions.node, nextNodeOptions.approve, userSession);
+            let to_final_rejection = false;
+            let to_final_approval = false;
+            if(nextNodeOptions.node.to_final_rejection){
+                to_final_rejection = true;
+                finalProcessStatus = 'rejected';
+            }else if(nextNodeOptions.node.to_final_approval){
+                to_final_approval = true;
+                finalProcessStatus = 'approved';
+            }
+            if(to_final_rejection){
+            }else if(to_final_approval){
+            }else{
+                await toNextNode(instanceId, nextNodeOptions.node, nextNodeOptions.approve, userSession);
+            }
         }
 
-        await handleProcessInstance(instanceId, processStatus, userSession);
+        await handleProcessInstance(instanceId, finalProcessStatus, userSession);
     }
 }
 
@@ -438,7 +450,6 @@ const getPendingInstanceHistoryCount = async (instanceId: string)=>{
 
 const handleProcessInstanceWorkitem = async (currentInstanceNode, processStatus: string, instanceHistoryId: string, userSession: any, comment: string, nextNodeOptions?: string)=>{
     let instanceHistory = await getInstanceHistory(instanceHistoryId);
-    //TODO 处理下一步需要选人的情况，如果需要选择，则return;
     if(processStatus === 'rejected' || processStatus === 'approved'){
         await objectql.getObject("process_instance_history").update(instanceHistoryId, {step_status: processStatus, comments: comment, actor: userSession.userId});
         let when_multiple_approvers = 'first_response';
@@ -487,7 +498,7 @@ export const processInstanceWorkitemReject = async (instanceHistoryId: string, u
     if(currentProcessNode.reject_behavior === 'back_to_previous'){
         nextNodeOptions = {}
         nextNodeOptions.node = await getPreviousNode(instanceId, currentProcessNode, userSession)
-        nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.nextNode, userSession, null, true);
+        nextNodeOptions.approve = await getProcessNodeApprover(instanceId, nextNodeOptions.node, userSession, null, true);
     }
 
     await handleProcessInstanceWorkitem(currentInstanceNode, 'rejected', instanceHistoryId, userSession, comment, nextNodeOptions);
@@ -495,10 +506,10 @@ export const processInstanceWorkitemReject = async (instanceHistoryId: string, u
 
 export const processInstanceWorkitemReassign = async (instanceHistoryId: string, userSession: any, comment: string, chooseApprover: string)=>{
     if(_.isEmpty(chooseApprover)){
-        throw new Error('process_approval_error_reassign_approver_notFind');
+        throw new SteedosError('process_approval_error_reassign_approver_notFind');
     }
     if(!_.isString(chooseApprover)){
-        throw new Error('process_approval_error_reassign_approver_mustBeString');
+        throw new SteedosError('process_approval_error_reassign_approver_mustBeString');
     }
 
     const history = await objectql.getObject("process_instance_history").update(instanceHistoryId, {

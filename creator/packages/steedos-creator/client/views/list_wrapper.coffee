@@ -262,9 +262,13 @@ Template.creator_list_wrapper.helpers
 			return search_text
 		else
 			return ''
+
 	isFiltering: ()->
 		return Creator.getIsFiltering()
+
 	canFollow: ()->
+		# 因icon图标大小样式问题先隐藏掉，后续改为调用sf的ButtonStateful控件
+		return false
 		objectName = Session.get("object_name")
 		object = Creator.getObject(objectName)
 		followAction = getFollowAction();
@@ -272,8 +276,19 @@ Template.creator_list_wrapper.helpers
 		if _.isFunction(followActionVisible)
 			followActionVisible = followActionVisible()
 		return (object?.enable_follow && followActionVisible) || isFollowing()
+
 	isFollowing : ()->
 		return isFollowing();
+
+	btnToggleGridSidebarClass: (isSidebarHidden)->
+		result = "slds-button_icon-border btn-toggle-grid-sidebar"
+		return unless isSidebarHidden then result + " slds-is-selected" else result
+
+	btnToggleFilterClass: (isFiltering, isFilterOpen)->
+		result = "slds-m-left_xx-small slds-button_icon-border-filled btn-filter-list"
+		if isFiltering
+			result += " filtering"
+		return result
 
 transformFilters = (filters)->
 	_filters = []
@@ -378,6 +393,9 @@ Template.creator_list_wrapper.events
 		format_logic = template.$("#filter-logic").val()
 		if Creator.validateFilters(filter_items, format_logic)
 			Session.set "list_view_visible", false
+			filter_items.forEach (item)->
+				delete item.start_value
+				delete item.end_value
 			Meteor.call "update_filters", list_view_id, filter_items, filter_scope, format_logic, (error, result) ->
 				Session.set "list_view_visible", true
 				if error 

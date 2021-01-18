@@ -38,16 +38,16 @@ JsonRoutes.add 'post', '/api/workflow/view/:instanceId', (req, res, next) ->
 			else if ins.state is 'completed' and ins.submitter is current_user_id
 				box = 'completed'
 			else
-				# 验证login user_id对该流程有管理申请单的权限
+				# 验证login user_id对该流程有管理、观察申请单的权限
 				permissions = permissionManager.getFlowPermissions(flowId, current_user_id)
 				space = db.spaces.findOne(spaceId, { fields: { admins: 1 } })
-				if permissions.includes("admin") or space.admins.includes(current_user_id)
+				if permissions.includes("admin") or permissions.includes("monitor") or space.admins.includes(current_user_id)
 					box = 'monitor'
-
+			workflowUrl = Meteor.settings.public.webservices?.workflow?.url
 			if box
-				redirect_url = "workflow/space/#{spaceId}/#{box}/#{insId}?X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
+				redirect_url = (workflowUrl || '') + "workflow/space/#{spaceId}/#{box}/#{insId}?X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
 			else
-				redirect_url = "workflow/space/#{spaceId}/print/#{insId}?box=monitor&print_is_show_traces=1&print_is_show_attachments=1&X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
+				redirect_url = (workflowUrl || '') + "workflow/space/#{spaceId}/print/#{insId}?box=monitor&print_is_show_traces=1&print_is_show_attachments=1&X-User-Id=#{x_user_id}&X-Auth-Token=#{x_auth_token}"
 
 			JsonRoutes.sendResult res, {
 				code: 200

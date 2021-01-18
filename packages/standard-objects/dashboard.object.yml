@@ -16,13 +16,12 @@ fields:
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
-
               _options = [];
-
-              _.forEach(Creator.Apps, function (o, k) {
+              var apps = Creator.getVisibleApps(false);
+              _.forEach(apps, function (o) {
                 return _options.push({
-                  label: o.name,
-                  value: k,
+                  label: o.label,
+                  value: o._id,
                   icon: o.icon_slds
                 });
               });

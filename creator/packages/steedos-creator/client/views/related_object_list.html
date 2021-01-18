@@ -50,9 +50,8 @@
 							<p class="slds-text-body_small tabular_info">{{#if recordsTotalCount}}{{_ "creator_list_item_counts" recordsTotalCount}}{{/if}}</p>
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-bottom">
-							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="{{_ "creator_refresh"}}">
-								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
-							</button>
+							{{> steedos_button className="slds-m-left_xx-small slds-button_icon-border-filled btn-refresh"
+								iconCategory="utility" iconName="refresh" variant="icon" title=(_ "creator_refresh")}}
 						</div>
 					</div>
 				</div>

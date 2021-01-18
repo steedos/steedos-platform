@@ -121,6 +121,11 @@ fields:
     type: boolean
     label: Enable Audit
     group: Switch
+  enable_inline_edit:
+    type: boolean
+    defaultValue: true
+    label: Enable Single Field Edit
+    group: Switch
   # enable_trash:
   #   type: boolean
   # enable_space_global:
@@ -250,6 +255,7 @@ relatedList:
   - permission_objects
   - object_workflows
   - process_definition
+  - object_validation_rules
 list_views:
   all:
     columns:

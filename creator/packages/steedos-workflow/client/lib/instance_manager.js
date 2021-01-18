@@ -363,7 +363,7 @@ InstanceManager.checkFormValue = function () {
 
 	for (var k in fieldsPermision) {
 		if (fieldsPermision[k] == 'editable') {
-			InstanceManager.checkFormFieldValue($("[name='" + k + "']")[0]);
+			InstanceManager.checkFormFieldValue($("[name='" + k + "']")[0], k);
 		}
 	}
 }
@@ -486,10 +486,14 @@ InstanceManager.checkSuggestion = function (alter) {
 	}
 }
 
-InstanceManager.checkFormFieldValue = function (field) {
+InstanceManager.checkFormFieldValue = function (field, fieldName, fieldValue) {
 
 	if (!field)
 		return;
+
+	if (!field.name && fieldName) {
+		field.name = fieldName;
+	}
 
 	var reg_email = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
 	var parent_group = $("#" + field.id).parent();
@@ -509,6 +513,17 @@ InstanceManager.checkFormFieldValue = function (field) {
 			fileValue = $("[name='" + field.name + "']:checked").val();
 		} else {
 			fileValue = field.value;
+		}
+
+		if (!fileValue && fieldName) {
+			// dx-date-box时间控件会拿不到field.value，需要额外写代码取出来
+			if (fieldValue) {
+				// 子表不可以从getInstanceValuesByAutoForm中取值，只能传过来
+				fileValue = fieldValue;
+			}
+			else {
+				fileValue = InstanceManager.getInstanceValuesByAutoForm()[fieldName];
+			}
 		}
 
 		if (!fileValue || fileValue == '' || fileValue.length < 1) {
@@ -801,7 +816,7 @@ InstanceManager.saveIns = function (noWarn) {
 				};
 				if (result == true) {
 					WorkflowManager.instanceModified.set(false);
-					if(!noWarn){
+					if (!noWarn) {
 						toastr.success(TAPi18n.__('Saved successfully'));
 					}
 				}
@@ -850,7 +865,7 @@ InstanceManager.saveIns = function (noWarn) {
 				$('body').removeClass("loading");
 				WorkflowManager.instanceModified.set(false);
 				if (result == true) {
-					if(!noWarn){
+					if (!noWarn) {
 						toastr.success(TAPi18n.__('Saved successfully'));
 					}
 				} else if (result == "upgraded") {
@@ -872,7 +887,7 @@ InstanceManager.saveIns = function (noWarn) {
 					$('body').removeClass("loading");
 					WorkflowManager.instanceModified.set(false);
 					if (result == true) {
-						if(!noWarn){
+						if (!noWarn) {
 							toastr.success(TAPi18n.__('Saved successfully'));
 						}
 					} else {
@@ -1208,7 +1223,7 @@ InstanceManager.uploadAttach = function (files, isAddVersion, isMainAttach) {
 
 	var limitSize, warnStr;
 	var maximumFileSize = 100;
-	if(Meteor.settings.public && Meteor.settings.public.cfs && Meteor.settings.public.cfs.size_limit){
+	if (Meteor.settings.public && Meteor.settings.public.cfs && Meteor.settings.public.cfs.size_limit) {
 		maximumFileSize = Meteor.settings.public.cfs.size_limit;
 	}
 	limitSize = maximumFileSize * 1024 * 1024;
@@ -1708,7 +1723,7 @@ InstanceManager.getCCStep = function () {
 
 InstanceManager.updateApproveSign = function (sign_field_code, description, sign_type, lastSignApprove) {
 	myApprove = InstanceManager.getCurrentApprove()
-	if (myApprove && myApprove.sign_show != true) {
+	if (myApprove && (myApprove.sign_show != true || !description)) {
 		Meteor.call('update_approve_sign', myApprove.instance, myApprove.trace, myApprove._id, sign_field_code, description, sign_type || "update", lastSignApprove)
 	}
 }
@@ -1801,4 +1816,23 @@ InstanceManager.ccHasEditPermission = function () {
 		return t._id == currentApprove.trace;
 	})
 	return ccStep.cc_has_edit_permission && !trace.is_finished;
+}
+
+InstanceManager.getOpinionFieldsCode = function () {
+	let sign_field_code = '';
+	let opinion_fields_codes = $('[name=opinion_fields_code]');
+	if (opinion_fields_codes && opinion_fields_codes.length > 0) {
+		let i = 0;
+		let l = opinion_fields_codes.length;
+		while (i < l) {
+			let ofc = opinion_fields_codes[i];
+			if (ofc.checked && ofc.value) {
+				sign_field_code = ofc.value;
+				break
+			}
+			i++;
+		}
+	}
+
+	return sign_field_code;
 }

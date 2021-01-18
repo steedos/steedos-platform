@@ -1,6 +1,6 @@
 name: autonumber
 label: Auto Number
-icon: apps
+icon: formula
 hidden: true
 fields:
   object_name:

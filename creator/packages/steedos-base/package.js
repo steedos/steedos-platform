@@ -223,7 +223,12 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/autoupdate_cordova.coffee', 'web.cordova');
 
+	api.addFiles('client/layout/login_layout.html', "client");
+	api.addFiles('client/layout/login_layout.coffee', "client");
+	api.addFiles('client/layout/login_layout.less', "client");
+
 	api.addFiles('server/startup.coffee', 'server');
+	api.addFiles('server/development.js', 'server');
 
 
 	api.export('Selector');

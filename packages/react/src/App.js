@@ -25,7 +25,7 @@ function App() {
 
   // let company = {
   //   name: 'company',
-  //   label: '单位',
+  //   label: '分部',
   //   fields: {
   //     name: {
   //       label: '公司名称',

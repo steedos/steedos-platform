@@ -4,11 +4,11 @@ html {
 }
 
 body {
-  background: rgba(var(--color-blue-100));
+  background: rgb(var(--color-blue-100));
 }
 
 .slds-page-header {
-  background: rgba(var(--color-cool-gray-50));
+  background: rgb(var(--color-cool-gray-50));
 }
 
 .slds-button__icon {

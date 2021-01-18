@@ -52,7 +52,7 @@ Template.creatorSidebarLeft.helpers
 			return item._id !='admin' && !_.isEmpty(item.mobile_objects)
 
 	logoUrl: ()->
-		avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar_square
+		avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar
 		if avatar
 			return Steedos.absoluteUrl("/api/files/avatars/#{avatar}")
 		else

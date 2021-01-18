@@ -72,6 +72,9 @@ export class SteedosSchema {
      */
     getObject(name: string) {
         let datasource_name: string, object_name: string;
+        if(!name){
+            throw new Error('Object name is required');
+        }
         let args = name.split('.')
         if(args.length == 1){
             object_name = name

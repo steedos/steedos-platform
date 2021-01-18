@@ -37,9 +37,8 @@
                     {{/if}}
                 </div>
             </a>
-            <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small removeFilter">
-                {{> steedos_icon class="slds-button__icon slds-button__icon_hint" source="utility-sprite" name="close"}}
-            </button>
+            {{> steedos_button className="slds-button_icon-small removeFilter"
+                iconCategory="utility" iconName="close" iconClassName="slds-button__icon_hint" variant="icon"}}
         </li>
         {{/each}}
     </ul>

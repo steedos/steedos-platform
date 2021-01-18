@@ -1,0 +1,89 @@
+name: workflow_rule
+label: Workflow Rule
+icon: maintenance_work_rule
+hidden: true
+fields:
+  object_name:
+    label: Object Name
+    type: lookup
+    required: true
+    is_wide: true
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions();
+      }
+  name:
+    type: text
+    required: true
+  label:
+    type: text
+    required: true
+    is_name: true
+  active:
+    type: boolean
+    # hidden: true
+  trigger_type:
+    type: select
+    is_wide: true
+    required: true
+    firstOption: false
+    options: 
+      - onCreateOnly
+      - onAllChanges
+      - onCreateOrTriggeringUpdate
+    defaultValue: onCreateOrTriggeringUpdate
+  formula:
+    type: textarea
+    is_wide: true
+    required: true
+    group: Rule Criteria
+  updates_field_actions:
+    group: Immediate Actions
+    type: lookup
+    multiple: true
+    label: Field Update
+    is_wide: true
+    reference_to: action_field_updates
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
+  # boolean_filter: # TODO 暂不支持
+  #   type: text
+  # criteria: # TODO 暂不支持
+  #   type: textarea
+  # time_triggers #TODO 暂不支持
+  description:
+    type: textarea
+    is_wide: true
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    filter_fields:
+      - object_name
+    columns:
+      - label
+      - object_name
+      - trigger_type
+      - active
+      - description
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

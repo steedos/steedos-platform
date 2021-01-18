@@ -1,6 +1,6 @@
 cms_files__object: 附件
 cms_files_action_download: 下载
-cms_files_action_office_online_preview: 预览
+cms_files_action_online_preview: 预览
 cms_files_action_new_version: 上传新版本
 cms_files_action_standard_delete: 删除
 cms_files_action_standard_edit: 编辑

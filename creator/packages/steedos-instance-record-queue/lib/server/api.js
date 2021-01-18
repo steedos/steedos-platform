@@ -1,3 +1,9 @@
+const objectql = require('@steedos/objectql');
+var runQuoted = function (objectName, recordId) {
+	objectql.runQuotedByObjectFieldFormulas(objectName, recordId);
+	objectql.runQuotedByObjectFieldSummaries(objectName, recordId);
+}
+
 var _eval = require('eval');
 var isConfigured = false;
 var sendWorker = function (task, interval) {
@@ -875,6 +881,9 @@ InstanceRecordQueue.sendDoc = function (doc) {
 				Meteor.wrapAsync(removeOldFiles)();
 				// 同步新附件
 				InstanceRecordQueue.syncAttach(sync_attachment, insId, record.space, record._id, objectName);
+
+				// 执行公式
+				runQuoted(objectName, record._id);
 			} catch (error) {
 				console.error(error.stack);
 				objectCollection.update({
@@ -955,6 +964,8 @@ InstanceRecordQueue.sendDoc = function (doc) {
 				// 附件同步
 				InstanceRecordQueue.syncAttach(sync_attachment, insId, spaceId, newRecordId, objectName);
 
+				// 执行公式
+				runQuoted(objectName, newRecordId);
 			} catch (error) {
 				console.error(error.stack);
 

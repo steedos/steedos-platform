@@ -1,5 +1,11 @@
 Template.filter_option.helpers Creator.helpers
 
+getFilterFieldType = (fields, schemaKey)->
+	result = fields[schemaKey]?.type
+	if ["formula", "summary"].indexOf(result) > -1
+		result = fields[schemaKey].data_type
+	return result
+
 Template.filter_option.helpers 
 	schema:() -> 
 		object_name = Template.instance().data?.object_name
@@ -10,7 +16,7 @@ Template.filter_option.helpers
 		schema_key = template.schema_key.get()
 		object_fields = Creator.getObject(object_name).fields
 
-		filter_field_type = object_fields[schema_key]?.type
+		filter_field_type = getFilterFieldType(object_fields, schema_key)
 		filedOptions = Creator.getObjectFilterFieldOptions object_name
 		schema=
 			is_default:
@@ -204,7 +210,7 @@ Template.filter_option.events
 	'click .save-filter': (event, template) ->
 		fields = Creator.getObject(template.data.object_name).fields
 		filter = AutoForm.getFormValues("filter-option").insertDoc
-		filter_field_type = fields[filter.field]?.type
+		filter_field_type = getFilterFieldType(fields, filter.field)
 		unless filter.operation
 			toastr.error(t("creator_filter_operation_required_error"))
 			return
@@ -219,7 +225,12 @@ Template.filter_option.events
 				filter.operation = "between"
 				filter.value = currentBuiltinValue.key
 			else
-				filter.value = [filter.start_value, filter.end_value]
+				if filter.start_value || filter.end_value
+					filter.value = [filter.start_value, filter.end_value]
+				else
+					delete filter.value 
+			delete filter.start_value
+			delete filter.end_value
 		index = this.index
 		filter_items = Session.get("filter_items")
 		filter_items[index] = filter
@@ -246,7 +257,7 @@ Template.filter_option.events
 			filter_item.value = ""
 			template.filter_item.set(filter_item)
 		object_fields = Creator.getObject(object_name).fields
-		filter_field_type = object_fields[field]?.type
+		filter_field_type = getFilterFieldType(object_fields, field)
 		defaultOperation = Creator.getFieldDefaultOperation(filter_field_type)
 		# 不能直接清除filter_item_operation，否则有默认值时，相关依赖的地方会出现异常
 		if defaultOperation
@@ -274,7 +285,7 @@ Template.filter_option.events
 			field = filter_item?.field
 			if field
 				object_fields = Creator.getObject(object_name).fields
-				filter_field_type = object_fields[field]?.type
+				filter_field_type = getFilterFieldType(object_fields, field)
 				focusFieldValueInput filter_field_type
 
 Template.filter_option.onCreated ->
@@ -293,7 +304,7 @@ Template.filter_option.onCreated ->
 		
 		key_obj = Creator.getSchema(object_name)._schema[key]
 		object_fields = Creator.getObject(object_name).fields
-		filter_field_type = object_fields[key]?.type
+		filter_field_type = getFilterFieldType(object_fields, key)
 
 		unless filter_field_type
 			filter_field_type = "text"
@@ -310,6 +321,9 @@ Template.filter_option.onCreated ->
 			if builtinOperation
 				operation = builtinOperation
 				filter_item.operation = builtinOperation
+			else if filter_item.value?.length
+				filter_item.start_value = filter_item.value[0]
+				filter_item.end_value = filter_item.value[1]
 		
 		Meteor.defer ->
 			focusFieldValueInput filter_field_type

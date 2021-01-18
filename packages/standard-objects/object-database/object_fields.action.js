@@ -5,7 +5,7 @@ module.exports = {
     var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
     $.ajax({
       type: "POST",
-      url: Meteor.absoluteUrl("/api/v4/" + object_name + "/" + record_id + "/recomputeFormulaValues"),
+      url: Steedos.absoluteUrl("/api/v4/" + object_name + "/" + record_id + "/recomputeFormulaValues"),
       data: JSON.stringify({}),
       dataType: "json",
       contentType: 'application/json',
@@ -68,7 +68,7 @@ module.exports = {
     var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
     $.ajax({
       type: "POST",
-      url: Meteor.absoluteUrl("/api/v4/" + object_name + "/" + record_id + "/recomputeSummaryValues"),
+      url: Steedos.absoluteUrl("/api/v4/" + object_name + "/" + record_id + "/recomputeSummaryValues"),
       data: JSON.stringify({}),
       dataType: "json",
       contentType: 'application/json',

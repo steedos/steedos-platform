@@ -30,4 +30,3 @@ tenant:
   enable_bind_mobile: false
 plugins:
   - "@steedos/accounts"
-  - "@steedos/app-crm"

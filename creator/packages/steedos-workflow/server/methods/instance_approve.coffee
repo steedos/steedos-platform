@@ -67,37 +67,16 @@ Meteor.methods
 		if !this.userId
 			return
 
+		trimDescription = description.trim()
+
+		showBlankApproveDescription = Meteor.settings.public.workflow?.showBlankApproveDescription
+
 		session_userId = this.userId
 
 		if lastSignApprove
-
-			if lastSignApprove.custom_sign_show
-				return
-
-			instance = db.instances.findOne({
-				_id: instanceId,
-				"traces._id": lastSignApprove.trace
-			}, { fields: { "traces.$": 1 } })
-
-			lastTrace = _.find instance?.traces, (t) ->
-				return t._id = lastSignApprove.trace
-
-			if lastTrace
-				setObj = {}
-				lastTrace?.approves.forEach (a, idx) ->
-					if a._id == lastSignApprove._id
-						if sign_type == "update"
-							setObj["traces.$.approves.#{idx}.sign_show"] = false
-							setObj["traces.$.approves.#{idx}.modified"] = new Date()
-							setObj["traces.$.approves.#{idx}.modified_by"] = session_userId
-
-				if not _.isEmpty(setObj)
-					db.instances.update({
-						_id: instanceId,
-						"traces._id": lastTrace._id
-					}, {
-						$set: setObj
-					})
+			if Meteor.settings.public.workflow?.keepLastSignApproveDescription != false
+				if lastSignApprove.custom_sign_show
+					return
 
 		instance = db.instances.findOne({ _id: instanceId, "traces._id": traceId }, { fields: { "traces.$": 1 } })
 
@@ -105,15 +84,34 @@ Meteor.methods
 
 			trace = instance.traces[0]
 			upObj = {}
+			currentApproveDescription = ''
 			trace.approves.forEach (approve, idx) ->
 				if approve._id == approveId
+					currentApproveDescription = approve.description
 					if sign_field_code
 						upObj["traces.$.approves.#{idx}.sign_field_code"] = sign_field_code
 					upObj["traces.$.approves.#{idx}.description"] = description
-					upObj["traces.$.approves.#{idx}.sign_show"] = true
+					upObj["traces.$.approves.#{idx}.sign_show"] = if trimDescription || showBlankApproveDescription then true else false
 					upObj["traces.$.approves.#{idx}.modified"] = new Date()
 					upObj["traces.$.approves.#{idx}.modified_by"] = session_userId
 					upObj["traces.$.approves.#{idx}.read_date"] = new Date()
+
+			if Meteor.settings.public.workflow?.keepLastSignApproveDescription == false && (!!currentApproveDescription != !!trimDescription || showBlankApproveDescription)
+				ins = db.instances.findOne({ _id: instanceId }, { fields: { "traces": 1 } })
+				traces = ins.traces
+				currentTrace = _.find traces, (t) ->
+					return t._id == traceId
+				currentStep = currentTrace.step
+				traces.forEach (t, tIdx) ->
+					if t.step == currentStep
+						t?.approves.forEach (appr, aIdx) ->
+							if appr.handler == session_userId && appr.is_finished && appr._id != approveId && !_.has(appr, 'custom_sign_show')
+								if (trimDescription && appr.sign_show == true && (sign_field_code == "" || !appr.sign_field_code || sign_field_code == appr.sign_field_code)) || showBlankApproveDescription
+									upObj["traces.#{tIdx}.approves.#{aIdx}.sign_show"] = false
+									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = approveId
+								else if appr.keepLastSignApproveDescription == approveId
+									upObj["traces.#{tIdx}.approves.#{aIdx}.sign_show"] = true
+									upObj["traces.#{tIdx}.approves.#{aIdx}.keepLastSignApproveDescription"] = null
 
 			if not _.isEmpty(upObj)
 				db.instances.update({

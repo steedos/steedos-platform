@@ -1,0 +1,176 @@
+name: action_field_updates
+label: Field Updates
+icon: record
+hidden: true
+enable_inline_edit: false
+fields:
+  name:
+    type: text
+    required: true
+  label:
+    type: text
+    required: true
+    is_name: true
+  object_name:
+    label: Object Name
+    type: lookup
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions();
+      }
+  target_object:
+    type: lookup
+    label: Object to Update
+    depend_on:
+      - object_name
+    optionsFunction: !!js/function |
+      function (doc) {
+        var object = Creator.objectsByName[doc.object_name];
+        if(object){
+          var _options = [{label: object.label, value: object.name}];
+          _.forEach(object.fields, function (field, fname) {
+            if(field && field.type === 'master_detail' && _.isString(field.reference_to) && field.label){
+              _options.push({
+                label: field.label,
+                value: field.name,
+              });
+            }
+          });
+          return _options;
+        }
+       return [];
+      }
+  field_name:
+    label: Field to Update
+    type: lookup
+    showIcon: false
+    depend_on:
+      - object_name
+      - target_object
+    optionsFunction: !!js/function |
+      function (doc) {
+        var mainObjectName = null;
+        if(doc.target_object && doc.target_object != doc.object_name){
+          var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
+        }else{
+          mainObjectName = doc.object_name;
+        }
+        var object = Creator.objectsByName[mainObjectName];
+        if(object){
+          var _options = [];
+          _.forEach(object.fields, function (field, fname) {
+            _options.push({
+                label: field.label,
+                value: field.name,
+              });
+          });
+          return _options;
+        }
+        return [];
+      }
+  operation:
+    type: lookup
+    showIcon: false
+    depend_on:
+      - field_name
+    optionsFunction: !!js/function |
+      function (doc) {
+        var mainObjectName = null;
+        if(doc.target_object && doc.target_object != doc.object_name){
+          var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
+        }else{
+          mainObjectName = doc.object_name;
+        }
+        var object = Creator.objectsByName[mainObjectName];
+        if(object && doc.field_name){
+          var _options = [];
+          var field = object.fields[doc.field_name];
+          if(field && field.type != 'boolean'){
+            _options.push({
+                label: TAPi18n.__("action_field_updates_field_operation_options_null"),
+                value: 'null',
+            }) 
+          }
+          _options.push({
+              label: TAPi18n.__("action_field_updates_field_operation_options_formula"),
+              value: 'formula',
+          });
+          _options.push({
+              label: TAPi18n.__("action_field_updates_field_operation_options_literal"),
+              value: 'literal',
+          })
+          return _options;
+        }
+        return [];
+      }
+    # options: 
+    #   - label: 'Null'
+    #     value: 'null'
+    #   - label: 'Formula'
+    #     value: 'formula'
+    #   - label: 'PreviousValue'
+    #     value: 'previous_value'
+    #   - label: 'NextValue'
+    #     value: 'next_value'
+    #   - label: '特定值'
+    #     value: 'literal'
+  formula:
+    type: textarea
+    is_wide: true
+  literal_value:
+    type: text
+    is_wide: true
+    label: Literal value
+  notify_assignee:
+    type: boolean
+    hidden: true
+    omit: true
+    label: 通知被分配人(仅修改拥有者时由此选项)
+  description:
+    label: Description
+    type: textarea
+    is_wide: true
+  # todo:
+form:
+  beforeEdit: !!js/function |
+    function(){
+      Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
+    }
+  afterEdit: !!js/function |
+    function(){
+      Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
+    }
+  beforeView: !!js/function |
+    function(){
+      Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
+    }
+list_views:
+  all:
+    label: All
+    filter_scope: space
+    filter_fields:
+      - object_name
+    columns:
+      - label
+      - object_name
+      - target_object
+      - field_name
+      - operation
+      - formula
+      - literal_value
+      - description
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

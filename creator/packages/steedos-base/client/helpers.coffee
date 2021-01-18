@@ -318,7 +318,7 @@ TemplateHelpers =
 		if spaceId
 			space = db.spaces.findOne(spaceId)
 			if space
-				return space.is_paid
+				return Steedos.hasFeature('paid', space._id)
 
 	isLegalVersion: (spaceId,app_version)->
 		if !spaceId

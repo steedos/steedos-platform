@@ -12,7 +12,7 @@ Template.instanceSignModal.helpers
 		if history_approve && history_approve?.description
 			return history_approve.description
 		else
-			description = Session.get("instance_my_approve_description") || InstanceManager.getCurrentApprove()?.description || InstanceSignText.helpers.getLastSignApprove()?.description || ""
+			description = Session.get("instance_my_approve_description") || InstanceManager.getCurrentApprove()?.description || (if Meteor.settings.public.workflow?.hideLastSignApproveDescription != true then InstanceSignText.helpers.getLastSignApprove()?.description) || ""
 			return description;
 
 	show_suggestion_counts: ()->

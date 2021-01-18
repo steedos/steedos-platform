@@ -15,7 +15,7 @@ function getFieldName(objectName, fieldName){
   if(object.datasource && object.datasource != 'default'){
     return fieldName;
   }else{
-    if(fieldName != 'name'){
+    if(fieldName != 'name' && fieldName != 'owner'){
       return `${fieldName}__c`;
     }else{
       return fieldName
@@ -210,6 +210,27 @@ function handleFieldProps(field){
 
 }
 
+const checkFormulaInfiniteLoop = function(_doc){
+  if(_doc.type === "formula"){
+    doc = clone(_doc)
+    delete doc._id
+    let objectConfig = Creator.getCollection("objects").findOne({
+      space: doc.space,
+      name: doc.object
+    });
+    delete objectConfig._id;
+    try {
+      objectql.addObjectFieldFormulaConfig(doc, objectConfig);
+    } catch (error) {
+      if(error.message.startsWith('Infinite Loop')){
+        throw new Error('字段公式配置异常，禁止循环引用对象字段');
+      }else{
+        throw error;
+      }
+    }
+  }
+}
+
 var triggers = {
   "after.insert.server.object_fields": {
     on: "server",
@@ -315,6 +336,7 @@ var triggers = {
         let defProps = getFieldDefaultProps(Object.assign(clone(doc), modifier.$set));
         Object.assign(modifier.$set, defProps);
       }
+      checkFormulaInfiniteLoop(modifier.$set);
     }
   },
   //					if modifier?.$set?.reference_to
@@ -328,7 +350,7 @@ var triggers = {
         throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
       checkName(doc._name);
-      if(doc._name === 'name'){
+      if(doc._name === 'name' || doc._name === 'owner'){
         doc.name = doc._name;
       }else{
         doc.name = getFieldName(doc.object,doc._name);
@@ -352,6 +374,8 @@ var triggers = {
       if ((doc != null ? doc.index : void 0) && ((doc != null ? doc.type : void 0) === 'textarea' || (doc != null ? doc.type : void 0) === 'html')) {
         throw new Meteor.Error(500, '多行文本不支持建立索引');
       }
+
+      checkFormulaInfiniteLoop(doc);
     }
   },
   "before.remove.server.object_fields": {

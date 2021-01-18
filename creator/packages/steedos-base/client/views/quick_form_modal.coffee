@@ -12,6 +12,8 @@ Template.quickFormModal.helpers
 		return this.template || "slds";
 	formId: ()->
 		return this.formId || defFormId
+	autoExpandGroup: ()->
+		return this.autoExpandGroup || false
 Template.quickFormModal.events
 	'click button.btn-confirm': (event,template) ->
 		formId = template.data.formId || defFormId

@@ -1,7 +1,8 @@
 name: process_node
-label: process_node
+label: Approval Steps
 hidden: true
-icon: record
+enable_inline_edit: false
+icon: steps
 fields:
   name:
     type: text
@@ -16,7 +17,7 @@ fields:
     scale: 0
     min: 1
   description:
-    label: description
+    label: Description
     type: textarea
     is_wide: true
   process_definition:
@@ -25,7 +26,7 @@ fields:
     reference_to: process_definition
   filtrad:
     type: boolean
-    label: 所有记录都应进入此步骤
+    label: All records should enter this step
     group: Specify Step Criteria
     defaultValue: false
     is_wide: true
@@ -33,6 +34,7 @@ fields:
     type: textarea
     label: Entry criteria
     is_wide: true
+    required: true
     group: Specify Step Criteria
   if_criteria_not_met: # https://help.salesforce.com/articleView?err=1&id=approvals_step_entrycriteria.htm&type=5
     type: select
@@ -66,15 +68,11 @@ fields:
     reference_to: roles
     multiple: true
     group: Select Assigned Approver
-    omit: true
-    hidden: true
   assigned_approver_flow_roles: 
     type: lookup
     reference_to: flow_roles
     multiple: true
     group: Select Assigned Approver
-    omit: true
-    hidden: true
   assigned_approver_user_field: 
     type: lookup
     multiple: true
@@ -129,7 +127,7 @@ fields:
   approval_updates_field_actions:
     type: lookup
     multiple: true
-    label: 字段更新
+    label: Field Update
     reference_to: action_field_updates
     depend_on:
       - process_definition
@@ -144,11 +142,11 @@ fields:
           return "object_name eq '" + object_name + "'";
         }
       }
-    group: 批准操作
+    group: Approval Actions
   rejection_updates_field_actions:
     type: lookup
     multiple: true
-    label: 字段更新
+    label: Field Update
     reference_to: action_field_updates
     depend_on:
       - process_definition
@@ -163,7 +161,7 @@ fields:
           return "object_name eq '" + object_name + "'";
         }
       }
-    group: 拒绝操作
+    group: Rejection Actions
 form:
   beforeInsert:
     function(){
@@ -188,10 +186,6 @@ form:
   beforeView: !!js/function |
     function(){
       Steedos.ProcessNodeManager.changeSchema(this.doc, this.schema);
-    }
-  afterView: !!js/function |
-    function(){
-      $(".table-cell-edit").remove();
     }
 list_views:
   all:

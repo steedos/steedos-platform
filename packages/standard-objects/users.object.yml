@@ -90,23 +90,35 @@ fields:
   company_id:
     defaultValue: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
     optionsFunction: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
     omit: true
     hidden: true
   company_ids:
     defaultValue: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
     optionsFunction: !!js/function |
       function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+        /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
+    omit: true
+    hidden: true
+  login_failed_number:
+    type: number
+    omit: true
+    hidden: true
+  login_failed_lockout_time:
+    type: datetime
+    omit: true
+    hidden: true
+  lockout:
+    type: boolean
     omit: true
     hidden: true
 list_views:

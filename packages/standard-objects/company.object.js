@@ -10,8 +10,8 @@ const checkRepeatCompany = function(orgId, spaceId){
         }
     });
     if (repeatCompany) {
-        /* 要判断选中的关联组织是否已经被其他单位关联了，如果有就提示不能修改，而且不用处理其is_company、company_id值逻辑 */
-        throw new Error("该关联组织，已经被其他单位占用了，不能重复关联该组织");
+        /* 要判断选中的关联组织是否已经被其他分部关联了，如果有就提示不能修改，而且不用处理其is_company、company_id值逻辑 */
+        throw new Error("该关联组织，已经被其他分部占用了，不能重复关联该组织");
     }
 }
 
@@ -62,7 +62,7 @@ Creator.Objects['company'].triggers = {
                     }
                 });
 
-                // 自动新建根组织下对应的组织关联到新单位，就算存在同名组织，也要新建，同名的老组织用户应该手动删除
+                // 自动新建根组织下对应的组织关联到新分部，就算存在同名组织，也要新建，同名的老组织用户应该手动删除
                 // 组织的其他属性，比如fullname，parents等在organizations.before.insert，organizations.after.insert处理
                 // 因为没办法保证company与organizations表的关联记录_id值一定相同，所以不再把它们_id值设置为相同值
                 var orgId = Creator.getCollection("organizations").insert({
@@ -99,7 +99,7 @@ Creator.Objects['company'].triggers = {
                     }
                 });
                 if(org){
-                    throw new Meteor.Error(400, "请先清空关联组织值再删除该单位");
+                    throw new Meteor.Error(400, "请先清空关联组织值再删除该分部");
                 }
             }
         }
@@ -215,7 +215,7 @@ let update_org_company_id = async function (_id, company_id, space_id, cachedCom
 }
 
 // 执行更新组织前先把所有company的直属关联组织is_company及is_company设置对，
-// 即把直属关联组织is_company设置为true，company_id设置为关联单位_id
+// 即把直属关联组织is_company设置为true，company_id设置为关联分部_id
 // 只需要处理organization值不等于其_id值的company记录，这些记录不是新建出来的，而是其他方式同步过来的数据
 let update_all_company_org = async function (space_id, cachedCompanys) {
     if(!cachedCompanys){
@@ -281,7 +281,7 @@ Creator.Objects['company'].methods = {
         });
 
         if (!company.organization) {
-            throw new Meteor.Error(400, "该单位的关联组织未设置");
+            throw new Meteor.Error(400, "该分部的关联组织未设置");
         }
 
         // 在使用cachedCompanys过程中一定要注意内部程序是否会变更cachedCompanys中的值，
@@ -312,7 +312,7 @@ Creator.Objects['company'].methods = {
             await update_su_company_ids.call(callThis, su._id, su, cachedOrganizations);
         }
 
-        // 单位没有上下层级关系，只能每次都更新所有单位的排序号
+        // 分部没有上下层级关系，只能每次都更新所有分部的排序号
         await update_all_company_sort_no.call(callThis, cachedCompanys, cachedOrganizations);
 
         return res.send({
@@ -342,7 +342,7 @@ Creator.Objects['company'].actions = {
         on: "record",
         todo: function (object_name, record_id, fields) {
             if (!this.record.organization) {
-                toastr.warning("该单位的关联组织未设置，未更新任何数据");
+                toastr.warning("该分部的关联组织未设置，未更新任何数据");
                 return;
             }
 
@@ -382,7 +382,7 @@ Creator.Objects['company'].actions = {
                             var logInfo = "已成功更新" + data.updatedOrgs + "条组织信息及" + data.updatedSus + "条用户信息";
                             console.log(logInfo);
                             toastr.success(logInfo);
-                            /* 更新组织后刷新单位列表，直接显示新的关联组织、排序号等列表信息 */
+                            /* 更新组织后刷新分部列表，直接显示新的关联组织、排序号等列表信息 */
                             $(".slds-page-header--object-home .btn-refresh").trigger("click");
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -403,7 +403,7 @@ Creator.Objects['company'].actions = {
                 }
             }
 
-            var text = "此操作将把组织结构中对应节点（及所有下属节点）的组织所属单位更新为本单位，组织中的人员所属单位也都更新为本单位。是否继续";
+            var text = "此操作将把组织结构中对应节点（及所有下属节点）的组织所属分部更新为本分部，组织中的人员所属分部也都更新为本分部。是否继续";
             swal({
                 title: "更新“" + this.record.name + "”组织信息",
                 text: "<div>" + text + "？</div>",

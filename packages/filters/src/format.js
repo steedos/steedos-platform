@@ -123,9 +123,15 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                             return item;
                         });
                         if (["=", "in"].indexOf(option) > -1) {
-                            _.each(value, function (v) {
-                                return sub_selector.push([field, "=", v], "or");
-                            });
+                            if(value.length){
+                                _.each(value, function (v) {
+                                    return sub_selector.push([field, "=", v], "or");
+                                });
+                            }
+                            else{
+                                // 空数组返回空值
+                                sub_selector.push([field, "=", "__badQueryForEmptyArray"], "and");
+                            }
                         } else if (["<>", "notin"].indexOf(option) > -1) {
                             _.each(value, function (v) {
                                 return sub_selector.push([field, "<>", v], "and");
@@ -144,6 +150,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                                 }
                             }
                         } else {
+                            // contains、startswith、endswith等，如果value为空数组，不加任何条件，即查找所有数据
                             _.each(value, function (v) {
                                 return sub_selector.push([field, option, v], "or");
                             });

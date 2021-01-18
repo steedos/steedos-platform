@@ -419,7 +419,8 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 				// try {
 
 				instanceHtml = InstanceReadOnlyTemplate.getInstanceHtml(user_info, space_id, ins, {
-					absolute: true
+					absolute: true,
+					showTrace: true
 				})
 				var instanceFile = new FS.File();
 				instanceFile.attachData(Buffer.from(instanceHtml, "utf-8"), {
@@ -501,51 +502,56 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 				})
 			}
 
-			// 给当前的申请单增加转发记录
-			var appr = {
-				'_id': new Mongo.ObjectID()._str,
-				'instance': instance_id,
-				'trace': current_trace_id,
-				'is_finished': true,
-				'user': user_id,
-				'user_name': user_info.name,
-				'handler': user_id,
-				'handler_name': user_info.name,
-				'handler_organization': space_user.organization,
-				'handler_organization_name': space_user_org_info.name,
-				'handler_organization_fullname': space_user_org_info.fullname,
-				'type': action_type,
-				'start_date': new Date(),
-				'finish_date': new Date(),
-				'is_read': false,
-				'judge': 'submitted',
-				'from_user': current_user_id,
-				'from_user_name': from_user_name,
-				'forward_space': space_id,
-				'forward_instance': new_ins_id,
-				'description': description,
-				'from_approve_id': from_approve_id
-			};
+			if (action_type === 'distribute') {
+				// 给当前的申请单增加分发记录
+				var appr = {
+					'_id': new Mongo.ObjectID()._str,
+					'instance': instance_id,
+					'trace': current_trace_id,
+					'is_finished': true,
+					'user': user_id,
+					'user_name': user_info.name,
+					'handler': user_id,
+					'handler_name': user_info.name,
+					'handler_organization': space_user.organization,
+					'handler_organization_name': space_user_org_info.name,
+					'handler_organization_fullname': space_user_org_info.fullname,
+					'type': action_type,
+					'start_date': new Date(),
+					'finish_date': new Date(),
+					'is_read': false,
+					'judge': 'submitted',
+					'from_user': current_user_id,
+					'from_user_name': from_user_name,
+					'forward_space': space_id,
+					'forward_instance': new_ins_id,
+					'description': description,
+					'from_approve_id': from_approve_id
+				};
 
-			forward_approves.push(appr);
+				forward_approves.push(appr);
+			}
 
 			new_ins_ids.push(new_ins_id);
 			pushManager.send_message_to_specifyUser("current_user", user_id);
 		})
 
-		set_obj.modified = new Date();
-		set_obj.modified_by = current_user_id;
-		var r = db.instances.update({
-			_id: instance_id,
-			"traces._id": current_trace_id
-		}, {
-			$set: set_obj,
-			$addToSet: {
-				'traces.$.approves': {
-					$each: forward_approves
+		if (!_.isEmpty(forward_approves)) {
+			set_obj.modified = new Date();
+			set_obj.modified_by = current_user_id;
+			var r = db.instances.update({
+				_id: instance_id,
+				"traces._id": current_trace_id
+			}, {
+				$set: set_obj,
+				$addToSet: {
+					'traces.$.approves': {
+						$each: forward_approves
+					}
 				}
-			}
-		});
+			});
+		}
+
 
 		if (r) {
 			_.each(current_trace.approves, function (a, idx) {

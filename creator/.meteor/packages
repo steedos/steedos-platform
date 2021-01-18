@@ -203,3 +203,5 @@ react-template-helper
 steedos:webkit-notification
 
 steedos:huaweipush
+
+steedos:api-authenticate-user

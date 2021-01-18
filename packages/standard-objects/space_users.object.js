@@ -891,7 +891,8 @@ let actions = {
         todo: function (object_name, record_id, fields) {
 
             if(!Creator.isSpaceAdmin()){
-                Modal.show("reset_password_modal");
+                // Modal.show("reset_password_modal");
+                Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
                 return;
             }
 
@@ -946,13 +947,13 @@ let actions = {
                 // permissions配置没有权限则不给权限
                 return false
             }
-            // 组织管理员要单独判断，只给到有对应单位的组织管理员权限
+            // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
             if(Steedos.isSpaceAdmin()){
                 return true;
             }
             else{
                 var userId = Steedos.userId();
-                //当前选中组织所属单位的管理员才有权限
+                //当前选中组织所属分部的管理员才有权限
                 if(organization && organization.company_id && organization.company_id.admins){
                     return organization.company_id.admins.indexOf(userId) > -1;
                 }
@@ -974,20 +975,20 @@ let actions = {
                 }
             }
 
-            // 组织管理员要单独判断，只给到有对应单位的组织管理员权限
+            // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
             if(Steedos.isSpaceAdmin()){
                 return true;
             }
             else{
                 var userId = Steedos.userId();
                 if(organization){
-                    //当前选中组织所属单位的管理员才有权限
+                    //当前选中组织所属分部的管理员才有权限
                     if(organization.company_id && organization.company_id.admins){
                         return organization.company_id.admins.indexOf(userId) > -1;
                     }
                 }
                 else{
-                    // 用户详细界面拿不到当前选中组织时，只能从记录本身所属单位的管理员中判断，只要当前用户是任何一个所属单位的管理员则有权限
+                    // 用户详细界面拿不到当前选中组织时，只能从记录本身所属分部的管理员中判断，只要当前用户是任何一个所属分部的管理员则有权限
                     var record = Creator.getObjectRecord(object_name, record_id);
                     if(record && record.company_ids && record.company_ids.length){
                         return _.any(record.company_ids,function(item){
@@ -1007,20 +1008,20 @@ let actions = {
             //     // permissions配置没有权限则不给权限
             //     return false
             // }
-            // // 组织管理员要单独判断，只给到有对应单位的组织管理员权限
+            // // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
             // if(Steedos.isSpaceAdmin()){
             //     return true;
             // }
             // else{
             //     var userId = Steedos.userId();
             //     if(organization){
-            //         //当前选中组织所属单位的管理员才有权限
+            //         //当前选中组织所属分部的管理员才有权限
             //         if(organization.company_id && organization.company_id.admins){
             //             return organization.company_id.admins.indexOf(userId) > -1;
             //         }
             //     }
             //     else{
-            //         // 用户详细界面拿不到当前选中组织时，只能从记录本身所属单位的管理员中判断，只要当前用户是任何一个所属单位的管理员则有权限
+            //         // 用户详细界面拿不到当前选中组织时，只能从记录本身所属分部的管理员中判断，只要当前用户是任何一个所属分部的管理员则有权限
             //         var record = Creator.getObjectRecord(object_name, record_id);
             //         if(record && record.company_ids && record.company_ids.length){
             //             return _.any(record.company_ids,function(item){
@@ -1090,7 +1091,7 @@ let methods = {
                 return;
             }
             const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"]});
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile"]});
             if (spaceUser.user === user.userId){
                 res.status(400).send({
                     success: false,
@@ -1109,7 +1110,7 @@ let methods = {
                 });
                 return;
             }
-            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: false });
+            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: false, profile: spaceUser.profile});
             if(result){
                 res.status(200).send({ success: true });
             }
@@ -1147,7 +1148,7 @@ let methods = {
                 return;
             }
             const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile"] });
             if (spaceUser.user === user.userId) {
                 res.status(400).send({
                     success: false,
@@ -1166,7 +1167,123 @@ let methods = {
                 });
                 return;
             }
-            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: true });
+            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: true, profile: spaceUser.profile });
+            if(result){
+                res.status(200).send({ success: true });
+            }
+            else{
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "The object updateOne return nothing."
+                    }
+                });
+            }
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                error: {
+                    reason: error.reason,
+                    message: error.message,
+                    details: error.details,
+                    stack: error.stack
+                }
+            });
+        }
+    },
+    is_lockout: async function (req, res) {
+        try {
+            const params = req.params;
+            const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
+            let result = await steedosSchema.getObject('users').findOne(spaceUser.user)
+            if(result){
+                res.status(200).send({ lockout: result.lockout });
+            }
+            else{
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "The object updateOne return nothing."
+                    }
+                });
+            }
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                error: {
+                    reason: error.reason,
+                    message: error.message,
+                    details: error.details,
+                    stack: error.stack
+                }
+            });
+        }
+    },
+    lockout: async function (req, res) {
+        try {
+            const params = req.params;
+            const user = req.user;
+            if (!user.is_space_admin){
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "space_users_method_unlock_lockout_error_only_space_admin"
+                    }
+                });
+                return;
+            }
+            const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
+            if (spaceUser.user === user.userId) {
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "不能锁定您自己的帐户。"
+                    }
+                });
+                return;
+            }
+            let result = await steedosSchema.getObject('users').updateOne(spaceUser.user, {lockout: true});
+            if(result){
+                res.status(200).send({ success: true });
+            }
+            else{
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "The object updateOne return nothing."
+                    }
+                });
+            }
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                error: {
+                    reason: error.reason,
+                    message: error.message,
+                    details: error.details,
+                    stack: error.stack
+                }
+            });
+        }
+    },
+    unlock: async function (req, res) {
+        try {
+            const params = req.params;
+            const user = req.user;
+            if (!user.is_space_admin){
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "space_users_method_unlock_lockout_error_only_space_admin"
+                    }
+                });
+                return;
+            }
+            const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
+            let result = await steedosSchema.getObject('users').updateOne(spaceUser.user, {lockout: false, login_failed_number: 0, login_failed_lockout_time: undefined});
             if(result){
                 res.status(200).send({ success: true });
             }

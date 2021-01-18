@@ -1,101 +1,184 @@
-# 华炎魔方低代码开发平台
 
-华炎魔方是开源低代码开发工具，基于商业智能和模型驱动，可以按照业务需求，轻松便捷地创建智能化、移动化、个性化的应用程序。
+<p align="center">
+  <a href="https://www.steedos.org">
+    <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
+  </a>
+</p>
+<h1 align="center">
+  Steedos Platform
+</h1>
 
-华炎魔方致力于打造 Salesforce Platform 的开源替代方案。
+<p align="center">
+<a href="https://github.com/steedos/steedos-platform/blob/1.22/README_cn.md">中文</a>
+<a href="http://www.steedos.org/docs/overview"> · Docs</a>
+<a href="https://github.com/steedos/steedos-platform/issues/"> · Report a bug</a>
+<a href="https://github.com/steedos/steedos-platform/discussions"> · Discussions</a>
+</p>
 
-## 什么是华炎魔方？
+<p align="center">
+Steedos Platform is an open source alternative to salesforce low code development platform. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
+</p>
 
-- [华炎魔方技术白皮书](http://oss.steedos.com/apps/pdfviewer/web/viewer.html?file=http://oss.steedos.com/docs/%E5%8D%8E%E7%82%8E%E9%AD%94%E6%96%B9%E6%8A%80%E6%9C%AF%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf)
-- [文档](https://www.steedos.com/help/)
-- [视频演示](https://www.steedos.com/videos/)
-- [开发向导](https://www.steedos.com/developer/)
+<h3 align="center">
+ 🤖 🎨 🚀
+</h3>
 
-## 开发进度
+## Click, Not Code
 
-### 数据建模
+Traditional programming, denotes the means of programming by using certain coding languages, to tell a computer exactly how to perform an action. 
 
-- [x] 字段
-- [x] 关系
-- [x] 列表视图
-- [x] 页面布局
-- [x] 操作按钮
-- [ ] 记录类型
+On the other hand, declarative programming accomplishes the same results by basically telling the computer the end result and letting the computer figure out how to get there.
 
-### 模型驱动界面
+Steedos is such an declarative programming platform.  Steedos empowers business owners with all of the tools of a developer, without requiring an advanced skill set.
 
-- [x] 仪表盘
-- [x] 报表
-- [x] 列表视图
-- [x] 日历视图
-- [x] 记录查看
-- [x] 全局查找
-- [ ] Chatter
-- [ ] 看板视图
+With drag-and-drop simplicity, just about anyone can create apps that automate business processes. The apps you create for your business can be deployed on mobile, tablet and web, be simple or complex, and connect to nearly any data source.
 
-### 低代码开发
+## Based on Metadata
 
-- [x] 触发器
-- [x] 服务端API
-- [x] 操作按钮
-- [x] React 自定义页面
+Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
 
-### 流程自动化
+There are several types of Metadata, with each one representing a unique way a business function can be customized. Here are a few broad categories for Metadata types:
 
-- [x] 审批王
-- [x] 批准过程
-- [ ] 进程生成器
-- [ ] 屏幕流
+- **Data**: the core components of the data structure on which most customization is built. E.g. Custom Objects, Fields, and Custom Apps.
+- **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
+- **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
 
-### 系统集成
+## Supported Metadata Types
 
-- [x] 单点登录 接口
-- [x] ODATA API 接口
-- [x] GraphQL API 接口
-- [x] Webhooks
+- **Custom Objects**: Create custom objects to store information that’s unique to your organization. Choose whether your custom objects are searchable, support sharing, or include access to the Bulk API and Streaming API.
 
-### 移动化
+- **Formula**: A formula is an algorithm that derives its value from other fields, expressions, or values. Formulas can help you automatically calculate the value of a field based on other fields.
 
-- [x] 手机客户端
-- [x] 手机版列表视图
-- [x] 手机版页面布局
-- [x] 消息推送
-- [x] 拍照上传
+- **Validation Rules**: Improve the quality of your data using validation rules. Validation rules verify that the data a user enters in a record meets the standards you specify before the user can save the record. 
 
-### 用户管理
+- **Workflow Rules**: Workflow lets you automate standard internal procedures and processes to save time across your org. A workflow rule is the main container for a set of workflow instructions. These instructions can always be summed up in an if/then statement.
 
-- [x] 组织
-- [x] 分部
-- [x] 部门
-- [x] 人员
-- [x] 角色
-- [x] 简档
-- [x] 权限集
-- [ ] 队列
+- **Automated Actions**: An automated action is a reusable component that performs some sort of action behind the scenes—like updating a field or sending an email. Once you create an automated action, add it to a process, milestone, or other automated process.
 
-### 权限控制
+- **Approval Process**:  Different from process automation in the form of workflow rules. Approvals take automation one step further, letting you specify a sequence of steps that are required to approve a record.
 
-- [x] 应用程序权限
-- [x] 对象权限
-- [x] 字段权限
-- [x] 按钮权限
-- [x] 列表视图权限
-- [x] 共享规则
+- **Report & Dashboard**: Steedos offers a powerful suite of reporting tools that work together to help you understand and act on your data.
 
-### 标准业务对象
+## Installation
 
-- [x] 客户
-- [x] 联系人
-- [x] 公告
-- [x] 任务
-- [x] 日程
-- [x] 附件
-- [x] 知识库
+Steedos is essentially a set of npm packages that can be installed over npm. 
 
-## 微信群
+The easiest way to install Steedos is to use the command line tool that helps you create a template project. You can run this command anywhere in a new empty repository or within an existing repository, it will create a new directory containing the scaffolded files.
 
-对于华炎魔方有疑问？？欢迎加入华炎魔方开发者微信群。
+```bash
+npx create-steedos-app my-app
+cd my-app
+yarn
+yarn start
+```
 
-![联系我们](https://wework.qpic.cn/wwpic/245123_3nYlxE6LT9qSfLA_1599620554/0)
+or you can try the following sample projects.
 
-请微信扫描以上二维码，并长按选择识别图中二维码。
+- [Project Management App](https://github.com/steedos/project-management-app)
+- [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
+
+## Steedos Project
+
+Steedos project is native [Node.js](https://nodejs.org/en/download/) (version >= 10.15.1) project, use [MongoDB](https://www.mongodb.com/try/download/) (version >= 4.2) to save metadata and data.
+
+Developers can define metadata in project source code, or via product interface.
+
+Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
+
+### Project Structure
+
+```sh
+my-app
+├── steedos-app/main/default
+│   ├── applications
+│   │   └── myApp.app.yml
+│   └── objects
+│       └──todo__c
+│           ├── buttons
+│           │   └── markDown.button.yml
+│           │   └── markDown.button.js
+│           ├── fields
+│           │   └── name.field.yml
+│           │   └── description.field.yml
+│           │   └── isDone.field.yml
+│           │   └── ...
+│           ├── listviews
+│           │   └── all.listview.yml
+│           │   └── recent.listview.yml
+│           │   └── my.listview.yml
+│           ├── permissions
+│           │   └── user.permission.yml
+│           │   └── admin.permission.yml
+│           └── todo.object.yml
+│           └──...
+├── .env
+├── .gitignore
+├── package.json
+├── README.md
+├── server.js
+├── steedos-config.yml
+└── yarn.lock
+```
+
+
+### Metadata Example
+
+Steedos use the following yml file to describe an object field.
+
+```yml
+name: rating
+label: Rating
+type: select
+sortable: true
+options:
+  - label: Hot
+    value: hot
+  - label: Warm
+    value: warm
+  - label: Cold
+    value: cold
+inlineHelpText: How do you classify this customer level, for example, hot, warn or cold.
+sort_no: 270
+```
+
+## Steedos DX
+
+With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
+
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
+
+To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+
+Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
+
+## Awesome Steedos Apps
+
+💻 🎉 An awesome & curated list of best applications powered by Steedos Platform.
+
+- [PM (Project Management)](https://github.com/steedos/project-management-app): Track and manage your projects, milestones, tasks, blocked tasks, overdue tasks, time, expense budgets, and has detailed reporting capabilities.
+- [CRM (Customer Relationship Management)](https://github.com/steedos/steedos-app-crm): Salesforce alternative, provides everything you need to manage your business. Generate the best leads, manage opportunities through the sales pipleline, and cultivate relationships with exisiting accounts. Plus, forecast revenues, set up sales territories, and organize your reps into selling teams.
+- [OKR (Objectives and Key Results)](https://github.com/steedos/okr-management-app): Objectives and Key Results (OKR) is a critical thinking framework and goal setting methodology that helps companies to align goals and ensure everyone is working collaboratively on goals that really matter.
+- [B2B Commerce](https://github.com/steedos/b2b-commerce): Design, build, and launch a business-to-business (B2B) commerce solution that enables retailers, wholesalers, or distributors to purchase goods or services from your brand. Powered by Steedos and Next.js Commerce.
+- [Contract Management](https://github.com/steedos/steedos-app-contract): Paper contracts are old school. With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
+
+[Find more](https://github.com/steedos/awesome-steedos-apps)
+
+## Steedos Docs
+
+For more information, please refer to the official website of [www.steedos.org](https://www.steedos.org/)
+
+## Contribute to Steedos Platform
+
+From reporting bugs to proposing improvement suggestions, every contribution is worthy of appreciation and welcome. If you are going to modify the code to fix a bug or implement a new function, please create an issue first, so that we can ensure that your work is not wasted.
+
+See [Contributing Guide](/CONTRIBUTING.md) for how to run and build our platform source code.
+
+## Licence
+
+Steedos Platform is licensed under the MIT. Everyone can build and distribute steedos apps for free. 
+
+## Keep in Contact
+
+If you have any questions or want to talk to other users of Steedos Platform , please jump to GitHub for discussion [Click to Discuss](https://github.com/steedos/steedos-platform/discussions) or [Join me on Slack-it's a faster,simpler way to work](https://join.slack.com/t/steedos/shared_invite/zt-jq7eupr9-cgKrUOyWb1zymniRzhH4jg).

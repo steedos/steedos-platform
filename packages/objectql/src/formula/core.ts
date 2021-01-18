@@ -2,25 +2,22 @@ import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaParamTypeConfig, SteedosFormulaVarPathTypeConfig, 
     FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions, SteedosQuotedByFieldFormulasTypeConfig } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
+import { runQuotedByObjectFieldSummaries, getObjectQuotedByFieldSummaryConfigs } from '../summary';
 import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndFields } from './util';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
 import { SteedosQueryFilters } from '../types';
 import _ = require('lodash')
-import _eval = require('eval')
+// import _eval = require('eval')
+import { extract, parse } from 'formulon'
+import { getFieldSubstitution } from './params'
 
 /**
  * 根据公式内容，取出其中{}中的变量
  * @param formula 
  */
 export const pickFormulaVars = (formula: string): Array<string> => {
-    let matchs = formula.match(/\{[\w\.\$]+\}/g);
-    if (matchs && matchs.length) {
-        return matchs.map((n) => { return n.replace(/{|}/g, "") });
-    }
-    else {
-        return [];
-    }
+    return extract(formula);
 }
 
 /**
@@ -126,6 +123,7 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
             }, null);
             params.push({
                 key: key,
+                path: _.last(paths),
                 value: tempValue
             });
         }
@@ -137,20 +135,21 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
     if (!currentUserId) {
         checkCurrentUserIdNotRequiredForFieldFormulas(fieldFormulaConfig);
     }
-    const { formula, vars, formula_type, formula_blank_value } = fieldFormulaConfig;
+    const { formula, vars, data_type, formula_blank_value } = fieldFormulaConfig;
     let params = await computeFormulaParams(doc, vars, currentUserId);
     return runFormula(formula, params, {
-        returnType: formula_type,
+        returnType: data_type,
         blankValue: formula_blank_value
     });
 }
 
 export const evalFieldFormula = function (formula: string, formulaParams: object) {
     try {
-        let formulaFun = `module.exports = function (__params) { ${formula} }`;
+        // let formulaFun = `module.exports = function (__params) { ${formula} }`;
         // console.log("==evalFieldFormula==formulaFun===", formulaFun);
         // console.log("==evalFieldFormula==formulaParams===", formulaParams);
-        return _eval(formulaFun)(formulaParams);
+        // return _eval(formulaFun)(formulaParams);
+        return parse(formula, formulaParams)
     }
     catch (ex) {
         formulaParams[FormulaUserKey] = "{...}" //$user简化，打出的日志看得清楚点
@@ -168,71 +167,74 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     if (!options) {
         options = {};
     }
+    // console.log("===runFormula===formula====", formula);
+    // console.log("===runFormula===params====", params);
     let { returnType, blankValue } = options;
     let formulaParams = {};
-    params.forEach(({ key, value }) => {
-        formulaParams[key] = value;
+    params.forEach(({ key, path, value }) => {
+        // formulaParams[key] = value;
         // 把{}括起来的变量替换为计算得到的变量值
-        formula = formula.replace(`{${key}}`, `__params["${key}"]`);
+        // formula = formula.replace(`{${key}}`, `__params["${key}"]`);
+        formulaParams[key] = getFieldSubstitution(path.reference_from, path.field_name, value, blankValue);
     });
-    if (!/\breturn\b/.test(formula)) {
-        // 如果里面没有return语句，则在最前面加上return前缀
-        formula = `return ${formula}`;
-    }
+    
     let result = evalFieldFormula(formula, formulaParams);
-    // console.log("==runFieldFormular==result===", result);
-    if (result === null || result === undefined || _.isNaN(result)) {
-        if (["number", "currency"].indexOf(returnType) > -1) {
-            if (blankValue === SteedosFormulaBlankValue.blanks) {
-                return null;
-            }
-            else {
-                // 默认为按0值处理
-                return 0;
-            }
+    // console.log("===runFormula===result====", result);
+    let formulaValue = result.value;
+    let formulaValueType = result.dataType;
+    if(result.type === 'error'){
+        if(blankValue === SteedosFormulaBlankValue.blanks && result.errorType === "ArgumentError"){
+            // 配置了空参数视为空值时会直接返回空值类型，这里就会报错，直接返回空值，而不是抛错
+            // TODO:result.errorType === "ArgumentError"不够细化，下一版本应该视错误情况优化返回空值的条件
+            formulaValue = null;
         }
-        else {
-            return null;
+        else{
+            throw new Error(result.message);
         }
     }
-    if (returnType) {
-        const resultType = typeof result;
+    if (formulaValueType === "number" && _.isNaN(formulaValue)){
+        // 数值类型计算结果为NaN时，保存为空值
+        formulaValue = null;
+    }
+
+    if (returnType && formulaValueType && formulaValueType != "null") {
         switch (returnType) {
             case "boolean":
-                if (resultType !== "boolean") {
-                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a boolean type result but got a ${resultType} type value '${result}'.`);
+                if (formulaValueType !== "checkbox") {
+                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a boolean type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "number":
-                if (resultType !== "number") {
-                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${resultType} type value '${result}'.`);
+                if (formulaValueType !== "number") {
+                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "currency":
-                if (resultType !== "number") {
-                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${resultType} type value '${result}'.`);
+                if (formulaValueType !== "number") {
+                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "text":
-                if (resultType !== "string") {
-                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a string type result but got a ${resultType} type value '${result}'.`);
+                if (formulaValueType !== "text") {
+                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a string type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "date":
-                if (result.constructor.name !== "Date") {
+                if (formulaValueType !== "date") {
                     // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
-                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${resultType} type value '${result}'.`);
+                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "datetime":
-                if (result.constructor.name !== "Date") {
+                if (formulaValueType !== "datetime") {
                     // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
-                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${resultType} type value '${result}'.`);
+                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
         }
     }
-    return result;
+    // console.log("===runFormula===formulaValue====", formulaValue);
+    return formulaValue;
 }
 
 const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFormulaVarPathTypeConfig>, toAggregatePaths: Array<Array<SteedosFormulaVarPathTypeConfig>>) => {
@@ -258,11 +260,12 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFormulaVarPat
  * @param options.escapeConfigs 传入该参数时，将额外跳过这些公式字段配置的运算，提高性能
  * @param options.quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, currentUserId: string, options: {
+export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, userSession: any, options: {
     fieldNames?: Array<string>,
     escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>,
     quotedByConfigs?: SteedosQuotedByFieldFormulasTypeConfig
 } = {}) {
+    let currentUserId = userSession ? userSession.userId : undefined;
     let { fieldNames, escapeConfigs, quotedByConfigs } = options;
     if (!quotedByConfigs) {
         quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs);
@@ -277,7 +280,7 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
     }
     // 要排除allConfigs中的ownConfigs，因为allConfigs中已经（按依赖关系先后次序）执行过的当前objectName引用自身的公式字段，不需要在下次级联调用runQuotedByObjectFieldFormulas时再次执行
     for (const config of quotedByConfigs.allConfigs) {
-        await updateQuotedByObjectFieldFormulaValue(objectName, recordId, config, currentUserId, quotedByConfigs.ownConfigs);
+        await updateQuotedByObjectFieldFormulaValue(objectName, recordId, config, userSession, quotedByConfigs.ownConfigs);
     }
 }
 
@@ -339,7 +342,7 @@ export const runManyCurrentObjectFieldFormulas = async function (objectName: str
  * @param recordId 当前修改的记录ID
  * @param fieldFormulaConfig 查到的引用了该记录所属对象的相关字段公式配置之一
  */
-export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, currentUserId: string, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
+export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
     // console.log("===updateQuotedByObjectFieldFormulaValue===", objectName, recordId, JSON.stringify(fieldFormulaConfig));
     const { vars, object_name: fieldFormulaObjectName } = fieldFormulaConfig;
     let toAggregatePaths: Array<Array<SteedosFormulaVarPathTypeConfig>> = [];
@@ -377,12 +380,12 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
             if (fieldFormulaObjectName === objectName && tempPath.reference_from === objectName) {
                 // 如果修改的是当前对象本身的公式字段值时，只需要更新当前记录的公式字段值就行
                 let doc = await getSteedosSchema().getObject(fieldFormulaObjectName).findOne(recordId, { fields: formulaVarFields })
-                await updateDocsFieldFormulaValue(doc, fieldFormulaConfig, currentUserId, escapeConfigs);
+                await updateDocsFieldFormulaValue(doc, fieldFormulaConfig, userSession, escapeConfigs);
             }
             else {
                 // 修改的是其他对象上的字段值（包括修改的是其他对象上的公式字段值），则需要按recordId值查出哪些记录需要更新重算公式字段值
                 let docs = await getSteedosSchema().getObject(fieldFormulaObjectName).find({ filters: [[tempPath.field_name, "=", recordId]], fields: formulaVarFields })
-                await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, currentUserId, escapeConfigs);
+                await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, userSession, escapeConfigs);
             }
         }
         else {
@@ -394,26 +397,47 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
                 filters: aggregateFilters,
                 fields: formulaVarFields
             }, aggregateLookups);
-            await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, currentUserId, escapeConfigs);
+            await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, userSession, escapeConfigs);
         }
     }
 }
 
-export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, currentUserId: string, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
+export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
     const { object_name: fieldFormulaObjectName } = fieldFormulaConfig;
     if (!_.isArray(docs)) {
         docs = [docs];
     }
+    let currentUserId = userSession ? userSession.userId : undefined;
     for (let doc of docs) {
         let value = await computeFieldFormulaValue(doc, fieldFormulaConfig, currentUserId);
         let setDoc = {};
         setDoc[fieldFormulaConfig.field_name] = value;
         await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
+    }
+    // 这里特意重新遍历一次docs而不是直接在当前函数中每次更新一条记录后立即处理被引用字段的级联变更，见：公式或汇总触发级联重算时，数据类型变更可能会造成无法重算 #965
+    await updateQuotedByDocsForFormulaType(docs, fieldFormulaConfig, userSession, escapeConfigs);
+}
+
+export const updateQuotedByDocsForFormulaType = async (docs: any, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
+    const { object_name: fieldFormulaObjectName } = fieldFormulaConfig;
+    if (!_.isArray(docs)) {
+        docs = [docs];
+    }
+    const fieldNames = [fieldFormulaConfig.field_name];
+    const formulaQuotedByConfigs = getObjectQuotedByFieldFormulaConfigs(fieldFormulaObjectName, fieldNames, escapeConfigs);
+    const summaryQuotedByConfigs = getObjectQuotedByFieldSummaryConfigs(fieldFormulaObjectName, fieldNames);
+    for (let doc of docs) {
         // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
-        await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, currentUserId, {
-            fieldNames: [fieldFormulaConfig.field_name], 
+        await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, userSession, {
+            fieldNames, 
+            quotedByConfigs: formulaQuotedByConfigs,
             escapeConfigs
         })
+        // 公式字段修改后，需要找到引用了该公式字段的其他汇总字段并更新其值
+        await runQuotedByObjectFieldSummaries(fieldFormulaObjectName, doc._id, null, userSession, {
+            fieldNames, 
+            quotedByConfigs: summaryQuotedByConfigs
+        });
     }
 }
 

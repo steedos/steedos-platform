@@ -6,24 +6,13 @@ _.each stores, (store_name)->
         if Meteor.isClient
             file_store = new FS.Store.OSS(store_name)
         else if Meteor.isServer
-            file_store = new FS.Store.OSS store_name,
-                region: Meteor.settings.cfs.aliyun.region
-                internal: Meteor.settings.cfs.aliyun.internal
-                bucket: Meteor.settings.cfs.aliyun.bucket
-                folder: Meteor.settings.cfs.aliyun.folder
-                accessKeyId: Meteor.settings.cfs.aliyun.accessKeyId
-                secretAccessKey: Meteor.settings.cfs.aliyun.secretAccessKey
+            file_store = new FS.Store.OSS store_name, Meteor.settings.cfs.aliyun
 
     else if Meteor.settings.public.cfs?.store == "S3"
         if Meteor.isClient
             file_store = new FS.Store.S3(store_name)
         else if Meteor.isServer
-            file_store = new FS.Store.S3 store_name,
-                region: Meteor.settings.cfs.aws.region
-                bucket: Meteor.settings.cfs.aws.bucket
-                folder: Meteor.settings.cfs.aws.folder
-                accessKeyId: Meteor.settings.cfs.aws.accessKeyId
-                secretAccessKey: Meteor.settings.cfs.aws.secretAccessKey
+            file_store = new FS.Store.S3 store_name, Meteor.settings.cfs.aws
     else
         if Meteor.isClient
             file_store = new FS.Store.FileSystem(store_name)

@@ -1,6 +1,6 @@
 name: web_forms
 label: Web Forms
-icon: account
+icon: display_text
 enable_api: true
 hidden: true
 fields:

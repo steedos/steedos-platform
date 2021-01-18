@@ -94,7 +94,7 @@
         },
         "enable_chatter": {
             "type": "boolean",
-            "description": "允许评论"
+            "description": "允许留言"
         },
         "enable_audit": {
             "type": "boolean",
@@ -127,6 +127,10 @@
         "enable_web_forms": {
             "type": "boolean",
             "description": "允许在线表单"
+        },
+        "enable_inline_edit": {
+            "type": "boolean",
+            "description": "允许单个字段编辑"
         },
         "is_view": {
             "type": "boolean",
@@ -309,6 +313,7 @@
                                 "datetime",
                                 "number",
                                 "currency",
+                                "percent",
                                 "password",
                                 "lookup",
                                 "master_detail",
@@ -411,6 +416,10 @@
                         "array"
                     ],
                     "description": "引用的对象"
+                },
+                "reference_to_field": {
+                    "type": "string",
+                    "description": "引用的对象的字段，按照此字段去查找相关记录"
                 },
                 "rows": {
                     "type": "integer",
@@ -558,9 +567,9 @@
                     "type": "string",
                     "description": "公式"
                 },
-                "formula_type": {
+                "data_type": {
                     "type": "string",
-                    "description": "公式返回类型",
+                    "description": "数据类型",
                     "anyOf": [
                         {
                             "enum": [
@@ -569,7 +578,8 @@
                                 "date",
                                 "datetime",
                                 "number",
-                                "currency"
+                                "currency",
+                                "percent"
                             ]
                         }
                     ]
@@ -595,6 +605,13 @@
                 "summary_field": {
                     "type": "string",
                     "description": "要聚合的字段"
+                },
+                "summary_filters": {
+                    "type": [
+                        "array",
+                        "string"
+                    ],
+                    "description": "要汇总的子表记录的过滤条件"
                 },
                 "formula_blank_value": {
                     "type": "string",
@@ -780,11 +797,11 @@
                 },
                 "viewCompanyRecords": {
                     "type": "boolean",
-                    "description": "查看本单位"
+                    "description": "查看本分部"
                 },
                 "modifyCompanyRecords": {
                     "type": "boolean",
-                    "description": "修改本单位"
+                    "description": "修改本分部"
                 },
                 "disabled_list_views": {
                     "type": "array",

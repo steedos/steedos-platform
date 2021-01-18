@@ -6,6 +6,7 @@ Steedos.ProcessNodeManager.changeSchema = function(doc, schema){
     var hiddenField = function(fieldName){
         schema._schema[fieldName].autoform.omit = true;
         schema._schema[fieldName].autoform.type = 'hidden';
+        schema._schema[fieldName].optional = true;
     }
 
     if(doc.filtrad){

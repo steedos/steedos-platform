@@ -180,7 +180,7 @@ if Meteor.isClient
 		# if permissions.viewAllRecords
 		# 	# 有所有权限则不另外加过虑条件
 		# else if permissions.viewCompanyRecords
-		# 	# 限制查看本单位时另外加过虑条件
+		# 	# 限制查看本分部时另外加过虑条件
 		# 	if selector.length > 0
 		# 		selector.push "and"
 		# 	userCompanyIds = Creator.getUserCompanyIds()
@@ -299,7 +299,7 @@ if Meteor.isClient
 		# if permissions.viewAllRecords
 		# 	# 有所有权限则不另外加过虑条件
 		# else if permissions.viewCompanyRecords
-		# 	# 限制查看本单位时另外加过虑条件
+		# 	# 限制查看本分部时另外加过虑条件
 		# 	if selector.length > 0
 		# 		selector.push "and"
 		# 	userCompanyIds = Creator.getUserCompanyIds()
@@ -488,9 +488,10 @@ if Meteor.isClient
 			if standard_query.is_mini
 				_.each query, (val, key)->
 					if object_fields[key]
-						if ["currency", "number"].includes(object_fields[key].type)
+						_fieldType = Creator.getFieldDataType(object_fields, key)
+						if ["currency", "number"].includes(_fieldType)
 							query_arr.push([key, "=", val])
-						else if ["text", "textarea", "html", "select"].includes(object_fields[key].type)
+						else if ["text", "textarea", "html", "select"].includes(_fieldType)
 							if _.isString(val)
 								vals = val.trim().split(" ")
 								query_or = []
@@ -505,9 +506,10 @@ if Meteor.isClient
 			else
 				_.each query, (val, key)->
 					if object_fields[key]
-						if ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
+						_fieldType = Creator.getFieldDataType(object_fields, key)
+						if ["date", "datetime", "currency", "number"].includes(_fieldType)
 							query_arr.push([key, ">=", val])
-						else if ["text", "textarea", "html"].includes(object_fields[key].type)
+						else if ["text", "textarea", "html"].includes(_fieldType)
 							if _.isString(val)
 								vals = val.trim().split(" ")
 								query_or = []
@@ -520,10 +522,10 @@ if Meteor.isClient
 							else if _.isArray(val)
 								query_arr.push([key, "=", val])
 
-						else if ["boolean"].includes(object_fields[key].type)
+						else if ["boolean"].includes(_fieldType)
 							query_arr.push([key, "=", JSON.parse(val)])
 
-						else if ["lookup", "master_detail"].includes(object_fields[key].type)
+						else if ["lookup", "master_detail"].includes(_fieldType)
 							_f = object_fields[key]
 							_reference_to = _f?.reference_to
 							if _.isFunction(_reference_to)
@@ -548,7 +550,8 @@ if Meteor.isClient
 							query_arr.push([key, "=", val])
 					else
 						key = key.replace(/(_endLine)$/, "")
-						if object_fields[key] and ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
+						_fieldType = Creator.getFieldDataType(object_fields, key)
+						if object_fields[key] and ["date", "datetime", "currency", "number"].includes(_fieldType)
 							query_arr.push([key, "<=", val])
 
 			is_logic_or = if standard_query.is_mini then true else false
@@ -601,8 +604,8 @@ if Meteor.isClient
 		
 		_filedType = _field.type
 		if _field.type == "formula"
-			# 公式类型字段，其字段类型按formula_type来
-			_filedType = _field.formula_type
+			# 公式类型字段，其字段类型按data_type来
+			_filedType = _field.data_type
 		else if _field.type == "summary"
 			# 汇总类型字段，其字段类型按summary_type和summary_count来
 			if _field.summary_type == "count"
@@ -617,9 +620,21 @@ if Meteor.isClient
 				unless summaryField
 					throw new Meteor.Error 500, "The summary_field '#{_field.summary_field}' is not found for the field '#{_field.name}'"
 				_filedType = summaryField.type
-				if _filedType == "formula"
-					# 公式类型按其公式返回值类型处理
-					_filedType = summaryField.formula_type
+				if _filedType == "formula" || _filedType == "summary"
+					# 要聚合的是公式类型或汇总类型则按其返回值类型处理
+					_filedType = summaryField.data_type
+				if !_.isNumber(_field.scale)
+					# 汇总字段本身没设置小数位数时，默认取其聚合字段的小数位数
+					__getDefaultSummaryFieldScale = (f)->
+						# 如果汇总的是另一个汇总字段，则进一步取其聚合字段的小数位数
+						if _.isNumber(f.scale)
+							return f.scale
+						if f.type == "summary"
+							_fso = Creator.getObject(f.summary_object)
+							if _fso
+								_fsf = _fso.fields[f.summary_field]
+								return if _fsf then __getDefaultSummaryFieldScale(_fsf) else null
+					_field.scale = __getDefaultSummaryFieldScale(summaryField)
 
 		reference_to = props.field?.reference_to
 
@@ -805,13 +820,17 @@ if Meteor.isClient
 							val = selectedOptions.getProperty("label")
 			else if _filedType == "filesize"
 				val = Creator.formatFileSize(val)
-			else if ["number", "currency"].indexOf(_filedType) > -1 && _.isNumber(val)
+			else if ["number", "currency", "percent"].indexOf(_filedType) > -1 && _.isNumber(val)
 				fieldScale = 0
-				if _field.scale
+				if _.isNumber(_field.scale)
 					fieldScale = _field.scale
-				else if _field.scale != 0
+				else
 					fieldScale = if _filedType == "currency" then 2 else 0
+				if _filedType == "percent"
+					val = val * 100
 				val = Steedos.numberToString(val, fieldScale)
+				if _filedType == "percent"
+					val += "%"
 			else if _filedType == "markdown"
 				if !_.isEmpty(val)
 					val = Spacebars.SafeString(marked(val))
@@ -867,19 +886,54 @@ if Meteor.isClient
 	
 	Creator.showPreviewButton = (fileName)->
 		# 配置webservices.officeOnline.url并且是office类型文件或pdf类型文件，显示预览按钮
-		if Meteor.settings?.public?.webservices?.officeOnline?.url && (Steedos.isPdfFile(fileName) || Steedos.isOfficeFile(fileName))
+		webservices = Meteor.settings?.public?.webservices;
+		if (webservices?.officeOnline?.url && Steedos.isOfficeFile(fileName)) || (webservices?.pdfOnline?.url && Steedos.isPdfFile(fileName))
 			return true
 		
 		return false
 
-	Creator.officeOnlinePreview = (fileUrl)->
+	Creator.officeOnlinePreview = (fileUrl,fileName)->
 		officeOnlineUrl = Meteor.settings?.public?.webservices?.officeOnline?.url
-		if !officeOnlineUrl || (officeOnlineUrl == "")
+		pdfOnlineUrl = Meteor.settings?.public?.webservices?.pdfOnline?.url
+		if (!officeOnlineUrl || (officeOnlineUrl == "")) && (!pdfOnlineUrl || (pdfOnlineUrl == ""))
 			toastr.error TAPi18n.__("creator_office_online_web_url_required")
 			return false
+		userId = Meteor.userId();
+		spaceId = Steedos.spaceId();
+		token = Accounts._storedLoginToken();
+
+		# url添加验证参数
+		fileUrl = fileUrl + "?X-Space-Id=" + spaceId + "&X-User-Id=" + userId + "&X-Auth-Token=" + token;
+
+		# pdf类型文件调用pdfjs进行在线预览
+		if Steedos.isPdfFile(fileName)
+			openUrl = fileUrl;
+			if pdfOnlineUrl && (pdfOnlineUrl != "")
+				openUrl = pdfOnlineUrl + encodeURIComponent(fileUrl);
+			
+			return Steedos.openWindow(openUrl);
+
 		openUrl = officeOnlineUrl + encodeURIComponent(fileUrl);
 		# console.log("-----openUrl------: ",openUrl);
 		return Steedos.openWindow(openUrl);
+	
+	Creator.isImageAttachment = (filename)->
+		#无文件类型时
+		if filename.split('.').length < 2
+			return false
+		# 获取文件类型
+		_exp = filename.split('.').pop().toLowerCase()
+		type = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff']
+		return type.indexOf(_exp) != -1
+
+	Creator.isHtmlAttachment = (filename)->
+		#无文件类型时
+		if filename.split('.').length < 2
+			return false
+		# 获取文件类型
+		_exp = filename.split('.').pop().toLowerCase()
+		type = ['html','htm']
+		return type.indexOf(_exp) != -1
 
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->

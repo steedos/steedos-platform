@@ -12,7 +12,7 @@
 	"objects_enable_tasks": "允许添加任务",
 	"objects_enable_notes": "允许添加备注",
     "objects_enable_events": "允许添加事件",
-    "objects_enable_chatter": "允许添加评论",
+    "objects_enable_chatter": "允许添加留言",
   	"objects_enable_audit": "记录字段历史",
 	"objects_enable_api": "允许 API 访问",
 	"objects_enable_share": "允许共享记录",
@@ -54,7 +54,7 @@
 	"object_triggers_is_enable": "已启用",
 	"object_triggers_todo": "执行的脚本",
 
-	"object_actions": "操作",
+	"object_actions": "操作按钮",
 	"object_actions_name": "名称",
 	"object_actions_label": "显示名称",
 	"object_actions_object": "所属对象",
@@ -62,5 +62,7 @@
 	"object_actions_visible": "visible",
 	"object_actions_on": "显示位置",
 	"object_actions_todo": "执行的脚本",
-	"view_object": "View object"
+	"view_object": "View object",
+	
+	"object_validation_rules_wrong_formula": "Wrong formula."
 }

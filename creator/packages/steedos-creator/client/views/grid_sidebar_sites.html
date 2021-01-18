@@ -23,9 +23,8 @@
 		<div class="action-sheet"></div>
 		{{#if allowCreateSite}}
 			<div class="creator-grid-sidebar-bottom">
-				<button class="slds-button slds-button_neutral slds-is-selected btn-new-site" title="新建站点">
-					{{> steedos_icon class="slds-button__icon slds-button__icon_left" source="utility-sprite" name="add"}} 新建站点
-				</button>
+				{{> steedos_button className="slds-button_neutral slds-is-selected btn-new-site" label="新建站点" 
+					iconCategory="utility" iconName="add" iconClassName="slds-button__icon_left" iconSize="large" variant="icon"}}
 			</div>
 		{{/if}}
 	{{/if}}

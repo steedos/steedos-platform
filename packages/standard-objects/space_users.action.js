@@ -5,7 +5,7 @@ module.exports = {
     var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
     $.ajax({
       type: "POST",
-      url: Meteor.absoluteUrl("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/disable"),
+      url: Steedos.absoluteUrl("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/disable"),
       data: JSON.stringify({}),
       dataType: "json",
       contentType: 'application/json',
@@ -70,7 +70,7 @@ module.exports = {
     var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
     $.ajax({
       type: "POST",
-      url: Meteor.absoluteUrl("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/enable"),
+      url: Steedos.absoluteUrl("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/enable"),
       data: JSON.stringify({}),
       dataType: "json",
       contentType: 'application/json',
@@ -126,6 +126,80 @@ module.exports = {
     }
     if (record && !record.user_accepted && (record.user && record.user._id) != Steedos.userId()){
       return true
+    }
+  },
+  lockout: function(object_name, record_id){
+    var text = "锁定的用户将无法登入系统。 是否确定？";
+    swal({
+      title: "锁定用户",
+      text: "<div>" + text + "</div>",
+      html: true,
+      showCancelButton: true,
+      confirmButtonText: t('YES'),
+      cancelButtonText: t('NO')
+    }, function (confirm) {
+      if (confirm) {
+        var userSession = Creator.USER_CONTEXT;
+        var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/lockout", {type: 'post', async: false, data: JSON.stringify({})});
+        if(result.error){
+          toastr.error(t("space_users_method_lockout_error", t(data.error.reason)));
+        }else{
+          toastr.success(t("space_users_method_lockout_success"));
+          FlowRouter.reload()
+        }
+      }
+      sweetAlert.close();
+    })
+  },
+  lockoutVisible: function (object_name, record_id, record_permissions, record) {
+    if (!Steedos.isSpaceAdmin()) {
+      return;
+    }
+    if (record){
+      var userSession = Creator.USER_CONTEXT;
+      var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
+      if(result.error){
+        toastr.error(data.error.reason);
+      }else{
+        return !result.lockout
+      }
+    }
+  },
+  unlock: function(object_name, record_id){
+    var text = "解除锁定以便恢复用户的访问权限。 是否确定？";
+    swal({
+      title: "解除锁定用户",
+      text: "<div>" + text + "</div>",
+      html: true,
+      showCancelButton: true,
+      confirmButtonText: t('YES'),
+      cancelButtonText: t('NO')
+    }, function (confirm) {
+      if (confirm) {
+        var userSession = Creator.USER_CONTEXT;
+        var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/unlock", {type: 'post', async: false, data: JSON.stringify({})});
+        if(result.error){
+          toastr.error(t("space_users_method_unlock_error", t(data.error.reason)));
+        }else{
+          toastr.success(t("space_users_method_unlock_success"));
+          FlowRouter.reload()
+        }
+      }
+      sweetAlert.close();
+    })
+  },
+  unlockVisible: function (object_name, record_id, record_permissions, record) {
+    if (!Steedos.isSpaceAdmin()) {
+      return;
+    }
+    if (record){
+      var userSession = Creator.USER_CONTEXT;
+      var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
+      if(result.error){
+        toastr.error(data.error.reason);
+      }else{
+        return result.lockout
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 name: object_layouts
 label: Object Layouts
-icon: custom.custom104
+icon: dashboard_ea
 hidden: true
 fields:
   label:
@@ -14,6 +14,7 @@ fields:
     type: master_detail
     required: true
     reference_to: objects
+    reference_to_field: name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options = [];
@@ -86,6 +87,13 @@ fields:
                 let _object = Creator.getObject(item.object_name) || {}
                 _options.push({label: _object.label || _object.name, value: item.object_name});
               })
+
+              if(!_.find(_options, function(option){
+                return option.value === 'process_instance_history'
+              })){
+                let _object = Creator.getObject("process_instance_history") || {}
+                _options.push({label: _object.label || _object.name, value: "process_instance_history"});
+              }
               return _options;
             }
   fields:
@@ -140,9 +148,9 @@ permission_set:
     modifyAllRecords: false
     viewAllRecords: false
   admin:
-    allowCreate: true
-    allowDelete: true
-    allowEdit: true
-    allowRead: true
-    modifyAllRecords: true
-    viewAllRecords: true
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false

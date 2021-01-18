@@ -43,6 +43,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
     }
 
     formatFiltersToMongoQuery(filters: any): JsonMap {
+        let emptyFilters = {};
         let odataQuery: string = "";
         if (_.isString(filters)) {
             odataQuery = filters;
@@ -50,7 +51,10 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         else {
             odataQuery = formatFiltersToODataQuery(filters)
         }
-        let query: JsonMap = createFilter(odataQuery)
+        if (!odataQuery) {
+            return emptyFilters;
+        }
+        let query: JsonMap = createFilter(odataQuery);
         return query;
     }
 
@@ -140,6 +144,42 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         return result;
     }
 
+    getAggregateSortOption(options: SteedosQueryOptions): any {
+        if (_.isUndefined(options)) {
+            return;
+        }
+        let sort: JsonMap = this.getMongoSortOptions(options.sort);
+        if (!_.isEmpty(sort)) {
+            return { $sort: sort };
+        }
+        return;
+    }
+
+    getAggregateProjectionOption(options: SteedosQueryOptions): any {
+        if (_.isUndefined(options)) {
+            return [];
+        }
+        let projection: JsonMap = this.getMongoFieldsOptions(options.fields);
+        if (!_.isEmpty(projection)) {
+            return { $project: projection };
+        }
+        return;
+    }
+
+    getAggregateSkipLimitOptions(options: SteedosQueryOptions): any {
+        if (_.isUndefined(options)) {
+            return [];
+        }
+        let result = [];
+        if (options.skip) {
+            result.push({ $skip: options.skip });
+        }
+        if (options.top) {
+            result.push({ $limit: options.top });
+        }
+        return result;
+    }
+
     collection(name: string) {
         return Creator.Collections[name];
     };
@@ -176,12 +216,22 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         let pipeline = [];
 
         let mongoFilters = this.getMongoFilters(query.filters);
-        let aggregateOptions = this.getAggregateOptions(query);
-
+        let sortOption = this.getAggregateSortOption(query);
+        if (sortOption) {
+            pipeline.push(sortOption);
+        }
         pipeline.push({ $match: mongoFilters });
-
-        pipeline = pipeline.concat(aggregateOptions).concat(externalPipeline);
-
+        let skipLimitOptions = this.getAggregateSkipLimitOptions(query);
+        if (!_.isEmpty(skipLimitOptions)) {
+            pipeline = pipeline.concat(skipLimitOptions);
+        }
+        let projectionOption = this.getAggregateProjectionOption(query);
+        if (projectionOption) {
+            pipeline.push(projectionOption);
+        }
+        if (!_.isEmpty(externalPipeline)) {
+            pipeline = pipeline.concat(externalPipeline);
+        }
         return await new Promise((resolve, reject) => {
             Fiber(function () {
                 try {

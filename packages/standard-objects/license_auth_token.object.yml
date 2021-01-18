@@ -30,5 +30,3 @@ permission_set:
     allowRead: false
     viewAllRecords: true
     modifyAllRecords: false
-
-    

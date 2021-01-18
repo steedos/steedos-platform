@@ -67,6 +67,10 @@ function getObjects(userId){
                 delete _obj.triggers
                 delete _obj.list_views
                 delete _obj.permission_set
+                if(_obj.enable_inline_edit !== false){
+                    // 默认值配置为true
+                    _obj.enable_inline_edit = true;
+                }
                 objects[_obj.name] = Object.assign({}, _obj, objectBaseFields)
             }
           });
@@ -105,6 +109,10 @@ function getObject(id, userId){
         object._id = object.name;
         object.datasource = _object.datasource.name;
         steedosI18n.translationObject(lng, object.name, object)
+        if(object.enable_inline_edit !== false){
+            // 默认值配置为true
+            object.enable_inline_edit = true;
+        }
         return Object.assign({}, object, objectBaseFields);
     } catch (error) {
         return null;
@@ -132,7 +140,7 @@ function getObjectFields(objectName, userId){
 exports.getObjectFields = getObjectFields
 
 exports.getDefaultSysFields = function(object, userId){
-    if(!object.datasource || object.datasource === 'default'){
+    if(object && (!object.datasource || object.datasource === 'default')){
         let baseObject = getObject('base', userId)
         return _.pick(baseObject.fields, 'created_by', 'modified_by');
     }

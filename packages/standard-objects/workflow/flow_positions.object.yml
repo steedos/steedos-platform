@@ -1,5 +1,5 @@
 name: flow_positions
-icon: metrics
+icon: person_account
 label: Workflow Position
 hidden: true
 fields:

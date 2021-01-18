@@ -16,6 +16,10 @@
 Creator.getSchema = (object_name)->
 	return Creator.getObject(object_name)?.schema
 
+Creator.getObjectHomeComponent = (object_name)->
+	if Meteor.isClient
+		return ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", object_name)
+
 Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if !app_id
 		app_id = Session.get("app_id")
@@ -31,7 +35,10 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 		if object_name is "meeting"
 			return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/calendar/")
 		else
-			return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+			if Creator.getObjectHomeComponent(object_name)
+				return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name)
+			else
+				return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
 
 Creator.getObjectAbsoluteUrl = (object_name, record_id, app_id) ->
 	if !app_id
@@ -707,6 +714,15 @@ Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 
 Creator.isFilterValueEmpty = (v) ->
 	return typeof v == "undefined" || v == null || Number.isNaN(v) || v.length == 0
+
+Creator.getFieldDataType = (objectFields, key)->
+	if objectFields and key
+		result = objectFields[key]?.type
+		if ["formula", "summary"].indexOf(result) > -1
+			result = objectFields[key].data_type
+		return result
+	else
+		return "text"
 
 # END
 
