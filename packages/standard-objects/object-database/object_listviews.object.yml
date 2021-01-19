@@ -283,10 +283,10 @@ list_views:
       - label
       - name
       - shared
+      - owner
       - modified
     label: All List View
     filter_scope: space
-    filters: [["shared", "=", true]]
 permission_set:
   user:
     allowCreate: true
@@ -300,5 +300,5 @@ permission_set:
     allowDelete: true
     allowEdit: true
     allowRead: false
-    modifyAllRecords: false
-    viewAllRecords: false
+    modifyAllRecords: true
+    viewAllRecords: true
