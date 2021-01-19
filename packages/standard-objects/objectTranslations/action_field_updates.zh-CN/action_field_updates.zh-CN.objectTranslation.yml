@@ -17,7 +17,7 @@ fields:
   target_object:
     label: 要更新的对象
     help: 
-    description: 
+    description: 如果要更新的是本对象，则这里保存的是对象名称；如果是跨对象的字段更新，零代码配置界面上这里给用户看到的选项会是要更新的对象的显示名称（label），但是实际保存的却是关联字段名，低代码配置时应该配置为关联字段名而不是要更新的对象名。
   field_name:
     label: 要更新的字段
     help: 

@@ -29,11 +29,14 @@ fields:
         if(object){
           var _options = [{label: object.label, value: object.name}];
           _.forEach(object.fields, function (field, fname) {
-            if(field && field.type === 'master_detail' && _.isString(field.reference_to) && field.label){
-              _options.push({
-                label: field.label,
-                value: field.name,
-              });
+            if(field && field.type === 'master_detail' && _.isString(field.reference_to)){
+              var referenceToObject = Creator.objectsByName[field.reference_to];
+              if(referenceToObject){
+                _options.push({
+                  label: referenceToObject.label,
+                  value: field.name,
+                });
+              }
             }
           });
           return _options;
@@ -80,7 +83,7 @@ fields:
       function (doc) {
         var mainObjectName = null;
         if(doc.target_object && doc.target_object != doc.object_name){
-          var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
+          mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
         }else{
           mainObjectName = doc.object_name;
         }
