@@ -28,7 +28,7 @@ async function getUserRoles(userId: string, spaceId: string) {
     }
 
     let filters = `(space eq '${spaceId}') and (users eq '${userId}')`;
-    let permission_sets = await getSteedosSchema().getObject('permission_set').find({ filters: filters, fields: ['name'] });
+    let permission_sets = await getSteedosSchema().getObject('permission_set').directFind({ filters: filters, fields: ['name'] });
     permission_sets.forEach(p => {
         if (!_.include(internalProfiles, p.name)) {
             roles.push(p.name);
