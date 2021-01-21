@@ -16,8 +16,7 @@
 </p>
 
 <p align="center">
-Steedos Platform is an open source alternative to salesforce low code development platform. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
-</p>
+Enterprise Low Code Development Platform, use metadata to describe objects, fields, code, logic, and page layouts. Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Salesforce Metadata API.</p>
 
 <h3 align="center">
  🤖 🎨 🚀
