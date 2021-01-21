@@ -36,7 +36,7 @@ There are several types of Metadata, with each one representing a unique way a b
 
 Hard-coded applications are a thing of the past; customization is the flair of the season.
 
-You need flexible applications that can be tailor-made as per your business needs without the need for high-level programming skills. That is why Steedos Metadata is so powerful. Metadata is what transforms Salesforce from a simple database into an entire platform.
+You need flexible applications that can be tailor-made as per your business needs without the need for high-level programming skills. That is why Steedos Metadata is so powerful. Metadata is what transforms Steedos from a simple database into an entire platform.
 
 ## Steedos Metadata Types
 
