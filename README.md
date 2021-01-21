@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-Enterprise Low Code Development Platform, use metadata to describe objects, fields, code, logic, and page layouts. Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Salesforce Metadata API.</p>
+Enterprise Low Code Development Platform, use metadata to describe objects, fields, code, logic, and page layouts. Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.</p>
 
 <h3 align="center">
  🤖 🎨 🚀
