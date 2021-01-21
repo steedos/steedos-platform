@@ -22,7 +22,7 @@ Enterprise Low Code Development Platform, use metadata to describe objects, fiel
  🤖 🎨 🚀
 </h3>
 
-## What is Steedos Metadata
+## What is Steedos Metadata?
 
 Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
 
