@@ -315,6 +315,7 @@ relatedList:
       - label
       - name
       - shared
+      - owner
   - objectName: object_actions
     columns:
       - label
