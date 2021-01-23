@@ -8,7 +8,7 @@ client.setUrl('http://127.0.0.1:8088');
 client.logToConsole = true;
 
 before(async function () {
-  let userProfile: any =  await client.login('18109255673', '123456');
+  let userProfile: any =  await client.login('username', 'password');
   //设置认证信息
   client.setToken(userProfile.token);
   //设置所属工作区
