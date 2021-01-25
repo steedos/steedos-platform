@@ -12,6 +12,7 @@
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
     "link": "lerna link --force-local",
     "buildSubmodulesPackage": "node .scripts/.build_package",
+    "buildPackages": "lerna run buildPackage",
     "verAfter_pull_submodules": "node .scripts/.git_pull",
     "pubBefore_push_submodules": "node .scripts/.git_push",
     "ver": "yarn verAfter_pull_submodules && lerna version --skip-git --force-publish",
