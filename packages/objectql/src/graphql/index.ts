@@ -283,8 +283,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
             type: GraphQLJSON,
             args: { 'data': { type: new GraphQLNonNull(GraphQLJSON) } },
             resolve: async function (source, args, context, info) {
-                console.log('args: ', args);
-                var data = args['data'];
+                var data = JSON.parse(JSON.stringify(args['data']));
                 data._id = data._id || new ObjectId().toHexString();
                 let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
@@ -295,8 +294,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
             type: GraphQLJSON,
             args: { '_id': { type: new GraphQLNonNull(GraphQLString) }, 'selector': { type: GraphQLJSON }, 'data': { type: new GraphQLNonNull(GraphQLJSON) } },
             resolve: async function (source, args, context, info) {
-                console.log('args: ', args);
-                let data = args['data'];
+                let data = JSON.parse(JSON.stringify(args['data']));
                 let _id = args['_id'];
                 let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
@@ -307,7 +305,6 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
             type: GraphQLJSON,
             args: { '_id': { type: new GraphQLNonNull(GraphQLString) }, 'selector': { type: GraphQLJSON } },
             resolve: async function (source, args, context, info) {
-                console.log('args: ', args);
                 let _id = args['_id'];
                 let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
