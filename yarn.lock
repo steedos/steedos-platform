@@ -3348,10 +3348,10 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
-"@steedos/license@^1.22.6":
-  version "1.22.6"
-  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-1.22.6.tgz#c2801d37f86461aa73d56880c7e72965968a4a5b"
-  integrity sha512-2inizziFbFvoire8cfSMBk7szk43p6xJVlbunyiHAQ0nVr8zXHxv8rfQVeU/eFSEeULhEn7oT9wgKxi01MeuAw==
+"@steedos/license@^1.22.7":
+  version "1.22.7"
+  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.7.tgz#3d4ece7aa1d25b36857cc349e607fca12616e233"
+  integrity sha1-PU7OeqHSWzaFfMNJ5gf8oSYW4jM=
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
