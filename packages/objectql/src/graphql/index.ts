@@ -279,8 +279,8 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
 
     let rootMutationfields = {};
     _.each(rootQueryfields, function (type, objName) {
-        rootMutationfields[objName + '_INSERT_ONE'] = {
-            type: GraphQLJSON,
+        rootMutationfields[objName + '__insert'] = {
+            type: knownTypes[objName],
             args: { 'data': { type: new GraphQLNonNull(GraphQLJSON) } },
             resolve: async function (source, args, context, info) {
                 var data = JSON.parse(JSON.stringify(args['data']));
@@ -290,8 +290,8 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
                 return object.insert(data, userSession);
             }
         }
-        rootMutationfields[objName + '_UPDATE_ONE'] = {
-            type: GraphQLJSON,
+        rootMutationfields[objName + '__update'] = {
+            type: knownTypes[objName],
             args: { '_id': { type: new GraphQLNonNull(GraphQLString) }, 'selector': { type: GraphQLJSON }, 'data': { type: new GraphQLNonNull(GraphQLJSON) } },
             resolve: async function (source, args, context, info) {
                 let data = JSON.parse(JSON.stringify(args['data']));
@@ -301,7 +301,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
                 return object.update(_id, data, userSession);
             }
         }
-        rootMutationfields[objName + '_DELETE_ONE'] = {
+        rootMutationfields[objName + '__delete'] = {
             type: GraphQLJSON,
             args: { '_id': { type: new GraphQLNonNull(GraphQLString) }, 'selector': { type: GraphQLJSON } },
             resolve: async function (source, args, context, info) {
