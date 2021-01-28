@@ -16,7 +16,7 @@ export default class Graphql {
         let url = this.client.getBaseRoute() + "/graphql";
         let body = {
             query: `mutation {
-                ${objectName}_INSERT_ONE(data:${JSON.stringify(data)})
+                ${objectName}__insert(data:${JSON.stringify(data)})
             }`
         };
         console.log('insert body', body);
@@ -27,7 +27,7 @@ export default class Graphql {
         let url = this.client.getBaseRoute() + "/graphql";
         let body = {
             query: `mutation {
-                ${objectName}_UPDATE_ONE(_id:"${_id}", data:${JSON.stringify(data)})
+                ${objectName}__update(_id:"${_id}", data:${JSON.stringify(data)})
             }`
         };
         return await this.client.doFetch(url, {method: 'POST', body: JSON.stringify(body)});
@@ -37,7 +37,7 @@ export default class Graphql {
         let url = this.client.getBaseRoute() + "/graphql";
         let body = {
             query: `mutation {
-                ${objectName}_DELETE_ONE(_id:"${_id}")
+                ${objectName}__delete(_id:"${_id}")
             }`
         };
         return await this.client.doFetch(url, {method: 'POST', body: JSON.stringify(body)});
