@@ -1,3 +1,4 @@
+const _ = require('underscore');
 export default class Graphql {
     client: any;
     constructor(client){
@@ -14,9 +15,13 @@ export default class Graphql {
 
     async insert(objectName: string, data){
         let url = this.client.getBaseRoute() + "/graphql";
+        let _data = data;
+        if(!_.isString(_data)){
+            _data = JSON.stringify(data)
+        }
         let body = {
             query: `mutation {
-                ${objectName}__insert(data:${JSON.stringify(data)})
+                ${objectName}__insert(data:${_data})
             }`
         };
         console.log('insert body', body);
@@ -25,9 +30,13 @@ export default class Graphql {
 
     async update(objectName: string, _id: string, data){
         let url = this.client.getBaseRoute() + "/graphql";
+        let _data = data;
+        if(!_.isString(_data)){
+            _data = JSON.stringify(data)
+        }
         let body = {
             query: `mutation {
-                ${objectName}__update(_id:"${_id}", data:${JSON.stringify(data)})
+                ${objectName}__update(_id:"${_id}", data:${_data})
             }`
         };
         return await this.client.doFetch(url, {method: 'POST', body: JSON.stringify(body)});
