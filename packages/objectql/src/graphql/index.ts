@@ -287,6 +287,9 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
                 data._id = data._id || new ObjectId().toHexString();
                 let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
+                if (userSession) {
+                    data.space = userSession.spaceId;
+                }
                 return object.insert(data, userSession);
             }
         }
@@ -298,6 +301,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
                 let _id = args['_id'];
                 let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
+                delete data.space;
                 return object.update(_id, data, userSession);
             }
         }
