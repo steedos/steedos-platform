@@ -36,17 +36,22 @@ module.exports = {
             Modal.hide(t);
             Meteor.setTimeout(function(){
                 const installPackage = function(formValues, e, t){
+                    $("body").addClass('loading');
                     var result = Steedos.authRequest(`/api/package/installing_from_store/file/${data.packageVersionId}`, {type: 'post', async: false, data: JSON.stringify({password: data.password})});
                     if(!result){
                         return $("body").removeClass('loading');
                     }
                     if(result.error){
+                        $("body").removeClass('loading');
                         return toastr.error(result.error);
                     }
-                    $("body").removeClass('loading');
-                    toastr.success(TAPi18n.__('imported_package_action_install_success'));
-                    FlowRouter.go("/app/-/imported_package/view/" + result._id);
-                    Modal.hide(t);
+                    Meteor.setTimeout(function(){
+                        $("body").removeClass('loading');
+                        toastr.success(TAPi18n.__('imported_package_action_install_success'));
+                        FlowRouter.go("/app/-/imported_package/view/" + result._id);
+                        Modal.hide(t);
+                        window.location.reload();
+                    }, 10 * 1000)
                 }
                 $("body").removeClass('loading');
                 Modal.show("quickFormModal", {formId: formId, formType: 'readonly', modalSize: 'modal-lg', title: TAPi18n.__(`imported_package_action_install`), confirmBtnText: TAPi18n.__("Confirm"), schema: _schema, doc: _doc, onConfirm: installPackage}, {
