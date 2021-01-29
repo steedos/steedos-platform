@@ -6,7 +6,7 @@ _changeClientApps = (document)->
 	if Session.get("app_id") == document._id
 		Creator.deps.app.changed();
 
-_changeClientObjects = (document)->
+_changeClientObjects = (document, oldDocument)->
 	if !Steedos.isSpaceAdmin() && !document.is_enable
 		return ;
 
@@ -34,6 +34,12 @@ _changeClientObjects = (document)->
 			Creator.loadObjects result
 #			if Session.get("object_name")
 			Creator.deps.object.changed();
+	try
+		if oldDocument && document && oldDocument.name != document.name
+			_removeClientObjects(oldDocument);
+	catch e
+		console.error(e);
+
 
 _removeClientObjects = (document)->
 	_object = _.findWhere Creator.objectsByName, {_id: document._id}
@@ -103,7 +109,7 @@ Meteor.startup ()->
 						if !Steedos.isSpaceAdmin() && (newDocument.is_enable == false || newDocument.in_development != '0')
 							_removeClientObjects newDocument
 						else
-							_changeClientObjects newDocument
+							_changeClientObjects newDocument, oldDocument
 #							Meteor.setTimeout ()->
 #								_changeClientObjects newDocument
 #							, 5000
