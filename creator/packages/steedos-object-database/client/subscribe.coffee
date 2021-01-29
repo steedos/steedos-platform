@@ -24,7 +24,12 @@ _changeClientObjects = (document)->
 #				result.permissions = old_obj?.permissions || {}
 			delete Creator._recordSafeObjectCache[result.name]
 			# 当变更对象后，result并没有返回这个对象列表视图相关数据，直接取原来内存中的列表视图数据加上，如果不加的话，会清除对象上的所有列表视图，造成子表上报找不到视图的bug
-			result = _.extend result, { list_views: Creator.getObject(result.name).list_views }
+			try
+				oldObject = Creator.getObject(result.name);
+				if oldObject
+					result = _.extend result, { list_views: oldObject.list_views }
+			catch e
+				console.error(e);
 			Creator.Objects[result.name] = result
 			Creator.loadObjects result
 #			if Session.get("object_name")
