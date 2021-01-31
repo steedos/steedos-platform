@@ -2,6 +2,9 @@ var _ = require("underscore");
 var objectql = require('@steedos/objectql');
 var clone = require('clone');
 var objectCore = require('./objects.core.js');
+
+const MAX_MASTER_DETAIL_LEAVE = objectql.MAX_MASTER_DETAIL_LEAVE;
+
 function canRemoveNameFileld(doc){
   var object = Creator.getCollection("objects").findOne({name: doc.object}, {fields: {datasource: 1}});
   if(object && object.datasource && object.datasource != 'default'){
@@ -140,6 +143,128 @@ function hasMultipleMasterDetailTypeFiled(doc) {
   }
   return false;
 };
+
+function checkMaxDetailsLeave(doc, maxLeave, isFirstCheck){
+  // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
+  // 其3层指的是A-B-C-D，它们都有父子关系，A作为最顶层，该对象上不可以再创建主表子表关系字段，但是B、C、D上可以。
+  let childFields = Creator.getCollection("object_fields").find({
+    space: doc.space,
+    type: "master_detail",
+    reference_to: doc.object
+  }, {
+    fields: {
+      _id: 1,
+      object: 1
+    }
+  }).fetch();
+  const childFieldsCount = childFields.length;
+  if(maxLeave <= 0){
+    if(isFirstCheck){
+      // 如果是一开始就传入maxLeave为0或负数，说明当对象下已经有一个主表子表关系字段时，不允许当前对象是其他对象的主对象。
+      // 所以childFieldsCount大于0时，就直接抛出对应的错误信息，否则说明当前对象不是任何主表子表关系的主对象允许创建新的主表子表关系。
+      if(childFieldsCount > 0){
+        throw new Meteor.Error(doc.name, "由于此对象上已经存在主表子表关系，同时是另一个主表子表关系的主对象，无法创建此类字段。");
+      }
+      return;
+    }
+    // if(isFirstCheck && childFieldsCount > 0){
+    //   // 如果是一开始就传入maxLeave为0，说明当对象下已经有一个主表子表关系字段时，不允许当前对象是其他对象的主对象。所以childFieldsCount大于0时，额外报另一种错误信息
+    //   throw new Meteor.Error(doc.name, "由于此对象上已经存在主表子表关系，同时是另一个主表子表关系的主对象，无法创建此类字段。");
+    // }
+    else{
+      // 如果maxLeave递归到0到，说明超过最大层级限制。
+      throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
+    }
+  }
+  maxLeave--;
+  _.each(childFields,(n)=>{
+    checkMaxDetailsLeave(_.extend({},n, {space: doc.space}), maxLeave);
+  })
+}
+
+function checkMaxMastersLeave(doc, maxLeave){
+  // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为子表对象往上的层级最多不越过3层，
+  // 其3层指的是A-B-C-D，它们都有父子关系，如果当前对象上创建的主表子表关系字段指向的对象是D，那么就会超过3层的层级限制。
+}
+
+function _checkMultipleMasterDetailTypeField(doc) {
+  if(!doc || !doc.type || doc.type !== "master_detail"){
+    return;
+  }
+  if(doc.reference_to === doc.object){
+    throw new Meteor.Error(doc.name, "您无法创建一个指向自身的[主表/子表]类型字段。");
+  }
+  var other;
+  other = Creator.getCollection("object_fields").find({
+    object: doc.object,
+    space: doc.space,
+    _id: {
+      $ne: doc._id
+    },
+    type: "master_detail"
+  }, {
+    fields: {
+      _id: 1
+    }
+  });
+  const otherCount = other.count();
+  console.log("===otherCount==", otherCount);
+  if (otherCount > 1) {
+    throw new Meteor.Error(doc.name, "您无法创建此类型的字段，因为此对象已有两种主表子表关系。");
+  }
+  let maxDetailsLeave = 3;
+  if (otherCount > 0) {
+    // 当对象下已经有一个主表子表关系字段时，不允许对象本身就是其他对象的主对象的情况，
+    // 即对象本身就是其他对象的主对象的情况下，最多只能有一个主表子表关系，
+    // 此时当前对象作为主表对象往下的层级最多为0层，即不允许当前对象是其他对象的主对象。
+    maxDetailsLeave = 0;
+  }
+  checkMaxDetailsLeave(doc, maxDetailsLeave, true);
+}
+
+
+function checkMasterDetailTypeField(doc) {
+  if(!doc || !doc.type || doc.type !== "master_detail"){
+    return;
+  }
+  if(doc.reference_to === doc.object){
+    throw new Meteor.Error(doc.name, "您无法创建一个指向自身的[主表/子表]类型字段！");
+  }
+  const obj = objectql.getObject(doc.object);
+  if(!obj){
+    throw new Meteor.Error(doc.name, `所属对象未加载！`);
+  }
+
+  const refObj = objectql.getObject(doc.reference_to);
+  if(!refObj){
+    throw new Meteor.Error(doc.name, `引用对象未加载！`);
+  }
+
+  const mastersCount = obj.masters.length;
+  const detailsCount = obj.details.length;
+  if(mastersCount > 2){
+    throw new Meteor.Error(doc.name, "您无法创建此类型的字段，因为此对象已有两种主表子表关系。");
+  }
+  else if(mastersCount > 1){
+      if(detailsCount > 0){
+        throw new Meteor.Error(doc.name, "由于此对象上已经存在主表子表关系，同时是另一个主表子表关系的主对象，无法创建此类字段。");
+      }
+  }
+
+  // 新加主表子表关系后，当前对象作为主表往下最多允许有MAX_MASTER_DETAIL_LEAVE层深度。
+  const maxDetailLeave = obj.getMaxDetailsLeave();
+  // console.log("===maxDetailLeave===", maxDetailLeave);
+  if(maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1){
+    throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
+  }
+
+  // 新加主表子表关系后，当前对象作为子表往上最多允许有MAX_DETAIL_LEAVE层深度。
+  const maxMasterLeave = refObj.getMaxMastersLeave();
+  // console.log("===maxMasterLeave===", maxMasterLeave);
+  if(maxMasterLeave + maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1){
+    throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
+  }
+}
 
 function onChangeName(oldName, newDoc){
   var newName = newDoc.name
@@ -325,9 +450,11 @@ var triggers = {
         throw new Meteor.Error(doc._name, "字段名不能重复");
       }
 
-      if(_.has(modifier.$set, 'type') && modifier.$set.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
-        throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
-      }
+      // if(_.has(modifier.$set, 'type') && modifier.$set.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
+      //   throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
+      // }
+
+      checkMasterDetailTypeField(modifier.$set);
 
       if (modifier != null ? (ref2 = modifier.$set) != null ? ref2.reference_to : void 0 : void 0) {
         if (modifier.$set.reference_to.length === 1) {
@@ -392,9 +519,10 @@ var triggers = {
         throw new Meteor.Error(doc.name, "字段名不能重复");
       }
 
-      if(doc.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
-        throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
-      }
+      // if(doc.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
+      //   throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
+      // }
+      checkMasterDetailTypeField(doc);
 
       let defProps = getFieldDefaultProps(doc);
       Object.assign(doc, defProps);

@@ -13,6 +13,12 @@ import { WorkflowRulesRunner } from '../actions';
 import { runValidationRules } from './validation_rules';
 const clone = require('clone')
 
+// 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
+// 其3层指的是A-B-C-D，它们都有父子关系，A作为最顶层，该对象上不可以再创建主表子表关系字段，但是B、C、D上可以；
+// 或者如果当前对象上创建的主表子表关系字段指向的对象是D，那么也会超过3层的层级限制；
+// 又或者中间加一层M先连接B再连接C，形成A-B-M-C-D，也会超过3层的层级限制；
+export const MAX_MASTER_DETAIL_LEAVE = 3;
+
 abstract class SteedosObjectProperties {
     _id?: string
     name?: string
@@ -86,6 +92,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _idFieldName: string;
     private _idFieldNames: string[] = [];
     private _NAME_FIELD_KEY: string;
+    private _masters: string[] = [];
+    private _details: string[] = [];
 
     private _enable_audit: boolean;
     public get enable_audit(): boolean {
@@ -147,18 +155,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._idFieldNames;
     }
 
+    public get masters(): string[] {
+        return this._masters;
+    }
+
+    public get details(): string[] {
+        return this._details;
+    }
+
     private checkField() {
         let driverSupportedColumnTypes = this._datasource.adapter.getSupportedColumnTypes()
-        let masterDetailFieldCount = 0
         _.each(this.fields, (field: SteedosFieldType, key: string) => {
             if (SteedosFieldDBType[field.fieldDBType] && !driverSupportedColumnTypes.includes(field.fieldDBType)) {
                 throw new Error(`driver ${this._datasource.driver} can not support field ${key} config`)
-            }
-            if (field.type === 'master_detail') {
-                masterDetailFieldCount++
-                if (masterDetailFieldCount > 1) {
-                    throw new Error(`object ${this._name} can not set multiple master_detail field type.`)
-                }
             }
         })
     }
@@ -367,6 +376,132 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     getField(field_name: string) {
         return this.fields[field_name]
+    }
+
+    checkMasterDetails(){
+        const mastersCount = this._masters.length;
+        const detailsCount = this._details.length;
+        if(mastersCount > 2){
+            throw new Error(`There are ${mastersCount} fields of type master_detail on the object '${this._name}', but only 2 fields are allowed at most.`);
+        }
+        else if(mastersCount > 1){
+            if(detailsCount > 0){
+                throw new Error(`There are ${mastersCount} fields of type master_detail on the object "${this._name}", but only 1 field are allowed at most, because this object is the master object of another object on a master-detail relationship.`);
+            }
+        }
+        const maxDetailLeave = this.getMaxDetailsLeave();
+        if(maxDetailLeave > MAX_MASTER_DETAIL_LEAVE){
+            throw new Error(`It exceed the maximum depth of master-detail relationship for the detail side of the object '${this._name}'`);
+        }
+        const maxMasterLeave = this.getMaxMastersLeave();
+        // 下面的if不用两边层级相加的判断是因为没必要中间每层都报错造成错误信息过多不好分析问题
+        // if(maxMasterLeave + maxMasterLeave > MAX_MASTER_DETAIL_LEAVE){
+        if(maxMasterLeave > MAX_MASTER_DETAIL_LEAVE){
+            throw new Error(`It exceed the maximum depth of master-detail relationship for the master side of the object '${this._name}'`);
+        }
+    }
+
+    initMasterDetails(){
+        _.each(this.fields, (field, field_name) => {
+            if(field.type === "master_detail"){
+                // 加try catch是因为有错误时不应该影响下一个字段逻辑
+                try {
+                    if (field.reference_to && typeof _.isString(field.reference_to)) {
+                        if (field.reference_to === this._name) {
+                            field.reference_to = null;//强行设置为空
+                            throw new Error(`Can't set a master-detail filed that reference to self on the object '${this._name}'.`);
+                        }
+                        const refObject = getObject(<string>field.reference_to);
+                        if (refObject) {
+                            this.addMaster(<string>field.reference_to);
+                            refObject.addDetail(this._name);
+                        }
+                        else {
+                            throw new Error(`Can't find the reference_to object '${field.reference_to}' for the master_detail field of the object '${this._name}'`);
+                        }
+                    }
+                }
+                catch (ex) {
+                    console.error(ex);
+                }
+            }
+        });
+    }
+
+    getMaxDetailsLeave(){
+        let maxLeave = 0;
+        let loop = (master: string, details: string[], leave: number) => {
+            if(!details.length){
+                return;
+            }
+            leave++;
+            if(maxLeave < leave){
+                maxLeave = leave;
+            }
+            _.each(details,(n)=>{
+                const detailObject = getObject(n);
+                if(detailObject){
+                    loop(n, detailObject.details, leave);
+                }
+                else{
+                    throw new Error(`Can't find the detail object '${n}' for the master object '${master}' of a master-detail relationship.`);
+                }
+            });
+        }
+        loop(this._name, this._details, 0);
+        return maxLeave;
+    }
+
+    getMaxMastersLeave(){
+        let maxLeave = 0;
+        let loop = (detail: string, masters: string[], leave: number) => {
+            if(!masters.length){
+                return;
+            }
+            leave++;
+            if(maxLeave < leave){
+                maxLeave = leave;
+            }
+            _.each(masters,(n)=>{
+                const masterObject = getObject(n);
+                if(masterObject){
+                    loop(n, masterObject.masters, leave);
+                }
+                else{
+                    throw new Error(`Can't find the master object '${n}' for the detail object '${detail}' of a master-detail relationship.`);
+                }
+            });
+        }
+        loop(this._name, this._masters, 0);
+        return maxLeave;
+    }
+
+    addMaster(object_name: string){
+        let index = this._masters.indexOf(object_name);
+        if(index < 0){
+            this._masters.push(object_name);
+        }
+    }
+
+    removeMaster(object_name: string){
+        let index = this._masters.indexOf(object_name);
+        if(index >= 0){
+            this._masters.splice(index, 1);
+        }
+    }
+
+    addDetail(object_name: string){
+        let index = this._details.indexOf(object_name);
+        if(index < 0){
+            this._details.push(object_name);
+        }
+    }
+
+    removeDetail(object_name: string){
+        let index = this._details.indexOf(object_name);
+        if(index >= 0){
+            this._details.splice(index, 1);
+        }
     }
 
     setListView(list_view_name: string, config: SteedosObjectListViewTypeConfig) {
