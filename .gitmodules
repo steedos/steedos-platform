@@ -8,10 +8,10 @@
 	path = apps/steedos-app-contract
 	url = https://github.com/steedos/steedos-app-contract
 [submodule "apps/project-management-app"]
-	path = apps/project-management-app
+	path = apps/steedos-app-project
 	url = https://github.com/steedos/project-management-app
 [submodule "apps/okr-management-app"]
-	path = apps/okr-management-app
+	path = apps/steedos-app-okr
 	url = https://github.com/steedos/okr-management-app
 [submodule "apps/steedos-app-oa"]
 	path = apps/steedos-app-oa
