@@ -396,6 +396,10 @@
         "relatedList": {
             "type": "boolean",
             "description": "用于表示是否在相关表的详细页面中作为子表显示"
+        },
+        "picklist": {
+            "type": "string",
+            "description": "指定字段的选项列表值集"
         }
     }
 }

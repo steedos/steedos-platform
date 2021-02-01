@@ -32,7 +32,11 @@ export const _makeNewObjectName = (objectName: string, spaceId: string, oldObjec
         return `${objectName}${getObjectSuffix(spaceId)}`
     }else{
         if(oldObjectName.endsWith(customObjectNameSuffix)){
-            return `${objectName}${customObjectNameSuffix}`
+            if(!objectName.endsWith(customObjectNameSuffix)){
+                return `${objectName}${customObjectNameSuffix}`
+            }else{
+                return `${objectName}`    
+            }
         }else{
             return `${objectName}`
         }
@@ -62,7 +66,11 @@ export const _makeNewFieldName = (fieldName: string, spaceId: string, oldFieldNa
         return `${fieldName}${getFieldSuffix(spaceId)}`
     }else{
         if(oldFieldName.endsWith(customFieldNameSuffix)){
-            return `${fieldName}${customFieldNameSuffix}`
+            if(!fieldName.endsWith(customFieldNameSuffix)){
+                return `${fieldName}${customFieldNameSuffix}`
+            }else{
+                return `${fieldName}` 
+            }
         }else{
             return `${fieldName}`
         }

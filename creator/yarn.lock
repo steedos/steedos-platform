@@ -1732,13 +1732,13 @@
     validator "^12.2.0"
 
 "@steedos/app-admin@../apps/steedos-app-admin":
-  version "1.23.0-alpha.15"
+  version "1.23.0-alpha.18"
 
 "@steedos/app-contracts@../apps/steedos-app-crm":
-  version "1.23.0-alpha.15"
+  version "1.23.0-alpha.18"
 
 "@steedos/app-crm@../apps/steedos-app-crm":
-  version "1.23.0-alpha.15"
+  version "1.23.0-alpha.18"
 
 "@steedos/auth@^1.23.0-alpha.7":
   version "1.23.0-alpha.7"
@@ -1816,15 +1816,15 @@
     i18next-sprintf-postprocessor "^0.2.2"
     i18next-xhr-backend "^3.2.2"
 
-"@steedos/license@^1.22.4":
-  version "1.22.4"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.4.tgz#416699c760ab5ac4263334525a83bf3e6c32433d"
-  integrity sha1-QWaZx2CrWsQmMzRSWoO/PmwyQz0=
+"@steedos/license@^1.22.7":
+  version "1.22.7"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-1.22.7.tgz#3d4ece7aa1d25b36857cc349e607fca12616e233"
+  integrity sha512-hCmfv1MZ93zZ4qo85P1g8SgPG7ppOVFENkenvuAEhkVNcQguRY2fMyWYXnDRR3SpRAheQaD0HoQSLWIdCAMyMA==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
     node-fetch "^2.6.0"
-    systeminformation "^4.26.10"
+    systeminformation "^4.34.5"
 
 "@steedos/metadata-api@^1.23.0-alpha.7":
   version "1.23.0-alpha.7"
@@ -13834,10 +13834,10 @@ syntax-error@^1.1.6:
   dependencies:
     acorn-node "^1.2.0"
 
-systeminformation@^4.26.10:
-  version "4.27.5"
-  resolved "https://registry.npm.taobao.org/systeminformation/download/systeminformation-4.27.5.tgz#af304fbfd0e7ba51c87512333691b58b4ad90e43"
-  integrity sha1-rzBPv9DnulHIdRIzNpG1i0rZDkM=
+systeminformation@^4.34.5:
+  version "4.34.9"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.34.9.tgz#70412e71ed755881930c0a7bbd831a905a7a362d"
+  integrity sha512-jvc4DlJeXazsen2riPDR97GSaHNCmoL+mgfB8IXxmpNpNd7kv5MfkuihXEmF1/prBFtqzUA2lxnt1qp4maOMQA==
 
 table@^5.2.3:
   version "5.4.6"
