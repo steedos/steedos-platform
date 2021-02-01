@@ -16,3 +16,6 @@
 [submodule "apps/steedos-app-oa"]
 	path = apps/steedos-app-oa
 	url = https://github.com/steedos/steedos-app-oa
+[submodule "apps/steedos-project-template"]
+	path = apps/steedos-project-template
+	url = https://github.com/steedos/steedos-project-template
