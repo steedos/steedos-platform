@@ -287,7 +287,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
                 data._id = data._id || new ObjectId().toHexString();
                 let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
-                if (userSession) {
+                if (userSession && object.getField('space')) {
                     data.space = userSession.spaceId;
                 }
                 return object.insert(data, userSession);
