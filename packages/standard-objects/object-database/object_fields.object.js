@@ -144,7 +144,7 @@ function hasMultipleMasterDetailTypeFiled(doc) {
   return false;
 };
 
-function checkMasterDetailTypeField(doc) {
+function checkMasterDetailTypeField(doc, oldReferenceTo) {
   if(!doc || !doc.type || doc.type !== "master_detail"){
     return;
   }
@@ -161,16 +161,25 @@ function checkMasterDetailTypeField(doc) {
     throw new Meteor.Error(doc.name, `引用对象未加载！`);
   }
 
-  if(obj.masters.indexOf(doc.reference_to) > -1){
+  let currentMasters = obj.masters;
+  let currentDetails = obj.details;
+  if(oldReferenceTo){
+    let index = currentMasters.indexOf(oldReferenceTo);
+    if(index >= 0){
+      currentMasters.splice(index, 1);
+    }
+  }
+
+  if(currentMasters.indexOf(doc.reference_to) > -1){
     throw new Meteor.Error(doc.name, `该对象上已经存在指向相同“引用对象”的其它主表子表关系，无法创建该字段。`);
   }
 
-  const mastersCount = obj.masters.length;
-  const detailsCount = obj.details.length;
-  if(mastersCount > 2){
+  const mastersCount = currentMasters.length;
+  const detailsCount = currentDetails.length;
+  if(mastersCount > 1){
     throw new Meteor.Error(doc.name, "您无法创建此类型的字段，因为此对象已有两种主表子表关系。");
   }
-  else if(mastersCount > 1){
+  else if(mastersCount > 0){
     if(detailsCount > 0){
       throw new Meteor.Error(doc.name, "由于此对象上已经存在主表子表关系，同时是另一个主表子表关系的主对象，无法创建此类字段。");
     }
@@ -189,6 +198,9 @@ function checkMasterDetailTypeField(doc) {
   if(maxMasterLeave + maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1){
     throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
   }
+
+  // const detailPaths = obj.getDetailPaths();
+  // console.log("===detailPaths===", detailPaths);
 }
 
 function onChangeName(oldName, newDoc){
@@ -379,7 +391,8 @@ var triggers = {
       //   throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
       // }
 
-      checkMasterDetailTypeField(modifier.$set);
+      let oldReferenceTo = doc.type === "master_detail" && doc.reference_to;
+      checkMasterDetailTypeField(modifier.$set, oldReferenceTo);
 
       if (modifier != null ? (ref2 = modifier.$set) != null ? ref2.reference_to : void 0 : void 0) {
         if (modifier.$set.reference_to.length === 1) {
