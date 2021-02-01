@@ -161,6 +161,10 @@ function checkMasterDetailTypeField(doc) {
     throw new Meteor.Error(doc.name, `引用对象未加载！`);
   }
 
+  if(obj.masters.indexOf(doc.reference_to) > -1){
+    throw new Meteor.Error(doc.name, `该对象上已经存在指向相同“引用对象”的其它主表子表关系，无法创建该字段。`);
+  }
+
   const mastersCount = obj.masters.length;
   const detailsCount = obj.details.length;
   if(mastersCount > 2){

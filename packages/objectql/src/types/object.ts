@@ -408,13 +408,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 try {
                     if (field.reference_to && typeof _.isString(field.reference_to)) {
                         if (field.reference_to === this._name) {
-                            field.reference_to = null;//强行设置为空
+                            field.type = "lookup";//强行变更为最接近的类型
                             throw new Error(`Can't set a master-detail filed that reference to self on the object '${this._name}'.`);
                         }
                         const refObject = getObject(<string>field.reference_to);
                         if (refObject) {
-                            this.addMaster(<string>field.reference_to);
-                            refObject.addDetail(this._name);
+                            const addSuc = this.addMaster(<string>field.reference_to);
+                            if(addSuc){
+                                refObject.addDetail(this._name);
+                            }
+                            else{
+                                // 不能选之前已经在该对象上建过的主表-子表字段上关联的相同对象
+                                field.type = "lookup";//强行变更为最接近的类型
+                                throw new Error(`Can't set a master-detail filed that reference to the same object '${field.reference_to}' that had referenced to by other master-detail filed on the object '${this._name}'.`);
+                            }
                         }
                         else {
                             throw new Error(`Can't find the reference_to object '${field.reference_to}' for the master_detail field of the object '${this._name}'`);
@@ -480,7 +487,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let index = this._masters.indexOf(object_name);
         if(index < 0){
             this._masters.push(object_name);
+            return true;
         }
+        return false;
     }
 
     removeMaster(object_name: string){
@@ -494,7 +503,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let index = this._details.indexOf(object_name);
         if(index < 0){
             this._details.push(object_name);
+            return true;
         }
+        return false;
     }
 
     removeDetail(object_name: string){
