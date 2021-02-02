@@ -13,6 +13,10 @@ var _ = require("underscore");
 import { ObjectId } from 'mongodb';
 var GraphQLJSON = require('graphql-type-json');
 import { getFieldLabel } from './utils';
+import {
+    GraphQLDate,
+    GraphQLDateTime
+} from 'graphql-iso-date';
 
 /** Maps basic creator field types to basic GraphQL types */
 const BASIC_TYPE_MAPPING = {
@@ -22,8 +26,8 @@ const BASIC_TYPE_MAPPING = {
     'select': GraphQLString,
     'url': GraphQLString,
     'email': GraphQLString,
-    'date': GraphQLString,
-    'datetime': GraphQLString,
+    'date': GraphQLDate,
+    'datetime': GraphQLDateTime,
     'number': GraphQLFloat,
     'currency': GraphQLFloat,
     'boolean': GraphQLBoolean
@@ -115,7 +119,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
 
             objTypeFields[k] = {
                 type: new GraphQLList(knownTypes[objName]),
-                args: {},
+                args: { 'fields': { type: new GraphQLList(GraphQLString) || GraphQLString }, 'filters': { type: GraphQLJSON }, 'top': { type: GraphQLInt }, 'skip': { type: GraphQLInt }, 'sort': { type: GraphQLString } },
                 resolve: async function (source, args, context, info) {
                     let field = relatedObjects[corName].fields[info.fieldName];
                     let referenceToField = field.reference_to_field;
@@ -133,7 +137,11 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                     else {
                         filters = [[field.name, "=", _idValue]];
                     }
-                    return object.find({ filters: filters }, userSession);
+                    if (args && args.filters) {
+                        filters.push(args.filters);
+                    }
+                    args.filters = filters;
+                    return object.find(args, userSession);
                 }
             };
         }
@@ -287,7 +295,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
                 data._id = data._id || new ObjectId().toHexString();
                 let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
-                if (userSession) {
+                if (userSession && object.getField('space')) {
                     data.space = userSession.spaceId;
                 }
                 return object.insert(data, userSession);
