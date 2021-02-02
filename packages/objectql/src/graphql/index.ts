@@ -13,6 +13,10 @@ var _ = require("underscore");
 import { ObjectId } from 'mongodb';
 var GraphQLJSON = require('graphql-type-json');
 import { getFieldLabel } from './utils';
+import {
+    GraphQLDate,
+    GraphQLDateTime
+} from 'graphql-iso-date';
 
 /** Maps basic creator field types to basic GraphQL types */
 const BASIC_TYPE_MAPPING = {
@@ -22,8 +26,8 @@ const BASIC_TYPE_MAPPING = {
     'select': GraphQLString,
     'url': GraphQLString,
     'email': GraphQLString,
-    'date': GraphQLString,
-    'datetime': GraphQLString,
+    'date': GraphQLDate,
+    'datetime': GraphQLDateTime,
     'number': GraphQLFloat,
     'currency': GraphQLFloat,
     'boolean': GraphQLBoolean
