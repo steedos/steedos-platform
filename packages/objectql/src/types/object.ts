@@ -489,54 +489,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         });
     }
 
-    // getMaxDetailsLeave(){
-    //     let maxLeave = 0;
-    //     let loop = (master: string, details: string[], leave: number) => {
-    //         if(!details.length){
-    //             return;
-    //         }
-    //         leave++;
-    //         if(maxLeave < leave){
-    //             maxLeave = leave;
-    //         }
-    //         _.each(details,(n)=>{
-    //             const detailObject = getObject(n);
-    //             if(detailObject){
-    //                 loop(n, detailObject.details, leave);
-    //             }
-    //             else{
-    //                 throw new Error(`Can't find the detail object '${n}' for the master object '${master}' of a master-detail relationship.`);
-    //             }
-    //         });
-    //     }
-    //     loop(this._name, this._details, 0);
-    //     return maxLeave;
-    // }
-
-    // getMaxMastersLeave(){
-    //     let maxLeave = 0;
-    //     let loop = (detail: string, masters: string[], leave: number) => {
-    //         if(!masters.length){
-    //             return;
-    //         }
-    //         leave++;
-    //         if(maxLeave < leave){
-    //             maxLeave = leave;
-    //         }
-    //         _.each(masters,(n)=>{
-    //             const masterObject = getObject(n);
-    //             if(masterObject){
-    //                 loop(n, masterObject.masters, leave);
-    //             }
-    //             else{
-    //                 throw new Error(`Can't find the master object '${n}' for the detail object '${detail}' of a master-detail relationship.`);
-    //             }
-    //         });
-    //     }
-    //     loop(this._name, this._masters, 0);
-    //     return maxLeave;
-    // }
-
     getMaxDetailsLeave(paths?: string[]){
         if(!paths){
             paths = this.getDetailPaths();
