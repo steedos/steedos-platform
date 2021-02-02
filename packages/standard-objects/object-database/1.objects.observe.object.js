@@ -13,6 +13,10 @@ Meteor.startup(function () {
     var _removeServerObjects = function (document) {
         try {
             objectCore.removeObject(document);
+            // 删除对象时应该重新初始化整个datasource，不把相关代码直接写到objectCore.removeObject函数中是因为这个函数被很多地方调用了会造成datasource.init次数加多
+            var datasourceName = objectCore.getDataSourceName(document);
+            const datasource = objectql.getDataSource(datasourceName);
+            datasource.init();
         } catch (error) {
             throw error
         }
