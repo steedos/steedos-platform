@@ -144,6 +144,18 @@ function hasMultipleMasterDetailTypeFiled(doc) {
   return false;
 };
 
+function checkMasterDetailPathsRepeat(doc, masterPaths, detailPaths) {
+  // 交叉叠加传入的两个方向的路径判断是否存在同一链条上同名对象可能，同名就直接报错
+  _.each(masterPaths, (masterPathItems)=>{
+    _.each(detailPaths, (detailPathItems)=>{
+      const repeatName = objectql.getRepeatObjectNameFromPaths([masterPathItems.concat(detailPathItems)]);
+      if(repeatName){
+        throw new Meteor.Error(doc.name, "您无法创建此类字段，因为在主表子表关系链条中存在同名对象：" + repeatName);
+      }
+    });
+  });
+}
+
 function checkMasterDetailTypeField(doc, oldReferenceTo) {
   if(!doc || !doc.type || doc.type !== "master_detail"){
     return;
@@ -185,22 +197,27 @@ function checkMasterDetailTypeField(doc, oldReferenceTo) {
     }
   }
 
+
+  const detailPaths = obj.getDetailPaths();
+  // console.log("===detailPaths===", detailPaths);
+  const masterPaths = refObj.getMasterPaths();
+  // console.log("===masterPaths===", masterPaths);
+  // 当有同名对象时肯定会死循环进而超出最大层级限制，所以优先判断提示同名对象问题
+  checkMasterDetailPathsRepeat(doc, masterPaths, detailPaths);
+
   // 新加主表子表关系后，当前对象作为主表往下最多允许有MAX_MASTER_DETAIL_LEAVE层深度。
-  const maxDetailLeave = obj.getMaxDetailsLeave();
+  const maxDetailLeave = obj.getMaxDetailsLeave(detailPaths);
   // console.log("===maxDetailLeave===", maxDetailLeave);
   if(maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1){
     throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
   }
 
-  // 新加主表子表关系后，当前对象作为子表往上最多允许有MAX_DETAIL_LEAVE层深度。
-  const maxMasterLeave = refObj.getMaxMastersLeave();
+  // 新加主表子表关系后，当前对象作为子表往上和往下加起来最多允许有MAX_DETAIL_LEAVE层深度。
+  const maxMasterLeave = refObj.getMaxMastersLeave(masterPaths);
   // console.log("===maxMasterLeave===", maxMasterLeave);
   if(maxMasterLeave + maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1){
     throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
   }
-
-  // const detailPaths = obj.getDetailPaths();
-  // console.log("===detailPaths===", detailPaths);
 }
 
 function onChangeName(oldName, newDoc){

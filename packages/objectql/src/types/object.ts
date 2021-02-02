@@ -19,6 +19,58 @@ const clone = require('clone')
 // 又或者中间加一层M先连接B再连接C，形成A-B-M-C-D，也会超过3层的层级限制；
 export const MAX_MASTER_DETAIL_LEAVE = 3;
 
+/**
+ * 判断传入的paths中最大层级深度
+ * @param paths 对象上getDetailPaths或getMasterPaths函数返回的当前对象向下或向上取主表子表关联对象名称列表链条
+ * 比如传入下面示例中的paths，表示当前对象b向下有4条主子关系链，最大层级深度为第2条，深度为3
+ * [
+    [ 'b', 't1', 't2' ],
+    [ 'b', 't1', 'm1', 'm2' ],
+    [ 'b', 't1', 'm2' ],
+    [ 'b', 'c', 'd' ]
+ * ]
+ */
+const getMaxPathLeave = (paths: string[]) => {
+    let maxLeave = 0;
+    _.each(paths, (n) => {
+        if (maxLeave < n.length) {
+            maxLeave = n.length;
+        }
+    });
+    // A-B-C-D这种主表子表链按3层算
+    maxLeave--;
+    return maxLeave;
+}
+
+/**
+ * 判断传入的paths中每条path下是否有重复对象名称，返回第一个重复的对象名称
+ * 有可能传入的paths有多个链条，只要其中任何一个链条上有同名对象名说明异常，返回第一个异常的同名对象名即可
+ * 比如传入下面示例中的paths，表示当前对象b向下有4条主子关系链，将返回第三条链中的重复对象名b
+ * @param paths 对象上getDetailPaths或getMasterPaths函数返回的当前对象向下或向上取主表子表关联对象名称列表链条
+ * [
+    [ 'b', 't1', 't2' ],
+    [ 'b', 't1', 'm1', 'm2' ],
+    [ 'b', 't1', 'm2', 'b' ],
+    [ 'b', 'c', 'd' ]
+ * ]
+ */
+export const getRepeatObjectNameFromPaths = (paths: string[]) => {
+    let repeatItem: string;
+    for (let p of paths) {
+        if(repeatItem){
+            break;
+        }
+        let g = _.groupBy(p);
+        for (let k in g) {
+            if (g[k].length > 1) {
+                repeatItem = k;
+                break;
+            }
+        }
+    }
+    return repeatItem;
+}
+
 abstract class SteedosObjectProperties {
     _id?: string
     name?: string
@@ -389,15 +441,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 throw new Error(`There are ${mastersCount} fields of type master_detail on the object "${this._name}", but only 1 field are allowed at most, because this object is the master object of another object on a master-detail relationship.`);
             }
         }
-        const maxDetailLeave = this.getMaxDetailsLeave();
+        // 下面只需要写一个方向的层级if判断即可，不用向上和向下两边层级都判断，因为只要链条有问题，该链条任意一个对象都会报错，没必要让多个节点抛错
+        // 比如A-B-C-D-E这个链条超出最大层级数量，只要A对象向下取MaxDetailsLeave来判断就行，不必再判断E对象向上判断层级数量
+        const detailPaths = this.getDetailPaths();
+        const maxDetailLeave = this.getMaxDetailsLeave(detailPaths);
         if(maxDetailLeave > MAX_MASTER_DETAIL_LEAVE){
-            throw new Error(`It exceed the maximum depth of master-detail relationship for the detail side of the object '${this._name}'`);
+            throw new Error(`It exceed the maximum depth of master-detail relationship for the detail side of the object '${this._name}', the paths is:${JSON.stringify(detailPaths)}`);
         }
-        const maxMasterLeave = this.getMaxMastersLeave();
-        // 下面的if不用两边层级相加的判断是因为没必要中间每层都报错造成错误信息过多不好分析问题
-        // if(maxMasterLeave + maxMasterLeave > MAX_MASTER_DETAIL_LEAVE){
-        if(maxMasterLeave > MAX_MASTER_DETAIL_LEAVE){
-            throw new Error(`It exceed the maximum depth of master-detail relationship for the master side of the object '${this._name}'`);
+        // detailPaths中每个链条中不可以出现同名对象，理论上出现同名对象的话会死循环，上面的MAX_MASTER_DETAIL_LEAVE最大层级判断就已经会报错了
+        const repeatName = getRepeatObjectNameFromPaths(detailPaths);
+        if(repeatName){
+            throw new Error(`It meet one repeat object name '${repeatName}' in the master-detail relationships for the detail side of the object '${this._name}', the paths is:${JSON.stringify(detailPaths)}`);
         }
     }
 
@@ -435,52 +489,126 @@ export class SteedosObjectType extends SteedosObjectProperties {
         });
     }
 
-    getMaxDetailsLeave(){
-        let maxLeave = 0;
-        let loop = (master: string, details: string[], leave: number) => {
+    // getMaxDetailsLeave(){
+    //     let maxLeave = 0;
+    //     let loop = (master: string, details: string[], leave: number) => {
+    //         if(!details.length){
+    //             return;
+    //         }
+    //         leave++;
+    //         if(maxLeave < leave){
+    //             maxLeave = leave;
+    //         }
+    //         _.each(details,(n)=>{
+    //             const detailObject = getObject(n);
+    //             if(detailObject){
+    //                 loop(n, detailObject.details, leave);
+    //             }
+    //             else{
+    //                 throw new Error(`Can't find the detail object '${n}' for the master object '${master}' of a master-detail relationship.`);
+    //             }
+    //         });
+    //     }
+    //     loop(this._name, this._details, 0);
+    //     return maxLeave;
+    // }
+
+    // getMaxMastersLeave(){
+    //     let maxLeave = 0;
+    //     let loop = (detail: string, masters: string[], leave: number) => {
+    //         if(!masters.length){
+    //             return;
+    //         }
+    //         leave++;
+    //         if(maxLeave < leave){
+    //             maxLeave = leave;
+    //         }
+    //         _.each(masters,(n)=>{
+    //             const masterObject = getObject(n);
+    //             if(masterObject){
+    //                 loop(n, masterObject.masters, leave);
+    //             }
+    //             else{
+    //                 throw new Error(`Can't find the master object '${n}' for the detail object '${detail}' of a master-detail relationship.`);
+    //             }
+    //         });
+    //     }
+    //     loop(this._name, this._masters, 0);
+    //     return maxLeave;
+    // }
+
+    getMaxDetailsLeave(paths?: string[]){
+        if(!paths){
+            paths = this.getDetailPaths();
+        }
+        return getMaxPathLeave(paths);
+    }
+
+    getMaxMastersLeave(paths?: string[]){
+        if(!paths){
+            paths = this.getMasterPaths();
+        }
+        return getMaxPathLeave(paths);
+    }
+
+    getDetailPaths(){
+        let results = [];
+        let loop = (master: string, details: string[], paths: string[], leave: number) => {
+            paths.push(master);
             if(!details.length){
+                results.push(paths);
                 return;
             }
             leave++;
-            if(maxLeave < leave){
-                maxLeave = leave;
+            if(leave > MAX_MASTER_DETAIL_LEAVE + 3){
+                // 加这段逻辑是避免死循环，results最多只输出MAX_MASTER_DETAIL_LEAVE+3层
+                console.error(`Meet max loop for the detail paths of ${this._name}`);
+                return;
             }
             _.each(details,(n)=>{
                 const detailObject = getObject(n);
                 if(detailObject){
-                    loop(n, detailObject.details, leave);
+                    loop(n, detailObject.details, _.clone(paths), leave);
                 }
                 else{
                     throw new Error(`Can't find the detail object '${n}' for the master object '${master}' of a master-detail relationship.`);
                 }
             });
         }
-        loop(this._name, this._details, 0);
-        return maxLeave;
+        // console.log("==getDetailPaths======", this._name);
+        loop(this._name, this._details, [], 0);
+        // console.log("==getDetailPaths=", JSON.stringify(results));
+        return results;
     }
 
-    getMaxMastersLeave(){
-        let maxLeave = 0;
-        let loop = (detail: string, masters: string[], leave: number) => {
+    getMasterPaths(){
+        let results = [];
+        let loop = (detail: string, masters: string[], paths: string[], leave: number) => {
+            paths.push(detail);
             if(!masters.length){
+                results.push(paths);
                 return;
             }
             leave++;
-            if(maxLeave < leave){
-                maxLeave = leave;
+            if(leave > MAX_MASTER_DETAIL_LEAVE + 3){
+                // 加这段逻辑是避免死循环，results最多只输出MAX_MASTER_DETAIL_LEAVE+3层
+                console.error(`Meet max loop for the detail paths of ${this._name}`);
+                return;
             }
             _.each(masters,(n)=>{
                 const masterObject = getObject(n);
                 if(masterObject){
-                    loop(n, masterObject.masters, leave);
+                    loop(n, masterObject.masters, _.clone(paths), leave);
                 }
                 else{
                     throw new Error(`Can't find the master object '${n}' for the detail object '${detail}' of a master-detail relationship.`);
                 }
             });
         }
-        loop(this._name, this._masters, 0);
-        return maxLeave;
+        // console.log("==getMasterPaths======", this._name);
+        loop(this._name, this._masters, [], 0);
+        // console.log("==getMasterPaths=", JSON.stringify(results));
+        return results;
     }
 
     addMaster(object_name: string){
