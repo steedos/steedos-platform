@@ -119,7 +119,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
 
             objTypeFields[k] = {
                 type: new GraphQLList(knownTypes[objName]),
-                args: {},
+                args: { 'fields': { type: new GraphQLList(GraphQLString) || GraphQLString }, 'filters': { type: GraphQLJSON }, 'top': { type: GraphQLInt }, 'skip': { type: GraphQLInt }, 'sort': { type: GraphQLString } },
                 resolve: async function (source, args, context, info) {
                     let field = relatedObjects[corName].fields[info.fieldName];
                     let referenceToField = field.reference_to_field;
@@ -137,7 +137,11 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                     else {
                         filters = [[field.name, "=", _idValue]];
                     }
-                    return object.find({ filters: filters }, userSession);
+                    if (args && args.filters) {
+                        filters.push(args.filters);
+                    }
+                    args.filters = filters;
+                    return object.find(args, userSession);
                 }
             };
         }
