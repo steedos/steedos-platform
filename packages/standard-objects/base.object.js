@@ -562,7 +562,6 @@ module.exports = {
                     const details = obj && obj.details;
                     if(details && details.length){
                         /* 如果当前对象存在子表的话，调整所有子表记录的owner以保持一致 */
-                        console.log("==details===", details);
                         _.each(details, (detail)=>{
                             const objDetail = objectql.getObject(detail);
                             let needToSync = false;
@@ -582,7 +581,6 @@ module.exports = {
                                 if(refField && refField.name){
                                     let selector = { space: doc.space };
                                     selector[refField.name] = docId;
-                                    console.log("==selector==", detail, selector);
                                     Creator.getCollection(detail).direct.update(selector, { $set: { owner: docOwner } }, { multi: true });
                                 }
                             }
