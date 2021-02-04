@@ -325,6 +325,19 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
         }
     })
 
+    rootQueryfields['count'] = {
+        type: GraphQLInt,
+        args: { 'objectName': { type: new GraphQLNonNull(GraphQLString) }, 'filters': { type: GraphQLJSON } },
+        resolve: async function (source, args, context, info) {
+            if (!args.objectName) {
+                throw new Error('objectName is required!');
+            }
+            let object = steedosSchema.getObject(args.objectName);
+            let userSession = context ? context.user : null;
+            return object.count({ filters: args.filters }, userSession);
+        }
+    }
+
     var schemaConfig = {
         query: new GraphQLObjectType({
             name: 'RootQueryType',
