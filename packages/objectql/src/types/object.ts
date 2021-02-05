@@ -470,6 +470,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
                             const addSuc = this.addMaster(<string>field.reference_to);
                             if(addSuc){
                                 refObject.addDetail(this._name);
+                                // #1435 对象是作为其他对象的子表的话，owner的omit属性必须为true
+                                // 因很多应用目前已经放开了子表的omit属性，这里就不限制了，影响不大，只在零代码界面配置时限制
+                                // if(!this.getField("owner").omit){
+                                //     throw new Error(`The omit property of the owner field on the object '${this._name}' must be true, because there is a master-detail field named '${field.name}' on the object.`);
+                                // }
                             }
                             else{
                                 // 不能选之前已经在该对象上建过的主表-子表字段上关联的相同对象

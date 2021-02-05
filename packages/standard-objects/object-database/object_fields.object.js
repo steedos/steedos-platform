@@ -144,6 +144,18 @@ function hasMultipleMasterDetailTypeFiled(doc) {
   return false;
 };
 
+function checkOwnerField(doc) {
+  if(doc.name !== "owner"){
+    return;
+  }
+  if(!doc.omit){
+    const obj = objectql.getObject(doc.object);
+    if(obj.masters && obj.masters.length){
+      throw new Meteor.Error(doc.name, "您无法取消勾选“新建、编辑时隐藏”属性，因为当前对象上有主表子表关系字段！");
+    }
+  }
+}
+
 function checkMasterDetailPathsRepeat(doc, masterPaths, detailPaths) {
   // 交叉叠加传入的两个方向的路径判断是否存在同一链条上同名对象可能，同名就直接报错
   _.each(masterPaths, (masterPathItems)=>{
@@ -197,7 +209,6 @@ function checkMasterDetailTypeField(doc, oldReferenceTo) {
     }
   }
 
-
   const detailPaths = obj.getDetailPaths();
   // console.log("===detailPaths===", detailPaths);
   const masterPaths = refObj.getMasterPaths();
@@ -217,6 +228,11 @@ function checkMasterDetailTypeField(doc, oldReferenceTo) {
   // console.log("===maxMasterLeave===", maxMasterLeave);
   if(maxMasterLeave + maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1){
     throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
+  }
+
+  const ownerField = _.find(obj.fields,(n)=>{ return n.name === "owner";});
+  if(!ownerField.omit){
+    throw new Meteor.Error(doc.name, "您无法创建此类字段，因为该对象上“所有者”字段未勾选“新建、编辑时隐藏”属性。");
   }
 }
 
@@ -410,6 +426,7 @@ var triggers = {
 
       let oldReferenceTo = doc.type === "master_detail" && doc.reference_to;
       checkMasterDetailTypeField(modifier.$set, oldReferenceTo);
+      checkOwnerField(modifier.$set);
 
       if (modifier != null ? (ref2 = modifier.$set) != null ? ref2.reference_to : void 0 : void 0) {
         if (modifier.$set.reference_to.length === 1) {
@@ -478,6 +495,7 @@ var triggers = {
       //   throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
       // }
       checkMasterDetailTypeField(doc);
+      checkOwnerField(doc);
 
       let defProps = getFieldDefaultProps(doc);
       Object.assign(doc, defProps);
