@@ -3,6 +3,9 @@
   "version": "1.23.20",
   "description": "Salesforce Formula Parser",
   "main": "lib/formulon.js",
+  "files": [
+    "lib"
+  ],
   "engines": {
     "node": ">=11.0.0"
   },
@@ -47,5 +50,9 @@
     "rollup": "^2.26.5",
     "rollup-plugin-terser": "^7.0.0",
     "semantic-release": "^17.0.4"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }
