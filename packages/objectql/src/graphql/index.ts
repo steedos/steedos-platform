@@ -268,9 +268,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
             let corName = correctName(obj.name);
             let objName: string = correctName(obj.name);
 
-            if (!knownTypes[objName]) {
-                knownTypes[objName] = buildGraphQLObjectType(obj, steedosSchema, knownTypes)
-            }
+            knownTypes[objName] = buildGraphQLObjectType(obj, steedosSchema, knownTypes)
 
             rootQueryfields[corName] = {
                 type: new GraphQLList(knownTypes[objName]),
