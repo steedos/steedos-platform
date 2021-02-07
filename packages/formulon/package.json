@@ -1,6 +1,6 @@
 {
-  "name": "formulon",
-  "version": "0.0.0-development",
+  "name": "@steedos/formulon",
+  "version": "1.23.20",
   "description": "Salesforce Formula Parser",
   "main": "lib/formulon.js",
   "engines": {
@@ -13,7 +13,9 @@
     "test:integration": "mocha --require @babel/register --recursive --grep @integration",
     "lint": "eslint --ignore-path .gitignore .",
     "commitlint": "commitlint",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "compile": "yarn build",
+    "prepare": "yarn build"
   },
   "repository": {
     "type": "git",
