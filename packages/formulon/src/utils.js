@@ -209,7 +209,7 @@ export const formatLiteral = (literal) => {
       return literal.value.toString();
     case 'text':
     case 'picklist':
-      return `"${literal.value}"`;
+      return literal.value.toString();
     case 'multipicklist':
       return `[${literal.value.map((value) => `"${value}"`).join(', ')}]`;
     case 'checkbox':
