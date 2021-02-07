@@ -77,8 +77,7 @@ function getSubstitutionDataType(objectName: string, fieldName: string, value: a
             if(field.multiple){
                 dateType = FormulonDataType.Multipicklist;
             }else{
-                dateType = FormulonDataType.Text;
-                // dateType = FormulonDataType.Picklist;
+                dateType = FormulonDataType.Picklist;
             }
             break;
         case 'lookup':
@@ -134,6 +133,25 @@ function getSubstitutionOptions(objectName: string, fieldName: string, dataType:
             return { scale };
         case 'text':
             return {length: Number.MAX_VALUE};
+        case 'multipicklist':
+            // 暂时先不支持optionsFunctions的情况，只支持写死的options
+            if(field.options){
+                /*
+                直接返回类似下面的完整内容，方便需要的时候取label显示。
+                TEXT函数在我们的公式引擎及sf中都不支持multipicklist，只支持单选的picklist，所以下面的返回值暂时没找到什么地方可以用
+                [
+                    { label: 'K1', value: 'k1' },
+                    { label: 'K2', value: 'k2' },
+                    { label: 'K3', value: 'k3' }
+                ]
+                */
+                return {values: field.options};
+            }
+            else{
+                // 实测直接返回空值不影响INCLUDES函数，所以optionsFunctions等情况下直接返回空数组影响不大
+                // 至少返回空数组，否则公式会报错
+                return {values: []};
+            }
         default:
             return ;
     }
@@ -149,6 +167,11 @@ function getSubstitutionValue(dataType: string, value: any){
         case FormulonDataType.Number:
             if(value === null || value === undefined){
                 return 0;
+            }
+            break;
+        case FormulonDataType.Multipicklist:
+            if(value === null || value === undefined){
+                return [];
             }
             break;
         default:
