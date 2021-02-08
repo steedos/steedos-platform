@@ -1,6 +1,6 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaParamTypeConfig, SteedosFormulaVarPathTypeConfig, 
-    FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions, SteedosQuotedByFieldFormulasTypeConfig } from './type';
+    FormulaUserKey, SteedosFormulaOptions, SteedosQuotedByFieldFormulasTypeConfig } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
 import { runQuotedByObjectFieldSummaries, getObjectQuotedByFieldSummaryConfigs } from '../summary';
 import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndFields } from './util';
@@ -178,19 +178,22 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
         formulaParams[key] = getFieldSubstitution(path.reference_from, path.field_name, value, blankValue);
     });
     
+    // console.log("===runFormula===formula====", formula);
+    // console.log("===runFormula===formulaParams====", formulaParams);
     let result = evalFieldFormula(formula, formulaParams);
     // console.log("===runFormula===result====", result);
     let formulaValue = result.value;
     let formulaValueType = result.dataType;
     if(result.type === 'error'){
-        if(blankValue === SteedosFormulaBlankValue.blanks && result.errorType === "ArgumentError"){
-            // 配置了空参数视为空值时会直接返回空值类型，这里就会报错，直接返回空值，而不是抛错
-            // TODO:result.errorType === "ArgumentError"不够细化，下一版本应该视错误情况优化返回空值的条件
-            formulaValue = null;
-        }
-        else{
-            throw new Error(result.message);
-        }
+        throw new Error(result.message);
+        // if(blankValue === SteedosFormulaBlankValue.blanks && result.errorType === "ArgumentError"){
+        //     // 配置了空参数视为空值时会直接返回空值类型，这里就会报错，直接返回空值，而不是抛错
+        //     // TODO:result.errorType === "ArgumentError"不够细化，下一版本应该视错误情况优化返回空值的条件
+        //     formulaValue = null;
+        // }
+        // else{
+        //     throw new Error(result.message);
+        // }
     }
     if (formulaValueType === "number" && _.isNaN(formulaValue)){
         // 数值类型计算结果为NaN时，保存为空值

@@ -32,7 +32,7 @@ const existingFunctions = {
   },
   blankvalue: {
     validations: [minNumOfParams(2), maxNumOfParams(2), paramTypes(['text', 'number', 'date', 'datetime', 'geolocation']), sameParamType()],
-    returnType: ['text', 'number'],
+    returnType: ['text', 'number', 'date', 'datetime', 'geolocation'],
   },
   br: {
     validations: [minNumOfParams(0), maxNumOfParams(0)],
@@ -139,7 +139,7 @@ const existingFunctions = {
     returnType: 'checkbox',
   },
   isblank: {
-    validations: [minNumOfParams(1), maxNumOfParams(1), paramTypes(['text', 'number', 'date', 'datetime', 'geolocation'])],
+    validations: [minNumOfParams(1), maxNumOfParams(1), paramTypes(['text', 'number', 'date', 'datetime', 'picklist', 'multipicklist', 'geolocation'])],
     returnType: 'checkbox',
   },
   isnull: {

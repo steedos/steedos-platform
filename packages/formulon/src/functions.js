@@ -125,9 +125,10 @@ export const sf$and = (...booleans) => {
   return buildLiteralFromJs(result);
 };
 
-export const sf$blankvalue = (expression, substituteExpression) => (
-  expression.dataType === 'null' || expression.value === '' ? substituteExpression : expression
-);
+export const sf$blankvalue = (expression, substituteExpression) => {
+  const isblank = expression.dataType === 'null' || expression.value === '' || expression.value === null || expression.value === undefined || (expression.dataType === "multipicklist" && !expression.value.length);
+  return isblank ? substituteExpression : expression
+};
 
 export const sf$case = (expression, ...values) => {
   const lastValueIndex = values.length - 1;
@@ -160,7 +161,7 @@ export const sf$if = (logicalTest, valueIfTrue, valueIfFalse) => (
   logicalTest.value ? valueIfTrue : valueIfFalse
 );
 
-export const sf$isblank = (expression) => buildLiteralFromJs(expression.dataType === 'null' || expression.value === '');
+export const sf$isblank = (expression) => buildLiteralFromJs(expression.dataType === 'null' || expression.value === '' || expression.value === null || expression.value === undefined || (expression.dataType === "multipicklist" && !expression.value.length));
 
 /* eslint-disable no-unused-vars */
 export const sf$isnull = (_expression) => {

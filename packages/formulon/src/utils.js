@@ -37,7 +37,13 @@ const calculateNumberOptions = (number) => {
 const coerceValue = (dataType, value, options) => {
   switch (dataType) {
     case 'number':
-      return sfRound(value, options.scale);
+      if(typeof value === "number"){
+        return sfRound(value, options.scale);
+      }
+      else{
+        // 如果不加判断返回null的话，ISBLANK函数传入数值参数将永远返回false。
+        return null;
+      }
     case 'text':
       return value.substring(0, options.length);
     default:
