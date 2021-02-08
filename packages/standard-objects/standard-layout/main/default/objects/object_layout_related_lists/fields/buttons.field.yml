@@ -1,0 +1,5 @@
+name: buttons
+type: grid
+is_wide: true
+required: true
+# 相关表的buttons如何控制？

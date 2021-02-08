@@ -1,0 +1,16 @@
+name: layout
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: Layout
+omit: false
+readonly: false
+reference_to: object_layouts
+required: false
+searchable: false
+sort_no: 180
+sortable: false
+type: master_detail
+write_requires_master_read: false

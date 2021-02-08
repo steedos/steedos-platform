@@ -1,0 +1,40 @@
+name: object_name
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: object name
+multiple: false
+omit: false
+readonly: false
+required: false
+searchable: false
+sort_no: 110
+sortable: false
+type: lookup
+depend_on:
+  - layout
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function (values) {
+        //TODO 此处需要处理选择项范围，根据layout的object_name获取对象的相关表
+          if (!(values != null ? values.object_name : void 0)) {
+            values.object_name = Session.get("object_name");
+          }
+          if(values.object_name && !_.isString(values.object_name)){
+            values.object_name = values.object_name.name
+          }
+          var _options = [];
+          _.each(Creator.getRelatedList(values.object_name), function(item){
+            let _object = Creator.getObject(item.object_name) || {}
+            _options.push({label: _object.label || _object.name, value: item.object_name});
+          })
+
+          if(!_.find(_options, function(option){
+            return option.value === 'process_instance_history'
+          })){
+            let _object = Creator.getObject("process_instance_history") || {}
+            _options.push({label: _object.label || _object.name, value: "process_instance_history"});
+          }
+          return _options;
+        }

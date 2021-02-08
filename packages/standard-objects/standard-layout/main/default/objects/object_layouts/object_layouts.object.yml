@@ -2,7 +2,7 @@ name: object_layouts
 label: Object Layouts
 icon: dashboard_ea
 hidden: true
-fields:
+fields:    
   label:
     type: text
     required: true
@@ -29,6 +29,7 @@ fields:
               return _options;
             }
   profiles:
+    # TODO profile 上也记录layout
     type: lookup
     label: Profile
     showIcon: false
@@ -47,7 +48,11 @@ fields:
         });
         return result;
       }
-  exclude_actions:
+  buttons:
+    type: grid
+    is_wide: true
+    required: true
+  buttons.$.button_name:
     type: lookup 
     label: Exclude Standard Actions
     is_wide: true
@@ -60,94 +65,37 @@ fields:
               })
               return _options;
             }
-  custom_actions:
-    label: Custom Actions
-    type: lookup
-    is_wide: true
-    multiple: true
-    depend_on:
-      - object_name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-              var _options = [];
-              var standardActions= _.keys(Creator.getObject('base').actions || {})
-              _.each(Creator.getObject(values.object_name).actions, function(v, k){
-                if(!_.include(standardActions, k)){
-                  _options.push({label: v.label || v.name, value: k});
-                }
-              })
-              return _options;
-            }
-  relatedList:
-    label: Related list
-    type: lookup
-    is_wide: true
-    multiple: true
-    depend_on:
-      - object_name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-              var _options = [];
-              _.each(Creator.getRelatedList(values.object_name), function(item){
-                let _object = Creator.getObject(item.object_name) || {}
-                _options.push({label: _object.label || _object.name, value: item.object_name});
-              })
-
-              if(!_.find(_options, function(option){
-                return option.value === 'process_instance_history'
-              })){
-                let _object = Creator.getObject("process_instance_history") || {}
-                _options.push({label: _object.label || _object.name, value: "process_instance_history"});
-              }
-              return _options;
-            }
-  fields:
-    type: grid
-    is_wide: true
-    required: true
-  fields.$:
-    label: Field
-    blackbox: true
-    type: object
-  fields.$.field:
-    label: Field
+  buttons.$.visible_on:
+    type: text
+    label: visible on
+  compact_layout_fields:
+    label: Compact Layout Fields
     type: lookup
     multiple: false
+    max: 10 #最大10个字段
     is_wide: false
     required: true
+    reference_to: object_fields
+    reference_to_field: name
     depend_on:
       - object_name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
+          console.log('values', values);
               if (!(values != null ? values.object_name : void 0)) {
                 values.object_name = Session.get("object_name");
               }
+              console.log('values.object_name2', values.object_name, !_.isString(values.object_name));
               if(values.object_name && !_.isString(values.object_name)){
+                console.log('values.object_name3', values.object_name);
                 values.object_name = values.object_name.name
               }
+              console.log('values.object_name', values.object_name);
               return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
             }
-  fields.$.readonly:
-    label: Readonly
-    type: boolean
-  fields.$.required:
-    label: Required
-    type: boolean
-  fields.$.group:
-    label: Group
-    type: text
+  template:
+    type: text 
+    # TODO
 list_views:
   all:
     columns:

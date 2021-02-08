@@ -1,0 +1,17 @@
+name: sort
+filterable: false
+hidden: false
+index: false
+inlineHelpText: 排序号：从小到大显示
+is_name: false
+is_wide: false
+label: sort
+omit: false
+precision: 18
+readonly: false
+required: false
+scale: 0
+searchable: false
+sort_no: 190
+sortable: false
+type: number

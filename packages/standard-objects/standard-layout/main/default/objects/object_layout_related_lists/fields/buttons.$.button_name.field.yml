@@ -1,0 +1,13 @@
+name: buttons.$.button_name
+type: lookup 
+label: Exclude Standard Actions
+is_wide: true
+multiple: true
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function (values) {
+          var _options = [];
+          _.each(Creator.getObject('base').actions, function(v, k){
+            _options.push({label: v.label || v.name, value: k});
+          })
+          return _options;
+        }

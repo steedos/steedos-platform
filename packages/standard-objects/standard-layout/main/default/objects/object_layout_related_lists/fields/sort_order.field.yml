@@ -1,0 +1,20 @@
+name: sort_order
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: sort Order
+multiple: false
+omit: false
+options:
+  - label: Asc
+    value: asc
+  - label: Desc
+    value: desc
+readonly: false
+required: true
+searchable: false
+sort_no: 160
+sortable: false
+type: select

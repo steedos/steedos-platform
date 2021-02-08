@@ -1,0 +1,24 @@
+name: style
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: style
+multiple: false
+omit: false
+options:
+  - label: 'Two columns, tab goes top to bottom'
+    value: TwoColumnsTopToBottom
+  - label: 'Two columns, tab goes left to right'
+    value: 'TwoColumnsLeftToRight '
+  - label: One column
+    value: OneColumn
+  - label: Contains custom links only
+    value: CustomLinks
+readonly: false
+required: false
+searchable: false
+sort_no: 160
+sortable: false
+type: select
