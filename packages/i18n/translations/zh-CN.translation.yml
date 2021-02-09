@@ -962,7 +962,7 @@ CustomLabels:
     12:00这种格式的字符表示日期时间。
   object_fields_error_filter_item_invalid_boolean: >-
     过滤条件设置有误,
-    布尔类型字段值无效，请输入'1/true/True/TRUE/真'表示真，或输入'0/false/False/FALSE/假'表示假。
+    复选框类型字段值无效，请输入'1/true/True/TRUE/真'表示真，或输入'0/false/False/FALSE/假'表示假。
   object_fields_error_filter_item_field_required: '过滤条件设置有误, 字段不能为空。'
   object_fields_error_filter_item_operation_required: '过滤条件设置有误, 运算符不能为空。'
   object_fields_error_filter_item_value_required: '过滤条件设置有误, 值不能为空。'

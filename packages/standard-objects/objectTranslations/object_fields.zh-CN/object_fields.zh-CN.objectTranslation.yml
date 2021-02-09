@@ -30,7 +30,7 @@ fields:
         value: html
       - label: 选择框
         value: select
-      - label: 布尔
+      - label: 复选框
         value: boolean
       - label: 日期
         value: date
@@ -125,7 +125,7 @@ fields:
     label: 数据类型
     help: 字段类型为公式时，必须填写此字段。
     options:
-      - label: 勾选框
+      - label: 复选框
         value: boolean
       - label: 数值
         value: number
