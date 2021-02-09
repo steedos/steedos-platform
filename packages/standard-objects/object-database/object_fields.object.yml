@@ -170,6 +170,8 @@ fields:
         value: number
       - label: Currency
         value: currency
+      - label: Percent
+        value: percent
       - label: Text
         value: text
       - label: Date
@@ -253,25 +255,25 @@ fields:
             return [];
           }
           if(values.summary_type === "sum"){
-            /*sum类型可以汇总数值、金额字段*/
+            /*sum类型可以汇总数值、金额、百分比字段*/
             options = options.filter(function(option){
               var optionFieldType = fields[option.value] && fields[option.value].type;
               if(["formula", "summary"].indexOf(optionFieldType) > -1){
                 /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
                 optionFieldType = fields[option.value].data_type;
               }
-              return ["number", "currency"].indexOf(optionFieldType) > -1
+              return ["number", "currency", "percent"].indexOf(optionFieldType) > -1
             });
           }
           else{
-            /*min、max类型可以汇总数值、金额、日期、日期时间字段*/
+            /*min、max类型可以汇总数值、金额、百分比、日期、日期时间字段*/
             options = options.filter(function(option){
               var optionFieldType = fields[option.value] && fields[option.value].type;
               if(["formula", "summary"].indexOf(optionFieldType) > -1){
                 /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
                 optionFieldType = fields[option.value].data_type;
               }
-              return ["number", "currency", "date", "datetime"].indexOf(optionFieldType) > -1
+              return ["number", "currency", "percent", "date", "datetime"].indexOf(optionFieldType) > -1
             });
           }
           return options;

@@ -139,6 +139,8 @@ fields:
         value: number
       - label: Currency
         value: currency
+      - label: Percent
+        value: percent
       - label: Text
         value: text
       - label: Date
