@@ -441,13 +441,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 throw new Error(`There are ${mastersCount} fields of type master_detail on the object "${this._name}", but only 1 field are allowed at most, because this object is the master object of another object on a master-detail relationship.`);
             }
         }
-        // 下面只需要写一个方向的层级if判断即可，不用向上和向下两边层级都判断，因为只要链条有问题，该链条任意一个对象都会报错，没必要让多个节点抛错
-        // 比如A-B-C-D-E这个链条超出最大层级数量，只要A对象向下取MaxDetailsLeave来判断就行，不必再判断E对象向上判断层级数量
+        
         const detailPaths = this.getDetailPaths();
-        const maxDetailLeave = this.getMaxDetailsLeave(detailPaths);
-        if(maxDetailLeave > MAX_MASTER_DETAIL_LEAVE){
-            throw new Error(`It exceed the maximum depth of master-detail relationship for the detail side of the object '${this._name}', the paths is:${JSON.stringify(detailPaths)}`);
-        }
+
+        /**
+         * 去掉内核中判断主表子表层级限制判断，因为内核对象可能有需求不止要用3层，只保留零代码上触发器判断逻辑就行
+         */
+        // // 下面只需要写一个方向的层级if判断即可，不用向上和向下两边层级都判断，因为只要链条有问题，该链条任意一个对象都会报错，没必要让多个节点抛错
+        // // 比如A-B-C-D-E这个链条超出最大层级数量，只要A对象向下取MaxDetailsLeave来判断就行，不必再判断E对象向上判断层级数量
+        // const maxDetailLeave = this.getMaxDetailsLeave(detailPaths);
+        // if(maxDetailLeave > MAX_MASTER_DETAIL_LEAVE){
+        //     throw new Error(`It exceed the maximum depth of master-detail relationship for the detail side of the object '${this._name}', the paths is:${JSON.stringify(detailPaths)}`);
+        // }
+
         // detailPaths中每个链条中不可以出现同名对象，理论上出现同名对象的话会死循环，上面的MAX_MASTER_DETAIL_LEAVE最大层级判断就已经会报错了
         const repeatName = getRepeatObjectNameFromPaths(detailPaths);
         if(repeatName){
