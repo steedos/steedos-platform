@@ -9,7 +9,7 @@ import { JsonMap } from "@salesforce/ts-types";
 import { SteedosQueryFilters } from '../types';
 import _ = require('lodash')
 // import _eval = require('eval')
-import { extract, parse } from '@steedos/formulon';
+import { extract, parse } from '@steedos/formula';
 import { getFieldSubstitution } from './params'
 
 /**

@@ -19,7 +19,7 @@
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
     "@steedos/filters": "^1.23.20",
-    "@steedos/formulon": "^1.23.20",
+    "@steedos/formula": "^1.23.20",
     "@steedos/odata-v4-typeorm": "^1.20.1",
     "@steedos/schemas": "^1.23.20",
     "@steedos/standard-objects": "^1.23.20",
