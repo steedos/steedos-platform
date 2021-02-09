@@ -1,0 +1,48 @@
+{
+  "name": "Sample Expense Tracking Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_expense_tracking.htm",
+  "examples": [
+    {
+      "name": "Expense Identifier",
+      "formula": "\"Expense-\" &\nTrip_Name__c & \"-\" & ExpenseNum__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Trip_Name__c": {
+              "dataType": "text",
+              "value": "Travel"
+            },
+            "ExpenseNum__c": {
+              "dataType": "text",
+              "value": "00011"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Expense-Travel-00011"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mileage Calculation",
+      "formula": "Miles_Driven__c * 0.35",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Miles_Driven__c": {
+              "dataType": "number",
+              "value": 502
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 175.7
+          }
+        }
+      ]
+    }
+  ]
+}

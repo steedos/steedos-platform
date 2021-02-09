@@ -16,24 +16,13 @@
 </p>
 
 <p align="center">
-Steedos Platform is an open source alternative to salesforce low code development platform. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
-</p>
+Salesforce alternative in nodejs and mongodb, use metadata to describe objects, fields, code, logic, and page layouts. Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.</p>
 
 <h3 align="center">
  🤖 🎨 🚀
 </h3>
 
-## Click, Not Code
-
-Traditional programming, denotes the means of programming by using certain coding languages, to tell a computer exactly how to perform an action. 
-
-On the other hand, declarative programming accomplishes the same results by basically telling the computer the end result and letting the computer figure out how to get there.
-
-Steedos is such an declarative programming platform.  Steedos empowers business owners with all of the tools of a developer, without requiring an advanced skill set.
-
-With drag-and-drop simplicity, just about anyone can create apps that automate business processes. The apps you create for your business can be deployed on mobile, tablet and web, be simple or complex, and connect to nearly any data source.
-
-## Based on Metadata
+## What is Steedos Metadata?
 
 Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
 
@@ -43,7 +32,13 @@ There are several types of Metadata, with each one representing a unique way a b
 - **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
 - **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
 
-## Supported Metadata Types
+## Why Metadata?
+
+Hard-coded applications are a thing of the past; customization is the flair of the season.
+
+You need flexible applications that can be tailor-made as per your business needs without the need for high-level programming skills. That is why Steedos Metadata is so powerful. Metadata is what transforms Steedos from a simple database into an entire platform.
+
+## Steedos Metadata Types
 
 - **Custom Objects**: Create custom objects to store information that’s unique to your organization. Choose whether your custom objects are searchable, support sharing, or include access to the Bulk API and Streaming API.
 

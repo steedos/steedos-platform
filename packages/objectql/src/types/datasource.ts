@@ -183,6 +183,32 @@ export class SteedosDataSourceType implements Dictionary {
             this.setObject(object.name, object);
         });
 
+        _.each(objects, (object) => {
+            const obj = this.getObject(object.name);
+            if(obj){
+                // 加try catch是因为有错误时不应该影响下一个对象加载
+                try{
+                    obj.initMasterDetails();
+                }
+                catch(ex){
+                    console.error(ex);
+                }
+            }
+        });
+
+        _.each(objects, (object) => {
+            const obj = this.getObject(object.name);
+            if(obj){
+                // 加try catch是因为有错误时不应该影响下一个对象加载
+                try{
+                    obj.checkMasterDetails();
+                }
+                catch(ex){
+                    console.error(ex);
+                }
+            }
+        });
+
         _.each(this.config.objectsRolesPermission, (objectRolesPermission, object_name) => {
             _.each(objectRolesPermission, (objectRolePermission, role_name) => {
                 objectRolePermission.name = role_name

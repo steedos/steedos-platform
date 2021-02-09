@@ -33,7 +33,7 @@ fields:
         value: html
       - label: Select
         value: select
-      - label: Boolean
+      - label: Checkbox
         value: boolean
       - label: Date
         value: date

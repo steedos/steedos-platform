@@ -2,6 +2,9 @@ var _ = require("underscore");
 var objectql = require('@steedos/objectql');
 var clone = require('clone');
 var objectCore = require('./objects.core.js');
+
+const MAX_MASTER_DETAIL_LEAVE = objectql.MAX_MASTER_DETAIL_LEAVE;
+
 function canRemoveNameFileld(doc){
   var object = Creator.getCollection("objects").findOne({name: doc.object}, {fields: {datasource: 1}});
   if(object && object.datasource && object.datasource != 'default'){
@@ -140,6 +143,98 @@ function hasMultipleMasterDetailTypeFiled(doc) {
   }
   return false;
 };
+
+function checkOwnerField(doc) {
+  if(doc.name !== "owner"){
+    return;
+  }
+  if(!doc.omit){
+    const obj = objectql.getObject(doc.object);
+    if(obj.masters && obj.masters.length){
+      throw new Meteor.Error(doc.name, "您无法取消勾选“新建、编辑时隐藏”属性，因为当前对象上有主表子表关系字段！");
+    }
+  }
+}
+
+function checkMasterDetailPathsRepeat(doc, masterPaths, detailPaths) {
+  // 交叉叠加传入的两个方向的路径判断是否存在同一链条上同名对象可能，同名就直接报错
+  _.each(masterPaths, (masterPathItems)=>{
+    _.each(detailPaths, (detailPathItems)=>{
+      const repeatName = objectql.getRepeatObjectNameFromPaths([masterPathItems.concat(detailPathItems)]);
+      if(repeatName){
+        throw new Meteor.Error(doc.name, "您无法创建此类字段，因为在主表子表关系链条中存在同名对象：" + repeatName);
+      }
+    });
+  });
+}
+
+function checkMasterDetailTypeField(doc, oldReferenceTo) {
+  if(!doc || !doc.type || doc.type !== "master_detail"){
+    return;
+  }
+  if(doc.reference_to === doc.object){
+    throw new Meteor.Error(doc.name, "您无法创建一个指向自身的[主表/子表]类型字段！");
+  }
+  const obj = objectql.getObject(doc.object);
+  if(!obj){
+    throw new Meteor.Error(doc.name, `所属对象未加载！`);
+  }
+
+  const refObj = objectql.getObject(doc.reference_to);
+  if(!refObj){
+    throw new Meteor.Error(doc.name, `引用对象未加载！`);
+  }
+
+  let currentMasters = obj.masters;
+  let currentDetails = obj.details;
+  if(oldReferenceTo){
+    let index = currentMasters.indexOf(oldReferenceTo);
+    if(index >= 0){
+      currentMasters.splice(index, 1);
+    }
+  }
+
+  if(currentMasters.indexOf(doc.reference_to) > -1){
+    throw new Meteor.Error(doc.name, `该对象上已经存在指向相同“引用对象”的其它主表子表关系，无法创建该字段。`);
+  }
+
+  const mastersCount = currentMasters.length;
+  const detailsCount = currentDetails.length;
+  if(mastersCount > 1){
+    throw new Meteor.Error(doc.name, "您无法创建此类型的字段，因为此对象已有两种主表子表关系。");
+  }
+  else if(mastersCount > 0){
+    if(detailsCount > 0){
+      throw new Meteor.Error(doc.name, "由于此对象上已经存在主表子表关系，同时是另一个主表子表关系的主对象，无法创建此类字段。");
+    }
+  }
+
+  const detailPaths = obj.getDetailPaths();
+  // console.log("===detailPaths===", detailPaths);
+  const masterPaths = refObj.getMasterPaths();
+  // console.log("===masterPaths===", masterPaths);
+  // 当有同名对象时肯定会死循环进而超出最大层级限制，所以优先判断提示同名对象问题
+  checkMasterDetailPathsRepeat(doc, masterPaths, detailPaths);
+
+  // 新加主表子表关系后，当前对象作为主表往下最多允许有MAX_MASTER_DETAIL_LEAVE层深度。
+  const maxDetailLeave = obj.getMaxDetailsLeave(detailPaths);
+  // console.log("===maxDetailLeave===", maxDetailLeave);
+  if(maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1){
+    throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
+  }
+
+  // 新加主表子表关系后，当前对象作为子表往上和往下加起来最多允许有MAX_DETAIL_LEAVE层深度。
+  const maxMasterLeave = refObj.getMaxMastersLeave(masterPaths);
+  // console.log("===maxMasterLeave===", maxMasterLeave);
+  if(maxMasterLeave + maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1){
+    throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
+  }
+
+  const ownerField = _.find(obj.fields,(n)=>{ return n.name === "owner";});
+  if(!ownerField.omit){
+    throw new Meteor.Error(doc.name, "您无法创建此类字段，因为该对象上“所有者”字段未勾选“新建、编辑时隐藏”属性。");
+  }
+}
 
 function onChangeName(oldName, newDoc){
   var newName = newDoc.name
@@ -325,9 +420,13 @@ var triggers = {
         throw new Meteor.Error(doc._name, "字段名不能重复");
       }
 
-      if(_.has(modifier.$set, 'type') && modifier.$set.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
-        throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
-      }
+      // if(_.has(modifier.$set, 'type') && modifier.$set.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
+      //   throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
+      // }
+
+      let oldReferenceTo = doc.type === "master_detail" && doc.reference_to;
+      checkMasterDetailTypeField(modifier.$set, oldReferenceTo);
+      checkOwnerField(modifier.$set);
 
       if (modifier != null ? (ref2 = modifier.$set) != null ? ref2.reference_to : void 0 : void 0) {
         if (modifier.$set.reference_to.length === 1) {
@@ -392,9 +491,11 @@ var triggers = {
         throw new Meteor.Error(doc.name, "字段名不能重复");
       }
 
-      if(doc.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
-        throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
-      }
+      // if(doc.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
+      //   throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
+      // }
+      checkMasterDetailTypeField(doc);
+      checkOwnerField(doc);
 
       let defProps = getFieldDefaultProps(doc);
       Object.assign(doc, defProps);

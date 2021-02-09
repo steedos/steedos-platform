@@ -1,0 +1,288 @@
+{
+  "name": "Sample Financial Calculations Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_financial.htm",
+  "examples": [
+    {
+      "name": "Compound Interest",
+      "formula": "Principal__c * ( 1 + Rate__c / M ) ^ ( T * M)",
+      "suites": [
+        {
+          "context": "4% over 10 years once per year",
+          "identifiers": {
+            "Principal__c": {
+              "dataType": "number",
+              "value": 100000
+            },
+            "Rate__c": {
+              "dataType": "number",
+              "value": 0.04
+            },
+            "M": {
+              "dataType": "number",
+              "value": 1
+            },
+            "T": {
+              "dataType": "number",
+              "value": 10
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 148024.42849183443
+          }
+        },
+        {
+          "context": "0.05% over 1 year monthly",
+          "identifiers": {
+            "Principal__c": {
+              "dataType": "number",
+              "value": 5000
+            },
+            "Rate__c": {
+              "dataType": "number",
+              "value": 0.0005
+            },
+            "M": {
+              "dataType": "number",
+              "value": 12
+            },
+            "T": {
+              "dataType": "number",
+              "value": 1
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 5002.5005729962495
+          }
+        }
+      ]
+    },
+    {
+      "name": "Compound Interest Continuous",
+      "formula": "Principal__c * EXP(Rate__c * T)",
+      "suites": [
+        {
+          "context": "4% over 10 years",
+          "identifiers": {
+            "Principal__c": {
+              "dataType": "number",
+              "value": 100000
+            },
+            "Rate__c": {
+              "dataType": "number",
+              "value": 0.04
+            },
+            "T": {
+              "dataType": "number",
+              "value": 10
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 149182.46976412705
+          }
+        },
+        {
+          "context": "0.05% over 1 year",
+          "identifiers": {
+            "Principal__c": {
+              "dataType": "number",
+              "value": 5000
+            },
+            "Rate__c": {
+              "dataType": "number",
+              "value": 0.0005
+            },
+            "T": {
+              "dataType": "number",
+              "value": 1
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 5002.50062510418
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultant Cost",
+      "formula": "Consulting_Days__c *\n1200",
+      "suites": [
+        {
+          "context": "1 month",
+          "identifiers": {
+            "Consulting_Days__c": {
+              "dataType": "number",
+              "value": 22
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 26400
+          }
+        },
+        {
+          "context": "1 year",
+          "identifiers": {
+            "Consulting_Days__c": {
+              "dataType": "number",
+              "value": 252
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 302400
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gross Margin",
+      "formula": "Total_Sales__c - Cost_of_Goods_Sold__c",
+      "suites": [
+        {
+          "context": "high margin",
+          "identifiers": {
+            "Total_Sales__c": {
+              "dataType": "number",
+              "value": 50000
+            },
+            "Cost_of_Goods_Sold__c": {
+              "dataType": "number",
+              "value": 10000
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 40000
+          }
+        },
+        {
+          "context": "low margin",
+          "identifiers": {
+            "Total_Sales__c": {
+              "dataType": "number",
+              "value": 50000
+            },
+            "Cost_of_Goods_Sold__c": {
+              "dataType": "number",
+              "value": 45000
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 5000
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment Due Indicator",
+      "formula": "(BLANKVALUE(Payment_Due_Date__c, StartDate +5))",
+      "suites": [
+        {
+          "context": "Due Date set",
+          "identifiers": {
+            "Payment_Due_Date__c": {
+              "dataType": "date",
+              "value": "2020-04-23"
+            },
+            "StartDate": {
+              "dataType": "date",
+              "value": "2020-04-20"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-04-23"
+          }
+        },
+        {
+          "context": "Due Date not set",
+          "identifiers": {
+            "Payment_Due_Date__c": {
+              "dataType": "null",
+              "value": null
+            },
+            "StartDate": {
+              "dataType": "date",
+              "value": "2020-04-20"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-04-25"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment Status",
+      "formula": "IF( \nAND(Payment_Due_Date__c < DATE(2020, 4, 23),\nISPICKVAL(Payment_Status__c, \"UNPAID\")),\"PAYMENT OVERDUE\",null )",
+      "suites": [
+        {
+          "context": "Unpaid and overdue",
+          "identifiers": {
+            "Payment_Due_Date__c": {
+              "dataType": "date",
+              "value": "2020-04-24"
+            },
+            "Payment_Status__c": {
+              "dataType": "picklist",
+              "value": "UNPAID",
+              "options": {
+                "values": ["PAID", "UNPAID"]
+              }
+            }
+          },
+          "expectedResult": {
+            "dataType": "null",
+            "value": null
+          }
+        },
+        {
+          "context": "Unpaid and not overdue",
+          "identifiers": {
+            "Payment_Due_Date__c": {
+              "dataType": "date",
+              "value": "2020-04-22"
+            },
+            "Payment_Status__c": {
+              "dataType": "picklist",
+              "value": "UNPAID",
+              "options": {
+                "values": ["PAID", "UNPAID"]
+              }
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "PAYMENT OVERDUE"
+          }
+        },
+        {
+          "context": "Paid",
+          "identifiers": {
+            "Payment_Due_Date__c": {
+              "dataType": "date",
+              "value": "2020-04-24"
+            },
+            "Payment_Status__c": {
+              "dataType": "picklist",
+              "value": "PAID",
+              "options": {
+                "values": ["PAID", "UNPAID"]
+              }
+            }
+          },
+          "expectedResult": {
+            "dataType": "null",
+            "value": null
+          }
+        }
+      ]
+    }
+  ]
+}

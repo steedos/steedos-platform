@@ -1,0 +1,185 @@
+{
+  "name": "Sample Commission Calculations Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_commission.htm",
+  "examples": [
+    {
+      "name": "Commission Amounts for Opportunities",
+      "formula": "IF(ISPICKVAL(StageName, \"Closed Won\"),\n  ROUND(Amount *0.02, 2), 0)",
+      "suites": [
+        {
+          "context": "Closed Won",
+          "identifiers": {
+            "StageName": {
+              "dataType": "picklist",
+              "value": "Closed Won",
+              "options": {
+                "values": ["Closed Won", "Closed Lost"]
+              }
+            },
+            "Amount": {
+              "dataType": "number",
+              "value": 91641
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1832.82
+          }
+        },
+        {
+          "context": "Closed Lost",
+          "identifiers": {
+            "StageName": {
+              "dataType": "picklist",
+              "value": "Closed Lost",
+              "options": {
+                "values": ["Closed Won", "Closed Lost"]
+              }
+            },
+            "Amount": {
+              "dataType": "number",
+              "value": 91641
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Commission Deal Size",
+      "formula": "IF(Amount > 100000, 0.09, 0.08 )",
+      "suites": [
+        {
+          "context": "100000",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 100000
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0.08
+          }
+        },
+        {
+          "context": "100001",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 100001
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0.09
+          }
+        }
+      ]
+    },
+    {
+      "name": "Commission Greater Than or Equal To",
+      "formula": "IF(Commission__c >=\n\t\t1000000, \"YES\", \"NO\")",
+      "suites": [
+        {
+          "context": "1000000",
+          "identifiers": {
+            "Commission__c": {
+              "dataType": "number",
+              "value": 1000000
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "YES"
+          }
+        },
+        {
+          "context": "999999",
+          "identifiers": {
+            "Commission__c": {
+              "dataType": "number",
+              "value": 999999
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "NO"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Commission Maximum",
+      "formula": "MAX($User.Commission_Percent__c * Price,\nPrice * Account_Discount__c, 100)",
+      "suites": [
+        {
+          "context": "Commision % of user highest",
+          "identifiers": {
+            "Price": {
+              "dataType": "number",
+              "value": 2000
+            },
+            "$User.Commission_Percent__c": {
+              "dataType": "number",
+              "value": 0.1
+            },
+            "Account_Discount__c": {
+              "dataType": "number",
+              "value": 0.05
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 200
+          }
+        },
+        {
+          "context": "Account Discount highest",
+          "identifiers": {
+            "Price": {
+              "dataType": "number",
+              "value": 2000
+            },
+            "$User.Commission_Percent__c": {
+              "dataType": "number",
+              "value": 0.05
+            },
+            "Account_Discount__c": {
+              "dataType": "number",
+              "value": 0.1
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 200
+          }
+        },
+        {
+          "context": "Fixed amount highest",
+          "identifiers": {
+            "Price": {
+              "dataType": "number",
+              "value": 50
+            },
+            "$User.Commission_Percent__c": {
+              "dataType": "number",
+              "value": 0.05
+            },
+            "Account_Discount__c": {
+              "dataType": "number",
+              "value": 0.1
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 100
+          }
+        }
+      ]
+    }
+  ]
+}

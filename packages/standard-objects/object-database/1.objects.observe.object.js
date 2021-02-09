@@ -12,7 +12,7 @@ Meteor.startup(function () {
     };
     var _removeServerObjects = function (document) {
         try {
-            objectCore.removeObject(document);
+            objectCore.removeObject(document, false, true);
         } catch (error) {
             throw error
         }

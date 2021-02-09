@@ -925,7 +925,7 @@ CustomLabels:
   web_forms_select_option_none: '--无--'
   object_fields_error_option_label_required: 选择项属性中每个选项的显示名不能为空。
   object_fields_error_option_value_required: 选择项属性中每个选项的选项值不能为空。
-  object_fields_error_option_color_not_valid: 该字段选择项属性中定义了错误格式的选项颜色值，请输入正确的16进制颜色值，如#ffffff。
+  object_fields_error_option_color_not_valid: 该字段选择项属性中定义了错误格式的选项颜色值，请输入正确的16进制颜色值，如ffffff。
   picklist_options_error_color_not_valid: 选项背景色格式不对，请输入正确的16进制颜色代码，如#ffffff。
   space_users_method_disable_success: 已成功停用该用户。
   space_users_method_disable_error: 停用用户失败，%s
@@ -962,7 +962,7 @@ CustomLabels:
     12:00这种格式的字符表示日期时间。
   object_fields_error_filter_item_invalid_boolean: >-
     过滤条件设置有误,
-    布尔类型字段值无效，请输入'1/true/True/TRUE/真'表示真，或输入'0/false/False/FALSE/假'表示假。
+    复选框类型字段值无效，请输入'1/true/True/TRUE/真'表示真，或输入'0/false/False/FALSE/假'表示假。
   object_fields_error_filter_item_field_required: '过滤条件设置有误, 字段不能为空。'
   object_fields_error_filter_item_operation_required: '过滤条件设置有误, 运算符不能为空。'
   object_fields_error_filter_item_value_required: '过滤条件设置有误, 值不能为空。'

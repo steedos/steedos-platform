@@ -1,0 +1,34 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-test:
+    executor:
+      name: 'node/default'
+      tag: '12.16.2'
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run:
+                name: Install Dependencies
+                command: yarn install
+            - run:
+                name: Build Parser
+                command: yarn build
+            - run:
+                name: Run Linter
+                command: yarn lint
+            - run:
+                name: Execute Unit Tests
+                command: yarn test --forbid-only
+            - run:
+                name: Execute Integration Tests
+                command: yarn test:integration --forbid-only
+            - run:
+                name: Release
+                command: yarn semantic-release || true
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test

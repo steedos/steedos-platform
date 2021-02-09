@@ -1,3 +1,4 @@
+const { getObject, getObjectConfig } = require('@steedos/objectql');
 var objectql = require('@steedos/objectql');
 var yaml = require('js-yaml');
 const _ = require('underscore');
@@ -226,6 +227,40 @@ function onChangeObjectName(oldName, newDoc){
     });
 }
 
+function beforeRemoveObject(doc){
+    const objectName = doc.name;
+    const obj = getObject(objectName);
+    if(obj && obj.details && obj.details.length){
+        throw new Meteor.Error(500, `不能删除该对象，因为在已知的主表子表关系中它是以下对象的主对象：${obj.details}`);
+    }
+}
+
+function beforeRestoreObject(doc){
+    let fields = Creator.getCollection("object_fields").find({
+        object: doc.name,
+        space: doc.space,
+        type: "master_detail"
+    }, {
+        fields: {
+            reference_to: 1
+        }
+    }).fetch();
+    _.each(fields, (field)=>{
+        if(field.reference_to && _.isString(field.reference_to)){
+            let exist = false;
+            try{
+                exist = !!getObject(field.reference_to);
+            }
+            catch(ex){
+                exist = false;
+            }
+            if(!exist){
+                throw new Meteor.Error(500, `不能还原该对象，因为在已知的主表子表关系中以下主对象未还原：${field.reference_to}`);
+            }
+        }
+    });
+}
+
 let objectTriggers = {
     "before.insert.server.objects": {
         on: "server",
@@ -310,6 +345,13 @@ let objectTriggers = {
             }
             modifier.$set = modifier.$set || {}
 
+            if(!doc.is_deleted && modifier.$set.is_deleted){
+                beforeRemoveObject(doc);
+            }
+            else if(doc.is_deleted && !modifier.$set.is_deleted){
+                beforeRestoreObject(doc);
+            }
+
             if(modifier.$set.is_enable){
                 if(!canEnable({fields: doc.fields, datasource: modifier.$set.datasource || doc.datasource})){
                     throw new Meteor.Error(500, "不能启用对象，请先配置主键字段");
@@ -348,6 +390,7 @@ let objectTriggers = {
             if(!allowChangeObject()){
                 throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
             }
+            beforeRemoveObject(doc);
             // var documents, object_collections;
             // if (doc.app_unique_id && doc.app_version) {
             //     return;
