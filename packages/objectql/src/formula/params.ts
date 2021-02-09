@@ -2,7 +2,7 @@ import _ = require('underscore');
 import { getObject } from '../types/object';
 import { SteedosFormulaBlankValue } from './type';
 
-const enum FormulonDataType {
+export const enum FormulonDataType {
     Text = 'text',
     Number = 'number',
     Date = 'date',

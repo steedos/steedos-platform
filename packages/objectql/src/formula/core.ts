@@ -10,7 +10,7 @@ import { SteedosQueryFilters } from '../types';
 import _ = require('lodash')
 // import _eval = require('eval')
 import { extract, parse } from '@steedos/formula';
-import { getFieldSubstitution } from './params'
+import { getFieldSubstitution, FormulonDataType } from './params'
 
 /**
  * 根据公式内容，取出其中{}中的变量
@@ -195,7 +195,7 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
         //     throw new Error(result.message);
         // }
     }
-    if (formulaValueType === "number" && _.isNaN(formulaValue)){
+    if (formulaValueType === FormulonDataType.Number && _.isNaN(formulaValue)){
         // 数值类型计算结果为NaN时，保存为空值
         formulaValue = null;
     }
@@ -203,33 +203,38 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     if (returnType && formulaValueType && formulaValueType != "null") {
         switch (returnType) {
             case "boolean":
-                if (formulaValueType !== "checkbox") {
+                if (formulaValueType !== FormulonDataType.Checkbox) {
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a boolean type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "number":
-                if (formulaValueType !== "number") {
+                if (formulaValueType !== FormulonDataType.Number) {
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "currency":
-                if (formulaValueType !== "number") {
+                if (formulaValueType !== FormulonDataType.Number) {
+                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${formulaValueType} type value '${formulaValue}'.`);
+                }
+                break;
+            case "percent":
+                if (formulaValueType !== FormulonDataType.Number) {
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "text":
-                if (formulaValueType !== "text") {
+                if (formulaValueType !== FormulonDataType.Text) {
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a string type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "date":
-                if (formulaValueType !== "date") {
+                if (formulaValueType !== FormulonDataType.Date) {
                     // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "datetime":
-                if (formulaValueType !== "datetime") {
+                if (formulaValueType !== FormulonDataType.Datetime) {
                     // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
