@@ -611,6 +611,9 @@ module.exports = {
     }
 };
 function setDetailOwner(doc, object_name, userId) {
+    if(!userId){
+        return;
+    }
     let masterRecordOwner = '';
     const obj = objectql.getObject(object_name);
     const masters = obj && obj.masters;
