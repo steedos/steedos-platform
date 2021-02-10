@@ -83,22 +83,22 @@ fields:
     label: Mobile App
     defaultValue: false
 
-  members:
-    type: object
-    label: Members
-    is_wide: true
-  members.users:
-    type: lookup
-    label: User Members
-    reference_to: users
-    multiple: true
-    filterable: true
-  members.organizations:
-    type: lookup
-    label: Department Members
-    reference_to: organizations
-    multiple: true
-    filterable: true
+  # members:
+  #   type: object
+  #   label: Members
+  #   is_wide: true
+  # members.users:
+  #   type: lookup
+  #   label: User Members
+  #   reference_to: users
+  #   multiple: true
+  #   filterable: true
+  # members.organizations:
+  #   type: lookup
+  #   label: Department Members
+  #   reference_to: organizations
+  #   multiple: true
+  #   filterable: true
 
   url:
     label: URL
