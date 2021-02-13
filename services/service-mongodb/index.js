@@ -111,6 +111,6 @@ module.exports = {
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-
+		await this.server.stop();
 	}
 };
