@@ -100,8 +100,8 @@ module.exports = {
 		this.logger.info(`MongoDB port: ${this.settings.port}`);
 		this.logger.info(`MongoDB db path: ${this.settings.dbPath}`);
 
-		this.server = await MongoMemoryReplSet.create(this.settings);
-		this.settings.url = this.server.getUri();
+		this.mongod = await MongoMemoryReplSet.create(this.settings);
+		this.settings.url = this.mongod.getUri();
 		this.settings.oplogUrl = `mongodb://localhost:${this.settings.port}/local`;
 		process.env.MONGO_OPLOG_URL = this.settings.oplogUrl
 		process.env.MONGO_URL = this.settings.url;
@@ -111,6 +111,6 @@ module.exports = {
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-		await this.server.stop();
+		await this.mongod.stop();
 	}
 };
