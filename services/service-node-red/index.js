@@ -17,10 +17,11 @@ module.exports = {
 	 */
 	settings: {
         port: 3100,
+        disableEditor: false,
         credentialSecret: "3b905ca2dbb6921f3c98a21eeb0e3ef1bWs",
-        httpAdminRoot:"/admin/",
+        httpAdminRoot:"/admin",
         httpNodeRoot: "/",
-        userDir: path.join(process.cwd(), "steedos-packages", "node-red"),
+        userDir: path.join(process.cwd(), "steedos-app", "main", "node-red"),
         flowFile: path.join("flows.json"),
         functionGlobalContext: {
         },    // enables global context
