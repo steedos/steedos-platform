@@ -1,6 +1,7 @@
 **/.DS_Store
 **/.idea
 
+/services/**/node_modules
 /packages/**/node_modules
 /apps/**/node_modules
 /apps/contracts

@@ -1,0 +1,15 @@
+{
+  "name": "@steedos/service-steedos",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@steedos/service-mongodb": "^0.0.1",
+    "dotenv-flow": "^3.2.0",
+    "moleculer": "^0.14.10",
+    "moleculer-db": "^0.8.4",
+    "moleculer-db-adapter-mongo": "^0.4.7",
+    "moleculer-web": "^0.9.0",
+    "nats": "^1.4.12"
+  }
+}

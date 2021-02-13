@@ -18,7 +18,7 @@ _.each stores, (store_name)->
             file_store = new FS.Store.FileSystem(store_name)
         else if Meteor.isServer
             file_store = new FS.Store.FileSystem(store_name, {
-                    path: require('path').join(Creator.steedosStorageDir, "files/#{store_name}"),
+                    path: require('path').join(process.env.STEEDOS_STORAGE_DIR, "files/#{store_name}"),
                     fileKeyMaker: (fileObj)->
                         # Lookup the copy
                         store = fileObj and fileObj._getInfo(store_name)
@@ -36,7 +36,7 @@ _.each stores, (store_name)->
                         month = now.getMonth() + 1
                         path = require('path')
                         mkdirp = require('mkdirp')
-                        pathname = path.join(Creator.steedosStorageDir, "files/#{store_name}/" + year + '/' + month)
+                        pathname = path.join(process.env.STEEDOS_STORAGE_DIR, "files/#{store_name}/" + year + '/' + month)
                         # Set absolute path
                         absolutePath = path.resolve(pathname)
                         # Ensure the path exists

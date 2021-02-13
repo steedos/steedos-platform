@@ -373,8 +373,5 @@ Creator.isCloudAdminSpace = (spaceId)->
 	return false
 
 if Meteor.isServer
-	if process.env.STEEDOS_STORAGE_DIR
-		Creator.steedosStorageDir = process.env.STEEDOS_STORAGE_DIR
-	else
-		path = require('path')
-		Creator.steedosStorageDir = path.resolve(path.join(__meteor_bootstrap__.serverDir, '../../../cfs'))
+	Creator.steedosStorageDir = process.env.STEEDOS_STORAGE_DIR
+	
