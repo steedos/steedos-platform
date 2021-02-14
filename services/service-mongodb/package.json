@@ -2,5 +2,8 @@
   "name": "@steedos/service-mongodb",
   "version": "0.0.1",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@steedos/mongodb-memory-server-core": "^7.0.0-beta.14"
+  }
 }

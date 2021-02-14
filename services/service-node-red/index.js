@@ -19,10 +19,11 @@ module.exports = {
         port: 3100,
         disableEditor: false,
         credentialSecret: "3b905ca2dbb6921f3c98a21eeb0e3ef1bWs",
-        httpAdminRoot:"/admin",
+        httpAdminRoot:"/",
         httpNodeRoot: "/",
+        httpRoot: '/',
         userDir: path.join(process.cwd(), "steedos-app", "main", "node-red"),
-        flowFile: path.join("flows.json"),
+        flowFile: "flows.json",
         functionGlobalContext: {
         },    // enables global context
         editorTheme: {
@@ -92,6 +93,10 @@ module.exports = {
         this.server = http.createServer(this.app);
 
 
+        this.settings.functionGlobalContext = {
+            broker: this.broker
+        }
+
         // Initialise the runtime with a server and settings
         RED.init(this.server,this.settings);
 
@@ -104,13 +109,16 @@ module.exports = {
         this.server.listen(this.settings.port);
 
         // Start the runtime
-        RED.start();
+        await RED.start();
+
+        this.logger.info(`Node Red Server is listening on port: ${this.settings.port}`)
 	},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-
+        this.server.stop;
+        this.logger.info(`Node Red Server stopped.`)
 	}
 };
