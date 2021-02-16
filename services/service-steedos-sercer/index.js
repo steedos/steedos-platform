@@ -56,16 +56,16 @@ module.exports = {
 	methods: {
 		async startSteedos() {
 
-			const server = require('@steedos/meteor-bundle-runner');
-			const steedos = require('@steedos/core');
+			this.meteor = require('@steedos/meteor-bundle-runner');
+			this.steedos = require('@steedos/core');
 			
 			// const logger = this.logger;
 			await Future.task( ()=> {
 				try {
-					server.loadServerBundles();
-					steedos.init();
-					server.callStartupHooks();
-					server.runMain();
+					this.meteor.loadServerBundles();
+					this.steedos.init();
+					this.meteor.callStartupHooks();
+					this.meteor.runMain();
 
 				} catch (error) {
 					this.logger.error(error)
@@ -109,14 +109,6 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	created() {
-
-		if (this.settings.mongodbServer && this.settings.mongodbServer.enabled) {
-			this.mongodbService = this.broker.createService({
-				name: "mongodb-server",
-				mixins: [MongoDBService],
-				settings: this.settings["mongodbServer"]
-			});
-		}
 	  
 	},
 
@@ -129,6 +121,12 @@ module.exports = {
 		process.env.ROOT_URL = this.settings.rootUrl;
 
 		if (this.settings.mongodbServer && this.settings.mongodbServer.enabled) {
+			this.mongodbService = this.broker.createService({
+				name: "mongodb-server",
+				mixins: [MongoDBService],
+				settings: this.settings["mongodbServer"]
+			});
+			this.broker._restartService(this.mongodbService)
 			await this.broker.waitForServices(["mongodb-server"]);
 			this.settings.mongoUrl = process.env.MONGO_URL;
 			this.settings.mongoOplogUrl = process.env.MONGO_OPLOG_URL;
@@ -138,8 +136,8 @@ module.exports = {
 
 		await this.startSteedos();
 
-		await this.startNodeRedService();
-		await this.startAPIService();
+		this.startNodeRedService();
+		this.startAPIService();
 	  
 	},
 
