@@ -1,6 +1,8 @@
 "use strict";
 
-let MongoDBService = require('@steedos/service-mongodb');
+const Future = require('fibers/future');
+let MongoDBService = require('@steedos/service-mongodb-server');
+let NodeRedService = require('@steedos/service-node-red');
 let APIService = require('@steedos/service-api');
 
 /**
@@ -8,7 +10,7 @@ let APIService = require('@steedos/service-api');
  */
 
 module.exports = {
-	name: "steedos",
+	name: "steedos-server",
 
 	/**
 	 * Settings
@@ -19,20 +21,26 @@ module.exports = {
 		mongoUrl: process.env.MONGO_URL,
 		mongoOplogUrl: process.env.MONGO_OPLOG_URL,
 		storageDir: process.env.STEEDOS_STORAGE_DIR || require('path').resolve(require('os').homedir(), '.steedos', 'storage'),
+		mongodbServer: {
+			enabled: !process.env.MONGO_URL,
+		},
+		nodeRedServer: {
+			httpAdminRoot:"/flows/",
+			httpNodeRoot: "/flows/",
+			enabled: false,
+		}
 	},
 
 	/**
 	 * Dependencies
 	 */
 	dependencies: [
-		'mongodb',
 	],
 
 	/**
 	 * Actions
 	 */
 	actions: {
-		
 	},
 
 	/**
@@ -46,7 +54,55 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
+		async startSteedos() {
 
+			const server = require('@steedos/meteor-bundle-runner');
+			const steedos = require('@steedos/core');
+			
+			// const logger = this.logger;
+			await Future.task( ()=> {
+				try {
+					server.loadServerBundles();
+					steedos.init();
+					server.callStartupHooks();
+					server.runMain();
+
+				} catch (error) {
+					this.logger.error(error)
+				}
+			}).promise();
+
+			this.httpServer = WebApp.httpServer;
+			this.app = WebApp.rawConnectHandlers;
+		},
+
+		async startNodeRedService() {
+
+			if (this.settings.nodeRedServer && this.settings.nodeRedServer.enabled) {
+				this.settings.nodeRedServer.httpServer = this.httpServer;
+				this.settings.nodeRedServer.app = this.app;
+				this.nodeRedService = this.broker.createService({
+					name: "node-red",
+					mixins: [NodeRedService],
+					settings: this.settings.nodeRedServer
+				});
+				this.broker._restartService(this.nodeRedService)
+			}
+		},
+
+		async startAPIService() {
+			if (this.settings.apiServer && this.settings.apiServer.enabled) {
+				this.settings.apiServer.server = false;
+				this.apiService = this.broker.createService({
+					name: "api",
+					mixins: [APIService],
+					settings: this.settings.apiServer
+				});
+				this.broker._restartService(this.apiService)
+				this.app.use("/", this.apiService.express());
+			}
+
+		}
 	},
 
 	/**
@@ -54,6 +110,13 @@ module.exports = {
 	 */
 	created() {
 
+		if (this.settings.mongodbServer && this.settings.mongodbServer.enabled) {
+			this.mongodbService = this.broker.createService({
+				name: "mongodb-server",
+				mixins: [MongoDBService],
+				settings: this.settings["mongodbServer"]
+			});
+		}
 	  
 	},
 
@@ -65,31 +128,19 @@ module.exports = {
 		process.env.PORT = this.settings.port;
 		process.env.ROOT_URL = this.settings.rootUrl;
 
-		if (!this.settings.mongoUrl) {
-
-			await this.broker.createService(MongoDBService);
-			await this.broker.waitForServices(["mongodb"]);
+		if (this.settings.mongodbServer && this.settings.mongodbServer.enabled) {
+			await this.broker.waitForServices(["mongodb-server"]);
 			this.settings.mongoUrl = process.env.MONGO_URL;
 			this.settings.mongoOplogUrl = process.env.MONGO_OPLOG_URL;
 		} else {
 			process.env.MONGO_URL = this.settings.mongoUrl;
 		}
 
+		await this.startSteedos();
 
-		const server = require('@steedos/meteor-bundle-runner');
-		const steedos = require('@steedos/core');
-		
-		const logger = this.logger;
-		server.Fiber(function () {
-			try {
-				server.loadServerBundles();
-				steedos.init();
-				server.callStartupHooks();
-				server.runMain();
-			} catch (error) {
-				logger.error(error)
-			}
-		}).run();
+		await this.startNodeRedService();
+		await this.startAPIService();
+	  
 	},
 
 	/**

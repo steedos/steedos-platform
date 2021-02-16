@@ -3,7 +3,8 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
-var RED = require("node-red");
+const _ = require('lodash');
+const RED = require("node-red");
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -16,12 +17,13 @@ module.exports = {
 	 * Settings
 	 */
 	settings: {
+        httpServer: null,
+        app: null,
         port: 3100,
         disableEditor: false,
         credentialSecret: "3b905ca2dbb6921f3c98a21eeb0e3ef1bWs",
         httpAdminRoot:"/",
         httpNodeRoot: "/",
-        httpRoot: '/',
         userDir: path.join(process.cwd(), "steedos-app", "main", "node-red"),
         flowFile: "flows.json",
         functionGlobalContext: {
@@ -74,51 +76,58 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	created() {
-
+        this.RED = RED;
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
+        this.logger.info(RED)
 
-
-        // Create an Express app
-        this.app = express();
-
-        // Add a simple route for static content served from 'public'
-        // app.use("/",express.static("public"));
-
-        // Create a server
-        this.server = http.createServer(this.app);
-
+        if (this.settings.httpServer && this.settings.app) {
+            this.app = this.settings.app;
+            this.httpServer = this.settings.httpServer;
+            this.port = null;
+        } else {
+            this.app = express();
+            this.httpServer = http.createServer(this.app);
+            this.port = this.settings.port;
+        }
 
         this.settings.functionGlobalContext = {
             broker: this.broker
         }
 
         // Initialise the runtime with a server and settings
-        RED.init(this.server,this.settings);
+        this.RED.init(this.httpServer,this.settings);
+
+        // Add a simple route for static content served from 'public'
+        // app.use("/",express.static("public"));
 
         // Serve the editor UI from /red
-        this.app.use(this.settings.httpAdminRoot, RED.httpAdmin);
+        this.app.use(this.settings.httpAdminRoot, this.RED.httpAdmin);
 
         // Serve the http nodes UI from /api
-        this.app.use(this.settings.httpNodeRoot, RED.httpNode);
+        this.app.use(this.settings.httpNodeRoot, this.RED.httpNode);
 
-        this.server.listen(this.settings.port);
+        if (this.port) {
+            this.httpServer.listen(this.port);
+            this.logger.info(`Node Red Server is listening on port: ${this.settings.port}`)
+        }
 
         // Start the runtime
-        await RED.start();
+        await this.RED.start();
 
-        this.logger.info(`Node Red Server is listening on port: ${this.settings.port}`)
 	},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-        this.server.stop;
-        this.logger.info(`Node Red Server stopped.`)
+        if (this.port) {
+            this.httpServer.stop;
+            this.logger.info(`Node Red Server stopped.`)
+        }
 	}
 };

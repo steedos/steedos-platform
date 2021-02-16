@@ -1,5 +1,5 @@
 {
-  "name": "@steedos/service-mongodb",
+  "name": "@steedos/service-mongodb-server",
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",

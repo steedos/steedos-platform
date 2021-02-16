@@ -11,7 +11,7 @@ const dbDirectoryName = 'db';
  */
 
 module.exports = {
-	name: "mongodb",
+	name: "mongodb-server",
 
 	/**
 	 * Settings
@@ -35,7 +35,7 @@ module.exports = {
 		  args: ['--bind_ip_all'],
 		  count: 1,
 		  dbName: 'steedos',
-		  ip: '127.0.0.1',
+		  ip: 'localhost',
 		  oplogSize: 1,
 		  spawn: {},
 		  storageEngine: 'wiredTiger'
