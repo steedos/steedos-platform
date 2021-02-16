@@ -22,10 +22,11 @@ module.exports = {
         port: 3100,
         disableEditor: false,
         credentialSecret: "3b905ca2dbb6921f3c98a21eeb0e3ef1bWs",
-        httpAdminRoot:"/",
-        httpNodeRoot: "/",
+        httpAdminRoot:"/flows/",
+        httpNodeRoot: "/flows/",
         userDir: path.join(process.cwd(), "steedos-app", "main", "node-red"),
         flowFile: "flows.json",
+        flowFilePretty: true,
         functionGlobalContext: {
         },    // enables global context
         editorTheme: {
