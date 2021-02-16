@@ -2,9 +2,9 @@
   "name": "steedos-platform",
   "private": true,
   "workspaces": [
-    "packages/*",
-    "services/*",
-    "apps/*",
+    "packages/**",
+    "services/**",
+    "apps/**",
     "server"
   ],
   "scripts": {
