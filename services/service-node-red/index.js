@@ -17,8 +17,6 @@ module.exports = {
 	 * Settings
 	 */
 	settings: {
-        httpServer: null,
-        app: null,
         port: 3100,
         disableEditor: false,
         credentialSecret: "3b905ca2dbb6921f3c98a21eeb0e3ef1bWs",
@@ -78,22 +76,24 @@ module.exports = {
 	 */
 	created() {
         this.RED = RED;
+        this.WebApp = WebApp;
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-        this.logger.info(RED)
 
-        if (this.settings.httpServer && this.settings.app) {
-            this.app = this.settings.app;
-            this.httpServer = this.settings.httpServer;
-            this.port = null;
+        if (this.WebApp && !this.settings.port) {
+            // 使用 meteor 内置 web 服务
+            this.app = express();
+            this.httpServer = this.WebApp.httpServer;
+            this.WebApp.connectHandlers.use('/', this.app);
         } else {
             this.app = express();
             this.httpServer = http.createServer(this.app);
-            this.port = this.settings.port;
+            this.httpServer.listen(this.settings.port);
+            this.logger.info(`Node Red port: ${this.settings.port}`)
         }
 
         this.settings.functionGlobalContext = {
@@ -112,13 +112,12 @@ module.exports = {
         // Serve the http nodes UI from /api
         this.app.use(this.settings.httpNodeRoot, this.RED.httpNode);
 
-        if (this.port) {
-            this.httpServer.listen(this.port);
-            this.logger.info(`Node Red Server is listening on port: ${this.settings.port}`)
+        if (this.WebApp && !this.settings.port) {
         }
 
         // Start the runtime
         await this.RED.start();
+
 
 	},
 
@@ -126,7 +125,7 @@ module.exports = {
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-        if (this.port) {
+        if (this.WebApp && !this.settings.port) {
             this.httpServer.stop;
             this.logger.info(`Node Red Server stopped.`)
         }

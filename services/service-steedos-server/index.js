@@ -1,6 +1,8 @@
 "use strict";
 
 const Future = require('fibers/future');
+const express = require('express');
+const RED = require("node-red");
 let MongoDBService = require('@steedos/service-mongodb-server');
 let NodeRedService = require('@steedos/service-node-red');
 let APIService = require('@steedos/service-api');
@@ -25,9 +27,8 @@ module.exports = {
 			enabled: !process.env.MONGO_URL,
 		},
 		nodeRedServer: {
-			httpAdminRoot:"/flows/",
-			httpNodeRoot: "/flows/",
-			enabled: false,
+			enabled: true,
+			port: null,
 		}
 	},
 
@@ -64,6 +65,8 @@ module.exports = {
 				try {
 					this.meteor.loadServerBundles();
 					this.steedos.init();
+					this.WebApp = WebApp;
+					this.startNodeRedService();
 					this.meteor.callStartupHooks();
 					this.meteor.runMain();
 
@@ -72,21 +75,18 @@ module.exports = {
 				}
 			}).promise();
 
-			this.httpServer = WebApp.httpServer;
-			this.app = WebApp.rawConnectHandlers;
 		},
 
 		async startNodeRedService() {
 
 			if (this.settings.nodeRedServer && this.settings.nodeRedServer.enabled) {
-				this.settings.nodeRedServer.httpServer = this.httpServer;
-				this.settings.nodeRedServer.app = this.app;
-				this.nodeRedService = this.broker.createService({
-					name: "node-red",
+				this.nodeRedService = await this.broker.createService({
+					name: "node-red-flows",
 					mixins: [NodeRedService],
 					settings: this.settings.nodeRedServer
 				});
-				this.broker._restartService(this.nodeRedService)
+
+				await this.broker._restartService(this.nodeRedService)
 			}
 		},
 
@@ -99,7 +99,7 @@ module.exports = {
 					settings: this.settings.apiServer
 				});
 				this.broker._restartService(this.apiService)
-				this.app.use("/", this.apiService.express());
+				this.WebApp.connectHandlers.use("/", this.apiService.express());
 			}
 
 		}
@@ -109,7 +109,7 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	created() {
-	  
+	  this.RED = RED;
 	},
 
 	/**
@@ -136,7 +136,6 @@ module.exports = {
 
 		await this.startSteedos();
 
-		this.startNodeRedService();
 		this.startAPIService();
 	  
 	},
