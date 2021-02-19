@@ -18,6 +18,14 @@ export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
     private _objectsMap: Dictionary<{datasourceName: string, filePath?: string}> = {};
     private graphQLSchema: any = null;
+    private _broker: any = null;
+
+    public get broker(): any {
+        return this._broker;
+    }
+    public set broker(value: any) {
+        this._broker = value;
+    }
     
     setObjectMap(objectName:string, options){
         let objectMap = this.getObjectMap(objectName);
@@ -173,8 +181,11 @@ export class SteedosSchema {
 
 }
 
-export function getSteedosSchema(): SteedosSchema {
+export function getSteedosSchema(broker?:any): SteedosSchema {
     const schema = getFromContainer(SteedosSchema);
+    if (broker) {
+        schema.broker = broker;
+    }
     return schema;
 }
 
