@@ -59,9 +59,9 @@ module.exports = {
 
 			this.meteor = require('@steedos/meteor-bundle-runner');
 			this.steedos = require('@steedos/core');
-			
+
 			// const logger = this.logger;
-			await Future.task( ()=> {
+			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
 					this.steedos.init();
@@ -69,7 +69,7 @@ module.exports = {
 					this.startNodeRedService();
 					this.meteor.callStartupHooks();
 					this.meteor.runMain();
-
+					require('@steedos/objectql').getSteedosSchema(this.broker);
 				} catch (error) {
 					this.logger.error(error)
 				}
@@ -109,7 +109,7 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	created() {
-	  this.RED = RED;
+		this.RED = RED;
 	},
 
 	/**
@@ -137,7 +137,7 @@ module.exports = {
 		await this.startSteedos();
 
 		this.startAPIService();
-	  
+
 	},
 
 	/**
