@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+	<title>moleculer-demo - Moleculer Microservices Project</title>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="https://moleculer.services/icon/favicon-16x16.png"/>
+	<script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+	<style type="text/css">
+	html {
+		font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
+		font-size: 18px;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	body {
+		padding: 0;
+		margin: 0;
+		color: black;
+		text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+		padding-bottom: 60px; /* footer */
+	}
+
+	.cursor-pointer {
+		cursor: pointer;
+		user-select: none;
+	}
+
+	header, footer {
+		text-align: center;
+		color: white;
+		text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+	}
+
+	header a, header a.router-link-exact-active,
+	footer a, footer a.router-link-exact-active
+	{
+		color: #63dcfd;
+	}
+
+	header {
+		background-image: linear-gradient(45deg, #e37682 0%, #5f4d93 100%);
+		padding: 1em;
+		box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+		margin-bottom: 1em;
+	}
+
+	footer {
+		background-image: linear-gradient(135deg, #e37682 0%, #5f4d93 100%);
+		padding: 0.75em;
+		font-size: 0.8em;
+		box-shadow: 0 -3px 10px rgba(0,0,0,0.6);
+		position: fixed;
+		left: 0; right: 0; bottom: 0;
+		margin-top: 1em;
+	}
+
+	footer .footer-links {
+		margin-top: 0.5em;
+	}
+
+	footer .footer-links a {
+		margin: 0 0.5em;
+	}
+
+	a, a.router-link-exact-active {
+		color: #3CAFCE;
+		text-decoration: none;
+	}
+
+	nav ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	nav ul li {
+		display: inline-block;
+		padding: 0.25em 0.75em;
+		cursor: pointer;
+		font-weight: 300;
+		font-size: 1.25em;
+		border-bottom: 2px solid transparent;
+		transition: color .1s linear, border-bottom .1s linear;
+	}
+
+	nav ul li.active {
+		border-bottom: 2px solid #63dcfd;
+	}
+
+	nav ul li:hover {
+		color: #63dcfd;
+	}
+
+	button, .button {
+		background-color: #3CAFCE;
+		border: 0;
+		border-radius: 8px;
+		color: white;
+		font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
+		font-size: 16px;
+		font-weight: 400;
+		padding: 0.5em 1em;
+		box-shadow: 0 4px 6px -1px rgba(0,0,0,.2);
+		cursor: pointer;
+		user-select: none;
+	}
+
+	button i, .button i {
+		margin-right: 0.5em;
+	}
+
+	button:hover, .button:hover {
+		background-color: #4ba3bb;
+	}
+
+	code {
+		font-family: "Consolas", 'Courier New', Courier, monospace;
+		color: #555;
+	}
+
+	main {
+		max-width: 1260px;
+		margin: 0 auto;
+		padding: 1em 1em;
+	}
+
+	main section#home > .content {
+		text-align: center;
+	}
+
+	main section#home h1 {
+		font-size: 2em;
+		font-weight: 400;
+		margin-top: 0;
+	}
+
+	main section#home h3 {
+		font-size: 1.25em;
+		font-weight: 600;
+	}
+
+	pre.broker-options {
+		display: inline-block;
+		text-align: left;
+		font-size: 0.9em;
+	}
+
+	.boxes {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.boxes .box {
+		width: 200px;
+		padding: 0.25em 1em;
+		margin: 0.5em;
+		background: rgba(60, 175, 206, 0.1);
+
+		border: 1px solid grey;
+		border-radius: 0.25em;
+	}
+
+	.boxes .box .caption {
+		font-weight: 300;
+		font-size: 0.9em;
+		margin-bottom: 0.5em;
+	}
+
+	.boxes .box .value {
+		font-weight: 600;
+		font-size: 1.1em;
+	}
+
+	main input {
+		border: 1px solid #3CAFCE;
+		border-radius: 4px;
+		padding: 2px 6px;
+		font-family: "Source Sans Pro";
+	}
+
+	main fieldset {
+		border: 1px solid lightgrey;
+		border-radius: 8px;
+		box-shadow: 2px 2px 10px rgba(0,0,0,0.4);
+		background-color: aliceblue;
+		margin-bottom: 2em;
+	}
+
+	main fieldset legend {
+		background-color: #cce7ff;
+		border: 1px solid lightgrey;
+		padding: 4px 10px;
+		border-radius: 8px;
+	}
+
+	main fieldset .content {
+		padding-left: 2em;
+	}
+
+	main fieldset .request {
+		margin-bottom: 0.5em;
+	}
+
+	main fieldset .parameters .field {
+		margin-bottom: 0.25em;
+	}
+
+	main fieldset .parameters .field label {
+		min-width: 80px;
+		display: inline-block;
+		text-align: right;
+		margin-right: 0.5em;
+	}
+
+	main fieldset .response {
+		margin-top: 1em;
+	}
+
+	main fieldset .response pre {
+		margin: 0.5em 0;
+		font-size: 0.9em;
+	}
+
+	pre.json .string { color: #885800; }
+	pre.json .number { color: blue; }
+	pre.json .boolean { color: magenta; }
+	pre.json .null { color: red; }
+	pre.json .key { color: green; }
+
+	main h4 {
+		font-weight: 600;
+		margin: 0.25em -1.0em;
+	}
+
+	.badge {
+		display: inline-block;
+		background-color: dimgray;
+		color: white;
+    	padding: 2px 6px;
+	    border-radius: 7px;
+	    font-size: 0.7em;
+		font-weight: 600;
+	}
+
+	.badge.green {
+		background-color: limegreen;
+	}
+
+	.badge.red {
+		background-color: firebrick;
+	}
+
+	.badge.orange {
+		background-color: #fab000;
+		color: black;
+	}
+
+	table {
+		width: 100%;
+		/*max-width: 1000px;*/
+		border: 1px solid lightgrey;
+		border-radius: 8px;
+		background-color: aliceblue;
+    }
+
+    table th {
+		padding: 2px 4px;
+		background-color: #cce7ff;
+		border-radius: 4px;
+    }
+
+    table tr.offline td {
+		font-style: italic;
+		color: #777;
+    }
+
+    table tr.local td {
+    	/*color: blue;*/
+    }
+
+    table tr:not(:last-child) td {
+		border-bottom: 1px solid #ddd;
+    }
+
+    table td {
+		text-align: center;
+		position: relative;
+		padding: 2px 4px;
+    }
+
+    table th:nth-child(1), table td:nth-child(1) {
+		text-align: left
+    }
+
+	table tr.service td:nth-child(1) {
+		font-weight: bold;
+	}
+
+	table tr.action td:nth-child(1) {
+		padding-left: 2em;
+	}
+
+	table tr td:nth-child(2) {
+		font-family: monospace;
+		font-size: 0.8em;
+	}
+
+	.bar {
+		position: absolute;
+		left: 0; right: 0; top: 0; bottom: 0;
+		width: 0;
+		height: 100%;
+		background-color: rgba(0,0,0,0.3);
+	}
+</style>
+</head>
+<body>
+	<div id="app">
+		<header>
+			<a href="https://moleculer.services/docs/0.14/" target="_blank"><img class="logo" src="https://moleculer.services/images/logo/logo_with_text_horizontal_100h_shadow.png" /></a>
+			<nav>
+				<ul>
+					<li v-for="item in menu" :class="{ active: page == item.id}" @click="changePage(item.id)">{{ item.caption }}</li>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<section id="home" v-if="page == 'home'">
+				<div class="content">
+					<h1>Welcome to your Moleculer microservices project!</h1>
+					<p>Check out the <a href="https://moleculer.services/docs/0.14/" target="_blank">Moleculer documentation</a> to learn how to customize this project.</p>
+
+					<template v-if="broker">
+						<h3>Configuration</h3>
+						<div class="boxes">
+							<div class="box">
+								<div class="caption">Namespace</div>
+								<div class="value">{{ broker.namespace || "&lt;not set&gt;" }}</div>
+							</div>
+
+							<div class="box">
+								<div class="caption">Transporter</div>
+								<div class="value">{{ broker.transporter || "&lt;no transporter&gt;" }}</div>
+							</div>
+
+							<div class="box">
+								<div class="caption">Serializer</div>
+								<div class="value">{{ broker.serializer || "JSON" }}</div>
+							</div>
+
+							<div class="box">
+								<div class="caption">Strategy</div>
+								<div class="value">{{ broker.registry.strategy || "Round Robin" }}</div>
+							</div>
+
+							<div class="box">
+								<div class="caption">Cacher</div>
+								<div class="value">{{ broker.cacher ? "Enabled" : "Disabled" }}</div>
+							</div>
+
+							<div class="box">
+								<div class="caption">Logger</div>
+								<div class="value">{{ broker.logger ? "Enabled" : "Disabled" }}</div>
+							</div>
+
+							<div class="box">
+								<div class="caption">Metrics</div>
+								<div class="value">{{ broker.metrics.enabled ? "Enabled" : "Disabled" }}</div>
+							</div>
+
+							<div class="box">
+								<div class="caption">Tracing</div>
+								<div class="value">{{ broker.tracing.enabled ? "Enabled" : "Disabled" }}</div>
+							</div>
+						</div>
+
+						<h3 class="cursor-pointer" @click="showBrokerOptions = !showBrokerOptions">Broker options <i :class="'fa fa-angle-' + (showBrokerOptions ? 'up' : 'down')"></i></h3>
+						<pre v-if="showBrokerOptions" class="broker-options"><code>{{ broker }}</code></pre>
+					</template>
+				</div>
+			</section>
+
+			<template v-for="(section, name) in requests">
+				<section :id="name" v-if="page == name">
+					<fieldset v-for="item in section">
+						<legend>
+							Action '<code>{{ item.action }}</code>'
+						</legend>
+						<div class="content">
+							<div class="request">
+								<h4>Request:</h4>
+								<code>{{ item.method || 'GET' }} <a target="_blank" :href="item.rest">{{ item.rest }}   </a></code>
+								<a class="button" @click="callAction(item)">
+									<i class="fa fa-rocket"></i>
+									Execute
+								</a>
+							</div>
+							<div v-if="item.fields" class="parameters">
+								<h4>Parameters:</h4>
+								<div class="field" v-for="field in item.fields">
+									<label for="">{{ field.label }}: </label>
+									<input :type="field.type" :value="getFieldValue(field)" @input="setFieldValue(field, $event.target.value)"></input>
+								</div>
+							</div>
+							<div class="response" v-if="item.status">
+								<h4>Response:
+									<div class="badge" :class="{ green: item.status < 400, red: item.status >= 400 || item.status == 'ERR' }">{{ item.status }}</div>
+									<div class="badge time">{{ humanize(item.duration) }}</div>
+								</h4>
+								<pre><code>{{ item.response }}</code></pre>
+							</div>
+						</div>
+					</fieldset>
+				</section>
+			</template>
+
+			<section id="nodes" v-if="page == 'nodes'">
+				<table>
+					<thead>
+						<th>Node ID</th>
+						<th>Type</th>
+						<th>Version</th>
+						<th>IP</th>
+						<th>Hostname</th>
+						<th>Status</th>
+						<th>CPU</th>
+					</thead>
+					<tbody>
+						<tr v-for="node in nodes" :class="{ offline: !node.available, local: node.local }" :key="node.id">
+							<td>{{ node.id }}</td>
+							<td>{{ node.client.type }}</td>
+							<td>{{ node.client.version }}</td>
+							<td>{{ node.ipList[0] }}</td>
+							<td>{{ node.hostname }}</td>
+
+							<td><div class="badge" :class="{ green: node.available, red: !node.available }">{{ node.available ? "Online": "Offline" }}</div></td>
+							<td>
+								<div class="bar" :style="{ width: node.cpu != null ? node.cpu + '%' : '0' }"></div>
+								{{ node.cpu != null ? Number(node.cpu).toFixed(0) + '%' : '-' }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			<section id="services" v-if="page == 'services'">
+				<table>
+					<thead>
+						<th>Service/Action name</th>
+						<th>REST</th>
+						<th>Parameters</th>
+						<th>Instances</th>
+						<th>Status</th>
+					</thead>
+					<tbody>
+						<template v-for="svc in filteredServices">
+							<tr class="service">
+								<td>
+									{{ svc.name }}
+									<div v-if="svc.version" class="badge">{{ svc.version }}</div>
+								</td>
+								<td>{{ svc.settings.rest ? svc.settings.rest : svc.fullName }}</td>
+								<td></td>
+								<td class="badges">
+									<div class="badge" v-for="nodeID in svc.nodes">
+										{{ nodeID }}
+									</div>
+								</td>
+								<td>
+									<div v-if="svc.nodes.length > 0" class="badge green">Online</div>
+									<div v-else class="badge red">Offline</div>
+								</td>
+							</tr>
+							<tr v-for="action in getServiceActions(svc)" :class="{ action: true, offline: !action.available, local: action.hasLocal }">
+								<td>
+									{{ action.name }}
+									<div v-if="action.action.cache" class="badge orange">cached</div>
+								</td>
+								<td v-html="getActionREST(svc, action)"></td>
+								<td :title="getActionParams(action)">
+									{{ getActionParams(action, 40) }}
+								</td>
+								<td></td>
+								<td>
+									<div v-if="action.available" class="badge green">Online</div>
+									<div v-else class="badge red">Offline</div>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</section>
+		</main>
+
+		<footer>
+			<div class="footer-copyright">
+				Copyright &copy; 2016-2020 - Moleculer
+			</div>
+			<div class="footer-links">
+				<a href="https://github.com/moleculerjs/moleculer" class="footer-link" target="_blank">Github</a>
+				<a href="https://twitter.com/MoleculerJS" class="footer-link" target="_blank">Twitter</a>
+				<a href="https://discord.gg/TSEcDRP" class="footer-link" target="_blank">Discord</a>
+				<a href="https://stackoverflow.com/questions/tagged/moleculer" class="footer-link" target="_blank">Stack Overflow</a>
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript">
+		var app = new Vue({
+			el: "#app",
+
+			data() {
+				return {
+					menu: [
+						{ id: "home", caption: "Home" },
+						{ id: "greeter", caption: "Greeter service" },
+						{ id: "products", caption: "Products service" },
+						{ id: "nodes", caption: "Nodes" },
+						{ id: "services", caption: "Services" }
+					],
+					page: "home",
+
+					requests: {
+						greeter: [
+							{ id: "hello", action: "greeter.hello", rest: "/api/greeter/hello", response: null, status: null, duration: null },
+
+							{ id: "welcome", action: "greeter.welcome", rest: "/api/greeter/welcome", fields: [
+								{ field: "name", label: "Name", type: "text", paramType: "param", model: "welcomeName" }
+							], response: null, status: null, duration: null }
+						],
+						products: [
+							{ id: "list", action: "products.list", rest: "/api/products/", response: null, status: null, duration: null, afterResponse: response => !this.fields.productID && (this.fields.productID = response.rows[0]._id) },
+
+							{ id: "create", action: "products.create", rest: "/api/products/", method: "POST", fields: [
+								{ field: "name", label: "Name", type: "text", paramType: "body", model: "productName" },
+								{ field: "price", label: "Price", type: "number", paramType: "body", model: "productPrice" },
+							], response: null, status: null, duration: null, afterResponse: response => this.fields.productID = response._id  },
+
+							{ id: "get", action: "products.get", rest: "/api/products/:id", method: "GET", fields: [
+								{ field: "id", label: "ID", type: "text", paramType: "url", model: "productID" }
+							], response: null, status: null, duration: null },
+
+							{ id: "update", action: "products.update", rest: "/api/products/:id", method: "PUT", fields: [
+								{ field: "id", label: "ID", type: "text", paramType: "url", model: "productID" },
+								{ field: "name", label: "Name", type: "text", paramType: "body", model: "productName" },
+								{ field: "price", label: "Price", type: "number", paramType: "body", model: "productPrice" },
+							], response: null, status: null, duration: null },
+
+							{ id: "increase", action: "products.increaseQuantity", rest: "/api/products/:id/quantity/increase", method: "PUT", fields: [
+								{ field: "id", label: "ID", type: "text", paramType: "url", model: "productID" },
+								{ field: "value", label: "Value", type: "number", paramType: "body", model: "productValue" },
+							], response: null, status: null, duration: null },
+
+							{ id: "decrease", action: "products.decreaseQuantity", rest: "/api/products/:id/quantity/decrease", method: "PUT", fields: [
+								{ field: "id", label: "ID", type: "text", paramType: "url", model: "productID" },
+								{ field: "value", label: "Value", type: "number", paramType: "body", model: "productValue" },
+							], response: null, status: null, duration: null },
+
+							{ id: "delete", action: "products.delete", rest: "/api/products/:id", method: "DELETE", fields: [
+								{ field: "id", label: "ID", type: "text", paramType: "url", model: "productID" }
+							], response: null, status: null, duration: null },
+
+						]
+					},
+
+					fields: {
+						welcomeName: "John",
+						productID: null,
+						productName: "Xiamoi Mi 9T",
+						productPrice: 299,
+						productValue: 1
+					},
+
+					broker: null,
+					nodes: [],
+					services: [],
+					actions: {},
+
+					showBrokerOptions: false
+				};
+			},
+
+			computed: {
+				filteredServices() {
+					return this.services.filter(svc => !svc.name.startsWith("$"));
+				}
+			},
+
+			methods: {
+				changePage(page) {
+					this.page = page;
+					this.updatePageResources();
+				},
+
+				humanize(ms) {
+					return ms > 1500 ? (ms / 1500).toFixed(2) + " s" : ms + " ms";
+				},
+
+				getFieldValue(field) {
+					return this.fields[field.model];
+				},
+
+				setFieldValue(field, newValue) {
+					if (field.type == "number")
+						this.fields[field.model] = Number(newValue);
+					else
+						this.fields[field.model] = newValue;
+				},
+
+				getServiceActions(svc) {
+					return Object.keys(svc.actions)
+						.map(name => this.actions[name])
+						.filter(action => !!action);
+				},
+
+				getActionParams(action, maxLen) {
+					if (action.action && action.action.params) {
+						const s = Object.keys(action.action.params).join(", ");
+						return s.length > maxLen ? s.substr(0, maxLen) + "…" : s;
+					}
+					return "-";
+				},
+
+				getActionREST(svc, action) {
+					if (action.action.rest) {
+						let prefix = svc.fullName || svc.name;
+						if (typeof(svc.settings.rest) == "string")
+							prefix = svc.settings.rest;
+
+						if (typeof action.action.rest == "string") {
+							if (action.action.rest.indexOf(" ") !== -1) {
+								const p = action.action.rest.split(" ");
+								return "<span class='badge'>" + p[0] + "</span> " + prefix + p[1];
+							} else {
+								return "<span class='badge'>*</span> " + prefix + action.action.rest;
+							}
+						} else {
+							return "<span class='badge'>" + (action.action.rest.method || "*") + "</span> " + prefix + action.action.rest.path;
+						}
+					}
+					return "";
+				},
+
+				callAction: function (item) {
+					var startTime = Date.now();
+
+					let url = item.rest;
+					const method = item.method || "GET";
+					let body = null;
+					let params = null;
+					if (item.fields) {
+						body = {};
+						params = {};
+						item.fields.forEach(field => {
+							const value = this.getFieldValue(field);
+							if (field.paramType == "body")
+								body[field.field] = value;
+							else if (field.paramType == "param")
+								params[field.field] = value;
+							else if (field.paramType == "url")
+								url = url.replace(":" + field.field, value);
+						});
+
+						if (body && method == "GET") {
+							body = null;
+						}
+						if (params) {
+							url += "?" + new URLSearchParams(params).toString();
+						}
+					}
+
+					return fetch(url, {
+						method,
+						body: body ? JSON.stringify(body) : null,
+					    headers: {
+							'Content-Type': 'application/json'
+						}
+						}).then(function(res) {
+							item.status = res.status;
+							item.duration = Date.now() - startTime;
+							return res.json().then(json => {
+								item.response = json;
+								if (item.afterResponse)
+									return item.afterResponse(json);
+							});
+						}).catch(function (err) {
+							item.status = "ERR";
+							item.duration = Date.now() - startTime;
+							item.response = err.message;
+							console.log(err);
+						});
+
+				},
+
+				updateBrokerOptions: function (name) {
+					this.req("/api/~node/options", null).then(res => this.broker = res);
+				},
+
+				updateNodeList: function (name) {
+					this.req("/api/~node/list", null).then(res => {
+						res.sort((a,b) => a.id.localeCompare(b.id));
+						this.nodes = res;
+					});
+				},
+
+				updateServiceList: function (name) {
+					this.req("/api/~node/services?withActions=true", null)
+						.then(res => {
+							this.services = res;
+							res.sort((a,b) => a.name.localeCompare(b.name));
+							res.forEach(svc => svc.nodes.sort());
+						})
+						.then(() => this.req("/api/~node/actions", null))
+						.then(res => {
+							res.sort((a,b) => a.name.localeCompare(b.name));
+							const actions = res.reduce((a,b) => {
+								a[b.name] = b;
+								return a;
+							}, {});
+
+							Vue.set(this, "actions", actions);
+						});
+				},
+
+				req: function (url, params) {
+					return fetch(url, { method: "GET", body: params ? JSON.stringify(params) : null })
+						.then(function(res) {
+							return res.json();
+						});
+				},
+
+				updatePageResources() {
+					if (this.page == 'nodes') return this.updateNodeList();
+					if (this.page == 'services') return this.updateServiceList();
+				}
+			},
+
+			mounted() {
+				var self = this;
+				setInterval(function () {
+					self.updatePageResources();
+				}, 2000);
+
+				this.updateBrokerOptions();
+			}
+		});
+	</script>
+</body>
+</html>

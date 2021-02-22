@@ -8,6 +8,9 @@ import { loadStandardObjects } from './object_dynamic_load';
 import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
 import { buildGraphQLSchema } from '../graphql';
 import { loadStandardProfiles, loadStandardPermissionsets } from '../dynamic-load';
+
+const { ServiceBroker } = require("moleculer");
+
 const defaultDatasourceName = 'default';
 
 export type SteedosSchemaConfig = {
@@ -19,6 +22,13 @@ export class SteedosSchema {
     private _objectsMap: Dictionary<{datasourceName: string, filePath?: string}> = {};
     private graphQLSchema: any = null;
     private _broker: any = null;
+    private _metadataBroker: any = null;
+    public get metadataBroker(): any {
+        return this._metadataBroker;
+    }
+    public set metadataBroker(value: any) {
+        this._metadataBroker = value;
+    }
 
     public get broker(): any {
         return this._broker;
@@ -181,10 +191,13 @@ export class SteedosSchema {
 
 }
 
-export function getSteedosSchema(broker?:any): SteedosSchema {
+export function getSteedosSchema(broker?:any, metadataBroker?: any): SteedosSchema {
     const schema = getFromContainer(SteedosSchema);
     if (broker) {
         schema.broker = broker;
+    }
+    if(metadataBroker){
+        schema.metadataBroker = metadataBroker || broker;
     }
     return schema;
 }
