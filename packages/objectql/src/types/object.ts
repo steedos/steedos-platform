@@ -11,7 +11,7 @@ import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from 
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { WorkflowRulesRunner } from '../actions';
 import { runValidationRules } from './validation_rules';
-import { brokeEmitTriggers } from "./object_events";
+import { brokeEmitEvents } from "./object_events";
 const clone = require('clone')
 
 // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
@@ -1015,7 +1015,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             await this.runBeforeTriggers(method, beforeTriggerContext)
             await runValidationRules(method, beforeTriggerContext, args[0], userSession)
-            await brokeEmitTriggers(objectName, method, beforeTriggerContext);
 
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
             let previousDoc = clone(afterTriggerContext.previousDoc);
@@ -1037,7 +1036,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             else{
                 await this.runAfterTriggers(method, afterTriggerContext)
             }
-            await brokeEmitTriggers(objectName, method, afterTriggerContext);
+            await brokeEmitEvents(objectName, method, afterTriggerContext);
             if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
                 if(_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))){
                     return returnValue
