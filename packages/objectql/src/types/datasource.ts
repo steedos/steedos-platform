@@ -180,7 +180,18 @@ export class SteedosDataSourceType implements Dictionary {
         // 从缓存中加载所有本数据源对象到datasource中
         let objects: Array<SteedosObjectTypeConfig> = getObjectConfigs(this._name);
         _.each(objects, (object) => {
-            this.setObject(object.name, object);
+            //TODO 处理异步 & 处理action异常
+            if(this.schema.metadataBroker){
+                this.schema.metadataRegister.object(object).then((res: boolean)=>{
+                    if(res){
+                        this.setObject(object.name, object);
+                    }
+                })
+                
+            }else{
+                this.setObject(object.name, object);
+            }
+            
         });
 
         _.each(objects, (object) => {

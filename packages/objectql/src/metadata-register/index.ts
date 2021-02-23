@@ -1,5 +1,4 @@
 import { registerObject } from './object';
-
 export enum MetadataType {
     Object,
     ObjectField,
@@ -15,13 +14,17 @@ export class MetadataRegister{
         this.broker = metadataBroker;
     }
 
-    register(type: MetadataType, metadata: any){
-        switch (type) {
-            case MetadataType.Object:
-                registerObject(this.broker, metadata);
-                break;
-            default:
-                break;
-        }
+    object(objectConfig: any): Promise<boolean>{
+        return registerObject(this.broker, objectConfig);
     }
+
+    // register(type: MetadataType, metadata: any){
+    //     switch (type) {
+    //         case MetadataType.Object:
+    //             registerObject(this.broker, metadata);
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
 }

@@ -5,7 +5,7 @@ const express = require('express');
 const RED = require("node-red");
 let MongoDBService = require('@steedos/service-mongodb-server');
 let NodeRedService = require('@steedos/service-node-red');
-let APIService = require('@steedos/service-api');
+// let APIService = require('@steedos/service-api');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -64,12 +64,12 @@ module.exports = {
 			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
+					require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.steedos.init();
 					this.WebApp = WebApp;
 					this.startNodeRedService();
 					this.meteor.callStartupHooks();
 					this.meteor.runMain();
-					require('@steedos/objectql').getSteedosSchema(this.broker);
 				} catch (error) {
 					this.logger.error(error)
 				}
@@ -78,8 +78,8 @@ module.exports = {
 		},
 
 		async startNodeRedService() {
-
-			if (this.settings.nodeRedServer && this.settings.nodeRedServer.enabled) {
+			//此段代码有问题，需要broker.waitForServices
+			if (false && this.settings.nodeRedServer && this.settings.nodeRedServer.enabled) {
 				this.nodeRedService = await this.broker.createService({
 					name: "node-red-flows",
 					mixins: [NodeRedService],
@@ -91,7 +91,8 @@ module.exports = {
 		},
 
 		async startAPIService() {
-			if (this.settings.apiServer && this.settings.apiServer.enabled) {
+			//此段代码有问题，需要broker.waitForServices
+			if (false && this.settings.apiServer && this.settings.apiServer.enabled) {
 				this.settings.apiServer.server = false;
 				this.apiService = this.broker.createService({
 					name: "api",
@@ -133,7 +134,6 @@ module.exports = {
 		} else {
 			process.env.MONGO_URL = this.settings.mongoUrl;
 		}
-
 		await this.startSteedos();
 
 		this.startAPIService();

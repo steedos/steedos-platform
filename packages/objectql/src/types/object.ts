@@ -358,6 +358,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
+    async runTriggerActions(when: string, context: SteedosTriggerContextConfig) {
+        let triggers = await this._schema.metadataBroker.call('triggers.get', {objectAPIName: this.name, when: when})
+        if (!triggers) {
+            return;
+        }
+
+        for (const trigger of triggers) {
+            this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`,{ }) //参考sf
+        }
+    }
+
     toConfig() {
         let config: JsonMap = {
             name: this.name,

@@ -38,19 +38,28 @@ module.exports = {
 		},
 		add:{
 			handler(ctx){
-				console.log("addObject", ctx.params);
+				console.log("addObject");
 				this.broker.emit("$object.registered", {name: 'test'});
 				return true;
 			}
 		},
 		change:{
-
+			handler(ctx){
+				console.log("change");
+				return true;
+			}
 		},
 		delete:{
-
+			handler(ctx){
+				console.log("delete");
+				return true;
+			}
 		},
 		verify:{
-			
+			handler(ctx){
+				console.log("verify");
+				return true;
+			}
 		}
 	},
 
