@@ -1,4 +1,4 @@
-export type Object = {
+export type SObject = {
     name: string,
     [x: string]: any
 }

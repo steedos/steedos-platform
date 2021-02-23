@@ -7,7 +7,7 @@ export async function registerObject(broker, objectConfig) {
     // count ++;
 	await broker.waitForServices(["steedos-server"]);
     console.log('call objects.add', `#${objectConfig.name}`);
-    const res = await broker.call("objects.add", objectConfig);
+    const res = await broker.call("objects.add", {data: objectConfig});
     if (res && objectConfig.hidden != true) {
         CreateObjectService(broker, objectConfig);
     }

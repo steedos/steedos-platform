@@ -1,8 +1,12 @@
 "use strict";
 
+import { SObject } from "../handler/object";
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
+
+ const SObjectHandler = new SObject();
 
 module.exports = {
 	name: "objects",
@@ -32,27 +36,25 @@ module.exports = {
 				method: "GET",
 				path: "/object"
 			},
-			async handler() {
-				return "Get Object";
+			async handler(ctx) {
+				return SObjectHandler.get(ctx.broker, ctx.params.objectAPIName);
 			}
 		},
 		add:{
 			handler(ctx){
-				console.log("addObject");
 				this.broker.emit("$object.registered", {name: 'test'});
+				return SObjectHandler.add(ctx.broker, ctx.params.data);
 				return true;
 			}
 		},
 		change:{
 			handler(ctx){
-				console.log("change");
-				return true;
+				return SObjectHandler.change(ctx.broker, ctx.params.data, ctx.params.oldData);
 			}
 		},
 		delete:{
 			handler(ctx){
-				console.log("delete");
-				return true;
+				return SObjectHandler.delete(ctx.broker, ctx.params.objectAPIName);
 			}
 		},
 		verify:{
@@ -88,10 +90,10 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		setInterval(()=>{
-			this.broker.call("appContracts.find", {name: 'main 1'}).then(res2=>{console.log(res2)})
-			// this.broker.call("$node.services").then(res => console.log(res));
-		}, 10000)
+		// setInterval(()=>{
+		// 	this.broker.call("appContracts.find", {name: 'main 1'}).then(res2=>{console.log(res2)})
+		// 	// this.broker.call("$node.services").then(res => console.log(res));
+		// }, 10000)
 	},
 
 	/**
