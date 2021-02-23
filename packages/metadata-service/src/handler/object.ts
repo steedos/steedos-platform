@@ -1,33 +1,36 @@
 import { SObject as SObjectType, MetadataObject } from '../types/object';
 
 export interface ISObject{
-    add(broker: any, config: SObjectType): boolean,
-    change(broker: any, newConfig: SObjectType, oldConfig: SObjectType): boolean,
-    delete(broker: any, config: SObjectType): boolean,
-    get(broker: any, objectAPIName): Promise<MetadataObject>
+    add(ctx: any, config: SObjectType): boolean,
+    change(ctx: any, newConfig: SObjectType, oldConfig: SObjectType): boolean,
+    delete(ctx: any, config: SObjectType): boolean,
+    get(ctx: any, objectAPIName): Promise<MetadataObject>
 }
 
+function cacherKey(APIName: string): string{
+    return `$steedos.#objects.${APIName}`
+}
 
 export class SObject implements ISObject{
-    add(broker: any, config: SObjectType): boolean {
+
+    add(ctx: any, config: SObjectType): boolean {
         console.log('set object', config.name);
-        broker.cacher.set(`$steedos.#objects.${config.name}`, config);
+        ctx.broker.cacher.set(cacherKey(config.name), config);
         return true;
     }
-    change(broker: any, newConfig: SObjectType, oldConfig: SObjectType): boolean {
+    change(ctx: any, newConfig: SObjectType, oldConfig: SObjectType): boolean {
         if(oldConfig.name != newConfig.name){
-            broker.cacher.del(`$steedos.#objects.${oldConfig.name}`)
+            ctx.broker.cacher.del(cacherKey(oldConfig.name))
         }
-        broker.cacher.set(`$steedos.#objects.${newConfig.name}`, newConfig)
+        ctx.broker.cacher.set(cacherKey(newConfig.name), newConfig)
         return true;
     }
-    delete(broker: any, config: SObjectType): boolean {
-        broker.cacher.del(`$steedos.#objects.${config.name}`)
+    delete(ctx: any, config: SObjectType): boolean {
+        ctx.broker.cacher.del(cacherKey(config.name))
         return true;
     }
-    get(broker: any, objectAPIName: any): Promise<MetadataObject> {
-        console.log('get object', objectAPIName);
-        return broker.cacher.get(`$steedos.#objects.${objectAPIName}`)
+    get(ctx: any, objectAPIName: any): Promise<MetadataObject> {
+        return ctx.broker.cacher.get(cacherKey(objectAPIName))
     }
 
 }
