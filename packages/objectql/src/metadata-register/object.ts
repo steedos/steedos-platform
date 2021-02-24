@@ -1,4 +1,5 @@
 import { CreateObjectService } from './objectServiceManager';
+const clone = require('clone');
 // let count = 1;
 export async function registerObject(broker, objectConfig) {
     // if(count > 1){
@@ -7,7 +8,9 @@ export async function registerObject(broker, objectConfig) {
     // count ++;
 	await broker.waitForServices(["steedos-server"]);
     const serviceName = `#${objectConfig.name}`;
-    const res = await broker.call("objects.add", {data: objectConfig}, {meta: {
+    const metadata = clone(objectConfig);
+    delete metadata.triggers
+    const res = await broker.call("objects.add", {data: metadata}, {meta: {
         caller: {
             nodeID: broker.nodeID,
             service: {
