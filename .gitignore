@@ -15,6 +15,7 @@
 **/lerna-debug.log
 
 /packages/**/lib
+/services/**/lib
 
 **/.vscode/launch.*
 !packages/project-template-empty/.vscode/launch.*
