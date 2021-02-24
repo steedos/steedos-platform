@@ -5,7 +5,7 @@ const express = require('express');
 const RED = require("node-red");
 let MongoDBService = require('@steedos/service-mongodb-server');
 let NodeRedService = require('@steedos/service-node-red');
-// let APIService = require('@steedos/service-api');
+let APIService = require('@steedos/service-api');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -92,7 +92,7 @@ module.exports = {
 
 		async startAPIService() {
 			//此段代码有问题，需要broker.waitForServices
-			if (false && this.settings.apiServer && this.settings.apiServer.enabled) {
+			if (this.settings.apiServer && this.settings.apiServer.enabled) {
 				this.settings.apiServer.server = false;
 				this.apiService = this.broker.createService({
 					name: "api",
