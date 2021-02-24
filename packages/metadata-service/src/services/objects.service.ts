@@ -44,7 +44,6 @@ module.exports = {
 			handler(ctx){
 				this.broker.emit("$object.registered", {name: 'test'});
 				return SObjectHandler.add(ctx.broker, ctx.params.data);
-				return true;
 			}
 		},
 		change:{
