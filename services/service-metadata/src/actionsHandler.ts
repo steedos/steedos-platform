@@ -11,7 +11,7 @@ export type MetadataObject = {
 function transformMetadata(ctx){
     console.log('ctx', ctx);
      return {
-        ...ctx.meta, 
+        ...ctx.meta?.caller, 
         metadata: ctx.params.data
      }
 }

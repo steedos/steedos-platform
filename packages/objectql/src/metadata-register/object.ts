@@ -6,19 +6,19 @@ export async function registerObject(broker, objectConfig) {
     // }
     // count ++;
 	await broker.waitForServices(["steedos-server"]);
-    console.log('call objects.add', `#${objectConfig.name}`);
+    const serviceName = `#${objectConfig.name}`;
     const res = await broker.call("objects.add", {data: objectConfig}, {meta: {
         caller: {
             nodeID: broker.nodeID,
             service: {
-                name: broker.service.name,
-                version: broker.service.version,
-                fullName: broker.service.fullName,
+                name: serviceName,
+                // version: broker.service.version, TODO
+                // fullName: broker.service.fullName, TODO
             }
         }
     }});
-    if (res && objectConfig.hidden != true) {
-        CreateObjectService(broker, objectConfig);
+    if (res) { //TODO  && objectConfig.hidden != true
+        CreateObjectService(broker, serviceName, objectConfig);
     }
     return res;
 }

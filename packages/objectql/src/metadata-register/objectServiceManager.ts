@@ -1,7 +1,7 @@
-export function CreateObjectService(broker, objectConfig){
-    console.log('CreateObjectService', `#${objectConfig.name}`);
+export function CreateObjectService(broker, serviceName, objectConfig){
+    console.log('CreateObjectService', `${serviceName}`);
     return broker.createService({
-        name: `#${objectConfig.name}`,
+        name: serviceName,
         actions: {
             find: {
                 rest: {
