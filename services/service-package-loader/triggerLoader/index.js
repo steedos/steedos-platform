@@ -1,7 +1,5 @@
 const _ = require("underscore");
 const path = require("path");
-const globby = require("globby");
-const clone = require("clone");
 const objectql = require("@steedos/objectql");
 const { getMD5 } = require("@steedos/objectql");
 module.exports = {
@@ -31,7 +29,7 @@ module.exports = {
 
 function createAction(listener) {
   let action = {};
-  let name = listener.name || objectql.getMD5(JSON.stringify(listener));
+  let name = listener.name || getMD5(JSON.stringify(listener));
   action.name = `$trigger.${listener.listenTo}.${name}`;
   action.handler = function(ctx) {
     listener.handler.call({}, ctx);
