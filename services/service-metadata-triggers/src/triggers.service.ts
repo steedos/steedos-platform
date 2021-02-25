@@ -129,7 +129,8 @@ module.exports = {
                 path: "/get"
             },
 			params: {
-				objectAPIName: "string"
+				objectAPIName: "string",
+				when:"string"
 			},
             async handler(ctx) {
                 return ActionHandlers.get(ctx);

@@ -32,14 +32,14 @@ async function add(broker, data, meta){
         when = data.when;
     }
     for (const item of when) {
-        await broker.call('metadata.add', {key: cacherKey(data.name, item), data: data}, {meta: meta});
+        await broker.call('metadata.add', {key: cacherKey(data.listenTo, item), data: data}, {meta: meta});
     }
     return true
 }
 
 export const ActionHandlers = {
     get(ctx: any): Promise<MetadataObject> {
-        return ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectAPIName)}, {meta: ctx.meta})
+        return ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectAPIName, ctx.params.when)}, {meta: ctx.meta})
     },
     async add(ctx: any): Promise<boolean>{
         return await add(ctx.broker, ctx.params.data, ctx.meta)
@@ -54,7 +54,7 @@ export const ActionHandlers = {
                 when = data.when;
             }
             for (const item of when) {
-                await ctx.broker.call('metadata.delete', {key: cacherKey(data.name, item)}, {meta: ctx.meta});
+                await ctx.broker.call('metadata.delete', {key: cacherKey(data.listenTo, item)}, {meta: ctx.meta});
             }
         }
         return await add(ctx.broker, ctx.params.data, ctx.meta)
