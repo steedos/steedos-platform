@@ -1,11 +1,17 @@
 {
   "name": "@steedos/service-package-loader",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@steedos/objectql": "^1.23.20",
+    "clone": "^2.1.2",
+    "globby": "^11.0.2",
+    "underscore": "^1.12.0"
+  }
 }
