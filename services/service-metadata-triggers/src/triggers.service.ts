@@ -1,8 +1,9 @@
 "use strict";
 import { ActionHandlers } from './actionsHandler';
+
 module.exports = {
-	name: "metadata",
-    namespace: "steedos",
+	name: "triggers",
+	namespace: "steedos",
 	/**
 	 * Settings
 	 */
@@ -111,31 +112,54 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['metadata'],
 
 	/**
 	 * Actions
 	 */
 	actions: {
-		get: {
-			rest: {
-				method: "GET",
-				path: "/object"
+		/**
+         * Say a 'Hello' action.
+         *
+         * @returns
+         */
+        get: {
+            rest: {
+                method: "GET",
+                path: "/get"
+            },
+			params: {
+				objectAPIName: "string"
 			},
-			async handler(ctx) {
-				return ActionHandlers.get(ctx);
-			}
-		},
-		add:{
-			handler(ctx){
-				return ActionHandlers.add(ctx);
-			}
-		},
-		delete:{
-			handler(ctx){
-				return ActionHandlers.delete(ctx);
-			}
-		}
+            async handler(ctx) {
+                return ActionHandlers.get(ctx);
+            }
+        },
+        add: {
+			params: {
+				data: "object"
+			},
+            handler(ctx) {
+                return ActionHandlers.add(ctx);
+            }
+        },
+        change: {
+			params: {
+				data: "object",
+				oldData: "object"
+			},
+            handler(ctx) {
+                return ActionHandlers.change(ctx);
+            }
+        },
+        delete: {
+			params: {
+				name: "string"
+			},
+            handler(ctx) {
+                return ActionHandlers.delete(ctx);
+            }
+        },
 	},
 
 	/**
@@ -149,22 +173,25 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
-
+		
 	},
 
 	/**
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-        
+		this.nodes = [];
+
+		this.metrics = {};
+		this.workerRegistry = {};
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-        
-    },
+
+	},
 
 	/**
 	 * Service stopped lifecycle event handler

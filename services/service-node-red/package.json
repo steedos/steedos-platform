@@ -2,6 +2,9 @@
   "name": "@steedos/service-node-red",
   "version": "0.0.1",
   "main": "index.js",
+  "scripts": {
+    "start": "moleculer-runner --repl --hot ./index.js"
+  },
   "dependencies": {
     "ioredis": "^4.22.0",
     "node-red": "^1.2.9",

@@ -19,7 +19,7 @@ todo?: function(){
 }
 */
 
-/** new: 一个when一个文件
+/** new: 一个handler 一个文件
 .trigger.js
 name: APIName
 listenTo?: accounts

@@ -78,8 +78,7 @@ module.exports = {
 		},
 
 		async startNodeRedService() {
-			//此段代码有问题，需要broker.waitForServices
-			if (false && this.settings.nodeRedServer && this.settings.nodeRedServer.enabled) {
+			if (this.settings.nodeRedServer && this.settings.nodeRedServer.enabled) {
 				this.nodeRedService = await this.broker.createService({
 					name: "node-red-flows",
 					mixins: [NodeRedService],
@@ -91,7 +90,6 @@ module.exports = {
 		},
 
 		async startAPIService() {
-			//此段代码有问题，需要broker.waitForServices
 			if (this.settings.apiServer && this.settings.apiServer.enabled) {
 				this.settings.apiServer.server = false;
 				this.apiService = this.broker.createService({

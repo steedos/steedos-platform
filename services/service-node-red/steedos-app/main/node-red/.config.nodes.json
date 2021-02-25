@@ -1,0 +1,659 @@
+{
+    "node-red": {
+        "name": "node-red",
+        "version": "1.2.9-git",
+        "local": false,
+        "nodes": {
+            "inject": {
+                "name": "inject",
+                "types": [
+                    "inject"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\common\\20-inject.js"
+            },
+            "debug": {
+                "name": "debug",
+                "types": [
+                    "debug"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\common\\21-debug.js"
+            },
+            "complete": {
+                "name": "complete",
+                "types": [
+                    "complete"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\common\\24-complete.js"
+            },
+            "catch": {
+                "name": "catch",
+                "types": [
+                    "catch"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\common\\25-catch.js"
+            },
+            "status": {
+                "name": "status",
+                "types": [
+                    "status"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\common\\25-status.js"
+            },
+            "link": {
+                "name": "link",
+                "types": [
+                    "link in",
+                    "link out"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\common\\60-link.js"
+            },
+            "comment": {
+                "name": "comment",
+                "types": [
+                    "comment"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\common\\90-comment.js"
+            },
+            "unknown": {
+                "name": "unknown",
+                "types": [
+                    "unknown"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\common\\98-unknown.js"
+            },
+            "function": {
+                "name": "function",
+                "types": [
+                    "function"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\function\\10-function.js"
+            },
+            "switch": {
+                "name": "switch",
+                "types": [
+                    "switch"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\function\\10-switch.js"
+            },
+            "change": {
+                "name": "change",
+                "types": [
+                    "change"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\function\\15-change.js"
+            },
+            "range": {
+                "name": "range",
+                "types": [
+                    "range"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\function\\16-range.js"
+            },
+            "template": {
+                "name": "template",
+                "types": [
+                    "template"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\function\\80-template.js"
+            },
+            "delay": {
+                "name": "delay",
+                "types": [
+                    "delay"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\function\\89-delay.js"
+            },
+            "trigger": {
+                "name": "trigger",
+                "types": [
+                    "trigger"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\function\\89-trigger.js"
+            },
+            "exec": {
+                "name": "exec",
+                "types": [
+                    "exec"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\function\\90-exec.js"
+            },
+            "tls": {
+                "name": "tls",
+                "types": [
+                    "tls-config"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\network\\05-tls.js"
+            },
+            "httpproxy": {
+                "name": "httpproxy",
+                "types": [
+                    "http proxy"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\network\\06-httpproxy.js"
+            },
+            "mqtt": {
+                "name": "mqtt",
+                "types": [
+                    "mqtt in",
+                    "mqtt out",
+                    "mqtt-broker"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\network\\10-mqtt.js"
+            },
+            "httpin": {
+                "name": "httpin",
+                "types": [
+                    "http in",
+                    "http response"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\network\\21-httpin.js"
+            },
+            "httprequest": {
+                "name": "httprequest",
+                "types": [
+                    "http request"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\network\\21-httprequest.js"
+            },
+            "websocket": {
+                "name": "websocket",
+                "types": [
+                    "websocket in",
+                    "websocket out",
+                    "websocket-listener",
+                    "websocket-client"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\network\\22-websocket.js"
+            },
+            "tcpin": {
+                "name": "tcpin",
+                "types": [
+                    "tcp in",
+                    "tcp out",
+                    "tcp request"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\network\\31-tcpin.js"
+            },
+            "udp": {
+                "name": "udp",
+                "types": [
+                    "udp in",
+                    "udp out"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\network\\32-udp.js"
+            },
+            "CSV": {
+                "name": "CSV",
+                "types": [
+                    "csv"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\parsers\\70-CSV.js"
+            },
+            "HTML": {
+                "name": "HTML",
+                "types": [
+                    "html"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\parsers\\70-HTML.js"
+            },
+            "JSON": {
+                "name": "JSON",
+                "types": [
+                    "json"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\parsers\\70-JSON.js"
+            },
+            "XML": {
+                "name": "XML",
+                "types": [
+                    "xml"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\parsers\\70-XML.js"
+            },
+            "YAML": {
+                "name": "YAML",
+                "types": [
+                    "yaml"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\parsers\\70-YAML.js"
+            },
+            "split": {
+                "name": "split",
+                "types": [
+                    "split",
+                    "join"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\sequence\\17-split.js"
+            },
+            "sort": {
+                "name": "sort",
+                "types": [
+                    "sort"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\sequence\\18-sort.js"
+            },
+            "batch": {
+                "name": "batch",
+                "types": [
+                    "batch"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\sequence\\19-batch.js"
+            },
+            "file": {
+                "name": "file",
+                "types": [
+                    "file",
+                    "file in"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\storage\\10-file.js"
+            },
+            "watch": {
+                "name": "watch",
+                "types": [
+                    "watch"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\@node-red\\nodes\\core\\storage\\23-watch.js"
+            }
+        }
+    },
+    "node-red-contrib-moleculer": {
+        "name": "node-red-contrib-moleculer",
+        "version": "0.5.1",
+        "local": true,
+        "nodes": {
+            "moleculer": {
+                "name": "moleculer",
+                "types": [
+                    "moleculer-config",
+                    "moleculer-service-config",
+                    "moleculer-event",
+                    "moleculer-emit",
+                    "moleculer-call",
+                    "moleculer-request-action",
+                    "moleculer-response-action",
+                    "moleculer-apigw",
+                    "moleculer-instance"
+                ],
+                "enabled": true,
+                "local": true,
+                "module": "node-red-contrib-moleculer",
+                "file": "F:\\GitHub\\steedos-platform\\services\\service-node-red\\steedos-app\\main\\node-red\\node_modules\\node-red-contrib-moleculer\\index.js"
+            }
+        }
+    },
+    "node-red-contrib-redis": {
+        "name": "node-red-contrib-redis",
+        "version": "1.3.9",
+        "local": false,
+        "nodes": {
+            "redis": {
+                "name": "redis",
+                "types": [
+                    "redis-config",
+                    "redis-in",
+                    "redis-out",
+                    "redis-command",
+                    "redis-lua-script",
+                    "redis-instance"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-contrib-redis",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-contrib-redis\\redis.js"
+            }
+        }
+    },
+    "node-red-dashboard": {
+        "name": "node-red-dashboard",
+        "version": "2.28.1",
+        "local": false,
+        "nodes": {
+            "ui_base": {
+                "name": "ui_base",
+                "types": [
+                    "ui_base"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_base.js"
+            },
+            "ui_button": {
+                "name": "ui_button",
+                "types": [
+                    "ui_button"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_button.js"
+            },
+            "ui_dropdown": {
+                "name": "ui_dropdown",
+                "types": [
+                    "ui_dropdown"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_dropdown.js"
+            },
+            "ui_switch": {
+                "name": "ui_switch",
+                "types": [
+                    "ui_switch"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_switch.js"
+            },
+            "ui_slider": {
+                "name": "ui_slider",
+                "types": [
+                    "ui_slider"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_slider.js"
+            },
+            "ui_numeric": {
+                "name": "ui_numeric",
+                "types": [
+                    "ui_numeric"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_numeric.js"
+            },
+            "ui_text_input": {
+                "name": "ui_text_input",
+                "types": [
+                    "ui_text_input"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_text_input.js"
+            },
+            "ui_date_picker": {
+                "name": "ui_date_picker",
+                "types": [
+                    "ui_date_picker"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_date_picker.js"
+            },
+            "ui_colour_picker": {
+                "name": "ui_colour_picker",
+                "types": [
+                    "ui_colour_picker"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_colour_picker.js"
+            },
+            "ui_form": {
+                "name": "ui_form",
+                "types": [
+                    "ui_form"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_form.js"
+            },
+            "ui_text": {
+                "name": "ui_text",
+                "types": [
+                    "ui_text"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_text.js"
+            },
+            "ui_gauge": {
+                "name": "ui_gauge",
+                "types": [
+                    "ui_gauge"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_gauge.js"
+            },
+            "ui_chart": {
+                "name": "ui_chart",
+                "types": [
+                    "ui_chart"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_chart.js"
+            },
+            "ui_audio": {
+                "name": "ui_audio",
+                "types": [
+                    "ui_audio"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_audio.js"
+            },
+            "ui_toast": {
+                "name": "ui_toast",
+                "types": [
+                    "ui_toast"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_toast.js"
+            },
+            "ui_ui_control": {
+                "name": "ui_ui_control",
+                "types": [
+                    "ui_ui_control"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_ui_control.js"
+            },
+            "ui_template": {
+                "name": "ui_template",
+                "types": [
+                    "ui_template"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_template.js"
+            },
+            "ui_link": {
+                "name": "ui_link",
+                "types": [
+                    "ui_link"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_link.js"
+            },
+            "ui_tab": {
+                "name": "ui_tab",
+                "types": [
+                    "ui_tab"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_tab.js"
+            },
+            "ui_group": {
+                "name": "ui_group",
+                "types": [
+                    "ui_group"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_group.js"
+            },
+            "ui_spacer": {
+                "name": "ui_spacer",
+                "types": [
+                    "ui_spacer"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-dashboard",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-dashboard\\nodes\\ui_spacer.js"
+            }
+        }
+    },
+    "node-red-node-rbe": {
+        "name": "node-red-node-rbe",
+        "version": "0.2.9",
+        "local": false,
+        "nodes": {
+            "rbe": {
+                "name": "rbe",
+                "types": [
+                    "rbe"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-node-rbe",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-node-rbe\\rbe.js"
+            }
+        }
+    },
+    "node-red-node-tail": {
+        "name": "node-red-node-tail",
+        "version": "0.1.1",
+        "local": false,
+        "nodes": {
+            "tail": {
+                "name": "tail",
+                "types": [
+                    "tail"
+                ],
+                "enabled": true,
+                "local": false,
+                "module": "node-red-node-tail",
+                "file": "F:\\GitHub\\steedos-platform\\node_modules\\node-red-node-tail\\28-tail.js"
+            }
+        }
+    }
+}

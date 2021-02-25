@@ -9,9 +9,8 @@ export type MetadataObject = {
 }
 
 function transformMetadata(ctx){
-    console.log('ctx', ctx);
      return {
-        ...ctx.meta?.caller, 
+        ...ctx.meta.caller, 
         metadata: ctx.params.data
      }
 }
