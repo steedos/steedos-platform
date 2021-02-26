@@ -126,6 +126,14 @@ module.exports = {
 				return ActionHandlers.get(ctx);
 			}
 		},
+		filter: {
+			params: {
+				key: "string"
+			},
+			handler(ctx){
+				return ActionHandlers.filter(ctx);
+			}
+		},
 		add:{
 			handler(ctx){
 				return ActionHandlers.add(ctx);

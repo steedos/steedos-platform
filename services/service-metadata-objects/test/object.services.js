@@ -11,7 +11,7 @@ const broker = new ServiceBroker({
 });
 
 broker.createService({
-	name: "ObjectFind",
+	name: "test-metadata-objects-services",
 
 	settings: {
 
@@ -31,4 +31,4 @@ broker.createService({
 
 broker.start().then((a, b, c, d) => {
     broker.repl();
-}, 5000)
+})

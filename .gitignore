@@ -47,3 +47,4 @@ apps/contracts/src/_test/**
 packages/accounts/webapp/build/**
 packages/react/.env.local
 services/service-metadata-objects/.env.local
+services/service-metadata-triggers/.env.local

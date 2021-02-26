@@ -130,10 +130,20 @@ module.exports = {
             },
 			params: {
 				objectAPIName: "string",
-				when:"string"
+				when:"string",
+				name:"string"
 			},
             async handler(ctx) {
                 return ActionHandlers.get(ctx);
+            }
+        },
+		filter: {
+			params: {
+				objectAPIName: "string",
+				when:"string"
+			},
+            async handler(ctx) {
+                return ActionHandlers.filter(ctx);
             }
         },
         add: {
