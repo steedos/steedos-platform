@@ -46,3 +46,4 @@ packages/project-template-empty/.env.local
 apps/contracts/src/_test/**
 packages/accounts/webapp/build/**
 packages/react/.env.local
+services/service-metadata-objects/.env.local

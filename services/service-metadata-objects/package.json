@@ -9,6 +9,7 @@
     "cli": "moleculer connect redis://192.168.3.17:6379",
     "ci": "jest --watch",
     "test": "jest --coverage",
+    "testObject": "node test/object.services.js",
     "lint": "eslint services",
     "dc:up": "docker-compose up --build -d",
     "dc:logs": "docker-compose logs -f",
