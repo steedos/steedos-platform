@@ -1,4 +1,4 @@
-import _ from "underscore";
+import * as _ from "underscore";
 import * as path from "path";
 import * as objectql from "@steedos/objectql";
 import { getMD5 } from "@steedos/objectql";
@@ -78,7 +78,7 @@ function generateAddData(action: Action): Trigger {
 function generateAddMeta(broker: any, serviceName: string): Meta {
     let meta = {
         caller: {
-            nodeID: broker.nodeId + '',
+            nodeID: broker.nodeID + '',
             service: {
                 name: serviceName
             }
