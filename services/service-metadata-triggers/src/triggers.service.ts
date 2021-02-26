@@ -155,7 +155,7 @@ module.exports = {
         },
         delete: {
 			params: {
-				name: "string"
+				data: "object"
 			},
             handler(ctx) {
                 return ActionHandlers.delete(ctx);

@@ -16,11 +16,14 @@ export type MetadataObject = {
     metadata: Trigger
 }
 
-function cacherKey(APIName: string, when?: string): string{
-    let key = `$steedos.#triggers.${APIName}`;
-    if(when){
-        key = `${key}.${when}`
+function cacherKey(APIName: string, when: string, name: string): string{
+    if(!when){
+        when = '*'
     }
+    if(!name){
+        name = '*'
+    }
+    let key = `$steedos.#triggers.${APIName}.${when}.${name}`;
     return key
 }
 
@@ -32,14 +35,14 @@ async function add(broker, data, meta){
         when = data.when;
     }
     for (const item of when) {
-        await broker.call('metadata.add', {key: cacherKey(data.listenTo, item), data: data}, {meta: meta});
+        await broker.call('metadata.add', {key: cacherKey(data.listenTo, item, data.name), data: data}, {meta: meta});
     }
     return true
 }
 
 export const ActionHandlers = {
     get(ctx: any): Promise<MetadataObject> {
-        return ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectAPIName, ctx.params.when)}, {meta: ctx.meta})
+        return ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectAPIName, ctx.params.when, ctx.params.name)}, {meta: ctx.meta})
     },
     async add(ctx: any): Promise<boolean>{
         return await add(ctx.broker, ctx.params.data, ctx.meta)
@@ -54,13 +57,14 @@ export const ActionHandlers = {
                 when = data.when;
             }
             for (const item of when) {
-                await ctx.broker.call('metadata.delete', {key: cacherKey(data.listenTo, item)}, {meta: ctx.meta});
+                await ctx.broker.call('metadata.delete', {key: cacherKey(oldData.listenTo, item, oldData.name)}, {meta: ctx.meta});
             }
         }
         return await add(ctx.broker, ctx.params.data, ctx.meta)
     },
     delete: (ctx: any)=>{
-        return ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.name)}, {meta: ctx.meta})
+        const data = ctx.params.data;
+        return ctx.broker.call('metadata.delete', {key: cacherKey(data.listenTo, data.when, data.name)}, {meta: ctx.meta})
     },
     verify: (ctx: any)=>{
         console.log("verify");
