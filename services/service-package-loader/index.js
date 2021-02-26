@@ -1,6 +1,6 @@
 "use strict";
 
-const triggerLoader = require('./triggerLoader');
+const triggerLoader = require('./lib');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
