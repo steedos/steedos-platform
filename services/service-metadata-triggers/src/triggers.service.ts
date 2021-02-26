@@ -129,7 +129,7 @@ module.exports = {
                 path: "/get"
             },
 			params: {
-				objectAPIName: "string",
+				objectApiName: "string",
 				when:"string",
 				name:"string"
 			},
@@ -139,7 +139,7 @@ module.exports = {
         },
 		filter: {
 			params: {
-				objectAPIName: "string",
+				objectApiName: "string",
 				when:"string"
 			},
             async handler(ctx) {

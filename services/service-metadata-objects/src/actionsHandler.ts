@@ -19,7 +19,7 @@ function cacherKey(APIName: string): string{
 
 export const ActionHandlers = {
     get(ctx: any): Promise<MetadataObject> {
-        return ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectAPIName)}, {meta: ctx.meta})
+        return ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
     },
     add(ctx: any): boolean{
         return ctx.broker.call('metadata.add', {key: cacherKey(ctx.params.data.name), data: ctx.params.data}, {meta: ctx.meta})
@@ -32,7 +32,7 @@ export const ActionHandlers = {
         return ctx.broker.call('metadata.add', {key: cacherKey(data.name), data: data}, {meta: ctx.meta})
     },
     delete: (ctx: any)=>{
-        return ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.objectAPIName)}, {meta: ctx.meta})
+        return ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
     },
     verify: (ctx: any)=>{
         console.log("verify");

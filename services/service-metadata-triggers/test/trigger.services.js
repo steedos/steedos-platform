@@ -29,7 +29,7 @@ broker.start().then((a, b, c, d) => {
 		const appCRM = broker.getLocalService("appCRM");
 		// console.log('broker.registry.registerActions', broker.registry);
 		// console.log('appCRM', appCRM);
-		broker.call('triggers.filter', { objectAPIName: 'test_trigger', when: 'before.update'}).then(res=>{console.log('triggers.filter', res)})
+		broker.call('triggers.filter', { objectApiName: 'test_trigger', when: 'before.update'}).then(res=>{console.log('triggers.filter', res)})
 		// });
 	}, 5000)
 })

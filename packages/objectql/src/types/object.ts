@@ -359,7 +359,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async runTriggerActions(when: string, context: SteedosTriggerContextConfig) {
-        let triggers = await this._schema.metadataBroker.call('triggers.get', {objectAPIName: this.name, when: when})
+        let triggers = await this._schema.metadataBroker.call('triggers.get', {objectApiName: this.name, when: when})
         if (!triggers) {
             return;
         }
