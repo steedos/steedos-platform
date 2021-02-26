@@ -15,8 +15,12 @@ const addLazyLoadListeners = function(objectName: string, json: SteedosListenerC
     _lazyLoadListeners[objectName].push(json)
 }
 
-const getLazyLoadListeners = function(objectName: string){
-    return _lazyLoadListeners[objectName]
+export const getLazyLoadListeners = function(objectName?: string){
+    if (objectName) {
+        return _lazyLoadListeners[objectName]
+    } else {
+        return _lazyLoadListeners;
+    }
 }
 
 export const loadObjectLazyListenners = function(objectName: string){
