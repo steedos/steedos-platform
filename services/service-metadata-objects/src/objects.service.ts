@@ -30,28 +30,28 @@ module.exports = {
                 path: "/object"
             },
             async handler(ctx) {
-                return ActionHandlers.get(ctx);
+                return await ActionHandlers.get(ctx);
             }
         },
         add: {
-            handler(ctx) {
+            async handler(ctx) {
                 // this.broker.emit("$object.registered", {name: 'test'});
-                return ActionHandlers.add(ctx);
+                return await ActionHandlers.add(ctx);
             }
         },
         change: {
-            handler(ctx) {
-                return ActionHandlers.change(ctx);
+            async handler(ctx) {
+                return await ActionHandlers.change(ctx);
             }
         },
         delete: {
-            handler(ctx) {
-                return ActionHandlers.delete(ctx);
+            async handler(ctx) {
+                return await ActionHandlers.delete(ctx);
             }
         },
         verify: {
-            handler(ctx) {
-                return ActionHandlers.verify(ctx);
+            async handler(ctx) {
+                return await ActionHandlers.verify(ctx);
             }
         }
     },

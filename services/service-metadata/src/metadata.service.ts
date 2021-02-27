@@ -123,25 +123,25 @@ module.exports = {
 				path: "/object"
 			},
 			async handler(ctx) {
-				return ActionHandlers.get(ctx);
+				return await ActionHandlers.get(ctx);
 			}
 		},
 		filter: {
 			params: {
 				key: "string"
 			},
-			handler(ctx){
-				return ActionHandlers.filter(ctx);
+			async handler(ctx){
+				return await ActionHandlers.filter(ctx);
 			}
 		},
 		add:{
-			handler(ctx){
-				return ActionHandlers.add(ctx);
+			async handler(ctx){
+				return await ActionHandlers.add(ctx);
 			}
 		},
 		delete:{
-			handler(ctx){
-				return ActionHandlers.delete(ctx);
+			async handler(ctx){
+				return await ActionHandlers.delete(ctx);
 			}
 		}
 	},

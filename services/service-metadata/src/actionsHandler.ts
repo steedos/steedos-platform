@@ -20,8 +20,8 @@ function getKey(key , keyPrefix){
 }
 
 export const ActionHandlers = {
-    get(ctx: any): Promise<MetadataObject>{
-        return ctx.broker.cacher.get(ctx.params.key)
+    async get(ctx: any): Promise<MetadataObject>{
+        return await ctx.broker.cacher.get(ctx.params.key)
     },
     async filter(ctx: any): Promise<Array<MetadataObject>> {
         const keyPrefix = ctx.broker.cacher.prefix
@@ -32,12 +32,12 @@ export const ActionHandlers = {
         }
         return values;
     },
-    add: (ctx: any)=>{
-        ctx.broker.cacher.set(ctx.params.key, transformMetadata(ctx));
+    async add(ctx: any){
+        await ctx.broker.cacher.set(ctx.params.key, transformMetadata(ctx));
         return true;
     },
-    delete: (ctx: any)=>{
-        ctx.broker.cacher.del(ctx.params.key);
+    async delete(ctx: any){
+        await await ctx.broker.cacher.del(ctx.params.key);
         return true;
     },
 }

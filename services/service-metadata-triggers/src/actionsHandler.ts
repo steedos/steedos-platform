@@ -65,11 +65,11 @@ export const ActionHandlers = {
         }
         return await add(ctx.broker, ctx.params.data, ctx.meta)
     },
-    delete: (ctx: any)=>{
+    async delete(ctx: any): Promise<boolean> {
         const data = ctx.params.data;
-        return ctx.broker.call('metadata.delete', {key: cacherKey(data.listenTo, data.when, data.name)}, {meta: ctx.meta})
+        return await ctx.broker.call('metadata.delete', {key: cacherKey(data.listenTo, data.when, data.name)}, {meta: ctx.meta})
     },
-    verify: (ctx: any)=>{
+    async verify(ctx: any): Promise<boolean> {
         console.log("verify");
         return true;
     }

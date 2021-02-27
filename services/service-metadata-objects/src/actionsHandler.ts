@@ -18,23 +18,23 @@ function cacherKey(APIName: string): string{
 }
 
 export const ActionHandlers = {
-    get(ctx: any): Promise<MetadataObject> {
-        return ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
+    async get(ctx: any): Promise<MetadataObject> {
+        return await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
     },
-    add(ctx: any): boolean{
-        return ctx.broker.call('metadata.add', {key: cacherKey(ctx.params.data.name), data: ctx.params.data}, {meta: ctx.meta})
+    async add(ctx: any): Promise<boolean>{
+        return await ctx.broker.call('metadata.add', {key: cacherKey(ctx.params.data.name), data: ctx.params.data}, {meta: ctx.meta})
     },
-    change(ctx: any): boolean {
+    async change(ctx: any): Promise<boolean> {
         const {data, oldData} = ctx.params;
         if(oldData.name != data.name){
-            ctx.broker.call('metadata.delete', {key: cacherKey(oldData.name)})
+            await ctx.broker.call('metadata.delete', {key: cacherKey(oldData.name)})
         }
-        return ctx.broker.call('metadata.add', {key: cacherKey(data.name), data: data}, {meta: ctx.meta})
+        return await ctx.broker.call('metadata.add', {key: cacherKey(data.name), data: data}, {meta: ctx.meta})
     },
-    delete: (ctx: any)=>{
-        return ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
+    async delete(ctx: any): Promise<boolean>{
+        return await ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
     },
-    verify: (ctx: any)=>{
+    async verify(ctx: any): Promise<boolean>{
         console.log("verify");
         return true;
     }

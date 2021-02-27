@@ -1,8 +1,8 @@
 import { CreateObjectService } from './objectServiceManager';
 const clone = require('clone');
-// let count = 1;
+// let count = 0;
 export async function registerObject(broker, objectConfig) {
-    // if(count > 1){
+    // if(count > 10){
     //     return 
     // }
     // count ++;
@@ -21,7 +21,10 @@ export async function registerObject(broker, objectConfig) {
         }
     }});
     if (res) { //TODO  && objectConfig.hidden != true
-        CreateObjectService(broker, serviceName, objectConfig);
+        //如果此处用await ，则会导致控制台抛错  objects.add 超时
+       CreateObjectService(broker, serviceName, objectConfig).then((res)=>{
+        console.log('CreateObjectService---', serviceName);
+       })
     }
     return res;
 }

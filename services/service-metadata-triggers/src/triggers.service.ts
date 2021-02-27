@@ -134,7 +134,7 @@ module.exports = {
 				name:"string"
 			},
             async handler(ctx) {
-                return ActionHandlers.get(ctx);
+                return await ActionHandlers.get(ctx);
             }
         },
 		filter: {
@@ -143,15 +143,15 @@ module.exports = {
 				when:"string"
 			},
             async handler(ctx) {
-                return ActionHandlers.filter(ctx);
+                return await ActionHandlers.filter(ctx);
             }
         },
         add: {
 			params: {
 				data: "object"
 			},
-            handler(ctx) {
-                return ActionHandlers.add(ctx);
+            async handler(ctx) {
+                return await ActionHandlers.add(ctx);
             }
         },
         change: {
@@ -159,16 +159,16 @@ module.exports = {
 				data: "object",
 				oldData: "object"
 			},
-            handler(ctx) {
-                return ActionHandlers.change(ctx);
+            async handler(ctx) {
+                return await ActionHandlers.change(ctx);
             }
         },
         delete: {
 			params: {
 				data: "object"
 			},
-            handler(ctx) {
-                return ActionHandlers.delete(ctx);
+            async handler(ctx) {
+                return await ActionHandlers.delete(ctx);
             }
         },
 	},
