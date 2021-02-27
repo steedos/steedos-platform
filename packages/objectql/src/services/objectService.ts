@@ -1,25 +1,186 @@
 import { SteedosObjectType } from '../types/object';
 import { getDataSource } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
-
+// mongodb pipeline: https://docs.mongodb.com/manual/core/aggregation-pipeline/
+type externalPipelineItem = {
+    [mongodPipeline: string]: any
+}
 function getObjectServiceMethodsSchema(){
-    const methods: any = {};
-    methods.find = {
-        async handler(query, userSession) {
-            return await this.object.find(query, userSession)
+    const methods = {
+        aggregate: {
+            async handler(query, externalPipeline: Array<externalPipelineItem>, userSession) {
+                return await this.object.aggregate(query, externalPipeline, userSession)
+            }
+        },
+        find: {
+            async handler(query, userSession) {
+                return await this.object.find(query, userSession)
+            }
+        },
+        findOne: {
+            async handler(id: string, query, userSession) {
+                return await this.object.findOne(id, query, userSession)
+            }
+        },
+        insert: {
+            async handler(doc, userSession) {
+                return await this.object.insert(doc, userSession)
+            }
+        },
+        updateOne: {
+            async handler(id, doc, userSession) {
+                return await this.object.updateOne(id, doc, userSession)
+            }
+        },
+        updateMany: {
+            async handler(queryFilters, doc, userSession) {
+                return await this.object.updateMany(queryFilters, doc, userSession)
+            }
+        },
+        delete: {
+            async handler(id, userSession) {
+                return await this.object.delete(id, userSession)
+            }
+        },
+        directAggregate: {
+            async handler(query, externalPipeline: Array<externalPipelineItem>, userSession) {
+                return await this.object.directAggregate(query, externalPipeline, userSession)
+            }
+        },
+        directAggregatePrefixalPipeline: {
+            async handler(query, externalPipeline: Array<externalPipelineItem>, userSession) {
+                return await this.object.directAggregatePrefixalPipeline(query, externalPipeline, userSession)
+            }
+        },
+        directFind: {
+            async handler(query, userSession) {
+                return await this.object.directFind(query, userSession)
+            }
+        },
+        directInsert: {
+            async handler(doc, userSession) {
+                return await this.object.directInsert(doc, userSession)
+            }
+        },
+        directUpdate: {
+            async handler(id, doc, userSession) {
+                return await this.object.directUpdate(id, doc, userSession)
+            }
+        },
+        directDelete: {
+            async handler(id, userSession) {
+                return await this.object.directDelete(id, userSession)
+            }
+        },
+        toConfig: {
+            handler() {
+                return this.object.toConfig()
+            }
         }
-    }
+    };
+    
     return methods;
 }
 
 function getObjectServiceActionsSchema(){
-    const actions: any = {};
-    actions.find = {
-        async handler(ctx) {
-            const userSession = null;  //TODO userSession
-            return this.find(ctx.params.query, userSession)
+    const actions: any = {
+        aggregate: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {query, externalPipeline} = ctx.params;
+                return await this.aggregate(query, externalPipeline, userSession)
+            }
+        },
+        find: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {query} = ctx.params;
+                return this.find(query, userSession)
+            }
+        },
+        findOne: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {id, query} = ctx.params;
+                return this.findOne(id, query, userSession)
+            }
+        },
+        insert: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {doc} = ctx.params;
+                return this.insert(doc, userSession)
+            }
+        },
+        updateOne: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {id, doc} = ctx.params;
+                return this.updateOne(id, doc, userSession)
+            }
+        },
+        updateMany: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {queryFilters, doc} = ctx.params;
+                return this.updateMany(queryFilters, doc, userSession)
+            }
+        },
+        delete: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {id} = ctx.params;
+                return this.delete(id, userSession)
+            }
+        },
+        directAggregate: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {query, externalPipeline} = ctx.params;
+                return this.directAggregate(query, externalPipeline, userSession)
+            }
+        },
+        directAggregatePrefixalPipeline: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {query, externalPipeline} = ctx.params;
+                return this.directAggregate(query, externalPipeline, userSession)
+            }
+        },
+        directFind: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {query} = ctx.params;
+                return this.directAggregate(query, userSession)
+            }
+        },
+        directInsert: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {doc} = ctx.params;
+                return this.directInsert(doc, userSession)
+            }
+        },
+        directUpdate: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {id, doc} = ctx.params;
+                return this.directUpdate(id, doc, userSession)
+            }
+        },
+        directDelete: {
+            async handler(ctx) {
+                const userSession = null;  //TODO userSession
+                const {id} = ctx.params;
+                return this.directDelete(id, userSession)
+            }
+        },
+        toConfig: {
+            async handler(ctx) {
+                return this.toConfig()
+            }
         }
-    }
+    };
     return actions;
 }
 
