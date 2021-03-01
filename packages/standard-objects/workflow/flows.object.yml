@@ -11,6 +11,13 @@ fields:
     searchable: true
     readonly: true
     name: name
+  api_name:
+    type: text
+    label: api_name
+    required: true
+    searchable: true
+    readonly: true
+    name: api_name
   form:
     label: Form
     type: lookup
@@ -348,8 +355,97 @@ actions:
     'on': list
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-              return Modal.show('new_flow_modal');
+              //return Modal.show('new_flow_modal');
+
+        var schema = {}
+        var object = Creator.getObject('flows')
+        var new_schema = new SimpleSchema(Creator.getObjectSchema(object))
+        var obj_schema = new_schema._schema
+        var _fields = ['category', 'name', 'company_id', 'api_name']
+        for(var i=0; i<_fields.length; i++){
+          var field = _fields[i]
+          schema[field] = obj_schema[field]
+          if(schema[field].autoform){
+            schema[field].autoform.readonly = false
+            schema[field].autoform.disabled = false
+          }
+        }
+        Modal.show("quickFormModal", {formId: 'newFlowForm', title: TAPi18n.__('new_flow_form_title'), 
+        confirmBtnText: TAPi18n.__('new_flow_form_comfirm'), schema: new SimpleSchema(schema), doc: null,
+        onConfirm: function (template, event){
+          event.currentTarget.disabled = true;
+          if (!AutoForm.validateField('newFlowForm')){
+            event.currentTarget.disabled = false;
+            return false;
+          }
+
+          var doc = AutoForm.getFormValues("newFlowForm").insertDoc
+
+          var newFormId = Creator.getCollection("flows")._makeNewID();
+
+          let form = {
+            id: newFormId,
+            name: doc.name,
+            api_name: doc.api_name,
+            space: Steedos.getSpaceId(),
+            is_valid: true,
+            app: "workflow",
+            current: {
+              id: Creator.getCollection("flows")._makeNewID(),
             }
+          }
+
+          if (doc.category){
+            form.category = doc.category
+          }
+
+          companyId = doc.company_id
+          if(companyId){
+            form.company_id = companyId
+          }
+          
+          let data = {
+            "Forms": [form]
+          }
+
+          $.ajax({
+            type: 'post',
+            url: Steedos.absoluteUrl("/am/forms?sync_token=" + (new Date()).getTime() / 1000),
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: "application/json",
+            crossDomain: true,
+            headers: {'x-user-id': Meteor.userId(), 'x-auth-token': Accounts._storedLoginToken()},
+            beforeSend: function(request){
+              request.setRequestHeader('X-User-Id', Meteor.userId())
+              request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+              request.setRequestHeader('x-user-id', Meteor.userId())
+              request.setRequestHeader('x-auth-token', Accounts._storedLoginToken())
+            },
+            success: function(data){
+              console.log(data);
+
+              flows = data.ChangeSet.inserts.Flows;
+
+              newFlow = _.find(flows, function(f){
+                    return f.form == newFormId
+              })
+              WorkflowCore.openFlowDesign(Steedos.locale(), newFlow.space, newFlow._id, Creator.getUserCompanyId())
+              FlowRouter.go("/app/admin/flows/view/"+newFlow._id)
+              Modal.hide(template)
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+              toastr.error(jqXHR.responseText);
+              event.currentTarget.disabled = false;
+              console.error(errorThrown)
+            }
+          });
+
+        }}, {
+            backdrop: 'static',
+            keyboard: true
+        });
+      }
   standard_new_by_template:
     label: Pull from Library
     visible: !<tag:yaml.org,2002:js/function> |-

@@ -259,3 +259,5 @@ CustomLabels:
   import_flows_error_not_find_object: 'Not find object [ %s ]'
   import_flows_error_not_allow_enable_workflow: 'object [ %s ] not enable workflow'
   import_flows_error_not_find_fields: 'Missing field [ %s ]'
+  new_flow_form_title: New Flow
+  new_flow_form_comfirm: Submit
