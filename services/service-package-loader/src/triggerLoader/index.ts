@@ -1,11 +1,11 @@
 import * as _ from "underscore";
 import * as path from "path";
 import * as objectql from "@steedos/objectql";
-import { getMD5 } from "@steedos/objectql";
+import { getMD5, JSONStringify } from "@steedos/objectql";
 import { Action, Meta, Trigger } from "./types";
 import { Context } from 'moleculer';
 
-const ENUM_WHEN = ['before.find', 'before.insert', 'before.update', 'before.delete', 'after.find', 'after.count', 'after.findOne', 'after.insert', 'after.update', 'after.delete', 'before.aggregate', 'after.aggregate'];
+const ENUM_WHEN = ['before.find', 'before.insert', 'before.update', 'before.remove', 'after.find', 'after.count', 'after.findOne', 'after.insert', 'after.update', 'after.remove', 'before.aggregate', 'after.aggregate'];
 
 export async function load(broker: any, packagePath?: string, packageServiceName?: string) {
     // 如果 packagePath packageServiceName 未传则不扫描，直接调用 objectql.getLazyLoadListeners 获取listensers
@@ -16,8 +16,6 @@ export async function load(broker: any, packagePath?: string, packageServiceName
     let filePath = path.join(packagePath, "**");
 
     let objTriggers = objectql.loadObjectTriggers(filePath);
-    console.log('objTriggers: ');
-    console.log(objTriggers);
     _.forEach(objTriggers, (ot) => {
         if (_.has(ot, 'handler')) { // 新trigger格式
 
@@ -55,7 +53,7 @@ function generateAction(trigger): Action {
         return;
     }
 
-    let name = trigger.name || getMD5(JSON.stringify(trigger));
+    let name = trigger.name || getMD5(JSONStringify(trigger));
     let action: Action = {
         trigger: {
             when: trigger.when,
