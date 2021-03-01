@@ -61,11 +61,14 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
         }
     }
     addLazyLoadListeners(object_name, Object.assign({}, json, {listenTo: object_name}));
+    return Object.assign({}, json, {listenTo: object_name}); 
 }
 
 export const loadObjectTriggers = function (filePath: string){
     let triggerJsons = util.loadTriggers(filePath)
+    let triggers = [];
     _.each(triggerJsons, (json: SteedosListenerConfig) => {
-        addObjectListenerConfig(json);
+        triggers.push(addObjectListenerConfig(json));
     })
+    return triggers;
 }
