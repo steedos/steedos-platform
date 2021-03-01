@@ -159,6 +159,11 @@ export function generateActionParams(when: string, context: SteedosTriggerContex
     switch (when) {
         case 'before.find':
             params.isBefore = true;
+            params.operationType = 'BEFORE_FIND';
+            break;
+        case 'before.aggregate':
+            params.isBefore = true;
+            params.operationType = 'BEFORE_AGGREGATE';
             break;
         case 'before.insert':
             params.isBefore = true;
@@ -188,12 +193,19 @@ export function generateActionParams(when: string, context: SteedosTriggerContex
             break;
         case 'after.find':
             params.isAfter = true;
+            params.operationType = 'AFTER_FIND';
+            break;
+        case 'after.aggregate':
+            params.isAfter = true;
+            params.operationType = 'AFTER_AGGREGATE';
             break;
         case 'after.count':
             params.isAfter = true;
+            params.operationType = 'AFTER_COUNT';
             break;
         case 'after.findOne':
             params.isAfter = true;
+            params.operationType = 'AFTER_FINDONE';
             break;
         case 'after.insert':
             params.isAfter = true;

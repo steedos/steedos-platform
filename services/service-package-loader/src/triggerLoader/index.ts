@@ -5,7 +5,7 @@ import { getMD5 } from "@steedos/objectql";
 import { Action, Meta, Trigger } from "./types";
 import { Context } from 'moleculer';
 
-const ENUM_WHEN = ['before.find', 'before.insert', 'before.update', 'before.remove', 'after.find', 'after.count', 'after.findOne', 'after.insert', 'after.update', 'after.remove'];
+const ENUM_WHEN = ['before.find', 'before.insert', 'before.update', 'before.delete', 'after.find', 'after.count', 'after.findOne', 'after.insert', 'after.update', 'after.delete', 'before.aggregate', 'after.aggregate'];
 
 export async function load(broker: any, packagePath?: string, packageServiceName?: string) {
     // 如果 packagePath packageServiceName 未传则不扫描，直接调用 objectql.getLazyLoadListeners 获取listensers
@@ -18,12 +18,24 @@ export async function load(broker: any, packagePath?: string, packageServiceName
     let objTriggers = objectql.loadObjectTriggers(filePath);
     console.log('objTriggers: ');
     console.log(objTriggers);
-    _.forEach(objTriggers, (l) => {
-        if (_.has(l, 'handler')) { // 新trigger格式
-            let action = generateAction(l);
-            if (action) {
-                actions[action.name] = action;
+    _.forEach(objTriggers, (ot) => {
+        if (_.has(ot, 'handler')) { // 新trigger格式
+
+            if (_.isString(ot.when)) {
+                let action = generateAction(ot);
+                if (action) {
+                    actions[action.name] = action;
+                }
+            } else if (_.isArray(ot.when)) {
+                for (const w of ot.when) {
+                    let trigger = _.extend({}, ot, { when: w, name: undefined });
+                    let action = generateAction(trigger);
+                    if (action) {
+                        actions[action.name] = action;
+                    }
+                }
             }
+
         }
 
     });
@@ -35,36 +47,27 @@ export async function load(broker: any, packagePath?: string, packageServiceName
     broker.createService(service);
 
     await regist(broker, actions, serviceName);
-
 }
 
-function generateAction(listener): Action {
-    let whenForCheck = [];
-    if (_.isString(listener.when)) {
-        whenForCheck.push(listener.when);
-    } else if (_.isArray(listener.when)) {
-        whenForCheck = listener.when;
-    }
-    for (const w of whenForCheck) {
-        if (!_.contains(ENUM_WHEN, w)) {
-            console.warn(`invalid value ${listener.when}, please check your trigger.`);
-            return;
-        }
+function generateAction(trigger): Action {
+    if (!_.contains(ENUM_WHEN, trigger.when)) {
+        console.warn(`invalid value ${trigger.when}, please check your trigger.`);
+        return;
     }
 
-    let name = listener.name || getMD5(JSON.stringify(listener));
+    let name = trigger.name || getMD5(JSON.stringify(trigger));
     let action: Action = {
         trigger: {
-            when: listener.when,
-            listenTo: listener.listenTo,
+            when: trigger.when,
+            listenTo: trigger.listenTo,
             name: name
         },
-        name: `$trigger.${listener.listenTo}.${name}`,
+        name: `$trigger.${trigger.listenTo}.${name}`,
         handler: function () { }
     };
-    if (_.has(listener, 'handler')) {
+    if (_.has(trigger, 'handler')) {
         action.handler = function (ctx: Context) {
-            listener.handler.call(ctx.params, ctx);
+            trigger.handler.call(ctx.params, ctx);
         }
     }
 

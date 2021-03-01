@@ -900,7 +900,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
         let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        let when = `before.${method}`;
+        let when = `after.${method}`;
         await this.runMeteorTriggers(meteorWhen, context);
         return await this.runTriggerActions(when, context)
     }
