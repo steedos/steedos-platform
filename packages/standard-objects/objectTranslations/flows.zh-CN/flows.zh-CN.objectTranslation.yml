@@ -256,5 +256,3 @@ CustomLabels:
   import_flows_error_not_find_object: '未找到对象[ %s ]'
   import_flows_error_not_allow_enable_workflow: '对象[ %s ]未启用配置对象流程'
   import_flows_error_not_find_fields: '缺少字段[ %s ]'
-  new_flow_form_title: 新建流程
-  new_flow_form_comfirm: 确定
