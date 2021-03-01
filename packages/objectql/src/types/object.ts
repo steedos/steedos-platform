@@ -369,7 +369,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         for (const trigger of triggers) {
             let params = generateActionParams(when, context); //参考sf
-            await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params)
+            try {
+                await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params)
+            } catch (error) {
+                console.error(error)
+            }
         }
 
     }
