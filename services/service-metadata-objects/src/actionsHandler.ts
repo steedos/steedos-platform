@@ -1,3 +1,5 @@
+import { addFormulaMetadata } from './formula';
+
 export type SObject = {
     name: string,
     [x: string]: any
@@ -22,6 +24,9 @@ export const ActionHandlers = {
         return await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
     },
     async add(ctx: any): Promise<boolean>{
+        addFormulaMetadata(ctx.broker, ctx.params.data, ctx.params.data.datasource).then(()=>{
+            console.log('add ok...');
+        })
         return await ctx.broker.call('metadata.add', {key: cacherKey(ctx.params.data.name), data: ctx.params.data}, {meta: ctx.meta})
     },
     async change(ctx: any): Promise<boolean> {

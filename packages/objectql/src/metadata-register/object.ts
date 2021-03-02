@@ -23,7 +23,7 @@ export async function registerObject(broker, objectConfig) {
     if (res) { //TODO  && objectConfig.hidden != true
         //如果此处用await ，则会导致控制台抛错  objects.add 超时
        CreateObjectService(broker, serviceName, objectConfig).then((res)=>{
-        console.log('CreateObjectService---', serviceName);
+        // console.log('CreateObjectService---', serviceName);
        })
     }
     return res;

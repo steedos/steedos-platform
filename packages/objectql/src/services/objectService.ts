@@ -1,6 +1,7 @@
 import { SteedosObjectType } from '../types/object';
 import { getDataSource } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
+import { parse } from '@steedos/formula';
 // mongodb pipeline: https://docs.mongodb.com/manual/core/aggregation-pipeline/
 type externalPipelineItem = {
     [mongodPipeline: string]: any
@@ -72,6 +73,11 @@ function getObjectServiceMethodsSchema(){
                 return await this.object.directDelete(id, userSession)
             }
         },
+        getField:{
+            handler(fieldName) {
+                return this.object.getField(fieldName)
+            }
+        },
         toConfig: {
             handler() {
                 return this.object.toConfig()
@@ -81,7 +87,7 @@ function getObjectServiceMethodsSchema(){
     
     return methods;
 }
-
+//TODO 添加rest、params
 function getObjectServiceActionsSchema(){
     const actions: any = {
         aggregate: {
@@ -174,6 +180,12 @@ function getObjectServiceActionsSchema(){
                 const {id} = ctx.params;
                 return this.directDelete(id, userSession)
             }
+        },
+        getField: {
+            async handler(ctx) {
+                const { fieldName } = ctx.params;
+                return this.getField(fieldName)
+            } 
         },
         toConfig: {
             async handler(ctx) {
