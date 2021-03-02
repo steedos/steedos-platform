@@ -56,7 +56,10 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		// await this.loadTriggers();
+		let settings = this.settings;
+		if (settings.packagePath && settings.packageServiceName) {
+			await this.loadTriggers();
+		}
 	},
 
 	/**
