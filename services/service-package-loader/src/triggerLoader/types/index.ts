@@ -1,3 +1,4 @@
 export * from './meta';
-export * from './trigger';
+export * from './triggerData';
 export * from './action';
+export * from './trigger';

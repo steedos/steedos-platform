@@ -1,6 +1,6 @@
-export type Trigger = {
+export type TriggerData = {
     name: string,
     listenTo: string,
     when: string | string[],
-    handler: Function
+    action: string
 }

@@ -2,21 +2,46 @@ import * as _ from "underscore";
 import * as path from "path";
 import * as objectql from "@steedos/objectql";
 import { getMD5, JSONStringify } from "@steedos/objectql";
-import { Action, Meta, Trigger } from "./types";
+import { Action, Meta, Trigger, TriggerData } from "./types";
 import { Context } from 'moleculer';
 
 const ENUM_WHEN = ['before.find', 'before.insert', 'before.update', 'before.remove', 'after.find', 'after.count', 'after.findOne', 'after.insert', 'after.update', 'after.remove', 'before.aggregate', 'after.aggregate'];
 
 export async function load(broker: any, packagePath?: string, packageServiceName?: string) {
     // 如果 packagePath packageServiceName 未传则不扫描，直接调用 objectql.getLazyLoadListeners 获取listensers
-    console.log("packagePath : " + packagePath);
     let actions = {};
-    let serviceName = `${packageServiceName}-triggers`;
+    let serviceName = '';
 
-    let filePath = path.join(packagePath, "**");
+    if (packagePath && packageServiceName) {
+        serviceName = `${packageServiceName}-triggers`;
+        let filePath = path.join(packagePath, "**");
+        let objTriggers = objectql.loadObjectTriggers(filePath);
+        if (_.isEmpty(objTriggers)) {
+            return;
+        }
+        transformTriggersToActions(objTriggers, actions);
+    } else {
+        serviceName = '$packages-service-steedos-server'; // TODO 确定 serviceName
+        let objListeners = objectql.getLazyLoadListeners();
+        if (_.isEmpty(objListeners)) {
+            return;
+        }
+        _.each(objListeners, (objTriggers, listenTo) => {
+            transformTriggersToActions(objTriggers, actions);
+        })
+    }
 
-    let objTriggers = objectql.loadObjectTriggers(filePath);
-    _.forEach(objTriggers, (ot) => {
+    let service = {
+        name: serviceName,
+        actions: actions,
+    };
+    broker.createService(service);
+
+    await regist(broker, actions, serviceName);
+}
+
+function transformTriggersToActions(objTriggers: any[], actions: object) {
+    for (const ot of objTriggers) {
         if (_.has(ot, 'handler')) { // 新trigger格式
 
             if (_.isString(ot.when)) {
@@ -35,19 +60,11 @@ export async function load(broker: any, packagePath?: string, packageServiceName
             }
 
         }
+    }
 
-    });
-
-    let service = {
-        name: serviceName,
-        actions: actions,
-    };
-    broker.createService(service);
-
-    await regist(broker, actions, serviceName);
 }
 
-function generateAction(trigger): Action {
+function generateAction(trigger: Trigger): Action {
     if (!_.contains(ENUM_WHEN, trigger.when)) {
         console.warn(`invalid value ${trigger.when}, please check your trigger.`);
         return;
@@ -85,7 +102,7 @@ async function regist(broker: any, actions: object, serviceName: string) {
 }
 
 
-function generateAddData(action: Action): Trigger {
+function generateAddData(action: Action): TriggerData {
     let data = {
         name: action.trigger.name,
         listenTo: action.trigger.listenTo,
