@@ -1,7 +1,7 @@
 import { SteedosObjectType } from '../types/object';
 import { getDataSource } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
-import { parse } from '@steedos/formula';
+// import { parse } from '@steedos/formula';
 // mongodb pipeline: https://docs.mongodb.com/manual/core/aggregation-pipeline/
 type externalPipelineItem = {
     [mongodPipeline: string]: any

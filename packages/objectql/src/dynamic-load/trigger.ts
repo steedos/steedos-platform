@@ -52,9 +52,10 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
         if(!object.listeners){
             object.listeners = {}
         }
-        delete json.listenTo
+        // delete json.listenTo
         const license = clone(json);
-        license.name = json._id || getMD5(JSONStringify(json));
+        delete license.listenTo
+        license.name = license._id || getMD5(JSONStringify(license));
         object.listeners[license.name] = license
         if(object.datasource === 'default'){
             util.extend(object, {triggers: transformListenersToTriggers(object, license)})
