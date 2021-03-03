@@ -1,6 +1,6 @@
 export type Action = {
     trigger: {
-        when: string | [string],
+        when: string | string[],
         listenTo: string,
         name: string
     },

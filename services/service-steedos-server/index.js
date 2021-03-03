@@ -6,6 +6,7 @@ const RED = require("node-red");
 let MongoDBService = require('@steedos/service-mongodb-server');
 let NodeRedService = require('@steedos/service-node-red');
 let APIService = require('@steedos/service-api');
+const servicePackageLoader = require('@steedos/service-package-loader');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -13,6 +14,7 @@ let APIService = require('@steedos/service-api');
 
 module.exports = {
 	name: "steedos-server",
+	mixins: [servicePackageLoader],
 
 	/**
 	 * Settings
@@ -85,7 +87,7 @@ module.exports = {
 					settings: this.settings.nodeRedServer
 				});
 
-				await this.broker._restartService(this.nodeRedService)
+				// await this.broker._restartService(this.nodeRedService)
 			}
 		},
 
@@ -97,7 +99,7 @@ module.exports = {
 					mixins: [APIService],
 					settings: this.settings.apiServer
 				});
-				this.broker._restartService(this.apiService)
+				// this.broker._restartService(this.apiService)
 				this.WebApp.connectHandlers.use("/", this.apiService.express());
 			}
 
@@ -133,6 +135,8 @@ module.exports = {
 			process.env.MONGO_URL = this.settings.mongoUrl;
 		}
 		await this.startSteedos();
+
+		await this.loadTriggers();
 
 		this.startAPIService();
 

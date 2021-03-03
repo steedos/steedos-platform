@@ -39,7 +39,10 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
-
+		loadTriggers: async function () {
+			let settings = this.settings;
+			await triggerLoader.load(this.broker, settings.packagePath, settings.packageServiceName);
+		}
 	},
 
 	/**
@@ -54,7 +57,9 @@ module.exports = {
 	 */
 	async started() {
 		let settings = this.settings;
-		triggerLoader.load(this.broker, settings.packagePath, settings.packageServiceName);
+		if (settings.packagePath && settings.packageServiceName) {
+			await this.loadTriggers();
+		}
 	},
 
 	/**
