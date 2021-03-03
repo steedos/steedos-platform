@@ -166,49 +166,6 @@ const computeFormulaVarsAndQuotes = (formula: string, objectConfig: any) => {
     return { quotes, vars };
 }
 
-// export const addObjectFieldFormulaConfig = (fieldConfig: any, objectConfig: any) => {
-//     const formula = fieldConfig.formula;
-//     let result = computeFormulaVarsAndQuotes(formula, objectConfig);
-//     let formulaConfig: SteedosFieldFormulaTypeConfig = {
-//         _id: `${objectConfig.name}.${fieldConfig.name}`,
-//         object_name: objectConfig.name,
-//         field_name: fieldConfig.name,
-//         formula: formula,
-//         data_type: fieldConfig.data_type,
-//         formula_blank_value: <SteedosFormulaBlankValue>fieldConfig.formula_blank_value,
-//         quotes: result.quotes,
-//         vars: result.vars
-//     };
-
-    
-//     _.each(result.quotes, (quote)=>{
-//         addFormulaReferenceMaps(`${objectConfig.name}.${fieldConfig.name}`, `${quote.object_name}.${quote.field_name}`);
-//     })
-
-//     addFieldFormulaConfig(formulaConfig);
-
-//     // const isQuotedTwoWays = isFieldFormulaConfigQuotedTwoWays(formulaConfig, getFieldFormulaConfigs());
-//     // if (!isQuotedTwoWays) {
-        
-//     // }
-// }
-
-// export const addObjectFieldsFormulaConfig = (config: any, datasource: string) => {
-//     _.each(config.fields, function (field) {
-//         if (field.type === "formula") {
-//             if(datasource !== "default"){
-//                 throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'formula', because it is not in the default datasource.`);
-//             }
-//             try {
-//                 // 这里一定要加try catch，否则某个字段报错后，后续其他字段及其他对象就再也没有正常加载了
-//                 addObjectFieldFormulaConfig(clone(field), config);
-//             } catch (error) {
-//                 console.error(error);
-//             }
-//         }
-//     })
-// }
-
 /*****formula cache******/
 
 const getObjectFieldFormulaConfig = (fieldConfig: any, objectConfig: any) => {
@@ -272,11 +229,14 @@ const refMapName = '$formula_ref_maps';
 //     await broker.call('metadata.delete', {key: cacherKey(refMapName)}, {meta: {}})
 // }
 
+async function getFormulaReferenceMaps(broker: any){
+    return await broker.call('metadata.get', {key: cacherKey(refMapName)}, {meta: {}});
+}
 async function addFormulaReferenceMaps(broker: any, key: string, value: string){
-    let cache = await broker.call('metadata.get', {key: cacherKey(refMapName)}, {meta: {}})
+    let { metadata } = (await getFormulaReferenceMaps(broker)) || [];
     let maps = [];
-    if(cache && cache.maps){
-        maps = cache.maps;
+    if(metadata){
+        maps = metadata;
     }
 
     let data = { 
@@ -288,7 +248,8 @@ async function addFormulaReferenceMaps(broker: any, key: string, value: string){
     checkRefMapData(maps, data);
 
     maps.push(data);
-
+    // console.log('metadata', metadata)
+    // console.log('metadata.add', maps)
     await broker.call('metadata.add', {key: cacherKey(refMapName), data: maps}, {meta: {}})
 } 
 
