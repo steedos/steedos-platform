@@ -13,7 +13,8 @@ module.exports = {
 	 * Settings
 	 */
 	settings: {
-
+		path: '', // 扫描加载trigger.js的路径
+		name: '' // service name
 	},
 
 	/**
@@ -39,10 +40,7 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
-		loadTriggers: async function () {
-			let settings = this.settings;
-			await triggerLoader.load(this.broker, settings.packagePath, settings.packageServiceName);
-		}
+
 	},
 
 	/**
@@ -57,9 +55,13 @@ module.exports = {
 	 */
 	async started() {
 		let settings = this.settings;
-		if (settings.packagePath && settings.packageServiceName) {
-			await this.loadTriggers();
+		let path = settings.path;
+		let name = settings.name;
+		if (!path || !name) {
+			console.error(`Please config standardObjectsPackageLoader in your settings.`);
+			return;
 		}
+		await triggerLoader.load(this.broker, path, name);
 	},
 
 	/**

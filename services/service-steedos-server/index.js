@@ -1,20 +1,19 @@
 "use strict";
 
 const Future = require('fibers/future');
-const express = require('express');
+const path = require('path');
 const RED = require("node-red");
 let MongoDBService = require('@steedos/service-mongodb-server');
 let NodeRedService = require('@steedos/service-node-red');
 let APIService = require('@steedos/service-api');
-const servicePackageLoader = require('@steedos/service-package-loader');
-
+const packageLoader = require('@steedos/service-package-loader');
+const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
 
 module.exports = {
 	name: "steedos-server",
-	mixins: [servicePackageLoader],
 
 	/**
 	 * Settings
@@ -31,6 +30,10 @@ module.exports = {
 		nodeRedServer: {
 			enabled: true,
 			port: null,
+		},
+		standardObjectsPackageLoader: {
+			path: standardObjectsPath,
+			name: '$packages-standard-objects'
 		}
 	},
 
@@ -87,7 +90,7 @@ module.exports = {
 					settings: this.settings.nodeRedServer
 				});
 
-				// await this.broker._restartService(this.nodeRedService)
+				await this.broker._restartService(this.nodeRedService)
 			}
 		},
 
@@ -99,8 +102,20 @@ module.exports = {
 					mixins: [APIService],
 					settings: this.settings.apiServer
 				});
-				// this.broker._restartService(this.apiService)
+				this.broker._restartService(this.apiService)
 				this.WebApp.connectHandlers.use("/", this.apiService.express());
+			}
+
+		},
+
+		async startStandardObjectsPackageLoader() {
+			if (this.settings.standardObjectsPackageLoader.path && this.settings.standardObjectsPackageLoader.name) {
+				this.standardObjectsPackageLoaderService = this.broker.createService({
+					name: this.settings.standardObjectsPackageLoader.name,
+					mixins: [packageLoader],
+					settings: this.settings.standardObjectsPackageLoader
+				});
+				this.broker._restartService(this.standardObjectsPackageLoaderService)
 			}
 
 		}
@@ -136,7 +151,7 @@ module.exports = {
 		}
 		await this.startSteedos();
 
-		await this.loadTriggers();
+		await this.startStandardObjectsPackageLoader();
 
 		this.startAPIService();
 
