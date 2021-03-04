@@ -269,4 +269,38 @@ export class FormulaActionHandler{
         }
         return true;
     }
+
+    async add(ctx){
+        const { data } = ctx.params;
+        return await this.addFormulaMetadata(data, data.datasource);
+    }
+
+    async filter(ctx){
+        let {objectApiName, fieldApiName} = ctx.params;
+        if(!objectApiName){
+            objectApiName = "*";
+        }
+        if(!fieldApiName){
+            fieldApiName = "*";
+        }
+        const key = `$steedos.#formula.${objectApiName}.${fieldApiName}`
+        const configs = [];
+        const res = await this.broker.call('metadata.filter', {key: key}, {meta: {}})
+        _.forEach(res, (item)=>{
+            configs.push(item.metadata)
+        })
+        return configs;
+    }
+
+    async get(ctx){
+        let {fieldApiFullName} = ctx.params; 
+        const key = `$steedos.#formula.${fieldApiFullName}`;
+        const res = await this.broker.call('metadata.get', {key: key}, {meta: {}})
+        return res?.metadata
+    }
+
+    async getFormulaVarsAndQuotes(ctx){
+        let {formula, objectConfig} = ctx.params;
+        return await this.computeFormulaVarsAndQuotes(formula, objectConfig);
+    }
 }

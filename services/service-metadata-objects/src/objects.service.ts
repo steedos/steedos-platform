@@ -1,6 +1,6 @@
 "use strict";
 import { ActionHandlers } from './actionsHandler';
-
+import { FormulaActionHandler } from './formula/formulaActionHandler';
 module.exports = {
     name: "objects",
     /**
@@ -36,6 +36,7 @@ module.exports = {
         add: {
             async handler(ctx) {
                 // this.broker.emit("$object.registered", {name: 'test'});
+                await this.formulaActionHandler.add(ctx)
                 return await ActionHandlers.add(ctx);
             }
         },
@@ -52,6 +53,21 @@ module.exports = {
         verify: {
             async handler(ctx) {
                 return await ActionHandlers.verify(ctx);
+            }
+        },
+        getObjectFieldFormulaConfigs:{
+            async handler(ctx) {
+                return await this.formulaActionHandler.filter(ctx);
+            }
+        },
+        getObjectFieldFormulaConfig:{
+            async handler(ctx) {
+                return await this.formulaActionHandler.get(ctx);
+            }
+        },
+        getFormulaVarsAndQuotes:{
+            async handler(ctx) {
+                return await this.formulaActionHandler.getFormulaVarsAndQuotes(ctx);
             }
         }
     },
@@ -74,7 +90,7 @@ module.exports = {
      * Service created lifecycle event handler
      */
     created() {
-
+        this.formulaActionHandler = new FormulaActionHandler(this.broker)
     },
 
     /**
