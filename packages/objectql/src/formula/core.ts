@@ -435,7 +435,7 @@ export const updateQuotedByDocsForFormulaType = async (docs: any, fieldFormulaCo
     }
     const fieldNames = [fieldFormulaConfig.field_name];
     const formulaQuotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(fieldFormulaObjectName, fieldNames, escapeConfigs);
-    const summaryQuotedByConfigs = getObjectQuotedByFieldSummaryConfigs(fieldFormulaObjectName, fieldNames);
+    const summaryQuotedByConfigs = await getObjectQuotedByFieldSummaryConfigs(fieldFormulaObjectName, fieldNames);
     for (let doc of docs) {
         // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
         await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, userSession, {

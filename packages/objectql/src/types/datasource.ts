@@ -1,5 +1,5 @@
 import { Dictionary } from '@salesforce/ts-types';
-import { initObjectFieldsSummarys } from '../summary';
+// import { initObjectFieldsSummarys } from '../summary';
 import {
     SteedosDriver,
     SteedosMongoDriver,
@@ -421,7 +421,7 @@ export class SteedosDataSourceType implements Dictionary {
     init() {
         this.initObjects();
         this.initTypeORM();
-        initObjectFieldsSummarys(this.name);
+        // initObjectFieldsSummarys(this.name);
         // this.schema.transformReferenceOfObject(this);
     }
 

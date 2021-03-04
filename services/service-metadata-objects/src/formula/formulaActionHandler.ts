@@ -283,7 +283,7 @@ export class FormulaActionHandler{
         if(!fieldApiName){
             fieldApiName = "*";
         }
-        const key = `$steedos.#formula.${objectApiName}.${fieldApiName}`
+        const key = this.cacherKey(`${objectApiName}.${fieldApiName}`)
         const configs = [];
         const res = await this.broker.call('metadata.filter', {key: key}, {meta: {}})
         _.forEach(res, (item)=>{
@@ -294,7 +294,7 @@ export class FormulaActionHandler{
 
     async get(ctx){
         let {fieldApiFullName} = ctx.params; 
-        const key = `$steedos.#formula.${fieldApiFullName}`;
+        const key = this.cacherKey(fieldApiFullName)
         const res = await this.broker.call('metadata.get', {key: key}, {meta: {}})
         return res?.metadata
     }

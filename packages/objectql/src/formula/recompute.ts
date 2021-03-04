@@ -33,7 +33,7 @@ const runQuotedFieldFormulas = async function (recordId: string, fieldFormulaCon
  * @param userSession 
  */
 const runQuotedFieldSummaries = async function (fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any) {
-    const summaryQuotedBys = getQuotedByFieldSummaryConfigs(fieldFormulaConfig);
+    const summaryQuotedBys = await getQuotedByFieldSummaryConfigs(fieldFormulaConfig);
     for (const config of summaryQuotedBys) {
         await recomputeFieldSummaryValues(config, userSession);
     }

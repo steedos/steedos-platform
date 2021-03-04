@@ -1,5 +1,4 @@
-import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarPathTypeConfig, SteedosFormulaVarTypeConfig } from './type';
-import _ = require('lodash')
+import { SteedosFieldFormulaTypeConfig } from './type';
 
 /**
  * 从参数sourceConfigs中找到参数config中引用过的公式字段配置
@@ -121,87 +120,4 @@ export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeCo
         addSortedFieldFormulaConfig(config, configs, sortedConfigs);
     });
     return sortedConfigs;
-}
-
-/**
- * 当currentUserId为空时，确认参数configs中没有引用$user变量
- * @param configs
- */
-export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>) => {
-    if (!_.isArray(configs)) {
-        configs = [configs];
-    }
-    if(!configs.length){
-        return;
-    }
-    for(let config of configs){
-        let { vars, object_name: objectName, field_name: fieldName, formula } = config;
-        let required = isCurrentUserIdRequiredForFormulaVars(vars);
-        if(required){
-            throw new Error(`The param 'currentUserId' is required while running the formula '${formula.replace("$", "\\$")}' of field '${fieldName}' on the object '${objectName}'`);
-        }
-    }
-}
-
-/**
- * 当currentUserId为空时，判断参数vars中是否有引用$user变量
- * @param configs
- */
-export const isCurrentUserIdRequiredForFormulaVars = (vars: Array<SteedosFormulaVarTypeConfig>) => {
-    let required = !!vars.find(({ is_user_var: isUserVar })=>{
-        return isUserVar;
-    });
-    return required;
-}
-
-/**
- * 把公式变量中需要聚合查询的paths转换为aggregate函数级联查询需要的lookups，
- * 比如合同对象某个公式字段中有变量{company_id.organization.name}需要聚合查询的paths为：
- * [{"field_name":"company_id","reference_from":"contracts"},{"field_name":"organization","reference_from":"company"},{"field_name":"name","reference_from":"organizations"}]
- * 将转换返回：
-[{
-    $lookup: {
-        from: 'company',
-        localField: 'company_id',
-        foreignField: '_id',
-        as: '@lookup_company_id'
-    }
-},{
-    $lookup: {
-        from: 'organizations',
-        localField: '@lookup_company_id.organization',
-        foreignField: '_id',
-        as: '@lookup_company_id.organization'
-    }
-}]
-以上返回的lookup可用于当修改组织的名称时，找到合同中引用了该组织记录的记录，并重算其对应的公式字段值
- * @param paths 该参数最后一项的reference_from即为需要聚合查询的对象，亦即为当前正在修改对象（需要查找数据库中有哪些对象记录引用了该对象上的字段）
- */
-export const getFormulaVarPathsAggregateLookups = (paths: Array<SteedosFormulaVarPathTypeConfig>) => {
-    if (!paths.length) {
-        return [];
-    }
-    let lookups = [], currentPath: SteedosFormulaVarPathTypeConfig, nextPath: SteedosFormulaVarPathTypeConfig;
-    let tempLookupAs: string = "", tempLookupLocalField: string = "";
-    for (let i = 0; i < paths.length - 1; i++) {
-        currentPath = paths[i];
-        nextPath = paths[i + 1];
-        tempLookupLocalField = currentPath.field_name;
-        if(tempLookupAs){
-            tempLookupLocalField = `${tempLookupAs}.${tempLookupLocalField}`;
-            tempLookupAs = tempLookupLocalField;
-        }
-        else{
-            tempLookupAs = `__lookup__${currentPath.field_name}`;
-        }
-        lookups.push({
-            $lookup: {
-                from: nextPath.reference_from,
-                localField: tempLookupLocalField,
-                foreignField: '_id',
-                as: tempLookupAs
-            }
-        });
-    }
-    return lookups;
 }

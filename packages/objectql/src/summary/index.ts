@@ -1,10 +1,8 @@
-import { SteedosObjectTypeConfig, SteedosFieldTypeConfig, getObjectConfigs } from '../types';
+import { SteedosObjectTypeConfig, getObjectConfigs } from '../types';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryDataTypeValue, SupportedSummaryFieldTypes } from './type';
-import { addFieldSummaryConfig, clearFieldSummaryConfigs } from './field_summary';
 import { isCodeObject } from '../util';
 import { isFormulaFieldQuotingObjectAndFields } from '../formula';
 import _ = require('lodash')
-const clone = require('clone')
 
 export * from './type'
 export * from './field_summary'
@@ -95,50 +93,4 @@ export const getSummaryDataType = async (summaryConfig: SteedosFieldSummaryTypeC
 
 export const isSummaryFieldTypeSupported = (summaryType: string, summaryFieldType: string) => {
     return !!(SupportedSummaryFieldTypes[summaryType] && SupportedSummaryFieldTypes[summaryType].indexOf(summaryFieldType) > -1)
-}
-
-export const addObjectFieldSummaryConfig = (fieldConfig: SteedosFieldTypeConfig, objectConfig: SteedosObjectTypeConfig) => {
-    let summaryConfig: SteedosFieldSummaryTypeConfig = {
-        _id: `${objectConfig.name}.${fieldConfig.name}`,
-        object_name: objectConfig.name,
-        field_name: fieldConfig.name,
-        summary_object: fieldConfig.summary_object,
-        summary_type: <SteedosSummaryTypeValue>fieldConfig.summary_type,
-        data_type: fieldConfig.data_type,
-        summary_field: fieldConfig.summary_field,
-        summary_filters: fieldConfig.summary_filters
-    };
-    
-    initSummaryConfig(summaryConfig);
-    addFieldSummaryConfig(summaryConfig);
-}
-
-export const addObjectFieldsSummaryConfig = (config: SteedosObjectTypeConfig, datasource: string) => {
-    _.each(config.fields, function (field) {
-        if (field.type === "summary") {
-            if (datasource !== "default") {
-                throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'summary', because it is not in the default datasource.`);
-            }
-            try {
-                // 这里一定要加try catch，否则某个字段报错后，后续其他字段及其他对象就再也没有正常加载了
-                addObjectFieldSummaryConfig(clone(field), config);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    })
-}
-
-export const initObjectFieldsSummarys = (datasource: string) => {
-    if(datasource === "default"){
-        // 因为要考虑对象和字段可能被禁用、删除的情况，所以需要先清除下原来的内存数据
-        // 暂时只支持默认数据源，后续如果要支持多数据源时需要传入datasource参数清除数据
-        clearFieldSummaryConfigs()
-    }
-    const objectConfigs = getObjectConfigs(datasource)
-    // console.log("===initObjectFieldsSummarys==objectConfigs=", JSON.stringify(_.map(objectConfigs, 'name')))
-    _.each(objectConfigs, function (objectConfig) {
-        addObjectFieldsSummaryConfig(objectConfig, datasource);
-    })
-    // console.log("===initObjectFieldsSummarys===", JSON.stringify(getFieldSummaryConfigs()))
 }
