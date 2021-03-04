@@ -183,7 +183,7 @@ export function generateActionParams(when: string, context: SteedosTriggerContex
             params.operationType = 'BEFORE_UPDATE';
             params.size = 1;
             break;
-        case 'before.remove':
+        case 'before.delete':
             params.isBefore = true;
             params.isDelete = true;
             params.old = [context.doc];
@@ -225,7 +225,7 @@ export function generateActionParams(when: string, context: SteedosTriggerContex
             params.operationType = 'AFTER_UPDATE';
             params.size = 1;
             break;
-        case 'after.remove':
+        case 'after.delete':
             params.isAfter = true;
             params.isDelete = true;
             params.old = [context.previousDoc];
