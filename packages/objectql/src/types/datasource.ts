@@ -25,9 +25,8 @@ import {
     getSteedosSchema
 } from '.';
 import { SteedosDriverConfig } from '../driver';
-import { getObjectConfigs, addObjectConfig, addAllConfigFiles } from '.';
+import { getObjectConfigs, addObjectConfig } from '.';
 let Fiber = require('fibers');
-var path = require('path')
 
 export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
@@ -269,13 +268,13 @@ export class SteedosDataSourceType implements Dictionary {
             addObjectConfig(object, this._name);
         })
         // 添加对象到缓存
-        _.each(this.config.objectFiles, (objectPath) => {
-            let filePath = objectPath;
-            if(!path.isAbsolute(objectPath)){
-                filePath = path.join(process.cwd(), objectPath)
-            }
-            addAllConfigFiles(filePath, this._name)
-        })
+        // _.each(this.config.objectFiles, (objectPath) => {
+        //     let filePath = objectPath;
+        //     if(!path.isAbsolute(objectPath)){
+        //         filePath = path.join(process.cwd(), objectPath)
+        //     }
+        //     addAllConfigFiles(filePath, this._name)
+        // })
     }
 
     setObjectPermission(object_name: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {

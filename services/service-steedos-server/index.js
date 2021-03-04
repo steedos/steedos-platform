@@ -31,7 +31,7 @@ module.exports = {
 			enabled: true,
 			port: null,
 		},
-		standardObjectsPackageLoader: {
+		packageInfo: {
 			path: standardObjectsPath,
 			name: '$packages-standard-objects'
 		}
@@ -60,6 +60,23 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
+		wrapAsync(fn, context) {
+			let proxyFn = async function (_cb) {
+				let value = null;
+				let error = null;
+				try {
+					value = await fn.call(context)
+				} catch (err) {
+					error = err
+				}
+				_cb(error, value)
+			}
+			let fut = new Future();
+			let callback = fut.resolver();
+			let result = proxyFn.apply(this, [callback]);
+			return fut ? fut.wait() : result;
+		},
+
 		async startSteedos() {
 
 			this.meteor = require('@steedos/meteor-bundle-runner');
@@ -70,11 +87,13 @@ module.exports = {
 				try {
 					this.meteor.loadServerBundles();
 					require('@steedos/objectql').getSteedosSchema(this.broker);
+					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
 					this.steedos.init();
 					this.WebApp = WebApp;
 					this.startNodeRedService();
 					this.meteor.callStartupHooks();
 					this.meteor.runMain();
+
 				} catch (error) {
 					this.logger.error(error)
 				}
@@ -109,13 +128,16 @@ module.exports = {
 		},
 
 		async startStandardObjectsPackageLoader() {
-			if (this.settings.standardObjectsPackageLoader.path && this.settings.standardObjectsPackageLoader.name) {
+			let settings = this.settings.packageInfo;
+			if (settings.path && settings.name) {
 				this.standardObjectsPackageLoaderService = this.broker.createService({
-					name: this.settings.standardObjectsPackageLoader.name,
+					name: settings.name,
 					mixins: [packageLoader],
-					settings: this.settings.standardObjectsPackageLoader
+					settings: { packageInfo: settings }
 				});
-				this.broker._restartService(this.standardObjectsPackageLoaderService)
+				await this.broker.waitForServices([settings.name]);
+				// this.broker._restartService(this.standardObjectsPackageLoaderService)
+				// await this.standardObjectsPackageLoaderService.loadPackageMetadataFiles(settings.path, settings.name);
 			}
 
 		}
@@ -149,9 +171,8 @@ module.exports = {
 		} else {
 			process.env.MONGO_URL = this.settings.mongoUrl;
 		}
-		await this.startSteedos();
 
-		await this.startStandardObjectsPackageLoader();
+		await this.startSteedos();
 
 		this.startAPIService();
 

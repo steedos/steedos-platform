@@ -1,6 +1,8 @@
 "use strict";
 
+const objectql = require('@steedos/objectql');
 const triggerLoader = require('./lib').triggerLoader;
+const path = require('path');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -13,7 +15,7 @@ module.exports = {
 	 * Settings
 	 */
 	settings: {
-		path: '', // 扫描加载trigger.js的路径
+		path: '', // 扫描加载原数据的路径
 		name: '' // service name
 	},
 
@@ -40,28 +42,34 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
-
+		loadPackageMetadataFiles: async function (packagePath, name) {
+			console.log('path: ', packagePath);
+			packagePath = path.join(packagePath, '**');
+			objectql.addAllConfigFiles(packagePath, 'default');
+			await triggerLoader.load(this.broker, packagePath, name);
+			return;
+		}
 	},
 
 	/**
 	 * Service created lifecycle event handler
 	 */
 	created() {
-		console.log('service package loader created!!!');
+		this.logger.debug('service package loader created!!!');
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		let settings = this.settings;
-		let path = settings.path;
-		let name = settings.name;
+		let packageInfo = this.settings.packageInfo;
+		let path = packageInfo.path;
+		let name = packageInfo.name;
 		if (!path || !name) {
-			console.error(`Please config standardObjectsPackageLoader in your settings.`);
+			this.logger.error(`Please config packageInfo in your settings.`);
 			return;
 		}
-		await triggerLoader.load(this.broker, path, name);
+		await this.loadPackageMetadataFiles(path, name);
 	},
 
 	/**

@@ -1,6 +1,6 @@
 import _ = require('lodash')
 import path = require('path')
-import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles, SteedosActionTypeConfig } from '.'
+import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig } from '.'
 import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
 import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset } from '../dynamic-load'
@@ -301,7 +301,7 @@ export const loadStandardObjects = () => {
     coreObjectTrigger.listenTo = SQL_BASE_OBJECT
     addObjectListenerConfig(coreObjectTrigger)
 
-    addAllConfigFiles(path.join(standardObjectsDir, "**"), 'default');
+    // addAllConfigFiles(path.join(standardObjectsDir, "**"), 'default');
 }
 
 export const addRouterConfig = (prefix: string, router: any) => {

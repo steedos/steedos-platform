@@ -6,7 +6,7 @@
  */
 
 import { isJsonMap, JsonMap } from '@salesforce/ts-types';
-import { Validators } from '../validators';
+import { Validators, loadCoreValidators } from '../validators';
 const Future  = require('fibers/future');
 const crypto = require('crypto')
 const yaml = require('js-yaml');
@@ -732,3 +732,5 @@ export function processFilters(filters: [], objectFields: any) {
 export function validateFilters(filters: [], objectFields: any) {
     processFilters(clone(filters), objectFields);
 }
+
+loadCoreValidators();
