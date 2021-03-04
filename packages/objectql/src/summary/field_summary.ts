@@ -29,7 +29,7 @@ export const getObjectFieldSummaryConfigs = async(objectName: string, fieldName?
  * @param fieldNames 
  */
 export const getObjectQuotedByFieldSummaryConfigs = async (objectName: string, fieldNames?: Array<string>): Promise<Array<SteedosFieldSummaryTypeConfig>> => {
-    const configs = await getFieldSummaryConfigs();
+    const configs = await getFieldSummaryConfigs(); //TODO 此处代码需要优化，取了所有配置
     return configs.filter((config: SteedosFieldSummaryTypeConfig) => {
         const summaryObjectName = config.summary_object;
         const summaryFieldName = config.summary_field;
