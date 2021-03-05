@@ -40,7 +40,7 @@ export const getObjectFieldFormulaConfigs = async (objectName: string, fieldName
  * @param escapeConfigs 要跳过的字段公式
  */
 export const getObjectQuotedByFieldFormulaConfigs = async (objectName: string, fieldNames?: Array<string>, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>): Promise<SteedosQuotedByFieldFormulasTypeConfig> => {
-    const configs = await getFieldFormulaConfigs(); //TODO 此处代码需要优化，取了所有配置
+    const configs = await getFieldFormulaConfigs(); //TODO 此处代码需要优化，取了所有配置。此处代码迁移到metadata objects services
     let configsOnCurrentObject = [];
     let configsOnOtherObjects = [];
     configs.forEach((config: SteedosFieldFormulaTypeConfig) => {

@@ -1,5 +1,6 @@
 "use strict";
 import { ActionHandlers } from './actionsHandler';
+import {MasterDetailActionHandler} from './master-detail/masterDetailActionHandler'
 import { FormulaActionHandler } from './formula/formulaActionHandler';
 import { SummaryActionHandler } from './summary/summaryActionHandler';
 module.exports = {
@@ -37,6 +38,7 @@ module.exports = {
         add: {
             async handler(ctx) {
                 // this.broker.emit("$object.registered", {name: 'test'});
+                await this.masterDetailActionHandler.add(ctx);
                 await this.formulaActionHandler.add(ctx);
                 await this.summaryActionHandler.add(ctx);
                 return await ActionHandlers.add(ctx);
@@ -82,8 +84,41 @@ module.exports = {
                 return await this.summaryActionHandler.get(ctx);
             }
         },
+        getDetailPaths:{
+            async handler(ctx) {
+                const {objectApiName} = ctx.params;
+                return await this.masterDetailActionHandler.getDetailPaths(objectApiName);
+            }
+        },
+        getMaxDetailsLeave:{
+            async handler(ctx) {
+                const {objectApiName, paths} = ctx.params;
+                return await this.masterDetailActionHandler.getMaxDetailsLeave(objectApiName, paths);
+            }
+        },
+        getMasterPaths:{
+            async handler(ctx) {
+                const {objectApiName} = ctx.params;
+                return await this.masterDetailActionHandler.getMasterPaths(objectApiName);
+            }
+        },
+        getMaxMastersLeave:{
+            async handler(ctx) {
+                const {objectApiName, paths} = ctx.params;
+                return await this.masterDetailActionHandler.getMaxMastersLeave(objectApiName, paths);
+            }
+        }
     },
-
+    hooks:{
+        error: {
+            // Global error handler
+            "*": function(ctx, err) {
+                this.logger.error(`Error occurred when '${ctx.action.name}' action was called`, err);
+                // Throw further the error
+                throw err;
+            }
+        }
+    },
     /**
      * Events
      */
@@ -102,6 +137,7 @@ module.exports = {
      * Service created lifecycle event handler
      */
     created() {
+        this.masterDetailActionHandler = new MasterDetailActionHandler(this.broker);
         this.formulaActionHandler = new FormulaActionHandler(this.broker);
         this.summaryActionHandler = new SummaryActionHandler(this.broker);
     },
