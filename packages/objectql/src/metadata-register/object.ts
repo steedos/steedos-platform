@@ -7,7 +7,7 @@ export async function registerObject(broker, objectConfig) {
     // }
     // count ++;
 	await broker.waitForServices(["steedos-server"]);
-    const serviceName = `#${objectConfig.name}`;
+    const serviceName = `@${objectConfig.name}`;
     const metadata = clone(objectConfig);
     delete metadata.triggers
     const res = await broker.call("objects.add", {data: metadata}, {meta: {
