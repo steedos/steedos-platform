@@ -136,8 +136,6 @@ module.exports = {
 					settings: { packageInfo: settings }
 				});
 				await this.broker.waitForServices([settings.name]);
-				// this.broker._restartService(this.standardObjectsPackageLoaderService)
-				// await this.standardObjectsPackageLoaderService.loadPackageMetadataFiles(settings.path, settings.name);
 			}
 
 		}
