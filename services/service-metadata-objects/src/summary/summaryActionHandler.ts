@@ -38,7 +38,7 @@ export class SummaryActionHandler {
             return item.type === "master_detail" && item.reference_to === object_name;
         });
         if (!referenceToField) {
-            console.log(`summaryObject`, summaryObject.name);
+            console.log(`summaryObject`, summaryObject);
             throw new Error(`Can't fount a master_detail type field that reference_to the master object '${object_name}' on the summary_object '${summary_object}'.`);
         }
         summaryConfig.reference_to_field = referenceToField.name;
@@ -117,7 +117,7 @@ export class SummaryActionHandler {
         //给引用了当前对象的汇总配置中，设置reference_to_field值并校验
         const quoteMineSummaryConfigs = await this.filterSummaryConfig("*.*", objectConfig.name);
         for await (const config of quoteMineSummaryConfigs) {
-            await this.initSummaryConfig(summaryConfig, config);
+            await this.initSummaryConfig(config, objectConfig);
         }
         return summaryConfig;
     }
@@ -179,8 +179,6 @@ export class SummaryActionHandler {
         _.forEach(res, (item)=>{
             configs.push(item.metadata)
         })
-        console.log(`filterSummaryConfig key`, key)
-        console.log(`filterSummaryConfig configs`, configs)
         return configs;
     }
 
