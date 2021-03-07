@@ -6,9 +6,9 @@ const clone = require('clone')
 export * from './type'
 
 // TODO
-const isCodeObject = (objectApiName) => {
-    return objectApiName ? false : true
-}
+// const isCodeObject = (objectApiName) => {
+//     return objectApiName ? false : true
+// }
 
 export class SummaryActionHandler {
     broker: any = null;
@@ -26,23 +26,19 @@ export class SummaryActionHandler {
      * 因为getObjectConfigs拿到的对象肯定不包括被禁用和假删除的对象，所以不需要额外判断相关状态
      * @param summaryConfig 
      */
-    async initSummaryConfig(summaryConfig: SteedosFieldSummaryTypeConfig) {
+    async initSummaryConfig(summaryConfig: SteedosFieldSummaryTypeConfig, summaryObject?: any) {
         const { summary_object, field_name, object_name } = summaryConfig;
-        let summaryObject = await this.getObjectConfig(summary_object);
-        if (!summaryObject) {
-            // 如果不是零代码对象，直接报错，否则直接返回，待相关零代码对象加载进来时，会再进入该函数
-            if (isCodeObject(summary_object)) {
-                throw new Error(`The summary_object '${summary_object}' of the field '${field_name}' on the object '${object_name}' is not found in the default datasource.`);
-            }
-            else {
-                return;
+        if(!summaryObject){
+            summaryObject = await this.getObjectConfig(summary_object);
+            if (!summaryObject) {
+                return ;
             }
         }
-
         const referenceToField = _.find(summaryObject.fields, (item) => {
             return item.type === "master_detail" && item.reference_to === object_name;
         });
         if (!referenceToField) {
+            console.log(`summaryObject`, summaryObject.name);
             throw new Error(`Can't fount a master_detail type field that reference_to the master object '${object_name}' on the summary_object '${summary_object}'.`);
         }
         summaryConfig.reference_to_field = referenceToField.name;
@@ -113,9 +109,16 @@ export class SummaryActionHandler {
             summary_type: <SteedosSummaryTypeValue>fieldConfig.summary_type,
             data_type: fieldConfig.data_type,
             summary_field: fieldConfig.summary_field,
-            summary_filters: fieldConfig.summary_filters
+            summary_filters: fieldConfig.summary_filters,
+            reference_to_field: null
         };
         await this.initSummaryConfig(summaryConfig);
+
+        //给引用了当前对象的汇总配置中，设置reference_to_field值并校验
+        const quoteMineSummaryConfigs = await this.filterSummaryConfig("*.*", objectConfig.name);
+        for await (const config of quoteMineSummaryConfigs) {
+            await this.initSummaryConfig(summaryConfig, config);
+        }
         return summaryConfig;
     }
 
@@ -131,6 +134,7 @@ export class SummaryActionHandler {
                     const fieldSummaryConfig = await this.getObjectFieldSummaryConfig(clone(field), config)
                     configs.push(fieldSummaryConfig);
                 } catch (error) {
+                    this.broker.logger.error(error);
                     console.error(error);
                 }
             }
@@ -141,22 +145,43 @@ export class SummaryActionHandler {
 
 
     /* metadata 新增 */
-
-    cacherKey(APIName: string): string{
-        return `$steedos.#summary.${APIName}`
+    //fieldApiFullName: ${objectApiName}.${fieldApiName}
+    cacherKey(fieldApiFullName: string, summaryObjectApiName?: string): string{
+        if(!summaryObjectApiName){
+            summaryObjectApiName = "*";
+        }
+        return `$steedos.#summary.${fieldApiFullName}.${summaryObjectApiName}`
     }
 
     async addSummaryMetadata(config: any, datasource: string){
         const fieldsSummaryConfig = await this.getObjectFieldsSummaryConfig(config, datasource);
         for await (const fieldSummary of fieldsSummaryConfig) {
-            await this.broker.call('metadata.add', {key: this.cacherKey(fieldSummary._id), data: fieldSummary}, {meta: {}})
+            await this.broker.call('metadata.add', {key: this.cacherKey(fieldSummary._id, fieldSummary.summary_object), data: fieldSummary}, {meta: {}})
         }
         return true;
     }
 
     async add(ctx){
         const { data } = ctx.params;
-        return await this.addSummaryMetadata(data, data.datasource);
+        try {
+            await this.addSummaryMetadata(data, data.datasource);
+            return true
+        } catch (error) {
+            this.broker.logger.error(error);
+        }
+        return false
+    }
+
+    async filterSummaryConfig(fieldApiFullName, summaryObjectApiName?){
+        const key = this.cacherKey(fieldApiFullName, summaryObjectApiName)
+        const configs = [];
+        const res = await this.broker.call('metadata.filter', {key: key}, {meta: {}})
+        _.forEach(res, (item)=>{
+            configs.push(item.metadata)
+        })
+        console.log(`filterSummaryConfig key`, key)
+        console.log(`filterSummaryConfig configs`, configs)
+        return configs;
     }
 
     async filter(ctx){
@@ -167,19 +192,15 @@ export class SummaryActionHandler {
         if(!fieldApiName){
             fieldApiName = "*";
         }
-        const key = this.cacherKey(`${objectApiName}.${fieldApiName}`)
-        const configs = [];
-        const res = await this.broker.call('metadata.filter', {key: key}, {meta: {}})
-        _.forEach(res, (item)=>{
-            configs.push(item.metadata)
-        })
+        const configs = await this.filterSummaryConfig(`${objectApiName}.${fieldApiName}`);
         return configs;
     }
 
     async get(ctx){
         let {fieldApiFullName} = ctx.params; 
-        const key = this.cacherKey(fieldApiFullName)
-        const res = await this.broker.call('metadata.get', {key: key}, {meta: {}})
-        return res?.metadata
+        const res = await this.filterSummaryConfig(fieldApiFullName);
+        if(res && res.length > 0){
+            return res[0]
+        }
     }
 }

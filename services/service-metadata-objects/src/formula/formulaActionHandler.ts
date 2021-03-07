@@ -272,7 +272,13 @@ export class FormulaActionHandler{
 
     async add(ctx){
         const { data } = ctx.params;
-        return await this.addFormulaMetadata(data, data.datasource);
+        try {
+            await this.addFormulaMetadata(data, data.datasource);
+            return true;
+        } catch (error) {
+            this.broker.logger.error(error);
+        }
+        return false
     }
 
     async filter(ctx){
