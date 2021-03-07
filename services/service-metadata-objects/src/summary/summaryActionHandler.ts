@@ -113,11 +113,6 @@ export class SummaryActionHandler {
         };
         await this.initSummaryConfig(summaryConfig);
 
-        //给引用了当前对象的汇总配置中，设置reference_to_field值并校验
-        const quoteMineSummaryConfigs = await this.filterSummaryConfig("*.*", objectConfig.name);
-        for await (const config of quoteMineSummaryConfigs) {
-            await this.initSummaryConfig(config, objectConfig);
-        }
         return summaryConfig;
     }
 
@@ -142,6 +137,19 @@ export class SummaryActionHandler {
         return configs;
     }
 
+    async getQuoteMineSummaryConfigs(objectConfig){
+        const fixedConfigs = [];
+        //给引用了当前对象的汇总配置中，设置reference_to_field值并校验
+        const quoteMineSummaryConfigs = await this.filterSummaryConfig("*.*", objectConfig.name);
+        for await (const summaryConfig of quoteMineSummaryConfigs) {
+            if(!summaryConfig.reference_to_field){
+                await this.initSummaryConfig(summaryConfig, objectConfig)
+                fixedConfigs.push(summaryConfig);
+            }
+        }
+        return fixedConfigs;
+    }
+
 
     /* metadata 新增 */
     //fieldApiFullName: ${objectApiName}.${fieldApiName}
@@ -155,6 +163,10 @@ export class SummaryActionHandler {
     async addSummaryMetadata(config: any, datasource: string){
         const fieldsSummaryConfig = await this.getObjectFieldsSummaryConfig(config, datasource);
         for await (const fieldSummary of fieldsSummaryConfig) {
+            await this.broker.call('metadata.add', {key: this.cacherKey(fieldSummary._id, fieldSummary.summary_object), data: fieldSummary}, {meta: {}})
+        }
+        const quoteMineSummaryConfigs = await this.getQuoteMineSummaryConfigs(config);
+        for await (const fieldSummary of quoteMineSummaryConfigs) {
             await this.broker.call('metadata.add', {key: this.cacherKey(fieldSummary._id, fieldSummary.summary_object), data: fieldSummary}, {meta: {}})
         }
         return true;
