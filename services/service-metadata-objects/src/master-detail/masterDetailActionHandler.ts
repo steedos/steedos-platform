@@ -114,6 +114,7 @@ export class MasterDetailActionHandler{
     
     async addObjectMasterDetails(objectConfig) {
         const { name: objectApiName } = objectConfig;
+        await this.deleteObjectMasterDetails(objectApiName);
         for await (const field of _.values(objectConfig.fields)) {
             if (field.type === "master_detail") {
                 // 加try catch是因为有错误时不应该影响下一个字段逻辑
@@ -280,5 +281,11 @@ export class MasterDetailActionHandler{
             paths = await this.getMasterPaths(objectApiName);
         }
         return getMaxPathLeave(paths);
+    }
+
+    async deleteObjectMasterDetails(objectApiName: string){
+        await this.broker.call('metadata.delete', {key: this.getMasterKey(objectApiName)}, {meta: {}});
+        await this.broker.call('metadata.delete', {key: this.getDetailKey(objectApiName)}, {meta: {}});
+        return true;
     }
 }
