@@ -19,7 +19,7 @@ export function loadPackages() {
             const packages = await getAllPackages(process.cwd());
             _.each(packages, function (filePath: string) {
                 // console.log('filePath: ', filePath)
-                broker.loadServices(filePath, "steedos-app/package.service.js");
+                broker.loadServices(filePath, "package.service.js");
             })
         }
 

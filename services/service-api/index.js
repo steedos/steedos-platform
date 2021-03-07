@@ -1,6 +1,7 @@
 "use strict";
 
 const ApiGateway = require("moleculer-web");
+const steedosAuth = require('@steedos/auth');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -38,10 +39,10 @@ module.exports = {
 				mergeParams: true,
 
 				// Enable authentication. Implement the logic into `authenticate` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authentication
-				authentication: false,
+				authentication: true,
 
 				// Enable authorization. Implement the logic into `authorize` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authorization
-				authorization: false,
+				authorization: true,
 
 				// The auto-alias feature allows you to declare your route alias directly in your services.
 				// The gateway will dynamically build the full routes from service schema.
@@ -129,28 +130,36 @@ module.exports = {
 		 * @param {IncomingRequest} req
 		 * @returns {Promise}
 		 */
-		async authenticate(ctx, route, req) {
-			// Read the token from header
-			const auth = req.headers["authorization"];
-
-			if (auth && auth.startsWith("Bearer")) {
-				const token = auth.slice(7);
-
-				// Check the token. Tip: call a service which verify the token. E.g. `accounts.resolveToken`
-				if (token == "123456") {
-					// Returns the resolved user. It will be set to the `ctx.meta.user`
-					return { id: 1, name: "John Doe" };
-
-				} else {
-					// Invalid token
-					throw new ApiGateway.Errors.UnAuthorizedError(ApiGateway.Errors.ERR_INVALID_TOKEN);
-				}
-
+		async authenticate(ctx, route, req, res) {
+			let user = await steedosAuth.auth(req, res);
+			if (user && user.userId) {
+				return user;
 			} else {
-				// No token. Throw an error or do nothing if anonymous access is allowed.
-				// throw new E.UnAuthorizedError(E.ERR_NO_TOKEN);
 				return null;
 			}
+
+
+			// // Read the token from header
+			// const auth = req.headers["authorization"];
+
+			// if (auth && auth.startsWith("Bearer")) {
+			// 	const token = auth.slice(7);
+
+			// 	// Check the token. Tip: call a service which verify the token. E.g. `accounts.resolveToken`
+			// 	if (token == "123456") {
+			// 		// Returns the resolved user. It will be set to the `ctx.meta.user`
+			// 		return { id: 1, name: "John Doe" };
+
+			// 	} else {
+			// 		// Invalid token
+			// 		throw new ApiGateway.Errors.UnAuthorizedError(ApiGateway.Errors.ERR_INVALID_TOKEN);
+			// 	}
+
+			// } else {
+			// 	// No token. Throw an error or do nothing if anonymous access is allowed.
+			// 	// throw new E.UnAuthorizedError(E.ERR_NO_TOKEN);
+			// 	return null;
+			// }
 		},
 
 		/**
@@ -163,14 +172,18 @@ module.exports = {
 		 * @param {IncomingRequest} req
 		 * @returns {Promise}
 		 */
-		async authorize(ctx, route, req) {
+		async authorize(ctx, route, req, res) {
 			// Get the authenticated user.
 			const user = ctx.meta.user;
 
-			// It check the `auth` property in action schema.
-			if (req.$action.auth == "required" && !user) {
+			if (!user) {
 				throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
 			}
+
+			// // It check the `auth` property in action schema.
+			// if (req.$action.auth == "required" && !user) {
+			// 	throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
+			// }
 		}
 
 	}
