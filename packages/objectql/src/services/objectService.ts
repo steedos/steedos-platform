@@ -126,7 +126,7 @@ function getObjectServiceActionsSchema() {
             },
             params: {
                 id: { type: "any" },
-                query: { type: "object" }
+                query: { type: "object", optional: true }
             },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
@@ -169,7 +169,7 @@ function getObjectServiceActionsSchema() {
                 path: "/updateMany"
             },
             params: {
-                queryFilters: { type: "array", items: "array|string" },
+                queryFilters: { type: "array", items: "any" },
                 doc: { type: "object" }
             },
             async handler(ctx) {
