@@ -38,7 +38,6 @@ export class SummaryActionHandler {
             return item.type === "master_detail" && item.reference_to === object_name;
         });
         if (!referenceToField) {
-            console.log(`summaryObject`, summaryObject);
             throw new Error(`Can't fount a master_detail type field that reference_to the master object '${object_name}' on the summary_object '${summary_object}'.`);
         }
         summaryConfig.reference_to_field = referenceToField.name;
