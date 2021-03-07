@@ -95,7 +95,14 @@ module.exports = {
 				mappingPolicy: "all", // Available values: "all", "restrict"
 
 				// Enable/disable logging
-				logging: true
+				logging: true,
+
+				// Route error handler
+				onError(req, res, err) {
+					res.setHeader("Content-Type", "application/json; charset=utf-8");
+					res.writeHead(err.code || 500);
+					res.end(JSON.stringify(err));
+				}
 			}
 		],
 
@@ -137,29 +144,6 @@ module.exports = {
 			} else {
 				return null;
 			}
-
-
-			// // Read the token from header
-			// const auth = req.headers["authorization"];
-
-			// if (auth && auth.startsWith("Bearer")) {
-			// 	const token = auth.slice(7);
-
-			// 	// Check the token. Tip: call a service which verify the token. E.g. `accounts.resolveToken`
-			// 	if (token == "123456") {
-			// 		// Returns the resolved user. It will be set to the `ctx.meta.user`
-			// 		return { id: 1, name: "John Doe" };
-
-			// 	} else {
-			// 		// Invalid token
-			// 		throw new ApiGateway.Errors.UnAuthorizedError(ApiGateway.Errors.ERR_INVALID_TOKEN);
-			// 	}
-
-			// } else {
-			// 	// No token. Throw an error or do nothing if anonymous access is allowed.
-			// 	// throw new E.UnAuthorizedError(E.ERR_NO_TOKEN);
-			// 	return null;
-			// }
 		},
 
 		/**
