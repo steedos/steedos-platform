@@ -221,7 +221,7 @@ function loadObject(doc, oldDoc) {
         //获取到继承后的对象
         const _doc = objectql.getObjectConfig(doc.name);
         datasource.setObject(doc.name, _doc);
-        datasource.init();
+        // datasource.init();
         try {
             if (!datasourceName || datasourceName == defaultDatasourceName) {
                 Creator.Objects[doc.name] = _doc;
