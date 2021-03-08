@@ -14,8 +14,8 @@ export class MetadataRegister{
         this.broker = metadataBroker;
     }
 
-    async object(objectConfig: any): Promise<boolean>{
-        return await registerObject(this.broker, objectConfig);
+    async object(serviceName, objectConfig: any): Promise<boolean>{
+        return await registerObject(this.broker, serviceName, objectConfig);
     }
 
     // register(type: MetadataType, metadata: any){

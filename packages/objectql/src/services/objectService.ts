@@ -333,6 +333,9 @@ module.exports = {
         if (!objectConfig) {
             throw new Error('Not found object config by objectApiName.')
         }
-        this.object = new SteedosObjectType(objectConfig.name, getDataSource(objectConfig.datasource), objectConfig);
+        const datasource = getDataSource(objectConfig.datasource);
+        if(datasource){
+            this.object = datasource.getObject(objectConfig.name);
+        }
     }
 }

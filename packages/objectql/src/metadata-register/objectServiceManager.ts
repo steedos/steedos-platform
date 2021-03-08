@@ -1,6 +1,6 @@
 const objectService = require('../services/objectService');
 
-export async function CreateObjectService(broker, serviceName, objectConfig){
+export async function createObjectService(broker, serviceName, objectConfig){
     return await broker.createService({
         name: serviceName,
         mixins: [objectService],

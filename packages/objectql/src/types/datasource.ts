@@ -1,5 +1,6 @@
 import { Dictionary } from '@salesforce/ts-types';
 // import { initObjectFieldsSummarys } from '../summary';
+import { getObjectServiceName } from '../services/index';
 import {
     SteedosDriver,
     SteedosMongoDriver,
@@ -26,6 +27,7 @@ import {
 } from '.';
 import { SteedosDriverConfig } from '../driver';
 import { getObjectConfigs, addObjectConfig } from '.';
+import { createObjectService } from '../metadata-register/objectServiceManager';
 let Fiber = require('fibers');
 
 export enum SteedosDatabaseDriverType {
@@ -116,10 +118,16 @@ export class SteedosDataSourceType implements Dictionary {
         return this._objectsConfig;
     }
 
-    setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
-        let object = new SteedosObjectType(object_name, this, objectConfig)
-        this._objectsConfig[object_name] = objectConfig;
-        this._objects[object_name] = object;
+    async setObject(objectApiName: string, objectConfig: SteedosObjectTypeConfig) {
+        const serviceName = getObjectServiceName(objectApiName)
+        const res = await this._schema.metadataRegister.object(serviceName, objectConfig);
+        if(res){
+            let object = new SteedosObjectType(objectApiName, this, objectConfig)
+            this._objectsConfig[objectApiName] = objectConfig;
+            this._objects[objectApiName] = object;
+            await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
+            return object;
+        }
     }
 
     removeObject(object_name: string){
@@ -179,14 +187,16 @@ export class SteedosDataSourceType implements Dictionary {
         let objects: Array<SteedosObjectTypeConfig> = getObjectConfigs(this._name);
         let self = this;
         for await (const object of _.values(objects)) {
-            if(self._schema.metadataBroker){
-                const res = await self._schema.metadataRegister.object(object)
-                if(res){
-                    self.setObject(object.name, object);
-                }
-            }else{
-                self.setObject(object.name, object);
-            }
+            // if(self._schema.metadataBroker){
+            //     const res = await self._schema.metadataRegister.object(object)
+            //     if(res){
+            //         self.setObject(object.name, object);
+            //     }
+            // }else{
+            //     self.setObject(object.name, object);
+            // }
+
+            await self.setObject(object.name, object);
         }
 
         // _.each(objects, (object) => {
