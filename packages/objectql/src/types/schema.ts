@@ -27,7 +27,6 @@ export class SteedosSchema {
         return this._metadataBroker;
     }
     public set metadataBroker(value: any) {
-        console.log('set metadataBroker....')
         this._metadataBroker = value;
         this.metadataRegister = new MetadataRegister(this._metadataBroker);
     }

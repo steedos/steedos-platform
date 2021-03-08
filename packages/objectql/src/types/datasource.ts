@@ -174,23 +174,20 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
-    initObjects(){
+    async initObjects(){
         // 从缓存中加载所有本数据源对象到datasource中
         let objects: Array<SteedosObjectTypeConfig> = getObjectConfigs(this._name);
-        _.each(objects, (object) => {
-            //TODO 处理异步 & 处理action异常
-            if(this.schema.metadataBroker){
-                this.schema.metadataRegister.object(object).then((res: boolean)=>{
-                    if(res){
-                        this.setObject(object.name, object);
-                    }
-                })
-                
+        let self = this;
+        for await (const object of _.values(objects)) {
+            if(self._schema.metadataBroker){
+                const res = await self._schema.metadataRegister.object(object)
+                if(res){
+                    self.setObject(object.name, object);
+                }
             }else{
-                this.setObject(object.name, object);
+                self.setObject(object.name, object);
             }
-            
-        });
+        }
 
         // _.each(objects, (object) => {
         //     const obj = this.getObject(object.name);
@@ -205,18 +202,18 @@ export class SteedosDataSourceType implements Dictionary {
         //     }
         // });
 
-        _.each(objects, (object) => {
-            const obj = this.getObject(object.name);
-            if(obj){
-                // 加try catch是因为有错误时不应该影响下一个对象加载
-                try{
-                    obj.checkMasterDetails();
-                }
-                catch(ex){
-                    console.error(ex);
-                }
-            }
-        });
+        // _.each(objects, (object) => {
+        //     const obj = this.getObject(object.name);
+        //     if(obj){
+        //         // 加try catch是因为有错误时不应该影响下一个对象加载
+        //         try{
+        //             obj.checkMasterDetails();
+        //         }
+        //         catch(ex){
+        //             console.error(ex);
+        //         }
+        //     }
+        // });
 
         _.each(this.config.objectsRolesPermission, (objectRolesPermission, object_name) => {
             _.each(objectRolesPermission, (objectRolePermission, role_name) => {
@@ -224,6 +221,8 @@ export class SteedosDataSourceType implements Dictionary {
                 this.setObjectPermission(object_name, objectRolePermission)
             })
         })
+
+        return true;
     }
 
     constructor(datasource_name: string, config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
@@ -242,7 +241,6 @@ export class SteedosDataSourceType implements Dictionary {
         this._driver = config.driver
         this._logging = config.logging
         this._locale = config.locale
-
         if(_.has(config, 'enable_space')){
             this._enable_space = config.enable_space
         }else{
@@ -417,8 +415,8 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
-    init() {
-        this.initObjects();
+    async init() {
+        await this.initObjects();
         this.initTypeORM();
         // initObjectFieldsSummarys(this.name);
         // this.schema.transformReferenceOfObject(this);
@@ -450,7 +448,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async connect() {
-        this.initObjects();
+        // this.initObjects();
         // init typeorm
         if (this._adapter.connect) 
             await this._adapter.connect()
