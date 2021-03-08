@@ -34,6 +34,9 @@ module.exports = {
 		packageInfo: {
 			path: standardObjectsPath,
 			name: '$packages-standard-objects'
+		},
+		apiServer: {
+			enabled: true
 		}
 	},
 

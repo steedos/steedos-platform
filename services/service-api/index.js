@@ -26,10 +26,10 @@ module.exports = {
 
 		routes: [
 			{
-				path: "/api",
+				path: "/service/api",
 
 				whitelist: [
-					"steedos.*"
+					"**"
 				],
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
@@ -83,11 +83,11 @@ module.exports = {
 				bodyParsers: {
 					json: {
 						strict: false,
-						limit: "1MB"
+						limit: "10MB"
 					},
 					urlencoded: {
 						extended: true,
-						limit: "1MB"
+						limit: "10MB"
 					}
 				},
 
