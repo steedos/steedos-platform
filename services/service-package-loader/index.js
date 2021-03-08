@@ -43,8 +43,9 @@ module.exports = {
 	 */
 	methods: {
 		loadPackageMetadataFiles: async function (packagePath, name) {
-			console.log('path: ', packagePath);
 			packagePath = path.join(packagePath, '**');
+			console.log('packagePath: ', packagePath);
+			objectql.loadStandardObjects();
 			objectql.addAllConfigFiles(packagePath, 'default');
 			await triggerLoader.load(this.broker, packagePath, name);
 			return;
