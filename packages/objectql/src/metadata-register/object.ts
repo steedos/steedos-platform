@@ -1,7 +1,8 @@
 import { CreateObjectService } from './objectServiceManager';
+import { getObjectServiceName } from '../services/index';
 const clone = require('clone');
 export async function registerObject(broker, objectConfig) {
-    const serviceName = `@${objectConfig.name}`;
+    const serviceName = getObjectServiceName(objectConfig.name);
     const metadata = clone(objectConfig);
     delete metadata.triggers
     const res = await broker.call("objects.add", {data: metadata}, {meta: {
