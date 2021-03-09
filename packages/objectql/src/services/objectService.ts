@@ -233,7 +233,7 @@ function getObjectServiceActionsSchema() {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { query } = ctx.params;
-                return this.directAggregate(query, userSession)
+                return this.directFind(query, userSession)
             }
         },
         directInsert: {
