@@ -1,6 +1,9 @@
 import { SteedosObjectType } from '../types/object';
 import { getDataSource } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
+import _ = require('underscore');
+import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql } from './utils';
+// var GraphQLJSON = require('graphql-type-json');
 // import { parse } from '@steedos/formula';
 // mongodb pipeline: https://docs.mongodb.com/manual/core/aggregation-pipeline/
 type externalPipelineItem = {
@@ -91,10 +94,6 @@ function getObjectServiceMethodsSchema() {
 function getObjectServiceActionsSchema() {
     const actions: any = {
         aggregate: {
-            rest: {
-                method: "GET",
-                path: "/aggregate"
-            },
             params: {
                 query: { type: "object" },
                 externalPipeline: { type: "array", items: "object" }
@@ -106,10 +105,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         find: {
-            rest: {
-                method: "GET",
-                path: "/find"
-            },
             params: {
                 query: { type: "object" }
             },
@@ -120,10 +115,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         findOne: {
-            rest: {
-                method: "GET",
-                path: "/findOne"
-            },
             params: {
                 id: { type: "any" },
                 query: { type: "object", optional: true }
@@ -135,10 +126,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         insert: {
-            rest: {
-                method: "POST",
-                path: "/insert"
-            },
             params: {
                 doc: { type: "object" }
             },
@@ -149,10 +136,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         updateOne: {
-            rest: {
-                method: "PUT",
-                path: "/updateOne"
-            },
             params: {
                 id: { type: "any" },
                 doc: { type: "object" }
@@ -164,10 +147,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         updateMany: {
-            rest: {
-                method: "PUT",
-                path: "/updateMany"
-            },
             params: {
                 queryFilters: { type: "array", items: "any" },
                 doc: { type: "object" }
@@ -179,10 +158,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         delete: {
-            rest: {
-                method: "DELETE",
-                path: "/delete"
-            },
             params: {
                 id: { type: "any" }
             },
@@ -193,10 +168,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         directAggregate: {
-            rest: {
-                method: "GET",
-                path: "/directAggregate"
-            },
             params: {
                 query: { type: "object" },
                 externalPipeline: { type: "array", items: "object" }
@@ -208,10 +179,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         directAggregatePrefixalPipeline: {
-            rest: {
-                method: "GET",
-                path: "/directAggregatePrefixalPipeline"
-            },
             params: {
                 query: { type: "object" },
                 prefixalPipeline: { type: "array", items: "object" }
@@ -223,10 +190,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         directFind: {
-            rest: {
-                method: "GET",
-                path: "/directFind"
-            },
             params: {
                 query: { type: "object" },
             },
@@ -237,10 +200,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         directInsert: {
-            rest: {
-                method: "POST",
-                path: "/directInsert"
-            },
             params: {
                 doc: { type: "object" }
             },
@@ -251,10 +210,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         directUpdate: {
-            rest: {
-                method: "PUT",
-                path: "/directUpdate"
-            },
             params: {
                 id: { type: "any" },
                 doc: { type: "object" }
@@ -266,10 +221,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         directDelete: {
-            rest: {
-                method: "DELETE",
-                path: "/directDelete"
-            },
             params: {
                 id: { type: "any" },
             },
@@ -280,10 +231,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         getField: {
-            rest: {
-                method: "GET",
-                path: "/getField"
-            },
             params: {
                 fieldName: { type: "string" },
             },
@@ -293,14 +240,27 @@ function getObjectServiceActionsSchema() {
             }
         },
         toConfig: {
-            rest: {
-                method: "GET",
-                path: "/toConfig"
-            },
             async handler(ctx) {
                 return this.toConfig()
             }
-        }
+        },
+        resolve: {
+            params: {
+                id: [{ type: "string", optional: true }, { type: "array", items: "string", optional: true }],
+            },
+            handler(ctx) {
+                let id = ctx.params.id;
+                if (!id) {
+                    return;
+                }
+                const userSession = ctx.meta.user;
+                if (Array.isArray(ctx.params.id)) {
+                    return this.find({ filters: [['_id', 'in', id]] }, userSession);
+                } else {
+                    return this.findOne(id, {}, userSession);
+                }
+            },
+        },
     };
     return actions;
 }
@@ -325,7 +285,6 @@ module.exports = {
     actions: getObjectServiceActionsSchema(),
     methods: getObjectServiceMethodsSchema(),
     created(broker) {
-        // console.log('this.settings', this.settings);
         if (!this.settings.objectApiName && !this.settings.objectConfig) {
             throw new Error('Please set the settings.objectApiName.')
         }
@@ -334,8 +293,23 @@ module.exports = {
             throw new Error('Not found object config by objectApiName.')
         }
         const datasource = getDataSource(objectConfig.datasource);
-        if(datasource){
+        if (datasource) {
             this.object = datasource.getObject(objectConfig.name);
+        }
+    },
+    merged(schema) {
+        let settings = schema.settings;
+        let objectConfig = settings.objectConfig;
+        if (objectConfig.enable_api) {
+            _.each(schema.actions, (action, actionName) => {
+                action.rest = generateActionRestProp(actionName);
+            })
+        }
+        if (objectConfig.enable_graphql || true) { // TODO object.yml添加enable_graphql属性
+            _.each(schema.actions, (action, actionName) => {
+                action.graphql = generateActionGraphqlProp(actionName, objectConfig);
+            })
+            settings.graphql = generateSettingsGraphql(objectConfig);
         }
     }
 }
