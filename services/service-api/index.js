@@ -2,6 +2,8 @@
 
 const ApiGateway = require("moleculer-web");
 const steedosAuth = require('@steedos/auth');
+const { ApolloService } = require("moleculer-apollo-server");
+const { GraphQLJSON } = require('graphql-type-json');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -11,7 +13,38 @@ const steedosAuth = require('@steedos/auth');
 
 module.exports = {
 	name: "api",
-	mixins: [ApiGateway],
+	mixins: [ApiGateway,
+		// GraphQL Apollo Server
+		ApolloService({
+
+			// Global GraphQL typeDefs
+			typeDefs: `scalar JSON`,
+
+			// Global resolvers
+			resolvers: {
+				JSON: GraphQLJSON,
+			},
+
+			// API Gateway route options
+			routeOptions: {
+				path: "/service/graphql",
+				cors: true,
+				mappingPolicy: "all"
+			},
+
+			// https://www.apollographql.com/docs/apollo-server/v2/api/apollo-server.html
+			serverOptions: {
+				tracing: true,
+
+				engine: {
+					apiKey: process.env.APOLLO_ENGINE_KEY
+				},
+				subscriptions: false,
+				playground: true,
+				introspection: true
+			}
+		})
+	],
 
 	// More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
 	settings: {
