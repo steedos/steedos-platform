@@ -1,7 +1,7 @@
 import steedosI18n = require("@steedos/i18n");
 import { getPlugins } from '../';
 import { requireAuthentication } from './auth'
-import { getObject, getLayout } from '@steedos/objectql'
+import { getObject, getLocalObject, getLayout } from '@steedos/objectql'
 require("@steedos/license");
 const Fiber = require('fibers')
 const clone = require("clone");
@@ -70,18 +70,31 @@ export async function getSpaceBootStrap(req, res) {
         
         let datasources = Creator.steedosSchema.getDataSources();
         
+        // for (const datasourceName in datasources) {
+        //     if(datasourceName != 'default'){
+        //         let datasource = datasources[datasourceName];
+        //         const datasourceObjects = datasource.getObjects();
+        //         for (const objectName in datasourceObjects) {
+        //             const object = datasourceObjects[objectName];
+        //             const _obj = Creator.convertObject(clone(object.toConfig()), spaceId)
+        //             _obj.name = objectName
+        //             _obj.database_name = datasourceName
+        //             _obj.permissions = await object.getUserObjectPermission(userSession)
+        //             result.objects[_obj.name] = _obj
+        //         }
+        //     }
+        // }
         for (const datasourceName in datasources) {
-            if(datasourceName != 'default'){
-                let datasource = datasources[datasourceName];
-                const datasourceObjects = datasource.getObjects();
-                for (const objectName in datasourceObjects) {
-                    const object = datasourceObjects[objectName];
-                    const _obj = Creator.convertObject(clone(object.toConfig()), spaceId)
-                    _obj.name = objectName
-                    _obj.database_name = datasourceName
-                    _obj.permissions = await object.getUserObjectPermission(userSession)
-                    result.objects[_obj.name] = _obj
-                }
+            let datasource = datasources[datasourceName];
+            const datasourceObjects = await datasource.getObjects();
+            for (const object of datasourceObjects) {
+                const objectConfig  = object.metadata;
+                const _obj = Creator.convertObject(clone(objectConfig), spaceId)
+                _obj.name = objectConfig.name
+                _obj.database_name = datasourceName
+                _obj.permissions = await getLocalObject('base').getUserObjectPermission(userSession)
+                // await object.getUserObjectPermission(userSession)
+                result.objects[_obj.name] = _obj
             }
         }
 

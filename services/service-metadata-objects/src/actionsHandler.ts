@@ -13,8 +13,8 @@ export type MetadataObject = {
     metadata: SObject
 }
 
-function cacherKey(APIName: string): string{
-    return `$steedos.#objects.${APIName}`
+function cacherKey(objectApiName: string): string{
+    return `$steedos.#objects.${objectApiName}`
 }
 
 export const ActionHandlers = {

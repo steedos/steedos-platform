@@ -130,7 +130,8 @@ export class ODataManager {
     for (let i = 0; i < createQuery.includes.length; i++) {
       let navigationProperty = createQuery.includes[i].navigationProperty;
       navigationProperty = navigationProperty.replace('/', '.')
-      let field = obj.fields[navigationProperty].toConfig();
+      // let field = obj.fields[navigationProperty].toConfig();
+      let field = await obj.getField(navigationProperty);
       if (field && (field.type === 'lookup' || field.type === 'master_detail')) {
         if (_.isFunction(field.reference_to)) {
           field.reference_to = field.reference_to();
@@ -281,7 +282,7 @@ export class ODataManager {
     return entities;
   }
 
-  makeAggregateLookup(createQuery: any, key: string, spaceId: string, userSession: object) {
+  async makeAggregateLookup(createQuery: any, key: string, spaceId: string, userSession: object) {
     if (_.isEmpty(createQuery.includes)) {
       return [];
     }
@@ -291,7 +292,8 @@ export class ODataManager {
     for (let i = 0; i < createQuery.includes.length; i++) {
       let navigationProperty = createQuery.includes[i].navigationProperty;
       navigationProperty = navigationProperty.replace('/', '.')
-      let field = obj.fields[navigationProperty].toConfig();
+      // let field = obj.fields[navigationProperty].toConfig();
+      let field = await obj.getField(navigationProperty);
       if (field && (field.type === 'lookup' || field.type === 'master_detail')) {
         let foreignFieldName = field.reference_to_field || '_id';
 
@@ -329,7 +331,7 @@ export class ODataManager {
     return pipeline;
   }
 
-  dealWithAggregateLookup(createQuery: any, entities: Array<any>, key: string, spaceId: string, userSession: object) {
+  async dealWithAggregateLookup(createQuery: any, entities: Array<any>, key: string, spaceId: string, userSession: object) {
     if (_.isEmpty(createQuery.includes)) {
       return entities;
     }
@@ -338,7 +340,8 @@ export class ODataManager {
     for (let i = 0; i < createQuery.includes.length; i++) {
       let navigationProperty = createQuery.includes[i].navigationProperty;
       navigationProperty = navigationProperty.replace('/', '.')
-      let field = obj.fields[navigationProperty].toConfig();
+      // let field = obj.fields[navigationProperty].toConfig();
+      let field = await obj.getField(navigationProperty);
       if (field && (field.type === 'lookup' || field.type === 'master_detail')) {
         if (_.isFunction(field.reference_to)) {
           field.reference_to = field.reference_to();

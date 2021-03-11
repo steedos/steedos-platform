@@ -28,6 +28,7 @@ import {
 import { SteedosDriverConfig } from '../driver';
 import { getObjectConfigs, addObjectConfig } from '.';
 import { createObjectService } from '../metadata-register/objectServiceManager';
+import { getObjectDispatcher } from '../services/index';
 let Fiber = require('fibers');
 
 export enum SteedosDatabaseDriverType {
@@ -106,12 +107,24 @@ export class SteedosDataSourceType implements Dictionary {
         return this._driver;
     }
 
-    getObjects() {
+    async getObjects() {
+        return await this.schema.metadataBroker.call('metadata.filter', {key: "$steedos.#objects.*"})
+    }
+
+    getLocalObjects() {
         return this._objects
     }
 
-    getObject(name: string) {
-        return this._objects[name]
+    getObject(objectApiName: string){
+        const localObject = this.getLocalObject(objectApiName);
+        if(localObject){
+            return localObject;
+        }
+        return getObjectDispatcher(objectApiName)
+    }
+
+    getLocalObject(objectApiName: string) {
+        return this._objects[objectApiName]
     }
 
     getObjectsConfig() {

@@ -1,7 +1,7 @@
 import _ = require('lodash')
 import path = require('path')
 import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig } from '.'
-import { isMeteor } from '../util'
+// import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
 import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset } from '../dynamic-load'
 
@@ -215,7 +215,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         extendOriginalObjectConfig(object_name, datasource, clone(objectConfig));
     } else {
         addOriginalObjectConfigs(object_name, datasource, clone(objectConfig));
-        if (isMeteor() && (datasource === 'default')) {
+        if (datasource === 'default') { // isMeteor() && (datasource === 'default')
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
             // 确保字段顺序正确，避免base中的字段跑到前面
             config.fields = _.clone(objectConfig.fields);

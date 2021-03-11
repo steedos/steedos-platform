@@ -451,6 +451,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this.fields[field_name]
     }
 
+    getFields(){
+        return this.toConfig().fields
+    }
+
     checkMasterDetails() {
         const mastersCount = this._masters.length;
         const detailsCount = this._details.length;
@@ -1347,4 +1351,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
 export function getObject(objectName: string, schema?: SteedosSchema) {
     return (schema ? schema : getSteedosSchema()).getObject(objectName);
+}
+export function getLocalObject(objectName: string, schema?: SteedosSchema) {
+    return (schema ? schema : getSteedosSchema()).getLocalObject(objectName);
 }

@@ -240,7 +240,7 @@ const getObjectData = async function (req: Request, res: Response) {
         if (entity) {
             fieldValue = entity[fieldName];
         }
-        let field = collection.fields[fieldName];
+        let field = await collection.getField(fieldName);
         if (field && fieldValue && (field.type === 'lookup' || field.type === 'master_detail')) {
             let lookupCollection = getSteedosSchema().getObject(String(field.reference_to));
             if (field.multiple) {

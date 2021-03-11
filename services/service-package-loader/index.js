@@ -3,7 +3,7 @@
 const objectql = require('@steedos/objectql');
 const triggerLoader = require('./lib').triggerLoader;
 const path = require('path');
-
+const Future = require('fibers/future');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -43,12 +43,17 @@ module.exports = {
 	 */
 	methods: {
 		loadPackageMetadataFiles: async function (packagePath, name) {
-			packagePath = path.join(packagePath, '**');
-			console.log('packagePath: ', packagePath);
-			objectql.loadStandardObjects();
-			objectql.addAllConfigFiles(packagePath, 'default');
-			await triggerLoader.load(this.broker, packagePath, name);
-			return;
+			await Future.task(async () => {
+				objectql.getSteedosSchema(this.broker);
+				packagePath = path.join(packagePath, '**');
+				objectql.loadStandardObjects();
+				objectql.addAllConfigFiles(packagePath, 'default');
+				const datasource = objectql.getDataSource('default');
+				await datasource.init();
+				await triggerLoader.load(this.broker, packagePath, name);
+				console.log('loadPackageMetadataFiles end...')
+				return;
+			}).promise();
 		}
 	},
 
@@ -71,6 +76,7 @@ module.exports = {
 			return;
 		}
 		await this.loadPackageMetadataFiles(path, name);
+		console.log(`service ${name} started`);
 	},
 
 	/**

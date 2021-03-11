@@ -73,16 +73,32 @@ function getObjectServiceMethodsSchema() {
                 return await this.object.directDelete(id, userSession)
             }
         },
+        count: {
+            async handler(query, userSession) {
+                return await this.object.count(query, userSession)
+            }
+        },
         getField: {
             handler(fieldName) {
-                return this.object.getField(fieldName)
+                return this.object.getField(fieldName).toConfig()
+            }
+        },
+        getFields: {
+            handler() {
+                return this.object.toConfig().fields;
             }
         },
         toConfig: {
             handler() {
                 return this.object.toConfig()
             }
+        },
+        getUserObjectPermission: {
+            handler(userSession) {
+                return this.object.getUserObjectPermission(userSession)
+            }
         }
+        
     };
 
     return methods;
@@ -279,17 +295,40 @@ function getObjectServiceActionsSchema() {
                 return this.directDelete(id, userSession)
             }
         },
+        count: {
+            rest: {
+                method: "GET",
+                path: "/count"
+            },
+            params: {
+                query: { type: "object" }
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { query } = ctx.params;
+                return this.count(query, userSession)
+            }
+        },
         getField: {
             rest: {
                 method: "GET",
                 path: "/getField"
             },
             params: {
-                fieldName: { type: "string" },
+                fieldApiName: { type: "string" },
             },
             async handler(ctx) {
-                const { fieldName } = ctx.params;
-                return this.getField(fieldName)
+                const { fieldApiName } = ctx.params;
+                return this.getField(fieldApiName)
+            }
+        },
+        getFields: {
+            rest: {
+                method: "GET",
+                path: "/getFields"
+            },
+            async handler(ctx) {
+                return this.getFields()
             }
         },
         toConfig: {
@@ -299,6 +338,16 @@ function getObjectServiceActionsSchema() {
             },
             async handler(ctx) {
                 return this.toConfig()
+            }
+        },
+        getUserObjectPermission: {
+            rest: {
+                method: "GET",
+                path: "/getUserObjectPermission"
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                return this.getUserObjectPermission(userSession)
             }
         }
     };
@@ -335,7 +384,7 @@ module.exports = {
         }
         const datasource = getDataSource(objectConfig.datasource);
         if(datasource){
-            this.object = datasource.getObject(objectConfig.name);
+            this.object = datasource.getLocalObject(objectConfig.name);
         }
     }
 }

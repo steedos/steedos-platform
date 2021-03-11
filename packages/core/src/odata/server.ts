@@ -63,9 +63,11 @@ export async function excuteObjectMethod(req, res) {
    return await meteorODataExpressMiddleware.excuteObjectMethod(req, res);
 }
 
+//TODO [微服务]重新处理此函数
 function _isMeteorDriver(req) {
    let urlParams = req.params;
    let key = urlParams.objectName;
    let collection = getSteedosSchema().getObject(key);
-   return collection.datasource.enable_space;
+   // return collection.datasource.enable_space;
+   return collection != null;
 }

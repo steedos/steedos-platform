@@ -59,11 +59,11 @@ const getObjectList = async function (req: Request, res: Response) {
                 if (queryParams.$orderby) {
                     query['sort'] = queryParams.$orderby;
                 }
-                let externalPipeline = getODataManager().makeAggregateLookup(createQuery, key, spaceId, userSession);
+                let externalPipeline = await getODataManager().makeAggregateLookup(createQuery, key, spaceId, userSession);
                 entities = await collection.aggregate(query, externalPipeline, userSession);
             }
             if (entities) {
-                entities = getODataManager().dealWithAggregateLookup(createQuery, entities, key, spaceId, userSession);
+                entities = await getODataManager().dealWithAggregateLookup(createQuery, entities, key, spaceId, userSession);
                 let body = {};
                 body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
                 if (queryParams.$count != 'false') {
@@ -252,13 +252,14 @@ const getObjectData = async function (req: Request, res: Response) {
         if (entity) {
             fieldValue = entity[fieldName];
         }
-        let field = collection.fields[fieldName];
+        let field = await collection.getField(fieldName);
         if (field && fieldValue && (field.type === 'lookup' || field.type === 'master_detail')) {
             let lookupCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
             let fields = [];
             // let readable_fields: any = await getCreator().getFields(field.reference_to, spaceId, userId);
             let permissions = await lookupCollection.getUserObjectPermission(userSession);
-            let readable_fields: any = getODataManager().getReadableFields(lookupCollection.fields, permissions.unreadable_fields);
+            let referenceObjectFields = await lookupCollection.getFields();
+            let readable_fields: any = getODataManager().getReadableFields(referenceObjectFields, permissions.unreadable_fields);
             _.each(readable_fields, function (f: string) {
                 if (f.indexOf('$') < 0) {
                     return fields.push(f)

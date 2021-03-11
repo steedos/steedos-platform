@@ -107,6 +107,34 @@ export class SteedosSchema {
         let args = name.split('.')
         if(args.length == 1){
             object_name = name
+            // let objectMap = this.getObjectMap(name);
+            // if(!objectMap){
+            //     throw new Error(`not find object ${name}`);
+            // }
+            // datasource_name = objectMap.datasourceName
+        }
+        if(args.length > 1){
+            datasource_name = args[0]
+            object_name = _.rest(args).join('.')
+        }
+
+        let datasource = this.getDataSource(datasource_name)
+
+        if(!datasource){
+            throw new Error(`not find datasource ${datasource_name}`);
+        }
+
+        return datasource.getObject(object_name)
+    }
+
+    getLocalObject(name: string) {
+        let datasource_name: string, object_name: string;
+        if(!name){
+            throw new Error('Object name is required');
+        }
+        let args = name.split('.')
+        if(args.length == 1){
+            object_name = name
             let objectMap = this.getObjectMap(name);
             if(!objectMap){
                 throw new Error(`not find object ${name}`);
@@ -124,7 +152,7 @@ export class SteedosSchema {
             throw new Error(`not find datasource ${datasource_name}`);
         }
 
-        return datasource.getObject(object_name)
+        return datasource.getLocalObject(object_name)
     }
 
     addDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig, readd?: boolean) {
@@ -162,8 +190,8 @@ export class SteedosSchema {
      * @memberof SteedosSchema
      * TODO 处理reference_to 为function的情况
      */
-    transformReferenceOfObject(datasource: SteedosDataSourceType): void{
-        let objects = datasource.getObjects();
+    async transformReferenceOfObject(datasource: SteedosDataSourceType): Promise<void>{
+        let objects = await datasource.getObjects();
         _.each(objects, (object, object_name) => {
             _.each(object.fields, (field, field_name)=>{
                 field.transformReferenceOfObject()
