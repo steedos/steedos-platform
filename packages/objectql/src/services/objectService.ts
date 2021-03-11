@@ -91,6 +91,11 @@ function getObjectServiceMethodsSchema() {
                 return this.object.toConfig().fields;
             }
         },
+        getNameFieldKey: {
+            handler(){
+                return this.object.getNameFieldKey();
+            }
+        },
         toConfig: {
             handler() {
                 return this.object.toConfig()
@@ -261,6 +266,10 @@ function getObjectServiceActionsSchema() {
             }
         },
         getField: {
+            rest: {
+                method: "GET",
+                path: "/field"
+            },
             params: {
                 fieldApiName: { type: "string" },
             },
@@ -272,11 +281,16 @@ function getObjectServiceActionsSchema() {
         getFields: {
             rest: {
                 method: "GET",
-                path: "/getFields"
+                path: "/fields"
             },
             async handler(ctx) {
                 return this.getFields()
             }
+        },
+        getNameFieldKey: {
+            async handler(ctx) {
+                return this.getNameFieldKey()
+            } 
         },
         toConfig: {
             async handler(ctx) {

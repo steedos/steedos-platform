@@ -455,6 +455,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this.toConfig().fields
     }
 
+    getNameFieldKey(){
+        return this.NAME_FIELD_KEY;
+    }
+
     checkMasterDetails() {
         const mastersCount = this._masters.length;
         const detailsCount = this._details.length;

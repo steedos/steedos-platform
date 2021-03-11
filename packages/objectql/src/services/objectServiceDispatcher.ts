@@ -4,19 +4,10 @@ class ObjectServiceDispatcher {
     serviceName: string;
     broker: any;
 
-    private _NAME_FIELD_KEY: string;
-    public get NAME_FIELD_KEY(): string {
-        return this._NAME_FIELD_KEY;
-    }
-    public set NAME_FIELD_KEY(value: string) {
-        this._NAME_FIELD_KEY = value;
-    }
-
     constructor(objectApiName) {
         this._name = objectApiName
         this.serviceName = `@${objectApiName}`;
         this.broker = getSteedosSchema().broker;
-        this._NAME_FIELD_KEY = 'name';
     }
 
     private getActionName(method: string){
@@ -105,6 +96,10 @@ class ObjectServiceDispatcher {
 
     async getFields(){
         return await this.callAction(`getFields`);
+    }
+
+    async getNameFieldKey(){
+        return await this.callAction(`getNameFieldKey`);
     }
 
     async toConfig() {
