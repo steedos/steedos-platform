@@ -2,7 +2,7 @@ import { SteedosObjectType } from '../types/object';
 import { getDataSource } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
 import _ = require('underscore');
-import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql } from './utils';
+import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql } from './helpers';
 // var GraphQLJSON = require('graphql-type-json');
 // import { parse } from '@steedos/formula';
 // mongodb pipeline: https://docs.mongodb.com/manual/core/aggregation-pipeline/
