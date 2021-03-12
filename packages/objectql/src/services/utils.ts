@@ -171,7 +171,7 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
             `;
             break;
         default:
-            console.error(`need to handle action: ${actionName}`);
+            // console.error(`need to handle action: ${actionName}`);
             break;
     }
     // console.log(gplObj);
