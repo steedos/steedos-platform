@@ -31,6 +31,11 @@ function getObjectServiceMethodsSchema() {
                 return await this.object.insert(doc, userSession)
             }
         },
+        update: {
+            async handler(id, doc, userSession) {
+                return await this.object.update(id, doc, userSession)
+            }
+        },
         updateOne: {
             async handler(id, doc, userSession) {
                 return await this.object.updateOne(id, doc, userSession)
@@ -154,6 +159,17 @@ function getObjectServiceActionsSchema() {
                 const userSession = ctx.meta.user;
                 const { doc } = ctx.params;
                 return this.insert(doc, userSession)
+            }
+        },
+        update: {
+            params: {
+                id: { type: "any" },
+                doc: { type: "object" }
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { id, doc } = ctx.params;
+                return this.update(id, doc, userSession)
             }
         },
         updateOne: {

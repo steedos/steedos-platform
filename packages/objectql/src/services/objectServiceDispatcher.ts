@@ -47,7 +47,7 @@ class ObjectServiceDispatcher {
     }
 
     async update(id, doc, userSession?) {
-        return await this.callAction(`updateOne`, {id, doc, userSession});
+        return await this.callAction(`update`, {id, doc, userSession});
     }
 
     async updateOne(id, doc, userSession?) {
