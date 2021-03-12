@@ -347,7 +347,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await todoWrapper.call(thisArg)
     }
 
-    async runMeteorTriggers(when: string, context: SteedosTriggerContextConfig) {
+    async runTriggers(when: string, context: SteedosTriggerContextConfig) {
         let triggers = this._triggersQueue[when]
         if (!triggers) {
             return;
@@ -906,14 +906,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
         let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
         let when = `before.${method}`;
-        await this.runMeteorTriggers(meteorWhen, context);
+        await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(when, context)
     }
 
     private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
         let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
         let when = `after.${method}`;
-        await this.runMeteorTriggers(meteorWhen, context);
+        await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(when, context)
     }
 

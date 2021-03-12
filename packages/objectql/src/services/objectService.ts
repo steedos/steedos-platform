@@ -132,12 +132,15 @@ function getObjectServiceActionsSchema() {
         },
         find: {
             params: {
-                query: { type: "object" }
+                fields: { type: 'array', items: "string", optional: true },
+                filters: { type: 'array', optional: true },
+                top: { type: 'number', optional: true },
+                skip: { type: 'number', optional: true },
+                sort: { type: 'string', optional: true }
             },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
-                const { query } = ctx.params;
-                return this.find(query, userSession)
+                return this.find(ctx.params, userSession)
             }
         },
         findOne: {
@@ -322,23 +325,6 @@ function getObjectServiceActionsSchema() {
                 const userSession = ctx.meta.user;
                 return this.getUserObjectPermission(userSession)
             }
-        },
-        resolve: {
-            params: {
-                id: [{ type: "string", optional: true }, { type: "array", items: "string", optional: true }],
-            },
-            handler(ctx) {
-                let id = ctx.params.id;
-                if (!id) {
-                    return;
-                }
-                const userSession = ctx.meta.user;
-                if (Array.isArray(ctx.params.id)) {
-                    return this.find({ filters: [['_id', 'in', id]] }, userSession);
-                } else {
-                    return this.findOne(id, {}, userSession);
-                }
-            },
         },
     };
     return actions;
