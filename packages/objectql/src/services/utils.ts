@@ -75,7 +75,7 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
         case 'find':
             gplObj.query = gql`
                 type Query {
-                    ${objectName}(query: JSON): [${objectName}]
+                    ${objectName}(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): [${objectName}]
                 }
             `;
             break;
@@ -171,9 +171,7 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
             `;
             break;
         default:
-            if (actionName != 'resolve') {
-                console.error(`need to handle action: ${actionName}`);
-            }
+            console.error(`need to handle action: ${actionName}`);
             break;
     }
     // console.log(gplObj);
@@ -193,6 +191,9 @@ const BASIC_TYPE_MAPPING = {
     'currency': 'Float',
     'boolean': 'Boolean'
 };
+
+const EXPAND_SUFFIX = '__expand';
+
 export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     let objectName = objectConfig.name;
     let fields = objectConfig.fields;
@@ -216,16 +217,33 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
         else if ((field.type == 'lookup' || field.type == 'master_detail') && field.reference_to && _.isString(field.reference_to)) {
             let refTo = field.reference_to;
             if (field.multiple) {
-                type += `${name}: [${refTo}] `;
+                type += `${name}: [String] `;
+                type += `${name}${EXPAND_SUFFIX}: [${refTo}] `;
+                resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = async function (parent, args, context, info) {
+                    let fieldName = info.fieldName.split(EXPAND_SUFFIX)[0];
+                    let filters = [];
+                    _.each(parent[fieldName], function (f) {
+                        filters.push(`(_id eq '${f}')`);
+                    })
+
+                    if (filters.length === 0) {
+                        return null;
+                    }
+                    return context.ctx.call(`${getObjectServiceName(refTo)}.find`, { filters: filters });
+                }
             } else {
-                type += `${name}: ${refTo} `;
+                type += `${name}: String `;
+                type += `${name}${EXPAND_SUFFIX}: ${refTo} `;
+                resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = async function (parent, args, context, info) {
+                    let fieldName = info.fieldName.split(EXPAND_SUFFIX)[0];
+                    let id = parent[fieldName];
+                    if (!id) {
+                        return;
+                    }
+                    return context.ctx.call(`${getObjectServiceName(refTo)}.findOne`, { id: id });
+                }
             }
-            let rootParams = {};
-            rootParams[name] = 'id';
-            resolvers[objectName][name] = {
-                action: `${getObjectServiceName(refTo)}.resolve`,
-                rootParams: rootParams
-            }
+
         }
         else {
             type += `${name}: JSON `;

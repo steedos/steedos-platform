@@ -310,23 +310,6 @@ function getObjectServiceActionsSchema() {
                 return this.getUserObjectPermission(userSession)
             }
         },
-        resolve: {
-            params: {
-                id: [{ type: "string", optional: true }, { type: "array", items: "string", optional: true }],
-            },
-            handler(ctx) {
-                let id = ctx.params.id;
-                if (!id) {
-                    return;
-                }
-                const userSession = ctx.meta.user;
-                if (Array.isArray(ctx.params.id)) {
-                    return this.find({ filters: [['_id', 'in', id]] }, userSession);
-                } else {
-                    return this.findOne(id, {}, userSession);
-                }
-            },
-        },
     };
     return actions;
 }
