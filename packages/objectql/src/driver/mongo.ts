@@ -214,6 +214,36 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
+    async directAggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[], userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let pipeline = [];
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let aggregateOptions = this.getAggregateOptions(query);
+
+        pipeline.push({ $match: mongoFilters });
+
+        pipeline = pipeline.concat(aggregateOptions).concat(externalPipeline);
+        let result = await collection.aggregate(pipeline).toArray();
+        return result;
+    }
+
+    async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let pipeline = [];
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let aggregateOptions = this.getAggregateOptions(query);
+
+        pipeline.push({ $match: mongoFilters });
+
+        // pipeline中的次序不能错，一定要先$lookup，再$match，再$project、$sort、$skip、$limit等，否则查询结果可能为空，比如公式字段中就用到了$lookup
+        pipeline = prefixalPipeline.concat(pipeline).concat(aggregateOptions);
+
+        let result = await collection.aggregate(pipeline).toArray();
+        return result;
+    }
+
     async count(tableName: string, query: SteedosQueryOptions) {
         await this.connect();
         let collection = this.collection(tableName);
