@@ -240,8 +240,17 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				return f.code == key
 
 		getFormField = (key) ->
-			return _.find formFields,  (f) ->
-				return f.code == key
+			ff = null
+			_.forEach formFields, (f) ->
+				if ff
+					return
+				if f.type == 'section'
+					ff = _.find f.fields,  (sf) ->
+						return sf.code == key
+				else if f.code == key
+					ff = f
+
+			return ff
 
 		getFormTableSubField = (tableField, subFieldCode) ->
 			return _.find tableField.fields,  (f) ->
