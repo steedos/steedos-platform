@@ -290,9 +290,12 @@ export const loadStandardObjects = () => {
     let baseObjectJs = util.loadFile(path.join(standardObjectsDir, "base.object.js"))
     baseObjectJs.extend = MONGO_BASE_OBJECT;
     addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE);
-    let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, "base.trigger.js"))
-    baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
-    addObjectListenerConfig(baseObjectTrigger)
+    const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.objectwebhooks.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js'];
+    _.forEach(baseTriggers, function(triggerFileName){
+        let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, triggerFileName))
+        baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
+        addObjectListenerConfig(baseObjectTrigger)
+    })
 
     let coreObject = util.loadFile(path.join(standardObjectsDir, "core.object.yml"))
     coreObject.name = SQL_BASE_OBJECT;

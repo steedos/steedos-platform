@@ -1,5 +1,6 @@
 const objectql = require('@steedos/objectql');
 const _ = require('underscore');
+const moment = require(`moment`);
 
 const caculateAutonumber = async function (objectName, fieldName, formula, spaceId) {
     var padding = function (num, length) {
@@ -87,7 +88,7 @@ const caculateAutonumber = async function (objectName, fieldName, formula, space
 module.exports = {
     listenTo: 'base',
     afterInsert: async function () {
-        var spaceId = doc.space;
+        const { spaceId, doc } = this;
         if (!spaceId) {
             return;
         }

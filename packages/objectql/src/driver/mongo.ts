@@ -289,7 +289,17 @@ export class SteedosMongoDriver implements SteedosDriver {
         } else {
             selector = { _id: id };
         }
-        let result = await collection.updateOne(selector, { $set: data });
+
+        const options = {$set: {}};
+        const keys = _.keys(data);
+        _.each(keys, function(key){
+            if(_.include(['$inc','$min','$max','$mul'], key)){
+                options[key] = data[key];
+            }else{
+                options.$set[key] = data[key];
+            }
+        })
+        let result = await collection.updateOne(selector, options);
         if (result.result.ok) {
             result = await collection.findOne(selector);
             return result;

@@ -294,8 +294,8 @@ const add = function(action, userId, object_name, new_doc, previous_doc, modifie
 module.exports = {
     listenTo: 'base',
     afterInsert: async function () {
-        const { object_name, doc } = this;
-        const obj = Creator.getObject(object_name);
+        const { object_name, doc, userId } = this;
+        const obj = objectql.getObject(object_name);
         const isEnableAudit = await obj.isEnableAudit();
         if (isEnableAudit) {
            const dbDoc = obj.findOne(doc._id);

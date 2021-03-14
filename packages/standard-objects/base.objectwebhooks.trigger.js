@@ -90,11 +90,11 @@ module.exports = {
         return await objectWebhooksPreSend(userId, doc, object_name, 'create');
     },
     afterUpdate: async function () {
-        const { doc, userId } = this;
+        const { doc, userId, object_name } = this;
         return await objectWebhooksPreSend(userId, doc, object_name, 'update');
     },
     afterDelete: async function () {
-        const { doc, userId } = this;
+        const { doc, userId, object_name } = this;
         return await objectWebhooksPreSend(userId, doc, object_name, 'create');
     }
 }

@@ -882,7 +882,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async _makeNewID(){
-        return await this.callAdapter('_makeNewID', this.table_name)
+        return await this._datasource._makeNewID(this.table_name);
     }
 
     async getFirstListView(){
@@ -892,7 +892,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async getAbsoluteUrl(app_id, record_id?){
         const object_name = this.name;
         const list_view:any = await this.getFirstListView();
-        const list_view_id = list_view._id || list_view.name
+        const list_view_id = list_view ? list_view._id || list_view.name : 'all'
         if(record_id)
             return absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
         else{

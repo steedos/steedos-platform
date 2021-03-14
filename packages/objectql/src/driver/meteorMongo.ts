@@ -400,8 +400,19 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         connection: null,
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
+
+                    const options = {$set: {}};
+                    const keys = _.keys(data);
+                    _.each(keys, function(key){
+                        if(_.include(['$inc','$min','$max','$mul'], key)){
+                            options[key] = data[key];
+                        }else{
+                            options.$set[key] = data[key];
+                        }
+                    })
+
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.update(selector, { $set: data });
+                        collection.update(selector, options);
                         return collection.findOne(selector);
                     })
                     resolve(result);
