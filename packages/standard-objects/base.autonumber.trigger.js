@@ -76,8 +76,7 @@ const caculateAutonumber = async function (objectName, fieldName, formula, space
         }
         await anColl.directInsert(insertObj);
     }
-    var currentNo = await anColl.findOne(anId).current_no;
-
+    var {current_no: currentNo} = await anColl.findOne(anId);
     var numberFormatMethod = function ($1) {
         return padding(currentNo, $1.length - 2);
     };
@@ -88,12 +87,11 @@ const caculateAutonumber = async function (objectName, fieldName, formula, space
 module.exports = {
     listenTo: 'base',
     afterInsert: async function () {
-        const { spaceId, doc } = this;
+        const { spaceId, doc, object_name } = this;
         if (!spaceId) {
             return;
         }
-        var obj, object_name, fields, setObj = {};
-        object_name = this.object_name;
+        var obj, fields, setObj = {};
         obj = objectql.getObject(object_name);
         fields = await obj.getFields();
 
@@ -104,9 +102,7 @@ module.exports = {
             }
         }
         if (!_.isEmpty(setObj)) {
-            objectql.getObject(object_name).directUpdate(doc._id, {
-                setObj
-            });
+            await objectql.getObject(object_name).directUpdate(doc._id, setObj);
         }
     }
 }

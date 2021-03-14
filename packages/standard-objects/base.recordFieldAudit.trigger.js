@@ -1,5 +1,6 @@
 const objectql = require('@steedos/objectql');
 const _ = require('underscore');
+const moment = require('moment');
 const getOrderlySetByIds = function(docs, ids, id_key, hit_first) {
     var values;
     if (!id_key) {
@@ -152,13 +153,13 @@ const updateRecord = async function(userId, object_name, new_doc, previous_doc, 
     //		return
     space_id = new_doc.space;
     record_id = new_doc._id;
-    fields = await objectql.getObject(object_name).fields()
+    fields = await objectql.getObject(object_name).getFields()
     utcOffset = 8;
     options = {
       utcOffset: utcOffset,
       space_id: space_id
     };
-    const keys = _.keys(v);
+    const keys = _.keys(modifier);
     for(var i = 0; i < keys.length; i++ ){
         const k = keys[i];
         const v = modifier[k];
