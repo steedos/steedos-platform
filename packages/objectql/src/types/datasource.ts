@@ -402,6 +402,10 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.directAggregatePrefixalPipeline(tableName, query, prefixalPipeline, userId)
     }
 
+    _makeNewID(tableName: string){
+        return this._adapter._makeNewID(tableName)
+    }
+
     public get schema(): SteedosSchema {
         return this._schema;
     }

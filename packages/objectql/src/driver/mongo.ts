@@ -353,4 +353,9 @@ export class SteedosMongoDriver implements SteedosDriver {
         return this.delete(tableName, id)
     }
 
+    _makeNewID(tableName: string){
+        if(tableName){}
+        return new ObjectId().toHexString();
+    }
+
 }

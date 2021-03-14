@@ -600,4 +600,9 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
             }).run()
         });
     }
+
+    _makeNewID(tableName){
+        let collection = this.collection(tableName);
+        return collection._makeNewID();
+    }
 }

@@ -84,6 +84,12 @@ module.exports = {
                 return await this.summaryActionHandler.get(ctx);
             }
         },
+        getDetails: {
+            async handler(ctx) {
+                const {objectApiName} = ctx.params;
+                return await this.masterDetailActionHandler.getDetails(objectApiName);
+            }
+        },
         getDetailPaths:{
             async handler(ctx) {
                 const {objectApiName} = ctx.params;
@@ -94,6 +100,12 @@ module.exports = {
             async handler(ctx) {
                 const {objectApiName, paths} = ctx.params;
                 return await this.masterDetailActionHandler.getMaxDetailsLeave(objectApiName, paths);
+            }
+        },
+        getMasters: {
+            async handler(ctx) {
+                const {objectApiName} = ctx.params;
+                return await this.masterDetailActionHandler.getMasters(objectApiName);
             }
         },
         getMasterPaths:{
@@ -110,14 +122,14 @@ module.exports = {
         }
     },
     hooks:{
-        error: {
-            // Global error handler
-            "*": function(ctx, err) {
-                this.logger.error(`Error occurred when '${ctx.action.name}' action was called`, err);
-                // Throw further the error
-                throw err;
-            }
-        }
+        // error: {
+        //     // Global error handler
+        //     "*": function(ctx, err) {
+        //         // this.logger.error(`Error occurred when '${ctx.action.name}' action was called`, err);
+        //         // Throw further the error
+        //         throw err;
+        //     }
+        // }
     },
     /**
      * Events

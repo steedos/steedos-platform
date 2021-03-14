@@ -1,21 +1,29 @@
 import { getSteedosSchema } from '../types/schema';
 class ObjectServiceDispatcher {
-    _name: string;
+    objectApiName: string;
     serviceName: string;
     broker: any;
+    metadataBroker: any;
 
     constructor(objectApiName) {
-        this._name = objectApiName
+        this.objectApiName = objectApiName
         this.serviceName = `@${objectApiName}`;
         this.broker = getSteedosSchema().broker;
+        this.metadataBroker = getSteedosSchema().metadataBroker;
     }
 
-    private getActionName(method: string){
+    private async callMetadataObjectServiceAction(action, params?){
+        const actionFullName = `objects.${action}`
+        const result = await this.metadataBroker.call(actionFullName, params);
+        return result;
+    }
+
+    private getActionFullName(method: string){
         return `${this.serviceName}.${method}`
     }
 
     private async callAction(method: string, params?){
-        const actionName = this.getActionName(method);
+        const actionFullName = this.getActionFullName(method);
         if(!params){
             params = {};
         }
@@ -26,7 +34,7 @@ class ObjectServiceDispatcher {
         };
 
         delete params.userSession;
-        const result = await this.broker.call(actionName, params, opts);
+        const result = await this.broker.call(actionFullName, params, opts);
         return result;
     }
 
@@ -109,6 +117,34 @@ class ObjectServiceDispatcher {
     async getUserObjectPermission(userSession){
         const permission = await this.callAction(`getUserObjectPermission`, {userSession});
         return permission;
+    }
+
+    async isEnableAudit(){
+        return await this.callAction(`isEnableAudit`);
+    }
+
+    async _makeNewID(){
+        return await this.callAction(`_makeNewID`);
+    }
+
+    async getRecordAbsoluteUrl(){
+        return await this.callAction(`getRecordAbsoluteUrl`)
+    }
+
+    async getGridAbsoluteUrl(){
+        return await this.callAction(`getRecordAbsoluteUrl`)
+    }
+
+    async getDetails(){
+        return await this.callMetadataObjectServiceAction(`getDetails`, {objectApiName: this.objectApiName});
+    }
+
+    async getMasters(){
+        return await this.callMetadataObjectServiceAction(`getMasters`, {objectApiName: this.objectApiName});
+    }
+
+    async getRecordPermissions(record, userSession){
+        return await this.callAction(`getRecordPermissions`, {record, userSession});
     }
 }
 

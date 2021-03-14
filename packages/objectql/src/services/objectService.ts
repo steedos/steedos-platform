@@ -110,8 +110,32 @@ function getObjectServiceMethodsSchema() {
             handler(userSession) {
                 return this.object.getUserObjectPermission(userSession)
             }
+        },
+        isEnableAudit:{
+            handler() {
+                return this.object.isEnableAudit()
+            }
+        },
+        _makeNewID: {
+            async handler() {
+                return this.object._makeNewID();
+            }
+        },
+        getRecordAbsoluteUrl:{
+            async handler() {
+                return this.object.getRecordAbsoluteUrl();
+            }
+        },
+        getGridAbsoluteUrl:{
+            async handler() {
+                return this.object.getGridAbsoluteUrl();
+            }
+        },
+        getRecordPermissions:{
+            async handler(record, userSession) {
+                return this.object.getRecordPermissions(record, userSession);
+            }
         }
-        
     };
 
     return methods;
@@ -326,6 +350,33 @@ function getObjectServiceActionsSchema() {
                 return this.getUserObjectPermission(userSession)
             }
         },
+        isEnableAudit: {
+            async handler() {
+                return this.isEnableAudit();
+            }
+        },
+        _makeNewID: {
+            async handler() {
+                return this._makeNewID();
+            }
+        },
+        getRecordAbsoluteUrl:{
+            async handler() {
+                return this.getRecordAbsoluteUrl();
+            }
+        },
+        getGridAbsoluteUrl:{
+            async handler() {
+                return this.getGridAbsoluteUrl();
+            }
+        },
+        getRecordPermissions:{
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { record } = ctx.params;
+                return this.getRecordPermissions(record, userSession);
+            }
+        }
     };
     return actions;
 }

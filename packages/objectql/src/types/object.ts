@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema } from ".";
-import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams } from '../util'
+import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl } from '../util'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -214,6 +214,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     public get details(): string[] {
         return this._details;
+    }
+
+    private async callMetadataObjectServiceAction(action, params?){
+        const actionFullName = `objects.${action}`
+        const result = await this.schema.metadataBroker.call(actionFullName, params);
+        return result;
     }
 
     private checkField() {
@@ -873,6 +879,107 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async directDelete(id: SteedosIDType, userSession?: SteedosUserSession) {
         let clonedId = id;
         return await this.callAdapter('directDelete', this.table_name, clonedId, userSession)
+    }
+
+    async _makeNewID(){
+        return await this.callAdapter('_makeNewID', this.table_name)
+    }
+
+    async getFirstListView(){
+        return this.list_views[0];
+    }
+
+    async getAbsoluteUrl(app_id, record_id?){
+        const object_name = this.name;
+        const list_view:any = await this.getFirstListView();
+        const list_view_id = list_view._id || list_view.name
+        if(record_id)
+            return absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
+        else{
+            if(object_name === 'meeting'){
+                return absoluteUrl("/app/" + app_id + "/" + object_name + "/calendar/")
+            }else{
+                return absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+            }
+        }
+    }
+
+    async getRecordAbsoluteUrl(app_id, record_id){
+        return await this.getAbsoluteUrl(app_id, record_id)
+    }
+
+    async getGridAbsoluteUrl(app_id){
+        return await this.getAbsoluteUrl(app_id)
+    }
+
+    async isEnableAudit(){
+        return this.enable_audit;
+    }
+
+    async getDetails(){
+        return await this.callMetadataObjectServiceAction(`getDetails`, {objectApiName: this.name});
+    }
+
+    async getMasters(){
+        return await this.callMetadataObjectServiceAction(`getMasters`, {objectApiName: this.name});
+    }
+
+    async getRecordPermissions(record, userSession){
+        const permissions = await this.getUserObjectPermission(userSession);
+        const { userId, company_ids: user_company_ids } = userSession;
+        if(record){
+            if(record.record_permissions){
+                return record.record_permissions
+            }
+            let recordOwnerId = record.owner;
+            if(_.isObject(recordOwnerId)){
+                recordOwnerId = recordOwnerId._id;
+            }
+            const isOwner = recordOwnerId == userId;
+            let record_company_id = record.company_id;
+            if(record_company_id && _.isObject(record_company_id) && record_company_id._id){
+                record_company_id = record_company_id._id;
+            }
+            let record_company_ids = record.company_ids;
+            if(record_company_ids && record_company_ids.length && _.isObject(record_company_ids[0])){
+                record_company_ids = record_company_ids.map((n)=> n._id)
+            }
+            record_company_ids = _.union(record_company_ids, [record_company_id]);
+            if(!permissions.modifyAllRecords && !isOwner && !permissions.modifyCompanyRecords){
+                permissions.allowEdit = false
+			    permissions.allowDelete = false
+            }else if(!permissions.modifyAllRecords && permissions.modifyCompanyRecords){
+                if(record_company_ids && record_company_ids.length){
+                    if(user_company_ids && user_company_ids.length){
+                        if(!_.intersection(user_company_ids, record_company_ids).length){
+                            permissions.allowEdit = false
+						    permissions.allowDelete = false
+                        }
+                    }else{
+                        permissions.allowEdit = false
+                        permissions.allowDelete = false
+                    }
+                }
+            }
+            if(record.locked && !permissions.modifyAllRecords){
+                permissions.allowEdit = false
+			    permissions.allowDelete = false
+            }
+            if(!permissions.viewAllRecords && !isOwner && !permissions.viewCompanyRecords){
+                permissions.allowRead = false
+            }else{
+                if(record_company_ids && record_company_ids.length){
+                    if(user_company_ids && user_company_ids.length){
+                        if(!_.intersection(user_company_ids, record_company_ids).length){
+                            permissions.allowRead = false
+                        }
+                    }else{
+                        permissions.allowRead = false
+                    }
+                }
+            }
+        }
+        return permissions
     }
 
     private isDirectCRUD(methodName: string) {

@@ -38,6 +38,12 @@ export function newCollection(tableName: string, datasourceName?: string, option
 
     }
 
+    if(tableName === 'object_webhooks_queue'){
+        if(ObjectWebhooksQueue && ObjectWebhooksQueue.collection){
+            return ObjectWebhooksQueue.collection
+        }
+    }
+
     if (options) {
         return new Meteor.Collection(tableName, options)
     } else {

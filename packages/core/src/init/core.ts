@@ -96,6 +96,9 @@ const getClientBaseObject = () => {
         if (typeof val === 'function') {
             return "$FS$" + val.toString().replace(/\"/g, "'")+"$FE$";
         }
+        if(key === 'listeners'){
+            return 'null';
+        }
         return val;
     });
     let code = "Creator.baseObject=" + baseObject;
