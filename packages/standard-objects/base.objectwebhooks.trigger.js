@@ -87,14 +87,16 @@ module.exports = {
     listenTo: 'base',
     afterInsert: async function () {
         const { doc, userId, object_name } = this;
-        return await objectWebhooksPreSend(userId, doc, object_name, 'create');
+        const dbDoc = await obj.findOne(doc._id);
+        return await objectWebhooksPreSend(userId, dbDoc, object_name, 'create');
     },
     afterUpdate: async function () {
         const { doc, userId, object_name } = this;
-        return await objectWebhooksPreSend(userId, doc, object_name, 'update');
+        const dbDoc = await obj.findOne(doc._id);
+        return await objectWebhooksPreSend(userId, dbDoc, object_name, 'update');
     },
     afterDelete: async function () {
-        const { doc, userId, object_name } = this;
-        return await objectWebhooksPreSend(userId, doc, object_name, 'create');
+        const { previousDoc, userId, object_name } = this;
+        return await objectWebhooksPreSend(userId, previousDoc, object_name, 'create');
     }
 }
