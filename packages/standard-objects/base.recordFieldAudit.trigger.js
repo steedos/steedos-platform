@@ -299,16 +299,16 @@ module.exports = {
         const obj = objectql.getObject(object_name);
         const isEnableAudit = await obj.isEnableAudit();
         if (isEnableAudit) {
-           const dbDoc = obj.findOne(doc._id);
+           const dbDoc = await obj.findOne(doc._id);
            await add('insert', userId, this.object_name, dbDoc) 
         }
     },
     afterUpdate: async function () {
-        const { doc, previousDoc, userId, object_name } = this;
+        const { doc, previousDoc, userId, object_name, id } = this;
         const obj = objectql.getObject(object_name);
         const isEnableAudit = await obj.isEnableAudit();
         if (isEnableAudit) {
-            const dbDoc = obj.findOne(doc._id);
+            const dbDoc = await obj.findOne(id);
             return add('update', userId, object_name, dbDoc, previousDoc, doc);
         }
     }
