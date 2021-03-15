@@ -258,17 +258,19 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 		getFieldOdataValue = (objName, id) ->
 			obj = Creator.getCollection(objName)
+			o = Creator.getObject(objName, spaceId)
+			nameKey = o.NAME_FIELD_KEY
 			if !obj
 				return
 			if _.isString id
 				_record = obj.findOne(id)
 				if _record
-					_record['@label'] = _record.name
+					_record['@label'] = _record[nameKey]
 					return _record
 			else if _.isArray id
 				_records = []
 				obj.find({ _id: { $in: id } }).forEach (_record) ->
-					_record['@label'] = _record.name
+					_record['@label'] = _record[nameKey]
 					_records.push _record
 
 				if !_.isEmpty _records
