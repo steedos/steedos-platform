@@ -424,9 +424,9 @@ var triggers = {
       //   throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
       // }
 
-      let oldReferenceTo = doc.type === "master_detail" && doc.reference_to;
-      checkMasterDetailTypeField(modifier.$set, oldReferenceTo);
-      checkOwnerField(modifier.$set);
+      // let oldReferenceTo = doc.type === "master_detail" && doc.reference_to;
+      // checkMasterDetailTypeField(modifier.$set, oldReferenceTo);
+      // checkOwnerField(modifier.$set);
 
       if (modifier != null ? (ref2 = modifier.$set) != null ? ref2.reference_to : void 0 : void 0) {
         if (modifier.$set.reference_to.length === 1) {
@@ -494,8 +494,8 @@ var triggers = {
       // if(doc.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
       //   throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
       // }
-      checkMasterDetailTypeField(doc);
-      checkOwnerField(doc);
+      // checkMasterDetailTypeField(doc);
+      // checkOwnerField(doc);
 
       let defProps = getFieldDefaultProps(doc);
       Object.assign(doc, defProps);

@@ -14,9 +14,10 @@ const setDetailOwner = async function (doc, object_name, userId) {
             1.必须至少具体其所有父对象关联记录的只读权限或可编辑权限（是只读还是可编辑取决于子表关系字段上是否勾选了write_requires_master_read属性）才能新建/编辑当前记录 
             2.当前记录的owner强制设置为其关联的首要主对象（即masters中第一个对象）记录的owner值
         */
-        const userSession = steedosAuth.getSessionByUserIdSync(userId, doc.space);
+        const userSession = await steedosAuth.getSessionByUserId(userId, doc.space);
         for(var index = 0; index < masters.length ; index++){
             const objFields = await obj.getFields();
+            const master = masters[index];
             const refField = _.find(objFields,(n)=>{ return n.type === "master_detail" && n.reference_to === master;});
             if(refField && refField.name){
                 let write_requires_master_read = refField.write_requires_master_read || false; /* 默认对主表有编辑权限才可新建或者编辑子表 */

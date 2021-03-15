@@ -143,6 +143,22 @@ class ObjectServiceDispatcher {
         return await this.callMetadataObjectServiceAction(`getMasters`, {objectApiName: this.objectApiName});
     }
 
+    async getDetailPaths(){
+        return await this.callMetadataObjectServiceAction(`getDetailPaths`, {objectApiName: this.objectApiName});
+    }
+
+    async getMasterPaths(){
+        return await this.callMetadataObjectServiceAction(`getMasterPaths`, {objectApiName: this.objectApiName});
+    }
+
+    async getMaxDetailsLeave(paths?){
+        return await this.callMetadataObjectServiceAction(`getMaxDetailsLeave`, {objectApiName: this.objectApiName, paths});
+    }
+
+    async getMaxMastersLeave(paths?){
+        return await this.callMetadataObjectServiceAction(`getMaxMastersLeave`, {objectApiName: this.objectApiName, paths});
+    }
+
     async getRecordPermissions(record, userSession){
         return await this.callAction(`getRecordPermissions`, {record, userSession});
     }
