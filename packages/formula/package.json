@@ -1,6 +1,6 @@
 {
   "name": "@steedos/formula",
-  "version": "1.23.20",
+  "version": "1.23.21",
   "description": "Salesforce Formula Parser",
   "main": "lib/formulon.js",
   "files": [
@@ -31,7 +31,6 @@
   ],
   "author": "Leif Gensert",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
