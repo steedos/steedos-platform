@@ -158,7 +158,7 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let fields = InternalData.getObjectFields(filters.object, this.userId);
+            let fields = await InternalData.getObjectFields(filters.object, this.userId);
             if(fields){
                 this.data.values = this.data.values.concat(fields)
             }
@@ -167,7 +167,7 @@ module.exports = {
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let fields = InternalData.getObjectFields(filters.object, this.userId);
+            let fields = await InternalData.getObjectFields(filters.object, this.userId);
             if(fields){
                 this.data.values = this.data.values.concat(fields)
             }
@@ -176,7 +176,7 @@ module.exports = {
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let fields = InternalData.getObjectFields(filters.object, this.userId);
+            let fields = await InternalData.getObjectFields(filters.object, this.userId);
             if(fields){
                 this.data.values = this.data.values + fields.length
             }
@@ -187,7 +187,7 @@ module.exports = {
             let id = this.id
             let objectName = id.substr(0, id.indexOf("."));
             if(objectName){
-                let field = InternalData.getObjectField(objectName, this.userId, id);
+                let field = await InternalData.getObjectField(objectName, this.userId, id);
                 if(field){
                     this.data.values = field;
                 }

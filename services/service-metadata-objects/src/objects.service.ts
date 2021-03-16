@@ -35,6 +35,15 @@ module.exports = {
                 return await ActionHandlers.get(ctx);
             }
         },
+        getAll: {
+            rest: {
+                method: "GET",
+                path: "/objects"
+            },
+            async handler(ctx) {
+                return await ActionHandlers.getAll(ctx);
+            }
+        },
         add: {
             async handler(ctx) {
                 // this.broker.emit("$object.registered", {name: 'test'});

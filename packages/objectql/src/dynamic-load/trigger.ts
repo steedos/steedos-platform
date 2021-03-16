@@ -56,7 +56,7 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
         const license = clone(json);
         license.name = json._id || getMD5(JSONStringify(json));
         object.listeners[license.name] = license
-        if(object.datasource === 'default'){
+        if(object.datasource === 'meteor'){
             util.extend(object, {triggers: transformListenersToTriggers(object, license)})
         }
     }

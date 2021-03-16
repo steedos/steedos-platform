@@ -1,16 +1,18 @@
 import { Dictionary } from '@salesforce/ts-types';
 import { SteedosDataSourceType, SteedosDataSourceTypeConfig } from ".";
-import { isMeteor, getSteedosConfig, wrapAsync } from "../util";
+import { isMeteor, getSteedosConfig } from "../util";
+// import { isMeteor, getSteedosConfig, wrapAsync } from "../util";
 import _ = require("underscore");
 import { getFromContainer } from 'typeorm';
 // import { loadCoreValidators } from '../validators';
 import { loadStandardObjects } from './object_dynamic_load';
-import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
+// import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
 import { buildGraphQLSchema } from '../graphql';
 import { loadStandardProfiles, loadStandardPermissionsets } from '../dynamic-load';
 import { MetadataRegister } from '../metadata-register';
 
 const defaultDatasourceName = 'default';
+const meteorDatasourceName = 'meteor';
 
 export type SteedosSchemaConfig = {
     datasources?: Dictionary<SteedosDataSourceTypeConfig>
@@ -42,6 +44,8 @@ export class SteedosSchema {
         let objectMap = this.getObjectMap(objectName);
         if(objectMap){
             if(objectName != 'base' && objectName != 'core' && objectMap.datasourceName != options.datasourceName){
+                console.log(`objectMap.datasourceName`, objectMap.datasourceName)
+                console.log(`options.datasourceName`, options.datasourceName)
                 throw new Error(`object name ${objectName} is unique, you can set table_name; see: https://developer.steedos.com/developer/object#%E5%AF%B9%E8%B1%A1%E5%90%8D-name`)
             }
         }
@@ -61,23 +65,37 @@ export class SteedosSchema {
         if(config && config.datasources){
             _.each(config.datasources, (datasource: any, datasource_name: string)=>{
                 datasource = _.extend(datasource, datasource.connection)
-                if (datasource_name === 'default') {
-                    if (isMeteor())
-                        datasource.driver = "meteor-mongo"
-                    else
-                        datasource.driver = "mongo"
+                if(datasource_name === 'default'){
+                    datasource.driver = "mongo"
+                }else if(datasource_name === meteorDatasourceName){
+                    if(!isMeteor()){
+                        throw new Error('not find Meteor, can not set datasource name is meteor')
+                    }
+                    datasource.driver = "meteor-mongo"
                 }
+                // if (datasource_name === 'default') {
+                //     if (isMeteor())
+                //         datasource.driver = "meteor-mongo"
+                //     else
+                //         datasource.driver = "mongo"
+                // }
                 this.addDataSource(datasource_name, datasource);
             })
+        }
+
+        if(isMeteor() && !this.getDataSource(meteorDatasourceName)){
+            if(config.datasources.default){
+                this.addDataSource(meteorDatasourceName, Object.assign({}, config.datasources.default, {driver: 'meteor-mongo'}));
+            }
         }
     }
 
     constructor(config?: SteedosSchemaConfig) {
         
         // loadCoreValidators();
-
-        wrapAsync(preloadDBObjectFields, {});
-        wrapAsync(preloadDBObjectButtons, {});
+        // TODO 以下两行代码需要放开
+        // wrapAsync(preloadDBObjectFields, {});
+        // wrapAsync(preloadDBObjectButtons, {});
 
         loadStandardProfiles();
         loadStandardPermissionsets();
@@ -165,7 +183,7 @@ export class SteedosSchema {
     }
 
     async removeDataSource(datasource_name){
-        if(datasource_name != defaultDatasourceName){
+        if(datasource_name != defaultDatasourceName && datasource_name != meteorDatasourceName){
             let datasource = this._datasources[datasource_name];
             if(datasource){
                 delete this._datasources[datasource_name];
@@ -199,7 +217,7 @@ export class SteedosSchema {
         })
     }
 
-    getDataSource(datasource_name: string = defaultDatasourceName) {
+    getDataSource(datasource_name: string = meteorDatasourceName) {
         return this._datasources[datasource_name]
     }
 
@@ -218,6 +236,9 @@ export class SteedosSchema {
         return this.graphQLSchema;
     }
 
+    async getAllObject(){
+        return await this.metadataBroker.call("objects.getAll");
+    }
 }
 
 export function getSteedosSchema(broker?:any, metadataBroker?: any): SteedosSchema {

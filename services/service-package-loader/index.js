@@ -42,16 +42,19 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
-		loadPackageMetadataFiles: async function (packagePath, name) {
+		loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
 			await Future.task(async () => {
+				//datasourceName 参数为临时改动，待meteor-package-load 处理完成后，此部分代码可以删除
+				if(!datasourceName){
+					datasourceName = 'default';
+				}
 				objectql.getSteedosSchema(this.broker);
 				packagePath = path.join(packagePath, '**');
 				objectql.loadStandardObjects();
-				objectql.addAllConfigFiles(packagePath, 'default');
-				const datasource = objectql.getDataSource('default');
+				objectql.addAllConfigFiles(packagePath, datasourceName);
+				const datasource = objectql.getDataSource(datasourceName);
 				await datasource.init();
 				await triggerLoader.load(this.broker, packagePath, name);
-				console.log('loadPackageMetadataFiles end...')
 				return;
 			}).promise();
 		}
@@ -69,13 +72,12 @@ module.exports = {
 	 */
 	async started() {
 		let packageInfo = this.settings.packageInfo;
-		let path = packageInfo.path;
-		let name = packageInfo.name;
+		const {path, name, datasource} = packageInfo;
 		if (!path || !name) {
 			this.logger.error(`Please config packageInfo in your settings.`);
 			return;
 		}
-		await this.loadPackageMetadataFiles(path, name);
+		await this.loadPackageMetadataFiles(path, name, datasource);
 		console.log(`service ${name} started`);
 	},
 

@@ -104,7 +104,7 @@ export class SteedosAppType{
 
     transformReferenceOfObject(){
         let datasource = this._datasource;
-        if(datasource.name != 'default'){
+        if(datasource.name != 'meteor'){
             if(_.isArray(this.objects)){
                 let objects: string[] = []
                 _.each(this.objects, (object_name)=>{

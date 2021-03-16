@@ -239,7 +239,7 @@ export async function getSpaceObjectBootStrap(req, res) {
             }
         } else {
             if (userSession.is_space_admin || _object.in_development == '0' && _object.is_enable) {
-                if (_object.datasource == 'default') {
+                if (_object.datasource == 'meteor') {
                     objectConfig = Creator.getAllPermissions(spaceId, userId).objects[objectName]
                 } else {
                     objectConfig = await getObjectConfig(objectName, spaceId, userSession);

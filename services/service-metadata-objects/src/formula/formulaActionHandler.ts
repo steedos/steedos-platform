@@ -207,7 +207,7 @@ export class FormulaActionHandler{
             // console.log('key', key);
             // const field = config.fields[key]
             if (field.type === "formula") {
-                if(datasource !== "default"){
+                if(datasource !== "meteor"){
                     throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'formula', because it is not in the default datasource.`);
                 }
                 try {

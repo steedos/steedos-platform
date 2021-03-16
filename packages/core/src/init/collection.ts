@@ -5,9 +5,9 @@ let mongodrivers = {};
 
 export function newCollection(tableName: string, datasourceName?: string, options?: object) {
     if (!datasourceName) {
-        datasourceName = 'default'
+        datasourceName = 'meteor'
     }
-    let datasourceConfig = config.datasources[datasourceName];
+    let datasourceConfig = config.datasources[datasourceName] || config.datasources['default'];
     let locale = datasourceConfig.locale || 'zh';
     let driver = mongodrivers[datasourceName];
     if (!driver) {

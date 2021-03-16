@@ -21,6 +21,9 @@ export const ActionHandlers = {
     async get(ctx: any): Promise<MetadataObject> {
         return await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
     },
+    async getAll(ctx: any): Promise<MetadataObject> {
+        return await ctx.broker.call('metadata.filter', {key: cacherKey("*")}, {meta: ctx.meta})
+    },
     async add(ctx: any): Promise<boolean>{
         return await ctx.broker.call('metadata.add', {key: cacherKey(ctx.params.data.name), data: ctx.params.data}, {meta: ctx.meta})
     },

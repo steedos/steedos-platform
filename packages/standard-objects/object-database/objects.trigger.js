@@ -4,24 +4,24 @@ const objectql = require('@steedos/objectql');
 module.exports = {
     afterFind: async function(){
         let userId = this.userId
-        _.each(this.data.values, function(doc){
-            doc.fields =  Object.assign({}, doc.fields, InternalData.getDefaultSysFields(doc.name, userId)) ;
-        })
-        this.data.values = this.data.values.concat(InternalData.findObjects(userId, this.query.filters))
+        for (const doc of this.data.values) {
+            doc.fields =  Object.assign({}, doc.fields, await InternalData.getDefaultSysFields(doc.name, userId)) ;
+        }
+        this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters))
     },
     afterAggregate: async function(){
         let userId = this.userId
-        _.each(this.data.values, function(doc){
-            doc.fields =  Object.assign({}, doc.fields, InternalData.getDefaultSysFields(doc.name, userId)) ;
-        })
-        this.data.values = this.data.values.concat(InternalData.findObjects(userId, this.query.filters))
+        for (const doc of this.data.values) {
+            doc.fields =  Object.assign({}, doc.fields, await InternalData.getDefaultSysFields(doc.name, userId)) ;
+        }
+        this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters))
     },
     afterCount: async function(){
-        this.data.values = this.data.values + InternalData.findObjects(this.userId, this.query.filters).length
+        this.data.values = this.data.values + await InternalData.findObjects(this.userId, this.query.filters).length
     },
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
-            this.data.values = InternalData.getObject(this.id, this.userId);
+            this.data.values = await InternalData.getObject(this.id, this.userId);
         }
     },
     afterInsert: async function(){

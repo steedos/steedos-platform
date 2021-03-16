@@ -33,7 +33,8 @@ module.exports = {
 		},
 		packageInfo: {
 			path: standardObjectsPath,
-			name: '$packages-standard-objects'
+			name: '$packages-standard-objects',
+			datasource: 'meteor'
 		},
 		apiServer: {
 			enabled: true

@@ -82,7 +82,7 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
     }
 
     if (!datasource)
-      datasource = 'default'
+      datasource = 'meteor'
 
     let objectJsons = util.loadObjects(filePath)
     objectJsons.forEach(element => {
@@ -212,10 +212,11 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         }
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
         delete config.extend
+        datasource = parentObjectConfig.datasource
         extendOriginalObjectConfig(object_name, datasource, clone(objectConfig));
     } else {
         addOriginalObjectConfigs(object_name, datasource, clone(objectConfig));
-        if (datasource === 'default') { // isMeteor() && (datasource === 'default')
+        if (datasource === 'default' || datasource === 'meteor') { // isMeteor() && (datasource === 'default')
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
             // 确保字段顺序正确，避免base中的字段跑到前面
             config.fields = _.clone(objectConfig.fields);
@@ -235,6 +236,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
     _.remove(_objectConfigs, {name: object_name, datasource: datasource});
     delete config.__filename
     perfectObjectConfig(config)
+    if(object_name === 'objects' && datasource==='default'){throw new Error(`debug error`)}
     _objectConfigs.push(config)
 }
 
