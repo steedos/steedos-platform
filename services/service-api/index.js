@@ -3,7 +3,7 @@
 const ApiGateway = require("moleculer-web");
 const steedosAuth = require('@steedos/auth');
 const { ApolloService } = require("moleculer-apollo-server");
-const { GraphQLJSON } = require('graphql-type-json');
+const GraphQLJSON = require('graphql-type-json');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
