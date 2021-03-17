@@ -20,7 +20,7 @@ export type SteedosSchemaConfig = {
 
 export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
-    private _objectsMap: Dictionary<{datasourceName: string, filePath?: string}> = {};
+    private _objectsMap: Dictionary<{ datasourceName: string, filePath?: string }> = {};
     private graphQLSchema: any = null;
     private _broker: any = null;
     private _metadataBroker: any = null;
@@ -39,11 +39,11 @@ export class SteedosSchema {
     public set broker(value: any) {
         this._broker = value;
     }
-    
-    setObjectMap(objectName:string, options){
+
+    setObjectMap(objectName: string, options) {
         let objectMap = this.getObjectMap(objectName);
-        if(objectMap){
-            if(objectName != 'base' && objectName != 'core' && objectMap.datasourceName != options.datasourceName){
+        if (objectMap) {
+            if (objectName != 'base' && objectName != 'core' && objectMap.datasourceName != options.datasourceName) {
                 console.log(`objectMap.datasourceName`, objectMap.datasourceName)
                 console.log(`options.datasourceName`, options.datasourceName)
                 throw new Error(`object name ${objectName} is unique, you can set table_name; see: https://developer.steedos.com/developer/object#%E5%AF%B9%E8%B1%A1%E5%90%8D-name`)
@@ -52,23 +52,23 @@ export class SteedosSchema {
         this._objectsMap[objectName] = options
     }
 
-    getObjectMap(objectName: string){
+    getObjectMap(objectName: string) {
         return this._objectsMap[objectName]
     }
 
-    removeObjectMap(objectName: string){
+    removeObjectMap(objectName: string) {
         delete this._objectsMap[objectName]
     }
 
     addDataSourceFromSteedosConfig() {
         let config: any = getSteedosConfig();
-        if(config && config.datasources){
-            _.each(config.datasources, (datasource: any, datasource_name: string)=>{
+        if (config && config.datasources) {
+            _.each(config.datasources, (datasource: any, datasource_name: string) => {
                 datasource = _.extend(datasource, datasource.connection)
-                if(datasource_name === 'default'){
+                if (datasource_name === 'default') {
                     datasource.driver = "mongo"
-                }else if(datasource_name === meteorDatasourceName){
-                    if(!isMeteor()){
+                } else if (datasource_name === meteorDatasourceName) {
+                    if (!isMeteor()) {
                         throw new Error('not find Meteor, can not set datasource name is meteor')
                     }
                     datasource.driver = "meteor-mongo"
@@ -82,16 +82,28 @@ export class SteedosSchema {
                 this.addDataSource(datasource_name, datasource);
             })
         }
+        this.addMeteorDatasource();
+    }
 
-        if(isMeteor() && !this.getDataSource(meteorDatasourceName)){
-            if(config.datasources.default){
-                this.addDataSource(meteorDatasourceName, Object.assign({}, config.datasources.default, {driver: 'meteor-mongo'}));
+    addMeteorDatasource(meteorDatasourceConfig?: SteedosDataSourceTypeConfig) {
+        if (!meteorDatasourceConfig) {
+            const steedosConfig = getSteedosConfig();
+            meteorDatasourceConfig = steedosConfig?.datasources?.meteor;
+            if (!meteorDatasourceConfig) {
+                meteorDatasourceConfig = steedosConfig?.datasources?.default;
             }
         }
+        if (meteorDatasourceConfig) {
+            if (isMeteor() && !this.getDataSource(meteorDatasourceName)) {
+                console.log('addMeteorDatasource: meteorDatasourceConfig: ', meteorDatasourceConfig);
+                this.addDataSource(meteorDatasourceName, Object.assign({}, meteorDatasourceConfig, { driver: 'meteor-mongo' }));
+            }
+        }
+
     }
 
     constructor(config?: SteedosSchemaConfig) {
-        
+
         // loadCoreValidators();
         // TODO 以下两行代码需要放开
         // wrapAsync(preloadDBObjectFields, {});
@@ -102,8 +114,8 @@ export class SteedosSchema {
 
         if (isMeteor())
             loadStandardObjects();
-            
-        if(config){
+
+        if (config) {
             _.each(config.datasources, (datasourceConfig, datasource_name) => {
                 this.addDataSource(datasource_name, datasourceConfig)
             })
@@ -119,11 +131,11 @@ export class SteedosSchema {
      */
     getObject(name: string) {
         let datasource_name: string, object_name: string;
-        if(!name){
+        if (!name) {
             throw new Error('Object name is required');
         }
         let args = name.split('.')
-        if(args.length == 1){
+        if (args.length == 1) {
             object_name = name
             // let objectMap = this.getObjectMap(name);
             // if(!objectMap){
@@ -131,14 +143,14 @@ export class SteedosSchema {
             // }
             // datasource_name = objectMap.datasourceName
         }
-        if(args.length > 1){
+        if (args.length > 1) {
             datasource_name = args[0]
             object_name = _.rest(args).join('.')
         }
 
         let datasource = this.getDataSource(datasource_name)
 
-        if(!datasource){
+        if (!datasource) {
             throw new Error(`not find datasource ${datasource_name}`);
         }
 
@@ -147,26 +159,26 @@ export class SteedosSchema {
 
     getLocalObject(name: string) {
         let datasource_name: string, object_name: string;
-        if(!name){
+        if (!name) {
             throw new Error('Object name is required');
         }
         let args = name.split('.')
-        if(args.length == 1){
+        if (args.length == 1) {
             object_name = name
             let objectMap = this.getObjectMap(name);
-            if(!objectMap){
+            if (!objectMap) {
                 throw new Error(`not find object ${name}`);
             }
             datasource_name = objectMap.datasourceName
         }
-        if(args.length > 1){
+        if (args.length > 1) {
             datasource_name = args[0]
             object_name = _.rest(args).join('.')
         }
 
         let datasource = this.getDataSource(datasource_name)
 
-        if(!datasource){
+        if (!datasource) {
             throw new Error(`not find datasource ${datasource_name}`);
         }
 
@@ -174,7 +186,7 @@ export class SteedosSchema {
     }
 
     addDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig, readd?: boolean) {
-        if(this._datasources[datasource_name] && !readd){
+        if (this._datasources[datasource_name] && !readd) {
             throw new Error(`datasource ${datasource_name} existed`);
         }
         let datasource = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
@@ -182,20 +194,20 @@ export class SteedosSchema {
         return datasource;
     }
 
-    async removeDataSource(datasource_name){
-        if(datasource_name != defaultDatasourceName && datasource_name != meteorDatasourceName){
+    async removeDataSource(datasource_name) {
+        if (datasource_name != defaultDatasourceName && datasource_name != meteorDatasourceName) {
             let datasource = this._datasources[datasource_name];
-            if(datasource){
+            if (datasource) {
                 delete this._datasources[datasource_name];
                 let self = this;
-                _.each(this._objectsMap, function(map, key){
-                    if(map && map.datasourceName === datasource_name){
+                _.each(this._objectsMap, function (map, key) {
+                    if (map && map.datasourceName === datasource_name) {
                         self.removeObjectMap(key);
                     }
                 })
                 await datasource.close();
             }
-        }else{
+        } else {
             throw new Error('Can not remove default datasource');
         }
     }
@@ -208,10 +220,10 @@ export class SteedosSchema {
      * @memberof SteedosSchema
      * TODO 处理reference_to 为function的情况
      */
-    async transformReferenceOfObject(datasource: SteedosDataSourceType): Promise<void>{
+    async transformReferenceOfObject(datasource: SteedosDataSourceType): Promise<void> {
         let objects = await datasource.getObjects();
         _.each(objects, (object, object_name) => {
-            _.each(object.fields, (field, field_name)=>{
+            _.each(object.fields, (field, field_name) => {
                 field.transformReferenceOfObject()
             })
         })
@@ -221,36 +233,36 @@ export class SteedosSchema {
         return this._datasources[datasource_name]
     }
 
-    getDataSources(){
+    getDataSources() {
         return this._datasources
     }
 
-    buildGraphQLSchema(){
+    buildGraphQLSchema() {
         this.graphQLSchema = buildGraphQLSchema(this);
     }
 
-    getGraphQLSchema(){
-        if(!this.graphQLSchema){
+    getGraphQLSchema() {
+        if (!this.graphQLSchema) {
             this.buildGraphQLSchema();
         }
         return this.graphQLSchema;
     }
 
-    async getAllObject(){
+    async getAllObject() {
         return await this.metadataBroker.call("objects.getAll");
     }
 }
 
-export function getSteedosSchema(broker?:any, metadataBroker?: any): SteedosSchema {
+export function getSteedosSchema(broker?: any, metadataBroker?: any): SteedosSchema {
     const schema = getFromContainer(SteedosSchema);
     if (broker) {
         schema.broker = broker;
     }
-    if(metadataBroker || broker){
+    if (metadataBroker || broker) {
         schema.metadataBroker = metadataBroker || broker;
     }
     return schema;
 }
 
-(function loadRun(){
+(function loadRun() {
 })();

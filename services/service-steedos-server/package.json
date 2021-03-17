@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@steedos/service-mongodb-server": "^0.0.1",
-    "@steedos/service-package-loader": "^0.0.1",
+    "@steedos/service-meteor-package-loader": "^0.0.1",
     "dotenv-flow": "^3.2.0",
     "moleculer": "^0.14.10",
     "moleculer-db": "^0.8.4",

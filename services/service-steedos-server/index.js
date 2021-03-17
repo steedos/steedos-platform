@@ -6,7 +6,7 @@ const RED = require("node-red");
 let MongoDBService = require('@steedos/service-mongodb-server');
 let NodeRedService = require('@steedos/service-node-red');
 let APIService = require('@steedos/service-api');
-const packageLoader = require('@steedos/service-package-loader');
+const packageLoader = require('@steedos/service-meteor-package-loader');
 const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -34,7 +34,6 @@ module.exports = {
 		packageInfo: {
 			path: standardObjectsPath,
 			name: '$packages-standard-objects',
-			datasource: 'meteor'
 		},
 		apiServer: {
 			enabled: true
@@ -85,11 +84,14 @@ module.exports = {
 
 			this.meteor = require('@steedos/meteor-bundle-runner');
 			this.steedos = require('@steedos/core');
-
+			const isMeteor = () => {
+				return (typeof Meteor != "undefined")            
+			}
 			// const logger = this.logger;
 			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
+					console.log('isMeteor: ', isMeteor());
 					require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
 					this.wrapAsync(this.steedos.init, {});
