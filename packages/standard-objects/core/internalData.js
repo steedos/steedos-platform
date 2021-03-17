@@ -53,7 +53,7 @@ async function getObjects(userId){
     let lng = await getLng(userId)
     let allObjectConfigs = await objectql.getSteedosSchema().getAllObject();
     _.each(allObjectConfigs, function(objectConfig) {
-        var _obj = clone(objectConfig);
+        var _obj = clone(objectConfig.metadata);
         var k = _obj.name;
         if(!_obj._id && !_obj.hidden &&  !_.include(hiddenObjects, k)){
             _obj._id = k;

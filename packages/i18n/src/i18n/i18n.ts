@@ -63,9 +63,9 @@ const getObjectListviewLabelKey = function(objectName, name){
 
 // }
 
-const isMeteor = () => {
-    return (typeof Meteor != "undefined")            
-}
+// const isMeteor = () => {
+//     return (typeof Meteor != "undefined")            
+// }
 
 
 const getBaseObjectName = function(datasource){
@@ -73,7 +73,7 @@ const getBaseObjectName = function(datasource){
         return '';
     }
     let baseObjectName = CORE_OBJECT;
-    if(isMeteor() && (datasource === 'default')){
+    if(datasource === 'default' || datasource === 'meteor'){
         baseObjectName = BASE_OBJECT;
     }
     return baseObjectName;

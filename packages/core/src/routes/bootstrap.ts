@@ -1,7 +1,7 @@
 import steedosI18n = require("@steedos/i18n");
 import { getPlugins } from '../';
 import { requireAuthentication } from './auth'
-import { getObject, getLocalObject, getLayout } from '@steedos/objectql'
+import { getObject, getLayout } from '@steedos/objectql'
 require("@steedos/license");
 const Fiber = require('fibers')
 const clone = require("clone");
@@ -53,9 +53,10 @@ export async function getSpaceBootStrap(req, res) {
         let result = Creator.getAllPermissions(spaceId, userId);
 
         let lng = _getLocale(db.users.findOne(userId, { fields: { locale: 1 } }))
-
+        console.log(`lng`, lng)
+        console.log(`result.objects 1`, JSON.stringify(result.objects.objects.fields.modified_by))
         steedosI18n.translationObjects(lng, result.objects);
-
+        console.log(`result.objects 2`, JSON.stringify(result.objects.objects.fields.modified_by))
         result.user = userSession
 
         result.space = space
@@ -84,20 +85,22 @@ export async function getSpaceBootStrap(req, res) {
         //         }
         //     }
         // }
+        console.log(`result.objects 2.5`, JSON.stringify(result.objects.objects.fields.modified_by))
         for (const datasourceName in datasources) {
-            let datasource = datasources[datasourceName];
-            const datasourceObjects = await datasource.getObjects();
-            for (const object of datasourceObjects) {
-                const objectConfig  = object.metadata;
-                const _obj = Creator.convertObject(clone(objectConfig), spaceId)
-                _obj.name = objectConfig.name
-                _obj.database_name = datasourceName
-                _obj.permissions = await getLocalObject('base').getUserObjectPermission(userSession)
-                // await object.getUserObjectPermission(userSession)
-                result.objects[_obj.name] = _obj
+            if(datasourceName != 'meteor' && datasourceName != 'default'){
+                let datasource = datasources[datasourceName];
+                const datasourceObjects = await datasource.getObjects();
+                for (const object of datasourceObjects) {
+                    const objectConfig  = object.metadata;
+                    const _obj = Creator.convertObject(clone(objectConfig), spaceId)
+                    _obj.name = objectConfig.name
+                    _obj.database_name = datasourceName
+                    _obj.permissions = await getObject(objectConfig.name).getUserObjectPermission(userSession)
+                    result.objects[_obj.name] = _obj
+                }
             }
         }
-
+        console.log(`result.objects 3`, JSON.stringify(result.objects.objects.fields.modified_by))
         _.each(Creator.steedosSchema.getDataSources(), function(datasource, name){
             result.apps = _.extend(result.apps, clone(datasource.getAppsConfig()))
             result.dashboards = _.extend(result.dashboards, datasource.getDashboardsConfig())
@@ -202,6 +205,7 @@ export async function getSpaceBootStrap(req, res) {
                 result.objects[item.object_name].enable_process = true
             }
         })
+        console.log(`result.objects 4`, JSON.stringify(result.objects.objects.fields.modified_by))
         return res.status(200).send(result);
     }).run();
 }

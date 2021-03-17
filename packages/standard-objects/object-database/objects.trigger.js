@@ -17,7 +17,7 @@ module.exports = {
         this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters))
     },
     afterCount: async function(){
-        this.data.values = this.data.values + await InternalData.findObjects(this.userId, this.query.filters).length
+        this.data.values = this.data.values + (await InternalData.findObjects(this.userId, this.query.filters)).length
     },
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
