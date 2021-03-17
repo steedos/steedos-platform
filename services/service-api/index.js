@@ -29,7 +29,41 @@ module.exports = {
 			routeOptions: {
 				path: "/service/graphql",
 				cors: true,
-				mappingPolicy: "all"
+				whitelist: [
+					"**"
+				],
+				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
+				use: [],
+				// Enable authentication. Implement the logic into `authenticate` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authentication
+				authentication: true,
+				// Enable authorization. Implement the logic into `authorize` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authorization
+				authorization: true,
+				// The auto-alias feature allows you to declare your route alias directly in your services.
+				// The gateway will dynamically build the full routes from service schema.
+				autoAliases: true,
+				aliases: {},
+				// Calling options. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Calling-options
+				callingOptions: {},
+				bodyParsers: {
+					json: {
+						strict: false,
+						limit: "10MB"
+					},
+					urlencoded: {
+						extended: true,
+						limit: "10MB"
+					}
+				},
+				// Mapping policy setting. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Mapping-policy
+				mappingPolicy: "all", // Available values: "all", "restrict"
+				// Enable/disable logging
+				logging: true,
+				// Route error handler
+				onError(req, res, err) {
+					res.setHeader("Content-Type", "application/json; charset=utf-8");
+					res.writeHead(err.code || 500);
+					res.end(JSON.stringify(err));
+				}
 			},
 
 			// https://www.apollographql.com/docs/apollo-server/v2/api/apollo-server.html
@@ -40,7 +74,11 @@ module.exports = {
 					apiKey: process.env.APOLLO_ENGINE_KEY
 				},
 				subscriptions: false,
-				playground: true,
+				playground: {
+					settings: {
+						'request.credentials': 'same-origin'
+					}
+				},
 				introspection: true
 			}
 		})
