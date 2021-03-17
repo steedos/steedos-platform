@@ -53,10 +53,7 @@ export async function getSpaceBootStrap(req, res) {
         let result = Creator.getAllPermissions(spaceId, userId);
 
         let lng = _getLocale(db.users.findOne(userId, { fields: { locale: 1 } }))
-        console.log(`lng`, lng)
-        console.log(`result.objects 1`, JSON.stringify(result.objects.objects.fields.modified_by))
         steedosI18n.translationObjects(lng, result.objects);
-        console.log(`result.objects 2`, JSON.stringify(result.objects.objects.fields.modified_by))
         result.user = userSession
 
         result.space = space
@@ -85,7 +82,6 @@ export async function getSpaceBootStrap(req, res) {
         //         }
         //     }
         // }
-        console.log(`result.objects 2.5`, JSON.stringify(result.objects.objects.fields.modified_by))
         for (const datasourceName in datasources) {
             if(datasourceName != 'meteor' && datasourceName != 'default'){
                 let datasource = datasources[datasourceName];
@@ -100,7 +96,6 @@ export async function getSpaceBootStrap(req, res) {
                 }
             }
         }
-        console.log(`result.objects 3`, JSON.stringify(result.objects.objects.fields.modified_by))
         _.each(Creator.steedosSchema.getDataSources(), function(datasource, name){
             result.apps = _.extend(result.apps, clone(datasource.getAppsConfig()))
             result.dashboards = _.extend(result.dashboards, datasource.getDashboardsConfig())
@@ -205,7 +200,6 @@ export async function getSpaceBootStrap(req, res) {
                 result.objects[item.object_name].enable_process = true
             }
         })
-        console.log(`result.objects 4`, JSON.stringify(result.objects.objects.fields.modified_by))
         return res.status(200).send(result);
     }).run();
 }
