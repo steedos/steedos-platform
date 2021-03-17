@@ -84,14 +84,10 @@ module.exports = {
 
 			this.meteor = require('@steedos/meteor-bundle-runner');
 			this.steedos = require('@steedos/core');
-			const isMeteor = () => {
-				return (typeof Meteor != "undefined")            
-			}
 			// const logger = this.logger;
 			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
-					console.log('isMeteor: ', isMeteor());
 					require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
 					this.wrapAsync(this.steedos.init, {});
