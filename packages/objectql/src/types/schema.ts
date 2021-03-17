@@ -95,7 +95,6 @@ export class SteedosSchema {
         }
         if (meteorDatasourceConfig) {
             if (isMeteor() && !this.getDataSource(meteorDatasourceName)) {
-                console.log('addMeteorDatasource: meteorDatasourceConfig: ', meteorDatasourceConfig);
                 this.addDataSource(meteorDatasourceName, Object.assign({}, meteorDatasourceConfig, { driver: 'meteor-mongo' }));
             }
         }
