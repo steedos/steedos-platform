@@ -1,6 +1,7 @@
 "use strict";
 
 const objectql = require('@steedos/objectql');
+const core = require('@steedos/core');
 const triggerLoader = require('./lib').triggerLoader;
 const path = require('path');
 const Future = require('fibers/future');
@@ -35,7 +36,11 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-
+		"translations.object.change": {
+            handler() {
+				core.loadObjectTranslations()
+            }
+        }
 	},
 
 	/**
@@ -51,7 +56,7 @@ module.exports = {
 				objectql.getSteedosSchema(this.broker);
 				packagePath = path.join(packagePath, '**');
 				objectql.loadStandardObjects();
-				objectql.addAllConfigFiles(packagePath, datasourceName);
+				await objectql.addAllConfigFiles(packagePath, datasourceName);
 				const datasource = objectql.getDataSource(datasourceName);
 				await datasource.init();
 				await triggerLoader.load(this.broker, packagePath, name);

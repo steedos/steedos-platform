@@ -48,3 +48,4 @@ packages/accounts/webapp/build/**
 packages/react/.env.local
 services/service-metadata-objects/.env.local
 services/service-metadata-triggers/.env.local
+services/service-metadata-translations/.env.local

@@ -101,6 +101,22 @@ function getI18nLng(filePath){
     }
 }
 
+function getObjectApiName(filePath){
+    try {
+        let pathJson = path.parse(filePath);
+        let filename = pathJson.base;
+        if(filename){
+            let f = filename.split('.');
+            if(f.length >= 3){
+                return f[0]
+            }
+        }
+        console.log(`getObjectApiName warn: Invalid file: ${filePath}`);
+    } catch (error) {
+        console.error(`getObjectApiName error: ${filePath}`, error)
+    }
+}
+
 export const loadI18n = (filePath: string)=>{
     let results = []
     const filePatten = [
@@ -127,8 +143,9 @@ export const loadObjectTranslations = (filePath: string)=>{
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         let lng = getI18nLng(matchedPath);
+        let objectApiName = getObjectApiName(matchedPath);
         if(lng){
-            results.push({lng: lng, __filename: matchedPath, data: json})
+            results.push({lng: lng, objectApiName, __filename: matchedPath, data: json})
         }
     })
     return results

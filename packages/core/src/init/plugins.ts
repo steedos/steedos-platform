@@ -8,30 +8,35 @@ const util = require('../util/index')
 const ConfigName = 'plugin.config.yml'
 import * as initConfig from './init-config.json'
 export class Plugins {
-    static init() {
+    static async init() {
         const pluginContext = {
             app,
             settings: Meteor.settings
         };
         let plugins = this.getPluginNames();
         if (_.isArray(plugins)) {
-            _.each(plugins, (pluginName) => {
+            for (const pluginName of plugins) {
                 try {
                     const pluginDir = this.getPluginDir(pluginName)
                     const plugin = require(pluginDir);
-                    this.loadFiles(pluginName);
+                    await this.loadFiles(pluginName);
                     if(_.isFunction(plugin.init)){
                         plugin.init(pluginContext);
                     }
                     
                 } catch (error) {
-                    if(error.message.startsWith("Cannot find module")){
-                        throw new Error(`Plugin not found in project, please execute: yarn add ${pluginName}`)
+                    if(true){
+                        console.error(error)
                     }else{
-                        throw error;
+                        if(error.message.startsWith("Cannot find module")){
+                            throw new Error(`Plugin not found in project, please execute: yarn add ${pluginName}`)
+                        }else{
+                            throw error;
+                        }
                     }
+                    
                 }
-            })
+            }
             WebApp.connectHandlers.use(pluginContext.app);
         }
     }
@@ -58,19 +63,21 @@ export class Plugins {
         return config;
     }
 
-    static loadFiles(pluginName){
+    static async loadFiles(pluginName){
         let pluginDir = this.getPluginDir(pluginName);
         let config = this.getConfig(pluginDir);
         if(config){
-            _.each(config.datasources, (_datasource, name)=>{
+            const datasources = _.keys(config.datasources);
+            for (const name of datasources) {
+                const _datasource = config.datasources[name];
                 if(!_.isArray(_datasource.objectFiles)){
                     throw new Error(`${name}.objectFiles must be an array` + _datasource.objectFiles)
                 }
-                _.each(_datasource.objectFiles, (objectFile)=>{
+                for (const objectFile of _datasource.objectFiles) {
                     let filePath = path.join(pluginDir, objectFile)
-                    objectql.addAllConfigFiles(filePath, name)
-                })
-            })
+                    await objectql.addAllConfigFiles(filePath, name)
+                }
+            }
         }
     }
 }

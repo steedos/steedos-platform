@@ -29,7 +29,7 @@ module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.
 	namespace: "steedos", //steedos
 	// Unique node identifier. Must be unique in a namespace.
-	nodeID: "service-metadata",
+	nodeID: "metadata-translations",
 	// Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
 	metadata: {},
 
@@ -58,7 +58,7 @@ module.exports = {
 	// More info: https://moleculer.services/docs/0.14/networking.html
 	// Note: During the development, you don't need to define it because all services will be loaded locally.
 	// In production you can set it via `TRANSPORTER=nats://localhost:4222` environment variable.
-	transporter: "redis://192.168.3.30:6379",
+	transporter: process.env.TRANSPORTER,
 	// registry: {
     //     discoverer: "redis://192.168.3.17:6379"
     // },
@@ -103,23 +103,6 @@ module.exports = {
 
 	// Define a cacher.
 	// More info: https://moleculer.services/docs/0.14/caching.html
-	cacher: "redis://192.168.3.30:6379/1",
-	// cacher: {
-    //     type: "Redis",
-    //     options: {
-    //         // Prefix for keys
-    //         prefix: "MOL",            
-    //         // set Time-to-live to 30sec.
-    //         // Turns Redis client monitoring on.
-    //         monitor: false,
-    //         // Redis settings
-    //         redis: {
-    //             host: "192.168.3.17",
-    //             port: 6379,
-    //             db: 2
-    //         }
-    //     }
-    // },
 
 	// Define a serializer.
 	// Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".
@@ -215,7 +198,7 @@ module.exports = {
 			type: "Prometheus",
 			options: {
 				// HTTP port
-				port: 4330,
+				port: 5230,
 				// HTTP URL path
 				path: "/metrics",
 				// Default labels which are appended to all metrics labels

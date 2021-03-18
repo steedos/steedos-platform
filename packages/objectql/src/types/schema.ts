@@ -11,6 +11,7 @@ import { buildGraphQLSchema } from '../graphql';
 import { loadStandardProfiles, loadStandardPermissionsets } from '../dynamic-load';
 import { MetadataRegister } from '../metadata-register';
 
+
 const defaultDatasourceName = 'default';
 const meteorDatasourceName = 'meteor';
 
@@ -73,12 +74,6 @@ export class SteedosSchema {
                     }
                     datasource.driver = "meteor-mongo"
                 }
-                // if (datasource_name === 'default') {
-                //     if (isMeteor())
-                //         datasource.driver = "meteor-mongo"
-                //     else
-                //         datasource.driver = "mongo"
-                // }
                 this.addDataSource(datasource_name, datasource);
             })
         }
@@ -136,11 +131,12 @@ export class SteedosSchema {
         let args = name.split('.')
         if (args.length == 1) {
             object_name = name
-            // let objectMap = this.getObjectMap(name);
-            // if(!objectMap){
-            //     throw new Error(`not find object ${name}`);
-            // }
-            // datasource_name = objectMap.datasourceName
+            let objectMap = this.getObjectMap(name);
+            if(!objectMap){
+                const services = require('../services');
+                return services.getObjectDispatcher(object_name)
+            }
+            datasource_name = objectMap.datasourceName
         }
         if (args.length > 1) {
             datasource_name = args[0]

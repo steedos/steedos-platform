@@ -1,4 +1,3 @@
-import { getSteedosSchema } from '../types/schema';
 class ObjectServiceDispatcher {
     objectApiName: string;
     serviceName: string;
@@ -6,10 +5,11 @@ class ObjectServiceDispatcher {
     metadataBroker: any;
 
     constructor(objectApiName) {
+        const schema = require('../types/schema');
         this.objectApiName = objectApiName
         this.serviceName = `@${objectApiName}`;
-        this.broker = getSteedosSchema().broker;
-        this.metadataBroker = getSteedosSchema().metadataBroker;
+        this.broker = schema.getSteedosSchema().broker;
+        this.metadataBroker = schema.getSteedosSchema().metadataBroker;
     }
 
     private async callMetadataObjectServiceAction(action, params?){

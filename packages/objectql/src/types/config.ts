@@ -95,14 +95,14 @@ export const getConfig = (objectName: string, _id: string) => {
     return _.find(records, {_id: _id})
 }
 
-export const addAllConfigFiles = (filePath, datasource) => {
+export const addAllConfigFiles = async (filePath, datasource) => {
     addObjectConfigFiles(filePath, datasource);
     addAppConfigFiles(filePath);
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     // addObjectI18nFiles(filePath);
     addTranslationsFiles(filePath);
-    addObjectTranslationsFiles(filePath);
+    await addObjectTranslationsFiles(filePath);
     addRouterFiles(filePath);
     // addConfigDataFiles(filePath);
     addConfigFiles('report', filePath);

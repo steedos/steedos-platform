@@ -83,16 +83,21 @@ export async function getSpaceBootStrap(req, res) {
         //     }
         // }
         for (const datasourceName in datasources) {
-            if(datasourceName != 'meteor' && datasourceName != 'default'){
-                let datasource = datasources[datasourceName];
-                const datasourceObjects = await datasource.getObjects();
-                for (const object of datasourceObjects) {
-                    const objectConfig  = object.metadata;
-                    const _obj = Creator.convertObject(clone(objectConfig), spaceId)
-                    _obj.name = objectConfig.name
-                    _obj.database_name = datasourceName
-                    _obj.permissions = await getObject(objectConfig.name).getUserObjectPermission(userSession)
-                    result.objects[_obj.name] = _obj
+            let datasource = datasources[datasourceName];
+            const datasourceObjects = await datasource.getObjects();
+            for (const object of datasourceObjects) {
+                const objectConfig  = object.metadata;
+                if(!result.objects[objectConfig.name]){
+                    try {
+                        const _obj = Creator.convertObject(clone(objectConfig), spaceId)
+                        _obj.name = objectConfig.name
+                        _obj.database_name = datasourceName
+                        _obj.permissions = await getObject(objectConfig.name).getUserObjectPermission(userSession)
+                        steedosI18n.translationObject(lng, _obj.name, _obj);
+                        result.objects[_obj.name] = _obj
+                    } catch (error) {
+                        console.error(error.message)
+                    }
                 }
             }
         }
