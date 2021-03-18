@@ -8,6 +8,7 @@ import { createFilter } from 'odata-v4-mongodb';
 import { createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 import { SteedosFieldDBType } from "./fieldDBType";
+import { ObjectId } from "mongodb";
 
 var Fiber = require('fibers');
 
@@ -401,12 +402,12 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
 
-                    const options = {$set: {}};
+                    const options = { $set: {} };
                     const keys = _.keys(data);
-                    _.each(keys, function(key){
-                        if(_.include(['$inc','$min','$max','$mul'], key)){
+                    _.each(keys, function (key) {
+                        if (_.include(['$inc', '$min', '$max', '$mul'], key)) {
                             options[key] = data[key];
-                        }else{
+                        } else {
                             options.$set[key] = data[key];
                         }
                     })
@@ -612,16 +613,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
-    async _makeNewID(tableName){
-        let collection = this.collection(tableName);
-        return await new Promise((resolve, reject) => {
-            Fiber(function () {
-                try {
-                    resolve(collection._makeNewID());
-                } catch (error) {
-                    reject(error)
-                }
-            }).run()
-        });
+    _makeNewID(tableName?: string) {
+        return new ObjectId().toHexString();
     }
 }
