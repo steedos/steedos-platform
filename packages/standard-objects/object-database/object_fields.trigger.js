@@ -147,8 +147,8 @@ async function checkMasterDetailTypeField(doc, oldReferenceTo) {
     if (maxMasterLeave + maxDetailLeave > MAX_MASTER_DETAIL_LEAVE - 1) {
         throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
     }
-
-    const ownerField = _.find(obj.fields, (n) => { return n.name === "owner"; });
+    let fields = await obj.getFields();
+    const ownerField = _.find(fields, (n) => { return n.name === "owner"; });
     if (!ownerField.omit) {
         throw new Meteor.Error(doc.name, "您无法创建此类字段，因为该对象上“所有者”字段未勾选“新建、编辑时隐藏”属性。");
     }
