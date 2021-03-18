@@ -1,7 +1,27 @@
 import _ = require("underscore");
+import moment = require('moment');
 import { getObjectServiceName } from "..";
 import { SteedosObjectTypeConfig } from "../..";
+const clone = require("clone");
+import { translationObject } from '@steedos/i18n';
 const { moleculerGql: gql } = require("moleculer-apollo-server");
+import { getSteedosSchema, getUserLocale } from '../../';
+const BASIC_TYPE_MAPPING = {
+    'text': 'String',
+    'textarea': 'String',
+    'html': 'String',
+    'select': 'String',
+    'url': 'String',
+    'email': 'String',
+    'date': 'String',
+    'datetime': 'String',
+    'number': 'Float',
+    'currency': 'Float',
+    'boolean': 'Boolean'
+};
+const EXPAND_SUFFIX = '__expand';
+const DISPLAY_PREFIX = '_display';
+declare var t: any;
 
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {
     let gplObj: any = {};
@@ -120,39 +140,20 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
     return gplObj;
 }
 
-const BASIC_TYPE_MAPPING = {
-    'text': 'String',
-    'textarea': 'String',
-    'html': 'String',
-    'select': 'String',
-    'url': 'String',
-    'email': 'String',
-    'date': 'String',
-    'datetime': 'String',
-    'number': 'Float',
-    'currency': 'Float',
-    'boolean': 'Boolean'
-};
-
-const EXPAND_SUFFIX = '__expand';
-
 export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     let objectName = objectConfig.name;
     let fields = objectConfig.fields;
     let type = `type ${objectName} { _id: String `;
     let resolvers = {};
     resolvers[objectName] = {};
-
     _.each(fields, (field, name) => {
         if (name.indexOf('.') > -1) {
             return;
         }
-
         if (!field.type) {
             console.error(`The field ${name} of ${objectName} has no type property.`);
             return;
         }
-
         if (BASIC_TYPE_MAPPING[field.type]) {
             type += `${name}: ${BASIC_TYPE_MAPPING[field.type]} `;
         }
@@ -185,13 +186,18 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
                     return context.ctx.call(`${getObjectServiceName(refTo)}.findOne`, { id: id });
                 }
             }
-
         }
         else {
             type += `${name}: JSON `;
         }
-
     })
+
+    // __display
+    type += `${DISPLAY_PREFIX}: JSON `;
+    resolvers[objectName][DISPLAY_PREFIX] = async function (parent, args, context, info) {
+        let userSession = context.ctx.meta.user;
+        return await translateToDisplay(objectName, fields, parent, userSession);
+    }
 
     type += '}';
     return {
@@ -200,3 +206,147 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     }
 }
 
+const getTranslatedFieldConfig = (translatedObject: any, name: string) => {
+    return translatedObject.fields[name.replace(/__label$/, "")];
+}
+
+async function translateToDisplay(objectName, fields, doc, userSession: any) {
+    console.log('objectName: ', objectName);
+    console.log('doc: ', doc);
+
+    const lng = getUserLocale(userSession);
+    let steedosSchema = getSteedosSchema();
+    let object = steedosSchema.getObject(objectName);
+    let objConfig = await object.toConfig();
+    let _object = clone(objConfig);
+    translationObject(lng, _object.name, _object);
+    let locale = userSession.locale;
+    let displayObj = {};
+    let utcOffset = userSession.utcOffset;
+    for (const name in fields) {
+        if (Object.prototype.hasOwnProperty.call(fields, name)) {
+            const field = fields[name];
+            if (_.has(doc, name)) {
+                const fType = field.type;
+                if (fType == 'text') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'textarea') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'html_text') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'html') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'select') {
+                    let label = '';
+                    let map = {};
+                    let value = doc[name];
+                    let translatedField = getTranslatedFieldConfig(_object, name);
+                    let translatedFieldOptions = translatedField && translatedField.options;
+                    _.forEach(translatedFieldOptions, function (o) {
+                        map[o.value] = o.label;
+                    });
+                    if (field.multiple) {
+                        let labels = [];
+                        _.forEach(value, function (v) {
+                            labels.push(map[v]);
+                        })
+                        label = labels.join(',');
+                    } else {
+                        label = map[value];
+                    }
+                    displayObj[name] = label;
+                }
+                else if (fType == 'boolean') {
+                    if (doc[name]) {
+                        displayObj[name] = t('YES', null, locale);
+                    } else {
+                        displayObj[name] = t('NO', null, locale);
+                    }
+                }
+                else if (fType == 'date') {
+                    displayObj[name] = moment(doc[name]).utcOffset(utcOffset).format("YYYY-MM-DD")
+                }
+                else if (fType == 'datetime') {
+                    displayObj[name] = moment(doc[name]).utcOffset(utcOffset).format("YYYY-MM-DD H:mm")
+                }
+                else if (fType == 'number') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'currency') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'percent') {
+                    displayObj[name] = `${doc[name] * 100}%`;
+                }
+                else if (fType == 'password') {
+                    if (_.isString(doc[name])) {
+                        displayObj[name] = '';
+                        for (let i = 0; i < doc[name].length; i++) {
+                            displayObj[name] += '*';
+                        }
+                    }
+                }
+                else if (fType == 'lookup') {
+                    let lookupLabel = '';
+                    let refTo = field.reference_to;
+                    let refValue = doc[name];
+                    let refObj = steedosSchema.getObject(refTo);
+                    let nameFieldKey = refObj.NAME_FIELD_KEY;
+                    if (field.multiple) {
+                        let refRecords = await refObj.find({ filters: [`_id`, 'in', refValue] });
+                        lookupLabel = _.pluck(refRecords, nameFieldKey).join(',');
+                    } else {
+                        let refRecord = (await refObj.find({ filters: [`_id`, '=', refValue] }))[0];
+                        if (refRecord) {
+                            lookupLabel = refRecord[nameFieldKey];
+                        }
+                    }
+                    displayObj[name] = lookupLabel;
+                }
+                else if (fType == 'master_detail') {
+                    let masterDetailLabel = '';
+                    let refTo = field.reference_to;
+                    let refValue = doc[name];
+                    let refObj = steedosSchema.getObject(refTo);
+                    let nameFieldKey = refObj.NAME_FIELD_KEY;
+                    if (field.multiple) {
+                        let refRecords = await refObj.find({ filters: [`_id`, 'in', refValue] });
+                        masterDetailLabel = _.pluck(refRecords, nameFieldKey).join(',');
+                    } else {
+                        let refRecord = (await refObj.find({ filters: [`_id`, '=', refValue] }))[0];
+                        if (refRecord) {
+                            masterDetailLabel = refRecord[nameFieldKey];
+                        }
+                    }
+                    displayObj[name] = masterDetailLabel;
+                }
+                else if (fType == 'autonumber') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'url') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'email') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'formula') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'summary') {
+                    displayObj[name] = doc[name];
+                }
+                else if (fType == 'image') {
+                    displayObj[name] = doc[name];
+                }
+                else {
+                    console.error(`Graphql Display: need to handle new field type ${field.type} for ${objectName}.`);
+                }
+            }
+        }
+    }
+    return displayObj;
+}
