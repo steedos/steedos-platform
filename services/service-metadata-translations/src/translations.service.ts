@@ -1,6 +1,5 @@
 "use strict";
 import { ActionHandlers } from './actionsHandler';
-console.log(`translations load.....`)
 module.exports = {
     name: "translations",
     /**
@@ -104,4 +103,3 @@ module.exports = {
 
     }
 };
-console.log(`load end...`)

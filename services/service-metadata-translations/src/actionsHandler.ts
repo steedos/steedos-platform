@@ -38,5 +38,3 @@ export const ActionHandlers = {
     //     return await ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
     // }
 }
-
-console.log(`actionsHandler end...`)
