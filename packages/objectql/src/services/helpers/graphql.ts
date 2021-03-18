@@ -21,7 +21,6 @@ const BASIC_TYPE_MAPPING = {
 };
 const EXPAND_SUFFIX = '__expand';
 const DISPLAY_PREFIX = '_display';
-declare var t: any;
 
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {
     let gplObj: any = {};
@@ -220,7 +219,6 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
     let objConfig = await object.toConfig();
     let _object = clone(objConfig);
     translationObject(lng, _object.name, _object);
-    let locale = userSession.locale;
     let displayObj = {};
     let utcOffset = userSession.utcOffset;
     for (const name in fields) {
@@ -262,9 +260,9 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
                 }
                 else if (fType == 'boolean') {
                     if (doc[name]) {
-                        displayObj[name] = t('YES', null, locale);
+                        displayObj[name] = '√';
                     } else {
-                        displayObj[name] = t('NO', null, locale);
+                        displayObj[name] = '';
                     }
                 }
                 else if (fType == 'date') {
