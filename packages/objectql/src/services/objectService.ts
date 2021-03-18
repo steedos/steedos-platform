@@ -18,11 +18,17 @@ function getObjectServiceMethodsSchema() {
         },
         find: {
             async handler(query, userSession) {
+                if (this.object.name == 'users') {
+                    return await this.object.find(query)
+                }
                 return await this.object.find(query, userSession)
             }
         },
         findOne: {
             async handler(id: string, query, userSession) {
+                if (this.object.name == 'users') {
+                    return await this.object.findOne(id, query)
+                }
                 return await this.object.findOne(id, query, userSession)
             }
         },
@@ -97,7 +103,7 @@ function getObjectServiceMethodsSchema() {
             }
         },
         getNameFieldKey: {
-            handler(){
+            handler() {
                 return this.object.getNameFieldKey();
             }
         },
@@ -111,27 +117,27 @@ function getObjectServiceMethodsSchema() {
                 return this.object.getUserObjectPermission(userSession)
             }
         },
-        isEnableAudit:{
+        isEnableAudit: {
             handler() {
                 return this.object.isEnableAudit()
             }
         },
         _makeNewID: {
             async handler() {
-                return this.object._makeNewID();
+                return await this.object._makeNewID();
             }
         },
-        getRecordAbsoluteUrl:{
+        getRecordAbsoluteUrl: {
             async handler() {
                 return this.object.getRecordAbsoluteUrl();
             }
         },
-        getGridAbsoluteUrl:{
+        getGridAbsoluteUrl: {
             async handler() {
                 return this.object.getGridAbsoluteUrl();
             }
         },
-        getRecordPermissions:{
+        getRecordPermissions: {
             async handler(record, userSession) {
                 return this.object.getRecordPermissions(record, userSession);
             }
@@ -333,7 +339,7 @@ function getObjectServiceActionsSchema() {
         getNameFieldKey: {
             async handler(ctx) {
                 return this.getNameFieldKey()
-            } 
+            }
         },
         toConfig: {
             async handler(ctx) {
@@ -357,20 +363,20 @@ function getObjectServiceActionsSchema() {
         },
         _makeNewID: {
             async handler() {
-                return this._makeNewID();
+                return await this._makeNewID();
             }
         },
-        getRecordAbsoluteUrl:{
+        getRecordAbsoluteUrl: {
             async handler() {
                 return this.getRecordAbsoluteUrl();
             }
         },
-        getGridAbsoluteUrl:{
+        getGridAbsoluteUrl: {
             async handler() {
                 return this.getGridAbsoluteUrl();
             }
         },
-        getRecordPermissions:{
+        getRecordPermissions: {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { record } = ctx.params;
@@ -409,7 +415,7 @@ module.exports = {
             throw new Error('Not found object config by objectApiName.')
         }
         const datasource = getDataSource(objectConfig.datasource);
-        if(datasource){
+        if (datasource) {
             this.object = datasource.getLocalObject(objectConfig.name);
         }
     },
@@ -418,12 +424,18 @@ module.exports = {
         let objectConfig = settings.objectConfig;
         if (objectConfig.enable_api) {
             _.each(schema.actions, (action, actionName) => {
-                action.rest = generateActionRestProp(actionName);
+                let rest = generateActionRestProp(actionName);
+                if (rest.method) {
+                    action.rest = rest;
+                }
             })
         }
         if (objectConfig.enable_graphql || true) { // TODO object.yml添加enable_graphql属性
             _.each(schema.actions, (action, actionName) => {
-                action.graphql = generateActionGraphqlProp(actionName, objectConfig);
+                let gpObj = generateActionGraphqlProp(actionName, objectConfig);
+                if (!_.isEmpty(gpObj)) {
+                    action.graphql = gpObj;
+                }
             })
             settings.graphql = generateSettingsGraphql(objectConfig);
         }

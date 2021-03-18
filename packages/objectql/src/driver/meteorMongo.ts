@@ -612,8 +612,16 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
-    _makeNewID(tableName){
+    async _makeNewID(tableName){
         let collection = this.collection(tableName);
-        return collection._makeNewID();
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    resolve(collection._makeNewID());
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
     }
 }
