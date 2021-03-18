@@ -120,7 +120,7 @@ export class SummaryActionHandler {
         const configs = [];
         for await (const field of _.values(config.fields)) {
             if (field.type === "summary") {
-                if (datasource !== "meteor") {
+                if (datasource !== "meteor" && datasource !== "default") {
                     throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'summary', because it is not in the default datasource.`);
                 }
                 try {
