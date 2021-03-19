@@ -101,7 +101,7 @@ export const addAllConfigFiles = async (filePath, datasource) => {
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     // addObjectI18nFiles(filePath);
-    addTranslationsFiles(filePath);
+    await addTranslationsFiles(filePath);
     await addObjectTranslationsFiles(filePath);
     addRouterFiles(filePath);
     // addConfigDataFiles(filePath);

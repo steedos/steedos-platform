@@ -13,7 +13,22 @@ function getObjectCacherKey(objectApiName: string, data?): string{
     return `$steedos.#translations-object.${objectApiName}.${suffix}`
 }
 
+function getCacherKey(key: string, data?): string{
+    let suffix = "*";
+    if(data){
+        suffix = getMD5(JSON.stringify(data));    
+    }
+    return `$steedos.#translations.${key}.${suffix}`
+}
+
 export const ActionHandlers = {
+    async getTranslations(ctx: any): Promise<any> {
+        return await ctx.broker.call('metadata.filter', {key: getCacherKey("*")}, {meta: ctx.meta})
+    },
+    async addTranslation(ctx: any): Promise<boolean>{
+        const { key, data } = ctx.params;
+        return await ctx.broker.call('metadata.add', {key: getCacherKey(key, data), data: data}, {meta: ctx.meta})
+    },
     async getObjectTranslations(ctx: any): Promise<any> {
         return await ctx.broker.call('metadata.filter', {key: getObjectCacherKey("*")}, {meta: ctx.meta})
     },

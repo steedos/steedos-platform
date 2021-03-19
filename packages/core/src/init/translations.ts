@@ -7,8 +7,8 @@ const app = express();
 
 export const InitTranslations = async function(){
     InitCoreTranslations();
-    await loadObjectTranslations();
-    loadTranslations();
+    // await loadObjectTranslations();
+    // await loadTranslations();
     InitTranslationRouter();
 }
 
@@ -22,8 +22,8 @@ export const InitTranslationRouter = function(){
     WebApp.connectHandlers.use(pluginContext.app);
 }
 
-export const loadTranslations = function(){
-    const tanslations = objectql.getTranslations();
+export const loadTranslations = async function(){
+    const tanslations = await objectql.getTranslations();
     I18n.addTranslations(tanslations);
 }
 

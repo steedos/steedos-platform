@@ -36,6 +36,11 @@ module.exports = {
 	 * Events
 	 */
 	events: {
+		"translations.change": {
+            handler() {
+				core.loadTranslations()
+            }
+        },
 		"translations.object.change": {
             handler() {
 				core.loadObjectTranslations()
