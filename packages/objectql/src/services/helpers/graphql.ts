@@ -353,12 +353,12 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
                         }
                     }
                 }
-                else if (fType == 'lookup') {
+                else if (fType == 'lookup' && _.isString(field.reference_to)) {
                     let lookupLabel = '';
                     let refTo = field.reference_to;
                     let refValue = doc[name];
                     let refObj = steedosSchema.getObject(refTo);
-                    let nameFieldKey = refObj.NAME_FIELD_KEY;
+                    let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
                         let refRecords = await refObj.find({ filters: [`_id`, 'in', refValue] });
                         lookupLabel = _.pluck(refRecords, nameFieldKey).join(',');
@@ -370,12 +370,12 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
                     }
                     displayObj[name] = lookupLabel;
                 }
-                else if (fType == 'master_detail') {
+                else if (fType == 'master_detail' && _.isString(field.reference_to)) {
                     let masterDetailLabel = '';
                     let refTo = field.reference_to;
                     let refValue = doc[name];
                     let refObj = steedosSchema.getObject(refTo);
-                    let nameFieldKey = refObj.NAME_FIELD_KEY;
+                    let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
                         let refRecords = await refObj.find({ filters: [`_id`, 'in', refValue] });
                         masterDetailLabel = _.pluck(refRecords, nameFieldKey).join(',');
@@ -407,6 +407,7 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
                 }
                 else {
                     console.error(`Graphql Display: need to handle new field type ${field.type} for ${objectName}.`);
+                    displayObj[name] = doc[name] || '';
                 }
             } else {
                 displayObj[name] = ''; // 如果值为空，均返回空字符串
