@@ -278,16 +278,13 @@ function getTranslatedFieldConfig(translatedObject: any, name: string) {
 }
 
 async function translateToDisplay(objectName, fields, doc, userSession: any) {
-    console.log('objectName: ', objectName);
-    console.log('doc: ', doc);
-
     const lng = getUserLocale(userSession);
     let steedosSchema = getSteedosSchema();
     let object = steedosSchema.getObject(objectName);
     let objConfig = await object.toConfig();
     let _object = clone(objConfig);
     translationObject(lng, _object.name, _object);
-    let displayObj = {};
+    let displayObj = { _id: doc._id };
     let utcOffset = userSession.utcOffset;
     for (const name in fields) {
         if (Object.prototype.hasOwnProperty.call(fields, name)) {
@@ -295,16 +292,16 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
             if (_.has(doc, name)) {
                 const fType = field.type;
                 if (fType == 'text') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'textarea') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'html_text') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'html') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'select') {
                     let label = '';
@@ -340,17 +337,17 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
                     displayObj[name] = moment(doc[name]).utcOffset(utcOffset).format("YYYY-MM-DD H:mm")
                 }
                 else if (fType == 'number') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'currency') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'percent') {
                     displayObj[name] = `${doc[name] * 100}%`;
                 }
                 else if (fType == 'password') {
+                    displayObj[name] = '';
                     if (_.isString(doc[name])) {
-                        displayObj[name] = '';
                         for (let i = 0; i < doc[name].length; i++) {
                             displayObj[name] += '*';
                         }
@@ -391,26 +388,28 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
                     displayObj[name] = masterDetailLabel;
                 }
                 else if (fType == 'autonumber') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'url') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'email') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'formula') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'summary') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'image') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else {
                     console.error(`Graphql Display: need to handle new field type ${field.type} for ${objectName}.`);
                 }
+            } else {
+                displayObj[name] = ''; // 如果值为空，均返回空字符串
             }
         }
     }
