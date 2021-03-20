@@ -21,6 +21,7 @@ const BASIC_TYPE_MAPPING = {
 };
 const EXPAND_SUFFIX = '__expand';
 const DISPLAY_PREFIX = '_display';
+export const RELATED_PREFIX = '_related';
 
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {
     let gplObj: any = {};
@@ -191,11 +192,55 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
         }
     })
 
-    // __display
+    // _display
     type += `${DISPLAY_PREFIX}: JSON `;
     resolvers[objectName][DISPLAY_PREFIX] = async function (parent, args, context, info) {
         let userSession = context.ctx.meta.user;
         return await translateToDisplay(objectName, fields, parent, userSession);
+    }
+
+    // _related
+    if (objectConfig.enable_files) {
+        let relatedObjName = 'cms_files';
+        let relatedFieldName = `${RELATED_PREFIX}_files`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'parent');
+    }
+    if (objectConfig.enable_tasks) {
+        let relatedObjName = 'tasks';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
+    }
+    if (objectConfig.enable_notes) {
+        let relatedObjName = 'notes';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
+    }
+    if (objectConfig.enable_events) {
+        let relatedObjName = 'events';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
+    }
+    if (objectConfig.enable_audit) {
+        let relatedObjName = 'audit_records';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
+    }
+    if (objectConfig.enable_instances) {
+        let relatedObjName = 'instances';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'record_ids');
+    }
+    if (objectConfig.enable_approvals) {
+        let relatedObjName = 'approvals';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
     }
 
     type += '}';
@@ -205,7 +250,30 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     }
 }
 
-const getTranslatedFieldConfig = (translatedObject: any, name: string) => {
+export function correctName(name: string) {
+    return name.replace(/\./g, '_');
+}
+
+export function _getRelatedType(relatedFieldName, relatedObjName) {
+    return `${relatedFieldName}(fields: [String], filters: JSON, top: Int, skip: Int, sort: String): [${relatedObjName}] `;
+}
+
+function _getRelatedResolver(objectName, relatedObjName, foreignKey) {
+    return async function (parent, args, context, info) {
+        let userSession = context.ctx.meta.user;
+        let steedosSchema = getSteedosSchema();
+        let object = steedosSchema.getObject(relatedObjName);
+        let filters = [];
+        filters = [[`${foreignKey}.o`, "=", objectName], [`${foreignKey}.ids`, "=", parent._id]];
+        if (args && args.filters) {
+            filters.push(args.filters);
+        }
+        args.filters = filters;
+        return await object.find(args, userSession);
+    }
+}
+
+function getTranslatedFieldConfig(translatedObject: any, name: string) {
     return translatedObject.fields[name.replace(/__label$/, "")];
 }
 

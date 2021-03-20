@@ -43,7 +43,7 @@ class ObjectServiceDispatcher {
     }
 
     async find(query, userSession?) {
-        return await this.callAction(`find`, {query, userSession});
+        return await this.callAction(`find`, {...query, userSession});
     }
 
     async findOne(id, query, userSession?) {
@@ -79,7 +79,7 @@ class ObjectServiceDispatcher {
     }
 
     async directFind(query, userSession) {
-        return await this.callAction(`directFind`, {query, userSession});
+        return await this.callAction(`directFind`, {...query, userSession});
     }
 
     async directInsert(doc, userSession?) {
