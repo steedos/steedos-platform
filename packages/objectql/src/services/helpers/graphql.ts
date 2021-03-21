@@ -21,6 +21,7 @@ const BASIC_TYPE_MAPPING = {
 };
 const EXPAND_SUFFIX = '__expand';
 const DISPLAY_PREFIX = '_display';
+export const RELATED_PREFIX = '_related';
 
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {
     let gplObj: any = {};
@@ -191,11 +192,55 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
         }
     })
 
-    // __display
+    // _display
     type += `${DISPLAY_PREFIX}: JSON `;
     resolvers[objectName][DISPLAY_PREFIX] = async function (parent, args, context, info) {
         let userSession = context.ctx.meta.user;
         return await translateToDisplay(objectName, fields, parent, userSession);
+    }
+
+    // _related
+    if (objectConfig.enable_files) {
+        let relatedObjName = 'cms_files';
+        let relatedFieldName = `${RELATED_PREFIX}_files`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'parent');
+    }
+    if (objectConfig.enable_tasks) {
+        let relatedObjName = 'tasks';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
+    }
+    if (objectConfig.enable_notes) {
+        let relatedObjName = 'notes';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
+    }
+    if (objectConfig.enable_events) {
+        let relatedObjName = 'events';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
+    }
+    if (objectConfig.enable_audit) {
+        let relatedObjName = 'audit_records';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
+    }
+    if (objectConfig.enable_instances) {
+        let relatedObjName = 'instances';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'record_ids');
+    }
+    if (objectConfig.enable_approvals) {
+        let relatedObjName = 'approvals';
+        let relatedFieldName = `${RELATED_PREFIX}_${relatedObjName}`;
+        type += _getRelatedType(relatedFieldName, relatedObjName);
+        resolvers[objectName][relatedFieldName] = _getRelatedResolver(objectName, relatedObjName, 'related_to');
     }
 
     type += '}';
@@ -205,21 +250,41 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     }
 }
 
-const getTranslatedFieldConfig = (translatedObject: any, name: string) => {
+export function correctName(name: string) {
+    return name.replace(/\./g, '_');
+}
+
+export function _getRelatedType(relatedFieldName, relatedObjName) {
+    return `${relatedFieldName}(fields: [String], filters: JSON, top: Int, skip: Int, sort: String): [${relatedObjName}] `;
+}
+
+function _getRelatedResolver(objectName, relatedObjName, foreignKey) {
+    return async function (parent, args, context, info) {
+        let userSession = context.ctx.meta.user;
+        let steedosSchema = getSteedosSchema();
+        let object = steedosSchema.getObject(relatedObjName);
+        let filters = [];
+        filters = [[`${foreignKey}.o`, "=", objectName], [`${foreignKey}.ids`, "=", parent._id]];
+        if (args && args.filters) {
+            filters.push(args.filters);
+        }
+        args.filters = filters;
+        return await object.find(args, userSession);
+    }
+}
+
+function getTranslatedFieldConfig(translatedObject: any, name: string) {
     return translatedObject.fields[name.replace(/__label$/, "")];
 }
 
 async function translateToDisplay(objectName, fields, doc, userSession: any) {
-    console.log('objectName: ', objectName);
-    console.log('doc: ', doc);
-
     const lng = getUserLocale(userSession);
     let steedosSchema = getSteedosSchema();
     let object = steedosSchema.getObject(objectName);
     let objConfig = await object.toConfig();
     let _object = clone(objConfig);
     translationObject(lng, _object.name, _object);
-    let displayObj = {};
+    let displayObj = { _id: doc._id };
     let utcOffset = userSession.utcOffset;
     for (const name in fields) {
         if (Object.prototype.hasOwnProperty.call(fields, name)) {
@@ -227,16 +292,16 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
             if (_.has(doc, name)) {
                 const fType = field.type;
                 if (fType == 'text') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'textarea') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'html_text') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'html') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'select') {
                     let label = '';
@@ -272,28 +337,28 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
                     displayObj[name] = moment(doc[name]).utcOffset(utcOffset).format("YYYY-MM-DD H:mm")
                 }
                 else if (fType == 'number') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'currency') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'percent') {
                     displayObj[name] = `${doc[name] * 100}%`;
                 }
                 else if (fType == 'password') {
+                    displayObj[name] = '';
                     if (_.isString(doc[name])) {
-                        displayObj[name] = '';
                         for (let i = 0; i < doc[name].length; i++) {
                             displayObj[name] += '*';
                         }
                     }
                 }
-                else if (fType == 'lookup') {
+                else if (fType == 'lookup' && _.isString(field.reference_to)) {
                     let lookupLabel = '';
                     let refTo = field.reference_to;
                     let refValue = doc[name];
                     let refObj = steedosSchema.getObject(refTo);
-                    let nameFieldKey = refObj.NAME_FIELD_KEY;
+                    let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
                         let refRecords = await refObj.find({ filters: [`_id`, 'in', refValue] });
                         lookupLabel = _.pluck(refRecords, nameFieldKey).join(',');
@@ -305,12 +370,12 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
                     }
                     displayObj[name] = lookupLabel;
                 }
-                else if (fType == 'master_detail') {
+                else if (fType == 'master_detail' && _.isString(field.reference_to)) {
                     let masterDetailLabel = '';
                     let refTo = field.reference_to;
                     let refValue = doc[name];
                     let refObj = steedosSchema.getObject(refTo);
-                    let nameFieldKey = refObj.NAME_FIELD_KEY;
+                    let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
                         let refRecords = await refObj.find({ filters: [`_id`, 'in', refValue] });
                         masterDetailLabel = _.pluck(refRecords, nameFieldKey).join(',');
@@ -323,26 +388,29 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
                     displayObj[name] = masterDetailLabel;
                 }
                 else if (fType == 'autonumber') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'url') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'email') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'formula') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'summary') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else if (fType == 'image') {
-                    displayObj[name] = doc[name];
+                    displayObj[name] = doc[name] || '';
                 }
                 else {
                     console.error(`Graphql Display: need to handle new field type ${field.type} for ${objectName}.`);
+                    displayObj[name] = doc[name] || '';
                 }
+            } else {
+                displayObj[name] = ''; // 如果值为空，均返回空字符串
             }
         }
     }

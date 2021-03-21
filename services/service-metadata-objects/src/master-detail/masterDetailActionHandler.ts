@@ -126,7 +126,7 @@ export class MasterDetailActionHandler{
                         }
                         const addSuc = await this.addMaster(objectApiName, field.reference_to);
                         if (addSuc) {
-                            await this.addDetail(field.reference_to, objectApiName);
+                            await this.addDetail(field.reference_to, objectApiName, field);
                             // #1435 对象是作为其他对象的子表的话，owner的omit属性必须为true
                             // 因很多应用目前已经放开了子表的omit属性，这里就不限制了，影响不大，只在零代码界面配置时限制
                             // if(!this.getField("owner").omit){
@@ -192,7 +192,7 @@ export class MasterDetailActionHandler{
         return metadata || [];
     }
 
-    async addDetail(objectApiName: any, detailObjectApiName: string){
+    async addDetail(objectApiName: any, detailObjectApiName: string, detailField: any){
         let detail = await this.getDetails(objectApiName);
         let maps = [];
         if(detail){
@@ -203,6 +203,7 @@ export class MasterDetailActionHandler{
         if (index < 0) {
             maps.push(detailObjectApiName);
             await this.broker.call('metadata.add', {key: this.getDetailKey(objectApiName), data: maps}, {meta: {}})
+            this.broker.emit(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
             return true;
         }
         return false;

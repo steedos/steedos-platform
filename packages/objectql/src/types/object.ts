@@ -71,6 +71,7 @@ abstract class SteedosObjectProperties {
     enable_space_global?: boolean
     enable_tree?: boolean
     enable_inline_edit?: boolean
+    enable_approvals?: boolean
     is_view?: boolean
     hidden?: boolean
     description?: string
