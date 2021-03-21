@@ -28,6 +28,28 @@ export function addConfigDataFiles(filePath: string){
     })
 }
 
+export function getConfigsFormFiles(objectName: string, filePath: string){
+    if(!path.isAbsolute(filePath)){
+        throw new Error(`${filePath} must be an absolute path`);
+    }
+
+    const filePatten = [
+        path.join(filePath, `*.${objectName}.yml`),
+        path.join(filePath, `*.${objectName}.js`),
+        path.join(filePath, `*.${objectName}.json`)
+    ]
+
+    let jsons = loadJsonFiles(filePatten);
+    const configs = [];
+    _.each(jsons, (json: any) => {
+        let recordId = path.basename(json.file).split(`.${objectName}.`)[0]
+        if (typeof json.data._id === "undefined")
+            json.data._id = recordId
+        configs.push(json.data)
+    })
+    return configs;
+}
+
 export function addConfigFiles(objectName: string, filePath: string){
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
@@ -97,7 +119,7 @@ export const getConfig = (objectName: string, _id: string) => {
 
 export const addAllConfigFiles = async (filePath, datasource) => {
     addObjectConfigFiles(filePath, datasource);
-    addAppConfigFiles(filePath);
+    await addAppConfigFiles(filePath);
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     // addObjectI18nFiles(filePath);

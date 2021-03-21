@@ -1,7 +1,7 @@
 import steedosI18n = require("@steedos/i18n");
 import { getPlugins } from '../';
 import { requireAuthentication } from './auth'
-import { getObject, getLayout } from '@steedos/objectql'
+import { getObject, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps } from '@steedos/objectql'
 require("@steedos/license");
 const Fiber = require('fibers')
 const clone = require("clone");
@@ -58,14 +58,17 @@ export async function getSpaceBootStrap(req, res) {
 
         result.space = space
 
-        result.apps = clone(Creator.Apps)
-
         result.dashboards = clone(Creator.Dashboards)
         
         result.object_listviews = Creator.getUserObjectsListViews(userId, spaceId, result.objects)
         
         result.object_workflows = Meteor.call('object_workflows.get', spaceId, userId)
         
+
+        // result.apps = clone(Creator.Apps)
+        result.apps = await getAppConfigs();
+        result.assigned_apps = await getAssignedApps(userSession);
+
         let datasources = Creator.steedosSchema.getDataSources();
         
         // for (const datasourceName in datasources) {
@@ -101,10 +104,10 @@ export async function getSpaceBootStrap(req, res) {
                 }
             }
         }
-        _.each(Creator.steedosSchema.getDataSources(), function(datasource, name){
-            result.apps = _.extend(result.apps, clone(datasource.getAppsConfig()))
-            result.dashboards = _.extend(result.dashboards, datasource.getDashboardsConfig())
-        })
+        // _.each(Creator.steedosSchema.getDataSources(), function(datasource, name){
+        //     result.apps = _.extend(result.apps, clone(datasource.getAppsConfig()))
+        //     result.dashboards = _.extend(result.dashboards, datasource.getDashboardsConfig())
+        // })
 
         var _dbApps = await getObject("apps").directFind({filters: [['space', '=', spaceId],['is_creator', '=', true],['visible', '=', true]]});
         let dbApps = {};
@@ -140,7 +143,7 @@ export async function getSpaceBootStrap(req, res) {
 
         steedosI18n.translationApps(lng, _Apps);
         result.apps = _Apps;
-        let assigned_menus = clone(result.assigned_menus);
+        let assigned_menus = await getAssignedMenus(userSession);
         steedosI18n.translationMenus(lng, assigned_menus);
         result.assigned_menus = assigned_menus;
 

@@ -44,19 +44,19 @@ export const initCreator = () => {
     //     obj.name = object_name
     //     objectql.addObjectConfig(obj, 'default')
     // });
-    objectql.addAppConfigFiles(path.join(process.cwd(), "src/**"))
+    objectql.addAppConfigFiles(path.join(process.cwd(), "src/**")) //TODO await
     
     let allObjects = objectql.getObjectConfigs('meteor');
     _.each(allObjects, function (obj) {
         Creator.Objects[obj.name] = obj;
     });
 
-    let allApps = objectql.getAppConfigs();
-    _.each(allApps, function (app) {
-        if (!app._id)
-            app._id = app.name
-        Creator.Apps[app._id] = app
-    });
+    // let allApps = objectql.getAppConfigs();
+    // _.each(allApps, function (app) {
+    //     if (!app._id)
+    //         app._id = app.name
+    //     Creator.Apps[app._id] = app
+    // });
 
     let allDashboards = objectql.getDashboardConfigs();
     if(!Creator.Dashboards){

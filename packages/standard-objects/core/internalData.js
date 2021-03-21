@@ -30,7 +30,7 @@ function parserFilters(filters){
         filters = odataMongodb.createFilter(filters)
     }
     let query = {};
-    if(_.isArray(filters)){
+    if(_.isArray(filters) && filters.length > 0 && _.isArray(filters[0])){
         _.each(filters,function(filter){
             Object.assign(query, parserFilters(filter))
         })
