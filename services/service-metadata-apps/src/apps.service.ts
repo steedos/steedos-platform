@@ -24,19 +24,11 @@ module.exports = {
          * @returns
          */
         get: {
-            rest: {
-                method: "GET",
-                path: "/object"
-            },
             async handler(ctx) {
                 return await ActionHandlers.get(ctx);
             }
         },
         getAll: {
-            rest: {
-                method: "GET",
-                path: "/objects"
-            },
             async handler(ctx) {
                 return await ActionHandlers.getAll(ctx);
             }
