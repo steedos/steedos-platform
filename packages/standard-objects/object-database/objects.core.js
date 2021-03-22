@@ -1,5 +1,6 @@
 var objectql = require('@steedos/objectql');
 const defaultDatasourceName = 'meteor';
+const defaultDatasourcesName = ['default','meteor'];
 var triggerCore = require('./object_triggers.core.js');
 var permissionCore = require('./permission_objects.core.js');
 var buildGraphQLSchemaSetTimeOutId = null;
@@ -31,14 +32,14 @@ function canLoadObject(name, datasource) {
 }
 
 function getDataSource(doc) {
-    if (doc.datasource && doc.datasource != defaultDatasourceName) {
+    if (doc.datasource && !_.include(defaultDatasourcesName, doc.datasource)) {
         let datasource = Creator.getCollection("datasources").findOne({ _id: doc.datasource })
         return datasource;
     }
 }
 
 function getDataSourceName(doc) {
-    if (doc && doc.datasource && doc.datasource != defaultDatasourceName) {
+    if (doc && doc.datasource && !_.include(defaultDatasourcesName, doc.datasource)) {
         let datasource = Creator.getCollection("datasources").findOne({ _id: doc.datasource })
         if (datasource) {
             return datasource.name
@@ -178,7 +179,7 @@ function loadObject(doc, oldDoc) {
         }
     
         var datasourceDoc = getDataSource(doc);
-        if (doc.datasource && doc.datasource != defaultDatasourceName && (!datasourceDoc || !datasourceDoc.is_enable)) {
+        if (doc.datasource && !_.include(defaultDatasourcesName, doc.datasource) && (!datasourceDoc || !datasourceDoc.is_enable)) {
             console.warn('warn: Not loaded. Invalid custom object -> ', doc.name, doc.datasource);
             return;
         }

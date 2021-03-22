@@ -5100,6 +5100,23 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
+"@steedos/plugin-qywx@0.0.19":
+  version "0.0.19"
+  resolved "https://registry.npm.taobao.org/@steedos/plugin-qywx/download/@steedos/plugin-qywx-0.0.19.tgz#e312ab4a0177bfc8a6811390ede9282588b3be55"
+  integrity sha1-4xKrSgF3v8imgROQ7ekoJYizvlU=
+  dependencies:
+    "@salesforce/dev-config" "^1.4.4"
+    admin-lte "^2.3.11"
+    bcrypt "3.0.6"
+    bootstrap "^3.3.7"
+    cookies "^0.8.0"
+    dotenv-flow "^3.1.0"
+    express "^4.17.1"
+    jsdom "^16.2.2"
+    jshashes "^1.0.8"
+    ts-node "^8.4.1"
+    wechat-crypto "^0.0.2"
+
 "@steedos/plugin-qywx@^0.0.16":
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/@steedos/plugin-qywx/-/plugin-qywx-0.0.16.tgz#9af41490d0eb4e06709388c9eeb7befd2cc09c42"
@@ -5117,23 +5134,6 @@
     ts-node "^8.4.1"
     wechat-crypto "^0.0.2"
     xml2json "^0.12.0"
-
-"@steedos/plugin-qywx@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-qywx/-/plugin-qywx-0.0.17.tgz#3dccf20e6e5af2675a1053766705f754e617312f"
-  integrity sha512-0Y5+8Wje+JGbp997IuZtcGwPbIRLO5Ycf6VAZBEg7b5KAI0aRzmriqC12uKhTkIXKB4pE41uiM+DqF7zJ635vw==
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    admin-lte "^2.3.11"
-    bcrypt "3.0.6"
-    bootstrap "^3.3.7"
-    cookies "^0.8.0"
-    dotenv-flow "^3.1.0"
-    express "^4.17.1"
-    jsdom "^16.2.2"
-    jshashes "^1.0.8"
-    ts-node "^8.4.1"
-    wechat-crypto "^0.0.2"
 
 "@steedos/steedos-plugin-schema-builder@^1.23.20":
   version "1.23.20"
