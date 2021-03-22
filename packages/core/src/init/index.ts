@@ -14,8 +14,8 @@ export async function init() {
     initPublicStaticRouter();
     initPublic();
     initDesignSystem();
-    wrapAsync(()=>{
-        Plugins.init()
+    wrapAsync(async ()=>{
+        await Plugins.init(this)
     }, {});
     Datasources.loadFiles();
     wrapAsync(()=>{

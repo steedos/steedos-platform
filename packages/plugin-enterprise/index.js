@@ -1,0 +1,1 @@
+exports.init = function ({ app }) {}

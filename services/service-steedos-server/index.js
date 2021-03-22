@@ -37,7 +37,17 @@ module.exports = {
 		},
 		apiServer: {
 			enabled: true
-		}
+		},
+		built_in_plugins: [
+			"@steedos/steedos-plugin-workflow",
+			"@steedos/accounts",
+			"@steedos/steedos-plugin-schema-builder",
+			"@steedos/plugin-enterprise",
+			"@steedos/word-template",
+			"@steedos/plugin-qywx",
+			"@steedos/metadata-api",
+			"@steedos/plugin-dingtalk"],
+		plugins: []
 	},
 
 	/**
@@ -90,7 +100,7 @@ module.exports = {
 					this.meteor.loadServerBundles();
 					require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
-					this.wrapAsync(this.steedos.init, {});
+					this.wrapAsync(this.steedos.init, this.settings);
 					this.WebApp = WebApp;
 					this.startNodeRedService();
 					this.meteor.callStartupHooks();
