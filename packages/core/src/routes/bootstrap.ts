@@ -50,6 +50,7 @@ export async function getSpaceBootStrap(req, res) {
 
         let space = Creator.Collections["spaces"].findOne({ _id: spaceId }, { fields: { name: 1 } })
 
+        //TODO 无需再从getAllPermissions中获取用户的对象权限
         let result = Creator.getAllPermissions(spaceId, userId);
 
         let lng = _getLocale(db.users.findOne(userId, { fields: { locale: 1 } }))

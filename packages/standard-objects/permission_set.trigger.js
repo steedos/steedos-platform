@@ -1,36 +1,38 @@
 const _ = require('underscore');
 const InternalData = require('./core/internalData');
 const objectql = require('@steedos/objectql');
-const getLng = function(userId){
-    return Steedos.locale(userId, true);
+const auth = require("@steedos/auth");
+const getLng = async function(userId){
+    const userSession = await auth.getSessionByUserId(userId);
+    return userSession ? userSession.language : null;
 }
 
-const getSourcePermissionSets = function(type){
+const getSourcePermissionSets = async function(type){
     switch (type) {
         case 'permission_set':
-            return objectql.getSourcePermissionsets();
+            return await objectql.getSourcePermissionsets();
         case 'profile':
-            return objectql.getSourceProfiles();
+            return await objectql.getSourceProfiles();
         default:
-            return objectql.getSourceProfiles().concat(objectql.getSourcePermissionsets());
+            return (await objectql.getSourceProfiles()).concat((await objectql.getSourcePermissionsets()));
     }
     
 }
 
-const getSourcePermissionSetsKeys = function(type){
+const getSourcePermissionSetsKeys = async function(type){
     switch (type) {
         case 'permission_set':
-            return objectql.getSourcePermissionsetKeys();
+            return await objectql.getSourcePermissionsetKeys();
         case 'profile':
-            return objectql.getSourceProfilesKeys();
+            return await objectql.getSourceProfilesKeys();
         default:
-            return objectql.getSourceProfilesKeys().concat(objectql.getSourcePermissionsetKeys())
+            return (await objectql.getSourceProfilesKeys()).concat((await objectql.getSourcePermissionsetKeys()))
     }
 }
 
 
-const getLngInternalPermissionSet = function(lng, type){
-    const internalPermissionSet = getSourcePermissionSets(type);
+const getLngInternalPermissionSet = async function(lng, type){
+    const internalPermissionSet = await getSourcePermissionSets(type);
     if(!lng){
         return internalPermissionSet;
     }
@@ -42,14 +44,13 @@ const getLngInternalPermissionSet = function(lng, type){
     return lngInternalPermissionSet;
 }
 
-const getInternalPermissionSet = function(spaceId, lng, type){
-    
-    let lngInternalPermissionSet = getLngInternalPermissionSet(lng, type);
-
+const getInternalPermissionSet = async function(spaceId, lng, type){
+    let lngInternalPermissionSet = await getLngInternalPermissionSet(lng, type);
     if(!spaceId){
         return lngInternalPermissionSet;
     }
-    let dbPerms = Creator.getCollection("permission_set").find({space: spaceId, name: {$in: getSourcePermissionSetsKeys(type) || []}}, {fields:{_id:1, name:1}}).fetch();
+    let keys = await getSourcePermissionSetsKeys(type);
+    let dbPerms = await objectql.getObject("permission_set").directFind({filters: ['space', '=', spaceId,['name', '=', keys || []]], fields: ['_id', 'name']});
     let perms = [];
     _.forEach(lngInternalPermissionSet, function(doc){
         if(!_.find(dbPerms, function(p){
@@ -92,8 +93,8 @@ module.exports = {
         if(_.isArray(this.data.values)){
             let filters = InternalData.parserFilters(this.query.filters);
             if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
-                let lng = getLng(this.userId);
-                let records = getInternalPermissionSet(this.spaceId, lng, filters.type);
+                let lng = await getLng(this.userId);
+                let records = await getInternalPermissionSet(this.spaceId, lng, filters.type);
                 if(_.has(filters, 'name')){
                     records = _.filter(records, function(record){
                         return record.name == filters.name
@@ -115,8 +116,8 @@ module.exports = {
         if(_.isArray(this.data.values)){
             let filters = InternalData.parserFilters(this.query.filters);
             if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
-                let lng = getLng(this.userId);
-                this.data.values = this.data.values.concat(getInternalPermissionSet(this.spaceId, lng, filters.type))
+                let lng = await getLng(this.userId);
+                this.data.values = this.data.values.concat((await getInternalPermissionSet(this.spaceId, lng, filters.type)))
             }
             
         }
@@ -124,23 +125,25 @@ module.exports = {
     afterCount: async function () {
         let filters = InternalData.parserFilters(this.query.filters);
         if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
-            this.data.values = this.data.values + getInternalPermissionSet(this.spaceId, null, filters.type).length
+            this.data.values = this.data.values + (await getInternalPermissionSet(this.spaceId, null, filters.type)).length
         }
     },
     afterFindOne: async function () {
         let id = this.id;
         let spaceId = this.spaceId;
         if(id && _.isEmpty(this.data.values)){
-            if(_.include(getSourcePermissionSetsKeys(), id) && spaceId){
-                let dbPerms = Creator.getCollection("permission_set").findOne({space: spaceId, name: id});
-                if(dbPerms){
-                    this.data.values = dbPerms
+            const keys = await getSourcePermissionSetsKeys();
+            if(_.include(keys, id) && spaceId){
+                let dbPerms = await objectql.getObject("permission_set").directFind({filters: [['space', '=', spaceId], ['name', '=', id]]});
+                if(dbPerms && dbPerms.length > 0){
+                    this.data.values = dbPerms[0]
                     return ;
                 }
             }
             if(this.userId){
-                let lng = getLng(this.userId);
-                Object.assign(this.data.values, _.find(getLngInternalPermissionSet(lng), (doc)=>{
+                let lng = await getLng(this.userId);
+                const permSet = await getLngInternalPermissionSet(lng);
+                Object.assign(this.data.values, _.find(permSet, (doc)=>{
                     return doc._id === id
                 }))
             }

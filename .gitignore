@@ -50,3 +50,4 @@ services/service-metadata-objects/.env.local
 services/service-metadata-triggers/.env.local
 services/service-metadata-translations/.env.local
 services/service-metadata-apps/.env.local
+services/service-metadata-permissionsets/.env.local

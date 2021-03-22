@@ -103,8 +103,8 @@ export class SteedosSchema {
         // wrapAsync(preloadDBObjectFields, {});
         // wrapAsync(preloadDBObjectButtons, {});
 
-        loadStandardProfiles();
-        loadStandardPermissionsets();
+        // loadStandardProfiles();
+        // loadStandardPermissionsets();
 
         if (isMeteor())
             loadStandardObjects();
@@ -256,6 +256,13 @@ export function getSteedosSchema(broker?: any, metadataBroker?: any): SteedosSch
     if (metadataBroker || broker) {
         schema.metadataBroker = metadataBroker || broker;
     }
+
+
+    if(broker || metadataBroker){
+        loadStandardProfiles();
+        loadStandardPermissionsets();
+    }
+
     return schema;
 }
 

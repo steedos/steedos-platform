@@ -36,11 +36,20 @@ function parserFilters(filters){
         })
     }else{
         _.each(filters, function (v, k) {
-            if (k === '$and') {
+            if(_.isArray(v) && v.length > 0){
                 Object.assign(query, parserFilters(v))
-            } else {
-                Object.assign(query, {[k]: v})
+            }else{
+                if (k === '$and') {
+                    Object.assign(query, parserFilters(v))
+                } else {
+                    if(_.isArray(filters) && _.isObject(v)){
+                        Object.assign(query, v)
+                    }else{
+                        Object.assign(query, {[k]: v})
+                    }
+                }
             }
+            
         })
     }
     return query;

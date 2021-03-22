@@ -1,5 +1,5 @@
 import { SteedosProfileTypeConfig } from '../ts-types';
-import { addConfig, getConfig, getConfigs } from '../types';
+import { getSteedosSchema } from '../types/schema';
 var util = require('../util');
 var clone = require('clone');
 var _ = require('underscore');
@@ -28,7 +28,7 @@ const STANDARD_PROFILES = {
     customer: {_id: 'customer', name: 'customer', label: 'customer', license: 'community', ...DEFAULTRECORD, ...BASERECORD}
 }
 
-const PROFILES_KEY = 'STANDARD_PROFILES';
+// const PROFILES_KEY = 'STANDARD_PROFILES';
 
 const getStandardProfile = function(name){
     return getStandardProfiles()[name];
@@ -38,39 +38,56 @@ const getStandardProfiles = function(){
     return clone(STANDARD_PROFILES);
 }
 
-const addProfile = function(json: SteedosProfileTypeConfig){
+const addProfile = async function(json: SteedosProfileTypeConfig){
     if(!json.name){
         throw new Error('missing attribute name');
     }
+
+    let profileConfig = null;
+
     if(_.include(_.keys(STANDARD_PROFILES), json.name)){
-        addConfig(PROFILES_KEY, Object.assign({}, getStandardProfile(json.name), json, clone(BASERECORD)));
+        profileConfig = Object.assign({}, getStandardProfile(json.name), json, clone(BASERECORD))
+        // addConfig(PROFILES_KEY, Object.assign({}, getStandardProfile(json.name), json, clone(BASERECORD)));
     }else{
-        addConfig(PROFILES_KEY, Object.assign({}, clone(DEFAULTRECORD), json, clone(BASERECORD)));
+        profileConfig = Object.assign({}, clone(DEFAULTRECORD), json, clone(BASERECORD))
+        // addConfig(PROFILES_KEY, Object.assign({}, clone(DEFAULTRECORD), json, clone(BASERECORD)));
+    }
+
+    const schema = getSteedosSchema();
+    const serviceName = '';
+    await schema.metadataRegister.addProfile(serviceName, profileConfig);
+}
+
+export const loadStandardProfiles = async function(){
+    const schema = getSteedosSchema();
+    const serviceName = '';
+    const keys = _.keys(STANDARD_PROFILES);
+    for (const key of keys) {
+        const standardProfile = STANDARD_PROFILES[key];
+        await schema.metadataRegister.addProfile(serviceName, standardProfile);
     }
 }
 
-export const loadStandardProfiles = function(){
-    _.each(STANDARD_PROFILES, function(standardProfile: SteedosProfileTypeConfig){
-        addConfig(PROFILES_KEY, standardProfile);
-    })
-}
-    
-
-export const loadSourceProfiles = function (filePath: string){
+export const loadSourceProfiles = async function (filePath: string){
     let profiles = util.loadProfiles(filePath)
-    _.each(profiles, (json: SteedosProfileTypeConfig) => {
-        addProfile(json);
-    })
+    for (const profile of profiles) {
+       await addProfile(profile);
+    }
 }
 
-export const getSourceProfile = function(name){
-    return getConfig(PROFILES_KEY, name);
+export const getSourceProfile = async function(name){
+    const schema = getSteedosSchema();
+    const profile = await schema.metadataRegister.getProfile(name);
+    return profile?.metadata
 }
 
-export const getSourceProfilesKeys = function(){
-    return _.pluck(getSourceProfiles(), 'name');
+export const getSourceProfilesKeys = async function(){
+    const profiles = await getSourceProfiles();
+    return _.pluck(profiles, 'name');
 }
 
-export const getSourceProfiles = function(){
-    return getConfigs(PROFILES_KEY) || [];
+export const getSourceProfiles = async function(){
+    const schema = getSteedosSchema();
+    const profiles = await schema.metadataRegister.getProfiles();
+    return  profiles ? _.pluck(profiles, 'metadata') : [];
 }

@@ -118,7 +118,7 @@ export const getConfig = (objectName: string, _id: string) => {
 }
 
 export const addAllConfigFiles = async (filePath, datasource) => {
-    addObjectConfigFiles(filePath, datasource);
+    await addObjectConfigFiles(filePath, datasource);
     await addAppConfigFiles(filePath);
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);

@@ -4,6 +4,7 @@ const objectql = require("@steedos/objectql");
 const i18n = require("@steedos/i18n");
 const auth = require("@steedos/auth");
 const InternalData = require('./core/internalData');
+
 const permissions = {
     allowEdit: false,
     allowDelete: false,
@@ -16,8 +17,9 @@ const baseRecord = {
     record_permissions:permissions
 }
 
-const getLng = function(userId){
-    return Steedos.locale(userId, true);
+const getLng = async function(userId){
+    const userSession = await auth.getSessionByUserId(userId);
+    return userSession ? userSession.language : null;
 }
 
 module.exports = {
@@ -30,7 +32,7 @@ module.exports = {
             }
         }
         if(_.isArray(this.data.values)){
-            let lng = getLng(this.userId);
+            let lng = await getLng(this.userId);
             let self = this;
             let allApps = clone(objectql.getAppConfigs());
             let apps = {}
@@ -57,7 +59,7 @@ module.exports = {
             }
         }
         if(_.isArray(this.data.values)){
-            let lng = getLng(this.userId);
+            let lng = await getLng(this.userId);
             let self = this;
             let allApps = clone(objectql.getAppConfigs());
             let apps = {}
@@ -82,7 +84,7 @@ module.exports = {
     afterFindOne: async function () {
         let id = this.id;
         if(id && _.isEmpty(this.data.values)){
-            let lng = getLng(this.userId);
+            let lng = await getLng(this.userId);
             let allApps = clone(objectql.getAppConfigs());
             let apps = {}
             _.each(allApps, function(app){

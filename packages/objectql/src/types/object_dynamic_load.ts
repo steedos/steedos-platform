@@ -76,7 +76,7 @@ export const getObjectConfig = (object_name: string):SteedosObjectTypeConfig => 
     return _.find(_objectConfigs, {name: object_name})
 }
 
-export const addObjectConfigFiles = (filePath: string, datasource: string) => {
+export const addObjectConfigFiles = async (filePath: string, datasource: string) => {
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
@@ -128,9 +128,9 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
 
     loadObjectPermissions(filePath);
 
-    loadSourceProfiles(filePath);
+    await loadSourceProfiles(filePath);
 
-    loadSourcePermissionset(filePath);
+    await loadSourcePermissionset(filePath);
 
 }
 
