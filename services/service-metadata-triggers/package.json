@@ -2,7 +2,7 @@
   "name": "@steedos/service-metadata-triggers",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/metadata.service.js",
+  "main": "lib/triggers.service.js",
   "scripts": {
     "dev": "moleculer-runner --repl --hot lib/services/**/*.service.js",
     "start": "yarn compile && moleculer-runner --repl --hot lib/triggers.service.js",
