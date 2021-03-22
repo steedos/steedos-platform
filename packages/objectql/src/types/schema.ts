@@ -99,12 +99,6 @@ export class SteedosSchema {
     constructor(config?: SteedosSchemaConfig) {
 
         // loadCoreValidators();
-        // TODO 以下两行代码需要放开
-        // wrapAsync(preloadDBObjectFields, {});
-        // wrapAsync(preloadDBObjectButtons, {});
-
-        // loadStandardProfiles();
-        // loadStandardPermissionsets();
 
         if (isMeteor())
             loadStandardObjects();

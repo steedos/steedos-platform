@@ -3,7 +3,8 @@ import _ = require('lodash')
 import {loadJsonFiles} from '../util'
 import { addAppConfigFiles } from './app';
 import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectDataFiles, addRouterFiles } from '.';
-import { addTranslationsFiles, addObjectTranslationsFiles } from '../dynamic-load'
+import { addTranslationsFiles, addObjectTranslationsFiles, preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load'
+import { getDataSource } from './datasource';
 
 export const LOADED_OBJECT_RECORDS = {}
 
@@ -117,8 +118,18 @@ export const getConfig = (objectName: string, _id: string) => {
     return _.find(records, {_id: _id})
 }
 
-export const addAllConfigFiles = async (filePath, datasource) => {
-    await addObjectConfigFiles(filePath, datasource);
+export const addAllConfigFiles = async (filePath, datasourceApiName) => {
+    if(datasourceApiName === 'default' || datasourceApiName === 'meteor'){
+        const datasource = getDataSource(datasourceApiName)
+        if(datasource && datasourceApiName === 'default'){
+            await datasource.init();
+        }
+        if(datasource){
+            await preloadDBObjectFields(datasource);
+            await preloadDBObjectButtons(datasource);
+        }
+    }
+    await addObjectConfigFiles(filePath, datasourceApiName);
     await addAppConfigFiles(filePath);
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);

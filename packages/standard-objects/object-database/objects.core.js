@@ -1,5 +1,5 @@
 var objectql = require('@steedos/objectql');
-const defaultDatasourceName = 'default';
+const defaultDatasourceName = 'meteor';
 var triggerCore = require('./object_triggers.core.js');
 var permissionCore = require('./permission_objects.core.js');
 var buildGraphQLSchemaSetTimeOutId = null;
