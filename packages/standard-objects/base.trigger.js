@@ -3,7 +3,6 @@ const _ = require('underscore');
 module.exports = {
     listenTo: 'base',
     beforeInsert: async function () {
-        console.log(`beforeInsert`, this)
         const { doc, userId } = this;
         doc.created = new Date();
         doc.modified = new Date();
