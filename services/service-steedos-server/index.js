@@ -8,12 +8,13 @@ let NodeRedService = require('@steedos/service-node-red');
 let APIService = require('@steedos/service-api');
 const packageLoader = require('@steedos/service-meteor-package-loader');
 const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
+const ServiceSteedosServerName = 'steedos-server';
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
 
 module.exports = {
-	name: "steedos-server",
+	name: ServiceSteedosServerName,
 
 	/**
 	 * Settings
@@ -142,6 +143,7 @@ module.exports = {
 		async startStandardObjectsPackageLoader() {
 			let settings = this.settings.packageInfo;
 			if (settings.path && settings.name) {
+
 				this.standardObjectsPackageLoaderService = this.broker.createService({
 					name: settings.name,
 					mixins: [packageLoader],
@@ -164,27 +166,28 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
+		this.broker.waitForServices(ServiceSteedosServerName).then(async () => {
+			process.env.PORT = this.settings.port;
+			process.env.ROOT_URL = this.settings.rootUrl;
 
-		process.env.PORT = this.settings.port;
-		process.env.ROOT_URL = this.settings.rootUrl;
+			if (this.settings.mongodbServer && this.settings.mongodbServer.enabled) {
+				this.mongodbService = this.broker.createService({
+					name: "mongodb-server",
+					mixins: [MongoDBService],
+					settings: this.settings["mongodbServer"]
+				});
+				this.broker._restartService(this.mongodbService)
+				await this.broker.waitForServices(["mongodb-server"]);
+				this.settings.mongoUrl = process.env.MONGO_URL;
+				this.settings.mongoOplogUrl = process.env.MONGO_OPLOG_URL;
+			} else {
+				process.env.MONGO_URL = this.settings.mongoUrl;
+			}
 
-		if (this.settings.mongodbServer && this.settings.mongodbServer.enabled) {
-			this.mongodbService = this.broker.createService({
-				name: "mongodb-server",
-				mixins: [MongoDBService],
-				settings: this.settings["mongodbServer"]
-			});
-			this.broker._restartService(this.mongodbService)
-			await this.broker.waitForServices(["mongodb-server"]);
-			this.settings.mongoUrl = process.env.MONGO_URL;
-			this.settings.mongoOplogUrl = process.env.MONGO_OPLOG_URL;
-		} else {
-			process.env.MONGO_URL = this.settings.mongoUrl;
-		}
+			await this.startSteedos();
 
-		await this.startSteedos();
-
-		this.startAPIService();
+			this.startAPIService();
+		});
 
 	},
 
