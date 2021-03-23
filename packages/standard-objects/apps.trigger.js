@@ -34,7 +34,7 @@ module.exports = {
         if(_.isArray(this.data.values)){
             let lng = await getLng(this.userId);
             let self = this;
-            let allApps = clone(objectql.getAppConfigs());
+            let allApps = clone(await objectql.getAppConfigs());
             let apps = {}
             _.each(allApps, function(app){
                 if(app.is_creator){
@@ -61,7 +61,7 @@ module.exports = {
         if(_.isArray(this.data.values)){
             let lng = await getLng(this.userId);
             let self = this;
-            let allApps = clone(objectql.getAppConfigs());
+            let allApps = clone(await objectql.getAppConfigs());
             let apps = {}
             _.each(allApps, function(app){
                 if(app.is_creator){
