@@ -46,7 +46,6 @@ module.exports = {
         },
         add: {
             async handler(ctx) {
-                // this.broker.emit("$object.registered", {name: 'test'});
                 await this.masterDetailActionHandler.add(ctx);
                 await this.formulaActionHandler.add(ctx);
                 await this.summaryActionHandler.add(ctx);
