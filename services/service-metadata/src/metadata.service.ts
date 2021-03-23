@@ -24,18 +24,11 @@ module.exports = {
 	 */
 	actions: {
 		get: {
-			rest: {
-				method: "GET",
-				path: "/object"
-			},
 			async handler(ctx) {
 				return await ActionHandlers.get(ctx);
 			}
 		},
 		filter: {
-			params: {
-				key: "string"
-			},
 			async handler(ctx){
 				return await ActionHandlers.filter(ctx);
 			}
@@ -56,10 +49,10 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-    this.broker.createService(apps);
-    this.broker.createService(objects);
-    this.broker.createService(permissionsets);
-    this.broker.createService(translations);
-    this.broker.createService(triggers);
+		this.broker.createService(apps);
+		this.broker.createService(objects);
+		this.broker.createService(permissionsets);
+		this.broker.createService(translations);
+		this.broker.createService(triggers);
 	},
 }
