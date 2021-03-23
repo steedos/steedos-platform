@@ -8,6 +8,7 @@
     "server"
   ],
   "scripts": {
+    "start": "moleculer-runner --repl services",
     "initSubmodules": "git submodule init && git submodule update",
     "gitSubmodulesReset": "./.scripts/git_submodule_reset.sh",
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",

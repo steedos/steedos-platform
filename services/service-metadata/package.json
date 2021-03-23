@@ -4,8 +4,9 @@
   "description": "",
   "main": "lib/metadata.service.js",
   "scripts": {
-    "start": "yarn compile && moleculer-runner --repl --hot lib/*.service.js",
-    "cli": "moleculer connect redis://192.168.3.17:6379",
+    "start": "yarn compile && moleculer-runner lib/*.service.js",
+    "dev": "yarn compile && moleculer-runner --repl --hot lib/*.service.js",
+    "cli": "moleculer connect redis://127.0.0.1:6379",
     "ci": "jest --watch",
     "test": "jest --coverage",
     "lint": "eslint services",

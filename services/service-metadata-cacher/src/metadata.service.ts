@@ -1,8 +1,8 @@
 "use strict";
 import { ActionHandlers } from './actionsHandler';
 module.exports = {
-	name: "metadata",
-    namespace: "steedos",
+	name: "metadata-cacher",
+  namespace: "steedos",
 	/**
 	 * Settings
 	 */
