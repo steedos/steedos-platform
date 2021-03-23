@@ -27,6 +27,7 @@ export const ActionHandlers = {
     async add(ctx: any): Promise<boolean>{
         await ctx.broker.call('metadata.add', {key: cacherKey(ctx.params.data.name), data: ctx.params.data}, {meta: ctx.meta})
         ctx.broker.emit("metadata.objects.inserted", {objectApiName: ctx.params.data.name, isInsert: true});
+        ctx.broker.emit(`@${ctx.params.data.name}.metadata.objects.inserted`, {objectApiName: ctx.params.data.name, isInsert: true, data: ctx.params.data});
         return true;
     },
     async change(ctx: any): Promise<boolean> {

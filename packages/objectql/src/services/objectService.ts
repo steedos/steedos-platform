@@ -476,6 +476,14 @@ module.exports = {
                 };
 
             }
+        };
+        schema.events[`${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`] = {
+            handler: async function (ctx) {
+                let objectConfig = ctx.params.data;
+                let gobj = generateSettingsGraphql(objectConfig);
+                this.settings.graphql = gobj;
+                ctx.emit('$services.changed');
+            }
         }
-    }
+    },
 }
