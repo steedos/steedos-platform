@@ -29,7 +29,7 @@ module.exports = {
 			enabled: !process.env.MONGO_URL,
 		},
 		nodeRedServer: {
-			enabled: true,
+			enabled: false,
 			port: null,
 		},
 		packageInfo: {
