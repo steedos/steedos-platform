@@ -28,16 +28,19 @@ export class Plugins {
                 let packageServiceFilePath = path.join(pluginDir, PACKAGE_SERVICE_FILE_NAME);
                 if (fs.existsSync(packageServiceFilePath)) {
                     await Future.task(async () => {
-                        let service = broker.loadService(packageServiceFilePath);
-                        await broker.waitForServices([service.name]);
-                        service.init(pluginContext);
-                        return;
+                        try {
+                            let service = broker.loadService(packageServiceFilePath);
+                            await broker.waitForServices([service.name]);
+                            service.init(pluginContext);
+                            WebApp.connectHandlers.use(pluginContext.app);
+                        } catch (error) {
+                            console.error(error);
+                        }
                     }).promise();
 
                 } else {
                     console.error(`Please add ${PACKAGE_SERVICE_FILE_NAME} in Plugin ${name}.`);
                 }
-                WebApp.connectHandlers.use(pluginContext.app);
             }
         }
 
