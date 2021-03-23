@@ -5100,10 +5100,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/plugin-qywx@0.0.19":
-  version "0.0.19"
-  resolved "https://registry.npm.taobao.org/@steedos/plugin-qywx/download/@steedos/plugin-qywx-0.0.19.tgz#e312ab4a0177bfc8a6811390ede9282588b3be55"
-  integrity sha1-4xKrSgF3v8imgROQ7ekoJYizvlU=
+"@steedos/plugin-dingtalk@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.npm.taobao.org/@steedos/plugin-dingtalk/download/@steedos/plugin-dingtalk-0.0.2.tgz#cce7f7b16e3616f31a95e16357b9da473d3fed0a"
+  integrity sha1-zOf3sW42FvMaleFjV7naRz0/7Qo=
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     admin-lte "^2.3.11"
@@ -5135,6 +5135,40 @@
     wechat-crypto "^0.0.2"
     xml2json "^0.12.0"
 
+"@steedos/plugin-qywx@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.npm.taobao.org/@steedos/plugin-qywx/download/@steedos/plugin-qywx-0.0.17.tgz#3dccf20e6e5af2675a1053766705f754e617312f"
+  integrity sha1-PczyDm5a8mdaEFN2ZwX3VOYXMS8=
+  dependencies:
+    "@salesforce/dev-config" "^1.4.4"
+    admin-lte "^2.3.11"
+    bcrypt "3.0.6"
+    bootstrap "^3.3.7"
+    cookies "^0.8.0"
+    dotenv-flow "^3.1.0"
+    express "^4.17.1"
+    jsdom "^16.2.2"
+    jshashes "^1.0.8"
+    ts-node "^8.4.1"
+    wechat-crypto "^0.0.2"
+
+"@steedos/plugin-qywx@^0.0.19":
+  version "0.0.19"
+  resolved "https://registry.npm.taobao.org/@steedos/plugin-qywx/download/@steedos/plugin-qywx-0.0.19.tgz#e312ab4a0177bfc8a6811390ede9282588b3be55"
+  integrity sha1-4xKrSgF3v8imgROQ7ekoJYizvlU=
+  dependencies:
+    "@salesforce/dev-config" "^1.4.4"
+    admin-lte "^2.3.11"
+    bcrypt "3.0.6"
+    bootstrap "^3.3.7"
+    cookies "^0.8.0"
+    dotenv-flow "^3.1.0"
+    express "^4.17.1"
+    jsdom "^16.2.2"
+    jshashes "^1.0.8"
+    ts-node "^8.4.1"
+    wechat-crypto "^0.0.2"
+
 "@steedos/steedos-plugin-schema-builder@^1.23.20":
   version "1.23.20"
   resolved "https://registry.npm.taobao.org/@steedos/steedos-plugin-schema-builder/download/@steedos/steedos-plugin-schema-builder-1.23.20.tgz#2a5d56af7bb33ac644e4faa80c1c7a5912c1bc93"
@@ -5162,6 +5196,15 @@
   version "1.23.0-alpha.17"
   resolved "https://registry.yarnpkg.com/@steedos/word-template/-/word-template-1.23.0-alpha.17.tgz#43290de03ff121e0d9dd5e2614414fb7da77f4c5"
   integrity sha512-vJq1uJIvhhO4HZCYZoz/p/qbtyySEMRo74M7KGjWSMO/3z4/ul6ULdjd1bBSkqy9qrbMI/6ELq8Uj8qUMVlClQ==
+  dependencies:
+    docxtemplater "^3.19.7"
+    dotenv-flow "^3.2.0"
+    jszip "^2.6.1"
+
+"@steedos/word-template@^1.23.19":
+  version "1.23.19"
+  resolved "https://registry.npm.taobao.org/@steedos/word-template/download/@steedos/word-template-1.23.19.tgz#1714782633da93155f1447c39242d68a1ff30647"
+  integrity sha1-FxR4JjPakxVfFEfDkkLWih/zBkc=
   dependencies:
     docxtemplater "^3.19.7"
     dotenv-flow "^3.2.0"
@@ -7907,7 +7950,7 @@ async@^1.5.0:
   resolved "https://registry.npm.taobao.org/async/download/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
   integrity sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
 
-async@^2.1.5, async@^2.6.0, async@^2.6.2:
+async@^2.1.5, async@^2.6.2:
   version "2.6.3"
   resolved "https://registry.npm.taobao.org/async/download/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
   integrity sha1-1yYl4jRKNlbjo61Pp0n6gymdgv8=
@@ -11266,37 +11309,13 @@ cookiejar@^2.1.0:
   resolved "https://registry.npm.taobao.org/cookiejar/download/cookiejar-2.1.2.tgz#dd8a235530752f988f9a0844f3fc589e3111125c"
   integrity sha1-3YojVTB1L5iPmghE8/xYnjERElw=
 
-cookies@0.6.1:
-  version "0.6.1"
-  resolved "https://registry.npm.taobao.org/cookies/download/cookies-0.6.1.tgz#ef693b1bc6f01f567d46e2f504e9c15fb70cba90"
-  integrity sha1-72k7G8bwH1Z9RuL1BOnBX7cMupA=
-  dependencies:
-    depd "~1.1.0"
-    keygrip "~1.0.0"
-
-cookies@^0.6.1, cookies@^0.6.2:
+cookies@0.6.1, cookies@0.6.2, cookies@^0.6.1, cookies@^0.6.2, cookies@^0.7.3, cookies@^0.8.0:
   version "0.6.2"
   resolved "https://registry.npm.taobao.org/cookies/download/cookies-0.6.2.tgz#6ac1b052895208e8fc4c4f5f86a9ed31b9cb5ccf"
   integrity sha1-asGwUolSCOj8TE9fhqntMbnLXM8=
   dependencies:
     depd "~1.1.0"
     keygrip "~1.0.1"
-
-cookies@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.npm.taobao.org/cookies/download/cookies-0.7.3.tgz#7912ce21fbf2e8c2da70cf1c3f351aecf59dadfa"
-  integrity sha1-eRLOIfvy6MLacM8cPzUa7PWdrfo=
-  dependencies:
-    depd "~1.1.2"
-    keygrip "~1.0.3"
-
-cookies@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.npm.taobao.org/cookies/download/cookies-0.8.0.tgz#1293ce4b391740a8406e3c9870e828c4b54f3f90"
-  integrity sha1-EpPOSzkXQKhAbjyYcOgoxLVPP5A=
-  dependencies:
-    depd "~2.0.0"
-    keygrip "~1.1.0"
 
 copy-concurrently@^1.0.0:
   version "1.0.5"
@@ -13887,13 +13906,6 @@ expect@^26.6.2:
     jest-matcher-utils "^26.6.2"
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
-
-express-dynamic-middleware@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/express-dynamic-middleware/download/express-dynamic-middleware-1.0.0.tgz#367bd27041f0b7aeea477601a5c6ef8861dfda0d"
-  integrity sha1-NnvScEHwt67qR3YBpcbviGHf2g0=
-  dependencies:
-    async "^2.6.0"
 
 express-graphql@^0.7.1:
   version "0.7.1"
@@ -16716,22 +16728,6 @@ ionicons@^3:
   resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-3.0.0.tgz#40b8daf4fd7a31150bd002160f66496e22a98c3c"
   integrity sha1-QLja9P16MRUL0AIWD2ZJbiKpjDw=
 
-ioredis@^4.17.3:
-  version "4.23.0"
-  resolved "https://registry.npm.taobao.org/ioredis/download/ioredis-4.23.0.tgz#f61b65633a25c93f43fccebcacac2f4342e418f9"
-  integrity sha1-9htlYzolyT9D/M68rKwvQ0LkGPk=
-  dependencies:
-    cluster-key-slot "^1.1.0"
-    debug "^4.1.1"
-    denque "^1.1.0"
-    lodash.defaults "^4.2.0"
-    lodash.flatten "^4.4.0"
-    p-map "^2.1.0"
-    redis-commands "1.7.0"
-    redis-errors "^1.2.0"
-    redis-parser "^3.0.0"
-    standard-as-callback "^2.0.1"
-
 ioredis@^4.22.0:
   version "4.22.0"
   resolved "https://registry.npm.taobao.org/ioredis/download/ioredis-4.22.0.tgz?cache=0&sync_timestamp=1612595017596&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fioredis%2Fdownload%2Fioredis-4.22.0.tgz#a2e18a29300ffb759670d7ed7023fcf6592031a2"
@@ -18827,17 +18823,10 @@ kareem@2.3.0:
   resolved "https://registry.npm.taobao.org/kareem/download/kareem-2.3.0.tgz#ef33c42e9024dce511eeaf440cd684f3af1fc769"
   integrity sha1-7zPELpAk3OUR7q9EDNaE868fx2k=
 
-keygrip@~1.0.0, keygrip@~1.0.1, keygrip@~1.0.3:
+keygrip@~1.0.1:
   version "1.0.3"
   resolved "https://registry.npm.taobao.org/keygrip/download/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
   integrity sha1-OZ1wnwrtK6sKBZ4M3TpQI6BT4dw=
-
-keygrip@~1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npm.taobao.org/keygrip/download/keygrip-1.1.0.tgz#871b1681d5e159c62a445b0c74b615e0917e7226"
-  integrity sha1-hxsWgdXhWcYqRFsMdLYV4JF+ciY=
-  dependencies:
-    tsscmp "1.0.6"
 
 keyv@3.0.0:
   version "3.0.0"
@@ -20761,7 +20750,7 @@ moleculer-web@^0.9.0, moleculer-web@^0.9.1:
     qs "^6.9.1"
     serve-static "^1.14.1"
 
-moleculer@^0.14.10, moleculer@^0.14.11, moleculer@^0.14.12, moleculer@^0.14.5:
+moleculer@^0.14.10, moleculer@^0.14.12, moleculer@^0.14.5:
   version "0.14.12"
   resolved "https://registry.yarnpkg.com/moleculer/-/moleculer-0.14.12.tgz#d08a4bbb73230b2fa249835b3c0fc82450384652"
   integrity sha512-FLoznJIwYPcBZ28b/oSddmNypAfxzwXoQL1zWvOgQvQX74PgsuLIGTeADU5LB0G2ALvQPnojTiDNv0igF6WYHQ==
@@ -21568,18 +21557,6 @@ node-red-admin@^0.2.6:
     read "^1.0.7"
   optionalDependencies:
     bcrypt "3.0.8"
-
-node-red-contrib-moleculer@~0.5.1:
-  version "0.5.1"
-  resolved "https://registry.npm.taobao.org/node-red-contrib-moleculer/download/node-red-contrib-moleculer-0.5.1.tgz#2cc2be5f48cc7fbfe0d74bb38142447701f4f8aa"
-  integrity sha1-LMK+X0jMf7/g10uzgUJEdwH0+Ko=
-  dependencies:
-    express-dynamic-middleware "^1.0.0"
-    moleculer "^0.14.11"
-    moleculer-web "^0.9.1"
-  optionalDependencies:
-    ioredis "^4.17.3"
-    nats "^1.4.12"
 
 node-red-contrib-redis@^1.3.9:
   version "1.3.9"
@@ -28922,11 +28899,6 @@ tslint@^5, tslint@^5.18.0:
     semver "^5.3.0"
     tslib "^1.8.0"
     tsutils "^2.29.0"
-
-tsscmp@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.npm.taobao.org/tsscmp/download/tsscmp-1.0.6.tgz#85b99583ac3589ec4bfef825b5000aa911d605eb"
-  integrity sha1-hbmVg6w1iexL/vgltQAKqRHWBes=
 
 "tsutils@^2.27.2 <2.29.0":
   version "2.28.0"

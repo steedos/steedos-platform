@@ -35,7 +35,8 @@
     "**/hoek": "^5.0.3",
     "**/cryptiles": "^4.1.2",
     "**/typescript": "3.9.7",
-    "**/odata-v4-parser": "^0.1.29"
+    "**/odata-v4-parser": "^0.1.29",
+    "**/cookies": "0.6.2"
   },
   "devDependencies": {
     "lerna": "^3.22.1"
