@@ -12,7 +12,7 @@ var path = require('path');
 import fs = require('fs')
 
 import { Publish } from '../publish'
-import { getSteedosSchema } from '@steedos/objectql';
+import { getSteedosSchema, extend } from '@steedos/objectql';
 import { coreExpress } from '../express-middleware'
 
 import { createHash } from "crypto";
@@ -37,7 +37,7 @@ const extendSimpleSchema = () => {
 
 export const initCreator = () => {
     extendSimpleSchema();
-    Creator.baseObject = objectql.getObjectConfig(objectql.MONGO_BASE_OBJECT)
+    Creator.baseObject = objectql.getObjectConfig(objectql.MONGO_BASE_OBJECT);
     Creator.steedosSchema = getSteedosSchema()
     // 不需要加载 Creator 中定义的objects
     // _.each(Creator.Objects, function (obj, object_name) {
@@ -86,6 +86,7 @@ export const initCreator = () => {
     WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
 
     _.each(allObjects, function (obj) {
+        extend(obj, {triggers: obj._baseTriggers})
         if (obj.name != 'users')
             Creator.loadObjects(obj, obj.name);
     });

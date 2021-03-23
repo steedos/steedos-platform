@@ -4,6 +4,7 @@ import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActi
 // import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
 import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset } from '../dynamic-load'
+import { transformListenersToTriggers } from '..';
 
 var util = require('../util')
 var clone = require('clone')
@@ -222,6 +223,12 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
             config.fields = _.clone(objectConfig.fields);
             let _baseObjectConfig = clone(baseObjectConfig);
             delete _baseObjectConfig.hidden;
+            if(datasource === 'meteor'){
+                _.each(_baseObjectConfig.listeners, function(license){
+                    const triggers = transformListenersToTriggers(config, license)
+                    util.extend(config, {triggers, _baseTriggers: triggers})
+                })
+            }
             config = util.extend(config, _baseObjectConfig, clone(objectConfig));
         } else {
             let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
