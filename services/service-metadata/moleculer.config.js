@@ -58,7 +58,7 @@ module.exports = {
 	// More info: https://moleculer.services/docs/0.14/networking.html
 	// Note: During the development, you don't need to define it because all services will be loaded locally.
 	// In production you can set it via `TRANSPORTER=nats://localhost:4222` environment variable.
-	transporter: "redis://127.0.0.1:6379",
+	transporter: process.env.TRANSPORTER,
 	// registry: {
     //     discoverer: "redis://192.168.3.17:6379"
     // },
@@ -103,7 +103,7 @@ module.exports = {
 
 	// Define a cacher.
 	// More info: https://moleculer.services/docs/0.14/caching.html
-	cacher: "redis://127.0.0.1:6379/1",
+	cacher: process.env.CACHER,
 	// cacher: {
     //     type: "Redis",
     //     options: {
@@ -215,7 +215,7 @@ module.exports = {
 			type: "Prometheus",
 			options: {
 				// HTTP port
-				port: 4330,
+				port: 5330,
 				// HTTP URL path
 				path: "/metrics",
 				// Default labels which are appended to all metrics labels
