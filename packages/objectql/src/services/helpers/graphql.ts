@@ -130,11 +130,18 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     })
 
     // _display
-    type += `${DISPLAY_PREFIX}: JSON `;
+    let _display_type_name = `${DISPLAY_PREFIX}_${objectName}`;
+    type += `${DISPLAY_PREFIX}: ${_display_type_name} `;
     resolvers[objectName][DISPLAY_PREFIX] = async function (parent, args, context, info) {
         let userSession = context.ctx.meta.user;
         return await translateToDisplay(objectName, fields, parent, userSession);
     }
+    // define _display type
+    let _display_type = _getDisplayType(_display_type_name, fields);
+    type = gql`
+        ${_display_type}
+        ${type}
+    `;
 
     // _related
     if (objectConfig.enable_files) {
@@ -352,4 +359,16 @@ async function translateToDisplay(objectName, fields, doc, userSession: any) {
         }
     }
     return displayObj;
+}
+
+function _getDisplayType(typeName, fields) {
+    let type = `type ${typeName} { _id: String `;
+    _.each(fields, (field, name) => {
+        if (name.indexOf('.') > -1) {
+            return;
+        }
+        type += `${name}: JSON `
+    })
+    type += '}';
+    return type;
 }
