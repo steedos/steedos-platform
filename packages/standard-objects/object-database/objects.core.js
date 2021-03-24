@@ -47,6 +47,9 @@ function getDataSourceName(doc) {
             throw new Error('not find datasource ', doc.datasource);
         }
     }
+    if(doc.datasource && _.include(defaultDatasourcesName, doc.datasource)){
+        return doc.datasource
+    }
     return defaultDatasourceName
 }
 
@@ -183,7 +186,7 @@ function loadObject(doc, oldDoc) {
             console.warn('warn: Not loaded. Invalid custom object -> ', doc.name, doc.datasource);
             return;
         }
-    
+        console.log(`datasourceName`, datasourceName, doc)
         var datasourceName = getDataSourceName(doc);
         const datasource = objectql.getDataSource(datasourceName);
     
