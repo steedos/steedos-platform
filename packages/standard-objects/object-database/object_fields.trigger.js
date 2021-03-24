@@ -1,5 +1,7 @@
 const InternalData = require('../core/internalData');
 var _ = require("underscore");
+const clone = require('clone');
+var objectCore = require('./objects.core.js');
 const objectql = require('@steedos/objectql');
 const MAX_MASTER_DETAIL_LEAVE = objectql.MAX_MASTER_DETAIL_LEAVE;
 const validateOptionValue = (value)=>{
@@ -154,6 +156,48 @@ async function checkMasterDetailTypeField(doc, oldReferenceTo) {
     }
 }
 
+function getFieldName(object, fieldName, spaceId, oldFieldName){
+    if(object && object.datasource && object.datasource != 'default'){
+      return fieldName;
+    }else{
+      if(fieldName != 'name' && fieldName != 'owner'){
+        return objectql._makeNewFieldName(fieldName, spaceId, oldFieldName);
+      }else{
+        return fieldName
+      }
+    }
+  }
+
+const checkFormulaInfiniteLoop = async function(_doc, oldFieldName){
+    if(_doc.type === "formula"){
+      doc = clone(_doc)
+      delete doc._id
+      let objects = await objectql.getObject("objects").directFind({filters: [['name', '=', doc.object], ['space', '=', doc.space]]})
+      let objectConfig = null;
+      if(objects && objects.length > 0){
+        objectConfig = objects[0];
+        console.log(`objectConfig`, objectConfig);
+      }
+      if(!objectConfig){
+        objectConfig = objectql.getObjectConfig(doc.object);
+      }
+    //   objectCore.loadDBObject(objectConfig)
+      delete objectConfig._id;
+      try {
+        if(!doc.name){
+            doc.name = getFieldName(objectConfig, doc._name, doc.space, oldFieldName)
+        }
+        await objectql.verifyObjectFieldFormulaConfig(doc, objectConfig);
+      } catch (error) {
+        if(error.message.startsWith('Infinite Loop')){
+          throw new Error('字段公式配置异常，禁止循环引用对象字段');
+        }else{
+          throw error;
+        }
+      }
+    }
+  }
+
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
@@ -197,6 +241,7 @@ module.exports = {
     beforeInsert: async function () {
         let doc = this.doc;
         validateDoc(doc);
+        await checkFormulaInfiniteLoop(doc);
         await checkMasterDetailTypeField(doc);
         await checkOwnerField(doc);
     },
@@ -205,6 +250,7 @@ module.exports = {
         validateDoc(doc);
         const dbDoc = await objectql.getObject(object_name).findOne(id)
         let oldReferenceTo = dbDoc.type === "master_detail" && dbDoc.reference_to;
+        await checkFormulaInfiniteLoop(doc, dbDoc.name);
         await checkMasterDetailTypeField(doc, oldReferenceTo);
         await checkOwnerField(doc);
     }

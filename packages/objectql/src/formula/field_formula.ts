@@ -12,6 +12,10 @@ export const getFieldFormulaConfig = async (fieldApiFullName: string): Promise<S
     return await getSteedosSchema().metadataBroker.call(`objects.getObjectFieldFormulaConfig`, {fieldApiFullName})
 }
 
+export const verifyObjectFieldFormulaConfig = async (fieldConfig, objectConfig): Promise<SteedosFieldFormulaTypeConfig> => {
+    return await getSteedosSchema().metadataBroker.call(`objects.verifyObjectFieldFormulaConfig`, {fieldConfig, objectConfig})
+}
+
 /**
  * 获取对象本身的字段公式配置
  * 不传入fieldName时取objectName关联的所有字段公式配置

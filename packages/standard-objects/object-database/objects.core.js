@@ -186,7 +186,6 @@ function loadObject(doc, oldDoc) {
             console.warn('warn: Not loaded. Invalid custom object -> ', doc.name, doc.datasource);
             return;
         }
-        console.log(`datasourceName`, datasourceName, doc)
         var datasourceName = getDataSourceName(doc);
         const datasource = objectql.getDataSource(datasourceName);
     

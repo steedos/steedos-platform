@@ -305,30 +305,30 @@ function getFieldDefaultProps(field){
   return prosp;
 }
 
-const checkFormulaInfiniteLoop = function(_doc){
-  if(_doc.type === "formula"){
-    doc = clone(_doc)
-    delete doc._id
-    let objectConfig = Creator.getCollection("objects").findOne({
-      space: doc.space,
-      name: doc.object
-    });
-    if(!objectConfig){
-      objectConfig = objectql.getObjectConfig(doc.object);
-    }
-    objectCore.loadDBObject(objectConfig)
-    delete objectConfig._id;
-    try {
-      objectql.addObjectFieldFormulaConfig(doc, objectConfig);
-    } catch (error) {
-      if(error.message.startsWith('Infinite Loop')){
-        throw new Error('字段公式配置异常，禁止循环引用对象字段');
-      }else{
-        throw error;
-      }
-    }
-  }
-}
+// const checkFormulaInfiniteLoop = function(_doc){
+//   if(_doc.type === "formula"){
+//     doc = clone(_doc)
+//     delete doc._id
+//     let objectConfig = Creator.getCollection("objects").findOne({
+//       space: doc.space,
+//       name: doc.object
+//     });
+//     if(!objectConfig){
+//       objectConfig = objectql.getObjectConfig(doc.object);
+//     }
+//     objectCore.loadDBObject(objectConfig)
+//     delete objectConfig._id;
+//     try {
+//       await objectql.verifyObjectFieldFormulaConfig(doc, objectConfig);
+//     } catch (error) {
+//       if(error.message.startsWith('Infinite Loop')){
+//         throw new Error('字段公式配置异常，禁止循环引用对象字段');
+//       }else{
+//         throw error;
+//       }
+//     }
+//   }
+// }
 
 const initSummaryDoc = (doc)=>{
   if(!doc.summary_object){
@@ -460,7 +460,7 @@ var triggers = {
         let defProps = getFieldDefaultProps(Object.assign(clone(doc), modifier.$set));
         Object.assign(modifier.$set, defProps);
       }
-      checkFormulaInfiniteLoop(modifier.$set);
+      // checkFormulaInfiniteLoop(modifier.$set);
       if(modifier.$set.type === "summary"){
         initSummaryDoc(modifier.$set);
       }
@@ -504,7 +504,7 @@ var triggers = {
         throw new Meteor.Error(500, '多行文本不支持建立索引');
       }
 
-      checkFormulaInfiniteLoop(doc);
+      // checkFormulaInfiniteLoop(doc);
       if(doc.type === "summary"){
         initSummaryDoc(doc);
       }

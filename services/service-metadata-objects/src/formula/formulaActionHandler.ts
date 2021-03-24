@@ -305,6 +305,27 @@ export class FormulaActionHandler{
         return res?.metadata
     }
 
+    async verifyObjectFieldFormulaConfig(ctx){
+        let {fieldConfig, objectConfig} = ctx.params; 
+
+        const fieldFormula = await this.getObjectFieldFormulaConfig(fieldConfig, objectConfig);
+        let { metadata } = (await this.getFormulaReferenceMaps(ctx.broker)) || [];
+        let maps = [];
+        if(metadata){
+            maps = metadata;
+        }
+
+        for await (const quote of fieldFormula.quotes) {
+            let data = { 
+                key: fieldFormula._id,
+                value: `${quote.object_name}.${quote.field_name}`
+            }
+            this.checkRefMapData(maps, data);
+        }
+    
+        return await this.getObjectFieldFormulaConfig(fieldConfig, objectConfig);
+    }
+
     async getFormulaVarsAndQuotes(ctx){
         let {formula, objectConfig} = ctx.params;
         return await this.computeFormulaVarsAndQuotes(formula, objectConfig);
