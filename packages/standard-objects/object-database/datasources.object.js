@@ -3,6 +3,7 @@ var objectql = require('@steedos/objectql');
 var schema = objectql.getSteedosSchema();
 const datasourceCore = require('./datasources.core');
 const defaultDatasourceName = 'default';
+const defaultDatasourcesName = ['default','meteor'];
 
 Meteor.publish("datasources", function (spaceId) {
     var userId = this.userId
@@ -65,6 +66,10 @@ function getConfigDatasources(){
 
 function isRepeatedName(id, name) {
     if(name === defaultDatasourceName){
+        return true;
+    }
+
+    if(_.include(defaultDatasourcesName, name)){
         return true;
     }
 
