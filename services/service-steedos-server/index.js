@@ -8,13 +8,12 @@ let NodeRedService = require('@steedos/service-node-red');
 let APIService = require('@steedos/service-api');
 const packageLoader = require('@steedos/service-meteor-package-loader');
 const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
-const ServiceSteedosServerName = 'steedos-server';
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
 
 module.exports = {
-	name: ServiceSteedosServerName,
+	name: 'steedos-server',
 
 	/**
 	 * Settings
@@ -166,7 +165,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		this.broker.waitForServices(ServiceSteedosServerName).then(async () => {
+		this.broker.waitForServices(this.name).then(async () => {
 			process.env.PORT = this.settings.port;
 			process.env.ROOT_URL = this.settings.rootUrl;
 
