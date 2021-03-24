@@ -22,7 +22,7 @@ module.exports = {
         credentialSecret: "3b905ca2dbb6921f3c98a21eeb0e3ef1bWs",
         httpAdminRoot:"/flows/",
         httpNodeRoot: "/flows/",
-        userDir: path.join(process.cwd(), "steedos-app", "main", "node-red"),
+        userDir: path.join(process.cwd(), "node-red"),
         flowFile: "flows.json",
         flowFilePretty: true,
         functionGlobalContext: {
@@ -76,7 +76,8 @@ module.exports = {
 	 */
 	created() {
         this.RED = RED;
-        this.WebApp = WebApp;
+        if (typeof(WebApp) !== 'undefined')
+            this.WebApp = WebApp;
 	},
 
 	/**
