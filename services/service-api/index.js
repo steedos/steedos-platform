@@ -166,7 +166,7 @@ module.exports = {
 				mappingPolicy: "all", // Available values: "all", "restrict"
 
 				// Enable/disable logging
-				logging: true,
+				logging: false,
 
 				// Route error handler
 				onError(req, res, err) {
@@ -180,7 +180,7 @@ module.exports = {
 		// Do not log client side errors (does not log an error response when the error.code is 400<=X<500)
 		log4XXResponses: false,
 		// Logging the request parameters. Set to any log level to enable it. E.g. "info"
-		logRequestParams: null,
+		logRequestParams: 'debug',
 		// Logging the response data. Set to any log level to enable it. E.g. "info"
 		logResponseData: null,
 
