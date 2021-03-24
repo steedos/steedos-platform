@@ -50,7 +50,7 @@ const getInternalPermissionSet = async function(spaceId, lng, type){
         return lngInternalPermissionSet;
     }
     let keys = await getSourcePermissionSetsKeys(type);
-    let dbPerms = await objectql.getObject("permission_set").directFind({filters: ['space', '=', spaceId,['name', '=', keys || []]], fields: ['_id', 'name']});
+    let dbPerms = await objectql.getObject("permission_set").directFind({filters: [['space', '=', spaceId],['name', '=', keys || []]], fields: ['_id', 'name']});
     let perms = [];
     _.forEach(lngInternalPermissionSet, function(doc){
         if(!_.find(dbPerms, function(p){
