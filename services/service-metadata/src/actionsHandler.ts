@@ -1,13 +1,3 @@
-export type MetadataObject = {
-    nodeID: [string],
-    service: {
-        name: string,
-        version: string | undefined,
-        fullName: string
-    }, 
-    metadata: any
-}
-
 function transformMetadata(ctx){
      return {
         ...ctx.meta.caller, 
@@ -20,10 +10,10 @@ function getKey(key , keyPrefix){
 }
 
 export const ActionHandlers = {
-    async get(ctx: any): Promise<MetadataObject>{
+    async get(ctx: any): Promise<any>{
         return await ctx.broker.cacher.get(ctx.params.key)
     },
-    async filter(ctx: any): Promise<Array<MetadataObject>> {
+    async filter(ctx: any): Promise<Array<any>> {
         const keyPrefix = ctx.broker.cacher.prefix
         const keys = await ctx.broker.cacher.client.keys(`${keyPrefix}${ctx.params.key}`) //TODO 此功能仅支持redis cache
         const values = [];
