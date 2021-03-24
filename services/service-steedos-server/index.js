@@ -3,9 +3,10 @@
 const Future = require('fibers/future');
 const path = require('path');
 const RED = require("node-red");
-let MongoDBService = require('@steedos/service-mongodb-server');
-let NodeRedService = require('@steedos/service-node-red');
-let APIService = require('@steedos/service-api');
+const MetadataService = require("@steedos/service-metadata-server");
+const MongoDBService = require('@steedos/service-mongodb-server');
+const NodeRedService = require('@steedos/service-node-red');
+const APIService = require('@steedos/service-api');
 const packageLoader = require('@steedos/service-meteor-package-loader');
 const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 /**
@@ -54,6 +55,7 @@ module.exports = {
 	 * Dependencies
 	 */
 	dependencies: [
+		'metadata-server'
 	],
 
 	/**
@@ -159,6 +161,7 @@ module.exports = {
 	 */
 	created() {
 		this.RED = RED;
+		this.MetadataService = this.broker.createService(MetadataService);
 	},
 
 	/**

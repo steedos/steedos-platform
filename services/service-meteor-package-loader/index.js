@@ -23,7 +23,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['metadata-server'],
 
 	/**
 	 * Actions
@@ -37,15 +37,15 @@ module.exports = {
 	 */
 	events: {
 		"translations.change": {
-            handler() {
+			handler() {
 				core.loadTranslations()
-            }
-        },
+			}
+		},
 		"translations.object.change": {
-            handler() {
+			handler() {
 				core.loadObjectTranslations()
-            }
-        }
+			}
+		}
 	},
 
 	/**

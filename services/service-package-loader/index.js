@@ -23,7 +23,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-  dependencies: ['metadata-server'],
+	dependencies: ['metadata-server'],
 
 	/**
 	 * Actions
@@ -37,15 +37,15 @@ module.exports = {
 	 */
 	events: {
 		"translations.change": {
-            handler() {
+			handler() {
 				core.loadTranslations()
-            }
-        },
+			}
+		},
 		"translations.object.change": {
-            handler() {
+			handler() {
 				core.loadObjectTranslations()
-            }
-        }
+			}
+		}
 	},
 
 	/**
@@ -55,7 +55,7 @@ module.exports = {
 		loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
 			await Future.task(async () => {
 				//datasourceName 参数为临时改动，待meteor-package-load 处理完成后，此部分代码可以删除
-				if(!datasourceName){
+				if (!datasourceName) {
 					datasourceName = 'default';
 				}
 				objectql.getSteedosSchema(this.broker);
@@ -82,7 +82,7 @@ module.exports = {
 	 */
 	async started() {
 		let packageInfo = this.settings.packageInfo;
-		const {path, name, datasource} = packageInfo;
+		const { path, name, datasource } = packageInfo;
 		if (!path || !name) {
 			this.logger.error(`Please config packageInfo in your settings.`);
 			return;
