@@ -3,12 +3,6 @@
 "use strict";
 import { ActionHandlers } from './actionsHandler';
 
-const apps = require('@steedos/service-metadata-apps');
-const objects = require('@steedos/service-metadata-objects');
-const permissionsets = require('@steedos/service-metadata-permissionsets');
-const translations = require('@steedos/service-metadata-translations');
-const triggers = require('@steedos/service-metadata-triggers');
-
 module.exports = {
   name: "metadata",
   namespace: "steedos",
@@ -45,14 +39,4 @@ module.exports = {
 		}
 	},
 
-	/**
-	 * Service created lifecycle event handler
-	 */
-	async created() {
-		this.broker.createService(apps);
-		this.broker.createService(objects);
-		this.broker.createService(permissionsets);
-		this.broker.createService(translations);
-		this.broker.createService(triggers);
-	},
 }

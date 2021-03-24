@@ -23,7 +23,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+  dependencies: ['metadata-server'],
 
 	/**
 	 * Actions
