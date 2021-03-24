@@ -310,12 +310,15 @@ function getObjectServiceActionsSchema() {
                 path: "/count"
             },
             params: {
-                query: { type: "object" }
+                fields: { type: 'array', items: "string", optional: true },
+                filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
+                top: { type: 'number', optional: true },
+                skip: { type: 'number', optional: true },
+                sort: { type: 'string', optional: true }
             },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
-                const { query } = ctx.params;
-                return this.count(query, userSession)
+                return this.count(ctx.params, userSession)
             }
         },
         getField: {

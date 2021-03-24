@@ -95,7 +95,7 @@ class ObjectServiceDispatcher {
     }
 
     async count(query, userSession){
-        return await this.callAction(`count`, {query, userSession});
+        return await this.callAction(`count`, {...query, userSession});
     }
 
     async getField(fieldApiName: string) {

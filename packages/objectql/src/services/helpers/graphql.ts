@@ -27,10 +27,10 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
     let gplObj: any = {};
     let objectName = objectConfig.name;
     switch (actionName) {
-        case 'aggregate':
+        case 'count':
             gplObj.query = gql`
                 type Query {
-                    ${objectName}__${actionName}(query: JSON, externalPipeline: [JSON]): [${objectName}]
+                    ${objectName}__${actionName}(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): Int
                 }
             `;
             break;
@@ -38,13 +38,6 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
             gplObj.query = gql`
                 type Query {
                     ${objectName}(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): [${objectName}]
-                }
-            `;
-            break;
-        case 'findOne':
-            gplObj.query = gql`
-                type Query {
-                    ${objectName}__${actionName}(id: String, query: JSON): ${objectName}
                 }
             `;
             break;
@@ -73,62 +66,6 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
             gplObj.mutation = gql`
                 type Mutation {
                     ${objectName}__${actionName}(id: String): Boolean
-                }
-            `;
-            break;
-        case 'directAggregate':
-            gplObj.query = gql`
-                type Query {
-                    ${objectName}__${actionName}(query: JSON): [${objectName}]
-                }
-            `;
-            break;
-        case 'directAggregatePrefixalPipeline':
-            gplObj.query = gql`
-                type Query {
-                    ${objectName}__${actionName}(query: JSON): [${objectName}]
-                }
-            `;
-            break;
-        case 'directFind':
-            gplObj.query = gql`
-                type Query {
-                    ${objectName}__${actionName}(query: JSON): [${objectName}]
-                }
-            `;
-            break;
-        case 'directInsert':
-            gplObj.mutation = gql`
-                type Mutation {
-                    ${objectName}__${actionName}(doc: JSON): ${objectName}
-                }
-            `;
-            break;
-        case 'directUpdate':
-            gplObj.mutation = gql`
-                type Mutation {
-                    ${objectName}__${actionName}(id: String, doc: JSON): ${objectName}
-                }
-            `;
-            break;
-        case 'directDelete':
-            gplObj.mutation = gql`
-                type Mutation {
-                    ${objectName}__${actionName}(id: String): Boolean
-                }
-            `;
-            break;
-        case 'getField':
-            gplObj.query = gql`
-                type Query {
-                    ${objectName}__${actionName}(fieldName: String): JSON
-                }
-            `;
-            break;
-        case 'toConfig':
-            gplObj.query = gql`
-                type Query {
-                    ${objectName}__${actionName}: JSON
                 }
             `;
             break;
