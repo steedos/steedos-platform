@@ -20,3 +20,13 @@ export async function registerObject(broker, serviceName, objectConfig) {
     // }
     return res;
 }
+
+export async function removeObject(broker, objectApiName) {
+    // const serviceName = getObjectServiceName(objectConfig.name);
+    const res = await broker.call("objects.delete", {objectApiName: objectApiName}, {meta: {
+        caller: {
+            nodeID: broker.nodeID,
+        }
+    }});
+    return res;
+}

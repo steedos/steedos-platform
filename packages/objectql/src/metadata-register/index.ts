@@ -1,5 +1,5 @@
-import { registerObject } from './object';
-import { registerApp, getApp, getApps } from './app';
+import { registerObject, removeObject } from './object';
+import { registerApp, getApp, getApps, removeApp } from './app';
 import { getProfile, getProfiles, registerProfile } from './profile';
 import { getPermissionset, getPermissionsets, registerPermissionset } from './permissionset';
 export enum MetadataType {
@@ -21,8 +21,16 @@ export class MetadataRegister{
         return await registerObject(this.broker, serviceName, objectConfig);
     }
 
+    async removeObject(objectApiName: any): Promise<boolean>{
+        return await removeObject(this.broker, objectApiName);
+    } 
+
     async addApp(serviceName, appConfig: any): Promise<boolean>{
         return await registerApp(this.broker, serviceName, appConfig);
+    }
+
+    async removeApp(appApiName: any): Promise<boolean>{
+        return await removeApp(this.broker, appApiName);
     }
 
     async getApp(appApiName): Promise<any>{

@@ -99,5 +99,9 @@ module.exports = {
                 Object.assign(sefl.data.values, Object.assign({code: app._id}, clone(app), baseRecord))
             })
         }
+    },
+    afterDelete: async function(){
+        let id = this.id;
+        objectql.removeApp(id)
     }
 }

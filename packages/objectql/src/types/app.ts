@@ -135,6 +135,11 @@ export const getAppConfigs = async () => {
     return _.pluck(apps, 'metadata');
 }
 
+export const removeApp = async (appApiName) => {
+    const schema = getSteedosSchema();
+    return await schema.metadataRegister.removeApp(appApiName);
+}
+
 export const getAppConfig = async (appApiName: string):Promise<SteedosAppTypeConfig> => {
     const schema = getSteedosSchema();
     const app = await schema.metadataRegister.getApp(appApiName);
