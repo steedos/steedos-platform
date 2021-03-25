@@ -144,4 +144,5 @@ form:
             $(".crm-header-title").append('<span class="slds-badge" style="background-color: #706e6b;color: #fff;">'+TAPi18n.__("process_instance_history_field_step_status_options_"+step_status)+'</span>')
             break;
       }
+      $("#creator-quick-form [for=field_target_object] .creator_table_cell.field-lookup a.link-detail").attr("target", "_blank");
     }
