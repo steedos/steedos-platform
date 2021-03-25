@@ -1,8 +1,9 @@
 "use strict";
 import { ActionHandlers } from './actionsHandler';
-import {MasterDetailActionHandler} from './master-detail/masterDetailActionHandler'
+import { MasterDetailActionHandler } from './master-detail/masterDetailActionHandler'
 import { FormulaActionHandler } from './formula/formulaActionHandler';
 import { SummaryActionHandler } from './summary/summaryActionHandler';
+import { LookupActionHandler } from './lookup/LookupActionHandler';
 module.exports = {
     name: "objects",
     /**
@@ -47,6 +48,7 @@ module.exports = {
         add: {
             async handler(ctx) {
                 await this.masterDetailActionHandler.add(ctx);
+                await this.lookupActionHandler.add(ctx);
                 await this.formulaActionHandler.add(ctx);
                 await this.summaryActionHandler.add(ctx);
                 return await ActionHandlers.add(ctx);
@@ -67,74 +69,74 @@ module.exports = {
                 return await ActionHandlers.verify(ctx);
             }
         },
-        getObjectFieldFormulaConfigs:{
+        getObjectFieldFormulaConfigs: {
             async handler(ctx) {
                 return await this.formulaActionHandler.filter(ctx);
             }
         },
-        verifyObjectFieldFormulaConfig:{
+        verifyObjectFieldFormulaConfig: {
             async handler(ctx) {
                 return await this.formulaActionHandler.verifyObjectFieldFormulaConfig(ctx);
             }
         },
-        getObjectFieldFormulaConfig:{
+        getObjectFieldFormulaConfig: {
             async handler(ctx) {
                 return await this.formulaActionHandler.get(ctx);
             }
         },
-        getFormulaVarsAndQuotes:{
+        getFormulaVarsAndQuotes: {
             async handler(ctx) {
                 return await this.formulaActionHandler.getFormulaVarsAndQuotes(ctx);
             }
         },
-        getObjectFieldSummaryConfigs:{
+        getObjectFieldSummaryConfigs: {
             async handler(ctx) {
                 return await this.summaryActionHandler.filter(ctx);
             }
         },
-        getObjectFieldSummaryConfig:{
+        getObjectFieldSummaryConfig: {
             async handler(ctx) {
                 return await this.summaryActionHandler.get(ctx);
             }
         },
         getDetails: {
             async handler(ctx) {
-                const {objectApiName} = ctx.params;
+                const { objectApiName } = ctx.params;
                 return await this.masterDetailActionHandler.getDetails(objectApiName);
             }
         },
-        getDetailPaths:{
+        getDetailPaths: {
             async handler(ctx) {
-                const {objectApiName} = ctx.params;
+                const { objectApiName } = ctx.params;
                 return await this.masterDetailActionHandler.getDetailPaths(objectApiName);
             }
         },
-        getMaxDetailsLeave:{
+        getMaxDetailsLeave: {
             async handler(ctx) {
-                const {objectApiName, paths} = ctx.params;
+                const { objectApiName, paths } = ctx.params;
                 return await this.masterDetailActionHandler.getMaxDetailsLeave(objectApiName, paths);
             }
         },
         getMasters: {
             async handler(ctx) {
-                const {objectApiName} = ctx.params;
+                const { objectApiName } = ctx.params;
                 return await this.masterDetailActionHandler.getMasters(objectApiName);
             }
         },
-        getMasterPaths:{
+        getMasterPaths: {
             async handler(ctx) {
-                const {objectApiName} = ctx.params;
+                const { objectApiName } = ctx.params;
                 return await this.masterDetailActionHandler.getMasterPaths(objectApiName);
             }
         },
-        getMaxMastersLeave:{
+        getMaxMastersLeave: {
             async handler(ctx) {
-                const {objectApiName, paths} = ctx.params;
+                const { objectApiName, paths } = ctx.params;
                 return await this.masterDetailActionHandler.getMaxMastersLeave(objectApiName, paths);
             }
         }
     },
-    hooks:{
+    hooks: {
         // error: {
         //     // Global error handler
         //     "*": function(ctx, err) {
@@ -165,6 +167,7 @@ module.exports = {
         this.masterDetailActionHandler = new MasterDetailActionHandler(this.broker);
         this.formulaActionHandler = new FormulaActionHandler(this.broker);
         this.summaryActionHandler = new SummaryActionHandler(this.broker);
+        this.lookupActionHandler = new LookupActionHandler(this.broker);
     },
 
     /**
