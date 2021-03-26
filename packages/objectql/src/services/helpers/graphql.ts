@@ -22,6 +22,8 @@ const BASIC_TYPE_MAPPING = {
 const EXPAND_SUFFIX = '__expand';
 const DISPLAY_PREFIX = '_display';
 export const RELATED_PREFIX = '_related';
+const GRAPHQL_ACTION_PREFIX = 'graphql_';
+
 
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {
     let gplObj: any = {};
@@ -99,28 +101,26 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
             if (field.multiple) {
                 type += `${name}: [String] `;
                 type += `${name}${EXPAND_SUFFIX}: [${refTo}] `;
-                resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = async function (parent, args, context, info) {
-                    let fieldName = info.fieldName.split(EXPAND_SUFFIX)[0];
-                    let filters = [];
-                    _.each(parent[fieldName], function (f) {
-                        filters.push(`(_id eq '${f}')`);
-                    })
-
-                    if (filters.length === 0) {
-                        return null;
+                resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = {
+                    action: `${getObjectServiceName(refTo)}.${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}_multiple`,
+                    rootParams: {
+                        [name]: 'ids'
+                    },
+                    params: {
+                        'objectName': refTo
                     }
-                    return context.ctx.call(`${getObjectServiceName(refTo)}.find`, { filters: filters });
                 }
             } else {
                 type += `${name}: String `;
                 type += `${name}${EXPAND_SUFFIX}: ${refTo} `;
-                resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = async function (parent, args, context, info) {
-                    let fieldName = info.fieldName.split(EXPAND_SUFFIX)[0];
-                    let id = parent[fieldName];
-                    if (!id) {
-                        return;
+                resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = {
+                    action: `${getObjectServiceName(refTo)}.${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}`,
+                    rootParams: {
+                        [name]: 'id'
+                    },
+                    params: {
+                        'objectName': refTo
                     }
-                    return context.ctx.call(`${getObjectServiceName(refTo)}.findOne`, { id: id });
                 }
             }
         }
@@ -132,9 +132,18 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     // _display
     let _display_type_name = `${DISPLAY_PREFIX}_${objectName}`;
     type += `${DISPLAY_PREFIX}: ${_display_type_name} `;
-    resolvers[objectName][DISPLAY_PREFIX] = async function (parent, args, context, info) {
-        let userSession = context.ctx.meta.user;
-        return await translateToDisplay(objectName, fields, parent, userSession);
+    // resolvers[objectName][DISPLAY_PREFIX] = async function (parent, args, context, info) {
+    //     let userSession = context.ctx.meta.user;
+    //     return await translateToDisplay(objectName, fields, parent, userSession);
+    // }
+    resolvers[objectName][DISPLAY_PREFIX] = {
+        action: `${getObjectServiceName(objectName)}.${GRAPHQL_ACTION_PREFIX}${DISPLAY_PREFIX}`,
+        rootParams: {
+            '_id': '_id'
+        },
+        params: {
+            'objectName': objectName
+        }
     }
     // define _display type
     let _display_type = _getDisplayType(_display_type_name, fields);
@@ -202,18 +211,120 @@ export function _getRelatedType(relatedFieldName, relatedObjName) {
     return `${relatedFieldName}(fields: [String], filters: JSON, top: Int, skip: Int, sort: String): [${relatedObjName}] `;
 }
 
-function _getRelatedResolverForEnableProperty(objectName, relatedObjName, foreignKey) {
-    return async function (parent, args, context, info) {
-        let userSession = context.ctx.meta.user;
-        let steedosSchema = getSteedosSchema();
-        let object = steedosSchema.getObject(relatedObjName);
-        let filters = [];
-        filters = [[`${foreignKey}.o`, "=", objectName], [`${foreignKey}.ids`, "=", parent._id]];
-        if (args && args.filters) {
-            filters.push(args.filters);
+export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
+    let actions = {};
+    let objName = objectConfig.name;
+
+    actions[`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}_multiple`] = {
+        handler: async function (ctx) {
+            let { ids, objectName } = ctx.params;
+            if (_.isEmpty(ids)) {
+                return null;
+            }
+            let filters = [['_id', 'in', ids]];
+            return ctx.call(`${getObjectServiceName(objectName)}.find`, { filters: filters });
         }
-        args.filters = filters;
-        return await object.find(args, userSession);
+    }
+    actions[`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}`] = {
+        handler: async function (ctx) {
+            let { id, objectName } = ctx.params;
+            if (!id) {
+                return;
+            }
+            return ctx.call(`${getObjectServiceName(objectName)}.findOne`, { id: id });
+        }
+    }
+
+    if (['cms_files', 'tasks', 'notes', 'events', 'audit_records', 'instances', 'approvals'].includes(objName)) {
+        actions[`${GRAPHQL_ACTION_PREFIX}${RELATED_PREFIX}_enabled`] = {
+            handler: async function (ctx) {
+                let params = ctx.params;
+                let { _parentId, _related_params } = params;
+                let { objectName, parentObjectName, foreignKey } = _related_params;
+                let userSession = ctx.meta.user;
+                let steedosSchema = getSteedosSchema();
+                let object = steedosSchema.getObject(objectName);
+                let filters = [];
+                filters = [[`${foreignKey}.o`, "=", parentObjectName], [`${foreignKey}.ids`, "=", _parentId]];
+                if (params.filters) {
+                    filters.push(params.filters);
+                }
+                params.filters = filters;
+                return await object.find(params, userSession);
+            }
+        }
+    }
+
+    actions[`${GRAPHQL_ACTION_PREFIX}${RELATED_PREFIX}`] = {
+        handler: async function (ctx) {
+            let params = ctx.params;
+            let { _parentId, _related_params } = params;
+            let { objectName, parentObjectName, fieldName, referenceToParentFieldName } = _related_params;
+            let userSession = ctx.meta.user;
+            let steedosSchema = getSteedosSchema();
+            let object = steedosSchema.getObject(objectName);
+            let parentObj = steedosSchema.getObject(parentObjectName);
+            let parent = await parentObj.findOne(_parentId);
+            let filters = [];
+            let _idValue = parent._id;
+            if (referenceToParentFieldName) {
+                _idValue = parent[referenceToParentFieldName];
+            }
+            filters = [[fieldName, "=", _idValue]];
+            if (params.filters) {
+                filters.push(params.filters);
+            }
+            params.filters = filters;
+            return await object.find(params, userSession);
+        }
+    }
+
+    actions[`${GRAPHQL_ACTION_PREFIX}${DISPLAY_PREFIX}`] = {
+        handler: async function (ctx) {
+            let params = ctx.params;
+            let { _id, objectName } = params;
+            let userSession = ctx.meta.user;
+            let steedosSchema = getSteedosSchema();
+            let obj = steedosSchema.getObject(objectName);
+            let objConfig = await obj.toConfig();
+            let doc = await obj.findOne(_id);
+            return await translateToDisplay(objectName, objConfig.fields, doc, userSession);
+        }
+    }
+
+    return actions;
+}
+
+function _getRelatedResolverForEnableProperty(parentObjectName, relatedObjName, foreignKey) {
+    return {
+        action: `${getObjectServiceName(relatedObjName)}.${GRAPHQL_ACTION_PREFIX}${RELATED_PREFIX}_enabled`,
+        rootParams: {
+            '_id': '_parentId'
+        },
+        params: {
+            '_related_params': {
+                'objectName': relatedObjName,
+                'parentObjectName': parentObjectName,
+                'foreignKey': foreignKey
+            }
+        }
+    }
+}
+
+export function getRelatedResolver(objectApiName, detailObjectApiName, detailFieldName, detailFieldReferenceToFieldName) {
+    return {
+        action: `${getObjectServiceName(detailObjectApiName)}.${GRAPHQL_ACTION_PREFIX}${RELATED_PREFIX}`,
+        rootParams: {
+            '_id': '_parentId'
+        },
+        params: {
+            '_related_params': {
+                'objectName': detailObjectApiName,
+                'parentObjectName': objectApiName,
+                'fieldName': detailFieldName,
+                'referenceToParentFieldName': detailFieldReferenceToFieldName
+            }
+        }
     }
 }
 

@@ -2,9 +2,8 @@ import { SteedosObjectType } from '../types/object';
 import { getDataSource } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
 import _ = require('underscore');
-import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName } from './helpers';
+import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver } from './helpers';
 import { getObjectServiceName } from '.';
-import { getSteedosSchema } from '../types';
 // import { parse } from '@steedos/formula';
 // mongodb pipeline: https://docs.mongodb.com/manual/core/aggregation-pipeline/
 type externalPipelineItem = {
@@ -445,6 +444,8 @@ module.exports = {
                 }
             })
             settings.graphql = generateSettingsGraphql(objectConfig);
+            let graphqlActions = getGraphqlActions(objectConfig);
+            schema.actions = _.extend({}, graphqlActions, schema.actions);
         }
         if (!schema.events) {
             schema.events = {};
@@ -452,7 +453,6 @@ module.exports = {
         schema.events[`${getObjectServiceName(objectConfig.name)}.detailsChanged`] = {
             handler: async function (ctx) {
                 const { objectApiName, detailObjectApiName, detailFieldName, detailFieldReferenceToFieldName } = ctx.params;
-
                 let resolvers = this.settings.graphql.resolvers;
                 let type: string = this.settings.graphql.type;
                 let relatedFieldName = correctName(`${RELATED_PREFIX}_${detailObjectApiName}_${detailFieldName}`);
@@ -461,23 +461,7 @@ module.exports = {
                     return;
                 }
                 this.settings.graphql.type = type.substring(0, type.length - 1) + relatedType + '}';
-                resolvers[objectApiName][relatedFieldName] = async function (parent, args, context, info) {
-                    let userSession = context.ctx.meta.user;
-                    let steedosSchema = getSteedosSchema();
-                    let object = steedosSchema.getObject(detailObjectApiName);
-                    let filters = [];
-                    let _idValue = parent._id;
-                    if (detailFieldReferenceToFieldName) {
-                        _idValue = parent[detailFieldReferenceToFieldName];
-                    }
-                    filters = [[detailFieldName, "=", _idValue]];
-                    if (args && args.filters) {
-                        filters.push(args.filters);
-                    }
-                    args.filters = filters;
-                    return await object.find(args, userSession);
-                };
-
+                resolvers[objectApiName][relatedFieldName] = getRelatedResolver(objectApiName, detailObjectApiName, detailFieldName, detailFieldReferenceToFieldName);
             }
         };
         schema.events[`${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`] = {
