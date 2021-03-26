@@ -2,7 +2,7 @@
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-meteor-package-loader');
-const serviceName = `$packages-${packageName}`;
+const serviceName = `~packages-${packageName}`;
 const init = require('.').init;
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context

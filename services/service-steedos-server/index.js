@@ -34,14 +34,14 @@ module.exports = {
 		},
 		packageInfo: {
 			path: standardObjectsPath,
-			name: '$packages-standard-objects',
+			name: '~packages-standard-objects',
 		},
 		apiServer: {
 			enabled: true
 		},
 		built_in_plugins: [
 			"@steedos/steedos-plugin-workflow",
-			"@steedos/accounts",
+			// "@steedos/accounts",
 			"@steedos/steedos-plugin-schema-builder",
 			"@steedos/plugin-enterprise",
 			"@steedos/word-template",

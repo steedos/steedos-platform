@@ -118,7 +118,7 @@ export const getConfig = (objectName: string, _id: string) => {
     return _.find(records, {_id: _id})
 }
 
-export const addAllConfigFiles = async (filePath, datasourceApiName) => {
+export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName) => {
     if(datasourceApiName === 'default' || datasourceApiName === 'meteor'){
         const datasource = getDataSource(datasourceApiName)
         if(datasource && datasourceApiName === 'default'){
@@ -130,7 +130,7 @@ export const addAllConfigFiles = async (filePath, datasourceApiName) => {
         }
     }
     await addObjectConfigFiles(filePath, datasourceApiName);
-    await addAppConfigFiles(filePath);
+    await addAppConfigFiles(filePath, serviceName);
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     // addObjectI18nFiles(filePath);

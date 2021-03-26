@@ -116,16 +116,15 @@ export class SteedosAppType{
     }
 }
 
-export async function addAppConfigFiles(filePath: string){
+export async function addAppConfigFiles(filePath: string, serviceName: string){
     const configs = getConfigsFormFiles('app', filePath);
     for (const config of configs) {
-        await addAppConfig(config);
+        await addAppConfig(config, serviceName);
     }
 }
 
-export const addAppConfig = async (appConfig: SteedosAppTypeConfig) => {
+export const addAppConfig = async (appConfig: SteedosAppTypeConfig, serviceName: string = '') => {
     const schema = getSteedosSchema();
-    const serviceName = '';
     await schema.metadataRegister.addApp(serviceName, appConfig);
 }
 

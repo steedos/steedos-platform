@@ -61,7 +61,7 @@ module.exports = {
 				objectql.getSteedosSchema(this.broker);
 				packagePath = path.join(packagePath, '**');
 				objectql.loadStandardObjects();
-				await objectql.addAllConfigFiles(packagePath, datasourceName);
+				await objectql.addAllConfigFiles(packagePath, datasourceName, name);
 				const datasource = objectql.getDataSource(datasourceName);
 				await datasource.init();
 				await triggerLoader.load(this.broker, packagePath, name);
@@ -95,6 +95,6 @@ module.exports = {
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-
+		await this.broker.call(`metadata.refreshServiceMetadatas`, {offlinePackageServices: [this.name]});
 	}
 };

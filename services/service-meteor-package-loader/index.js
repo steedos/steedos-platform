@@ -58,7 +58,7 @@ module.exports = {
 				steedosSchema.addMeteorDatasource();
 				packagePath = path.join(packagePath, '**');
 				objectql.loadStandardObjects();
-				await objectql.addAllConfigFiles(packagePath, 'meteor');
+				await objectql.addAllConfigFiles(packagePath, 'meteor', name);
 				const datasource = objectql.getDataSource('meteor');
 				await datasource.init();
 				await triggerLoader.load(this.broker, packagePath, name);
@@ -92,6 +92,6 @@ module.exports = {
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-
+		await this.broker.call(`metadata.refreshServiceMetadatas`, {offlinePackageServices: [this.name]});
 	}
 };

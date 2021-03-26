@@ -9,7 +9,7 @@ const ENUM_WHEN = ['before.find', 'before.insert', 'before.update', 'before.dele
 
 export async function load(broker: any, packagePath: string, packageServiceName: string) {
     let actions = {};
-    let serviceName = `${packageServiceName}-triggers`;
+    let serviceName = `~triggers-${packageServiceName}`;
     let filePath = path.join(packagePath, "**");
     let objTriggers = objectql.loadObjectTriggers(filePath);
     if (_.isEmpty(objTriggers)) {

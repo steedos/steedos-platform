@@ -1,5 +1,5 @@
 "use strict";
-import { ActionHandlers } from './actionsHandler';
+import { ActionHandlers, METADATA_TYPE } from './actionsHandler';
 module.exports = {
     name: "apps",
     /**
@@ -14,6 +14,13 @@ module.exports = {
      */
     dependencies: ['metadata'],
 
+    events: {
+		[`$METADATA.${METADATA_TYPE}.*`]: {
+            async handler(ctx) {
+                return await ActionHandlers.refresh(ctx);
+            }
+        }
+	},
     /**
      * Actions
      */
@@ -59,13 +66,6 @@ module.exports = {
         //     }
         // }
     },
-    /**
-     * Events
-     */
-    events: {
-
-    },
-
     /**
      * Methods
      */
