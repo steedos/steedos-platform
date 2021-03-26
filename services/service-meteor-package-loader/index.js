@@ -57,7 +57,7 @@ module.exports = {
 				let steedosSchema = objectql.getSteedosSchema(this.broker);
 				steedosSchema.addMeteorDatasource();
 				packagePath = path.join(packagePath, '**');
-				objectql.loadStandardObjects();
+				objectql.loadStandardBaseObjects();
 				await objectql.addAllConfigFiles(packagePath, 'meteor', name);
 				const datasource = objectql.getDataSource('meteor');
 				await datasource.init();

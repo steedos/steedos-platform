@@ -285,7 +285,7 @@ export const removeObjectListenerConfig = (_id, listenTo, when)=>{
     }
 }
 
-export const loadStandardObjects = () => {
+export const loadStandardBaseObjects = () => {
     
     if (standardObjectsLoaded)
         return;

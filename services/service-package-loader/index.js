@@ -60,7 +60,7 @@ module.exports = {
 				}
 				objectql.getSteedosSchema(this.broker);
 				packagePath = path.join(packagePath, '**');
-				objectql.loadStandardObjects();
+				objectql.loadStandardBaseObjects();
 				await objectql.addAllConfigFiles(packagePath, datasourceName, name);
 				const datasource = objectql.getDataSource(datasourceName);
 				await datasource.init();

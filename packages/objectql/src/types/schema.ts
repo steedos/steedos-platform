@@ -5,7 +5,7 @@ import { isMeteor, getSteedosConfig } from "../util";
 import _ = require("underscore");
 import { getFromContainer } from 'typeorm';
 // import { loadCoreValidators } from '../validators';
-import { loadStandardObjects } from './object_dynamic_load';
+import { loadStandardBaseObjects } from './object_dynamic_load';
 // import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
 import { buildGraphQLSchema } from '../graphql';
 import { loadStandardProfiles, loadStandardPermissionsets } from '../dynamic-load';
@@ -101,7 +101,7 @@ export class SteedosSchema {
         // loadCoreValidators();
 
         if (isMeteor())
-            loadStandardObjects();
+            loadStandardBaseObjects();
 
         if (config) {
             _.each(config.datasources, (datasourceConfig, datasource_name) => {
