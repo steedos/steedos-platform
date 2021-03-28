@@ -2,72 +2,71 @@
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-meteor-package-loader');
-const serviceName = `$packages-${packageName}`;
 const init = require('./lib').init;
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
  */
 module.exports = {
-	name: serviceName,
-	namespace: "steedos",
-	mixins: [packageLoader],
-	/**
-	 * Settings
-	 */
-	settings: {
-		packageInfo: {
-			path: __dirname,
-			name: serviceName
-		}
-	},
+    name: packageName,
+    namespace: "steedos",
+    mixins: [packageLoader],
+    /**
+     * Settings
+     */
+    settings: {
+        packageInfo: {
+            path: __dirname,
+            name: packageName
+        }
+    },
 
-	/**
-	 * Dependencies
-	 */
-	dependencies: [],
+    /**
+     * Dependencies
+     */
+    dependencies: [],
 
-	/**
-	 * Actions
-	 */
-	actions: {
+    /**
+     * Actions
+     */
+    actions: {
 
-	},
+    },
 
-	/**
-	 * Events
-	 */
-	events: {
+    /**
+     * Events
+     */
+    events: {
 
-	},
+    },
 
-	/**
-	 * Methods
-	 */
-	methods: {
-		init: function (context) {
-			init(context);
-		}
-	},
+    /**
+     * Methods
+     */
+    methods: {
+        init: function (context) {
+            init(context);
+        }
+    },
 
-	/**
-	 * Service created lifecycle event handler
-	 */
-	async created() {
+    /**
+     * Service created lifecycle event handler
+     */
+    async created() {
 
-	},
+    },
 
-	/**
-	 * Service started lifecycle event handler
-	 */
-	async started() {
+    /**
+     * Service started lifecycle event handler
+     */
+    async started() {
 
-	},
+    },
 
-	/**
-	 * Service stopped lifecycle event handler
-	 */
-	async stopped() {
+    /**
+     * Service stopped lifecycle event handler
+     */
+    async stopped() {
 
-	}
+    }
 };

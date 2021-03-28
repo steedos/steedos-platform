@@ -34,7 +34,7 @@ module.exports = {
 		},
 		packageInfo: {
 			path: standardObjectsPath,
-			name: '~packages-standard-objects',
+			name: 'standard-objects',
 		},
 		apiServer: {
 			enabled: true
@@ -150,7 +150,7 @@ module.exports = {
 					mixins: [packageLoader],
 					settings: { packageInfo: settings }
 				});
-				await this.broker.waitForServices([settings.name]);
+				await this.broker.waitForServices(this.standardObjectsPackageLoaderService.name);
 			}
 
 		}
