@@ -90,7 +90,8 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
             return;
         }
         if (!field.type) {
-            console.error(`The field ${name} of ${objectName} has no type property.`);
+            // console.error(`The field ${name} of ${objectName} has no type property.`);
+            type += `${name}: JSON `;
             return;
         }
         if (BASIC_TYPE_MAPPING[field.type]) {
