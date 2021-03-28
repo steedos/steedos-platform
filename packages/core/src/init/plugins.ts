@@ -30,7 +30,7 @@ export class Plugins {
                     await Future.task(async () => {
                         try {
                             let service = broker.loadService(packageServiceFilePath);
-                            await broker.waitForServices([service.name]);
+                            await broker.waitForServices([service.name], 10000); // timeout 10s
                             service.init(pluginContext);
                             WebApp.connectHandlers.use(pluginContext.app);
                         } catch (error) {
