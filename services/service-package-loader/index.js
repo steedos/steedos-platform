@@ -54,7 +54,6 @@ module.exports = {
 	methods: {
 		loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
 			await Future.task(async () => {
-				//datasourceName 参数为临时改动，待meteor-package-load 处理完成后，此部分代码可以删除
 				if (!datasourceName) {
 					datasourceName = 'default';
 				}
