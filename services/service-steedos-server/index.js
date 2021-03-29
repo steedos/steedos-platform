@@ -34,7 +34,6 @@ module.exports = {
 		},
 		packageInfo: {
 			path: standardObjectsPath,
-			name: 'standard-objects',
 		},
 		apiServer: {
 			enabled: true
@@ -143,10 +142,9 @@ module.exports = {
 
 		async startStandardObjectsPackageLoader() {
 			let settings = this.settings.packageInfo;
-			if (settings.path && settings.name) {
-
+			if (settings.path) {
 				this.standardObjectsPackageLoaderService = this.broker.createService({
-					name: settings.name,
+					name: 'standard-objects',
 					mixins: [packageLoader],
 					settings: { packageInfo: settings }
 				});
