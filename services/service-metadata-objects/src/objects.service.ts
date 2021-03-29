@@ -4,6 +4,7 @@ import { MasterDetailActionHandler } from './master-detail/masterDetailActionHan
 import { FormulaActionHandler } from './formula/formulaActionHandler';
 import { SummaryActionHandler } from './summary/summaryActionHandler';
 import { LookupActionHandler } from './lookup/LookupActionHandler';
+import { METADATA_TYPE } from '.';
 module.exports = {
     name: "objects",
     /**
@@ -17,6 +18,14 @@ module.exports = {
      * Dependencies
      */
     dependencies: ['metadata'],
+
+    events: {
+		[`$METADATA.${METADATA_TYPE}.*`]: {
+            async handler(ctx) {
+                return await ActionHandlers.refresh(ctx);
+            }
+        }
+	},
 
     /**
      * Actions
@@ -52,6 +61,11 @@ module.exports = {
                 await this.formulaActionHandler.add(ctx);
                 await this.summaryActionHandler.add(ctx);
                 return await ActionHandlers.add(ctx);
+            }
+        },
+        addConfig: {
+            async handler(ctx) {
+                return await ActionHandlers.addConfig(ctx);
             }
         },
         change: {
@@ -145,12 +159,6 @@ module.exports = {
         //         throw err;
         //     }
         // }
-    },
-    /**
-     * Events
-     */
-    events: {
-
     },
 
     /**

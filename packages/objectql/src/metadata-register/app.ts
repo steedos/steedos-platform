@@ -3,6 +3,7 @@ export async function registerApp(broker, serviceName, appConfig) {
     const metadata = clone(appConfig);
     delete metadata.triggers
     const res = await broker.call("apps.add", {appApiName: metadata._id || metadata.name ,data: metadata}, {meta: {
+        metadataServiceName: serviceName,
         caller: {
             nodeID: broker.nodeID,
             service: {

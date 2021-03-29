@@ -46,7 +46,9 @@ module.exports = {
 	 */
 	methods: {
 		init: function (context) {
+			console.log(`init`, new Date().getTime())
 			init(context);
+			console.log(`init end`, new Date().getTime())
 		}
 	},
 
@@ -54,20 +56,20 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-
+		console.log(`created`, new Date().getTime())
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-
+		console.log(`started`, new Date().getTime())
 	},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-
+		console.log(`stopped`, new Date().getTime())
 	}
 };

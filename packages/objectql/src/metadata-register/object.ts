@@ -21,6 +21,22 @@ export async function registerObject(broker, serviceName, objectConfig) {
     return res;
 }
 
+export async function addObjectConfig(broker, serviceName, objectConfig) {
+    const metadata = clone(objectConfig);
+    delete metadata.triggers
+    const res = await broker.call("objects.addConfig", {data: metadata}, {meta: {
+        metadataServiceName: serviceName,
+        caller: {
+            nodeID: broker.nodeID
+        }
+    }});
+    return res;
+}
+
+export async function getObjectsConfig(broker, datasourceName){
+    return await broker.call('objects.getAll', {datasource: datasourceName})
+}
+
 export async function removeObject(broker, objectApiName) {
     // const serviceName = getObjectServiceName(objectConfig.name);
     const res = await broker.call("objects.delete", {objectApiName: objectApiName}, {meta: {

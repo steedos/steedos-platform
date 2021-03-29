@@ -124,12 +124,12 @@ export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName
         if(datasource && datasourceApiName === 'default'){
             await datasource.init();
         }
-        if(datasource){
+        if(datasource && false){
             await preloadDBObjectFields(datasource);
             await preloadDBObjectButtons(datasource);
         }
     }
-    await addObjectConfigFiles(filePath, datasourceApiName);
+    await addObjectConfigFiles(filePath, datasourceApiName, serviceName);
     await addAppConfigFiles(filePath, serviceName);
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);

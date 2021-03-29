@@ -26,7 +26,7 @@ import {
     getSteedosSchema
 } from '.';
 import { SteedosDriverConfig } from '../driver';
-import { getObjectConfigs, addObjectConfig } from '.';
+import { addObjectConfig } from '.';
 import { createObjectService } from '../metadata-register/objectServiceManager';
 import { getObjectDispatcher } from '../services/index';
 let Fiber = require('fibers');
@@ -108,7 +108,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async getObjects() {
-        return await this.schema.metadataBroker.call('metadata.filter', {key: "$steedos.#objects.*"})
+        return await this.schema.metadataRegister.getObjectsConfig(this.name);
     }
 
     getLocalObjects() {
@@ -198,7 +198,7 @@ export class SteedosDataSourceType implements Dictionary {
 
     async initObjects(){
         // 从缓存中加载所有本数据源对象到datasource中
-        let objects: Array<SteedosObjectTypeConfig> = getObjectConfigs(this._name);
+        let objects: Array<any> = await this.getObjects();
         let self = this;
         for await (const object of _.values(objects)) {
             // if(self._schema.metadataBroker){
@@ -209,8 +209,8 @@ export class SteedosDataSourceType implements Dictionary {
             // }else{
             //     self.setObject(object.name, object);
             // }
-
-            await self.setObject(object.name, object);
+            const objectConfig = object.metadata;
+            await self.setObject(objectConfig.name, objectConfig);
         }
 
         // _.each(objects, (object) => {

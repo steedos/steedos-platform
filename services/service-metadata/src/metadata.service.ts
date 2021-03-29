@@ -21,7 +21,7 @@ module.exports = {
 	   */
 	methods: {
 		refreshServiceMetadatas:async function (ctx) {
-			ActionHandlers.refreshServiceMetadatas(ctx)
+			return await ActionHandlers.refreshServiceMetadatas(ctx)
 		}
 	},
 
@@ -60,6 +60,21 @@ module.exports = {
             },
 			async handler(ctx) {
 				return await ActionHandlers.refreshServiceMetadatas(ctx);
+			}
+		},
+		getServiceMetadatas: {
+			async handler(ctx) {
+				return await ActionHandlers.getServiceMetadatas(ctx);
+			}
+		},
+		getServiceMetadata: {
+			params: {
+				serviceName: { type: "string"},
+				metadataType: { type: "string"},
+				metadataApiName: { type: "string"},
+			},
+			async handler(ctx) {
+				return await ActionHandlers.getServiceMetadata(ctx);
 			}
 		}
 	},

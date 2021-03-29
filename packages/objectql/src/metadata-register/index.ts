@@ -1,4 +1,4 @@
-import { registerObject, removeObject } from './object';
+import { registerObject, removeObject, addObjectConfig, getObjectsConfig } from './object';
 import { registerApp, getApp, getApps, removeApp } from './app';
 import { getProfile, getProfiles, registerProfile } from './profile';
 import { getPermissionset, getPermissionsets, registerPermissionset } from './permissionset';
@@ -15,6 +15,13 @@ export class MetadataRegister{
     
     constructor(metadataBroker){
         this.broker = metadataBroker;
+    }
+
+    async addObjectConfig(serviceName, objectConfig: any): Promise<boolean>{
+        return await addObjectConfig(this.broker, serviceName, objectConfig);
+    }
+    async getObjectsConfig(datasourceName: string): Promise<any>{
+        return await getObjectsConfig(this.broker, datasourceName);
     }
 
     async addObject(serviceName, objectConfig: any): Promise<boolean>{

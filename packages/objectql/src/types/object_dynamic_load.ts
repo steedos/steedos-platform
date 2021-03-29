@@ -5,6 +5,7 @@ import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActi
 import { Dictionary } from '@salesforce/ts-types';
 import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset } from '../dynamic-load'
 import { transformListenersToTriggers } from '..';
+import { getSteedosSchema } from './schema';
 
 var util = require('../util')
 var clone = require('clone')
@@ -77,7 +78,7 @@ export const getObjectConfig = (object_name: string):SteedosObjectTypeConfig => 
     return _.find(_objectConfigs, {name: object_name})
 }
 
-export const addObjectConfigFiles = async (filePath: string, datasource: string) => {
+export const addObjectConfigFiles = async (filePath: string, datasource: string, serviceName?: string) => {
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
@@ -85,8 +86,8 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string)
     if (!datasource)
       datasource = 'meteor'
 
-    let objectJsons = util.loadObjects(filePath)
-    objectJsons.forEach(element => {
+    let objectJsons = util.loadObjects(filePath);
+    for await (const element of objectJsons) {
         let startNo = 10;
         _.each(element.fields, function(field){
             if(!_.has(field, 'sort_no')){
@@ -110,10 +111,10 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string)
         if(_mf && element.name){
             element.fields_serial_number = _mf.sort_no + 10;
         }
-        addObjectConfig(element, datasource);
-    });
+        await addObjectConfig(element, datasource, serviceName);
+    }
 
-    loadObjectFields(filePath);
+    await loadObjectFields(filePath, serviceName);
 
     loadObjectListViews(filePath);
 
@@ -196,8 +197,15 @@ export const getClientScripts = () => {
 }
 
 
-export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasource: string) => {
+export const addObjectConfig = async (objectConfig: SteedosObjectTypeConfig, datasource: string, serviceName?: string) => {
     let object_name = objectConfig.name;
+    if(serviceName){
+        if(datasource){
+            objectConfig.datasource = datasource
+        }
+        await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, objectConfig);
+    }
+    // if(true){return;}
     let config:SteedosObjectTypeConfig = {
         name: object_name,
         fields: {}
@@ -209,6 +217,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         object_name = objectConfig.extend
         let parentObjectConfig = getObjectConfig(object_name);
         if(_.isEmpty(parentObjectConfig)){
+            return; //TODO 
             throw new Error(`Object extend failed, object not exist: ${objectConfig.extend}`);
         }
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
@@ -285,7 +294,7 @@ export const removeObjectListenerConfig = (_id, listenTo, when)=>{
     }
 }
 
-export const loadStandardBaseObjects = () => {
+export const loadStandardBaseObjects = async (serviceName: string) => {
     
     if (standardObjectsLoaded)
         return;
@@ -295,10 +304,10 @@ export const loadStandardBaseObjects = () => {
     let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
     let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
     baseObject.name = MONGO_BASE_OBJECT;
-    addObjectConfig(baseObject, SYSTEM_DATASOURCE);
+    await addObjectConfig(baseObject, SYSTEM_DATASOURCE, serviceName);
     let baseObjectJs = util.loadFile(path.join(standardObjectsDir, "base.object.js"))
     baseObjectJs.extend = MONGO_BASE_OBJECT;
-    addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE);
+    await addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE, serviceName);
     const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.objectwebhooks.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js'];
     _.forEach(baseTriggers, function(triggerFileName){
         let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, triggerFileName))
@@ -308,7 +317,7 @@ export const loadStandardBaseObjects = () => {
 
     let coreObject = util.loadFile(path.join(standardObjectsDir, "core.object.yml"))
     coreObject.name = SQL_BASE_OBJECT;
-    addObjectConfig(coreObject, SYSTEM_DATASOURCE);
+    await addObjectConfig(coreObject, SYSTEM_DATASOURCE, serviceName);
     let coreObjectTrigger = util.loadFile(path.join(standardObjectsDir, "core.objectwebhooks.trigger.js"))
     coreObjectTrigger.listenTo = SQL_BASE_OBJECT
     addObjectListenerConfig(coreObjectTrigger)

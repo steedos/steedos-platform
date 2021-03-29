@@ -20,13 +20,15 @@ function getServiceMetadataCacherKey(serviceName: string, metadataType: string, 
 }
 
 async function saveServiceMetadataMap(ctx){
-    let serviceName = ctx.meta.caller?.service?.name;
     const { nodeID } = ctx.meta.caller || {}
-    const { metadataType, metadataApiName } = ctx.meta || {}
-    if(!serviceName){
-        serviceName = 'TODO'
+    const { metadataType, metadataApiName, metadataServiceName } = ctx.meta || {}
+    // if(metadataType){
+    //     console.log('saveServiceMetadataMap', metadataType, metadataApiName, metadataServiceName )
+    // }
+    if(!metadataServiceName){
+        return;
     }
-    const key = getServiceMetadataCacherKey(serviceName, metadataType, metadataApiName)
+    const key = getServiceMetadataCacherKey(metadataServiceName, metadataType, metadataApiName)
     let data = await ctx.broker.cacher.get(key);
     let nodeIds = [];
     if(data){
@@ -102,6 +104,7 @@ async function clearPackageServicesMetadatas(ctx, offlinePackageServices){
         const clearPackageMetadatas = await clearPackageServiceMetadatas(ctx, packageServiceName)
         clearMetadatas = clearMetadatas.concat(clearPackageMetadatas);
     }
+    console.log(`clearPackageServicesMetadatas`, clearMetadatas)
     _.each(_.groupBy(clearMetadatas, 'metadataType'), function( data: any , metadataType){
         ctx.broker.emit(`${SERVICE_METADATA_PREFIX}.${metadataType}.clear`, {metadataType, metadataApiNames: _.pluck(data, 'metadataApiName'), isClear: true})
     })
@@ -170,6 +173,11 @@ export const ActionHandlers = {
         }
         const key = getServiceMetadataCacherKey(serviceName, metadataType, metadataApiName)
         return await query(ctx, key);
+    },
+    async getServiceMetadata(ctx: any){
+        let { serviceName, metadataType, metadataApiName } = ctx.params;
+        const key = getServiceMetadataCacherKey(serviceName, metadataType, metadataApiName)
+        return await ctx.broker.cacher.get(key)
     },
     async refreshServiceMetadatas(ctx: any){
         const { offlinePackageServices: _offlinePackageServices } = ctx.params || {};
