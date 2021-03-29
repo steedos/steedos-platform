@@ -34,14 +34,14 @@ module.exports = {
 		},
 		packageInfo: {
 			path: standardObjectsPath,
-			name: '~packages-standard-objects',
+			name: 'standard-objects',
 		},
 		apiServer: {
 			enabled: true
 		},
 		built_in_plugins: [
 			"@steedos/steedos-plugin-workflow",
-			// "@steedos/accounts",
+			"@steedos/accounts",
 			"@steedos/steedos-plugin-schema-builder",
 			"@steedos/plugin-enterprise",
 			"@steedos/word-template",
@@ -150,7 +150,7 @@ module.exports = {
 					mixins: [packageLoader],
 					settings: { packageInfo: settings }
 				});
-				await this.broker.waitForServices([settings.name]);
+				await this.broker.waitForServices(this.standardObjectsPackageLoaderService.name);
 			}
 
 		}

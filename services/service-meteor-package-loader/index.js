@@ -10,43 +10,43 @@ const Future = require('fibers/future');
  */
 
 module.exports = {
-	name: "service-meteor-package-loader",
+    name: "service-meteor-package-loader",
 
-	/**
-	 * Settings
-	 */
-	settings: {
-		path: '', // 扫描加载原数据的路径
-		name: '' // service name
-	},
+    /**
+     * Settings
+     */
+    settings: {
+        path: '', // 扫描加载原数据的路径
+        name: '' // service name
+    },
 
-	/**
-	 * Dependencies
-	 */
-	dependencies: ['metadata-server'],
+    /**
+     * Dependencies
+     */
+    dependencies: ['metadata-server'],
 
-	/**
-	 * Actions
-	 */
-	actions: {
+    /**
+     * Actions
+     */
+    actions: {
 
-	},
+    },
 
-	/**
-	 * Events
-	 */
-	events: {
-		"translations.change": {
-			handler() {
-				core.loadTranslations()
-			}
-		},
-		"translations.object.change": {
-			handler() {
-				core.loadObjectTranslations()
-			}
-		}
-	},
+    /**
+     * Events
+     */
+    events: {
+        "translations.change": {
+            handler() {
+                core.loadTranslations()
+            }
+        },
+        "translations.object.change": {
+            handler() {
+                core.loadObjectTranslations()
+            }
+        }
+    },
 
 	/**
 	 * Methods
@@ -67,31 +67,35 @@ module.exports = {
 		}
 	},
 
-	/**
-	 * Service created lifecycle event handler
-	 */
-	created() {
-		this.logger.debug('service package loader created!!!');
-	},
+    /**
+     * Service created lifecycle event handler
+     */
+    created() {
+        this.logger.debug('service package loader created!!!');
+    },
 
-	/**
-	 * Service started lifecycle event handler
-	 */
-	async started() {
-		let packageInfo = this.settings.packageInfo;
-		const { path, name } = packageInfo;
-		if (!path || !name) {
-			this.logger.error(`Please config packageInfo in your settings.`);
-			return;
-		}
-		await this.loadPackageMetadataFiles(path, name);
-		console.log(`service ${name} started`);
-	},
+    merged (schema) {
+        schema.name = `~packages-${schema.name}`;
+    },
 
-	/**
-	 * Service stopped lifecycle event handler
-	 */
-	async stopped() {
-		await this.broker.call(`metadata.refreshServiceMetadatas`, {offlinePackageServices: [this.name]});
-	}
+    /**
+     * Service started lifecycle event handler
+     */
+    async started() {
+        let packageInfo = this.settings.packageInfo;
+        const { path, name } = packageInfo;
+        if (!path || !name) {
+            this.logger.error(`Please config packageInfo in your settings.`);
+            return;
+        }
+        await this.loadPackageMetadataFiles(path, name);
+        console.log(`service ${this.name} started`);
+    },
+
+    /**
+     * Service stopped lifecycle event handler
+     */
+    async stopped() {
+        await this.broker.call(`metadata.refreshServiceMetadatas`, {offlinePackageServices: [this.name]});
+    }
 };

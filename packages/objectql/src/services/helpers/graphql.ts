@@ -50,24 +50,17 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
                 }
             `;
             break;
-        case 'updateOne':
+        case 'update':
             gplObj.mutation = gql`
                 type Mutation {
                     ${objectName}__${actionName}(id: String, doc: JSON): ${objectName}
                 }
             `;
             break;
-        case 'updateMany':
-            gplObj.mutation = gql`
-                type Mutation {
-                    ${objectName}__${actionName}(queryFilters: [JSON], doc: JSON): [${objectName}]
-                }
-            `;
-            break;
         case 'delete':
             gplObj.mutation = gql`
                 type Mutation {
-                    ${objectName}__${actionName}(id: String): Boolean
+                    ${objectName}__${actionName}(id: String): JSON
                 }
             `;
             break;
@@ -90,7 +83,8 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
             return;
         }
         if (!field.type) {
-            console.error(`The field ${name} of ${objectName} has no type property.`);
+            // console.error(`The field ${name} of ${objectName} has no type property.`);
+            type += `${name}: JSON `;
             return;
         }
         if (BASIC_TYPE_MAPPING[field.type]) {
