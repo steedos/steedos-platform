@@ -85,12 +85,12 @@ module.exports = {
      */
     async started() {
         let packageInfo = this.settings.packageInfo;
-        const { path, name, datasource } = packageInfo;
-        if (!path || !name) {
+        const { path, datasource } = packageInfo;
+        if (!path) {
             this.logger.error(`Please config packageInfo in your settings.`);
             return;
         }
-        await this.loadPackageMetadataFiles(path, name, datasource);
+        await this.loadPackageMetadataFiles(path, this.name, datasource);
         console.log(`service ${this.name} started`);
     },
 

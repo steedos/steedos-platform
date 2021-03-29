@@ -16,8 +16,7 @@ module.exports = {
      */
     settings: {
         packageInfo: {
-            path: __dirname,
-            name: packageName
+            path: __dirname
         }
     },
 
