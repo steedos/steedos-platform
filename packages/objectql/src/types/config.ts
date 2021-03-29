@@ -124,7 +124,7 @@ export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName
         if(datasource && datasourceApiName === 'default'){
             await datasource.init();
         }
-        if(datasource && false){
+        if(datasource && false){ //TODO: 处理从数据库加载字段时，报错
             await preloadDBObjectFields(datasource);
             await preloadDBObjectButtons(datasource);
         }
