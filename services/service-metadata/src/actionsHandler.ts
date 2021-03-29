@@ -104,7 +104,6 @@ async function clearPackageServicesMetadatas(ctx, offlinePackageServices){
         const clearPackageMetadatas = await clearPackageServiceMetadatas(ctx, packageServiceName)
         clearMetadatas = clearMetadatas.concat(clearPackageMetadatas);
     }
-    console.log(`clearPackageServicesMetadatas`, clearMetadatas)
     _.each(_.groupBy(clearMetadatas, 'metadataType'), function( data: any , metadataType){
         ctx.broker.emit(`${SERVICE_METADATA_PREFIX}.${metadataType}.clear`, {metadataType, metadataApiNames: _.pluck(data, 'metadataApiName'), isClear: true})
     })

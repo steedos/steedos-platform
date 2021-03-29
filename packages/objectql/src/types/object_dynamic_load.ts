@@ -128,7 +128,7 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
 
     loadObjectLayouts(filePath);
 
-    loadObjectPermissions(filePath);
+    await loadObjectPermissions(filePath, serviceName);
 
     await loadSourceProfiles(filePath);
 

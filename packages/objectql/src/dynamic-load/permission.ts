@@ -1,5 +1,5 @@
 import { Dictionary } from '@salesforce/ts-types';
-import { getObjectConfig, SteedosObjectPermissionTypeConfig } from '../types'
+import { getObjectConfig, getSteedosSchema, SteedosObjectPermissionTypeConfig } from '../types'
 import _ = require('lodash');
 var util = require('../util');
 var clone = require('clone');
@@ -40,9 +40,15 @@ export const addPermissionConfig = (objectName: string, json: SteedosObjectPermi
     }
 }
 
-export const loadObjectPermissions = function (filePath: string){
+export const loadObjectPermissions = async function (filePath: string, serviceName: string){
     let permissions = util.loadPermissions(filePath);
     permissions.forEach(permission => {
         addPermissionConfig(permission.object_name, permission);
     });
+
+    for await (const permission of permissions) {
+        await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: permission.object_name}, {permission_set: {
+            [permission.name]: permission
+        }}));
+    }
 }

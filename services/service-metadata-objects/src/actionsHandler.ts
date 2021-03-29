@@ -60,28 +60,14 @@ export const ActionHandlers = {
         }
         const metadataApiName = config.name;
 
-        if(metadataApiName === 'test_formula22'){
-            console.log(`addConfig 1 `, config)
-        }
-
         const metadataConfig = await ctx.broker.call('metadata.getServiceMetadata', {
             serviceName: ctx.meta.metadataServiceName,
             metadataType: METADATA_TYPE,
             metadataApiName: metadataApiName,
         });
 
-        if(metadataApiName === 'test_formula22'){
-            console.log(`addConfig 2 `, metadataConfig)
-        }
-
         if(metadataConfig && metadataConfig.metadata){
-            const _config = {}
-            _.defaultsDeep(_config, metadataConfig.metadata, config);
-            config = _config;
-        }
-
-        if(metadataApiName === 'test_formula22'){
-            console.log(`addConfig 3 `, config)
+            config = _.defaultsDeep(metadataConfig.metadata, config);
         }
 
         await ctx.broker.call('metadata.add', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
@@ -123,7 +109,7 @@ export const ActionHandlers = {
                 console.log(`${METADATA_TYPE} refresh --> clear`, metadataApiName)
                 const objectConfig = await refreshObject(ctx, metadataApiName);
                 const objectServiceName = getObjectServiceName(metadataApiName);
-                return await registerObject(ctx, metadataApiName, objectConfig, {
+                await registerObject(ctx, metadataApiName, objectConfig, {
                     caller: {
                         // nodeID: broker.nodeID,
                         service: {

@@ -70,7 +70,7 @@ function getObjectDatasource(objectConfigs: Array<any>) {
 // }
 
 export async function refreshObject(ctx, objectAPIName) {
-    const objectConfig: any = {};
+    let objectConfig: any = {};
 
     const objectConfigs = await getObjectConfigs(ctx, objectAPIName);
 
@@ -82,23 +82,12 @@ export async function refreshObject(ctx, objectAPIName) {
         delete baseObjectConfig.hidden;
     }
 
-    if(objectAPIName === 'test_formula22'){
-        console.log(`refreshObject 1 `, baseObjectConfig)
-    }
-
-    _.defaultsDeep(objectConfig, ...objectConfigs)
-
-    if(objectAPIName === 'test_formula22'){
-        console.log(`refreshObject 2 `, objectConfig)
-    }
+    objectConfig = _.defaultsDeep({}, ..._.reverse(objectConfigs), objectConfig)
 
     const _objectConfig = _.clone(objectConfig)
 
     objectConfig.fields = _.clone(_objectConfig.fields);
 
-    _.defaultsDeep(objectConfig, baseObjectConfig, clone(_objectConfig));
-    if(objectAPIName === 'test_formula22'){
-        console.log(`refreshObject 3 `, objectConfig)
-    }
+    objectConfig = _.defaultsDeep({}, clone(_objectConfig), baseObjectConfig, objectConfig);
     return objectConfig;
 }
