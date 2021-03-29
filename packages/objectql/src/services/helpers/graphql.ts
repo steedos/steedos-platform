@@ -50,24 +50,17 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
                 }
             `;
             break;
-        case 'updateOne':
+        case 'update':
             gplObj.mutation = gql`
                 type Mutation {
                     ${objectName}__${actionName}(id: String, doc: JSON): ${objectName}
                 }
             `;
             break;
-        case 'updateMany':
-            gplObj.mutation = gql`
-                type Mutation {
-                    ${objectName}__${actionName}(queryFilters: [JSON], doc: JSON): [${objectName}]
-                }
-            `;
-            break;
         case 'delete':
             gplObj.mutation = gql`
                 type Mutation {
-                    ${objectName}__${actionName}(id: String): Boolean
+                    ${objectName}__${actionName}(id: String): JSON
                 }
             `;
             break;

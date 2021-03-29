@@ -191,7 +191,17 @@ function getObjectServiceActionsSchema() {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { doc } = ctx.params;
-                return this.insert(doc, userSession)
+                let data: any = '';
+                if (_.isString(doc)) {
+                    data = JSON.parse(doc);
+                } else {
+                    data = JSON.parse(JSON.stringify(doc));
+                }
+                let object = this.object;
+                if (userSession && object.getField('space')) {
+                    data.space = userSession.spaceId;
+                }
+                return this.insert(data, userSession)
             }
         },
         update: {
@@ -202,7 +212,14 @@ function getObjectServiceActionsSchema() {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { id, doc } = ctx.params;
-                return this.update(id, doc, userSession)
+                let data: any = '';
+                if (_.isString(doc)) {
+                    data = JSON.parse(doc);
+                } else {
+                    data = JSON.parse(JSON.stringify(doc));
+                }
+                delete data.space;
+                return this.update(id, data, userSession)
             }
         },
         updateOne: {
@@ -213,7 +230,14 @@ function getObjectServiceActionsSchema() {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { id, doc } = ctx.params;
-                return this.updateOne(id, doc, userSession)
+                let data: any = '';
+                if (_.isString(doc)) {
+                    data = JSON.parse(doc);
+                } else {
+                    data = JSON.parse(JSON.stringify(doc));
+                }
+                delete data.space;
+                return this.updateOne(id, data, userSession)
             }
         },
         updateMany: {
@@ -224,7 +248,14 @@ function getObjectServiceActionsSchema() {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { queryFilters, doc } = ctx.params;
-                return this.updateMany(queryFilters, doc, userSession)
+                let data: any = '';
+                if (_.isString(doc)) {
+                    data = JSON.parse(doc);
+                } else {
+                    data = JSON.parse(JSON.stringify(doc));
+                }
+                delete data.space;
+                return await this.updateMany(queryFilters, data, userSession)
             }
         },
         delete: {
