@@ -1,4 +1,4 @@
-import { SteedosActionTypeConfig } from '../types'
+import { getSteedosSchema, SteedosActionTypeConfig } from '../types'
 import { Dictionary } from '@salesforce/ts-types';
 import { getObjectConfig } from '../types'
 import _ = require('lodash');
@@ -93,7 +93,7 @@ export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
     }
 }
 
-export const loadObjectActions = function (filePath: string){
+export const loadObjectActions = async function (filePath: string, serviceName: string){
     let actions = util.loadActions(filePath)
     _.each(actions, (json: SteedosActionTypeConfig) => {
         addObjectActionConfig(json);
@@ -103,4 +103,41 @@ export const loadObjectActions = function (filePath: string){
         addObjectActionConfig(json);
         addActionScripts(json);
     })
+
+    for await (const action of actions) {
+        await addObjectActionConfigMetadata(action, serviceName)
+    }
+
+    for await (const buttonScript of buttonScripts) {
+        await addObjectActionConfigMetadata(buttonScript, serviceName, true)
+    }
+}
+
+async function addObjectActionConfigMetadata(config: any, serviceName: string, isScript?: boolean){
+    const actions = {};
+    let apiKey = config.name || config._id
+    let object_name = getListenTo(config);
+    if(isScript){
+        const keys = _.keys(config);
+        _.each(keys, (key)=>{
+            if(key.endsWith('Visible')){
+                if(_.isFunction(config[key])){
+                    if(!actions[key.replace(/(.*)Visible/,'$1')]){
+                        actions[key.replace(/(.*)Visible/,'$1')] = {};
+                    }
+                    actions[key.replace(/(.*)Visible/,'$1')]._visible = config[key].toString();
+                }
+            }else{
+                if(_.isFunction(config[key])){
+                    if(!actions[key]){
+                        actions[key] = {};
+                    }
+                    actions[key]._todo = config[key].toString();
+                }
+            }
+        })
+    }else{
+        actions[apiKey] = config
+    }
+    await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: object_name}, {actions: actions}));
 }

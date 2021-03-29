@@ -118,11 +118,11 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
 
     await loadObjectListViews(filePath, serviceName);
 
-    loadObjectButtons(filePath);
+    await loadObjectButtons(filePath, serviceName);
 
     loadObjectTriggers(filePath);
 
-    loadObjectActions(filePath);
+    await loadObjectActions(filePath, serviceName);
 
     loadObjectMethods(filePath);
 

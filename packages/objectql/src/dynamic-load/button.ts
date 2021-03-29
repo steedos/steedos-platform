@@ -1,4 +1,4 @@
-import { SteedosActionTypeConfig } from '../types'
+import { getSteedosSchema, SteedosActionTypeConfig } from '../types'
 import { Dictionary } from '@salesforce/ts-types';
 import { getObjectConfig } from '../types'
 import _ = require('lodash');
@@ -54,9 +54,12 @@ export const removeObjectButtonsConfig = (objectName: string, json: SteedosActio
     }
 }
 
-export const loadObjectButtons = function (filePath: string){
+export const loadObjectButtons = async function (filePath: string, serviceName: string){
     let buttonJsons = util.loadButtons(filePath);
     buttonJsons.forEach(element => {
         addObjectButtonsConfig(element.object_name, element);
     });
+    for await (const buttonJson of buttonJsons) {
+        await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: buttonJson.object_name}, {actions: {[buttonJson.name]: buttonJson}}));
+    }
 }
