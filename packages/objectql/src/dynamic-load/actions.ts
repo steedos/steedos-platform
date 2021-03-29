@@ -122,10 +122,11 @@ async function addObjectActionConfigMetadata(config: any, serviceName: string, i
         _.each(keys, (key)=>{
             if(key.endsWith('Visible')){
                 if(_.isFunction(config[key])){
-                    if(!actions[key.replace(/(.*)Visible/,'$1')]){
-                        actions[key.replace(/(.*)Visible/,'$1')] = {};
+                    const _key = key.replace(/(.*)Visible/,'$1');
+                    if(!actions[_key]){
+                        actions[_key] = {};
                     }
-                    actions[key.replace(/(.*)Visible/,'$1')]._visible = config[key].toString();
+                    actions[_key]._visible = config[key].toString();
                 }
             }else{
                 if(_.isFunction(config[key])){
