@@ -108,17 +108,22 @@ export const ActionHandlers = {
             for await (const metadataApiName of metadataApiNames) {
                 console.log(`${METADATA_TYPE} refresh --> clear`, metadataApiName)
                 const objectConfig = await refreshObject(ctx, metadataApiName);
-                const objectServiceName = getObjectServiceName(metadataApiName);
-                await registerObject(ctx, metadataApiName, objectConfig, {
-                    caller: {
-                        // nodeID: broker.nodeID,
-                        service: {
-                            name: objectServiceName,
-                            // version: broker.service.version, TODO
-                            // fullName: broker.service.fullName, TODO
+                if(!objectConfig){
+                    await ctx.broker.call('metadata.delete', {key: cacherKey(metadataApiName)})
+                }else{
+                    const objectServiceName = getObjectServiceName(metadataApiName);
+                    await registerObject(ctx, metadataApiName, objectConfig, {
+                        caller: {
+                            // nodeID: broker.nodeID,
+                            service: {
+                                name: objectServiceName,
+                                // version: broker.service.version, TODO
+                                // fullName: broker.service.fullName, TODO
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                
             }
         }
     }

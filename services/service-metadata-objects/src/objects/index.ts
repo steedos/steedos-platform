@@ -74,6 +74,10 @@ export async function refreshObject(ctx, objectAPIName) {
 
     const objectConfigs = await getObjectConfigs(ctx, objectAPIName);
 
+    if(objectConfigs.length == 0){
+        return null
+    }
+
     const objectDatasource = getObjectDatasource(objectConfigs);
 
     const baseObjectConfig = await getBaseObjectConfig(ctx, objectDatasource);
