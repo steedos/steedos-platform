@@ -48,9 +48,7 @@ module.exports = {
     },
     beforeUpdate: async function () {
         const { doc, userId } = this;
-        if (doc) {
-            doc.modified = new Date();
-        }
+        doc.modified = new Date();
         if (userId) {
             doc.modified_by = userId;
         }
