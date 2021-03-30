@@ -41,7 +41,7 @@ export async function load(broker: any, packagePath: string, packageServiceName:
     };
     broker.createService(service);
 
-    await regist(broker, actions, serviceName);
+    await regist(broker, actions, serviceName, packageServiceName);
 }
 
 function generateAction(trigger: Trigger): Action {
@@ -70,12 +70,12 @@ function generateAction(trigger: Trigger): Action {
 }
 
 
-async function regist(broker: any, actions: object, serviceName: string) {
+async function regist(broker: any, actions: object, serviceName: string, packageServiceName: string) {
     for (const key in actions) {
         if (Object.hasOwnProperty.call(actions, key)) {
             let action = actions[key];
             let data = generateAddData(action);
-            let meta = generateAddMeta(broker, serviceName);
+            let meta = generateAddMeta(broker, serviceName, packageServiceName);
             await broker.call('triggers.add', { data: data }, { meta: meta });
         }
     }
@@ -93,8 +93,9 @@ function generateAddData(action: Action): TriggerData {
 }
 
 
-function generateAddMeta(broker: any, serviceName: string): Meta {
+function generateAddMeta(broker: any, serviceName: string, packageServiceName: string): Meta {
     let meta = {
+        metadataServiceName: packageServiceName,
         caller: {
             nodeID: broker.nodeID + '',
             service: {
