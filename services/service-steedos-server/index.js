@@ -25,9 +25,6 @@ module.exports = {
 		mongoUrl: process.env.MONGO_URL,
 		mongoOplogUrl: process.env.MONGO_OPLOG_URL,
 		storageDir: process.env.STEEDOS_STORAGE_DIR || require('path').resolve(require('os').homedir(), '.steedos', 'storage'),
-		mongodbServer: {
-			enabled: !process.env.MONGO_URL,
-		},
 		nodeRedServer: {
 			enabled: false,
 			port: null,
@@ -169,20 +166,6 @@ module.exports = {
 		this.broker.waitForServices(this.name).then(async () => {
 			process.env.PORT = this.settings.port;
 			process.env.ROOT_URL = this.settings.rootUrl;
-
-			if (this.settings.mongodbServer && this.settings.mongodbServer.enabled) {
-				this.mongodbService = this.broker.createService({
-					name: "mongodb-server",
-					mixins: [MongoDBService],
-					settings: this.settings["mongodbServer"]
-				});
-				this.broker._restartService(this.mongodbService)
-				await this.broker.waitForServices(["mongodb-server"]);
-				this.settings.mongoUrl = process.env.MONGO_URL;
-				this.settings.mongoOplogUrl = process.env.MONGO_OPLOG_URL;
-			} else {
-				process.env.MONGO_URL = this.settings.mongoUrl;
-			}
 
 			await this.startSteedos();
 
