@@ -23,7 +23,8 @@ import {
     SteedosObjectPermissionType,
     getAppConfigs,
     getDashboardConfigs,
-    getSteedosSchema
+    getSteedosSchema,
+    getObjectConfig
 } from '.';
 import { SteedosDriverConfig } from '../driver';
 import { addObjectConfig } from '.';
@@ -201,6 +202,12 @@ export class SteedosDataSourceType implements Dictionary {
         let objects: Array<any> = await this.getObjects();
         let self = this;
         for await (const object of _.values(objects)) {
+            const objectConfig = object.metadata;
+            //从本地对象配置中读取触发器配置
+            const localObjectConfig = getObjectConfig(objectConfig.name);
+            if(localObjectConfig){
+                objectConfig.listeners = localObjectConfig.listeners; 
+            }
             // if(self._schema.metadataBroker){
             //     const res = await self._schema.metadataRegister.object(object)
             //     if(res){
@@ -209,7 +216,6 @@ export class SteedosDataSourceType implements Dictionary {
             // }else{
             //     self.setObject(object.name, object);
             // }
-            const objectConfig = object.metadata;
             await self.setObject(objectConfig.name, objectConfig);
         }
 
