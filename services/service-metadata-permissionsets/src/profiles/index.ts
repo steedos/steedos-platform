@@ -15,12 +15,12 @@ export async function getServiceProfileConfig(ctx, serviceName, profileApiName) 
 async function getServicesProfileConfigs(ctx, profileApiName) {
     const serviceName = '*';
     const metadataType = PROFILE_METADATA_TYPE;
-    const objectConfigs = await ctx.broker.call(`metadata.getServiceMetadatas`, {
+    const configs = await ctx.broker.call(`metadata.getServiceMetadatas`, {
         serviceName,
         metadataType,
         metadataApiName: profileApiName
     })
-    return _.map(objectConfigs, 'metadata');
+    return _.map(configs, 'metadata');
 }
 
 export async function refreshProfile(ctx, profileApiName) {

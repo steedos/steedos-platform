@@ -35,7 +35,7 @@ export const ActionHandlers = {
         if(metadataConfig && metadataConfig.metadata){
             config = _.defaultsDeep(metadataConfig.metadata, config);
         }
-        await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: ctx.params.profileApiName})})
+        await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
         const permissionsetConfig = await refreshPermissionset(ctx, metadataApiName);
         return await registerPermissionset(ctx, metadataApiName, permissionsetConfig, ctx.meta)
     },
@@ -54,7 +54,7 @@ export const ActionHandlers = {
         if(metadataConfig && metadataConfig.metadata){
             config = _.defaultsDeep(metadataConfig.metadata, config);
         }
-        await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: PROFILE_METADATA_TYPE, metadataApiName: ctx.params.profileApiName})})
+        await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: PROFILE_METADATA_TYPE, metadataApiName: metadataApiName})})
         const profileConfig = await refreshProfile(ctx, metadataApiName);
         return await registerProfile(ctx, ctx.params.profileApiName, profileConfig, ctx.meta)
     },

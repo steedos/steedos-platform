@@ -14,12 +14,12 @@ export async function getServicePermissionsetConfig(ctx, serviceName, permission
 async function getServicesPermissionsetConfigs(ctx, permissionsetApiName) {
     const serviceName = '*';
     const metadataType = METADATA_TYPE;
-    const objectConfigs = await ctx.broker.call(`metadata.getServiceMetadatas`, {
+    const configs = await ctx.broker.call(`metadata.getServiceMetadatas`, {
         serviceName,
         metadataType,
         metadataApiName: permissionsetApiName
     })
-    return _.map(objectConfigs, 'metadata');
+    return _.map(configs, 'metadata');
 }
 
 export async function refreshPermissionset(ctx, permissionsetApiName) {

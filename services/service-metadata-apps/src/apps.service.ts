@@ -1,5 +1,6 @@
 "use strict";
-import { ActionHandlers, METADATA_TYPE } from './actionsHandler';
+import { METADATA_TYPE } from '.';
+import { ActionHandlers } from './actionsHandler';
 module.exports = {
     name: "apps",
     /**
