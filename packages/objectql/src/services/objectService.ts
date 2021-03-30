@@ -501,6 +501,10 @@ module.exports = {
                 // 对象发生变化时，重新创建Steedos Object 对象
                 const datasource = getDataSource(objectConfig.datasource);
                 if (datasource) {
+                    const localObjectConfig = getObjectConfig(objectConfig.name);
+                    if(localObjectConfig){
+                        objectConfig.listeners = localObjectConfig.listeners; 
+                    }
                     const object = new SteedosObjectType(objectConfig.name, datasource, objectConfig)
                     datasource.setLocalObject(objectConfig.name, object);
                 }
