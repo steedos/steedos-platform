@@ -8,7 +8,6 @@ import { getFromContainer } from 'typeorm';
 // import { loadStandardBaseObjects } from './object_dynamic_load';
 // import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
 import { buildGraphQLSchema } from '../graphql';
-import { loadStandardProfiles, loadStandardPermissionsets } from '../dynamic-load';
 import { MetadataRegister } from '../metadata-register';
 
 
@@ -252,10 +251,10 @@ export function getSteedosSchema(broker?: any, metadataBroker?: any): SteedosSch
     }
 
 
-    if(broker || metadataBroker){
-        loadStandardProfiles();
-        loadStandardPermissionsets();
-    }
+    // if(broker || metadataBroker){
+    //     loadStandardProfiles();
+    //     loadStandardPermissionsets();
+    // }
 
     return schema;
 }

@@ -70,7 +70,7 @@ export const ActionHandlers = {
             config = _.defaultsDeep(metadataConfig.metadata, config);
         }
 
-        await ctx.broker.call('metadata.add', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
+        await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
         const objectConfig = await refreshObject(ctx, metadataApiName);
         const objectServiceName = getObjectServiceName(metadataApiName);
         return await registerObject(ctx, metadataApiName, objectConfig, {
@@ -123,7 +123,6 @@ export const ActionHandlers = {
                         }
                     });
                 }
-                
             }
         }
     }

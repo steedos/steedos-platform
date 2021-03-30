@@ -40,7 +40,7 @@ module.exports = {
 		},
 		built_in_plugins: [
 			"@steedos/steedos-plugin-workflow",
-			"@steedos/accounts",
+			// "@steedos/accounts",
 			"@steedos/steedos-plugin-schema-builder",
 			"@steedos/plugin-enterprise",
 			"@steedos/word-template",

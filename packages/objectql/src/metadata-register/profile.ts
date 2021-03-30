@@ -3,6 +3,7 @@ export async function registerProfile(broker, serviceName, profileConfig) {
     const metadata = clone(profileConfig);
     delete metadata.triggers
     const res = await broker.call("permissionsets.addProfile", {profileApiName: metadata._id || metadata.name ,data: metadata}, {meta: {
+        metadataServiceName: serviceName,
         caller: {
             nodeID: broker.nodeID,
             service: {

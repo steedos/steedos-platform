@@ -49,6 +49,11 @@ module.exports = {
 				return await ActionHandlers.add(ctx);
 			}
 		},
+		addServiceMetadata: {
+			async handler(ctx) {
+				return await ActionHandlers.addServiceMetadata(ctx);
+			}
+		},
 		delete: {
 			async handler(ctx) {
 				return await ActionHandlers.delete(ctx);

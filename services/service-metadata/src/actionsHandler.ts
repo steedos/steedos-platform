@@ -19,7 +19,7 @@ function getServiceMetadataCacherKey(serviceName: string, metadataType: string, 
     return `${SERVICE_METADATA_PREFIX}.${serviceName}.${metadataType}.${metadataApiName}`;
 }
 
-async function saveServiceMetadataMap(ctx){
+async function addServiceMetadata(ctx){
     const { nodeID } = ctx.meta.caller || {}
     const { metadataType, metadataApiName, metadataServiceName } = ctx.meta || {}
     // if(metadataType){
@@ -147,9 +147,10 @@ export const ActionHandlers = {
         // return values;
     },
     async add(ctx: any){
-        await ctx.broker.cacher.set(ctx.params.key, transformMetadata(ctx));
-        await saveServiceMetadataMap(ctx);
-        return true;
+        return await ctx.broker.cacher.set(ctx.params.key, transformMetadata(ctx));
+    },
+    async addServiceMetadata(ctx: any){
+       return await addServiceMetadata(ctx);
     },
     async delete(ctx: any){
         try {

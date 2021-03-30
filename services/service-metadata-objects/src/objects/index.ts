@@ -26,13 +26,13 @@ async function getBaseObjectConfig(ctx, datasourceName) {
     return configs && configs.length > 0 ? configs[0].metadata : null;
 }
 
-async function getObjectConfigs(ctx, objectAPIName) {
+async function getObjectConfigs(ctx, objectApiName) {
     const serviceName = '*';
     const metadataType = METADATA_TYPE;
     const objectConfigs = await ctx.broker.call(`metadata.getServiceMetadatas`, {
         serviceName,
         metadataType,
-        metadataApiName: objectAPIName
+        metadataApiName: objectApiName
     })
     return _.map(objectConfigs, 'metadata');
 }
@@ -69,10 +69,10 @@ function getObjectDatasource(objectConfigs: Array<any>) {
 
 // }
 
-export async function refreshObject(ctx, objectAPIName) {
+export async function refreshObject(ctx, objectApiName) {
     let objectConfig: any = {};
 
-    const objectConfigs = await getObjectConfigs(ctx, objectAPIName);
+    const objectConfigs = await getObjectConfigs(ctx, objectApiName);
 
     if(objectConfigs.length == 0){
         return null

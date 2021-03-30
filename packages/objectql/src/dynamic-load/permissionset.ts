@@ -29,7 +29,7 @@ const getStandardpPermissionsets = function(){
 
 // const PERMISSION_SET_KEY = 'STANDARD_PERMISSION_SETS';
 
-const addPermissionset = async function(json: SteedosPermissionsetTypeConfig){
+const addPermissionset = async function(json: SteedosPermissionsetTypeConfig, serviceName: string){
     if(!json.name){
         throw new Error('missing attribute name');
     }
@@ -42,13 +42,11 @@ const addPermissionset = async function(json: SteedosPermissionsetTypeConfig){
     }
 
     const schema = getSteedosSchema();
-    const serviceName = '';
     await schema.metadataRegister.addPermissionset(serviceName, permissionsetConfig);
 }
 
-export const loadStandardPermissionsets = async function(){
+export const loadStandardPermissionsets = async function(serviceName: string){
     const schema = getSteedosSchema();
-    const serviceName = '';
     const keys = _.keys(STANDARD_PERMISSIONSETS);
     for (const key of keys) {
         const standardPermissionset = STANDARD_PERMISSIONSETS[key];
@@ -56,10 +54,10 @@ export const loadStandardPermissionsets = async function(){
     }
 }
 
-export const loadSourcePermissionset = async function (filePath: string){
+export const loadSourcePermissionset = async function (filePath: string, serviceName: string){
     let permissionsets = util.loadPermissionsets(filePath)
     for (const permissionset of permissionsets) {
-        await addPermissionset(permissionset);
+        await addPermissionset(permissionset, serviceName);
      }
 }
 

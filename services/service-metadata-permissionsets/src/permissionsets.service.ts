@@ -1,5 +1,6 @@
 "use strict";
 import { ActionHandlers } from './actionsHandler';
+import { METADATA_TYPE, PROFILE_METADATA_TYPE } from './index';
 module.exports = {
     name: "permissionsets",
     /**
@@ -13,7 +14,18 @@ module.exports = {
      * Dependencies
      */
     dependencies: ['metadata'],
-
+    events: {
+		[`$METADATA.${METADATA_TYPE}.*`]: {
+            async handler(ctx) {
+                return await ActionHandlers.refresh(ctx);
+            }
+        },
+        [`$METADATA.${PROFILE_METADATA_TYPE}.*`]: {
+            async handler(ctx) {
+                return await ActionHandlers.refreshProfiles(ctx);
+            }
+        }
+	},
     /**
      * Actions
      */
@@ -74,13 +86,6 @@ module.exports = {
         //     }
         // }
     },
-    /**
-     * Events
-     */
-    events: {
-
-    },
-
     /**
      * Methods
      */

@@ -3,7 +3,7 @@ import path = require('path')
 import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig } from '.'
 // import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
-import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset } from '../dynamic-load'
+import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadStandardProfiles, loadStandardPermissionsets } from '../dynamic-load'
 import { transformListenersToTriggers } from '..';
 import { getSteedosSchema } from './schema';
 
@@ -130,9 +130,9 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
 
     await loadObjectPermissions(filePath, serviceName);
 
-    await loadSourceProfiles(filePath);
+    await loadSourceProfiles(filePath, serviceName);
 
-    await loadSourcePermissionset(filePath);
+    await loadSourcePermissionset(filePath, serviceName);
 
 }
 
@@ -292,6 +292,12 @@ export const removeObjectListenerConfig = (_id, listenTo, when)=>{
     } else {
         throw new Error(`Error remove listener, object not found: ${object_name}`);
     }
+}
+
+export const loadStandardMetadata = async (serviceName: string) =>{
+    await loadStandardProfiles(serviceName);
+    await loadStandardPermissionsets(serviceName);
+    await loadStandardBaseObjects(serviceName);
 }
 
 export const loadStandardBaseObjects = async (serviceName: string) => {

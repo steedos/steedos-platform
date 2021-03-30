@@ -38,7 +38,7 @@ const getStandardProfiles = function(){
     return clone(STANDARD_PROFILES);
 }
 
-const addProfile = async function(json: SteedosProfileTypeConfig){
+const addProfile = async function(json: SteedosProfileTypeConfig, serviceName: string){
     if(!json.name){
         throw new Error('missing attribute name');
     }
@@ -52,15 +52,12 @@ const addProfile = async function(json: SteedosProfileTypeConfig){
         profileConfig = Object.assign({}, clone(DEFAULTRECORD), json, clone(BASERECORD))
         // addConfig(PROFILES_KEY, Object.assign({}, clone(DEFAULTRECORD), json, clone(BASERECORD)));
     }
-
     const schema = getSteedosSchema();
-    const serviceName = '';
     await schema.metadataRegister.addProfile(serviceName, profileConfig);
 }
 
-export const loadStandardProfiles = async function(){
+export const loadStandardProfiles = async function(serviceName: string){
     const schema = getSteedosSchema();
-    const serviceName = '';
     const keys = _.keys(STANDARD_PROFILES);
     for (const key of keys) {
         const standardProfile = STANDARD_PROFILES[key];
@@ -68,10 +65,10 @@ export const loadStandardProfiles = async function(){
     }
 }
 
-export const loadSourceProfiles = async function (filePath: string){
+export const loadSourceProfiles = async function (filePath: string, serviceName: string){
     let profiles = util.loadProfiles(filePath)
     for (const profile of profiles) {
-       await addProfile(profile);
+       await addProfile(profile, serviceName);
     }
 }
 
