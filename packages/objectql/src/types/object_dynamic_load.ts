@@ -124,7 +124,7 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
 
     await loadObjectActions(filePath, serviceName);
 
-    loadObjectMethods(filePath);
+    loadObjectMethods(filePath);  //此功能不支持微服务模式
 
     loadObjectLayouts(filePath);
 
