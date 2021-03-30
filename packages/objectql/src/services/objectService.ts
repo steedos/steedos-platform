@@ -498,6 +498,13 @@ module.exports = {
         schema.events[`${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`] = {
             handler: async function (ctx) {
                 let objectConfig = ctx.params.data;
+                // 对象发生变化时，重新创建Steedos Object 对象
+                const datasource = getDataSource(objectConfig.datasource);
+                if (datasource) {
+                    const object = new SteedosObjectType(objectConfig.name, datasource, objectConfig)
+                    datasource.setLocalObject(objectConfig.name, object);
+                }
+                
                 let gobj = generateSettingsGraphql(objectConfig);
                 this.settings.graphql = gobj;
                 ctx.emit('$services.changed');

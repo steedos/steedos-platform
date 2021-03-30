@@ -106,7 +106,6 @@ export const ActionHandlers = {
         const { isClear, metadataApiNames } = ctx.params
         if(isClear){
             for await (const metadataApiName of metadataApiNames) {
-                console.log(`${METADATA_TYPE} refresh --> clear`, metadataApiName)
                 const objectConfig = await refreshObject(ctx, metadataApiName);
                 if(!objectConfig){
                     await ctx.broker.call('metadata.delete', {key: cacherKey(metadataApiName)})

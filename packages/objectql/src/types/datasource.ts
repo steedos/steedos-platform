@@ -116,6 +116,10 @@ export class SteedosDataSourceType implements Dictionary {
         return this._objects
     }
 
+    setLocalObject(objectApiName, object){
+        this._objects[objectApiName] = object;
+    }
+
     getObject(objectApiName: string){
         const localObject = this.getLocalObject(objectApiName);
         if(localObject){
