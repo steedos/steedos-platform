@@ -5,6 +5,8 @@ var triggerCore = require('./object_triggers.core.js');
 var permissionCore = require('./permission_objects.core.js');
 var buildGraphQLSchemaSetTimeOutId = null;
 
+const DB_OBJECT_SERVICE_NAME = '~database-objects';
+
 function buildGraphQLSchema(){
     if(buildGraphQLSchemaSetTimeOutId != null){
         clearTimeout(buildGraphQLSchemaSetTimeOutId);
@@ -223,21 +225,26 @@ function loadObject(doc, oldDoc) {
         objectql.loadObjectLazyListenners(doc.name);
         //获取到继承后的对象
         const _doc = objectql.getObjectConfig(doc.name);
-        datasource.setObject(doc.name, _doc);
-        // datasource.init();
-        try {
-            if (!datasourceName || datasourceName == defaultDatasourceName) {
-                Creator.Objects[doc.name] = _doc;
-                Creator.loadObjects(_doc, _doc.name);
+        objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, _doc).then(function(res){            
+            if(res){
+                datasource.setObject(doc.name, _doc);
+                try {
+                    if (!datasourceName || datasourceName == defaultDatasourceName) {
+                        Creator.Objects[doc.name] = _doc;
+                        Creator.loadObjects(_doc, _doc.name);
+                    }
+                    buildGraphQLSchema();
+                } catch (error) {
+                    console.log('error', error);
+                }
+                if (!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)) {
+                    loadObjectTriggers(doc);
+                    loadObjectPermission(doc);
+                }
             }
-            buildGraphQLSchema();
-        } catch (error) {
-            console.log('error', error);
-        }
-        if (!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)) {
-            loadObjectTriggers(doc);
-            loadObjectPermission(doc);
-        }
+        })
+        
+        
     } catch (error) {
         console.error(error)
     }

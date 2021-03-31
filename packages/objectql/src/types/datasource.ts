@@ -138,14 +138,11 @@ export class SteedosDataSourceType implements Dictionary {
 
     async setObject(objectApiName: string, objectConfig: SteedosObjectTypeConfig) {
         const serviceName = getObjectServiceName(objectApiName)
-        const res = await this._schema.metadataRegister.addObject(serviceName, objectConfig);
-        if(res){
-            let object = new SteedosObjectType(objectApiName, this, objectConfig)
-            this._objectsConfig[objectApiName] = objectConfig;
-            this._objects[objectApiName] = object;
-            await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
-            return object;
-        }
+        let object = new SteedosObjectType(objectApiName, this, objectConfig)
+        this._objectsConfig[objectApiName] = objectConfig;
+        this._objects[objectApiName] = object;
+        await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
+        return object;
     }
 
     removeObject(object_name: string){
