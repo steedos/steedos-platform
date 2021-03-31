@@ -30,7 +30,13 @@ export class Plugins {
                     await Future.task(async () => {
                         try {
                             let service = broker.loadService(packageServiceFilePath);
-                            await broker._restartService(service);
+                            await new Promise(function (resolve, reject) {
+                                broker.waitForServices(service.name).then(function () {
+                                    resolve(true);
+                                }).catch(function () {
+                                    reject();
+                                })
+                            })
                             service.init(pluginContext);
                             WebApp.connectHandlers.use(pluginContext.app);
                         } catch (error) {
