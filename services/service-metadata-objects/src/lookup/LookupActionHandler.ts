@@ -6,10 +6,9 @@ export class LookupActionHandler {
         this.broker = broker;
     }
 
-    async add(ctx) {
-        const { data } = ctx.params;
+    async add(objectConfig) {
         try {
-            await this.addObjectLookups(data);
+            await this.addObjectLookups(objectConfig);
             return true
         } catch (error) {
             this.broker.logger.error(error);

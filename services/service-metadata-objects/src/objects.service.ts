@@ -22,7 +22,7 @@ module.exports = {
     events: {
 		[`$METADATA.${METADATA_TYPE}.*`]: {
             async handler(ctx) {
-                return await ActionHandlers.refresh(ctx);
+                return await this.objetActionHandlers.refresh(ctx);
             }
         }
 	},
@@ -42,7 +42,7 @@ module.exports = {
                 path: "/object"
             },
             async handler(ctx) {
-                return await ActionHandlers.get(ctx);
+                return await this.objetActionHandlers.get(ctx);
             }
         },
         getAll: {
@@ -51,36 +51,32 @@ module.exports = {
                 path: "/objects"
             },
             async handler(ctx) {
-                return await ActionHandlers.getAll(ctx);
+                return await this.objetActionHandlers.getAll(ctx);
             }
         },
         add: {
             async handler(ctx) {
-                await this.masterDetailActionHandler.add(ctx);
-                await this.lookupActionHandler.add(ctx);
-                await this.formulaActionHandler.add(ctx);
-                await this.summaryActionHandler.add(ctx);
-                return await ActionHandlers.add(ctx);
+                return await this.objetActionHandlers.add(ctx);
             }
         },
         addConfig: {
             async handler(ctx) {
-                return await ActionHandlers.addConfig(ctx);
+                return await this.objetActionHandlers.addConfig(ctx);
             }
         },
         change: {
             async handler(ctx) {
-                return await ActionHandlers.change(ctx);
+                return await this.objetActionHandlers.change(ctx);
             }
         },
         delete: {
             async handler(ctx) {
-                return await ActionHandlers.delete(ctx);
+                return await this.objetActionHandlers.delete(ctx);
             }
         },
         verify: {
             async handler(ctx) {
-                return await ActionHandlers.verify(ctx);
+                return await this.objetActionHandlers.verify(ctx);
             }
         },
         getObjectFieldFormulaConfigs: {
@@ -176,6 +172,12 @@ module.exports = {
         this.formulaActionHandler = new FormulaActionHandler(this.broker);
         this.summaryActionHandler = new SummaryActionHandler(this.broker);
         this.lookupActionHandler = new LookupActionHandler(this.broker);
+        this.objetActionHandlers = new ActionHandlers(async (objectConfig)=>{
+            await this.masterDetailActionHandler.add(objectConfig);
+            await this.lookupActionHandler.add(objectConfig);
+            await this.formulaActionHandler.add(objectConfig);
+            await this.summaryActionHandler.add(objectConfig);
+        })
     },
 
     /**

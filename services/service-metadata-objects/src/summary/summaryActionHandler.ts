@@ -172,10 +172,9 @@ export class SummaryActionHandler {
         return true;
     }
 
-    async add(ctx){
-        const { data } = ctx.params;
+    async add(objectConfig){
         try {
-            await this.addSummaryMetadata(data, data.datasource);
+            await this.addSummaryMetadata(objectConfig, objectConfig.datasource);
             return true
         } catch (error) {
             this.broker.logger.error(error);

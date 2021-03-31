@@ -70,10 +70,9 @@ export class MasterDetailActionHandler{
         return data ? data.metadata : null;
     }
 
-    async add(ctx){
-        const { data } = ctx.params;
+    async add(objectConfig){
         try {
-            await this.addObjectMasterDetails(data);
+            await this.addObjectMasterDetails(objectConfig);
             return true
         } catch (error) {
             this.broker.logger.error(error);

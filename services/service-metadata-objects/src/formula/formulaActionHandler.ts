@@ -270,10 +270,9 @@ export class FormulaActionHandler{
         return true;
     }
 
-    async add(ctx){
-        const { data } = ctx.params;
+    async add(objectConfig){
         try {
-            await this.addFormulaMetadata(data, data.datasource);
+            await this.addFormulaMetadata(objectConfig, objectConfig.datasource);
             return true;
         } catch (error) {
             this.broker.logger.error(error);
