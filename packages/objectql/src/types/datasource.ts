@@ -211,6 +211,7 @@ export class SteedosDataSourceType implements Dictionary {
             const localObjectConfig = getObjectConfig(objectConfig.name);
             if(localObjectConfig){
                 objectConfig.listeners = localObjectConfig.listeners; 
+                objectConfig.methods = localObjectConfig.methods; 
             }
             // if(self._schema.metadataBroker){
             //     const res = await self._schema.metadataRegister.object(object)

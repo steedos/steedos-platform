@@ -504,6 +504,7 @@ module.exports = {
                     const localObjectConfig = getObjectConfig(objectConfig.name);
                     if(localObjectConfig){
                         objectConfig.listeners = localObjectConfig.listeners; 
+                        objectConfig.methods = localObjectConfig.methods; 
                     }
                     const object = new SteedosObjectType(objectConfig.name, datasource, objectConfig)
                     datasource.setLocalObject(objectConfig.name, object);
