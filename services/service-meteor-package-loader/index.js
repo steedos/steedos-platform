@@ -85,7 +85,7 @@ module.exports = {
         let packageInfo = this.settings.packageInfo;
         const { path } = packageInfo;
         if (!path) {
-            this.logger.error(`Please config packageInfo in your settings.`);
+            this.logger.info(`Please config packageInfo in your settings.`);
             return;
         }
         await this.loadPackageMetadataFiles(path, this.name);
