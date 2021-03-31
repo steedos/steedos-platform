@@ -22,7 +22,7 @@ export async function init() {
         loadPackages()
     }, {});
     initCreator(); //此行代码之前不能出现await
-    await Datasources.init();
+    // await Datasources.init();
     await migrate.init();
     await InitTranslations();
     Core.run();

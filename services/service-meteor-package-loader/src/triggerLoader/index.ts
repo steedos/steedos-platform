@@ -40,7 +40,9 @@ export async function load(broker: any, packagePath: string, packageServiceName:
         actions: actions
     };
     let service = broker.createService(serviceConfig);
-    broker._restartService(service)
+    if (!broker.started) {
+        await broker._restartService(service)
+    }
 
     await regist(broker, actions, serviceName);
 }

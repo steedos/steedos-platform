@@ -30,6 +30,7 @@ export class Plugins {
                     await Future.task(async () => {
                         try {
                             let service = broker.loadService(packageServiceFilePath);
+                            await broker._restartService(service);
                             service.init(pluginContext);
                             WebApp.connectHandlers.use(pluginContext.app);
                         } catch (error) {
