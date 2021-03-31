@@ -35,11 +35,14 @@ export async function load(broker: any, packagePath: string, packageServiceName:
         }
     }
 
-    let service = {
+    let serviceConfig = {
         name: serviceName,
-        actions: actions,
+        actions: actions
     };
-    broker.createService(service);
+    let service = broker.createService(serviceConfig);
+    if (!broker.started) {
+        await broker._restartService(service)
+    }
 
     await regist(broker, actions, serviceName, packageServiceName);
 }
@@ -57,7 +60,7 @@ function generateAction(trigger: Trigger): Action {
             listenTo: trigger.listenTo,
             name: name
         },
-        name: `$trigger.${trigger.listenTo}.${name}`,
+        name: `${trigger.listenTo}.${name}`,
         handler: function () { }
     };
     if (_.has(trigger, 'handler')) {

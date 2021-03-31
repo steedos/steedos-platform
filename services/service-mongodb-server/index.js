@@ -11,106 +11,108 @@ const dbDirectoryName = 'db';
  */
 
 module.exports = {
-	name: "mongodb-server",
+    name: "mongodb-server",
 
-	/**
-	 * Settings
-	 */
-	settings: {
+    /**
+     * Settings
+     */
+    settings: {
 
-		debug: process.env.MONGO_DEBUG || false,
-		downloadMirror: 'https://www-steedos-com.oss-cn-beijing.aliyuncs.com/steedos/platform/bin/mongodb',
+        debug: process.env.MONGO_DEBUG || false,
+        downloadMirror: 'https://www-steedos-com.oss-cn-beijing.aliyuncs.com/steedos/platform/bin/mongodb',
 
-		port: process.env.MONGO_PORT || 27018,
-		dbPath: process.env.MONGO_DBPATH || path.join(process.cwd(), dbDirectoryName),
+        port: process.env.MONGO_PORT || 27018,
+        dbPath: process.env.MONGO_DBPATH || path.join(process.cwd(), dbDirectoryName),
 
-		binary: {
-			version: '4.2.11',
-			downloadDir: path.join(process.cwd(), 'bin/mongodb'),
-		},
+        binary: {
+            version: '4.2.11',
+            downloadDir: path.join(process.cwd(), 'bin/mongodb'),
+        },
 
-		replSet: {
-		  name: 'rsSteedos',
-		  auth: false,
-		  args: ['--bind_ip_all'],
-		  count: 1,
-		  dbName: 'steedos',
-		  ip: 'localhost',
-		  oplogSize: 1,
-		  spawn: {},
-		  storageEngine: 'wiredTiger'
-		},
+        replSet: {
+            name: 'rsSteedos',
+            auth: false,
+            args: ['--bind_ip_all'],
+            count: 1,
+            dbName: 'steedos',
+            ip: 'localhost',
+            oplogSize: 1,
+            spawn: {},
+            storageEngine: 'wiredTiger'
+        },
 
-		autoStart: false,
+        autoStart: true,
 
-	},
+    },
 
-	/**
-	 * Dependencies
-	 */
-	dependencies: [],
+    /**
+     * Dependencies
+     */
+    dependencies: [],
 
-	/**
-	 * Actions
-	 */
-	actions: {
+    /**
+     * Actions
+     */
+    actions: {
 
-	},
+    },
 
-	/**
-	 * Events
-	 */
-	events: {
+    /**
+     * Events
+     */
+    events: {
 
-	},
+    },
 
-	/**
-	 * Methods
-	 */
-	methods: {
+    /**
+     * Methods
+     */
+    methods: {
+        startMongo: async function () {
+            process.env.MONGOMS_DEBUG = this.settings.debug;
+            process.env.MONGOMS_DOWNLOAD_MIRROR = this.settings.downloadMirror;
 
-	},
+            this.settings.instanceOpts = [
+                {
+                    port: this.settings.port,
+                    dbPath: this.settings.dbPath,
+                },
+            ];
 
-	/**
-	 * Service created lifecycle event handler
-	 */
-	created() {
+            if (!fs.existsSync(this.settings.dbPath)) {
+                fs.mkdirSync(this.settings.dbPath);
+            }
 
-	},
+            this.logger.warn(`MongoDB port: ${this.settings.port}`);
+            this.logger.warn(`MongoDB db path: ${this.settings.dbPath}`);
 
-	/**
-	 * Service started lifecycle event handler
-	 */
-	async started() {
+            this.mongod = await MongoMemoryReplSet.create(this.settings);
+            this.settings.url = this.mongod.getUri();
+            this.settings.oplogUrl = `mongodb://localhost:${this.settings.port}/local`;
+            process.env.MONGO_OPLOG_URL = this.settings.oplogUrl
+            process.env.MONGO_URL = this.settings.url;
+        }
+    },
 
-		process.env.MONGOMS_DEBUG = this.settings.debug;
-		process.env.MONGOMS_DOWNLOAD_MIRROR = this.settings.downloadMirror;
+    /**
+     * Service created lifecycle event handler
+     */
+    created() {
 
-		this.settings.instanceOpts = [
-			{
-			  port: this.settings.port, 
-			  dbPath: this.settings.dbPath,
-			},
-		];
+    },
 
-		if (!fs.existsSync(this.settings.dbPath)) {
-			fs.mkdirSync(this.settings.dbPath);
-		}
+    /**
+     * Service started lifecycle event handler
+     */
+    async started() {
 
-		this.logger.info(`MongoDB port: ${this.settings.port}`);
-		this.logger.info(`MongoDB db path: ${this.settings.dbPath}`);
 
-		this.mongod = await MongoMemoryReplSet.create(this.settings);
-		this.settings.url = this.mongod.getUri();
-		this.settings.oplogUrl = `mongodb://localhost:${this.settings.port}/local`;
-		process.env.MONGO_OPLOG_URL = this.settings.oplogUrl
-		process.env.MONGO_URL = this.settings.url;
-	},
+    },
 
-	/**
-	 * Service stopped lifecycle event handler
-	 */
-	async stopped() {
-		await this.mongod.stop();
-	}
+    /**
+     * Service stopped lifecycle event handler
+     */
+    async stopped() {
+        await this.mongod.stop();
+    }
 };

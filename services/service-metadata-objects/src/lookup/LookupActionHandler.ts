@@ -22,7 +22,7 @@ export class LookupActionHandler {
         for await (const field of _.values(objectConfig.fields)) {
             if (field.type === "lookup") {
                 try {
-                    if (field.reference_to && typeof _.isString(field.reference_to)) {
+                    if (field.reference_to && _.isString(field.reference_to)) {
                         await this.addDetail(field.reference_to, objectApiName, field);
                     }
                 }

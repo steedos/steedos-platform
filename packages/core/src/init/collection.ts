@@ -1,12 +1,12 @@
 import { getSteedosConfig, SteedosMongoDriver } from "@steedos/objectql";
 
-const config = getSteedosConfig();
 let mongodrivers = {};
 
 export function newCollection(tableName: string, datasourceName?: string, options?: object) {
     if (!datasourceName) {
         datasourceName = 'meteor'
     }
+    const config = getSteedosConfig();
     let datasourceConfig = config.datasources[datasourceName] || config.datasources['default'];
     let locale = datasourceConfig.locale || 'zh';
     let driver = mongodrivers[datasourceName];

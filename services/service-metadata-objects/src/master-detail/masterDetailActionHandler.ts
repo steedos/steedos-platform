@@ -118,7 +118,7 @@ export class MasterDetailActionHandler{
             if (field.type === "master_detail") {
                 // 加try catch是因为有错误时不应该影响下一个字段逻辑
                 try {
-                    if (field.reference_to && typeof _.isString(field.reference_to)) {
+                    if (field.reference_to && _.isString(field.reference_to)) {
                         if (field.reference_to === objectApiName) {
                             field.type = "lookup";//强行变更为最接近的类型
                             throw new Error(`Can't set a master-detail filed that reference to self on the object '${objectApiName}'.`);

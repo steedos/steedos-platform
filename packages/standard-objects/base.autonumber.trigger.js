@@ -57,7 +57,7 @@ const caculateAutonumber = async function (objectName, fieldName, formula, space
     var anId;
     if (anData) {
         anId = anData._id;
-        await anColl.update(anId, {
+        await anColl.directUpdate(anId, {
             $inc: {
                 current_no: 1
             }
