@@ -46,7 +46,8 @@ export const initCreator = () => {
     // });
     objectql.addAppConfigFiles(path.join(process.cwd(), "src/**")) //TODO await
     
-    let allObjects = objectql.getObjectConfigs('meteor');
+    // let allObjects = objectql.getObjectConfigs('meteor');
+    let allObjects = objectql.getDataSource('meteor').getObjectsConfig();
     _.each(allObjects, function (obj) {
         Creator.Objects[obj.name] = obj;
     });

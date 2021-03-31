@@ -269,6 +269,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this.schema.setObjectMap(this.name, { datasourceName: this.datasource.name, _id: config._id })
     }
 
+    getConfig(){
+        return this.datasource.getObjectConfig(this.name);
+    }
+
     setPermission(config: SteedosObjectPermissionTypeConfig) {
         this._datasource.setObjectPermission(this._name, config)
     }

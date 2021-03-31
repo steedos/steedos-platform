@@ -469,7 +469,7 @@ const excuteObjectMethod = async function (req: Request, res: Response) {
         // let bodyParams = req.body;
         let key = urlParams.objectName;
         // let spaceId = userSession.spaceId;
-        let collection = getCreator().getSteedosSchema().getObject(key);
+        let collection = getCreator().getSteedosSchema().getLocalObject(key);
         let setErrorMessage = getODataManager().setErrorMessage;
 
         if (!collection) {
@@ -478,7 +478,7 @@ const excuteObjectMethod = async function (req: Request, res: Response) {
         let permissions = await collection.getUserObjectPermission(userSession);
         if (permissions.allowRead) {
             let methodName = urlParams.methodName;
-            let methods = collection.methods || {};
+            let methods = collection.getConfig().methods || {};
             if (methods.hasOwnProperty(methodName)) {
                 // let thisObj = {
                 //     object_name: key,

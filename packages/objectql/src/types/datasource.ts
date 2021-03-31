@@ -136,6 +136,10 @@ export class SteedosDataSourceType implements Dictionary {
         return this._objectsConfig;
     }
 
+    getObjectConfig(objectName) {
+        return this._objectsConfig[objectName];
+    }
+
     async setObject(objectApiName: string, objectConfig: SteedosObjectTypeConfig) {
         const serviceName = getObjectServiceName(objectApiName)
         let object = new SteedosObjectType(objectApiName, this, objectConfig)
