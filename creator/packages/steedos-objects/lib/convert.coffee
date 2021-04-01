@@ -229,7 +229,7 @@
 					field.optionsFunction = Creator.eval("(#{optionsFunction})")
 
 				if reference_to && _.isString(reference_to)
-					field.reference_to = Creator.eval("(#{referloadObjectsence_to})")
+					field.reference_to = Creator.eval("(#{reference_to})")
 
 				if createFunction && _.isString(createFunction)
 					field.createFunction = Creator.eval("(#{createFunction})")
