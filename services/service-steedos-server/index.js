@@ -71,34 +71,16 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
-		wrapAsync(fn, context) {
-			let proxyFn = async function (_cb) {
-				let value = null;
-				let error = null;
-				try {
-					value = await fn.call(context)
-				} catch (err) {
-					error = err
-				}
-				_cb(error, value)
-			}
-			let fut = new Future();
-			let callback = fut.resolver();
-			let result = proxyFn.apply(this, [callback]);
-			return fut ? fut.wait() : result;
-		},
-
 		async startSteedos() {
 
 			this.meteor = require('@steedos/meteor-bundle-runner');
 			this.steedos = require('@steedos/core');
-			// const logger = this.logger;
 			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
 					require('@steedos/objectql').getSteedosSchema(this.broker);
-					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
-					this.wrapAsync(this.steedos.init, this.settings);
+					Future.fromPromise(this.startStandardObjectsPackageLoader()).wait();
+					Future.fromPromise(this.steedos.init(this.settings)).wait();
 					this.WebApp = WebApp;
 					this.startNodeRedService();
 					this.meteor.callStartupHooks();

@@ -7,20 +7,16 @@ import { initPublicStaticRouter } from '../routes';
 // import { InitI18n } from './i18n';
 import { loadPackages } from './packages';
 import { InitTranslations } from './translations';
-import { wrapAsync } from '@steedos/objectql';
-export async function init() {
+const Future = require('fibers/future');
+export async function init(settings) {
     getSteedosSchema();
     WebAppInternals.setInlineScriptsAllowed(false);
     initPublicStaticRouter();
     initPublic();
     initDesignSystem();
-    wrapAsync(async ()=>{
-        await Plugins.init(this)
-    }, {});
+    Future.fromPromise(Plugins.init(settings)).wait();
     Datasources.loadFiles();
-    wrapAsync(()=>{
-        loadPackages()
-    }, {});
+    Future.fromPromise(loadPackages()).wait();
     initCreator(); //此行代码之前不能出现await
     // await Datasources.init();
     await migrate.init();
