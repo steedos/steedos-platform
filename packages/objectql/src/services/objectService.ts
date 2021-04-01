@@ -4,8 +4,12 @@ import { getObjectConfig } from '../types/object_dynamic_load';
 import _ = require('underscore');
 import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver } from './helpers';
 import { getObjectServiceName } from '.';
+import { jsonToObject } from '../metadata-register/object';
+import { extend } from '../util';
 // import { parse } from '@steedos/formula';
 // mongodb pipeline: https://docs.mongodb.com/manual/core/aggregation-pipeline/
+declare var Creator: any;
+
 type externalPipelineItem = {
     [mongodPipeline: string]: any
 }
@@ -508,6 +512,17 @@ module.exports = {
                     }
                     const object = new SteedosObjectType(objectConfig.name, datasource, objectConfig)
                     datasource.setLocalObject(objectConfig.name, object);
+
+                    if(datasource.name === 'meteor' && Creator.Objects[objectConfig.name]){
+                        jsonToObject(objectConfig);
+                        const localTriggers = (localObjectConfig as any).triggers;
+                        if(localTriggers){
+                            objectConfig.triggers = localTriggers; 
+                        }
+                        extend(objectConfig, {triggers: (localObjectConfig as any)._baseTriggers})
+                        Creator.Objects[objectConfig.name] = objectConfig;
+                        Creator.loadObjects(objectConfig, objectConfig.name);
+                    }
                 }
                 
                 let gobj = generateSettingsGraphql(objectConfig);

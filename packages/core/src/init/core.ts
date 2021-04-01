@@ -1,4 +1,5 @@
 import { bootStrapExpress } from '../routes'
+const Future = require('fibers/future');
 const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
 const steedosProcess = require("@steedos/process");
@@ -35,62 +36,79 @@ const extendSimpleSchema = () => {
     });
 }
 
-export const initCreator = () => {
-    extendSimpleSchema();
-    Creator.baseObject = objectql.getObjectConfig(objectql.MONGO_BASE_OBJECT);
-    Creator.steedosSchema = getSteedosSchema()
-    // 不需要加载 Creator 中定义的objects
-    // _.each(Creator.Objects, function (obj, object_name) {
-    //     obj.name = object_name
-    //     objectql.addObjectConfig(obj, 'default')
-    // });
-    objectql.addAppConfigFiles(path.join(process.cwd(), "src/**")) //TODO await
+export const initCreator = async () => {
+    let allObjects = await objectql.getDataSource('meteor').getObjects();
+    await Future.task(() => {
+        try {
+            extendSimpleSchema();
+            Creator.baseObject = objectql.getObjectConfig(objectql.MONGO_BASE_OBJECT);
+            Creator.steedosSchema = getSteedosSchema()
+            // 不需要加载 Creator 中定义的objects
+            // _.each(Creator.Objects, function (obj, object_name) {
+            //     obj.name = object_name
+            //     objectql.addObjectConfig(obj, 'default')
+            // });
+            objectql.addAppConfigFiles(path.join(process.cwd(), "src/**")) //TODO await
+            // let allObjects = objectql.getObjectConfigs('meteor');
+            _.each(allObjects, function (obj) {
+                const objectConfig = obj.metadata;
+                const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+                if(localObjectConfig){
+                    objectConfig.listeners = localObjectConfig.listeners; 
+                    objectConfig.methods = localObjectConfig.methods; 
+                    objectConfig.triggers = localObjectConfig.triggers; 
+                    extend(objectConfig, {triggers: localObjectConfig._baseTriggers})
+                }
+                Creator.Objects[objectConfig.name] = objectConfig;
+            });
+
+            // let allApps = objectql.getAppConfigs();
+            // _.each(allApps, function (app) {
+            //     if (!app._id)
+            //         app._id = app.name
+            //     Creator.Apps[app._id] = app
+            // });
+
+            let allDashboards = objectql.getDashboardConfigs();
+            if(!Creator.Dashboards){
+                // Creator新版本发包前Creator.Dashboards全局变量不存在
+                Creator.Dashboards = {}
+            }
+            _.each(allDashboards, function (dashboard) {
+                if (!dashboard._id)
+                    dashboard._id = dashboard.name
+                Creator.Dashboards[dashboard._id] = dashboard
+            });
+
+            let allServerScripts = objectql.getServerScripts();
+            _.each(allServerScripts, function (scriptFile) {
+                require(scriptFile)
+            });
+
+            let clientCodes = getClientBaseObject();
+
+            let clientScripts = objectql.getClientScripts();
+            _.each(clientScripts, function (scriptFile) {
+                
+                let code = fs.readFileSync(scriptFile, 'utf8');
+
+                clientCodes = clientCodes + '\r\n' + code
+            });
+            WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
+
+            _.each(allObjects, function (obj) {
+                const objectConfig = obj.metadata;
+                const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+                extend(objectConfig, {triggers: localObjectConfig._baseTriggers})
+                if (objectConfig.name != 'users')
+                    Creator.loadObjects(objectConfig, objectConfig.name);
+            });
+
+        } catch (error) {
+            console.error(error)
+        }
+    }).promise();
     
-    // let allObjects = objectql.getObjectConfigs('meteor');
-    let allObjects = objectql.getDataSource('meteor').getObjectsConfig();
-    _.each(allObjects, function (obj) {
-        Creator.Objects[obj.name] = obj;
-    });
-
-    // let allApps = objectql.getAppConfigs();
-    // _.each(allApps, function (app) {
-    //     if (!app._id)
-    //         app._id = app.name
-    //     Creator.Apps[app._id] = app
-    // });
-
-    let allDashboards = objectql.getDashboardConfigs();
-    if(!Creator.Dashboards){
-        // Creator新版本发包前Creator.Dashboards全局变量不存在
-        Creator.Dashboards = {}
-    }
-    _.each(allDashboards, function (dashboard) {
-        if (!dashboard._id)
-            dashboard._id = dashboard.name
-        Creator.Dashboards[dashboard._id] = dashboard
-    });
-
-    let allServerScripts = objectql.getServerScripts();
-    _.each(allServerScripts, function (scriptFile) {
-        require(scriptFile)
-    });
-
-    let clientCodes = getClientBaseObject();
-
-    let clientScripts = objectql.getClientScripts();
-    _.each(clientScripts, function (scriptFile) {
-        
-        let code = fs.readFileSync(scriptFile, 'utf8');
-
-        clientCodes = clientCodes + '\r\n' + code
-    });
-    WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
-
-    _.each(allObjects, function (obj) {
-        extend(obj, {triggers: obj._baseTriggers})
-        if (obj.name != 'users')
-            Creator.loadObjects(obj, obj.name);
-    });
 }
 
 const getClientBaseObject = () => {
