@@ -48,10 +48,10 @@ export const loadObjectListViews = async function (filePath: string, serviceName
     listViewJsons.forEach(element => {
         addObjectListViewConfig(element.object_name, element);
     });
-
-    for await (const listViewJson of listViewJsons) {
-        await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: listViewJson.object_name}, {list_views: {
-            [listViewJson.name]: listViewJson
-        }}));
-    }
+    if(serviceName)
+        for await (const listViewJson of listViewJsons) {
+            await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: listViewJson.object_name}, {list_views: {
+                [listViewJson.name]: listViewJson
+            }}));
+        }
 }

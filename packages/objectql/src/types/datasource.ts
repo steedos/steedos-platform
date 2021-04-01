@@ -24,12 +24,13 @@ import {
     getAppConfigs,
     getDashboardConfigs,
     getSteedosSchema,
-    getObjectConfig
+    getObjectConfig,
+    addAllConfigFiles
 } from '.';
 import { SteedosDriverConfig } from '../driver';
-import { addObjectConfig } from '.';
 import { createObjectService } from '../metadata-register/objectServiceManager';
 import { getObjectDispatcher } from '../services/index';
+import path = require('path');
 let Fiber = require('fibers');
 
 export enum SteedosDatabaseDriverType {
@@ -109,6 +110,9 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async getObjects() {
+        if(!this.schema.metadataRegister){
+            return this._objects
+        }
         return await this.schema.metadataRegister.getObjectsConfig(this.name);
     }
 
@@ -295,20 +299,20 @@ export class SteedosDataSourceType implements Dictionary {
         this._getRoles = config.getRoles
     }
 
-    loadFiles(){
-        // 添加对象到缓存
-        _.each(this.config.objects, (object, object_name) => {
-            object.name = object_name
-            addObjectConfig(object, this._name);
-        })
-        // 添加对象到缓存
-        // _.each(this.config.objectFiles, (objectPath) => {
-        //     let filePath = objectPath;
-        //     if(!path.isAbsolute(objectPath)){
-        //         filePath = path.join(process.cwd(), objectPath)
-        //     }
-        //     addAllConfigFiles(filePath, this._name)
+    async loadFiles(){
+        // 不再支持从steedos-config中配置对象定义。
+        // _.each(this.config.objects, (object, object_name) => {
+        //     object.name = object_name
+        //     addObjectConfig(object, this._name);
         // })
+        // 添加对象到缓存
+        for (const objectPath of this.config.objectFiles) {
+            let filePath = objectPath;
+            if(!path.isAbsolute(objectPath)){
+                filePath = path.join(process.cwd(), objectPath)
+            }
+            await addAllConfigFiles(filePath, this._name, null)
+        }
     }
 
     setObjectPermission(object_name: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {

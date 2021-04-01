@@ -67,10 +67,11 @@ export const loadObjectFields = async function (filePath: string, serviceName?: 
     fieldJsons.forEach(element => {
         addObjectFieldConfig(element.object_name, element);
     });
-    for await (const fieldJson of fieldJsons) {
-        await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: fieldJson.object_name}, {fields: {
-            [fieldJson.name]: fieldJson
-        }}));
+    if(serviceName)
+        for await (const fieldJson of fieldJsons) {
+            await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: fieldJson.object_name}, {fields: {
+                [fieldJson.name]: fieldJson
+            }}));
     }
     
 }

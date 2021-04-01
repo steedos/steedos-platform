@@ -73,7 +73,6 @@ export function addConfigFiles(objectName: string, filePath: string){
 
 export const addConfig = (objectName: string, record: any) => {
     if(!record._id){
-        console.log("addConfig", objectName, record);
         throw new Error(`Error adding record to ${objectName}, record._id required`);
     }
     let records = getConfigs(objectName);

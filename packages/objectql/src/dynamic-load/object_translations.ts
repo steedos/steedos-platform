@@ -5,13 +5,13 @@ var util = require('../util');
 
 const brokeEmitEvents = async(filePath)=>{
     let schema = getSteedosSchema();
-    await schema.broker.emit(`translations.object.change`, {
+    await schema.broker?.emit(`translations.object.change`, {
         filePath
     });
 }
 
 const addObjectsTranslation = async (objectApiName, data)=>{
-    return await getSteedosSchema().metadataBroker.call('translations.addObjectTranslation', {
+    return await getSteedosSchema().metadataBroker?.call('translations.addObjectTranslation', {
         objectApiName, data
     })
 }

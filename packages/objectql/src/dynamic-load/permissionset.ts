@@ -40,9 +40,8 @@ const addPermissionset = async function(json: SteedosPermissionsetTypeConfig, se
     }else{
         permissionsetConfig = Object.assign({}, json, clone(BASERECORD))
     }
-
     const schema = getSteedosSchema();
-    await schema.metadataRegister.addPermissionset(serviceName, permissionsetConfig);
+    await schema.metadataRegister?.addPermissionset(serviceName, permissionsetConfig);
 }
 
 export const loadStandardPermissionsets = async function(serviceName: string){

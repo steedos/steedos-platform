@@ -1,4 +1,4 @@
-import { Datasources } from './datasources'
+// import { Datasources } from './datasources'
 import { Core, initCreator, initDesignSystem, initPublic } from './core'
 import { Plugins } from './plugins';
 import { getSteedosSchema } from '@steedos/objectql';
@@ -17,7 +17,7 @@ export async function init() {
     wrapAsync(async ()=>{
         await Plugins.init(this)
     }, {});
-    Datasources.loadFiles();
+    // Datasources.loadFiles();
     wrapAsync(()=>{
         loadPackages()
     }, {});

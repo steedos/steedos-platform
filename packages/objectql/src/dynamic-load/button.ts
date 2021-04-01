@@ -59,7 +59,8 @@ export const loadObjectButtons = async function (filePath: string, serviceName: 
     buttonJsons.forEach(element => {
         addObjectButtonsConfig(element.object_name, element);
     });
-    for await (const buttonJson of buttonJsons) {
-        await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: buttonJson.object_name}, {actions: {[buttonJson.name]: buttonJson}}));
-    }
+    if(serviceName)
+        for await (const buttonJson of buttonJsons) {
+            await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: buttonJson.object_name}, {actions: {[buttonJson.name]: buttonJson}}));
+        }
 }

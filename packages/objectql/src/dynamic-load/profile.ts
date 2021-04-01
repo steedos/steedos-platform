@@ -53,7 +53,7 @@ const addProfile = async function(json: SteedosProfileTypeConfig, serviceName: s
         // addConfig(PROFILES_KEY, Object.assign({}, clone(DEFAULTRECORD), json, clone(BASERECORD)));
     }
     const schema = getSteedosSchema();
-    await schema.metadataRegister.addProfile(serviceName, profileConfig);
+    await schema.metadataRegister?.addProfile(serviceName, profileConfig);
 }
 
 export const loadStandardProfiles = async function(serviceName: string){

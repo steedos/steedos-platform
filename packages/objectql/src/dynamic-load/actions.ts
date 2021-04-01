@@ -140,5 +140,6 @@ async function addObjectActionConfigMetadata(config: any, serviceName: string, i
     }else{
         actions[apiKey] = config
     }
-    await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: object_name}, {actions: actions}));
+    if(serviceName)
+        await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: object_name}, {actions: actions}));
 }

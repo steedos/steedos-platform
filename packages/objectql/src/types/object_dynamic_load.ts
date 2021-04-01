@@ -199,7 +199,7 @@ export const getClientScripts = () => {
 
 export const addObjectConfig = async (objectConfig: SteedosObjectTypeConfig, datasource: string, serviceName?: string) => {
     let object_name = objectConfig.name;
-    if(serviceName){
+    if(serviceName && getSteedosSchema().metadataRegister){
         if(datasource){
             objectConfig.datasource = datasource
         }

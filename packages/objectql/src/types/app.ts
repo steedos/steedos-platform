@@ -1,4 +1,5 @@
 import { SteedosDataSourceType, getConfigsFormFiles, getSteedosSchema, getObject } from '.';
+import { getConfigs } from './config';
 import _ = require('underscore');
 export type SteedosAppTypeConfig = {
     _id: string,
@@ -125,11 +126,16 @@ export async function addAppConfigFiles(filePath: string, serviceName: string){
 
 export const addAppConfig = async (appConfig: SteedosAppTypeConfig, serviceName: string = '') => {
     const schema = getSteedosSchema();
-    await schema.metadataRegister.addApp(serviceName, appConfig);
+    await schema.metadataRegister?.addApp(serviceName, appConfig);
 }
 
 export const getAppConfigs = async () => {
     const schema = getSteedosSchema();
+
+    if(!schema.metadataRegister){
+        return getConfigs('app')
+    }
+
     const apps = await schema.metadataRegister.getApps();
     return _.pluck(apps, 'metadata');
 }
