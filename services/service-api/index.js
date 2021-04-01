@@ -27,7 +27,7 @@ module.exports = {
 
 			// API Gateway route options
 			routeOptions: {
-				path: "/service/graphql",
+				path: "/graphql",
 				cors: true,
 				whitelist: [
 					"**"
