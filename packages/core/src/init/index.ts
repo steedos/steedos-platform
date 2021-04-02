@@ -18,10 +18,10 @@ export async function init() {
         await Plugins.init(this)
     }, {});
     // Datasources.loadFiles();
-    wrapAsync(async ()=>{
-        await loadPackages()
+    wrapAsync(()=>{
+        loadPackages()
     }, {});
-    await initCreator(); //此行代码之前不能出现await
+    initCreator(); //此行代码之前不能出现await
     // await Datasources.init();
     await migrate.init();
     await InitTranslations();
