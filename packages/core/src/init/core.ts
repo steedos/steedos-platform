@@ -185,7 +185,7 @@ export class Core {
             })),
         );
 
-        app.use('/graphql', router);
+        app.use('/graphql/v1', router);
         return WebApp.connectHandlers.use(app);
     }
 
