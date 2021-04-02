@@ -5,7 +5,7 @@ import { getMD5, JSONStringify } from "@steedos/objectql";
 import { Action, Meta, Trigger, TriggerData } from "./types";
 import { Context } from 'moleculer';
 
-const ENUM_WHEN = ['before.find', 'before.insert', 'before.update', 'before.delete', 'after.find', 'after.count', 'after.findOne', 'after.insert', 'after.delete', 'after.remove', 'before.aggregate', 'after.aggregate'];
+const ENUM_WHEN = ['before.find', 'before.insert', 'before.update', 'before.delete', 'after.find', 'after.count', 'after.findOne', 'after.insert', 'after.delete', 'after.update', 'before.aggregate', 'after.aggregate'];
 
 export async function load(broker: any, packagePath: string, packageServiceName: string) {
     let actions = {};
