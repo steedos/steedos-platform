@@ -4,16 +4,22 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "debug": "nodemon server.js",
-    "start": "node server.js"
+    "start": "moleculer-runner services",
+    "start:steedos": "cross-env NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",
+    "start:app": "cross-env NODEID=STEEDOS-APP moleculer-runner --repl services/steedos-app",
+    "console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
+    "docker": "docker-compose up --build -d"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
       "dotenv-flow": "^3.1.0",
-      "@steedos/steedos-plugin-workflow": "^2.1.1",
-      "@steedos/accounts": "^1.23.20",
-      "steedos-server": "^1.23.20"
+      "@steedos/service-metadata-server": "^1.0.0",
+      "@steedos/service-package-loader": "^1.0.0",
+      "@steedos/service-steedos-server": "^1.0.0",
+      "ioredis": "^4.22.0",
+      "moleculer": "^0.14.12",
+      "moleculer-cli": "^0.7.1"
   },
   "devDependencies": {
       "nodemon": "^1.19.1"
