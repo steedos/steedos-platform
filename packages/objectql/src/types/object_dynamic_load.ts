@@ -1,9 +1,9 @@
 import _ = require('lodash')
 import path = require('path')
-import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig } from '.'
+import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig, getDataSource } from '.'
 // import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
-import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadStandardProfiles, loadStandardPermissionsets } from '../dynamic-load'
+import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load'
 import { transformListenersToTriggers } from '..';
 import { getSteedosSchema } from './schema';
 
@@ -294,10 +294,20 @@ export const removeObjectListenerConfig = (_id, listenTo, when)=>{
     }
 }
 
-export const loadStandardMetadata = async (serviceName: string) =>{
+export const loadStandardMetadata = async (serviceName: string, datasourceApiName: string) =>{
     await loadStandardProfiles(serviceName);
     await loadStandardPermissionsets(serviceName);
     await loadStandardBaseObjects(serviceName);
+    if(datasourceApiName === 'default' || datasourceApiName === 'meteor'){
+        const datasource = getDataSource(datasourceApiName)
+        if(datasource && datasourceApiName === 'default'){
+            await datasource.initTypeORM();
+        }
+        if(datasource){
+            await preloadDBObjectFields(datasource);
+            await preloadDBObjectButtons(datasource);
+        }
+    }
 }
 
 export const loadStandardBaseObjects = async (serviceName: string) => {

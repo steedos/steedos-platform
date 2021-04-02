@@ -3,8 +3,7 @@ import _ = require('lodash')
 import {loadJsonFiles} from '../util'
 import { addAppConfigFiles } from './app';
 import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectDataFiles, addRouterFiles } from '.';
-import { addTranslationsFiles, addObjectTranslationsFiles, preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load'
-import { getDataSource } from './datasource';
+import { addTranslationsFiles, addObjectTranslationsFiles } from '../dynamic-load'
 
 export const LOADED_OBJECT_RECORDS = {}
 
@@ -118,16 +117,6 @@ export const getConfig = (objectName: string, _id: string) => {
 }
 
 export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName) => {
-    if(datasourceApiName === 'default' || datasourceApiName === 'meteor'){
-        const datasource = getDataSource(datasourceApiName)
-        if(datasource && datasourceApiName === 'default'){
-            await datasource.init();
-        }
-        if(datasource && false){ //TODO: 处理从数据库加载字段时，报错
-            await preloadDBObjectFields(datasource);
-            await preloadDBObjectButtons(datasource);
-        }
-    }
     await addObjectConfigFiles(filePath, datasourceApiName, serviceName);
     await addAppConfigFiles(filePath, serviceName);
     addClientScriptFiles(filePath);

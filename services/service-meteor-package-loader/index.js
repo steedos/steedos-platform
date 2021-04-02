@@ -56,10 +56,11 @@ module.exports = {
 			await Future.task(async () => {
 				let steedosSchema = objectql.getSteedosSchema(this.broker);
 				steedosSchema.addMeteorDatasource();
+                const datasourceName = 'meteor';
 				packagePath = path.join(packagePath, '**');
-				await objectql.loadStandardMetadata(name);
-				await objectql.addAllConfigFiles(packagePath, 'meteor', name);
-				const datasource = objectql.getDataSource('meteor');
+				await objectql.loadStandardMetadata(name, datasourceName);
+				await objectql.addAllConfigFiles(packagePath, datasourceName, name);
+				const datasource = objectql.getDataSource(datasourceName);
 				await datasource.init();
 				await triggerLoader.load(this.broker, packagePath, name);
 				return;
