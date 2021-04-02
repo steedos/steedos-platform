@@ -7,21 +7,16 @@ import { initPublicStaticRouter } from '../routes';
 // import { InitI18n } from './i18n';
 import { loadPackages } from './packages';
 import { InitTranslations } from './translations';
-import { wrapAsync } from '@steedos/objectql';
 export async function init() {
     getSteedosSchema();
     WebAppInternals.setInlineScriptsAllowed(false);
     initPublicStaticRouter();
     initPublic();
     initDesignSystem();
-    wrapAsync(async ()=>{
-        await Plugins.init(this)
-    }, {});
+    await Plugins.init(this);
     // Datasources.loadFiles();
-    wrapAsync(()=>{
-        loadPackages()
-    }, {});
-    initCreator(); //此行代码之前不能出现await
+    await loadPackages();
+    await initCreator();
     // await Datasources.init();
     await migrate.init();
     await InitTranslations();
