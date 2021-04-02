@@ -283,7 +283,7 @@ module.exports = {
             visible: function (object_name, record_id) {
                 return Steedos.ProcessManager.allowSubmit(object_name, record_id);
             },
-            on: "record_only_more",
+            on: "record_only",
             todo: function (object_name, record_id) {
                 Steedos.ProcessManager.submit(object_name, record_id);
             }

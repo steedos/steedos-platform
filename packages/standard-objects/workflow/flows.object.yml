@@ -11,6 +11,12 @@ fields:
     searchable: true
     readonly: true
     name: name
+  api_name:
+    type: text
+    label: api_name
+    required: true
+    searchable: true
+    name: api_name
   form:
     label: Form
     type: lookup

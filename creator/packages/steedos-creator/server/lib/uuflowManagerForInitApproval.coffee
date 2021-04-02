@@ -240,8 +240,17 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				return f.code == key
 
 		getFormField = (key) ->
-			return _.find formFields,  (f) ->
-				return f.code == key
+			ff = null
+			_.forEach formFields, (f) ->
+				if ff
+					return
+				if f.type == 'section'
+					ff = _.find f.fields,  (sf) ->
+						return sf.code == key
+				else if f.code == key
+					ff = f
+
+			return ff
 
 		getFormTableSubField = (tableField, subFieldCode) ->
 			return _.find tableField.fields,  (f) ->
@@ -249,17 +258,19 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 		getFieldOdataValue = (objName, id) ->
 			obj = Creator.getCollection(objName)
+			o = Creator.getObject(objName, spaceId)
+			nameKey = o.NAME_FIELD_KEY
 			if !obj
 				return
 			if _.isString id
 				_record = obj.findOne(id)
 				if _record
-					_record['@label'] = _record.name
+					_record['@label'] = _record[nameKey]
 					return _record
 			else if _.isArray id
 				_records = []
 				obj.find({ _id: { $in: id } }).forEach (_record) ->
-					_record['@label'] = _record.name
+					_record['@label'] = _record[nameKey]
 					_records.push _record
 
 				if !_.isEmpty _records
