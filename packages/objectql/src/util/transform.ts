@@ -178,8 +178,6 @@ export function generateActionParams(when: string, context: SteedosTriggerContex
             params.isUpdate = true;
             params.new = [context.doc];
             params.newMap = [context.id];
-            params.old = [context.previousDoc];
-            params.oldMap = [context.id];
             params.operationType = 'BEFORE_UPDATE';
             params.size = 1;
             break;
