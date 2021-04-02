@@ -39,8 +39,8 @@ export class Plugins {
                             })
                             if (_.isFunction(service.init)) {
                                 service.init(pluginContext);
+                                WebApp.connectHandlers.use(pluginContext.app);
                             }
-                            WebApp.connectHandlers.use(pluginContext.app);
                         } catch (error) {
                             console.error(error);
                         }
