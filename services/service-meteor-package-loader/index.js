@@ -87,6 +87,7 @@ module.exports = {
         const { path } = packageInfo;
         if (!path) {
             this.logger.info(`Please config packageInfo in your settings.`);
+            console.log(`service ${this.name} started`);
             return;
         }
         await this.loadPackageMetadataFiles(path, this.name);

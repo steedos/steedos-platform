@@ -5183,46 +5183,6 @@
     ts-node "^8.4.1"
     wechat-crypto "^0.0.2"
 
-"@steedos/plugin-enterprise@1.23.20":
-  version "1.23.20"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-enterprise/-/plugin-enterprise-1.23.20.tgz#9272d518e1f89da679ba50a45d91dd7b0df2747f"
-  integrity sha512-Qf4pqpwKedx7wEMXAmMMoBh7s9KkYFLmrvJGXvCMkjSQhfDzWaRFzxlp+g0MUOx/OAcQUmi7UyKV4oye9kUOlQ==
-
-"@steedos/plugin-qywx@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@steedos/plugin-qywx/-/plugin-qywx-0.0.16.tgz#9af41490d0eb4e06709388c9eeb7befd2cc09c42"
-  integrity sha512-GLHeyja81j5DfXHnZYfCUCtyxZsYpa9y8HzS0VtvUdfAOpCWctN6Woj6hpPgeCK934E0RDn3198DZY3mG6edug==
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    admin-lte "^2.3.11"
-    bcrypt "3.0.6"
-    bootstrap "^3.3.7"
-    cookies "^0.8.0"
-    dotenv-flow "^3.1.0"
-    express "^4.17.1"
-    jsdom "^16.2.2"
-    jshashes "^1.0.8"
-    ts-node "^8.4.1"
-    wechat-crypto "^0.0.2"
-    xml2json "^0.12.0"
-
-"@steedos/plugin-qywx@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.npm.taobao.org/@steedos/plugin-qywx/download/@steedos/plugin-qywx-0.0.17.tgz#3dccf20e6e5af2675a1053766705f754e617312f"
-  integrity sha1-PczyDm5a8mdaEFN2ZwX3VOYXMS8=
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    admin-lte "^2.3.11"
-    bcrypt "3.0.6"
-    bootstrap "^3.3.7"
-    cookies "^0.8.0"
-    dotenv-flow "^3.1.0"
-    express "^4.17.1"
-    jsdom "^16.2.2"
-    jshashes "^1.0.8"
-    ts-node "^8.4.1"
-    wechat-crypto "^0.0.2"
-
 "@steedos/steedos-plugin-schema-builder@^1.23.20":
   version "1.23.20"
   resolved "https://registry.npm.taobao.org/@steedos/steedos-plugin-schema-builder/download/@steedos/steedos-plugin-schema-builder-1.23.20.tgz#2a5d56af7bb33ac644e4faa80c1c7a5912c1bc93"
@@ -5245,15 +5205,6 @@
     body-parser "^1.19.0"
     express "^4.17.1"
     underscore "^1.9.1"
-
-"@steedos/word-template@1.23.0-alpha.17", "@steedos/word-template@^1.23.0-alpha.16":
-  version "1.23.0-alpha.17"
-  resolved "https://registry.yarnpkg.com/@steedos/word-template/-/word-template-1.23.0-alpha.17.tgz#43290de03ff121e0d9dd5e2614414fb7da77f4c5"
-  integrity sha512-vJq1uJIvhhO4HZCYZoz/p/qbtyySEMRo74M7KGjWSMO/3z4/ul6ULdjd1bBSkqy9qrbMI/6ELq8Uj8qUMVlClQ==
-  dependencies:
-    docxtemplater "^3.19.7"
-    dotenv-flow "^3.2.0"
-    jszip "^2.6.1"
 
 "@steedos/word-template@^1.23.19":
   version "1.23.19"
@@ -15966,7 +15917,7 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoek@2.x.x, hoek@4.x.x, hoek@5.x.x, hoek@6.x.x, hoek@^4.2.1, hoek@^5.0.3:
+hoek@2.x.x, hoek@4.x.x, hoek@6.x.x, hoek@^5.0.3:
   version "5.0.4"
   resolved "https://registry.npm.taobao.org/hoek/download/hoek-5.0.4.tgz#0f7fa270a1cafeb364a4b2ddfaa33f864e4157da"
   integrity sha1-D3+icKHK/rNkpLLd+qM/hk5BV9o=
@@ -17419,13 +17370,6 @@ isarray@^2.0.5:
   resolved "https://registry.npm.taobao.org/isarray/download/isarray-2.0.5.tgz#8af1e4c1221244cc62459faf38940d4e644a5723"
   integrity sha1-ivHkwSISRMxiRZ+vOJQNTmRKVyM=
 
-isemail@3.x.x:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/isemail/-/isemail-3.2.0.tgz#59310a021931a9fb06bbb51e155ce0b3f236832c"
-  integrity sha512-zKqkK+O+dGqevc93KNsbZ/TqTUFd46MwWjYOoMrjIMZ51eU7DtQG3Wmd9SQQT7i7RVnuTPEiYEWHU3MSbxC1Tg==
-  dependencies:
-    punycode "2.x.x"
-
 isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/isexe/download/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
@@ -18400,15 +18344,6 @@ jest@^26.4.2:
     "@jest/core" "^26.6.3"
     import-local "^3.0.2"
     jest-cli "^26.6.3"
-
-joi@^13.1.2:
-  version "13.7.0"
-  resolved "https://registry.yarnpkg.com/joi/-/joi-13.7.0.tgz#cfd85ebfe67e8a1900432400b4d03bbd93fb879f"
-  integrity sha512-xuY5VkHfeOYK3Hdi91ulocfuFopwgbSORmIwzcwHKESQhC7w1kD5jaVSPnqDxS2I8t3RZ9omCKAxNwXN5zG1/Q==
-  dependencies:
-    hoek "5.x.x"
-    isemail "3.x.x"
-    topo "3.x.x"
 
 jquery-knob@^1.2.11:
   version "1.2.11"
@@ -21181,7 +21116,7 @@ nan@2.14.0:
   resolved "https://registry.npm.taobao.org/nan/download/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha1-eBj3IgJ7JFmobwKV1DTR/CM2xSw=
 
-nan@^2.0.8, nan@^2.12.1, nan@^2.13.2:
+nan@^2.0.8, nan@^2.12.1:
   version "2.14.2"
   resolved "https://registry.npm.taobao.org/nan/download/nan-2.14.2.tgz?cache=0&sync_timestamp=1602591675048&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnan%2Fdownload%2Fnan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha1-9TdkAGlRaPTMaUrJOT0MlYXu6hk=
@@ -21397,14 +21332,6 @@ node-emoji@^1.10.0, node-emoji@^1.8.1:
   integrity sha1-iIar0l2ce7YYAqZYUj0fjSqJsto=
   dependencies:
     lodash.toarray "^4.4.0"
-
-node-expat@^2.3.18:
-  version "2.3.18"
-  resolved "https://registry.yarnpkg.com/node-expat/-/node-expat-2.3.18.tgz#d9e6949cecda15e131f14259b73dc7b9ed7bc560"
-  integrity sha512-9dIrDxXePa9HSn+hhlAg1wXkvqOjxefEbMclGxk2cEnq/Y3U7Qo5HNNqeo3fQ4bVmLhcdt3YN1TZy7WMZy4MHw==
-  dependencies:
-    bindings "^1.5.0"
-    nan "^2.13.2"
 
 node-fetch-npm@^2.0.2:
   version "2.0.4"
@@ -24569,15 +24496,15 @@ punycode@1.3.2:
   resolved "https://registry.npm.taobao.org/punycode/download/punycode-1.3.2.tgz#9653a036fb7c1ee42342f2325cceefea3926c48d"
   integrity sha1-llOgNvt8HuQjQvIyXM7v6jkmxI0=
 
-punycode@2.x.x, punycode@^2.1.0, punycode@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.npm.taobao.org/punycode/download/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
-  integrity sha1-tYsBCsQMIsVldhbI0sLALHv0eew=
-
 punycode@^1.2.4, punycode@^1.3.2, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/punycode/download/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
   integrity sha1-wNWmOycYgArY4esPpSachN1BhF4=
+
+punycode@^2.1.0, punycode@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npm.taobao.org/punycode/download/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
+  integrity sha1-tYsBCsQMIsVldhbI0sLALHv0eew=
 
 pupa@^2.0.1:
   version "2.1.1"
@@ -28902,13 +28829,6 @@ toml@^2.3.2:
   resolved "https://registry.yarnpkg.com/toml/-/toml-2.3.6.tgz#25b0866483a9722474895559088b436fd11f861b"
   integrity sha512-gVweAectJU3ebq//Ferr2JUY4WKSDe5N+z0FvjDncLGyHmIDoxgY/2Ie4qfEIDm4IS7OA6Rmdm7pdEEdMcV/xQ==
 
-topo@3.x.x:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/topo/-/topo-3.0.3.tgz#d5a67fb2e69307ebeeb08402ec2a2a6f5f7ad95c"
-  integrity sha512-IgpPtvD4kjrJ7CRA3ov2FhWQADwv+Tdqbsf1ZnPUSAtCJ9e1Z44MmoSGDXGk4IppoZA7jd/QRkNddlLJWlUZsQ==
-  dependencies:
-    hoek "6.x.x"
-
 touch@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npm.taobao.org/touch/download/touch-3.1.0.tgz#fe365f5f75ec9ed4e56825e0bb76d24ab74af83b"
@@ -30828,15 +30748,6 @@ xml2js@0.4.23, xml2js@^0.4.19, xml2js@^0.4.23, xml2js@^0.4.6:
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "~11.0.0"
-
-xml2json@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/xml2json/-/xml2json-0.12.0.tgz#b2ae450b267033b76d896f86e022fa7bff678572"
-  integrity sha512-EPJHRWJnJUYbJlzR4pBhZODwWdi2IaYGtDdteJi0JpZ4OD31IplWALuit8r73dJuM4iHZdDVKY1tLqY2UICejg==
-  dependencies:
-    hoek "^4.2.1"
-    joi "^13.1.2"
-    node-expat "^2.3.18"
 
 xmlbuilder@~11.0.0:
   version "11.0.1"
