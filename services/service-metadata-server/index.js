@@ -5,7 +5,6 @@ const objects = require('@steedos/service-metadata-objects');
 const permissionsets = require('@steedos/service-metadata-permissionsets');
 const translations = require('@steedos/service-metadata-translations');
 const triggers = require('@steedos/service-metadata-triggers');
-const { started } = require('../../apps/steedos-project-template/moleculer.config');
 
 module.exports = {
 	name: "metadata-server",

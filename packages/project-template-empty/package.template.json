@@ -2,7 +2,7 @@
   "name": "",
   "version": "0.0.1",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "moleculer-runner services",
     "start:steedos": "cross-env NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",
@@ -35,6 +35,7 @@
     "**/samlp": "3.4.1",
     "**/xmldom": "0.2.1",
     "**/tslib": "1.11.2",
-    "**/fibers": "^4.0.3"
+    "**/fibers": "^4.0.3",
+    "**/@babel/runtime": "7.12.0"
   }
 }

@@ -5,11 +5,14 @@
   "license": "MIT",
   "dependencies": {
     "@steedos/accounts": "^2.0.0",
+    "@steedos/core": "^2.0.0",
     "@steedos/metadata-api": "^2.0.0",
     "@steedos/plugin-dingtalk": "^2.0.0",
     "@steedos/plugin-enterprise": "^2.0.0",
     "@steedos/plugin-qywx": "^2.0.0",
+    "@steedos/service-api": "^2.0.0",
     "@steedos/service-meteor-package-loader": "^2.0.0",
+    "@steedos/service-node-red": "^2.0.0",
     "@steedos/steedos-plugin-schema-builder": "^2.0.0",
     "@steedos/word-template": "^2.0.0",
     "@steedos/workflow": "^2.0.0",
@@ -18,7 +21,9 @@
     "moleculer-db": "^0.8.4",
     "moleculer-db-adapter-mongo": "^0.4.7",
     "moleculer-web": "^0.9.0",
-    "nats": "^1.4.12"
+    "nats": "^1.4.12",
+    "node-red": "^1.2.9",
+    "steedos-server": "^2.0.0"
   },
   "private": false,
   "publishConfig": {
