@@ -1,6 +1,6 @@
 {
     "name": "@steedos/plugin-dingtalk",
-    "version": "^0.0.2",
+    "version": "0.0.2",
     "private": false,
     "description": "",
     "publishConfig": {
