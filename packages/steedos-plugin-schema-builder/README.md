@@ -18,5 +18,16 @@ yarn
 yarn start
 ```
 
+### 启动前端调试
+```
+yarn fe-watch
+```
+
+
+### 编译前端
+```
+yarn fe-build
+```
+
 ### 了解更多
 - [开发文档](https://www.steedos.com/developer/)
