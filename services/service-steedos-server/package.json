@@ -11,7 +11,7 @@
     "@steedos/plugin-qywx": "^0.0.19",
     "@steedos/service-meteor-package-loader": "^0.0.1",
     "@steedos/steedos-plugin-schema-builder": "^1.23.20",
-    "@steedos/steedos-plugin-workflow": "^2.1.1",
+    "@steedos/workflow": "^1.0.0",
     "@steedos/word-template": "^1.23.19",
     "dotenv-flow": "^3.2.0",
     "moleculer": "^0.14.10",

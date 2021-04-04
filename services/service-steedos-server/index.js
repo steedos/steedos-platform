@@ -35,7 +35,7 @@ module.exports = {
 			enabled: true
 		},
 		built_in_plugins: [
-			"@steedos/steedos-plugin-workflow",
+			"@steedos/workflow",
 			"@steedos/accounts",
 			"@steedos/steedos-plugin-schema-builder",
 			"@steedos/plugin-enterprise",
