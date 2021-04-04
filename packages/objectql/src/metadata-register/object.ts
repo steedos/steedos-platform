@@ -85,7 +85,7 @@ function objectToJson(objectConfig){
     _.forEach(objectConfig.actions, (action, key)=>{
         const _todo = action?.todo
         if(_todo && _.isFunction(_todo)){
-            action._todo = _todo.toString()
+            action.todo = _todo.toString()
         }
         const _visible = action?.visible
         if(_visible && _.isFunction(_visible)){
