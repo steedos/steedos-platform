@@ -36,5 +36,9 @@
     "nodemon": "^1.18.10",
     "ts-node": "^8.0.3",
     "typescript": "3.5.3"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }

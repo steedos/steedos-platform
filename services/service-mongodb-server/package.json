@@ -5,5 +5,9 @@
   "license": "MIT",
   "dependencies": {
     "@steedos/mongodb-memory-server-core": "^7.0.0-beta.14"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }

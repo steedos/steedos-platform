@@ -7,5 +7,9 @@
     "graphql-type-json": "^0.3.2",
     "moleculer-apollo-server": "^0.3.3",
     "moleculer-web": "^0.9.1"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }

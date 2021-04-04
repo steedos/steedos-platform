@@ -10,5 +10,9 @@
     "@steedos/service-metadata-permissionsets": "^2.0.0",
     "@steedos/service-metadata-translations": "^2.0.0",
     "@steedos/service-metadata-triggers": "^2.0.0"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }

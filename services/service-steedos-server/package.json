@@ -19,5 +19,9 @@
     "moleculer-db-adapter-mongo": "^0.4.7",
     "moleculer-web": "^0.9.0",
     "nats": "^1.4.12"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }
