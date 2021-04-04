@@ -85,6 +85,19 @@ export const initCreator = async () => {
                 require(scriptFile)
             });
 
+            _.each(allObjects, function (obj) {
+                const objectConfig = obj.metadata;
+                const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+                if(localObjectConfig){
+                    if(Creator.Objects[objectConfig.name]){
+                        extend(localObjectConfig, {methods: Creator.Objects[objectConfig.name].methods})
+                    }
+                }
+            });
+
+            let collection = objectql.getLocalObject('spaces');
+            console.log(`spaces methods 222`, collection.getConfig().methods)
+
             let clientCodes = getClientBaseObject();
 
             let clientScripts = objectql.getClientScripts();

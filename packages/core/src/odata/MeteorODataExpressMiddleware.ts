@@ -7,6 +7,7 @@ import odataV4Mongodb = require('odata-v4-mongodb');
 import _ = require('underscore');
 import { Response } from 'express';
 import * as core from "express-serve-static-core";
+import { getObjectConfig } from "@steedos/objectql";
 interface Request extends core.Request {
     user: any;
 }
@@ -478,7 +479,7 @@ const excuteObjectMethod = async function (req: Request, res: Response) {
         let permissions = await collection.getUserObjectPermission(userSession);
         if (permissions.allowRead) {
             let methodName = urlParams.methodName;
-            let methods = collection.getConfig().methods || {};
+            let methods = getObjectConfig(key).methods || {};
             if (methods.hasOwnProperty(methodName)) {
                 // let thisObj = {
                 //     object_name: key,
