@@ -1,0 +1,10 @@
+extend: space_users
+fields:
+  dingtalk_id:
+    label: 钉钉账号
+    type: text
+    hidden: false
+  dingtalk_space:
+    label: 钉钉工作区
+    type: text
+    hidden: true

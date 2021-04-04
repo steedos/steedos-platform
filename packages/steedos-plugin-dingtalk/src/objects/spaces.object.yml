@@ -1,0 +1,30 @@
+extend: spaces
+fields:
+  dingtalk_corp_id:
+    label: 企业ID(CorpId)
+    type: text
+    group: 钉钉
+    unique: true
+    hidden: false
+  dingtalk_agent_id:
+    label: AgentID
+    type: text
+    group: 钉钉
+    hidden: false
+  dingtalk_key:
+    label: AppKey
+    type: text
+    group: 钉钉
+    hidden: false
+  dingtalk_secret:
+    label: AppSecret
+    type: text
+    group: 钉钉
+    hidden: false
+  dingtalk_need_sync:
+    label: 同步钉钉
+    type: boolean
+    group: 钉钉
+    defaultValue: false
+    hidden: false
+

@@ -1,0 +1,25 @@
+datasources:
+  default:
+    connection:
+      url: ${MONGO_URL}
+    objectFiles: 
+      - "./src/**"
+public:
+  cfs:
+    store: "local"
+    local: 
+      folder: "./storage"
+email:
+  from: 华炎云 <noreply@steedos.com>
+  url: xxx
+tenant:
+  _id: ${ENV_TENANT_ID}
+  name: 华炎魔方
+  enable_register: true
+  enable_forget_password: true
+  enable_create_tenant: true
+  enable_password_login: true
+  enable_bind_email: false
+  enable_bind_mobile: false
+plugins:
+  - "@steedos/accounts"
