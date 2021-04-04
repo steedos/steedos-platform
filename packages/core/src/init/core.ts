@@ -95,9 +95,6 @@ export const initCreator = async () => {
                 }
             });
 
-            let collection = objectql.getLocalObject('spaces');
-            console.log(`spaces methods 222`, collection.getConfig().methods)
-
             let clientCodes = getClientBaseObject();
 
             let clientScripts = objectql.getClientScripts();
