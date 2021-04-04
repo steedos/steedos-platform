@@ -12,7 +12,7 @@
         "type": "git",
         "url": "https://github.com/steedos/steedos-plugin-qywx.git"
     },
-    "main": "lib/index.js",
+    "main": "index.js",
     "scripts": {
         "debug": "tsc && nodemon server.js",
         "start": "node server",
