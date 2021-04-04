@@ -1,0 +1,25 @@
+extend: spaces
+fields:
+  qywx_corp_id:
+    label: 企业ID(CorpId)
+    type: text
+    group: 企业微信
+    unique: true
+    hidden: false
+  qywx_agent_id:
+    label: 应用ID(AgentID)
+    type: text
+    group: 企业微信
+    hidden: false
+  qywx_secret:
+    label: 应用密钥(Secret)
+    type: text
+    group: 企业微信
+    hidden: false
+  qywx_need_sync:
+    label: 同步企业微信
+    type: boolean
+    group: 企业微信
+    defaultValue: false
+    hidden: false
+
