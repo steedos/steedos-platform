@@ -174,5 +174,3 @@ export * from './i18n/i18n'
 export * from './i18n/i18n.app'
 
 export * from './translations'
-
-export { loadCoreTranslations } from './core_i18n';
