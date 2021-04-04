@@ -3,7 +3,7 @@ const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-meteor-package-loader');
 const path = require('path');
-const init = require('./lib').init;
+const init = require('.').init;
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。

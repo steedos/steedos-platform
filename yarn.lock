@@ -5166,23 +5166,6 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/plugin-dingtalk@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.npm.taobao.org/@steedos/plugin-dingtalk/download/@steedos/plugin-dingtalk-0.0.2.tgz#cce7f7b16e3616f31a95e16357b9da473d3fed0a"
-  integrity sha1-zOf3sW42FvMaleFjV7naRz0/7Qo=
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    admin-lte "^2.3.11"
-    bcrypt "3.0.6"
-    bootstrap "^3.3.7"
-    cookies "^0.8.0"
-    dotenv-flow "^3.1.0"
-    express "^4.17.1"
-    jsdom "^16.2.2"
-    jshashes "^1.0.8"
-    ts-node "^8.4.1"
-    wechat-crypto "^0.0.2"
-
 "@steedos/steedos-plugin-schema-builder@^1.23.20":
   version "1.23.20"
   resolved "https://registry.npm.taobao.org/@steedos/steedos-plugin-schema-builder/download/@steedos/steedos-plugin-schema-builder-1.23.20.tgz#2a5d56af7bb33ac644e4faa80c1c7a5912c1bc93"
