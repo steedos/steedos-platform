@@ -10,7 +10,8 @@
     "/src",
     "/lib",
     "/webapp/src/i18n",
-    "/webapp/build"
+    "/webapp/build",
+    "package.service.js"
   ],
   "license": "MIT",
   "scripts": {
