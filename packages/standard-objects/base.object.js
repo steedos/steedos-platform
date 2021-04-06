@@ -640,7 +640,7 @@ function setDetailOwner(doc, object_name, userId) {
                     masterAllow = masterObjectPerm.allowEdit;
                 }
                 if (!masterAllow) {
-                    throw new Meteor.Error(400, `缺少主对象”${master}“的“${write_requires_master_read ? "只读" : "编辑"}权限”`);
+                    throw new Meteor.Error(400, `缺少当前子对象${object_name}的主对象”${master}“的“${write_requires_master_read ? "只读" : "编辑"}权限”`);
                 }
                 /* 上面先判断一次对象级权限是因为有可能新建修改子表记录时未选择关联父记录字段值，以下是判断关联父记录的权限 */
                 let refFieldValue = doc[refField.name];
@@ -658,7 +658,7 @@ function setDetailOwner(doc, object_name, userId) {
                                 masterAllow = masterRecordPerm.allowEdit;
                             }
                             if (!masterAllow) {
-                                throw new Meteor.Error(400, `缺少主对象”${master}“的“${write_requires_master_read ? "只读" : "编辑"}权限”，不能选择主表记录： “${recordMaster[nameFieldKey]}”。`);
+                                throw new Meteor.Error(400, `缺少当前子对象${object_name}的主对象”${master}“的“${write_requires_master_read ? "只读" : "编辑"}权限”，不能选择主表记录： “${recordMaster[nameFieldKey]}”。`);
                             }
 
                         }
