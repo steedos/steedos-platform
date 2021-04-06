@@ -1,6 +1,6 @@
 import { addObjectFieldConfig } from './field'
 import { addObjectButtonsConfig } from './button'
-import { SteedosDataSourceType } from '..';
+import { addAppConfig, SteedosDataSourceType } from '..';
 
 declare var Creator: any;
 
@@ -23,5 +23,16 @@ export const preloadDBObjectButtons = async function(datasource: SteedosDataSour
     let buttons: any = await datasource.find(tableName , {filters: ['is_enable','=',true]});
     buttons.forEach(element => {
         addObjectButtonsConfig(element.object, element);
+    });
+}
+
+export const preloadDBApps = async function(datasource: SteedosDataSourceType, serviceName: string){
+    const tableName = "apps";
+    if(datasource.name === 'meteor'){
+        Creator.Collections[tableName] = Creator.createCollection({name: tableName});
+    }
+    let apps: any = await datasource.find(tableName , {filters: ['visible','=',true]});
+    apps.forEach(element => {
+        addAppConfig(element, serviceName);
     });
 }
