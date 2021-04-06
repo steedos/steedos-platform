@@ -1,5 +1,5 @@
-const core = require('@steedos/core');
-db.apps = core.newCollection('apps');
+// const core = require('@steedos/core');
+db.apps = Creator.Collections.apps
 
 db.apps.isInternalApp = function (url) {
     var app_url, i, len, ref;
