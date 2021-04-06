@@ -105,7 +105,7 @@ export const loadObjectActions = async function (filePath: string, serviceName: 
     })
 
     for await (const action of actions) {
-        await addObjectActionConfigMetadata(action, serviceName)
+        await addObjectActionConfigMetadata(action, serviceName, true)
     }
 
     for await (const buttonScript of buttonScripts) {
