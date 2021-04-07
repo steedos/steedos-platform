@@ -3,6 +3,7 @@ module.exports = {
   copy: async function (req, res) {
     try {
       const params = req.params;
+      const userSession = req.user;
       const recordId = params._id;
       const steedosSchema = objectql.getSteedosSchema();
       const pdObj = steedosSchema.getObject('process_definition');
@@ -16,11 +17,16 @@ module.exports = {
       let newPDID = newPD._id;
       let pns = await pnObj.find({ filters: ['process_definition', '=', recordId] });
       for (let index = 0; index < pns.length; index++) {
-        const pn = pns[index];
+        let pn = pns[index];
         delete pn._id;
         pn.process_definition = newPDID;
         pn.name = `pn_${nowTime}_${index}`;
-        await pnObj.insert(pn);
+        const now = new Date();
+        pn.created = now;
+        pn.created_by = userSession.userId
+        pn.modified = now;
+        pn.modified_by = userSession.userId
+        await pnObj.directInsert(pn);
       }
       res.status(200).send({ _id: newPDID });
     } catch (error) {

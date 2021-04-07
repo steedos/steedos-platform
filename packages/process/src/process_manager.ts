@@ -133,7 +133,7 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
     }
 
     if(status === 'pending'){
-        await sendNotifications(instanceHistory, options.submitted_by, options.actor);
+        await sendNotifications(instanceHistory, instance.submitted_by, options.actor);
     }
 }
 
