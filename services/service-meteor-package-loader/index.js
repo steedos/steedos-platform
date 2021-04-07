@@ -84,6 +84,9 @@ module.exports = {
      */
     async started() {
         let packageInfo = this.settings.packageInfo;
+        if (!packageInfo) {
+            return;
+        }
         const { path } = packageInfo;
         if (!path) {
             this.logger.info(`Please config packageInfo in your settings.`);
