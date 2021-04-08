@@ -646,7 +646,7 @@ function setDetailOwner(doc, object_name, userId) {
                 let refFieldValue = doc[refField.name];
                 if(refFieldValue && _.isString(refFieldValue)) { /* isString是为排除字段属性multiple:true的情况 */
                     let nameFieldKey = objMaster.NAME_FIELD_KEY;
-                    let recordMaster = objMaster.findOne(refFieldValue, {fields:[nameFieldKey, "owner", "space"]});
+                    let recordMaster = objMaster.findOne(refFieldValue, {fields:[nameFieldKey, "owner", "space", "locked", "company_id", "company_ids"]});
                     if(recordMaster){
                         if (userId && recordMaster.space){
                             masterAllow = false;
