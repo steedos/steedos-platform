@@ -30,13 +30,10 @@ export class Plugins {
                     await Future.task(async () => {
                         try {
                             let service = broker.loadService(packageServiceFilePath);
-                            await new Promise(function (resolve, reject) {
-                                broker.waitForServices(service.name).then(function () {
-                                    resolve(true);
-                                }).catch(function () {
-                                    reject();
-                                })
-                            })
+                            if(!broker.started){
+                                broker._restartService(service)
+                            }
+                            await broker.waitForServices(service.name)
                             if (_.isFunction(service.init)) {
                                 service.init(pluginContext);
                                 WebApp.connectHandlers.use(pluginContext.app);
