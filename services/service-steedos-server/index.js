@@ -117,8 +117,9 @@ module.exports = {
 					mixins: [NodeRedService],
 					settings: this.settings.nodeRedServer
 				});
-
-				await this.broker._restartService(this.nodeRedService)
+				if (!this.broker.started) {
+					await this.broker._restartService(this.nodeRedService)
+				}
 			}
 		},
 
@@ -130,7 +131,9 @@ module.exports = {
 					mixins: [APIService],
 					settings: this.settings.apiServer
 				});
-				this.broker._restartService(this.apiService)
+				if (!this.broker.started) {
+					this.broker._restartService(this.apiService)
+				}
 				this.WebApp.connectHandlers.use("/", this.apiService.express());
 			}
 
@@ -144,6 +147,9 @@ module.exports = {
 					mixins: [packageLoader],
 					settings: { packageInfo: settings }
 				});
+				if (!this.broker.started) {
+					this.broker._restartService(this.standardObjectsPackageLoaderService)
+				}
 				await this.broker.waitForServices(this.standardObjectsPackageLoaderService.name);
 			}
 
