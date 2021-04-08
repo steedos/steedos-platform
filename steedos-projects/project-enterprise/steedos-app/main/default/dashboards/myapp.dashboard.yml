@@ -1,0 +1,15 @@
+_id: myhome
+name: 默认首页
+apps: 
+  - myapp
+widgets: 
+  - position: CENTER_TOP
+    type: instances_pendings
+  - position: CENTER_TOP
+    type: apps
+  - position: CENTER_TOP
+    type: announcements_week
+  - position: RIGHT
+    type: tasks_today
+  - position: RIGHT
+    type: events_today
