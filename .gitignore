@@ -52,3 +52,5 @@ services/service-metadata-translations/.env.local
 services/service-metadata-apps/.env.local
 services/service-metadata-permissionsets/.env.local
 services/service-metadata/.env.local
+steedos-projects/project-community/logs/**
+steedos-projects/project-community/storage/**
