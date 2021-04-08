@@ -1,0 +1,6 @@
+name: lead
+inlineHelpText: 潜在客户姓名（如果市场活动成员基于潜在客户）。
+label: 潜在客户
+reference_to: leads
+sort_no: 180
+type: lookup

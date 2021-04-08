@@ -1,0 +1,17 @@
+name: agreement_contact_role
+label: 主协议联系人角色
+description: 
+fields:
+  agreement:
+    label: 主协议
+    help: 
+    description: 
+  contact:
+    label: 启用人
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有主协议联系人角色
+  recent:
+    label: 最近查看

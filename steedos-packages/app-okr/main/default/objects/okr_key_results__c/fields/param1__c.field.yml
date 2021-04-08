@@ -1,0 +1,19 @@
+name: param1__c
+data_type: number
+filterable: false
+formula: 'CASE(confidence__c, "1", 1, "2", 2, "3", 3, "4", 4,"5", 5, 3)*weight__c'
+formula_blank_value: zeroes
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 信息指数（数值）
+omit: false
+precision: 18
+readonly: false
+required: false
+scale: 2
+searchable: false
+sort_no: 340
+sortable: false
+type: formula

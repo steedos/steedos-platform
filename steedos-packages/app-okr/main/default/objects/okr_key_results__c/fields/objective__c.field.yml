@@ -1,0 +1,16 @@
+name: objective__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 目标
+omit: false
+readonly: false
+reference_to: okr_objective__c
+required: true
+searchable: false
+sort_no: 120
+sortable: false
+type: master_detail
+write_requires_master_read: true

@@ -1,0 +1,22 @@
+name: 自定义应用
+code: myapp
+description: 包含审批、文档、公告、任务、日程等标准对象。
+icon_slds: groups
+sort: 10
+is_creator: true
+objects:
+  - instances
+  - cms_posts
+  - announcements
+  - space_users
+  - tasks
+  - events
+  - reports
+mobile_objects:
+  - instances
+  - cms_posts
+  - announcements
+  - space_users
+  - tasks
+  - events
+visible: true

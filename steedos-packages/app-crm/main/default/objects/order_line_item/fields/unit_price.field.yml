@@ -1,0 +1,5 @@
+name: unit_price
+inlineHelpText: 订单产品的单价。
+label: 单价
+sort_no: 120
+type: currency

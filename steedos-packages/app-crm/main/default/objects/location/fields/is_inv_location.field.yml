@@ -1,0 +1,5 @@
+name: is_inv_location
+defaultValue: true
+label: 库存位置
+sort_no: 120
+type: boolean

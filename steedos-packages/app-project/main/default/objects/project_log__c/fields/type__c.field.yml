@@ -1,0 +1,27 @@
+name: type__c
+defaultValue: General
+description: null
+filterable: false
+group: null
+hidden: false
+index: false
+inlineHelpText: null
+is_name: false
+is_wide: false
+label: 类型
+omit: false
+options:
+  - label: 汇报
+    value: Report
+  - label: 讨论
+    value: Discussion
+  - label: 风险
+    value: Risk
+  - label: 其他
+    value: Others
+readonly: false
+required: false
+searchable: false
+sort_no: 110
+sortable: false
+type: select

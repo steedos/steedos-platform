@@ -1,0 +1,21 @@
+name: uom__c
+defaultValue: Number
+filterable: false
+hidden: true
+index: false
+is_name: false
+is_wide: false
+label: 衡量方式
+multiple: false
+omit: true
+options:
+  - label: 数值
+    value: Number
+  - label: 百分比
+    value: Percent
+readonly: true
+required: false
+searchable: false
+sort_no: 130
+sortable: false
+type: select

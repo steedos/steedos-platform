@@ -1,0 +1,6 @@
+name: campaign_id
+label: 市场活动
+reference_to: campaign
+searchable: true
+sort_no: 250
+type: master_detail

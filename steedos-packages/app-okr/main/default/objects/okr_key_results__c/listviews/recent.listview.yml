@@ -1,0 +1,26 @@
+name: recent
+columns:
+  - field: name
+    wrap: false
+  - field: objective__c
+    wrap: false
+  - field: owner
+    wrap: false
+  - field: weight__c
+    wrap: false
+  - field: starting_value__c
+    wrap: false
+  - field: target__c
+    wrap: false
+  - field: most_recent_progress_made__c
+    wrap: false
+  - field: progress__c
+    wrap: false
+  - field: calculated_objective_progress__c
+    wrap: false
+filter_scope: space
+filters: []
+label: 最近查看
+scrolling_mode: standard
+shared: true
+type: grid

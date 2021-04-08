@@ -1,0 +1,6 @@
+name: list_price
+inlineHelpText: 父级订单上的价格手册设定的默认价格。（只读）
+label: 价目表价格
+readonly: true
+sort_no: 130
+type: currency

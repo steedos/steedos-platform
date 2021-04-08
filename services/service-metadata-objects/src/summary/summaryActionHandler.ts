@@ -46,6 +46,9 @@ export class SummaryActionHandler {
             throw new Error(`Invalid field type summary '${field_name}' on the object '${object_name}', miss data_type property.`);
         }
         const dataType = await this.getSummaryDataType(summaryConfig, summaryObject);
+        if(!dataType){
+            return ;
+        }
         if (dataType !== summaryConfig.data_type) {
             throw new Error(`The data_type of the summary field '${field_name}' on the object '${object_name}' is incorrect, it should be '${dataType}' but is set to '${summaryConfig.data_type}'.`);
         }
@@ -87,7 +90,8 @@ export class SummaryActionHandler {
                 result = <SteedosSummaryDataTypeValue>fieldType;
             }
             else {
-                throw new Error(`The summary_field '${summary_field}' is not a field of the summary_object '${summary_object}'.`);
+                // throw new Error(`The summary_field '${summary_field}' is not a field of the summary_object '${summary_object}'.`);
+                return 
             }
         }
         else {

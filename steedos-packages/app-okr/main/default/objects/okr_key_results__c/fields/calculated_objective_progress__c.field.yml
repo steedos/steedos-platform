@@ -1,0 +1,16 @@
+name: calculated_objective_progress__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 完成度（贡献）
+omit: true
+precision: 18
+readonly: true
+required: false
+scale: 4
+searchable: false
+sort_no: 275
+sortable: true
+type: number

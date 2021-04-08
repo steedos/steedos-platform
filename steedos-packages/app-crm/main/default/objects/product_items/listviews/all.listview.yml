@@ -1,0 +1,10 @@
+name: all
+columns:
+  - product_items_number
+  - product
+  - location
+  - field: quantity
+    width: 100
+  - unit
+label: 所有产品项
+shared: true

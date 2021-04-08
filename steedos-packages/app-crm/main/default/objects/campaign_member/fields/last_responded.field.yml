@@ -1,0 +1,5 @@
+name: last_responded
+hidden: true
+label: 上次响应日期
+sort_no: 300
+type: date

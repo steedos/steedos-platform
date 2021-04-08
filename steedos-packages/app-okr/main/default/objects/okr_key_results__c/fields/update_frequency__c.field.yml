@@ -1,0 +1,28 @@
+name: update_frequency__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 更新频率
+multiple: false
+omit: false
+options:
+  - label: 每天一次
+    value: Daily
+  - label: 每周一次
+    value: Weekly
+  - label: 每月一次
+    value: Monthly
+  - label: 每季度一次
+    value: Quarterly
+  - label: 半年一次
+    value: ' Half Annually'
+  - label: 一年一次
+    value: Annually
+readonly: false
+required: false
+searchable: false
+sort_no: 190
+sortable: false
+type: select

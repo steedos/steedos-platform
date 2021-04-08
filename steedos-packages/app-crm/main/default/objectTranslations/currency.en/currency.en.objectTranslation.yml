@@ -1,0 +1,21 @@
+name: currency
+label: 货币
+description: 
+fields:
+  exchange_rate:
+    label: 汇率（人民币）
+    help: 
+    description: 
+  name:
+    label: 货币名称
+    help: 
+    description: 
+  shorthand:
+    label: 简称
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有货币
+  recent:
+    label: 最近查看

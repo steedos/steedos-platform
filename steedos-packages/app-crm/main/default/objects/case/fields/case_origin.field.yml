@@ -1,0 +1,14 @@
+name: case_origin
+label: 个案来源
+options:
+  - label: 电子邮件
+    value: Email
+  - label: 电话
+    value: Phone
+  - label: 网页
+    value: Web
+required: true
+searchable: true
+sort_no: 180
+sortable: true
+type: select

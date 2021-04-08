@@ -1,0 +1,68 @@
+name: project_meeting__c
+label: 会议
+description: 
+fields:
+  assignees2__c:
+    label: 参会者（联系人）
+    help: 从客户联系人中选择参会者
+    description: 
+  assignees__c:
+    label: 参会者（人员）
+    help: 从系统人员中选择参会者
+    description: 
+  description__c:
+    label: 描述
+    help: 会议目标、议程、参会人员及其他说明等
+    description: 
+  end__c:
+    label: 结束时间
+    help: 
+    description: 
+  is_all_day__c:
+    label: 全天会议
+    help: 
+    description: 
+  location__c:
+    label: 地址
+    help: 
+    description: 
+  meeting_type__c:
+    label: 会议类别
+    help: 
+    options:
+      - label: 项目启动
+        value: Kick-off
+      - label: 阶段评审/技术评审
+        value: Review
+      - label: 项目验收
+        value: Acceptance
+      - label: 需求调研
+        value: Research
+      - label: 问题讨论
+        value: Problem
+      - label: 周期性例会
+        value: Periodic
+      - label: 其他
+        value: Others
+    description: 
+  name:
+    label: 主题
+    help: 
+    description: 
+  owner:
+    label: 责任人
+    help: 
+    description: 
+  project__c:
+    label: 项目
+    help: 
+    description: 
+  start__c:
+    label: 开始时间
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+  recent:
+    label: 最近查看

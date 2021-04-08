@@ -1,0 +1,33 @@
+name: product_consumed
+label: 产品消耗
+description: 
+fields:
+  description:
+    label: 描述
+    help: 
+    description: 
+  product:
+    label: 产品名
+    help: 产品项下对应的产品名。
+    description: 
+  product_consumed_number:
+    label: 产品消耗编号
+    help: 
+    description: 
+  product_items:
+    label: 产品项
+    help: 
+    description: 
+  quantity:
+    label: 消耗数量
+    help: 
+    description: 
+  unit_price:
+    label: 单价
+    help: 
+    description: 
+groups:
+  描述: 描述
+listviews:
+  all:
+    label: 所有产品消耗

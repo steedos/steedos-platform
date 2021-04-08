@@ -1,0 +1,6 @@
+name: name
+index: true
+label: 价格手册名
+required: true
+sort_no: 100
+type: text

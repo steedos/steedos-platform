@@ -1,0 +1,16 @@
+name: progress__c
+filterable: true
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 完成度
+omit: true
+precision: 18
+readonly: true
+required: false
+scale: 4
+searchable: true
+sort_no: 170
+sortable: true
+type: number

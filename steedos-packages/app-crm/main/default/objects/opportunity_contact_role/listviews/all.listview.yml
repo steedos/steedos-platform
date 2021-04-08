@@ -1,0 +1,10 @@
+name: all
+columns:
+  - number
+  - opportunity_id
+  - contact_id
+  - is_primary
+  - roles
+filter_scope: space
+label: 全部业务机会联系人
+shared: true

@@ -1,0 +1,6 @@
+name: quantity
+defaultValue: 1
+label: 数量
+required: true
+sort_no: 120
+type: number

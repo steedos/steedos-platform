@@ -1,0 +1,5 @@
+name: last_transfer_date
+hidden: true
+label: 上次更改客户经理日期
+sort_no: 330
+type: date

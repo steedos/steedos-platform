@@ -1,0 +1,72 @@
+name: project_expense__c
+label: 费用
+description: 
+fields:
+  amount__c:
+    label: 费用
+    help: 
+    description: 
+  approved_date__c:
+    label: 核准日期
+    help: 
+    description: 
+  approve_state__c:
+    label: 处理状态
+    help: 
+    options:
+      - label: 待提交
+        value: to_be_submited
+        color: cfd3d7
+      - label: 已核准
+        value: approved
+        color: 49d181
+      - label: 审批中
+        value: approving
+        color: f9e29d
+      - label: 已驳回
+        value: rejected
+        color: c11d25
+    description: 
+  description__c:
+    label: 备注
+    help: 
+    description: 
+  incurred_by__c:
+    label: 经手人员
+    help: 
+    description: 
+  incurred_date__c:
+    label: 发生日期
+    help: 
+    description: 
+  name:
+    label: 编号
+    help: 
+    description: 
+  owner:
+    label: 所有者(E)
+    help: 
+    description: 
+  project_id__c:
+    label: 项目
+    help: 
+    description: 
+  project_task__c:
+    label: 任务
+    help: 
+    description: 
+  project__c:
+    label: 项目名
+    help: 
+    description: 
+  submit_date__c:
+    label: 提交日期
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+  my:
+    label: 我的
+  recent:
+    label: 最近查看

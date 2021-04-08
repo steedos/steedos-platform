@@ -1,0 +1,11 @@
+name: all
+columns:
+  - campaign_id
+  - campany_or_account
+  - name
+  - status
+  - lead_source
+  - leads
+filter_scope: space
+label: 所有市场活动成员
+shared: true

@@ -1,0 +1,17 @@
+name: 市场营销
+code: marketing
+description: 自动化市场营销
+icon_slds: campaign
+is_creator: true
+mobile_objects:
+  - campaign
+  - leads
+objects:
+  - campaign
+  - leads
+  - accounts
+  - contacts
+  - opportunity
+  - reports
+sort: 40
+visible: false

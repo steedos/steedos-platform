@@ -1,0 +1,5 @@
+name: closed_when_created
+hidden: true
+label: 创建时关闭
+sort_no: 310
+type: boolean

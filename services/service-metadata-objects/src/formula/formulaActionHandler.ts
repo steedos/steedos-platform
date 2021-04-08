@@ -96,7 +96,8 @@ export class FormulaActionHandler{
             }
             if (!tempFieldConfig) {
                 // 不是对象上的字段，则直接退出，这里注意公式中引用零代码中的字段的话，公式中字段名需要手动加上__c后缀（因为用户填写的api名称不带__c，是内核会自动加后缀），否则会找不到
-                throw new Error(`computeFormulaVarAndQuotes:Can't find the field '${varItem}' on the object '${tempObjectConfig.name}' for the formula var '${formulaVar}'`);
+                // throw new Error(`computeFormulaVarAndQuotes:Can't find the field '${varItem}' on the object '${tempObjectConfig.name}' for the formula var '${formulaVar}'`);
+                return ;
             }
             let isFormulaType = tempFieldConfig.type === "formula";
             if(!isUserKey){

@@ -1,0 +1,17 @@
+name: start_date__c
+data_type: date
+filterable: false
+formula: period__c.start_date__c
+formula_blank_value: zeroes
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 开始日期
+omit: true
+readonly: false
+required: false
+searchable: false
+sort_no: 240
+sortable: false
+type: formula

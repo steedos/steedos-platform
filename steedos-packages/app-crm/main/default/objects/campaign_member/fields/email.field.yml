@@ -1,0 +1,4 @@
+name: email
+label: 电子邮件
+sort_no: 140
+type: email

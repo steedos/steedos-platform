@@ -1,0 +1,5 @@
+name: customer_authorized_by_id
+label: 客户授权人
+reference_to: contacts
+sort_no: 160
+type: lookup

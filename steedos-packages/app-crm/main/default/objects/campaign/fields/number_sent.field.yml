@@ -1,0 +1,6 @@
+name: number_sent
+group: 计划
+inlineHelpText: 市场活动面向的目标个人数目。例如，发送的电子邮件数目。
+label: 市场活动中的发送次数
+sort_no: 190
+type: number

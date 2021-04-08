@@ -1,0 +1,17 @@
+name: case_reason
+label: 个案原因
+options:
+  - label: 用户未参加培训
+    value: Not_In_Training
+  - label: 功能复杂
+    value: Complex_Function
+  - label: 已有问题
+    value: Existing_Problem
+  - label: 说明不详
+    value: Description_Unknown
+  - label: 新问题
+    value: New_Problem
+searchable: true
+sort_no: 190
+sortable: true
+type: select

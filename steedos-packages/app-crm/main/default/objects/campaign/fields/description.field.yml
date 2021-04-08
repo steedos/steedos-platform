@@ -1,0 +1,6 @@
+name: description
+is_wide: true
+label: 描述
+rows: 3
+sort_no: 180
+type: textarea

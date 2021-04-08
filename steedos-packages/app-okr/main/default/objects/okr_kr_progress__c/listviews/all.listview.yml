@@ -1,0 +1,28 @@
+name: all
+columns:
+  - field: name
+    wrap: false
+  - field: key_result__c
+    wrap: false
+  - field: update_date__c
+    wrap: false
+  - field: current_progress__c
+    wrap: false
+  - field: progress__c
+    wrap: false
+  - field: confidence__c
+    wrap: false
+filter_fields:
+  - current_progress__c
+  - update_date__c
+  - progress__c
+filter_scope: space
+filters: []
+label: 所有
+scrolling_mode: standard
+shared: true
+show_count: false
+sort:
+  - field_name: update_date__c
+    order: desc
+type: grid

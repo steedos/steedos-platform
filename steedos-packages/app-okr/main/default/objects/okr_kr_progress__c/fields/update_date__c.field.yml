@@ -1,0 +1,14 @@
+name: update_date__c
+filterable: true
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 日期
+omit: false
+readonly: false
+required: true
+searchable: true
+sort_no: 165
+sortable: true
+type: date

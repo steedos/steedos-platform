@@ -1,0 +1,127 @@
+name: agreement
+label: 主协议
+description: 
+fields:
+  account_id:
+    label: 客户名
+    help: 
+    description: 
+  activated_by_id:
+    label: 启用人
+    help: 
+    description: 
+  activated_date:
+    label: 启用日期
+    help: 
+    description: 
+  agreement_number:
+    label: 主协议编号
+    help: 
+    description: 
+  agreement_term:
+    label: 主协议期限（月）
+    help: 
+    description: 
+  billing_address:
+    label: 开单地址
+    help: 
+    description: 
+  company_signed_date:
+    label: 公司签字日期
+    help: 
+    description: 
+  company_signed_id:
+    label: 公司签字人
+    help: 
+    description: 
+  currency:
+    label: 主协议币种
+    help: 
+    description: 
+  customer_signed_date:
+    label: 客户签字日期
+    help: 
+    description: 
+  customer_signed_id:
+    label: 客户签字人
+    help: 
+    description: 
+  customer_signed_title:
+    label: 客户签字人职务
+    help: 
+    description: 
+  description:
+    label: 备注
+    help: 
+    description: 
+  end_date:
+    label: 主协议结束日期
+    help: 
+    description: 
+  name:
+    label: 主协议名
+    help: 
+    description: 
+  owner:
+    label: 主协议所有人
+    help: 
+    description: 
+  owner_expiration_notice:
+    label: 通知所有人到期日
+    help: 
+    options:
+      - label: 15天
+        value: 15天
+      - label: 30天
+        value: 30天
+      - label: 45天
+        value: 45天
+      - label: 60天
+        value: 60天
+      - label: 90天
+        value: 90天
+      - label: 120天
+        value: 120天
+    description: 
+  price_book_id:
+    label: 价格手册
+    help: 
+    description: 
+  shipping_address:
+    label: 发货地址
+    help: 
+    description: 
+  special_term:
+    label: 特别条款
+    help: 
+    description: 
+  start_date:
+    label: 主协议开始日期
+    help: 
+    description: 
+  status:
+    label: 状态
+    help: 
+    options:
+      - label: 草稿
+        value: Draft
+      - label: 审批中
+        value: Pending
+      - label: 已启用
+        value: Enabled
+      - label: 已结束
+        value: Finished
+      - label: 意外终止
+        value: Terminated
+    description: 
+groups:
+  地址信息: 地址信息
+  备注信息: 备注信息
+  签名信息: 签名信息
+listviews:
+  all:
+    label: 所有主协议
+  mine:
+    label: 我的主协议
+  recent:
+    label: 最近查看

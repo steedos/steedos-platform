@@ -1,0 +1,20 @@
+name: target_type__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 目标类型
+multiple: false
+omit: false
+options:
+  - label: 增加到
+    value: Increase to
+  - label: 减少到
+    value: Decrease to
+readonly: false
+required: true
+searchable: false
+sort_no: 140
+sortable: false
+type: select

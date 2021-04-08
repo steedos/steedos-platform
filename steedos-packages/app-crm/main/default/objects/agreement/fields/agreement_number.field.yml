@@ -1,0 +1,8 @@
+name: agreement_number
+filterable: true
+formula: '{YYYY}{MM}{0000}'
+is_name: true
+label: 主协议编号
+readonly: true
+sort_no: 120
+type: autonumber

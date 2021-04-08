@@ -1,0 +1,5 @@
+name: iq_score
+hidden: true
+label: 业务机会得分
+sort_no: 290
+type: number

@@ -1,0 +1,91 @@
+name: product
+label: 产品
+description: 
+fields:
+  description:
+    label: 产品描述
+    help: 
+    description: 
+  display_url:
+    label: 显示URL
+    help: 
+    description: 
+  external_data_source:
+    label: 外部数据源
+    help: 
+    description: 
+  external_id:
+    label: 外部ID
+    help: 
+    description: 
+  family:
+    label: 产品系列
+    help: 
+    options:
+      - label: 无
+        value: none
+    description: 
+  is_active:
+    label: 已启用
+    help: 指示产品已准备好在价目表、业务机会或报价中使用，以及您是否可以在视图中查看产品。
+    description: 
+  name:
+    label: 产品名称
+    help: 
+    description: 
+  number_of_quantity_installments:
+    label: 数量分期付款期数
+    help: 
+    description: 
+  number_of_revenue_installments:
+    label: 收入分期付款期数
+    help: 
+    description: 
+  product_code:
+    label: 产品代码
+    help: 
+    description: 
+  product_currency:
+    label: 产品货币
+    help: 
+    description: 
+  quantity_installment_period:
+    label: 数量分期付款周期
+    help: 
+    description: 
+  quantity_schedule_type:
+    label: 数量计划类型
+    help: 
+    description: 
+  quantity_scheduling_enabled:
+    label: 已启用数量计划
+    help: 
+    description: 
+  quantity_unit_of_measure:
+    label: 数量计量单位
+    help: 
+    description: 
+  revenue_installment_period:
+    label: 收入分期付款周期
+    help: 
+    description: 
+  revenue_schedule_type:
+    label: 收入计划类型
+    help: 
+    description: 
+  revenue_scheduling_enabled:
+    label: 已启用收入计划
+    help: 
+    description: 
+  stock_keeping_unit:
+    label: 产品最小存货单位
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有产品
+  recent:
+    label: 最近查看
+actions:
+  addToPriceBook:
+    label: 添加到价格手册

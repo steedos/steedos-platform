@@ -1,0 +1,17 @@
+name: project_milestone__c
+custom: true
+enable_api: true
+enable_audit: true
+enable_chatter: false
+enable_events: false
+enable_files: true
+enable_inline_edit: true
+enable_instances: false
+enable_notes: false
+enable_search: true
+enable_share: false
+enable_tasks: false
+enable_workflow: false
+icon: entity_milestone
+is_enable: true
+label: 里程碑

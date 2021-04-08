@@ -1,0 +1,15 @@
+name: status
+filterable: true
+label: 状态
+options:
+  - label: 暂停
+    value: On_Hold
+  - label: 升级
+    value: Escalated
+  - label: 新建
+    value: New
+required: true
+searchable: true
+sort_no: 160
+sortable: true
+type: select

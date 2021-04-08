@@ -1,0 +1,5 @@
+name: unread
+hidden: true
+label: 未读
+sort_no: 360
+type: boolean

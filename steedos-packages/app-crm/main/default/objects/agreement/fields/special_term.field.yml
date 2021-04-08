@@ -1,0 +1,6 @@
+name: special_term
+group: 备注信息
+label: 特别条款
+rows: 3
+sort_no: 210
+type: textarea

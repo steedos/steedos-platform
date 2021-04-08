@@ -1,0 +1,16 @@
+name: days__c
+filterable: false
+hidden: true
+index: false
+is_name: false
+is_wide: false
+label: 总天数
+omit: false
+precision: 18
+readonly: false
+required: false
+scale: 0
+searchable: false
+sort_no: 260
+sortable: false
+type: number

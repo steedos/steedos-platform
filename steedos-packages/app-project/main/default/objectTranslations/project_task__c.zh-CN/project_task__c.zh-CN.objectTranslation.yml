@@ -1,0 +1,138 @@
+name: project_task__c
+label: 项目任务
+description: 
+fields:
+  assignees__c:
+    label: 分派给
+    help: 
+    description: 
+  blocked_reason__c:
+    label: 受阻原因
+    help: 
+    description: 
+  blocked__c:
+    label: 受阻
+    help: 
+    description: 
+  class__c:
+    label: 附加标记
+    help: 
+    options:
+      - label: 临时
+        value: Ad Hoc
+      - label: 缺陷
+        value: Defect
+      - label: 返工
+        value: Rework
+    description: 
+  completed_date__c:
+    label: 实际完成日期
+    help: 
+    description: 
+  completed__c:
+    label: 已完成
+    help: 
+    description: 
+  description__c:
+    label: 简述
+    help: 
+    description: 
+  due_date__c:
+    label: 到期日期
+    help: 
+    description: 
+  estimated_expense__c:
+    label: 预估费用
+    help: 
+    description: 
+  estimated_hours__c:
+    label: 预估耗时
+    help: 
+    description: 
+  expense_balance__c:
+    label: 剩余费用
+    help: 
+    description: 
+  hours_balance__c:
+    label: 剩余用时
+    help: 
+    description: 
+  name:
+    label: 任务名称
+    help: 
+    description: 
+  overspended__c:
+    label: 已超支
+    help: 
+    description: 
+  priority__c:
+    label: 优先级
+    help: 
+    options:
+      - label: 高
+        value: high
+        color: c11d25
+      - label: 中
+        value: normal
+        color: f9e29d
+      - label: 低
+        value: low
+        color: 49d181
+    description: 
+  project_milestone__c:
+    label: 里程碑
+    help: 
+    description: 
+  project_name__c:
+    label: 项目名称
+    help: 
+    description: 
+  project__c:
+    label: 项目
+    help: 
+    description: 
+  start_date__c:
+    label: 开始日期
+    help: 
+    description: 
+  state__c:
+    label: 状态
+    help: 
+    options:
+      - label: 未开始
+        value: not_started
+        color: cfd3d7
+      - label: 进行中
+        value: in_progress
+        color: '4169E1'
+      - label: 已完成
+        value: completed
+        color: 49d181
+      - label: 等待其他人
+        value: waiting
+        color: f9e29d
+      - label: '延期 '
+        value: deferred
+        color: c11d25
+    description: 
+  total_expense__c:
+    label: 累计花费
+    help: 
+    description: 
+  total_hours__c:
+    label: 累计耗时
+    help: 
+    description: 
+groups:
+  受阻: 受阻
+  费用: 费用
+  用时: 用时
+listviews:
+  all:
+    label: 所有
+  mine:
+    label: 我的任务
+  recent:
+    label: 最近查看
+  todo:
+    label: 待完成的任务

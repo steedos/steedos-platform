@@ -1,0 +1,16 @@
+name: weight__c
+filterable: true
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 权重
+omit: false
+precision: 18
+readonly: false
+required: true
+scale: 2
+searchable: false
+sort_no: 165
+sortable: true
+type: number

@@ -1,0 +1,5 @@
+name: quantity
+label: 现存数量
+required: true
+sort_no: 130
+type: number

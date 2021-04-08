@@ -1,0 +1,22 @@
+name: ownership__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 隶属
+multiple: false
+omit: false
+options:
+  - label: 公司
+    value: Company
+  - label: 团队
+    value: Team
+  - label: 个人
+    value: Individual
+readonly: false
+required: true
+searchable: false
+sort_no: 120
+sortable: false
+type: select

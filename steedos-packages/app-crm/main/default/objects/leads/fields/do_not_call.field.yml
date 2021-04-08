@@ -1,0 +1,5 @@
+name: do_not_call
+hidden: true
+label: 请勿致电
+sort_no: 300
+type: boolean

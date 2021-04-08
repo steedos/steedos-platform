@@ -1,0 +1,6 @@
+name: price_book_entry_id
+hidden: true
+label: 价格手册条目
+reference_to: price_book_entry
+sort_no: 270
+type: lookup

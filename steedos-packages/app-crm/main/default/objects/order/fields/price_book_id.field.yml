@@ -1,0 +1,6 @@
+name: price_book_id
+hidden: true
+label: 价格手册
+reference_to: price_book
+sort_no: 220
+type: lookup

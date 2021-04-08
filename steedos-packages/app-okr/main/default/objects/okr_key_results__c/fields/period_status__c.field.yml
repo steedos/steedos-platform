@@ -1,0 +1,14 @@
+name: period_status__c
+filterable: false
+hidden: true
+index: false
+is_name: false
+is_wide: false
+label: 当前时段
+omit: true
+readonly: false
+required: false
+searchable: false
+sort_no: 320
+sortable: false
+type: text

@@ -1,0 +1,18 @@
+name: location_type
+defaultValue: Location
+filterable: true
+label: 位置类型
+options:
+  - label: 仓库
+    value: Location
+  - label: 站点
+    value: Site
+  - label: 货车
+    value: Van
+  - label: 工厂
+    value: Factory
+required: true
+searchable: true
+sort_no: 110
+sortable: true
+type: select

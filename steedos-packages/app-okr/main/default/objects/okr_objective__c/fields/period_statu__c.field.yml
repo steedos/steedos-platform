@@ -1,0 +1,17 @@
+name: period_statu__c
+data_type: text
+filterable: false
+formula: TEXT(period__c.status__c)
+formula_blank_value: zeroes
+hidden: true
+index: false
+is_name: false
+is_wide: false
+label: 时段状态
+omit: true
+readonly: false
+required: false
+searchable: false
+sort_no: 280
+sortable: false
+type: formula

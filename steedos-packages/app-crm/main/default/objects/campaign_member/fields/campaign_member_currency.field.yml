@@ -1,0 +1,6 @@
+name: campaign_member_currency
+hidden: true
+inlineHelpText: 市场活动成员中货币字段的默认币种。仅适用于使用多币种的组织。
+label: 市场活动成员币种
+sort_no: 290
+type: text

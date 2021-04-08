@@ -1,0 +1,43 @@
+name: project_time__c
+label: 用时
+description: 
+fields:
+  description__c:
+    label: 备注
+    help: 
+    description: 
+  hours__c:
+    label: 花费人时
+    help: 
+    description: 
+  incurred_by__c:
+    label: 人员
+    help: 
+    description: 
+  incurred_date__c:
+    label: 发生日期
+    help: 
+    description: 
+  name:
+    label: 编号
+    help: 
+    description: 
+  project_id__c:
+    label: 项目
+    help: 
+    description: 
+  project_task__c:
+    label: 任务
+    help: 
+    description: 
+  project__c:
+    label: 项目名
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+  my:
+    label: 我的
+  recent:
+    label: 最近查看

@@ -1,0 +1,73 @@
+name: account_contact_relationship
+label: 客户联系人关系
+description: 
+fields:
+  account_id:
+    label: 客户
+    help: 与联系人相关的公司的名称。
+    description: 
+  contact_id:
+    label: 联系人
+    help: 与客户相关的人员的姓名。
+    description: 
+  end_date:
+    label: 结束日期
+    help: 客户和联系人之间关系结束的日期。与开始日期字段一起使用，以保持关系历史记录。
+    description: 
+  is_active:
+    label: 启用
+    help: 表示联系人是否积极参与该公司。
+    description: 
+  is_direct:
+    label: 直接
+    help: >-
+      表示与联系人相关的客户是否为该联系人的主要客户。该只读字段基于联系人记录中的客户名。例如，在百度客户记录中，相关联系人的相关列表会自动包括在客户名字段中拥有百度的所有联系人，并将他们标记为直接联系人。
+    description: 
+  number:
+    label: 序号
+    help: 
+    description: 
+  relationship_strength:
+    label: 亲密程度
+    help: 
+    options:
+      - label: 好友关系
+        value: Friends
+      - label: 一般关系
+        value: Normal
+      - label: 初相识
+        value: New
+    description: 
+  role:
+    label: 角色
+    help: 联系人在业务机会中的参与角色；例如：购买者、决策者或评估者。您可以为一个联系人选择多个角色。
+    options:
+      - label: 普通人
+        value: Ordinary
+      - label: 决策人
+        value: Policymaker
+      - label: 分项决策人
+        value: Itemize_Policymaker
+      - label: 商务决策
+        value: Business_Decision
+      - label: 技术决策
+        value: Tech_Decision
+      - label: 财务决策
+        value: Finance_Decision
+      - label: 使用人
+        value: Recipient
+      - label: 意见影响人
+        value: Opinions_People
+    description: 
+  start_date:
+    label: 开始日期
+    help: 客户和联系人之间关系开始的日期。与结束日期字段一起使用，以保持关系历史记录。
+    description: 
+listviews:
+  all:
+    label: 所有客户联系人关系
+  recent:
+    label: 最近查看
+actions:
+  addContact:
+    label: 新建联系人

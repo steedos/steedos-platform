@@ -1,0 +1,5 @@
+name: responded
+inlineHelpText: 表示市场活动成员是否已响应。
+label: 已响应
+sort_no: 220
+type: boolean

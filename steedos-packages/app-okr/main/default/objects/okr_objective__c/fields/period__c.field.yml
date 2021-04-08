@@ -1,0 +1,16 @@
+name: period__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 时段
+omit: false
+readonly: false
+reference_to: okr_period__c
+required: true
+searchable: false
+sort_no: 130
+sortable: false
+type: master_detail
+write_requires_master_read: true

@@ -1,0 +1,26 @@
+name: 任务完成情况统计
+charting: false
+columns:
+  - priority__c
+  - state__c
+counting: true
+data_source: odata
+fields:
+  - name
+  - start_date__c
+  - due_date__c
+  - state__c
+  - completed_date__c
+  - project__c.name
+filter_fields:
+  - field: start_date__c
+    required: false
+  - field: due_date__c
+    required: false
+filter_scope: space
+grouping: true
+object_name: project_task__c
+report_type: matrix
+rows:
+  - assignees__c.name
+totaling: true

@@ -1,0 +1,39 @@
+name: type__c
+defaultValue: null
+description: null
+filterable: false
+group: null
+hidden: false
+index: false
+inlineHelpText: null
+is_name: false
+is_wide: false
+label: 问题类型
+omit: false
+options:
+  - label: 预算
+    value: Budget
+  - label: 资源
+    value: Resource
+  - label: 范围
+    value: Scope
+  - label: 计划
+    value: Schedule
+  - label: 质量
+    value: Quality
+  - label: 风险
+    value: Risk
+  - label: 其他
+    value: Others
+  - label: 维护：Bug
+    value: Bug
+  - label: 维护：需求
+    value: Demand
+  - label: 维护：其他
+    value: Other Maintain
+readonly: false
+required: false
+searchable: false
+sort_no: 140
+sortable: false
+type: select

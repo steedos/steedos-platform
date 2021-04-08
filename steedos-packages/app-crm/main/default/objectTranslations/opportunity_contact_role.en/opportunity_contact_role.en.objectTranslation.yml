@@ -1,0 +1,44 @@
+name: opportunity_contact_role
+label: 业务机会联系人角色
+description: 
+fields:
+  contact_id:
+    label: 联系人
+    help: 联系人或个人客户的姓名。
+    description: 
+  is_primary:
+    label: 主要
+    help: 打✔，则该联系人为业务机会的主要联系人。
+    description: 
+  number:
+    label: 序号
+    help: 
+    description: 
+  opportunity_id:
+    label: 业务机会名
+    help: 与联系人相关的业务机会的名称。
+    description: 
+  roles:
+    label: 角色
+    help: 联系人在业务机会中的参与角色；例如：购买者、决策者或评估者。您可以为一个联系人选择多个角色。
+    options:
+      - label: 普通人
+        value: Ordinary
+      - label: 决策人
+        value: Policymaker
+      - label: 分项决策人
+        value: Itemize_Policymaker
+      - label: 商务决策
+        value: Business_Decision
+      - label: 技术决策
+        value: Tech_Decision
+      - label: 财务决策
+        value: Finance_Decision
+      - label: 使用人
+        value: Recipient
+      - label: 意见影响人
+        value: Opinions_People
+    description: 
+listviews:
+  all:
+    label: 全部业务机会联系人

@@ -1,0 +1,9 @@
+name: item_transaction_number
+formula: 'T-{000}'
+index: true
+is_name: true
+label: 产品项交易编号
+readonly: true
+searchable: true
+sort_no: 100
+type: autonumber

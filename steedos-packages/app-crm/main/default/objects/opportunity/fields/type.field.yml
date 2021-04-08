@@ -1,0 +1,10 @@
+name: type
+inlineHelpText: 业务机会的类型，例如“现有业务”或“新业务”。
+label: 业务机会类型
+options:
+  - label: 现有业务
+    value: Existing_Business
+  - label: 新业务
+    value: New_Business
+sort_no: 140
+type: select

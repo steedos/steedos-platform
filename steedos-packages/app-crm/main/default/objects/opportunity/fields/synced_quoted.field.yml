@@ -1,0 +1,6 @@
+name: synced_quoted
+hidden: true
+inlineHelpText: 同步到业务机会的报价。只有一个报价可以同步到业务机会。
+label: 同步的报价
+sort_no: 310
+type: boolean

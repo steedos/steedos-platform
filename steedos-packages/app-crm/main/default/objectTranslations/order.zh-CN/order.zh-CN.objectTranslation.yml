@@ -1,0 +1,137 @@
+name: order
+label: 订单
+description: 
+fields:
+  account_id:
+    label: 客户
+    help: 
+    description: 
+  account_number:
+    label: 客户编号
+    help: 
+    description: 
+  activated_by_id:
+    label: 启用人
+    help: 
+    description: 
+  activated_date:
+    label: 启用日期
+    help: 
+    description: 
+  agreement_end_date:
+    label: 主协议结束日期
+    help: 
+    description: 
+  agreement_id:
+    label: 主协议编号
+    help: 
+    description: 
+  agreement_name:
+    label: 主协议名
+    help: 
+    description: 
+  bill_to_contact:
+    label: 开单对象联系人
+    help: 
+    description: 
+  billing_address:
+    label: 账单地址
+    help: 
+    description: 
+  company_authorized_by_id:
+    label: 公司授权人
+    help: 
+    description: 
+  company_authorized_date:
+    label: 公司授权日期
+    help: 
+    description: 
+  customer_authorized_by_id:
+    label: 客户授权人
+    help: 
+    description: 
+  customer_authorized_date:
+    label: 客户授权日期
+    help: 
+    description: 
+  description:
+    label: 说明
+    help: 
+    description: 
+  effective_date:
+    label: 订单开始日期
+    help: 
+    description: 
+  end_date:
+    label: 订单结束日期
+    help: 
+    description: 
+  name:
+    label: 订单名
+    help: 
+    description: 
+  opportunity_id:
+    label: 业务机会
+    help: 
+    description: 
+  order_number:
+    label: 订单编号
+    help: 
+    description: 
+  order_reference_number:
+    label: 订单参考编号
+    help: 
+    description: 
+  owner:
+    label: 订单所有人
+    help: 
+    description: 
+  po_date:
+    label: 订单日期
+    help: 
+    description: 
+  po_number:
+    label: 订单编号
+    help: 
+    description: 
+  price_book_id:
+    label: 价格手册
+    help: 
+    description: 
+  quote_id:
+    label: 报价
+    help: 
+    description: 
+  ship_to_contact_id:
+    label: 收货方联系人
+    help: 
+    description: 
+  shipping_address:
+    label: 邮寄地址
+    help: 
+    description: 
+  status:
+    label: 状态
+    help: 
+    options:
+      - label: 草稿
+        value: Draft
+      - label: 已启用
+        value: Activated
+    description: 
+  total_amount:
+    label: 订单金额
+    help: 
+    description: 
+  type:
+    label: 订单类型
+    help: 
+    options:
+      - label: 无
+        value: none
+    description: 
+listviews:
+  all:
+    label: 所有订单
+  recent:
+    label: 最近查看

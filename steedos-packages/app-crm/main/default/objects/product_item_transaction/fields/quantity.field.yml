@@ -1,0 +1,4 @@
+name: quantity
+label: 数量
+sort_no: 120
+type: number

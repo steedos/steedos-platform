@@ -1,0 +1,36 @@
+name: location
+label: 位置
+description: 
+fields:
+  description:
+    label: 描述
+    help: 
+    description: 
+  is_inv_location:
+    label: 库存位置
+    help: 
+    description: 
+  is_mobile:
+    label: 移动位置
+    help: 
+    description: 
+  location_type:
+    label: 位置类型
+    help: 
+    options:
+      - label: 仓库
+        value: Location
+      - label: 站点
+        value: Site
+      - label: 货车
+        value: Van
+      - label: 工厂
+        value: Factory
+    description: 
+  name:
+    label: 位置名称
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有位置

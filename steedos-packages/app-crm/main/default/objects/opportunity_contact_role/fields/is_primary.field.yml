@@ -1,0 +1,5 @@
+name: is_primary
+inlineHelpText: 打✔，则该联系人为业务机会的主要联系人。
+label: 主要
+sort_no: 130
+type: boolean

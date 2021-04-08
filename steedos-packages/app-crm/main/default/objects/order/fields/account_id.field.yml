@@ -1,0 +1,6 @@
+name: account_id
+label: 客户
+reference_to: accounts
+required: true
+sort_no: 120
+type: lookup

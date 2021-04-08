@@ -1,0 +1,6 @@
+name: customer
+label: customer
+license: community
+lockout_interval: '15'
+max_login_attempts: '10'
+password_history: '3'

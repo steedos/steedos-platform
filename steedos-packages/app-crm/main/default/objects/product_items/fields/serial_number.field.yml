@@ -1,0 +1,5 @@
+name: serial_number
+inlineHelpText: 如果现存数量是 1，则输入序号。
+label: 序号
+sort_no: 150
+type: text

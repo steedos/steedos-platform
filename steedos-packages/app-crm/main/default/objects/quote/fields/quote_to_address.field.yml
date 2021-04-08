@@ -1,0 +1,7 @@
+name: quote_to_address
+hidden: true
+is_wide: true
+label: 收报价人地址
+rows: 3
+sort_no: 350
+type: textarea

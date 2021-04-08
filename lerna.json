@@ -1,8 +1,9 @@
 {
   "packages": [
-    "packages/*",
-    "services/*",
-    "apps/*",
+    "packages/**",
+    "steedos-packages/**",
+    "steedos-projects/**",
+    "services/**",
     "server"
   ],
   "useWorkspaces": true,

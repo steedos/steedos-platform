@@ -1,0 +1,6 @@
+name: all
+columns:
+  - agreement
+  - contact
+label: 所有主协议联系人角色
+shared: true

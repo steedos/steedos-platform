@@ -1,0 +1,9 @@
+name: line_number
+formula: '{0000000}'
+index: true
+is_name: true
+label: 行项目编号
+readonly: true
+searchable: true
+sort_no: 190
+type: autonumber

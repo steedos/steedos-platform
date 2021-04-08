@@ -1,0 +1,271 @@
+name: leads
+label: 潜在客户
+description: 
+fields:
+  address:
+    label: 地址
+    help: 
+    description: 
+  annual_revenue:
+    label: 年收入
+    help: 
+    description: 
+  campaign_id:
+    label: 市场活动
+    help: 
+    description: 
+  company:
+    label: 公司
+    help: 
+    description: 
+  converted:
+    label: 已转换
+    help: 
+    description: 
+  converted_account:
+    label: 已转换的客户
+    help: 
+    description: 
+  converted_contact:
+    label: 已转换的联系人
+    help: 
+    description: 
+  converted_opportunity:
+    label: 已转换的业务机会
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  do_not_call:
+    label: 请勿致电
+    help: 
+    description: 
+  email:
+    label: 电子邮件
+    help: 
+    description: 
+  fax:
+    label: 传真
+    help: 
+    description: 
+  fax_opt_out:
+    label: 退出传真列表
+    help: 
+    description: 
+  has_opted_out_of_email:
+    label: 退出邮件列表
+    help: 
+    description: 
+  individual:
+    label: 个人
+    help: 
+    description: 
+  industry:
+    label: 行业
+    help: 
+    options:
+      - label: 农业
+        value: Agriculture
+      - label: 服饰
+        value: Apparel
+      - label: 银行
+        value: Banking
+      - label: 生物科技
+        value: Biotechnology
+      - label: 化工
+        value: Chemicals
+      - label: 软件
+        value: Software
+      - label: 通信
+        value: Communications
+      - label: 建筑
+        value: Construction
+      - label: 咨询
+        value: Consulting
+      - label: 教育
+        value: Education
+      - label: 电子
+        value: Electronics
+      - label: 能源
+        value: Energy
+      - label: 工程
+        value: Engineering
+      - label: 娱乐
+        value: Entertainment
+      - label: 环保
+        value: Environmental
+      - label: 金融
+        value: Finance
+      - label: 食品饮料
+        value: Food_&_Beverage
+      - label: 政府组织
+        value: Government
+      - label: 医疗保健
+        value: Healthcare
+      - label: 服务
+        value: Hospitality
+      - label: 保险
+        value: Insurance
+      - label: 机械
+        value: Machinery
+      - label: 制造
+        value: Manufacturing
+      - label: 媒体
+        value: Media
+      - label: 非牟利组织
+        value: Not_For_Profit
+      - label: 其他
+        value: Other
+      - label: 休闲
+        value: Recreation
+      - label: 零售
+        value: Retail
+      - label: 航运
+        value: Shipping
+      - label: 科技
+        value: Technology
+      - label: 电讯
+        value: Telecommunications
+      - label: 交通运输
+        value: Transportation
+      - label: 公用事业
+        value: Utilities
+    description: 
+  last_transfer_date:
+    label: 上次更改客户经理日期
+    help: 
+    description: 
+  lead_source:
+    label: 潜在客户来源
+    help: 
+    options:
+      - label: 广告
+        value: Advertisement
+      - label: 客户活动
+        value: Customer_Event
+      - label: 员工推荐
+        value: Employee_Referral
+      - label: 百度搜索
+        value: Baidu_AdWords
+      - label: 其他
+        value: Other
+      - label: 合作伙伴
+        value: Partner
+      - label: 采购清单
+        value: Purchased_List
+      - label: 贸易展览
+        value: Trade_Show
+      - label: 线上研讨
+        value: Webinar
+      - label: 网站
+        value: Website
+      - label: 电话
+        value: Phone
+      - label: 企业微信扫码
+        value: WeChat
+      - label: 公众号
+        value: Official_Accounts
+    description: 
+  mobilephone:
+    label: 手机
+    help: 
+    description: 
+  name:
+    label: 姓名
+    help: 
+    description: 
+  number_of_employees:
+    label: 职员数
+    help: 
+    description: 
+  owner:
+    label: 我方客户经理
+    help: 
+    description: 
+  partner_account:
+    label: 合作伙伴客户
+    help: 
+    description: 
+  phone:
+    label: 电话
+    help: 
+    description: 
+  rating:
+    label: 分级
+    help: 
+    options:
+      - label: 非常重要
+        value: Hot
+      - label: 重要
+        value: Warm
+      - label: 普通
+        value: Cold
+    description: 
+  read:
+    label: 读取
+    help: 
+    description: 
+  salutation:
+    label: 性别
+    help: 
+    options:
+      - label: 男
+        value: Male
+      - label: 女
+        value: Female
+    description: 
+  status:
+    label: 状态
+    help: 
+    options:
+      - label: 新建
+        value: New
+      - label: 已联系
+        value: Working
+      - label: 培育中
+        value: Nurturing
+      - label: 已转化
+        value: Qualified
+      - label: 无意向
+        value: Unqualified
+      - label: 已选择其他品牌
+        value: Others
+      - label: 无法联系
+        value: Not_Available
+      - label: 经销代
+        value: Agent
+      - label: 企业客户
+        value: Business
+    description: 
+  title:
+    label: 职务
+    help: 
+    description: 
+  unread:
+    label: 未读
+    help: 
+    description: 
+  website:
+    label: 网址
+    help: 
+    description: 
+groups:
+  地址信息: 地址信息
+listviews:
+  all:
+    label: 所有潜在客户
+  hot:
+    label: 非常重要的潜在客户
+  mine:
+    label: 我的潜在客户
+  recent:
+    label: 最近查看
+  today:
+    label: 新的潜在客户
+actions:
+  alertConvertedRecords:
+    label: 显示转换状态
+  convert:
+    label: 转换

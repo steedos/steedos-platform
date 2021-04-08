@@ -1,0 +1,216 @@
+name: opportunity
+label: 业务机会
+description: 
+fields:
+  account:
+    label: 客户
+    help: 业务机会所链接的客户名。您可输入客户名或使用查找图标选择客户。如果您更改的客户有合作伙伴，则将从“合作伙伴”相关列表删除所有合作伙伴。
+    description: 
+  agreement_id:
+    label: 主协议
+    help: 
+    description: 
+  amount:
+    label: 金额
+    help: >-
+      估计总销售额。如果启用了多种币种，默认情况下，金额以您的个人币种显示。更改业务机会币种选项列表以跟踪另一币种的金额。对于具有产品的业务机会，金额是相关产品的总和。您无法直接编辑金额，除非该业务机会没有产品。要更改包含产品的业务机会的金额，编辑相关产品的销售价格或数量。如果您更改业务机会对应的价格手册，那么所有的产品都从该业务机会的“相关产品”中删除，但是本字段中的值不变。
+    description: 
+  budget_confirmed:
+    label: 有预算
+    help: 
+    description: 
+  campaign_id:
+    label: 主要市场活动源
+    help: >-
+      负责产生业务机会的市场活动的名称。对于在潜在客户转换期间创建的业务机会，此字段自动以潜在客户中的市场活动名称填充。如果潜在客户具有多个相关联市场活动，则将具有最新更新的成员状态的市场活动插入业务机会。对于具有多个影响的市场活动的业务机会，单击业务机会详细信息页面上“市场活动影响”相关列表中的主要市场活动旁边的编辑并选择主要市场活动源复选框。该市场活动显示在业务机会上主要市场活动源字段上。
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  discovery_completed:
+    label: 勘察结束
+    help: 
+    description: 
+  due_date:
+    label: 结单日期
+    help: >-
+      您计划关闭业务机会的日期。您可以输入一个日期，或从您将光标放在字段中时显示的日历中选择一个日期。在指定期限内具有关闭日期的业务机会计入该时期的预测，除非您将其分配到“忽略”类别，或按计划或产品日期预测。当您将未处理业务机会的阶段设为“已结束/赢得客户”，如果最初的日期是在未来，则关闭日期设为协调世界时
+      (UTC) 的当前日期。在一天的某个时间，UTC 可能与您的时区相差一天。如果结束日期是过去业务机会结束的日期，则日期不能更改。
+    description: 
+  expected_revenue:
+    label: 预测收入
+    help: 基于金额和业务机会赢率计算的收入。
+    description: 
+  forecast_category:
+    label: 预测类别
+    help: 在报表、业务机会详细信息和编辑页面、业务机会搜索和业务机会列表视图中显示的预测类别名称。业务机会的设置绑定到其阶段。
+    options:
+      - label: 忽略
+        value: Omit
+      - label: 销售漏斗
+        value: Sales_Funnel
+      - label: 最高金额
+        value: Maximum_Amount
+      - label: 提交
+        value: Submit
+      - label: 关闭
+        value: Close
+    description: 
+  iq_score:
+    label: 业务机会得分
+    help: 
+    description: 
+  lead_source:
+    label: 潜在客户来源
+    help: 
+    options:
+      - label: 广告
+        value: Advertisement
+      - label: 客户活动
+        value: Customer_Event
+      - label: 员工推荐
+        value: Employee_Referral
+      - label: 百度搜索
+        value: Baidu_AdWords
+      - label: 其他
+        value: Other
+      - label: 合作伙伴
+        value: Partner
+      - label: 采购清单
+        value: Purchased_List
+      - label: 贸易展览
+        value: Trade_Show
+      - label: 线上研讨
+        value: Webinar
+      - label: 网站
+        value: Website
+    description: 
+  loss_reason:
+    label: 失败原因
+    help: 
+    options:
+      - label: 竞争失败
+        value: Lost_to_Competitor
+      - label: 没有预算
+        value: No_Budget_Lost_Funding
+      - label: 没有回应
+        value: No_Decision_Non-Responsive
+      - label: 价格因素
+        value: Price
+      - label: 其他
+        value: Other
+    description: 
+  name:
+    label: 业务机会名
+    help: 
+    description: 
+  next_step:
+    label: 下一步
+    help: 说明关闭业务机会后下一步的任务。
+    description: 
+  opportunity_currency:
+    label: 业务机会币种
+    help: >-
+      业务机会中所有币种金额字段的默认币种。金额以业务机会币种显示，并会转换为用户的个人币种。仅在启用多种币种时可用。对于具有产品的业务机会，该币种绑定到相关联价格手册的币种。您无法直接编辑此字段，除非您首先删除产品。
+    description: 
+  owner:
+    label: 我方客户经理
+    help: 
+    description: 
+  partner_account:
+    label: 合作伙伴客户
+    help: 表示该业务机会属于某合作伙伴（只读）
+    description: 
+  price_book_id:
+    label: 价格手册
+    help: 
+    description: 
+  private:
+    label: 专用
+    help: 业务机会是专用的。只有记录的所有人、层次结构中位于该角色之上的用户和管理员可以查看、编辑或报告专有记录。
+    description: 
+  probability:
+    label: 业务机会赢率（%）
+    help: >-
+      业务机会将关闭的可能性，以百分比表示。可能性值总是由阶段值的更改而更新，即使在您的页面布局中可能性字段标记为只读。对此字段具有编辑权限的用户可以覆盖该值。
+    options:
+      - label: 10%
+        value: 10%
+      - label: 35%
+        value: 35%
+      - label: 75%
+        value: 75%
+      - label: 90%
+        value: 90%
+      - label: 100%
+        value: 100%
+      - label: 0%
+        value: 0%
+    description: 
+  rating:
+    label: 分级
+    help: 
+    options:
+      - label: 非常重要
+        value: Hot
+      - label: 重要
+        value: Warm
+      - label: 普通
+        value: Cold
+    description: 
+  roi_analysis_completed:
+    label: 完成ROI分析
+    help: 
+    description: 
+  stage:
+    label: 业务机会阶段
+    help: >-
+      管理员将此选项列表中的值与决定业务机会如何对您的预测进行贡献的“预测类别”值关联。如果原始日期在未来，则当您将未处理业务机会的阶段设为已结束/赢得客户，则关闭日期设为协调世界时
+      (UTC) 的当前日期。在一天的某个时间，UTC 可能与您的时区相差一天。如果结束日期是过去业务机会结束的日期，则日期不能更改。
+    options:
+      - label: 初期沟通
+        value: Qualification
+      - label: 立项跟踪
+        value: Needs_Analysis
+      - label: 呈报方案
+        value: Proposal
+      - label: 商务谈判
+        value: Negotiation
+      - label: 赢单
+        value: Closed_Won
+      - label: 输单
+        value: Closed_Lost
+    description: 
+  synced_quoted:
+    label: 同步的报价
+    help: 同步到业务机会的报价。只有一个报价可以同步到业务机会。
+    description: 
+  total_opportunity_quantity:
+    label: 数量
+    help: 如果业务机会具有产品则为“产品”相关列表中所有产品的所有数量字段值的总计。如果业务机会没有产品则为通用字段。
+    description: 
+  type:
+    label: 业务机会类型
+    help: 业务机会的类型，例如“现有业务”或“新业务”。
+    options:
+      - label: 现有业务
+        value: Existing_Business
+      - label: 新业务
+        value: New_Business
+    description: 
+groups:
+  备注信息: 备注信息
+listviews:
+  all:
+    label: 全部业务机会
+  lost:
+    label: 已失败的业务机会
+  mine:
+    label: 我的业务机会
+  operating:
+    label: 进行中的业务机会
+  recent:
+    label: 最近查看
+  won:
+    label: 已成功的业务机会
