@@ -9,7 +9,7 @@ export const sendNotifications = async (instanceHistory, from, to)=>{
         return;
     }
     var instance = await objectql.getObject("process_instance").findOne(instanceHistory.process_instance);
-    var fromUser =  await objectql.getObject("users").findOne(to);
+    var fromUser =  await objectql.getObject("users").findOne(from);
     const targetObject = objectql.getObject(instance.target_object.o);
     var relatedDoc = await targetObject.findOne(instance.target_object.ids[0]);
     let relatedDocName = relatedDoc.name; //TODO

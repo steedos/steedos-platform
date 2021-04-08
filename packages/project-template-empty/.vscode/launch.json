@@ -11,8 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\server.js",
-            "runtimeArgs": ["--max-old-space-size=2048", "--stack_trace_limit=200"]
+            "program": "${workspaceFolder}\\services",
+            "runtimeArgs": ["--max-old-space-size=2048", "--stack_trace_limit=200", "../../node_modules/moleculer/bin/moleculer-runner.js"]
         }
     ]
 }

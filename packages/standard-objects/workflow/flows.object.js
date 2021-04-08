@@ -84,7 +84,7 @@ if (Meteor.isServer) {
     db.flows.before.update(function (userId, doc, fieldNames, modifier, options) {
         if(modifier.$set.api_name){
             checkName(modifier.$set.api_name)
-            let count = db.flows.find({api_name: modifier.$set.api_name, space: doc.space}).count()
+            let count = db.flows.find({_id: {$ne: doc._id}, api_name: modifier.$set.api_name, space: doc.space}).count()
             if(count > 0){
                 throw new Error('api_name不能重复')
             }

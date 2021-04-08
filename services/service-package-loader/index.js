@@ -48,26 +48,26 @@ module.exports = {
         }
     },
 
-	/**
-	 * Methods
-	 */
-	methods: {
-		loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
-			await Future.task(async () => {
-				if (!datasourceName) {
-					datasourceName = 'default';
-				}
-				objectql.getSteedosSchema(this.broker);
-				packagePath = path.join(packagePath, '**');
-				await objectql.loadStandardMetadata(name, datasourceName);
-				await objectql.addAllConfigFiles(packagePath, datasourceName, name);
-				const datasource = objectql.getDataSource(datasourceName);
-				await datasource.init();
-				await triggerLoader.load(this.broker, packagePath, name);
-				return;
-			}).promise();
-		}
-	},
+    /**
+     * Methods
+     */
+    methods: {
+        loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
+            await Future.task(async () => {
+                if (!datasourceName) {
+                    datasourceName = 'default';
+                }
+                objectql.getSteedosSchema(this.broker);
+                packagePath = path.join(packagePath, '**');
+                await objectql.loadStandardMetadata(name, datasourceName);
+                await objectql.addAllConfigFiles(packagePath, datasourceName, name);
+                const datasource = objectql.getDataSource(datasourceName);
+                await datasource.init();
+                await triggerLoader.load(this.broker, packagePath, name);
+                return;
+            }).promise();
+        }
+    },
 
     /**
      * Service created lifecycle event handler
@@ -85,6 +85,9 @@ module.exports = {
      */
     async started() {
         let packageInfo = this.settings.packageInfo;
+        if (!packageInfo) {
+            return;
+        }
         const { path, datasource } = packageInfo;
         if (!path) {
             this.logger.error(`Please config packageInfo in your settings.`);
