@@ -1,5 +1,5 @@
 {
-  "name": "steedos-app-community",
+  "name": "steedos-app-enterprise",
   "version": "0.0.1",
   "description": "A Steedos App",
   "main": "index.js",
