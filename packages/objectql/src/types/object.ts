@@ -778,6 +778,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callMetadataObjectServiceAction(`getMasters`, {objectApiName: this.name});
     }
 
+    async getLookupDetails(){
+        return await this.callMetadataObjectServiceAction(`getLookupDetails`, {objectApiName: this.name});
+    }
+
+    async getDetailsInfo(){
+        return await this.callMetadataObjectServiceAction(`getDetailsInfo`, {objectApiName: this.name});
+    }
+
+    async getMastersInfo(){
+        return await this.callMetadataObjectServiceAction(`getMastersInfo`, {objectApiName: this.name});
+    }
+
+    async getLookupDetailsInfo(){
+        return await this.callMetadataObjectServiceAction(`getLookupDetailsInfo`, {objectApiName: this.name});
+    }
+
     async getRecordPermissions(record, userSession){
         const permissions = await this.getUserObjectPermission(userSession);
         const { userId, company_ids: user_company_ids } = userSession;

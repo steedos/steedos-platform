@@ -143,6 +143,22 @@ class ObjectServiceDispatcher {
         return await this.callMetadataObjectServiceAction(`getMasters`, {objectApiName: this.objectApiName});
     }
 
+    async getLookupDetails(){
+        return await this.callMetadataObjectServiceAction(`getLookupDetails`, {objectApiName: this.objectApiName});
+    }
+
+    async getDetailsInfo(){
+        return await this.callMetadataObjectServiceAction(`getDetailsInfo`, {objectApiName: this.objectApiName});
+    }
+
+    async getMastersInfo(){
+        return await this.callMetadataObjectServiceAction(`getMastersInfo`, {objectApiName: this.objectApiName});
+    }
+
+    async getLookupDetailsInfo(){
+        return await this.callMetadataObjectServiceAction(`getLookupDetailsInfo`, {objectApiName: this.objectApiName});
+    }
+
     async getDetailPaths(){
         return await this.callMetadataObjectServiceAction(`getDetailPaths`, {objectApiName: this.objectApiName});
     }

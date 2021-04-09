@@ -113,8 +113,10 @@ export class MasterDetailActionHandler{
     
     async addObjectMasterDetails(objectConfig) {
         const { name: objectApiName } = objectConfig;
-        await this.deleteObjectMasterDetails(objectApiName);
-        for await (const field of _.values(objectConfig.fields)) {
+        // await this.deleteObjectMasterDetails(objectApiName);
+        for await (const fieldName of _.keys(objectConfig.fields)) {
+            const field = objectConfig.fields[fieldName];
+            field.name = fieldName;
             if (field.type === "master_detail") {
                 // 加try catch是因为有错误时不应该影响下一个字段逻辑
                 try {
@@ -123,7 +125,8 @@ export class MasterDetailActionHandler{
                             field.type = "lookup";//强行变更为最接近的类型
                             throw new Error(`Can't set a master-detail filed that reference to self on the object '${objectApiName}'.`);
                         }
-                        const addSuc = await this.addMaster(objectApiName, field.reference_to);
+                        const addSuc = await this.addMaster(objectApiName, field.reference_to, field);
+
                         if (addSuc) {
                             await this.addDetail(field.reference_to, objectApiName, field);
                             // #1435 对象是作为其他对象的子表的话，owner的omit属性必须为true
@@ -135,7 +138,7 @@ export class MasterDetailActionHandler{
                         else {
                             // 不能选之前已经在该对象上建过的主表-子表字段上关联的相同对象
                             field.type = "lookup";//强行变更为最接近的类型
-                            throw new Error(`Can't set a master-detail filed that reference to the same object '${field.reference_to}' that had referenced to by other master-detail filed on the object '${objectApiName}'.`);
+                            throw new Error(`Can't set a master-detail filed that reference to the same object '${field.reference_to}' that had referenced to by other master-detail filed on the object '${objectApiName}.${field.name}'.`);
                         }
                     }
                 }
@@ -154,22 +157,38 @@ export class MasterDetailActionHandler{
 
     async getMasters(objectApiName: string){
         let { metadata } = (await this.broker.call('metadata.get', {key: this.getMasterKey(objectApiName)}, {meta: {}})) || {};
+        let mastersName = [];
+        _.each(metadata, function(item){
+            if(item && _.isString(item)){
+                const foo = item.split('.');
+                if(foo.length > 0){
+                    mastersName.push(foo[0]);
+                }
+            }
+        })
+        return _.uniq(mastersName);
+    }
+
+    async getMastersInfo(objectApiName: string){
+        let { metadata } = (await this.broker.call('metadata.get', {key: this.getMasterKey(objectApiName)}, {meta: {}})) || {};
         return metadata || [];
     }
 
-    async addMaster(objectApiName: any, masterObjectApiName: string){
-        let master = await this.getMasters(objectApiName);
+    async addMaster(objectApiName: any, masterObjectApiName: string, field: any){
+        let master = await this.getMastersInfo(objectApiName);
         let maps = [];
         if(master){
             maps = master;
         }
-
-        let index = maps.indexOf(masterObjectApiName);
-        if (index < 0) {
-            maps.push(masterObjectApiName);
+        const masterFullName = `${masterObjectApiName}.${field.name}`
+        let count = _.filter(maps, function(o) { return o.startsWith(`${masterObjectApiName}.`) && o != masterFullName});
+        if (count.length < 1) {
+            maps.push(masterFullName);
+            maps = _.uniq(maps);
             await this.broker.call('metadata.add', {key: this.getMasterKey(objectApiName), data: maps}, {meta: {}})
             return true;
         }
+        console.log(`maps`, maps, masterFullName)
         return false;
     }
 
@@ -188,19 +207,34 @@ export class MasterDetailActionHandler{
 
     async getDetails(objectApiName: string){
         let { metadata } = (await this.broker.call('metadata.get', {key: this.getDetailKey(objectApiName)}, {meta: {}})) || {};
+        let detailsName = [];
+        _.each(metadata, function(item){
+            if(item && _.isString(item)){
+                const foo = item.split('.');
+                if(foo.length > 0){
+                    detailsName.push(foo[0]);
+                }
+            }
+        })
+        return _.uniq(detailsName);
+    }
+
+    async getDetailsInfo(objectApiName: string){
+        let { metadata } = (await this.broker.call('metadata.get', {key: this.getDetailKey(objectApiName)}, {meta: {}})) || {};
         return metadata || [];
     }
 
     async addDetail(objectApiName: any, detailObjectApiName: string, detailField: any){
-        let detail = await this.getDetails(objectApiName);
+        let detail = await this.getDetailsInfo(objectApiName);
         let maps = [];
         if(detail){
             maps = detail;
         }
-    
-        let index = maps.indexOf(detailObjectApiName);
-        if (index < 0) {
-            maps.push(detailObjectApiName);
+        const detailFullName = `${detailObjectApiName}.${detailField.name}`
+        let count = _.filter(maps, function(o) { return o.startsWith(`${detailObjectApiName}.`) && o != detailFullName});
+        if (count.length < 1) {
+            maps.push(detailFullName);
+            maps = _.uniq(maps);
             await this.broker.call('metadata.add', {key: this.getDetailKey(objectApiName), data: maps}, {meta: {}})
             this.broker.emit(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
             return true;

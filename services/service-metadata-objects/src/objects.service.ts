@@ -115,6 +115,12 @@ module.exports = {
                 return await this.masterDetailActionHandler.getDetails(objectApiName);
             }
         },
+        getDetailsInfo: {
+            async handler(ctx) {
+                const { objectApiName } = ctx.params;
+                return await this.masterDetailActionHandler.getDetailsInfo(objectApiName);
+            }
+        },
         getDetailPaths: {
             async handler(ctx) {
                 const { objectApiName } = ctx.params;
@@ -131,6 +137,24 @@ module.exports = {
             async handler(ctx) {
                 const { objectApiName } = ctx.params;
                 return await this.masterDetailActionHandler.getMasters(objectApiName);
+            }
+        },
+        getMastersInfo: {
+            async handler(ctx) {
+                const { objectApiName } = ctx.params;
+                return await this.masterDetailActionHandler.getMastersInfo(objectApiName);
+            }
+        },
+        getLookupDetails: {
+            async handler(ctx) {
+                const { objectApiName } = ctx.params;
+                return await this.lookupActionHandler.getDetails(objectApiName);
+            }
+        },
+        getLookupDetailsInfo: {
+            async handler(ctx) {
+                const { objectApiName } = ctx.params;
+                return await this.lookupActionHandler.getDetailsInfo(objectApiName);
             }
         },
         getMasterPaths: {
