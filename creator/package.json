@@ -19,10 +19,10 @@
     "@salesforce-ux/design-system": "^2.11.0",
     "@salesforce/design-system-react": "^0.10.17",
     "@steedos/accounts": "^1.23.0-alpha.7",
-    "@steedos/app-admin": "../apps/steedos-app-admin",
-    "@steedos/app-contracts": "../apps/steedos-app-crm",
+    "@steedos/app-admin": "../steedos-packages/app-admin",
+    "@steedos/app-contracts": "../steedos-packages/app-crm",
     "@steedos/design-system-react": "^1.23.0-alpha.7",
-    "@steedos/app-crm": "../apps/steedos-app-crm",
+    "@steedos/app-crm": "../steedos-packages/app-crm",
 
     "@steedos/auth": "^1.23.0-alpha.7",
     "@steedos/core": "^1.23.0-alpha.7",
