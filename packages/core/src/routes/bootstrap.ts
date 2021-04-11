@@ -37,6 +37,71 @@ async function getUserProfileObjectsLayout(userId, spaceId, objectName?) {
     }
 };
 
+async function getUserObjects(userId, spaceId, objects){
+    const objectsLayout = await getUserProfileObjectsLayout(userId, spaceId);
+    for (const objectName in objects) {
+        let userObjectLayout = null;
+        if(objectsLayout){
+            userObjectLayout = _.find(objectsLayout, function(objectLayout){
+                return objectLayout.object_name === objectName
+            })
+        }
+        if(!userObjectLayout && false){
+            userObjectLayout = getLayout(objectName, 'default');
+        }
+        if(userObjectLayout){
+            objects[userObjectLayout.object_name] = await getUserObject(userId, spaceId, objects[userObjectLayout.object_name], userObjectLayout)
+        }
+    }
+}
+
+async function getUserObject(userId, spaceId, object, layout?){
+    if(!layout){
+        layout = await getUserProfileObjectsLayout(userId, spaceId, object.name); 
+    }
+    let _object = clone(object);
+    if(_object && layout){
+        let _fields = {};
+        _.each(layout.fields, function(_item){
+            _fields[_item.field_name] = _object.fields[_item.field_name]
+            if(_fields[_item.field_name]){
+                if(_.has(_item, 'group')){
+                    _fields[_item.field_name].group = _item.group
+                }
+                
+                if(_item.is_required){
+                    _fields[_item.field_name].readonly = false
+                    _fields[_item.field_name].disabled = false
+                    _fields[_item.field_name].required = true
+                }else if(_item.is_readonly){
+                    _fields[_item.field_name].readonly = true
+                    _fields[_item.field_name].disabled = true
+                    _fields[_item.field_name].required = false
+                }
+
+                if(_item.visible_on){
+                    _fields[_item.field_name].visible_on = _item.visible_on
+                }
+            }
+        })
+        _object.fields = _fields;
+        let _buttons = {};
+        _.each(layout.buttons, function(button){
+            const action = _object.actions[button.button_name];
+            if(action){
+                action.visible_on = button.visible_on;
+                _buttons[button.button_name] = action
+            }
+        })
+        _object.actions = _buttons;
+        // _object.allow_customActions = userObjectLayout.custom_actions || []
+        // _object.exclude_actions = userObjectLayout.exclude_actions || []
+        _object.related_lists = layout.related_lists || []
+    }
+    return _object;
+}
+
+
 export async function getSpaceBootStrap(req, res) {
     return Fiber(async function () {
         let userSession = req.user;
@@ -159,48 +224,7 @@ export async function getSpaceBootStrap(req, res) {
 
         result.plugins = getPlugins ? getPlugins() : null
 
-        let objectsLayout = await getUserProfileObjectsLayout(userId, spaceId);
-        _.each(result.objects, function(_object, objectName){
-            let userObjectLayout = null;
-            if(objectsLayout){
-                userObjectLayout = _.find(objectsLayout, function(objectLayout){
-                    return objectLayout.object_name === objectName
-                })
-            }
-            if(!userObjectLayout){
-                userObjectLayout = getLayout(objectName, 'default');
-            }
-
-            if(userObjectLayout){
-                let _object = clone(result.objects[userObjectLayout.object_name]);
-                if(_object){
-                    let _fields = {};
-                    _.each(userObjectLayout.fields, function(_item){
-                        _fields[_item.field] = _object.fields[_item.field]
-                        if(_fields[_item.field]){
-                            if(_.has(_item, 'group')){
-                                _fields[_item.field].group = _item.group
-                            }
-                            
-                            if(_item.required){
-                                _fields[_item.field].readonly = false
-                                _fields[_item.field].disabled = false
-                                _fields[_item.field].required = true
-                            }else if(_item.readonly){
-                                _fields[_item.field].readonly = true
-                                _fields[_item.field].disabled = true
-                                _fields[_item.field].required = false
-                            }
-                        }
-                    })
-                    _object.fields = _fields
-                    _object.allow_customActions = userObjectLayout.custom_actions || []
-                    _object.exclude_actions = userObjectLayout.exclude_actions || []
-                    _object.allow_relatedList = userObjectLayout.relatedList || []
-                }
-                result.objects[userObjectLayout.object_name] = _object
-            }
-        })
+        await getUserObjects(userId, spaceId, result.objects);
         
         // TODO object layout 是否需要控制审批记录显示？
         let spaceProcessDefinition = await getObject("process_definition").directFind({filters: [['space', '=', spaceId], ['active', '=', true]]})
@@ -209,6 +233,22 @@ export async function getSpaceBootStrap(req, res) {
                 result.objects[item.object_name].enable_process = true
             }
         })
+
+        for (const key in result.objects) {
+            if (Object.prototype.hasOwnProperty.call(result.objects, key)) {
+                const objectConfig = result.objects[key];
+                try {
+                    const object = getObject(key);
+                    objectConfig.details = await object.getDetailsInfo();
+                    objectConfig.masters = await object.getMastersInfo();
+                    objectConfig.lookup_details = await object.getLookupDetailsInfo();
+                } catch (error) {
+                    
+                }
+            }
+        }
+
+
         return res.status(200).send(result);
     }).run();
 }
@@ -221,6 +261,9 @@ async function getObjectConfig(objectName, spaceId, userSession) {
         objectConfig.name = objectName
         objectConfig.datasource = object.datasource.name;
         objectConfig.permissions = await object.getUserObjectPermission(userSession);
+        objectConfig.details = await object.getDetails();
+        objectConfig.masters = await object.getMasters();
+        objectConfig.lookup_details = await object.getLookupDetails();
         return objectConfig;
     } catch (error) {
         console.warn('not load object', objectName)
@@ -258,42 +301,7 @@ export async function getSpaceObjectBootStrap(req, res) {
             // objectConfig.list_views = Creator.getUserObjectListViews(userId, spaceId, objectName)
             steedosI18n.translationObject(lng, objectConfig.name, objectConfig)
 
-            let objectsLayout = await getUserProfileObjectsLayout(userId, spaceId, objectName);
-
-            let userObjectLayout = null;
-            if (objectsLayout) {
-                userObjectLayout = _.find(objectsLayout, function (objectLayout) {
-                    return objectLayout.object_name === objectName
-                })
-            }
-            if (!userObjectLayout) {
-                userObjectLayout = getLayout(objectName, 'default');
-            }
-
-            if (userObjectLayout) {
-                let _fields = {};
-                _.each(userObjectLayout.fields, function (_item) {
-                    _fields[_item.field] = objectConfig.fields[_item.field]
-                    if (_fields[_item.field]) {
-                        if (_.has(_item, 'group')) {
-                            _fields[_item.field].group = _item.group
-                        }
-                        if (_item.required) {
-                            _fields[_item.field].readonly = false
-                            _fields[_item.field].disabled = false
-                            _fields[_item.field].required = true
-                        } else if (_item.readonly) {
-                            _fields[_item.field].readonly = true
-                            _fields[_item.field].disabled = true
-                            _fields[_item.field].required = false
-                        }
-                    }
-                })
-                objectConfig.fields = _fields
-                objectConfig.allow_customActions = userObjectLayout.custom_actions || []
-                objectConfig.exclude_actions = userObjectLayout.exclude_actions || []
-                objectConfig.allow_relatedList = userObjectLayout.relatedList || []
-            }
+            objectConfig = await getUserObject(userId, spaceId, objectConfig)
 
             // TODO object layout 是否需要控制审批记录显示？
             let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', spaceId], ['object_name', '=', objectName], ['active', '=', true]] })

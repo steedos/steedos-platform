@@ -67,6 +67,9 @@ Creator.Object = (options)->
 	self.enable_follow = options.enable_follow
 	self.enable_workflow = options.enable_workflow
 	self.enable_inline_edit = options.enable_inline_edit
+	self.details = options.details
+	self.masters = options.masters
+	self.lookup_details = options.lookup_details
 	if _.has(options, 'in_development')
 		self.in_development = options.in_development
 	self.idFieldName = '_id'
