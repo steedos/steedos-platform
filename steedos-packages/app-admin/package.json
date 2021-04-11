@@ -16,7 +16,7 @@
     "buildPackage": "steedos package:build -n admin -p steedos-app",
     "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/app-admin"
   },
-  "dependencies": {
+  "devDependencies": {
     "@steedos/service-metadata-server": "^2.0.2",
     "@steedos/service-package-loader": "^2.0.2",
     "@steedos/service-steedos-server": "^2.0.2",
