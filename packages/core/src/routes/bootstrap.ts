@@ -132,7 +132,7 @@ export async function getSpaceBootStrap(req, res) {
         
 
         // result.apps = clone(Creator.Apps)
-        result.apps = await getAppConfigs();
+        result.apps = await getAppConfigs(spaceId);
         result.assigned_apps = await getAssignedApps(userSession);
 
         let datasources = Creator.steedosSchema.getDataSources();

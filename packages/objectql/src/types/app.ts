@@ -129,7 +129,7 @@ export const addAppConfig = async (appConfig: SteedosAppTypeConfig, serviceName:
     await schema.metadataRegister?.addApp(serviceName, appConfig);
 }
 
-export const getAppConfigs = async () => {
+export const getAppConfigs = async (spaceId?) => {
     const schema = getSteedosSchema();
 
     if(!schema.metadataRegister){
@@ -137,7 +137,18 @@ export const getAppConfigs = async () => {
     }
 
     const apps = await schema.metadataRegister.getApps();
-    return _.pluck(apps, 'metadata');
+    const configs = _.pluck(apps, 'metadata');
+
+    if(spaceId){
+        return _.filter(configs, function(config){
+            if(_.has(config, 'space') && config.space){
+                return config.space === spaceId;                
+            }
+            return true;
+        })
+    }
+
+    return configs;
 }
 
 export const removeApp = async (appApiName) => {
