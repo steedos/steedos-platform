@@ -85,7 +85,7 @@ module.exports = {
         let id = this.id;
         if(id && _.isEmpty(this.data.values)){
             let lng = await getLng(this.userId);
-            let allApps = clone(objectql.getAppConfigs(this.spaceId));
+            let allApps = clone(await objectql.getAppConfigs(this.spaceId));
             let apps = {}
             _.each(allApps, function(app){
                 if(app._id === id && app.is_creator){
