@@ -93,5 +93,14 @@ export async function refreshObject(ctx, objectApiName) {
     objectConfig.fields = _.clone(_objectConfig.fields);
 
     objectConfig = _.defaultsDeep({}, clone(_objectConfig), baseObjectConfig, objectConfig);
+
+    _.each(objectConfig.fields, function(field, field_name){
+        if (field.is_name) {
+            objectConfig.NAME_FIELD_KEY = field_name
+        } else if (field_name == 'name' && !objectConfig.NAME_FIELD_KEY) {
+            objectConfig.NAME_FIELD_KEY = field_name
+        }
+    })
+
     return objectConfig;
 }
