@@ -40,6 +40,7 @@ async function getUserProfileObjectsLayout(userId, spaceId, objectName?) {
 async function getUserObjects(userId, spaceId, objects){
     const objectsLayout = await getUserProfileObjectsLayout(userId, spaceId);
     for (const objectName in objects) {
+        objects[objectName].list_views = await getUserObjectListViews(userId, spaceId, objectName)
         let userObjectLayout = null;
         if(objectsLayout){
             userObjectLayout = _.find(objectsLayout, function(objectLayout){
@@ -287,6 +288,17 @@ async function getObjectConfig(objectName, spaceId, userSession) {
         console.warn('not load object', objectName)
     }
 }
+
+
+async function getUserObjectListViews(userId, spaceId, object_name){
+    const _user_object_list_views = {};
+    const object_listview = await getObject("object_listviews").find({filters: [['object_name', object_name],['space', '=', spaceId],[ [ "owner", "=", userId ], "or", [ "shared", "=", true ] ]]});
+    object_listview.forEach(function(listview) {
+      return _user_object_list_views[listview._id] = listview;
+    });
+    return _user_object_list_views;
+}
+
 export async function getSpaceObjectBootStrap(req, res) {
     return Fiber(async function () {
         let userSession = req.user;
@@ -316,7 +328,7 @@ export async function getSpaceObjectBootStrap(req, res) {
         }
         if (objectConfig) {
             delete objectConfig.db
-            // objectConfig.list_views = Creator.getUserObjectListViews(userId, spaceId, objectName)
+            objectConfig.list_views = await getUserObjectListViews(userId, spaceId, objectName)
             steedosI18n.translationObject(lng, objectConfig.name, objectConfig)
 
             objectConfig = await getUserObject(userId, spaceId, objectConfig)
