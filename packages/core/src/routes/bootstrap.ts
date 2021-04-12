@@ -57,7 +57,10 @@ async function getUserObjects(userId, spaceId, objects){
 
 async function getUserObject(userId, spaceId, object, layout?){
     if(!layout){
-        layout = await getUserProfileObjectsLayout(userId, spaceId, object.name); 
+        const layouts = await getUserProfileObjectsLayout(userId, spaceId, object.name); 
+        if(layouts && layouts.length > 0){
+            layout = layouts[0];
+        }
     }
     let _object = clone(object);
     if(_object && layout){
@@ -84,12 +87,27 @@ async function getUserObject(userId, spaceId, object, layout?){
                 }
             }
         })
-        _object.fields = _fields;
+
+        const layoutFieldKeys = _.keys(_fields);
+        const objectFieldKeys = _.keys(_object.fields);
+
+        const difference = _.difference(objectFieldKeys, layoutFieldKeys);
+
+        _.each(layoutFieldKeys, function(fieldApiName){
+            _object.fields[fieldApiName] = _fields[fieldApiName];
+        })
+        
+        _.each(difference, function(fieldApiName){
+            _object.fields[fieldApiName].hidden = true;
+        })
+
         let _buttons = {};
         _.each(layout.buttons, function(button){
             const action = _object.actions[button.button_name];
             if(action){
-                action.visible_on = button.visible_on;
+                if(button.visible_on){
+                    action.visible = button.visible_on;
+                }
                 _buttons[button.button_name] = action
             }
         })
