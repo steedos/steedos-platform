@@ -40,7 +40,7 @@ async function getUserProfileObjectsLayout(userId, spaceId, objectName?) {
 async function getUserObjects(userId, spaceId, objects){
     const objectsLayout = await getUserProfileObjectsLayout(userId, spaceId);
     for (const objectName in objects) {
-        objects[objectName].list_views = await getUserObjectListViews(userId, spaceId, objectName)
+        // objects[objectName].list_views = await getUserObjectListViews(userId, spaceId, objectName)
         let userObjectLayout = null;
         if(objectsLayout){
             userObjectLayout = _.find(objectsLayout, function(objectLayout){
@@ -144,12 +144,9 @@ export async function getSpaceBootStrap(req, res) {
         result.space = space
 
         result.dashboards = clone(Creator.Dashboards)
-        
-        result.object_listviews = Creator.getUserObjectsListViews(userId, spaceId, result.objects)
-        
-        result.object_workflows = Meteor.call('object_workflows.get', spaceId, userId)
-        
 
+        result.object_workflows = Meteor.call('object_workflows.get', spaceId, userId)
+        result.object_listviews = await getUserObjectsListViews(userId, spaceId)
         // result.apps = clone(Creator.Apps)
         result.apps = await getAppConfigs(spaceId);
         result.assigned_apps = await getAssignedApps(userSession);
@@ -289,15 +286,40 @@ async function getObjectConfig(objectName, spaceId, userSession) {
     }
 }
 
-
-async function getUserObjectListViews(userId, spaceId, object_name){
-    const _user_object_list_views = {};
-    const object_listview = await getObject("object_listviews").find({filters: [['object_name', object_name],['space', '=', spaceId],[ [ "owner", "=", userId ], "or", [ "shared", "=", true ] ]]});
-    object_listview.forEach(function(listview) {
-      return _user_object_list_views[listview._id] = listview;
+async function getUserObjectsListViews(userId, spaceId) {
+    const listViews = {};
+    const objectsViews = await getObject("object_listviews").find({filters: [['space', '=', spaceId],[ [ "owner", "=", userId ], "or", [ "shared", "=", true ] ]]});
+    let objectNames = _.pluck(objectsViews, 'object_name');
+    objectNames = _.uniq(objectNames);
+    const _getUserObjectListViews = function(object_name) {
+      var _user_object_list_views, olistViews;
+      _user_object_list_views = {};
+      olistViews = _.filter(objectsViews, function(ov) {
+        return ov.object_name === object_name;
+      });
+      _.each(olistViews, function(listview) {
+        return _user_object_list_views[listview._id] = listview;
+      });
+      return _user_object_list_views;
+    };
+    _.forEach(objectNames, function(key) {
+      var list_view;
+      list_view = _getUserObjectListViews(key);
+      if (!_.isEmpty(list_view)) {
+        return listViews[key] = list_view;
+      }
     });
-    return _user_object_list_views;
-}
+    return listViews;
+  };
+
+// async function getUserObjectListViews(userId, spaceId, object_name){
+//     const _user_object_list_views = {};
+//     const object_listview = await getObject("object_listviews").find({filters: [['object_name', '=', object_name],['space', '=', spaceId],[ [ "owner", "=", userId ], "or", [ "shared", "=", true ] ]]});
+//     object_listview.forEach(function(listview) {
+//       return _user_object_list_views[listview._id] = listview;
+//     });
+//     return _user_object_list_views;
+// }
 
 export async function getSpaceObjectBootStrap(req, res) {
     return Fiber(async function () {
@@ -328,7 +350,7 @@ export async function getSpaceObjectBootStrap(req, res) {
         }
         if (objectConfig) {
             delete objectConfig.db
-            objectConfig.list_views = await getUserObjectListViews(userId, spaceId, objectName)
+            // objectConfig.list_views = await getUserObjectListViews(userId, spaceId, objectName)
             steedosI18n.translationObject(lng, objectConfig.name, objectConfig)
 
             objectConfig = await getUserObject(userId, spaceId, objectConfig)
