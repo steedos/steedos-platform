@@ -614,7 +614,7 @@ function setDetailOwner(doc, object_name, userId) {
     if(!userId){
         return;
     }
-    if (object_name.startWith('cfs.')) {
+    if (object_name.startsWith('cfs.')) {
         return;
     }
     let masterRecordOwner = '';
