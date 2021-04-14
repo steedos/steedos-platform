@@ -145,7 +145,15 @@ function getObjectServiceMethodsSchema() {
             async handler(record, userSession) {
                 return this.object.getRecordPermissions(record, userSession);
             }
-        }
+        },
+        getRecordView: {
+            async handler(record, userSession) {
+                return await this.object.getRecordView(record, userSession);
+            }
+        },
+        // getPageView: {
+        //     //TODO
+        // }
     };
 
     return methods;
@@ -422,6 +430,16 @@ function getObjectServiceActionsSchema() {
                 const userSession = ctx.meta.user;
                 const { record } = ctx.params;
                 return this.getRecordPermissions(record, userSession);
+            }
+        },
+        getRecordView: {
+            rest: {
+                method: "GET",
+                path: "/uiSchema"
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                return await this.getRecordView(userSession);
             }
         }
     };

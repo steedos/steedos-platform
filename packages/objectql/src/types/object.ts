@@ -12,6 +12,9 @@ import { formatFiltersToODataQuery } from "@steedos/filters";
 import { WorkflowRulesRunner } from '../actions';
 import { runValidationRules } from './validation_rules';
 import { brokeEmitEvents } from "./object_events";
+import { objectToJson } from '../util/index';
+import { translationObject } from "@steedos/i18n";
+import { getObjectLayouts } from "./object_layouts";
 const clone = require('clone')
 
 // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
@@ -850,6 +853,95 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         }
         return permissions
+    }
+
+    async getRecordView(userSession){
+        const lng = userSession.language;
+        let objectConfig = objectToJson(clone(this.toConfig()));
+        objectConfig.name = this.name
+        objectConfig.datasource = this.datasource.name;
+        objectConfig.permissions = await this.getUserObjectPermission(userSession);
+        objectConfig.details = await this.getDetails();
+        objectConfig.masters = await this.getMasters();
+        objectConfig.lookup_details = await this.getLookupDetails();
+
+        delete objectConfig.db
+
+        translationObject(lng, objectConfig.name, objectConfig);
+
+        const layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name)
+        if(layouts && layouts.length > 0){
+            const layout = layouts[0];
+            let _fields = {};
+            _.each(layout.fields, function(_item){
+                _fields[_item.field_name] = objectConfig.fields[_item.field_name]
+                if(_fields[_item.field_name]){
+                    if(_.has(_item, 'group')){
+                        _fields[_item.field_name].group = _item.group
+                    }
+                    
+                    if(_item.is_required){
+                        _fields[_item.field_name].readonly = false
+                        _fields[_item.field_name].disabled = false
+                        _fields[_item.field_name].required = true
+                    }else if(_item.is_readonly){
+                        _fields[_item.field_name].readonly = true
+                        _fields[_item.field_name].disabled = true
+                        _fields[_item.field_name].required = false
+                    }
+
+                    if(_item.visible_on){
+                        _fields[_item.field_name].visible_on = _item.visible_on
+                    }
+                }
+            })
+
+            const layoutFieldKeys = _.keys(_fields);
+            const objectFieldKeys = _.keys(objectConfig.fields);
+
+            const difference = _.difference(objectFieldKeys, layoutFieldKeys);
+
+            _.each(layoutFieldKeys, function(fieldApiName){
+                objectConfig.fields[fieldApiName] = _fields[fieldApiName];
+            })
+            
+            _.each(difference, function(fieldApiName){
+                objectConfig.fields[fieldApiName].hidden = true;
+            })
+
+            let _buttons = {};
+            _.each(layout.buttons, function(button){
+                const action = objectConfig.actions[button.button_name];
+                if(action){
+                    if(button.visible_on){
+                        action.visible = button.visible_on;
+                    }
+                    _buttons[button.button_name] = action
+                }
+            })
+            objectConfig.actions = _buttons;
+            // _object.allow_customActions = userObjectLayout.custom_actions || []
+            // _object.exclude_actions = userObjectLayout.exclude_actions || []
+            objectConfig.related_lists = layout.related_lists || []
+        }
+
+        // TODO object layout 是否需要控制审批记录显示？
+        let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] })
+        if (spaceProcessDefinition.length > 0) {
+            objectConfig.enable_process = true
+        }
+
+        //清理数据
+
+        _.each(objectConfig.triggers, function(trigger, key){
+            if(trigger?.on != 'client'){
+                delete objectConfig.triggers[key];
+            }
+        })
+
+        delete objectConfig.listeners
+
+        return objectConfig;
     }
 
     private isDirectCRUD(methodName: string) {

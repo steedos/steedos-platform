@@ -41,6 +41,8 @@ fields:
         value: record
       - label: Page
         value: page
+    defaultValue: record
+    hidden: true
     required: true
   profiles:
     type: lookup

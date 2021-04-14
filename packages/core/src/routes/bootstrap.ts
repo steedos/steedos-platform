@@ -259,6 +259,12 @@ export async function getSpaceBootStrap(req, res) {
                     objectConfig.details = await object.getDetailsInfo();
                     objectConfig.masters = await object.getMastersInfo();
                     objectConfig.lookup_details = await object.getLookupDetailsInfo();
+                    _.each(objectConfig.triggers, function(trigger, key){
+                        if(trigger?.on != 'client'){
+                            delete objectConfig.triggers[key];
+                        }
+                    })
+                    delete objectConfig.listeners
                 } catch (error) {
                     
                 }
@@ -361,6 +367,14 @@ export async function getSpaceObjectBootStrap(req, res) {
             if (spaceProcessDefinition.length > 0) {
                 objectConfig.enable_process = true
             }
+
+            _.each(objectConfig.triggers, function(trigger, key){
+                if(trigger?.on != 'client'){
+                    delete objectConfig.triggers[key];
+                }
+            })
+
+            delete objectConfig.listeners
         }
         return res.status(200).send(objectConfig || {});
     }).run();
