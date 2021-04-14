@@ -5,6 +5,9 @@ const setDetailOwner = async function (doc, object_name, userId) {
     if(!userId){
         return;
     }
+    if (object_name.startsWith('cfs.')) {
+        return;
+    }
     let masterRecordOwner = '';
     const obj = objectql.getObject(object_name);
     const masters = await obj.getMasters();
