@@ -7,6 +7,7 @@
     "@steedos/service-metadata": "^2.0.2",
     "@steedos/service-metadata-apps": "^2.0.2",
     "@steedos/service-metadata-objects": "^2.0.2",
+    "@steedos/service-metadata-layouts": "^2.0.2",
     "@steedos/service-metadata-permissionsets": "^2.0.2",
     "@steedos/service-metadata-translations": "^2.0.2",
     "@steedos/service-metadata-triggers": "^2.0.2"

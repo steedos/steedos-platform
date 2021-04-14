@@ -3,7 +3,7 @@ import path = require('path')
 import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig, getDataSource } from '.'
 // import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
-import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps } from '../dynamic-load'
+import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts } from '../dynamic-load'
 import { transformListenersToTriggers } from '..';
 import { getSteedosSchema } from './schema';
 
@@ -126,7 +126,7 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
 
     loadObjectMethods(filePath);  //此功能不支持微服务模式
 
-    loadObjectLayouts(filePath);
+    await loadObjectLayouts(filePath, serviceName);
 
     await loadObjectPermissions(filePath, serviceName);
 
@@ -304,7 +304,8 @@ export const loadStandardMetadata = async (serviceName: string, datasourceApiNam
             await datasource.initTypeORM();
         }
         if(datasource){
-            await preloadDBApps(datasource, serviceName);
+            await preloadDBApps(datasource);
+            await preloadDBObjectLayouts(datasource);
             await preloadDBObjectFields(datasource);
             await preloadDBObjectButtons(datasource);
         }

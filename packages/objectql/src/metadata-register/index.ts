@@ -1,6 +1,7 @@
 import { registerObject, removeObject, addObjectConfig, getObjectsConfig } from './object';
 import { registerApp, getApp, getApps, removeApp } from './app';
 import { getProfile, getProfiles, registerProfile } from './profile';
+import { registerLayout, getLayout, getLayouts, removeLayout, filterLayouts } from './layout';
 import { getPermissionset, getPermissionsets, registerPermissionset } from './permissionset';
 export enum MetadataType {
     Object,
@@ -46,6 +47,26 @@ export class MetadataRegister{
 
     async getApps(): Promise<any>{
         return await getApps(this.broker);
+    }
+
+    async addLayout(serviceName, config: any): Promise<boolean>{
+        return await registerLayout(this.broker, serviceName, config);
+    }
+
+    async removeLayout(objectLayoutFullName: any): Promise<boolean>{
+        return await removeLayout(this.broker, objectLayoutFullName);
+    }
+
+    async getLayout(objectLayoutFullName): Promise<any>{
+        return await getLayout(this.broker, objectLayoutFullName);
+    }
+
+    async getLayouts(): Promise<any>{
+        return await getLayouts(this.broker);
+    }
+
+    async filterLayouts(profileApiName, spaceId, objectApiName?):Promise<any>{
+        return await filterLayouts(this.broker, profileApiName, spaceId, objectApiName);
     }
 
     async addProfile(serviceName, profileConfig): Promise<boolean>{

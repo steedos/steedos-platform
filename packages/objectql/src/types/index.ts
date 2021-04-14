@@ -6,6 +6,7 @@ export * from "./datasource";
 export * from "./dashboard";
 export * from "./object";
 export * from "./connection";
+export * from "./object_layouts";
 export { SteedosFieldType, SteedosFieldTypeConfig } from "./field";
 export { SteedosListenerConfig } from './listeners'
 export { SteedosTriggerType } from './trigger'

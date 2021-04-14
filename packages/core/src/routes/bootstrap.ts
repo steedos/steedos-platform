@@ -1,7 +1,7 @@
 import steedosI18n = require("@steedos/i18n");
 import { getPlugins } from '../';
 import { requireAuthentication } from './auth'
-import { getObject, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps } from '@steedos/objectql'
+import { getObject, getObjectLayouts, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps } from '@steedos/objectql'
 require("@steedos/license");
 const Fiber = require('fibers')
 const clone = require("clone");
@@ -29,11 +29,12 @@ async function getUserProfileObjectsLayout(userId, spaceId, objectName?) {
         spaceUser = spaceUsers[0];
     }
     if (spaceUser && spaceUser.profile) {
-        let filters = [['space', '=', spaceId],['profiles', '=', spaceUser.profile]];
-        if(objectName){
-            filters.push(['object_name', '=', objectName])
-        }
-        return await getObject("object_layouts").directFind({filters: filters})
+        // let filters = [['space', '=', spaceId],['profiles', '=', spaceUser.profile]];
+        // if(objectName){
+        //     filters.push(['object_name', '=', objectName])
+        // }
+        // return await getObject("object_layouts").directFind({filters: filters})
+        return await getObjectLayouts(spaceUser.profile, spaceId, objectName)
     }
 };
 

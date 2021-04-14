@@ -181,6 +181,20 @@ async function getObjectActions(objectName, userId){
 }
 exports.getObjectActions = getObjectActions
 
+exports.getObjectLayouts = async function(objectApiName, spaceId){
+    const layouts = await objectql.getObjectLayouts(null, spaceId, objectApiName);
+    const _layouts = []
+    _.each(layouts, function(layout){
+        _layouts.push(Object.assign({}, layout, objectBaseFields))
+    })
+    return _layouts;
+}
+
+exports.getObjectLayout = async function(objectLayoutFullName){
+    const layout = await objectql.getObjectLayout(objectLayoutFullName);
+    return Object.assign({}, layout, objectBaseFields);
+}
+
 exports.getObjectAction = async function(objectName, userId, id){
     let actions = await getObjectActions(objectName, userId);
     return _.find(actions, function(action){ return action._id === id})

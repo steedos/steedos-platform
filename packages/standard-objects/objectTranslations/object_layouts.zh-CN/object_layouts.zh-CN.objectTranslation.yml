@@ -14,16 +14,16 @@ fields:
     label: 简档
     help: 
     description: 
-  exclude_actions:
-    label: 排除的标准操作
+  buttons:
+    label: 操作
     help: 
     description: 
-  custom_actions:
-    label: 自定义操作
+  buttons.$.button_name:
+    label: 名称
     help: 
     description: 
-  relatedList:
-    label: 相关列表
+  buttons.$.visible_on:
+    label: 显示条件
     help: 
     description: 
   fields:
@@ -34,22 +34,59 @@ fields:
     label: Field
     help: 
     description: 
-  fields.$.field:
+  fields.$.field_name:
     label: 字段
     help: 
     description: 
-  fields.$.readonly:
+  fields.$.is_readonly:
     label: 只读
     help: 
     description: 
-  fields.$.required:
+  fields.$.is_required:
     label: 必填
     help: 
-    description: 
+    description:
+  fields.$.visible_on:
+    label: 显示条件
+    help: 
+    description:
   fields.$.group:
     label: 分组
     help: 
     description: 
+  related_lists:
+    label: 相关子表
+    help: 
+    description: 
+  related_lists.$.related_field_fullname:
+    label: 子表名称
+    help: 
+    description:
+  related_lists.$.field_names:
+    label: 显示的字段
+    help: 
+    description:
+  related_lists.$.sort_field_name:
+    label: 排序字段
+    help: 
+    description:
+  related_lists.$.sort_order:
+    label: 排序方式
+    help: 
+    description:
+    options:
+      - label: 正序
+        value: asc
+      - label: 倒序
+        value: desc
+  related_lists.$.filters:
+    label: 过滤规则
+    help: 
+    description:
+  related_lists.$.visible_on:
+    label: 显示条件
+    help: 
+    description:
 listviews:
   all:
     label: 所有

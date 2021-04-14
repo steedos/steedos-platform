@@ -58,3 +58,4 @@ steedos-projects/project-community/.env.local
 steedos-projects/project-enterprise/logs/**
 steedos-projects/project-enterprise/storage/**
 steedos-projects/project-enterprise/.env.local
+services/service-metadata-layouts/.env.local
