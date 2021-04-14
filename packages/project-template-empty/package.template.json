@@ -14,9 +14,9 @@
   "license": "ISC",
   "dependencies": {
       "dotenv-flow": "^3.1.0",
-      "@steedos/service-metadata-server": "^2.0.3",
-      "@steedos/service-package-loader": "^2.0.3",
-      "@steedos/service-steedos-server": "^2.0.3",
+      "@steedos/service-metadata-server": "^2.0.4",
+      "@steedos/service-package-loader": "^2.0.4",
+      "@steedos/service-steedos-server": "^2.0.4",
       "ioredis": "^4.22.0",
       "moleculer": "^0.14.12",
       "moleculer-cli": "^0.7.1"
