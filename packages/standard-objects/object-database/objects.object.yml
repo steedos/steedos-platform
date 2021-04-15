@@ -328,7 +328,6 @@ relatedList:
       - label
       - object_name
       - profiles
-  - object_related_list
   - permission_objects
   - object_workflows
   - process_definition
