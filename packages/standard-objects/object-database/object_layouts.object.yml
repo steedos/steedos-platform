@@ -200,6 +200,10 @@ fields:
         value: asc
       - label: DESC
         value: desc
+  related_lists.$.buttons:
+    label: Buttons
+    type: lookup
+    is_wide: true
   related_lists.$.filters:
     label: Filters
     type: textarea
@@ -215,6 +219,11 @@ list_views:
       - profiles
     label: All
     filter_scope: space
+actions:
+  createDefaulRecordView:
+    on: list
+    label: 创建默认页面布局
+    visible: false
 permission_set:
   user:
     allowCreate: false

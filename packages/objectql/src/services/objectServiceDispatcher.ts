@@ -178,6 +178,14 @@ class ObjectServiceDispatcher {
     async getRecordPermissions(record, userSession){
         return await this.callAction(`getRecordPermissions`, {record, userSession});
     }
+
+    async getRecordView(userSession){
+        return await this.callAction(`getRecordView`, {userSession});
+    }
+
+    async createDefaulRecordView(userSession){
+        return await this.callAction(`createDefaulRecordView`, {userSession});
+    }
 }
 
 export function getObjectDispatcher(objectApiName): any {

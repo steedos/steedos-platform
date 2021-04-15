@@ -1,4 +1,4 @@
-import { registerObject, removeObject, addObjectConfig, getObjectsConfig } from './object';
+import { registerObject, removeObject, addObjectConfig, getObjectsConfig, getObjectConfig } from './object';
 import { registerApp, getApp, getApps, removeApp } from './app';
 import { getProfile, getProfiles, registerProfile } from './profile';
 import { registerLayout, getLayout, getLayouts, removeLayout, filterLayouts } from './layout';
@@ -23,6 +23,10 @@ export class MetadataRegister{
     }
     async getObjectsConfig(datasourceName: string): Promise<any>{
         return await getObjectsConfig(this.broker, datasourceName);
+    }
+
+    async getObjectConfig(objectApiName): Promise<any>{
+        return await getObjectConfig(this.broker, objectApiName);
     }
 
     async addObject(serviceName, objectConfig: any): Promise<boolean>{

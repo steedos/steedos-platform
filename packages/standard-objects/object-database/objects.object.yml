@@ -404,6 +404,9 @@ actions:
   copy_odata: 
     label: Copy OData URL
     on: record
+  createDefaulRecordView:
+      on: record_only_more
+      label: 创建默认页面布局
   # export:
   #   label: Export
   #   visible: true

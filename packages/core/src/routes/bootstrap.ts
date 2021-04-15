@@ -265,6 +265,8 @@ export async function getSpaceBootStrap(req, res) {
                         }
                     })
                     delete objectConfig.listeners
+                    delete objectConfig.__filename
+                    delete objectConfig.extend
                 } catch (error) {
                     
                 }
@@ -375,6 +377,8 @@ export async function getSpaceObjectBootStrap(req, res) {
             })
 
             delete objectConfig.listeners
+            delete objectConfig.__filename
+            delete objectConfig.extend
         }
         return res.status(200).send(objectConfig || {});
     }).run();

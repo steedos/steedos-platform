@@ -147,10 +147,15 @@ function getObjectServiceMethodsSchema() {
             }
         },
         getRecordView: {
-            async handler(record, userSession) {
-                return await this.object.getRecordView(record, userSession);
+            async handler(userSession) {
+                return await this.object.getRecordView(userSession);
             }
         },
+        createDefaulRecordView: {
+            async handler(userSession) {
+                return await this.object.createDefaulRecordView(userSession);
+            }
+        }
         // getPageView: {
         //     //TODO
         // }
@@ -440,6 +445,19 @@ function getObjectServiceActionsSchema() {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 return await this.getRecordView(userSession);
+            }
+        },
+        createDefaulRecordView: {
+            rest: {
+                method: "POST",
+                path: "/defUiSchema"
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                if(!userSession.is_space_admin){
+                    throw new Error('no permission.')
+                }
+                return await this.createDefaulRecordView(userSession);
             }
         }
     };

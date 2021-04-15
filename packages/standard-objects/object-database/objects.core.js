@@ -1,4 +1,5 @@
 var objectql = require('@steedos/objectql');
+const clone = require('clone');
 const defaultDatasourceName = 'meteor';
 const defaultDatasourcesName = ['default','meteor'];
 var triggerCore = require('./object_triggers.core.js');
@@ -214,9 +215,9 @@ function loadObject(doc, oldDoc) {
         if (datasourceName === defaultDatasourceName) {
             delete doc.table_name
         }
-    
         //继承base
         loadDBObject(doc);
+        const originalObject = clone(doc);
         objectql.addObjectConfig(doc, datasourceName);
         objectql.loadObjectLazyListViews(doc.name);
         objectql.loadObjectLazyActions(doc.name);
@@ -225,7 +226,7 @@ function loadObject(doc, oldDoc) {
         objectql.loadObjectLazyListenners(doc.name);
         //获取到继承后的对象
         const _doc = objectql.getObjectConfig(doc.name);
-        objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, _doc).then(function(res){            
+        objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, originalObject).then(function(res){            
             if(res){
                 datasource.setObject(doc.name, _doc);
                 try {

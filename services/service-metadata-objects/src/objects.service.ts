@@ -79,6 +79,11 @@ module.exports = {
                 return await this.objetActionHandlers.verify(ctx);
             }
         },
+        getOriginalObject:{
+            async handler(ctx) {
+                return await this.objetActionHandlers.getOriginalObject(ctx);
+            }
+        },
         getObjectFieldFormulaConfigs: {
             async handler(ctx) {
                 return await this.formulaActionHandler.filter(ctx);

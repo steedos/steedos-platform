@@ -49,6 +49,16 @@ export async function getObjectsConfig(broker, datasourceName){
     return objectsConfig;
 }
 
+export async function getObjectConfig(broker, objectApiName){
+    const objectsConfig = await broker.call('objects.get', {objectApiName: objectApiName})
+    _.map(objectsConfig, (metadataConfig)=>{
+        if(metadataConfig && metadataConfig.metadata){
+            jsonToObject(metadataConfig.metadata)
+        }
+    })
+    return objectsConfig;
+}
+
 export async function removeObject(broker, objectApiName) {
     // const serviceName = getObjectServiceName(objectConfig.name);
     const res = await broker.call("objects.delete", {objectApiName: objectApiName}, {meta: {

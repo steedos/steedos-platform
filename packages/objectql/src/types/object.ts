@@ -12,7 +12,6 @@ import { formatFiltersToODataQuery } from "@steedos/filters";
 import { WorkflowRulesRunner } from '../actions';
 import { runValidationRules } from './validation_rules';
 import { brokeEmitEvents } from "./object_events";
-import { objectToJson } from '../util/index';
 import { translationObject } from "@steedos/i18n";
 import { getObjectLayouts } from "./object_layouts";
 const clone = require('clone')
@@ -857,7 +856,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async getRecordView(userSession){
         const lng = userSession.language;
-        let objectConfig = objectToJson(clone(this.toConfig()));
+        const objectMetadataConfig: any = await this.callMetadataObjectServiceAction('get', {objectApiName: this.name});
+        let objectConfig = objectMetadataConfig.metadata;
         objectConfig.name = this.name
         objectConfig.datasource = this.datasource.name;
         objectConfig.permissions = await this.getUserObjectPermission(userSession);
@@ -940,8 +940,48 @@ export class SteedosObjectType extends SteedosObjectProperties {
         })
 
         delete objectConfig.listeners
-
+        delete objectConfig.__filename
+        delete objectConfig.extend
         return objectConfig;
+    }
+
+    async createDefaulRecordView(userSession){
+        const name = 'default';
+        const label = 'Default';
+        const object_name = this.name;
+        const type = 'record';
+        const profiles = ['user'];
+        const buttons = null;
+        const fields = []; 
+        const related_lists = [];
+
+        const objectConfig: any = await this.callMetadataObjectServiceAction('getOriginalObject', {objectApiName: this.name});
+        _.each(objectConfig.fields, function(field){
+            const layoutField: any = {};
+            layoutField.field_name = field.name;
+            layoutField.is_readonly = field.readonly;
+            layoutField.is_required = field.required;
+            layoutField.group = field.group;
+            layoutField.visible_on = `${!field.hidden}`;
+            fields.push(layoutField);
+        });
+
+        // const details = await this.getDetailsInfo();
+        // for await (const detail of details) {
+        //     const relatedList: any = {}
+        //     if(detail){
+        //         relatedList.related_field_fullname = detail;
+        //     }
+        // }
+
+        try {
+            return await getObject('object_layouts').insert({
+                name, label, object_name, type, profiles, buttons, fields, related_lists,
+                space: userSession.spaceId
+            }, userSession)
+        } catch (error) {
+            return {error: error.message}
+        }
     }
 
     private isDirectCRUD(methodName: string) {

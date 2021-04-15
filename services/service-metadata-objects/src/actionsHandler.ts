@@ -1,6 +1,6 @@
 import _ = require("lodash");
 import { METADATA_TYPE } from ".";
-import { getObjectServiceName, refreshObject } from "./objects";
+import { getObjectServiceName, getOriginalObject, refreshObject } from "./objects";
 export type SObject = {
     name: string,
     [x: string]: any
@@ -19,11 +19,6 @@ export type MetadataObject = {
 function cacherKey(objectApiName: string): string{
     return `$steedos.#${METADATA_TYPE}.${objectApiName}`
 }
-
-
-
-
-
 export class ActionHandlers {
     onRegister: any = null;
     constructor(onRegister){
@@ -116,6 +111,10 @@ export class ActionHandlers {
     async verify(ctx: any): Promise<boolean>{
         console.log("verify");
         return true;
+    }
+
+    async getOriginalObject(ctx: any): Promise<boolean>{
+        return await getOriginalObject(ctx, ctx.params.objectApiName);
     }
      
     async refresh(ctx){
