@@ -11,17 +11,6 @@ let objectql = require('@steedos/objectql');
 const auth = require("@steedos/auth");
 const steedosConfig = objectql.getSteedosConfig();
 let qywx_api = require('./router.js');
-let push = require('./notifications');
-
-// let config = ServiceConfiguration.configurations.findOne({
-//     service: "qiyeweixin"
-// });
-
-// if (config) {
-//     newCrypt = new WXBizMsgCrypt(config != null ? (_ref = config.secret) != null ? _ref.token : void 0 : void 0, config != null ? (_ref2 = config.secret) != null ? _ref2.encodingAESKey : void 0 : void 0, config != null ? (_ref3 = config.secret) != null ? _ref3.corpid : void 0 : void 0);
-// }
-// let TICKET_EXPIRES_IN = (config != null ? (_ref4 = config.secret) != null ? _ref4.ticket_expires_in : void 0 : void 0) || 1000 * 60 * 20;
-
 
 router.use("/qywx", async function (req, res, next) {
     await next();
@@ -42,7 +31,6 @@ router.get("/api/qiyeweixin/mainpage", async function (req, res, next) {
     
     if (o) {
         redirect_uri = encodeURIComponent(Meteor.absoluteUrl('api/qiyeweixin/auth_login'));
-        // console.log("redirect_uri----: ",redirect_uri);
         authorize_uri = qywx_api.authorize_uri;
         
         if (!authorize_uri)
@@ -51,6 +39,7 @@ router.get("/api/qiyeweixin/mainpage", async function (req, res, next) {
             appid = o.qywx_corp_id;
         
         url = authorize_uri + '?appid=' + appid + '&redirect_uri=' + redirect_uri + `&response_type=code&scope=snsapi_base&state=${target}#wechat_redirect`;
+        // console.log("url: ",url);
         res.writeHead(302, {
             'Location': url
         });
@@ -75,7 +64,6 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
     if (state != "")
         redirect_url = Meteor.absoluteUrl(state);
 
-    // console.log("redirect_url: ",redirect_url);
     if ((req != null ? (_ref5 = req.query) != null ? _ref5.code : void 0 : void 0) && token) {
         userInfo = Qiyeweixin.getUserInfo(token, req.query.code);
     } else {
@@ -422,25 +410,6 @@ let initSpace = function (service, name) {
         });
     }
     return;
-    // else {
-    //     doc = {};
-    //     doc.qywx_corp_id = service.corp_id;
-    //     doc.name = name;
-    //     doc.is_deleted = false;
-    //     doc.created = new Date;
-    //     doc.qywx_need_sync = true;
-    //     service.remote_modified = new Date;
-    //     doc.services = {
-    //         qiyeweixin: service
-    //     };
-    //     newSpace = Creator.getCollection("spaces").direct.insert(doc);
-    // }
-    // newSpace = Creator.getCollection("spaces").findOne({
-    //     "qywx_corp_id": service.corp_id
-    // });
-    // if (newSpace) {
-    //     return _sync.syncCompany(newSpace);
-    // }
 };
 
 // 根据suite_ticket，获取suite_access_token
@@ -475,4 +444,4 @@ let getAbsoluteUrl = function (url) {
 };
 
 
-exports.router = router;
+module.exports.router = router;

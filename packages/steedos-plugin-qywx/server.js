@@ -2,19 +2,19 @@ require('dotenv-flow').config();
 
 var server = require('@steedos/meteor-bundle-runner');
 var steedos = require('@steedos/core');
-var express = require('express');
-var app = express();
+var qywx_sso = require('./index');
 
 server.Fiber(function () {
     try {
         server.Profile.run("Server startup", function () {
             server.loadServerBundles();
-            var init = require('./lib/index').init;
-            init({ app: app });
-            WebApp.connectHandlers.use(app);
             steedos.init();
             server.callStartupHooks();
             server.runMain();
+            WebApp.httpServer.setTimeout(60000);
+            qywx_sso.init();
+            var push = require('./src/qywx/notifications');
+            push.notify();
         })
     } catch (error) {
        console.error(error.stack)

@@ -464,3 +464,35 @@ exports.getUserInfo = function (access_token, code) {
         });
     }
 };
+
+// 待审核推送
+exports.workflowPush = function (options, spaceId, oauthUrl) {
+    if (!options || (options == {}))
+        return false;
+
+    let info = {};
+    info.text = "";
+    info.url = "";
+    info.title = "审批王";
+    // 获取申请单
+    let instanceId = options.payload.instance;
+    let instance = Creator.getCollection('instances').findOne({ _id: instanceId });
+
+    let inboxUrl = oauthUrl + '/workflow/space/' + spaceId + '/inbox/' + options.payload.instance;
+
+    let outboxUrl = oauthUrl + '/workflow/space/' + spaceId + '/outbox/' + options.payload.instance;
+
+    info.text = '请审批 ' + options.text;
+    info.url = inboxUrl;
+    info.title = options.title;
+
+    if (!instance) {
+        info.text = options.text;
+    } else {
+        if (instance.state == "completed") {
+            info.text = options.text;
+            info.url = outboxUrl;
+        }
+    }
+    return info;
+};

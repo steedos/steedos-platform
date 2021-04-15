@@ -7,7 +7,6 @@ Meteor.startup(function () {
     Push.send = function (options) {
         Push.oldSend(options);
         try {
-            // console.log("options:---",options);
             if (options.from !== 'workflow')
                 return;
 
