@@ -55,6 +55,7 @@ listviews:
     label: All
 CustomLabels:
   object_layouts_group_field_info: Field Info
+  object_layouts__object: Object Layouts
   object_layouts_group_appendToLayouts: >-
     Select the page layout that should contain the field (if you don’t select a
     layout, the field will not be displayed on any page)
