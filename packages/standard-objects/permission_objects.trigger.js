@@ -15,13 +15,15 @@ const baseRecord = {
     record_permissions:permissions
 }
 
-const getInternalPermissionObjects = function(){
+const getInternalPermissionObjects = async function(){
     let objectsPermissions = [];
     const datasources = objectql.getSteedosSchema().getDataSources();
-    _.each(datasources, function(datasource, name){
-        let datasourceObjects = datasource.getObjects();
-        _.each(datasourceObjects, function(object, objectName) {
-          let objectJSON = object.toConfig();
+    for (const datasourceName in datasources) {
+        let datasource = datasources[datasourceName];
+        let datasourceObjects = await datasource.getObjects();
+        _.each(datasourceObjects, function(object) {
+          const objectJSON  = object.metadata;
+          const objectName = objectJSON.name;
           if(!objectJSON._id && !objectJSON.hidden && !_.include(InternalData.hiddenObjects, objectName)){
             let permission_set = objectJSON.permission_set
             _.each(permission_set, function(v, code){
@@ -29,13 +31,13 @@ const getInternalPermissionObjects = function(){
             })
           }
         });
-    })
+    }
     return objectsPermissions;
 }
 
 
-const getPermissionByFilters = function(filtersFun){
-    let allPer = getInternalPermissionObjects();
+const getPermissionByFilters = async function(filtersFun){
+    let allPer = await getInternalPermissionObjects();
     let pers = []
     _.each(allPer, function(doc){
         if(filtersFun(doc)){
@@ -45,8 +47,8 @@ const getPermissionByFilters = function(filtersFun){
     return pers;
 }
 
-const getPermissionById = function(id){
-    let allPer = getInternalPermissionObjects();
+const getPermissionById = async function(id){
+    let allPer = await getInternalPermissionObjects();
     return _.find(allPer, (doc)=>{
         return doc._id === id
     })
@@ -96,7 +98,7 @@ const find = async function(query){
         }
     }
     let objectName = filters.object_name;
-    let permissionObjects = getPermissionByFilters((doc)=>{
+    let permissionObjects = await getPermissionByFilters((doc)=>{
         if(permissionSetId && objectName){
             return permissionSetId === doc.permission_set_id && objectName === doc.object_name
         }
