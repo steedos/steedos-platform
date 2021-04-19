@@ -118,9 +118,13 @@ Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
   if(_.isObject(objectName)){
     objectName = objectName.name
   }
-  var _object = Steedos.authRequest(`/api/v4/objects/${objectName}`, { type: 'get', async: false});
+  var _object = Creator.getObject(objectName); 
+  if(!_object){
+    var _objects = Steedos.authRequest(`/api/v4/objects`, { type: 'get', async: false, data: { $filter: "name eq '"+objectName+"'" } });
+    _object = _objects && _objects.value && _objects.value.length > 0 ? _objects.value[0] : null;
+  }
   // 外部数据源对象必须启用后，才可正常显示对象字段属性
-  if(_object && _object.database_name){
+  if(_object && (_object.database_name || _object.datasource)){
     showFields.push({"name":"column_name"})
     showFields.push({"name":"primary"})
     showFields.push({"name":"generated"})

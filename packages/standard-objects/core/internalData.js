@@ -94,10 +94,15 @@ exports.findObjects = async function(userId, filters){
     let query = parserFilters(filters);
     let isSystem = query.is_system;
     let datasource = query.datasource;
+    let name = query.name;
     let objects = await getObjects(userId);
 
     if(datasource){
         objects = _.filter(objects, function(obj){ return obj.datasource === datasource})
+    }
+
+    if(name){
+        objects = _.filter(objects, function(obj){ return obj.name === name})
     }
 
     if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
