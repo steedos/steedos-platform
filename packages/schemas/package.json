@@ -1,6 +1,6 @@
 {
   "name": "@steedos/schemas",
-  "version": "1.23.25",
+  "version": "1.23.26",
   "main": "index.js",
   "repository": "https://github.com/steedos/schemas.git",
   "author": "sunhaolin <sunhaolin@hotoa.com>",
