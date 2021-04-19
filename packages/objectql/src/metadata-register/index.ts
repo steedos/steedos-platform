@@ -3,6 +3,7 @@ import { registerApp, getApp, getApps, removeApp } from './app';
 import { getProfile, getProfiles, registerProfile } from './profile';
 import { registerLayout, getLayout, getLayouts, removeLayout, filterLayouts } from './layout';
 import { getPermissionset, getPermissionsets, registerPermissionset } from './permissionset';
+import { getTab, getTabs, registerTab, removeTab } from './tabs';
 export enum MetadataType {
     Object,
     ObjectField,
@@ -51,6 +52,22 @@ export class MetadataRegister{
 
     async getApps(): Promise<any>{
         return await getApps(this.broker);
+    }
+
+    async addTab(serviceName, tabConfig: any): Promise<boolean>{
+        return await registerTab(this.broker, serviceName, tabConfig);
+    }
+
+    async removeTab(tabApiName: any): Promise<boolean>{
+        return await removeTab(this.broker, tabApiName);
+    }
+
+    async getTab(tabApiName): Promise<any>{
+        return await getTab(this.broker, tabApiName);
+    }
+
+    async getTabs(): Promise<any>{
+        return await getTabs(this.broker);
     }
 
     async addLayout(serviceName, config: any): Promise<boolean>{

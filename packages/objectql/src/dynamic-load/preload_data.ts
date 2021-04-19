@@ -1,6 +1,7 @@
 import { addObjectFieldConfig } from './field'
 import { addObjectButtonsConfig } from './button'
 import { addAppConfig, loadObjectLayoutMetadata, SteedosDataSourceType } from '..';
+import { addTabConfig } from './tabs';
 
 declare var Creator: any;
 
@@ -32,9 +33,20 @@ export const preloadDBApps = async function(datasource: SteedosDataSourceType){
         Creator.Collections[tableName] = Creator.createCollection({name: tableName});
     }
     let apps: any = await datasource.find(tableName , {filters: ['visible','=',true]});
-    apps.forEach(element => {
-        addAppConfig(element, `~database-${tableName}`);
-    });
+    for await (const element of apps) {
+        await addAppConfig(element, `~database-${tableName}`);
+    }
+}
+
+export const preloadDBTabs = async function(datasource: SteedosDataSourceType){
+    const tableName = "tabs";
+    if(datasource.name === 'meteor'){
+        Creator.Collections[tableName] = Creator.createCollection({name: tableName});
+    }
+    let tabs: any = await datasource.find(tableName, {});
+    for await (const element of tabs) {
+        await addTabConfig(element, `~database-${tableName}`);
+    }
 }
 
 export const preloadDBObjectLayouts = async function(datasource: SteedosDataSourceType){

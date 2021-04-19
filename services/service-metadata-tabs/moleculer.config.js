@@ -29,7 +29,7 @@ module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.
 	namespace: "steedos", //steedos
 	// Unique node identifier. Must be unique in a namespace.
-	nodeID: "metadata-layouts",
+	nodeID: "metadata-tabs",
 	// Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
 	metadata: {},
 

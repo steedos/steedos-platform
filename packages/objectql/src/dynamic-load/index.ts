@@ -11,3 +11,4 @@ export * from './profile'
 export * from './permissionset'
 export * from './translations'
 export * from './object_translations'
+export * from "./tabs"

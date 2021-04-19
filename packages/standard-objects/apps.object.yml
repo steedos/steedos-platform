@@ -45,26 +45,12 @@ fields:
     label: Description
     type: textarea
     is_wide: true
-  objects:
-    label: Objects
+  tabs:
+    label: Tabs
     type: lookup
     multiple: true
     group: Business object
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions()
-      }
-    filterable: true
-  mobile_objects:
-    label: Mobile Objects
-    type: lookup
-    multiple: true
-    group: Business object
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions()
-      }
-    filterable: true
+    reference_to: tabs
   icon:
     label: Icon
     type: text

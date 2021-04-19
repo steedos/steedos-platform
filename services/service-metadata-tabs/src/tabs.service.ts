@@ -2,7 +2,7 @@
 import { METADATA_TYPE } from '.';
 import { ActionHandlers } from './actionsHandler';
 module.exports = {
-    name: "apps",
+    name: "tabs",
     /**
      * Settings
      */
@@ -36,31 +36,19 @@ module.exports = {
                 return await ActionHandlers.get(ctx);
             }
         },
-        getMenus:{
-            rest: {
-                method: "GET",
-                path: "/menus"
-            },
-            params: {
-            },
+        getChildren: {
             async handler(ctx) {
-                return await ActionHandlers.getMenus(ctx);
-            }
-        },
-        getAppMenus: {
-            rest: {
-                method: "GET",
-                path: "/:appApiName/menus"
-            },
-            params: {
-            },
-            async handler(ctx) {
-                return await ActionHandlers.getAppMenus(ctx);
+                return await ActionHandlers.getChildren(ctx);
             }
         },
         getAll: {
             async handler(ctx) {
                 return await ActionHandlers.getAll(ctx);
+            }
+        },
+        filter: {
+            async handler(ctx){
+                return await ActionHandlers.filter(ctx);
             }
         },
         add: {

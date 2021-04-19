@@ -33,7 +33,7 @@ export const ActionHandlers = {
         return await register(ctx, metadataApiName, layoutConfig, ctx.meta)
     },
     async filter(ctx: any): Promise<any>{
-        let {objectApiName, spaceId, profileApiName} = ctx.params;
+        let {objectApiName, spaceId, layoutApiName} = ctx.params;
         const layouts = await ctx.broker.call('metadata.filter', {key: cacherKey("*", "*")}, {meta: ctx.meta});
         const configs = _.filter(layouts, function(item){
             const layout = item.metadata;
@@ -44,8 +44,8 @@ export const ActionHandlers = {
             if(rev && spaceId){
                 rev = (layout.space === spaceId || !_.has(layout, 'space'));
             }
-            if(rev && profileApiName){
-                rev = _.includes(layout.profiles, profileApiName);
+            if(rev && layoutApiName){
+                rev = _.includes(layout.profiles, layoutApiName);
             }
             return rev;
         })

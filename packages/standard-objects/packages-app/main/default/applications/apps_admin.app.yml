@@ -10,6 +10,10 @@ admin_menus:
     name: App Manager
     object_name: apps
     parent: apps
+  - _id: tabs
+    name: Tabs
+    object_name: tabs
+    parent: apps
   - _id: packaging
     name: Packaging
     parent: apps

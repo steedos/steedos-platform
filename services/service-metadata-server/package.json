@@ -9,6 +9,7 @@
     "@steedos/service-metadata-layouts": "^2.0.4",
     "@steedos/service-metadata-objects": "^2.0.4",
     "@steedos/service-metadata-permissionsets": "^2.0.4",
+    "@steedos/service-metadata-tabs": "^2.0.4",
     "@steedos/service-metadata-translations": "^2.0.4",
     "@steedos/service-metadata-triggers": "^2.0.4"
   },
