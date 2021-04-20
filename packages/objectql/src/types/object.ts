@@ -817,6 +817,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 record_company_ids = record_company_ids.map((n)=> n._id)
             }
             record_company_ids = _.union(record_company_ids, [record_company_id]);
+            record_company_ids = _.compact(record_company_ids);
             if(!permissions.modifyAllRecords && !isOwner && !permissions.modifyCompanyRecords){
                 permissions.allowEdit = false
 			    permissions.allowDelete = false

@@ -430,6 +430,18 @@ function getObjectServiceActionsSchema() {
                 return this.getGridAbsoluteUrl();
             }
         },
+        getRecordPermissionsById: {
+            rest: {
+                method: "GET",
+                path: "/recordPermissions/:recordId"
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { recordId } = ctx.params;
+                const record = await this.findOne(recordId)
+                return this.getRecordPermissions(record, userSession);
+            }
+        },
         getRecordPermissions: {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
