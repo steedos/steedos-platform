@@ -25,6 +25,9 @@ async function get(ctx: any){
             }
             return true;
         })
+        if(ctx.params.appApiName === '-'){
+            return _.first(userApps);
+        }
         return _.find(userApps, function(metadataConfig){
             const app = metadataConfig.metadata;
             return app.code === ctx.params.appApiName
