@@ -68,6 +68,6 @@ function _isMeteorDriver(req) {
    let urlParams = req.params;
    let key = urlParams.objectName;
    let collection = getSteedosSchema().getObject(key);
-   // return collection.datasource.enable_space;
-   return collection != null;
+   return collection.datasource.enable_space;
+   // return collection != null;
 }
