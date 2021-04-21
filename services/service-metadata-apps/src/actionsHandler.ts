@@ -26,7 +26,7 @@ async function get(ctx: any){
             return true;
         })
         if(ctx.params.appApiName === '-'){
-            return _.first(userApps);
+            return _.first(_.sortBy(userApps, ['sort']));
         }
         return _.find(userApps, function(metadataConfig){
             const app = metadataConfig.metadata;
@@ -110,12 +110,16 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
 }
 
 async function transformAppToMenus(ctx, app, mobile, userSession){
-    if(!app.code){
+    if(!app.code && !app._id){
         return;
     }
 
     if(!mobile && app.mobile){
         return;
+    }
+
+    if(!app.code){
+        app.code = app._id;
     }
 
     translationApp(userSession.language, app.code, app);
@@ -252,7 +256,8 @@ async function getAppMenus(ctx){
         if (_.has(appConfig, 'space') && appConfig.space && appConfig.space != spaceId) {
             return ;
         }
-        return await transformAppToMenus(ctx, appConfig, mobile, userSession);
+        const appMeuns = await transformAppToMenus(ctx, appConfig, mobile, userSession);
+        return appMeuns;
     }
 
 }
