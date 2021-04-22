@@ -353,7 +353,11 @@ let objectTriggers = {
             }
 
             if(modifier.$set.is_enable){
-                if(!canEnable({fields: doc.fields, datasource: modifier.$set.datasource || doc.datasource})){
+                let fields = doc.fields;
+                if (!fields) {
+                    fields = Creator.getCollection("object_fields").find({space: doc.space, object: doc.name}).fetch();
+                }
+                if(!canEnable({fields: fields, datasource: modifier.$set.datasource || doc.datasource})){
                     throw new Meteor.Error(500, "不能启用对象，请先配置主键字段");
                 }
             }

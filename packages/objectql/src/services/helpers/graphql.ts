@@ -53,14 +53,14 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
         case 'update':
             gplObj.mutation = gql`
                 type Mutation {
-                    ${objectName}__${actionName}(id: String, doc: JSON): ${objectName}
+                    ${objectName}__${actionName}(id: JSON, doc: JSON): ${objectName}
                 }
             `;
             break;
         case 'delete':
             gplObj.mutation = gql`
                 type Mutation {
-                    ${objectName}__${actionName}(id: String): JSON
+                    ${objectName}__${actionName}(id: JSON): JSON
                 }
             `;
             break;
