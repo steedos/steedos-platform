@@ -218,6 +218,12 @@ function loadObject(doc, oldDoc) {
         //继承base
         loadDBObject(doc);
         const originalObject = clone(doc);
+        
+        // 由于外部数据源对象的datasource属性存的是datasource._id的值，故这里转换为datasoruce.name
+        if(!_.include(defaultDatasourcesName, originalObject.datasource)) { 
+            originalObject.datasource = datasourceName;
+        }
+
         objectql.addObjectConfig(doc, datasourceName);
         objectql.loadObjectLazyListViews(doc.name);
         objectql.loadObjectLazyActions(doc.name);
