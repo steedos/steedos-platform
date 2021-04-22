@@ -862,9 +862,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         objectConfig.name = this.name
         objectConfig.datasource = this.datasource.name;
         objectConfig.permissions = await this.getUserObjectPermission(userSession);
-        objectConfig.details = await this.getDetails();
-        objectConfig.masters = await this.getMasters();
-        objectConfig.lookup_details = await this.getLookupDetails();
+        objectConfig.details = await this.getDetailsInfo();
+        objectConfig.masters = await this.getMastersInfo();
+        objectConfig.lookup_details = await this.getLookupDetailsInfo();
 
         delete objectConfig.db
 

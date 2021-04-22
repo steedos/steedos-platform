@@ -20,13 +20,19 @@ async function get(ctx: any){
         const spaceId = userSession.spaceId;
         const userApps = _.filter(allApps, function (metadataConfig) {
             const config = metadataConfig.metadata;
+            if(!config.is_creator || !config.visible){
+                return false;
+            }
             if (_.has(config, 'space') && config.space) {
                 return config.space === spaceId;
+            }
+            if (!_.isEmpty(config.tabs) || !_.isEmpty(config.objects) || !_.isEmpty(config.mobile_objects)) {
+                return true;
             }
             return true;
         })
         if(ctx.params.appApiName === '-'){
-            return _.first(_.sortBy(userApps, ['sort']));
+            return _.first(_.sortBy(userApps, ['metadata.sort']));
         }
         return _.find(userApps, function(metadataConfig){
             const app = metadataConfig.metadata;
@@ -177,6 +183,9 @@ async function getAppsMenus(ctx) {
     const allApps = _.map(metadataApps, 'metadata');
 
     const userApps = _.filter(allApps, function (config) {
+        if(!config.is_creator || !config.visible){
+            return false;
+        }
         if (_.has(config, 'space') && config.space) {
             return config.space === spaceId;
         }
@@ -252,7 +261,6 @@ async function getAppMenus(ctx){
     const metadataConf = await get(ctx);
     if(metadataConf){
         const appConfig = metadataConf.metadata;
-
         if (_.has(appConfig, 'space') && appConfig.space && appConfig.space != spaceId) {
             return ;
         }

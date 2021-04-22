@@ -286,9 +286,9 @@ async function getObjectConfig(objectName, spaceId, userSession) {
         objectConfig.name = objectName
         objectConfig.datasource = object.datasource.name;
         objectConfig.permissions = await object.getUserObjectPermission(userSession);
-        objectConfig.details = await object.getDetails();
-        objectConfig.masters = await object.getMasters();
-        objectConfig.lookup_details = await object.getLookupDetails();
+        objectConfig.details = await object.getDetailsInfo();
+        objectConfig.masters = await object.getMastersInfo();
+        objectConfig.lookup_details = await object.getLookupDetailsInfo();
         return objectConfig;
     } catch (error) {
         console.warn('not load object', objectName)
