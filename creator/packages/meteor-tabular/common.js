@@ -21,7 +21,8 @@ Tabular.Table = function (options) {
   self.name = options.name;
 
   if (!(options.collection instanceof Mongo.Collection)) {
-    throw new Error('Tabular.Table options must specify collection');
+	  console.log("documentDB: !(options.collection instanceof Mongo.Collection)");
+    // throw new Error('Tabular.Table options must specify collection');
   }
   self.collection = options.collection;
 
