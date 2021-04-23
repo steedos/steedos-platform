@@ -386,8 +386,7 @@ if (Meteor.isServer) {
         "mobile": 1,
         "created": 1
     }, {
-            background: true,
-            name: "primaryEmailVerified.locale.name._id.mobile.created"
+            background: true
         });
     db.users._ensureIndex({
         "primary_email_verified": 1,
@@ -398,8 +397,7 @@ if (Meteor.isServer) {
         "created": 1,
         "last_logon": 1
     }, {
-            background: true,
-            name: "primaryEmailVerified.locale.name.id.mobile.created.last"
+            background: true
         });
     db.users._ensureIndex({
         "imo_uid": 1
@@ -461,8 +459,7 @@ if (Meteor.isServer) {
         "services.weixin.openid.appid": 1,
         "services.weixin.openid._id": 1
     }, {
-            background: true,
-            name: "services.weixin.openid.appid_services.weixin.openid._id"
+            background: true
         });
 }
 
