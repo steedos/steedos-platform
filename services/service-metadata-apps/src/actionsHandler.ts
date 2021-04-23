@@ -65,6 +65,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
             const tabChildren = await getChildren(ctx, tabApiName);
             if(tabChildren && tabChildren.length > 0){
                 const tabMenu = {
+                    id: tab.name,
                     name: `${tab.label}`,
                     children: []
                 };
@@ -131,9 +132,11 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
     translationApp(userSession.language, app.code, app);
     const appPath = `/app/${app.code}`
     const menu = {
+        id: app.code,
         path: appPath,
         name: `${app.label || app.name}`,
-        icon: "",
+        icon: app.icon_slds,
+        description: app.description,
         children: []
     }
 
@@ -148,6 +151,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
                     translationObject(userSession.language, objectConfig.name, objectConfig)
                     menu.children.push(
                         {
+                            id: objectConfig.name,
                             path: `${appPath}/${objectConfig.name}`,
                             name: `${objectConfig.label}`
                         }
