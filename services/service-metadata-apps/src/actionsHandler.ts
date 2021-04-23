@@ -83,6 +83,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
                         translationObject(userSession.language, objectConfig.name, objectConfig)
                         menu.children.push(
                             {
+                                id: objectConfig.name,
                                 path: `${appPath}/${objectConfig.name}`,
                                 name: `${objectConfig.label}`
                             }
@@ -91,6 +92,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
                 }
                 if(tab.type === 'url'){
                     let urlMenu: any = {
+                        id: `${tab.name}`,
                         path: `${tab.url}`,
                         name: `${tab.label}`
                     };
@@ -104,6 +106,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
                 if(tab.type === 'page'){
                     menu.children.push(
                         {
+                            id: `${tab.name}`,
                             path: `${tab.page}`,
                             name: `${tab.label}`
                         }
