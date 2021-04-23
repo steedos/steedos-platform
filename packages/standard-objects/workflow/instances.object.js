@@ -1,3 +1,6 @@
+const objectql = require("@steedos/objectql");
+const config = objectql.getSteedosConfig();
+
 if (!db.instances) {
   const core = require('@steedos/core');
   db.instances = core.newCollection('instances');
@@ -213,7 +216,8 @@ if (Meteor.isServer) {
     "submitter": 1,
     "applicant": 1
   }, {
-    background: true
+    background: true,
+    name: "isDeleted.state.space.finalDeci.submitter.applicant"
   });
   db.instances._ensureIndex({
     "is_deleted": 1,
@@ -232,7 +236,8 @@ if (Meteor.isServer) {
     "submitter": 1,
     "applicant": 1
   }, {
-    background: true
+    background: true,
+    name: "isDeleted.sta.space.modif.finalDeci.submit.applicant"
   });
   db.instances._ensureIndex({
     "is_deleted": 1,
@@ -248,7 +253,8 @@ if (Meteor.isServer) {
     "submit_date": 1,
     "outbox_users": 1
   }, {
-    background: true
+    background: true,
+    name: "isDeleted.space.modified.submitDate.outboxUsers"
   });
   db.instances._ensureIndex({
     "is_deleted": 1,
@@ -283,7 +289,8 @@ if (Meteor.isServer) {
     "submit_date": 1,
     "modified": 1
   }, {
-    background: true
+    background: true,
+    name: "isDeleted.sta.space.flow.submit_date.applicant"
   });
   db.instances._ensureIndex({
     "is_deleted": 1,
@@ -302,7 +309,8 @@ if (Meteor.isServer) {
     "applicant": 1,
     "inbox_users": 1
   }, {
-    background: true
+    background: true,
+    name: "isDeleted.sta.space.flow.submit.appli.inboxUser"
   });
   db.instances._ensureIndex({
     "is_deleted": 1,
@@ -312,7 +320,8 @@ if (Meteor.isServer) {
     "submitter": 1,
     "applicant": 1
   }, {
-    background: true
+    background: true,
+    name: "isDeleted.state.space.isArchive.submit.applicant"
   });
   db.instances._ensureIndex({
     "modified": 1
@@ -336,11 +345,15 @@ if (Meteor.isServer) {
   }, {
     background: true
   });
-  db.instances._ensureIndex({
-    "keywords": "hashed"
-  }, {
-    background: true
-  });
+
+  if (!config.datasources.default.documentDB) {
+    db.instances._ensureIndex({
+      "keywords": "hashed"
+    }, {
+      background: true
+    });
+  }
+
   db.instances._ensureIndex({
     "space": 1,
     "submit_date": 1,
@@ -348,13 +361,15 @@ if (Meteor.isServer) {
     "final_decision": 1,
     "state": 1
   }, {
-    background: true
+    background: true,
+    name: "space.submitDate.isDeleted.finalDecision.state"
   });
   db.instances._ensureIndex({
     "traces.approves.type": 1,
     "traces.approves.handler": 1
   }, {
-    background: true
+    background: true,
+    name: "traces.approves.type_traces.approves.handler"
   });
   // 全文检索同步字段
   db.instances._ensureIndex({

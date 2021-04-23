@@ -49,9 +49,10 @@ Tabular.Table = function (options) {
     throw new Error('Tabular.Table options must specify name');
   }
   self.name = options.name;
-
+  
   if (!(options.collection instanceof Mongo.Collection)) {
-    throw new Error('Tabular.Table options must specify collection');
+	  console.log("!(options.collection instanceof Mongo.Collection)");
+    // throw new Error('Tabular.Table options must specify collection');
   }
   self.collection = options.collection;
 
