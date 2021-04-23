@@ -4,7 +4,6 @@ datasources:
       url: ${MONGO_URL}
     objectFiles:
       - "./steedos-app/**"
-    documentDB: true
 public:
   cfs:
     store: ${STEEDOS_CFS_STORE}
