@@ -12,7 +12,23 @@ fields:
     type: text
   icon:
     label: Icon
-    type: text
+    type: lookup
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var options;
+              options = [];
+
+              _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
+                return options.push({
+                  value: svg,
+                  label: svg,
+                  icon: svg
+                });
+              });
+
+              return options;
+            }
   parent:
     label: Parent
     type: lookup

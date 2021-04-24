@@ -66,6 +66,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
             if(tabChildren && tabChildren.length > 0){
                 const tabMenu = {
                     id: tab.name,
+                    icon: tab.icon,
                     name: `${tab.label}`,
                     children: []
                 };
@@ -84,6 +85,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
                         menu.children.push(
                             {
                                 id: objectConfig.name,
+                                icon: objectConfig.icon,
                                 path: `${appPath}/${objectConfig.name}`,
                                 name: `${objectConfig.label}`
                             }
@@ -93,6 +95,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
                 if(tab.type === 'url'){
                     let urlMenu: any = {
                         id: `${tab.name}`,
+                        icon: tab.icon,
                         path: `${tab.url}`,
                         name: `${tab.label}`
                     };
@@ -107,6 +110,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
                     menu.children.push(
                         {
                             id: `${tab.name}`,
+                            icon: tab.icon,
                             path: `${tab.page}`,
                             name: `${tab.label}`
                         }
@@ -155,6 +159,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
                     menu.children.push(
                         {
                             id: objectConfig.name,
+                            icon: objectConfig.icon,
                             path: `${appPath}/${objectConfig.name}`,
                             name: `${objectConfig.label}`
                         }
