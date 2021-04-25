@@ -1,3 +1,6 @@
+const objectql = require("@steedos/objectql");
+const config = objectql.getSteedosConfig();
+
 if (!db.instances) {
   const core = require('@steedos/core');
   db.instances = core.newCollection('instances');
