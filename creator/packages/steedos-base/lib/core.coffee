@@ -900,3 +900,19 @@ if Meteor.isClient
 			return Session.get('app_id')
 		else
 			return sessionStorage.getItem('current_app_id');
+
+if Meteor.isServer
+	Steedos.formatIndex = (array) ->
+		object = {
+        	background: true
+    	};
+		isdocumentDB = Meteor.settings?.datasources?.default?.documentDB || false;
+		if isdocumentDB
+			if array.length > 0
+				indexName = array.join(".");
+				object.name = indexName;
+				
+				if (indexName.length > 52)
+					object.name = indexName.substring(0,52);
+
+		return object;
