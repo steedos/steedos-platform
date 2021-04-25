@@ -49,7 +49,7 @@ fields:
     label: Tabs
     type: lookup
     multiple: true
-    group: Business object
+    is_wide: true
     reference_to: tabs
   icon:
     label: Icon
