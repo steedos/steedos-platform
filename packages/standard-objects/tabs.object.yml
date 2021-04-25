@@ -47,6 +47,7 @@ fields:
     type: boolean
   type: 
     type: select
+    inlineHelpText: 作为上级选项卡时，无需设置类型
     options:
     - label: Object
       value: object
@@ -83,8 +84,8 @@ list_views:
     label: All Apps
     filter_scope: space
     columns:
-      - name
       - label
+      - name
       - parent
       - mobile
       - type
@@ -103,3 +104,16 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+form:
+  beforeEdit: !!js/function |
+    function(){
+      return Steedos.TabsManager.changeSchema(this.doc, this.schema, 'edit');
+    }
+  afterEdit: !!js/function |
+    function(){
+      return Steedos.TabsManager.changeSchema(this.doc, this.schema, 'edit');
+    }
+  beforeView: !!js/function |
+    function(){
+      Steedos.TabsManager.changeSchema(this.doc, this.schema, 'view');
+    }
