@@ -60,3 +60,4 @@ steedos-projects/project-enterprise/storage/**
 steedos-projects/project-enterprise/.env.local
 services/service-metadata-layouts/.env.local
 steedos-packages/**/node_modules/**
+steedos-projects/**/node_modules/**
