@@ -22,12 +22,12 @@ var Tabular;
 
 (function(){
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                   //
-// packages/aldeed_tabular/common.js                                                                                 //
-//                                                                                                                   //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                     //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                  //
+// packages/aldeed_tabular/common.js                                                                                //
+//                                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                    //
 /* global Tabular:true, Mongo, _, Meteor, Template */
 
 Tabular = {}; //exported
@@ -49,11 +49,12 @@ Tabular.Table = function (options) {
     throw new Error('Tabular.Table options must specify name');
   }
   self.name = options.name;
-  
-  if (!(options.collection instanceof Mongo.Collection)) {
-	  console.log("!(options.collection instanceof Mongo.Collection)");
-    // throw new Error('Tabular.Table options must specify collection');
-  }
+
+  // 使用DocumentDB时，Mongo驱动无法识别，先注释这段抛错
+  // if (!(options.collection instanceof Mongo.Collection)) {
+  //   throw new Error('Tabular.Table options must specify collection');
+  // }
+
   self.collection = options.collection;
 
   self.pub = options.pub || 'tabular_genericPub';
@@ -88,7 +89,7 @@ Tabular.Table = function (options) {
   Tabular.tablesByName[self.name] = self;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -99,12 +100,12 @@ Tabular.Table = function (options) {
 
 (function(){
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                   //
-// packages/aldeed_tabular/server/tabular.js                                                                         //
-//                                                                                                                   //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                     //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                  //
+// packages/aldeed_tabular/server/tabular.js                                                                        //
+//                                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                    //
 /* global check, Match, Meteor, _, Tabular */
 
 /*
@@ -378,7 +379,7 @@ Meteor.publish("tabular_getInfo", function (tableName, selector, sort, skip, lim
 	});
 });
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
