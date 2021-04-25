@@ -69,7 +69,7 @@ fields:
   is_new_window:
     type: boolean
   page:
-    type: lookup
+    type: text
     label: Page
   action_overrides:
     type: text
