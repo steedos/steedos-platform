@@ -4,7 +4,7 @@ const objectql = require("@steedos/objectql");
 const i18n = require("@steedos/i18n");
 const auth = require("@steedos/auth");
 const InternalData = require('./core/internalData');
-
+const SERVICE_NAME = `~database-apps`;
 const permissions = {
     allowEdit: false,
     allowDelete: false,
@@ -99,6 +99,14 @@ module.exports = {
                 Object.assign(sefl.data.values, Object.assign({code: app._id}, clone(app), baseRecord))
             })
         }
+    },
+    afterInsert: async function () {
+        const record = await this.getObject('apps').findOne(this.doc._id);
+        await objectql.addAppConfig(record, SERVICE_NAME)
+    },
+    afterUpdate: async function () {
+        const record = await this.getObject('apps').findOne(this.id);
+        await objectql.addAppConfig(record, SERVICE_NAME)
     },
     afterDelete: async function(){
         let id = this.id;
