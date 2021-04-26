@@ -940,6 +940,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         })
 
+        const dbListViews = await getObject("object_listviews").find({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] })
+        objectConfig.list_views = Object.assign({}, objectConfig.list_views)
+        _.each(dbListViews, function(dbListView){
+            delete dbListView.created;
+            delete dbListView.created_by;
+            delete dbListView.modified;
+            delete dbListView.modified_by;
+            objectConfig.list_views[dbListView.name] = dbListView;
+        })
         delete objectConfig.listeners
         delete objectConfig.__filename
         delete objectConfig.extend
