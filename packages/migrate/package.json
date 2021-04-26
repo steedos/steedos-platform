@@ -1,6 +1,6 @@
 {
   "name": "@steedos/migrate",
-  "version": "1.23.26",
+  "version": "1.23.27",
   "description": "Migration scripts for steedos",
   "main": "index.js",
   "license": "MIT",
