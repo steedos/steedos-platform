@@ -10,34 +10,63 @@ async function registerApp(ctx, appApiName, data, meta){
     return await ctx.broker.call('metadata.add', {key: cacherKey(appApiName), data: data}, {meta: meta});
 }
 
-async function get(ctx: any){
-    const metadataConfig = await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.appApiName)}, {meta: ctx.meta});
-    if(metadataConfig){
-        return metadataConfig;
-    }else{
-        const allApps = await getAll(ctx);
-        const userSession = ctx.meta.user;
-        const spaceId = userSession.spaceId;
-        const userApps = _.filter(allApps, function (metadataConfig) {
-            const config = metadataConfig.metadata;
-            if(!config.is_creator || !config.visible){
-                return false;
-            }
-            if (_.has(config, 'space') && config.space) {
-                return config.space === spaceId;
-            }
-            if (!_.isEmpty(config.tabs) || !_.isEmpty(config.objects) || !_.isEmpty(config.mobile_objects)) {
-                return true;
-            }
-            return true;
-        })
-        if(ctx.params.appApiName === '-'){
-            return _.first(_.sortBy(userApps, ['metadata.sort']));
+async function getSpaceApp(ctx: any, appApiName: string){
+    const allApps = await getAll(ctx);
+    const userSession = ctx.meta.user;
+    const spaceId = userSession.spaceId;
+    const userApps = _.filter(allApps, function (metadataConfig) {
+        const config = metadataConfig.metadata;
+        if(!config.is_creator || !config.visible){
+            return false;
         }
-        return _.find(userApps, function(metadataConfig){
-            const app = metadataConfig.metadata;
-            return app.code === ctx.params.appApiName
-        })
+        if (_.has(config, 'space') && config.space) {
+            return config.space === spaceId;
+        }
+        if (!_.isEmpty(config.tabs) || !_.isEmpty(config.objects) || !_.isEmpty(config.mobile_objects)) {
+            return true;
+        }
+        return true;
+    });
+    
+    return _.find(userApps, function(metadataConfig){
+        const config = metadataConfig.metadata;
+        return config.space && config.code === appApiName
+    })
+}
+
+async function get(ctx: any){
+    const spaceAppMetadataConfig = await getSpaceApp(ctx, ctx.params.appApiName)
+    if(spaceAppMetadataConfig){
+     return spaceAppMetadataConfig;   
+    }else{
+        const metadataConfig = await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.appApiName)}, {meta: ctx.meta});
+        if(metadataConfig){
+            return metadataConfig;
+        }else{
+            const allApps = await getAll(ctx);
+            const userSession = ctx.meta.user;
+            const spaceId = userSession.spaceId;
+            const userApps = _.filter(allApps, function (metadataConfig) {
+                const config = metadataConfig.metadata;
+                if(!config.is_creator || !config.visible){
+                    return false;
+                }
+                if (_.has(config, 'space') && config.space) {
+                    return config.space === spaceId;
+                }
+                if (!_.isEmpty(config.tabs) || !_.isEmpty(config.objects) || !_.isEmpty(config.mobile_objects)) {
+                    return true;
+                }
+                return true;
+            })
+            if(ctx.params.appApiName === '-'){
+                return _.first(_.sortBy(userApps, ['metadata.sort']));
+            }
+            return _.find(userApps, function(metadataConfig){
+                const app = metadataConfig.metadata;
+                return app.code === ctx.params.appApiName
+            })
+        }
     }
 }
 
@@ -197,7 +226,7 @@ async function getAppsMenus(ctx) {
     const metadataApps = await getAll(ctx);
     const allApps = _.map(metadataApps, 'metadata');
 
-    const userApps = _.filter(allApps, function (config) {
+    const _userApps = _.filter(allApps, function (config) {
         if(!config.is_creator || !config.visible){
             return false;
         }
@@ -207,6 +236,22 @@ async function getAppsMenus(ctx) {
         return true;
     })
     const menus = [];
+
+    let userApps = [];
+    _.each(_.sortBy(_userApps, ['sort']), function(app){
+        if(!app.code){
+            app.code = app._id;
+        }
+        const _appIndex = _.findIndex(userApps, function(item){ return item.code === app.code});
+        if(_appIndex < 0){
+            userApps.push(app)
+        }else{
+            const _app = userApps[_appIndex];
+            if(!_app.space && app.space){
+                userApps[_appIndex] = app;
+            }
+        }
+    })
 
     for await (const app of _.sortBy(userApps, ['sort'])) {
         // if(!app.code){
