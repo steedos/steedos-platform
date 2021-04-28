@@ -1,0 +1,13 @@
+name: query
+filterable: false
+is_name: false
+is_wide: true
+label: Query
+omit: false
+readonly: false
+required: false
+sort_no: 500
+sortable: false
+type: textarea
+hidden: false
+blackbox: true

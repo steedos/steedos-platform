@@ -26,6 +26,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@steedos/service-charts": "^2.0.8",
     "@steedos/service-metadata-server": "^2.0.8",
     "@steedos/service-mongodb-server": "^2.0.8",
     "@steedos/service-package-loader": "^2.0.8",
