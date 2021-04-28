@@ -255,11 +255,12 @@ Creator.Object = (options)->
 
 
 Creator.getObjectODataRouterPrefix = (object)->
-	if object
-		if !object.database_name || object.database_name == 'meteor-mongo'
-			return "/api/odata/v4"
-		else
-			return "/api/odata/#{object.database_name}"
+	return "/api/odata/v4"
+	# if object
+	# 	if !object.database_name || object.database_name == 'meteor-mongo'
+	# 		return "/api/odata/v4"
+	# 	else
+	# 		return "/api/odata/#{object.database_name}"
 
 # if Meteor.isClient
 
