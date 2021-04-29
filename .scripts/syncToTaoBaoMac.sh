@@ -43,3 +43,4 @@
  open https://npm.taobao.org/sync/@steedos/service-node-red
  open https://npm.taobao.org/sync/@steedos/service-package-loader
  open https://npm.taobao.org/sync/@steedos/service-steedos-server
+ open https://npm.taobao.org/sync/@steedos/service-charts
