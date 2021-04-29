@@ -45,6 +45,26 @@ fields:
     label: Description
     type: textarea
     is_wide: true
+  objects:
+    label: Objects
+    type: lookup
+    multiple: true
+    group: Business object
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions()
+      }
+    filterable: true
+  mobile_objects:
+    label: Mobile Objects
+    type: lookup
+    multiple: true
+    group: Business object
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions()
+      }
+    filterable: true
   tabs:
     label: Tabs
     type: lookup
