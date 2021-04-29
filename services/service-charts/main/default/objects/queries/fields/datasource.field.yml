@@ -1,6 +1,6 @@
 name: datasource
 type: master_detail
-label: Datasource
+label: 数据源
 reference_to: datasources
 reference_to_field: name
 showIcon: false
