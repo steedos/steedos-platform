@@ -7,7 +7,7 @@ is_wide: false
 label: Api Name
 omit: false
 readonly: false
-required: false
+required: true
 searchable: true
 sort_no: 110
 sortable: true

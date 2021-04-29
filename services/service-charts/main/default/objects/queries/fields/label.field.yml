@@ -7,7 +7,7 @@ is_wide: false
 label: 显示名称
 omit: false
 readonly: false
-required: false
+required: true
 searchable: true
 sort_no: 100
 sortable: true
