@@ -48,13 +48,28 @@ export const getObjectQuotedByFieldSummaryConfigs = (objectName: string, fieldNa
     const configs = getFieldSummaryConfigs();
     return configs.filter((config: SteedosFieldSummaryTypeConfig) => {
         const summaryObjectName = config.summary_object;
-        const summaryFieldName = config.summary_field;
         if(summaryObjectName){
-            if (fieldNames && fieldNames.length) {
-                return summaryObjectName === objectName && fieldNames.indexOf(summaryFieldName) > -1;
+            const summaryFieldName = config.summary_field;
+            if(summaryObjectName === objectName){
+                if (fieldNames && fieldNames.length) {
+                    if(fieldNames.indexOf(summaryFieldName) > -1){
+                        return true;
+                    }
+                    const summaryFilters = config.summary_filters;
+                    if(summaryFilters && summaryFilters.length){
+                        // 如果汇总过滤条件中正好包括了fieldNames中一某个字段的话，也需要重新触发该汇总字段重新计算
+                        return !!fieldNames.find((fieldName)=>{
+                            return new RegExp(`\\b${fieldName}\\b`).test(JSON.stringify(summaryFilters))
+                        })
+                    }
+                    return false;
+                }
+                else{
+                    return true;
+                }
             }
-            else {
-                return summaryObjectName === objectName;
+            else{
+                return false;
             }
         }
         else {
