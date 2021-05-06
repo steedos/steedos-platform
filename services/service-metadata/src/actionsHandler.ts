@@ -4,9 +4,66 @@ const PACKAGE_SERVICE_PREFIX = '~packages-';
 const METADATA_SERVICES_PERFIX = '$METADATA-SERVICES';
 import * as _ from 'underscore';
 
+//////////////// mock for redis cacher ////////////////
+type MockCacherEntry = {
+	key: string,
+	splitedKeyArray: string[],
+	data: string,
+};
+let mockCacherData: MockCacherEntry[] = [];
+
+let mock_prefix = "";
+
+async function mockCacherGet(ctx: any, key: string): Promise<any> { // cacher.get
+	const finalKey = mock_prefix + key;
+	const item = mockCacherData.find(item => item.key === finalKey);
+	if (item) {
+		return JSON.parse(item.data);
+	}
+	return null;
+}
+
+// 支持 * 通配符
+async function mockCacherKeys(ctx: any, key: string): Promise<string[]> { // cacher.client.keys
+	const regex_key = "^"+ key.split(".").join("\\.").split("*").join(".+").split("$").join("\\$") + "$";
+	const reg = new RegExp(regex_key);
+	const keys = mockCacherData.filter(item => reg.test(item.key)).map(item => item.key);
+	return keys;
+}
+
+async function mockCacherSet(ctx: any, key: string, data: any): Promise<any> { // cacher.set
+	data = JSON.stringify(data); //  TODO: ……生产环境考虑深度克隆
+	const finalKey = mock_prefix + key;
+	const item = mockCacherData.find(item => item.key === finalKey);
+	if (item) {
+		item.data = data;
+	} else {
+		const splitedKeyArray = finalKey.split(".");
+		mockCacherData.push({ key: finalKey, splitedKeyArray, data, });
+	}
+}
+
+// 支持 * 通配符
+async function mockCacherClean(ctx: any, key: string): Promise<any> { // cacher.clean
+	if (key == "**") {
+		mockCacherData = []
+	} else {
+		const regex_key = "^"+ key.split(".").join("\\.").split("*").join(".+").split("$").join("\\$") + "$";
+		const reg = new RegExp(regex_key);
+		mockCacherData = mockCacherData.filter(item => !reg.test(item.key));
+	}
+}
+async function mockCacherDel(ctx: any, key: string): Promise<any> { // cacher.del
+	const finalKey = mock_prefix + key;
+	mockCacherData = mockCacherData.filter(item => item.key !== finalKey);
+}
+
+
+////////////////////////////////////////////////
+
 function transformMetadata(ctx){
      return {
-        ...ctx.meta.caller, 
+        ...ctx.meta.caller,
         metadata: ctx.params.data
      }
 }
@@ -20,8 +77,8 @@ function getServiceMetadataCacherKey(serviceName: string, metadataType: string, 
 }
 
 async function addServiceMetadata(ctx){
-    const { nodeID } = ctx.meta.caller || {}
-    const { metadataType, metadataApiName, metadataServiceName } = ctx.meta || {}
+    const { nodeID } = ctx.meta.caller || {nodeID: undefined}
+    const { metadataType, metadataApiName, metadataServiceName } = ctx.meta || {metadataType: undefined, metadataApiName: undefined, metadataServiceName: undefined}
     // if(metadataType){
     //     console.log('saveServiceMetadataMap', metadataType, metadataApiName, metadataServiceName )
     // }
@@ -29,7 +86,7 @@ async function addServiceMetadata(ctx){
         return;
     }
     const key = getServiceMetadataCacherKey(metadataServiceName, metadataType, metadataApiName)
-    let data = await ctx.broker.cacher.get(key);
+    let data = await mockCacherGet(ctx, key); // REPLACE: await ctx.broker.cacher.get(key);
     let nodeIds = [];
     if(data){
         if(data.nodeIds){
@@ -37,20 +94,30 @@ async function addServiceMetadata(ctx){
         }
     }
     nodeIds.push(nodeID);
-    await ctx.broker.cacher.set(key, {
-        nodeIds: nodeIds,
-        metadataType, 
-        metadataApiName,
-        metadata: ctx.params.data
-    });
+		// REPLACE:
+    // await ctx.broker.cacher.set(key, {
+    //     nodeIds: nodeIds,
+    //     metadataType,
+    //     metadataApiName,
+    //     metadata: ctx.params.data
+    // });
+		await mockCacherSet(ctx, key, {
+			nodeIds: nodeIds,
+			metadataType,
+			metadataApiName,
+			metadata: ctx.params.data
+	});
 }
 
+// 这里需要更改
 async function query(ctx, queryKey){
-    const keyPrefix = ctx.broker.cacher.prefix
-    const keys = await ctx.broker.cacher.client.keys(`${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
+    const keyPrefix = ctx.broker.cacher?.prefix || "";
+    // REPLACE: const keys = await ctx.broker.cacher.client.keys(`${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
+    const keys = await mockCacherKeys(ctx, `${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
     const values = [];
     for (const key of keys) {
-        values.push(await ctx.broker.cacher.get(getKey(key, keyPrefix)))
+        // REPLACE: values.push(await ctx.broker.cacher.get(getKey(key, keyPrefix)))
+        values.push(await mockCacherGet(ctx, getKey(key, keyPrefix)));
     }
     return values;
 }
@@ -61,13 +128,15 @@ function getPackageServiceCacherKey(serviceName){
 
 async function setPackageServices(ctx, packageServicesName){
     for await (const packageServiceName of packageServicesName) {
-        await ctx.broker.cacher.set(getPackageServiceCacherKey(packageServiceName), {service: packageServiceName});
+        // REPLACE: await ctx.broker.cacher.set(getPackageServiceCacherKey(packageServiceName), {service: packageServiceName});
+        await mockCacherSet(ctx, getPackageServiceCacherKey(packageServiceName), {service: packageServiceName});
     }
 }
 
 async function clearPackageServices(ctx, packageServicesName){
     for await (const packageServiceName of packageServicesName) {
-        await ctx.broker.cacher.del(getPackageServiceCacherKey(packageServiceName));
+        // REPLACE: await ctx.broker.cacher.del(getPackageServiceCacherKey(packageServiceName));
+        await mockCacherDel(ctx, getPackageServiceCacherKey(packageServiceName));
     }
 }
 
@@ -93,8 +162,9 @@ async function getPackageServices(ctx){
 
 async function clearPackageServiceMetadatas(ctx, packageServiceName){
     const key = getServiceMetadataCacherKey(packageServiceName, "*", "*");
-    const clearMetadatas = await query(ctx, key); 
-    await ctx.broker.cacher.clean(key);
+    const clearMetadatas = await query(ctx, key);
+    // REPLACE: await ctx.broker.cacher.clean(key);
+    await mockCacherClean(ctx, key);
     return clearMetadatas;
 }
 
@@ -111,30 +181,37 @@ async function clearPackageServicesMetadatas(ctx, offlinePackageServices){
 
 async function getMetadataServices(broker){
     const queryKey = `${METADATA_SERVICES_PERFIX}.*`
-    const keyPrefix = broker.cacher.prefix
-    const keys = await broker.cacher.client.keys(`${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
+    const keyPrefix = broker.cacher?.prefix || "";
+    // REPLACE: const keys = await broker.cacher.client.keys(`${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
+    const keys = await mockCacherKeys({broker,}, `${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
     const values = [];
     for (const key of keys) {
-        values.push(await broker.cacher.get(getKey(key, keyPrefix)))
+        // REPLACE: values.push(await broker.cacher.get(getKey(key, keyPrefix)))
+        values.push(await mockCacherGet({broker}, getKey(key, keyPrefix)))
     }
     return values;
 }
 
 export async function started(broker){
-    await broker.cacher.set(`${METADATA_SERVICES_PERFIX}.${broker.nodeID}`, {});
+	mock_prefix = broker.cacher?.prefix || "";
+    // REPLACE: await broker.cacher.set(`${METADATA_SERVICES_PERFIX}.${broker.nodeID}`, {});
+    await mockCacherSet({broker, }, `${METADATA_SERVICES_PERFIX}.${broker.nodeID}`, {});
 }
 
 export async function stopped(broker){
-    await broker.cacher.del(`${METADATA_SERVICES_PERFIX}.${broker.nodeID}`);
+    // REPLACE: await broker.cacher.del(`${METADATA_SERVICES_PERFIX}.${broker.nodeID}`);
+    await mockCacherDel({broker}, `${METADATA_SERVICES_PERFIX}.${broker.nodeID}`);
     const services = await getMetadataServices(broker);
     if(!services || services.length === 0){
-        await broker.cacher.clean(`**`);
+        // REPLACE: await broker.cacher.clean(`**`);
+        await mockCacherClean({broker}, `**`);
     }
 }
 
 export const ActionHandlers = {
     async get(ctx: any): Promise<any>{
-        return await ctx.broker.cacher.get(ctx.params.key)
+        // REPLACE: return await ctx.broker.cacher.get(ctx.params.key)
+        return await mockCacherGet(ctx, ctx.params.key)
     },
     async filter(ctx: any): Promise<Array<any>> {
         return await query(ctx, ctx.params.key);
@@ -147,14 +224,16 @@ export const ActionHandlers = {
         // return values;
     },
     async add(ctx: any){
-        return await ctx.broker.cacher.set(ctx.params.key, transformMetadata(ctx));
+        // REPLACE: return await ctx.broker.cacher.set(ctx.params.key, transformMetadata(ctx));
+        return await mockCacherSet(ctx, ctx.params.key, transformMetadata(ctx));
     },
     async addServiceMetadata(ctx: any){
        return await addServiceMetadata(ctx);
     },
     async delete(ctx: any){
         try {
-            await ctx.broker.cacher.del(ctx.params.key);
+					  // REPLACE: await ctx.broker.cacher.del(ctx.params.key);
+            await mockCacherDel(ctx, ctx.params.key);
         } catch (error) {
             ctx.broker.logger.info(error.message)
         }
@@ -177,10 +256,11 @@ export const ActionHandlers = {
     async getServiceMetadata(ctx: any){
         let { serviceName, metadataType, metadataApiName } = ctx.params;
         const key = getServiceMetadataCacherKey(serviceName, metadataType, metadataApiName)
-        return await ctx.broker.cacher.get(key)
+        // REPLACE: return await ctx.broker.cacher.get(key)
+        return await mockCacherGet(ctx, key);
     },
     async refreshServiceMetadatas(ctx: any){
-        const { offlinePackageServices: _offlinePackageServices } = ctx.params || {};
+        const { offlinePackageServices: _offlinePackageServices } = ctx.params || {offlinePackageServices: undefined};
         if(_offlinePackageServices && _offlinePackageServices.length > 0){
             await clearPackageServices(ctx, _offlinePackageServices);
         }

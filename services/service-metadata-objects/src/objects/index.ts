@@ -44,7 +44,7 @@ function getObjectDatasource(objectConfigs: Array<any>) {
     // if(!config){
     //     console.log(`getObjectDatasource`, _.map(objectConfigs, 'name'))
     // }
-    return config?.datasource
+    return config?.datasource;
 }
 
 
@@ -77,7 +77,7 @@ export async function getOriginalObject(ctx, objectApiName){
     if(objectConfigs.length == 0){
         return null
     }
-    
+
     objectConfig = _.defaultsDeep({}, ..._.reverse(objectConfigs), objectConfig)
 
     const _objectConfig = _.clone(objectConfig)
