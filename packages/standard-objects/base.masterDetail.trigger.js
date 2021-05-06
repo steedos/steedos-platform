@@ -1,6 +1,5 @@
 const objectql = require('@steedos/objectql');
 const _ = require('underscore');
-const steedosAuth = require("@steedos/auth");
 const setDetailOwner = async function (doc, object_name, userId) {
     if(!userId){
         return;
@@ -17,7 +16,6 @@ const setDetailOwner = async function (doc, object_name, userId) {
             1.必须至少具体其所有父对象关联记录的只读权限或可编辑权限（是只读还是可编辑取决于子表关系字段上是否勾选了write_requires_master_read属性）才能新建/编辑当前记录 
             2.当前记录的owner强制设置为其关联的首要主对象（即masters中第一个对象）记录的owner值
         */
-        const userSession = await steedosAuth.getSessionByUserId(userId, doc.space);
         for(var index = 0; index < masters.length ; index++){
             const objFields = await obj.getFields();
             const master = masters[index];
@@ -25,18 +23,7 @@ const setDetailOwner = async function (doc, object_name, userId) {
             if(refField && refField.name){
                 let write_requires_master_read = refField.write_requires_master_read || false; /* 默认对主表有编辑权限才可新建或者编辑子表 */
                 let masterAllow = false;
-                /* let masterObjectPerm = Creator.getObjectPermissions(doc.space, userId, master); */
                 const objMaster = objectql.getObject(master);
-                let masterObjectPerm = await objMaster.getUserObjectPermission(userSession);
-                if (write_requires_master_read == true) {
-                    masterAllow = masterObjectPerm.allowRead;
-                }
-                else if (write_requires_master_read == false) {
-                    masterAllow = masterObjectPerm.allowEdit;
-                }
-                if (!masterAllow) {
-                    throw new Meteor.Error(400, `缺少主对象”${master}“的“${write_requires_master_read ? "只读" : "编辑"}权限”`);
-                }
                 /* 上面先判断一次对象级权限是因为有可能新建修改子表记录时未选择关联父记录字段值，以下是判断关联父记录的权限 */
                 let refFieldValue = doc[refField.name];
                 if(refFieldValue && _.isString(refFieldValue)) { /* isString是为排除字段属性multiple:true的情况 */
