@@ -1,6 +1,7 @@
 import { SteedosDataSourceType, getConfigsFormFiles, getSteedosSchema, getObject } from '.';
 import { getConfigs } from './config';
 import _ = require('underscore');
+import * as _l from 'lodash';
 export type SteedosAppTypeConfig = {
     _id: string,
     name: string,
@@ -140,12 +141,25 @@ export const getAppConfigs = async (spaceId?) => {
     const configs = _.pluck(apps, 'metadata');
 
     if(spaceId){
-        return _.filter(configs, function(config){
+        let _apps = _.filter(configs, function(config){
             if(_.has(config, 'space') && config.space){
                 return config.space === spaceId;                
             }
             return true;
         })
+        const result = [];
+        _.each(_apps, function(config){
+            const index = _l.findIndex(result, function(item){return item.code === config.code;})
+            if( index > -1){
+                const _config = result[index];
+                if(_config.code === _config._id){
+                    result[index] = config;
+                }
+            }else{
+                result.push(config)
+            }
+        })
+        return result;
     }
 
     return configs;
