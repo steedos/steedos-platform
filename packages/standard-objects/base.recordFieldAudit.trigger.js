@@ -35,7 +35,7 @@ const getLookupFieldValue = async function(reference_to, value, space_id) {
     }
     reference_to_object = objectql.getObject(reference_to);
     name_field_key = await reference_to_object.getNameFieldKey();
-    values = await reference_to_object.find({filters: ['_id', '=', [previous_ids]], fields: ['_id', name_field_key]});
+    values = await reference_to_object.find({filters: ['_id', '=', previous_ids], fields: ['_id', name_field_key]});
     values = getOrderlySetByIds(values, previous_ids);
     return (_.pluck(values, name_field_key)).join(',');
   };
