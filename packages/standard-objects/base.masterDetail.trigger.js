@@ -1,4 +1,5 @@
 const objectql = require('@steedos/objectql');
+const steedosAuth = require("@steedos/auth");
 const _ = require('underscore');
 const setDetailOwner = async function (doc, object_name, userId) {
     if(!userId){
@@ -16,6 +17,7 @@ const setDetailOwner = async function (doc, object_name, userId) {
             1.必须至少具体其所有父对象关联记录的只读权限或可编辑权限（是只读还是可编辑取决于子表关系字段上是否勾选了write_requires_master_read属性）才能新建/编辑当前记录 
             2.当前记录的owner强制设置为其关联的首要主对象（即masters中第一个对象）记录的owner值
         */
+        const userSession = await steedosAuth.getSessionByUserId(userId, doc.space);
         for(var index = 0; index < masters.length ; index++){
             const objFields = await obj.getFields();
             const master = masters[index];
