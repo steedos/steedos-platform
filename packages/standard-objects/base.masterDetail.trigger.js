@@ -100,7 +100,7 @@ module.exports = {
                         const detialFields = objDetail.fields;
                         const refField = _.find(detialFields,(n)=>{ return n.type === "master_detail" && n.reference_to === object_name;});
                         if(refField && refField.name){
-                            await objectql.getObject(detail).updateMany([[refField.name, '=', docId], ['space', '=', dbDoc.space]], { $set: { owner: docOwner } }, { multi: true });
+                            await objectql.getObject(detail).updateMany([[refField.name, '=', docId], ['space', '=', dbDoc.space]], { owner: docOwner });
                         }
                     }
                  }
