@@ -1,6 +1,38 @@
 chalk = require("chalk")
 chalk.enabled = true;
+canDefineNonEnumerableProperties = ->
+	testObj = {}
+	testPropName = 't'
+	try
+		Object.defineProperty testObj, testPropName,
+			enumerable: false
+			value: testObj
+		for k of testObj
+			if k == testPropName
+				return false
+	catch e
+		return false
+	testObj[testPropName] == testObj
 
+sanitizeEasy = (value) ->
+	value
+
+sanitizeHard = (obj) ->
+	if Array.isArray(obj)
+		newObj = {}
+		keys = Object.keys(obj)
+		keyCount = keys.length
+		i = 0
+		while i < keyCount
+			key = keys[i]
+			newObj[key] = obj[key]
+			++i
+		return newObj
+	obj
+
+@meteorBabelHelpers =
+	sanitizeForInObject: if canDefineNonEnumerableProperties() then sanitizeEasy else sanitizeHard
+	_sanitizeForInObjectHard: sanitizeHard
 @LoggerManager = new class extends EventEmitter
 	constructor: ->
 		@enabled = false
@@ -348,7 +380,7 @@ Meteor.publish 'stdout', ->
 
 	unless @userId
 		return @ready()
-	
+
 	user = db.users.findOne(@userId, {fields: {is_cloudadmin: 1}})
 
 	unless user

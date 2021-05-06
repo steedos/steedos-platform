@@ -16,7 +16,7 @@
     "@salesforce-ux/icons": "^9.38.0",
     "@steedos/design-system-react": "^2.0.9",
     "dotenv-flow": "^3.1.0",
-    "immer": "^4.0.1",
+    "immer": "^6.0.9",
     "marked": "^0.8.0",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",

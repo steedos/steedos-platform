@@ -31,7 +31,7 @@ Package.onUse(function (api) {
 	api.use('aldeed:schema-index@1.1.0');
 	api.use('aldeed:collection2@2.5.0');
 	api.use('aldeed:tabular@1.6.1');
-	api.use('meteorhacks:unblock@1.1.0');
+	api.use('lamhieu:unblock@1.0.0');
 	api.use('aldeed:autoform@5.8.0');
 	api.use('matb33:collection-hooks@0.8.1');
 
