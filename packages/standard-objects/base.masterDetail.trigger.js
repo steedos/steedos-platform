@@ -40,7 +40,7 @@ const setDetailOwner = async function (doc, object_name, userId) {
                                 masterAllow = masterRecordPerm.allowEdit;
                             }
                             if (!masterAllow) {
-                                throw new Meteor.Error(400, `缺少主对象”${master}“的“${write_requires_master_read ? "只读" : "编辑"}权限”，不能选择主表记录： “${recordMaster[nameFieldKey]}”。`);
+                                throw new Meteor.Error(400, `缺少当前子对象${object_name}的主对象”${master}“的“${write_requires_master_read ? "只读" : "编辑"}权限”，不能选择主表记录： “${recordMaster[nameFieldKey]}”。`);
                             }
 
                         }
