@@ -149,6 +149,9 @@ export const getAppConfigs = async (spaceId?) => {
         })
         const result = [];
         _.each(_apps, function(config){
+            if(!_.has(config, 'code')){
+                config.code = config._id;
+            }
             const index = _l.findIndex(result, function(item){return item.code === config.code;})
             if( index > -1){
                 const _config = result[index];
