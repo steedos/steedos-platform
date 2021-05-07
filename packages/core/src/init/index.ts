@@ -7,13 +7,13 @@ import { initPublicStaticRouter } from '../routes';
 // import { InitI18n } from './i18n';
 import { loadPackages } from './packages';
 import { InitTranslations } from './translations';
-export async function init() {
+export async function init(settings: any = {}) {
     getSteedosSchema();
     WebAppInternals.setInlineScriptsAllowed(false);
     initPublicStaticRouter();
     initPublic();
     initDesignSystem();
-    await Plugins.init(this);
+    await Plugins.init(settings);
     // Datasources.loadFiles();
     await loadPackages();
     await initCreator();
@@ -22,5 +22,5 @@ export async function init() {
     await InitTranslations();
     Core.run();
 }
-export * from './translations'; 
+export * from './translations';
 export * from './collection';
