@@ -8,7 +8,7 @@ var clone = require('clone');
 
 const _lazyLoadButtons: Dictionary<any> = {};
 
-const addLazyLoadButtons = function(objectName: string, json: SteedosActionTypeConfig){
+export const addLazyLoadButtons = function(objectName: string, json: SteedosActionTypeConfig){
     if(!_lazyLoadButtons[objectName]){
         _lazyLoadButtons[objectName] = []
     }
@@ -51,6 +51,7 @@ export const removeObjectButtonsConfig = (objectName: string, json: SteedosActio
     let object = getObjectConfig(objectName);
     if(object.actions){
         delete object.actions[json.name]
+
     }
 }
 
@@ -59,4 +60,10 @@ export const loadObjectButtons = function (filePath: string){
     buttonJsons.forEach(element => {
         addObjectButtonsConfig(element.object_name, element);
     });
+}
+
+export const removeLazyLoadButton = function (objectName: string, json: SteedosActionTypeConfig) {
+    let objectButtons = _lazyLoadButtons[objectName];
+    let btnIndex = _.findIndex(objectButtons, { name: json.name});
+    objectButtons.splice(btnIndex, 1);
 }

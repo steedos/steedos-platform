@@ -167,6 +167,10 @@ function loadDBObject(object){
     let actions = getObjectActions(object);
     let relatedList = getObjectRelateList(object);
     objectql.extend(object, {fields: fields}, {actions: actions}, {relatedList: relatedList});
+    _.each(actions, function(action){
+        action._visible = action.visible;
+        objectql.addLazyLoadButtons(action.object, action);
+    })
 }
 
 
@@ -218,6 +222,7 @@ function loadObject(doc, oldDoc) {
         objectql.loadActionScripts(doc.name);
         objectql.loadObjectLazyMethods(doc.name);
         objectql.loadObjectLazyListenners(doc.name);
+        objectql.loadObjectLazyButtons(doc.name);
         //获取到继承后的对象
         const _doc = objectql.getObjectConfig(doc.name);
         datasource.setObject(doc.name, _doc);
