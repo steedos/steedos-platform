@@ -17205,10 +17205,15 @@ immer@1.10.0:
   resolved "https://registry.npm.taobao.org/immer/download/immer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
   integrity sha1-utZ2BbqcgQJ12R4cKkfUWC6YKG0=
 
-immer@^4.0.0, immer@^4.0.1:
+immer@^4.0.0:
   version "4.0.2"
   resolved "https://registry.npm.taobao.org/immer/download/immer-4.0.2.tgz#9ff0fcdf88e06f92618a5978ceecb5884e633559"
   integrity sha1-n/D834jgb5Jhill4zuy1iE5jNVk=
+
+immer@^6.0.9:
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-6.0.9.tgz#b9dd69b8e69b3a12391e87db1e3ff535d1b26485"
+  integrity sha512-SyCYnAuiRf67Lvk0VkwFvwtDoEiCMjeamnHvRfnVDyc7re1/rQrNxuL+jJ7lA3WvdC4uznrvbmm+clJ9+XXatg==
 
 immutable@^3.8.1:
   version "3.8.2"

@@ -20,7 +20,7 @@ let STEEDOSCONFIG:any = {};
 const configName = 'steedos-config.yml'
 const licenseName = '.license'
 import { getObjectConfig } from '../types'
-
+export const StandardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 export * from './transform'
 export * from './permission_shares'
 export * from './suffix'
