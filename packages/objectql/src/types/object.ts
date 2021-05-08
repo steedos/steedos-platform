@@ -416,6 +416,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
+        config.datasource = this.datasource.name;
+
         return config
     }
 
