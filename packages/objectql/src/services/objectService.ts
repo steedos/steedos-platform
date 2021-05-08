@@ -506,6 +506,7 @@ module.exports = {
         const datasource = getDataSource(objectConfig.datasource);
         if (datasource) {
             this.object = datasource.getLocalObject(objectConfig.name);
+            this.objectApiName = objectConfig.name;
         }
     },
     merged(schema) {
@@ -560,6 +561,7 @@ module.exports = {
                     }
                     const object = new SteedosObjectType(objectConfig.name, datasource, objectConfig)
                     datasource.setLocalObject(objectConfig.name, object);
+                    this.object = object;
 
                     if(datasource.name === 'meteor' && Creator.Objects[objectConfig.name]){
                         jsonToObject(objectConfig);
