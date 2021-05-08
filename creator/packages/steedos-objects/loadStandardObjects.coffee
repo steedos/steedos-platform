@@ -23,7 +23,7 @@ try
 					namespace: "steedos",
 					nodeID: "steedos-creator",
 					metadata: {},
-					transporter: "redis://192.168.3.30:6379",
+					transporter: process.env.TRANSPORTER,
 					logLevel: "warn",
 					serializer: "JSON",
 					requestTimeout: 60 * 1000,
@@ -78,33 +78,14 @@ try
 				});
 				Meteor.wrapAsync((cb)->
 					broker.start().then(()->
-						console.log('==========================broker.start...');
-
 						if !broker.started
 							broker._restartService(standardObjectsPackageLoaderService);
 
 						broker.waitForServices(standardObjectsPackageLoaderService.name).then (resolve, reject) ->
-							console.log('74.....................', resolve, reject)
 							steedosCore.init.call(settings).then ()->
 								cb(reject, resolve)
 					)
 				)()
-				console.log("broker.started", broker.started)
-#				broker.waitForServices(standardObjectsPackageLoaderService.name);
-#				objectql.loadStandardBaseObjects();
-#				objectql.loadStandardProfiles();
-#				objectql.loadStandardPermissionsets();
-#				datasourceName = 'meteor';
-#				objectql.wrapAsync(()->
-#					objectql.wrapAsync(()->
-#						objectql.addAllConfigFiles(path.join(standardObjectsDir, "**"), datasourceName)
-#					)
-#					objectql.wrapAsync(()->
-#						datasource = objectql.getDataSource(datasourceName);
-#						datasource.init();
-#					)
-#					objectql.wrapAsync(steedosCore.init)
-#				)
 			catch ex
 				console.error("error:",ex)
 catch e
