@@ -54,9 +54,9 @@ export const initCreator = async () => {
                 const objectConfig = obj.metadata;
                 const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
                 if(localObjectConfig){
-                    objectConfig.listeners = localObjectConfig.listeners; 
-                    objectConfig.methods = localObjectConfig.methods; 
-                    objectConfig.triggers = localObjectConfig.triggers; 
+                    objectConfig.listeners = localObjectConfig.listeners;
+                    objectConfig.methods = localObjectConfig.methods;
+                    objectConfig.triggers = localObjectConfig.triggers;
                     extend(objectConfig, {triggers: localObjectConfig._baseTriggers})
                 }
                 Creator.Objects[objectConfig.name] = objectConfig;
@@ -99,10 +99,11 @@ export const initCreator = async () => {
 
             let clientScripts = objectql.getClientScripts();
             _.each(clientScripts, function (scriptFile) {
-                
+
                 let code = fs.readFileSync(scriptFile, 'utf8');
 
-                clientCodes = clientCodes + '\r\n' + code
+				clientCodes = clientCodes + '\r\n;' + code + '\r\n;'
+
             });
             WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
 
@@ -118,7 +119,7 @@ export const initCreator = async () => {
             console.error(error)
         }
     }).promise();
-    
+
 }
 
 const getClientBaseObject = () => {
@@ -209,7 +210,7 @@ export class Core {
         app.use(bootStrapExpress);
         app.use(steedosProcess.processExpress)
         app.use(coreExpress);
-        
+
         let routers = objectql.getRouterConfigs()
         _.each(routers, (item)=>{
             app.use(item.prefix, item.router)
