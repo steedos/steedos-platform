@@ -20,47 +20,35 @@ function cacherKey(objectApiName: string): string{
     return `$steedos.#${METADATA_TYPE}.${objectApiName}`
 }
 
-function waitTime(ms: number): Promise<any> {
-    return new Promise((res: any, rej) => {
-        setTimeout(function(){
-            res()
-        }, ms);
-    })
-}
+const DELAY_MESSAGE_OF_OBJECT_CHANGED  = 10; // 延迟通知对象事件的时间，单位：毫秒
 
 export class ActionHandlers {
     onRegister: any = null;
-	registerObjectMemEntry: any[] = [];
+	registerObjectMemEntry: Map<string, number>;
 
     constructor(onRegister){
         this.onRegister = onRegister;
-		this.startRegisterObjectMailBox();
+		this.registerObjectMemEntry = new Map<string, number>();
     }
-
-	async startRegisterObjectMailBox() {
-		while (true) {
-			await waitTime(100); // 100 毫秒 1 次
-
-			// 交换空余 ....
-			const buffer = this.registerObjectMemEntry;
-			this.registerObjectMemEntry = [];
-
-			// 发送所有消息 ...
-			for (let entry of buffer) {
-				entry();
-			}
-		}
-	}
 
 	async registerObject(ctx, objectApiName, data, meta) {
         if(this.onRegister && _.isFunction(this.onRegister)){
             await this.onRegister(data)
         }
         await ctx.broker.call('metadata.add', {key: cacherKey(objectApiName), data: data}, {meta: meta});
-		this.registerObjectMemEntry.push(function(){
+
+		// 为每个对象 setTimeout 延时执行
+		const registerObjectMemEntry = this.registerObjectMemEntry;
+		let timeoutId = registerObjectMemEntry.get(objectApiName);
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+		}
+		timeoutId = setTimeout(function(){
 			ctx.broker.emit("metadata.objects.inserted", {objectApiName: objectApiName, isInsert: true});
 			ctx.broker.emit(`@${objectApiName}.metadata.objects.inserted`, {objectApiName: objectApiName, isInsert: true, data: data});
-		});
+			registerObjectMemEntry.delete(objectApiName);
+		}, DELAY_MESSAGE_OF_OBJECT_CHANGED);
+		registerObjectMemEntry.set(objectApiName, timeoutId);
         return true;
 	}
 
