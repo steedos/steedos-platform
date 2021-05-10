@@ -4711,13 +4711,13 @@
     node-fetch "^2.6.0"
     systeminformation "^4.34.5"
 
-"@steedos/metadata-api@^1.23.19":
-  version "1.23.19"
-  resolved "https://registry.npm.taobao.org/@steedos/metadata-api/download/@steedos/metadata-api-1.23.19.tgz#733e31a397cf34fed62a6b47dee55489d5d2c448"
-  integrity sha1-cz4xo5fPNP7WKmtH3uVUidXSxEg=
+"@steedos/metadata-api@^1.23.27":
+  version "1.23.27"
+  resolved "https://registry.nlark.com/@steedos/metadata-api/download/@steedos/metadata-api-1.23.27.tgz#3e1b9cddc856218eb740ecd30e46ce55635bcaf5"
+  integrity sha1-Phuc3chWIY63QOzTDkbOVWNbyvU=
   dependencies:
     "@salesforce/dev-config" "^2.0.0"
-    "@steedos/metadata-core" "^1.23.19"
+    "@steedos/metadata-core" "^1.23.27"
     chalk "^4.1.0"
     compressing "^1.5.1"
     dotenv-flow "^3.1.0"
@@ -4727,12 +4727,12 @@
     node-fetch "^2.6.1"
     underscore "^1.11.0"
 
-"@steedos/metadata-core@^1.23.19":
-  version "1.23.19"
-  resolved "https://registry.npm.taobao.org/@steedos/metadata-core/download/@steedos/metadata-core-1.23.19.tgz#940ad1e1e29bdbec01470e43dca93152051984cd"
-  integrity sha1-lArR4eKb2+wBRw5D3KkxUgUZhM0=
+"@steedos/metadata-core@^1.23.27":
+  version "1.23.27"
+  resolved "https://registry.nlark.com/@steedos/metadata-core/download/@steedos/metadata-core-1.23.27.tgz#e7b66cbd91edd2bbc4e79d3ce9b54413ccb8c8cc"
+  integrity sha1-57ZsvZHt0rvE55086bVEE8y4yMw=
   dependencies:
-    "@steedos/client" "^1.23.19"
+    "@steedos/client" "^1.23.27"
     archiver "^5.1.0"
     chalk "^4.1.0"
     clone "^2.1.2"
