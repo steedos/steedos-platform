@@ -138,6 +138,8 @@ fields:
     showIcon: false
     required: true
     create: false
+    reference_to: permission_set
+    reference_to_field: name
     optionsFunction: !!js/function |
       function () {
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
@@ -217,6 +219,12 @@ fields:
     omit: true
     hidden: true
     name: invite_state
+  password:
+    label: Password
+    type: text
+    omit: true
+    hidden: true
+    name: password
   user:
     type: master_detail
     reference_to: users

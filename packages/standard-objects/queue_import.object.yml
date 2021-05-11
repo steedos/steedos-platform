@@ -58,29 +58,78 @@ fields:
     omit: true
     name: value_separator
     filterable: true
-  field_mapping:
+  
+  operation:
+    type: select
+    label: operation
+    options:
+      - label: insert
+        value: insert
+      - label: update
+        value: update
+      - label: upsert
+        value: upsert
+    required: true
+  fire_workflows:
+    name: fire_workflows
+    label: Fire Workflows
+    type: boolean
+
+  field_mappings:
     label: Field Mappings
-    type: lookup
-    multiple: true
+    type: grid
     is_wide: true
-    depend_on:
-      - object_name
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
-              if(values && values.object_name){
-                var _object = Creator.getObject(values.object_name);
-                if(_object){
-                  var icon = _object.icon;
-                  return [{label: "Primary Key ( _id )", value: "_id", icon: "account"}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
-                }
-              }else{
-                return []
-              }
-            }
+        if(values && values.object_name){
+          var _object = Creator.getObject(values.object_name);
+          if(_object){
+            var icon = _object.icon;
+            return [{label: "Primary Key ( _id )", value: "_id", icon: "account"}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
+          }
+        }else{
+          return []
+        }
+      }
     required: true
-    name: field_mapping
+    name: field_mappings
     filterable: true
+  field_mappings.$:
+    label: Column
+    blackbox: true
+    type: object
+  field_mappings.$.header:
+    label: Header
+    type: text
+  field_mappings.$.api_name:
+    label: ApiName
+    type: lookup
+    multiple: false
+    is_wide: false
+    required: false
+    depend_on:
+      - object_name
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+
+        if(values.object_name && !_.isString(values.object_name)){
+          values.object_name = values.object_name.name
+        }
+
+        let objectFieldOption = Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
+        objectFieldOption.push({label: "密码", value: "password", icon: "user"})
+        return objectFieldOption;
+      }
+  
+  field_mappings.$.matched_by:
+    label: Matched By
+    type: text
+  field_mappings.$.save_key_while_fail:
+    label: Save key while fail to map a record
+    type: boolean
+    defaultValue: false
+
   external_id_name:
     label: External_id (Based on this when executing again)
     type: lookup
@@ -186,9 +235,24 @@ actions:
         $("body").addClass("loading");
         var space;
         space = Session.get("spaceId");
-        Meteor.call('startImportJobs', record_id, space, function(result){
-          $("body").removeClass("loading");
-          FlowRouter.reload();
-          toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
+        $.ajax({
+          url: "/api/data/initiateImport",
+          type: "post",
+          data: {
+            importObjId: record_id
+          },
+          xhrFields: {
+            withCredentials: true
+          },
+          success: function(res){
+            $("body").removeClass("loading");
+            FlowRouter.reload();
+            toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
+          },
+          error: function(res){
+            $("body").removeClass("loading");
+            toastr.error(res.responseJSON.message);
+          }
+
         });
       }

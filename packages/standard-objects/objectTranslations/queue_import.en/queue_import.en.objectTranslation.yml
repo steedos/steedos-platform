@@ -77,6 +77,13 @@ fields:
     label: Error Message
     help: 
     description: 
+  fire_workflows:
+    label: Trigger workflow rules and processes
+    help: 
+    description: 
+  operation:
+    label: Operation
+    options:
 listviews:
   all:
     label: All Queues
