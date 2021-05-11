@@ -482,6 +482,13 @@ Meteor.startup(function () {
             if (newEmail && newEmail !== doc.email) {
                 modifier.$set.email_verified = false;
             }
+
+            let updateObj = {}
+            if(doc.password){
+                password.parsePassword(doc.password, updateObj);  
+                delete doc.password;                         
+            }
+            db.users.update({_id: doc.user}, {$set:updateObj});
         });
         db.space_users.after.update(function (userId, doc, fieldNames, modifier, options) {
             var ref;

@@ -41,8 +41,7 @@ exports.parsePassword = function(newPassword, options){
         options.services = {
             password:{
                 bcrypt:bcrypt
-            },
-            password_history:[bcrypt]
+            }
         }
     }else{
         options.services.password.bcrypt = bcrypt;
