@@ -38,13 +38,11 @@ exports.parsePassword = function(newPassword, options){
     const formattedPassword = hashPassword(newPassword, passwordHashAlgorithm )
     const bcrypt = bcryptPassword(formattedPassword)
     if(!options.services){
-        options.services = {
-            password:{
-                bcrypt:bcrypt
-            }
-        }
-    }else{
-        options.services.password.bcrypt = bcrypt;
+        options.services = {}
     }
+    if (!options.services.password) {
+        options.services.password = {};
+    }
+    options.services.password.bcrypt = bcrypt;
     options.password_expired = false;
 }
