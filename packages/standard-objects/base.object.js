@@ -211,6 +211,11 @@ module.exports = {
             on: "record",
             todo: function () {
                 var data, instanceId, uobj, url;
+                if (!this.record.instances || !this.record.instances[0]) {
+                    toastr.error('申请单已删除');
+                    Template.creator_view.currentInstance.onEditSuccess();
+                    return;
+                }
                 instanceId = this.record.instances[0]._id;
                 if (!instanceId) {
                     console.error('instanceId not exists');
