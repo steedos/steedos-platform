@@ -560,7 +560,7 @@ uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo = (relatedTablesI
 	_.each relatedTablesInfo, (tableItems, relatedObjectName) ->
 		relatedCollection = Creator.getCollection(relatedObjectName, spaceId)
 		_.each tableItems, (item) ->
-			relatedCollection.update(item._table._id, {
+			relatedCollection.direct.update(item._table._id, {
 				$set: {
 					instances: [{
 						_id: insId,
