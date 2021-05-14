@@ -186,7 +186,7 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     let formulaValue = result.value;
     let formulaValueType = result.dataType;
     if(result.type === 'error'){
-        throw new Error(`runFormula,Catch an error "${result.message}" while eval formula "${formula}" with params: "${JSON.stringify(formulaParams)}" for "${JSON.stringify(messageTag)}"`);
+        throw new Error(`runFormula:Catch an error "${result.message}" while eval formula "${formula}" with params: "${JSON.stringify(formulaParams)}" for "${JSON.stringify(messageTag)}"`);
         // if(blankValue === SteedosFormulaBlankValue.blanks && result.errorType === "ArgumentError"){
         //     // 配置了空参数视为空值时会直接返回空值类型，这里就会报错，直接返回空值，而不是抛错
         //     // TODO:result.errorType === "ArgumentError"不够细化，下一版本应该视错误情况优化返回空值的条件
