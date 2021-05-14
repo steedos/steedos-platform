@@ -5,42 +5,42 @@ const METADATA_SERVICES_PERFIX = '$METADATA-SERVICES';
 import * as _ from 'underscore';
 
 //////////////// mock for redis cacher ////////////////
-type MockCacherEntry = {
-	key: string,
-	splitedKeyArray: string[],
-	data: string,
-};
-let mockCacherData: MockCacherEntry[] = [];
-
+let mockCacherData: string[] = [];
 let mock_prefix = "";
 
 async function mockCacherGet(ctx: any, key: string): Promise<any> { // cacher.get
-	const finalKey = mock_prefix + key;
-	const item = mockCacherData.find(item => item.key === finalKey);
-	if (item) {
-		return JSON.parse(item.data);
-	}
-	return null;
+	return await ctx.broker.cacher.get(key);
 }
 
 // 支持 * 通配符
 async function mockCacherKeys(ctx: any, key: string): Promise<string[]> { // cacher.client.keys
+	// // 原来是：
+	// const broker_res = await ctx.broker.cacher.client.keys(key);
+
 	const regex_key = "^"+ key.split(".").join("\\.").split("*").join(".+").split("$").join("\\$") + "$";
 	const reg = new RegExp(regex_key);
-	const keys = mockCacherData.filter(item => reg.test(item.key)).map(item => item.key);
+	const keys = mockCacherData.filter(item => reg.test(item));
+
+	// const diff_d = _.difference(broker_res, keys); // 差错 diff 代码
+	// if (diff_d.length > 0) {
+	// 	console.log("diff is",key, diff_d);
+	// 	console.log("* is", key,await ctx.broker.cacher.client.keys("*"));
+	// 	console.log("my is",key, mockCacherData);
+	// 	process.exit();
+	// }
+
 	return keys;
 }
 
 async function mockCacherSet(ctx: any, key: string, data: any): Promise<any> { // cacher.set
-	data = JSON.stringify(data); //  TODO: ……生产环境考虑深度克隆
 	const finalKey = mock_prefix + key;
-	const item = mockCacherData.find(item => item.key === finalKey);
-	if (item) {
-		item.data = data;
-	} else {
-		const splitedKeyArray = finalKey.split(".");
-		mockCacherData.push({ key: finalKey, splitedKeyArray, data, });
+	const item = mockCacherData.find(item => item === finalKey);
+	if (!item) {
+		mockCacherData.push(finalKey);
 	}
+
+	await ctx.broker.cacher.set(key, data);
+
 }
 
 // 支持 * 通配符
@@ -50,12 +50,16 @@ async function mockCacherClean(ctx: any, key: string): Promise<any> { // cacher.
 	} else {
 		const regex_key = "^"+ key.split(".").join("\\.").split("*").join(".+").split("$").join("\\$") + "$";
 		const reg = new RegExp(regex_key);
-		mockCacherData = mockCacherData.filter(item => !reg.test(item.key));
+		mockCacherData = mockCacherData.filter(item => !reg.test(item));
 	}
+
+	await ctx.broker.cacher.clean(key);
 }
 async function mockCacherDel(ctx: any, key: string): Promise<any> { // cacher.del
 	const finalKey = mock_prefix + key;
-	mockCacherData = mockCacherData.filter(item => item.key !== finalKey);
+	mockCacherData = mockCacherData.filter(item => item !== finalKey);
+
+	await ctx.broker.cacher.del(key);
 }
 
 
