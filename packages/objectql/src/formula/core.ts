@@ -140,7 +140,7 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
     return runFormula(formula, params, {
         returnType: data_type,
         blankValue: formula_blank_value
-    });
+    }, fieldFormulaConfig);
 }
 
 export const evalFieldFormula = function (formula: string, formulaParams: object) {
@@ -161,9 +161,10 @@ export const evalFieldFormula = function (formula: string, formulaParams: object
  * 运行公式
  * @param formula 公式脚本内容
  * @param params 参数
- * @param formulaType 公式返回类型，如果空则不判断类型
+ * @param options 公式返回类型，及空值配置
+ * @param messageTag 用于显示错误日志的标识信息，可以是一个json对象
  */
-export const runFormula = function (formula: string, params: Array<SteedosFormulaParamTypeConfig>, options?: SteedosFormulaOptions) {
+export const runFormula = function (formula: string, params: Array<SteedosFormulaParamTypeConfig>, options?: SteedosFormulaOptions, messageTag?: any) {
     if (!options) {
         options = {};
     }
@@ -186,12 +187,12 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     let formulaValueType = result.dataType;
     if(result.type === 'error'){
         console.error(formula, formulaParams)
-        throw new Error(result.message);
+        throw new Error(`runFormula:Catch an error "${result.message}" while eval formula "${formula}" with params: "${JSON.stringify(formulaParams)}" for "${JSON.stringify(messageTag)}"`);
         // if(blankValue === SteedosFormulaBlankValue.blanks && result.errorType === "ArgumentError"){
         //     // 配置了空参数视为空值时会直接返回空值类型，这里就会报错，直接返回空值，而不是抛错
         //     // TODO:result.errorType === "ArgumentError"不够细化，下一版本应该视错误情况优化返回空值的条件
         //     formulaValue = null;
-        // }
+        // }yar
         // else{
         //     throw new Error(result.message);
         // }

@@ -55,7 +55,7 @@ async function _computeFormula(formula: string, objectName:string, data: any, cu
         doc.space = spaceId;
     }
     let params = await computeFormulaParams(doc, vars, currentUserId);
-    return runFormula(formula, params, options);
+    return runFormula(formula, params, options, {objectName});
 }
 
 export const computeFormula = _computeFormula 

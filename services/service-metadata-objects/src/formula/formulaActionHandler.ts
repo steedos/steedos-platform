@@ -174,7 +174,13 @@ export class FormulaActionHandler{
     async computeFormulaVarsAndQuotes(formula: string, objectConfig: any){
         let quotes: Array<SteedosFieldFormulaQuoteTypeConfig> = [];
         let vars: Array<SteedosFormulaVarTypeConfig> = [];
-        const formulaVars = pickFormulaVars(formula);
+        let formulaVars: any = [];
+        try{
+            formulaVars = pickFormulaVars(formula);
+        }
+        catch(ex){
+            throw new Error(`pickFormulaVars:Catch an error "${ex}" while pick vars from the formula "${formula}" for "${JSON.stringify(objectConfig)}"`);
+        }
         for await(const formulaVar of formulaVars) {
             await this.computeFormulaVarAndQuotes(formulaVar, objectConfig, quotes, vars);
         }
