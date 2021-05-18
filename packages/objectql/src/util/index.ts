@@ -251,6 +251,27 @@ export const loadLayouts = (filePath: string)=>{
     return results
 }
 
+export const loadValidationRules = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.validationRule.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[1]
+        }
+        if(!json.object_name){
+            json.object_name =  path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
+        results.push(json)
+    })
+    return results
+}
+
 export const loadListViews = (filePath: string)=>{
     let results = []
     const filePatten = [
