@@ -27,9 +27,15 @@ function parserFilters(filters){
     }
     let query = {};
     if(_.isArray(filters)){
-        _.each(filters,function(filter){
-            Object.assign(query, parserFilters(filter))
-        })
+        if(filters[1] && filters[1] == '='){
+            key = filters[0]
+            value = filters[2]
+            Object.assign(query, {[key]: value})
+        }else{
+            _.each(filters,function(filter){
+                Object.assign(query, parserFilters(filter))
+            })
+        }
     }else{
         _.each(filters, function (v, k) {
             if (k === '$and') {
