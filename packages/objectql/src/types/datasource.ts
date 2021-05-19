@@ -80,6 +80,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _url: string;
     private _host: string;
     private _port: number;
+    private _serviceName?: string;
     private _username?: string;
     private _password?: string;
     private _database?: string;
@@ -116,6 +117,14 @@ export class SteedosDataSourceType implements Dictionary {
             return this._objects
         }
         return await this.schema.metadataRegister.getObjectsConfig(this.name);
+    }
+
+    getSrviceName() {
+        return this._serviceName;
+    }
+
+    setServiceName(serviceName: string) {
+        this._serviceName = serviceName;
     }
 
     getLocalObjects() {
@@ -469,22 +478,22 @@ export class SteedosDataSourceType implements Dictionary {
         // this.schema.transformReferenceOfObject(this);
     }
 
-	async sendConfigToMetadata() {
-		// let baseObject = getObjectConfig(MONGO_BASE_OBJECT);
-		// if (baseObject) {
-		// 	await this.schema.metadataRegister.addObjectConfig(baseObject.__serviceName, baseObject);
-		// }
-		// baseObject = getObjectConfig(SQL_BASE_OBJECT);
-		// if (baseObject) {
-		// 	await this.schema.metadataRegister.addObjectConfig(baseObject.__serviceName, baseObject);
-		// }
+    async sendConfigToMetadata() {
+        // let baseObject = getObjectConfig(MONGO_BASE_OBJECT);
+        // if (baseObject) {
+        //     await this.schema.metadataRegister.addObjectConfig(baseObject.__serviceName, baseObject);
+        // }
+        // baseObject = getObjectConfig(SQL_BASE_OBJECT);
+        // if (baseObject) {
+        //     await this.schema.metadataRegister.addObjectConfig(baseObject.__serviceName, baseObject);
+        // }
+        // user xxx.filter() will cause more memory ...
+        const originalObjectConfigs = getOriginalObjectConfigs(this.name, this._serviceName);
+        for await (const objectConfig of originalObjectConfigs) {
+            await this.schema.metadataRegister.addObjectConfig(objectConfig.__serviceName, objectConfig);
+        }
 
-		// send object withs fields
-		const originalObjectConfigs = getOriginalObjectConfigs(this.name);
-		for await (const objectConfig of originalObjectConfigs) {
-			await this.schema.metadataRegister.addObjectConfig(objectConfig.__serviceName, objectConfig);
-		}
-	}
+    }
 
     initTypeORM() {
         if (this._adapter.init) {

@@ -58,9 +58,16 @@ export const getOriginalObjectConfig = (object_name: string):SteedosObjectTypeCo
     return _.find(_original_objectConfigs, {name: object_name})
 }
 
-export const getOriginalObjectConfigs = (datasource: string) => {
-    if (datasource) {
-        return _.filter(_original_objectConfigs, {datasource: datasource})
+export const getOriginalObjectConfigs = (datasource: string, serviceName: string) : Array<SteedosObjectTypeConfig> => {
+    if (datasource || serviceName) {
+        const filterConfig : any = {};
+        if (datasource) {
+            filterConfig.datasource = datasource;
+        }
+        if (serviceName) {
+            filterConfig.__serviceName = serviceName;
+        }
+        return _.filter(_original_objectConfigs, filterConfig)
     } else {
         return _original_objectConfigs
     }
