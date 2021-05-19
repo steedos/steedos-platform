@@ -28,7 +28,7 @@ export const getAllObjectValidationRules = function(){
 
     for(let objectName in _ValidationRules){
         let objectValidationRules = _ValidationRules[objectName]
-        result = result.concat(objectValidationRules);
+        result = result.concat(clone(objectValidationRules));
     }
     
     return result;
