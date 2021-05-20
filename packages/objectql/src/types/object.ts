@@ -872,7 +872,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         translationObject(lng, objectConfig.name, objectConfig);
 
-        const layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name)
+        const layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name);
         if(layouts && layouts.length > 0){
             const layout = layouts[0];
             let _fields = {};
@@ -968,9 +968,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         const related_lists = [];
 
         const objectConfig: any = await this.callMetadataObjectServiceAction('getOriginalObject', {objectApiName: this.name});
-        _.each(objectConfig.fields, function(field){
+        _.each(objectConfig.fields, function(field, key){
             const layoutField: any = {};
-            layoutField.field_name = field.name;
+            layoutField.field_name = field.name || key;
             layoutField.is_readonly = field.readonly;
             layoutField.is_required = field.required;
             layoutField.group = field.group;
