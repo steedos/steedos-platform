@@ -18,20 +18,26 @@ module.exports = {
     },
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
+        let validationRules;
         if(filters.object_name){
-            let validationRules = objectql.getObjectValidationRules(filters.object_name);
-            if(validationRules){
-                this.data.values = this.data.values.concat(validationRules)
-            }
+            validationRules = objectql.getObjectValidationRules(filters.object_name);
+        }else{
+            validationRules = objectql.getAllObjectValidationRules();
+        }
+        if(validationRules){
+            this.data.values = this.data.values.concat(validationRules)
         }
     },
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
+        let validationRules;
         if(filters.object_name){
-            let validationRules = objectql.getObjectValidationRules(filters.object_name);
-            if(validationRules){
-                this.data.values = this.data.values + validationRules.length
-            }
+            validationRules = objectql.getObjectValidationRules(filters.object_name);
+        }else{
+            validationRules = objectql.getAllObjectValidationRules();
+        }
+        if(validationRules){
+            this.data.values = this.data.values + validationRules.length
         }
     },
     afterFindOne: async function(){
