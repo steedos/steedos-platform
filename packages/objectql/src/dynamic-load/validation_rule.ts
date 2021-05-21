@@ -5,9 +5,16 @@ var util = require('../util');
 
 const _ValidationRules: Dictionary<any> = {};
 
+const PERMISSIONS = {
+    allowEdit: false,
+    allowDelete: false,
+    allowRead: true,
+};
+  
 const BASERECORD = {
     is_system: true,
     type: "validation_rule",
+    record_permissions: PERMISSIONS
   };
 
 const addObjectValidationRule = function(objectName: string, json: any){

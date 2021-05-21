@@ -31,6 +31,10 @@ function parserFilters(filters){
             key = filters[0]
             value = filters[2]
             Object.assign(query, {[key]: value})
+        }else if(filters[1] && (filters[1] == '!=' || filters[1] == '<>')){
+            key = filters[0]
+            value = filters[2]
+            Object.assign(query, {[key]: {$ne: value}})
         }else{
             _.each(filters,function(filter){
                 Object.assign(query, parserFilters(filter))

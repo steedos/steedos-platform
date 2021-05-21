@@ -1,7 +1,25 @@
 const _ = require("underscore");
 const util = require('../util');
 const objectql = require("@steedos/objectql");
+const core = require("@steedos/core");
 const InternalData = require('../core/internalData');
+
+let doFilt = function (list, filters){
+
+    let result = list;
+    delete filters.space
+
+    for(let key in filters){
+        let value = filters[key];
+        if(value.$ne){
+            result = _.filter(result, function(item){ return item[key] !== value.$ne})
+        }else{
+            result = _.filter(result, function(item){ return item[key] === value})
+        }
+    }
+
+    return result;
+};
 
 module.exports = {
     afterFind: async function(){
@@ -9,10 +27,21 @@ module.exports = {
         let validationRules;
         if(filters.object_name){
             validationRules = objectql.getObjectValidationRules(filters.object_name);
+            delete filters.object_name;
         }else{
             validationRules = objectql.getAllObjectValidationRules();
         }
-        if(validationRules){
+
+        validationRules = doFilt(validationRules, filters)
+
+        let existNames = _.pluck(this.data.values, "name")
+        let sourceNames = _.pluck(validationRules, "name")
+
+        let differentNames = _.difference(sourceNames, existNames);
+        validationRules = _.filter(validationRules, function(item){ 
+            return _.contains(differentNames, item.name)
+        })
+        if(validationRules && validationRules.length>0){
             this.data.values = this.data.values.concat(validationRules)
         }
     },
@@ -21,10 +50,20 @@ module.exports = {
         let validationRules;
         if(filters.object_name){
             validationRules = objectql.getObjectValidationRules(filters.object_name);
+            delete filters.object_name;
         }else{
             validationRules = objectql.getAllObjectValidationRules();
         }
-        if(validationRules){
+        validationRules = doFilt(validationRules, filters)
+
+        let existNames = _.pluck(this.data.values, "name")
+        let sourceNames = _.pluck(validationRules, "name")
+
+        let differentNames = _.difference(sourceNames, existNames);
+        validationRules = _.filter(validationRules, function(item){ 
+            return _.contains(differentNames, item.name)
+        })
+        if(validationRules && validationRules.length>0){
             this.data.values = this.data.values.concat(validationRules)
         }
     },
@@ -33,10 +72,21 @@ module.exports = {
         let validationRules;
         if(filters.object_name){
             validationRules = objectql.getObjectValidationRules(filters.object_name);
+            delete filters.object_name;
         }else{
             validationRules = objectql.getAllObjectValidationRules();
         }
-        if(validationRules){
+        
+        validationRules = doFilt(validationRules, filters)
+
+        let existNames = _.pluck(this.data.values, "name")
+        let sourceNames = _.pluck(validationRules, "name")
+
+        let differentNames = _.difference(sourceNames, existNames);
+        validationRules = _.filter(validationRules, function(item){ 
+            return _.contains(differentNames, item.name)
+        })
+        if(validationRules && validationRules.length>0){
             this.data.values = this.data.values + validationRules.length
         }
     },
@@ -53,12 +103,12 @@ module.exports = {
         }
     },
     beforeInsert: async function () {
-        await util.checkAPIName(this.object_name, 'name', this.doc.name);
+        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
 
     },
     beforeUpdate: async function () {
         if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id);
+            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
         }
     }
 }
