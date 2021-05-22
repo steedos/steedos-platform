@@ -42,14 +42,15 @@ const getObjectList = async function (req: Request, res: Response) {
 
         if (userId) {
             let entities = [];
-            let filters = queryParams.$filter;
+            let filters = queryParams.$filter as string || '';
             let fields = [];
             // filters = `(${filters}) and (space eq \'${spaceId}\')`;
             if (queryParams.$select) {
                 fields = _.keys(createQuery.projection)
-            } else {
-                fields = _.keys(collection.toConfig().fields);
             }
+
+            filters = getODataManager().excludeDeleted(filters);
+
             if (queryParams.$top !== '0') {
                 let query = { filters: filters, fields: fields, top: Number(queryParams.$top) };
                 if (queryParams.hasOwnProperty('$skip')) {
