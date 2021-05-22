@@ -49,7 +49,14 @@ Template.creatorLayout.helpers
 			return !reg.test(currentPath)
 		else
 			return false
-
+	object_name: ()->
+		return Session.get("object_name");
+	recordId: ()->
+		return Session.get("recordId");
+	title: ()->
+		return "编辑";
+	triggerLabel: ()->
+		return "编辑";
 Template.creatorLayout.events
 	'click .sidebar-show': (e, t)->
 		$("#sidebar-left").removeClass('hidden')

@@ -119,7 +119,8 @@
 								<div class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-details__item">
 									<div id="creator-quick-form" class="{{#if form_horizontal}} slds-form_horizontal{{else}}  slds-form_stacked{{/if}} slds-form" role="tabpanel">
 										<div class="">
-										{{#if detail_info_visible}}
+											{{> steedos_form mode='read' name=cmFormId objectApiName=object_name recordId=recordId}}
+											{{#if detail_info_visible}}
 											{{#if showForm}}
 												{{#autoForm collection=collection type="disabled" id="viewRecordForm" schema=schema doc=record}}
 													{{#if schemaFields.grouplessFields}}

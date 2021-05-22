@@ -42,6 +42,8 @@ if Meteor.isClient
 			Modal.show("standard_query_modal")
 
 		"standard_new": (object_name, record_id, fields)->
+			if true
+				return $("#steedosReactFormAddTrigger").trigger('click');
 			Session.set 'action_object_name', object_name
 			ids = Creator.TabularSelectedIds[object_name]
 			if ids?.length
@@ -65,6 +67,8 @@ if Meteor.isClient
 
 		"standard_edit": (object_name, record_id, fields)->
 			if record_id
+				if true
+					return $("#steedosReactFormEditTrigger").trigger('click');
 				if Steedos.isMobile() && false
 #					record = Creator.getObjectRecord(object_name, record_id)
 #					Session.set 'cmDoc', record
