@@ -1,7 +1,6 @@
 const _ = require("underscore");
 module.exports = {
     customize: function (object_name, record_id, fields) {
-        console.log('customize');
         var doc = Creator.odata.get(object_name, record_id);
         var newDoc = {}
         _.each(Creator.getObject(object_name).fields, function(v, k){
