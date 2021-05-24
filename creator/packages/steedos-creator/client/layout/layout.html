@@ -33,8 +33,8 @@
 
 		{{> CreatorAutoformModals}}
 		<div style="display: none">
-			{{> steedos_form_modal submitter=false mode="edit" name="steedosReactFormEdit" triggerId="steedosReactFormEditTrigger" title=title triggerLabel=triggerLabel objectApiName=object_name recordId=recordId}}
-			{{> steedos_form_modal submitter=false mode="edit" name="steedosReactFormAdd" triggerId="steedosReactFormAddTrigger" title=title triggerLabel=triggerLabel objectApiName=object_name}}
+			{{> steedos_form_modal afterUpdate=onEditFinish submitter=false mode="edit" name="steedosReactFormEdit" triggerId="steedosReactFormEditTrigger" title=title triggerLabel=triggerLabel objectApiName=object_name recordId=recordId}}
+			{{> steedos_form_modal afterInsert=onAddFinish submitter=false mode="edit" name="steedosReactFormAdd" triggerId="steedosReactFormAddTrigger" title=title triggerLabel=triggerLabel objectApiName=object_name}}
 		</div>
 		{{#CreatorAfModal formId="creatorAddForm" meteormethod="af_insert" class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
 		{{#CreatorAfModal formId="creatorEditForm" meteormethod="af_update" class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}

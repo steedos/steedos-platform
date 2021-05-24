@@ -57,6 +57,26 @@ Template.creatorLayout.helpers
 		return "编辑";
 	triggerLabel: ()->
 		return "编辑";
+	onAddFinish: ()->
+		return (values)->
+			result = values[0];
+			app_id = Session.get("app_id")
+			object_name = Session.get("object_name");
+			record_id = result._id
+			url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
+			FlowRouter.go url
+			return true;
+#			app_id = Session.get("app_id")
+#			object_name = Session.get("object_name")
+#			list_view_id = result._id
+#			url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
+#			FlowRouter.go url
+	onEditFinish: ()->
+		return ()->
+			setTimeout(()->
+				FlowRouter.reload()
+			, 1);
+			return true;
 Template.creatorLayout.events
 	'click .sidebar-show': (e, t)->
 		$("#sidebar-left").removeClass('hidden')
