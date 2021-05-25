@@ -4,27 +4,10 @@ const objectql = require("@steedos/objectql");
 const core = require("@steedos/core");
 const InternalData = require('../core/internalData');
 
-let doFilt = function (list, filters){
-
-    let result = list;
-    delete filters.space
-
-    for(let key in filters){
-        let value = filters[key];
-        if(value.$ne){
-            result = _.filter(result, function(item){ return item[key] !== value.$ne})
-        }else{
-            result = _.filter(result, function(item){ return item[key] === value})
-        }
-    }
-
-    return result;
-};
-
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        let validationRules;
+        let validationRules = [];
         if(filters.object_name){
             validationRules = objectql.getObjectValidationRules(filters.object_name);
             delete filters.object_name;
@@ -32,7 +15,7 @@ module.exports = {
             validationRules = objectql.getAllObjectValidationRules();
         }
 
-        validationRules = doFilt(validationRules, filters)
+        validationRules = InternalData.filtSourceFile(validationRules, filters)
 
         let existNames = _.pluck(this.data.values, "name")
         let sourceNames = _.pluck(validationRules, "name")
@@ -47,14 +30,14 @@ module.exports = {
     },
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        let validationRules;
+        let validationRules = [];
         if(filters.object_name){
             validationRules = objectql.getObjectValidationRules(filters.object_name);
             delete filters.object_name;
         }else{
             validationRules = objectql.getAllObjectValidationRules();
         }
-        validationRules = doFilt(validationRules, filters)
+        validationRules = InternalData.filtSourceFile(validationRules, filters)
 
         let existNames = _.pluck(this.data.values, "name")
         let sourceNames = _.pluck(validationRules, "name")
@@ -69,7 +52,7 @@ module.exports = {
     },
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        let validationRules;
+        let validationRules = [];
         if(filters.object_name){
             validationRules = objectql.getObjectValidationRules(filters.object_name);
             delete filters.object_name;
@@ -77,7 +60,7 @@ module.exports = {
             validationRules = objectql.getAllObjectValidationRules();
         }
         
-        validationRules = doFilt(validationRules, filters)
+        validationRules = InternalData.filtSourceFile(validationRules, filters)
 
         let existNames = _.pluck(this.data.values, "name")
         let sourceNames = _.pluck(validationRules, "name")
