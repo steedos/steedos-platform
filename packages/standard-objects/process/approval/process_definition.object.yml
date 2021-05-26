@@ -267,6 +267,7 @@ list_views:
       - object_name
     columns:
       - label
+      - name
       - object_name
       - order
       - description
@@ -280,6 +281,9 @@ actions:
     on: record
   copy:
     label: Copy
+    on: record
+  customize:
+    label: Customize
     on: record
 permission_set:
   user:

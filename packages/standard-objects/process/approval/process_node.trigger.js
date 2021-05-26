@@ -1,6 +1,7 @@
 const _ = require("underscore");
 const objectql = require('@steedos/objectql');
 const util = require('../../util');
+const InternalData = require('../../core/internalData');
 
 const reviseRecordOrder = async function (processId, record) {
     let processNodes = await objectql.getObject("process_node").find({ filters: ['process_definition', '=', processId], sort: 'order asc' });
@@ -161,5 +162,92 @@ module.exports = {
     },
     afterDelete: async function () {
         await reviseRecordOrder(this.previousDoc.process_definition);
+    },
+    afterFind: async function(){
+        let filters = InternalData.parserFilters(this.query.filters)
+        let processNodes = [];
+        if(filters.process_definition){
+            approvalProcess = objectql.getSourceApprovalProcess(filters.process_definition);
+            if(approvalProcess){
+                processNodes = approvalProcess.process_nodes
+            }
+            delete filters.process_definition
+        }
+
+        processNodes = InternalData.filtSourceFile(processNodes, filters)
+
+        let existNames = _.pluck(this.data.values, "name")
+        let sourceNames = _.pluck(processNodes, "name")
+
+        let differentNames = _.difference(sourceNames, existNames);
+        processNodes = _.filter(processNodes, function(item){ 
+            return _.contains(differentNames, item.name)
+        })
+
+        if(processNodes){
+            this.data.values = this.data.values.concat(processNodes)
+        }
+    },
+    afterAggregate: async function(){
+        let filters = InternalData.parserFilters(this.query.filters)
+        let processNodes = [];
+        if(filters.process_definition){
+            approvalProcess = objectql.getSourceApprovalProcess(filters.process_definition);
+            if(approvalProcess){
+                processNodes = approvalProcess.process_nodes
+            }
+            delete filters.process_definition
+        }
+
+        processNodes = InternalData.filtSourceFile(processNodes, filters)
+
+        let existNames = _.pluck(this.data.values, "name")
+        let sourceNames = _.pluck(processNodes, "name")
+
+        let differentNames = _.difference(sourceNames, existNames);
+        processNodes = _.filter(processNodes, function(item){ 
+            return _.contains(differentNames, item.name)
+        })
+
+        if(processNodes){
+            this.data.values = this.data.values.concat(processNodes)
+        }
+    },
+    afterCount: async function(){
+        let filters = InternalData.parserFilters(this.query.filters)
+        let processNodes = [];
+        if(filters.process_definition){
+            approvalProcess = objectql.getSourceApprovalProcess(filters.process_definition);
+            if(approvalProcess){
+                processNodes = approvalProcess.process_nodes
+            }
+            delete filters.process_definition
+        }
+
+        processNodes = InternalData.filtSourceFile(processNodes, filters)
+
+        let existNames = _.pluck(this.data.values, "name")
+        let sourceNames = _.pluck(processNodes, "name")
+
+        let differentNames = _.difference(sourceNames, existNames);
+        processNodes = _.filter(processNodes, function(item){ 
+            return _.contains(differentNames, item.name)
+        })
+
+        if(processNodes){
+            this.data.values = this.data.values + processNodes.length
+        }
+    },
+    afterFindOne: async function(){
+        if(_.isEmpty(this.data.values)){
+            let id = this.id
+            let objectName = id.substr(0, id.indexOf("."));
+            if(objectName){
+                let processNode = objectql.getSourceProcessNode(objectName, id.substr(id.indexOf(".")+1));
+                if(processNode){
+                    this.data.values = processNode;
+                }
+            }
+        }
     }
 }

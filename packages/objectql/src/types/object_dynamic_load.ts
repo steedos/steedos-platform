@@ -3,7 +3,7 @@ import path = require('path')
 import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles, SteedosActionTypeConfig } from '.'
 import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
-import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules } from '../dynamic-load'
+import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules, loadSourceRoles, loadSourceApprovalProcesses } from '../dynamic-load'
 
 var util = require('../util')
 var clone = require('clone')
@@ -133,6 +133,10 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
     loadSourcePermissionset(filePath);
 
     loadObjectValidationRules(filePath);
+
+    loadSourceRoles(filePath);
+
+    loadSourceApprovalProcesses(filePath);
 }
 
 export const addServerScriptFiles = (filePath: string) => {

@@ -272,6 +272,42 @@ export const loadValidationRules = (filePath: string)=>{
     return results
 }
 
+export const loadRoles = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.role.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[1]
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadApprovalProcesses = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.approvalProcess.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[1]
+        }
+        results.push(json)
+    })
+    return results
+}
+
 export const loadListViews = (filePath: string)=>{
     let results = []
     const filePatten = [
