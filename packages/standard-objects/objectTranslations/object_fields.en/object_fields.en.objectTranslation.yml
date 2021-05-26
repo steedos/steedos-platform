@@ -33,7 +33,7 @@ fields:
         value: html
       - label: Select
         value: select
-      - label: Boolean
+      - label: Checkbox
         value: boolean
       - label: Date
         value: date
@@ -139,6 +139,8 @@ fields:
         value: number
       - label: Currency
         value: currency
+      - label: Percent
+        value: percent
       - label: Text
         value: text
       - label: Date

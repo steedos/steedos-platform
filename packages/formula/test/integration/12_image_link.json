@@ -1,0 +1,354 @@
+{
+  "name": "Sample Image Link Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_image_links.htm",
+  "examples": [
+    {
+      "name": "Yahoo! Instant Messenger™ Image",
+      "formula": "IF(ISBLANK(Yahoo_Name__c),\"\", HYPERLINK(\"ymsgr:sendIM?\" & Yahoo_Name__c, \nIMAGE(\"http://opi.yahoo.com/online?u=\" & Yahoo_Name__c & \"&m=g&t=0\", \" \")))",
+      "suites": [
+        {
+          "context": "blank",
+          "identifiers": {
+            "Yahoo_Name__c": {
+              "dataType": "text",
+              "value": ""
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": ""
+          }
+        },
+        {
+          "context": "filled",
+          "identifiers": {
+            "Yahoo_Name__c": {
+              "dataType": "text",
+              "value": "leifg"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"ymsgr:sendIM?leifg\"><img src=\"http://opi.yahoo.com/online?u=leifg&m=g&t=0\" alt=\" \"/></a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Flags for Case Priority",
+      "formula": "IMAGE( \nCASE( Priority,\n\"Low\", \"/img/samples/flag_green.gif\",\n\"Medium\", \"/img/samples/flag_yellow.gif\",\n\"High\", \"/img/samples/flag_red.gif\",\"/s.gif\"),\"Priority Flag\")",
+      "suites": [
+        {
+          "context": "Low",
+          "identifiers": {
+            "Priority": {
+              "dataType": "text",
+              "value": "Low"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/flag_green.gif\" alt=\"Priority Flag\"/>"
+          }
+        },
+        {
+          "context": "Medium",
+          "identifiers": {
+            "Priority": {
+              "dataType": "text",
+              "value": "Medium"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/flag_yellow.gif\" alt=\"Priority Flag\"/>"
+          }
+        },
+        {
+          "context": "High",
+          "identifiers": {
+            "Priority": {
+              "dataType": "text",
+              "value": "High"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/flag_red.gif\" alt=\"Priority Flag\"/>"
+          }
+        },
+        {
+          "context": "Other",
+          "identifiers": {
+            "Priority": {
+              "dataType": "text",
+              "value": "Not So Important"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/s.gif\" alt=\"Priority Flag\"/>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Color Squares for Case Age",
+      "formula": "IF( Case_Age__c > 20, \nIMAGE(\"/img/samples/color_red.gif\", \"red\", 30, 30),\nIF( Case_Age__c > 10,\nIMAGE(\"/img/samples/color_yellow.gif\", \"yellow\", 30, 30),\nIMAGE(\"/img/samples/color_green.gif\", \"green\", 30, 30)\n))",
+      "suites": [
+        {
+          "context": "Age > 20",
+          "identifiers": {
+            "Case_Age__c": {
+              "dataType": "number",
+              "value": 21
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/color_red.gif\" alt=\"red\" height=\"30\" width=\"30\"/>"
+          }
+        },
+        {
+          "context": "Age > 10",
+          "identifiers": {
+            "Case_Age__c": {
+              "dataType": "number",
+              "value": 11
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/color_yellow.gif\" alt=\"yellow\" height=\"30\" width=\"30\"/>"
+          }
+        },
+        {
+          "context": "Age = 10",
+          "identifiers": {
+            "Case_Age__c": {
+              "dataType": "number",
+              "value": 10
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/color_green.gif\" alt=\"green\" height=\"30\" width=\"30\"/>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stars for Ratings",
+      "formula": "IMAGE( \nCASE(Rating__c,\n\"1\", \"/img/samples/stars_100.gif\",\n\"2\", \"/img/samples/stars_200.gif\",\n\"3\", \"/img/samples/stars_300.gif\",\n\"4\", \"/img/samples/stars_400.gif\",\n\"5\", \"/img/samples/stars_500.gif\",\n\"/img/samples/stars_000.gif\"),\n\"rating\")",
+      "suites": [
+        {
+          "context": "1",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "1"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/stars_100.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "2",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "2"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/stars_200.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "3",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "3"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/stars_300.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "4",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "4"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/stars_400.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "5",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "5"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/stars_500.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "other",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "-1"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/stars_000.gif\" alt=\"rating\"/>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consumer Reports™—Style Colored Circles for Ratings",
+      "formula": "IMAGE( \nCASE(Rating__c,\n\"1\", \"/img/samples/rating1.gif\",\n\"2\", \"/img/samples/rating2.gif\",\n\"3\", \"/img/samples/rating3.gif\", \n\"4\", \"/img/samples/rating4.gif\", \n\"5\", \"/img/samples/rating5.gif\",\"/s.gif\"),\"rating\")",
+      "suites": [
+        {
+          "context": "1",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "1"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/rating1.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "2",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "2"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/rating2.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "3",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "3"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/rating3.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "4",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "4"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/rating4.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "5",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "5"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/rating5.gif\" alt=\"rating\"/>"
+          }
+        },
+        {
+          "context": "other",
+          "identifiers": {
+            "Rating__c": {
+              "dataType": "text",
+              "value": "-1"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/s.gif\" alt=\"rating\"/>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Horizontal Bars to Indicate Scoring",
+      "formula": "IMAGE(\"/img/samples/color_green.gif\", \"green\", 15, Industry_Score__c * 2) &\nIMAGE(\"/s.gif\", \"white\", 15, \n200 - (Industry_Score__c * 2))",
+      "suites": [
+        {
+          "context": "65%",
+          "identifiers": {
+            "Industry_Score__c": {
+              "dataType": "number",
+              "value": 65
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/color_green.gif\" alt=\"green\" height=\"15\" width=\"130\"/><img src=\"/s.gif\" alt=\"white\" height=\"15\" width=\"70\"/>"
+          }
+        },
+        {
+          "context": "100%",
+          "identifiers": {
+            "Industry_Score__c": {
+              "dataType": "number",
+              "value": 100
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/color_green.gif\" alt=\"green\" height=\"15\" width=\"200\"/><img src=\"/s.gif\" alt=\"white\" height=\"15\" width=\"0\"/>"
+          }
+        },
+        {
+          "context": ">100%",
+          "identifiers": {
+            "Industry_Score__c": {
+              "dataType": "number",
+              "value": 110
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<img src=\"/img/samples/color_green.gif\" alt=\"green\" height=\"15\" width=\"220\"/><img src=\"/s.gif\" alt=\"white\" height=\"15\" width=\"-20\"/>"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -167,6 +167,10 @@ function loadDBObject(object){
     let actions = getObjectActions(object);
     let relatedList = getObjectRelateList(object);
     objectql.extend(object, {fields: fields}, {actions: actions}, {relatedList: relatedList});
+    _.each(actions, function(action){
+        action._visible = action.visible;
+        objectql.addLazyLoadButtons(action.object, action);
+    })
 }
 
 
@@ -218,6 +222,7 @@ function loadObject(doc, oldDoc) {
         objectql.loadActionScripts(doc.name);
         objectql.loadObjectLazyMethods(doc.name);
         objectql.loadObjectLazyListenners(doc.name);
+        objectql.loadObjectLazyButtons(doc.name);
         //获取到继承后的对象
         const _doc = objectql.getObjectConfig(doc.name);
         datasource.setObject(doc.name, _doc);
@@ -240,7 +245,7 @@ function loadObject(doc, oldDoc) {
     }
 }
 
-function removeObject(doc, enforce) {
+function removeObject(doc, enforce, reInitDatasource) {
     if (!enforce && !objectql.hasObjectSuffix(doc.name, doc.space) && !doc.datasource) {
         console.warn('warn: Not deleted. Invalid custom object -> ', doc.name);
         return;
@@ -253,6 +258,10 @@ function removeObject(doc, enforce) {
     }
     if (!datasourceName || datasourceName == defaultDatasourceName) {
         Creator.removeObject(doc.name);
+    }
+    if(reInitDatasource){
+        // 删除对象时应该重新初始化整个datasource，出于性能考虑，不应该多次调用init函数，所以增加参数来控制，默认不执行init
+        datasource.init();
     }
 }
 

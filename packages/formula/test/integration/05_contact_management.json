@@ -1,0 +1,121 @@
+{
+  "name": "Sample Contact Management Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_contact_mgmt.htm",
+  "examples": [
+    {
+      "name": "Contact's Account Discount Percent",
+      "formula": "Account.Discount_Percent__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Account.Discount_Percent__c": {
+              "dataType": "number",
+              "value": 50
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 50
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contact's Account Name",
+      "formula": "Account.Name",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Account.Name": {
+              "dataType": "text",
+              "value": "Smith & Co"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Smith & Co"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contact's Account Phone",
+      "formula": "Account.Phone",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Account.Phone": {
+              "dataType": "text",
+              "value": "+1-202-555-0109"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "+1-202-555-0109"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contact's Account Rating",
+      "formula": "CASE(Account.Rating, \"Hot\", \"Hot\", \"Warm\", \"Warm\", \"Cold\", \"Cold\", \"Not Rated\")",
+      "suites": [
+        {
+          "context": "Hot",
+          "identifiers": {
+            "Account.Rating": {
+              "dataType": "text",
+              "value": "Hot"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Hot"
+          }
+        },
+        {
+          "context": "Warm",
+          "identifiers": {
+            "Account.Rating": {
+              "dataType": "text",
+              "value": "Warm"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Warm"
+          }
+        },
+        {
+          "context": "Cold",
+          "identifiers": {
+            "Account.Rating": {
+              "dataType": "text",
+              "value": "Cold"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Cold"
+          }
+        },
+        {
+          "context": "Ice Cold",
+          "identifiers": {
+            "Account.Rating": {
+              "dataType": "text",
+              "value": "Ice Cold"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Not Rated"
+          }
+        }
+      ]
+    }
+  ]
+}

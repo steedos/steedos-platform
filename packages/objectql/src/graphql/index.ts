@@ -268,9 +268,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
             let corName = correctName(obj.name);
             let objName: string = correctName(obj.name);
 
-            if (!knownTypes[objName]) {
-                knownTypes[objName] = buildGraphQLObjectType(obj, steedosSchema, knownTypes)
-            }
+            knownTypes[objName] = buildGraphQLObjectType(obj, steedosSchema, knownTypes)
 
             rootQueryfields[corName] = {
                 type: new GraphQLList(knownTypes[objName]),
@@ -289,9 +287,14 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
     _.each(rootQueryfields, function (type, objName) {
         rootMutationfields[objName + '__insert'] = {
             type: knownTypes[objName],
-            args: { 'data': { type: new GraphQLNonNull(GraphQLJSON) } },
+            args: { 'data': { type: new GraphQLNonNull(GraphQLJSON) || new GraphQLNonNull(GraphQLString) } },
             resolve: async function (source, args, context, info) {
-                var data = JSON.parse(JSON.stringify(args['data']));
+                let data:any = '';
+                if(_.isString(args['data'])){
+                    data = JSON.parse(args['data'])
+                }else{
+                    data = JSON.parse(JSON.stringify(args['data']))
+                }
                 data._id = data._id || new ObjectId().toHexString();
                 let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
@@ -303,9 +306,14 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
         }
         rootMutationfields[objName + '__update'] = {
             type: knownTypes[objName],
-            args: { '_id': { type: new GraphQLNonNull(GraphQLString) }, 'selector': { type: GraphQLJSON }, 'data': { type: new GraphQLNonNull(GraphQLJSON) } },
+            args: { '_id': { type: new GraphQLNonNull(GraphQLString) }, 'selector': { type: GraphQLJSON }, 'data': { type: new GraphQLNonNull(GraphQLJSON) || new GraphQLNonNull(GraphQLString) } },
             resolve: async function (source, args, context, info) {
-                let data = JSON.parse(JSON.stringify(args['data']));
+                let data:any = '';
+                if(_.isString(args['data'])){
+                    data = JSON.parse(args['data'])
+                }else{
+                    data = JSON.parse(JSON.stringify(args['data']))
+                }
                 let _id = args['_id'];
                 let object = steedosSchema.getObject(`${type.type.ofType.name}`);
                 let userSession = context ? context.user : null;
@@ -324,6 +332,19 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
             }
         }
     })
+
+    rootQueryfields['count'] = {
+        type: GraphQLInt,
+        args: { 'objectName': { type: new GraphQLNonNull(GraphQLString) }, 'filters': { type: GraphQLJSON } },
+        resolve: async function (source, args, context, info) {
+            if (!args.objectName) {
+                throw new Error('objectName is required!');
+            }
+            let object = steedosSchema.getObject(args.objectName);
+            let userSession = context ? context.user : null;
+            return object.count({ filters: args.filters }, userSession);
+        }
+    }
 
     var schemaConfig = {
         query: new GraphQLObjectType({

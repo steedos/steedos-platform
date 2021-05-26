@@ -162,6 +162,11 @@ Template.dxDateBox.rendered = function () {
 
   module.dynamicImport('devextreme/ui/date_box').then(function (dxDateBox) {
     DevExpress.ui.dxDateBox = dxDateBox;
+    opts.onValueChanged = function(e){ 
+      if (e.event) {
+        $input.find("input").trigger('change'); 
+      }
+    };
     $input.dxDateBox(opts);
   });
 

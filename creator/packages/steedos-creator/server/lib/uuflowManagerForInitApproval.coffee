@@ -240,8 +240,17 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				return f.code == key
 
 		getFormField = (key) ->
-			return _.find formFields,  (f) ->
-				return f.code == key
+			ff = null
+			_.forEach formFields, (f) ->
+				if ff
+					return
+				if f.type == 'section'
+					ff = _.find f.fields,  (sf) ->
+						return sf.code == key
+				else if f.code == key
+					ff = f
+
+			return ff
 
 		getFormTableSubField = (tableField, subFieldCode) ->
 			return _.find tableField.fields,  (f) ->
@@ -249,17 +258,19 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 		getFieldOdataValue = (objName, id) ->
 			obj = Creator.getCollection(objName)
+			o = Creator.getObject(objName, spaceId)
+			nameKey = o.NAME_FIELD_KEY
 			if !obj
 				return
 			if _.isString id
 				_record = obj.findOne(id)
 				if _record
-					_record['@label'] = _record.name
+					_record['@label'] = _record[nameKey]
 					return _record
 			else if _.isArray id
 				_records = []
 				obj.find({ _id: { $in: id } }).forEach (_record) ->
-					_record['@label'] = _record.name
+					_record['@label'] = _record[nameKey]
 					_records.push _record
 
 				if !_.isEmpty _records
@@ -301,6 +312,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 		ow.field_map?.forEach (fm) ->
 			object_field = fm.object_field
 			workflow_field = fm.workflow_field
+			if !object_field || !workflow_field
+				throw new Meteor.Error(400, '未找到字段，请检查对象流程映射字段配置')
 			relatedObjectFieldCode = getRelatedObjectFieldCode(object_field)
 			formTableFieldCode = getFormTableFieldCode(workflow_field)
 			objField = object.fields[object_field]
@@ -549,7 +562,7 @@ uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo = (relatedTablesI
 	_.each relatedTablesInfo, (tableItems, relatedObjectName) ->
 		relatedCollection = Creator.getCollection(relatedObjectName, spaceId)
 		_.each tableItems, (item) ->
-			relatedCollection.update(item._table._id, {
+			relatedCollection.direct.update(item._table._id, {
 				$set: {
 					instances: [{
 						_id: insId,

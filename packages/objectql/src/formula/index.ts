@@ -167,7 +167,13 @@ const computeFormulaVarAndQuotes = (formulaVar: string, objectConfig: SteedosObj
 const computeFormulaVarsAndQuotes = (formula: string, objectConfig: SteedosObjectTypeConfig, objectConfigs: Array<SteedosObjectTypeConfig>) => {
     let quotes: Array<SteedosFieldFormulaQuoteTypeConfig> = [];
     let vars: Array<SteedosFormulaVarTypeConfig> = [];
-    const formulaVars = pickFormulaVars(formula);
+    let formulaVars: any = [];
+    try{
+        formulaVars = pickFormulaVars(formula);
+    }
+    catch(ex){
+        throw new Error(`pickFormulaVars:Catch an error "${ex}" while pick vars from the formula "${formula}" for "${JSON.stringify(objectConfig)}"`);
+    }
     formulaVars.forEach((formulaVar) => {
         computeFormulaVarAndQuotes(formulaVar, objectConfig, objectConfigs, quotes, vars);
     });
@@ -272,7 +278,7 @@ async function _computeFormula(formula: string, objectName:string, data: any, cu
         doc.space = spaceId;
     }
     let params = await computeFormulaParams(doc, vars, currentUserId);
-    return runFormula(formula, params, options);
+    return runFormula(formula, params, options, {objectName});
 }
 
 export const computeFormula = _computeFormula 

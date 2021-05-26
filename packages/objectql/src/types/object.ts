@@ -13,6 +13,64 @@ import { WorkflowRulesRunner } from '../actions';
 import { runValidationRules } from './validation_rules';
 const clone = require('clone')
 
+// 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
+// 其3层指的是A-B-C-D，它们都有父子关系，A作为最顶层，该对象上不可以再创建主表子表关系字段，但是B、C、D上可以；
+// 或者如果当前对象上创建的主表子表关系字段指向的对象是D，那么也会超过3层的层级限制；
+// 又或者中间加一层M先连接B再连接C，形成A-B-M-C-D，也会超过3层的层级限制；
+export const MAX_MASTER_DETAIL_LEAVE = 3;
+
+/**
+ * 判断传入的paths中最大层级深度
+ * @param paths 对象上getDetailPaths或getMasterPaths函数返回的当前对象向下或向上取主表子表关联对象名称列表链条
+ * 比如传入下面示例中的paths，表示当前对象b向下有4条主子关系链，最大层级深度为第2条，深度为3
+ * [
+    [ 'b', 't1', 't2' ],
+    [ 'b', 't1', 'm1', 'm2' ],
+    [ 'b', 't1', 'm2' ],
+    [ 'b', 'c', 'd' ]
+ * ]
+ */
+const getMaxPathLeave = (paths: string[]) => {
+    let maxLeave = 0;
+    _.each(paths, (n) => {
+        if (maxLeave < n.length) {
+            maxLeave = n.length;
+        }
+    });
+    // A-B-C-D这种主表子表链按3层算
+    maxLeave--;
+    return maxLeave;
+}
+
+/**
+ * 判断传入的paths中每条path下是否有重复对象名称，返回第一个重复的对象名称
+ * 有可能传入的paths有多个链条，只要其中任何一个链条上有同名对象名说明异常，返回第一个异常的同名对象名即可
+ * 比如传入下面示例中的paths，表示当前对象b向下有4条主子关系链，将返回第三条链中的重复对象名b
+ * @param paths 对象上getDetailPaths或getMasterPaths函数返回的当前对象向下或向上取主表子表关联对象名称列表链条
+ * [
+    [ 'b', 't1', 't2' ],
+    [ 'b', 't1', 'm1', 'm2' ],
+    [ 'b', 't1', 'm2', 'b' ],
+    [ 'b', 'c', 'd' ]
+ * ]
+ */
+export const getRepeatObjectNameFromPaths = (paths: string[]) => {
+    let repeatItem: string;
+    for (let p of paths) {
+        if(repeatItem){
+            break;
+        }
+        let g = _.groupBy(p);
+        for (let k in g) {
+            if (g[k].length > 1) {
+                repeatItem = k;
+                break;
+            }
+        }
+    }
+    return repeatItem;
+}
+
 abstract class SteedosObjectProperties {
     _id?: string
     name?: string
@@ -86,6 +144,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _idFieldName: string;
     private _idFieldNames: string[] = [];
     private _NAME_FIELD_KEY: string;
+    private _masters: string[] = [];
+    private _details: string[] = [];
 
     private _enable_audit: boolean;
     public get enable_audit(): boolean {
@@ -147,18 +207,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._idFieldNames;
     }
 
+    public get masters(): string[] {
+        return this._masters;
+    }
+
+    public get details(): string[] {
+        return this._details;
+    }
+
     private checkField() {
         let driverSupportedColumnTypes = this._datasource.adapter.getSupportedColumnTypes()
-        let masterDetailFieldCount = 0
         _.each(this.fields, (field: SteedosFieldType, key: string) => {
             if (SteedosFieldDBType[field.fieldDBType] && !driverSupportedColumnTypes.includes(field.fieldDBType)) {
                 throw new Error(`driver ${this._datasource.driver} can not support field ${key} config`)
-            }
-            if (field.type === 'master_detail') {
-                masterDetailFieldCount++
-                if (masterDetailFieldCount > 1) {
-                    throw new Error(`object ${this._name} can not set multiple master_detail field type.`)
-                }
             }
         })
     }
@@ -367,6 +428,182 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     getField(field_name: string) {
         return this.fields[field_name]
+    }
+
+    checkMasterDetails(){
+        const mastersCount = this._masters.length;
+        const detailsCount = this._details.length;
+        if(mastersCount > 2){
+            throw new Error(`There are ${mastersCount} fields of type master_detail on the object '${this._name}', but only 2 fields are allowed at most.`);
+        }
+        else if(mastersCount > 1){
+            if(detailsCount > 0){
+                throw new Error(`There are ${mastersCount} fields of type master_detail on the object "${this._name}", but only 1 field are allowed at most, because this object is the master object of another object on a master-detail relationship.`);
+            }
+        }
+        
+        const detailPaths = this.getDetailPaths();
+
+        /**
+         * 去掉内核中判断主表子表层级限制判断，因为内核对象可能有需求不止要用3层，只保留零代码上触发器判断逻辑就行
+         */
+        // // 下面只需要写一个方向的层级if判断即可，不用向上和向下两边层级都判断，因为只要链条有问题，该链条任意一个对象都会报错，没必要让多个节点抛错
+        // // 比如A-B-C-D-E这个链条超出最大层级数量，只要A对象向下取MaxDetailsLeave来判断就行，不必再判断E对象向上判断层级数量
+        // const maxDetailLeave = this.getMaxDetailsLeave(detailPaths);
+        // if(maxDetailLeave > MAX_MASTER_DETAIL_LEAVE){
+        //     throw new Error(`It exceed the maximum depth of master-detail relationship for the detail side of the object '${this._name}', the paths is:${JSON.stringify(detailPaths)}`);
+        // }
+
+        // detailPaths中每个链条中不可以出现同名对象，理论上出现同名对象的话会死循环，上面的MAX_MASTER_DETAIL_LEAVE最大层级判断就已经会报错了
+        const repeatName = getRepeatObjectNameFromPaths(detailPaths);
+        if(repeatName){
+            throw new Error(`It meet one repeat object name '${repeatName}' in the master-detail relationships for the detail side of the object '${this._name}', the paths is:${JSON.stringify(detailPaths)}`);
+        }
+    }
+
+    initMasterDetails(){
+        _.each(this.fields, (field, field_name) => {
+            if(field.type === "master_detail"){
+                // 加try catch是因为有错误时不应该影响下一个字段逻辑
+                try {
+                    if (field.reference_to && typeof _.isString(field.reference_to)) {
+                        if (field.reference_to === this._name) {
+                            field.type = "lookup";//强行变更为最接近的类型
+                            throw new Error(`Can't set a master-detail filed that reference to self on the object '${this._name}'.`);
+                        }
+                        const refObject = getObject(<string>field.reference_to);
+                        if (refObject) {
+                            const addSuc = this.addMaster(<string>field.reference_to);
+                            if(addSuc){
+                                refObject.addDetail(this._name);
+                                // #1435 对象是作为其他对象的子表的话，owner的omit属性必须为true
+                                // 因很多应用目前已经放开了子表的omit属性，这里就不限制了，影响不大，只在零代码界面配置时限制
+                                // if(!this.getField("owner").omit){
+                                //     throw new Error(`The omit property of the owner field on the object '${this._name}' must be true, because there is a master-detail field named '${field.name}' on the object.`);
+                                // }
+                            }
+                            else{
+                                // 不能选之前已经在该对象上建过的主表-子表字段上关联的相同对象
+                                field.type = "lookup";//强行变更为最接近的类型
+                                throw new Error(`Can't set a master-detail filed that reference to the same object '${field.reference_to}' that had referenced to by other master-detail filed on the object '${this._name}'.`);
+                            }
+                        }
+                        else {
+                            throw new Error(`Can't find the reference_to object '${field.reference_to}' for the master_detail field of the object '${this._name}'`);
+                        }
+                    }
+                }
+                catch (ex) {
+                    console.error(ex);
+                }
+            }
+        });
+    }
+
+    getMaxDetailsLeave(paths?: string[]){
+        if(!paths){
+            paths = this.getDetailPaths();
+        }
+        return getMaxPathLeave(paths);
+    }
+
+    getMaxMastersLeave(paths?: string[]){
+        if(!paths){
+            paths = this.getMasterPaths();
+        }
+        return getMaxPathLeave(paths);
+    }
+
+    getDetailPaths(){
+        let results = [];
+        let loop = (master: string, details: string[], paths: string[], leave: number) => {
+            paths.push(master);
+            if(!details.length){
+                results.push(paths);
+                return;
+            }
+            leave++;
+            if(leave > MAX_MASTER_DETAIL_LEAVE + 3){
+                // 加这段逻辑是避免死循环，results最多只输出MAX_MASTER_DETAIL_LEAVE+3层
+                console.error(`Meet max loop for the detail paths of ${this._name}`);
+                return;
+            }
+            _.each(details,(n)=>{
+                const detailObject = getObject(n);
+                if(detailObject){
+                    loop(n, detailObject.details, _.clone(paths), leave);
+                }
+                else{
+                    throw new Error(`Can't find the detail object '${n}' for the master object '${master}' of a master-detail relationship.`);
+                }
+            });
+        }
+        // console.log("==getDetailPaths======", this._name);
+        loop(this._name, this._details, [], 0);
+        // console.log("==getDetailPaths=", JSON.stringify(results));
+        return results;
+    }
+
+    getMasterPaths(){
+        let results = [];
+        let loop = (detail: string, masters: string[], paths: string[], leave: number) => {
+            paths.push(detail);
+            if(!masters.length){
+                results.push(paths);
+                return;
+            }
+            leave++;
+            if(leave > MAX_MASTER_DETAIL_LEAVE + 3){
+                // 加这段逻辑是避免死循环，results最多只输出MAX_MASTER_DETAIL_LEAVE+3层
+                console.error(`Meet max loop for the detail paths of ${this._name}`);
+                return;
+            }
+            _.each(masters,(n)=>{
+                const masterObject = getObject(n);
+                if(masterObject){
+                    loop(n, masterObject.masters, _.clone(paths), leave);
+                }
+                else{
+                    throw new Error(`Can't find the master object '${n}' for the detail object '${detail}' of a master-detail relationship.`);
+                }
+            });
+        }
+        // console.log("==getMasterPaths======", this._name);
+        loop(this._name, this._masters, [], 0);
+        // console.log("==getMasterPaths=", JSON.stringify(results));
+        return results;
+    }
+
+    addMaster(object_name: string){
+        let index = this._masters.indexOf(object_name);
+        if(index < 0){
+            this._masters.push(object_name);
+            return true;
+        }
+        return false;
+    }
+
+    removeMaster(object_name: string){
+        let index = this._masters.indexOf(object_name);
+        if(index >= 0){
+            this._masters.splice(index, 1);
+        }
+    }
+
+    addDetail(object_name: string){
+        let index = this._details.indexOf(object_name);
+        if(index < 0){
+            this._details.push(object_name);
+            return true;
+        }
+        return false;
+    }
+
+    removeDetail(object_name: string){
+        let index = this._details.indexOf(object_name);
+        if(index >= 0){
+            this._details.splice(index, 1);
+        }
     }
 
     setListView(list_view_name: string, config: SteedosObjectListViewTypeConfig) {

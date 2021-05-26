@@ -1,6 +1,6 @@
 
-// const objectql = require("@steedos/objectql");
-// const wrapAsync = objectql.wrapAsync;
+const objectql = require("@steedos/objectql");
+const wrapAsync = objectql.wrapAsync;
 
 const objectWebhooksPreSend = function (userId, doc, object_name, action) {
     var spaceId = doc.space;
@@ -85,6 +85,13 @@ const objectWebhooksPreSend = function (userId, doc, object_name, action) {
 // const fieldFormulaAfterUpdate = function(userId, doc, fieldNames, modifier, options){
 //     wrapAsync(objectql.fieldFormulaTriggers.afterUpdate, Object.assign({userId: userId, spaceId: doc.space, id: doc._id, doc: doc, previousDoc: this.previous, object_name: this.object_name}))
 // }
+
+const getUserObjectPermission = function(obj, userSession){
+    let getSessionFn = function () {
+      return obj.getUserObjectPermission(userSession);
+    }
+    return wrapAsync(getSessionFn, {});
+}
 
 module.exports = {
     extend: 'base',
@@ -204,6 +211,11 @@ module.exports = {
             on: "record",
             todo: function () {
                 var data, instanceId, uobj, url;
+                if (!this.record.instances || !this.record.instances[0]) {
+                    toastr.error('申请单已删除');
+                    Template.creator_view.currentInstance.onEditSuccess();
+                    return;
+                }
                 instanceId = this.record.instances[0]._id;
                 if (!instanceId) {
                     console.error('instanceId not exists');
@@ -275,7 +287,7 @@ module.exports = {
             visible: function (object_name, record_id) {
                 return Steedos.ProcessManager.allowSubmit(object_name, record_id);
             },
-            on: "record_only_more",
+            on: "record_only",
             todo: function (object_name, record_id) {
                 Steedos.ProcessManager.submit(object_name, record_id);
             }
@@ -538,7 +550,7 @@ module.exports = {
             todo: function (userId, doc, fieldNames, modifier, options) {
                 modifier.$set = modifier.$set || {};
                 /*子表 master_detail 字段类型新增属性 sharing #1461*/
-                setDetailOwner(modifier.$set, this.object_name, userId);
+                setDetailOwner(_.extend({}, doc, modifier.$set), this.object_name, userId);
             }
         },
         "after.update.server.masterDetail": {
@@ -550,25 +562,34 @@ module.exports = {
                 if (docOwner !== this.previous.owner) {
                     let object_name = this.object_name;
                     let docId = doc._id;
-                    let objField = {};
-                    /* 当主表的owner改变，调整所有子表的owner以保持一致 */
-                    _.each(Creator.Objects, function (obj) {
-                        let objName = obj.name;
-                        if (objField[objName]) {
-                            return;
-                        }
-                        _.each(obj.fields, function (f, k) {
-                            if (f.type === 'master_detail' && f.reference_to === object_name) {
-                                objField[objName] = k;
+                    const obj = objectql.getObject(object_name);
+                    const details = obj && obj.details;
+                    if(details && details.length){
+                        /* 如果当前对象存在子表的话，调整所有子表记录的owner以保持一致 */
+                        _.each(details, (detail)=>{
+                            const objDetail = objectql.getObject(detail);
+                            let needToSync = false;
+                            if(objDetail){
+                                const detailMasters = objDetail.masters;
+                                if(detailMasters.length > 1){
+                                    /* 如果子表有多个主表子表关系，则只有当前主对象为该子表首要主对象（即第一个主对象）时才需要同步owner值。 */
+                                    needToSync = detailMasters[0] === object_name;
+                                }
+                                else{
+                                    needToSync = true;
+                                }
+                            }
+                            if(needToSync){
+                                const detialFields = objDetail.fields;
+                                const refField = _.find(detialFields,(n)=>{ return n.type === "master_detail" && n.reference_to === object_name;});
+                                if(refField && refField.name){
+                                    let selector = { space: doc.space };
+                                    selector[refField.name] = docId;
+                                    Creator.getCollection(detail).direct.update(selector, { $set: { owner: docOwner } }, { multi: true });
+                                }
                             }
                         });
-                    });
-                    _.each(objField, function (fieldName, objName) {
-                        let selector = { space: doc.space };
-                        selector[fieldName] = docId;
-                        Creator.getCollection(objName).direct.update(selector, { $set: { owner: docOwner } }, { multi: true });
-                    });
-
+                    }
                 }
             }
         },
@@ -594,38 +615,59 @@ module.exports = {
     }
 };
 function setDetailOwner(doc, object_name, userId) {
-    let obj = Creator.getObject(object_name);
+    if(!userId){
+        return;
+    }
+    if (object_name.startsWith('cfs.')) {
+        return;
+    }
     let masterRecordOwner = '';
-    _.each(obj.fields, function (f, k) {
-        if (f.type === 'master_detail' && doc[k] && f.reference_to) { /* 如果本次修改的是master_detail字段 */
-            let masterObjectName = f.reference_to;
-            let masterCollection = Creator.getCollection(masterObjectName);
-            let masterId = doc[k];
-            if (masterId && _.isString(masterId)) { /* 排除字段属性multiple:true的情况 */
-                let masterObject = Creator.getObject(masterObjectName);
-                let nameFieldKey = masterObject.NAME_FIELD_KEY;
-                let masterRecord = masterCollection.findOne(doc[k]);
-                if (masterRecord) {
-                    if (userId && masterRecord.space) { /* 新增和修改子表记录中的master_detial字段时需要根据sharing校验是否有权限新增和修改 */
-                        let write_requires_master_read = f.write_requires_master_read || false; /* 默认对主表有编辑权限才可新建或者编辑子表 */
-                        let masterAllow = false;
-                        let masterRecordPerm = Creator.getRecordPermissions(masterObjectName, masterRecord, userId, masterRecord.space);
-                        if (write_requires_master_read == true) {
-                            masterAllow = masterRecordPerm.allowRead;
+    const obj = objectql.getObject(object_name);
+    const masters = obj && obj.masters;
+    if(masters && masters.length){
+        /* 
+            如果当前修改的对象是其他对象的子表对象，这里有两个逻辑需要处理：
+            1.必须至少具体其所有父对象关联记录的只读权限或可编辑权限（是只读还是可编辑取决于子表关系字段上是否勾选了write_requires_master_read属性）才能新建/编辑当前记录 
+            2.当前记录的owner强制设置为其关联的首要主对象（即masters中第一个对象）记录的owner值
+        */
+        _.each(masters, (master, index)=>{
+            const objFields = obj.fields;
+            const refField = _.find(objFields,(n)=>{ return n.type === "master_detail" && n.reference_to === master;});
+            if(refField && refField.name){
+                let write_requires_master_read = refField.write_requires_master_read || false; /* 默认对主表有编辑权限才可新建或者编辑子表 */
+                let masterAllow = false;
+                const objMaster = objectql.getObject(master);
+                /* 上面先判断一次对象级权限是因为有可能新建修改子表记录时未选择关联父记录字段值，以下是判断关联父记录的权限 */
+                let refFieldValue = doc[refField.name];
+                if(refFieldValue && _.isString(refFieldValue)) { /* isString是为排除字段属性multiple:true的情况 */
+                    let nameFieldKey = objMaster.NAME_FIELD_KEY;
+                    let recordMaster = objMaster.findOne(refFieldValue, {fields:[nameFieldKey, "owner", "space", "locked", "company_id", "company_ids"]});
+                    if(recordMaster){
+                        if (userId && recordMaster.space){
+                            masterAllow = false;
+                            let masterRecordPerm = Creator.getRecordPermissions(master, recordMaster, userId, recordMaster.space);
+                            if (write_requires_master_read == true) {
+                                masterAllow = masterRecordPerm.allowRead;
+                            }
+                            else if (write_requires_master_read == false) {
+                                masterAllow = masterRecordPerm.allowEdit;
+                            }
+                            if (!masterAllow) {
+                                throw new Meteor.Error(400, `缺少当前子对象${object_name}的主对象”${master}“的“${write_requires_master_read ? "只读" : "编辑"}权限”，不能选择主表记录： “${recordMaster[nameFieldKey]}”。`);
+                            }
+
                         }
-                        else if (write_requires_master_read == false) {
-                            masterAllow = masterRecordPerm.allowEdit;
-                        }
-                        if (!masterAllow) {
-                            throw new Meteor.Error(400, `不能选择主表记录： ${masterRecord[nameFieldKey]}。`);
+                        if(index === 0){
+                            /* 子表记录owner同步为masters中第一个对象记录的owner值 */
+                            masterRecordOwner = recordMaster.owner;
                         }
                     }
-                    masterRecordOwner = masterRecord.owner;
                 }
             }
-        }
-    });
+        });
+    }
     if (masterRecordOwner) {
+        /* masterRecordOwner为空说明子表上未选择关联你父记录，此时owner会默认取当前用户的owner */
         doc.owner = masterRecordOwner;
     }
 }

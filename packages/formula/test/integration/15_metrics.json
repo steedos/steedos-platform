@@ -1,0 +1,57 @@
+{
+  "name": "Sample Metrics Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_metrics.htm",
+  "examples": [
+    {
+      "name": "Temperature Conversion",
+      "formula": "1.8 * degrees_celsius__c + 32",
+      "suites": [
+        {
+          "context": "Positive Degrees",
+          "identifiers": {
+            "degrees_celsius__c": {
+              "dataType": "number",
+              "value": 24
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 75.2
+          }
+        },
+        {
+          "context": "Negative Degrees",
+          "identifiers": {
+            "degrees_celsius__c": {
+              "dataType": "number",
+              "value": -40
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": -40
+          }
+        }
+      ]
+    },
+    {
+      "name": "Unit of Measure Conversion",
+      "formula": "Miles__c/0.621371192",
+      "suites": [
+        {
+          "context": "Marathon length",
+          "identifiers": {
+            "Miles__c": {
+              "dataType": "number",
+              "value": 26.2188
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 42.19506848331649
+          }
+        }
+      ]
+    }
+  ]
+}
