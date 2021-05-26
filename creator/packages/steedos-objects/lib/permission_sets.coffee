@@ -18,22 +18,23 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 	if !spaceId and Meteor.isClient
 		spaceId = Session.get("spaceId")
 	
-	if record and object_name == "cms_files" and Meteor.isClient
-		# 如果是cms_files附件，则权限取其父记录权限
-		if object_name == Session.get('object_name')
-			# 当前处于cms_files附件详细界面
-			object_name = record.parent['reference_to._o'];
-			record_id = record.parent._id;
-		else 
-			# 当前处于cms_files附件的父记录界面
-			object_name = Session.get('object_name');
-			record_id = Session.get("record_id");
-		object_fields_keys = _.keys(Creator.getObject(object_name, spaceId)?.fields or {}) || [];
-		select = _.intersection(object_fields_keys, ['owner', 'company_id', 'company_ids', 'locked']) || [];
-		if select.length > 0
-			record = Creator.getObjectRecord(object_name, record_id, select.join(','));
-		else
-			record = null;
+	# 附件权限不再与其父记录编辑配置关联
+	# if record and object_name == "cms_files" and Meteor.isClient
+	# 	# 如果是cms_files附件，则权限取其父记录权限
+	# 	if object_name == Session.get('object_name')
+	# 		# 当前处于cms_files附件详细界面
+	# 		object_name = record.parent['reference_to._o'];
+	# 		record_id = record.parent._id;
+	# 	else 
+	# 		# 当前处于cms_files附件的父记录界面
+	# 		object_name = Session.get('object_name');
+	# 		record_id = Session.get("record_id");
+	# 	object_fields_keys = _.keys(Creator.getObject(object_name, spaceId)?.fields or {}) || [];
+	# 	select = _.intersection(object_fields_keys, ['owner', 'company_id', 'company_ids', 'locked']) || [];
+	# 	if select.length > 0
+	# 		record = Creator.getObjectRecord(object_name, record_id, select.join(','));
+	# 	else
+	# 		record = null;
 
 	permissions = _.clone(Creator.getPermissions(object_name, spaceId, userId))
 
@@ -85,7 +86,25 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 				else
 					# 记录有company_id属性，但是当前用户user_company_ids为空时，认为无权查看
 					permissions.allowRead = false
-
+		console.log("===object_name===", object_name);
+		if object_name == "cms_files" and Meteor.isClient
+			# 如果是cms_files附件，则权限需要额外考虑其父对象上关于附件的权限配置
+			if object_name == Session.get('object_name')
+				# 当前处于cms_files附件详细界面
+				masterObjectName = record.parent['reference_to._o'];
+				# record_id = record.parent._id;
+			else 
+				# 当前处于cms_files附件的父记录界面
+				masterObjectName = Session.get('object_name');
+				# record_id = Session.get("record_id");
+			masterRecordPerm = Creator.getPermissions(masterObjectName, spaceId, userId)
+			permissions.allowCreate = permissions.allowCreate && masterRecordPerm.allowCreateFiles
+			permissions.allowEdit = permissions.allowEdit && masterRecordPerm.allowEditFiles
+			permissions.allowDelete = permissions.allowDelete && masterRecordPerm.allowDeleteFiles
+			permissions.allowRead = permissions.allowRead && masterRecordPerm.viewAllFiles
+			console.log("===files===masterRecordPerm====", record.name, masterRecordPerm);
+			console.log("===files===permissions====", record.name, permissions);
+	
 	return permissions
 
 
@@ -110,21 +129,26 @@ if Meteor.isClient
 		if !spaceId and Meteor.isClient
 			spaceId = Session.get("spaceId")
 
-		write_requires_master_read = relatedListItem.write_requires_master_read || false
-		masterAllow = false
 		masterRecordPerm = Creator.getRecordPermissions(currentObjectName, currentRecord, userId, spaceId)
-		if write_requires_master_read == true
-			masterAllow = masterRecordPerm.allowRead
-		else if write_requires_master_read == false
-			masterAllow = masterRecordPerm.allowEdit
-
-		uneditable_related_list = Creator.getRecordSafeRelatedList(currentRecord, currentObjectName)
 		relatedObjectPermissions = Creator.getPermissions(relatedListItem.object_name)
-		isRelateObjectUneditable = uneditable_related_list.indexOf(relatedListItem.object_name) > -1
-
 		result = _.clone relatedObjectPermissions
-		result.allowCreate = masterAllow && relatedObjectPermissions.allowCreate && !isRelateObjectUneditable
-		result.allowEdit = masterAllow && relatedObjectPermissions.allowEdit && !isRelateObjectUneditable
+
+		if relatedListItem.is_file
+			result.allowCreate = relatedObjectPermissions.allowCreate && masterRecordPerm.allowCreateFiles
+			result.allowEdit = relatedObjectPermissions.allowEdit && masterRecordPerm.allowEditFiles
+		else
+			write_requires_master_read = relatedListItem.write_requires_master_read || false
+			masterAllow = false
+			if write_requires_master_read == true
+				masterAllow = masterRecordPerm.allowRead
+			else if write_requires_master_read == false
+				masterAllow = masterRecordPerm.allowEdit
+
+			uneditable_related_list = Creator.getRecordSafeRelatedList(currentRecord, currentObjectName)
+			isRelateObjectUneditable = uneditable_related_list.indexOf(relatedListItem.object_name) > -1
+
+			result.allowCreate = masterAllow && relatedObjectPermissions.allowCreate && !isRelateObjectUneditable
+			result.allowEdit = masterAllow && relatedObjectPermissions.allowEdit && !isRelateObjectUneditable
 		return result
 
 if Meteor.isServer

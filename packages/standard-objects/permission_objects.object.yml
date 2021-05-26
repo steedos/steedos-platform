@@ -81,6 +81,24 @@ fields:
     type: boolean
     label: Modify Division's Records
     name: modifyCompanyRecords
+  allowReadFiles:
+    type: boolean
+    label: Allow Read Files
+  allowCreateFiles:
+    label: Allow Create Files
+    type: boolean
+  allowEditFiles:
+    label: Allow Edit Files
+    type: boolean
+  allowDeleteFiles:
+    label: Allow Delete Files
+    type: boolean
+  viewAllFiles:
+    type: boolean
+    label: View All Files
+  modifyAllFiles:
+    type: boolean
+    label: Modify All Files
   disabled_list_views:
     type: lookup
     label: Disabled ListViews
@@ -328,3 +346,14 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+form:
+  beforeView: !!js/function |
+    function(){
+      /*附件权限需要兼容之前没有附件权限配置功能时的设置，取好默认值显示即可*/
+      Creator.processPermissions(this.doc);
+    }
+  beforeEdit: !!js/function |
+    function(){
+      /*附件权限需要兼容之前没有附件权限配置功能时的设置，取好默认值显示即可*/
+      Creator.processPermissions(this.doc);
+    }
