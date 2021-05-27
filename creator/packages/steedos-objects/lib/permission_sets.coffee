@@ -104,7 +104,9 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 			if !masterRecordPerm.modifyAllFiles and !isOwner
 				permissions.allowEdit = false
 				permissions.allowDelete = false
-			permissions.allowRead = permissions.allowRead && masterRecordPerm.viewAllFiles
+			permissions.allowRead = permissions.allowRead && masterRecordPerm.allowReadFiles
+			if !masterRecordPerm.viewAllFiles and !isOwner
+				permissions.allowRead = false
 			console.log("===files===masterRecordPerm====", record.name, masterRecordPerm);
 			console.log("===files===permissions====", record.name, permissions);
 	
