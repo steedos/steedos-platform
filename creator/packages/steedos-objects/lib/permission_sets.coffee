@@ -48,64 +48,62 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 			return record.record_permissions
 
 		isOwner = record.owner == userId || record.owner?._id == userId
-		if Meteor.isClient
-			user_company_ids = Steedos.getUserCompanyIds()
-		else
-			user_company_ids = Creator.getUserCompanyIds(userId, spaceId)
-		record_company_id = record?.company_id
-		if record_company_id and _.isObject(record_company_id) and record_company_id._id
-			# 因record_company_id是lookup类型，有可能dx控件会把它映射转为对应的object，所以这里取出其_id值
-			record_company_id = record_company_id._id
-		record_company_ids = record?.company_ids
-		if record_company_ids and record_company_ids.length and _.isObject(record_company_ids[0])
-			# 因record_company_ids是lookup类型，有可能dx控件会把它映射转为对应的[object]，所以这里取出其_id值
-			record_company_ids = record_company_ids.map((n)-> n._id)
-		record_company_ids = _.union(record_company_ids, [record_company_id])
-		if !permissions.modifyAllRecords and !isOwner and !permissions.modifyCompanyRecords
-			permissions.allowEdit = false
-			permissions.allowDelete = false
-		else if !permissions.modifyAllRecords and permissions.modifyCompanyRecords
-			if record_company_ids and record_company_ids.length
-				if user_company_ids and user_company_ids.length
-					if !_.intersection(user_company_ids, record_company_ids).length
-						# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权修改
+		unless object_name == "cms_files"
+			# 附件的查看所有修改所有权限与附件对象的viewAllRecords、modifyAllRecords无关，只与其主表记录的viewAllFiles和modifyAllFiles有关
+			if Meteor.isClient
+				user_company_ids = Steedos.getUserCompanyIds()
+			else
+				user_company_ids = Creator.getUserCompanyIds(userId, spaceId)
+			record_company_id = record?.company_id
+			if record_company_id and _.isObject(record_company_id) and record_company_id._id
+				# 因record_company_id是lookup类型，有可能dx控件会把它映射转为对应的object，所以这里取出其_id值
+				record_company_id = record_company_id._id
+			record_company_ids = record?.company_ids
+			if record_company_ids and record_company_ids.length and _.isObject(record_company_ids[0])
+				# 因record_company_ids是lookup类型，有可能dx控件会把它映射转为对应的[object]，所以这里取出其_id值
+				record_company_ids = record_company_ids.map((n)-> n._id)
+			record_company_ids = _.union(record_company_ids, [record_company_id])
+			if !permissions.modifyAllRecords and !isOwner and !permissions.modifyCompanyRecords
+				permissions.allowEdit = false
+				permissions.allowDelete = false
+			else if !permissions.modifyAllRecords and permissions.modifyCompanyRecords
+				if record_company_ids and record_company_ids.length
+					if user_company_ids and user_company_ids.length
+						if !_.intersection(user_company_ids, record_company_ids).length
+							# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权修改
+							permissions.allowEdit = false
+							permissions.allowDelete = false
+					else
+						# 记录有company_id/company_ids属性，但是当前用户user_company_ids为空时，认为无权修改
 						permissions.allowEdit = false
 						permissions.allowDelete = false
-				else
-					# 记录有company_id/company_ids属性，但是当前用户user_company_ids为空时，认为无权修改
-					permissions.allowEdit = false
-					permissions.allowDelete = false
-		
-		if record.locked and !permissions.modifyAllRecords
-			permissions.allowEdit = false
-			permissions.allowDelete = false
+			
+			if record.locked and !permissions.modifyAllRecords
+				permissions.allowEdit = false
+				permissions.allowDelete = false
 
-		if !permissions.viewAllRecords and !isOwner and !permissions.viewCompanyRecords
-			permissions.allowRead = false
-		else if !permissions.viewAllRecords and permissions.viewCompanyRecords
-			if record_company_ids and record_company_ids.length
-				if user_company_ids and user_company_ids.length
-					if !_.intersection(user_company_ids, record_company_ids).length
-						# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权查看
+			if !permissions.viewAllRecords and !isOwner and !permissions.viewCompanyRecords
+				permissions.allowRead = false
+			else if !permissions.viewAllRecords and permissions.viewCompanyRecords
+				if record_company_ids and record_company_ids.length
+					if user_company_ids and user_company_ids.length
+						if !_.intersection(user_company_ids, record_company_ids).length
+							# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权查看
+							permissions.allowRead = false
+					else
+						# 记录有company_id属性，但是当前用户user_company_ids为空时，认为无权查看
 						permissions.allowRead = false
-				else
-					# 记录有company_id属性，但是当前用户user_company_ids为空时，认为无权查看
-					permissions.allowRead = false
 		console.log("===object_name===", object_name);
-		if object_name == "cms_files" and Meteor.isClient
+		if object_name == "cms_files"
 			# 如果是cms_files附件，则权限需要额外考虑其父对象上关于附件的权限配置
-			if object_name == Session.get('object_name')
-				# 当前处于cms_files附件详细界面
-				masterObjectName = record.parent['reference_to._o'];
-				# record_id = record.parent._id;
-			else 
-				# 当前处于cms_files附件的父记录界面
-				masterObjectName = Session.get('object_name');
-				# record_id = Session.get("record_id");
+			masterObjectName = record.parent['reference_to._o'];
 			masterRecordPerm = Creator.getPermissions(masterObjectName, spaceId, userId)
 			permissions.allowCreate = permissions.allowCreate && masterRecordPerm.allowCreateFiles
 			permissions.allowEdit = permissions.allowEdit && masterRecordPerm.allowEditFiles
 			permissions.allowDelete = permissions.allowDelete && masterRecordPerm.allowDeleteFiles
+			if !masterRecordPerm.modifyAllFiles and !isOwner
+				permissions.allowEdit = false
+				permissions.allowDelete = false
 			permissions.allowRead = permissions.allowRead && masterRecordPerm.viewAllFiles
 			console.log("===files===masterRecordPerm====", record.name, masterRecordPerm);
 			console.log("===files===permissions====", record.name, permissions);
