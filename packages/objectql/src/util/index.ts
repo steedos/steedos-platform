@@ -290,6 +290,24 @@ export const loadRoles = (filePath: string)=>{
     return results
 }
 
+export const loadFlowRoles = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.flowRole.yml")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[1]
+        }
+        results.push(json)
+    })
+    return results
+}
+
 export const loadApprovalProcesses = (filePath: string)=>{
     let results = []
     const filePatten = [

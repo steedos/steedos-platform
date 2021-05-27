@@ -50,3 +50,7 @@ permission_set:
     unreadable_fields: []
     uneditable_fields: []
     unrelated_objects: []
+actions:
+  customize:
+    label: Customize
+    on: record
