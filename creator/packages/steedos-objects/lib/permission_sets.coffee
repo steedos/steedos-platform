@@ -159,7 +159,6 @@ if Meteor.isClient
 if Meteor.isServer
 
 	Creator.getAllPermissions = (spaceId, userId) ->
-		console.log("==Creator.getAllPermissions==");
 		permissions =
 			objects: {}
 			assigned_apps: []
@@ -214,7 +213,6 @@ if Meteor.isServer
 			set_ids = _.pluck psetsCurrent, "_id"
 			psetsCurrent_pos = Creator.getCollection("permission_objects").find({permission_set_id: {$in: set_ids}}).fetch()
 			psetsCurrentNames = _.pluck psetsCurrent, "name"
-		console.log("====psetsUser_pos===", psetsUser_pos);
 		psets = {
 			psetsAdmin, 
 			psetsUser, 
