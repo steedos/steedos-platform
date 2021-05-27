@@ -7,6 +7,23 @@ function setSpaceAndOwner(record, that){
     record['space'] = that.spaceId
     record['owner'] = that.userId
 }
+
+const getInternalApprovalProcesses = function(sourceApprovalProcesses, filters){
+    let dbApprovalProcesses = Creator.getCollection("process_definition").find(filters, {fields:{_id:1, name:1}}).fetch();
+    let approvalProcesses = [];
+
+    if(!filters.is_system){
+        _.forEach(sourceApprovalProcesses, function(doc){
+            if(!_.find(dbApprovalProcesses, function(p){
+                return p.name === doc.name
+            })){
+                approvalProcesses.push(doc);
+            }
+        })
+    }
+    return approvalProcesses;
+}
+
 module.exports = {
     beforeInsert: async function () {
         await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
@@ -38,17 +55,7 @@ module.exports = {
             approvalProcesses = objectql.getSourceApprovalProcesses();
         }
 
-        approvalProcesses = InternalData.filtSourceFile(approvalProcesses, filters)
-
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(approvalProcesses, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        let that = this
-        approvalProcesses = _.filter(approvalProcesses, function(item){ 
-            setSpaceAndOwner(approvalProcesses, that);
-            return _.contains(differentNames, item.name)
-        })
+        approvalProcesses = getInternalApprovalProcesses(approvalProcesses, filters);
 
         if(approvalProcesses){
             this.data.values = this.data.values.concat(approvalProcesses)
@@ -66,17 +73,7 @@ module.exports = {
             approvalProcesses = objectql.getSourceApprovalProcesses();
         }
 
-        approvalProcesses = InternalData.filtSourceFile(approvalProcesses, filters)
-
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(approvalProcesses, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        let that = this
-        approvalProcesses = _.filter(approvalProcesses, function(item){ 
-            setSpaceAndOwner(approvalProcesses, that);
-            return _.contains(differentNames, item.name)
-        })
+        approvalProcesses = getInternalApprovalProcesses(approvalProcesses, filters);
 
         if(approvalProcesses){
             this.data.values = this.data.values.concat(approvalProcesses)
@@ -94,17 +91,7 @@ module.exports = {
             approvalProcesses = objectql.getSourceApprovalProcesses();
         }
 
-        approvalProcesses = InternalData.filtSourceFile(approvalProcesses, filters)
-
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(approvalProcesses, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        let that = this
-        approvalProcesses = _.filter(approvalProcesses, function(item){ 
-            setSpaceAndOwner(approvalProcesses, that);
-            return _.contains(differentNames, item.name)
-        })
+        approvalProcesses = getInternalApprovalProcesses(approvalProcesses, filters);
 
         if(approvalProcesses){
             this.data.values = this.data.values + approvalProcesses.length

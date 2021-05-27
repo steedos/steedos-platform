@@ -2,6 +2,22 @@ const _ = require("underscore");
 const objectql = require("@steedos/objectql");
 const InternalData = require('./core/internalData');
 
+const getInternalRoles = function(sourceRoles, filters){
+    let dbRoles = Creator.getCollection("roles").find(filters, {fields:{_id:1, name:1}}).fetch();
+    let roles = [];
+
+    if(!filters.is_system){
+        _.forEach(sourceRoles, function(doc){
+            if(!_.find(dbRoles, function(p){
+                return p.name === doc.name
+            })){
+                roles.push(doc);
+            }
+        })
+    }
+    return roles;
+}
+
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
@@ -15,15 +31,7 @@ module.exports = {
             roles = objectql.getSourceRoles();
         }
 
-        roles = InternalData.filtSourceFile(roles, filters)
-
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(roles, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        roles = _.filter(roles, function(item){ 
-            return _.contains(differentNames, item.name)
-        })
+        roles = getInternalRoles(roles, filters);
 
         if(roles){
             this.data.values = this.data.values.concat(roles)
@@ -41,15 +49,7 @@ module.exports = {
             roles = objectql.getSourceRoles();
         }
 
-        roles = InternalData.filtSourceFile(roles, filters)
-
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(roles, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        roles = _.filter(roles, function(item){ 
-            return _.contains(differentNames, item.name)
-        })
+        roles = getInternalRoles(roles, filters);
 
         if(roles){
             this.data.values = this.data.values.concat(roles)
@@ -67,15 +67,7 @@ module.exports = {
             roles = objectql.getSourceRoles();
         }
 
-        roles = InternalData.filtSourceFile(roles, filters)
-
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(roles, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        roles = _.filter(roles, function(item){ 
-            return _.contains(differentNames, item.name)
-        })
+        roles = getInternalRoles(roles, filters);
 
         if(roles){
             this.data.values = this.data.values + roles.length

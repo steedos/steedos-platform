@@ -4,6 +4,22 @@ const objectql = require("@steedos/objectql");
 const core = require("@steedos/core");
 const InternalData = require('../core/internalData');
 
+const getInternalValidationRules = function(sourceValidationRules, filters){
+    let dbValidationRules = Creator.getCollection("object_validation_rules").find(filters, {fields:{_id:1, name:1}}).fetch();
+    let validationRules = [];
+
+    if(!filters.is_system){
+        _.forEach(sourceValidationRules, function(doc){
+            if(!_.find(dbValidationRules, function(p){
+                return p.name === doc.name
+            })){
+                validationRules.push(doc);
+            }
+        })
+    }
+    return validationRules;
+}
+
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
@@ -15,15 +31,8 @@ module.exports = {
             validationRules = objectql.getAllObjectValidationRules();
         }
 
-        validationRules = InternalData.filtSourceFile(validationRules, filters)
+        validationRules = getInternalValidationRules(validationRules, filters);
 
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(validationRules, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        validationRules = _.filter(validationRules, function(item){ 
-            return _.contains(differentNames, item.name)
-        })
         if(validationRules && validationRules.length>0){
             this.data.values = this.data.values.concat(validationRules)
         }
@@ -37,15 +46,9 @@ module.exports = {
         }else{
             validationRules = objectql.getAllObjectValidationRules();
         }
-        validationRules = InternalData.filtSourceFile(validationRules, filters)
+        
+        validationRules = getInternalValidationRules(validationRules, filters);
 
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(validationRules, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        validationRules = _.filter(validationRules, function(item){ 
-            return _.contains(differentNames, item.name)
-        })
         if(validationRules && validationRules.length>0){
             this.data.values = this.data.values.concat(validationRules)
         }
@@ -60,15 +63,8 @@ module.exports = {
             validationRules = objectql.getAllObjectValidationRules();
         }
         
-        validationRules = InternalData.filtSourceFile(validationRules, filters)
+        validationRules = getInternalValidationRules(validationRules, filters);
 
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(validationRules, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        validationRules = _.filter(validationRules, function(item){ 
-            return _.contains(differentNames, item.name)
-        })
         if(validationRules && validationRules.length>0){
             this.data.values = this.data.values + validationRules.length
         }

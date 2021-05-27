@@ -54,23 +54,6 @@ function parserFilters(filters){
 
 exports.parserFilters = parserFilters
 
-exports.filtSourceFile = function (list, filters){
-
-    let result = list;
-    delete filters.space
-
-    for(let key in filters){
-        let value = filters[key];
-        if(value.$ne){
-            result = _.filter(result, function(item){ return item[key] !== value.$ne})
-        }else{
-            result = _.filter(result, function(item){ return item[key] === value})
-        }
-    }
-
-    return result;
-};
-
 const getLng = function(userId){
     return Steedos.locale(userId, true);
 }
