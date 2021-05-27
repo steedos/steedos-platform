@@ -3,6 +3,12 @@ const objectql = require('@steedos/objectql');
 const util = require('../../util');
 const InternalData = require('../../core/internalData');
 
+function setSpaceAndOwner(record, that){
+    record['space'] = that.spaceId
+    record['owner'] = that.userId
+}
+
+
 const reviseRecordOrder = async function (processId, record) {
     let processNodes = await objectql.getObject("process_node").find({ filters: ['process_definition', '=', processId], sort: 'order asc' });
     if (record) {
@@ -174,17 +180,10 @@ module.exports = {
             delete filters.process_definition
         }
 
-        processNodes = InternalData.filtSourceFile(processNodes, filters)
-
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(processNodes, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        processNodes = _.filter(processNodes, function(item){ 
-            return _.contains(differentNames, item.name)
-        })
-
         if(processNodes){
+            for(let node of processNodes){
+                setSpaceAndOwner(node, this);
+            }
             this.data.values = this.data.values.concat(processNodes)
         }
     },
@@ -198,16 +197,6 @@ module.exports = {
             }
             delete filters.process_definition
         }
-
-        processNodes = InternalData.filtSourceFile(processNodes, filters)
-
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(processNodes, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        processNodes = _.filter(processNodes, function(item){ 
-            return _.contains(differentNames, item.name)
-        })
 
         if(processNodes){
             this.data.values = this.data.values.concat(processNodes)
@@ -223,16 +212,6 @@ module.exports = {
             }
             delete filters.process_definition
         }
-
-        processNodes = InternalData.filtSourceFile(processNodes, filters)
-
-        let existNames = _.pluck(this.data.values, "name")
-        let sourceNames = _.pluck(processNodes, "name")
-
-        let differentNames = _.difference(sourceNames, existNames);
-        processNodes = _.filter(processNodes, function(item){ 
-            return _.contains(differentNames, item.name)
-        })
 
         if(processNodes){
             this.data.values = this.data.values + processNodes.length
