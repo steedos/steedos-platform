@@ -331,7 +331,6 @@ export const loadWorkflows = (filePath: string)=>{
     const filePatten = [
         path.join(filePath, "*.workflow.yml")
     ]
-    console.log(filePath);
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);

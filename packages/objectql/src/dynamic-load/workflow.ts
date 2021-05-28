@@ -22,41 +22,44 @@ const addWorkflow = function(json){
     if(!json.name){
         throw new Error('missing attribute name');
     }
-    console.log('json', json);
     if(json.notifications){
-        console.log('notifications', json.notifications);
         for(let notification of json.notifications){
             if(!notification.name){
                 throw new Error('missing attribute notification.name');
             }
-            _WorkflowNotifications[json.name]  = Object.assign({}, json, clone(BASERECORD), {type: "workflow_notifications", _id: json.name});
+            if(!_WorkflowNotifications[json.name]){
+                _WorkflowNotifications[json.name] = [];
+            }
+            _WorkflowNotifications[json.name].push(Object.assign({}, notification, clone(BASERECORD), {type: "workflow_notifications", _id: `${json.name}.${notification.name}`}));
         }
     }
     if(json.rules){
-        console.log('rules', json.rules);
         for(let rule of json.rules){
             if(!rule.name){
                 throw new Error('missing attribute rule.name');
             }
-            _WorkflowRules[json.name]  = Object.assign({}, json, clone(BASERECORD), {type: "workflow_rule", _id: json.name});
+            if(!_WorkflowRules[json.name]){
+                _WorkflowRules[json.name] = [];
+            }
+            _WorkflowRules[json.name].push(Object.assign({}, rule, clone(BASERECORD), {type: "workflow_rule", _id: `${json.name}.${rule.name}`}));
         }
     }
     if(json.fieldUpdates){
-        console.log('fieldUpdates', json.fieldUpdates);
         for(let fieldUpdate of json.fieldUpdates){
             if(!fieldUpdate.name){
                 throw new Error('missing attribute fieldUpdate.name');
             }
-            _ActionFieldUpdates[json.name]  = Object.assign({}, json, clone(BASERECORD), {type: "action_field_updates", _id: json.name});
+            if(!_ActionFieldUpdates[json.name]){
+                _ActionFieldUpdates[json.name] = [];
+            }
+            _ActionFieldUpdates[json.name].push(Object.assign({}, fieldUpdate, clone(BASERECORD), {type: "action_field_updates", _id: `${json.name}.${fieldUpdate.name}`}));
         }
     }
     
 }
 
 export const loadSourceWorkflows = function (filePath: string){
-    console.log('loadSourceWorkflows');
     let workflows = util.loadWorkflows(filePath);
-    console.log('workflows', workflows);
     workflows.forEach(element => {
         addWorkflow(element);
     });
@@ -78,7 +81,7 @@ export const getAllWorkflowNotifications = function(){
     let workflowNotifications = getWorkflowNotifications();
     let res = [];
 
-    for(let objName of workflowNotifications){
+    for(let objName in workflowNotifications){
         let notifications = workflowNotifications[objName];
         res = res.concat(notifications);
     }
@@ -89,7 +92,7 @@ export const getAlltWorkflowRules = function(){
     let workflowRules = gettWorkflowRules();
     let res = [];
 
-    for(let objName of workflowRules){
+    for(let objName in workflowRules){
         let rules = workflowRules[objName];
         res = res.concat(rules);
     }
@@ -100,7 +103,7 @@ export const getAllActionFieldUpdates = function(){
     let actionFieldUpdates = getActionFieldUpdates();
     let res = [];
 
-    for(let objName of actionFieldUpdates){
+    for(let objName in actionFieldUpdates){
         let updates = actionFieldUpdates[objName];
         res = res.concat(updates);
     }
