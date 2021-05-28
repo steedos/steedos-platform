@@ -84,21 +84,27 @@ fields:
   allowReadFiles:
     type: boolean
     label: Allow Read Files
+    group: Files permissions
   allowCreateFiles:
     label: Allow Create Files
     type: boolean
+    group: Files permissions
   allowEditFiles:
     label: Allow Edit Files
     type: boolean
+    group: Files permissions
   allowDeleteFiles:
     label: Allow Delete Files
     type: boolean
+    group: Files permissions
   viewAllFiles:
     type: boolean
     label: View All Files
+    group: Files permissions
   modifyAllFiles:
     type: boolean
     label: Modify All Files
+    group: Files permissions
   disabled_list_views:
     type: lookup
     label: Disabled ListViews

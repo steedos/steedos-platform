@@ -94,6 +94,8 @@ fields:
     label: 系统
     help: 
     description: 
+groups:
+  files_permissions: Files permissions
 listviews:
   customize:
     label: Customize
