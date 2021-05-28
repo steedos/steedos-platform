@@ -48,8 +48,22 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 			return record.record_permissions
 
 		isOwner = record.owner == userId || record.owner?._id == userId
-		unless object_name == "cms_files"
+
+		if object_name == "cms_files"
 			# 附件的查看所有修改所有权限与附件对象的viewAllRecords、modifyAllRecords无关，只与其主表记录的viewAllFiles和modifyAllFiles有关
+			# 如果是cms_files附件，则权限需要额外考虑其父对象上关于附件的权限配置
+			masterObjectName = record.parent['reference_to._o'];
+			masterRecordPerm = Creator.getPermissions(masterObjectName, spaceId, userId)
+			permissions.allowCreate = permissions.allowCreate && masterRecordPerm.allowCreateFiles
+			permissions.allowEdit = permissions.allowEdit && masterRecordPerm.allowEditFiles
+			permissions.allowDelete = permissions.allowDelete && masterRecordPerm.allowDeleteFiles
+			if !masterRecordPerm.modifyAllFiles and !isOwner
+				permissions.allowEdit = false
+				permissions.allowDelete = false
+			permissions.allowRead = permissions.allowRead && masterRecordPerm.allowReadFiles
+			if !masterRecordPerm.viewAllFiles and !isOwner
+				permissions.allowRead = false
+		else
 			if Meteor.isClient
 				user_company_ids = Steedos.getUserCompanyIds()
 			else
@@ -93,22 +107,6 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 					else
 						# 记录有company_id属性，但是当前用户user_company_ids为空时，认为无权查看
 						permissions.allowRead = false
-		console.log("===object_name===", object_name);
-		if object_name == "cms_files"
-			# 如果是cms_files附件，则权限需要额外考虑其父对象上关于附件的权限配置
-			masterObjectName = record.parent['reference_to._o'];
-			masterRecordPerm = Creator.getPermissions(masterObjectName, spaceId, userId)
-			permissions.allowCreate = permissions.allowCreate && masterRecordPerm.allowCreateFiles
-			permissions.allowEdit = permissions.allowEdit && masterRecordPerm.allowEditFiles
-			permissions.allowDelete = permissions.allowDelete && masterRecordPerm.allowDeleteFiles
-			if !masterRecordPerm.modifyAllFiles and !isOwner
-				permissions.allowEdit = false
-				permissions.allowDelete = false
-			permissions.allowRead = permissions.allowRead && masterRecordPerm.allowReadFiles
-			if !masterRecordPerm.viewAllFiles and !isOwner
-				permissions.allowRead = false
-			console.log("===files===masterRecordPerm====", record.name, masterRecordPerm);
-			console.log("===files===permissions====", record.name, permissions);
 	
 	return permissions
 
