@@ -249,13 +249,11 @@
 														<div class="slds-no-flex">
 															{{#if allowCreate}}
 																{{#if this.is_file}}
-																	{{#if isUnlocked}}
-																	{{#if hasPermission 'allowEdit' }}
+																	{{#if recordPerminssion "allowCreateFiles"}}
 																	<button class="slds-button slds-button_neutral btn-upload-file">
 																		{{_ "creator_actions_upload_file"}}
 																		<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files">
 																	</button>
-																	{{/if}}
 																	{{/if}}
 																{{else}}
 																	<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{this.object_name}}">{{_ "New"}}</button>

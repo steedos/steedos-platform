@@ -133,7 +133,7 @@ const addInstanceHistory = async (spaceId: string, instanceId: string, status: s
     }
 
     if(status === 'pending'){
-        await sendNotifications(instanceHistory, instance.submitted_by, options.actor);
+        await sendNotifications(instance.created_by, options.actor, {instanceHistory, status, instance});
     }
 }
 
@@ -386,6 +386,9 @@ const handleProcessInstance = async(instanceId: string, processStatus: string, u
         let when = getProcessActionWhenByStatus(processStatus);
         if(when){
             await runProcessAction(pInstance.process_definition, when, pInstance.target_object.ids[0], userSession);
+        }
+        if(['approved', 'rejected'].indexOf(processStatus) > -1){
+            await sendNotifications(pInstance.created_by, pInstance.created_by, { status: processStatus, instance: pInstance});
         }
     }
 }
