@@ -485,7 +485,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                             else{
                                 // 不能选之前已经在该对象上建过的主表-子表字段上关联的相同对象
                                 field.type = "lookup";//强行变更为最接近的类型
-                                throw new Error(`Can't set a master-detail filed that reference to the same object '${field.reference_to}' that had referenced to by other master-detail filed on the object '${this._name}'.`);
+                                throw new Error(`Can't set a master-detail field that reference to the same object '${field.reference_to}' that had referenced to by other master-detail field on the object '${this._name}'.`);
                             }
                         }
                         else {
