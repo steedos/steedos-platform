@@ -133,7 +133,7 @@ fields:
   external_id_name:
     label: External_id (Based on this when executing again)
     type: lookup
-    multiple: false
+    multiple: true
     is_wide: true
     depend_on:
       - object_name
