@@ -113,6 +113,7 @@ Template.creator_list_wrapper.helpers
 		return Template["creator_grid"]?.refresh
 
 	list_template: ()->
+		return "object_listview";
 		return "creator_grid"
 
 	recordsTotalCount: ()->
@@ -424,6 +425,10 @@ Template.creator_list_wrapper.events
 		$(".btn-delete-list-view").click()
 
 	'click .btn-refresh': (event, template)->
+
+		if true
+			window.gridRef.current.api.refreshServerSideStore()
+
 		$(".slds-icon-standard-refresh", event.currentTarget).animateCss("rotate")
 		object = Creator.getObject()
 		gridContainer = $(event.currentTarget).closest(".filter-list-wraper").find(".gridContainer")

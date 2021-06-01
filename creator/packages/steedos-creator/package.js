@@ -229,6 +229,13 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/list_wrapper.less', 'client');
 	api.addFiles('client/views/grid.html', 'client');
 	api.addFiles('client/views/grid.coffee', 'client');
+
+	api.addFiles('client/views/react_grid.html', 'client');
+	api.addFiles('client/views/react_grid.coffee', 'client');
+
+	api.addFiles('client/views/object_listview.html', 'client');
+	api.addFiles('client/views/object_listview.coffee', 'client');
+
 	api.addFiles('client/views/grid.less', 'client');
 	api.addFiles('client/views/view.html', 'client');
 	api.addFiles('client/views/view.coffee', 'client');
