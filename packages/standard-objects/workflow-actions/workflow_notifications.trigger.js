@@ -21,17 +21,27 @@ const getInternalWorkflowNotifications = function(sourceWorkflowNotifications, f
 
 module.exports = {
     beforeInsert: async function () {
-        await util.checkAPIName(this.object_name, 'name', this.doc.name);
+        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
     },
     beforeUpdate: async function () {
         if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id);
+            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
         }
     },
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let workflowNotifications = [];
-        if(filters.object_name){
+        if(filters._id && filters._id.$in){
+            for(let id of filters._id.$in){
+                let objectName = id.substr(0, id.indexOf("."));
+                if(objectName){
+                    let workflowNotification = objectql.getObjectWorkflowNotification(objectName, id.substr(id.indexOf(".")+1));
+                    if(workflowNotification){
+                        workflowNotifications.push(workflowNotification);
+                    }
+                }
+            }
+        }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
             delete filters.object_name;
         }else{

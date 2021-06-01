@@ -27,19 +27,30 @@ const getInternalActionFieldUpdates = function(sourceActionFieldUpdates, filters
 
 module.exports = {
     beforeInsert: async function () {
-        await util.checkAPIName(this.object_name, 'name', this.doc.name);
+        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
         checkReevaluateParent(this.doc);
     },
     beforeUpdate: async function () {
         if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id);
+            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
         }
         checkReevaluateParent(this.doc);
     },
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let actionFieldUpdates = [];
-        if(filters.object_name){
+        
+        if(filters._id && filters._id.$in){
+            for(let id of filters._id.$in){
+                let objectName = id.substr(0, id.indexOf("."));
+                if(objectName){
+                    let actionFieldUpdate = objectql.getObjectActionFieldUpdate(objectName, id.substr(id.indexOf(".")+1));
+                    if(actionFieldUpdate){
+                        actionFieldUpdates.push(actionFieldUpdate);
+                    }
+                }
+            }
+        }else if(filters.object_name){
             actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
             delete filters.object_name;
         }else{

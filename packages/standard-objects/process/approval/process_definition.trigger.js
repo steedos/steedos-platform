@@ -38,7 +38,7 @@ module.exports = {
             }
         };
         if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id);
+            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
         }
 
         objectql.checkFormula(this.doc.entry_criteria, this.doc.object_name)

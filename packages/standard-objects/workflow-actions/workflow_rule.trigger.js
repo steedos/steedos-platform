@@ -21,12 +21,12 @@ const getInternalWorkflowRules = function(sourceWorkflowRules, filters){
 
 module.exports = {
     beforeInsert: async function () {
-        await util.checkAPIName(this.object_name, 'name', this.doc.name);
+        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
 
     },
     beforeUpdate: async function () {
         if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id);
+            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
         }
     },
     afterFind: async function(){
