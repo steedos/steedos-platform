@@ -69,7 +69,7 @@ export const getWorkflowNotifications = function(){
     return clone(_WorkflowNotifications) || [];
 }
 
-export const gettWorkflowRules = function(){
+export const getWorkflowRules = function(){
     return clone(_WorkflowRules) || [];
 }
 
@@ -88,8 +88,8 @@ export const getAllWorkflowNotifications = function(){
     return res;
 }
 
-export const getAlltWorkflowRules = function(){
-    let workflowRules = gettWorkflowRules();
+export const getAllWorkflowRules = function(){
+    let workflowRules = getWorkflowRules();
     let res = [];
 
     for(let objName in workflowRules){
@@ -115,7 +115,7 @@ export const getObjectWorkflowNotifications = function(objName){
 }
 
 export const getObjectWorkflowRules = function(objName){
-    return gettWorkflowRules()[objName];
+    return getWorkflowRules()[objName];
 }
 
 export const getObjectActionFieldUpdates = function(objName){

@@ -35,6 +35,10 @@ function parserFilters(filters){
             key = filters[0]
             value = filters[2]
             Object.assign(query, {[key]: {$ne: value}})
+        }else if(filters[1] && filters[1] == 'in'){
+            key = filters[0]
+            value = filters[2]
+            Object.assign(query, {[key]: {$in: value}})
         }else{
             _.each(filters,function(filter){
                 Object.assign(query, parserFilters(filter))

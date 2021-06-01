@@ -337,7 +337,7 @@ export const loadWorkflows = (filePath: string)=>{
         let names = path.basename(matchedPath).split('.');
 
         if(!json.name){
-            json.name = names[1]
+            json.name = names[0]
         }
         results.push(json)
     })
