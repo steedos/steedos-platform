@@ -42,8 +42,23 @@ if Meteor.isClient
 			Modal.show("standard_query_modal")
 
 		"standard_new": (object_name, record_id, fields)->
+			#TODO 使用对象版本判断
 			if true
-				return $("#steedosReactFormAddTrigger").trigger('click');
+				return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+					name: "#{object_name}_standard_new_form",
+					objectApiName: object_name,
+					title: '新建',
+					afterInsert: (result)->
+						if(result.length > 0)
+							record = result[0];
+							setTimeout(()->
+								app_id = Session.get("app_id")
+								url = "/app/#{app_id}/#{object_name}/view/#{record._id}"
+								FlowRouter.go url
+							, 1);
+							return true;
+
+				}, null, {iconPath: '/assets/icons'})
 			Session.set 'action_object_name', object_name
 			ids = Creator.TabularSelectedIds[object_name]
 			if ids?.length
@@ -68,7 +83,17 @@ if Meteor.isClient
 		"standard_edit": (object_name, record_id, fields)->
 			if record_id
 				if true
-					return $("#steedosReactFormEditTrigger").trigger('click');
+					return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+						name: "#{object_name}_standard_edit_form",
+						objectApiName: object_name,
+						recordId: record_id,
+						title: '编辑',
+						afterUpdate: ()->
+							setTimeout(()->
+								window.gridRef.current.api.refreshServerSideStore()
+							, 1);
+							return true;
+					}, null, {iconPath: '/assets/icons'})
 				if Steedos.isMobile() && false
 #					record = Creator.getObjectRecord(object_name, record_id)
 #					Session.set 'cmDoc', record
