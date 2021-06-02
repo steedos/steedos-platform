@@ -1,15 +1,16 @@
 const _ = require("underscore");
 const objectql = require("@steedos/objectql");
 const InternalData = require('../core/internalData');
+const util = require('../util');
 
 const getInternalFlowRoles = function(sourceFlowRoles, filters){
-    let dbFlowRoles = Creator.getCollection("flow_roles").find(filters, {fields:{_id:1, name:1}}).fetch();
+    let dbFlowRoles = Creator.getCollection("flow_roles").find(filters, {fields:{_id:1, api_name:1}}).fetch();
     let flowRoles = [];
 
     if(!filters.is_system){
         _.forEach(sourceFlowRoles, function(doc){
             if(!_.find(dbFlowRoles, function(p){
-                return p.name === doc.name
+                return p.api_name === doc.api_name
             })){
                 flowRoles.push(doc);
             }
@@ -22,8 +23,8 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let flowRoles = [];
-        if(filters.name){
-            flowRole = objectql.getSourceFlowRole(filters.name);
+        if(filters.api_name){
+            flowRole = objectql.getSourceFlowRole(filters.api_name);
             if(flowRole){
                 flowRoles.push(flowRole);
             }
@@ -40,8 +41,8 @@ module.exports = {
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let flowRoles = [];
-        if(filters.name){
-            flowRole = objectql.getSourceFlowRole(filters.name);
+        if(filters.api_name){
+            flowRole = objectql.getSourceFlowRole(filters.api_name);
             if(flowRole){
                 flowRoles.push(flowRole);
             }
@@ -58,8 +59,8 @@ module.exports = {
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let flowRoles = [];
-        if(filters.name){
-            flowRole = objectql.getSourceFlowRole(filters.name);
+        if(filters.api_name){
+            flowRole = objectql.getSourceFlowRole(filters.api_name);
             if(flowRole){
                 flowRoles.push(flowRole);
             }

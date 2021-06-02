@@ -21,14 +21,17 @@ const addFlowRole = function(json){
     if(!json.name){
         throw new Error('missing attribute name');
     }
-    addConfig(FLOWROLES_KEY, Object.assign({}, json, clone(BASERECORD), {_id: json.name}));
+    if(!json.api_name){
+        throw new Error('missing attribute api_name');
+    }
+    addConfig(FLOWROLES_KEY, Object.assign({}, json, clone(BASERECORD), {_id: json.api_name}));
 }
 export const getSourceFlowRolesKeys = function(){
-    return _.pluck(getSourceFlowRoles(), 'name');
+    return _.pluck(getSourceFlowRoles(), 'api_name');
 }
 
-export const getSourceFlowRole = function(name){
-    return getConfig(FLOWROLES_KEY, name);
+export const getSourceFlowRole = function(api_name){
+    return getConfig(FLOWROLES_KEY, api_name);
 }
 
 export const getSourceFlowRoles = function(){
