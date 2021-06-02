@@ -16,6 +16,9 @@ Template.steedos_object_listview.helpers({
 	},
 	filters: function (){
 		return this.filters;
+	},
+	onModelUpdated: function (){
+		return this.onModelUpdated;
 	}
 })
 

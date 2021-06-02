@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { ObjectListView, SteedosRouter as Router, SteedosProvider } from '@steedos/builder-community/dist/builder-community.react.js';
 function SteedosGridContainer(prop){
-	const { objectApiName, name, listName, filters } = prop;
+	const { objectApiName, name, listName, filters, onModelUpdated } = prop;
 	const gridRef = useRef();
 	window.gridRef = gridRef;
 	return (
@@ -14,6 +14,7 @@ function SteedosGridContainer(prop){
 					listName={listName}
 					filters={filters}
 					sideBar={false}
+					onModelUpdated={onModelUpdated}
 				></ObjectListView>
 			</Router>
 		</SteedosProvider>

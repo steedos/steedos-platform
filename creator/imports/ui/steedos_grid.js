@@ -22,6 +22,9 @@ Template.steedos_grid.helpers({
 	},
 	onChange: function(){
 		return this.onChange;
+	},
+	onModelUpdated: function (){
+		return this.onModelUpdated;
 	}
 })
 

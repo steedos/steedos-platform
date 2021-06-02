@@ -13,6 +13,10 @@ Template.object_listview.helpers
 		related_object_name = null
 		record_id = null
 		return Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id)
+	onModelUpdated: ()->
+		self = this;
+		return (event)->
+			self.total.set(event.api.getDisplayedRowCount())
 
 Template.object_listview.onCreated ->
 	self = this
