@@ -110,7 +110,11 @@
         },
         "enable_tree": {
             "type": "boolean",
-            "description": "树状显示"
+            "description": "启用树状结构显示记录"
+        },
+        "parent_field": {
+            "type": "string",
+            "description": "树状结构父字段"
         },
         "enable_approvals": {
             "type": "boolean",
@@ -416,6 +420,18 @@
                 "reference_to_field": {
                     "type": "string",
                     "description": "引用的对象的字段，按照此字段去查找相关记录"
+                },
+                "modal_mode": {
+                    "type": "string",
+                    "description": "弹出框模式类型: 'dialog' | 'drawer' ",
+                    "enum": [
+                        "dialog",
+                        "drawer"
+                    ]
+                },
+                "table_schema": {
+                    "type": ["string", "object"],
+                    "description": "弹出框表格定义，可以定义为列表视图名称或列表属性"
                 },
                 "rows": {
                     "type": "integer",
