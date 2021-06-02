@@ -21,14 +21,17 @@ const addRole = function(json){
     if(!json.name){
         throw new Error('missing attribute name');
     }
-    addConfig(ROLES_KEY, Object.assign({}, json, clone(BASERECORD), {_id: json.name}));
+    if(!json.api_name){
+        throw new Error('missing attribute api_name');
+    }
+    addConfig(ROLES_KEY, Object.assign({}, json, clone(BASERECORD), {_id: json.api_name}));
 }
 export const getSourceRolesKeys = function(){
-    return _.pluck(getSourceRoles(), 'name');
+    return _.pluck(getSourceRoles(), 'api_name');
 }
 
-export const getSourceRole = function(name){
-    return getConfig(ROLES_KEY, name);
+export const getSourceRole = function(api_name){
+    return getConfig(ROLES_KEY, api_name);
 }
 
 export const getSourceRoles = function(){

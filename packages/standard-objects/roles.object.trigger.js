@@ -1,15 +1,16 @@
 const _ = require("underscore");
 const objectql = require("@steedos/objectql");
 const InternalData = require('./core/internalData');
+const util = require('./util');
 
 const getInternalRoles = function(sourceRoles, filters){
-    let dbRoles = Creator.getCollection("roles").find(filters, {fields:{_id:1, name:1}}).fetch();
+    let dbRoles = Creator.getCollection("roles").find(filters, {fields:{_id:1, api_name:1}}).fetch();
     let roles = [];
 
     if(!filters.is_system){
         _.forEach(sourceRoles, function(doc){
             if(!_.find(dbRoles, function(p){
-                return p.name === doc.name
+                return p.api_name === doc.api_name
             })){
                 roles.push(doc);
             }
@@ -22,8 +23,8 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let roles = [];
-        if(filters.name){
-            role = objectql.getSourceRole(filters.name);
+        if(filters.api_name){
+            role = objectql.getSourceRole(filters.api_name);
             if(role){
                 roles.push(role);
             }
@@ -40,8 +41,8 @@ module.exports = {
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let roles = [];
-        if(filters.name){
-            role = objectql.getSourceRole(filters.name);
+        if(filters.api_name){
+            role = objectql.getSourceRole(filters.api_name);
             if(role){
                 roles.push(role);
             }
@@ -58,8 +59,8 @@ module.exports = {
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let roles = [];
-        if(filters.name){
-            role = objectql.getSourceRole(filters.name);
+        if(filters.api_name){
+            role = objectql.getSourceRole(filters.api_name);
             if(role){
                 roles.push(role);
             }

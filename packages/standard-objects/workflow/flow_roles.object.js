@@ -36,7 +36,7 @@ if (Meteor.isServer) {
   db.flow_roles.before.insert(function (userId, doc) {
     doc.created_by = userId;
     if(doc.api_name){
-      checkName(api_name)
+      checkName(doc.api_name)
     }
     let count = db.flow_roles.find({api_name: doc.api_name, space: doc.space}).count()
     if(count > 0){
@@ -48,10 +48,12 @@ if (Meteor.isServer) {
     modifier.$set = modifier.$set || {};
     modifier.$set.modified_by = userId;
 
-    checkName(modifier.$set.api_name)
-    let count = db.flow_roles.find({_id: {$ne: doc._id}, api_name: modifier.$set.api_name, space: doc.space}).count()
-    if(count > 0){
-        throw new Error('api_name不能重复')
+    if(modifier.$set.api_name){
+      checkName(modifier.$set.api_name)
+      let count = db.flow_roles.find({_id: {$ne: doc._id}, api_name: modifier.$set.api_name, space: doc.space}).count()
+      if(count > 0){
+          throw new Error('api_name不能重复')
+      }
     }
 
     return modifier.$set.modified = new Date();

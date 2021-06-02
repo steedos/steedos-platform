@@ -8,6 +8,12 @@ fields:
     type: text
     required: true
     searchable: true
+  api_name:
+    type: text
+    label: api_name
+    required: true
+    searchable: true
+    name: api_name
   parent:
     label: Parent Role
     type: lookup
