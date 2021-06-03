@@ -52,10 +52,23 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
                     let processInstance = await objectql.getObject("process_instance").findOne(instanceId);
                     submitted_by = processInstance.submitted_by;
                 }
+                let assigned_approver_flow_role_ids = [];
+                let flowRoleKeys = processNode.assigned_approver_flow_roles;
+                for(let flowRoleKey of flowRoleKeys){
+                    let dbFlowRole;
+                    let dbFlowRoles = await objectql.getObject("flow_roles").find({filters: ['api_name', '=', flowRoleKey]});
+                    if(dbFlowRoles && dbFlowRoles.length == 1){
+                        dbFlowRole = dbFlowRoles[0]
+                    }else{
+                        dbFlowRole = await objectql.getObject("flow_roles").findOne(flowRoleKey);
+                    }
+                    assigned_approver_flow_role_ids.push(dbFlowRole._id);
+                }
+
                 let handlers = await new Promise((resolve, reject) => {
                     Fiber(function () {
                         try {
-                            let handlers = getHandlersManager.getHandlersByUserAndRoles(submitted_by, processNode.assigned_approver_flow_roles, spaceId);
+                            let handlers = getHandlersManager.getHandlersByUserAndRoles(submitted_by, assigned_approver_flow_role_ids, spaceId);
                             resolve(handlers);
                         } catch (error) {
                             reject(error)

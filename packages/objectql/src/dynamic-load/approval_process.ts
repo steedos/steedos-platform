@@ -39,7 +39,6 @@ const addApprovalProcess = function(json){
             json.process_nodes[i] = Object.assign({}, processNode, clone(BASERECORD_NODE), {_id: `${json.name}.${processNode.name}`})
         }
     }
-    json.active = false;
     _ApprovalProcesses[json.name] = Object.assign({}, json, clone(BASERECORD), {_id: json.name});
 }
 export const getSourceApprovalProcessesKeys = function(){

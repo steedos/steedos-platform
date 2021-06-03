@@ -68,11 +68,45 @@ fields:
     reference_to: roles
     multiple: true
     group: Select Assigned Approver
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "api_name"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('roles', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.name,
+                value: item.api_name
+            });
+        });
+        return result;
+      }
   assigned_approver_flow_roles: 
     type: lookup
     reference_to: flow_roles
     multiple: true
     group: Select Assigned Approver
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "api_name"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('flow_roles', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.name,
+                value: item.api_name
+            });
+        });
+        return result;
+      }
   assigned_approver_user_field: 
     type: lookup
     multiple: true
