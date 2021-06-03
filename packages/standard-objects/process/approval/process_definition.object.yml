@@ -119,6 +119,23 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('action_field_updates', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
+      }
     group: Initial Submission Actions
   initial_submission_workflow_notifications_actions:
     type: lookup
@@ -132,6 +149,23 @@ fields:
         if(dependValues && dependValues.object_name){
           return "object_name eq '" + dependValues.object_name + "'";
         }
+      }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('workflow_notifications', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
       }
     group: Initial Submission Actions
   final_approval_record_lock:
@@ -159,6 +193,23 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('action_field_updates', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
+      }
     group: Final Approval Actions
   final_approval_workflow_notifications_actions:
     type: lookup
@@ -172,6 +223,23 @@ fields:
         if(dependValues && dependValues.object_name){
           return "object_name eq '" + dependValues.object_name + "'";
         }
+      }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('workflow_notifications', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
       }
     group: Final Approval Actions
   final_rejection_record_lock:
@@ -199,6 +267,23 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('action_field_updates', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
+      }
     group: Final Rejection Actions
   final_rejection_workflow_notifications_actions:
     type: lookup
@@ -212,6 +297,23 @@ fields:
         if(dependValues && dependValues.object_name){
           return "object_name eq '" + dependValues.object_name + "'";
         }
+      }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('workflow_notifications', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
       }
     group: Final Rejection Actions
   recall_record_lock:
@@ -240,6 +342,23 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('action_field_updates', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
+      }
     group: Recall Actions
   recall_workflow_notifications_actions:
     type: lookup
@@ -253,6 +372,23 @@ fields:
         if(dependValues && dependValues.object_name){
           return "object_name eq '" + dependValues.object_name + "'";
         }
+      }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('workflow_notifications', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
       }
     group: Recall Actions
     
