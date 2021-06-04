@@ -33,14 +33,13 @@ module.exports = {
         let workflowNotifications = [];
         if(filters._id && filters._id.$in){
             for(let id of filters._id.$in){
-                let objectName = id.substr(0, id.indexOf("."));
-                if(objectName){
-                    let workflowNotification = objectql.getObjectWorkflowNotification(objectName, id.substr(id.indexOf(".")+1));
-                    if(workflowNotification){
-                        workflowNotifications.push(workflowNotification);
-                    }
+                let workflowNotification = objectql.getWorkflowNotification(id);
+                if(workflowNotification){
+                    workflowNotifications.push(workflowNotification);
                 }
             }
+        }else if(filters._id){
+            workflowNotifications.push(objectql.getWorkflowNotification(filters._id));
         }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
             delete filters.object_name;
@@ -57,7 +56,16 @@ module.exports = {
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let workflowNotifications = [];
-        if(filters.object_name){
+        if(filters._id && filters._id.$in){
+            for(let id of filters._id.$in){
+                let workflowNotification = objectql.getWorkflowNotification(id);
+                if(workflowNotification){
+                    workflowNotifications.push(workflowNotification);
+                }
+            }
+        }else if(filters._id){
+            workflowNotifications.push(objectql.getWorkflowNotification(filters._id));
+        }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
             delete filters.object_name;
         }else{
@@ -73,7 +81,16 @@ module.exports = {
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let workflowNotifications = [];
-        if(filters.object_name){
+        if(filters._id && filters._id.$in){
+            for(let id of filters._id.$in){
+                let workflowNotification = objectql.getWorkflowNotification(id);
+                if(workflowNotification){
+                    workflowNotifications.push(workflowNotification);
+                }
+            }
+        }else if(filters._id){
+            workflowNotifications.push(objectql.getWorkflowNotification(filters._id));
+        }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
             delete filters.object_name;
         }else{
@@ -89,12 +106,9 @@ module.exports = {
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
             let id = this.id
-            let objectName = id.substr(0, id.indexOf("."));
-            if(objectName){
-                let workflowNotification = objectql.getObjectWorkflowNotification(objectName, id.substr(id.indexOf(".")+1));
-                if(workflowNotification){
-                    this.data.values = workflowNotification;
-                }
+            let workflowNotification = objectql.getWorkflowNotification(id);
+            if(workflowNotification){
+                this.data.values = workflowNotification;
             }
         }
     },

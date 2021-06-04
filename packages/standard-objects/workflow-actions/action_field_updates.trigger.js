@@ -42,14 +42,13 @@ module.exports = {
         
         if(filters._id && filters._id.$in){
             for(let id of filters._id.$in){
-                let objectName = id.substr(0, id.indexOf("."));
-                if(objectName){
-                    let actionFieldUpdate = objectql.getObjectActionFieldUpdate(objectName, id.substr(id.indexOf(".")+1));
-                    if(actionFieldUpdate){
-                        actionFieldUpdates.push(actionFieldUpdate);
-                    }
+                let actionFieldUpdate = objectql.getActionFieldUpdate(id);
+                if(actionFieldUpdate){
+                    actionFieldUpdates.push(actionFieldUpdate);
                 }
             }
+        }else if(filters._id){
+            actionFieldUpdates.push(objectql.getActionFieldUpdate(filters._id));
         }else if(filters.object_name){
             actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
             delete filters.object_name;
@@ -66,13 +65,23 @@ module.exports = {
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let actionFieldUpdates = [];
-        if(filters.object_name){
+        
+        if(filters._id && filters._id.$in){
+            for(let id of filters._id.$in){
+                let actionFieldUpdate = objectql.getActionFieldUpdate(id);
+                if(actionFieldUpdate){
+                    actionFieldUpdates.push(actionFieldUpdate);
+                }
+            }
+        }else if(filters._id){
+            actionFieldUpdates.push(objectql.getActionFieldUpdate(filters._id));
+        }else if(filters.object_name){
             actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
             delete filters.object_name;
         }else{
             actionFieldUpdates = objectql.getAllActionFieldUpdates();
         }
-        
+
         actionFieldUpdates = getInternalActionFieldUpdates(actionFieldUpdates, filters);
 
         if(actionFieldUpdates && actionFieldUpdates.length>0){
@@ -82,7 +91,17 @@ module.exports = {
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let actionFieldUpdates = [];
-        if(filters.object_name){
+        
+        if(filters._id && filters._id.$in){
+            for(let id of filters._id.$in){
+                let actionFieldUpdate = objectql.getActionFieldUpdate(id);
+                if(actionFieldUpdate){
+                    actionFieldUpdates.push(actionFieldUpdate);
+                }
+            }
+        }else if(filters._id){
+            actionFieldUpdates.push(objectql.getActionFieldUpdate(filters._id));
+        }else if(filters.object_name){
             actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
             delete filters.object_name;
         }else{
@@ -98,12 +117,9 @@ module.exports = {
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
             let id = this.id
-            let objectName = id.substr(0, id.indexOf("."));
-            if(objectName){
-                let actionFieldUpdate = objectql.getObjectActionFieldUpdate(objectName, id.substr(id.indexOf(".")+1));
-                if(actionFieldUpdate){
-                    this.data.values = actionFieldUpdate;
-                }
+            let actionFieldUpdate = objectql.getActionFieldUpdate(id);
+            if(actionFieldUpdate){
+                this.data.values = actionFieldUpdate;
             }
         }
     },

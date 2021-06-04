@@ -27,10 +27,7 @@ const addWorkflow = function(json){
             if(!notification.name){
                 throw new Error('missing attribute notification.name');
             }
-            if(!_WorkflowNotifications[json.name]){
-                _WorkflowNotifications[json.name] = [];
-            }
-            _WorkflowNotifications[json.name].push(Object.assign({}, notification, clone(BASERECORD), {type: "workflow_notifications", _id: `${json.name}.${notification.name}`}));
+            _WorkflowNotifications[notification.name] = Object.assign({}, notification, clone(BASERECORD), {type: "workflow_notifications", _id: notification.name});
         }
     }
     if(json.rules){
@@ -38,10 +35,7 @@ const addWorkflow = function(json){
             if(!rule.name){
                 throw new Error('missing attribute rule.name');
             }
-            if(!_WorkflowRules[json.name]){
-                _WorkflowRules[json.name] = [];
-            }
-            _WorkflowRules[json.name].push(Object.assign({}, rule, clone(BASERECORD), {type: "workflow_rule", _id: `${json.name}.${rule.name}`}));
+            _WorkflowRules[rule.name] = Object.assign({}, rule, clone(BASERECORD), {type: "workflow_rule", _id: rule.name});
         }
     }
     if(json.fieldUpdates){
@@ -49,10 +43,7 @@ const addWorkflow = function(json){
             if(!fieldUpdate.name){
                 throw new Error('missing attribute fieldUpdate.name');
             }
-            if(!_ActionFieldUpdates[json.name]){
-                _ActionFieldUpdates[json.name] = [];
-            }
-            _ActionFieldUpdates[json.name].push(Object.assign({}, fieldUpdate, clone(BASERECORD), {type: "action_field_updates", _id: `${json.name}.${fieldUpdate.name}`}));
+            _ActionFieldUpdates[fieldUpdate.name] = Object.assign({}, fieldUpdate, clone(BASERECORD), {type: "action_field_updates", _id: fieldUpdate.name});
         }
     }
     
@@ -79,72 +70,45 @@ export const getActionFieldUpdates = function(){
 
 export const getAllWorkflowNotifications = function(){
     let workflowNotifications = getWorkflowNotifications();
-    let res = [];
-
-    for(let objName in workflowNotifications){
-        let notifications = workflowNotifications[objName];
-        res = res.concat(notifications);
-    }
-    return res;
+    return _.values(workflowNotifications);
 }
 
 export const getAllWorkflowRules = function(){
     let workflowRules = getWorkflowRules();
-    let res = [];
-
-    for(let objName in workflowRules){
-        let rules = workflowRules[objName];
-        res = res.concat(rules);
-    }
-    return res;
+    return _.values(workflowRules);
 }
 
 export const getAllActionFieldUpdates = function(){
     let actionFieldUpdates = getActionFieldUpdates();
-    let res = [];
-
-    for(let objName in actionFieldUpdates){
-        let updates = actionFieldUpdates[objName];
-        res = res.concat(updates);
-    }
-    return res;
+    return _.values(actionFieldUpdates);
 }
 
 export const getObjectWorkflowNotifications = function(objName){
-    return getWorkflowNotifications()[objName];
+    return _.where(getAllWorkflowNotifications(), {object_name: objName});
 }
 
 export const getObjectWorkflowRules = function(objName){
-    return getWorkflowRules()[objName];
+    return _.where(getAllWorkflowRules(), {object_name: objName});
 }
 
 export const getObjectActionFieldUpdates = function(objName){
-    return getActionFieldUpdates()[objName];
+    return _.where(getAllActionFieldUpdates(), {object_name: objName});
 }
 
-export const getObjectWorkflowNotification = function(objName, name){
-    let objectWorkflowNotifications = getObjectWorkflowNotifications(objName)
-    if(objectWorkflowNotifications){
-        return _.find(objectWorkflowNotifications, function(notification){
-            return notification.name === name
-        })
-    }
+export const getWorkflowNotification = function(name){
+    return _.find(getAllWorkflowNotifications(), function (item){
+        return item.name === name
+    });
 }
 
-export const getObjectWorkflowRule = function(objName, name){
-    let objectWorkflowRules = getObjectWorkflowRules(objName);
-    if(objectWorkflowRules){
-        return _.find(objectWorkflowRules, function(rule){
-            return rule.name === name
-        })
-    }
+export const getWorkflowRule = function(name){
+    return _.find(getAllWorkflowRules(), function (item){
+        return item.name === name
+    });
 }
 
-export const getObjectActionFieldUpdate = function(objName, name){
-    let objectActionFieldUpdates = getObjectActionFieldUpdates(objName)
-    if(objectActionFieldUpdates){
-        return _.find(objectActionFieldUpdates, function(fieldUpdate){
-            return fieldUpdate.name === name
-        })
-    }
+export const getActionFieldUpdate = function(name){
+    return _.find(getAllActionFieldUpdates(), function (item){
+        return item.name === name
+    });
 }
