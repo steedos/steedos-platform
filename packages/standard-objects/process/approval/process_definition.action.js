@@ -33,7 +33,7 @@ module.exports = {
     let docName = doc.name
     let docObjectName = doc.object_name
 
-    Creator.odata.insert(object_name, Object.assign(newDoc, { name: docName, object_name: docObjectName }), function (result, error) {
+    Creator.odata.insert(object_name, Object.assign(newDoc, { name: docName, object_name: docObjectName, active:false }), function (result, error) {
       if (result) {
         for(let node of doc.process_nodes){
           let nodeName = node.name
