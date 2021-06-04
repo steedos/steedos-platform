@@ -41,13 +41,25 @@ function parserFilters(filters){
             Object.assign(query, {[key]: {$in: value}})
         }else{
             _.each(filters,function(filter){
-                Object.assign(query, parserFilters(filter))
+                let parsedFilters = parserFilters(filter);
+                if(query._id && query._id.$ne && parsedFilters._id && parsedFilters._id.$ne){
+                    parsedFilters._id.$ne = [parsedFilters._id.$ne]
+                    parsedFilters._id.$ne = parsedFilters._id.$ne.concat(query._id.$ne);
+                    delete query._id;
+                }
+                Object.assign(query, parsedFilters)
             })
         }
     }else{
         _.each(filters, function (v, k) {
             if (k === '$and') {
-                Object.assign(query, parserFilters(v))
+                let parsedFilters = parserFilters(v);
+                if(query._id && query._id.$ne && parsedFilters._id && parsedFilters._id.$ne){
+                    parsedFilters._id.$ne = [parsedFilters._id.$ne]
+                    parsedFilters._id.$ne = parsedFilters._id.$ne.concat(query._id.$ne);
+                    delete query._id;
+                }
+                Object.assign(query, parsedFilters)
             } else {
                 Object.assign(query, {[k]: v})
             }

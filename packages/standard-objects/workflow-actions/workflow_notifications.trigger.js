@@ -38,13 +38,24 @@ module.exports = {
                     workflowNotifications.push(workflowNotification);
                 }
             }
-        }else if(filters._id){
+        }else if(filters._id && !filters._id.$ne){
             workflowNotifications.push(objectql.getWorkflowNotification(filters._id));
         }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
             delete filters.object_name;
         }else{
             workflowNotifications = objectql.getAllWorkflowNotifications();
+        }
+        
+        if(filters._id && filters._id.$ne){
+            if(!_.isArray(filters._id.$ne)){
+                filters._id.$ne = [filters._id.$ne]
+            }
+            for(let neid of filters._id.$ne){
+                workflowNotifications = _.filter(workflowNotifications, function(item){
+                    return item._id !== neid
+                })
+            }
         }
 
         workflowNotifications = getInternalWorkflowNotifications(workflowNotifications, filters);
@@ -63,7 +74,7 @@ module.exports = {
                     workflowNotifications.push(workflowNotification);
                 }
             }
-        }else if(filters._id){
+        }else if(filters._id && !filters._id.$ne){
             workflowNotifications.push(objectql.getWorkflowNotification(filters._id));
         }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
@@ -72,6 +83,17 @@ module.exports = {
             workflowNotifications = objectql.getAllWorkflowNotifications();
         }
         
+        if(filters._id && filters._id.$ne){
+            if(!_.isArray(filters._id.$ne)){
+                filters._id.$ne = [filters._id.$ne]
+            }
+            for(let neid of filters._id.$ne){
+                workflowNotifications = _.filter(workflowNotifications, function(item){
+                    return item._id !== neid
+                })
+            }
+        }
+
         workflowNotifications = getInternalWorkflowNotifications(workflowNotifications, filters);
 
         if(workflowNotifications && workflowNotifications.length>0){
@@ -88,13 +110,24 @@ module.exports = {
                     workflowNotifications.push(workflowNotification);
                 }
             }
-        }else if(filters._id){
+        }else if(filters._id && !filters._id.$ne){
             workflowNotifications.push(objectql.getWorkflowNotification(filters._id));
         }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
             delete filters.object_name;
         }else{
             workflowNotifications = objectql.getAllWorkflowNotifications();
+        }
+        
+        if(filters._id && filters._id.$ne){
+            if(!_.isArray(filters._id.$ne)){
+                filters._id.$ne = [filters._id.$ne]
+            }
+            for(let neid of filters._id.$ne){
+                workflowNotifications = _.filter(workflowNotifications, function(item){
+                    return item._id !== neid
+                })
+            }
         }
         
         workflowNotifications = getInternalWorkflowNotifications(workflowNotifications, filters);

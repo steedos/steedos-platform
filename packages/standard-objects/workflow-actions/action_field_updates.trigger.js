@@ -47,13 +47,24 @@ module.exports = {
                     actionFieldUpdates.push(actionFieldUpdate);
                 }
             }
-        }else if(filters._id){
+        }else if(filters._id && !filters._id.$ne){
             actionFieldUpdates.push(objectql.getActionFieldUpdate(filters._id));
         }else if(filters.object_name){
             actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
             delete filters.object_name;
         }else{
             actionFieldUpdates = objectql.getAllActionFieldUpdates();
+        }
+
+        if(filters._id && filters._id.$ne){
+            if(!_.isArray(filters._id.$ne)){
+                filters._id.$ne = [filters._id.$ne]
+            }
+            for(let neid of filters._id.$ne){
+                actionFieldUpdates = _.filter(actionFieldUpdates, function(item){
+                    return item._id !== neid
+                })
+            }
         }
 
         actionFieldUpdates = getInternalActionFieldUpdates(actionFieldUpdates, filters);
@@ -73,13 +84,24 @@ module.exports = {
                     actionFieldUpdates.push(actionFieldUpdate);
                 }
             }
-        }else if(filters._id){
+        }else if(filters._id && !filters._id.$ne){
             actionFieldUpdates.push(objectql.getActionFieldUpdate(filters._id));
         }else if(filters.object_name){
             actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
             delete filters.object_name;
         }else{
             actionFieldUpdates = objectql.getAllActionFieldUpdates();
+        }
+
+        if(filters._id && filters._id.$ne){
+            if(!_.isArray(filters._id.$ne)){
+                filters._id.$ne = [filters._id.$ne]
+            }
+            for(let neid of filters._id.$ne){
+                actionFieldUpdates = _.filter(actionFieldUpdates, function(item){
+                    return item._id !== neid
+                })
+            }
         }
 
         actionFieldUpdates = getInternalActionFieldUpdates(actionFieldUpdates, filters);
@@ -99,13 +121,24 @@ module.exports = {
                     actionFieldUpdates.push(actionFieldUpdate);
                 }
             }
-        }else if(filters._id){
+        }else if(filters._id && !filters._id.$ne){
             actionFieldUpdates.push(objectql.getActionFieldUpdate(filters._id));
         }else if(filters.object_name){
             actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
             delete filters.object_name;
         }else{
             actionFieldUpdates = objectql.getAllActionFieldUpdates();
+        }
+
+        if(filters._id && filters._id.$ne){
+            if(!_.isArray(filters._id.$ne)){
+                filters._id.$ne = [filters._id.$ne]
+            }
+            for(let neid of filters._id.$ne){
+                actionFieldUpdates = _.filter(actionFieldUpdates, function(item){
+                    return item._id !== neid
+                })
+            }
         }
         
         actionFieldUpdates = getInternalActionFieldUpdates(actionFieldUpdates, filters);
