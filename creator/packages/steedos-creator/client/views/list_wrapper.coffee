@@ -135,7 +135,7 @@ Template.creator_list_wrapper.helpers
 	
 	list_data: ()->
 		object_name = Session.get "object_name"
-		return {object_name: object_name, total: Template.instance().recordsTotal}
+		return {object_name: object_name, total: Template.instance().recordsTotal, sideBar: false}
 
 	list_views: ()->
 		Session.get("change_list_views")
@@ -427,7 +427,7 @@ Template.creator_list_wrapper.events
 	'click .btn-refresh': (event, template)->
 
 		if true
-			window.gridRef.current.api.refreshServerSideStore()
+			return window.gridRef.current.api.refreshServerSideStore()
 
 		$(".slds-icon-standard-refresh", event.currentTarget).animateCss("rotate")
 		object = Creator.getObject()

@@ -17,6 +17,8 @@ Template.object_listview.helpers
 		self = this;
 		return (event)->
 			self.total.set(event.api.getDisplayedRowCount())
+	sideBar: ()->
+		return Template.instance().data.sideBar
 
 Template.object_listview.onCreated ->
 	self = this

@@ -61,7 +61,8 @@
 							{{#if isMobile}}
 								{{> list options=list_data}}
 							{{else}}
-								{{> Template.dynamic template="creator_grid" data=list_data}}
+<!--								{{> Template.dynamic template="creator_grid" data=list_data}}-->
+								{{> steedos_object_listview objectApiName=related_object_name name=name columnFields=columnFields filters=filters onModelUpdated=onModelUpdated}}
 							{{/if}}
 						</div>
 					</div>

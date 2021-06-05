@@ -43,7 +43,8 @@ if Meteor.isClient
 
 		"standard_new": (object_name, record_id, fields)->
 			#TODO 使用对象版本判断
-			if true
+			object = Creator.getObject(object_name);
+			if object?.version >= 2
 				return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
 					name: "#{object_name}_standard_new_form",
 					objectApiName: object_name,
@@ -82,7 +83,8 @@ if Meteor.isClient
 
 		"standard_edit": (object_name, record_id, fields)->
 			if record_id
-				if true
+				object = Creator.getObject(object_name);
+				if object?.version >= 2
 					return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
 						name: "#{object_name}_standard_edit_form",
 						objectApiName: object_name,
@@ -113,7 +115,6 @@ if Meteor.isClient
 							$(".btn.creator-edit").click()
 
 		"standard_delete": (object_name, record_id, record_title, list_view_id, record, call_back)->
-			console.log("standard_delete", object_name, record_id, record_title, list_view_id)
 			beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
 			if !beforeHook
 				return false;

@@ -265,6 +265,10 @@
         "relatedList": {
             "type": "array",
             "description": "主表想在详细页显示的相关子表"
+        },
+        "version":{
+            "type": "number",
+            "description": "对象版本, 默认1.0"
         }
     },
     "definitions": {
@@ -657,6 +661,9 @@
                 "picklist": {
                     "type": "string",
                     "description": "指定字段的选项列表值集"
+                },
+                "modal_mode": {
+                    "type": "string"
                 }
             }
         },

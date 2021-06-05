@@ -400,6 +400,9 @@
         "picklist": {
             "type": "string",
             "description": "指定字段的选项列表值集"
+        },
+        "modal_mode": {
+            "type": "string"
         }
     }
 }

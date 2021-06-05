@@ -144,6 +144,11 @@ fields:
   #   label: 隐藏
   #   type: boolean
   #   omit: true
+  version:
+    label: Version
+    type: number
+    scale: 0
+    defaultValue: 2
   description:
     label: Description
     type: textarea

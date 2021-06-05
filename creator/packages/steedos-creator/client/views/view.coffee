@@ -406,7 +406,7 @@ Template.creator_view.helpers
 		return !record?.locked
 
 	detail_info_visible: ()->
-		return false && Session.get("detail_info_visible")
+		return Session.get("detail_info_visible")
 
 	actions: ()->
 		actions = Creator.getActions()
@@ -515,6 +515,8 @@ Template.creator_view.helpers
 		return Session.get("record_id")
 	isEdit: ()->
 		return this.name == 'standard_edit'
+	showReactForm: ()->
+		return Creator.getObject(Session.get("object_name"))?.version >= 2
 
 Template.creator_view.events
 

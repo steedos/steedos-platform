@@ -69,8 +69,31 @@ Template.related_object_list.helpers
 		}
 		if object_name == 'objects'
 			data.record_id = Template.instance()?.record.get().name;
+#		console.log("list_data", data)
 		return data
-
+	name: ()->
+		return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name")
+	columnFields: ()->
+		object_name = Session.get "object_name"
+		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		related_object_name = Session.get "related_object_name"
+		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
+		columnFields = [];
+		_.each(related_list_item_props.columns, (fieldName)->
+			columnFields.push({fieldName: fieldName})
+		)
+		return columnFields;
+	filters: ()->
+		object_name = Session.get "object_name"
+		record_id = Session.get("record_id")
+		related_object_name = Session.get "related_object_name"
+		is_related = true;
+		list_view_id = Creator.getListView(related_object_name, "all")?._id
+		return Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id)
+	onModelUpdated: ()->
+		recordsTotal = Template.instance().recordsTotal
+		return (event)->
+			recordsTotal?.set(event.api.getDisplayedRowCount())
 
 Template.related_object_list.events
 	"click .add-related-object-record": (event, template)->
@@ -105,8 +128,9 @@ Template.related_object_list.events
 		if Steedos.isMobile()
 			Template.list.refresh getRelatedListTemplateId()
 		else
-			dxDataGridInstance = $(event.currentTarget).closest(".related_object_list").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
-			Template.creator_grid.refresh(dxDataGridInstance)
+			return window.gridRef.current.api.refreshServerSideStore()
+#			dxDataGridInstance = $(event.currentTarget).closest(".related_object_list").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
+#			Template.creator_grid.refresh(dxDataGridInstance)
 
 	'change .input-file-upload': (event, template)->
 		Creator.relatedObjectFileUploadHandler event, ()->

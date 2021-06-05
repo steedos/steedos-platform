@@ -87,6 +87,8 @@ fields:
     label: 备注
     help: 
     description: 
+  version:
+    label: 版本
   sidebar:
     label: 左侧列表
     help: 
