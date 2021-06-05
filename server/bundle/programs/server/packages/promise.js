@@ -9,7 +9,7 @@ var meteorInstall = Package.modules.meteorInstall;
 /* Package-scope variables */
 var Promise;
 
-var require = meteorInstall({"node_modules":{"meteor":{"promise":{"modern.js":function(){
+var require = meteorInstall({"node_modules":{"meteor":{"promise":{"modern.js":function module(){
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                                                               //
@@ -23,7 +23,7 @@ Promise = global.Promise;
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-},"server.js":function(require,exports,module){
+},"server.js":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                                                               //
@@ -57,7 +57,7 @@ require("meteor/modern-browsers").setMinimumBrowserVersions({
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-},"extensions.js":function(){
+},"extensions.js":function module(){
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                                                               //
@@ -109,7 +109,7 @@ if (! hasOwn.call(proto, "finally")) {
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-},"node_modules":{"meteor-promise":{"package.json":function(require,exports,module){
+},"node_modules":{"meteor-promise":{"package.json":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                                                               //
@@ -125,7 +125,7 @@ module.exports = {
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-},"promise_server.js":function(require,exports,module){
+},"promise_server.js":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                                                               //

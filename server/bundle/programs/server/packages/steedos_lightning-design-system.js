@@ -8,17 +8,16 @@ var WebApp = Package.webapp.WebApp;
 var WebAppInternals = Package.webapp.WebAppInternals;
 var main = Package.webapp.main;
 var meteorInstall = Package.modules.meteorInstall;
-var meteorBabelHelpers = Package['babel-runtime'].meteorBabelHelpers;
 var Promise = Package.promise.Promise;
 
-var require = meteorInstall({"node_modules":{"meteor":{"steedos:lightning-design-system":{"server.js":function(require){
+var require = meteorInstall({"node_modules":{"meteor":{"steedos:lightning-design-system":{"server.js":function module(require){
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// packages/steedos_lightning-design-system/server.js                                               //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                   //
+// packages/steedos_lightning-design-system/server.js                                                //
+//                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                     //
 
 // const express = require("express");
 // const path = require("path");
@@ -42,7 +41,7 @@ var require = meteorInstall({"node_modules":{"meteor":{"steedos:lightning-design
 
 // WebApp.rawConnectHandlers.use(router);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }}}}},{
   "extensions": [

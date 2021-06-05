@@ -9,7 +9,7 @@ var meteorInstall = Package.modules.meteorInstall;
 /* Package-scope variables */
 var GeoJSON;
 
-var require = meteorInstall({"node_modules":{"meteor":{"geojson-utils":{"main.js":function(require,exports){
+var require = meteorInstall({"node_modules":{"meteor":{"geojson-utils":{"main.js":function module(require,exports){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                         //
@@ -21,7 +21,7 @@ exports.GeoJSON = require("./geojson-utils.js");
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"geojson-utils.js":function(require,exports,module){
+},"geojson-utils.js":function module(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                         //

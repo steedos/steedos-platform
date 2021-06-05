@@ -2511,36 +2511,36 @@
 
 "@babel/runtime@7.3.4":
   version "7.3.4"
-  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.3.4.tgz#73d12ba819e365fcf7fd152aed56d6df97d21c83"
+  resolved "https://registry.nlark.com/@babel/runtime/download/@babel/runtime-7.3.4.tgz?cache=0&sync_timestamp=1619727389508&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.3.4.tgz#73d12ba819e365fcf7fd152aed56d6df97d21c83"
   integrity sha1-c9ErqBnjZfz3/RUq7VbW35fSHIM=
   dependencies:
     regenerator-runtime "^0.12.0"
 
 "@babel/runtime@7.9.0":
   version "7.9.0"
-  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.9.0.tgz#337eda67401f5b066a6f205a3113d4ac18ba495b"
+  resolved "https://registry.nlark.com/@babel/runtime/download/@babel/runtime-7.9.0.tgz?cache=0&sync_timestamp=1619727389508&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.9.0.tgz#337eda67401f5b066a6f205a3113d4ac18ba495b"
   integrity sha1-M37aZ0AfWwZqbyBaMRPUrBi6SVs=
   dependencies:
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@7.9.6":
   version "7.9.6"
-  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.9.6.tgz#a9102eb5cadedf3f31d08a9ecf294af7827ea29f"
+  resolved "https://registry.nlark.com/@babel/runtime/download/@babel/runtime-7.9.6.tgz?cache=0&sync_timestamp=1619727389508&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.9.6.tgz#a9102eb5cadedf3f31d08a9ecf294af7827ea29f"
   integrity sha1-qRAutcre3z8x0IqezylK94J+op8=
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.3", "@babel/runtime@^7.11.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.1", "@babel/runtime@^7.5.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.0", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.3", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.1", "@babel/runtime@^7.5.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.0", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.12.0"
-  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.12.0.tgz#98bd7666186969c04be893d747cf4a6c6c8fa6b0"
+  resolved "https://registry.nlark.com/@babel/runtime/download/@babel/runtime-7.12.0.tgz?cache=0&sync_timestamp=1619727389508&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.12.0.tgz#98bd7666186969c04be893d747cf4a6c6c8fa6b0"
   integrity sha1-mL12ZhhpacBL6JPXR89KbGyPprA=
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.12.5":
-  version "7.13.10"
-  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.13.10.tgz?cache=0&sync_timestamp=1615243066705&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.13.10.tgz#47d42a57b6095f4468da440388fdbad8bebf0d7d"
-  integrity sha1-R9QqV7YJX0Ro2kQDiP262L6/DX0=
+"@babel/runtime@^7.12.5":
+  version "7.14.0"
+  resolved "https://registry.nlark.com/@babel/runtime/download/@babel/runtime-7.14.0.tgz?cache=0&sync_timestamp=1619727389508&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.14.0.tgz#46794bc20b612c5f75e62dd071e24dfd95f1cbe6"
+  integrity sha1-RnlLwgthLF915i3QceJN/ZXxy+Y=
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -9639,7 +9639,7 @@ bcrypt@3.0.6:
 
 bcrypt@3.0.8:
   version "3.0.8"
-  resolved "https://registry.npm.taobao.org/bcrypt/download/bcrypt-3.0.8.tgz?cache=0&sync_timestamp=1592670620426&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbcrypt%2Fdownload%2Fbcrypt-3.0.8.tgz#fe437b7569faffc1105c3c3f6e7d2913e3d3bea5"
+  resolved "https://registry.npm.taobao.org/bcrypt/download/bcrypt-3.0.8.tgz#fe437b7569faffc1105c3c3f6e7d2913e3d3bea5"
   integrity sha1-/kN7dWn6/8EQXDw/bn0pE+PTvqU=
   dependencies:
     nan "2.14.0"
@@ -12093,7 +12093,7 @@ cron@1.7.2:
 
 cross-env@5.2.1, cross-env@^5.2.0, cross-env@^7.0.2, cross-env@^7.0.3:
   version "5.2.1"
-  resolved "https://registry.npm.taobao.org/cross-env/download/cross-env-5.2.1.tgz?cache=0&sync_timestamp=1615511040562&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcross-env%2Fdownload%2Fcross-env-5.2.1.tgz#b2c76c1ca7add66dc874d11798466094f551b34d"
+  resolved "https://registry.npm.taobao.org/cross-env/download/cross-env-5.2.1.tgz#b2c76c1ca7add66dc874d11798466094f551b34d"
   integrity sha1-ssdsHKet1m3IdNEXmEZglPVRs00=
   dependencies:
     cross-spawn "^6.0.5"
@@ -22561,7 +22561,7 @@ node-pre-gyp@0.12.0:
 
 node-pre-gyp@0.14.0:
   version "0.14.0"
-  resolved "https://registry.npm.taobao.org/node-pre-gyp/download/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
+  resolved "https://registry.nlark.com/node-pre-gyp/download/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
   integrity sha1-mgWWUzuHcom8rU4UOYLKPZBN3IM=
   dependencies:
     detect-libc "^1.0.2"
@@ -27105,7 +27105,7 @@ regenerator-runtime@^0.11.0:
 
 regenerator-runtime@^0.12.0:
   version "0.12.1"
-  resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
+  resolved "https://registry.nlark.com/regenerator-runtime/download/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
   integrity sha1-+hpxVEdkwDb4xJsToIsllMn4oN4=
 
 regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.3, regenerator-runtime@^0.13.4:
@@ -27907,7 +27907,7 @@ saml@^0.12.1:
 
 "samlp@github:mcguinness/node-samlp":
   version "3.4.1"
-  resolved "https://registry.npm.taobao.org/samlp/download/samlp-3.4.1.tgz#f75b21bed0a572e28874b063bb012a7d60a1a0c2"
+  resolved "https://registry.nlark.com/samlp/download/samlp-3.4.1.tgz#f75b21bed0a572e28874b063bb012a7d60a1a0c2"
   integrity sha1-91shvtClcuKIdLBjuwEqfWChoMI=
   dependencies:
     "@auth0/thumbprint" "0.0.6"
@@ -30767,23 +30767,23 @@ tsconfig-paths@^3.9.0:
 
 tslib@1.10.0:
   version "1.10.0"
-  resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.10.0.tgz?cache=0&sync_timestamp=1609887581211&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
+  resolved "https://registry.nlark.com/tslib/download/tslib-1.10.0.tgz?cache=0&sync_timestamp=1618847132149&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha1-w8GflZc/sKYpc/sJ2Q2WHuQ+XIo=
 
 tslib@^1.10.0, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.11.2"
-  resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.11.2.tgz?cache=0&sync_timestamp=1609887438976&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-1.11.2.tgz#9c79d83272c9a7aaf166f73915c9667ecdde3cc9"
+  resolved "https://registry.nlark.com/tslib/download/tslib-1.11.2.tgz?cache=0&sync_timestamp=1618847132149&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-1.11.2.tgz#9c79d83272c9a7aaf166f73915c9667ecdde3cc9"
   integrity sha1-nHnYMnLJp6rxZvc5Fclmfs3ePMk=
 
 tslib@^1.13.0:
   version "1.14.1"
-  resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.14.1.tgz?cache=0&sync_timestamp=1609887581211&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
+  resolved "https://registry.nlark.com/tslib/download/tslib-1.14.1.tgz?cache=0&sync_timestamp=1618847132149&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha1-zy04vcNKE0vK8QkcQfZhni9nLQA=
 
 tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3:
-  version "2.1.0"
-  resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.1.0.tgz?cache=0&sync_timestamp=1609887581211&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
-  integrity sha1-2mCGDxwuyqVwOrfTm8Bba/mIuXo=
+  version "2.2.0"
+  resolved "https://registry.nlark.com/tslib/download/tslib-2.2.0.tgz?cache=0&sync_timestamp=1618847132149&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
+  integrity sha1-+yxHWXfjXiQTEe3iaTzuHsZpj1w=
 
 tslint-microsoft-contrib@^5.2.1:
   version "5.2.1"
@@ -31025,7 +31025,7 @@ typeorm@^0.2.16:
 
 typescript@3.1.x, typescript@3.5.3, typescript@3.9.7, typescript@^3.4.5, typescript@^3.6.2, typescript@^3.8.2, typescript@^4.0.2, typescript@^4.2.2, typescript@~3.7.4:
   version "3.9.7"
-  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.9.7.tgz?cache=0&sync_timestamp=1617521144779&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
+  resolved "https://registry.nlark.com/typescript/download/typescript-3.9.7.tgz?cache=0&sync_timestamp=1620858709203&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha1-mNYApevcOPQMsndSLxLcgA6eJfo=
 
 uglify-js@2.7.5:
@@ -32649,7 +32649,7 @@ xmlchars@^2.1.1, xmlchars@^2.2.0:
 
 xmldom@=0.1.15:
   version "0.1.15"
-  resolved "https://registry.npm.taobao.org/xmldom/download/xmldom-0.1.15.tgz#b3048062f1bdd52edc421424459f06dceeb2f94d"
+  resolved "https://registry.nlark.com/xmldom/download/xmldom-0.1.15.tgz#b3048062f1bdd52edc421424459f06dceeb2f94d"
   integrity sha1-swSAYvG91S7cQhQkRZ8G3O6y+U0=
 
 xmldom@=0.1.19, xmldom@auth0/xmldom#v0.1.19-auth0_1:
@@ -32658,17 +32658,17 @@ xmldom@=0.1.19, xmldom@auth0/xmldom#v0.1.19-auth0_1:
 
 "xmldom@>= 0.1.x":
   version "0.2.1"
-  resolved "https://registry.npm.taobao.org/xmldom/download/xmldom-0.2.1.tgz#cac9465066f161e1c3302793ea4dbe59c518274f"
+  resolved "https://registry.nlark.com/xmldom/download/xmldom-0.2.1.tgz#cac9465066f161e1c3302793ea4dbe59c518274f"
   integrity sha1-yslGUGbxYeHDMCeT6k2+WcUYJ08=
 
 xmldom@^0.3.0:
   version "0.3.0"
-  resolved "https://registry.npm.taobao.org/xmldom/download/xmldom-0.3.0.tgz#e625457f4300b5df9c2e1ecb776147ece47f3e5a"
+  resolved "https://registry.nlark.com/xmldom/download/xmldom-0.3.0.tgz#e625457f4300b5df9c2e1ecb776147ece47f3e5a"
   integrity sha1-5iVFf0MAtd+cLh7Ld2FH7OR/Plo=
 
 xmldom@~0.1.15:
   version "0.1.31"
-  resolved "https://registry.npm.taobao.org/xmldom/download/xmldom-0.1.31.tgz#b76c9a1bd9f0a9737e5a72dc37231cf38375e2ff"
+  resolved "https://registry.nlark.com/xmldom/download/xmldom-0.1.31.tgz#b76c9a1bd9f0a9737e5a72dc37231cf38375e2ff"
   integrity sha1-t2yaG9nwqXN+WnLcNyMc84N14v8=
 
 xmlhttprequest-ssl@~1.5.4:

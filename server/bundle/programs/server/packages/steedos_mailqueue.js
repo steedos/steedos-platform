@@ -14,7 +14,6 @@ var Mongo = Package.mongo.Mongo;
 var _ = Package.underscore._;
 var EJSON = Package.ejson.EJSON;
 var Random = Package.random.Random;
-var meteorBabelHelpers = Package['babel-runtime'].meteorBabelHelpers;
 var Promise = Package.promise.Promise;
 
 /* Package-scope variables */
@@ -22,14 +21,14 @@ var MailQueue, __coffeescriptShare;
 
 (function(){
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// packages/steedos_mailqueue/lib/common/main.js                                                    //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                   //
+// packages/steedos_mailqueue/lib/common/main.js                                                     //
+//                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                     //
 MailQueue = new EventState();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -40,12 +39,12 @@ MailQueue = new EventState();
 
 (function(){
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// packages/steedos_mailqueue/lib/common/mails.js                                                   //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                   //
+// packages/steedos_mailqueue/lib/common/mails.js                                                    //
+//                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                     //
 MailQueue.collection = new Mongo.Collection('_mail_queue');
 
 var _validateDocument = function(mail) {
@@ -78,7 +77,7 @@ MailQueue.send = function(options) {
 
 	return MailQueue.collection.insert(mail);
 };
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -89,12 +88,12 @@ MailQueue.send = function(options) {
 
 (function(){
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// packages/steedos_mailqueue/lib/server/api.js                                                     //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                   //
+// packages/steedos_mailqueue/lib/server/api.js                                                      //
+//                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                     //
 var isConfigured = false;
 var sendWorker = function(task, interval) {
 
@@ -324,7 +323,7 @@ MailQueue.Configure = function(options) {
 
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -335,12 +334,12 @@ MailQueue.Configure = function(options) {
 
 (function(){
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// packages/steedos_mailqueue/server/startup.coffee                                                 //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                   //
+// packages/steedos_mailqueue/server/startup.coffee                                                  //
+//                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                     //
 __coffeescriptShare = typeof __coffeescriptShare === 'object' ? __coffeescriptShare : {}; var share = __coffeescriptShare;
 Meteor.startup(function () {
   var ref;
@@ -353,7 +352,7 @@ Meteor.startup(function () {
     });
   }
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -366,4 +365,4 @@ Package._define("steedos:mailqueue", {
 })();
 
 //# sourceURL=meteor://💻app/packages/steedos_mailqueue.js
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1ldGVvcjovL/CfkrthcHAvcGFja2FnZXMvc3RlZWRvc19tYWlscXVldWUvc2VydmVyL3N0YXJ0dXAuY29mZmVlIiwibWV0ZW9yOi8v8J+Su2FwcC9zZXJ2ZXIvc3RhcnR1cC5jb2ZmZWUiXSwibmFtZXMiOlsiTWV0ZW9yIiwic3RhcnR1cCIsInJlZiIsInNldHRpbmdzIiwiY3JvbiIsIm1haWxxdWV1ZV9pbnRlcnZhbCIsIk1haWxRdWV1ZSIsIkNvbmZpZ3VyZSIsInNlbmRJbnRlcnZhbCIsInNlbmRCYXRjaFNpemUiLCJrZWVwTWFpbHMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUFBLE9BQU9DLE9BQVAsQ0FBZTtBQUNkLE1BQUFDLEdBQUE7O0FBQUEsT0FBQUEsTUFBQUYsT0FBQUcsUUFBQSxDQUFBQyxJQUFBLFlBQUFGLElBQXlCRyxrQkFBekIsR0FBeUIsTUFBekI7QUNFRyxXRERGQyxVQUFVQyxTQUFWLENBQ0M7QUFBQUMsb0JBQWNSLE9BQU9HLFFBQVAsQ0FBZ0JDLElBQWhCLENBQXFCQyxrQkFBbkM7QUFDQUkscUJBQWUsRUFEZjtBQUVBQyxpQkFBVztBQUZYLEtBREQsQ0NDRTtBQUtEO0FEUkgsRyIsImZpbGUiOiIvcGFja2FnZXMvc3RlZWRvc19tYWlscXVldWUuanMiLCJzb3VyY2VzQ29udGVudCI6WyJNZXRlb3Iuc3RhcnR1cCAtPlxuXHRpZiBNZXRlb3Iuc2V0dGluZ3MuY3Jvbj8ubWFpbHF1ZXVlX2ludGVydmFsXG5cdFx0TWFpbFF1ZXVlLkNvbmZpZ3VyZVxuXHRcdFx0c2VuZEludGVydmFsOiBNZXRlb3Iuc2V0dGluZ3MuY3Jvbi5tYWlscXVldWVfaW50ZXJ2YWxcblx0XHRcdHNlbmRCYXRjaFNpemU6IDEwXG5cdFx0XHRrZWVwTWFpbHM6IGZhbHNlXG4iLCJNZXRlb3Iuc3RhcnR1cChmdW5jdGlvbigpIHtcbiAgdmFyIHJlZjtcbiAgaWYgKChyZWYgPSBNZXRlb3Iuc2V0dGluZ3MuY3JvbikgIT0gbnVsbCA/IHJlZi5tYWlscXVldWVfaW50ZXJ2YWwgOiB2b2lkIDApIHtcbiAgICByZXR1cm4gTWFpbFF1ZXVlLkNvbmZpZ3VyZSh7XG4gICAgICBzZW5kSW50ZXJ2YWw6IE1ldGVvci5zZXR0aW5ncy5jcm9uLm1haWxxdWV1ZV9pbnRlcnZhbCxcbiAgICAgIHNlbmRCYXRjaFNpemU6IDEwLFxuICAgICAga2VlcE1haWxzOiBmYWxzZVxuICAgIH0pO1xuICB9XG59KTtcbiJdfQ==
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1ldGVvcjovL/CfkrthcHAvcGFja2FnZXMvc3RlZWRvc19tYWlscXVldWUvc2VydmVyL3N0YXJ0dXAuY29mZmVlIiwibWV0ZW9yOi8v8J+Su2FwcC9zZXJ2ZXIvc3RhcnR1cC5jb2ZmZWUiXSwibmFtZXMiOlsiTWV0ZW9yIiwic3RhcnR1cCIsInJlZiIsInNldHRpbmdzIiwiY3JvbiIsIm1haWxxdWV1ZV9pbnRlcnZhbCIsIk1haWxRdWV1ZSIsIkNvbmZpZ3VyZSIsInNlbmRJbnRlcnZhbCIsInNlbmRCYXRjaFNpemUiLCJrZWVwTWFpbHMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQUEsT0FBT0MsT0FBUCxDQUFlO0FBQ2QsTUFBQUMsR0FBQTs7QUFBQSxPQUFBQSxNQUFBRixPQUFBRyxRQUFBLENBQUFDLElBQUEsWUFBQUYsSUFBeUJHLGtCQUF6QixHQUF5QixNQUF6QjtBQ0VHLFdEREZDLFVBQVVDLFNBQVYsQ0FDQztBQUFBQyxvQkFBY1IsT0FBT0csUUFBUCxDQUFnQkMsSUFBaEIsQ0FBcUJDLGtCQUFuQztBQUNBSSxxQkFBZSxFQURmO0FBRUFDLGlCQUFXO0FBRlgsS0FERCxDQ0NFO0FBS0Q7QURSSCxHIiwiZmlsZSI6Ii9wYWNrYWdlcy9zdGVlZG9zX21haWxxdWV1ZS5qcyIsInNvdXJjZXNDb250ZW50IjpbIk1ldGVvci5zdGFydHVwIC0+XHJcblx0aWYgTWV0ZW9yLnNldHRpbmdzLmNyb24/Lm1haWxxdWV1ZV9pbnRlcnZhbFxyXG5cdFx0TWFpbFF1ZXVlLkNvbmZpZ3VyZVxyXG5cdFx0XHRzZW5kSW50ZXJ2YWw6IE1ldGVvci5zZXR0aW5ncy5jcm9uLm1haWxxdWV1ZV9pbnRlcnZhbFxyXG5cdFx0XHRzZW5kQmF0Y2hTaXplOiAxMFxyXG5cdFx0XHRrZWVwTWFpbHM6IGZhbHNlXHJcbiIsIk1ldGVvci5zdGFydHVwKGZ1bmN0aW9uKCkge1xuICB2YXIgcmVmO1xuICBpZiAoKHJlZiA9IE1ldGVvci5zZXR0aW5ncy5jcm9uKSAhPSBudWxsID8gcmVmLm1haWxxdWV1ZV9pbnRlcnZhbCA6IHZvaWQgMCkge1xuICAgIHJldHVybiBNYWlsUXVldWUuQ29uZmlndXJlKHtcbiAgICAgIHNlbmRJbnRlcnZhbDogTWV0ZW9yLnNldHRpbmdzLmNyb24ubWFpbHF1ZXVlX2ludGVydmFsLFxuICAgICAgc2VuZEJhdGNoU2l6ZTogMTAsXG4gICAgICBrZWVwTWFpbHM6IGZhbHNlXG4gICAgfSk7XG4gIH1cbn0pO1xuIl19

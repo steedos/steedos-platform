@@ -7,6 +7,9 @@ datasources:
 public:
   cfs:
     store: ${STEEDOS_CFS_STORE}
+  password:
+    policy: ^[A-Za-z0-9]{8,}$
+    policyError: 密码不能少于8位
 tenant:
   _id: ${STEEDOS_TENANT_ID}
   name: 华炎魔方

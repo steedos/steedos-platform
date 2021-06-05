@@ -1,0 +1,24 @@
+name: test_grid
+enable_api: true
+enable_audit: true
+enable_files: true
+enable_instances: true
+enable_search: true
+enable_trash: true
+icon: contract
+label: Test Grid
+# fields:
+#   name:
+#     name: name
+#     type: text
+#     label: Name
+#   grid:
+#     name: grid
+#     type: grid
+#     label: Grid
+#     is_wide: true
+#     blackbox: true
+#   grid.$.name:
+#     name: grid.$.name
+#     type: text
+#     label: Grid Name

@@ -12,6 +12,7 @@ objects:
   - tasks
   - events
   - reports
+  - test_grid
 mobile_objects:
   - instances
   - cms_posts
@@ -19,4 +20,5 @@ mobile_objects:
   - space_users
   - tasks
   - events
+  - test_grid
 visible: true

@@ -168,6 +168,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
+		let time = new Date().getTime();
 		this.broker.waitForServices(this.name).then(async () => {
 			process.env.PORT = this.settings.port;
 			process.env.ROOT_URL = this.settings.rootUrl;
@@ -175,6 +176,7 @@ module.exports = {
 			await this.startSteedos();
 
 			this.startAPIService();
+			console.log('耗时：', new Date().getTime() - time);
 		});
 
 	},

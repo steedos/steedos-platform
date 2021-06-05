@@ -1,0 +1,5 @@
+name: grid
+type: grid
+label: Grid
+is_wide: true
+blackbox: true
