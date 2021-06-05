@@ -22,8 +22,15 @@ const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
 const _routers: Array<any> = [];
 const _objectsData: Dictionary<any> = {};
-
+const delayLoadExtendObjectConfigQueue: Dictionary<any> = {};
 let standardObjectsLoaded: boolean = false;
+
+const addDelayLoadExtendObjectConfig = function (extend: string, config: SteedosObjectTypeConfig){
+    if(!delayLoadExtendObjectConfigQueue[extend]){
+        delayLoadExtendObjectConfigQueue[extend] = [];
+    }
+    delayLoadExtendObjectConfigQueue[extend].push(config);
+}
 
 const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
     if(objectName === MONGO_BASE_OBJECT || objectName === SQL_BASE_OBJECT){
@@ -203,6 +210,9 @@ export const addObjectConfig = async (objectConfig: SteedosObjectTypeConfig, dat
         if(datasource){
             objectConfig.datasource = datasource
         }
+        if(!objectConfig.extend){
+            objectConfig.isMain = true;
+        }
         await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, objectConfig);
     }
     // if(true){return;}
@@ -217,10 +227,11 @@ export const addObjectConfig = async (objectConfig: SteedosObjectTypeConfig, dat
         object_name = objectConfig.extend
         let parentObjectConfig = getObjectConfig(object_name);
         if(_.isEmpty(parentObjectConfig)){
-            return; //TODO 
+            return addDelayLoadExtendObjectConfig(objectConfig.extend, objectConfig);
             throw new Error(`Object extend failed, object not exist: ${objectConfig.extend}`);
         }
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
+        config.name = object_name;
         delete config.extend
         datasource = parentObjectConfig.datasource
         extendOriginalObjectConfig(object_name, datasource, clone(objectConfig));
@@ -253,7 +264,16 @@ export const addObjectConfig = async (objectConfig: SteedosObjectTypeConfig, dat
     delete config.__filename
     perfectObjectConfig(config)
     if(object_name === 'objects' && datasource==='default'){throw new Error(`debug error`)}
-    _objectConfigs.push(config)
+    _objectConfigs.push(config);
+    const delayLoadQueue = clone(delayLoadExtendObjectConfigQueue[object_name]);
+    if(delayLoadQueue && delayLoadQueue.length > 0){
+        delayLoadExtendObjectConfigQueue[object_name] = [];
+        for (const index in delayLoadQueue) {
+            const delayLoadConfig = delayLoadQueue[index]
+            await addObjectConfig(delayLoadConfig, delayLoadConfig.datasource, null)
+        }
+    }
+
 }
 
 export const removeObjectConfig = (object_name: string, datasource: string)=>{

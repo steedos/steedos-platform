@@ -96,6 +96,9 @@ export class ActionHandlers {
 
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
         const objectConfig = await refreshObject(ctx, metadataApiName);
+        if(!objectConfig){
+            return ;
+        }
         const objectServiceName = getObjectServiceName(metadataApiName);
         return await this.registerObject(ctx, metadataApiName, objectConfig, {
             caller: {

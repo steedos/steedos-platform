@@ -113,6 +113,14 @@ export async function refreshObject(ctx, objectApiName) {
         delete baseObjectConfig.hidden;
     }
 
+    const mainConfig = _.find(objectConfigs, (conf)=>{
+        return conf.isMain;
+    })
+
+    if(!mainConfig){
+        return null;
+    }
+
     objectConfig = _.defaultsDeep({}, ..._.reverse(objectConfigs), objectConfig)
 
     const _objectConfig = _.clone(objectConfig)
@@ -128,6 +136,8 @@ export async function refreshObject(ctx, objectApiName) {
             objectConfig.NAME_FIELD_KEY = field_name
         }
     })
+
+    objectConfig.datasource = mainConfig.datasource
 
     return objectConfig;
 }
