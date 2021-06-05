@@ -35,14 +35,14 @@ export class FormulaActionHandler{
             quotes.push(quote);
         }
     }
-    
+
     /**
      * 把公式中a.b.c，比如account.website这样的变量转为SteedosFieldFormulaQuoteTypeConfig和SteedosFieldFormulaVarTypeConfig追加到quotes和vars中
      * 因为getObjectConfigs拿到的对象肯定不包括被禁用和假删除的对象，所以不需要额外判断相关状态
      * @param formulaVar 公式中的单个变量，比如account.website
-     * @param fieldConfig 
-     * @param objectConfigs 
-     * @param quotes 
+     * @param fieldConfig
+     * @param objectConfigs
+     * @param quotes
      */
     async computeFormulaVarAndQuotes(formulaVar: string, objectConfig: any,  quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFormulaVarTypeConfig>){
         // 公式变量以FormulaUserSessionKey（即$user）值开头，说明是userSession变量
@@ -165,16 +165,22 @@ export class FormulaActionHandler{
         }
         vars.push(formulaVarItem);
     }
-    
+
     /**
      * 根据公式内容，取出其中{}中的变量，返回计算后的公式引用集合
-     * @param formula 
-     * @param fieldConfig 
+     * @param formula
+     * @param fieldConfig
      */
     async computeFormulaVarsAndQuotes(formula: string, objectConfig: any){
         let quotes: Array<SteedosFieldFormulaQuoteTypeConfig> = [];
         let vars: Array<SteedosFormulaVarTypeConfig> = [];
-        const formulaVars = pickFormulaVars(formula);
+        let formulaVars: any = [];
+        try{
+            formulaVars = pickFormulaVars(formula);
+        }
+        catch(ex){
+            throw new Error(`pickFormulaVars:Catch an error "${ex}" while pick vars from the formula "${formula}" for "${JSON.stringify(objectConfig)}"`);
+        }
         for await(const formulaVar of formulaVars) {
             await this.computeFormulaVarAndQuotes(formulaVar, objectConfig, quotes, vars);
         }
@@ -198,7 +204,7 @@ export class FormulaActionHandler{
             quotes: result.quotes,
             vars: result.vars
         };
-    
+
         return formulaConfig;
     }
 
@@ -248,17 +254,17 @@ export class FormulaActionHandler{
         if(metadata){
             maps = metadata;
         }
-    
-        let data = { 
+
+        let data = {
             key: key,
             value: value
         }
-    
+
         //checkData
         this.checkRefMapData(maps, data);
         maps.push(data);
         await broker.call('metadata.add', {key: this.cacherKey(refMapName), data: maps}, {meta: {}})
-    } 
+    }
 
     async addFormulaMetadata(config: any, datasource: string){
         const objectFieldsFormulaConfig = await this.getObjectFieldsFormulaConfig(config, datasource);
@@ -299,14 +305,14 @@ export class FormulaActionHandler{
     }
 
     async get(ctx){
-        let {fieldApiFullName} = ctx.params; 
+        let {fieldApiFullName} = ctx.params;
         const key = this.cacherKey(fieldApiFullName)
-        const res = await this.broker.call('metadata.get', {key: key}, {meta: {}})
-        return res?.metadata
+        const res = await this.broker.call('metadata.get', {key: key}, {meta: {}});
+        return res?.metadata;
     }
 
     async verifyObjectFieldFormulaConfig(ctx){
-        let {fieldConfig, objectConfig} = ctx.params; 
+        let {fieldConfig, objectConfig} = ctx.params;
 
         const fieldFormula = await this.getObjectFieldFormulaConfig(fieldConfig, objectConfig);
         let { metadata } = (await this.getFormulaReferenceMaps(ctx.broker)) || [];
@@ -316,13 +322,13 @@ export class FormulaActionHandler{
         }
 
         for await (const quote of fieldFormula.quotes) {
-            let data = { 
+            let data = {
                 key: fieldFormula._id,
                 value: `${quote.object_name}.${quote.field_name}`
             }
             this.checkRefMapData(maps, data);
         }
-    
+
         return await this.getObjectFieldFormulaConfig(fieldConfig, objectConfig);
     }
 

@@ -123,7 +123,7 @@ export class MasterDetailActionHandler{
                     if (field.reference_to && _.isString(field.reference_to)) {
                         if (field.reference_to === objectApiName) {
                             field.type = "lookup";//强行变更为最接近的类型
-                            throw new Error(`Can't set a master-detail filed that reference to self on the object '${objectApiName}'.`);
+                            throw new Error(`Can't set a master-detail field that reference to self on the object '${objectApiName}'.`);
                         }
                         const addSuc = await this.addMaster(objectApiName, field.reference_to, field);
 
@@ -138,7 +138,7 @@ export class MasterDetailActionHandler{
                         else {
                             // 不能选之前已经在该对象上建过的主表-子表字段上关联的相同对象
                             field.type = "lookup";//强行变更为最接近的类型
-                            throw new Error(`Can't set a master-detail filed that reference to the same object '${field.reference_to}' that had referenced to by other master-detail filed on the object '${objectApiName}.${field.name}'.`);
+                            throw new Error(`Can't set a master-detail field that reference to the same object '${field.reference_to}' that had referenced to by other master-detail filed which named '${objectApiName}.${field.name}' on the object '${objectApiName}'.`);
                         }
                     }
                 }

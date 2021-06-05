@@ -97,7 +97,7 @@ module.exports = {
 					this.meteor.loadServerBundles();
 					require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
-					this.wrapAsync(this.steedos.init, this.settings);
+					Future.fromPromise(this.steedos.init(this.settings)).wait();
 					this.WebApp = WebApp;
 					this.startNodeRedService();
 					this.meteor.callStartupHooks();

@@ -11,7 +11,7 @@ import * as initConfig from './init-config.json'
 const PACKAGE_SERVICE_FILE_NAME = 'package.service.js';
 const Future = require('fibers/future');
 export class Plugins {
-    static async init(coreInitConfig: any) {
+    static async init(coreInitConfig: any = {}) {
         let builtInPluginsName = coreInitConfig.built_in_plugins || [];
         let configedPluginsName = coreInitConfig.plugins || [];
         let pluginsName = _.union(builtInPluginsName, configedPluginsName);

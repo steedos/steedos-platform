@@ -97,7 +97,7 @@ module.exports = {
     //         // Maximum enabled outgoing connections. If reach, close the old connections
     //         maxConnections: 32,
     //         // Maximum TCP packet size
-    //         maxPacketSize: 1 * 1024 * 1024            
+    //         maxPacketSize: 1 * 1024 * 1024
     //     }
     // }, //"NATS"
 
@@ -108,7 +108,7 @@ module.exports = {
     //     type: "Redis",
     //     options: {
     //         // Prefix for keys
-    //         prefix: "MOL",            
+    //         prefix: "MOL",
     //         // set Time-to-live to 30sec.
     //         // Turns Redis client monitoring on.
     //         monitor: false,
@@ -259,7 +259,7 @@ module.exports = {
 
 	// Called after broker started.
 	async started(broker) {
-		
+
 	},
 
 	// Called after broker stopped.

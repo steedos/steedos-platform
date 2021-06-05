@@ -12,28 +12,45 @@ export type MetadataObject = {
         name: string,
         version: string | undefined,
         fullName: string
-    }, 
+    },
     metadata: SObject
 }
 
 function cacherKey(objectApiName: string): string{
     return `$steedos.#${METADATA_TYPE}.${objectApiName}`
 }
+
+const DELAY_MESSAGE_OF_OBJECT_CHANGED  = 10; // 延迟通知对象事件的时间，单位：毫秒
+
 export class ActionHandlers {
     onRegister: any = null;
+	registerObjectMemEntry: Map<string, number>;
+
     constructor(onRegister){
         this.onRegister = onRegister;
+		this.registerObjectMemEntry = new Map<string, number>();
     }
 
-    async registerObject(ctx, objectApiName, data, meta){
+	async registerObject(ctx, objectApiName, data, meta) {
         if(this.onRegister && _.isFunction(this.onRegister)){
             await this.onRegister(data)
         }
         await ctx.broker.call('metadata.add', {key: cacherKey(objectApiName), data: data}, {meta: meta});
-        ctx.broker.emit("metadata.objects.inserted", {objectApiName: objectApiName, isInsert: true});
-        ctx.broker.emit(`@${objectApiName}.metadata.objects.inserted`, {objectApiName: objectApiName, isInsert: true, data: data});
+
+		// 为每个对象 setTimeout 延时执行
+		const registerObjectMemEntry = this.registerObjectMemEntry;
+		let timeoutId = registerObjectMemEntry.get(objectApiName);
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+		}
+		timeoutId = setTimeout(function(){
+			ctx.broker.emit("metadata.objects.inserted", {objectApiName: objectApiName, isInsert: true});
+			ctx.broker.emit(`@${objectApiName}.metadata.objects.inserted`, {objectApiName: objectApiName, isInsert: true, data: data});
+			registerObjectMemEntry.delete(objectApiName);
+		}, DELAY_MESSAGE_OF_OBJECT_CHANGED);
+		registerObjectMemEntry.set(objectApiName, timeoutId);
         return true;
-    }
+	}
 
     async get(ctx: any): Promise<MetadataObject> {
         return await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
@@ -44,8 +61,8 @@ export class ActionHandlers {
         const objects =  await ctx.broker.call('metadata.filter', {key: cacherKey("*")}, {meta: ctx.meta});
         if(datasource){
             return _.filter(objects, (object)=>{
-                return object.metadata?.datasource == datasource
-            })
+                return object.metadata?.datasource == datasource;
+            });
         }
         return objects
     }
@@ -57,7 +74,7 @@ export class ActionHandlers {
         const objectApiName = ctx.params.data.name;
         const data = ctx.params.data;
         const meta = ctx.meta;
-        return await this.registerObject(ctx, objectApiName, data, meta)
+        return await this.registerObject(ctx, objectApiName, data, meta);
     }
 
     async addConfig(ctx: any): Promise<boolean>{
@@ -116,7 +133,7 @@ export class ActionHandlers {
     async getOriginalObject(ctx: any): Promise<boolean>{
         return await getOriginalObject(ctx, ctx.params.objectApiName);
     }
-     
+
     async refresh(ctx){
         const { isClear, metadataApiNames } = ctx.params
         if(isClear){

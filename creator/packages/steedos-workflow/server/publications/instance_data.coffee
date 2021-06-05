@@ -2,7 +2,7 @@ Meteor.publish 'instance_data', (instanceId, box)->
 	unless this.userId
 		return this.ready()
 
-	unless instanceId
+	unless (instanceId && db.instances.find({_id: instanceId}).count())
 		return this.ready()
 
 	self = this;

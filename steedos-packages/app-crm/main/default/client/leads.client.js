@@ -6,7 +6,7 @@ Steedos.CRM.showLeadConvertForm = function (fields, formId, doc, onConfirm, titl
         backdrop: 'static',
         keyboard: true
     });
-}
+};
 
 Steedos.CRM.convertLead = function (record) {
     if (record.converted) {
@@ -154,7 +154,7 @@ Steedos.CRM.convertLead = function (record) {
             Steedos.CRM.alertLeadConvertedRecords(record);
         }
     })
-}
+};
 
 Steedos.CRM.alertLeadConvertedRecords = function (record) {
     const record_id = record._id;
@@ -205,4 +205,4 @@ Steedos.CRM.alertLeadConvertedRecords = function (record) {
             sweetAlert.close();
         }
     );
-}
+};
