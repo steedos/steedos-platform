@@ -14,7 +14,7 @@ function SteedosFormContainer(prop){
 		form.setMode(value);
 		console.log('form.setMode', value);
 	}
-	API.client.setUrl("http://192.168.3.2:5000");
+	API.client.setUrl(Steedos.absoluteUrl());
 	API.client.setUserId(Steedos.getUserId());
 	API.client.setToken(Steedos.getCookie("X-Auth-Token"));
 	API.client.setSpaceId(Steedos.getSpaceId());
