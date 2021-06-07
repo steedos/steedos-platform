@@ -473,9 +473,10 @@ function getObjectServiceActionsSchema() {
             }
         }
     };
-    return _.each(actions, function(action){
+    _.each(actions, function(action){
         delete action.params;
     });
+    return actions;
 }
 
 export function getObjectServiceSchema(serviceName, objectConfig) {
