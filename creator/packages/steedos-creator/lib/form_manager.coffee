@@ -29,7 +29,14 @@ FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related
 		if main_object_name == "objects"
 			defaultValue[relatedKey] = Creator.getObjectRecord().name
 		else
-			defaultValue[relatedKey] = {o: main_object_name, ids: [main_record_id]}
+			relatedObject = Creator.getObject(related_object_name);
+			if _.isString(relatedObject.fields[relatedKey].reference_to)
+				if relatedObject.fields[relatedKey].multiple
+					defaultValue[relatedKey] = [main_record_id]
+				else
+					defaultValue[relatedKey] = main_record_id
+			else
+				defaultValue[relatedKey] = {o: main_object_name, ids: [main_record_id]}
 	if !_.has(defaultValue, "company_id") && main_record?.company_id
 		defaultValue['company_id'] = main_record.company_id
 
