@@ -39,7 +39,10 @@ module.exports = {
                 }
             }
         }else if(filters._id && !filters._id.$ne){
-            workflowNotifications.push(objectql.getWorkflowNotification(filters._id));
+            let notification = objectql.getWorkflowNotification(filters._id);
+            if(notification){
+                workflowNotifications.push(notification);
+            }
         }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
             delete filters.object_name;
@@ -75,7 +78,10 @@ module.exports = {
                 }
             }
         }else if(filters._id && !filters._id.$ne){
-            workflowNotifications.push(objectql.getWorkflowNotification(filters._id));
+            let notification = objectql.getWorkflowNotification(filters._id);
+            if(notification){
+                workflowNotifications.push(notification);
+            }
         }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
             delete filters.object_name;
@@ -111,7 +117,10 @@ module.exports = {
                 }
             }
         }else if(filters._id && !filters._id.$ne){
-            workflowNotifications.push(objectql.getWorkflowNotification(filters._id));
+            let notification = objectql.getWorkflowNotification(filters._id);
+            if(notification){
+                workflowNotifications.push(notification);
+            }
         }else if(filters.object_name){
             workflowNotifications = objectql.getObjectWorkflowNotifications(filters.object_name);
             delete filters.object_name;
