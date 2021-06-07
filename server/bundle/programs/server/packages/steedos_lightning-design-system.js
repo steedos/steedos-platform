@@ -8,10 +8,9 @@ var WebApp = Package.webapp.WebApp;
 var WebAppInternals = Package.webapp.WebAppInternals;
 var main = Package.webapp.main;
 var meteorInstall = Package.modules.meteorInstall;
-var meteorBabelHelpers = Package['babel-runtime'].meteorBabelHelpers;
 var Promise = Package.promise.Promise;
 
-var require = meteorInstall({"node_modules":{"meteor":{"steedos:lightning-design-system":{"server.js":function(require){
+var require = meteorInstall({"node_modules":{"meteor":{"steedos:lightning-design-system":{"server.js":function module(require){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //

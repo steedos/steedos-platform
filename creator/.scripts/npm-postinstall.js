@@ -22,6 +22,8 @@ execSync('rm -rf ./node_modules/bcrypt');
 execSync('cp -r .scripts/iconv-lite/* node_modules/iconv-lite/');
 
 execSync('rm -rf node_modules/@steedos');
+execSync('rm -rf node_modules/steedos-server');
+execSync('rm -rf ../apps/*/node_modules/steedos-server');
 if (process.platform == "win32") {
     execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos')+' '+ path.join(process.cwd(), '/../node_modules/@steedos'));
 }else{

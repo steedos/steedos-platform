@@ -8,7 +8,7 @@ var meteorInstall = Package.modules.meteorInstall;
 var Promise = Package.promise.Promise;
 var fetch = Package.fetch.fetch;
 
-var require = meteorInstall({"node_modules":{"meteor":{"dynamic-import":{"server.js":function(require,exports,module){
+var require = meteorInstall({"node_modules":{"meteor":{"dynamic-import":{"server.js":function module(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                                                             //
@@ -240,7 +240,7 @@ onMessage("client-refresh", () => {
 
 /////////////////////////////////////////////////////////////////////////////////
 
-},"cache.js":function(require,exports,module){
+},"cache.js":function module(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                                                             //
@@ -439,7 +439,7 @@ function flushSetMany() {
 
 /////////////////////////////////////////////////////////////////////////////////
 
-},"client.js":function(require,exports,module){
+},"client.js":function module(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                                                             //
@@ -625,7 +625,7 @@ function getNamespace(module, id) {
 
 /////////////////////////////////////////////////////////////////////////////////
 
-},"common.js":function(require,exports){
+},"common.js":function module(require,exports){
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                                                             //
@@ -637,7 +637,7 @@ exports.fetchURL = "/__meteor__/dynamic-import/fetch";
 
 /////////////////////////////////////////////////////////////////////////////////
 
-},"dynamic-versions.js":function(require,exports,module){
+},"dynamic-versions.js":function module(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                                                             //
@@ -736,7 +736,7 @@ if (global.addEventListener) {
 
 /////////////////////////////////////////////////////////////////////////////////
 
-},"security.js":function(require,exports,module){
+},"security.js":function module(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                                                             //

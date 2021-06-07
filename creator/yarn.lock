@@ -7459,15 +7459,10 @@ immediate@~3.0.5:
   resolved "https://registry.npm.taobao.org/immediate/download/immediate-3.0.6.tgz?cache=0&sync_timestamp=1591712549735&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimmediate%2Fdownload%2Fimmediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
   integrity sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=
 
-immer@1.10.0:
-  version "1.10.0"
-  resolved "https://registry.npm.taobao.org/immer/download/immer-1.10.0.tgz?cache=0&sync_timestamp=1599661912395&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimmer%2Fdownload%2Fimmer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
-  integrity sha1-utZ2BbqcgQJ12R4cKkfUWC6YKG0=
-
-immer@^4.0.1:
-  version "4.0.2"
-  resolved "https://registry.npm.taobao.org/immer/download/immer-4.0.2.tgz?cache=0&sync_timestamp=1599661912395&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimmer%2Fdownload%2Fimmer-4.0.2.tgz#9ff0fcdf88e06f92618a5978ceecb5884e633559"
-  integrity sha1-n/D834jgb5Jhill4zuy1iE5jNVk=
+immer@1.10.0, immer@^4.0.1, immer@^5.3.6:
+  version "5.3.6"
+  resolved "https://registry.npm.taobao.org/immer/download/immer-5.3.6.tgz#51eab8cbbeb13075fe2244250f221598818cac04"
+  integrity sha1-Ueq4y76xMHX+IkQlDyIVmIGMrAQ=
 
 import-cwd@^2.0.0:
   version "2.1.0"
