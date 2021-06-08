@@ -20,6 +20,28 @@ function SteedosFormContainer(prop){
 	API.client.setUserId(Steedos.getUserId());
 	API.client.setToken(Steedos.getCookie("X-Auth-Token"));
 	API.client.setSpaceId(Steedos.getSpaceId());
+	let _submitter = submitter;
+	if(_submitter !== false && !_submitter){
+		_submitter = {
+			render: (_, dom) => <div tabIndex="-1"
+									 className="ant-drawer ant-drawer-bottom ant-drawer-open no-mask"
+									 style={{height:"60px"}}>
+				<div className="ant-drawer-content-wrapper">
+					<div className="ant-drawer-content">
+						<div className="ant-drawer-wrapper-body">
+							<div className="ant-drawer-body" style={{padding: "12px", textAlign: "center"}}>
+								<div className="ant-space ant-space-horizontal ant-space-align-center">
+									{dom}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	}
+
+
 	return (
 		<SteedosProvider iconPath="/assets/icons">
 			<Router>
@@ -30,23 +52,10 @@ function SteedosFormContainer(prop){
 					name={name}
 					mode={mode}
 					// onFinish={onFinish}
-					submitter={submitter}
+					submitter={_submitter}
 					afterUpdate = {afterUpdate}
 					afterInsert = {afterInsert}
 					isModalForm={isModalForm}
-					// submitter={{
-					// 	// render: (_, dom) => <FooterToolbar style={{height: "64px", lineHeight:"64px"}}>{dom}</FooterToolbar>
-					// 	// ,
-					// 	searchConfig: {
-					// 		resetText: '取消',
-					// 		submitText: '提交',
-					// 	},
-					// 	resetButtonProps: {
-					// 		onClick: () => {
-					// 			setFormMode('read')
-					// 		},
-					// 	},
-					// }}
 				></ObjectForm>
 			</Router>
 		</SteedosProvider>
