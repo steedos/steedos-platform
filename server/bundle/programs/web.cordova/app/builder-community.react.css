@@ -23759,8 +23759,8 @@ div.ant-typography-edit-content.ant-typography-rtl {
   border: none;
 }
 
-.ag-filter-toolpanel-instance-filter .ant-select,
-.ag-filter-toolpanel-instance-filter .ant-input-number {
+.ag-filter .ant-select,
+.ag-filter .ant-input-number {
   width: 100%;
 }
 
