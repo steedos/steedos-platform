@@ -112,6 +112,10 @@
             "type": "boolean",
             "description": "启用树状结构显示记录"
         },
+        "enable_enhanced_lookup": {
+            "type": "boolean",
+            "description": "启用增强lookup模式，当开启时，指向该对象的lookup字段会弹出窗口显示可选项！"
+        },
         "parent_field": {
             "type": "string",
             "description": "树状结构父字段"
@@ -423,7 +427,7 @@
                 },
                 "modal_mode": {
                     "type": "string",
-                    "description": "弹出框模式类型: 'dialog' | 'drawer' ",
+                    "description": "lookup字段弹出框模式: 'dialog' | 'drawer' ",
                     "enum": [
                         "dialog",
                         "drawer"
@@ -431,7 +435,7 @@
                 },
                 "table_schema": {
                     "type": ["string", "object"],
-                    "description": "弹出框表格定义，可以定义为列表视图名称或列表属性"
+                    "description": "lookup字段弹出框表格定义，可以定义为列表视图名称或列表属性"
                 },
                 "rows": {
                     "type": "integer",

@@ -174,6 +174,18 @@
             "type": "string",
             "description": "引用的对象的字段，按照此字段去查找相关记录"
         },
+        "modal_mode": {
+            "type": "string",
+            "description": "lookup字段弹出框模式: 'dialog' | 'drawer' ",
+            "enum": [
+                "dialog",
+                "drawer"
+            ]
+        },
+        "table_schema": {
+            "type": ["string", "object"],
+            "description": "lookup字段弹出框表格定义，可以定义为列表视图名称或列表属性"
+        },
         "rows": {
             "type": "integer",
             "description": "多行文本默认行数"
