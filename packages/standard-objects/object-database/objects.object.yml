@@ -352,6 +352,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
   customize:
     columns:
       - label
@@ -368,6 +369,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
   system:
     columns:
       - label
@@ -384,6 +386,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
   deleted:
     columns:
       - label
@@ -401,6 +404,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
 actions: 
   show_object: 
     label: Preview
