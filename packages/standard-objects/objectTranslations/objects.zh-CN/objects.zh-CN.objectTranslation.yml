@@ -83,6 +83,14 @@ fields:
     label: 允许编辑单个字段
     help: 
     description: 
+  enable_tree:
+    label: 启用树状结构显示记录
+    help: 
+    description: 
+  enable_enhanced_lookup:
+    label: 启用增强查找模式
+    help: 当启用时，与此对象关联的查找字段将以弹出窗口的形式显示其选项。
+    description: 
   description:
     label: 备注
     help: 

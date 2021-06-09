@@ -126,6 +126,16 @@ fields:
     defaultValue: true
     label: Enable Single Field Edit
     group: Switch
+  # enable_tree:
+  #   type: boolean
+  #   label: Enable Tree
+  #   inlineHelpText: Enable a tree structure to display records
+  #   group: Switch
+  enable_enhanced_lookup:
+    type: boolean
+    label: Enable Enhanced Lookup
+    inlineHelpText: When enabled, the lookup field associated with this object displays its options as a pop-up window.
+    group: Switch
   # enable_trash:
   #   type: boolean
   # enable_space_global:
