@@ -22,6 +22,9 @@ Template.steedos_object_listview.helpers({
 	},
 	sideBar: function () {
 		return this.sideBar;
+	},
+	pageSize: function(){
+		return this.pageSize;
 	}
 })
 

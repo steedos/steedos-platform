@@ -316,7 +316,8 @@ Template.creator_list_wrapper.events
 		Creator.executeAction objectName, this
 
 	'click .export-data-grid': (event, template)->
-		template.$(".dx-datagrid-export-button").click()
+		window.open()
+#		template.$(".dx-datagrid-export-button").click()
 
 	'click .btn-filter-list': (event, template)->
 		$(event.currentTarget).toggleClass("slds-is-selected")

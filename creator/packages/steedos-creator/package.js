@@ -371,6 +371,9 @@ Package.onUse(function (api) {
 	api.addAssets('assets/logo-square.png', 'client');
 	api.addAssets('assets/logo-square.en-us.png', 'client');
 
+	api.addFiles('client/views/detail_realted_object_list.html', 'client');
+	api.addFiles('client/views/detail_realted_object_list.coffee', 'client');
+
 	api.export(['permissionManagerForInitApproval', 'uuflowManagerForInitApproval'], ['server']);
 
 });
