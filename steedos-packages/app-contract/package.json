@@ -1,6 +1,6 @@
 {
   "name": "@steedos/app-contracts",
-  "version": "2.0.13",
+  "version": "2.0.14",
   "description": "contract-management-system",
   "main": "package.service.js",
   "private": false,
@@ -28,10 +28,10 @@
   },
   "author": "Jack Zhuang",
   "devDependencies": {
-    "@steedos/app-crm": "^2.0.13",
-    "@steedos/service-metadata-server": "^2.0.13",
-    "@steedos/service-package-loader": "^2.0.13",
-    "@steedos/service-steedos-server": "^2.0.13",
+    "@steedos/app-crm": "^2.0.14",
+    "@steedos/service-metadata-server": "^2.0.14",
+    "@steedos/service-package-loader": "^2.0.14",
+    "@steedos/service-steedos-server": "^2.0.14",
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.2.0",
     "nodemon": "^1.19.1",
