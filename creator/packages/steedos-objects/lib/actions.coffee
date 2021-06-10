@@ -152,7 +152,10 @@ if Meteor.isClient
 									isOpenerRemove = true
 									gridContainer = window.opener.$(".gridContainer.#{gridObjectNameClass}")
 							try
-								window.gridRef.current.api.refreshServerSideStore()
+								if FlowRouter.current().route.path.endsWith("/:record_id")
+									FlowRouter.reload();
+								else
+									window.gridRef.current.api.refreshServerSideStore()
 							catch _e
 								console.error(_e);
 							if gridContainer?.length
