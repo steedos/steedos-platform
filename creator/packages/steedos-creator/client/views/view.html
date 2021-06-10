@@ -121,7 +121,7 @@
 										<div class="">
 											{{#if detail_info_visible}}
 												{{#if showReactForm}}
-													{{> steedos_form mode='read' name=cmFormId objectApiName=object_name recordId=recordId}}
+													{{> steedos_form mode='read' name=cmFormId objectApiName=object_name recordId=recordId afterUpdate=afterUpdate}}
 												{{else}}
 													{{#if showForm}}
 														{{#autoForm collection=collection type="disabled" id="viewRecordForm" schema=schema doc=record}}

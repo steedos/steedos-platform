@@ -1,4 +1,4 @@
-import { bootStrapExpress } from '../routes'
+import { bootStrapExpress, exportExcelExpress } from '../routes'
 const Future = require('fibers/future');
 const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
@@ -208,6 +208,7 @@ export class Core {
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
         app.use(bootStrapExpress);
+        app.use(exportExcelExpress);
         app.use(steedosProcess.processExpress)
         app.use(coreExpress);
 

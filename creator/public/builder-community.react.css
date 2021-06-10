@@ -23764,6 +23764,24 @@ div.ant-typography-edit-content.ant-typography-rtl {
   width: 100%;
 }
 
+.creator-grid-wrap .ag-theme-balham .ag-root-wrapper {
+  border: none;
+}
+.ag-theme-balham .ag-filter-toolpanel-search {
+  display: none;
+}
+.ag-theme-balham .ag-filter-toolpanel-group-level-0 {
+  border-top: none;
+}
+.ag-theme-balham .ag-group-title-bar {
+  background-color: transparent;
+}
+.ag-theme-balham .ag-filter-toolpanel-instance-filter {
+  border-top: none;
+  border-bottom: none;
+  margin-top: 0;
+}
+
 /**
  ****************************
  * Generic Styles
@@ -29795,4 +29813,11 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   display: flex;
   align-items: center;
   padding: 0px 7px 0px 2px;
+}
+
+.type-image .ant-image .image-item {
+  width: auto;
+}
+.ant-image-preview-wrap .ant-image-preview-body .ant-image-preview-img-wrapper .ant-image-preview-img {
+  display: inline;
 }

@@ -25,6 +25,12 @@ Template.steedos_object_listview.helpers({
 	},
 	pageSize: function(){
 		return this.pageSize;
+	},
+	onUpdated: function(){
+		return this.onUpdated;
+	},
+	checkboxSelection: function(){
+		return this.checkboxSelection;
 	}
 })
 

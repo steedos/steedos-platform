@@ -128,3 +128,14 @@ AutoForm.hooks creatorCellEditForm:
 			# recordName为空时不会更新TempNavLabel
 			Creator.updateTempNavLabel(result.object_name, recordUrl, recordName)
 ,false
+
+onSuccess = (formType,result)->
+	if FlowRouter.current().route.path.endsWith("/:record_id")
+		FlowRouter.reload();
+	else
+		window.gridRef.current.api.refreshServerSideStore()
+
+
+AutoForm.hooks creatorAddRelatedForm:
+	onSuccess: onSuccess
+,false

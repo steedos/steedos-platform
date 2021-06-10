@@ -517,7 +517,9 @@ Template.creator_view.helpers
 		return this.name == 'standard_edit'
 	showReactForm: ()->
 		return Creator.getObject(Session.get("object_name"))?.version >= 2
-
+	afterUpdate: ()->
+		return ()->
+			FlowRouter.reload();
 Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->
@@ -591,10 +593,40 @@ Template.creator_view.events
 		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 
 	'click .add-related-object-record': (event, template) ->
-		object_name = event.currentTarget.dataset.objectName
-		collection_name = Creator.getObject(object_name).label
-		collection = "Creator.Collections.#{Creator.getObject(object_name)._collection_name}"
+		related_object_name = event.currentTarget.dataset.objectName
+		relateObject = Creator.getObject(related_object_name)
+
+		collection_name = relateObject.label
+		collection = "Creator.Collections.#{Creator.getObject(related_object_name)._collection_name}"
 		current_object_name = Session.get("object_name")
+		ids = Creator.TabularSelectedIds[related_object_name]
+		initialValues = {};
+		if ids?.length
+			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
+			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
+			record_id = ids[0]
+			doc = Creator.odata.get(related_object_name, record_id)
+			initialValues = doc
+			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
+			Session.set 'cmShowAgainDuplicated', true
+		else
+			defaultDoc = FormManager.getRelatedInitialValues(current_object_name, Session.get("record_id"), related_object_name);
+			if !_.isEmpty(defaultDoc)
+				initialValues = defaultDoc
+		if relateObject?.version >= 2
+			return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+				name: "#{related_object_name}_standard_new_form",
+				objectApiName: related_object_name,
+				title: '新建',
+				initialValues: initialValues,
+				afterInsert: (result)->
+					setTimeout(()->
+						FlowRouter.reload();
+					, 1);
+					return true;
+			}, null, {iconPath: '/assets/icons'})
+
+
 
 #		relatedKey = ""
 #		relatedValue = Session.get("record_id")
@@ -602,19 +634,16 @@ Template.creator_view.events
 #			if object_name == related_obj.object_name
 #				relatedKey = related_obj.related_field_name
 		
-		ids = Creator.TabularSelectedIds[object_name]
+
 		if ids?.length
 			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
 			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
-			record_id = ids[0]
-			doc = Creator.odata.get(object_name, record_id)
-			Session.set 'cmDoc', doc
+			Session.set 'cmDoc', initialValues
 			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 			Session.set 'cmShowAgainDuplicated', true
 		else
-			defaultDoc = FormManager.getRelatedInitialValues(current_object_name, Session.get("record_id"), object_name);
-			if !_.isEmpty(defaultDoc)
-				Session.set 'cmDoc', defaultDoc
+			if !_.isEmpty(initialValues)
+				Session.set 'cmDoc', initialValues
 
 #		else if current_object_name == "objects"
 #			recordObjectName = Creator.getObjectRecord().name
@@ -708,6 +737,7 @@ Template.creator_view.events
 				$(".btn.creator-edit").click()
 
 	'change .input-file-upload': (event, template)->
+		mainObjectApiName = Session.get "object_name";
 		Creator.relatedObjectFileUploadHandler event, ()->
 			dataset = event.currentTarget.dataset
 			parent = dataset?.parent
@@ -716,9 +746,10 @@ Template.creator_view.events
 			if Steedos.isMobile()
 				Template.list.refresh getRelatedListTemplateId(targetObjectName)
 			else
-				gridContainerWrap = $(".related-object-tabular")
-				dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
-				Template.creator_grid.refresh dxDataGridInstance
+				window.gridRefs["related_listview_#{mainObjectApiName}_#{targetObjectName}"].current.api.refreshServerSideStore()
+#				gridContainerWrap = $(".related-object-tabular")
+#				dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
+#				Template.creator_grid.refresh dxDataGridInstance
 
 	
 	'click .slds-tabs_card .slds-tabs_default__item': (event) ->

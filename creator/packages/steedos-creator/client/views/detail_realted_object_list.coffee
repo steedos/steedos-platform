@@ -1,6 +1,5 @@
 Template.detail_realted_object_list.helpers
 	related_object_name: ()->
-		console.log("this.data.related_object_name", this.related_object_name)
 		return this.related_object_name
 	name: ()->
 		return "related_listview_" + Session.get("object_name") + '_' + this.related_object_name
@@ -24,7 +23,6 @@ Template.detail_realted_object_list.helpers
 	onModelUpdated: ()->
 		recordsTotal = this.recordsTotal
 		related_object_name = this.related_object_name
-		console.log("onModelUpdated22 recordsTotal", recordsTotal)
 		return (event)->
 			if recordsTotal
 				recordsTotalVal = recordsTotal.get();
@@ -32,3 +30,6 @@ Template.detail_realted_object_list.helpers
 				recordsTotal.set recordsTotal
 	pageSize: ()->
 		return 5;
+	onUpdated: ()->
+		return ()->
+			FlowRouter.reload();

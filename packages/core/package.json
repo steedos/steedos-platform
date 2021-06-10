@@ -44,6 +44,7 @@
     "graphql-type-json": "^0.2.2",
     "js-yaml": ">=3.13.1",
     "jsen": "^0.6.6",
+    "json2xls": "^0.1.2",
     "mongodb": "^3.0.8",
     "odata-v4-mongodb": "^0.1.12",
     "pg": "^7.8.2",
