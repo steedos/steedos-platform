@@ -74,7 +74,13 @@ const exportRecordData = async function (req, res) {
                     //开头空一列
                     let parsedRecord = {"": null};
 
-                    for (let fieldName in record) {
+                    let keys;
+                    if(fields && fields.length >0){
+                        keys = fields;
+                    }else{
+                        keys = _.keys(record);
+                    }
+                    for (let fieldName of keys) {
                         let fieldConfig = fieldConfigs[fieldName];
                         let fieldValue = record[fieldName]
 
@@ -83,9 +89,9 @@ const exportRecordData = async function (req, res) {
                         }
                         if (fieldValue || fieldValue == false) {
                             // record[fieldName] = await key2value(fieldValue, fieldConfig);
-                            parsedRecord[fieldConfig.label] = await key2value(fieldValue, fieldConfig, userSession);
+                            parsedRecord = Object.assign(parsedRecord, {[fieldConfig.label]: await key2value(fieldValue, fieldConfig, userSession)});
                         } else {
-                            parsedRecord[fieldConfig.label] = null
+                            parsedRecord = Object.assign(parsedRecord, {[fieldConfig.label]: null});
                         }
                     }
                     
@@ -206,7 +212,12 @@ const getOptionLabel = function (optionValue, options) {
     let option = _.find(options, function (o) {
         return o.value == optionValue
     });
-    return option.label;
+
+    if(option && option.label){
+        return option.label;
+    }else{
+        return optionValue;
+    }
 }
 
 const key2value = async function (fieldValue, fieldConfig, userSession) {
@@ -223,7 +234,8 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
 
             if (fieldConfig.multiple) {
                 for (let i = 0; i < fieldValue.length; i++) {
-                    fieldValue[i] = getOptionLabel(fieldValue[i], options);
+                    let newValue = getOptionLabel(fieldValue[i], options);
+                    fieldValue[i] = newValue
                 }
                 return fieldValue;
             } else {
@@ -245,7 +257,11 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
                 filters[1] = "=";
                 filters[2] = fieldValue;
                 let ref_record = await ref_coll.find({ filters: filters });
-                return ref_record[0].name;
+                if(ref_record && ref_record.length == 1){
+                    return ref_record[0].name;
+                }else{
+                    return fieldValue;
+                }
             } else {
                 filters[1] = "in";
                 filters[2] = fieldValue;
@@ -253,7 +269,9 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
 
                 for (let i = 0; i < fieldValue.length; i++) {
                     let _record = _.find(ref_record, { [filters[0]]: fieldValue[i] })
-                    fieldValue[i] = _record.name;
+                    if(_record){
+                        fieldValue[i] = _record.name
+                    }
                 }
                 return fieldValue;
             }
@@ -265,7 +283,6 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
             return fieldValue;
     }
 }
-
 exportExcelExpress.get('/api/record/export/:objectName', requireAuthentication, function (req, res) {
     return Fiber(function () {
         return exportRecordData(req, res);

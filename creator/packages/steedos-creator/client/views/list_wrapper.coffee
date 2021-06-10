@@ -1,3 +1,91 @@
+Filters = require("@steedos/filters")
+
+FilterTypesMap = {
+	'equals': '=',
+	'notEqual': '!=',
+	'contains': 'contains',
+	'notContains': 'notcontains',
+	'startsWith': 'startswith',
+	'endsWith': '=',
+	'lessThan': '<',
+	'lessThanOrEqual': '<=',
+	'greaterThan': '>',
+	'greaterThanOrEqual': '>=',
+	'empty': 'empty'
+}
+
+filterModelToOdataFilters = (filterModel)->
+	filters = []
+	_.forEach(filterModel, (value, key)->
+		if value.type == 'between'
+			if(value.filterType == "number")
+				filters.push([key, "between", [value.numberFrom, value.numberTo]]);
+			else
+				if value.filter
+					filters.push([key, value.type, value.filter]);
+				else
+					filters.push([key, "between", [value.dateFrom, value.dateTo]]);
+		else
+			if !_.isEmpty(value.filter)
+				filter = [key, FilterTypesMap[value.type], value.filter];
+				filters.push(filter);
+			else if value.operator
+				filter = [];
+				if value.condition1
+					filter.push([key, FilterTypesMap[value.condition1.type], value.condition1.filter]);
+
+				filter.push(value.operator.toLocaleLowerCase());
+				if value.condition2
+					filter.push([key, FilterTypesMap[value.condition2.type], value.condition2.filter]);
+
+				filters.push(filter);
+
+	)
+	return filters
+
+
+gridExportExcel = ()->
+	grid = window.gridRef.current;
+	select = [];
+	_.each(grid.props.columnDefs, (columnDef)->
+		if columnDef && columnDef.field
+			select.push(columnDef.field)
+	);
+
+	sort = [];
+	_.forEach(grid.api.getSortModel(), (sortField)->
+		sort.push([sortField.colId, sortField.sort])
+	);
+
+	list_view_id = Session.get("list_view_id")
+	object_name = Session.get("object_name")
+	is_related = false
+	related_object_name = null
+	record_id = null
+	defaultFilters = Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id)
+	userFilters = filterModelToOdataFilters(grid.api.getFilterModel());
+	filters = _.compact([].concat(defaultFilters).concat(userFilters))
+	$filter = Filters.formatFiltersToODataQuery(filters)
+
+	filename = Creator.getObject(object_name).label + "-" + Creator.getListView(object_name, list_view_id)?.label
+	orders = [];
+	_.map(sort,(value)->
+		if value[1]=='desc'
+			order2 = value[0] + ' desc'
+		else
+			order2 = value[0]
+		orders.push(order2);
+	)
+	order = orders.join(",")
+
+	url = "/api/record/export/#{object_name}?$select=#{select.toString()}&filename="+filename
+
+	if sort.length > 0
+		url = url + "&$orderby=" + order;
+
+	if $filter
+		url = url + "&$filter=" + $filter;
+	window.open url
 
 Template.creator_list_wrapper.onRendered ->
 	self = this
@@ -316,7 +404,7 @@ Template.creator_list_wrapper.events
 		Creator.executeAction objectName, this
 
 	'click .export-data-grid': (event, template)->
-		window.open()
+		gridExportExcel();
 #		template.$(".dx-datagrid-export-button").click()
 
 	'click .btn-filter-list': (event, template)->
