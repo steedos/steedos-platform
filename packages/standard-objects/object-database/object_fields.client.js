@@ -82,6 +82,10 @@ function getFieldsByType(doc, type, dataType) {
       // fields.push({ name: 'multiple'}); image多选时，单个字段编辑窗口样式异常,暂时不支持
       break;
     }
+    case 'url': {
+      fields.push({ name: 'show_as_qr'});
+      break;
+    }
     default:
       break;
   }
