@@ -246,6 +246,10 @@ fields:
     label: 过滤器默认字段
     help: 
     description: 
+  show_as_qr:
+    label: 显示为二维码
+    help: 
+    description: 
   inlineHelpText:
     label: 提示文本
     help: 
