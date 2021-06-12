@@ -23549,11 +23549,6 @@ ora@^3.4.0:
     strip-ansi "^5.2.0"
     wcwidth "^1.0.1"
 
-oracledb@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/oracledb/-/oracledb-4.0.1.tgz#1580be9d932a394bfe9cb5f913dfb41b21849cb8"
-  integrity sha512-IHgPS7+7kLHDEGP/L8o3Kh+rSyV6FArX1ob4xcOMc6hWt4EJVSVbHpPIpChGMOgb91x33AAb+kW9lVkqQIwRsg==
-
 ordered-read-streams@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ordered-read-streams/-/ordered-read-streams-1.0.1.tgz#77c0cb37c41525d64166d990ffad7ec6a0e1363e"
