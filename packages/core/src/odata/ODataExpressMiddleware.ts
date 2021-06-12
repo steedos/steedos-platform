@@ -192,7 +192,9 @@ const createObjectData = async function (req: Request, res: Response) {
             res.status(401).send(setErrorMessage(404, collection, key));
         }
         if (userId) {
-            // bodyParams.space = spaceId;
+            if(collection.datasource && collection.datasource.name === "default"){
+                bodyParams.space = spaceId;
+            }
             if (spaceId == 'guest') {
                 delete bodyParams.space;
             }
