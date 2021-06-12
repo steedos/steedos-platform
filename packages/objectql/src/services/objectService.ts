@@ -578,9 +578,6 @@ module.exports = {
                     }
                 }
                 
-                let gobj = generateSettingsGraphql(objectConfig);
-                this.settings.graphql = gobj;
-                ctx.emit('$services.changed');
             }
         }
     },

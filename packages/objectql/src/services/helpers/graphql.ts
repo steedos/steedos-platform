@@ -198,7 +198,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
 }
 
 export function correctName(name: string) {
-    return name.replace(/\./g, '_');
+    return name.replace(/\./g, '_').replace(/\$/g, '_');
 }
 
 export function _getRelatedType(relatedFieldName, relatedObjName) {
