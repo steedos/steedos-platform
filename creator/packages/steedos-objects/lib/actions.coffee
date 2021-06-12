@@ -92,7 +92,10 @@ if Meteor.isClient
 						title: '编辑',
 						afterUpdate: ()->
 							setTimeout(()->
-								window.gridRef.current.api.refreshServerSideStore()
+								if FlowRouter.current().route.path.endsWith("/:record_id")
+									FlowRouter.reload()
+								else
+									window.gridRef.current.api.refreshServerSideStore()
 							, 1);
 							return true;
 					}, null, {iconPath: '/assets/icons'})
