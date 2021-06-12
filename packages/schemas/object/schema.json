@@ -684,6 +684,9 @@
                 },
                 "modal_mode": {
                     "type": "string"
+                },
+                "visible_on": {
+                    "type": "string"
                 }
             }
         },
