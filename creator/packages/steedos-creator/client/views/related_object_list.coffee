@@ -79,7 +79,7 @@ Template.related_object_list.helpers
 		related_object_name = Session.get "related_object_name"
 		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
 		columnFields = [];
-		_.each(related_list_item_props.columns, (fieldName)->
+		_.each(related_list_item_props?.columns, (fieldName)->
 			columnFields.push({fieldName: fieldName})
 		)
 		return columnFields;
