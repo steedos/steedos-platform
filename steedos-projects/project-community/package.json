@@ -38,7 +38,6 @@
     "moleculer-cli": "^0.7.1",
     "mssql": "5.1.2",
     "mysql": "2.18.1",
-    "oracledb": "4.0.1",
     "pg": "7.18.2",
     "redlock": "^4.2.0",
     "sqlite3": "4.2.0"
