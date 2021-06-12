@@ -157,7 +157,13 @@ Template.related_object_list.events
 			return window.gridRef.current.api.refreshServerSideStore()
 #			dxDataGridInstance = $(event.currentTarget).closest(".related_object_list").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
 #			Template.creator_grid.refresh(dxDataGridInstance)
-
+	'click .btn-export_list_view': (event, template)->
+		object_name = Session.get "object_name"
+		record_id = Session.get("record_id")
+		related_object_name = Session.get "related_object_name"
+		is_related = true;
+		list_view_id = Creator.getListView(related_object_name, "all")?._id
+		GridExport.excel(object_name, list_view_id, is_related, related_object_name, record_id, $(".related-main-record-name")[0].dataset.name)
 	'change .input-file-upload': (event, template)->
 		Creator.relatedObjectFileUploadHandler event, ()->
 			if Steedos.isMobile()

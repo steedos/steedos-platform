@@ -100,6 +100,7 @@ Package.onUse(function (api) {
 	api.addFiles('lib/object_recent.coffee', 'client');
 	api.addFiles('lib/filters_transform.coffee', 'client');
 	api.addFiles('lib/form_manager.coffee', 'client');
+	api.addFiles('lib/grid_export.coffee', 'client');
 
 	api.addFiles('server/methods/object_recent_viewed.coffee', 'server');
 	api.addFiles('server/methods/object_recent_record.coffee', 'server');
