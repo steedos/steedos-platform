@@ -104,12 +104,11 @@ Template.related_object_list.events
 		if object_name == 'objects'
 			record_id = template?.record?.get().name;
 		action_collection_name = relateObject.label
-		ids = Creator.TabularSelectedIds[related_object_name]
+		selectedRows = window.gridRef.current.api.getSelectedRows()
+
 		initialValues = {};
-		if ids?.length
-			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
-			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
-			record_id = ids[0]
+		if selectedRows?.length
+			record_id = selectedRows[0]._id;
 			doc = Creator.odata.get(related_object_name, record_id)
 			initialValues = doc
 		else
@@ -135,7 +134,7 @@ Template.related_object_list.events
 
 			}, null, {iconPath: '/assets/icons'})
 
-		if ids?.length
+		if selectedRows?.length
 			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
 			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
 			Session.set 'cmDoc', initialValues

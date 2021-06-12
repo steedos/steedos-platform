@@ -44,11 +44,22 @@ if Meteor.isClient
 		"standard_new": (object_name, record_id, fields)->
 			#TODO 使用对象版本判断
 			object = Creator.getObject(object_name);
+			initialValues={}
+			selectedRows = window.gridRef.current.api.getSelectedRows()
+			if selectedRows?.length
+				record_id = selectedRows[0]._id;
+				if record_id
+					initialValues = Creator.odata.get(object_name, record_id)
+
+			else
+				initialValues = FormManager.getInitialValues(object_name)
+
 			if object?.version >= 2
 				return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
 					name: "#{object_name}_standard_new_form",
 					objectApiName: object_name,
 					title: '新建',
+					initialValues: initialValues,
 					afterInsert: (result)->
 						if(result.length > 0)
 							record = result[0];
@@ -61,17 +72,14 @@ if Meteor.isClient
 
 				}, null, {iconPath: '/assets/icons'})
 			Session.set 'action_object_name', object_name
-			ids = Creator.TabularSelectedIds[object_name]
-			if ids?.length
+			if selectedRows?.length
 				# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
 				# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
-				record_id = ids[0]
-				doc = Creator.odata.get(object_name, record_id)
-				Session.set 'cmDoc', doc
+				Session.set 'cmDoc', initialValues
 				# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 				Session.set 'cmShowAgainDuplicated', true
 			else
-				Session.set 'cmDoc', FormManager.getInitialValues(object_name)
+				Session.set 'cmDoc', initialValues
 			Meteor.defer ()->
 				$(".creator-add").click()
 			return 
