@@ -6,7 +6,7 @@ const Fiber = require('fibers');
 const moment = require('moment');
 const json2xls = require('json2xls');
 const objectql = require('@steedos/objectql')
-const _ = require('underscore')
+const _ = require('lodash')
 export const exportExcelExpress = express.Router();
 
 const exportRecordData = async function (req, res) {
@@ -268,7 +268,9 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
                 let ref_record = await ref_coll.find({ filters: filters, fields: [filters[0], "name"] });
 
                 for (let i = 0; i < fieldValue.length; i++) {
-                    let _record = _.find(ref_record, { [filters[0]]: fieldValue[i] })
+                    let _record = _.find(ref_record, function(r){
+                        return r[filters[0]] == fieldValue[i]
+                    });
                     if(_record){
                         fieldValue[i] = _record.name
                     }
