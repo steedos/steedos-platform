@@ -1,6 +1,6 @@
 {
     "name": "@steedos/plugin-dingtalk",
-    "version": "2.0.15",
+    "version": "2.0.16",
     "private": false,
     "description": "",
     "publishConfig": {
@@ -21,7 +21,7 @@
     "license": "ISC",
     "dependencies": {
         "@salesforce/dev-config": "^1.4.4",
-        "@steedos/service-meteor-package-loader": "^2.0.15",
+        "@steedos/service-meteor-package-loader": "^2.0.16",
         "admin-lte": "^2.3.11",
         "bcrypt": "3.0.6",
         "bootstrap": "^3.3.7",

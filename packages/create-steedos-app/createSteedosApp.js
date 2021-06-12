@@ -66,6 +66,11 @@ function createProject(name) {
       projectConfig.name = projectName
       fs.outputJsonSync(path.join(projectDir, 'package.json'), projectConfig, { spaces: 4, EOL: '\r\n' })
       fs.removeSync(path.join(projectDir, projectConfigName))
+
+      const appConfig = fs.readJsonSync(path.join(templateProjectDir, 'steedos-app', 'package.json'))
+      // appConfig.name = projectName
+      fs.outputJsonSync(path.join(projectDir, 'steedos-app', 'package.json'), appConfig, { spaces: 4, EOL: '\r\n' })
+
       const gitignorePath = path.join(projectDir, '.gitignore')
       if (fs.existsSync(gitignorePath)) {
         // let data = fs.readFileSync(gitignorePath, 'utf8')

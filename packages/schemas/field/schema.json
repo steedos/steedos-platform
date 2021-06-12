@@ -182,6 +182,10 @@
                 "drawer"
             ]
         },
+        "show_as_qr": {
+            "type": "boolean",
+            "description": "显示为二维码"
+        },
         "table_schema": {
             "type": ["string", "object"],
             "description": "lookup字段弹出框表格定义，可以定义为列表视图名称或列表属性"
