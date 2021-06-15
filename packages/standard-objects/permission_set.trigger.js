@@ -114,7 +114,24 @@ module.exports = {
     },
     afterAggregate: async function () {
         if(_.isArray(this.data.values)){
+            let spaceId = this.spaceId;
             let filters = InternalData.parserFilters(this.query.filters);
+            if(_.has(filters, '_id') && this.data.values.length === 0){
+                const keys = await getSourcePermissionSetsKeys();
+                if(_.include(keys, filters._id) && spaceId){
+                    let dbPerms = await objectql.getObject("permission_set").directFind({filters: [['space', '=', spaceId], ['name', '=', filters._id]]});
+                    if(dbPerms && dbPerms.length > 0){
+                        return this.data.values = this.data.values.concat(dbPerms[0])
+                    }
+                }
+                if(this.userId){
+                    let lng = await getLng(this.userId);
+                    const permSet = await getLngInternalPermissionSet(lng);
+                    return this.data.values = this.data.values.concat(_.find(permSet, (doc)=>{
+                        return doc._id === filters._id
+                    }))
+                }
+            }
             if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
                 let lng = await getLng(this.userId);
                 this.data.values = this.data.values.concat((await getInternalPermissionSet(this.spaceId, lng, filters.type)))

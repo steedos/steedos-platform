@@ -226,7 +226,7 @@ module.exports = {
     afterFindOne: async function () {
         let id = this.id;
         if(id && _.isEmpty(this.data.values)){
-            Object.assign(this.data.values, getPermissionById(id))
+            Object.assign(this.data.values, await getPermissionById(id))
         }
     },
     beforeInsert: function(){

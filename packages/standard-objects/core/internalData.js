@@ -95,6 +95,7 @@ exports.findObjects = async function(userId, filters){
     let isSystem = query.is_system;
     let datasource = query.datasource;
     let name = query.name;
+    let _id = query._id;
     let objects = await getObjects(userId);
 
     if(datasource){
@@ -103,6 +104,10 @@ exports.findObjects = async function(userId, filters){
 
     if(name){
         objects = _.filter(objects, function(obj){ return obj.name === name})
+    }
+
+    if(_id){
+        objects = _.filter(objects, function(obj){ return obj._id === _id})
     }
 
     if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
