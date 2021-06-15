@@ -1,5 +1,6 @@
 import { SteedosTriggerContextConfig } from "./trigger";
 import { getSteedosSchema } from "./schema";
+import { getObjectServiceName } from '../services/index';
 
 export async function brokeEmitEvents(objectName: string, method: string, context: SteedosTriggerContextConfig) {
     if (method == 'insert' || method == 'update' || method == 'delete') {
@@ -32,7 +33,7 @@ export async function brokeEmitEvents(objectName: string, method: string, contex
             isDelete
         };
         if (schema.broker) {
-            await schema.broker.emit(`#${objectName}.${when}`, payload);
+            await schema.broker.emit(`${getObjectServiceName(objectName)}.${when}`, payload);
         }
     }
 
