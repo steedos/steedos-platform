@@ -195,6 +195,23 @@ fields:
           return "object_name eq '" + object_name + "'";
         }
       }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('workflow_notifications', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
+      }
     group: Approval Actions
   rejection_updates_field_actions:
     type: lookup
@@ -232,6 +249,23 @@ fields:
           var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
           return "object_name eq '" + object_name + "'";
         }
+      }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('workflow_notifications', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
       }
     group: Rejection Actions
 form:
