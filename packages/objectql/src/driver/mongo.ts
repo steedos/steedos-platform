@@ -269,10 +269,26 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
+    convertDataForOperate(data: any){
+        var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
+        const result = {};
+        const keys = _.keys(data);
+        _.each(keys, function(key){
+            const value = data[key];
+            if(_.isString(value) && regDate.test(value)){
+                result[key] = new Date(value);
+            }else{
+                result[key] = value;
+            }
+        })
+        return result;
+    }
+
     async insert(tableName: string, data: Dictionary<any>) {
         await this.connect();
         data._id = data._id || new ObjectId().toHexString();
         let collection = this.collection(tableName);
+        data = this.convertDataForOperate(data);
         let result = await collection.insertOne(data);
         return result.ops[0];
     }
@@ -291,6 +307,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         }
 
         const options = {$set: {}};
+        data = this.convertDataForOperate(data);
         const keys = _.keys(data);
         _.each(keys, function(key){
             if(_.include(['$inc','$min','$max','$mul'], key)){
@@ -318,6 +335,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         } else {
             selector = { _id: id };
         }
+        data = this.convertDataForOperate(data);
         let result = await collection.updateOne(selector, { $set: data });
         if (result.result.ok) {
             result = await collection.findOne(selector);
@@ -332,6 +350,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         await this.connect();
         let collection = this.collection(tableName);
         let mongoFilters = this.getMongoFilters(queryFilters);
+        data = this.convertDataForOperate(data);
         return await collection.update(mongoFilters, { $set: data }, { multi: true });
     }
 
@@ -352,10 +371,12 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async directInsert(tableName: string, data: Dictionary<any>) {
+        data = this.convertDataForOperate(data);
         return this.insert(tableName, data)
     }
 
     async directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>) {
+        data = this.convertDataForOperate(data);
         return this.update(tableName, id, data)
     }
 
