@@ -117,6 +117,7 @@ export const getConfig = (objectName: string, _id: string) => {
 }
 
 export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName) => {
+    addRouterFiles(filePath);
     await addObjectConfigFiles(filePath, datasourceApiName, serviceName);
     await addAppConfigFiles(filePath, serviceName);
     addClientScriptFiles(filePath);
@@ -124,7 +125,6 @@ export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName
     // addObjectI18nFiles(filePath);
     await addTranslationsFiles(filePath);
     await addObjectTranslationsFiles(filePath);
-    addRouterFiles(filePath);
     // addConfigDataFiles(filePath);
     addConfigFiles('report', filePath);
     addConfigFiles('flow', filePath);
