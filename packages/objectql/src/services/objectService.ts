@@ -2,7 +2,7 @@ import { SteedosObjectType } from '../types/object';
 import { getDataSource } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
 import _ = require('underscore');
-import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver } from './helpers';
+import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver, dealWithRelatedFields } from './helpers';
 import { getObjectServiceName } from '.';
 import { jsonToObject } from '../metadata-register/object';
 import { extend } from '../util';
@@ -531,6 +531,7 @@ module.exports = {
                 }
             })
             settings.graphql = generateSettingsGraphql(objectConfig);
+            dealWithRelatedFields(objectConfig, settings.graphql);
             let graphqlActions = getGraphqlActions(objectConfig);
             schema.actions = _.extend({}, graphqlActions, schema.actions);
         }

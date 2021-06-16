@@ -23,7 +23,6 @@ const EXPAND_SUFFIX = '__expand';
 const DISPLAY_PREFIX = '_display';
 export const RELATED_PREFIX = '_related';
 const GRAPHQL_ACTION_PREFIX = 'graphql_';
-const Future = require('fibers/future');
 
 
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {
@@ -74,9 +73,7 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
 }
 
 export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
-    let steedosSchema = getSteedosSchema();
     let objectName = objectConfig.name;
-    let obj = steedosSchema.getObject(objectName);
     let fields = objectConfig.fields;
     let type = `type ${objectName} { _id: String `;
     let resolvers = {};
@@ -194,8 +191,20 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     }
 
 
-    let detailsInfo = Future.fromPromise(obj.getDetailsInfo()).wait();
-    let lookupsInfo = Future.fromPromise(obj.getLookupDetailsInfo()).wait();
+    type += '}';
+    return {
+        type: type,
+        resolvers: resolvers
+    }
+}
+
+export async function dealWithRelatedFields(objectConfig: SteedosObjectTypeConfig, graphql) {
+    let steedosSchema = getSteedosSchema();
+    let objectName = objectConfig.name;
+    let obj = steedosSchema.getObject(objectName);
+    // 拆开 使用单独的promise处理
+    let detailsInfo = await obj.getDetailsInfo();
+    let lookupsInfo = await obj.getLookupDetailsInfo();
     let relatedInfos = detailsInfo.concat(lookupsInfo);
     for (const info of relatedInfos) {
         if (!info.startsWith('__')) {
@@ -203,16 +212,14 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
             let detailObjectApiName = infos[0];
             let detailFieldName = infos[1];
             let relatedFieldName = correctName(`${RELATED_PREFIX}_${detailObjectApiName}_${detailFieldName}`);
-            type += _getRelatedType(relatedFieldName, detailObjectApiName);
-            resolvers[objectName][relatedFieldName] = getRelatedResolver(objectName, detailObjectApiName, detailFieldName, '');
+            let relatedType = _getRelatedType(relatedFieldName, detailObjectApiName);
+            if (graphql.type.indexOf(relatedType) > -1) { // 防止重复定义field
+                continue;
+            }
+            graphql.type = graphql.type.substring(0, graphql.type.length - 1) + relatedType + '}';
+            graphql.resolvers[objectName][relatedFieldName] = getRelatedResolver(objectName, detailObjectApiName, detailFieldName, '');
 
         }
-    }
-
-    type += '}';
-    return {
-        type: type,
-        resolvers: resolvers
     }
 }
 
