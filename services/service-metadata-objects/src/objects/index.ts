@@ -121,7 +121,7 @@ export async function refreshObject(ctx, objectApiName) {
         return null;
     }
 
-    objectConfig = _.defaultsDeep({}, ..._.reverse(objectConfigs), objectConfig)
+    objectConfig = _.defaultsDeep({}, ..._.sortBy(objectConfigs, function(o){return o.isMain ? 1:-1}), objectConfig)
 
     const _objectConfig = _.clone(objectConfig)
 
