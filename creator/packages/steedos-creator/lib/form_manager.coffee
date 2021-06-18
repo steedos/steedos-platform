@@ -14,8 +14,14 @@ FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related
 	Creator.getRelatedList(main_object_name, main_record_id).forEach (related_obj) ->
 		if related_object_name == related_obj.object_name
 			relatedKey = related_obj.related_field_name
+	relatedObject = Creator.getObject(related_object_name);
+	mainSelect = 'company_id';
+	if relatedObject && relatedKey && relatedObject.fields[relatedKey] && relatedObject.fields[relatedKey].reference_to_field
+		mainSelect = mainSelect + ',' + relatedObject.fields[relatedKey].reference_to_field
+	main_record = Creator.odata.get(main_object_name, main_record_id, mainSelect)
 
-	main_record = Creator.odata.get(main_object_name, main_record_id, 'company_id')
+	if main_record && main_record[relatedObject.fields[relatedKey].reference_to_field]
+		main_record_id = main_record[relatedObject.fields[relatedKey].reference_to_field]
 #
 #	related_object = Creator.getObject(related_object_name);
 #
