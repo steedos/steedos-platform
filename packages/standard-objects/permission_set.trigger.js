@@ -116,6 +116,15 @@ module.exports = {
         if(_.isArray(this.data.values)){
             let spaceId = this.spaceId;
             let filters = InternalData.parserFilters(this.query.filters);
+            let filterType = "";
+            try {
+                filterType = filters.type || filters["$and"][0].type;
+            } catch (error) {
+                
+            }
+            if(_.has(filters, '_id') && this.data.values.length > 0){
+                return this.data.values
+            }
             if(_.has(filters, '_id') && this.data.values.length === 0){
                 const keys = await getSourcePermissionSetsKeys();
                 if(_.include(keys, filters._id) && spaceId){
@@ -134,7 +143,7 @@ module.exports = {
             }
             if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
                 let lng = await getLng(this.userId);
-                this.data.values = this.data.values.concat((await getInternalPermissionSet(this.spaceId, lng, filters.type)))
+                this.data.values = this.data.values.concat((await getInternalPermissionSet(this.spaceId, lng, filterType)))
             }
             
         }
