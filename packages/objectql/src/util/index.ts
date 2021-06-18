@@ -25,6 +25,7 @@ export * from './transform'
 export * from './permission_shares'
 export * from './suffix'
 export * from './locale'
+export * from './field'
 
 exports.loadJSONFile = (filePath: string)=>{
     return JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
