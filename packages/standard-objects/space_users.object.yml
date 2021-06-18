@@ -143,11 +143,14 @@ fields:
       function () {
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
         var result = [];
+        var is_space_admin = Creator.USER_CONTEXT.user.is_space_admin;
         profiles.forEach(function (item) {
-          result.push({
-            label: item.label,
-            value: item.name
-          });
+            if(!(item.name === 'admin' && !is_space_admin)){
+              result.push({
+                label: item.label,
+                value: item.name
+              });
+            }
         });
         return result;
       }
@@ -367,8 +370,6 @@ permission_set:
     allowRead: true
     modifyCompanyRecords: true
     viewAllRecords: true
-    uneditable_fields:
-      - profile
   customer:
     allowCreate: false
     allowDelete: false
