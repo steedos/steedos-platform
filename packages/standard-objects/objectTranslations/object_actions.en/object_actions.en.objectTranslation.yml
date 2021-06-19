@@ -29,6 +29,16 @@ fields:
     label: 'On'
     help: 
     description: 
+  type: 
+    label: Type
+    options:
+      - label: Custom JavaScript
+        value: script
+      - label: Print Word Template
+        value: word-print
+    defaultValue: script
+  word_template:
+    label: Word Template
   todo:
     label: Execute Script
     help: 

@@ -1,5 +1,5 @@
 Filters = require("@steedos/filters")
-
+@ObjectGrid = {}
 @GridExport = {}
 
 FilterTypesMap = {
@@ -43,6 +43,13 @@ filterModelToOdataFilters = (filterModel)->
 				filters.push(filter);
 
 	)
+	return filters
+
+ObjectGrid.getFilters = (object_name, list_view_id, is_related, related_object_name, record_id)->
+	grid = window.gridRef.current;
+	defaultFilters = Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id)
+	userFilters = filterModelToOdataFilters(grid.api.getFilterModel());
+	filters = _.compact([].concat(defaultFilters).concat(userFilters))
 	return filters
 
 GridExport.excel = (object_name, list_view_id, is_related, related_object_name, record_id, mainRecordName)->
