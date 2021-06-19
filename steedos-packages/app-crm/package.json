@@ -1,6 +1,6 @@
 {
     "name": "@steedos/app-crm",
-    "version": "2.0.19",
+    "version": "2.0.20",
     "description": "",
     "main": "package.service.js",
     "scripts": {
@@ -14,9 +14,9 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@steedos/service-metadata-server": "^2.0.19",
-        "@steedos/service-package-loader": "^2.0.19",
-        "@steedos/service-steedos-server": "^2.0.19",
+        "@steedos/service-metadata-server": "^2.0.20",
+        "@steedos/service-package-loader": "^2.0.20",
+        "@steedos/service-steedos-server": "^2.0.20",
         "dotenv-flow": "^3.1.0",
         "nodemon": "^1.19.1"
     },
