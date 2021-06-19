@@ -1153,6 +1153,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         }
 
+        let paramRecordId; // 用于记录原始的id参数值
+        if (method === 'findOne' || method === 'update' || method === 'delete') {
+            paramRecordId = args[1];
+        }
+
         // 判断处理工作区权限，公司级权限，owner权限
         if (this._datasource.enable_space) {
             this.dealWithFilters(method, args);
@@ -1168,11 +1173,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
         } else {
             userSession = args[args.length - 1]
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
-            await this.runBeforeTriggers(method, Object.assign({}, beforeTriggerContext, { id: recordId }))
+            if (paramRecordId) {
+                beforeTriggerContext = Object.assign({} , beforeTriggerContext, { id: paramRecordId });
+            }
+            await this.runBeforeTriggers(method, beforeTriggerContext)
             await runValidationRules(method, beforeTriggerContext, args[0], userSession)
 
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
-            afterTriggerContext = Object.assign({}, afterTriggerContext, { id: recordId };
+            if (paramRecordId) {
+                afterTriggerContext = Object.assign({}, afterTriggerContext, { id: paramRecordId });
+            }
             let previousDoc = clone(afterTriggerContext.previousDoc);
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
