@@ -173,7 +173,8 @@ if Meteor.isClient
 									gridContainer = window.opener.$(".gridContainer.#{gridObjectNameClass}")
 							try
 								if FlowRouter.current().route.path.endsWith("/:record_id")
-									FlowRouter.reload();
+									if object_name != Session.get("object_name")
+										FlowRouter.reload();
 								else
 									window.gridRef.current.api.refreshServerSideStore()
 							catch _e
