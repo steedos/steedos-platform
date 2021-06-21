@@ -1194,6 +1194,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 Object.assign(afterTriggerContext, { data: { values: values } })
             }
             // console.log("==returnValue==", returnValue);
+            if(method == 'insert' && _.has(returnValue, '_id')){
+                afterTriggerContext = Object.assign({}, afterTriggerContext, { id: returnValue._id });
+            }
             if (method == "update") {
                 if (returnValue) {
                     await this.runAfterTriggers(method, afterTriggerContext)
