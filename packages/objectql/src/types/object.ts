@@ -1040,7 +1040,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.runTriggerActions(when, context)
     }
 
-    private async getTriggerContext(when: string, method: string, args: any[]) {
+    private async getTriggerContext(when: string, method: string, args: any[], recordId?: string) {
 
         let userSession = args[args.length - 1]
 
@@ -1063,7 +1063,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         if (when === 'after' && (method === 'update' || method === 'delete')) {
-            context.previousDoc = await this.findOne(context.id, {}, userSession)
+            context.previousDoc = await this.findOne(recordId, {}, userSession)
         }
 
         return context
@@ -1179,7 +1179,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             await this.runBeforeTriggers(method, beforeTriggerContext)
             await runValidationRules(method, beforeTriggerContext, args[0], userSession)
 
-            let afterTriggerContext = await this.getTriggerContext('after', method, args)
+            let afterTriggerContext = await this.getTriggerContext('after', method, args, paramRecordId)
             if (paramRecordId) {
                 afterTriggerContext = Object.assign({}, afterTriggerContext, { id: paramRecordId });
             }
