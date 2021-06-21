@@ -32,7 +32,7 @@ import { createObjectService } from '../metadata-register/objectServiceManager';
 import { getObjectDispatcher } from '../services/index';
 import path = require('path');
 let Fiber = require('fibers');
-
+declare var Creator: any;
 export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
     MeteorMongo = 'meteor-mongo',
@@ -227,6 +227,15 @@ export class SteedosDataSourceType implements Dictionary {
             //     self.setObject(object.name, object);
             // }
             await self.setObject(objectConfig.name, objectConfig);
+
+            if(this.name === "default"){
+                try {
+                    const _db = Creator.createCollection(objectConfig)
+	                Creator.Collections[_db._name] = _db
+                } catch (error) {
+                    // console.log(`error`, error) //此处无需打印日志，@steedos/core 在init Creator 时，会兼容此部分的异常逻辑。
+                }
+            }
         }
 
         // _.each(objects, (object) => {

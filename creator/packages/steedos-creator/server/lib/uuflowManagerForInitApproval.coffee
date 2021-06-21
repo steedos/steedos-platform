@@ -1,4 +1,6 @@
 _eval = require('eval')
+objectql = require('@steedos/objectql');
+
 uuflowManagerForInitApproval = {}
 
 uuflowManagerForInitApproval.check_authorization = (req) ->
