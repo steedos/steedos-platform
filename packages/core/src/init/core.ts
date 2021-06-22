@@ -36,6 +36,20 @@ const extendSimpleSchema = () => {
     });
 }
 
+export const loadClientScripts = ()=>{
+    try {
+        let clientCodes = getClientBaseObject();
+        let clientScripts = objectql.getClientScripts();
+        _.each(clientScripts, function (scriptFile) {
+            let code = fs.readFileSync(scriptFile, 'utf8');
+            clientCodes = clientCodes + '\r\n;' + code + '\r\n;'
+        });
+        WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
+    } catch (error) {
+        
+    }
+}
+
 export const initCreator = async () => {
     let allObjects = await objectql.getDataSource('meteor').getObjects();
     let allDefautObjects = await objectql.getDataSource('default').getObjects();
@@ -96,17 +110,7 @@ export const initCreator = async () => {
                 }
             });
 
-            let clientCodes = getClientBaseObject();
-
-            let clientScripts = objectql.getClientScripts();
-            _.each(clientScripts, function (scriptFile) {
-
-                let code = fs.readFileSync(scriptFile, 'utf8');
-
-				clientCodes = clientCodes + '\r\n;' + code + '\r\n;'
-
-            });
-            WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
+            loadClientScripts()
 
             _.each(allObjects, function (obj) {
                 const objectConfig = obj.metadata;

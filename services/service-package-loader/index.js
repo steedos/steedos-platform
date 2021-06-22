@@ -64,6 +64,7 @@ module.exports = {
                 const datasource = objectql.getDataSource(datasourceName);
                 await datasource.init();
                 await triggerLoader.load(this.broker, packagePath, name);
+                core.loadClientScripts();
                 return;
             }).promise();
         }
