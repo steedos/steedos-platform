@@ -102,7 +102,7 @@ fields:
     # omit: true
     # hidden: true
     is_wide: true
-    visible_on: "{{formData.type === 'script' ? true: false}}"
+    visible_on: "{{formData.type != 'word-print' ? true: false}}"
 paging:
   enabled: false
 list_views:
