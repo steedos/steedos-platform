@@ -254,6 +254,10 @@ fields:
     group: script
     blackbox: true
     is_wide: true
+  form.onValuesChange:
+    type: code
+    rows: 3
+    is_wide: true
   form.initialValues:
     type: code
     rows: 3

@@ -166,6 +166,8 @@ fields:
     label: Validate
   form.beforeInsert:
     label: Before Insert
+  form.onValuesChange:
+    label: On Change
   form.beforeUpdate:
     label: Before Update
   form.beforeDelete:
