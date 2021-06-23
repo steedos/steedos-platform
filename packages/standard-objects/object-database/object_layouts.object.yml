@@ -67,10 +67,10 @@ fields:
     type: grid
     blackbox: true
     is_wide: true
-  buttons.$.button_name:
-    type: lookup
     depend_on:
       - object_name
+  buttons.$.button_name:
+    type: lookup
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
         if (!(values != null ? values.object_name : void 0)) {
@@ -95,6 +95,8 @@ fields:
     type: grid
     is_wide: true
     required: true
+    depend_on:
+      - object_name
   fields.$:
     label: Field
     blackbox: true
@@ -105,8 +107,6 @@ fields:
     multiple: false
     is_wide: false
     required: true
-    depend_on:
-      - object_name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               if (!(values != null ? values.object_name : void 0)) {
@@ -133,10 +133,11 @@ fields:
     type: grid
     blackbox: true
     is_wide: true
-  related_lists.$.related_field_fullname:
-    type: lookup
     depend_on:
       - object_name
+      - related_lists.$.related_field_fullname
+  related_lists.$.related_field_fullname:
+    type: lookup
     optionsFunction: !!js/function |
       function(values) {
         if (!(values != null ? values.object_name : void 0)) {
@@ -158,9 +159,6 @@ fields:
     reference_to: object_fields
     create: false
     multiple: true
-    depend_on:
-      - object_name
-      - related_lists.$.related_field_fullname
     optionsFunction: !!js/function |
       function(values) {
         if(!this.template){return [];}
@@ -184,9 +182,6 @@ fields:
     reference_to: object_fields
     create: false
     multiple: true
-    depend_on:
-      - object_name
-      - related_lists.$.related_field_fullname
     optionsFunction: !!js/function |
       function(values) {
         if(!this.template){return [];}
@@ -217,9 +212,6 @@ fields:
     label: Buttons
     type: lookup
     is_wide: true
-    depend_on:
-      - object_name
-      - related_lists.$.related_field_fullname
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
         if(!this.template){return [];}
