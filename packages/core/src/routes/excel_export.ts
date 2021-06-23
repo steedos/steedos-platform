@@ -1,5 +1,6 @@
 import querystring = require('querystring');
 import odataV4Mongodb = require('odata-v4-mongodb');
+import steedosI18n = require("@steedos/i18n");
 import { requireAuthentication } from './';
 const express = require("express");
 const Fiber = require('fibers');
@@ -20,14 +21,20 @@ const exportRecordData = async function (req, res) {
             filename = "导出"
         }
         let spaceId = userSession.spaceId;
-
+        
         const objectName = urlParams.objectName
         let key = urlParams.objectName;
-
+        
         const collection = await objectql.getObject(objectName);
         if (!collection) {
             res.status(404).send({ msg: `collection not exists: ${objectName}` })
         }
+        
+        let lng = userSession.language;
+        if(lng){
+            steedosI18n.translationObject(lng, collection.name, collection)
+        }
+
         removeInvalidMethod(queryParams);
         let qs = decodeURIComponent(querystring.stringify(queryParams as querystring.ParsedUrlQueryInput));
         if (qs) {
@@ -71,8 +78,7 @@ const exportRecordData = async function (req, res) {
                 for (let i=0; i<entities.length; i++) {
                     let record = entities[i]
                     delete record._id;
-                    //开头空一列
-                    let parsedRecord = {"": null};
+                    let parsedRecord = { };
 
                     let keys;
                     if(fields && fields.length >0){
