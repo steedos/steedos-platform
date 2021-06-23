@@ -34,28 +34,30 @@ function parserFilters(filters){
         _.each(filters,function(filter){
             Object.assign(query, parserFilters(filter))
         })
-    }else if(filters[1] && filters[1] == '='){
-        key = filters[0]
-        value = filters[2]
-        Object.assign(query, {[key]: value})
-    }else if(filters[1] && (filters[1] == '!=' || filters[1] == '<>')){
-        key = filters[0]
-        value = filters[2]
-        Object.assign(query, {[key]: {$ne: value}})
-    }else if(filters[1] && filters[1] == 'in'){
-        key = filters[0]
-        value = filters[2]
-        Object.assign(query, {[key]: {$in: value}})
-    }else{
-        _.each(filters,function(filter){
-            let parsedFilters = parserFilters(filter);
-            if(query._id && query._id.$ne && parsedFilters._id && parsedFilters._id.$ne){
-                parsedFilters._id.$ne = [parsedFilters._id.$ne]
-                parsedFilters._id.$ne = parsedFilters._id.$ne.concat(query._id.$ne);
-                delete query._id;
-            }
-            Object.assign(query, parsedFilters)
-        })
+    }else if(_.isArray(filters) && filters.length > 0){
+        if(filters[1] && filters[1] == '='){
+            key = filters[0]
+            value = filters[2]
+            Object.assign(query, {[key]: value})
+        }else if(filters[1] && (filters[1] == '!=' || filters[1] == '<>')){
+            key = filters[0]
+            value = filters[2]
+            Object.assign(query, {[key]: {$ne: value}})
+        }else if(filters[1] && filters[1] == 'in'){
+            key = filters[0]
+            value = filters[2]
+            Object.assign(query, {[key]: {$in: value}})
+        }else{
+            _.each(filters,function(filter){
+                let parsedFilters = parserFilters(filter);
+                if(query._id && query._id.$ne && parsedFilters._id && parsedFilters._id.$ne){
+                    parsedFilters._id.$ne = [parsedFilters._id.$ne]
+                    parsedFilters._id.$ne = parsedFilters._id.$ne.concat(query._id.$ne);
+                    delete query._id;
+                }
+                Object.assign(query, parsedFilters)
+            })
+        }
     }else{
         _.each(filters, function (v, k) {
             if(_.isArray(v) && v.length > 0){
