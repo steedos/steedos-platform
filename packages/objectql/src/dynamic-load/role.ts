@@ -31,7 +31,7 @@ export const getSourceRolesKeys = function(){
 }
 
 export const getSourceRole = function(api_name){
-    return getConfig(ROLES_KEY, api_name);
+    return clone(getConfig(ROLES_KEY, api_name));
 }
 
 export const getSourceRoles = function(){

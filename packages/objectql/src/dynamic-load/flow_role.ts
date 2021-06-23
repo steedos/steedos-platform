@@ -31,7 +31,7 @@ export const getSourceFlowRolesKeys = function(){
 }
 
 export const getSourceFlowRole = function(api_name){
-    return getConfig(FLOWROLES_KEY, api_name);
+    return clone(getConfig(FLOWROLES_KEY, api_name));
 }
 
 export const getSourceFlowRoles = function(){

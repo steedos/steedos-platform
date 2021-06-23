@@ -26,7 +26,7 @@ const addObjectValidationRule = function(objectName: string, json: any){
 
 export const getObjectValidationRules = function(objectName: string){
 
-    return _ValidationRules[objectName]
+    return clone(_ValidationRules[objectName])
 }
 
 export const getAllObjectValidationRules = function(){
