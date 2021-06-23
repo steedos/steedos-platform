@@ -91,6 +91,7 @@ fields:
   buttons.$.visible_on:
     label: Visible on
     type: textarea
+    rows: 1
   fields:
     type: grid
     is_wide: true
@@ -129,6 +130,7 @@ fields:
   fields.$.visible_on:
     label: Visible on
     type: textarea 
+    rows: 1
   related_lists:
     type: grid
     blackbox: true
@@ -232,10 +234,12 @@ fields:
   related_lists.$.filters:
     label: Filters
     type: textarea
+    rows: 1
     is_wide: true
   related_lists.$.visible_on:
     label: Visible on
     type: textarea
+    rows: 1
 list_views:
   all:
     columns:

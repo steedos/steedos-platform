@@ -1,0 +1,136 @@
+extend: accounts
+name: accounts
+label: 客户
+list_views:
+  recent:
+    label: 最近查看
+    columns:
+      - field: name
+        width: 300
+        wrap: true
+      - field: type
+        width: 120
+      - field: rating
+        width: 120
+      - field: shipping_address
+        width: 400
+      - field: owner
+        width: 120
+    filter_scope: space
+    filter_fields:
+      - type
+      - industry
+      - rating
+      - name
+  all:
+    label: 所有客户
+    columns:
+      - field: name
+        width: 300
+        wrap: true
+      - field: type
+        width: 120
+      - field: rating
+        width: 120
+      - field: shipping_address
+        width: 400
+      - field: owner
+        width: 120
+      - field: mobile
+      - field: salutation
+    filter_scope: space
+    filter_fields:
+      - type
+      - industry
+      - rating
+      - name
+  allCustomers:
+    label: 所有顾客
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+          return [
+            ["type","=","Customer"]
+          ];
+      }
+    columns:
+      - field: name
+        width: 300
+        wrap: true
+      - field: type
+        width: 120
+      - field: rating
+        width: 120
+      - field: shipping_address
+        width: 400
+      - field: owner
+        width: 120
+    filter_scope: space
+    filter_fields:
+      - type
+      - industry
+      - name
+  hotRating:
+    label: 非常重要的客户
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+          return [
+            ["rating","=","hot"]
+          ];
+      }
+    columns:
+      - field: name
+        width: 300
+        wrap: true
+      - field: type
+        width: 120
+      - field: rating
+        width: 120
+      - field: shipping_address
+        width: 400
+      - field: owner
+        width: 120
+    filter_scope: space
+    filter_fields:
+      - type
+      - industry
+      - name
+  mine:
+    label: 我的客户
+    columns:
+      - field: name
+        width: 300
+        wrap: true
+      - field: type
+        width: 120
+      - field: rating
+        width: 120
+      - field: shipping_address
+        width: 400
+      - field: owner
+        width: 120
+    filter_scope: mine
+    filter_fields:
+      - type
+      - industry
+      - rating
+      - name
+  mine3:
+    label: 我的客户3
+    columns:
+      - field: name
+        width: 300
+        wrap: true
+      - field: type
+        width: 120
+      - field: rating
+        width: 120
+      - field: shipping_address
+        width: 400
+      - field: owner
+        width: 120
+    filter_scope: mine
+    filter_fields:
+      - type
+      - industry
+      - rating
+      - name
