@@ -1,0 +1,24 @@
+name: my
+columns:
+  - field: name
+    wrap: false
+  - field: period__c
+    wrap: false
+  - field: ownership__c
+    wrap: false
+  - field: owner
+    wrap: false
+  - field: progress__c
+    wrap: false
+  - field: confidence__c
+    wrap: false
+filter_scope: mine
+filters: []
+label: 我的目标
+scrolling_mode: standard
+shared: true
+show_count: false
+sort:
+  - field_name: ownership__c
+    order: asc
+type: grid

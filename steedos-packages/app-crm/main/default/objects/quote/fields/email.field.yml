@@ -1,0 +1,6 @@
+name: email
+group: 准备用于
+inlineHelpText: 与报价关联的联系人电子邮件地址。如果可用，则在您添加联系人时自动填写。
+label: 电子邮件
+sort_no: 250
+type: email

@@ -1,0 +1,6 @@
+name: account_id
+inlineHelpText: 报价的业务机会所链接的客户名。
+label: 客户
+reference_to: accounts
+sort_no: 160
+type: lookup

@@ -1,0 +1,5 @@
+name: account_number
+hidden: true
+label: 客户编号
+sort_no: 290
+type: text

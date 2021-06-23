@@ -1,0 +1,23 @@
+name: all
+columns:
+  - field: name
+    wrap: false
+  - field: type__c
+    wrap: false
+  - field: project__c
+    wrap: false
+  - field: name
+    wrap: false
+filter_fields:
+  - name
+  - type__c
+  - project__c
+filter_scope: space
+label: 所有
+scrolling_mode: standard
+shared: true
+show_count: false
+sort:
+  - field_name: created
+    order: desc
+type: grid

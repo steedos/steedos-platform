@@ -1,51 +1,61 @@
 import { addObjectFieldConfig } from './field'
 import { addObjectButtonsConfig } from './button'
-var Fiber = require('fibers');
+import { addAppConfig, loadObjectLayoutMetadata, SteedosDataSourceType } from '..';
+import { addTabConfig } from './tabs';
 
 declare var Creator: any;
-declare var DDP: any;
-declare var DDPCommon: any;
 
-const hasCreator = function(){
-    return (typeof Creator != "undefined");
-}
-
-async function meteorFind(name, query?, options?){
-    if(!hasCreator()){
-        return [];
+export const preloadDBObjectFields = async function(datasource: SteedosDataSourceType){
+    const tableName = "object_fields";
+    if(datasource.name === 'meteor'){
+        Creator.Collections[tableName] = Creator.createCollection({name: tableName});
     }
-
-    Creator.Collections[name] = Creator.createCollection({name: name});
-    return await new Promise((resolve, reject) => {
-        Fiber(function () {
-            try {
-                let invocation = new DDPCommon.MethodInvocation({
-                    isSimulation: true,
-                    connection: null,
-                    randomSeed: DDPCommon.makeRpcSeed()
-                })
-                let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                    return Creator.Collections[name].find(query, options).fetch();
-                })
-                resolve(result);
-            } catch (error) {
-                reject(error)
-            }
-        }).run()
-    });
-}
-
-export const preloadDBObjectFields = async function(){
-    let fields: any = await meteorFind("object_fields", {});
+    let fields: any = await datasource.find(tableName, {});
     fields.forEach(element => {
         addObjectFieldConfig(element.object, element);
     });
 }
 
-export const preloadDBObjectButtons = async function(){
-    let buttons: any = await meteorFind("object_actions", {is_enable: true});
+export const preloadDBObjectButtons = async function(datasource: SteedosDataSourceType){
+    const tableName = "object_actions";
+    if(datasource.name === 'meteor'){
+        Creator.Collections[tableName] = Creator.createCollection({name: tableName});
+    }
+    let buttons: any = await datasource.find(tableName , {filters: ['is_enable','=',true]});
     buttons.forEach(element => {
         addObjectButtonsConfig(element.object, element);
     });
 }
 
+export const preloadDBApps = async function(datasource: SteedosDataSourceType){
+    const tableName = "apps";
+    if(datasource.name === 'meteor'){
+        Creator.Collections[tableName] = Creator.createCollection({name: tableName});
+    }
+    let apps: any = await datasource.find(tableName , {filters: ['visible','=',true]});
+    for await (const element of apps) {
+        await addAppConfig(element, `~database-${tableName}`);
+    }
+}
+
+export const preloadDBTabs = async function(datasource: SteedosDataSourceType){
+    const tableName = "tabs";
+    if(datasource.name === 'meteor'){
+        Creator.Collections[tableName] = Creator.createCollection({name: tableName});
+    }
+    let tabs: any = await datasource.find(tableName, {});
+    for await (const element of tabs) {
+        await addTabConfig(element, `~database-${tableName}`);
+    }
+}
+
+export const preloadDBObjectLayouts = async function(datasource: SteedosDataSourceType){
+    const tableName = "object_layouts";
+    if(datasource.name === 'meteor'){
+        Creator.Collections[tableName] = Creator.createCollection({name: tableName});
+    }
+    let objectLayouts: any = await datasource.find(tableName, {});
+    for await (const element of objectLayouts) {
+        await loadObjectLayoutMetadata(element, `~database-${tableName}`);
+    }
+}

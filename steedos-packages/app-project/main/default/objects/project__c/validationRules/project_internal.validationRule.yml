@@ -1,0 +1,5 @@
+name: project_internal
+active: false
+description: 非内部项目须指定客户
+error_condition_formula: ( NOT(internal__c) ) && ( ISBLANK(account__c._id) )
+error_message: 请注意：非内部项目须指定客户

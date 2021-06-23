@@ -1,0 +1,6 @@
+name: query
+type: master_detail
+label: Query
+reference_to: queries
+showIcon: false
+required: true

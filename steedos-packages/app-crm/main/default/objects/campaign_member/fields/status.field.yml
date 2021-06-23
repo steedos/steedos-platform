@@ -1,0 +1,11 @@
+name: status
+filterable: true
+label: 状态
+options:
+  - label: 已发送
+    value: Sent
+  - label: 已响应
+    value: Responded
+required: true
+sort_no: 240
+type: select

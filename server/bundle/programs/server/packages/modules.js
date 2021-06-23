@@ -684,7 +684,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "react",
-  "version": "16.13.1",
+  "version": "17.0.2",
   "main": "index.js"
 };
 
@@ -991,7 +991,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.23.36",
+  "version": "2.0.21",
   "main": "lib/index.js"
 };
 
@@ -1018,7 +1018,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "1.23.36",
+  "version": "2.0.21",
   "main": "lib/index.js"
 };
 
@@ -1035,6 +1035,60 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+}}},"service-meteor-package-loader":{"package.json":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/@steedos/service-meteor-package-loader/package.json                                   //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.exports = {
+  "name": "@steedos/service-meteor-package-loader",
+  "version": "2.0.21",
+  "main": "index.js"
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"index.js":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/@steedos/service-meteor-package-loader/index.js                                       //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.useNode();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}},"filters":{"package.json":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/@steedos/filters/package.json                                                         //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.exports = {
+  "name": "@steedos/filters",
+  "version": "2.0.21",
+  "main": "lib/index.js"
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"index.js":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/@steedos/filters/lib/index.js                                                         //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.useNode();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }}},"i18n":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1045,7 +1099,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.23.36",
+  "version": "2.0.21",
   "main": "lib/index.js"
 };
 
@@ -1072,7 +1126,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.23.36",
+  "version": "2.0.21",
   "main": "lib/index.js"
 };
 
@@ -1089,34 +1143,34 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"filters":{"package.json":function module(require,exports,module){
+}}}},"moleculer":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
-// node_modules/@steedos/filters/package.json                                                         //
+// node_modules/moleculer/package.json                                                                //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //
 module.exports = {
-  "name": "@steedos/filters",
-  "version": "1.23.36",
-  "main": "lib/index.js"
+  "name": "moleculer",
+  "version": "0.14.13",
+  "main": "index.js"
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"lib":{"index.js":function module(require,exports,module){
+},"index.js":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
-// node_modules/@steedos/filters/lib/index.js                                                         //
+// node_modules/moleculer/index.js                                                                    //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}}},"clone":{"package.json":function module(require,exports,module){
+}},"clone":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //

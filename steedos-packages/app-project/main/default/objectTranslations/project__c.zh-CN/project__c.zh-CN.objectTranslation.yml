@@ -1,0 +1,92 @@
+name: project__c
+label: 项目
+description: 
+fields:
+  account__c:
+    label: 客户
+    help: 
+    description: 
+  contract__c:
+    label: 合同
+    help: 
+    description: 
+  count_milestones_ok__c:
+    label: 里程碑完成数
+    help: 
+    description: 
+  count_milestones__c:
+    label: 里程碑总数
+    help: 
+    description: 
+  deadline__c:
+    label: 截止日期
+    help: 
+    description: 
+  description__c:
+    label: 简述
+    help: 
+    description: 
+  internal__c:
+    label: 内部项目
+    help: 
+    description: 
+  kickoff__c:
+    label: 启动日期
+    help: 
+    description: 
+  name:
+    label: 名称
+    help: 
+    description: 
+  open_issues__c:
+    label: 待解决问题
+    help: 
+    description: 
+  open_tasks__c:
+    label: 待完成任务
+    help: 
+    description: 
+  pencent_milestones__c:
+    label: 里程碑完成
+    help: 
+    description: 
+  project_manager__c:
+    label: 项目经理
+    help: 
+    description: 
+  project_program__c:
+    label: 项目集
+    help: 
+    description: 
+  status__c:
+    label: 项目状态
+    help: 
+    options:
+      - label: 待启动
+        value: to_be_signed
+        color: cfd3d7
+      - label: 开发中
+        value: developing
+        color: '4169E1'
+      - label: 已部署
+        value: deployed
+        color: EAB236
+      - label: 试运行
+        value: try_to_work
+        color: c11d25
+      - label: 运行中
+        value: working
+        color: f9e29d
+      - label: 已验收
+        value: accepted
+        color: 49d181
+    description: 
+groups:
+  任务与问题: 任务与问题
+listviews:
+  all:
+    label: 所有项目
+  my:
+    label: 我的项目
+  recent:
+    label: 最近查看

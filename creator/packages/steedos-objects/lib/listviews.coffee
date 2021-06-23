@@ -104,7 +104,7 @@ if Meteor.isClient
 			return
 		relatedListObjects = {}
 		relatedListNames = []
-		_object = Creator.Objects[object_name]
+		_object = Creator.getObject(object_name)
 		if _object
 			relatedList = _object.relatedList
 			if !_.isEmpty relatedList

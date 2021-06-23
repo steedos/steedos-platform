@@ -1,0 +1,15 @@
+name: project_id__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 项目
+omit: false
+readonly: false
+reference_to: project__c
+required: true
+searchable: false
+sort_no: 125
+sortable: true
+type: master_detail

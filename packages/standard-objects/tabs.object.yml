@@ -1,0 +1,119 @@
+name: tabs
+label: Tabs
+icon: apps
+hidden: true
+fields:
+  label:
+    inlineHelpText: This is the label of the tab, for web tabs only.
+    type: text
+    is_name: true
+  name:
+    label: Api Name
+    type: text
+  icon:
+    label: Icon
+    type: lookup
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var options;
+              options = [];
+
+              _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
+                return options.push({
+                  value: svg,
+                  label: svg,
+                  icon: svg
+                });
+              });
+
+              return options;
+            }
+  parent:
+    label: Parent
+    type: lookup
+    reference_to: tabs
+  mobile: 
+    label: Display on the Mobile
+    type: boolean
+  frame_height:
+    hidden: true
+    inlineHelpText: The height, in pixels of the tab frame. Required for frame and page tabs.
+    label: Height
+    type: number
+  has_sidebar:
+    hidden: true
+    inlineHelpText: Indicates if the tab displays the sidebar panel.
+    type: boolean
+  type: 
+    type: select
+    inlineHelpText: 作为上级选项卡时，无需设置类型
+    options:
+    - label: Object
+      value: object
+    - label: Url
+      value: url
+    - label: Page
+      value: page
+  object:
+    label: Object
+    type: lookup
+    reference_to: objects
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions()
+      }
+    filterable: true
+  url:
+    type: url
+    label: Url
+  is_new_window:
+    type: boolean
+  page:
+    type: text
+    label: Page
+  action_overrides:
+    type: text
+    hidden: true
+    inlineHelpText: A list of the action overrides that are assigned to the tab. Only one override is allowed per formFactor for a given tab.
+  description:
+    type: textarea
+    is_wide: true
+list_views:
+  all:
+    label: All Apps
+    filter_scope: space
+    columns:
+      - label
+      - name
+      - parent
+      - mobile
+      - type
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+form:
+  beforeEdit: !!js/function |
+    function(){
+      return Steedos.TabsManager.changeSchema(this.doc, this.schema, 'edit');
+    }
+  afterEdit: !!js/function |
+    function(){
+      return Steedos.TabsManager.changeSchema(this.doc, this.schema, 'edit');
+    }
+  beforeView: !!js/function |
+    function(){
+      Steedos.TabsManager.changeSchema(this.doc, this.schema, 'view');
+    }

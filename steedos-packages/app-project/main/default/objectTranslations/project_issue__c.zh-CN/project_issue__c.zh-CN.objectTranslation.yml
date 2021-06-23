@@ -1,0 +1,122 @@
+name: project_issue__c
+label: 问题
+description: 
+fields:
+  actual_resolution__c:
+    label: 实际解决日期
+    help: 
+    description: 
+  assigned_to__c:
+    label: 分派给
+    help: 
+    description: 
+  detail__c:
+    label: 内容
+    help: 
+    description: 
+  github__c:
+    label: 外部URL
+    help: 
+    description: 
+  name:
+    label: 问题名称
+    help: 
+    description: 
+  next_steps__c:
+    label: 下一步
+    help: 
+    description: 
+  planned_resolution__c:
+    label: 计划解决日期
+    help: 
+    description: 
+  priority__c:
+    label: 优先级
+    help: 
+    options:
+      - label: 高
+        value: High
+        color: c11d25
+      - label: 中
+        value: Medium
+        color: f9e29d
+      - label: 低
+        value: Low
+        color: 49d181
+    description: 
+  project_milestone__c:
+    label: 里程碑
+    help: 
+    description: 
+  project_task__c:
+    label: 项目任务
+    help: 
+    description: 
+  project__c:
+    label: 项目
+    help: 
+    description: 
+  requester__c:
+    label: 提出
+    help: 
+    description: 
+  request_date__c:
+    label: 提出日期
+    help: 
+    description: 
+  resolution_note__c:
+    label: 完成情况说明
+    help: 关于问题是怎么解决的备注说明
+    description: 
+  status__c:
+    label: 状态
+    help: 
+    options:
+      - label: 新建
+        value: Open
+        color: f9e29d
+      - label: 处理中
+        value: In-Process
+        color: '4169E1'
+      - label: 恶化
+        value: Escalated
+        color: c11d25
+      - label: 已解决
+        value: Resolved
+        color: 49d181
+      - label: 关闭
+        value: Closed
+        color: cfd3d7
+    description: 
+  type__c:
+    label: 问题类型
+    help: 
+    options:
+      - label: 预算
+        value: Budget
+      - label: 资源
+        value: Resource
+      - label: 范围
+        value: Scope
+      - label: 计划
+        value: Schedule
+      - label: 质量
+        value: Quality
+      - label: 风险
+        value: Risk
+      - label: 其他
+        value: Others
+      - label: 维护：Bug
+        value: Bug
+      - label: 维护：需求
+        value: Demand
+      - label: 维护：其他
+        value: Other Maintain
+    description: 
+listviews:
+  all:
+    label: 所有
+  my:
+    label: 分配给我的问题
+  recent:
+    label: 最近查看

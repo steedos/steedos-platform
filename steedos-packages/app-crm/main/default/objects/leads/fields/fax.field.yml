@@ -1,0 +1,5 @@
+name: fax
+hidden: true
+label: 传真
+sort_no: 270
+type: text

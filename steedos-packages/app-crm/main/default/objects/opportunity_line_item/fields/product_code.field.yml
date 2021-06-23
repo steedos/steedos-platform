@@ -1,0 +1,6 @@
+name: product_code
+data_type: text
+formula: product_id.product_code
+label: 产品代码
+sort_no: 200
+type: formula

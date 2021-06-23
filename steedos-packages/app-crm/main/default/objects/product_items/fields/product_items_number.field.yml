@@ -1,0 +1,9 @@
+name: product_items_number
+formula: 'PI-{0000}'
+index: true
+is_name: true
+label: 产品项编号
+readonly: true
+searchable: true
+sort_no: 100
+type: autonumber

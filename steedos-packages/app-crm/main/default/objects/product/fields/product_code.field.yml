@@ -1,0 +1,4 @@
+name: product_code
+label: 产品代码
+sort_no: 120
+type: text

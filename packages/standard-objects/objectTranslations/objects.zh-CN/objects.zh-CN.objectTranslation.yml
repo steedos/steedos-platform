@@ -83,10 +83,20 @@ fields:
     label: 允许编辑单个字段
     help: 
     description: 
+  enable_tree:
+    label: 启用树状结构显示记录
+    help: 
+    description: 
+  enable_enhanced_lookup:
+    label: 启用增强查找模式
+    help: 当启用时，与此对象关联的查找字段将以弹出窗口的形式显示其选项。
+    description: 
   description:
     label: 备注
     help: 
     description: 
+  version:
+    label: 版本
   sidebar:
     label: 左侧列表
     help: 
@@ -155,6 +165,8 @@ fields:
     label: 验证数据
   form.beforeInsert:
     label: 新增数据之前
+  form.onValuesChange:
+    label: 数据变化时
   form.beforeUpdate:
     label: 修改数据之前
   form.beforeDelete:

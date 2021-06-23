@@ -274,6 +274,11 @@ if Meteor.isClient
 			if related_object_fields
 				related_field = related_object_fields[related_field_name]
 
+			if related_field && related_field.reference_to_field
+				mainRecord = Creator.odata.get(object_name, record_id, related_field.reference_to_field);
+				if mainRecord && mainRecord[related_field.reference_to_field]
+					record_id = mainRecord[related_field.reference_to_field]
+
 			if related_field && (related_field.type == 'master_detail' or related_field.type == 'lookup')
 				if _.isFunction(related_field.reference_to)
 					if _.isArray(related_field.reference_to())

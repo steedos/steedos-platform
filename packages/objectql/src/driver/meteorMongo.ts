@@ -8,6 +8,7 @@ import { createFilter } from 'odata-v4-mongodb';
 import { createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 import { SteedosFieldDBType } from "./fieldDBType";
+import { ObjectId } from "mongodb";
 
 var Fiber = require('fibers');
 
@@ -400,8 +401,19 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         connection: null,
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
+
+                    const options = { $set: {} };
+                    const keys = _.keys(data);
+                    _.each(keys, function (key) {
+                        if (_.include(['$inc', '$min', '$max', '$mul'], key)) {
+                            options[key] = data[key];
+                        } else {
+                            options.$set[key] = data[key];
+                        }
+                    })
+
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.update(selector, { $set: data });
+                        collection.update(selector, options);
                         return collection.findOne(selector);
                     })
                     resolve(result);
@@ -535,8 +547,19 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         connection: null,
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
+
+                    const options = { $set: {} };
+                    const keys = _.keys(data);
+                    _.each(keys, function (key) {
+                        if (_.include(['$inc', '$min', '$max', '$mul'], key)) {
+                            options[key] = data[key];
+                        } else {
+                            options.$set[key] = data[key];
+                        }
+                    })
+
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.direct.update(selector, { $set: data });
+                        collection.direct.update(selector, options);
                         return collection.findOne(selector);
                     })
                     resolve(result);
@@ -599,5 +622,9 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                 }
             }).run()
         });
+    }
+
+    _makeNewID(tableName?: string) {
+        return new ObjectId().toHexString();
     }
 }

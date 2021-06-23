@@ -4,7 +4,7 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let triggers = InternalData.getObjectTriggers(filters.object, this.userId);
+            let triggers = await InternalData.getObjectTriggers(filters.object, this.userId);
             if(triggers){
                 this.data.values = this.data.values.concat(triggers)
             }
@@ -13,7 +13,7 @@ module.exports = {
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let triggers = InternalData.getObjectTriggers(filters.object, this.userId);
+            let triggers = await InternalData.getObjectTriggers(filters.object, this.userId);
             if(triggers){
                 this.data.values = this.data.values.concat(triggers)
             }
@@ -22,7 +22,7 @@ module.exports = {
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let triggers = InternalData.getObjectTriggers(filters.object, this.userId);
+            let triggers = await InternalData.getObjectTriggers(filters.object, this.userId);
             if(triggers){
                 this.data.values = this.data.values + triggers.length
             }
@@ -33,7 +33,7 @@ module.exports = {
             let id = this.id
             let objectName = id.substr(0, id.indexOf("."));
             if(objectName){
-                let trigger = InternalData.getObjectTrigger(objectName, this.userId, id);
+                let trigger = await InternalData.getObjectTrigger(objectName, this.userId, id);
                 if(trigger){
                     this.data.values = trigger;
                 }

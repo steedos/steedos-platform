@@ -1,0 +1,7 @@
+name: total_price
+data_type: currency
+formula: 'IF(discount == 0, subtotal, ROUND(subtotal * (1 - discount),2))'
+inlineHelpText: 行项目的销售价格和数量相乘再减去折扣。
+label: 总价
+sort_no: 130
+type: formula

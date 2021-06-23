@@ -1,0 +1,9 @@
+_id: apps_user_apikey
+name: Apps
+admin_menus:
+  - _id: app_charts
+    name: Charts
+    object_name: charts
+    parent: objects_manager
+    permission_sets:
+      - admin

@@ -27,12 +27,14 @@ module.exports = {
         Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
     }
   },
-  show_objectVisible: function(object_name, record_id, record_permissions){
+  show_objectVisible: function(object_name, record_id, record_permissions, record){
     if(!Creator.isSpaceAdmin()){
         return false
     }
-
-    var record = Creator.odata.get("objects", record_id, "is_deleted");
+    if(!record){
+        record = Creator.odata.get("objects", record_id, "is_deleted");
+    }
+    
     if(record && !record.is_deleted){
         return true;
     }
@@ -63,22 +65,24 @@ module.exports = {
         return toastr.error('复制失败: 未启用API');
     }
   },
-  copy_odataVisible: function(object_name, record_id, record_permissions){
+  copy_odataVisible: function(object_name, record_id, record_permissions, record){
     if(!Creator.isSpaceAdmin()){
         return false
     }
-
-    var record = Creator.odata.get("objects", record_id, "is_deleted");
+    if(!record){
+        record = Creator.odata.get("objects", record_id, "is_deleted");
+    }
     if(record && !record.is_deleted){
         return true;
     }
   },
-  standard_deleteVisible: function(object_name, record_id, record_permissions){
+  standard_deleteVisible: function(object_name, record_id, record_permissions, record){
     if(!Creator.isSpaceAdmin()){
         return false
     }
-
-    var record = Creator.odata.get("objects", record_id, "is_deleted");
+    if(!record){
+        record = Creator.odata.get("objects", record_id, "is_deleted");
+    }
     if(record && !record.is_deleted){
         return Creator.baseObject.actions.standard_delete.visible.apply(this, arguments);
     }

@@ -7,6 +7,7 @@
 > Only when you run the source code  in '/creator' folder of our platform, you need to install Meteor. If you use Steedos as a development tool, you do not need to install Meteor.
 
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
+- [Redis](https://redis.io/)
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
 - [Yarn](https://yarnpkg.com/en/) version >= 1.5 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
 
@@ -15,17 +16,14 @@
 - Clone this repository to your local.
 - Enter to the local folder of this repository by command line.
 - Run `yarn` on command line to install the dependent NPM packages.
-- And then run `yarn initSubmodules` to init the git submodules for this repository to the ‘apps’ folder.
 - Then run `yarn bootstrap` to auto clone git submodules for this repository and link them by [lerna](https://lerna.js.org/).
 - Start the MongoDB service.
 
-## Run One App That Linked To Source Code
+## Run Project
+- Run `yarn start` on the command line to start a community project
+- Run `yarn start-project-community` on the command line to start a community project
+- Run `yarn start-project-enterprise` on the command line to start a enterprise project
 
-The code in the folder '/apps' of this repository is some sample project that developed by Steedos.
-
-- Enter to the 'apps' folder of this repository by command line.
-- And enter to one app folder such as 'steedos-app-crm'.
-- Then you can start the service just by run `yarn start`.
 - Use your browser to access `http://127.0.0.1:5000`.
 
 > You do not need to run `yarn` on command line to install the dependent NPM packages, because all of the dependence are linked to the souce code or the node_modules of the parent folder.

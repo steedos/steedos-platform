@@ -1,0 +1,14 @@
+name: is_all_day__c
+filterable: true
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 全天会议
+omit: false
+readonly: false
+required: false
+searchable: false
+sort_no: 135
+sortable: false
+type: boolean

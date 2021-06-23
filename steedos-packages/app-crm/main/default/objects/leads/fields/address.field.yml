@@ -1,0 +1,7 @@
+name: address
+group: 地址信息
+is_wide: true
+label: 地址
+rows: 3
+sort_no: 240
+type: textarea

@@ -1,0 +1,4 @@
+name: discovery_completed
+label: 勘察结束
+sort_no: 220
+type: boolean

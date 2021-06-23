@@ -1,0 +1,6 @@
+name: agreement_id
+hidden: true
+label: 主协议
+reference_to: agreement
+sort_no: 300
+type: lookup

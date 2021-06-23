@@ -4,6 +4,7 @@ const objectql = require("@steedos/objectql");
 const i18n = require("@steedos/i18n");
 const auth = require("@steedos/auth");
 const InternalData = require('./core/internalData');
+const SERVICE_NAME = `~database-apps`;
 const permissions = {
     allowEdit: false,
     allowDelete: false,
@@ -16,8 +17,9 @@ const baseRecord = {
     record_permissions:permissions
 }
 
-const getLng = function(userId){
-    return Steedos.locale(userId, true);
+const getLng = async function(userId){
+    const userSession = await auth.getSessionByUserId(userId);
+    return userSession ? userSession.language : null;
 }
 
 module.exports = {
@@ -30,9 +32,9 @@ module.exports = {
             }
         }
         if(_.isArray(this.data.values)){
-            let lng = getLng(this.userId);
+            let lng = await getLng(this.userId);
             let self = this;
-            let allApps = clone(objectql.getAppConfigs());
+            let allApps = clone(await objectql.getAppConfigs(this.spaceId));
             let apps = {}
             _.each(allApps, function(app){
                 if(app.is_creator){
@@ -42,7 +44,7 @@ module.exports = {
             i18n.translationApps(lng, apps)
             _.each(apps, function(app){
                 app.name = app.label
-                if(!_.find(self.data.values, function(item){return item.code === app._id})){
+                if(!_.find(self.data.values, function(item){return item.code === app._id || item._id === app._id})){
                     self.data.values.push(Object.assign({code: app._id}, clone(app), baseRecord));
                 }
             })
@@ -57,9 +59,9 @@ module.exports = {
             }
         }
         if(_.isArray(this.data.values)){
-            let lng = getLng(this.userId);
+            let lng = await getLng(this.userId);
             let self = this;
-            let allApps = clone(objectql.getAppConfigs());
+            let allApps = clone(await objectql.getAppConfigs(this.spaceId));
             let apps = {}
             _.each(allApps, function(app){
                 if(app.is_creator){
@@ -69,7 +71,7 @@ module.exports = {
             i18n.translationApps(lng, apps)
             _.each(apps, function(app){
                 app.name = app.label
-                if(!_.find(self.data.values, function(item){return item.code === app._id})){
+                if(!_.find(self.data.values, function(item){return item.code === app._id || item._id === app._id})){
                     self.data.values.push(Object.assign({code: app._id}, clone(app), baseRecord));
                 }
             })
@@ -82,8 +84,8 @@ module.exports = {
     afterFindOne: async function () {
         let id = this.id;
         if(id && _.isEmpty(this.data.values)){
-            let lng = getLng(this.userId);
-            let allApps = clone(objectql.getAppConfigs());
+            let lng = await getLng(this.userId);
+            let allApps = clone(await objectql.getAppConfigs(this.spaceId));
             let apps = {}
             _.each(allApps, function(app){
                 if(app._id === id && app.is_creator){
@@ -97,5 +99,17 @@ module.exports = {
                 Object.assign(sefl.data.values, Object.assign({code: app._id}, clone(app), baseRecord))
             })
         }
+    },
+    afterInsert: async function () {
+        const record = await this.getObject('apps').findOne(this.doc._id);
+        await objectql.addAppConfig(record, SERVICE_NAME)
+    },
+    afterUpdate: async function () {
+        const record = await this.getObject('apps').findOne(this.id);
+        await objectql.addAppConfig(record, SERVICE_NAME)
+    },
+    afterDelete: async function(){
+        let id = this.id;
+        objectql.removeApp(id)
     }
 }

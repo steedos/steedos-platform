@@ -1,0 +1,28 @@
+name: status
+defaultValue: New
+filterable: true
+label: 状态
+options:
+  - label: 新建
+    value: New
+  - label: 已联系
+    value: Working
+  - label: 培育中
+    value: Nurturing
+  - label: 已转化
+    value: Qualified
+  - label: 无意向
+    value: Unqualified
+  - label: 已选择其他品牌
+    value: Others
+  - label: 无法联系
+    value: Not_Available
+  - label: 经销代
+    value: Agent
+  - label: 企业客户
+    value: Business
+required: true
+searchable: true
+sort_no: 100
+sortable: true
+type: select

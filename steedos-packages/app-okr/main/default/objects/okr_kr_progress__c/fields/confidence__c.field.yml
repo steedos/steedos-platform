@@ -1,0 +1,32 @@
+name: confidence__c
+defaultValue: '3'
+filterable: true
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 信心指数
+multiple: false
+omit: false
+options:
+  - label: '1'
+    value: '1'
+    color: e94716
+  - label: '2'
+    value: '2'
+    color: ffa749
+  - label: '3'
+    value: '3'
+    color: ffd95e
+  - label: '4'
+    value: '4'
+    color: a1cdac
+  - label: '5'
+    value: '5'
+    color: 32845e
+readonly: false
+required: true
+searchable: true
+sort_no: 190
+sortable: true
+type: select

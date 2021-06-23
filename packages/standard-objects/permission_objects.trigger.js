@@ -15,13 +15,15 @@ const baseRecord = {
     record_permissions:permissions
 }
 
-const getInternalPermissionObjects = function(){
+const getInternalPermissionObjects = async function(){
     let objectsPermissions = [];
     const datasources = objectql.getSteedosSchema().getDataSources();
-    _.each(datasources, function(datasource, name){
-        let datasourceObjects = datasource.getObjects();
-        _.each(datasourceObjects, function(object, objectName) {
-          let objectJSON = object.toConfig();
+    for (const datasourceName in datasources) {
+        let datasource = datasources[datasourceName];
+        let datasourceObjects = await datasource.getObjects();
+        _.each(datasourceObjects, function(object) {
+          const objectJSON  = object.metadata;
+          const objectName = objectJSON.name;
           if(!objectJSON._id && !objectJSON.hidden && !_.include(InternalData.hiddenObjects, objectName)){
             let permission_set = objectJSON.permission_set
             _.each(permission_set, function(v, code){
@@ -29,13 +31,13 @@ const getInternalPermissionObjects = function(){
             })
           }
         });
-    })
+    }
     return objectsPermissions;
 }
 
 
-const getPermissionByFilters = function(filtersFun){
-    let allPer = getInternalPermissionObjects();
+const getPermissionByFilters = async function(filtersFun){
+    let allPer = await getInternalPermissionObjects();
     let pers = []
     _.each(allPer, function(doc){
         if(filtersFun(doc)){
@@ -45,8 +47,8 @@ const getPermissionByFilters = function(filtersFun){
     return pers;
 }
 
-const getPermissionById = function(id){
-    let allPer = getInternalPermissionObjects();
+const getPermissionById = async function(id){
+    let allPer = await getInternalPermissionObjects();
     return _.find(allPer, (doc)=>{
         return doc._id === id
     })
@@ -70,28 +72,33 @@ function parserFilters(filters){
     return query;
 }
 
-const getSourcePermissionSetsKeys = function(type){
+const getSourcePermissionSetsKeys = async function(type){
     switch (type) {
         case 'permission_set':
-            return objectql.getSourcePermissionsetKeys();
+            return await objectql.getSourcePermissionsetKeys();
         case 'profile':
-            return objectql.getSourceProfilesKeys();
+            return await objectql.getSourceProfilesKeys();
         default:
-            return objectql.getSourceProfilesKeys().concat(objectql.getSourcePermissionsetKeys())
+            return (await objectql.getSourceProfilesKeys()).concat((await objectql.getSourcePermissionsetKeys()))
     }
 }
 
-const find = function(query){
+const find = async function(query){
     let filters = parserFilters(odataMongodb.createFilter(query.filters));
     let permissionSetId = filters.permission_set_id;
-    if(permissionSetId && !_.include(getSourcePermissionSetsKeys(), permissionSetId)){
-        var dbPerm = Creator.getCollection("permission_set").findOne({_id: permissionSetId}, {fields:{_id:1, name:1}});
-        if(dbPerm && _.include(getSourcePermissionSetsKeys(), dbPerm.name)){
+    let sourcePermissionSetsKeys = await getSourcePermissionSetsKeys();
+    if(permissionSetId && !_.include(sourcePermissionSetsKeys, permissionSetId)){
+        var dbPerms = await objectql.getObject("permission_set").directFind({filters: ['_id', '=', permissionSetId], fields: ['_id', 'name']});
+        var dbPerm = null;
+        if(dbPerms && dbPerms.length > 0){
+            dbPerm = dbPerms[0];
+        }
+        if(dbPerm && _.include(sourcePermissionSetsKeys, dbPerm.name)){
             permissionSetId = dbPerm.name
         }
     }
     let objectName = filters.object_name;
-    let permissionObjects = getPermissionByFilters((doc)=>{
+    let permissionObjects = await getPermissionByFilters((doc)=>{
         if(permissionSetId && objectName){
             return permissionSetId === doc.permission_set_id && objectName === doc.object_name
         }
@@ -112,7 +119,7 @@ module.exports = {
         let isSystem = filters.is_system;
         if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
             if(_.isBoolean(isSystem) && isSystem){
-                this.data.values = find(this.query);
+                this.data.values = await find(this.query);
             }else{
                 return ;
             }
@@ -120,7 +127,7 @@ module.exports = {
                 return 
             }
         }else{
-            let permissionObjects = find(this.query);
+            let permissionObjects = await find(this.query);
             if(_.isArray(this.data.values)){
                 let that = this;
                 const _ids = [];
@@ -151,7 +158,7 @@ module.exports = {
         let isSystem = filters.is_system;
         if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
             if(_.isBoolean(isSystem) && isSystem){
-                this.data.values = find(this.query);
+                this.data.values = await find(this.query);
             }else{
                 return ;
             }
@@ -159,7 +166,7 @@ module.exports = {
                 return 
             }
         }else{
-            let permissionObjects = find(this.query);
+            let permissionObjects = await find(this.query);
             if(_.isArray(this.data.values)){
                 let that = this;
                 const _ids = [];
@@ -219,7 +226,7 @@ module.exports = {
     afterFindOne: async function () {
         let id = this.id;
         if(id && _.isEmpty(this.data.values)){
-            Object.assign(this.data.values, getPermissionById(id))
+            Object.assign(this.data.values, await getPermissionById(id))
         }
     },
     beforeInsert: function(){

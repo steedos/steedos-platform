@@ -1,4 +1,4 @@
-import { Datasources } from './datasources'
+// import { Datasources } from './datasources'
 import { Core, initCreator, initDesignSystem, initPublic } from './core'
 import { Plugins } from './plugins';
 import { getSteedosSchema } from '@steedos/objectql';
@@ -7,21 +7,21 @@ import { initPublicStaticRouter } from '../routes';
 // import { InitI18n } from './i18n';
 import { loadPackages } from './packages';
 import { InitTranslations } from './translations';
-
-export async function init() {
+export { loadClientScripts } from './core'
+export async function init(settings: any = {}) {
     getSteedosSchema();
     WebAppInternals.setInlineScriptsAllowed(false);
     initPublicStaticRouter();
     initPublic();
     initDesignSystem();
-    Plugins.init();
-    Datasources.loadFiles();
-    loadPackages();
-    initCreator();
-    await Datasources.init();
+    await Plugins.init(settings);
+    // Datasources.loadFiles();
+    await loadPackages();
+    await initCreator();
+    // await Datasources.init();
     await migrate.init();
-    InitTranslations();
+    await InitTranslations();
     Core.run();
 }
-
+export * from './translations';
 export * from './collection';

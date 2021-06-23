@@ -77,31 +77,79 @@ Template.related_object_list.helpers
 		}
 		if object_name == 'objects'
 			data.record_id = Template.instance()?.record.get().name;
+#		console.log("list_data", data)
 		return data
-
+	name: ()->
+		return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name")
+	columnFields: ()->
+		object_name = Session.get "object_name"
+		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		related_object_name = Session.get "related_object_name"
+		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
+		columnFields = [];
+		_.each(related_list_item_props?.columns, (fieldName)->
+			columnFields.push({fieldName: fieldName})
+		)
+		return columnFields;
+	filters: ()->
+		object_name = Session.get "object_name"
+		record_id = Session.get("record_id")
+		related_object_name = Session.get "related_object_name"
+		is_related = true;
+		list_view_id = Creator.getListView(related_object_name, "all")?._id
+		return Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id)
+	onModelUpdated: ()->
+		recordsTotal = Template.instance().recordsTotal
+		return (event)->
+			recordsTotal?.set(event.api.getDisplayedRowCount())
 
 Template.related_object_list.events
 	"click .add-related-object-record": (event, template)->
 		related_object_name = Session.get "related_object_name"
+		relateObject = Creator.getObject(related_object_name)
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
 		if object_name == 'objects'
 			record_id = template?.record?.get().name;
-		action_collection_name = Creator.getObject(related_object_name).label
-		
-		ids = Creator.TabularSelectedIds[related_object_name]
-		if ids?.length
+		action_collection_name = relateObject.label
+		selectedRows = window.gridRef.current.api.getSelectedRows()
+
+		initialValues = {};
+		if selectedRows?.length
+			record_id = selectedRows[0]._id;
+			doc = Creator.odata.get(related_object_name, record_id)
+			initialValues = doc
+		else
+			defaultDoc = FormManager.getRelatedInitialValues(object_name, record_id, related_object_name);
+			if !_.isEmpty(defaultDoc)
+				initialValues = defaultDoc
+
+		if relateObject?.version >= 2
+			return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+				name: "#{related_object_name}_standard_new_form",
+				objectApiName: related_object_name,
+				title: '新建',
+				initialValues: initialValues,
+				afterInsert: (result)->
+					if(result.length > 0)
+						record = result[0];
+						setTimeout(()->
+							app_id = Session.get("app_id")
+							url = "/app/#{app_id}/#{related_object_name}/view/#{record._id}"
+							FlowRouter.go url
+						, 1);
+						return true;
+
+			}, null, {iconPath: '/assets/icons'})
+
+		if selectedRows?.length
 			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
 			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
-			record_id = ids[0]
-			doc = Creator.odata.get(related_object_name, record_id)
-			Session.set 'cmDoc', doc
+			Session.set 'cmDoc', initialValues
 			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 			Session.set 'cmShowAgainDuplicated', true
 		else 
-			defaultDoc = FormManager.getRelatedInitialValues(object_name, record_id, related_object_name);
-			if !_.isEmpty(defaultDoc)
-				Session.set 'cmDoc', defaultDoc
+			Session.set 'cmDoc', initialValues
 		
 		Session.set "action_collection", "Creator.Collections.#{related_object_name}"
 		Session.set "action_collection_name", action_collection_name
@@ -113,9 +161,16 @@ Template.related_object_list.events
 		if Steedos.isMobile()
 			Template.list.refresh getRelatedListTemplateId()
 		else
-			dxDataGridInstance = $(event.currentTarget).closest(".related_object_list").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
-			Template.creator_grid.refresh(dxDataGridInstance)
-
+			return window.gridRef.current.api.refreshServerSideStore()
+#			dxDataGridInstance = $(event.currentTarget).closest(".related_object_list").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
+#			Template.creator_grid.refresh(dxDataGridInstance)
+	'click .btn-export_list_view': (event, template)->
+		object_name = Session.get "object_name"
+		record_id = Session.get("record_id")
+		related_object_name = Session.get "related_object_name"
+		is_related = true;
+		list_view_id = Creator.getListView(related_object_name, "all")?._id
+		GridExport.excel(object_name, list_view_id, is_related, related_object_name, record_id, $(".related-main-record-name")[0].dataset.name)
 	'change .input-file-upload': (event, template)->
 		Creator.relatedObjectFileUploadHandler event, ()->
 			if Steedos.isMobile()

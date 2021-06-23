@@ -65,6 +65,12 @@ fields:
         return Steedos.getObjectsOptions()
       }
     filterable: true
+  tabs:
+    label: Tabs
+    type: lookup
+    multiple: true
+    is_wide: true
+    reference_to: tabs
   icon:
     label: Icon
     type: text

@@ -1,0 +1,22 @@
+name: all
+columns:
+  - field: agreement_number
+    width: 150
+  - field: account_id
+    width: 280
+    wrap: true
+  - field: status
+    width: 150
+  - field: start_date
+    width: 150
+  - field: end_date
+    width: 150
+  - field: agreement_term
+    width: 150
+  - owner
+filter_scope: space
+label: 所有主协议
+shared: true
+sort:
+  - - create_date
+    - desc

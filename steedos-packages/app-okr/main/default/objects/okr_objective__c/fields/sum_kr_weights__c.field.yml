@@ -1,0 +1,16 @@
+name: sum_kr_weights__c
+filterable: false
+hidden: true
+index: false
+is_name: false
+is_wide: false
+label: 总权重
+omit: true
+precision: 18
+readonly: false
+required: false
+scale: 2
+searchable: false
+sort_no: 190
+sortable: false
+type: number

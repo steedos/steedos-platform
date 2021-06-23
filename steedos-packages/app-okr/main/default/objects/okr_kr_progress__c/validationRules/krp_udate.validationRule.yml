@@ -1,0 +1,7 @@
+name: krp_udate
+active: false
+description: 日期不在时段区间内
+error_condition_formula: >-
+  OR( update_date__c > key_result__c.objective__c.period__c.end_date__c ,
+  update_date__c  <  key_result__c.objective__c.period__c.start_date__c )
+error_message: 日期不在时段内，请重新输入。

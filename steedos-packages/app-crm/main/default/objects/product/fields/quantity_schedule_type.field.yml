@@ -1,0 +1,5 @@
+name: quantity_schedule_type
+hidden: true
+label: 数量计划类型
+sort_no: 260
+type: text

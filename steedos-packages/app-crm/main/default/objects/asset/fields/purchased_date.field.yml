@@ -1,0 +1,5 @@
+name: purchased_date
+label: 购买日期
+searchable: true
+sort_no: 170
+type: date

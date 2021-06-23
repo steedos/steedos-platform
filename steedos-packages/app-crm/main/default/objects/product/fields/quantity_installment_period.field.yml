@@ -1,0 +1,5 @@
+name: quantity_installment_period
+hidden: true
+label: 数量分期付款周期
+sort_no: 240
+type: text

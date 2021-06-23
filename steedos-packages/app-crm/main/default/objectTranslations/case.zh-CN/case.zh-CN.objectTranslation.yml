@@ -1,0 +1,167 @@
+name: case
+label: 个案
+description: 
+fields:
+  account_id:
+    label: 客户
+    help: 
+    description: 
+  asset_id:
+    label: 资产
+    help: 
+    description: 
+  business_hours_id:
+    label: 工作时间
+    help: 
+    description: 
+  case_currency:
+    label: 个案币种
+    help: 
+    description: 
+  case_number:
+    label: 个案编号
+    help: 
+    description: 
+  case_origin:
+    label: 个案来源
+    help: 
+    options:
+      - label: 电子邮件
+        value: Email
+      - label: 电话
+        value: Phone
+      - label: 网页
+        value: Web
+    description: 
+  case_reason:
+    label: 个案原因
+    help: 
+    options:
+      - label: 用户未参加培训
+        value: Not_In_Training
+      - label: 功能复杂
+        value: Complex_Function
+      - label: 已有问题
+        value: Existing_Problem
+      - label: 说明不详
+        value: Description_Unknown
+      - label: 新问题
+        value: New_Problem
+    description: 
+  closed_when_created:
+    label: 创建时关闭
+    help: 
+    description: 
+  contact_email:
+    label: 联系人电子邮件
+    help: 
+    description: 
+  contact_fax:
+    label: 联系人传真
+    help: 
+    description: 
+  contact_id:
+    label: 联系人姓名
+    help: 
+    description: 
+  contact_mobile:
+    label: 联系人移动电话
+    help: 
+    description: 
+  contact_phone:
+    label: 联系人电话
+    help: 
+    description: 
+  datetime_closeed:
+    label: 结束日期
+    help: 
+    description: 
+  datetime_opened:
+    label: 开始日期
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  escalated:
+    label: 已升级
+    help: 
+    description: 
+  internal_comments:
+    label: 内部注释
+    help: 
+    description: 
+  order_reference_number:
+    label: 订单参考编号
+    help: 
+    description: 
+  owner:
+    label: 个案所有人
+    help: 
+    description: 
+  parent_case:
+    label: 父级个案
+    help: 
+    description: 
+  priority:
+    label: 优先级
+    help: 
+    options:
+      - label: 高
+        value: High
+      - label: 中
+        value: Medium
+      - label: 低
+        value: Low
+    description: 
+  status:
+    label: 状态
+    help: 
+    options:
+      - label: 暂停
+        value: On_Hold
+      - label: 升级
+        value: Escalated
+      - label: 新建
+        value: New
+    description: 
+  subject:
+    label: 主题
+    help: 
+    description: 
+  type:
+    label: 类型
+    help: 
+    options:
+      - label: 问题
+        value: Problem
+      - label: 功能需求
+        value: Feature_Request
+      - label: 疑问
+        value: Question
+    description: 
+  web_company:
+    label: Web公司
+    help: 
+    description: 
+  web_email:
+    label: Web电子邮件
+    help: 
+    description: 
+  web_name:
+    label: Web名称
+    help: 
+    description: 
+  web_phone:
+    label: Web电话
+    help: 
+    description: 
+groups:
+  web信息: Web信息
+  备注信息: 备注信息
+listviews:
+  all:
+    label: 所有个案
+  recent:
+    label: 最近查看

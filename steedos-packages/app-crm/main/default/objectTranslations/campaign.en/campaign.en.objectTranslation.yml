@@ -1,0 +1,115 @@
+name: campaign
+label: 市场活动
+description: 
+fields:
+  actual_cost:
+    label: 市场活动中的实际成本
+    help: 运行市场活动所花费的实际金额。
+    description: 
+  budgeted_cost:
+    label: 市场活动中的预算成本
+    help: 市场活动的预算金额。
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  end_date:
+    label: 结束日期
+    help: 
+    description: 
+  expected_response:
+    label: 预期响应百分比(%)
+    help: 预期市场活动接收到的响应百分比。
+    description: 
+  expected_revenue:
+    label: 市场活动中的预期收入
+    help: 预期市场活动产生的收入金额。
+    description: 
+  hierarchy_amount_all_opportunities:
+    label: 层次结构中的业务机会金额
+    help: >-
+      市场活动层次结构相关所有业务机会（包括赢得客户业务机会）的价值总额计算字段。（只读）层次结构中的所有市场活动必须使用相同的币种。对于采用多币种的组织，业务机会价值金额应转换为市场活动币种。如果您的币种与市场活动币种不符，金额将转换成您的币种并显示在括号中。
+    description: 
+  hierarchy_number_of_opportunities:
+    label: 层次结构中的业务机会
+    help: 市场活动层次结构相关业务机会总数的计算字段。（只读）
+    description: 
+  hierarchy_number_sent:
+    label: 层次结构中的发送次数
+    help: 为市场活动层次结构作为目标的个体总数计算的字段，例如已发送电子邮件的总数。（只读）
+    description: 
+  inhierarchy_amount_won_opportunities:
+    label: 层次结构中的赢得客户业务机会金额
+    help: >-
+      市场活动层次结构相关赢得客户业务机会的价值金额计算字段。（只读）层次结构中的所有市场活动必须使用相同的币种。对于采用多币种的组织，业务机会价值金额应转换为市场活动币种。如果您的币种与市场活动币种不符，金额将转换成您的币种并显示在括号中。
+    description: 
+  is_active:
+    label: 启用
+    help: 标记市场活动是否启用。
+    description: 
+  name:
+    label: 市场活动名称
+    help: 
+    description: 
+  number_sent:
+    label: 市场活动中的发送次数
+    help: 市场活动面向的目标个人数目。例如，发送的电子邮件数目。
+    description: 
+  owner:
+    label: 市场活动所有人
+    help: 
+    description: 
+  parent_id:
+    label: 父级市场活动
+    help: 
+    description: 
+  start_date:
+    label: 开始日期
+    help: 
+    description: 
+  status:
+    label: 状态
+    help: 
+    options:
+      - label: 进行中
+        value: In_Progress
+      - label: 已结束
+        value: Finished
+      - label: 中止
+        value: Terminated
+      - label: 已计划
+        value: Planned
+    description: 
+  type:
+    label: 类型
+    help: 
+    options:
+      - label: 广告
+        value: Advertisement
+      - label: 客户活动
+        value: Customer_Event
+      - label: 员工推荐
+        value: Employee_Referral
+      - label: 百度搜索
+        value: Baidu_AdWords
+      - label: 其他
+        value: Other
+      - label: 合作伙伴
+        value: Partner
+      - label: 采购清单
+        value: Purchased_List
+      - label: 贸易展览
+        value: Trade_Show
+      - label: 线上研讨
+        value: Webinar
+      - label: 网站
+        value: Website
+    description: 
+groups:
+  计划: 计划
+listviews:
+  all:
+    label: 所有市场活动
+  recent:
+    label: 最近查看

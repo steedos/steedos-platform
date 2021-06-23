@@ -65,6 +65,10 @@ Creator.objectLayoutMananger.appendField = function(field){
         let insertDoc = formValues.insertDoc;
         let data = {
             field: field.name,
+            is_readonly: field.readonly,
+            is_required: field.required,
+            group: field.group,
+            visible_on: `${!field.hidden}`,
             layouts: insertDoc.appendToLayouts
         }
         if(_.isEmpty(insertDoc.appendToLayouts)){

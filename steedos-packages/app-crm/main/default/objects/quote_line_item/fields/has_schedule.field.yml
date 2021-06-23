@@ -1,0 +1,5 @@
+name: has_schedule
+inlineHelpText: 行项目是否在业务机会中使用计划。当业务机会产品被复制到报价中时，默认计划不会从业务机会中移转。
+label: 计划
+sort_no: 200
+type: boolean

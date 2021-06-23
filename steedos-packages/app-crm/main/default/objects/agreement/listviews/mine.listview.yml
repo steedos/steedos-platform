@@ -1,0 +1,7 @@
+name: mine
+filter_scope: mine
+label: 我的主协议
+shared: true
+sort:
+  - - create_date
+    - desc

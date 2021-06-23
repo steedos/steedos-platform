@@ -1,0 +1,12 @@
+name: all
+columns:
+  - case_number
+  - subject
+  - account_id
+  - case_reason
+  - priority
+  - status
+  - type
+filter_scope: space
+label: 所有个案
+shared: true

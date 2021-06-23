@@ -1,0 +1,4 @@
+name: asset_currency
+label: 资产币种
+sort_no: 220
+type: text

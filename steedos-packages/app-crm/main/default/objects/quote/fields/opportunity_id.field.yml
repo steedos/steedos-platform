@@ -1,0 +1,8 @@
+name: opportunity_id
+inlineHelpText: 与报价关联的业务机会名。
+label: 业务机会名
+reference_to: opportunity
+required: true
+searchable: true
+sort_no: 140
+type: master_detail

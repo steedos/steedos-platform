@@ -1,0 +1,3 @@
+name: standard_new
+is_enable: true
+visible: false //禁用新增

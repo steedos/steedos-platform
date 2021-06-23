@@ -1,0 +1,16 @@
+name: most_recent_progress_made__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 最新值
+omit: true
+precision: 18
+readonly: true
+required: false
+scale: 2
+searchable: false
+sort_no: 157
+sortable: false
+type: number

@@ -1,0 +1,8 @@
+name: name
+index: true
+label: 业务机会名
+required: true
+searchable: true
+sort_no: 100
+sortable: true
+type: text

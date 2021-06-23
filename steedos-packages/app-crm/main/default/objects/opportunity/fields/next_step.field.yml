@@ -1,0 +1,5 @@
+name: next_step
+inlineHelpText: 说明关闭业务机会后下一步的任务。
+label: 下一步
+sort_no: 250
+type: text

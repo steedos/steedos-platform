@@ -1,0 +1,16 @@
+name: organization__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 部门
+multiple: false
+omit: false
+readonly: false
+reference_to: organizations
+required: false
+searchable: false
+sort_no: 150
+sortable: false
+type: lookup

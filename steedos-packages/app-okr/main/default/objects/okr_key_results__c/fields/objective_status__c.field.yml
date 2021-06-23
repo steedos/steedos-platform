@@ -1,0 +1,14 @@
+name: objective_status__c
+filterable: false
+hidden: true
+index: false
+is_name: false
+is_wide: false
+label: 目标状态
+omit: true
+readonly: false
+required: false
+searchable: false
+sort_no: 310
+sortable: false
+type: text

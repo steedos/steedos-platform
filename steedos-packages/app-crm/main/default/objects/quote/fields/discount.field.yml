@@ -1,0 +1,6 @@
+name: discount
+inlineHelpText: 报价上所有行项目折扣的加权平均值。您可以使用最多两个小数位。
+label: 折扣
+scale: 2
+sort_no: 190
+type: number

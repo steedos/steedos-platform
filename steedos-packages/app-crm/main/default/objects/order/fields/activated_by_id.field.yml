@@ -1,0 +1,6 @@
+name: activated_by_id
+hidden: true
+label: 启用人
+reference_to: users
+sort_no: 260
+type: lookup

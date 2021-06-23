@@ -1,0 +1,33 @@
+name: meeting_type__c
+defaultValue: null
+description: null
+filterable: false
+group: null
+hidden: false
+index: false
+inlineHelpText: null
+is_name: false
+is_wide: false
+label: 会议类别
+omit: false
+options:
+  - label: 项目启动
+    value: Kick-off
+  - label: 阶段评审/技术评审
+    value: Review
+  - label: 项目验收
+    value: Acceptance
+  - label: 需求调研
+    value: Research
+  - label: 问题讨论
+    value: Problem
+  - label: 周期性例会
+    value: Periodic
+  - label: 其他
+    value: Others
+readonly: false
+required: false
+searchable: true
+sort_no: 115
+sortable: false
+type: select

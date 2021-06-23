@@ -1,0 +1,5 @@
+name: project_deadline
+active: false
+description: 项目的截止日期应在启动日期之后
+error_condition_formula: ISBLANK(TEXT(kickoff__c))
+error_message: 请注意：项目的截止日期应在启动日期之后。

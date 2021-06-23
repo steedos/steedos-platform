@@ -1,0 +1,7 @@
+name: unit_price
+inlineHelpText: >-
+  您想使用的产品价格。最初，业务机会或报价产品的销售价格为价格手册中该产品的价目表价格，但您可在此进行更改。如果报价与业务机会同步，该字段会从报价行项目更新到业务机会产品。
+label: 销售价格
+readonly: false
+sort_no: 210
+type: currency

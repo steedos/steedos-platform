@@ -1,0 +1,16 @@
+name: resolution_note__c
+filterable: false
+hidden: false
+index: false
+inlineHelpText: 关于问题是怎么解决的备注说明
+is_name: false
+is_wide: true
+label: 完成情况说明
+omit: false
+readonly: false
+required: false
+rows: 2
+searchable: false
+sort_no: 192
+sortable: false
+type: textarea

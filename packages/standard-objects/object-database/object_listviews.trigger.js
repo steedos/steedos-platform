@@ -4,7 +4,7 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object_name){
-            let views = InternalData.getObjectListViews(filters.object_name, this.userId);
+            let views = await InternalData.getObjectListViews(filters.object_name, this.userId);
             if(views){
                 this.data.values = this.data.values.concat(views)
             }
@@ -13,7 +13,7 @@ module.exports = {
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object_name){
-            let views = InternalData.getObjectListViews(filters.object_name, this.userId);
+            let views = await InternalData.getObjectListViews(filters.object_name, this.userId);
             if(views){
                 this.data.values = this.data.values.concat(views)
             }
@@ -22,7 +22,7 @@ module.exports = {
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object_name){
-            let views = InternalData.getObjectListViews(filters.object_name, this.userId);
+            let views = await InternalData.getObjectListViews(filters.object_name, this.userId);
             if(views){
                 this.data.values = this.data.values + views.length
             }
@@ -34,7 +34,7 @@ module.exports = {
             if(_.isString(id)){
                 let objectName = id.substr(0, id.indexOf("."));
                 if(objectName){
-                    let view = InternalData.getObjectListView(objectName, this.userId, id);
+                    let view = await InternalData.getObjectListView(objectName, this.userId, id);
                     if(view){
                         this.data.values = view;
                     }

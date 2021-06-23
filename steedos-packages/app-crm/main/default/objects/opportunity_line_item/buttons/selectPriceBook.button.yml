@@ -1,0 +1,8 @@
+name: selectPriceBook
+is_enable: true
+label: 选择价格手册
+'on': list
+visible: |-
+  function(){
+      return true
+    }

@@ -22,14 +22,8 @@ fields:
     label: Description
     help: 
     description: 
-  objects:
-    label: Objects
-    help: 
-    description: 
-  mobile_objects:
-    label: Mobile Objects
-    help: 
-    description: 
+  tabs: 
+    label: Tabs
   icon:
     label: Icon
     help: 

@@ -88,5 +88,6 @@ export interface SteedosDriver {
     dropTables?(): any;
     createTables?(objects: Dictionary<SteedosObjectType>): any;
     init(objects: Dictionary<SteedosObjectType>): any;
+    _makeNewID?(tableName?: string): any
 }
 

@@ -743,3 +743,19 @@ if Meteor.isServer
 			related_object_names.push "cms_files"
 
 		return related_object_names
+
+if Meteor.isServer
+	Steedos.formatIndex = (array) ->
+		object = {
+        	background: true
+    	};
+		isdocumentDB = Meteor.settings?.datasources?.default?.documentDB || false;
+		if isdocumentDB
+			if array.length > 0
+				indexName = array.join(".");
+				object.name = indexName;
+				
+				if (indexName.length > 52)
+					object.name = indexName.substring(0,52);
+
+		return object;

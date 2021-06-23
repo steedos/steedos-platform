@@ -1,0 +1,5 @@
+name: po_number
+hidden: true
+label: 订单编号
+sort_no: 380
+type: text

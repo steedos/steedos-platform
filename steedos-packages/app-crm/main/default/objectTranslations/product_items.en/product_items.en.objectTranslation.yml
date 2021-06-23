@@ -1,0 +1,31 @@
+name: product_items
+label: 产品项
+description: 
+fields:
+  location:
+    label: 位置
+    help: 只有选择库存位置选项的位置，才可以与产品项关联。
+    description: 
+  product:
+    label: 产品名
+    help: 
+    description: 
+  product_items_number:
+    label: 产品项编号
+    help: 
+    description: 
+  quantity:
+    label: 现存数量
+    help: 
+    description: 
+  serial_number:
+    label: 序号
+    help: 如果现存数量是 1，则输入序号。
+    description: 
+  unit:
+    label: 单位
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有产品项

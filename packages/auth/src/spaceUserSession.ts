@@ -107,7 +107,8 @@ export async function getSpaceUserSession(spaceId, userId) {
             let userSpaceId = su.space;
             let userSpaceIds = _.pluck(spaceUsers, 'space');
             let roles = await getUserRoles(userId, userSpaceId);
-            spaceSession = { roles: roles, expiredAt: expiredAt };
+            let profile = await getSpaceUserProfile(userId, userSpaceId);
+            spaceSession = { roles: roles, profile: profile,expiredAt: expiredAt };
             spaceSession.spaceId = userSpaceId;
             spaceSession.space = (await getObjectDataByIds('spaces', [userSpaceId], ['name', 'admins']))[0];
             spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name']);

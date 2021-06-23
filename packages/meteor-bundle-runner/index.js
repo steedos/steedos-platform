@@ -103,18 +103,22 @@ if (!mongoUrl) {
   process.env.MONGO_URL = mongoUrl
 }
 
-var ref, ref1, ref2, ref3;
-var steedosStorageDir = "./storage"
-var cfsSettings = typeof settings !== "undefined" && settings !== null ? (ref = settings["public"]) != null ? ref.cfs : void 0 : void 0;
-if (cfsSettings && (cfsSettings != null ? (ref1 = cfsSettings.local) != null ? ref1.folder : void 0 : void 0)) {
-  steedosStorageDir = cfsSettings.local.folder;
-}
+if (!process.env.STEEDOS_STORAGE_DIR ) {
+  
+  var ref, ref1, ref2, ref3;
+  var steedosStorageDir = "./storage"
+  var cfsSettings = typeof settings !== "undefined" && settings !== null ? (ref = settings["public"]) != null ? ref.cfs : void 0 : void 0;
+  if (cfsSettings && (cfsSettings != null ? (ref1 = cfsSettings.local) != null ? ref1.folder : void 0 : void 0)) {
+    steedosStorageDir = cfsSettings.local.folder;
+  }
+  
+  if (!path.isAbsolute(steedosStorageDir)) {
+    steedosStorageDir = path.resolve(steedosStorageDir);
+  }
+  
+  process.env.STEEDOS_STORAGE_DIR = steedosStorageDir
 
-if (!path.isAbsolute(steedosStorageDir)) {
-  steedosStorageDir = path.resolve(steedosStorageDir);
 }
-
-process.env.STEEDOS_STORAGE_DIR = steedosStorageDir
 
 __steedos_bootstrap__ = {
     projectDir: projectDir,

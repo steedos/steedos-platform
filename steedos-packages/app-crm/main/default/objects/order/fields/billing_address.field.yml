@@ -1,0 +1,6 @@
+name: billing_address
+is_wide: true
+label: 账单地址
+rows: 3
+sort_no: 190
+type: textarea

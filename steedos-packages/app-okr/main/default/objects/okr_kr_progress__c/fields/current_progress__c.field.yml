@@ -1,0 +1,16 @@
+name: current_progress__c
+filterable: true
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 最新值
+omit: false
+precision: 18
+readonly: false
+required: true
+scale: 2
+searchable: true
+sort_no: 160
+sortable: true
+type: number

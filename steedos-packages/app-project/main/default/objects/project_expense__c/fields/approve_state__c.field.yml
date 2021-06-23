@@ -1,0 +1,31 @@
+name: approve_state__c
+defaultValue: to_be_submited
+description: null
+filterable: false
+group: null
+hidden: false
+index: false
+inlineHelpText: null
+is_name: false
+is_wide: false
+label: 处理状态
+omit: false
+options:
+  - label: 待提交
+    value: to_be_submited
+    color: cfd3d7
+  - label: 已核准
+    value: approved
+    color: 49d181
+  - label: 审批中
+    value: approving
+    color: f9e29d
+  - label: 已驳回
+    value: rejected
+    color: c11d25
+readonly: true
+required: false
+searchable: false
+sort_no: 190
+sortable: false
+type: select

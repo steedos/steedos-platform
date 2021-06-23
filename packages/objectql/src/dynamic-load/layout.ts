@@ -1,4 +1,5 @@
 import { Dictionary } from '@salesforce/ts-types';
+import { getSteedosSchema } from '..';
 const _ = require('underscore');
 var util = require('../util');
 
@@ -31,9 +32,22 @@ export const addObjectLayoutConfig = (objectName: string, json: any) => {
     addLayouts(objectName, json);
 }
 
-export const loadObjectLayouts = function (filePath: string){
+export const loadObjectLayouts = async function (filePath: string, serviceName: string){
     let layoutJsons = util.loadLayouts(filePath);
     layoutJsons.forEach(element => {
         addObjectLayoutConfig(element.object_name, element);
     });
+
+    if(serviceName){
+        for await (const layoutJson of layoutJsons) {
+            await loadObjectLayoutMetadata(layoutJson, serviceName);
+        }
+    }
+}
+
+export const loadObjectLayoutMetadata = async function(layoutJson, serviceName?){
+    if(serviceName){
+        const schema = getSteedosSchema();
+        await schema.metadataRegister?.addLayout(serviceName, layoutJson);
+    }
 }

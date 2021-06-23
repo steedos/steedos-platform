@@ -1,0 +1,28 @@
+name: status__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 状态
+multiple: false
+omit: false
+options:
+  - label: 已结束时段
+    value: Closed Period
+  - label: 当前时段
+    value: Current Period
+  - label: 待开始时段
+    value: Future Period
+  - label: 当前财年
+    value: Current FY
+  - label: 已结束财年
+    value: Closed FY
+  - label: 待开始财年
+    value: Future FY
+readonly: false
+required: false
+searchable: false
+sort_no: 140
+sortable: false
+type: select

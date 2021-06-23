@@ -1,0 +1,11 @@
+name: all
+columns:
+  - product_id
+  - price_book_id
+  - is_active
+  - product_code
+  - unit_price
+  - use_standard_price
+filter_scope: space
+label: 所有价格手册条目
+shared: true

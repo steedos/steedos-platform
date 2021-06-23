@@ -1,7 +1,7 @@
 import steedosI18n = require("@steedos/i18n");
 import { getPlugins } from '../';
 import { requireAuthentication } from './auth'
-import { getObject, getLayout } from '@steedos/objectql'
+import { getObject, getObjectLayouts, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps } from '@steedos/objectql'
 require("@steedos/license");
 const Fiber = require('fibers')
 const clone = require("clone");
@@ -29,13 +29,98 @@ async function getUserProfileObjectsLayout(userId, spaceId, objectName?) {
         spaceUser = spaceUsers[0];
     }
     if (spaceUser && spaceUser.profile) {
-        let filters = [['space', '=', spaceId],['profiles', '=', spaceUser.profile]];
-        if(objectName){
-            filters.push(['object_name', '=', objectName])
-        }
-        return await getObject("object_layouts").directFind({filters: filters})
+        // let filters = [['space', '=', spaceId],['profiles', '=', spaceUser.profile]];
+        // if(objectName){
+        //     filters.push(['object_name', '=', objectName])
+        // }
+        // return await getObject("object_layouts").directFind({filters: filters})
+        return await getObjectLayouts(spaceUser.profile, spaceId, objectName)
     }
 };
+
+async function getUserObjects(userId, spaceId, objects){
+    const objectsLayout = await getUserProfileObjectsLayout(userId, spaceId);
+    for (const objectName in objects) {
+        // objects[objectName].list_views = await getUserObjectListViews(userId, spaceId, objectName)
+        let userObjectLayout = null;
+        if(objectsLayout){
+            userObjectLayout = _.find(objectsLayout, function(objectLayout){
+                return objectLayout.object_name === objectName
+            })
+        }
+        if(!userObjectLayout && false){
+            userObjectLayout = getLayout(objectName, 'default');
+        }
+        if(userObjectLayout){
+            objects[userObjectLayout.object_name] = await getUserObject(userId, spaceId, objects[userObjectLayout.object_name], userObjectLayout)
+        }
+    }
+}
+
+async function getUserObject(userId, spaceId, object, layout?){
+    if(!layout){
+        const layouts = await getUserProfileObjectsLayout(userId, spaceId, object.name); 
+        if(layouts && layouts.length > 0){
+            layout = layouts[0];
+        }
+    }
+    let _object = clone(object);
+    if(_object && layout){
+        let _fields = {};
+        _.each(layout.fields, function(_item){
+            _fields[_item.field_name] = _object.fields[_item.field_name]
+            if(_fields[_item.field_name]){
+                if(_.has(_item, 'group')){
+                    _fields[_item.field_name].group = _item.group
+                }
+                
+                if(_item.is_required){
+                    _fields[_item.field_name].readonly = false
+                    _fields[_item.field_name].disabled = false
+                    _fields[_item.field_name].required = true
+                }else if(_item.is_readonly){
+                    _fields[_item.field_name].readonly = true
+                    _fields[_item.field_name].disabled = true
+                    _fields[_item.field_name].required = false
+                }
+
+                if(_item.visible_on){
+                    _fields[_item.field_name].visible_on = _item.visible_on
+                }
+            }
+        })
+
+        const layoutFieldKeys = _.keys(_fields);
+        const objectFieldKeys = _.keys(_object.fields);
+
+        const difference = _.difference(objectFieldKeys, layoutFieldKeys);
+
+        _.each(layoutFieldKeys, function(fieldApiName){
+            _object.fields[fieldApiName] = _fields[fieldApiName];
+        })
+        
+        _.each(difference, function(fieldApiName){
+            _object.fields[fieldApiName].hidden = true;
+        })
+
+        let _buttons = {};
+        _.each(layout.buttons, function(button){
+            const action = _object.actions[button.button_name];
+            if(action){
+                if(button.visible_on){
+                    action.visible = button.visible_on;
+                }
+                _buttons[button.button_name] = action
+            }
+        })
+        _object.actions = _buttons;
+        // _object.allow_customActions = userObjectLayout.custom_actions || []
+        // _object.exclude_actions = userObjectLayout.exclude_actions || []
+        _object.related_lists = layout.related_lists || []
+    }
+    return _object;
+}
+
 
 export async function getSpaceBootStrap(req, res) {
     return Fiber(async function () {
@@ -50,45 +135,62 @@ export async function getSpaceBootStrap(req, res) {
 
         let space = Creator.Collections["spaces"].findOne({ _id: spaceId }, { fields: { name: 1 } })
 
+        //TODO 无需再从getAllPermissions中获取用户的对象权限
         let result = Creator.getAllPermissions(spaceId, userId);
 
         let lng = _getLocale(db.users.findOne(userId, { fields: { locale: 1 } }))
-
         steedosI18n.translationObjects(lng, result.objects);
-
         result.user = userSession
 
         result.space = space
 
-        result.apps = clone(Creator.Apps)
-
         result.dashboards = clone(Creator.Dashboards)
-        
-        result.object_listviews = Creator.getUserObjectsListViews(userId, spaceId, result.objects)
-        
+
         result.object_workflows = Meteor.call('object_workflows.get', spaceId, userId)
-        
+        result.object_listviews = await getUserObjectsListViews(userId, spaceId)
+        // result.apps = clone(Creator.Apps)
+        result.apps = await getAppConfigs(spaceId);
+        result.assigned_apps = await getAssignedApps(userSession);
+
         let datasources = Creator.steedosSchema.getDataSources();
         
+        // for (const datasourceName in datasources) {
+        //     if(datasourceName != 'default'){
+        //         let datasource = datasources[datasourceName];
+        //         const datasourceObjects = datasource.getObjects();
+        //         for (const objectName in datasourceObjects) {
+        //             const object = datasourceObjects[objectName];
+        //             const _obj = Creator.convertObject(clone(object.toConfig()), spaceId)
+        //             _obj.name = objectName
+        //             _obj.database_name = datasourceName
+        //             _obj.permissions = await object.getUserObjectPermission(userSession)
+        //             result.objects[_obj.name] = _obj
+        //         }
+        //     }
+        // }
         for (const datasourceName in datasources) {
-            if(datasourceName != 'default'){
-                let datasource = datasources[datasourceName];
-                const datasourceObjects = datasource.getObjects();
-                for (const objectName in datasourceObjects) {
-                    const object = datasourceObjects[objectName];
-                    const _obj = Creator.convertObject(clone(object.toConfig()), spaceId)
-                    _obj.name = objectName
-                    _obj.database_name = datasourceName
-                    _obj.permissions = await object.getUserObjectPermission(userSession)
-                    result.objects[_obj.name] = _obj
+            let datasource = datasources[datasourceName];
+            const datasourceObjects = await datasource.getObjects();
+            for (const object of datasourceObjects) {
+                const objectConfig  = object.metadata;
+                if(!result.objects[objectConfig.name]){
+                    try {
+                        const _obj = Creator.convertObject(clone(objectConfig), spaceId)
+                        _obj.name = objectConfig.name
+                        _obj.database_name = datasourceName
+                        _obj.permissions = await getObject(objectConfig.name).getUserObjectPermission(userSession)
+                        steedosI18n.translationObject(lng, _obj.name, _obj);
+                        result.objects[_obj.name] = _obj
+                    } catch (error) {
+                        console.error(error.message)
+                    }
                 }
             }
         }
-
-        _.each(Creator.steedosSchema.getDataSources(), function(datasource, name){
-            result.apps = _.extend(result.apps, clone(datasource.getAppsConfig()))
-            result.dashboards = _.extend(result.dashboards, datasource.getDashboardsConfig())
-        })
+        // _.each(Creator.steedosSchema.getDataSources(), function(datasource, name){
+        //     result.apps = _.extend(result.apps, clone(datasource.getAppsConfig()))
+        //     result.dashboards = _.extend(result.dashboards, datasource.getDashboardsConfig())
+        // })
 
         var _dbApps = await getObject("apps").directFind({filters: [['space', '=', spaceId],['is_creator', '=', true],['visible', '=', true]]});
         let dbApps = {};
@@ -124,7 +226,7 @@ export async function getSpaceBootStrap(req, res) {
 
         steedosI18n.translationApps(lng, _Apps);
         result.apps = _Apps;
-        let assigned_menus = clone(result.assigned_menus);
+        let assigned_menus = await getAssignedMenus(userSession);
         steedosI18n.translationMenus(lng, assigned_menus);
         result.assigned_menus = assigned_menus;
 
@@ -139,48 +241,7 @@ export async function getSpaceBootStrap(req, res) {
 
         result.plugins = getPlugins ? getPlugins() : null
 
-        let objectsLayout = await getUserProfileObjectsLayout(userId, spaceId);
-        _.each(result.objects, function(_object, objectName){
-            let userObjectLayout = null;
-            if(objectsLayout){
-                userObjectLayout = _.find(objectsLayout, function(objectLayout){
-                    return objectLayout.object_name === objectName
-                })
-            }
-            if(!userObjectLayout){
-                userObjectLayout = getLayout(objectName, 'default');
-            }
-
-            if(userObjectLayout){
-                let _object = clone(result.objects[userObjectLayout.object_name]);
-                if(_object){
-                    let _fields = {};
-                    _.each(userObjectLayout.fields, function(_item){
-                        _fields[_item.field] = _object.fields[_item.field]
-                        if(_fields[_item.field]){
-                            if(_.has(_item, 'group')){
-                                _fields[_item.field].group = _item.group
-                            }
-                            
-                            if(_item.required){
-                                _fields[_item.field].readonly = false
-                                _fields[_item.field].disabled = false
-                                _fields[_item.field].required = true
-                            }else if(_item.readonly){
-                                _fields[_item.field].readonly = true
-                                _fields[_item.field].disabled = true
-                                _fields[_item.field].required = false
-                            }
-                        }
-                    })
-                    _object.fields = _fields
-                    _object.allow_customActions = userObjectLayout.custom_actions || []
-                    _object.exclude_actions = userObjectLayout.exclude_actions || []
-                    _object.allow_relatedList = userObjectLayout.relatedList || []
-                }
-                result.objects[userObjectLayout.object_name] = _object
-            }
-        })
+        await getUserObjects(userId, spaceId, result.objects);
         
         // TODO object layout 是否需要控制审批记录显示？
         let spaceProcessDefinition = await getObject("process_definition").find({filters: [['space', '=', spaceId], ['active', '=', true]]})
@@ -189,6 +250,30 @@ export async function getSpaceBootStrap(req, res) {
                 result.objects[item.object_name].enable_process = true
             }
         })
+
+        for (const key in result.objects) {
+            if (Object.prototype.hasOwnProperty.call(result.objects, key)) {
+                const objectConfig = result.objects[key];
+                try {
+                    const object = getObject(key);
+                    objectConfig.details = await object.getDetailsInfo();
+                    objectConfig.masters = await object.getMastersInfo();
+                    objectConfig.lookup_details = await object.getLookupDetailsInfo();
+                    _.each(objectConfig.triggers, function(trigger, key){
+                        if(trigger?.on != 'client'){
+                            delete objectConfig.triggers[key];
+                        }
+                    })
+                    delete objectConfig.listeners
+                    delete objectConfig.__filename
+                    delete objectConfig.extend
+                } catch (error) {
+                    
+                }
+            }
+        }
+
+
         return res.status(200).send(result);
     }).run();
 }
@@ -201,11 +286,50 @@ async function getObjectConfig(objectName, spaceId, userSession) {
         objectConfig.name = objectName
         objectConfig.datasource = object.datasource.name;
         objectConfig.permissions = await object.getUserObjectPermission(userSession);
+        objectConfig.details = await object.getDetailsInfo();
+        objectConfig.masters = await object.getMastersInfo();
+        objectConfig.lookup_details = await object.getLookupDetailsInfo();
         return objectConfig;
     } catch (error) {
         console.warn('not load object', objectName)
     }
 }
+
+async function getUserObjectsListViews(userId, spaceId) {
+    const listViews = {};
+    const objectsViews = await getObject("object_listviews").find({filters: [['space', '=', spaceId],[ [ "owner", "=", userId ], "or", [ "shared", "=", true ] ]]});
+    let objectNames = _.pluck(objectsViews, 'object_name');
+    objectNames = _.uniq(objectNames);
+    const _getUserObjectListViews = function(object_name) {
+      var _user_object_list_views, olistViews;
+      _user_object_list_views = {};
+      olistViews = _.filter(objectsViews, function(ov) {
+        return ov.object_name === object_name;
+      });
+      _.each(olistViews, function(listview) {
+        return _user_object_list_views[listview._id] = listview;
+      });
+      return _user_object_list_views;
+    };
+    _.forEach(objectNames, function(key) {
+      var list_view;
+      list_view = _getUserObjectListViews(key);
+      if (!_.isEmpty(list_view)) {
+        return listViews[key] = list_view;
+      }
+    });
+    return listViews;
+  };
+
+// async function getUserObjectListViews(userId, spaceId, object_name){
+//     const _user_object_list_views = {};
+//     const object_listview = await getObject("object_listviews").find({filters: [['object_name', '=', object_name],['space', '=', spaceId],[ [ "owner", "=", userId ], "or", [ "shared", "=", true ] ]]});
+//     object_listview.forEach(function(listview) {
+//       return _user_object_list_views[listview._id] = listview;
+//     });
+//     return _user_object_list_views;
+// }
+
 export async function getSpaceObjectBootStrap(req, res) {
     return Fiber(async function () {
         let userSession = req.user;
@@ -226,7 +350,7 @@ export async function getSpaceObjectBootStrap(req, res) {
             }
         } else {
             if (userSession.is_space_admin || _object.in_development == '0' && _object.is_enable) {
-                if (_object.datasource == 'default') {
+                if (_object.datasource == 'meteor') {
                     objectConfig = Creator.getAllPermissions(spaceId, userId).objects[objectName]
                 } else {
                     objectConfig = await getObjectConfig(objectName, spaceId, userSession);
@@ -235,51 +359,26 @@ export async function getSpaceObjectBootStrap(req, res) {
         }
         if (objectConfig) {
             delete objectConfig.db
-            // objectConfig.list_views = Creator.getUserObjectListViews(userId, spaceId, objectName)
+            // objectConfig.list_views = await getUserObjectListViews(userId, spaceId, objectName)
             steedosI18n.translationObject(lng, objectConfig.name, objectConfig)
 
-            let objectsLayout = await getUserProfileObjectsLayout(userId, spaceId, objectName);
-
-            let userObjectLayout = null;
-            if (objectsLayout) {
-                userObjectLayout = _.find(objectsLayout, function (objectLayout) {
-                    return objectLayout.object_name === objectName
-                })
-            }
-            if (!userObjectLayout) {
-                userObjectLayout = getLayout(objectName, 'default');
-            }
-
-            if (userObjectLayout) {
-                let _fields = {};
-                _.each(userObjectLayout.fields, function (_item) {
-                    _fields[_item.field] = objectConfig.fields[_item.field]
-                    if (_fields[_item.field]) {
-                        if (_.has(_item, 'group')) {
-                            _fields[_item.field].group = _item.group
-                        }
-                        if (_item.required) {
-                            _fields[_item.field].readonly = false
-                            _fields[_item.field].disabled = false
-                            _fields[_item.field].required = true
-                        } else if (_item.readonly) {
-                            _fields[_item.field].readonly = true
-                            _fields[_item.field].disabled = true
-                            _fields[_item.field].required = false
-                        }
-                    }
-                })
-                objectConfig.fields = _fields
-                objectConfig.allow_customActions = userObjectLayout.custom_actions || []
-                objectConfig.exclude_actions = userObjectLayout.exclude_actions || []
-                objectConfig.allow_relatedList = userObjectLayout.relatedList || []
-            }
+            objectConfig = await getUserObject(userId, spaceId, objectConfig)
 
             // TODO object layout 是否需要控制审批记录显示？
             let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', spaceId], ['object_name', '=', objectName], ['active', '=', true]] })
             if (spaceProcessDefinition.length > 0) {
                 objectConfig.enable_process = true
             }
+
+            _.each(objectConfig.triggers, function(trigger, key){
+                if(trigger?.on != 'client'){
+                    delete objectConfig.triggers[key];
+                }
+            })
+
+            delete objectConfig.listeners
+            delete objectConfig.__filename
+            delete objectConfig.extend
         }
         return res.status(200).send(objectConfig || {});
     }).run();

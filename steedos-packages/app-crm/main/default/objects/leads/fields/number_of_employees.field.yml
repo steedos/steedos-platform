@@ -1,0 +1,5 @@
+name: number_of_employees
+label: 职员数
+sort_no: 200
+sortable: true
+type: number

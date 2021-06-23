@@ -1,0 +1,7 @@
+name: hierarchy_number_of_opportunities
+hidden: true
+inlineHelpText: 市场活动层次结构相关业务机会总数的计算字段。（只读）
+label: 层次结构中的业务机会
+readonly: true
+sort_no: 240
+type: number

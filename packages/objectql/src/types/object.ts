@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema } from ".";
-import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace } from '../util'
+import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl } from '../util'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -11,6 +11,9 @@ import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from 
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { WorkflowRulesRunner } from '../actions';
 import { runValidationRules } from './validation_rules';
+import { brokeEmitEvents } from "./object_events";
+import { translationObject } from "@steedos/i18n";
+import { getObjectLayouts } from "./object_layouts";
 const clone = require('clone')
 
 // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
@@ -18,29 +21,6 @@ const clone = require('clone')
 // 或者如果当前对象上创建的主表子表关系字段指向的对象是D，那么也会超过3层的层级限制；
 // 又或者中间加一层M先连接B再连接C，形成A-B-M-C-D，也会超过3层的层级限制；
 export const MAX_MASTER_DETAIL_LEAVE = 3;
-
-/**
- * 判断传入的paths中最大层级深度
- * @param paths 对象上getDetailPaths或getMasterPaths函数返回的当前对象向下或向上取主表子表关联对象名称列表链条
- * 比如传入下面示例中的paths，表示当前对象b向下有4条主子关系链，最大层级深度为第2条，深度为3
- * [
-    [ 'b', 't1', 't2' ],
-    [ 'b', 't1', 'm1', 'm2' ],
-    [ 'b', 't1', 'm2' ],
-    [ 'b', 'c', 'd' ]
- * ]
- */
-const getMaxPathLeave = (paths: string[]) => {
-    let maxLeave = 0;
-    _.each(paths, (n) => {
-        if (maxLeave < n.length) {
-            maxLeave = n.length;
-        }
-    });
-    // A-B-C-D这种主表子表链按3层算
-    maxLeave--;
-    return maxLeave;
-}
 
 /**
  * 判断传入的paths中每条path下是否有重复对象名称，返回第一个重复的对象名称
@@ -57,7 +37,7 @@ const getMaxPathLeave = (paths: string[]) => {
 export const getRepeatObjectNameFromPaths = (paths: string[]) => {
     let repeatItem: string;
     for (let p of paths) {
-        if(repeatItem){
+        if (repeatItem) {
             break;
         }
         let g = _.groupBy(p);
@@ -92,7 +72,9 @@ abstract class SteedosObjectProperties {
     enable_trash?: boolean
     enable_space_global?: boolean
     enable_tree?: boolean
+    enable_enhanced_lookup?: boolean
     enable_inline_edit?: boolean
+    enable_approvals?: boolean
     is_view?: boolean
     hidden?: boolean
     description?: string
@@ -115,6 +97,7 @@ abstract class SteedosObjectProperties {
 export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     __filename?: string
     name?: string
+    isMain?: boolean
     datasource?: string
     fields: Dictionary<SteedosFieldTypeConfig>
     actions?: Dictionary<SteedosActionTypeConfig>
@@ -124,7 +107,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
 
 const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
 
-const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number']
+const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'enable_enhanced_lookup', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number']
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -215,6 +198,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._details;
     }
 
+    private async callMetadataObjectServiceAction(action, params?){
+        const actionFullName = `objects.${action}`
+        const result = await this.schema.metadataBroker.call(actionFullName, params);
+        return result;
+    }
+
     private checkField() {
         let driverSupportedColumnTypes = this._datasource.adapter.getSupportedColumnTypes()
         _.each(this.fields, (field: SteedosFieldType, key: string) => {
@@ -284,6 +273,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this.schema.setObjectMap(this.name, { datasourceName: this.datasource.name, _id: config._id })
     }
 
+    getConfig(){
+        return this.datasource.getObjectConfig(this.name);
+    }
+
     setPermission(config: SteedosObjectPermissionTypeConfig) {
         this._datasource.setObjectPermission(this._name, config)
     }
@@ -313,6 +306,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
     registerTrigger(trigger: SteedosTriggerType) {
         //如果是meteor mongo 则不做任何处理
         if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo || trigger.when === 'beforeFind' || trigger.when === 'afterFind' || trigger.when === 'afterFindOne' || trigger.when === 'afterCount' || trigger.when === 'beforeAggregate' || trigger.when === 'afterAggregate') {
+            if (!trigger.todo) {
+                return;
+            }
             if (!this._triggersQueue[trigger.when]) {
                 this._triggersQueue[trigger.when] = {}
             }
@@ -355,6 +351,23 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let trigger = triggers[triggerKeys[index]];
             await this.runTirgger(trigger, context)
         }
+    }
+
+    async runTriggerActions(when: string, context: SteedosTriggerContextConfig) {
+        let triggers = await this._schema.metadataBroker.call('triggers.filter', { objectApiName: this.name, when: when })
+        if (_.isEmpty(triggers)) {
+            return;
+        }
+
+        for (const trigger of triggers) {
+            let params = generateActionParams(when, context); //参考sf
+            try {
+                await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
     }
 
     toConfig() {
@@ -405,6 +418,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
+        config.datasource = this.datasource.name;
+
         return config
     }
 
@@ -419,9 +434,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         }
 
-        if(field.is_name){
+        if (field.is_name) {
             this._NAME_FIELD_KEY = field_name
-        }else if(field_name == 'name' && !this._NAME_FIELD_KEY){
+        } else if (field_name == 'name' && !this._NAME_FIELD_KEY) {
             this._NAME_FIELD_KEY = field_name
         }
     }
@@ -430,178 +445,58 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this.fields[field_name]
     }
 
-    checkMasterDetails(){
-        const mastersCount = this._masters.length;
-        const detailsCount = this._details.length;
-        if(mastersCount > 2){
-            throw new Error(`There are ${mastersCount} fields of type master_detail on the object '${this._name}', but only 2 fields are allowed at most.`);
-        }
-        else if(mastersCount > 1){
-            if(detailsCount > 0){
-                throw new Error(`There are ${mastersCount} fields of type master_detail on the object "${this._name}", but only 1 field are allowed at most, because this object is the master object of another object on a master-detail relationship.`);
-            }
-        }
-        
-        const detailPaths = this.getDetailPaths();
-
-        /**
-         * 去掉内核中判断主表子表层级限制判断，因为内核对象可能有需求不止要用3层，只保留零代码上触发器判断逻辑就行
-         */
-        // // 下面只需要写一个方向的层级if判断即可，不用向上和向下两边层级都判断，因为只要链条有问题，该链条任意一个对象都会报错，没必要让多个节点抛错
-        // // 比如A-B-C-D-E这个链条超出最大层级数量，只要A对象向下取MaxDetailsLeave来判断就行，不必再判断E对象向上判断层级数量
-        // const maxDetailLeave = this.getMaxDetailsLeave(detailPaths);
-        // if(maxDetailLeave > MAX_MASTER_DETAIL_LEAVE){
-        //     throw new Error(`It exceed the maximum depth of master-detail relationship for the detail side of the object '${this._name}', the paths is:${JSON.stringify(detailPaths)}`);
-        // }
-
-        // detailPaths中每个链条中不可以出现同名对象，理论上出现同名对象的话会死循环，上面的MAX_MASTER_DETAIL_LEAVE最大层级判断就已经会报错了
-        const repeatName = getRepeatObjectNameFromPaths(detailPaths);
-        if(repeatName){
-            throw new Error(`It meet one repeat object name '${repeatName}' in the master-detail relationships for the detail side of the object '${this._name}', the paths is:${JSON.stringify(detailPaths)}`);
-        }
+    getFields(){
+        return this.toConfig().fields
     }
 
-    initMasterDetails(){
-        _.each(this.fields, (field, field_name) => {
-            if(field.type === "master_detail"){
-                // 加try catch是因为有错误时不应该影响下一个字段逻辑
-                try {
-                    if (field.reference_to && typeof _.isString(field.reference_to)) {
-                        if (field.reference_to === this._name) {
-                            field.type = "lookup";//强行变更为最接近的类型
-                            throw new Error(`Can't set a master-detail filed that reference to self on the object '${this._name}'.`);
-                        }
-                        const refObject = getObject(<string>field.reference_to);
-                        if (refObject) {
-                            const addSuc = this.addMaster(<string>field.reference_to);
-                            if(addSuc){
-                                refObject.addDetail(this._name);
-                                // #1435 对象是作为其他对象的子表的话，owner的omit属性必须为true
-                                // 因很多应用目前已经放开了子表的omit属性，这里就不限制了，影响不大，只在零代码界面配置时限制
-                                // if(!this.getField("owner").omit){
-                                //     throw new Error(`The omit property of the owner field on the object '${this._name}' must be true, because there is a master-detail field named '${field.name}' on the object.`);
-                                // }
-                            }
-                            else{
-                                // 不能选之前已经在该对象上建过的主表-子表字段上关联的相同对象
-                                field.type = "lookup";//强行变更为最接近的类型
-                                throw new Error(`Can't set a master-detail field that reference to the same object '${field.reference_to}' that had referenced to by other master-detail field on the object '${this._name}'.`);
-                            }
-                        }
-                        else {
-                            throw new Error(`Can't find the reference_to object '${field.reference_to}' for the master_detail field of the object '${this._name}'`);
-                        }
-                    }
-                }
-                catch (ex) {
-                    console.error(ex);
-                }
-            }
-        });
+    getNameFieldKey(){
+        return this.NAME_FIELD_KEY;
     }
 
-    getMaxDetailsLeave(paths?: string[]){
-        if(!paths){
-            paths = this.getDetailPaths();
-        }
-        return getMaxPathLeave(paths);
+    async getDetailPaths(){
+        return await this.callMetadataObjectServiceAction(`getDetailPaths`, {objectApiName: this.name});
     }
 
-    getMaxMastersLeave(paths?: string[]){
-        if(!paths){
-            paths = this.getMasterPaths();
-        }
-        return getMaxPathLeave(paths);
+    async getMasterPaths(){
+        return await this.callMetadataObjectServiceAction(`getMasterPaths`, {objectApiName: this.name});
     }
 
-    getDetailPaths(){
-        let results = [];
-        let loop = (master: string, details: string[], paths: string[], leave: number) => {
-            paths.push(master);
-            if(!details.length){
-                results.push(paths);
-                return;
-            }
-            leave++;
-            if(leave > MAX_MASTER_DETAIL_LEAVE + 3){
-                // 加这段逻辑是避免死循环，results最多只输出MAX_MASTER_DETAIL_LEAVE+3层
-                console.error(`Meet max loop for the detail paths of ${this._name}`);
-                return;
-            }
-            _.each(details,(n)=>{
-                const detailObject = getObject(n);
-                if(detailObject){
-                    loop(n, detailObject.details, _.clone(paths), leave);
-                }
-                else{
-                    throw new Error(`Can't find the detail object '${n}' for the master object '${master}' of a master-detail relationship.`);
-                }
-            });
-        }
-        // console.log("==getDetailPaths======", this._name);
-        loop(this._name, this._details, [], 0);
-        // console.log("==getDetailPaths=", JSON.stringify(results));
-        return results;
+    async getMaxDetailsLeave(paths?){
+        return await this.callMetadataObjectServiceAction(`getMaxDetailsLeave`, {objectApiName: this.name, paths});
     }
 
-    getMasterPaths(){
-        let results = [];
-        let loop = (detail: string, masters: string[], paths: string[], leave: number) => {
-            paths.push(detail);
-            if(!masters.length){
-                results.push(paths);
-                return;
-            }
-            leave++;
-            if(leave > MAX_MASTER_DETAIL_LEAVE + 3){
-                // 加这段逻辑是避免死循环，results最多只输出MAX_MASTER_DETAIL_LEAVE+3层
-                console.error(`Meet max loop for the detail paths of ${this._name}`);
-                return;
-            }
-            _.each(masters,(n)=>{
-                const masterObject = getObject(n);
-                if(masterObject){
-                    loop(n, masterObject.masters, _.clone(paths), leave);
-                }
-                else{
-                    throw new Error(`Can't find the master object '${n}' for the detail object '${detail}' of a master-detail relationship.`);
-                }
-            });
-        }
-        // console.log("==getMasterPaths======", this._name);
-        loop(this._name, this._masters, [], 0);
-        // console.log("==getMasterPaths=", JSON.stringify(results));
-        return results;
+    async getMaxMastersLeave(paths?){
+        return await this.callMetadataObjectServiceAction(`getMaxMastersLeave`, {objectApiName: this.name, paths});
     }
-
-    addMaster(object_name: string){
+   
+    addMaster(object_name: string) {
         let index = this._masters.indexOf(object_name);
-        if(index < 0){
+        if (index < 0) {
             this._masters.push(object_name);
             return true;
         }
         return false;
     }
 
-    removeMaster(object_name: string){
+    removeMaster(object_name: string) {
         let index = this._masters.indexOf(object_name);
-        if(index >= 0){
+        if (index >= 0) {
             this._masters.splice(index, 1);
         }
     }
 
-    addDetail(object_name: string){
+    addDetail(object_name: string) {
         let index = this._details.indexOf(object_name);
-        if(index < 0){
+        if (index < 0) {
             this._details.push(object_name);
             return true;
         }
         return false;
     }
 
-    removeDetail(object_name: string){
+    removeDetail(object_name: string) {
         let index = this._details.indexOf(object_name);
-        if(index >= 0){
+        if (index >= 0) {
             this._details.splice(index, 1);
         }
     }
@@ -645,9 +540,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     getObjectRolesPermission(spaceId?: string) {
         let globalPermission = this._datasource.getObjectRolesPermission(this._name)
-        if(spaceId){
+        if (spaceId) {
             let permission = this._datasource.getObjectSpaceRolesPermission(this._name, spaceId);
-            if(!_.isEmpty(permission)){
+            if (!_.isEmpty(permission)) {
                 return Object.assign({}, globalPermission || {}, permission);
             }
         }
@@ -693,12 +588,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
                             userObjectPermission[k] = _v
                         }
                     } else if ((_.isArray(v) || _.isNull(v))) {
-                        if(!_.isArray(_v)){
+                        if (!_.isArray(_v)) {
                             _v = []
                         }
-                        if(_.isNull(v)){
+                        if (_.isNull(v)) {
                             userObjectPermission[k] = _v
-                        }else{
+                        } else {
                             userObjectPermission[k] = _.intersection(v, _v)
                         }
                     }
@@ -846,6 +741,263 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('directDelete', this.table_name, clonedId, userSession)
     }
 
+    async _makeNewID(){
+        return await this._datasource._makeNewID(this.table_name);
+    }
+
+    async getFirstListView(){
+        return this.list_views[0];
+    }
+
+    async getAbsoluteUrl(app_id, record_id?){
+        const object_name = this.name;
+        const list_view:any = await this.getFirstListView();
+        const list_view_id = list_view ? list_view._id || list_view.name : 'all'
+        if(record_id)
+            return absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
+        else{
+            if(object_name === 'meeting'){
+                return absoluteUrl("/app/" + app_id + "/" + object_name + "/calendar/")
+            }else{
+                return absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+            }
+        }
+    }
+
+    async getRecordAbsoluteUrl(app_id, record_id){
+        return await this.getAbsoluteUrl(app_id, record_id)
+    }
+
+    async getGridAbsoluteUrl(app_id){
+        return await this.getAbsoluteUrl(app_id)
+    }
+
+    async isEnableAudit(){
+        return this.enable_audit;
+    }
+
+    async getDetails(){
+        return await this.callMetadataObjectServiceAction(`getDetails`, {objectApiName: this.name});
+    }
+
+    async getMasters(){
+        return await this.callMetadataObjectServiceAction(`getMasters`, {objectApiName: this.name});
+    }
+
+    async getLookupDetails(){
+        return await this.callMetadataObjectServiceAction(`getLookupDetails`, {objectApiName: this.name});
+    }
+
+    async getDetailsInfo(){
+        return await this.callMetadataObjectServiceAction(`getDetailsInfo`, {objectApiName: this.name});
+    }
+
+    async getMastersInfo(){
+        return await this.callMetadataObjectServiceAction(`getMastersInfo`, {objectApiName: this.name});
+    }
+
+    async getLookupDetailsInfo(){
+        return await this.callMetadataObjectServiceAction(`getLookupDetailsInfo`, {objectApiName: this.name});
+    }
+
+    async getRecordPermissions(record, userSession){
+        const permissions = await this.getUserObjectPermission(userSession);
+        const { userId, company_ids: user_company_ids } = userSession;
+        if(record){
+            if(record.record_permissions){
+                return record.record_permissions
+            }
+            let recordOwnerId = record.owner;
+            if(_.isObject(recordOwnerId)){
+                recordOwnerId = recordOwnerId._id;
+            }
+            const isOwner = recordOwnerId == userId;
+            let record_company_id = record.company_id;
+            if(record_company_id && _.isObject(record_company_id) && record_company_id._id){
+                record_company_id = record_company_id._id;
+            }
+            let record_company_ids = record.company_ids;
+            if(record_company_ids && record_company_ids.length && _.isObject(record_company_ids[0])){
+                record_company_ids = record_company_ids.map((n)=> n._id)
+            }
+            record_company_ids = _.union(record_company_ids, [record_company_id]);
+            record_company_ids = _.compact(record_company_ids);
+            if(!permissions.modifyAllRecords && !isOwner && !permissions.modifyCompanyRecords){
+                permissions.allowEdit = false
+			    permissions.allowDelete = false
+            }else if(!permissions.modifyAllRecords && permissions.modifyCompanyRecords){
+                if(record_company_ids && record_company_ids.length){
+                    if(user_company_ids && user_company_ids.length){
+                        if(!_.intersection(user_company_ids, record_company_ids).length){
+                            permissions.allowEdit = false
+						    permissions.allowDelete = false
+                        }
+                    }else{
+                        permissions.allowEdit = false
+                        permissions.allowDelete = false
+                    }
+                }
+            }
+            if(record.locked && !permissions.modifyAllRecords){
+                permissions.allowEdit = false
+			    permissions.allowDelete = false
+            }
+            if(!permissions.viewAllRecords && !isOwner && !permissions.viewCompanyRecords){
+                permissions.allowRead = false
+            }else{
+                if(record_company_ids && record_company_ids.length){
+                    if(user_company_ids && user_company_ids.length){
+                        if(!_.intersection(user_company_ids, record_company_ids).length){
+                            permissions.allowRead = false
+                        }
+                    }else{
+                        permissions.allowRead = false
+                    }
+                }
+            }
+        }
+        return permissions
+    }
+
+    async getRecordView(userSession){
+        const lng = userSession.language;
+        const objectMetadataConfig: any = await this.callMetadataObjectServiceAction('get', {objectApiName: this.name});
+        let objectConfig = objectMetadataConfig.metadata;
+        objectConfig.name = this.name
+        objectConfig.datasource = this.datasource.name;
+        objectConfig.permissions = await this.getUserObjectPermission(userSession);
+        objectConfig.details = await this.getDetailsInfo();
+        objectConfig.masters = await this.getMastersInfo();
+        objectConfig.lookup_details = await this.getLookupDetailsInfo();
+
+        delete objectConfig.db
+
+        translationObject(lng, objectConfig.name, objectConfig);
+
+        const layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name);
+        if(layouts && layouts.length > 0){
+            const layout = layouts[0];
+            let _fields = {};
+            _.each(layout.fields, function(_item){
+                _fields[_item.field_name] = objectConfig.fields[_item.field_name]
+                if(_fields[_item.field_name]){
+                    if(_.has(_item, 'group')){
+                        _fields[_item.field_name].group = _item.group
+                    }
+                    
+                    if(_item.is_required){
+                        _fields[_item.field_name].readonly = false
+                        _fields[_item.field_name].disabled = false
+                        _fields[_item.field_name].required = true
+                    }else if(_item.is_readonly){
+                        _fields[_item.field_name].readonly = true
+                        _fields[_item.field_name].disabled = true
+                        _fields[_item.field_name].required = false
+                    }
+
+                    if(_item.visible_on){
+                        _fields[_item.field_name].visible_on = _item.visible_on
+                    }
+                }
+            })
+
+            const layoutFieldKeys = _.keys(_fields);
+            const objectFieldKeys = _.keys(objectConfig.fields);
+
+            const difference = _.difference(objectFieldKeys, layoutFieldKeys);
+
+            _.each(layoutFieldKeys, function(fieldApiName){
+                objectConfig.fields[fieldApiName] = _fields[fieldApiName];
+            })
+            
+            _.each(difference, function(fieldApiName){
+                objectConfig.fields[fieldApiName].hidden = true;
+            })
+
+            let _buttons = {};
+            _.each(layout.buttons, function(button){
+                const action = objectConfig.actions[button.button_name];
+                if(action){
+                    if(button.visible_on){
+                        action.visible = button.visible_on;
+                    }
+                    _buttons[button.button_name] = action
+                }
+            })
+            objectConfig.actions = _buttons;
+            // _object.allow_customActions = userObjectLayout.custom_actions || []
+            // _object.exclude_actions = userObjectLayout.exclude_actions || []
+            objectConfig.related_lists = layout.related_lists || []
+        }
+
+        // TODO object layout 是否需要控制审批记录显示？
+        let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] })
+        if (spaceProcessDefinition.length > 0) {
+            objectConfig.enable_process = true
+        }
+
+        //清理数据
+
+        _.each(objectConfig.triggers, function(trigger, key){
+            if(trigger?.on != 'client'){
+                delete objectConfig.triggers[key];
+            }
+        })
+
+        const dbListViews = await getObject("object_listviews").find({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] })
+        objectConfig.list_views = Object.assign({}, objectConfig.list_views)
+        _.each(dbListViews, function(dbListView){
+            delete dbListView.created;
+            delete dbListView.created_by;
+            delete dbListView.modified;
+            delete dbListView.modified_by;
+            objectConfig.list_views[dbListView.name] = dbListView;
+        })
+        delete objectConfig.listeners
+        delete objectConfig.__filename
+        delete objectConfig.extend
+        return objectConfig;
+    }
+
+    async createDefaulRecordView(userSession){
+        const name = 'default';
+        const label = 'Default';
+        const object_name = this.name;
+        const type = 'record';
+        const profiles = ['user'];
+        const buttons = null;
+        const fields = []; 
+        const related_lists = [];
+
+        const objectConfig: any = await this.callMetadataObjectServiceAction('getOriginalObject', {objectApiName: this.name});
+        _.each(objectConfig.fields, function(field, key){
+            const layoutField: any = {};
+            layoutField.field_name = field.name || key;
+            layoutField.is_readonly = field.readonly;
+            layoutField.is_required = field.required;
+            layoutField.group = field.group;
+            layoutField.visible_on = `${!field.hidden}`;
+            fields.push(layoutField);
+        });
+
+        // const details = await this.getDetailsInfo();
+        // for await (const detail of details) {
+        //     const relatedList: any = {}
+        //     if(detail){
+        //         relatedList.related_field_fullname = detail;
+        //     }
+        // }
+
+        try {
+            return await getObject('object_layouts').insert({
+                name, label, object_name, type, profiles, buttons, fields, related_lists,
+                space: userSession.spaceId
+            }, userSession)
+        } catch (error) {
+            return {error: error.message}
+        }
+    }
+
     private isDirectCRUD(methodName: string) {
         return methodName.startsWith("direct");
     }
@@ -875,16 +1027,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (method === 'count') {
             method = 'find';
         }
-        let when = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        return await this.runTriggers(when, context)
+        let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
+        let when = `before.${method}`;
+        await this.runTriggers(meteorWhen, context);
+        return await this.runTriggerActions(when, context)
     }
 
     private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
-        let when = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        return await this.runTriggers(when, context)
+        let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
+        let when = `after.${method}`;
+        await this.runTriggers(meteorWhen, context);
+        return await this.runTriggerActions(when, context)
     }
 
-    private async getTriggerContext(when: string, method: string, args: any[]) {
+    private async getTriggerContext(when: string, method: string, args: any[], recordId?: string) {
 
         let userSession = args[args.length - 1]
 
@@ -907,7 +1063,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         if (when === 'after' && (method === 'update' || method === 'delete')) {
-            context.previousDoc = await this.findOne(context.id, {}, userSession)
+            context.previousDoc = await this.findOne(recordId, {}, userSession)
         }
 
         return context
@@ -930,8 +1086,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
             if (!(query.fields && query.fields.length)) {
                 queryFields = _.keys(this.toConfig().fields)
-                _.each(queryFields, function(fieldName, index){
-                    if(fieldName && fieldName.indexOf("$") > -1){
+                _.each(queryFields, function (fieldName, index) {
+                    if (fieldName && fieldName.indexOf("$") > -1) {
                         delete queryFields[index];
                     }
                 })
@@ -984,17 +1140,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         let objectName = args[0], recordId: string, doc: JsonMap;
-        if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
+        if (["insert", "update", "updateMany", "delete"].indexOf(method) > -1) {
             // 因下面的代码，比如函数dealWithMethodPermission可能改写args变量，所以需要提前从args取出对应变量值。
-            if(method === "insert"){
+            if (method === "insert") {
                 // 此处doc不带_id值，得执行完adapterMethod.apply后，doc中才有_id属性，所以这里的doc及recordId都不准确
                 doc = args[1];
                 recordId = <string>doc._id;
             }
-            else{
+            else {
                 recordId = args[1];
                 doc = args[2];
             }
+        }
+
+        let paramRecordId; // 用于记录原始的id参数值
+        if (method === 'findOne' || method === 'update' || method === 'delete') {
+            paramRecordId = args[1];
         }
 
         // 判断处理工作区权限，公司级权限，owner权限
@@ -1012,33 +1173,43 @@ export class SteedosObjectType extends SteedosObjectProperties {
         } else {
             userSession = args[args.length - 1]
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
+            if (paramRecordId) {
+                beforeTriggerContext = Object.assign({} , beforeTriggerContext, { id: paramRecordId });
+            }
             await this.runBeforeTriggers(method, beforeTriggerContext)
             await runValidationRules(method, beforeTriggerContext, args[0], userSession)
 
-            let afterTriggerContext = await this.getTriggerContext('after', method, args)
+            let afterTriggerContext = await this.getTriggerContext('after', method, args, paramRecordId)
+            if (paramRecordId) {
+                afterTriggerContext = Object.assign({}, afterTriggerContext, { id: paramRecordId });
+            }
             let previousDoc = clone(afterTriggerContext.previousDoc);
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
-            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
+            if (method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline') {
                 let values = returnValue || {}
-                if(method === 'count'){
+                if (method === 'count') {
                     values = returnValue || 0
                 }
-                Object.assign(afterTriggerContext, {data: {values: values}})
+                Object.assign(afterTriggerContext, { data: { values: values } })
             }
             // console.log("==returnValue==", returnValue);
-            if(method == "update"){
-                if(returnValue){
+            if(method == 'insert' && _.has(returnValue, '_id')){
+                afterTriggerContext = Object.assign({}, afterTriggerContext, { id: returnValue._id });
+            }
+            if (method == "update") {
+                if (returnValue) {
                     await this.runAfterTriggers(method, afterTriggerContext)
                 }
             }
-            else{
+            else {
                 await this.runAfterTriggers(method, afterTriggerContext)
             }
-            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
-                if(_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))){
+            await brokeEmitEvents(objectName, method, afterTriggerContext);
+            if (method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline') {
+                if (_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))) {
                     return returnValue
-                }else{
+                } else {
                     return afterTriggerContext.data.values
                 }
             }
@@ -1049,8 +1220,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 user_session: userSession,
                 previous_record: afterTriggerContext.previousDoc
             }).run();
-            if(returnValue){
-                if(method === "insert"){
+            if (returnValue) {
+                if (method === "insert") {
                     // 当为insert时，上面代码执行后的doc不带_id，只能从returnValue中取
                     doc = returnValue;
                     recordId = <string>doc._id;
@@ -1064,16 +1235,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
     };
 
     private async runRecordFormula(method: string, objectName: string, recordId: string, doc: any, userSession: any) {
-        if(["insert", "update", "updateMany"].indexOf(method) > -1){
-            if(method === "updateMany"){
+        if (["insert", "update", "updateMany"].indexOf(method) > -1) {
+            if (method === "updateMany") {
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
                 // let filters: SteedosQueryFilters = args[1];
                 // await runManyCurrentObjectFieldFormulas(objectName, filters, userSession);
             }
-            else{
+            else {
                 let currentUserId = userSession ? userSession.userId : undefined;
                 await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
-                if(method === "update"){
+                if (method === "update") {
                     // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
                     await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
                 }
@@ -1082,12 +1253,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async runRecordSummaries(method: string, objectName: string, recordId: string, doc: any, previousDoc: any, userSession: any) {
-        if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
-            if(method === "updateMany"){
+        if (["insert", "update", "updateMany", "delete"].indexOf(method) > -1) {
+            if (method === "updateMany") {
                 // TODO:暂时不支持updateMany汇总计算，因为拿不到修改了哪些数据
             }
-            else{
-                if(method === "insert"){
+            else {
+                if (method === "insert") {
                     await runCurrentObjectFieldSummaries(objectName, recordId);
                 }
                 await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, userSession);
@@ -1321,4 +1492,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
 export function getObject(objectName: string, schema?: SteedosSchema) {
     return (schema ? schema : getSteedosSchema()).getObject(objectName);
+}
+export function getLocalObject(objectName: string, schema?: SteedosSchema) {
+    return (schema ? schema : getSteedosSchema()).getLocalObject(objectName);
 }

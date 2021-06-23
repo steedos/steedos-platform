@@ -1,0 +1,24 @@
+name: program_health__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 运行状况
+omit: false
+options:
+  - label: Red
+    value: Red
+    color: c11d25
+  - label: Green
+    value: Green
+    color: 49d181
+  - label: Yellow
+    value: Yellow
+    color: f9e29d
+readonly: false
+required: false
+searchable: false
+sort_no: 110
+sortable: false
+type: select

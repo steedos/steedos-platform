@@ -116,9 +116,14 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                     }
                     if (_.isArray(value)) {
                         value = value.map(function (item) {
-                            if (typeof item === "string" && regDate.test(item)) {
-                                // 如果value正好是regDate格式，则转换为Date类型
-                                item = new Date(item);
+                            if (typeof item === "string") {
+                                if(regDate.test(item)){
+                                    // 如果item正好是regDate格式，则转换为Date类型
+                                    item = new Date(item);
+                                }
+                                else if(item.indexOf("#") > -1){
+                                    item = encodeURIComponent(item);
+                                }
                             }
                             return item;
                         });
@@ -176,9 +181,14 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                             // between操作符时，value必须是数组，不能是undefined等其他值
                         }
                         else {
-                            if (typeof value === "string" && regDate.test(value)) {
-                                // 如果value正好是regDate格式，则转换为Date类型
-                                value = new Date(value);
+                            if (typeof value === "string") {
+                                if(regDate.test(value)){
+                                    // 如果value正好是regDate格式，则转换为Date类型
+                                    value = new Date(value);
+                                }
+                                else if(value.indexOf("#") > -1){
+                                    value = encodeURIComponent(value);
+                                }
                             }
                             tempFilters = [field, option, value];
                         }

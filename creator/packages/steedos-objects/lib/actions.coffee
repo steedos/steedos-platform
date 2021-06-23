@@ -1,13 +1,22 @@
 Creator.actionsByName = {}
 
 if Meteor.isClient
-
+	steedosFilters = require("@steedos/filters");
 	# 定义全局 actions 函数	
 	Creator.actions = (actions)->
 		_.each actions, (todo, action_name)->
 			Creator.actionsByName[action_name] = todo 
 
 	Creator.executeAction = (object_name, action, record_id, item_element, list_view_id, record)->
+		if action && action.type == 'word-print'
+			if record_id
+				filters = ['_id', '=', record_id]
+			else
+				filters = ObjectGrid.getFilters(object_name, list_view_id, false, null, null)
+			url = "/api/v4/word_templates/" + action.word_template + "/print" + "?filters=" + steedosFilters.formatFiltersToODataQuery(filters);
+			url = Steedos.absoluteUrl(url);
+			return window.open(url);
+
 		obj = Creator.getObject(object_name)
 		if action?.todo
 			if typeof action.todo == "string"
@@ -42,18 +51,44 @@ if Meteor.isClient
 			Modal.show("standard_query_modal")
 
 		"standard_new": (object_name, record_id, fields)->
+			#TODO 使用对象版本判断
+			object = Creator.getObject(object_name);
+			initialValues={}
+			selectedRows = window.gridRef.current.api.getSelectedRows()
+			if selectedRows?.length
+				record_id = selectedRows[0]._id;
+				if record_id
+					initialValues = Creator.odata.get(object_name, record_id)
+
+			else
+				initialValues = FormManager.getInitialValues(object_name)
+
+			if object?.version >= 2
+				return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+					name: "#{object_name}_standard_new_form",
+					objectApiName: object_name,
+					title: '新建',
+					initialValues: initialValues,
+					afterInsert: (result)->
+						if(result.length > 0)
+							record = result[0];
+							setTimeout(()->
+								app_id = Session.get("app_id")
+								url = "/app/#{app_id}/#{object_name}/view/#{record._id}"
+								FlowRouter.go url
+							, 1);
+							return true;
+
+				}, null, {iconPath: '/assets/icons'})
 			Session.set 'action_object_name', object_name
-			ids = Creator.TabularSelectedIds[object_name]
-			if ids?.length
+			if selectedRows?.length
 				# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
 				# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
-				record_id = ids[0]
-				doc = Creator.odata.get(object_name, record_id)
-				Session.set 'cmDoc', doc
+				Session.set 'cmDoc', initialValues
 				# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 				Session.set 'cmShowAgainDuplicated', true
 			else
-				Session.set 'cmDoc', FormManager.getInitialValues(object_name)
+				Session.set 'cmDoc', initialValues
 			Meteor.defer ()->
 				$(".creator-add").click()
 			return 
@@ -65,6 +100,22 @@ if Meteor.isClient
 
 		"standard_edit": (object_name, record_id, fields)->
 			if record_id
+				object = Creator.getObject(object_name);
+				if object?.version >= 2
+					return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+						name: "#{object_name}_standard_edit_form",
+						objectApiName: object_name,
+						recordId: record_id,
+						title: '编辑',
+						afterUpdate: ()->
+							setTimeout(()->
+								if FlowRouter.current().route.path.endsWith("/:record_id")
+									FlowRouter.reload()
+								else
+									window.gridRef.current.api.refreshServerSideStore()
+							, 1);
+							return true;
+					}, null, {iconPath: '/assets/icons'})
 				if Steedos.isMobile() && false
 #					record = Creator.getObjectRecord(object_name, record_id)
 #					Session.set 'cmDoc', record
@@ -84,7 +135,6 @@ if Meteor.isClient
 							$(".btn.creator-edit").click()
 
 		"standard_delete": (object_name, record_id, record_title, list_view_id, record, call_back)->
-			console.log("standard_delete", object_name, record_id, record_title, list_view_id)
 			beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
 			if !beforeHook
 				return false;
@@ -121,6 +171,14 @@ if Meteor.isClient
 								if window.opener
 									isOpenerRemove = true
 									gridContainer = window.opener.$(".gridContainer.#{gridObjectNameClass}")
+							try
+								if FlowRouter.current().route.path.endsWith("/:record_id")
+									if object_name != Session.get("object_name")
+										FlowRouter.reload();
+								else
+									window.gridRef.current.api.refreshServerSideStore()
+							catch _e
+								console.error(_e);
 							if gridContainer?.length
 								if object.enable_tree
 									dxDataGridInstance = gridContainer.dxTreeList().dxTreeList('instance')

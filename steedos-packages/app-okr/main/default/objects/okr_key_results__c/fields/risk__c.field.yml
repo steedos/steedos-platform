@@ -1,0 +1,33 @@
+name: risk__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 风险级别
+multiple: false
+omit: false
+options:
+  - label: 未更新
+    value: No Update
+  - label: 极低风险
+    value: Very Low Risk
+    color: 32845e
+  - label: 低风险
+    value: Low Risk
+    color: a1cdac
+  - label: 中风险
+    value: Medium Risk
+    color: ffd95e
+  - label: 高风险
+    value: High Risk
+    color: ffa749
+  - label: 极高风险
+    value: ' Very High Risk'
+    color: e94716
+readonly: false
+required: false
+searchable: false
+sort_no: 250
+sortable: false
+type: select

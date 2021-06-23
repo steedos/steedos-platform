@@ -1,0 +1,7 @@
+name: recent
+filter_scope: space
+label: 最近查看
+shared: true
+sort:
+  - - create_date
+    - desc

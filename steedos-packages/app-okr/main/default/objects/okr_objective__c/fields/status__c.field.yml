@@ -1,0 +1,30 @@
+name: status__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 状态
+multiple: false
+omit: false
+options:
+  - label: 草稿
+    value: Draft
+  - label: 完成中
+    value: Active
+  - label: 未完成
+    value: Incomplete
+  - label: 暂停
+    value: Paused
+  - label: 关闭
+    value: Closed
+  - label: 完成
+    value: Achieved
+  - label: 部分完成
+    value: Partially Achieved
+readonly: false
+required: false
+searchable: false
+sort_no: 275
+sortable: false
+type: select

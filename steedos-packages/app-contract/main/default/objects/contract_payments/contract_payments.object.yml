@@ -1,0 +1,4 @@
+name: contract_payments
+label: 付款
+icon: logging
+enable_chatter: true

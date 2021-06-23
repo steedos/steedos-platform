@@ -1,0 +1,7 @@
+name: owner
+hidden: false
+index: true
+label: 个案所有人
+omit: false
+sort_no: 100
+sortable: true

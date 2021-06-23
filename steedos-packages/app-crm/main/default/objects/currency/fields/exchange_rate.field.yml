@@ -1,0 +1,5 @@
+name: exchange_rate
+label: 汇率（人民币）
+scale: 2
+sort_no: 120
+type: number

@@ -28,6 +28,28 @@ export function addConfigDataFiles(filePath: string){
     })
 }
 
+export function getConfigsFormFiles(objectName: string, filePath: string){
+    if(!path.isAbsolute(filePath)){
+        throw new Error(`${filePath} must be an absolute path`);
+    }
+
+    const filePatten = [
+        path.join(filePath, `*.${objectName}.yml`),
+        path.join(filePath, `*.${objectName}.js`),
+        path.join(filePath, `*.${objectName}.json`)
+    ]
+
+    let jsons = loadJsonFiles(filePatten);
+    const configs = [];
+    _.each(jsons, (json: any) => {
+        let recordId = path.basename(json.file).split(`.${objectName}.`)[0]
+        if (typeof json.data._id === "undefined")
+            json.data._id = recordId
+        configs.push(json.data)
+    })
+    return configs;
+}
+
 export function addConfigFiles(objectName: string, filePath: string){
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
@@ -50,7 +72,6 @@ export function addConfigFiles(objectName: string, filePath: string){
 
 export const addConfig = (objectName: string, record: any) => {
     if(!record._id){
-        console.log("addConfig", objectName, record);
         throw new Error(`Error adding record to ${objectName}, record._id required`);
     }
     let records = getConfigs(objectName);
@@ -95,15 +116,15 @@ export const getConfig = (objectName: string, _id: string) => {
     return _.find(records, {_id: _id})
 }
 
-export const addAllConfigFiles = (filePath, datasource) => {
-    addObjectConfigFiles(filePath, datasource);
-    addAppConfigFiles(filePath);
+export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName) => {
+    addRouterFiles(filePath);
+    await addObjectConfigFiles(filePath, datasourceApiName, serviceName);
+    await addAppConfigFiles(filePath, serviceName);
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     // addObjectI18nFiles(filePath);
-    addTranslationsFiles(filePath);
-    addObjectTranslationsFiles(filePath);
-    addRouterFiles(filePath);
+    await addTranslationsFiles(filePath);
+    await addObjectTranslationsFiles(filePath);
     // addConfigDataFiles(filePath);
     addConfigFiles('report', filePath);
     addConfigFiles('flow', filePath);

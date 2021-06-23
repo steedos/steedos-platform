@@ -4,7 +4,7 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let actions = InternalData.getObjectActions(filters.object, this.userId);
+            let actions = await InternalData.getObjectActions(filters.object, this.userId);
             if(actions){
                 this.data.values = this.data.values.concat(actions)
             }
@@ -13,7 +13,7 @@ module.exports = {
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let actions = InternalData.getObjectActions(filters.object, this.userId);
+            let actions = await InternalData.getObjectActions(filters.object, this.userId);
             if(actions){
                 this.data.values = this.data.values.concat(actions)
             }
@@ -22,7 +22,7 @@ module.exports = {
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let actions = InternalData.getObjectActions(filters.object, this.userId);
+            let actions = await InternalData.getObjectActions(filters.object, this.userId);
             if(actions){
                 this.data.values = this.data.values + actions.length
             }
@@ -33,7 +33,7 @@ module.exports = {
             let id = this.id
             let objectName = id.substr(0, id.indexOf("."));
             if(objectName){
-                let action = InternalData.getObjectAction(objectName, this.userId, id);
+                let action = await InternalData.getObjectAction(objectName, this.userId, id);
                 if(action){
                     this.data.values = action;
                 }

@@ -1,0 +1,41 @@
+name: project_program__c
+label: 项目集
+description: 
+fields:
+  name:
+    label: 项目集名称
+    help: 
+    description: 
+  note__c:
+    label: 备注
+    help: 
+    description: 
+  program_health__c:
+    label: 运行状况
+    help: 
+    options:
+      - label: Red
+        value: Red
+        color: c11d25
+      - label: Green
+        value: Green
+        color: 49d181
+      - label: Yellow
+        value: Yellow
+        color: f9e29d
+    description: 
+  program_manager__c:
+    label: 项目集负责人
+    help: 
+    description: 
+  total_projects__c:
+    label: 项目数
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+  my:
+    label: 我的
+  recent:
+    label: 最近查看

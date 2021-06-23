@@ -16,3 +16,4 @@ export * from './role'
 export * from './flow_role'
 export * from './approval_process'
 export * from './workflow'
+export * from "./tabs"

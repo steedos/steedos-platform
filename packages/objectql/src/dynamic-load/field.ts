@@ -1,4 +1,4 @@
-import { SteedosFieldTypeConfig } from '../types'
+import { getSteedosSchema, SteedosFieldTypeConfig } from '../types'
 import { Dictionary } from '@salesforce/ts-types';
 import { getObjectConfig, getOriginalObjectConfig } from '../types'
 import _ = require('lodash');
@@ -62,9 +62,16 @@ export const removeObjectFieldConfig = (objectName: string, json: SteedosFieldTy
     }
 }
 
-export const loadObjectFields = function (filePath: string){
+export const loadObjectFields = async function (filePath: string, serviceName?: string){
     let fieldJsons = util.loadFields(filePath);
     fieldJsons.forEach(element => {
         addObjectFieldConfig(element.object_name, element);
     });
+    if(serviceName)
+        for await (const fieldJson of fieldJsons) {
+            await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: fieldJson.object_name}, {fields: {
+                [fieldJson.name]: fieldJson
+            }}));
+    }
+    
 }

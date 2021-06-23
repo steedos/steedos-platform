@@ -1,21 +1,14 @@
-import { addConfig, removeManyConfigs, getConfigs, getConfig } from '../types';
 import { SteedosFieldSummaryTypeConfig } from './type';
 import { SteedosFieldFormulaTypeConfig } from '../formula';
+import { getSteedosSchema } from '../types/schema';
 
-export const addFieldSummaryConfig = (config: SteedosFieldSummaryTypeConfig) => {
-    addConfig('field_summary', config);
+
+export const getFieldSummaryConfigs = async(objectApiName?, fieldApiName?): Promise<Array<SteedosFieldSummaryTypeConfig>> => {
+    return await getSteedosSchema().metadataBroker.call(`objects.getObjectFieldSummaryConfigs`, {objectApiName, fieldApiName})
 }
 
-export const clearFieldSummaryConfigs = (query?: object) => {
-    removeManyConfigs('field_summary', query);
-}
-
-export const getFieldSummaryConfigs = (): Array<SteedosFieldSummaryTypeConfig> => {
-    return getConfigs('field_summary')
-}
-
-export const getFieldSummaryConfig = (_id: string): SteedosFieldSummaryTypeConfig => {
-    return getConfig('field_summary', _id);
+export const getFieldSummaryConfig = async (fieldApiFullName: string): Promise<SteedosFieldSummaryTypeConfig> => {
+    return await getSteedosSchema().metadataBroker.call(`objects.getObjectFieldSummaryConfig`, {fieldApiFullName})
 }
 
 /**
@@ -24,17 +17,8 @@ export const getFieldSummaryConfig = (_id: string): SteedosFieldSummaryTypeConfi
  * @param objectName 
  * @param fieldName 
  */
-export const getObjectFieldSummaryConfigs = (objectName: string, fieldName?: string): Array<SteedosFieldSummaryTypeConfig> => {
-    const configs = getFieldSummaryConfigs();
-    let result = configs.filter((config: SteedosFieldSummaryTypeConfig) => {
-        if (fieldName) {
-            return config.object_name === objectName && config.field_name === fieldName;
-        }
-        else {
-            return config.object_name === objectName;
-        }
-    });
-    return result;
+export const getObjectFieldSummaryConfigs = async(objectName: string, fieldName?: string): Promise<Array<SteedosFieldSummaryTypeConfig>> => {
+    return await getFieldSummaryConfigs(objectName, fieldName);;
 }
 
 
@@ -44,8 +28,8 @@ export const getObjectFieldSummaryConfigs = (objectName: string, fieldName?: str
  * @param objectName 
  * @param fieldNames 
  */
-export const getObjectQuotedByFieldSummaryConfigs = (objectName: string, fieldNames?: Array<string>): Array<SteedosFieldSummaryTypeConfig> => {
-    const configs = getFieldSummaryConfigs();
+export const getObjectQuotedByFieldSummaryConfigs = async (objectName: string, fieldNames?: Array<string>): Promise<Array<SteedosFieldSummaryTypeConfig>> => {
+    const configs = await getFieldSummaryConfigs(); //TODO 此处代码需要优化，取了所有配置。此处代码迁移到metadata objects services
     return configs.filter((config: SteedosFieldSummaryTypeConfig) => {
         const summaryObjectName = config.summary_object;
         if(summaryObjectName){
@@ -82,6 +66,6 @@ export const getObjectQuotedByFieldSummaryConfigs = (objectName: string, fieldNa
  * 获取参数config在哪些累计汇总中被引用
  * @param config 
  */
-export const getQuotedByFieldSummaryConfigs = (config: SteedosFieldFormulaTypeConfig): Array<SteedosFieldSummaryTypeConfig> => {
-    return getObjectQuotedByFieldSummaryConfigs(config.object_name, [config.field_name]);
+export const getQuotedByFieldSummaryConfigs = async(config: SteedosFieldFormulaTypeConfig): Promise<Array<SteedosFieldSummaryTypeConfig>> => {
+    return await getObjectQuotedByFieldSummaryConfigs(config.object_name, [config.field_name]);
 }

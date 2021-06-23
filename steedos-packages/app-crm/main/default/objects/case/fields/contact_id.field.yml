@@ -1,0 +1,5 @@
+name: contact_id
+label: 联系人姓名
+reference_to: contacts
+sort_no: 140
+type: master_detail

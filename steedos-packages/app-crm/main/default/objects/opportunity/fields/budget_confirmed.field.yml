@@ -1,0 +1,4 @@
+name: budget_confirmed
+label: 有预算
+sort_no: 200
+type: boolean

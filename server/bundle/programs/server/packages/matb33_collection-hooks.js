@@ -14,7 +14,7 @@ var LocalCollection = Package.minimongo.LocalCollection;
 var Minimongo = Package.minimongo.Minimongo;
 
 /* Package-scope variables */
-var CollectionHooks, InsecureLogin;
+var CollectionHooks;
 
 (function(){
 

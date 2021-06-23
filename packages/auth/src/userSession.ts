@@ -40,6 +40,13 @@ export async function getUserSession(userId) {
             session.utcOffset = user.utcOffset;
             session.steedos_id = user.steedos_id;
             session.locale = user.locale;
+            if(user.locale == "en-us"){
+                session.language = "en"
+            }else if(user.locale == "zh-cn"){
+                session.language = "zh-CN"
+            }else{
+                session.language = user.locale
+            }
             session.expiredAt = expiredAt;
             addSessionToCache(userId, session);
             return session;

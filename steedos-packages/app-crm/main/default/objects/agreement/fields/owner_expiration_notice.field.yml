@@ -1,0 +1,17 @@
+name: owner_expiration_notice
+label: 通知所有人到期日
+options:
+  - label: 15天
+    value: 15天
+  - label: 30天
+    value: 30天
+  - label: 45天
+    value: 45天
+  - label: 60天
+    value: 60天
+  - label: 90天
+    value: 90天
+  - label: 120天
+    value: 120天
+sort_no: 170
+type: select

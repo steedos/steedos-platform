@@ -1,0 +1,5 @@
+name: remark
+label: 备注
+type: textarea
+is_wide: true
+sort_no: 240

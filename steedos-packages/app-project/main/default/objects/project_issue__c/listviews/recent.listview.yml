@@ -1,0 +1,40 @@
+name: recent
+columns:
+  - field: name
+    wrap: false
+  - field: project__c
+    wrap: false
+  - field: type__c
+    width: '150'
+    wrap: false
+  - field: priority__c
+    width: '100'
+    wrap: false
+  - field: status__c
+    width: '150'
+    wrap: false
+  - field: assigned_to__c
+    width: '150'
+    wrap: false
+  - field: planned_resolution__c
+    width: '150'
+    wrap: false
+  - field: request_date__c
+    width: '150'
+    wrap: false
+filter_fields:
+  - name
+  - project__c
+  - type__c
+  - priority__c
+  - status__c
+  - assigned_to__c
+filter_scope: space
+filters: []
+label: 最近查看
+scrolling_mode: standard
+shared: true
+sort:
+  - field_name: created
+    order: desc
+type: grid

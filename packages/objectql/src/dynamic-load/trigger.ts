@@ -15,8 +15,12 @@ const addLazyLoadListeners = function(objectName: string, json: SteedosListenerC
     _lazyLoadListeners[objectName].push(json)
 }
 
-const getLazyLoadListeners = function(objectName: string){
-    return _lazyLoadListeners[objectName]
+export const getLazyLoadListeners = function(objectName?: string){
+    if (objectName) {
+        return _lazyLoadListeners[objectName]
+    } else {
+        return _lazyLoadListeners;
+    }
 }
 
 export const loadObjectLazyListenners = function(objectName: string){
@@ -52,16 +56,19 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
         const license = clone(json);
         license.name = json._id || getMD5(JSONStringify(json));
         object.listeners[license.name] = license
-        if(object.datasource === 'default'){
+        if(object.datasource === 'meteor'){
             util.extend(object, {triggers: transformListenersToTriggers(object, license)})
         }
     }
     addLazyLoadListeners(object_name, Object.assign({}, json, {listenTo: object_name}));
+    return Object.assign({}, json, {listenTo: object_name}); 
 }
 
 export const loadObjectTriggers = function (filePath: string){
     let triggerJsons = util.loadTriggers(filePath)
+    let triggers = [];
     _.each(triggerJsons, (json: SteedosListenerConfig) => {
-        addObjectListenerConfig(json);
+        triggers.push(addObjectListenerConfig(json));
     })
+    return triggers;
 }

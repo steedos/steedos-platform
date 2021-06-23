@@ -1,0 +1,26 @@
+name: recent
+columns:
+  - field: name
+    width: 220
+  - field: account
+    width: 280
+  - field: amount
+    width: 120
+  - field: due_date
+    width: 120
+  - field: stage
+    width: 160
+  - field: probability
+    width: 120
+  - field: lead_source
+    width: 120
+  - field: owner
+    width: 120
+filter_fields:
+  - stage
+  - lead_source
+  - account
+  - name
+filter_scope: space
+label: 最近查看
+shared: true

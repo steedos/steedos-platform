@@ -5,10 +5,10 @@ const express = require('express');
 const objectql = require('@steedos/objectql')
 const app = express();
 
-export const InitTranslations = function(){
+export const InitTranslations = async function(){
     InitCoreTranslations();
-    loadObjectTranslations();
-    loadTranslations();
+    // await loadObjectTranslations();
+    // await loadTranslations();
     InitTranslationRouter();
 }
 
@@ -22,12 +22,12 @@ export const InitTranslationRouter = function(){
     WebApp.connectHandlers.use(pluginContext.app);
 }
 
-export const loadTranslations = function(){
-    const tanslations = objectql.getTranslations();
+export const loadTranslations = async function(){
+    const tanslations = await objectql.getTranslations();
     I18n.addTranslations(tanslations);
 }
 
-export const loadObjectTranslations = function(){
-    const objectTanslations = objectql.getObjectTranslations();
+export const loadObjectTranslations = async function(){
+    const objectTanslations = await objectql.getObjectTranslations();
     I18n.addObjectsTranslation(objectTanslations);
 }

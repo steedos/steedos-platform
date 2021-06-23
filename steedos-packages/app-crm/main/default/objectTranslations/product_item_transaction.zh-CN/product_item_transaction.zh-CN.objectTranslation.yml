@@ -1,0 +1,30 @@
+name: product_item_transaction
+label: 产品项交易
+description: 
+fields:
+  item_transaction_number:
+    label: 产品项交易编号
+    help: 
+    description: 
+  product_items:
+    label: 产品项
+    help: 
+    description: 
+  quantity:
+    label: 数量
+    help: 
+    description: 
+  transaction_type:
+    label: 类型
+    help: 
+    options:
+      - label: 已创建
+        value: Replenished
+      - label: 手动调整
+        value: Adjusted
+      - label: 已消耗
+        value: Consumed
+    description: 
+listviews:
+  all:
+    label: 所有产品项交易

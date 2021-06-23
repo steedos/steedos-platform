@@ -1,0 +1,17 @@
+name: loss_reason
+label: 失败原因
+options:
+  - label: 竞争失败
+    value: Lost_to_Competitor
+  - label: 没有预算
+    value: No_Budget_Lost_Funding
+  - label: 没有回应
+    value: No_Decision_Non-Responsive
+  - label: 价格因素
+    value: Price
+  - label: 其他
+    value: Other
+searchable: true
+sort_no: 240
+sortable: true
+type: select

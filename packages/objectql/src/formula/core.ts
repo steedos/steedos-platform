@@ -186,12 +186,13 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     let formulaValue = result.value;
     let formulaValueType = result.dataType;
     if(result.type === 'error'){
+        console.error(formula, formulaParams)
         throw new Error(`runFormula:Catch an error "${result.message}" while eval formula "${formula}" with params: "${JSON.stringify(formulaParams)}" for "${JSON.stringify(messageTag)}"`);
         // if(blankValue === SteedosFormulaBlankValue.blanks && result.errorType === "ArgumentError"){
         //     // 配置了空参数视为空值时会直接返回空值类型，这里就会报错，直接返回空值，而不是抛错
         //     // TODO:result.errorType === "ArgumentError"不够细化，下一版本应该视错误情况优化返回空值的条件
         //     formulaValue = null;
-        // }
+        // }yar
         // else{
         //     throw new Error(result.message);
         // }
@@ -277,7 +278,7 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
     let currentUserId = userSession ? userSession.userId : undefined;
     let { fieldNames, escapeConfigs, quotedByConfigs } = options;
     if (!quotedByConfigs) {
-        quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs);
+        quotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs);
         // console.log("runQuotedByObjectFieldFormulas===objectName, fieldNames, escapeConfigs===", objectName, fieldNames, escapeConfigs);
         // console.log("runQuotedByObjectFieldFormulas===quotedByConfigs===", quotedByConfigs);
     }
@@ -304,7 +305,7 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
  */
 export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, currentUserId: string, needRefetchDoc?: boolean, configs?: Array<SteedosFieldFormulaTypeConfig>) {
     if (!configs) {
-        configs = getObjectFieldFormulaConfigs(objectName);
+        configs = await getObjectFieldFormulaConfigs(objectName);
     }
     if (!configs.length) {
         return;
@@ -332,7 +333,7 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
  * @param currentUserId 
  */
 export const runManyCurrentObjectFieldFormulas = async function (objectName: string, filters: SteedosQueryFilters, currentUserId: string) {
-    const configs = getObjectFieldFormulaConfigs(objectName);
+    const configs = await getObjectFieldFormulaConfigs(objectName);
     if (!configs.length) {
         return;
     }
@@ -434,8 +435,8 @@ export const updateQuotedByDocsForFormulaType = async (docs: any, fieldFormulaCo
         docs = [docs];
     }
     const fieldNames = [fieldFormulaConfig.field_name];
-    const formulaQuotedByConfigs = getObjectQuotedByFieldFormulaConfigs(fieldFormulaObjectName, fieldNames, escapeConfigs);
-    const summaryQuotedByConfigs = getObjectQuotedByFieldSummaryConfigs(fieldFormulaObjectName, fieldNames);
+    const formulaQuotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(fieldFormulaObjectName, fieldNames, escapeConfigs);
+    const summaryQuotedByConfigs = await getObjectQuotedByFieldSummaryConfigs(fieldFormulaObjectName, fieldNames);
     for (let doc of docs) {
         // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
         await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, userSession, {
@@ -458,8 +459,8 @@ export const updateQuotedByDocsForFormulaType = async (docs: any, fieldFormulaCo
  * @param object_name 是否引用了该对象
  * @param field_name 是否引用了该字段
  */
-export const isFormulaFieldQuotingObjectAndFields = (formulaObjectName: string, formulaFieldName: string, objectName: string, fieldNames?: Array<string>): boolean => {
-    const configs: Array<SteedosFieldFormulaTypeConfig> = getObjectFieldFormulaConfigs(formulaObjectName, formulaFieldName);
+export const isFormulaFieldQuotingObjectAndFields = async (formulaObjectName: string, formulaFieldName: string, objectName: string, fieldNames?: Array<string>): Promise<boolean> => {
+    const configs: Array<SteedosFieldFormulaTypeConfig> = await getObjectFieldFormulaConfigs(formulaObjectName, formulaFieldName);
     if (configs && configs.length) {
         return isFieldFormulaConfigQuotingObjectAndFields(configs[0], objectName, fieldNames);
     }

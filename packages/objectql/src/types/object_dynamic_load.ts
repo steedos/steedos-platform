@@ -1,9 +1,11 @@
 import _ = require('lodash')
 import path = require('path')
-import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles, SteedosActionTypeConfig } from '.'
-import { isMeteor } from '../util'
+import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig, getDataSource } from '.'
+// import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
-import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules, loadSourceRoles, loadSourceFlowRoles, loadSourceApprovalProcesses, loadSourceWorkflows } from '../dynamic-load'
+import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules, loadSourceRoles, loadSourceFlowRoles, loadSourceApprovalProcesses, loadSourceWorkflows, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts, preloadDBTabs } from '../dynamic-load'
+import { transformListenersToTriggers } from '..';
+import { getSteedosSchema } from './schema';
 
 var util = require('../util')
 var clone = require('clone')
@@ -20,8 +22,15 @@ const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
 const _routers: Array<any> = [];
 const _objectsData: Dictionary<any> = {};
-
+const delayLoadExtendObjectConfigQueue: Dictionary<any> = {};
 let standardObjectsLoaded: boolean = false;
+
+const addDelayLoadExtendObjectConfig = function (extend: string, config: SteedosObjectTypeConfig){
+    if(!delayLoadExtendObjectConfigQueue[extend]){
+        delayLoadExtendObjectConfigQueue[extend] = [];
+    }
+    delayLoadExtendObjectConfigQueue[extend].push(config);
+}
 
 const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
     if(objectName === MONGO_BASE_OBJECT || objectName === SQL_BASE_OBJECT){
@@ -76,16 +85,16 @@ export const getObjectConfig = (object_name: string):SteedosObjectTypeConfig => 
     return _.find(_objectConfigs, {name: object_name})
 }
 
-export const addObjectConfigFiles = (filePath: string, datasource: string) => {
+export const addObjectConfigFiles = async (filePath: string, datasource: string, serviceName?: string) => {
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
 
     if (!datasource)
-      datasource = 'default'
+      datasource = 'meteor'
 
-    let objectJsons = util.loadObjects(filePath)
-    objectJsons.forEach(element => {
+    let objectJsons = util.loadObjects(filePath);
+    for await (const element of objectJsons) {
         let startNo = 10;
         _.each(element.fields, function(field){
             if(!_.has(field, 'sort_no')){
@@ -109,28 +118,28 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
         if(_mf && element.name){
             element.fields_serial_number = _mf.sort_no + 10;
         }
-        addObjectConfig(element, datasource);
-    });
+        await addObjectConfig(element, datasource, serviceName);
+    }
 
-    loadObjectFields(filePath);
+    await loadObjectFields(filePath, serviceName);
 
-    loadObjectListViews(filePath);
+    await loadObjectListViews(filePath, serviceName);
 
-    loadObjectButtons(filePath);
+    await loadObjectButtons(filePath, serviceName);
 
     loadObjectTriggers(filePath);
 
-    loadObjectActions(filePath);
+    await loadObjectActions(filePath, serviceName);
 
-    loadObjectMethods(filePath);
+    loadObjectMethods(filePath);  //此功能不支持微服务模式
 
-    loadObjectLayouts(filePath);
+    await loadObjectLayouts(filePath, serviceName);
 
-    loadObjectPermissions(filePath);
+    await loadObjectPermissions(filePath, serviceName);
 
-    loadSourceProfiles(filePath);
+    await loadSourceProfiles(filePath, serviceName);
 
-    loadSourcePermissionset(filePath);
+    await loadSourcePermissionset(filePath, serviceName);
 
     loadObjectValidationRules(filePath);
 
@@ -204,8 +213,18 @@ export const getClientScripts = () => {
 }
 
 
-export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasource: string) => {
+export const addObjectConfig = async (objectConfig: SteedosObjectTypeConfig, datasource: string, serviceName?: string) => {
     let object_name = objectConfig.name;
+    if(serviceName && getSteedosSchema().metadataRegister){
+        if(datasource){
+            objectConfig.datasource = datasource
+        }
+        if(!objectConfig.extend){
+            objectConfig.isMain = true;
+        }
+        await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, objectConfig);
+    }
+    // if(true){return;}
     let config:SteedosObjectTypeConfig = {
         name: object_name,
         fields: {}
@@ -217,19 +236,28 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         object_name = objectConfig.extend
         let parentObjectConfig = getObjectConfig(object_name);
         if(_.isEmpty(parentObjectConfig)){
+            return addDelayLoadExtendObjectConfig(objectConfig.extend, objectConfig);
             throw new Error(`Object extend failed, object not exist: ${objectConfig.extend}`);
         }
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
+        config.name = object_name;
         delete config.extend
+        datasource = parentObjectConfig.datasource
         extendOriginalObjectConfig(object_name, datasource, clone(objectConfig));
     } else {
         addOriginalObjectConfigs(object_name, datasource, clone(objectConfig));
-        if (isMeteor() && (datasource === 'default')) {
+        if (datasource === 'default' || datasource === 'meteor') { // isMeteor() && (datasource === 'default')
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
             // 确保字段顺序正确，避免base中的字段跑到前面
             config.fields = _.clone(objectConfig.fields);
             let _baseObjectConfig = clone(baseObjectConfig);
             delete _baseObjectConfig.hidden;
+            if(datasource === 'meteor'){
+                _.each(_baseObjectConfig.listeners, function(license){
+                    const triggers = transformListenersToTriggers(config, license)
+                    util.extend(config, {triggers, _baseTriggers: triggers})
+                })
+            }
             config = util.extend(config, _baseObjectConfig, clone(objectConfig));
         } else {
             let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
@@ -244,7 +272,17 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
     _.remove(_objectConfigs, {name: object_name, datasource: datasource});
     delete config.__filename
     perfectObjectConfig(config)
-    _objectConfigs.push(config)
+    if(object_name === 'objects' && datasource==='default'){throw new Error(`debug error`)}
+    _objectConfigs.push(config);
+    const delayLoadQueue = clone(delayLoadExtendObjectConfigQueue[object_name]);
+    if(delayLoadQueue && delayLoadQueue.length > 0){
+        delayLoadExtendObjectConfigQueue[object_name] = [];
+        for (const index in delayLoadQueue) {
+            const delayLoadConfig = delayLoadQueue[index]
+            await addObjectConfig(delayLoadConfig, delayLoadConfig.datasource, null)
+        }
+    }
+
 }
 
 export const removeObjectConfig = (object_name: string, datasource: string)=>{
@@ -285,7 +323,26 @@ export const removeObjectListenerConfig = (_id, listenTo, when)=>{
     }
 }
 
-export const loadStandardObjects = () => {
+export const loadStandardMetadata = async (serviceName: string, datasourceApiName: string) =>{
+    await loadStandardProfiles(serviceName);
+    await loadStandardPermissionsets(serviceName);
+    await loadStandardBaseObjects(serviceName);
+    if(datasourceApiName === 'default' || datasourceApiName === 'meteor'){
+        const datasource = getDataSource(datasourceApiName)
+        if(datasource && datasourceApiName === 'default'){
+            await datasource.initTypeORM();
+        }
+        if(datasource){
+            await preloadDBApps(datasource);
+            await preloadDBTabs(datasource);
+            await preloadDBObjectLayouts(datasource);
+            await preloadDBObjectFields(datasource);
+            await preloadDBObjectButtons(datasource);
+        }
+    }
+}
+
+export const loadStandardBaseObjects = async (serviceName: string) => {
     
     if (standardObjectsLoaded)
         return;
@@ -295,22 +352,25 @@ export const loadStandardObjects = () => {
     let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
     let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
     baseObject.name = MONGO_BASE_OBJECT;
-    addObjectConfig(baseObject, SYSTEM_DATASOURCE);
+    await addObjectConfig(baseObject, SYSTEM_DATASOURCE, serviceName);
     let baseObjectJs = util.loadFile(path.join(standardObjectsDir, "base.object.js"))
     baseObjectJs.extend = MONGO_BASE_OBJECT;
-    addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE);
-    let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, "base.trigger.js"))
-    baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
-    addObjectListenerConfig(baseObjectTrigger)
+    await addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE, serviceName);
+    const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.objectwebhooks.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js'];
+    _.forEach(baseTriggers, function(triggerFileName){
+        let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, triggerFileName))
+        baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
+        addObjectListenerConfig(baseObjectTrigger)
+    })
 
     let coreObject = util.loadFile(path.join(standardObjectsDir, "core.object.yml"))
     coreObject.name = SQL_BASE_OBJECT;
-    addObjectConfig(coreObject, SYSTEM_DATASOURCE);
+    await addObjectConfig(coreObject, SYSTEM_DATASOURCE, serviceName);
     let coreObjectTrigger = util.loadFile(path.join(standardObjectsDir, "core.objectwebhooks.trigger.js"))
     coreObjectTrigger.listenTo = SQL_BASE_OBJECT
     addObjectListenerConfig(coreObjectTrigger)
 
-    addAllConfigFiles(path.join(standardObjectsDir, "**"), 'default');
+    // addAllConfigFiles(path.join(standardObjectsDir, "**"), 'default');
 }
 
 export const addRouterConfig = (prefix: string, router: any) => {

@@ -1,0 +1,5 @@
+name: campany_or_account
+inlineHelpText: 公司（如果市场活动成员基于潜在客户），或客户（如果市场活动成员基于联系人）。
+label: 公司(客户)
+sort_no: 110
+type: text

@@ -1,0 +1,6 @@
+name: currency
+hidden: true
+label: 主协议币种
+reference_to: currency
+sort_no: 310
+type: lookup

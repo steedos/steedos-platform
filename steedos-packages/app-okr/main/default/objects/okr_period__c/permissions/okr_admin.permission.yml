@@ -1,0 +1,9 @@
+allowCreate: false
+allowDelete: true
+allowEdit: true
+allowRead: true
+modifyAllRecords: true
+modifyCompanyRecords: false
+permission_set_id: okr_admin
+viewAllRecords: true
+viewCompanyRecords: false

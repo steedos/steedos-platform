@@ -1,0 +1,11 @@
+name: all
+columns:
+  - number
+  - account_id
+  - is_direct
+  - contact_id
+  - start_date
+  - end_date
+filter_scope: space
+label: 所有客户联系人关系
+shared: true

@@ -1,0 +1,6 @@
+name: converted_contact
+hidden: true
+label: 已转换的联系人
+reference_to: contacts
+sort_no: 390
+type: lookup

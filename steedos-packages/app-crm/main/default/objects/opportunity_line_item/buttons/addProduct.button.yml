@@ -1,0 +1,8 @@
+name: addProduct
+is_enable: true
+label: 添加产品
+'on': list
+visible: |-
+  function(){
+      return true
+    }

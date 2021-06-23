@@ -1,0 +1,11 @@
+name: all
+columns:
+  - name
+  - opportunity_id
+  - expiration_date
+  - is_syncing
+  - status
+  - grand_total
+filter_scope: space
+label: 所有报价
+shared: true

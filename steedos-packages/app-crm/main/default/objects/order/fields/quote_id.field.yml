@@ -1,0 +1,6 @@
+name: quote_id
+hidden: true
+label: 报价
+reference_to: quote
+sort_no: 310
+type: lookup

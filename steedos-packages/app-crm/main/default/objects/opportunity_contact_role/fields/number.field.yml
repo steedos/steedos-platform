@@ -1,0 +1,9 @@
+name: number
+formula: '{00000}'
+is_name: true
+label: 序号
+omit: true
+readonly: true
+searchable: true
+sort_no: 100
+type: autonumber

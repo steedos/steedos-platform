@@ -1,0 +1,62 @@
+name: quote_line_item
+label: 报价行条目
+description: 
+fields:
+  date:
+    label: 日期
+    help: 产品日期、有效日期或产品的其他日期。
+    description: 
+  description:
+    label: 行项目描述
+    help: 
+    description: 
+  discount:
+    label: 折扣
+    help: 您应用到行项目的折扣。您可以使用百分比符号输入数字，也可以不使用百分比符号输入数字。您可以使用最多两个小数位。
+    description: 
+  has_schedule:
+    label: 计划
+    help: 行项目是否在业务机会中使用计划。当业务机会产品被复制到报价中时，默认计划不会从业务机会中移转。
+    description: 
+  line_number:
+    label: 行项目编号
+    help: 
+    description: 
+  list_price:
+    label: 定价
+    help: 
+    description: 
+  price_book_entry_id:
+    label: 价格手册条目
+    help: 
+    description: 
+  product_id:
+    label: 产品
+    help: 价格手册中所列的行项目产品的名称。
+    description: 
+  quantity:
+    label: 数量
+    help: 报价中包含的该行项目产品的套数。值必须大于或等于 1。如果报价与业务机会同步，该字段会从报价行项目更新到业务机会产品。
+    description: 
+  quote_id:
+    label: 报价名称
+    help: 
+    description: 
+  subtotal:
+    label: 小计
+    help: 行项目的销售价格与数量相乘。
+    description: 
+  total_price:
+    label: 总价
+    help: 行项目的销售价格和数量相乘再减去折扣。
+    description: 
+  unit_price:
+    label: 销售价格
+    help: >-
+      您想使用的产品价格。最初，业务机会或报价产品的销售价格为价格手册中该产品的价目表价格，但您可在此进行更改。如果报价与业务机会同步，该字段会从报价行项目更新到业务机会产品。
+    description: 
+listviews:
+  all:
+    label: 所有报价行条目
+  recent:
+    label: 最近查看

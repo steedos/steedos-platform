@@ -1,4 +1,4 @@
-import { SteedosObjectListViewTypeConfig } from '../types'
+import { getSteedosSchema, SteedosObjectListViewTypeConfig } from '../types'
 import { Dictionary } from '@salesforce/ts-types';
 import { getObjectConfig } from '../types';
 import { overrideOriginalObject } from './originalObject';
@@ -43,9 +43,15 @@ export const addObjectListViewConfig = (objectName: string, json: SteedosObjectL
     }
 }
 
-export const loadObjectListViews = function (filePath: string){
+export const loadObjectListViews = async function (filePath: string, serviceName: string){
     let listViewJsons = util.loadListViews(filePath);
     listViewJsons.forEach(element => {
         addObjectListViewConfig(element.object_name, element);
     });
+    if(serviceName)
+        for await (const listViewJson of listViewJsons) {
+            await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: listViewJson.object_name}, {list_views: {
+                [listViewJson.name]: listViewJson
+            }}));
+        }
 }

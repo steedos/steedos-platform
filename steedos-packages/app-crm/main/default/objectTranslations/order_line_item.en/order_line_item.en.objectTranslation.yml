@@ -1,0 +1,81 @@
+name: order_line_item
+label: 订单产品
+description: 
+fields:
+  available_quantity:
+    label: 可用数量
+    help: 可用于减少的单位数量。当启用减单时，订单产品的可用数量将更新，以反映出相关减单产品的数量。值必须始终大于或等于 0。（只读）
+    description: 
+  description:
+    label: 行备注
+    help: 
+    description: 
+  discount:
+    label: 折扣（%）
+    help: 
+    description: 
+  end_date:
+    label: 结束日期
+    help: 
+    description: 
+  has_schedule:
+    label: 计划
+    help: 
+    description: 
+  list_price:
+    label: 价目表价格
+    help: 父级订单上的价格手册设定的默认价格。（只读）
+    description: 
+  order_id:
+    label: 订单
+    help: 本订单产品的父级订单。
+    description: 
+  order_item_number:
+    label: 订单产品编号
+    help: 识别订单产品记录的自动生成的编号。（只读）
+    description: 
+  original_order_item_id:
+    label: 原始订单产品
+    help: 要减少订单产品的编号。如果订单产品正减少另一个订单产品时必填。（只读）
+    description: 
+  price_book_entry_id:
+    label: 价格手册条目
+    help: 
+    description: 
+  product_code:
+    label: 产品代码
+    help: 用于识别产品的内部代码或产品号。（只读）
+    description: 
+  product_id:
+    label: 产品
+    help: 本订单产品记录使用的产品名称。（只读）
+    description: 
+  quantity:
+    label: 数量
+    help: 产品的单位数量。
+    description: 
+  quote_line_item_id:
+    label: 报价行项目
+    help: 与订单产品关联的报价行项目。报价行项目的报价必须与和订单产品的父级订单相关联的报价相匹配。
+    description: 
+  service_date:
+    label: 开始日期
+    help: 订单产品的开始日期。
+    description: 
+  subtotal:
+    label: 小计
+    help: 
+    description: 
+  total_price:
+    label: 总价
+    help: 订单产品数量乘以单价。
+    description: 
+  unit_price:
+    label: 单价
+    help: 订单产品的单价。
+    description: 
+listviews:
+  all:
+    label: 所有订单产品
+  recent:
+    label: 最近查看

@@ -1,0 +1,4 @@
+name: price
+label: 价格
+sort_no: 130
+type: currency

@@ -1,0 +1,7 @@
+name: contact_id
+inlineHelpText: 与客户相关的人员的姓名。
+label: 联系人
+reference_to: contacts
+searchable: true
+sort_no: 170
+type: lookup

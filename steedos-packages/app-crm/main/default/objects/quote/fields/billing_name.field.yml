@@ -1,0 +1,5 @@
+name: billing_name
+group: 地址信息
+label: 收票人姓名
+sort_no: 270
+type: text

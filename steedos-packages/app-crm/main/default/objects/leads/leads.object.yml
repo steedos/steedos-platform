@@ -1,0 +1,10 @@
+name: leads
+enable_api: true
+enable_audit: true
+enable_chatter: true
+enable_events: true
+enable_files: true
+enable_search: true
+enable_tasks: true
+icon: lead
+label: 潜在客户

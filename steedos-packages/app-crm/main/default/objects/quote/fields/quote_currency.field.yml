@@ -1,0 +1,6 @@
+name: quote_currency
+hidden: true
+label: 报价币种
+reference_to: currency
+sort_no: 370
+type: lookup

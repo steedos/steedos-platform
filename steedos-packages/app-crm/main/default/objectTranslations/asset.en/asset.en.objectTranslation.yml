@@ -1,0 +1,74 @@
+name: asset
+label: 资产
+description: 
+fields:
+  account:
+    label: 客户
+    help: 
+    description: 
+  asset_currency:
+    label: 资产币种
+    help: 
+    description: 
+  asset_number:
+    label: 序列号
+    help: 
+    description: 
+  competitor_asset:
+    label: 竞争对手资产
+    help: 
+    description: 
+  contact:
+    label: 联系人
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  installed_date:
+    label: 安装日期
+    help: 
+    description: 
+  name:
+    label: 资产名称
+    help: 
+    description: 
+  obsoleted_date:
+    label: 使用结束日期
+    help: 
+    description: 
+  price:
+    label: 价格
+    help: 
+    description: 
+  product:
+    label: 产品
+    help: 
+    description: 
+  purchased_date:
+    label: 购买日期
+    help: 
+    description: 
+  quantity:
+    label: 数量
+    help: 
+    description: 
+  status:
+    label: 状态
+    help: 
+    options:
+      - label: 已购买
+        value: Purchased
+      - label: 已出货
+        value: Shipped
+      - label: 已安装
+        value: Installed
+      - label: 已注册
+        value: Registered
+      - label: 已废弃
+        value: Obsolete
+    description: 
+listviews:
+  all:
+    label: 所有资产

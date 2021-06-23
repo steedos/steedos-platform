@@ -1,0 +1,5 @@
+name: company_authorized_by_id
+label: 公司授权人
+reference_to: users
+sort_no: 170
+type: lookup

@@ -3,16 +3,18 @@ const clone = require('clone');
 const steedosI18n = require("@steedos/i18n");
 const objectql = require("@steedos/objectql");
 const _ = require('underscore');
-const getLng = function(userId){
-    return Steedos.locale(userId, true);
+const auth = require("@steedos/auth");
+const getLng = async function(userId){
+    const userSession = await auth.getSessionByUserId(userId);
+    return userSession.language;
 }
 
 function getOriginalObjectFields(objectName){
     return objectql.getOriginalObjectConfig(objectName).fields || {}
 }
 
-function getObjectFields(objectName, userId){
-    let object = InternalData.getObject(objectName, userId);
+async function getObjectFields(objectName, userId){
+    let object = await InternalData.getObject(objectName, userId);
     if(object){
         let fields = [];
         let originalFieldsName = ['created_by', 'modified_by'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified', 'owner'
@@ -30,34 +32,33 @@ function getObjectFields(objectName, userId){
     }
 }
 
-function getObjects(userId){
+async function getObjects(userId){
     let objects = {};
-    let lng = getLng(userId)
-    _.each(Creator.steedosSchema.getDataSources(), function(datasource, name) {
-        var datasourceObjects = datasource.getObjects();
-          _.each(datasourceObjects, function(v, k) {
-            var _obj = clone(v.toConfig());
-            if(!_obj.hidden &&  !_.include(InternalData.hiddenObjects, k)){
-                if(!_obj._id){
-                    _obj._id = k;
-                }
-                _obj.name = k;
-                _obj.datasource = name;
-                _obj.fields = {}
-                _.each(getObjectFields(k, userId), function(_f){
-                    _obj.fields[_f.name] = _f;
-                });
-                delete _obj.actions
-                delete _obj.triggers
-                delete _obj.list_views
-                delete _obj.permission_set
-                if(_obj.enable_inline_edit !== false){
-                    // 默认值配置为true
-                    _obj.enable_inline_edit = true;
-                }
-                objects[_obj.name] = _obj
+    let lng = await getLng(userId)
+    let allObjectConfigs = await objectql.getSteedosSchema().getAllObject();
+    _.each(allObjectConfigs, function(objectConfig) {
+        var _obj = clone(objectConfig);
+        var k = _obj.name;
+        if(!_obj.hidden &&  !_.include(InternalData.hiddenObjects, k)){
+            if(!_obj._id){
+                _obj._id = k;
             }
-          });
+            _obj.name = k;
+            // _obj.datasource = name;
+            _obj.fields = {}
+            // _.each(getObjectFields(k, userId), function(_f){
+            //     _obj.fields[_f.name] = _f;
+            // });
+            delete _obj.actions
+            delete _obj.triggers
+            delete _obj.list_views
+            delete _obj.permission_set
+            if(_obj.enable_inline_edit !== false){
+                // 默认值配置为true
+                _obj.enable_inline_edit = true;
+            }
+            objects[_obj.name] = _obj
+        }
       });
       steedosI18n.translationObjects(lng, objects)
       return _.values(objects);
@@ -66,13 +67,11 @@ function getObjects(userId){
 module.exports = {
     listenTo: 'objects',
     erd: async function(req, res){
-        return Fiber(function(){
-            const params = req.params;
-            const userSession = req.user;
-            const spaceId = userSession.spaceId;
-            const userId = userSession.userId;
-            const objects = clone(getObjects(userId));
-            res.status(200).send({ value: objects });
-        }).run();
+        const params = req.params;
+        const userSession = req.user;
+        const spaceId = userSession.spaceId;
+        const userId = userSession.userId;
+        const objects = await getObjects(userId);
+        res.status(200).send({ value: objects });
     }
   }

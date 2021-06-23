@@ -1,22 +1,19 @@
-import { addConfig, getConfigs, getConfig, removeManyConfigs } from '../types';
 import { SteedosFieldFormulaTypeConfig, SteedosQuotedByFieldFormulasTypeConfig } from './type';
 import { sortFieldFormulaConfigs, isFieldFormulaConfigQuotingObjectAndFields } from './util';
+import { getSteedosSchema } from '../types/schema';
+
 import _ = require('lodash');
 
-export const addFieldFormulaConfig = (config: SteedosFieldFormulaTypeConfig) => {
-    addConfig('field_formula', config);
+export const getFieldFormulaConfigs = async (objectApiName?, fieldApiName?): Promise<Array<SteedosFieldFormulaTypeConfig>> => {
+    return await getSteedosSchema().metadataBroker.call(`objects.getObjectFieldFormulaConfigs`, {objectApiName, fieldApiName})
 }
 
-export const clearFieldFormulaConfigs = (query?: object) => {
-    removeManyConfigs('field_formula', query);
+export const getFieldFormulaConfig = async (fieldApiFullName: string): Promise<SteedosFieldFormulaTypeConfig> => {
+    return await getSteedosSchema().metadataBroker.call(`objects.getObjectFieldFormulaConfig`, {fieldApiFullName})
 }
 
-export const getFieldFormulaConfigs = (): Array<SteedosFieldFormulaTypeConfig> => {
-    return getConfigs('field_formula')
-}
-
-export const getFieldFormulaConfig = (_id: string): SteedosFieldFormulaTypeConfig => {
-    return getConfig('field_formula', _id);
+export const verifyObjectFieldFormulaConfig = async (fieldConfig, objectConfig): Promise<SteedosFieldFormulaTypeConfig> => {
+    return await getSteedosSchema().metadataBroker.call(`objects.verifyObjectFieldFormulaConfig`, {fieldConfig, objectConfig})
 }
 
 /**
@@ -25,17 +22,18 @@ export const getFieldFormulaConfig = (_id: string): SteedosFieldFormulaTypeConfi
  * @param objectName 
  * @param fieldName 
  */
-export const getObjectFieldFormulaConfigs = (objectName: string, fieldName?: string): Array<SteedosFieldFormulaTypeConfig> => {
-    const configs = getFieldFormulaConfigs();
-    let result = configs.filter((config: SteedosFieldFormulaTypeConfig) => {
-        if (fieldName) {
-            return config.object_name === objectName && config.field_name === fieldName;
-        }
-        else {
-            return config.object_name === objectName;
-        }
-    });
-    return sortFieldFormulaConfigs(result);
+export const getObjectFieldFormulaConfigs = async (objectName: string, fieldName?: string): Promise<Array<SteedosFieldFormulaTypeConfig>> => {
+    return await getFieldFormulaConfigs(objectName, fieldName);
+    // console.log('getObjectFieldFormulaConfigs from metadata services', configs);
+    // let result = configs.filter((config: SteedosFieldFormulaTypeConfig) => {
+    //     if (fieldName) {
+    //         return config.object_name === objectName && config.field_name === fieldName;
+    //     }
+    //     else {
+    //         return config.object_name === objectName;
+    //     }
+    // });
+    // return sortFieldFormulaConfigs(result);
 }
 
 /**
@@ -45,8 +43,8 @@ export const getObjectFieldFormulaConfigs = (objectName: string, fieldName?: str
  * @param fieldNames 
  * @param escapeConfigs 要跳过的字段公式
  */
-export const getObjectQuotedByFieldFormulaConfigs = (objectName: string, fieldNames?: Array<string>, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>): SteedosQuotedByFieldFormulasTypeConfig => {
-    const configs = getFieldFormulaConfigs();
+export const getObjectQuotedByFieldFormulaConfigs = async (objectName: string, fieldNames?: Array<string>, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>): Promise<SteedosQuotedByFieldFormulasTypeConfig> => {
+    const configs = await getFieldFormulaConfigs(); //TODO 此处代码需要优化，取了所有配置。此处代码迁移到metadata objects services
     let configsOnCurrentObject = [];
     let configsOnOtherObjects = [];
     configs.forEach((config: SteedosFieldFormulaTypeConfig) => {
@@ -84,6 +82,6 @@ export const getObjectQuotedByFieldFormulaConfigs = (objectName: string, fieldNa
  * 获取参数config在哪些字段公式中被引用
  * @param config 
  */
-export const getQuotedByFieldFormulaConfigs = (config: SteedosFieldFormulaTypeConfig): SteedosQuotedByFieldFormulasTypeConfig => {
-    return getObjectQuotedByFieldFormulaConfigs(config.object_name, [config.field_name]);
+export const getQuotedByFieldFormulaConfigs = async (config: SteedosFieldFormulaTypeConfig): Promise<SteedosQuotedByFieldFormulasTypeConfig> => {
+    return await getObjectQuotedByFieldFormulaConfigs(config.object_name, [config.field_name]);
 }

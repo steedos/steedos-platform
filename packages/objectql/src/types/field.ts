@@ -160,7 +160,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
     transformReferenceOfObject(){
         if(this.reference_to){
             let datasource = this._object.datasource
-            if(datasource.name != 'default'){
+            if(datasource.name != 'meteor'){
                 if(_.isString(this.reference_to)){
                     this.reference_to = this.transformReferenceTo(this.reference_to, datasource)
                 }else if(_.isArray(this.reference_to)){

@@ -1,0 +1,8 @@
+name: opportunity_currency
+hidden: true
+inlineHelpText: >-
+  业务机会中所有币种金额字段的默认币种。金额以业务机会币种显示，并会转换为用户的个人币种。仅在启用多种币种时可用。对于具有产品的业务机会，该币种绑定到相关联价格手册的币种。您无法直接编辑此字段，除非您首先删除产品。
+label: 业务机会币种
+reference_to: currency
+sort_no: 350
+type: lookup

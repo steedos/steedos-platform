@@ -1,0 +1,6 @@
+name: expected_response
+group: 计划
+inlineHelpText: 预期市场活动接收到的响应百分比。
+label: 预期响应百分比(%)
+sort_no: 210
+type: number

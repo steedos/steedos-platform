@@ -1,0 +1,5 @@
+name: po_date
+hidden: true
+label: 订单日期
+sort_no: 360
+type: date

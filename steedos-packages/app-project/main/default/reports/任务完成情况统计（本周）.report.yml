@@ -1,0 +1,46 @@
+name: 任务完成情况统计（本周）
+charting: false
+columns:
+  - priority__c
+  - state__c
+counting: true
+data_source: odata
+fields:
+  - name
+  - start_date__c
+  - due_date__c
+  - state__c
+  - completed_date__c
+  - project__c.name
+filter_fields:
+  - field: due_date__c
+    required: false
+  - field: start_date__c
+    required: false
+filter_scope: space
+filters:
+  - is_default: true
+    field: due_date__c
+    operation: between
+    value: this_week
+    is_required: false
+  - field: start_date__c
+    is_default: true
+    is_required: false
+grouping: true
+object_name: project_task__c
+options:
+  sort: []
+  column_width:
+    - - assignees__c.name
+      - 100
+    - - priority__c
+      - 100
+    - - state__c
+      - 100
+report_type: matrix
+rows:
+  - assignees__c.name
+totaling: true
+values:
+  - _id

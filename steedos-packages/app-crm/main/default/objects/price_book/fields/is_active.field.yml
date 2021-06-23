@@ -1,0 +1,5 @@
+name: is_active
+defaultValue: true
+label: 已启用
+sort_no: 110
+type: toggle

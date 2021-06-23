@@ -1,0 +1,25 @@
+name: price_book
+label: 价格手册
+description: 
+fields:
+  description:
+    label: 描述
+    help: 
+    description: 
+  is_active:
+    label: 已启用
+    help: 
+    description: 
+  is_standard:
+    label: 是标准价格手册
+    help: 
+    description: 
+  name:
+    label: 价格手册名
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有价格手册
+  recent:
+    label: 最近查看

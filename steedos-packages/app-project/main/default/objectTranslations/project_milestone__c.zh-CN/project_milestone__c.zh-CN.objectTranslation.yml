@@ -1,0 +1,45 @@
+name: project_milestone__c
+label: 里程碑
+description: 
+fields:
+  completed_date__c:
+    label: 实际完成日期
+    help: 
+    description: 
+  completed__c:
+    label: 已完成
+    help: 
+    description: 
+  deadline__c:
+    label: 截止日期
+    help: 
+    description: 
+  description__c:
+    label: 简述
+    help: 
+    description: 
+  head__c:
+    label: 责任人
+    help: 
+    description: 
+  kickoff__c:
+    label: 启动日期
+    help: 
+    description: 
+  name:
+    label: 里程碑名
+    help: 
+    description: 
+  project__c:
+    label: 项目
+    help: 所属项目
+    description: 
+listviews:
+  all:
+    label: 所有
+  mine:
+    label: 我的里程碑
+  recent:
+    label: 最近查看
+  to_be_completed:
+    label: 待完成的里程碑

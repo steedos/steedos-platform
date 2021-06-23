@@ -1,0 +1,20 @@
+name: recent
+columns:
+  - field: name
+    wrap: false
+  - field: type__c
+    wrap: false
+  - field: project__c
+    wrap: false
+  - field: name
+    wrap: false
+filter_fields:
+  - name
+  - type__c
+  - project__c
+filter_scope: space
+filters: []
+label: 最近查看
+scrolling_mode: standard
+shared: true
+type: grid

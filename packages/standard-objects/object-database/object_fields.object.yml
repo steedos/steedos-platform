@@ -284,6 +284,8 @@ fields:
     type: 'grid'
     inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
     is_wide: true
+    depend_on:
+      - summary_object
   summary_filters.$:
     label: Filter Criteria
     blackbox: true
@@ -292,8 +294,6 @@ fields:
     label: Field
     type: lookup
     showIcon: false
-    depend_on:
-      - summary_object
     optionsFunction: !!js/function |
       function(values){
         if(values.summary_object){
@@ -399,6 +399,10 @@ fields:
     type: boolean
     label: Filterable
     group: Advanced
+  show_as_qr:
+    type: boolean
+    label: Show_as_qr
+    group: Advanced
   inlineHelpText:
     label: Prompt text
     type: text
@@ -479,5 +483,5 @@ form:
     }
   afterInsert: !!js/function |
     function(){
-      // Creator.objectLayoutMananger.appendField(this.doc);
+      Creator.objectLayoutMananger.appendField(this.doc);
     }

@@ -1,0 +1,6 @@
+name: end_date
+hidden: true
+label: 主协议结束日期
+readonly: true
+sort_no: 130
+type: date

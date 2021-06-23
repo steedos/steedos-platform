@@ -82,6 +82,10 @@ function getFieldsByType(doc, type, dataType) {
       // fields.push({ name: 'multiple'}); image多选时，单个字段编辑窗口样式异常,暂时不支持
       break;
     }
+    case 'url': {
+      fields.push({ name: 'show_as_qr'});
+      break;
+    }
     default:
       break;
   }
@@ -118,9 +122,13 @@ Steedos.ObjectFieldManager.changeSchema = function (doc, schema, when) {
   if(_.isObject(objectName)){
     objectName = objectName.name
   }
-  var _object = Creator.getObject(objectName);
+  var _object = Creator.getObject(objectName); 
+  if(!_object){
+    var _objects = Steedos.authRequest(`/api/v4/objects`, { type: 'get', async: false, data: { $filter: "name eq '"+objectName+"'" } });
+    _object = _objects && _objects.value && _objects.value.length > 0 ? _objects.value[0] : null;
+  }
   // 外部数据源对象必须启用后，才可正常显示对象字段属性
-  if(_object && _object.database_name){
+  if(_object && (_object.database_name || _object.datasource)){
     showFields.push({"name":"column_name"})
     showFields.push({"name":"primary"})
     showFields.push({"name":"generated"})

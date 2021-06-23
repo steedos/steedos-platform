@@ -262,6 +262,10 @@ fields:
     label: Filterable
     help: 
     description: 
+  show_as_qr:
+    label: Show as QR
+    help: 
+    description: 
   inlineHelpText:
     label: Prompt text
     help: 

@@ -1,0 +1,14 @@
+name: completed__c
+filterable: true
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 已完成
+omit: false
+readonly: false
+required: false
+searchable: false
+sort_no: 120
+sortable: true
+type: boolean

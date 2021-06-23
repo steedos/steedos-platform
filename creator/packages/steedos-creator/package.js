@@ -100,6 +100,7 @@ Package.onUse(function (api) {
 	api.addFiles('lib/object_recent.coffee', 'client');
 	api.addFiles('lib/filters_transform.coffee', 'client');
 	api.addFiles('lib/form_manager.coffee', 'client');
+	api.addFiles('lib/grid_export.coffee', 'client');
 
 	api.addFiles('server/methods/object_recent_viewed.coffee', 'server');
 	api.addFiles('server/methods/object_recent_record.coffee', 'server');
@@ -229,6 +230,13 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/list_wrapper.less', 'client');
 	api.addFiles('client/views/grid.html', 'client');
 	api.addFiles('client/views/grid.coffee', 'client');
+
+	api.addFiles('client/views/react_grid.html', 'client');
+	api.addFiles('client/views/react_grid.coffee', 'client');
+
+	api.addFiles('client/views/object_listview.html', 'client');
+	api.addFiles('client/views/object_listview.coffee', 'client');
+
 	api.addFiles('client/views/grid.less', 'client');
 	api.addFiles('client/views/view.html', 'client');
 	api.addFiles('client/views/view.coffee', 'client');
@@ -363,6 +371,9 @@ Package.onUse(function (api) {
 	// api.addAssets('assets/logo.png', 'client');
 	api.addAssets('assets/logo-square.png', 'client');
 	api.addAssets('assets/logo-square.en-us.png', 'client');
+
+	api.addFiles('client/views/detail_realted_object_list.html', 'client');
+	api.addFiles('client/views/detail_realted_object_list.coffee', 'client');
 
 	api.export(['permissionManagerForInitApproval', 'uuflowManagerForInitApproval'], ['server']);
 

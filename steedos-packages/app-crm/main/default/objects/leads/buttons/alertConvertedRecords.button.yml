@@ -1,0 +1,10 @@
+name: alertConvertedRecords
+is_enable: true
+label: 显示转换状态
+'on': record
+visible: |-
+  function (object_name, record_id, permissions, record) {
+      if(record && record.converted){
+        return true
+      }
+    }

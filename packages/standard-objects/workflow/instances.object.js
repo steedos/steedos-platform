@@ -1,3 +1,6 @@
+const objectql = require("@steedos/objectql");
+const config = objectql.getSteedosConfig();
+
 if (!db.instances) {
   const core = require('@steedos/core');
   db.instances = core.newCollection('instances');
@@ -225,9 +228,7 @@ if (Meteor.isServer) {
     "final_decision": 1,
     "submitter": 1,
     "applicant": 1
-  }, {
-    background: true
-  });
+  }, Steedos.formatIndex(["is_deleted","state","space","final_decision","submitter","applicant"]));
   db.instances._ensureIndex({
     "is_deleted": 1,
     "space": 1,
@@ -244,9 +245,7 @@ if (Meteor.isServer) {
     "final_decision": 1,
     "submitter": 1,
     "applicant": 1
-  }, {
-    background: true
-  });
+  }, Steedos.formatIndex(["is_deleted","state","space","modified","final_decision","submitter","applicant"]));
   db.instances._ensureIndex({
     "is_deleted": 1,
     "space": 1,
@@ -260,9 +259,7 @@ if (Meteor.isServer) {
     "modified": 1,
     "submit_date": 1,
     "outbox_users": 1
-  }, {
-    background: true
-  });
+  }, Steedos.formatIndex(["is_deleted","space","modified","submit_date","outbox_users"]));
   db.instances._ensureIndex({
     "is_deleted": 1,
     "space": 1,
@@ -295,9 +292,7 @@ if (Meteor.isServer) {
     "flow": 1,
     "submit_date": 1,
     "modified": 1
-  }, {
-    background: true
-  });
+  }, Steedos.formatIndex(["is_deleted","state","space","flow","submit_date","modified"]));
   db.instances._ensureIndex({
     "is_deleted": 1,
     "state": 1,
@@ -314,9 +309,7 @@ if (Meteor.isServer) {
     "submitter": 1,
     "applicant": 1,
     "inbox_users": 1
-  }, {
-    background: true
-  });
+  }, Steedos.formatIndex(["is_deleted","state","space","submitter","applicant","inbox_users"]));
   db.instances._ensureIndex({
     "is_deleted": 1,
     "state": 1,
@@ -324,9 +317,7 @@ if (Meteor.isServer) {
     "is_archive": 1,
     "submitter": 1,
     "applicant": 1
-  }, {
-    background: true
-  });
+  }, Steedos.formatIndex(["is_deleted","state","space","is_archive","submitter","applicant"]));
   db.instances._ensureIndex({
     "modified": 1
   }, {
@@ -349,26 +340,26 @@ if (Meteor.isServer) {
   }, {
     background: true
   });
-  db.instances._ensureIndex({
-    "keywords": "hashed"
-  }, {
-    background: true
-  });
+
+  if (!config.datasources.default.documentDB) {
+    db.instances._ensureIndex({
+      "keywords": "hashed"
+    }, {
+      background: true
+    });
+  }
+
   db.instances._ensureIndex({
     "space": 1,
     "submit_date": 1,
     "is_deleted": 1,
     "final_decision": 1,
     "state": 1
-  }, {
-    background: true
-  });
+  }, Steedos.formatIndex(["space","submit_date","is_deleted","final_decision","state"]));
   db.instances._ensureIndex({
     "traces.approves.type": 1,
     "traces.approves.handler": 1
-  }, {
-    background: true
-  });
+  }, Steedos.formatIndex(["traces.approves.type","traces.approves.handler"]));
   // 全文检索同步字段
   db.instances._ensureIndex({
     "is_recorded": 1

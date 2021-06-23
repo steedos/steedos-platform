@@ -1,0 +1,10 @@
+name: convert
+is_enable: true
+label: 转换
+'on': record
+visible: |-
+  function (object_name, record_id, permissions, record) {
+      if(record && !record.converted){
+        return true
+      }
+    }

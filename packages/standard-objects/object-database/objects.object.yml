@@ -126,6 +126,16 @@ fields:
     defaultValue: true
     label: Enable Single Field Edit
     group: Switch
+  # enable_tree:
+  #   type: boolean
+  #   label: Enable Tree
+  #   inlineHelpText: Enable a tree structure to display records
+  #   group: Switch
+  enable_enhanced_lookup:
+    type: boolean
+    label: Enable Enhanced Lookup
+    inlineHelpText: When enabled, the lookup field associated with this object displays its options as a pop-up window.
+    group: Switch
   # enable_trash:
   #   type: boolean
   # enable_space_global:
@@ -144,6 +154,11 @@ fields:
   #   label: 隐藏
   #   type: boolean
   #   omit: true
+  version:
+    label: Version
+    type: number
+    scale: 0
+    defaultValue: 2
   description:
     label: Description
     type: textarea
@@ -239,6 +254,10 @@ fields:
     group: script
     blackbox: true
     is_wide: true
+  form.onValuesChange:
+    type: code
+    rows: 3
+    is_wide: true
   form.initialValues:
     type: code
     rows: 3
@@ -328,7 +347,6 @@ relatedList:
       - label
       - object_name
       - profiles
-  - object_related_list
   - permission_objects
   - object_workflows
   - process_definition
@@ -348,6 +366,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
   customize:
     columns:
       - label
@@ -364,6 +383,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
   system:
     columns:
       - label
@@ -380,6 +400,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
   deleted:
     columns:
       - label
@@ -397,6 +418,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
 actions: 
   show_object: 
     label: Preview
@@ -404,6 +426,9 @@ actions:
   copy_odata: 
     label: Copy OData URL
     on: record
+  createDefaulRecordView:
+      on: record_only_more
+      label: 创建默认页面布局
   # export:
   #   label: Export
   #   visible: true

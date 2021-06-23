@@ -1,0 +1,5 @@
+name: unit_price
+inlineHelpText: 价格手册内的产品的价格，包括货币。
+label: 价目表价格
+sort_no: 140
+type: currency

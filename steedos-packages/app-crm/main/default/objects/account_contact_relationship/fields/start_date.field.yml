@@ -1,0 +1,5 @@
+name: start_date
+inlineHelpText: 客户和联系人之间关系开始的日期。与结束日期字段一起使用，以保持关系历史记录。
+label: 开始日期
+sort_no: 140
+type: date

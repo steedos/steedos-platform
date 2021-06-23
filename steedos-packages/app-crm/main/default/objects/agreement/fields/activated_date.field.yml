@@ -1,0 +1,5 @@
+name: activated_date
+hidden: true
+label: 启用日期
+sort_no: 290
+type: date

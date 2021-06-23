@@ -1,8 +1,12 @@
 var objectql = require('@steedos/objectql');
-const defaultDatasourceName = 'default';
+const clone = require('clone');
+const defaultDatasourceName = 'meteor';
+const defaultDatasourcesName = ['default','meteor'];
 var triggerCore = require('./object_triggers.core.js');
 var permissionCore = require('./permission_objects.core.js');
 var buildGraphQLSchemaSetTimeOutId = null;
+
+const DB_OBJECT_SERVICE_NAME = '~database-objects';
 
 function buildGraphQLSchema(){
     if(buildGraphQLSchemaSetTimeOutId != null){
@@ -31,20 +35,23 @@ function canLoadObject(name, datasource) {
 }
 
 function getDataSource(doc) {
-    if (doc.datasource && doc.datasource != defaultDatasourceName) {
+    if (doc.datasource && !_.include(defaultDatasourcesName, doc.datasource)) {
         let datasource = Creator.getCollection("datasources").findOne({ _id: doc.datasource })
         return datasource;
     }
 }
 
 function getDataSourceName(doc) {
-    if (doc && doc.datasource && doc.datasource != defaultDatasourceName) {
+    if (doc && doc.datasource && !_.include(defaultDatasourcesName, doc.datasource)) {
         let datasource = Creator.getCollection("datasources").findOne({ _id: doc.datasource })
         if (datasource) {
             return datasource.name
         } else {
             throw new Error('not find datasource ', doc.datasource);
         }
+    }
+    if(doc.datasource && _.include(defaultDatasourcesName, doc.datasource)){
+        return doc.datasource
     }
     return defaultDatasourceName
 }
@@ -182,11 +189,10 @@ function loadObject(doc, oldDoc) {
         }
     
         var datasourceDoc = getDataSource(doc);
-        if (doc.datasource && doc.datasource != defaultDatasourceName && (!datasourceDoc || !datasourceDoc.is_enable)) {
+        if (doc.datasource && !_.include(defaultDatasourcesName, doc.datasource) && (!datasourceDoc || !datasourceDoc.is_enable)) {
             console.warn('warn: Not loaded. Invalid custom object -> ', doc.name, doc.datasource);
             return;
         }
-    
         var datasourceName = getDataSourceName(doc);
         const datasource = objectql.getDataSource(datasourceName);
     
@@ -213,9 +219,15 @@ function loadObject(doc, oldDoc) {
         if (datasourceName === defaultDatasourceName) {
             delete doc.table_name
         }
-    
         //继承base
         loadDBObject(doc);
+        const originalObject = clone(doc);
+        
+        // 由于外部数据源对象的datasource属性存的是datasource._id的值，故这里转换为datasoruce.name
+        if(!_.include(defaultDatasourcesName, originalObject.datasource)) { 
+            originalObject.datasource = datasourceName;
+        }
+
         objectql.addObjectConfig(doc, datasourceName);
         objectql.loadObjectLazyListViews(doc.name);
         objectql.loadObjectLazyActions(doc.name);
@@ -225,21 +237,26 @@ function loadObject(doc, oldDoc) {
         objectql.loadObjectLazyButtons(doc.name);
         //获取到继承后的对象
         const _doc = objectql.getObjectConfig(doc.name);
-        datasource.setObject(doc.name, _doc);
-        datasource.init();
-        try {
-            if (!datasourceName || datasourceName == defaultDatasourceName) {
-                Creator.Objects[doc.name] = _doc;
-                Creator.loadObjects(_doc, _doc.name);
+        objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, originalObject).then(function(res){            
+            if(res){
+                datasource.setObject(doc.name, _doc);
+                try {
+                    if (!datasourceName || datasourceName == defaultDatasourceName) {
+                        Creator.Objects[doc.name] = _doc;
+                        Creator.loadObjects(_doc, _doc.name);
+                    }
+                    buildGraphQLSchema();
+                } catch (error) {
+                    console.log('error', error);
+                }
+                if (!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)) {
+                    loadObjectTriggers(doc);
+                    loadObjectPermission(doc);
+                }
             }
-            buildGraphQLSchema();
-        } catch (error) {
-            console.log('error', error);
-        }
-        if (!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)) {
-            loadObjectTriggers(doc);
-            loadObjectPermission(doc);
-        }
+        })
+        
+        
     } catch (error) {
         console.error(error)
     }

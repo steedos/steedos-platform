@@ -14,6 +14,8 @@ fields:
     label: 图标
     help: 
     description: 
+  tabs: 
+    label: 选项卡
   visible:
     label: 启用
     help: 

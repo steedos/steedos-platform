@@ -26,6 +26,16 @@ fields:
     label: 显示位置
     help: 
     description: 
+  type: 
+    label: 类型
+    options:
+      - label: JavaScript
+        value: script
+      - label: 打印模板(word)
+        value: word-print
+    defaultValue: script
+  word_template:
+    label: 打印模板
   todo:
     label: 执行的脚本
     help: 

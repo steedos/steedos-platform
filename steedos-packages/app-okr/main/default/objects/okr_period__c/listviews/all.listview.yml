@@ -1,0 +1,20 @@
+name: all
+columns:
+  - field: name
+    wrap: false
+  - field: start_date__c
+    wrap: false
+  - field: end_date__c
+    wrap: false
+  - field: status__c
+    wrap: false
+filter_scope: space
+filters: []
+label: 所有
+scrolling_mode: standard
+shared: true
+show_count: false
+sort:
+  - field_name: name
+    order: asc
+type: grid

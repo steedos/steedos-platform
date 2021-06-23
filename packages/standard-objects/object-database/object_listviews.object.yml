@@ -145,6 +145,8 @@ fields:
     label: Default Sort Order
     type: grid
     is_wide: true
+    depend_on:
+      - object_name
   sort.$:
     label: Order
     blackbox: true
@@ -152,8 +154,6 @@ fields:
   sort.$.field_name:
     label: Field Name
     type: lookup
-    depend_on:
-      - object_name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               var _object, _options, fields, icon;
@@ -195,6 +195,8 @@ fields:
     is_wide: true
     hidden: true
     omit: true
+    depend_on:
+      - object_name
   filters.$:
     label: Filter
     blackbox: true
@@ -203,8 +205,6 @@ fields:
     label: Field
     type: lookup
     showIcon: false
-    depend_on:
-      - object_name
     optionsFunction: !!js/function |
       function(values){
         if(values.object_name){
@@ -252,6 +252,8 @@ fields:
     label: Mobile Columns
     type: grid
     is_wide: true
+    depend_on:
+      - object_name
   mobile_columns.$:
     label: Column
     blackbox: true
@@ -261,8 +263,6 @@ fields:
     type: lookup
     multiple: false
     is_wide: false
-    depend_on:
-      - object_name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               if (!(values != null ? values.object_name : void 0)) {

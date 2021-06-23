@@ -1,0 +1,5 @@
+name: use_standard_price
+inlineHelpText: 价格手册条目的价格是否继承至标准价格手册。
+label: 使用标准价格
+sort_no: 150
+type: boolean

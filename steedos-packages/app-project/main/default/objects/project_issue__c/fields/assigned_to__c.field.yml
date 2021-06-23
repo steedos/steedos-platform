@@ -1,0 +1,16 @@
+name: assigned_to__c
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 分派给
+multiple: false
+omit: false
+readonly: false
+reference_to: space_users
+required: false
+searchable: false
+sort_no: 170
+sortable: false
+type: lookup

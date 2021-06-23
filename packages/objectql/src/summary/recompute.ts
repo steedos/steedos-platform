@@ -14,7 +14,7 @@ const runCurrentFieldSummary = async function (fieldSummaryConfig: SteedosFieldS
  * @param fieldId 
  */
 export const recomputeSummaryValues = async (fieldId: string, userSession: any) => {
-    let config = getFieldSummaryConfig(fieldId);
+    let config = await getFieldSummaryConfig(fieldId);
     if (!config) {
         throw new Error(`recomputeSummaryValues:${fieldId} not found in field_summary configs.`);
     }

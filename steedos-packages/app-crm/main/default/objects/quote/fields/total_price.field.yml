@@ -1,0 +1,7 @@
+name: total_price
+data_type: currency
+formula: 'IF(discount == 0, subtotal, ROUND(subtotal * (1 - discount),2))'
+inlineHelpText: 折扣后，不含税和运费的报价行项目的总和。(只读)
+label: 总价
+sort_no: 330
+type: formula
