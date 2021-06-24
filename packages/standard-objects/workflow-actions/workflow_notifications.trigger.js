@@ -31,9 +31,9 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let workflowNotifications = [];
-        if(filters._id && filters._id.$in){
-            for(let id of filters._id.$in){
-                let workflowNotification = objectql.getWorkflowNotification(id);
+        if(filters.name && filters.name.$in){
+            for(let _name of filters.name.$in){
+                let workflowNotification = objectql.getWorkflowNotification(_name);
                 if(workflowNotification){
                     workflowNotifications.push(workflowNotification);
                 }
