@@ -6,7 +6,7 @@
   "dependencies": {
     "@steedos/accounts": "^2.0.24",
     "@steedos/core": "^2.0.24",
-    "@steedos/metadata-api": "^2.0.0",
+    "@steedos/metadata-api": "^2.0.1",
     "@steedos/plugin-dingtalk": "^2.0.24",
     "@steedos/plugin-enterprise": "^2.0.24",
     "@steedos/plugin-qywx": "^2.0.24",
