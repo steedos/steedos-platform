@@ -71,28 +71,28 @@ function allowChangeObject(){
 }
 
 Creator.Objects.object_actions.triggers = {
-  // "after.insert.server.object_actions": {
-  //   on: "server",
-  //   when: "after.insert",
-  //   todo: function (userId, doc) {
-  //     return _syncToObject(doc, 'insert');
-  //   }
-  // },
-  // "after.update.server.object_actions": {
-  //   on: "server",
-  //   when: "after.update",
-  //   todo: function (userId, doc) {
-  //     doc._previousName = this.previous.name
-  //     return _syncToObject(doc, 'update');
-  //   }
-  // },
-  // "after.remove.server.object_actions": {
-  //   on: "server",
-  //   when: "after.remove",
-  //   todo: function (userId, doc) {
-  //     return _syncToObject(doc, 'remove');
-  //   }
-  // },
+  "after.insert.server.object_actions": {
+    on: "server",
+    when: "after.insert",
+    todo: function (userId, doc) {
+      return _syncToObject(doc, 'insert');
+    }
+  },
+  "after.update.server.object_actions": {
+    on: "server",
+    when: "after.update",
+    todo: function (userId, doc) {
+      doc._previousName = this.previous.name
+      return _syncToObject(doc, 'update');
+    }
+  },
+  "after.remove.server.object_actions": {
+    on: "server",
+    when: "after.remove",
+    todo: function (userId, doc) {
+      return _syncToObject(doc, 'remove');
+    }
+  },
   "before.update.server.object_actions": {
     on: "server",
     when: "before.update",

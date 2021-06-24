@@ -67,6 +67,3 @@ CustomLabels:
   action_field_updates_field__error_process_node_process_definition_required: 请先选择该批准步骤的“批准过程”然后再新建字段更新！
   action_field_updates_field__error_process_definition_object_required: 请先选择该批准过程的“对象”然后再新建字段更新！
   action_field_updates_field__error_workflow_rule_object_required: 请先选择该工作流规则的“对象”然后再新建字段更新！
-actions:
-  customize:
-    label: 自定义

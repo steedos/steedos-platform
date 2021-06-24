@@ -9,6 +9,3 @@ fields:
 listviews:
   all:
     label: 所有
-actions:
-  customize:
-    label: 自定义

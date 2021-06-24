@@ -354,33 +354,6 @@ Creator.processPermissions = (po)->
 		po.allowEdit = true
 		po.allowDelete = true
 		po.viewCompanyRecords = true
-		
-	# 如果附件相关权限配置为空，则兼容之前没有附件权限配置时的规则
-	if po.allowRead
-		typeof po.allowReadFiles != "boolean" && po.allowReadFiles = true
-		typeof po.viewAllFiles != "boolean" && po.viewAllFiles = true
-	if po.allowEdit
-		typeof po.allowCreateFiles != "boolean" && po.allowCreateFiles = true
-		typeof po.allowEditFiles != "boolean" && po.allowEditFiles = true
-		typeof po.allowDeleteFiles != "boolean" && po.allowDeleteFiles = true
-	if po.modifyAllRecords
-		typeof po.modifyAllFiles != "boolean" && po.modifyAllFiles = true
-
-	if po.allowCreateFiles
-		po.allowReadFiles = true
-	if po.allowEditFiles
-		po.allowReadFiles = true
-	if po.allowDeleteFiles
-		po.allowEditFiles = true
-		po.allowReadFiles = true
-	if po.viewAllFiles
-		po.allowReadFiles = true
-	if po.modifyAllFiles
-		po.allowReadFiles = true
-		po.allowEditFiles = true
-		po.allowDeleteFiles = true
-		po.viewAllFiles = true
-
 	return po
 
 Creator.getTemplateSpaceId = ()->

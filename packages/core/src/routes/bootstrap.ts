@@ -244,7 +244,7 @@ export async function getSpaceBootStrap(req, res) {
         await getUserObjects(userId, spaceId, result.objects);
         
         // TODO object layout 是否需要控制审批记录显示？
-        let spaceProcessDefinition = await getObject("process_definition").find({filters: [['space', '=', spaceId], ['active', '=', true]]})
+        let spaceProcessDefinition = await getObject("process_definition").directFind({filters: [['space', '=', spaceId], ['active', '=', true]]})
         _.each(spaceProcessDefinition, function(item){
             if(result.objects[item.object_name]){
                 result.objects[item.object_name].enable_process = true

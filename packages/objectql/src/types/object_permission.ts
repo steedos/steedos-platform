@@ -11,12 +11,6 @@ abstract class SteedosObjectPermissionTypeProperties {
     modifyAllRecords?: boolean
     viewCompanyRecords?: boolean
     modifyCompanyRecords?: boolean
-    allowReadFiles?: boolean
-    allowEditFiles?: boolean
-    allowCreateFiles?: boolean
-    allowDeleteFiles?: boolean
-    viewAllFiles?: boolean
-    modifyAllFiles?: boolean
     disabled_list_views?: []
     disabled_actions?: []
     unreadable_fields?: string[]

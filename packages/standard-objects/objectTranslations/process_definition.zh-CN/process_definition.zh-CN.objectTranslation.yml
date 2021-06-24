@@ -124,8 +124,6 @@ actions:
     label: 停用
   copy:
     label: 复制
-  customize:
-    label: 自定义
 CustomLabels:
   process_definition_field_approval_page_fields: 批准页面字段
   process_definition_field_approval_page_fields_inlineHelpText: 批准页面是批准人实际批准或拒绝请求的地方。使用下面的选项，选择要在此页面上显示的字段。

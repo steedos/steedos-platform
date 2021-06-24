@@ -45,14 +45,6 @@ Template.related_object_list.helpers
 		record = Creator.getObjectRecord()
 		return !record?.locked
 
-	recordPerminssion: (permissionName)->
-		object_name = Session.get "object_name"
-		record_id = Session.get "record_id"
-		record = Creator.getCollection(object_name).findOne record_id
-		recordPerminssion = Creator.getRecordPermissions object_name, record, Meteor.userId()
-		if recordPerminssion
-			return recordPerminssion[permissionName]
-
 	hasPermission: (permissionName)->
 		permissions = Creator.getPermissions()
 		if permissions

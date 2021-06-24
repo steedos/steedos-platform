@@ -579,7 +579,7 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 						if (!approveRoleById && company_id) || (approveRoleById?.company_id && company_id)
 							flow_role_query.company_id = company_id
 						else
-							flow_role_query.$or = [{ company_id: { $exists: false } }, { company_id: null }, { company_id: '' }]
+							flow_role_query.company_id = {$exists: false}
 						role = db.flow_roles.findOne(flow_role_query, {fields: {_id: 1}})
 						if _.isEmpty(role)
 							role_id = db.flow_roles._makeNewID()

@@ -1,32 +1,10 @@
 const _ = require("underscore");
 const util = require('../../util');
 const objectql = require('@steedos/objectql');
-const InternalData = require('../../core/internalData');
-
-function setSpaceAndOwner(record, that){
-    record['space'] = that.spaceId
-    record['owner'] = that.userId
-}
-
-const getInternalApprovalProcesses = function(sourceApprovalProcesses, filters){
-    let dbApprovalProcesses = Creator.getCollection("process_definition").find(filters, {fields:{_id:1, name:1}}).fetch();
-    let approvalProcesses = [];
-
-    if(!filters.is_system){
-        _.forEach(sourceApprovalProcesses, function(doc){
-            if(!_.find(dbApprovalProcesses, function(p){
-                return p.name === doc.name
-            })){
-                approvalProcesses.push(doc);
-            }
-        })
-    }
-    return approvalProcesses;
-}
 
 module.exports = {
     beforeInsert: async function () {
-        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
+        await util.checkAPIName(this.object_name, 'name', this.doc.name);
 
         objectql.checkFormula(this.doc.entry_criteria, this.doc.object_name)
     },
@@ -38,75 +16,9 @@ module.exports = {
             }
         };
         if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
+            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id);
         }
 
         objectql.checkFormula(this.doc.entry_criteria, this.doc.object_name)
-    },
-    afterFind: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let approvalProcesses = [];
-        if(filters.name){
-            approvalProcess = objectql.getSourceApprovalProcess(filters.name);
-            if(approvalProcess){
-                approvalProcesses.push(approvalProcess);
-            }
-        }else{
-            approvalProcesses = objectql.getSourceApprovalProcesses();
-        }
-
-        approvalProcesses = getInternalApprovalProcesses(approvalProcesses, filters);
-
-        if(approvalProcesses){
-            this.data.values = this.data.values.concat(approvalProcesses)
-        }
-    },
-    afterAggregate: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let approvalProcesses = [];
-        if(filters.name){
-            approvalProcess = objectql.getSourceApprovalProcess(filters.name);
-            if(approvalProcess){
-                approvalProcesses.push(approvalProcess);
-            }
-        }else{
-            approvalProcesses = objectql.getSourceApprovalProcesses();
-        }
-
-        approvalProcesses = getInternalApprovalProcesses(approvalProcesses, filters);
-
-        if(approvalProcesses){
-            this.data.values = this.data.values.concat(approvalProcesses)
-        }
-    },
-    afterCount: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let approvalProcesses = [];
-        if(filters.name){
-            approvalProcess = objectql.getSourceApprovalProcess(filters.name);
-            if(approvalProcess){
-                approvalProcesses.push(approvalProcess);
-            }
-        }else{
-            approvalProcesses = objectql.getSourceApprovalProcesses();
-        }
-
-        approvalProcesses = getInternalApprovalProcesses(approvalProcesses, filters);
-
-        if(approvalProcesses){
-            this.data.values = this.data.values + approvalProcesses.length
-        }
-    },
-    afterFindOne: async function(){
-        if(_.isEmpty(this.data.values)){
-            let id = this.id
-            if(id){
-                let approvalProcess = objectql.getSourceApprovalProcess(id);
-                if(approvalProcess){
-                    setSpaceAndOwner(approvalProcess, this);
-                    this.data.values = approvalProcess;
-                }
-            }
-        }
     }
 }

@@ -21,6 +21,3 @@ fields:
 listviews:
   all:
     label: 所有角色
-actions:
-  customize:
-    label: 自定义
