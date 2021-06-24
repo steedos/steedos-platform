@@ -31,7 +31,7 @@ Package.onUse(function (api) {
 	], ['server']);
 
 	// API's
-	api.addFiles('lib/server/api.js', 'server');
+	// api.addFiles('lib/server/api.js', 'server');
 
 	// STARTUP
 	api.addFiles('server/startup.coffee', 'server');
