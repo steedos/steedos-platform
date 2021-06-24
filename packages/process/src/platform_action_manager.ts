@@ -9,18 +9,18 @@ export const runProcessNodeAction = async (processNodeId: string, when: string, 
     switch (when) {
         case 'approval':
             if(!_.isEmpty(processNode.approval_updates_field_actions) && _.isArray(processNode.approval_updates_field_actions)){
-                filters.push(['_id', 'in', processNode.approval_updates_field_actions])
+                filters.push(['name', 'in', processNode.approval_updates_field_actions])
             }
             if(!_.isEmpty(processNode.approval_workflow_notifications_actions) && _.isArray(processNode.approval_workflow_notifications_actions)){
-                wnfilters.push(['_id', 'in', processNode.approval_workflow_notifications_actions])
+                wnfilters.push(['name', 'in', processNode.approval_workflow_notifications_actions])
             }
             break;
         case 'rejection':
             if(!_.isEmpty(processNode.rejection_updates_field_actions) && _.isArray(processNode.rejection_updates_field_actions)){
-                filters.push(['_id', 'in', processNode.rejection_updates_field_actions])
+                filters.push(['name', 'in', processNode.rejection_updates_field_actions])
             }
             if(!_.isEmpty(processNode.rejection_workflow_notifications_actions) && _.isArray(processNode.rejection_workflow_notifications_actions)){
-                wnfilters.push(['_id', 'in', processNode.rejection_workflow_notifications_actions])
+                wnfilters.push(['name', 'in', processNode.rejection_workflow_notifications_actions])
             }
             break;
         default:
