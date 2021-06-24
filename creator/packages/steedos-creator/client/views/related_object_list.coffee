@@ -89,6 +89,8 @@ Template.related_object_list.helpers
 		related_object_name = Session.get "related_object_name"
 		is_related = true;
 		list_view_id = Creator.getListView(related_object_name, "all")?._id
+		if object_name == 'objects'
+			record_id = Template.instance()?.record.get().name;
 		return Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id)
 	onModelUpdated: ()->
 		recordsTotal = Template.instance().recordsTotal

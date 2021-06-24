@@ -224,6 +224,8 @@ function loadObject(doc, oldDoc) {
             originalObject.datasource = datasourceName;
         }
 
+        originalObject.isMain = true;
+
         objectql.addObjectConfig(doc, datasourceName);
         objectql.loadObjectLazyListViews(doc.name);
         objectql.loadObjectLazyActions(doc.name);

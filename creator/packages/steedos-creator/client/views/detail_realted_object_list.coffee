@@ -2,10 +2,10 @@ Template.detail_realted_object_list.helpers
 	related_object_name: ()->
 		return this.related_object_name
 	name: ()->
-		return "related_listview_" + Session.get("object_name") + '_' + this.related_object_name
+		return "related_listview_" + this.object_name + '_' + this.related_object_name
 	columnFields: ()->
-		object_name = Session.get "object_name"
-		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		object_name = this.object_name
+		relatedList = Creator.getRelatedList(this.object_name, this.record_id)
 		related_object_name = this.related_object_name
 		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
 		columnFields = [];
@@ -14,8 +14,8 @@ Template.detail_realted_object_list.helpers
 		)
 		return columnFields;
 	filters: ()->
-		object_name = Session.get "object_name"
-		record_id = Session.get("record_id")
+		object_name = this.object_name
+		record_id = this.record_id
 		related_object_name = this.related_object_name
 		is_related = true;
 		list_view_id = Creator.getListView(related_object_name, "all")?._id

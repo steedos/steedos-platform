@@ -9,11 +9,13 @@ module.exports = {
         }
         this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters))
         _.each(this.data.values, function(value){
-            delete value.actions;
-            delete value.fields;
-            delete value.list_views;
-            delete value.permission_set;
-            delete value.triggers;
+            if(value){
+                delete value.actions;
+                delete value.fields;
+                delete value.list_views;
+                delete value.permission_set;
+                delete value.triggers;
+            }
         })
     },
     afterAggregate: async function(){
@@ -24,11 +26,13 @@ module.exports = {
         this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters));
         
         _.each(this.data.values, function(value){
-            delete value.actions;
-            delete value.fields;
-            delete value.list_views;
-            delete value.permission_set;
-            delete value.triggers;
+            if(value){
+                delete value.actions;
+                delete value.fields;
+                delete value.list_views;
+                delete value.permission_set;
+                delete value.triggers;
+            }
         })
     },
     afterCount: async function(){
@@ -38,11 +42,13 @@ module.exports = {
         if(_.isEmpty(this.data.values)){
             this.data.values = await InternalData.getObject(this.id, this.userId);
         }
-        delete this.data.values.actions;
-        delete this.data.values.fields;
-        delete this.data.values.list_views;
-        delete this.data.values.permission_set;
-        delete this.data.values.triggers;
+        if(this.data.values){
+            delete this.data.values.actions;
+            delete this.data.values.fields;
+            delete this.data.values.list_views;
+            delete this.data.values.permission_set;
+            delete this.data.values.triggers;
+        }
     },
     afterInsert: async function(){
         // let spaceProfiles = await objectql.getObject('permission_set').find({space: this.spaceId, type: 'profile'});
