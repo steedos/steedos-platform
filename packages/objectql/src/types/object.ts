@@ -75,6 +75,7 @@ abstract class SteedosObjectProperties {
     enable_enhanced_lookup?: boolean
     enable_inline_edit?: boolean
     enable_approvals?: boolean
+    enable_process?: boolean
     is_view?: boolean
     hidden?: boolean
     description?: string
@@ -996,6 +997,54 @@ export class SteedosObjectType extends SteedosObjectProperties {
         } catch (error) {
             return {error: error.message}
         }
+    }
+
+    async getRelateds(){
+        const related_objects = [];
+        if(this.enable_files){
+            related_objects.push({object_name:"cms_files", foreign_key: "parent"})
+        }
+        let detailsInfo = await this.getDetailsInfo();
+        let lookupsInfo = await this.getLookupDetailsInfo();
+        let relatedInfos = detailsInfo.concat(lookupsInfo);
+        for (const info of relatedInfos) {
+            if (!info.startsWith('__')) {
+                let infos = info.split('.');
+                let detailObjectApiName = infos[0];
+                let detailFieldName = infos[1];
+                let related_field = await getObject(detailObjectApiName).getField(detailFieldName);
+                if(related_field){
+                    if((related_field.type == "master_detail" || (related_field.type == "lookup" && related_field.relatedList)) && related_field.reference_to && related_field.reference_to == this.name){
+                        if(detailObjectApiName == "object_fields"){
+                            related_objects.splice(0, 0, {object_name: detailObjectApiName, foreign_key: detailFieldName})
+                        }else{
+                            related_objects.push({object_name:detailObjectApiName, foreign_key: detailFieldName, write_requires_master_read: related_field.write_requires_master_read})
+                        }
+                    }
+                }
+            }
+        }
+        if(this.enable_tasks){
+            related_objects.push({object_name:"tasks", foreign_key: "related_to"})
+        }
+        if(this.enable_notes){
+            related_objects.push({object_name:"notes", foreign_key: "related_to"})
+        }
+        if(this.enable_events){
+            related_objects.push({object_name:"events", foreign_key: "related_to"});
+        }
+        if(this.enable_instances){
+            related_objects.push({object_name:"instances", foreign_key: "record_ids"})
+        }
+            
+        if(this.enable_approvals){
+            related_objects.push({object_name:"approvals", foreign_key: "related_to"})
+        }
+            
+        if(this.enable_process){
+            related_objects.push({object_name:"process_instance_history", foreign_key: "target_object"})
+        }
+        return related_objects;
     }
 
     private isDirectCRUD(methodName: string) {

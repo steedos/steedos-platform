@@ -186,6 +186,10 @@ class ObjectServiceDispatcher {
     async createDefaulRecordView(userSession){
         return await this.callAction(`createDefaulRecordView`, {userSession});
     }
+
+    async getRelateds(){
+        return await this.callAction(`getRelateds`)
+    }
 }
 
 export function getObjectDispatcher(objectApiName): any {

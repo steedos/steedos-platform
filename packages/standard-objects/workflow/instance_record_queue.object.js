@@ -23,6 +23,12 @@ const getObjectConfig = function(objectApiName){
     },{objectApiName:objectApiName})
 }
 
+const getRelateds = function(objectApiName){
+    return objectql.wrapAsync(async function(){
+        return await objectql.getObject(this.objectApiName).getRelateds()
+    },{objectApiName:objectApiName})
+}
+
 var _eval = require('eval');
 var isConfigured = false;
 var sendWorker = function (task, interval) {
@@ -422,7 +428,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
 
     var objectFields = objectInfo.fields;
     var objectFieldKeys = _.keys(objectFields);
-    var relatedObjects = Creator.getRelatedObjects(objectInfo.name, spaceId);
+    var relatedObjects = getRelateds(objectInfo.name);
     var relatedObjectsKeys = _.pluck(relatedObjects, 'object_name');
     var formTableFields = _.filter(formFields, function (formField) {
         return formField.type === 'table'
@@ -888,7 +894,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     $set: setObj
                 })
 
-                var relatedObjects = Creator.getRelatedObjects(ow.object_name, spaceId);
+                var relatedObjects = getRelateds(ow.object_name);
                 var relatedObjectsValue = syncValues.relatedObjectsValue;
                 InstanceRecordQueue.syncRelatedObjectsValue(record._id, relatedObjects, relatedObjectsValue, spaceId, ins);
 
@@ -983,7 +989,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                             modified: new Date()
                         }
                     })
-                    var relatedObjects = Creator.getRelatedObjects(ow.object_name, spaceId);
+                    var relatedObjects = getRelateds(ow.object_name);
                     var relatedObjectsValue = syncValues.relatedObjectsValue;
                     InstanceRecordQueue.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins);
                     // workflow里发起审批后，同步时也可以修改相关表的字段值 #1183

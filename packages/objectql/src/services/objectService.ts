@@ -155,6 +155,11 @@ function getObjectServiceMethodsSchema() {
             async handler(userSession) {
                 return await this.object.createDefaulRecordView(userSession);
             }
+        },
+        getRelateds: {
+            async handler() {
+                return await this.object.getRelateds();
+            }
         }
         // getPageView: {
         //     //TODO
@@ -470,6 +475,15 @@ function getObjectServiceActionsSchema() {
                     throw new Error('no permission.')
                 }
                 return await this.createDefaulRecordView(userSession);
+            }
+        },
+        getRelateds: {
+            rest: {
+                method: "GET",
+                path: "/relateds"
+            },
+            async handler(ctx) {
+                return await this.getRelateds();
             }
         }
     };
