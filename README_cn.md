@@ -92,6 +92,14 @@
 - [设置和维护华炎魔方](https://www.steedos.com/help/admin/)
 - [开发人员](https://www.steedos.com/developer/)
 
+## 2.0 微服务版本的如何在platform 源码平台运行项目：
+- 配置环境变量：TRANSPORTER、CACHER 使用redis
+- 先启动platform: yarn start
+- 项目下也配置环境变量TRANSPORTER、CACHER 值与platform 一致。
+- 启动项目时，如果程序都在steedos-app文件夹下， 就通过 yarn start:app 启动
+
+停止项目服务后，platform平台中的项目对象会自动下线。
+
 ## 为华炎魔方做贡献
 
 从上报BUG到提出改善建议，每一个贡献都值得赞赏和欢迎。如果您打算动手修改代码来修正BUG或实现某个新功能，请先创建一个 [ISSUE](https://github.com/steedos/steedos-platform/issues)，这样我们可以确保您的工作没有白费。
