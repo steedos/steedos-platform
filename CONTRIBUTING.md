@@ -83,7 +83,7 @@ You can run the shell bellow on command line to build all of the source code of 
         cd app-builder
         yarn build
         ```
-    - Link builder-community: **You need to modify the path of the app-builder project in creator\.scripts\npm-postinstall.js first**
+    - Link builder-community: **You need to modify the path of the app-builder project in creator\\.scripts\npm-postinstall.js first**
         ```
         yarn postinstall
         ```
