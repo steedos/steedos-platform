@@ -71,9 +71,22 @@ The content of the `setting.json` may like this:
 - Then you can start the service just by run `yarn start`.
 - Use your browser to access `http://127.0.0.1:3100`.
 
+
+
 ### Build Creator
 
 You can run the shell bellow on command line to build all of the source code of '/creator' to the '/server' folder as a NPM package named 'steedos-server'.
+
+- Precondition
+    - Build app-builder
+        ```shell
+        cd app-builder
+        yarn build
+        ```
+    - Link builder-community: **You need to modify the path of the app-builder project in creator\.scripts\npm-postinstall.js first**
+        ```
+        yarn postinstall
+        ```
 
 ```shell
 cd creator/
