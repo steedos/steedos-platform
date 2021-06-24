@@ -55,3 +55,6 @@ CustomLabels:
   workflow_rule_field_trigger_type_options_onAllChanges: 新建时，和每次编辑时
   workflow_rule_field_trigger_type_options_onCreateOnly: 新建时
   workflow_rule_field_trigger_type_options_onCreateOrTriggeringUpdate: 新建时，或编辑数据导致条件成立
+actions:
+  customize:
+    label: 自定义

@@ -314,6 +314,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 		ow.field_map?.forEach (fm) ->
 			object_field = fm.object_field
 			workflow_field = fm.workflow_field
+			if !object_field || !workflow_field
+				throw new Meteor.Error(400, '未找到字段，请检查对象流程映射字段配置')
 			relatedObjectFieldCode = getRelatedObjectFieldCode(object_field)
 			formTableFieldCode = getFormTableFieldCode(workflow_field)
 			objField = object.fields[object_field]
@@ -562,7 +564,7 @@ uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo = (relatedTablesI
 	_.each relatedTablesInfo, (tableItems, relatedObjectName) ->
 		relatedCollection = Creator.getCollection(relatedObjectName, spaceId)
 		_.each tableItems, (item) ->
-			relatedCollection.update(item._table._id, {
+			relatedCollection.direct.update(item._table._id, {
 				$set: {
 					instances: [{
 						_id: insId,

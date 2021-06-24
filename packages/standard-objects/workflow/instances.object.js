@@ -137,6 +137,19 @@ if (Meteor.isServer) {
       return uuflowManager.triggerRecordInstanceQueue(doc._id, doc.record_ids, doc.current_step_name, doc.flow);
     }
   });
+  db.instances.after.remove(function (userId, doc) {
+    let recordIds = doc.record_ids;
+    if (recordIds && recordIds.length == 1) {
+      let recordObjName = recordIds[0].o;
+      let recordId = recordIds[0].ids[0];
+      if (recordObjName && recordId) {
+        let recordObj = Creator.getCollection(recordObjName);
+        if (recordObj) {
+          recordObj.update(recordId, { $unset: { "instances": 1, "instance_state": 1, "locked": 1 } });
+        }
+      }
+    }
+  });
   db.instances._ensureIndex({
     "space": 1
   }, {

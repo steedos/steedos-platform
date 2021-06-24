@@ -46,6 +46,30 @@ fields:
     label: 修改本分部
     help: 
     description: 
+  allowReadFiles:
+    label: 允许查看附件
+    help: 
+    description: 
+  allowCreateFiles:
+    label: 允许创建附件
+    help: 
+    description: 
+  allowEditFiles:
+    label: 允许修改附件
+    help: 
+    description: 
+  allowDeleteFiles:
+    label: 允许删除附件
+    help: 
+    description: 
+  viewAllFiles:
+    label: 查看所有附件
+    help: 
+    description: 
+  modifyAllFiles:
+    label: 修改所有附件
+    help: 
+    description: 
   disabled_list_views:
     label: 禁用列表视图
     help: 
@@ -70,6 +94,8 @@ fields:
     label: 系统
     help: 
     description: 
+groups:
+  files_permissions: 附件权限
 listviews:
   customize:
     label: 自定义
