@@ -77,7 +77,7 @@ The content of the `setting.json` may like this:
 
 You can run the shell bellow on command line to build all of the source code of '/creator' to the '/server' folder as a NPM package named 'steedos-server'.
 
-- Precondition
+- Requirements
     - Build app-builder
         ```shell
         cd app-builder
