@@ -1,6 +1,6 @@
 var objectql = require('@steedos/objectql');
 const clone = require('clone');
-const defaultDatasourceName = 'meteor';
+const defaultDatasourceName = 'default';
 const defaultDatasourcesName = ['default','meteor'];
 var triggerCore = require('./object_triggers.core.js');
 var permissionCore = require('./permission_objects.core.js');
