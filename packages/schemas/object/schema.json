@@ -851,6 +851,30 @@
                     "type": "boolean",
                     "description": "修改本分部"
                 },
+                "allowReadFiles": {
+                    "type": "boolean",
+                    "description": "允许查看附件"
+                },
+                "allowCreateFiles": {
+                    "type": "boolean",
+                    "description": "允许创建附件"
+                },
+                "allowEditFiles": {
+                    "type": "boolean",
+                    "description": "允许修改附件"
+                },
+                "allowDeleteFiles": {
+                    "type": "boolean",
+                    "description": "允许删除附件"
+                },
+                "viewAllFiles": {
+                    "type": "boolean",
+                    "description": "查看所有附件"
+                },
+                "modifyAllFiles": {
+                    "type": "boolean",
+                    "description": "修改所有附件"
+                },
                 "disabled_list_views": {
                     "type": "array",
                     "description": "禁用对象列表视图"

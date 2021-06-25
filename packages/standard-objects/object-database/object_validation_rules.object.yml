@@ -92,3 +92,7 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+actions:
+  customize:
+    label: Customize
+    on: record
