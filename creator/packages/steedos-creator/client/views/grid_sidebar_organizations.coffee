@@ -269,4 +269,5 @@ Template.creator_grid_sidebar_organizations.onCreated ->
 				self.needToRefreshTree.set(new Date())
 
 Template.creator_grid_sidebar_organizations.onDestroyed ->
+	Session.set "organization", null
 	Session.set "grid_sidebar_filters", null
