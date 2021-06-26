@@ -3,6 +3,9 @@ const SteedosFilter = require("./filter");
 const _ = require('underscore');
 const utils = require("./utils");
 const formula = require("./formula");
+// 正则包括encodeURIComponent函数转义的11个特殊符号;/?:@&=+$,#
+// TODO: 目前测试到contains操作符过滤时?\+三个符号会报错且$符号会查出所有数据（在前面加\\先转义下就没问题且能正常搜索到数据）。
+const REG_FOR_ENCORD = /\;|\/|\?|\:|\@|\&|\=|\+|\$|\,|\#/;
 
 let extendUserContext = (userContext, utcOffset) => {
     if (!userContext.now) {
@@ -121,7 +124,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                                     // 如果item正好是regDate格式，则转换为Date类型
                                     item = new Date(item);
                                 }
-                                else if(item.indexOf("#") > -1){
+                                else if(REG_FOR_ENCORD.test(item)){
                                     item = encodeURIComponent(item);
                                 }
                             }
@@ -186,7 +189,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                                     // 如果value正好是regDate格式，则转换为Date类型
                                     value = new Date(value);
                                 }
-                                else if(value.indexOf("#") > -1){
+                                else if(REG_FOR_ENCORD.test(value)){
                                     value = encodeURIComponent(value);
                                 }
                             }
