@@ -1,0 +1,10 @@
+extend: organizations
+fields:
+  dingtalk_id:
+    label: 钉钉部门ID
+    type: text
+    hidden: false
+  dingtalk_space:
+    label: 钉钉工作区
+    type: text
+    hidden: true
