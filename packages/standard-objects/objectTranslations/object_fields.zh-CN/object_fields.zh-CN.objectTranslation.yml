@@ -117,6 +117,10 @@ fields:
     label: 背景颜色
     help: 
     description: 
+  options.$.description:
+    label: 描述
+    help: 
+    description: 
   formula:
     label: 公式
     help: 字段类型为自动编号或公式时，必须填写此字段。

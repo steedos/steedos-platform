@@ -125,6 +125,10 @@ fields:
     label: Color
     help: 
     description: 
+  options.$.description:
+    label: Description
+    help: 
+    description: 
   formula:
     label: Formula
     help: This field must be filled when the field type is 'Autonumber' or 'Formula'

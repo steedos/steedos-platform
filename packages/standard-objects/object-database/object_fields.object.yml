@@ -154,6 +154,10 @@ fields:
     label: Color
     type: text
     required: false
+  options.$.description:
+    label: Description
+    type: text
+    required: false
   formula:
     label: Formula
     type: text
