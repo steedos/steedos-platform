@@ -55,6 +55,10 @@ module.exports = {
             approvalProcesses = objectql.getSourceApprovalProcesses();
         }
 
+        if (filters.object_name){
+            approvalProcesses = _.where(approvalProcesses, {object_name: filters.object_name});
+        }
+
         approvalProcesses = getInternalApprovalProcesses(approvalProcesses, filters);
 
         if(approvalProcesses){
@@ -73,6 +77,10 @@ module.exports = {
             approvalProcesses = objectql.getSourceApprovalProcesses();
         }
 
+        if (filters.object_name){
+            approvalProcesses = _.where(approvalProcesses, {object_name: filters.object_name});
+        }
+
         approvalProcesses = getInternalApprovalProcesses(approvalProcesses, filters);
 
         if(approvalProcesses){
@@ -89,6 +97,10 @@ module.exports = {
             }
         }else{
             approvalProcesses = objectql.getSourceApprovalProcesses();
+        }
+
+        if (filters.object_name){
+            approvalProcesses = _.where(approvalProcesses, {object_name: filters.object_name});
         }
 
         approvalProcesses = getInternalApprovalProcesses(approvalProcesses, filters);
