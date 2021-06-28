@@ -2,6 +2,7 @@ name: object_layouts
 label: Object Layouts
 icon: dashboard_ea
 hidden: false
+version: 2
 fields:
   name:
     type: text
@@ -137,7 +138,6 @@ fields:
     is_wide: true
     depend_on:
       - object_name
-      - related_lists.$.related_field_fullname
   related_lists.$.related_field_fullname:
     type: lookup
     optionsFunction: !!js/function |
@@ -163,11 +163,13 @@ fields:
     multiple: true
     optionsFunction: !!js/function |
       function(values) {
-        if(!this.template){return [];}
-        const formFieldName = this.template.data.name;
-        const foo = formFieldName.split('.');
-        const index = foo[1];
-        const relatedFieldFullname = values["related_lists"][index].related_field_fullname;
+        let relatedFieldFullname = null;
+        const rowValue = _.find(values.related_lists, function(item){
+          return item._id === values._grid_row_id
+        })
+        if(rowValue){
+          relatedFieldFullname = rowValue.related_field_fullname
+        }
         const options = [];
         if(relatedFieldFullname){
           const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
@@ -186,11 +188,13 @@ fields:
     multiple: true
     optionsFunction: !!js/function |
       function(values) {
-        if(!this.template){return [];}
-        const formFieldName = this.template.data.name;
-        const foo = formFieldName.split('.');
-        const index = foo[1];
-        const relatedFieldFullname = values["related_lists"][index].related_field_fullname;
+        let relatedFieldFullname = null;
+        const rowValue = _.find(values.related_lists, function(item){
+          return item._id === values._grid_row_id
+        })
+        if(rowValue){
+          relatedFieldFullname = rowValue.related_field_fullname
+        }
         const options = [];
         if(relatedFieldFullname){
           const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
@@ -216,11 +220,13 @@ fields:
     is_wide: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
-        if(!this.template){return [];}
-        const formFieldName = this.template.data.name;
-        const foo = formFieldName.split('.');
-        const index = foo[1];
-        const relatedFieldFullname = values["related_lists"][index].related_field_fullname;
+        let relatedFieldFullname = null;
+        const rowValue = _.find(values.related_lists, function(item){
+          return item._id === values._grid_row_id
+        })
+        if(rowValue){
+          relatedFieldFullname = rowValue.related_field_fullname
+        }
         const options = [];
         if(relatedFieldFullname){
           const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
@@ -240,6 +246,11 @@ fields:
     label: Visible on
     type: textarea
     rows: 1
+  related_lists.$.page_size:
+    label: Page Size
+    type: number
+    scale: 0
+    defaultValue: 5
 list_views:
   all:
     columns:

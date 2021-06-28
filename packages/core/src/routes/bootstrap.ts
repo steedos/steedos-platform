@@ -347,11 +347,20 @@ export async function getSpaceObjectBootStrap(req, res) {
             objectConfig = Creator.getAllPermissions(spaceId, userId).objects[objectName];
             if (_.isEmpty(objectConfig)) {
                 objectConfig = await getObjectConfig(objectName, spaceId, userSession);
+            }else{
+                const object = getObject(objectName);
+                objectConfig.details = await object.getDetailsInfo();
+                objectConfig.masters = await object.getMastersInfo();
+                objectConfig.lookup_details = await object.getLookupDetailsInfo();
             }
         } else {
             if (userSession.is_space_admin || _object.in_development == '0' && _object.is_enable) {
                 if (_object.datasource == 'meteor') {
                     objectConfig = Creator.getAllPermissions(spaceId, userId).objects[objectName]
+                    const object = getObject(objectName);
+                    objectConfig.details = await object.getDetailsInfo();
+                    objectConfig.masters = await object.getMastersInfo();
+                    objectConfig.lookup_details = await object.getLookupDetailsInfo();
                 } else {
                     objectConfig = await getObjectConfig(objectName, spaceId, userSession);
                 }

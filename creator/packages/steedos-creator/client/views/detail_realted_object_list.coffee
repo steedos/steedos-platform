@@ -29,7 +29,7 @@ Template.detail_realted_object_list.helpers
 				recordsTotalVal[related_object_name] = event.api.getDisplayedRowCount()
 				recordsTotal.set recordsTotal
 	pageSize: ()->
-		return 5;
+		return this.related_list_item_props.page_size || 5;
 	onUpdated: ()->
 		return ()->
 			FlowRouter.reload();
