@@ -70,6 +70,10 @@ fields:
     label: 排序字段
     help: 
     description:
+  related_lists.$.buttons:
+    label: 排序字段
+    help: 
+    description:
   related_lists.$.sort_order:
     label: 排序方式
     help: 
@@ -85,6 +89,10 @@ fields:
     description:
   related_lists.$.visible_on:
     label: 显示条件
+    help: 
+    description:
+  related_lists.$.page_size:
+    label: 每页显示数量
     help: 
     description:
 listviews:
