@@ -3,6 +3,7 @@ label: Data Import Queue
 icon: product_consumed
 enable_files: true
 hidden: true
+version: 2
 fields:
   description:
     label: Description
