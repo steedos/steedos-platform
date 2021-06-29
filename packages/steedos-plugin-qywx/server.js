@@ -13,8 +13,6 @@ server.Fiber(function () {
             server.runMain();
             WebApp.httpServer.setTimeout(60000);
             qywx_sso.init();
-            var push = require('./src/qywx/notifications');
-            push.notify();
         })
     } catch (error) {
        console.error(error.stack)
