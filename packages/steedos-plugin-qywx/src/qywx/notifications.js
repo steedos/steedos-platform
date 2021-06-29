@@ -1,12 +1,13 @@
 let Qiyeweixin = require("./qywx")
-// 网页授权url
-let oauthUrl = Meteor.absoluteUrl('/api/qiyeweixin/mainpage?target=');
 
 module.exports = {
     notify: function () {
-        Push.oldSend = Push.send;
+        // 网页授权url
+        let oauthUrl = Meteor.absoluteUrl('/api/qiyeweixin/mainpage?target=');
+        
+        Push.oldQywxSend = Push.send;
         Push.send = function (options) {
-            Push.oldSend(options);
+            Push.oldQywxSend(options);
             try {
                 // console.log("options:---");
                 if (options.from !== 'workflow')
