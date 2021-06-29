@@ -50,7 +50,7 @@ const caculateAutonumber = async function (objectName, fieldName, formula, space
         filters.push([key, '=', selector[key]]);
     }
     var anData = null;
-    var records = await anColl.find(selector);
+    var records = await anColl.find({ filters });
     if (records && records.length > 0) {
         anData = records[0];
     }
