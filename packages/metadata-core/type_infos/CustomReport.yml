@@ -1,0 +1,12 @@
+metadataName: CustomReport
+defaultDirectory: reports
+tableName: reports
+ext: report
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Report
+nameForMsgsPlural: Custom Report
+deleteSupported: true

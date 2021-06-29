@@ -1,0 +1,11 @@
+metadataName: Router
+defaultDirectory: router
+ext: router
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Router
+nameForMsgsPlural: Custom Routers
+deleteSupported: true

@@ -1,0 +1,12 @@
+metadataName: CustomProfile
+defaultDirectory: profiles
+tableName: permission_set
+ext: profile
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Profile
+nameForMsgsPlural: Custom Profiles
+deleteSupported: true

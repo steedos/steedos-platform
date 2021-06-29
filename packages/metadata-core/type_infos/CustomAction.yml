@@ -1,0 +1,13 @@
+parent: CustomObject
+metadataName: CustomAction
+defaultDirectory: buttons
+tableName: object_actions
+ext: button
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Action
+nameForMsgsPlural: Custom Action
+deleteSupported: true
