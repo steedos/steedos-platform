@@ -52,6 +52,11 @@ module.exports = {
             if(action){
                 actionFieldUpdates.push(action);
             }
+        }else if(filters.name && !filters.name.$ne){
+            let action = objectql.getActionFieldUpdate(filters.name);
+            if(action){
+                actionFieldUpdates.push(action);
+            }
         }else if(filters.object_name){
             actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
             delete filters.object_name;
@@ -92,6 +97,11 @@ module.exports = {
             if(action){
                 actionFieldUpdates.push(action);
             }
+        }else if(filters.name && !filters.name.$ne){
+            let action = objectql.getActionFieldUpdate(filters.name);
+            if(action){
+                actionFieldUpdates.push(action);
+            }
         }else if(filters.object_name){
             actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
             delete filters.object_name;
@@ -129,6 +139,11 @@ module.exports = {
             }
         }else if(filters._id && !filters._id.$ne){
             let action = objectql.getActionFieldUpdate(filters._id);
+            if(action){
+                actionFieldUpdates.push(action);
+            }
+        }else if(filters.name && !filters.name.$ne){
+            let action = objectql.getActionFieldUpdate(filters.name);
             if(action){
                 actionFieldUpdates.push(action);
             }
