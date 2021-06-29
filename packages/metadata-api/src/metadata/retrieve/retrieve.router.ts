@@ -28,9 +28,9 @@ const downloadMetadata = async function (req, res) {
             return res.status(401).send({ status: 'error', message: 'Permission denied' });
         }
 
-        if(!Steedos.hasFeature('metadata_api', spaceId)){
-            return res.status(403).send({ status: 'error', message: 'Please upgrade the platform license to Enterprise Edition' });
-        }
+        // if(!Steedos.hasFeature('metadata_api', spaceId)){
+        //     return res.status(403).send({ status: 'error', message: 'Please upgrade the platform license to Enterprise Edition' });
+        // }
         const yml_base64 = req.body.yml  // 这里给一个steedos_package.yml格式文件的base64
 
         const yml = yaml.safeLoad(Buffer.from(Buffer.from(yml_base64, 'base64').toString('utf8'), 'utf8'));

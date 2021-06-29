@@ -35,9 +35,9 @@ async function doPost(req, res){
         return res.status(401).send({ status: 'error', message: 'Permission denied' });
     }
 
-    if(!Steedos.hasFeature('metadata_api', spaceId)){
-        return res.status(403).send({ status: 'error', message: 'Please upgrade the platform license to Enterprise Edition' });
-    }
+    // if(!Steedos.hasFeature('metadata_api', spaceId)){
+    //     return res.status(403).send({ status: 'error', message: 'Please upgrade the platform license to Enterprise Edition' });
+    // }
 
     var SObjectName = req.params.SObjectName
     var ids = req.body.ids
