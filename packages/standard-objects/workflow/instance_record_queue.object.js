@@ -23,6 +23,18 @@ const getObjectConfig = function(objectApiName){
     },{objectApiName:objectApiName})
 }
 
+const objectInsert = function(objectApiName, data){
+    return objectql.wrapAsync(async function(){
+        return await objectql.getObject(this.objectApiName).insert(this.data)
+    },{objectApiName:objectApiName, data:data})
+}
+
+const objectUpdate = function(objectApiName, id, data){
+    return objectql.wrapAsync(async function(){
+        return await objectql.getObject(this.objectApiName).update(this.id, this.data)
+    },{objectApiName:objectApiName, id:id, data:data})
+}
+
 const getRelateds = function(objectApiName){
     return objectql.wrapAsync(async function(){
         return await objectql.getObject(this.objectApiName).getRelateds()
@@ -611,9 +623,10 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             if (oCollection && record && record[objField]) {
                                 var referSetObj = {};
                                 referSetObj[referObjField] = values[fm.workflow_field];
-                                oCollection.update(record[objField], {
-                                    $set: referSetObj
-                                })
+                                objectUpdate(oField.reference_to, record[objField], referSetObj)
+                                // oCollection.update(record[objField], {
+                                //     $set: referSetObj
+                                // })
                             }
                         }
                     }
@@ -647,9 +660,10 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                                 if (oCollection && record && record[objField]) {
                                     var referSetObj = {};
                                     referSetObj[referObjField] = ins[insField];
-                                    oCollection.update(record[objField], {
-                                        $set: referSetObj
-                                    })
+                                    objectUpdate(oField.reference_to, record[objField], referSetObj)
+                                    // oCollection.update(record[objField], {
+                                    //     $set: referSetObj
+                                    // })
                                 }
                             }
                         }
@@ -801,7 +815,8 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
             tableMap[table_code].push(table_id);
             var oldRelatedRecord = Creator.getCollection(relatedObject.object_name, spaceId).findOne({ [relatedObject.foreign_key]: mainRecordId, "instances._id": insId, _table: relatedObjectValue._table }, { fields: { _id: 1 } })
             if (oldRelatedRecord) {
-                Creator.getCollection(relatedObject.object_name, spaceId).update({ _id: oldRelatedRecord._id }, { $set: relatedObjectValue })
+                objectUpdate(relatedObject.object_name, oldRelatedRecord._id, relatedObjectValue)
+                // Creator.getCollection(relatedObject.object_name, spaceId).update({ _id: oldRelatedRecord._id }, { $set: relatedObjectValue })
             } else {
                 relatedObjectValue[relatedObject.foreign_key] = mainRecordId;
                 relatedObjectValue.space = spaceId;
@@ -818,7 +833,11 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
                     state: instance_state
                 }];
                 relatedObjectValue.instance_state = instance_state;
-                Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, { validate: false, filter: false })
+                if(Creator.Objects[relatedObject.object_name]){
+                    Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, { validate: false, filter: false })
+                }else{
+                    objectInsert(relatedObject.object_name, relatedObjectValue)
+                }
             }
         })
         //清理申请单上被删除子表记录对应的相关表记录
@@ -976,7 +995,8 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 newObj.owner = ins.applicant;
                 newObj.created_by = ins.applicant;
                 newObj.modified_by = ins.applicant;
-                var r = objectCollection.insert(newObj);
+                // var r = objectCollection.insert(newObj);
+                var r = objectInsert(ow.object_name, newObj);
                 if (r) {
                     Creator.getCollection('instances').update(ins._id, {
                         $push: {
