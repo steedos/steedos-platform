@@ -266,18 +266,32 @@ const updateRecord = async function(userId, object_name, new_doc, previous_doc, 
         }
         if ((db_new_value !== null && db_new_value !== void 0) || (db_previous_value !== null && db_previous_value !== void 0)) {
             auditRecordsObject = objectql.getObject('audit_records');
-            doc = {
-            _id: await auditRecordsObject._makeNewID(),
-            space: space_id,
-            field_name: field.label || field.name,
-            previous_value: db_previous_value,
-            new_value: db_new_value,
-            related_to: {
-                o: object_name,
-                ids: [record_id]
+            try {
+              var previous_value = db_previous_value;
+              if(_.isObject(previous_value)){
+                previous_value = JSON.stringify(db_previous_value)
+              }
+              
+              var new_value = db_new_value;
+              if(_.isObject(db_new_value)){
+                new_value = JSON.stringify(db_new_value)
+              }
+
+              doc = {
+              _id: await auditRecordsObject._makeNewID(),
+              space: space_id,
+              field_name: field.label || field.name,
+              previous_value: previous_value,
+              new_value: new_value,
+              related_to: {
+                  o: object_name,
+                  ids: [record_id]
+              }
+              };
+              await auditRecordsObject.insert(doc);
+            } catch (error) {
+              console.error(`error`, error)
             }
-            };
-            await auditRecordsObject.insert(doc);
         }
     };
   };
