@@ -905,13 +905,13 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     instance_state = ins.final_decision;
                 }
                 setObj['instances.$.state'] = setObj.instance_state = instance_state;
-
-                objectCollection.update({
-                    _id: record._id,
-                    'instances._id': insId
-                }, {
-                    $set: setObj
-                })
+                objectUpdate(objectName, {filters: [['_id', '=', record._id],['instances._id', '=', insId]]}, setObj)
+                // objectCollection.update({
+                //     _id: record._id,
+                //     'instances._id': insId
+                // }, {
+                //     $set: setObj
+                // })
 
                 var relatedObjects = getRelateds(ow.object_name);
                 var relatedObjectsValue = syncValues.relatedObjectsValue;
@@ -938,15 +938,20 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 runQuoted(objectName, record._id);
             } catch (error) {
                 console.error(error.stack);
-                objectCollection.update({
-                    _id: record._id,
-                    'instances._id': insId
-                }, {
-                    $set: {
-                        'instances.$.state': 'pending',
-                        'instance_state': 'pending'
-                    }
+                
+                objectUpdate(objectName, {filters: [['_id', '=', record._id],['instances._id', '=', insId]]}, {
+                    'instances.$.state': 'pending',
+                    'instance_state': 'pending'
                 })
+                // objectCollection.update({
+                //     _id: record._id,
+                //     'instances._id': insId
+                // }, {
+                //     $set: {
+                //         'instances.$.state': 'pending',
+                //         'instance_state': 'pending'
+                //     }
+                // })
 
                 Creator.getCollection('cms_files').remove({
                     'parent': {

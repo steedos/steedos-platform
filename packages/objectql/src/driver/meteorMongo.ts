@@ -345,6 +345,9 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
                         let selector = { _id: id };
+                        if (_.isObject(id)) {
+                            selector = this.getMongoFilters(id['filters']);
+                        }
                         if (!_.isEmpty(mongoFilters)) {
                             selector = Object.assign(mongoFilters, selector);
                         }

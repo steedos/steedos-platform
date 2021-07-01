@@ -255,12 +255,15 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
-    async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
+    async findOne(tableName: string, id: SteedosIDType | SteedosQueryOptions, query: SteedosQueryOptions) {
         await this.connect();
         let collection = this.collection(tableName);
         let mongoOptions = this.getMongoOptions(query);
         let mongoFilters = this.getMongoFilters(query.filters);
-        let selector = { _id: id };
+        let selector: any = { _id: id };
+        if (_.isObject(id)) {
+            selector = this.getMongoFilters(id['filters']);
+        }
         if (!_.isEmpty(mongoFilters)) {
             selector = Object.assign(mongoFilters, selector);
         }
