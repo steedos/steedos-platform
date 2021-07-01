@@ -11,11 +11,13 @@ Template.detail_realted_object_list.helpers
 #		related_object_name = this.related_object_name
 #		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
 		related_list_item_props = this.related_list_item_props
+		related_field_name = related_list_item_props.related_field_name
 		columnFields = [];
 		_.each(related_list_item_props.columns, (fieldName)->
 			if _.isObject(fieldName)
-				columnFields.push(Object.assign({}, fieldName, {fieldName: fieldName.field}))
-			else
+				if fieldName.field != related_field_name
+					columnFields.push(Object.assign({}, fieldName, {fieldName: fieldName.field}))
+			else if related_field_name != fieldName
 				columnFields.push({fieldName: fieldName})
 		)
 		return columnFields;

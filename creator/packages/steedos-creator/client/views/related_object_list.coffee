@@ -80,14 +80,16 @@ Template.related_object_list.helpers
 #		console.log("list_data", data)
 		return data
 	name: ()->
-		return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name") + '_' + getRelatedFieldName
+		return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name") + '_' + getRelatedFieldName()
 	columnFields: ()->
 		related_list_item_props = getRelateObj()
 		columnFields = [];
+		related_field_name = related_list_item_props.related_field_name
 		_.each(related_list_item_props?.columns, (fieldName)->
 			if _.isObject(fieldName)
-				columnFields.push(Object.assign({}, fieldName, {fieldName: fieldName.field}))
-			else
+				if fieldName.field != related_field_name
+					columnFields.push(Object.assign({}, fieldName, {fieldName: fieldName.field}))
+			else if related_field_name != fieldName
 				columnFields.push({fieldName: fieldName})
 		)
 		return columnFields;
