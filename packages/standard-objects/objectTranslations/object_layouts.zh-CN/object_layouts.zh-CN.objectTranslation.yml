@@ -71,7 +71,7 @@ fields:
     help: 
     description:
   related_lists.$.buttons:
-    label: 排序字段
+    label: 操作按钮
     help: 
     description:
   related_lists.$.sort_order:
