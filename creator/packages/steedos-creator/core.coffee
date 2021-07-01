@@ -90,8 +90,11 @@ Creator.getSwitchListUrl = (object_name, app_id, list_view_id) ->
 	else
 		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/list/switch")
 
-Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_name) ->
-	return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
+Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_name, related_field_name) ->
+	if related_field_name
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid?related_field_name=" + related_field_name)
+	else
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
 
 Creator.getObjectLookupFieldOptions = (object_name, is_deep, is_skip_hide, is_related)->
 	_options = []

@@ -52,7 +52,7 @@ ObjectGrid.getFilters = (object_name, list_view_id, is_related, related_object_n
 	filters = _.compact([].concat(defaultFilters).concat(userFilters))
 	return filters
 
-GridExport.excel = (object_name, list_view_id, is_related, related_object_name, record_id, mainRecordName)->
+GridExport.excel = (object_name, list_view_id, is_related, related_object_name, record_id, mainRecordName, relatedList)->
 	grid = window.gridRef.current;
 	select = [];
 	_.each(grid.props.columnDefs, (columnDef)->
@@ -65,7 +65,7 @@ GridExport.excel = (object_name, list_view_id, is_related, related_object_name, 
 		sort.push([sortField.colId, sortField.sort])
 	);
 
-	defaultFilters = Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id)
+	defaultFilters = Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id, relatedList)
 	userFilters = filterModelToOdataFilters(grid.api.getFilterModel());
 	filters = _.compact([].concat(defaultFilters).concat(userFilters))
 	$filter = Filters.formatFiltersToODataQuery(filters)

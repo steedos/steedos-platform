@@ -58,6 +58,10 @@ fields:
     label: 相关子表
     help: 
     description: 
+  related_lists.$.label:
+    label: 显示标题
+    help: 默认为对象名称
+    description:
   related_lists.$.related_field_fullname:
     label: 子表名称
     help: 

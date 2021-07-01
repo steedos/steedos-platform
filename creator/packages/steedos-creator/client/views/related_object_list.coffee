@@ -1,5 +1,17 @@
 getRelatedListTemplateId = ()->
 	return "steedos-list-related-object-list"
+getRelatedFieldName = ()->
+	return FlowRouter.current().queryParams.related_field_name;
+getRelateObj = ()->
+	related_object_name = Session.get("related_object_name")
+	related_field_name = FlowRouter.current().queryParams.related_field_name
+	relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+	relatedObj = _.find relatedList, (rl) ->
+		if related_field_name
+			return rl.object_name == related_object_name && rl.related_field_name == related_field_name
+		else
+			return rl.object_name == related_object_name
+	return relatedObj
 
 Template.related_object_list.helpers
 	related_object_name: ()->
@@ -7,9 +19,7 @@ Template.related_object_list.helpers
 
 	related_object_label: ()->
 		related_object_name = Session.get("related_object_name")
-		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
-		relatedObj = _.find relatedList, (rl) ->
-			return rl.object_name == related_object_name
+		relatedObj = getRelateObj()
 		return relatedObj?.label || Creator.getObject(related_object_name).label
 
 	is_file: ()->
@@ -35,8 +45,7 @@ Template.related_object_list.helpers
 		if related_object_name == object_name
 			# 说明是进入了已经新建成功的详细界面，此时会因为Session再进入该函数，不再需要处理
 			return false
-		relatedList = Creator.getRelatedList(object_name, Session.get("record_id"))
-		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
+		related_list_item_props = getRelateObj()
 		return Creator.getRecordRelatedListPermissions(object_name, related_list_item_props).allowCreate
 
 	isUnlocked: ()->
@@ -55,9 +64,8 @@ Template.related_object_list.helpers
 	
 	list_data: () ->
 		object_name = Session.get "object_name"
-		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 		related_object_name = Session.get "related_object_name"
-		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
+		related_list_item_props = getRelateObj()
 		data = {
 			id: getRelatedListTemplateId(), 
 			related_object_name: related_object_name, 
@@ -72,15 +80,15 @@ Template.related_object_list.helpers
 #		console.log("list_data", data)
 		return data
 	name: ()->
-		return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name")
+		return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name") + '_' + getRelatedFieldName
 	columnFields: ()->
-		object_name = Session.get "object_name"
-		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
-		related_object_name = Session.get "related_object_name"
-		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
+		related_list_item_props = getRelateObj()
 		columnFields = [];
 		_.each(related_list_item_props?.columns, (fieldName)->
-			columnFields.push({fieldName: fieldName})
+			if _.isObject(fieldName)
+				columnFields.push(Object.assign({}, fieldName, {fieldName: fieldName.field}))
+			else
+				columnFields.push({fieldName: fieldName})
 		)
 		return columnFields;
 	filters: ()->
@@ -91,7 +99,8 @@ Template.related_object_list.helpers
 		list_view_id = Creator.getListView(related_object_name, "all")?._id
 		if object_name == 'objects'
 			record_id = Template.instance()?.record.get().name;
-		return Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id)
+		related_list = getRelateObj()
+		return Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id, related_list)
 	onModelUpdated: ()->
 		recordsTotal = Template.instance().recordsTotal
 		return (event)->
@@ -164,7 +173,8 @@ Template.related_object_list.events
 		related_object_name = Session.get "related_object_name"
 		is_related = true;
 		list_view_id = Creator.getListView(related_object_name, "all")?._id
-		GridExport.excel(object_name, list_view_id, is_related, related_object_name, record_id, $(".related-main-record-name")[0].dataset.name)
+		related_list = getRelateObj()
+		GridExport.excel(object_name, list_view_id, is_related, related_object_name, record_id, $(".related-main-record-name")[0].dataset.name, related_list)
 	'change .input-file-upload': (event, template)->
 		Creator.relatedObjectFileUploadHandler event, ()->
 			if Steedos.isMobile()

@@ -342,9 +342,13 @@ Template.creator_view.helpers
 	related_list_count: (obj)->
 		if obj
 			object_name = obj.object_name
+			related_field_name = obj.related_field_name
 			recordsTotal = Template.instance().recordsTotal.get()
 			if !_.isEmpty(recordsTotal) and object_name
-				return recordsTotal[object_name]
+				if related_field_name
+					return recordsTotal[object_name + '/' + related_field_name]
+				else
+					return recordsTotal[object_name]
 
 	related_selector: ()->
 		object_name = this.object_name
@@ -452,7 +456,7 @@ Template.creator_view.helpers
 		record_id = Session.get "record_id"
 		app_id = Session.get "app_id"
 		related_object_name = this.object_name
-		return Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name)
+		return Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name, this.related_field_name)
 
 	cell_data: (key)->
 		record = Creator.getObjectRecord()

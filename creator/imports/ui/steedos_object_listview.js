@@ -31,6 +31,9 @@ Template.steedos_object_listview.helpers({
 	},
 	checkboxSelection: function(){
 		return this.checkboxSelection;
+	},
+	columnFields: function(){
+		return this.columnFields;
 	}
 })
 
