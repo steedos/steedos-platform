@@ -42,7 +42,9 @@ module.exports = {
 			"@steedos/word-template",
 			"@steedos/plugin-qywx",
 			"@steedos/metadata-api",
-			"@steedos/plugin-dingtalk"],
+			"@steedos/plugin-dingtalk",
+			"@steedos/data-import"
+		],
 		plugins: []
 	},
 
