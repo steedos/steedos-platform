@@ -77,6 +77,23 @@ fields:
     label: 错误信息
     help: 
     description: 
+  fire_workflows:
+    label: 导入后触发工作流规则
+    help: 
+    description: 
+  operation:
+    label: 导入操作
+    options:
+  field_mappings:
+    label: 字段映射
+  field_mappings.$.header:
+    label: 表头
+  field_mappings.$.api_name:
+    label: 导入对象的字段
+  field_mappings.$.matched_by:
+    label: 关联对象的key
+  field_mappings.$.save_key_while_fail:
+    label: 关联失败时保存key
 listviews:
   all:
     label: 全部

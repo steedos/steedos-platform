@@ -3,6 +3,8 @@ const core = require('@steedos/core');
 const validator = require("validator");
 const objectql = require('@steedos/objectql');
 
+const password = require('./util/password')
+
 db.space_users = core.newCollection('space_users');
 
 db.space_users._simpleSchema = new SimpleSchema;
@@ -185,7 +187,6 @@ Meteor.startup(function () {
             }else{
                 doc.profile = 'user'
             }
-
             if(doc.user){
                 doc.owner = doc.user
                 let userDoc = db.users.findOne({_id: doc.user});
@@ -258,6 +259,12 @@ Meteor.startup(function () {
                         if (doc.username) {
                             options.username = doc.username;
                         }
+                        
+                        if(doc.password){
+                            password.parsePassword(doc.password, options);  
+                            delete doc.password;                         
+                        }
+
                         doc.user = db.users.insert(options);
                     }
                 }
@@ -474,6 +481,13 @@ Meteor.startup(function () {
             newEmail = modifier.$set.email;
             if (newEmail && newEmail !== doc.email) {
                 modifier.$set.email_verified = false;
+            }
+
+            if(doc.password){
+                let updateObj = {}
+                password.parsePassword(doc.password, updateObj);  
+                delete doc.password;                         
+                db.users.update({_id: doc.user}, {$set:updateObj});
             }
         });
         db.space_users.after.update(function (userId, doc, fieldNames, modifier, options) {
