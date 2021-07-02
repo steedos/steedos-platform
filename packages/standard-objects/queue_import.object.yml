@@ -151,7 +151,7 @@ fields:
                 return []
               }
             }
-    required: false
+    required: true
     name: external_id_name
     filterable: true
   success_count:
