@@ -1,6 +1,8 @@
 import { getAllPackages, uncompressPackages } from '@steedos/metadata-core';
 import * as _ from 'underscore';
+const globby = require("globby");
 // import * as path from 'path';
+const path = require("path");
 import { getSteedosSchema } from '@steedos/objectql';
 
 export async function loadPackages() {
@@ -15,9 +17,17 @@ export async function loadPackages() {
     let broker = schema.broker;
     if (broker) {
         const packages = await getAllPackages(process.cwd());
-        _.each(packages, function (filePath: string) {
-            // console.log('filePath: ', filePath)
-            broker.loadServices(filePath, "package.service.js");
-        })
+        for await (const packagePath of packages) {
+            const filePatten = [
+                path.join(packagePath, "**", "package.service.js")
+            ]
+            const matchedPaths:[string] = globby.sync(filePatten);
+            for await (const serviceFilePath of matchedPaths) {
+                const service = broker.loadService(serviceFilePath);
+                if (!broker.started) { //如果broker未启动则手动启动service
+                    broker._restartService(service)
+                }
+            }
+        }
     }
 }
