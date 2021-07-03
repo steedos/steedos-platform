@@ -5208,6 +5208,14 @@
     uglify-js "^3.6.0"
     underscore "1.5.2"
 
+"@steedos/data-import@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.nlark.com/@steedos/data-import/download/@steedos/data-import-2.0.3.tgz#1ff8e615a41cbc265c588cb03e9ff0c24fb5f1b4"
+  integrity sha1-H/jmFaQcvCZcWIywPp/wwk+18bQ=
+  dependencies:
+    dotenv-flow "^3.1.0"
+    node-xlsx "^0.16.1"
+
 "@steedos/filters@^1.22.2", "@steedos/filters@^1.23.20", "@steedos/filters@^1.23.23":
   version "1.23.23"
   resolved "https://registry.npm.taobao.org/@steedos/filters/download/@steedos/filters-1.23.23.tgz#ab6b72cd28e8cdba9476719c11c77f571b3e7ff9"
@@ -5267,13 +5275,13 @@
     node-fetch "^2.6.1"
     underscore "^1.11.0"
 
-"@steedos/metadata-api@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/@steedos/metadata-api/download/@steedos/metadata-api-2.0.0.tgz#be05053320b23f937be52f591e95e2963db5607a"
-  integrity sha1-vgUFMyCyP5N75S9ZHpXilj21YHo=
+"@steedos/metadata-api@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.nlark.com/@steedos/metadata-api/download/@steedos/metadata-api-2.0.3.tgz#98faefafab7ea209c934f631240d0efb8a9b5605"
+  integrity sha1-mPrvr6t+ognJNPYxJA0O+4qbVgU=
   dependencies:
     "@salesforce/dev-config" "^2.0.0"
-    "@steedos/metadata-core" "^2.0.0"
+    "@steedos/metadata-core" "^2.0.3"
     chalk "^4.1.0"
     compressing "^1.5.1"
     dotenv-flow "^3.1.0"
@@ -5301,10 +5309,10 @@
     js-yaml "^3.14.0"
     underscore "^1.11.0"
 
-"@steedos/metadata-core@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/@steedos/metadata-core/download/@steedos/metadata-core-2.0.0.tgz#8fdc1e2ee0ff008b211b9b22670216e48a2f5f10"
-  integrity sha1-j9weLuD/AIshG5siZwIW5IovXxA=
+"@steedos/metadata-core@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.nlark.com/@steedos/metadata-core/download/@steedos/metadata-core-2.0.3.tgz#da086aa0a255c1ec06e0361120e92a8b9c816459"
+  integrity sha1-2ghqoKJVwewG4DYRIOkqi5yBZFk=
   dependencies:
     "@steedos/client" "^2.0.0"
     archiver "^5.1.0"
@@ -5525,14 +5533,14 @@
     redux "^4.0.4"
     redux-thunk "^2.3.0"
 
-"@steedos/word-template@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/@steedos/word-template/download/@steedos/word-template-2.0.0.tgz#426e670b9cd98c079bedcbb31939c5a34c7d0196"
-  integrity sha1-Qm5nC5zZjAeb7cuzGTnFo0x9AZY=
+"@steedos/word-template@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.nlark.com/@steedos/word-template/download/@steedos/word-template-2.0.3.tgz#d5a6c2aa4dff63c7ab63e4eb411bd77088f5c799"
+  integrity sha1-1abCqk3/Y8erY+TrQRvXcIj1x5k=
   dependencies:
     docxtemplater "^3.19.7"
     dotenv-flow "^3.2.0"
-    jszip "^2.6.1"
+    jszip "^3.6.0"
 
 "@storybook/addon-actions@^5.3.0-alpha.22":
   version "5.3.21"
@@ -10635,6 +10643,15 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
+cfb@^1.1.4:
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/cfb/download/cfb-1.2.0.tgz#6a4d0872b525ed60349e1ef51fb4b0bf73eca9a8"
+  integrity sha1-ak0IcrUl7WA0nh71H7Swv3Psqag=
+  dependencies:
+    adler-32 "~1.2.0"
+    crc-32 "~1.2.0"
+    printj "~1.1.2"
+
 cfb@~1.0.7:
   version "1.0.8"
   resolved "https://registry.npm.taobao.org/cfb/download/cfb-1.0.8.tgz#77f213493d697d754fd9c0f5511eab5ad72d02cf"
@@ -11244,6 +11261,14 @@ codepage@~1.13.0:
   version "1.13.1"
   resolved "https://registry.npm.taobao.org/codepage/download/codepage-1.13.1.tgz#4f19dbbe3ebc2909dc8ebfc47ea26d838715e3f8"
   integrity sha1-Txnbvj68KQncjr/EfqJtg4cV4/g=
+  dependencies:
+    commander "~2.14.1"
+    exit-on-epipe "~1.0.1"
+
+codepage@~1.14.0:
+  version "1.14.0"
+  resolved "https://registry.npm.taobao.org/codepage/download/codepage-1.14.0.tgz#8cbe25481323559d7d307571b0fff91e7a1d2f99"
+  integrity sha1-jL4lSBMjVZ19MHVxsP/5HnodL5k=
   dependencies:
     commander "~2.14.1"
     exit-on-epipe "~1.0.1"
@@ -14957,6 +14982,11 @@ fecha@~4.2.0:
   version "4.2.0"
   resolved "https://registry.npm.taobao.org/fecha/download/fecha-4.2.0.tgz#3ffb6395453e3f3efff850404f0a59b6747f5f41"
   integrity sha1-P/tjlUU+Pz7/+FBATwpZtnR/X0E=
+
+fflate@^0.3.8:
+  version "0.3.11"
+  resolved "https://registry.nlark.com/fflate/download/fflate-0.3.11.tgz#2c440d7180fdeb819e64898d8858af327b042a5d"
+  integrity sha1-LEQNcYD964GeZImNiFivMnsEKl0=
 
 fibers@4.0.3, fibers@^4.0.3:
   version "4.0.3"
@@ -19721,17 +19751,20 @@ jszip@2.5.0:
   dependencies:
     pako "~0.2.5"
 
-jszip@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/jszip/-/jszip-2.6.1.tgz#b88f3a7b2e67a2a048152982c7a3756d9c4828f0"
-  integrity sha1-uI86ey5noqBIFSmCx6N1bZxIKPA=
-  dependencies:
-    pako "~1.0.2"
-
 jszip@^3.1.5:
   version "3.5.0"
   resolved "https://registry.npm.taobao.org/jszip/download/jszip-3.5.0.tgz#b4fd1f368245346658e781fec9675802489e15f6"
   integrity sha1-tP0fNoJFNGZY54H+yWdYAkieFfY=
+  dependencies:
+    lie "~3.3.0"
+    pako "~1.0.2"
+    readable-stream "~2.3.6"
+    set-immediate-shim "~1.0.1"
+
+jszip@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.nlark.com/jszip/download/jszip-3.6.0.tgz#839b72812e3f97819cc13ac4134ffced95dd6af9"
+  integrity sha1-g5tygS4/l4GcwTrEE0/87ZXdavk=
   dependencies:
     lie "~3.3.0"
     pako "~1.0.2"
@@ -22747,6 +22780,15 @@ node-xlsx@^0.12.0:
   dependencies:
     buffer-from "^1.1.0"
     xlsx "^0.12.4"
+
+node-xlsx@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.npm.taobao.org/node-xlsx/download/node-xlsx-0.16.1.tgz#42f4a92a8d2864780b3008dcf68a7eadfec4d8a6"
+  integrity sha1-QvSpKo0oZHgLMAjc9op+rf7E2KY=
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    buffer-from "^1.1.1"
+    xlsx "^0.16.9"
 
 node-zip@1.x:
   version "1.1.1"
@@ -29125,6 +29167,13 @@ ssf@~0.10.2:
   dependencies:
     frac "~1.1.2"
 
+ssf@~0.11.2:
+  version "0.11.2"
+  resolved "https://registry.npm.taobao.org/ssf/download/ssf-0.11.2.tgz#0b99698b237548d088fc43cdf2b70c1a7512c06c"
+  integrity sha1-C5lpiyN1SNCI/EPN8rcMGnUSwGw=
+  dependencies:
+    frac "~1.1.2"
+
 sshpk@^1.7.0:
   version "1.16.1"
   resolved "https://registry.npm.taobao.org/sshpk/download/sshpk-1.16.1.tgz#fb661c0bef29b39db40769ee39fa70093d6f6877"
@@ -32253,10 +32302,20 @@ with-dnd-context@^1.0.4:
     react-dnd "^7.4.5"
     react-dnd-html5-backend "^7.4.4"
 
+wmf@~1.0.1:
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/wmf/download/wmf-1.0.2.tgz#7d19d621071a08c2bdc6b7e688a9c435298cc2da"
+  integrity sha1-fRnWIQcaCMK9xrfmiKnENSmMwto=
+
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"
   resolved "https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
   integrity sha1-YQY29rH3A4kb00dxzLF/uTtHB5w=
+
+word@~0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npm.taobao.org/word/download/word-0.3.0.tgz#8542157e4f8e849f4a363a288992d47612db9961"
+  integrity sha1-hUIVfk+OhJ9KNjooiZLUdhLbmWE=
 
 wordwrap@0.0.2:
   version "0.0.2"
@@ -32610,6 +32669,22 @@ xlsx@^0.12.4:
     crc-32 "~1.2.0"
     exit-on-epipe "~1.0.1"
     ssf "~0.10.2"
+
+xlsx@^0.16.9:
+  version "0.16.9"
+  resolved "https://registry.nlark.com/xlsx/download/xlsx-0.16.9.tgz#dacd5bb46bda6dd3743940c9c3dc1e2171826256"
+  integrity sha1-2s1btGvabdN0OUDJw9weIXGCYlY=
+  dependencies:
+    adler-32 "~1.2.0"
+    cfb "^1.1.4"
+    codepage "~1.14.0"
+    commander "~2.17.1"
+    crc-32 "~1.2.0"
+    exit-on-epipe "~1.0.1"
+    fflate "^0.3.8"
+    ssf "~0.11.2"
+    wmf "~1.0.1"
+    word "~0.3.0"
 
 xml-crypto@^0.10.1, xml-crypto@~0.10.1:
   version "0.10.1"
