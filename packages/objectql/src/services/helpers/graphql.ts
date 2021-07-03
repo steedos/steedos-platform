@@ -306,9 +306,8 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
             let userSession = ctx.meta.user;
             let steedosSchema = getSteedosSchema();
             let obj = steedosSchema.getObject(objectName);
-            let objConfig = await obj.toConfig();
             let doc = await obj.findOne(_id);
-            return await translateToDisplay(objectName, objConfig.fields, doc, userSession);
+            return await translateToDisplay(objectName, doc, userSession);
         }
     }
 
@@ -352,11 +351,12 @@ function getTranslatedFieldConfig(translatedObject: any, name: string) {
     return translatedObject.fields[name.replace(/__label$/, "")];
 }
 
-async function translateToDisplay(objectName, fields, doc, userSession: any) {
+async function translateToDisplay(objectName, doc, userSession: any) {
     const lng = getUserLocale(userSession);
     let steedosSchema = getSteedosSchema();
     let object = steedosSchema.getObject(objectName);
     let objConfig = await object.toConfig();
+    let fields = objConfig.fields
     let _object = clone(objConfig);
     translationObject(lng, _object.name, _object);
     let displayObj = { _id: doc._id };
