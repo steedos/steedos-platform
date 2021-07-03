@@ -366,7 +366,8 @@ export class SteedosMongoDriver implements SteedosDriver {
         } else {
             selector = { _id: id };
         }
-        await collection.deleteOne(selector);
+        const result = await collection.deleteOne(selector);
+        return result?.deletedCount;
     }
 
     async directFind(tableName: string, query: SteedosQueryOptions) {
