@@ -187,6 +187,10 @@ class ObjectServiceDispatcher {
         return await this.callAction(`createDefaulRecordView`, {userSession});
     }
 
+    async getDefaulRecordView(userSession){
+        return await this.callAction(`getDefaulRecordView`, {userSession});
+    }
+
     async getRelateds(){
         return await this.callAction(`getRelateds`)
     }

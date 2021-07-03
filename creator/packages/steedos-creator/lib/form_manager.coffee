@@ -29,7 +29,7 @@ FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related
 #		if main_record[field.name]
 #			defaultValue[field.name] = main_record[field.name]
 
-	defaultValue = FormManager.getInitialValues(related_object_name)
+	defaultValue = {}
 
 	if relatedKey
 		if main_object_name == "objects"
@@ -45,15 +45,15 @@ FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related
 				defaultValue[relatedKey] = {o: main_object_name, ids: [main_record_id]}
 	if !_.has(defaultValue, "company_id") && main_record?.company_id
 		defaultValue['company_id'] = main_record.company_id
-
+	defaultValue = Object.assign({}, defaultValue, FormManager.getInitialValues(related_object_name, defaultValue))
 	return defaultValue;
 
 
-FormManager.getInitialValues = (object_name)->
+FormManager.getInitialValues = (object_name, defaultValue)->
 	object = Creator.getObject(object_name);
 	objectFormInitialValuesFun = object?.form?.initialValues
 	if _.isFunction(objectFormInitialValuesFun)
-		return objectFormInitialValuesFun.apply({})
+		return objectFormInitialValuesFun.apply({doc: defaultValue || {} })
 	else
 		return {}
 

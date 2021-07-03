@@ -960,12 +960,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return objectConfig;
     }
 
-    async createDefaulRecordView(userSession){
-        const name = 'default';
-        const label = 'Default';
+    async getDefaulRecordView(userSession){
         const object_name = this.name;
         const type = 'record';
-        const profiles = ['user'];
         const buttons = null;
         const fields = []; 
         const related_lists = [];
@@ -977,7 +974,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             layoutField.is_readonly = field.readonly;
             layoutField.is_required = field.required;
             layoutField.group = field.group;
-            layoutField.visible_on = `${!field.hidden}`;
+            // layoutField.visible_on = `${!field.hidden}`;
             fields.push(layoutField);
         });
 
@@ -989,11 +986,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
         //     }
         // }
 
+        return {
+            object_name, type, buttons, fields, related_lists,
+            space: userSession.spaceId
+        }
+    }
+
+    async createDefaulRecordView(userSession){
+        const name = 'default';
+        const label = 'Default';
+        const profiles = ['user'];
         try {
-            return await getObject('object_layouts').insert({
-                name, label, object_name, type, profiles, buttons, fields, related_lists,
-                space: userSession.spaceId
-            }, userSession)
+            let defaultRecordView = await this.getDefaulRecordView(userSession);
+            return await getObject('object_layouts').insert(Object.assign({},defaultRecordView, {name, label, profiles}), userSession)
         } catch (error) {
             return {error: error.message}
         }

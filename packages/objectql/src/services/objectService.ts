@@ -156,6 +156,11 @@ function getObjectServiceMethodsSchema() {
                 return await this.object.createDefaulRecordView(userSession);
             }
         },
+        getDefaulRecordView: {
+            async handler(userSession) {
+                return await this.object.getDefaulRecordView(userSession);
+            }
+        },
         getRelateds: {
             async handler() {
                 return await this.object.getRelateds();
@@ -475,6 +480,19 @@ function getObjectServiceActionsSchema() {
                     throw new Error('no permission.')
                 }
                 return await this.createDefaulRecordView(userSession);
+            }
+        },
+        getDefaulRecordView: {
+            rest: {
+                method: "GET",
+                path: "/uiSchemaTemplate"
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                if(!userSession.is_space_admin){
+                    throw new Error('no permission.')
+                }
+                return await this.getDefaulRecordView(userSession);
             }
         },
         getRelateds: {
