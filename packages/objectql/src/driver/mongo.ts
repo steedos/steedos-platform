@@ -371,7 +371,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async directFind(tableName: string, query: SteedosQueryOptions) {
-        return this.directFind(tableName, query)
+        return this.find(tableName, query)
     }
 
     async directInsert(tableName: string, data: Dictionary<any>) {

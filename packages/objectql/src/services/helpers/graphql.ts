@@ -125,7 +125,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
 
     // _display
     let _display_type_name = `${DISPLAY_PREFIX}_${objectName}`;
-    type += `${DISPLAY_PREFIX}: ${_display_type_name} `;
+    type += `${DISPLAY_PREFIX}(fields: [String]): ${_display_type_name} `;
     // resolvers[objectName][DISPLAY_PREFIX] = async function (parent, args, context, info) {
     //     let userSession = context.ctx.meta.user;
     //     return await translateToDisplay(objectName, fields, parent, userSession);
@@ -302,12 +302,17 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
     actions[`${GRAPHQL_ACTION_PREFIX}${DISPLAY_PREFIX}`] = {
         handler: async function (ctx) {
             let params = ctx.params;
-            let { _id, objectName } = params;
+            let { _id, objectName, fields } = params;
             let userSession = ctx.meta.user;
             let steedosSchema = getSteedosSchema();
             let obj = steedosSchema.getObject(objectName);
-            let doc = await obj.findOne(_id);
-            return await translateToDisplay(objectName, doc, userSession);
+            let selector = { filters: [['_id', '=', _id]] };
+            if (fields && fields.length > 0) {
+                (selector as any).fields = fields;
+            }
+            let doc = (await obj.directFind(selector))[0];
+            let result = await translateToDisplay(objectName, doc, userSession);
+            return result;
         }
     }
 
@@ -435,10 +440,10 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     let refObj = steedosSchema.getObject(refTo);
                     let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
-                        let refRecords = await refObj.find({ filters: [`_id`, 'in', refValue] });
+                        let refRecords = await refObj.directFind({ filters: [`_id`, 'in', refValue] });
                         lookupLabel = _.pluck(refRecords, nameFieldKey).join(',');
                     } else {
-                        let refRecord = (await refObj.find({ filters: [`_id`, '=', refValue] }))[0];
+                        let refRecord = (await refObj.directFind({ filters: [`_id`, '=', refValue] }))[0];
                         if (refRecord) {
                             lookupLabel = refRecord[nameFieldKey];
                         }
@@ -452,10 +457,10 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     let refObj = steedosSchema.getObject(refTo);
                     let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
-                        let refRecords = await refObj.find({ filters: [`_id`, 'in', refValue] });
+                        let refRecords = await refObj.directFind({ filters: [`_id`, 'in', refValue] });
                         masterDetailLabel = _.pluck(refRecords, nameFieldKey).join(',');
                     } else {
-                        let refRecord = (await refObj.find({ filters: [`_id`, '=', refValue] }))[0];
+                        let refRecord = (await refObj.directFind({ filters: [`_id`, '=', refValue] }))[0];
                         if (refRecord) {
                             masterDetailLabel = refRecord[nameFieldKey];
                         }
