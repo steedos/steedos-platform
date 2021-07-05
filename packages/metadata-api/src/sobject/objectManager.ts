@@ -18,6 +18,7 @@ export function getLookupFields(mainObjectName) {
                     var item = {
                         fieldName:fieldName,
                         collectionName: objectField.reference_to,
+                        reference_to_field: objectField.reference_to_field ? objectField.reference_to_field : "_id"
                     }
                     res.push(item);
                 }
@@ -41,6 +42,7 @@ export function getMasterDetailObjects(mainObjectName) {
                     var item = {
                         fieldName:fieldName,
                         collectionName: objectName,
+                        reference_to_field: objectField.reference_to_field ? objectField.reference_to_field : "_id"
                     }
                     res.push(item);
                 }
@@ -75,10 +77,10 @@ export function isLookup(mainObjectName, relCollectionName, relationName){
     var objectField = objectFields[relationName];
     if(objectField){
         if(objectField.type == 'lookup' && objectField.reference_to == relCollectionName){
-            return true;
+            return objectField.reference_to_field;
         }
     }
-    return false;
+    return;
 }
 
 export function isMasterDetail(mainObjectName, relCollectionName, relationName){
@@ -87,11 +89,11 @@ export function isMasterDetail(mainObjectName, relCollectionName, relationName){
     var objectField = objectFields[relationName];
     if(objectField){
         if(objectField.type == 'master_detail' && objectField.reference_to == mainObjectName){
-            return true;
+            return objectField.reference_to_field;
         }
     }
 
-    return false;
+    return;
 }
 
 export function parseFieldType(objectName, record){

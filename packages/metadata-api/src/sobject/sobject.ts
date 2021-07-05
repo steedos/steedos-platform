@@ -98,9 +98,10 @@ async function fillMasterDetailRecord(tools, masterDetailCollectionNames, object
         const item = masterDetailCollectionNames[i];
         const fieldName = item['fieldName']
         const collectionName = item['collectionName']
+        const reference_to_field = item['reference_to_field']
         
         var filter = {}
-        filter[fieldName] = object._id;
+        filter[fieldName] = object[reference_to_field];
         var masterDetailRecords = await tools.dbManager.find(collectionName, filter);
 
         var subNames = await getSubNames(tools, collectionName);
@@ -130,9 +131,10 @@ async function fillLookupRecord(tools, lookupCollectionNames, object:any){
         const item = lookupCollectionNames[i];
         const fieldName = item['fieldName']
         const collectionName = item['collectionName']
+        const reference_to_field = item['reference_to_field']
 
         var filter = {}
-        filter['_id'] = object[fieldName];
+        filter[reference_to_field] = object[fieldName];
         var lookupRecords = await tools.dbManager.find(collectionName, filter);
         
         var subNames = await getSubNames(tools, collectionName);
@@ -337,14 +339,14 @@ async function insertRecord(dbManager, record, insertResults, referenceIdMap, al
 
                 var subRecord = subRecords[j];
                 if(_isMasterDetail){
-                    subRecord[relationName] = record._id;
+                    subRecord[relationName] = record[_isMasterDetail];
                 }
                 await insertRecord(dbManager, subRecord, insertResults, referenceIdMap, allOrNone, true);
                
                 var subAttributes = subRecord.attributes;
                 if(_isLookup){
-                    let subRecordId = subRecord._id;
-                    if(subAttributes.isDuplicate){
+                    let subRecordId = subRecord[_isLookup];
+                    if(_isLookup === "_id" && subAttributes.isDuplicate){
                         subRecordId = referenceIdMap[subAttributes.referenceId];
                     }
                     record[relationName] = subRecordId;
