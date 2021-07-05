@@ -334,6 +334,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         let collection = this.collection(tableName);
         let mongoFilters = this.getMongoFilters(query.filters);
         let mongoOptions = this.getMongoOptions(query);
+        let self = this;
         return await new Promise((resolve, reject) => {
             Fiber(function () {
                 try {
@@ -344,9 +345,9 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        let selector = { _id: id };
+                        let selector: any = { _id: id };
                         if (_.isObject(id)) {
-                            selector = this.getMongoFilters(id['filters']);
+                            selector = self.getMongoFilters(id['filters']);
                         }
                         if (!_.isEmpty(mongoFilters)) {
                             selector = Object.assign(mongoFilters, selector);
