@@ -490,6 +490,8 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 		related_object_name = related_object.object_name
 		isActive = related_object_names.indexOf(related_object_name) > -1
 		allowRead = Creator.getPermissions(related_object_name, spaceId, userId)?.allowRead
+		if related_object_name == "cms_files"
+			allowRead = allowRead && permissions.allowReadFiles
 		return isActive and allowRead
 
 Creator.getRelatedObjectNames = (object_name, spaceId, userId)->
