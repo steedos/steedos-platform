@@ -48,6 +48,12 @@ steedos run --help
 - 开发环境运行方式: 进行cli项目, 执行 `yarn prepare` 后， 再进入**bin**文件夹下执行（示例）: `.\run i18n zh-CN -s D:\GitHub\steedos-project-saas`
 
 ### source
-- 需要配置环境变量：METADATA_URL、METADATA_SPACE_ID、METADATA_AUTH_TOKEN，可以通过项目的env文件进行配置。
+- 需要配置环境变量: METADATA_SERVER、METADATA_APIKEY，可以通过项目的env文件进行配置。
+- config: 创建.env.local并写入METADATA_SERVER、METADATA_APIKEY。 比如 `steedos source:config`
 - retrieve: 从服务器获取数据生成本地文件。 比如 `steedos source:retrieve -m Object:Accounts`
 - deploy: 将本地文件部署到服务器。 比如 `steedos source:deploy -p steedos-app\main\default`
+
+### data
+- 需要配置环境变量: METADATA_SERVER、METADATA_APIKEY，可以通过项目的env文件进行配置。
+- export: 从服务器获取数据生成本地文件。 比如 `steedos data:export -o accounts`
+- import: 将本地文件部署到服务器。 比如 `steedos data:import -f accounts.json`
