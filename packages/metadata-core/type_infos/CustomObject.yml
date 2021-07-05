@@ -1,0 +1,19 @@
+metadataName: CustomObject
+isAddressable: true
+isSourceTracked: true
+tableName: objects
+ext: object
+hasContent: false
+defaultDirectory: objects
+nameForMsgs: Custom Object
+nameForMsgsPlural: Custom Objects
+contentIsBinary: false
+childMetadataNames:
+- CustomField
+- CustomAction
+- CustomListview
+- CustomValidationRule
+- CustomPermission
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

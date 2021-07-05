@@ -1,0 +1,11 @@
+metadataName: Server
+defaultDirectory: server
+ext: object
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Server
+nameForMsgsPlural: Custom Servers
+deleteSupported: true

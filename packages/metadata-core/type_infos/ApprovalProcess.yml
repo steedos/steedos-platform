@@ -1,0 +1,13 @@
+metadataName: ApprovalProcess
+isAddressable: true
+isSourceTracked: true
+ext: approvalProcess
+tableName: process_definition
+hasContent: false
+defaultDirectory: approvalProcesses
+nameForMsgs: ApprovalProcess
+nameForMsgsPlural: ApprovalProcesses
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

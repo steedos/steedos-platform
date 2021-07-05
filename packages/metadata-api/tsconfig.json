@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "target": "ES2017",
+      "noImplicitAny": false,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": true,
+      "declaration": false,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitReturns": true,
+      "stripInternal": true,
+      "strictNullChecks": true,
+      "resolveJsonModule": true,
+      "outDir": "./lib",
+      "newLine": "LF",
+      "lib": [
+          "es2017"
+      ],
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+  },
+  "include": [
+      "./src"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/*.spec.ts"
+  ]
+}
