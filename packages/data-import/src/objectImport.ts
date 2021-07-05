@@ -49,10 +49,11 @@ function converteNum(field_name, dataCell, jsonObj) {
     return number_error;
 };
 
-function converterSelect(objectName, field_name, dataCell, jsonObj) {
+async function converterSelect(objectName, field_name, dataCell, jsonObj) {
     var allowedValues, fields, ref, select_error;
     select_error = "";
-    fields = objectql.getOriginalObjectConfig(objectName).fields;
+    let objectConfig = await objectql.getObject(objectName).toConfig();
+    fields = objectConfig.fields;
     let field = fields[field_name]
     allowedValues = _.pluck(field.options, 'value');
     let cellContents: any = [];
@@ -106,10 +107,11 @@ function getNameFieldKey(fields) {
 async function converterLookup(objectName, field_name, dataCell, jsonObj, fieldMap, options) {
     var fields, lookups, lookup_error, field, reference_to_object, reference_to_field, selectfield;
     lookup_error = "";
-    let objectConfig = objectql.getOriginalObjectConfig(objectName);
+    let objectConfig = await objectql.getObject(objectName).toConfig();
     fields = objectConfig.fields;
     field = fields[field_name]
     reference_to_object = field.reference_to;
+    
     reference_to_field = field.reference_to_field;
     let noResult = true;  // 判断是否所有数据都找不到结果
 
@@ -159,7 +161,7 @@ async function converterLookup(objectName, field_name, dataCell, jsonObj, fieldM
                 }
             }
             if (hasSpace) {
-                lookup_error += `所查找的${objectName}不属于当前space`;
+                lookup_error += `所查找的${reference_to_object}不属于当前space`;
                 continue;
             }
         }
@@ -239,8 +241,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
     let space = options.userSession.spaceId;
 
     // 对象的fields
-    ref = objectql.getOriginalObjectConfig(objectName);
-
+    ref = await objectql.getObject(objectName).toConfig()
     objFields = ref.fields;
     objFields = Object.assign({ _id: { name: "_id", type: "text" } }, objFields);
 
@@ -276,7 +277,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                             error = converterBool(field_name, dataCell, jsonObj);
                             break;
                         case "select":
-                            error = converterSelect(objectName, field_name, dataCell, jsonObj);
+                            error = await converterSelect(objectName, field_name, dataCell, jsonObj);
                             break;
                         case "lookup":
                             error = await converterLookup(objectName, field_name, dataCell, jsonObj, lookupFieldMap, options);
@@ -504,8 +505,7 @@ export async function importWithExcelFile(file, options) {
     if (!fieldMappings) {
         throw new Error(`fieldMapping is required`)
     }
-    
-    let objectConfig = objectql.getOriginalObjectConfig(options.objectName);
+    let objectConfig = await objectql.getObject(options.objectName).toConfig();
     if (!objectConfig) {
         throw new Error(`can not find object "${options.objectName}"`)
     }
