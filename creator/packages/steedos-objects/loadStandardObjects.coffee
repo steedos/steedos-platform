@@ -4,6 +4,7 @@ try
 		objectql = require('@steedos/objectql')
 		moleculer = require("moleculer");
 		packageLoader = require('@steedos/service-meteor-package-loader');
+		APIService = require('@steedos/service-api');
 		path = require('path')
 		settings = {
 			built_in_plugins: [
@@ -74,10 +75,20 @@ try
 						path: standardObjectsDir,
 					} }
 				});
+
+				apiService = broker.createService({
+					name: "api",
+					mixins: [APIService],
+					settings: {
+						port: null
+					} 
+				});
+				WebApp.connectHandlers.use("/", apiService.express());
 				Meteor.wrapAsync((cb)->
 					broker.start().then(()->
-						if !broker.started
+						if !broker.started 
 							broker._restartService(standardObjectsPackageLoaderService);
+							# broker._restartService(apiService);
 
 						broker.waitForServices(standardObjectsPackageLoaderService.name).then (resolve, reject) ->
 							steedosCore.init(settings).then ()->
