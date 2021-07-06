@@ -18,18 +18,22 @@ execSync('rm -rf ./node_modules/bcrypt');
 //     execSync('cp -r .scripts/bcrypt-57-win32-x64/* ../node_modules/bcrypt/');
 // }
 
+
 // 修正 旧版 windows 客户端
 execSync('cp -r .scripts/iconv-lite/* node_modules/iconv-lite/');
 
 execSync('rm -rf node_modules/@steedos');
 execSync('rm -rf node_modules/steedos-server');
 execSync('rm -rf ../apps/*/node_modules/steedos-server');
+
+// 执行 platform 下的 bootstrap
+execSync('cd .. && yarn bootstrap', {stdio: 'inherit'});
+
 if (process.platform == "win32") {
     execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos')+' '+ path.join(process.cwd(), '/../node_modules/@steedos'));
     // execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos/builder-community')+' '+ path.join('F:/GitHub/app-builder/packages/builder-community')); 指向本地app-builder项目
 }else{
-    execSync('ln -s ' + process.cwd() + '/../node_modules/@steedos ' + process.cwd() + '/node_modules/@steedos' );
-    // execSync('ln -s '+ process.cwd() + '/../../app-builder/packages/builder-community ' + process.cwd() + '/node_modules/@steedos/builder-community');
-    // // 上面app-builder link指令有可能会加了多余的link文件,需要删除掉
-    // execSync('rm -rf '+ process.cwd() + '/node_modules/@steedos/builder-community/builder-community');
+    execSync('rm -rf '+ path.join(process.cwd(), '../node_modules/@steedos/builder-community'));
+    execSync('ln -s '+ path.join(process.cwd(), '../../app-builder/packages/builder-community') + ' ' + path.join(process.cwd(), '../node_modules/@steedos'));
+    execSync('ln -s ' + path.join(process.cwd(), '../node_modules/@steedos') + ' ' + process.cwd() + '/node_modules/@steedos' );
 }

@@ -12,9 +12,7 @@ try
 				"@steedos/steedos-plugin-schema-builder",
 				"@steedos/plugin-enterprise",
 				"@steedos/word-template",
-				"@steedos/plugin-qywx",
-				"@steedos/metadata-api",
-				"@steedos/plugin-dingtalk"],
+				"@steedos/metadata-api"],
 			plugins: []
 		}
 		Meteor.startup ->
@@ -82,7 +80,7 @@ try
 							broker._restartService(standardObjectsPackageLoaderService);
 
 						broker.waitForServices(standardObjectsPackageLoaderService.name).then (resolve, reject) ->
-							steedosCore.init.call(settings).then ()->
+							steedosCore.init(settings).then ()->
 								cb(reject, resolve)
 					)
 				)()

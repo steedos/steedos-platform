@@ -13,13 +13,13 @@
     "start-project-community": "cd steedos-projects && cd project-community && yarn start",
     "start-project-enterprise": "cd steedos-projects && cd project-enterprise && yarn start",
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
-    "link": "lerna link --force-local",
+    "lerna-link": "lerna clean --yes && lerna link --force-local",
     "buildPackages": "lerna run buildPackage",
     "ver": "lerna version --skip-git --force-publish",
     "pub": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
     "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
     "compile": "lerna run compile",
-    "prepare": "lerna run prepare",
+    "build": "lerna run prepare",
     "clean": "lerna clean",
     "changed": "lerna changed",
     "git": "git config core.autocrlf true && git config core.filemode false",
@@ -40,5 +40,8 @@
   },
   "devDependencies": {
     "lerna": "^3.22.1"
+  },
+  "peerDependencies": {
+    "steedos-server": "2.x"
   }
 }
