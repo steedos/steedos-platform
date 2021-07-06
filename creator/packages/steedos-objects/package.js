@@ -6,6 +6,10 @@ Package.describe({
 	git: ''
 });
 
+Npm.depends({
+  moleculer: '0.14.12'
+});
+
 Package.onUse(function(api) {
 	api.versionsFrom('1.0');
 
