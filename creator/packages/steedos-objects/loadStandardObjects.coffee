@@ -7,6 +7,8 @@ try
 		APIService = require('@steedos/service-api');
 		MetadataService = require('@steedos/service-metadata-server');
 		path = require('path')
+
+		config = objectql.getSteedosConfig();
 		settings = {
 			built_in_plugins: [
 				"@steedos/workflow",
@@ -15,7 +17,7 @@ try
 				"@steedos/plugin-enterprise",
 				"@steedos/word-template",
 				"@steedos/metadata-api"],
-			plugins: []
+			plugins: config.plugins
 		}
 		Meteor.startup ->
 			try
