@@ -61,4 +61,4 @@ steedos-projects/project-enterprise/.env.local
 services/service-metadata-layouts/.env.local
 steedos-packages/**/node_modules/**
 steedos-projects/**/node_modules/**
-projects/cli/dist/**
+packages/cli/dist/**
