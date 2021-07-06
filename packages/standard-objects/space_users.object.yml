@@ -352,6 +352,8 @@ actions:
   unlock:
     label: Unlock
     on: record_only
+  standard_delete:
+    visible: false
 permission_set:
   user:
     allowCreate: false
