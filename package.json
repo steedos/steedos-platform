@@ -36,7 +36,8 @@
     "**/typescript": "3.9.7",
     "**/odata-v4-parser": "^0.1.29",
     "**/cookies": "0.6.2",
-    "**/cross-env": "5.2.1"
+    "**/cross-env": "5.2.1",
+    "**/globby": "9.2.0"
   },
   "devDependencies": {
     "lerna": "^3.22.1"
