@@ -4,6 +4,8 @@ try
 		objectql = require('@steedos/objectql')
 		moleculer = require("moleculer");
 		packageLoader = require('@steedos/service-meteor-package-loader');
+		APIService = require('@steedos/service-api');
+		MetadataService = require('@steedos/service-metadata-server');
 		path = require('path')
 		settings = {
 			built_in_plugins: [
@@ -22,6 +24,7 @@ try
 					nodeID: "steedos-creator",
 					metadata: {},
 					transporter: process.env.TRANSPORTER,
+					cacher: process.env.CACHER,
 					logLevel: "warn",
 					serializer: "JSON",
 					requestTimeout: 60 * 1000,
@@ -65,6 +68,22 @@ try
 						}
 					}
 				})
+
+				metadataService = broker.createService({
+					name: 'metadata-server',
+					mixins: [MetadataService],
+					settings: {
+					} 
+				});
+
+				apiService = broker.createService({
+					name: "api",
+					mixins: [APIService],
+					settings: {
+						port: null
+					} 
+				});
+
 				objectql.getSteedosSchema(broker);
 				standardObjectsDir = objectql.StandardObjectsPath;
 				standardObjectsPackageLoaderService = broker.createService({
@@ -74,10 +93,15 @@ try
 						path: standardObjectsDir,
 					} }
 				});
+
 				Meteor.wrapAsync((cb)->
 					broker.start().then(()->
-						if !broker.started
+						if !broker.started 
 							broker._restartService(standardObjectsPackageLoaderService);
+
+						WebApp.connectHandlers.use("/", apiService.express());
+						# steedosCore.init(settings).then ()->
+						# 	cb();
 
 						broker.waitForServices(standardObjectsPackageLoaderService.name).then (resolve, reject) ->
 							steedosCore.init(settings).then ()->
