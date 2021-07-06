@@ -12,6 +12,7 @@
   },
   "scripts": {
     "start": "moleculer-runner services",
+    "start:metadata": "cross-env NODEID=METADATA-SERVER moleculer-runner services/metadata-server",
     "start:steedos": "cross-env NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",
     "start:app": "cross-env NODEID=STEEDOS-APP moleculer-runner --repl services/steedos-app",
     "console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
