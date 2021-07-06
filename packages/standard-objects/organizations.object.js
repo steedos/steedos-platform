@@ -330,7 +330,7 @@ if (Meteor.isServer) {
                     name: 1
                 }
             });
-        if (sUser) {
+        if (sUser && userId) {
             return db.audit_logs.insert({
                 c_name: "organizations",
                 c_action: "add",
@@ -652,7 +652,7 @@ if (Meteor.isServer) {
                     name: 1
                 }
             });
-        if (sUser) {
+        if (sUser && userId) {
             return db.audit_logs.insert({
                 c_name: "organizations",
                 c_action: "edit",
