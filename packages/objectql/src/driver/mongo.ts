@@ -217,13 +217,13 @@ export class SteedosMongoDriver implements SteedosDriver {
     async directAggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[], userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         let pipeline = [];
-
-        let mongoFilters = this.getMongoFilters(query.filters);
-        let aggregateOptions = this.getAggregateOptions(query);
-
-        pipeline.push({ $match: mongoFilters });
-
-        pipeline = pipeline.concat(aggregateOptions).concat(externalPipeline);
+        if(query.filters){
+            let mongoFilters = this.getMongoFilters(query.filters);
+            let aggregateOptions = this.getAggregateOptions(query);
+            pipeline.push({ $match: mongoFilters });
+            pipeline = pipeline.concat(aggregateOptions)
+        }
+        pipeline = pipeline.concat(externalPipeline);
         let result = await collection.aggregate(pipeline).toArray();
         return result;
     }
