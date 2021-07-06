@@ -684,7 +684,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "react",
-  "version": "16.13.1",
+  "version": "17.0.2",
   "main": "index.js"
 };
 
