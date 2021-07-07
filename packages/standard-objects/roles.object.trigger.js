@@ -28,6 +28,8 @@ module.exports = {
             if(role){
                 roles.push(role);
             }
+        }else if(filters._id){
+            roles = Creator.getCollection("roles").find({api_name: filters.id}).fetch();
         }else{
             roles = objectql.getSourceRoles();
         }
@@ -46,6 +48,8 @@ module.exports = {
             if(role){
                 roles.push(role);
             }
+        }else if(filters._id){
+            roles = Creator.getCollection("roles").find({api_name: filters.id}).fetch();
         }else{
             roles = objectql.getSourceRoles();
         }
@@ -64,6 +68,8 @@ module.exports = {
             if(role){
                 roles.push(role);
             }
+        }else if(filters._id){
+            roles = Creator.getCollection("roles").find({api_name: filters.id}).fetch();
         }else{
             roles = objectql.getSourceRoles();
         }

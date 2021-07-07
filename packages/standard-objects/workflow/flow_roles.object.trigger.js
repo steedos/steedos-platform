@@ -28,6 +28,8 @@ module.exports = {
             if(flowRole){
                 flowRoles.push(flowRole);
             }
+        }else if(filters._id){
+            roles = Creator.getCollection("flow_roles").find({api_name: filters.id}).fetch();
         }else{
             flowRoles = objectql.getSourceFlowRoles();
         }
@@ -46,6 +48,8 @@ module.exports = {
             if(flowRole){
                 flowRoles.push(flowRole);
             }
+        }else if(filters._id){
+            roles = Creator.getCollection("flow_roles").find({api_name: filters.id}).fetch();
         }else{
             flowRoles = objectql.getSourceFlowRoles();
         }
@@ -64,6 +68,8 @@ module.exports = {
             if(flowRole){
                 flowRoles.push(flowRole);
             }
+        }else if(filters._id){
+            roles = Creator.getCollection("flow_roles").find({api_name: filters.id}).fetch();
         }else{
             flowRoles = objectql.getSourceFlowRoles();
         }
