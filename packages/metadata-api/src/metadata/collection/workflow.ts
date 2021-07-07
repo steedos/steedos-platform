@@ -66,26 +66,6 @@ async function getAllWorkflows(dbManager) {
     return workflows;
 }
 
-async function getFieldUpdateNameById(dbManager, fieldUpdateId) {
-    var actionFieldUpdate = await dbManager.findOne(action_field_updates, {_id: fieldUpdateId});
-    return actionFieldUpdate.name
-}
-
-async function getNotificationNameById(dbManager, notificationId) {
-    var workflowNotification = await dbManager.findOne(workflow_notifications, {_id: notificationId});
-    return workflowNotification.name
-}
-
-async function getFieldUpdateIdByName(dbManager, fieldUpdateName) {
-    var actionFieldUpdate = await dbManager.findOne(action_field_updates, {name: fieldUpdateName});
-    return actionFieldUpdate._id
-}
-
-async function getNotificationIdByName(dbManager, notificationName) {
-    var workflowNotification = await dbManager.findOne(workflow_notifications, {name: notificationName});
-    return workflowNotification._id
-}
-
 async function getWorkflowByOjectName(dbManager, objectName) {
 
     var workflowRules = await dbManager.find(workflow_rule, {object_name: objectName});
@@ -96,16 +76,6 @@ async function getWorkflowByOjectName(dbManager, objectName) {
 
     for(var i=0; i<workflowRules.length; i++){
         let workflowRule = workflowRules[i];
-        if(workflowRule.updates_field_actions){
-            for(var j=0; j<workflowRule.updates_field_actions.length; j++){
-                workflowRule.updates_field_actions[j] = await getFieldUpdateNameById(dbManager, workflowRule.updates_field_actions[j]);
-            }
-        }
-        if(workflowRule.workflow_notifications_actions){
-            for(var j=0; j<workflowRule.workflow_notifications_actions.length; j++){
-                workflowRule.workflow_notifications_actions[j] = await getNotificationNameById(dbManager, workflowRule.workflow_notifications_actions[j]);
-            }
-        }
         deleteCommonAttribute(workflowRule);
         delete workflowRule._id;
         sortAttribute(workflowRule);
@@ -182,18 +152,6 @@ async function saveOrUpdateWorkflow(dbManager, workflow, workflowName) {
 async function updateWorkflowRule(dbManager, workflowRule, objectName) {
 
     var filter = {name: workflowRule.name, object_name: objectName};
-
-    if(workflowRule.updates_field_actions){
-        for(var i=0; i<workflowRule.updates_field_actions.length; i++){
-            workflowRule.updates_field_actions[i] = await getFieldUpdateIdByName(dbManager, workflowRule.updates_field_actions[i]);
-        }
-    }
-
-    if(workflowRule.workflow_notifications_actions){
-        for(var i=0; i<workflowRule.workflow_notifications_actions.length; i++){
-            workflowRule.workflow_notifications_actions[i] = await getNotificationIdByName(dbManager, workflowRule.workflow_notifications_actions[i]);
-        }
-    }
 
     await dbManager.update(workflow_rule, filter, workflowRule);
 }
