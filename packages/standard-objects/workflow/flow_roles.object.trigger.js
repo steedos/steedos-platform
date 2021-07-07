@@ -78,6 +78,13 @@ module.exports = {
         if(_.isEmpty(this.data.values)){
             let id = this.id
             if(id){
+
+                let dbFlowRole = Creator.getCollection("flow_roles").find({api_name: id}).fetch();
+                if(dbFlowRole && dbFlowRole.length > 0){
+                    this.data.values = dbFlowRole[0];
+                    return;
+                }
+
                 let flowRole = objectql.getSourceFlowRole(id);
                 if(flowRole){
                     this.data.values = flowRole;

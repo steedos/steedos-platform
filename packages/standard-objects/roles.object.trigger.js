@@ -78,6 +78,13 @@ module.exports = {
         if(_.isEmpty(this.data.values)){
             let id = this.id
             if(id){
+
+                let dbRole = Creator.getCollection("roles").find({api_name: id}).fetch();
+                if(dbRole && dbRole.length > 0){
+                    this.data.values = dbRole[0];
+                    return;
+                }
+
                 let role = objectql.getSourceRole(id);
                 if(role){
                     this.data.values = role;

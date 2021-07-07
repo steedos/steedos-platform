@@ -40,9 +40,9 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let actionFieldUpdates = [];
         
-        if(filters._id && filters._id.$in){
-            for(let id of filters._id.$in){
-                let actionFieldUpdate = objectql.getActionFieldUpdate(id);
+        if(filters.name && filters.name.$in){
+            for(let name of filters.name.$in){
+                let actionFieldUpdate = objectql.getActionFieldUpdate(name);
                 if(actionFieldUpdate){
                     actionFieldUpdates.push(actionFieldUpdate);
                 }
@@ -80,9 +80,9 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let actionFieldUpdates = [];
         
-        if(filters._id && filters._id.$in){
-            for(let id of filters._id.$in){
-                let actionFieldUpdate = objectql.getActionFieldUpdate(id);
+        if(filters.name && filters.name.$in){
+            for(let name of filters.name.$in){
+                let actionFieldUpdate = objectql.getActionFieldUpdate(name);
                 if(actionFieldUpdate){
                     actionFieldUpdates.push(actionFieldUpdate);
                 }
@@ -120,9 +120,9 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let actionFieldUpdates = [];
         
-        if(filters._id && filters._id.$in){
-            for(let id of filters._id.$in){
-                let actionFieldUpdate = objectql.getActionFieldUpdate(id);
+        if(filters.name && filters.name.$in){
+            for(let name of filters.name.$in){
+                let actionFieldUpdate = objectql.getActionFieldUpdate(name);
                 if(actionFieldUpdate){
                     actionFieldUpdates.push(actionFieldUpdate);
                 }
@@ -159,6 +159,13 @@ module.exports = {
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
             let id = this.id
+
+            let dbFieldUpdate = Creator.getCollection("action_field_updates").find({name: id}).fetch();
+            if(dbFieldUpdate && dbFieldUpdate.length > 0){
+                this.data.values = dbFieldUpdate[0];
+                return;
+            }
+
             let actionFieldUpdate = objectql.getActionFieldUpdate(id);
             if(actionFieldUpdate){
                 this.data.values = actionFieldUpdate;

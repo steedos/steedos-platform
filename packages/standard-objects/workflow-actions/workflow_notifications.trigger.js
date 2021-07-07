@@ -220,6 +220,13 @@ module.exports = {
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
             let id = this.id
+
+            let dbNotification = Creator.getCollection("workflow_notifications").find({name: id}).fetch();
+            if(dbNotification && dbNotification.length > 0){
+                this.data.values = dbNotification[0];
+                return;
+            }
+
             let workflowNotification = objectql.getWorkflowNotification(id);
             if(workflowNotification){
                 this.data.values = workflowNotification;
