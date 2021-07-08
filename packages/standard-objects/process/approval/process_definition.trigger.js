@@ -9,6 +9,7 @@ function setSpaceAndOwner(record, that){
 }
 
 const getInternalApprovalProcesses = function(sourceApprovalProcesses, filters){
+    delete filters.active;
     let dbApprovalProcesses = Creator.getCollection("process_definition").find(filters, {fields:{_id:1, name:1}}).fetch();
     let approvalProcesses = [];
 
