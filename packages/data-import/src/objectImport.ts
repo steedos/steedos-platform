@@ -147,9 +147,10 @@ async function converterLookup(objectName, field_name, dataCell, jsonObj, fieldM
         if (!cellContent) {
             continue;
         }
-        let cellFilter = `(${selectfield} eq '${cellContent}')`
-        let spaceFilter = ` and (space eq '${options.userSession.spaceId}')`
-        lookups = await lookupCollection.find({ filters: cellFilter + spaceFilter });
+        let cellFilter = [selectfield, "=", cellContent]
+        let spaceFilter = ['space', "=", options.userSession.spaceId]
+        let filters = [cellFilter, spaceFilter] 
+        lookups = await lookupCollection.find({ filters: filters });
 
         if (lookups.length == 0) { //找不到记录可能是对象上没有space属性
             lookups = await lookupCollection.find({ filters: cellFilter });
@@ -251,6 +252,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
         if (!dataCell) {
             dataCell = null;
         }
+
         var error, mapping, noField;
         mapping = mappings[i];
         if (!mapping) {
@@ -265,44 +267,49 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                 let field = objFields[field_name]
                 if (field_name == apiName) {
                     noField = false;
-                    switch (field != null ? field.type : void 0) {
-                        case "date":
-                        case "datetime":
-                            error = converterDate(field_name, dataCell, jsonObj);
-                            break;
-                        case "number":
-                            error = converteNum(field_name, dataCell, jsonObj);
-                            break;
-                        case "boolean":
-                            error = converterBool(field_name, dataCell, jsonObj);
-                            break;
-                        case "select":
-                            error = await converterSelect(objectName, field_name, dataCell, jsonObj);
-                            break;
-                        case "lookup":
-                            error = await converterLookup(objectName, field_name, dataCell, jsonObj, lookupFieldMap, options);
-                            break;
-                        case "text":
-                            error = converterString(field_name, dataCell, jsonObj);
-                            break;
-                        case "textarea":
-                            error = converterString(field_name, dataCell, jsonObj);
-                            break;
-                        case "master_detail":
-                            error = await converterLookup(objectName, field_name, dataCell, jsonObj, lookupFieldMap, options);
-                            break;
-                        case "email":
-                            error = converterString(field_name, dataCell, jsonObj);
-                            break;
-                        case "toggle":
-                            error = converterBool(field_name, dataCell, jsonObj);
-                            break;
-                        case "url":
-                            error = converterString(field_name, dataCell, jsonObj);
-                            break;
-                        case "currency":
-                            error = converteNum(field_name, dataCell, jsonObj);
-                            break;
+                    try{
+
+                        switch (field != null ? field.type : void 0) {
+                            case "date":
+                            case "datetime":
+                                error = converterDate(field_name, dataCell, jsonObj);
+                                break;
+                            case "number":
+                                error = converteNum(field_name, dataCell, jsonObj);
+                                break;
+                            case "boolean":
+                                error = converterBool(field_name, dataCell, jsonObj);
+                                break;
+                            case "select":
+                                error = await converterSelect(objectName, field_name, dataCell, jsonObj);
+                                break;
+                            case "lookup":
+                                error = await converterLookup(objectName, field_name, dataCell, jsonObj, lookupFieldMap, options);
+                                break;
+                            case "text":
+                                error = converterString(field_name, dataCell, jsonObj);
+                                break;
+                            case "textarea":
+                                error = converterString(field_name, dataCell, jsonObj);
+                                break;
+                            case "master_detail":
+                                error = await converterLookup(objectName, field_name, dataCell, jsonObj, lookupFieldMap, options);
+                                break;
+                            case "email":
+                                error = converterString(field_name, dataCell, jsonObj);
+                                break;
+                            case "toggle":
+                                error = converterBool(field_name, dataCell, jsonObj);
+                                break;
+                            case "url":
+                                error = converterString(field_name, dataCell, jsonObj);
+                                break;
+                            case "currency":
+                                error = converteNum(field_name, dataCell, jsonObj);
+                                break;
+                        }
+                    }catch(err){
+                        error = err.message;
                     }
                 }
             }
