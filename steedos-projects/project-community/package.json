@@ -27,6 +27,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@steedos/app-admin": "2.0.34",
+    "@steedos/app-contracts": "2.0.34",
+    "@steedos/app-crm": "2.0.34",
+    "@steedos/app-oa": "2.0.34",
+    "@steedos/app-okr-management": "2.0.34",
+    "@steedos/app-project-management": "2.0.34",
     "@steedos/service-charts": "^2.0.34",
     "@steedos/service-metadata-server": "^2.0.34",
     "@steedos/service-mongodb-server": "^2.0.34",
