@@ -38,9 +38,14 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
     
             if (!_.isEmpty(processNode.assigned_approver_roles)) {
                 for (const roleId of processNode.assigned_approver_roles) {
-                    let role = await objectql.getObject('roles').findOne(roleId);
-                    if (role && !_.isEmpty(role.users)) {
-                        nodeApprover = nodeApprover.concat(role.users);
+                    let dbRoles = await objectql.getObject("roles").find({filters: ['api_name', '=', roleId]});
+                    if (dbRoles && dbRoles.length>0 && !_.isEmpty(dbRoles[0].users)) {
+                        nodeApprover = nodeApprover.concat(dbRoles[0].users);
+                    }else{
+                        let role = await objectql.getObject('roles').findOne(roleId);
+                        if (role && !_.isEmpty(role.users)) {
+                            nodeApprover = nodeApprover.concat(role.users);
+                        }
                     }
                 }
             }
