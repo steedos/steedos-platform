@@ -944,6 +944,85 @@ html {
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-message {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: fixed;
+  top: 8px;
+  left: 0;
+  z-index: 1010;
+  width: 100%;
+  pointer-events: none;
+}
+.ant-message-notice {
+  padding: 8px;
+  text-align: center;
+}
+.ant-message-notice-content {
+  display: inline-block;
+  padding: 10px 16px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  pointer-events: all;
+}
+.ant-message-success .anticon {
+  color: #52c41a;
+}
+.ant-message-error .anticon {
+  color: #ff4d4f;
+}
+.ant-message-warning .anticon {
+  color: #faad14;
+}
+.ant-message-info .anticon,
+.ant-message-loading .anticon {
+  color: #1890ff;
+}
+.ant-message .anticon {
+  position: relative;
+  top: 1px;
+  margin-right: 8px;
+  font-size: 16px;
+}
+.ant-message-notice.move-up-leave.move-up-leave-active {
+  animation-name: MessageMoveOut;
+  animation-duration: 0.3s;
+}
+@keyframes MessageMoveOut {
+  0% {
+    max-height: 150px;
+    padding: 8px;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+}
+.ant-message-rtl {
+  direction: rtl;
+}
+.ant-message-rtl span {
+  direction: rtl;
+}
+.ant-message-rtl .anticon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
 .ant-spin {
   box-sizing: border-box;
   margin: 0;
@@ -10238,85 +10317,6 @@ a.ant-btn-sm {
   margin-right: 8px;
   margin-left: 0;
   text-align: right;
-}
-
-/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
-/* stylelint-disable no-duplicate-selectors */
-/* stylelint-disable */
-/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
-.ant-message {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 14px;
-  font-variant: tabular-nums;
-  line-height: 1.5715;
-  list-style: none;
-  font-feature-settings: 'tnum';
-  position: fixed;
-  top: 8px;
-  left: 0;
-  z-index: 1010;
-  width: 100%;
-  pointer-events: none;
-}
-.ant-message-notice {
-  padding: 8px;
-  text-align: center;
-}
-.ant-message-notice-content {
-  display: inline-block;
-  padding: 10px 16px;
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-  pointer-events: all;
-}
-.ant-message-success .anticon {
-  color: #52c41a;
-}
-.ant-message-error .anticon {
-  color: #ff4d4f;
-}
-.ant-message-warning .anticon {
-  color: #faad14;
-}
-.ant-message-info .anticon,
-.ant-message-loading .anticon {
-  color: #1890ff;
-}
-.ant-message .anticon {
-  position: relative;
-  top: 1px;
-  margin-right: 8px;
-  font-size: 16px;
-}
-.ant-message-notice.move-up-leave.move-up-leave-active {
-  animation-name: MessageMoveOut;
-  animation-duration: 0.3s;
-}
-@keyframes MessageMoveOut {
-  0% {
-    max-height: 150px;
-    padding: 8px;
-    opacity: 1;
-  }
-  100% {
-    max-height: 0;
-    padding: 0;
-    opacity: 0;
-  }
-}
-.ant-message-rtl {
-  direction: rtl;
-}
-.ant-message-rtl span {
-  direction: rtl;
-}
-.ant-message-rtl .anticon {
-  margin-right: 0;
-  margin-left: 8px;
 }
 
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
@@ -29721,6 +29721,10 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 .ag-theme-balham .ag-cell-inline-editing .ant-select {
   width: 100%;
 }
+.ag-theme-balham .ag-popup-editor .ant-picker,
+.ag-theme-balham .ag-cell-inline-editing .ant-picker {
+  width: 100%;
+}
 .ag-theme-balham .ag-body-viewport {
   min-height: 10px;
 }
@@ -29788,30 +29792,30 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 .type-lookup .ant-form-item-control-input .ant-select-selector .left_label {
   display: none;
 }
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content {
   display: flex;
 }
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu {
   width: 55px;
   margin-right: -1px;
 }
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu .ant-select-selector {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu .ant-select-selector {
   border-radius: 2px 0 0 2px;
 }
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:hover .ant-select-selector,
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:active .ant-select-selector,
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu.ant-select-focused .ant-select-selector {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:hover .ant-select-selector,
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:active .ant-select-selector,
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu.ant-select-focused .ant-select-selector {
   z-index: 1;
 }
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:hover .ant-select-arrow,
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:active .ant-select-arrow,
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu.ant-select-focused .ant-select-arrow {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:hover .ant-select-arrow,
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:active .ant-select-arrow,
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu.ant-select-focused .ant-select-arrow {
   z-index: 2;
 }
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu + .ant-pro-filed-search-select {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu + .ant-pro-filed-search-select {
   flex: auto;
 }
-.type-lookup.mode-edit .ant-form-item-control .ant-form-item-control-input-content .left_label_menu + .ant-pro-filed-search-select .ant-select-selector {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu + .ant-pro-filed-search-select .ant-select-selector {
   border-radius: 0 2px 2px 0;
 }
 .rc-virtual-list .rc-virtual-list-holder-inner .ant-select-item-option-selected {
@@ -29838,4 +29842,17 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 
 .type-file .ant-upload .ant-btn .anticon-upload svg {
   vertical-align: -0.125em;
+}
+
+.ant-modal-wrap {
+  overflow: hidden;
+}
+.ant-modal-content {
+  max-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+}
+.ant-modal-body {
+  flex: 1;
+  overflow: auto;
 }

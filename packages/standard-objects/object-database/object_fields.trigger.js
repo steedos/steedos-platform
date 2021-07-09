@@ -1,5 +1,6 @@
 const InternalData = require('../core/internalData');
 var _ = require("underscore");
+const odataMongodb = require("odata-v4-mongodb");
 const clone = require('clone');
 var objectCore = require('./objects.core.js');
 const objectql = require('@steedos/objectql');
@@ -201,17 +202,60 @@ const checkFormulaInfiniteLoop = async function(_doc, oldFieldName){
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
+        console.log(`afterFind filters`, filters);
         if(filters.object){
             let fields = await InternalData.getObjectFields(filters.object, this.userId);
+            if(filters.name){
+                fields = _.filter(fields, function(field){
+                    return field.name === filters.name
+                })
+            }
             if(fields){
                 this.data.values = this.data.values.concat(fields)
             }
         }
     },
     afterAggregate: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        if(filters.object){
-            let fields = await InternalData.getObjectFields(filters.object, this.userId);
+        let filters = InternalData.parserFilters(this.query.filters);
+        let objectName = filters.object;
+        let fieldNames = [];
+        if(filters.name){
+            fieldNames.push(filters.name)
+        }
+        let filters2 = odataMongodb.createFilter(this.query.filters)
+        function getName(query){
+            if(query.name){
+                fieldNames.push(query.name)
+            }else if(query.$or){
+                _.each(query.$or, function(item){
+                    if(item.name){
+                        fieldNames.push(item.name)
+                    }else if(item.$or){
+                        getName(item)
+                    }
+                })
+            }
+        }
+        if(filters2){
+            try {
+                getName(filters2.$and[0].$and[0])
+            } catch (error) {
+                
+            }
+            try {
+                objectName = filters2.$and[0].$and[1].object
+            } catch (error) {
+                
+            }
+        }
+        if(objectName){
+            fieldNames = _.uniq(fieldNames);
+            let fields = await InternalData.getObjectFields(objectName, this.userId);
+            if(fieldNames && fieldNames.length > 0){
+                fields = _.filter(fields, function(field){
+                    return _.includes(fieldNames, field.name)
+                })
+            }
             if(fields){
                 this.data.values = this.data.values.concat(fields)
             }
