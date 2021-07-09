@@ -103,17 +103,30 @@ async function getUserObject(userId, spaceId, object, layout?){
             _object.fields[fieldApiName].hidden = true;
         })
 
-        let _buttons = {};
+        // let _buttons = {};
         _.each(layout.buttons, function(button){
             const action = _object.actions[button.button_name];
             if(action){
                 if(button.visible_on){
                     action.visible = button.visible_on;
                 }
-                _buttons[button.button_name] = action
+                // _buttons[button.button_name] = action
             }
         })
-        _object.actions = _buttons;
+
+        if(layout.buttons){
+            const layoutButtonsName = _.pluck(layout.buttons,'button_name');
+            if(layoutButtonsName.length > 0){
+                _.each(_object.actions, function(action){
+                    if(!_.includes(layoutButtonsName, action.name)){
+                        action.visible = false
+                        action._visible = function(){return false}.toString()
+                    }
+                })
+            }
+        }
+
+        // _object.actions = _buttons;
         // _object.allow_customActions = userObjectLayout.custom_actions || []
         // _object.exclude_actions = userObjectLayout.exclude_actions || []
         _object.related_lists = layout.related_lists || []
