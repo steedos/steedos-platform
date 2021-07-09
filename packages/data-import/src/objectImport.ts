@@ -672,7 +672,9 @@ export async function importWithRecords(recordDatas, options) {
 
     for (let i = 0; i < recordDatas.length; i++) {
         let dataRow = recordDatas[i];
-
+        if(!dataRow || dataRow.length == 0){
+            continue;
+        }
         let key = getKeyString(dataRow, keyIndexes);
 
         if (keyMap[key] > 1) {
