@@ -31,6 +31,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 					space = body['space']
 					record_id = body['record_id']
 					object_name = body['object_name']
+					description = body['description']
 					parent = body['parent']
 					metadata = {owner:owner, owner_name:owner_name, space:space, record_id:record_id, object_name: object_name}
 					if parent
@@ -60,7 +61,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 				else
 					newFileObjId = fileCollection.direct.insert {
 						name: filename
-						description: ''
+						description: description
 						extention: extention
 						size: size
 						versions: [fileObj._id]
