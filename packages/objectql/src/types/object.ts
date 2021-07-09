@@ -978,9 +978,33 @@ export class SteedosObjectType extends SteedosObjectProperties {
             fields.push(layoutField);
         });
 
+        let relatedLists = []
+        if(this.enable_files){
+            relatedLists.push("cms_files.parent")
+        }
+
         const details = await this.getDetailsInfo();
         const lookup_details = await this.getLookupDetailsInfo();
-        const relatedLists = _.union(details, lookup_details);
+        relatedLists = relatedLists.concat(_.union(details, lookup_details));
+
+        if(this.enable_tasks){
+            relatedLists.push("tasks.related_to")
+        }
+        if(this.enable_notes){
+            relatedLists.push("notes.related_to")
+        }
+        if(this.enable_events){
+            relatedLists.push("events.related_to")
+        }
+        if(this.enable_instances){
+            relatedLists.push("instances.record_ids")
+        }
+        if(this.enable_approvals){
+            relatedLists.push("approvals.related_to")
+        }
+        if(this.enable_process){
+            relatedLists.push("process_instance_history.target_object")
+        }
         for await (const related of relatedLists) {
             if(related){
                 const relatedItem: any = {}

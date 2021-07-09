@@ -155,8 +155,33 @@ fields:
         }
         const options = [];
         const object = Creator.getObject(values.object_name);
-        const relatedList = _.union(object.details, object.lookup_details);
-        _.each(relatedList, function(related){
+
+        let relatedLists = []
+        if(object.enable_files){
+            relatedLists.push("cms_files.parent")
+        }
+        relatedLists = relatedLists.concat(_.union(object.details, object.lookup_details));
+
+        if(object.enable_tasks){
+            relatedLists.push("tasks.related_to")
+        }
+        if(object.enable_notes){
+            relatedLists.push("notes.related_to")
+        }
+        if(object.enable_events){
+            relatedLists.push("events.related_to")
+        }
+        if(object.enable_instances){
+            relatedLists.push("instances.record_ids")
+        }
+        if(object.enable_approvals){
+            relatedLists.push("approvals.related_to")
+        }
+        if(object.enable_process){
+            relatedLists.push("process_instance_history.target_object")
+        }
+
+        _.each(relatedLists, function(related){
           let foo = related.split('.');
           let rObjectName = foo[0];
           let rFieldName = foo[1];
