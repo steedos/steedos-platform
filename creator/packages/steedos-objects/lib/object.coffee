@@ -42,6 +42,7 @@ Creator.Object = (options)->
 	self.enable_tasks = options.enable_tasks
 	self.enable_notes = options.enable_notes
 	self.enable_audit = options.enable_audit
+	self.enable_events = options.enable_events
 	if options.paging
 		self.paging = options.paging
 	self.hidden = options.hidden
