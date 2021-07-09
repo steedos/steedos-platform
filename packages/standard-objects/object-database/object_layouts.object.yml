@@ -108,16 +108,18 @@ fields:
     multiple: false
     is_wide: false
     required: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
-            }
+    reference_to: object_fields
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        if(values && values.object_name){
+          return ['object', '=', values.object_name]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
   fields.$.is_readonly:
     label: Readonly
     type: boolean
@@ -153,19 +155,53 @@ fields:
         }
         const options = [];
         const object = Creator.getObject(values.object_name);
-        const relatedList = _.union(object.details, object.lookup_details);
-        _.each(relatedList, function(related){
-          options.push({label: related, value: related})
+
+        let relatedLists = []
+        if(object.enable_files){
+            relatedLists.push("cms_files.parent")
+        }
+        relatedLists = relatedLists.concat(_.union(object.details, object.lookup_details));
+
+        if(object.enable_tasks){
+            relatedLists.push("tasks.related_to")
+        }
+        if(object.enable_notes){
+            relatedLists.push("notes.related_to")
+        }
+        if(object.enable_events){
+            relatedLists.push("events.related_to")
+        }
+        if(object.enable_instances){
+            relatedLists.push("instances.record_ids")
+        }
+        if(object.enable_approvals){
+            relatedLists.push("approvals.related_to")
+        }
+        if(object.enable_process){
+            relatedLists.push("process_instance_history.target_object")
+        }
+
+        _.each(relatedLists, function(related){
+          let foo = related.split('.');
+          let rObjectName = foo[0];
+          let rFieldName = foo[1];
+          let rObjectLable = Creator.getObject(rObjectName).label;
+          let rObjectFieldLable = (_.find(Creator.getObject(rObjectName).fields, function(field){return field.name === rFieldName}) || {}).label;
+          options.push({label: `${rObjectLable}.${rObjectFieldLable}`, value: related})
         })
         return options;
       }
   related_lists.$.field_names:
     type: lookup
-    reference_to: object_fields
     create: false
     multiple: true
-    optionsFunction: !!js/function |
-      function(values) {
+    reference_to: object_fields
+    reference_to_field: name
+    depend_on:
+      - object_name
+      - related_lists
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
         let relatedFieldFullname = null;
         const rowValue = _.find(values.related_lists, function(item){
           return item._id === values._grid_row_id
@@ -173,24 +209,25 @@ fields:
         if(rowValue){
           relatedFieldFullname = rowValue.related_field_fullname
         }
-        const options = [];
         if(relatedFieldFullname){
           const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
-          const object = Creator.getObject(objectName);
-          _.each(object.fields, function(field){
-            options.push({label: field.label, value: field.name})
-          })
+          return ['object', '=', objectName]
+        }else{
+          return ['_id', '=', 'no']
         }
-        return options
       }
   related_lists.$.sort_field_name:
     label: Sort field
     type: lookup
-    reference_to: object_fields
     create: false
     multiple: true
-    optionsFunction: !!js/function |
-      function(values) {
+    reference_to: object_fields
+    reference_to_field: name
+    depend_on:
+      - object_name
+      - related_lists
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
         let relatedFieldFullname = null;
         const rowValue = _.find(values.related_lists, function(item){
           return item._id === values._grid_row_id
@@ -198,15 +235,12 @@ fields:
         if(rowValue){
           relatedFieldFullname = rowValue.related_field_fullname
         }
-        const options = [];
         if(relatedFieldFullname){
           const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
-          const object = Creator.getObject(objectName);
-          _.each(object.fields, function(field){
-            options.push({label: field.label, value: field.name})
-          })
+          return ['object', '=', objectName]
+        }else{
+          return ['_id', '=', 'no']
         }
-        return options
       }
   related_lists.$.sort_order:
     label: Sort Order
@@ -282,3 +316,10 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+form:
+  initialValues: !<tag:yaml.org,2002:js/function> |-
+    function () {
+      const objectApiName = this.doc.object_name;
+      const res = Steedos.authRequest(`/service/api/@${objectApiName}/uiSchemaTemplate`, { type: 'get', async: false});
+      return res || {}
+    }

@@ -2,6 +2,7 @@ name: object_fields
 icon: textbox
 enable_api: true
 enable_inline_edit: false
+enable_enhanced_lookup: true
 hidden: true
 label: Object Fields
 fields:

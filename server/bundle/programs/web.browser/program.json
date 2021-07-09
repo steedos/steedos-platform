@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "cf5cdcaa03c38170a8f2b2b1e288250f0d190e20.js",
+      "path": "64b7985fba26ede6a8c6f01e3f827f0bba208409.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/cf5cdcaa03c38170a8f2b2b1e288250f0d190e20.js?meteor_js_resource=true",
-      "size": 13647476,
-      "hash": "cf5cdcaa03c38170a8f2b2b1e288250f0d190e20",
-      "sri": "74cyc92AZsBsUG7IXaBoJI7ItyVrC8umODQi/XLVeS+y4ztXZrgTKW643w46LLi3E6FakJyOiJNlzVdLEGARag=="
+      "url": "/64b7985fba26ede6a8c6f01e3f827f0bba208409.js?meteor_js_resource=true",
+      "size": 13647741,
+      "hash": "64b7985fba26ede6a8c6f01e3f827f0bba208409",
+      "sri": "f0m4NkrTorOxilF+gvrn6obQAeZz80PcS6/AxjZDAPqDWxHOHFy0oJnzvOKK2SXvdqJfDZsd8QUoWkcrjExFIw=="
     },
     {
-      "path": "cf5cdcaa03c38170a8f2b2b1e288250f0d190e20.stats.json",
+      "path": "64b7985fba26ede6a8c6f01e3f827f0bba208409.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/cf5cdcaa03c38170a8f2b2b1e288250f0d190e20.stats.json?meteor_js_resource=true",
+      "url": "/64b7985fba26ede6a8c6f01e3f827f0bba208409.stats.json?meteor_js_resource=true",
       "size": 148699,
-      "hash": "72506cefc073ccc0c9e1b83d55e820079798810e",
-      "sri": "5X7kMUZM0ybFxkFFH4Ue5ZZ/QWfuIOOVx0bXzhVghs6dhyLDHfVltbTTzZ88buaNvF/E1y9WY8edd4CfOLyFug=="
+      "hash": "11ba74b9c69066aec8f13f5eca94348e8b693b89",
+      "sri": "145TY6yZHXhEHgUbKx3ed3sBEKoMA+wBA4caPOJX6iSTfg8GrEOM9TCGU/g7s/hFUSdNO1PsrdNgN76MZ/v7PQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3422,14 +3422,14 @@
       "sri": "QHoD3eBWtoB0O5iCxYBCVvUIiHJ/4DDM/ojXZdmSFEEM+8kcGAQ3eaB2wpOenTLldZ9XhfIGTBaNisipdwarxA=="
     },
     {
-      "path": "523078f029510c16807ad4d4e58d47877dc66ef0.css",
+      "path": "52c339fae90d2d7e32e2498120e2429a703d3dd8.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/523078f029510c16807ad4d4e58d47877dc66ef0.css?meteor_css_resource=true",
-      "size": 1645925,
-      "hash": "523078f029510c16807ad4d4e58d47877dc66ef0",
-      "sri": "vlQuN9LKvh9KX6fHzO0UBMu906uaNGytklYJWAtJNtV5mUQPa995eBt6NGwpNPhGE8lJY/K2lhgWatwSeV64Qw=="
+      "url": "/52c339fae90d2d7e32e2498120e2429a703d3dd8.css?meteor_css_resource=true",
+      "size": 1645955,
+      "hash": "52c339fae90d2d7e32e2498120e2429a703d3dd8",
+      "sri": "CCgW88AM9j4soZI+R2YiLsXlPbCjiVI6mVJO6uRM50RwcMUzXLB2Cl1qVdMbcpZrE8/qgEHTToVkb0P3N4/6dg=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -3587,9 +3587,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
-      "size": 108738,
-      "hash": "714c8aa3ab61ae93c1e1efe8a2738e6f36508bde",
-      "sri": "wud+qzJ68UaQl8MbwNr4IMBmsCIgWdj/Ds68qXS2K3U16W8fNWZDsrYnY6kk0EDkrJsgl+HeLCIiZBH96HI3Qw=="
+      "size": 109025,
+      "hash": "852ab3aa52b90c4c4065b46d4ef168ce70375b4e",
+      "sri": "TA2yGFQy7NRslo01PZUbqsgifljdE+r1mxFFSm/vOMFvJ/6nevc1/gq+5L+Kq1khtuM2JuXpABpVkB6lDqe4LQ=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
@@ -4018,8 +4018,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.png",
       "size": 11690,
-      "hash": "64004a554239896538cb4b92a9272b4255086b4f",
-      "sri": "tBt0KSmXEPbOXAP8mPgdp+Zbsf1h8+DCkyTMFaN9AR9ohnpuddjGHCi/HmPr/DZMzL8SGt/CAoGkqBGeGNhp0w=="
+      "hash": "9afd1a12da882436af1e8b57d647dd6587bc9dad",
+      "sri": null
     },
     {
       "path": "packages/steedos_creator/assets/logo-square.en-us.png",
@@ -4028,8 +4028,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.en-us.png",
       "size": 15294,
-      "hash": "563568609e446146f3ddc44368bcad43de10165f",
-      "sri": "FHY37rVUVS3d6DRq2ImEQQTJKTIpFNa8LObnx0Jvk9fDkMatx/6opYCIIT1Rm2FEQJroHeu2wQciQhRQGRha/Q=="
+      "hash": "e256fab7ec953bf744be35fed594fb44e60c51e7",
+      "sri": null
     },
     {
       "path": "packages/steedos_users-import/assets/excel/steedos_import_users_simple.xls",
@@ -4047,9 +4047,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
-      "size": 2439,
-      "hash": "41c29095fb591655d64f6862170bca966f1a0938",
-      "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
+      "size": 2541,
+      "hash": "1e28c64e105dd044b181736a21e00bff1bec2b7a",
+      "sri": "aXGOE4JnYUn0EFJzEjM871q6r34vbu2mABfV5SRAbLFLvD5mLS9eidTgB8xbBTwLot29g0isvUhfYsCxzyyROw=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.css",
@@ -4057,9 +4057,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.css",
-      "size": 4053,
-      "hash": "b9547b69afeb56e55b1f00f02dfb855b1afad9c1",
-      "sri": "/YAQOWy5oTA+aQ1X+kOkOnsGZc9tdMQfImbS3owBKJGAYAhGMOuEjSw4cIA6xoOLUH4NP0A5deQ/pqMxSLp/kw=="
+      "size": 4327,
+      "hash": "7c9d58f7c3623f47a4b7d9f46981784a15a13d13",
+      "sri": "NKd8QGtRPsO12nVf04Vbq/EFN9/HReD3WmZsMz8lC6ccXKNT405Zz0RIC9yyzXL/derGV3IwdjLrE3f86eiorQ=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.dark.css",
@@ -4067,9 +4067,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.dark.css",
-      "size": 4200,
-      "hash": "d85e0ab8b459135855c4d729b624c8aea081581f",
-      "sri": "U8wC0Y6kY6cJHACXFjnHiZ88d4qX02hgF7bUi5UHo4WQpzaewESMM25Vb7wYZ4jlJ/q/1iEf9/7LNwcCfS94Ww=="
+      "size": 4475,
+      "hash": "0d185a28e945fa4a539a26d6495b52adb82b6243",
+      "sri": "dt7HZdzOWU+D4GWPo/m1mV/SYUxTTVCqIwlobrdtxE3LgBlb9GAg5ziWiuuPRq3QA6oaywbx0spvgm9DgYjJ+w=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.forest.css",
@@ -4077,9 +4077,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.forest.css",
-      "size": 5208,
-      "hash": "dcd2ae3d517f69aa2b2228645c20931fc8994b33",
-      "sri": "YYawKhnW+Q41390oq6sBksa5fnO5eyQDLQNXJ1LBMI0whBWLc8h4iwRUtcB/HqDnxxH8IajG8A6t/1YlDIrM/Q=="
+      "size": 5561,
+      "hash": "65435c8f3611a3fbad117cd94ec7ac1d3b07a214",
+      "sri": "jdxUqKUXcjwM+HUD0LxbWXQ47BmWzPbym2L8JADOBAWpnaa6tcyIOwaQ7mRSnAmAWekfDmvLl9/LIFoeUpZlSg=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.min.js",
@@ -4087,9 +4087,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.min.js",
-      "size": 1108921,
-      "hash": "9570edbd1fa9226da6991ea9b7d28d7025cfdba3",
-      "sri": "ImRiLKrrb4FLaTnXMn0V3zRZf2uHgNpGDDhoPbBjyMR86HstDVfMwgsmMfUDEAiY6El6luyaW+5thgWGh3czYw=="
+      "size": 1108939,
+      "hash": "ca26cbf9c9d2a2a3f12127797e741f98d2d4c7ce",
+      "sri": "oPQF0KYcETp86TPrTg9WelHwGHnrqubaFxOmCMzkfPR91YYgKqWeLIUFCXXEmvLnJab7XaXCPGgJ+T6p9HX+6g=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/index.html",
@@ -4097,9 +4097,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/index.html",
-      "size": 2915,
-      "hash": "8fff1e68113bcad87b8a47bdfb28231cb7b1886a",
-      "sri": "yF17060pS0p7q9/b8j2m1ANuSTkIFpuD+ZUclUJiNIn6U74nfu16TarTc5os9try5tEfoj9lvUUdGVi4Mcr2Fw=="
+      "size": 2959,
+      "hash": "0e98e995354680e9447c4cd53843143c59ff21b6",
+      "sri": "EslWekdj8njn5+EbChXp16KX7a2r1YP9Ibastd0KDm5vivSggt3nQrefETbI25UcM0vHYc798OV+9lx+vt7RSw=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/index.js",
@@ -4107,9 +4107,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/index.js",
-      "size": 1239,
-      "hash": "7646379e38e5d686479bf305a9591fa363a4306e",
-      "sri": "pI6AStkZ8n9F3tRTKHuig2pqfNLXPpZu9zIIE6iVtsuKpZRs8oG1oJjPwB/g76ULQ4DnIyiEX943CQbrO6eGhw=="
+      "size": 1281,
+      "hash": "b12ef1d91a0faa801262bbb9f23f553357963a77",
+      "sri": "EG+ytkXGQ+lqQTHJSibDCv2POY+f+DG5Yqw5Fu4YOZL+uRUt3rxJiNkYSRBc6/slPlFKAj6pPtK03OCytJK5QA=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/index.css",
@@ -4117,9 +4117,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/index.css",
-      "size": 37,
-      "hash": "0dd1bdac71090a9aba8fea7364809a2a92fb0098",
-      "sri": "bx+VQh3nyLV4f3EZVKeuzIEjpL1GuOQIO03DwsNF1rehBvSfsnfYCUbggSqC82k2atIkavDYMrChnxma8qgPjw=="
+      "size": 40,
+      "hash": "c52a83ad1b57cb63e1dfe531b08c14cbf86167fc",
+      "sri": "PZ57T7GuYWHNKwB6rw9h6WhahEIED+KcXpRROIJ7rWnLsEDZ/3tK1xrqHji7wPEdm0zk8tXHagXGR5NxXc0YkA=="
     },
     {
       "path": "app/builder-community.react.css",
@@ -4127,8 +4127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/builder-community.react.css",
-      "size": 805594,
-      "hash": "8fc355b5a7bc0bb006c7f1908311cee7e6a467fe",
+      "size": 806069,
+      "hash": "5b62e6700f397dea02ac6f2392915d3b6e64ed85",
       "sri": null
     },
     {
@@ -4137,8 +4137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/customize.css",
-      "size": 524,
-      "hash": "72c6cab9a3e495d5acfac9b4b6e510f321a0011b",
+      "size": 552,
+      "hash": "4a6b756d605e5db4697b8c54b9d8ee8fff001667",
       "sri": null
     },
     {
@@ -4147,8 +4147,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/workflow.html",
-      "size": 1219,
-      "hash": "03841ec2e5a9713755f9f0dbc23518296c5fcfab",
+      "size": 1254,
+      "hash": "07b4cdaa64a5677a3bfb52633265bac72b291592",
       "sri": null
     },
     {
@@ -4157,8 +4157,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/built/global.css",
-      "size": 4234,
-      "hash": "4b63b2f3c03346ea77bc8179d4f54b55a98a7b76",
+      "size": 4236,
+      "hash": "49023e1f7594117fc02f2fdc4b0c1e7f5fd90a5f",
       "sri": null
     },
     {
@@ -4177,8 +4177,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/built/screen.css",
-      "size": 35137,
-      "hash": "d53d588356acd6d28991faee8a12e139562e6b3c",
+      "size": 35139,
+      "hash": "de026715a114f537fbe221e1154d852c44974d6d",
       "sri": null
     },
     {
@@ -4197,8 +4197,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/built/screen_extend.css",
-      "size": 375,
-      "hash": "7c6b2d7189bf0f2a1e2429757e7a7723ea5787b4",
+      "size": 397,
+      "hash": "66b39b66703e01e8fa5c0ec45bf8bbd370bfbcf1",
       "sri": null
     },
     {
@@ -4407,8 +4407,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/favicons/browserconfig.xml",
-      "size": 453,
-      "hash": "bf8ff50e59bd48f9879ccf9bea4ba2da4fb70c57",
+      "size": 468,
+      "hash": "74f0c060ef2f7c561d7d75bac780349aecdb6e45",
       "sri": null
     },
     {
@@ -4507,8 +4507,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/favicons/manifest.json",
-      "size": 930,
-      "hash": "baa81f40fcf391f47d108e0100f01ae14a7e0500",
+      "size": 973,
+      "hash": "3b04295d4cb00fd1fdadb9dc13922583e3fef111",
       "sri": null
     },
     {
@@ -4517,8 +4517,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/favicons/manifest.webapp",
-      "size": 275,
-      "hash": "71a1b950dc9ab741d7fa7840d3f0a5919b9ce59d",
+      "size": 288,
+      "hash": "502fcff914ce4cdbc6146e1d7e91e6d4d99d04ef",
       "sri": null
     },
     {
@@ -4597,8 +4597,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/favicons/yandex-browser-manifest.json",
-      "size": 155,
-      "hash": "ac20dee14ec835a1e9c8b7c4c5ce1d8a92554b3c",
+      "size": 163,
+      "hash": "cd485cfb45173b4e87417d88bec729eb0cc1a90f",
       "sri": null
     },
     {
@@ -4617,8 +4617,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/infinitescroll.js",
-      "size": 3526,
-      "hash": "1edfecaf0a1776e91fdf09712e23fd4b6eb4d1a1",
+      "size": 3641,
+      "hash": "8c7efe4c8cfd020542d8722f4f2369c44f7d9c6d",
       "sri": null
     },
     {
@@ -4627,8 +4627,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/jquery.fitvids.js",
-      "size": 3446,
-      "hash": "3bdc38ea411f55f926c0e9eef84394b68b71c219",
+      "size": 3535,
+      "hash": "6ec7586bb02a79d04e9979c265853000ac79f73e",
       "sri": null
     },
     {
@@ -4637,8 +4637,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/nw_core.js",
-      "size": 3100,
-      "hash": "9ddd444852f8be8213ed76e7bb1c4c7e9865ec11",
+      "size": 3252,
+      "hash": "244ae0c5f7c05f8571c011763b45e5f98e446494",
       "sri": null
     },
     {
@@ -4647,8 +4647,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/workflow_client.css",
-      "size": 944,
-      "hash": "938d309b32b1beaebd2120c2c7f94aa1fa2b6147",
+      "size": 998,
+      "hash": "1fe8ff4f538bda2fd4629350d45775536cacad36",
       "sri": null
     },
     {
@@ -4657,8 +4657,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/workflow_client.js",
-      "size": 3734,
-      "hash": "6aa2ca7f2150627343c8453826c57f5d6dc138f5",
+      "size": 3907,
+      "hash": "23d196971120503ba5079c0edace3c1d0d502fac",
       "sri": null
     },
     {
@@ -4677,8 +4677,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/word/demo.doc",
-      "size": 2,
-      "hash": "637877adffcbf03c142ff32f67d3169116aaa04d",
+      "size": 4,
+      "hash": "38a6cc3a301b323ceda7eb00adab8fac23dc0e3f",
       "sri": null
     },
     {
@@ -4707,8 +4707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/selectize/selectize.bootstrap2.css",
-      "size": 15641,
-      "hash": "30820ffdbc94288d2c2d92e49e54a3fa56bb4f5d",
+      "size": 16135,
+      "hash": "2093dbe42fc062a0e85e3a4f22711601e4ab56ef",
       "sri": null
     },
     {
@@ -4717,8 +4717,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/selectize/selectize.bootstrap3.css",
-      "size": 10766,
-      "hash": "28c126d76aab274df1763ae28e86a0e50f65b7b9",
+      "size": 11174,
+      "hash": "a852b2e5c78e21fd7b3c8c5208bcd3ba3647fe1b",
       "sri": null
     },
     {
@@ -4727,8 +4727,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/selectize/selectize.css",
-      "size": 8589,
-      "hash": "b2dee7de259ec39f635e1820bf66c43f4fad8a66",
+      "size": 8913,
+      "hash": "41b5881286072890f74e2c912b9396669627ee51",
       "sri": null
     },
     {
@@ -4737,8 +4737,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/selectize/selectize.default.css",
-      "size": 11692,
-      "hash": "fa3da889047c2b7f8e5a5ba1fa72f4c00759bdf8",
+      "size": 12086,
+      "hash": "9701651243dd73ece734ee3454ff99dc562c4418",
       "sri": null
     },
     {
@@ -4747,8 +4747,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/selectize/selectize.js",
-      "size": 104098,
-      "hash": "2bb7140d87f2fb5f30c29bab38ddae50779c861d",
+      "size": 107926,
+      "hash": "8abf257291b04c32ea35a2ea1c1f51157b6c61ca",
       "sri": null
     },
     {
@@ -4757,8 +4757,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/lib/jquery/jquery-1.11.2.min.js",
-      "size": 95930,
-      "hash": "d66ccb9a62f29024faaaff5ba6172ba1a0c34af9",
+      "size": 95933,
+      "hash": "ca305c240c22c0c46519480f6ab5a533e60ea83a",
       "sri": null
     },
     {
@@ -4797,8 +4797,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/plugins/toastr/toastr.min.css",
-      "size": 5738,
-      "hash": "7a7bdf43d451002d11ba1a44be8c45d4b8a64de7",
+      "size": 5739,
+      "hash": "bca40d193c8e9fa62050a0345eae977cff9c5996",
       "sri": null
     },
     {
@@ -4807,8 +4807,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/plugins/toastr/toastr.min.js",
-      "size": 4321,
-      "hash": "1f62e8c66718116fe4a36d59630e08f6ec1fc5ff",
+      "size": 4323,
+      "hash": "1d8cd75633dab20669e8e3b6f9ff5f4cdde15938",
       "sri": null
     },
     {
@@ -4847,8 +4847,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css",
-      "size": 11276,
-      "hash": "d1e8a5ad07e8ed1f3b54142b41a0a8953b0cfdc4",
+      "size": 11284,
+      "hash": "cbd012c3ce791b626afa66cba7a7d2494fe8422e",
       "sri": null
     },
     {
@@ -4967,8 +4967,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
-      "size": 813,
-      "hash": "44474dae2443c06b283d812ccb2f32c838b15e52",
+      "size": 829,
+      "hash": "48acf76fbe7c840914f30d046219882524566067",
       "sri": null
     },
     {

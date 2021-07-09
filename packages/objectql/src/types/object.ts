@@ -963,7 +963,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async getDefaulRecordView(userSession){
         const object_name = this.name;
         const type = 'record';
-        const buttons = null;
+        const buttons = [];
         const fields = []; 
         const related_lists = [];
 
@@ -978,13 +978,80 @@ export class SteedosObjectType extends SteedosObjectProperties {
             fields.push(layoutField);
         });
 
-        // const details = await this.getDetailsInfo();
-        // for await (const detail of details) {
-        //     const relatedList: any = {}
-        //     if(detail){
-        //         relatedList.related_field_fullname = detail;
-        //     }
-        // }
+        let relatedLists = []
+        if(this.enable_files){
+            relatedLists.push("cms_files.parent")
+        }
+
+        const details = await this.getDetailsInfo();
+        const lookup_details = await this.getLookupDetailsInfo();
+        relatedLists = relatedLists.concat(_.union(details, lookup_details));
+
+        if(this.enable_tasks){
+            relatedLists.push("tasks.related_to")
+        }
+        if(this.enable_notes){
+            relatedLists.push("notes.related_to")
+        }
+        if(this.enable_events){
+            relatedLists.push("events.related_to")
+        }
+        if(this.enable_instances){
+            relatedLists.push("instances.record_ids")
+        }
+        if(this.enable_approvals){
+            relatedLists.push("approvals.related_to")
+        }
+        if(this.enable_process){
+            relatedLists.push("process_instance_history.target_object")
+        }
+        for await (const related of relatedLists) {
+            if(related){
+                const relatedItem: any = {}
+                relatedItem.related_field_fullname = related;
+                let foo = (related as any).split('.');
+                let rObjectName = foo[0];
+
+                const relatedObject = await getObject(rObjectName).toConfig();
+                const relatedObjectAllListView = _.find(relatedObject.list_views, function(listview){
+                    return listview.name === 'all'
+                })
+
+                if(relatedObjectAllListView && relatedObjectAllListView.columns){
+                    const fieldNames = [];
+                    _.each(relatedObjectAllListView.columns, (column)=>{
+                        if(_.isString(column)){
+                            fieldNames.push(column);
+                        }else if(_.isObject(column)){
+                            fieldNames.push(column.field);
+                        }
+                    })
+
+                    relatedItem.field_names = fieldNames
+                }
+                related_lists.push(relatedItem)
+            }
+        }
+
+        buttons.push({
+            button_name: 'standard_new'
+        })
+
+        buttons.push({
+            button_name: 'standard_edit'
+        })
+
+        buttons.push({
+            button_name: 'standard_delete'
+        })
+
+        _.each(objectConfig.actions, function(action, key){
+            if(action.is_enable){
+                buttons.push({
+                    button_name: action.name
+                })
+            }
+        });
 
         return {
             object_name, type, buttons, fields, related_lists,
