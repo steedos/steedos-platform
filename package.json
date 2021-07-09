@@ -25,7 +25,8 @@
     "git": "git config core.autocrlf true && git config core.filemode false",
     "update-yarn": "curl --compressed -o- -L https://yarnpkg.com/install.sh | bash",
     "syncToTaoBaoWin": "start https://npm.taobao.org/sync/@steedos/webapp && start https://npm.taobao.org/sync/@steedos/app-admin && start https://npm.taobao.org/sync/@steedos/app-crm && start https://npm.taobao.org/sync/@steedos/app-contracts && start https://npm.taobao.org/sync/@steedos/auth && start https://npm.taobao.org/sync/steedos-cli && start https://npm.taobao.org/sync/@steedos/core && start https://npm.taobao.org/sync/@steedos/filters && start https://npm.taobao.org/sync/@steedos/i18n && start https://npm.taobao.org/sync/@steedos/meteor-bundle-dependencies && start https://npm.taobao.org/sync/@steedos/meteor-bundle-runner && start https://npm.taobao.org/sync/@steedos/migrate && start https://npm.taobao.org/sync/@steedos/objectql && start https://npm.taobao.org/sync/@steedos/project-template-empty && start https://npm.taobao.org/sync/@steedos/schemas && start https://npm.taobao.org/sync/@steedos/standard-objects && start https://npm.taobao.org/sync/steedos-server && start https://npm.taobao.org/sync/create-steedos-app && start https://npm.taobao.org/sync/@steedos/plugin-enterprise && start https://npm.taobao.org/sync/@steedos/accounts",
-    "syncToTaoBaoMac": "./.scripts/syncToTaoBaoMac.sh"
+    "syncToTaoBaoMac": "./.scripts/syncToTaoBaoMac.sh",
+    "build_image": "node build_image.js"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
@@ -36,7 +37,8 @@
     "**/typescript": "3.9.7",
     "**/odata-v4-parser": "^0.1.29",
     "**/cookies": "0.6.2",
-    "**/cross-env": "5.2.1"
+    "**/cross-env": "5.2.1",
+    "**/globby": "9.2.0"
   },
   "devDependencies": {
     "lerna": "^3.22.1"

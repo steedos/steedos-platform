@@ -61,3 +61,6 @@ steedos-projects/project-enterprise/.env.local
 services/service-metadata-layouts/.env.local
 steedos-packages/**/node_modules/**
 steedos-projects/**/node_modules/**
+packages/cli/dist/**
+
+docker-volumes

@@ -542,6 +542,7 @@
       "path": "packages/steedos_logger.js"
     },
     {
+      "node_modules": "npm/node_modules/meteor/steedos_objects/node_modules",
       "sourceMap": "packages/steedos_objects.js.map",
       "path": "packages/steedos_objects.js"
     },

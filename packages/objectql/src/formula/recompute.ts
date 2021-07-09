@@ -43,12 +43,12 @@ const runQuotedFieldSummaries = async function (fieldFormulaConfig: SteedosField
  * 重算指定公式字段Id对应的公式值
  * @param fieldId : ${objectApiName}.${fieldApiName}
  */
-export const recomputeFormulaValues = async (fieldId: string, currentUserId: string) => {
+export const recomputeFormulaValues = async (fieldId: string, userSession: any) => {
     let config = await getFieldFormulaConfig(fieldId);
     if (!config) {
         throw new Error(`recomputeFormulaValues:${fieldId} not found in field_formula configs.`);
     }
-    return await recomputeFieldFormulaValues(config, currentUserId);
+    return await recomputeFieldFormulaValues(config, userSession);
 }
 
 /**
