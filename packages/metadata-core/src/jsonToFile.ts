@@ -135,7 +135,7 @@ function writeButtonFile(folderPath, recordName, fileExt, record){
     }
     var filePath = path.join(folderPath, buttonFileName);
     delete record.todo;
-    if(record.visible){
+    if(!_.isBoolean(actionVisible) && record.visible){
         delete record.visible;
     }
     var ymlData = yaml.dump(record);
