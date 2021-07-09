@@ -309,6 +309,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                                 break;
                         }
                     }catch(err){
+                        console.error(error)
                         error = err.message;
                     }
                 }
@@ -381,7 +382,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                 insertInfo["create"] = false;
                 insertInfo["update"] = true;
             } catch (error) {
-                // console.error(error)
+                console.error(error)
                 errorInfo = error.message;
                 insertInfo["update"] = false;
                 insertInfo["insertState"] = false;
@@ -410,7 +411,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                 insertInfo["create"] = true;
                 insertInfo["update"] = false;
             } catch (error) {
-                // console.error(error)
+                console.error(error)
                 errorInfo = error.message;
                 insertInfo["create"] = false;
                 insertInfo["insertState"] = false;
