@@ -282,9 +282,7 @@
 															{{#if isMobile}}
 																{{> list options=(list_data this)}}
 															{{else}}
-																<div class="{{#if related_list_count this}} {{else}}  hidden{{/if}}">
-																	{{> Template.dynamic template="detail_realted_object_list" data=(list_data this)}}
-																</div>
+																{{> Template.dynamic template="detail_realted_object_list" data=(list_data this)}}
 															{{/if}}
 													{{/if}}
 												</div>
