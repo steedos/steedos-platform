@@ -194,6 +194,10 @@ class ObjectServiceDispatcher {
     async getRelateds(){
         return await this.callAction(`getRelateds`)
     }
+
+    async refreshIndexes(){
+        return await this.callAction(`refreshIndexes`)
+    }
 }
 
 export function getObjectDispatcher(objectApiName): any {

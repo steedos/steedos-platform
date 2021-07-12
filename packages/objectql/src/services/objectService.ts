@@ -165,6 +165,11 @@ function getObjectServiceMethodsSchema() {
             async handler() {
                 return await this.object.getRelateds();
             }
+        },
+        refreshIndexes: {
+            async handler() {
+                return await this.object.refreshIndexes();
+            }
         }
         // getPageView: {
         //     //TODO
@@ -502,6 +507,11 @@ function getObjectServiceActionsSchema() {
             },
             async handler(ctx) {
                 return await this.getRelateds();
+            }
+        },
+        refreshIndexes: {
+            async handler(ctx) {
+                return await this.refreshIndexes();
             }
         }
     };

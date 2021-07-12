@@ -146,6 +146,38 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
         }
     }
 
+    getIndexInfo = ()=>{
+        const indexName = this.getIndexName();
+        if(this.index || this.unique){
+            let index = {}; 
+            let indexValue: any =  null;
+            let sparse = false;
+            if (this.index) {
+                indexValue = this.index;
+                if (indexValue === true){
+                    indexValue = 1;
+                }
+            } else {
+                indexValue = 1;
+            }
+            var idxFieldName = this.name.replace(/\.\$\./g, ".");
+            index[idxFieldName] = indexValue;
+            let unique = !!this.unique && (indexValue === 1 || indexValue === -1);
+            return {
+                key: index, 
+                name: indexName,
+                unique: unique,
+                sparse: sparse,
+                background: true, //兼容4.2之前的数据库版本
+            }
+        }
+    }
+
+    getIndexName = ()=>{
+        return 'c2_' + this.name;
+    }
+
+
     private transformReferenceTo(reference_to: string, datasource: SteedosDataSourceType): string{
         if(_.isString(reference_to)){
             if(reference_to.split('.').length = 1){
