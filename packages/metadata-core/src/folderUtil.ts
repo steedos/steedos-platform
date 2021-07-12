@@ -104,6 +104,8 @@ export function getRetrievePackageInfo(option) {
             if(hasParent(metadataName) == true){
                 var parentName = path.parse(path.dirname(path.dirname(filePath))).name
                 manifestName = parentName + '.' + itemName;
+            }else if(fileinfo.parentName){
+                manifestName = fileinfo.parentName + '.' + itemName;
             }
     
             if(fileinfo.suffix){
