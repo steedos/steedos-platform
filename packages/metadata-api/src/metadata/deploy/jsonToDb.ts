@@ -101,7 +101,7 @@ export async function jsonToDb(steedosPackage, dbManager, session){
     try {
         await session.withTransaction(async () => {
 
-            const topKeys = [TypeInfoKeys.Profile, TypeInfoKeys.Permissionset, TypeInfoKeys.Role, TypeInfoKeys.FlowRole]
+            const topKeys = [TypeInfoKeys.Profile, TypeInfoKeys.Permissionset, TypeInfoKeys.Role, TypeInfoKeys.FlowRole, TypeInfoKeys.Object]
             var keys = _.sortBy(_.keys(steedosPackage), function(key){ 
                 return _.include(topKeys, key) ? -1: 1
             })
