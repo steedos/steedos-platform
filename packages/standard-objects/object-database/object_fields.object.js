@@ -472,7 +472,7 @@ var triggers = {
   "before.insert.server.object_fields": {
     on: "server",
     when: "before.insert",
-    todo: function (userId, doc) {
+    todo: async function (userId, doc) {
       if(!allowChangeObject()){
         throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
@@ -506,7 +506,7 @@ var triggers = {
 
       // checkFormulaInfiniteLoop(doc);
       if(doc.type === "summary"){
-        initSummaryDoc(doc);
+        await initSummaryDoc(doc);
       }
     }
   },
