@@ -4,7 +4,7 @@ module.exports = {
     notify: function () {
         // 网页授权url
         let oauthUrl = Meteor.absoluteUrl('/api/qiyeweixin/mainpage?target=');
-
+        
         Push.oldQywxSend = Push.send;
         Push.send = function (options) {
             Push.oldQywxSend(options);
