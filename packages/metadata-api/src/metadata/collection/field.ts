@@ -85,16 +85,89 @@ function removeAttributeForField(field){
   noUseFields.forEach(function (noUseField){
     delete field[noUseField]
   });
+  
+}
+
+async function generateFieldsSerialNumber(dbManager, fields, objectName){
+
+  let object = await dbManager.findOne("objects", {name: objectName});
+
+  let fields_serial_number = 100;
+  if(object && object.fields_serial_number){
+    fields_serial_number = object.fields_serial_number;
+  }
+
+  let sort_no_map = {}
+  let unserialed_fields:any[] = [];
+
+  for (let key in fields) {
+
+    let field = fields[key];
+    let sort_no = field.sort_no;
+    if(! sort_no_map[sort_no]){
+      sort_no_map[sort_no] = {sort_no, count: 1, fields: [field]};
+    }else{
+      sort_no_map[sort_no].count = sort_no_map[sort_no].count + 1
+      sort_no_map[sort_no].fields.push(field)
+    }
+  }
+
+  let array = _.toArray(sort_no_map);
+  _.sortBy(array, 'sort_no');
+
+  for (let i=0; i<array.length; i++) {
+
+    let item = array[i];
+    let sort_no_fields = item.fields
+    let sort_no = item.sort_no
+    let count = item.count
+    
+    if(count > 1){
+      
+      for (let j=0; j<sort_no_fields.length; j++) {
+        let field = sort_no_fields[j];
+        
+        var filter = {_name: field._name, object: field.object};
+        
+        var dbField = await dbManager.findOne(collection_name, filter);
+        if(!dbField || !dbField.sort_no || dbField.sort_no != sort_no){
+          
+          unserialed_fields.push(field);
+        }
+        
+        if(fields_serial_number < sort_no){
+          fields_serial_number = sort_no;
+        }
+      }
+    }
+  }
+  fields_serial_number = fields_serial_number + 10;
+
+  for(let field of unserialed_fields){
+    
+    field.sort_no = fields_serial_number
+
+    fields_serial_number = fields_serial_number + 10;
+  }
+
+  return await dbManager.update("objects", {name: objectName}, {fields_serial_number});
 }
 
 export async function fieldsToDb(dbManager, fields, objectName){
+
   for(const fieldName in fields){
     var field = fields[fieldName];
     
     field.name = fieldName;
     field._name = fieldName.replace(/__c$/, "");
     field.object = objectName;
+  }
 
+  let fields_serial_number = await generateFieldsSerialNumber(dbManager, fields, objectName);
+    
+  for(const fieldName in fields){
+    var field = fields[fieldName];
+    
     var requiredFields = _.pluck(_.where(getFieldsByType(field, field.type, field.data_type), {required: true}), 'name');
     var allFields = _.keys(field);
     var missingFields = _.difference(requiredFields, allFields);
@@ -109,6 +182,7 @@ export async function fieldsToDb(dbManager, fields, objectName){
       await addFieldToLayouts(dbManager, fieldName, objectName);
     }
   }
+
 }
 
 async function addFieldToLayouts(dbManager, fieldName, objectName) {

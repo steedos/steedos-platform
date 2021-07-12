@@ -392,18 +392,6 @@ async function loadObjects(filePath, objectName){
     //fields
     let fieldsFilePath = path.join(newObjectsPath, "fields");
     let fields = await loadObjectFields(fieldsFilePath);
-    let fields_serial_number = 100;
-    for (const key in fields) {
-        if (Object.prototype.hasOwnProperty.call(fields, key)) {
-            let field = fields[key];
-            let sort_no = field.sort_no;
-            if(fields_serial_number < sort_no){
-                fields_serial_number = field.sort_no;
-            }        
-        }
-    }
-
-    object['fields_serial_number'] = fields_serial_number + 10;
     object[TypeInfoKeys.Field] = fields;
 
     //listviews
