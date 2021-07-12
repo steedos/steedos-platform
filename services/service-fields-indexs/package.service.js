@@ -70,8 +70,8 @@ module.exports = {
 	async started(ctx) {
 		const steedosConfig = objectql.getSteedosConfig() || {};
 		const cron = steedosConfig.cron;
-		if(cron.refresh_fields_indexes){
-			this.job = schedule.scheduleJob(cron.refresh_fields_indexes, ()=>{
+		if(cron.build_index){
+			this.job = schedule.scheduleJob(cron.build_index, ()=>{
 				this.broker.call(`${serviceName}.refreshIndexes`)
 			});
 		}
