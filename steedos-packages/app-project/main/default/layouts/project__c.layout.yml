@@ -1,9 +1,0 @@
-name: default
-object_name: project__c
-profiles:
-  - admin
-  - user
-fields:
-  - field_name: name
-    is_readonly: true
-    is_required: true
