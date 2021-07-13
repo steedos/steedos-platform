@@ -119,7 +119,6 @@ fields:
         }
 
         let objectFieldOption = Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
-        objectFieldOption.push({label: "密码", value: "password", icon: "user"})
         return objectFieldOption;
       }
   
