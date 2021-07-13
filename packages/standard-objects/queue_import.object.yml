@@ -75,6 +75,7 @@ fields:
     name: fire_workflows
     label: Fire Workflows
     type: boolean
+    hidden: true
 
   field_mappings:
     label: Field Mappings
