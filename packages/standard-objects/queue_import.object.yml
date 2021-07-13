@@ -1,7 +1,7 @@
 name: queue_import
 label: Data Import Queue
 icon: product_consumed
-enable_files: true
+enable_files: false
 hidden: true
 version: 2
 fields:
@@ -75,6 +75,7 @@ fields:
     name: fire_workflows
     label: Fire Workflows
     type: boolean
+    hidden: true
 
   field_mappings:
     label: Field Mappings
@@ -119,7 +120,6 @@ fields:
         }
 
         let objectFieldOption = Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
-        objectFieldOption.push({label: "密码", value: "password", icon: "user"})
         return objectFieldOption;
       }
   
@@ -190,6 +190,10 @@ fields:
     type: '[text]'
     omit: true
     name: error
+  file:
+    label: Excel File
+    type: file
+    name: file
 list_views:
   all:
     label: All Queues
@@ -223,7 +227,13 @@ actions:
     'on': record
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-        var files = Creator.odata.query('cms_files', {$filter:`(parent/o eq \'queue_import\') and (parent/ids eq \'${record_id}\')`, $select: "_id"}, true);
+        var record = Creator.getCollection('queue_import').findOne(record_id);
+        console.log(record);
+        if (!record.file) {
+          toastr.error(TAPi18n.__("queue_import_action_import_need_file"));
+          return;
+        }
+        var files = Creator.odata.query('cfs_files_filerecord', {$filter:`(_id eq \'${record.file}\')`, $select: "_id"}, true);
         if (_.isEmpty(files)) {
           toastr.error(TAPi18n.__("queue_import_action_import_need_files"));
           return;

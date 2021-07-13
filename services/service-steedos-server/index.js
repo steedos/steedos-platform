@@ -43,7 +43,8 @@ module.exports = {
 			"@steedos/plugin-qywx",
 			"@steedos/metadata-api",
 			"@steedos/plugin-dingtalk",
-			"@steedos/data-import"
+			"@steedos/data-import",
+			"@steedos/service-fields-indexs"
 		],
 		plugins: []
 	},

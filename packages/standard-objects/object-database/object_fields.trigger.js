@@ -253,7 +253,7 @@ module.exports = {
             let fields = await InternalData.getObjectFields(objectName, this.userId);
             if(fieldNames && fieldNames.length > 0){
                 fields = _.filter(fields, function(field){
-                    return _.includes(fieldNames, field.name)
+                    return _.include(fieldNames, field.name)
                 })
             }
             if(fields){

@@ -514,6 +514,55 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._actions[action_name]
     }
 
+    async refreshIndexes(){
+        if(this.datasource.driver === SteedosDatabaseDriverType.Mongo){
+            const adapter = this.datasource.adapter;
+            await adapter.connect()
+            const collection = (adapter as any).collection(this.name);
+            const indexesInfo = [];
+            const dropIndexNames = [];
+            for (const key in this.fields) {
+                const field = this.fields[key];
+                const info = field.getIndexInfo();
+                if(info){
+                    indexesInfo.push(info);
+                }else{
+                    dropIndexNames.push(field.getIndexName());
+                }
+            }
+            if(indexesInfo && indexesInfo.length > 0){
+                try {
+                    for await (const indexInfo of indexesInfo) {
+                        const key = indexInfo.key;
+                        delete indexInfo.key;
+                        try {
+                            await collection.createIndex(key, indexInfo)
+                        } catch (error) {
+                            console.error(error)
+                        }
+                    }
+                    // await collection.createIndexes(indexesInfo)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+            if(dropIndexNames && dropIndexNames.length > 0){
+                try {
+                    for await (const indexName of dropIndexNames) {
+                        try {
+                            await collection.dropIndex(indexName)
+                        } catch (error) {
+                            
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+        }
+    }
+
     //TODO 处理对象继承
     extend_TODO(config: SteedosObjectTypeConfig) {
         if (this.name != config.name)

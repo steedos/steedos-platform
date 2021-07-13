@@ -88,9 +88,14 @@ function removeAttributeForField(field){
   
 }
 
-async function getObjectSortNo(dbManager, fields){
+async function generateFieldsSerialNumber(dbManager, fields, objectName){
+
+  let object = await dbManager.findOne("objects", {name: objectName});
 
   let fields_serial_number = 100;
+  if(object && object.fields_serial_number){
+    fields_serial_number = object.fields_serial_number;
+  }
 
   let sort_no_map = {}
   let unserialed_fields:any[] = [];
@@ -145,7 +150,7 @@ async function getObjectSortNo(dbManager, fields){
     fields_serial_number = fields_serial_number + 10;
   }
 
-  return fields_serial_number;
+  return await dbManager.update("objects", {name: objectName}, {fields_serial_number});
 }
 
 export async function fieldsToDb(dbManager, fields, objectName){
@@ -158,7 +163,7 @@ export async function fieldsToDb(dbManager, fields, objectName){
     field.object = objectName;
   }
 
-  let fields_serial_number = await getObjectSortNo(dbManager, fields);
+  let fields_serial_number = await generateFieldsSerialNumber(dbManager, fields, objectName);
     
   for(const fieldName in fields){
     var field = fields[fieldName];
@@ -178,7 +183,6 @@ export async function fieldsToDb(dbManager, fields, objectName){
     }
   }
 
-  await dbManager.update("objects", {name: objectName}, {fields_serial_number});
 }
 
 async function addFieldToLayouts(dbManager, fieldName, objectName) {

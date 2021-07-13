@@ -92,5 +92,5 @@ actions:
     label: Perform Import
 CustomLabels:
   queue_import_action_import_execute_success: Executed
-  queue_import_action_import_need_files: Upload excel file, please.
+  queue_import_action_import_need_file: Upload excel file, please.
   queue_import_action_import_just_need_one_file: Just need one file.
