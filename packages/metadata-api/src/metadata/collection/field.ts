@@ -135,10 +135,10 @@ async function generateFieldsSerialNumber(dbManager, fields, objectName){
           unserialed_fields.push(field);
         }
         
-        if(fields_serial_number < sort_no){
-          fields_serial_number = sort_no;
-        }
       }
+    }
+    if(fields_serial_number < sort_no){
+      fields_serial_number = sort_no;
     }
   }
   fields_serial_number = fields_serial_number + 10;
