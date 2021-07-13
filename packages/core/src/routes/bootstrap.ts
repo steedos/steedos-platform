@@ -118,7 +118,7 @@ async function getUserObject(userId, spaceId, object, layout?){
             const layoutButtonsName = _.pluck(layout.buttons,'button_name');
             if(layoutButtonsName.length > 0){
                 _.each(_object.actions, function(action){
-                    if(!_.includes(layoutButtonsName, action.name)){
+                    if(!_.include(layoutButtonsName, action.name)){
                         action.visible = false
                         action._visible = function(){return false}.toString()
                     }
