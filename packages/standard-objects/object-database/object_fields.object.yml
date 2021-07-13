@@ -88,6 +88,8 @@ fields:
         value: image
       - label: Formula
         value: formula
+      - label: File
+        value: file
       - label: Roll-Up Summary
         value: summary
   defaultValue:

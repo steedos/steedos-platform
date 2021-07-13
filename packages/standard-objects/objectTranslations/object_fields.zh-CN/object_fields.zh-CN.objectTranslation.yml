@@ -58,6 +58,8 @@ fields:
         value: image
       - label: 公式
         value: formula
+      - label: 附件
+        value: file
       - label: 累计汇总
         value: summary
     description: 
