@@ -481,7 +481,7 @@ export async function importWithCmsFile(importObjId, userSession) {
     }
 
     let fileCollection = await objectql.getObject('cfs_files_filerecord')
-    files = await fileCollection.find({ filters: [['metadata/record_id', '=', queueImport._id]] });
+    files = await fileCollection.find({ filters: [['_id', '=', queueImport.file]] });
 
     if (files && files.length == 0) {
         throw new Error(`Upload excel file, please.`)

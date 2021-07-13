@@ -102,5 +102,5 @@ actions:
     label: 执行导入
 CustomLabels:
   queue_import_action_import_execute_success: 已执行
-  queue_import_action_import_need_files: 请上传Excel文件
+  queue_import_action_import_need_file: 请上传Excel文件
   queue_import_action_import_just_need_one_file: 只需上传一个文件
