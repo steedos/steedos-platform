@@ -746,11 +746,12 @@ Template.creator_view.events
 			dataset = event.currentTarget.dataset
 			parent = dataset?.parent
 			targetObjectName = dataset?.targetObjectName
+			related_field_name = dataset?.targetRelatedFieldName
 			console.log("relatedObjectFileUploadHandler==targetObjectName==", targetObjectName);
 			if Steedos.isMobile()
 				Template.list.refresh getRelatedListTemplateId(targetObjectName)
 			else
-				window.gridRefs["related_listview_#{mainObjectApiName}_#{targetObjectName}"].current.api.refreshServerSideStore()
+				window.gridRefs["related_listview_#{mainObjectApiName}_#{targetObjectName}"+ '_' + related_field_name].current.api.refreshServerSideStore()
 #				gridContainerWrap = $(".related-object-tabular")
 #				dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
 #				Template.creator_grid.refresh dxDataGridInstance
