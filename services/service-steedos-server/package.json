@@ -12,7 +12,7 @@
     "@steedos/plugin-enterprise": "^2.0.37",
     "@steedos/plugin-qywx": "^2.0.37",
     "@steedos/service-api": "^2.0.37",
-    "@steedos/service-fields-indexs": "^2.0.36",
+    "@steedos/service-fields-indexs": "^2.0.37",
     "@steedos/service-meteor-package-loader": "^2.0.37",
     "@steedos/service-node-red": "^2.0.37",
     "@steedos/steedos-plugin-schema-builder": "^2.0.37",
