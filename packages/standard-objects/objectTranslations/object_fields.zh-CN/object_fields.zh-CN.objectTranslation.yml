@@ -56,10 +56,10 @@ fields:
         value: email
       - label: 图片
         value: image
-      - label: 公式
-        value: formula
       - label: 附件
         value: file
+      - label: 公式
+        value: formula
       - label: 累计汇总
         value: summary
     description: 
