@@ -155,6 +155,7 @@ fields:
   #   type: boolean
   #   omit: true
   version:
+    readonly: true
     label: Version
     type: number
     scale: 0
