@@ -67,7 +67,7 @@
             "type": "array",
             "description": "额外在列表显示的字段"
         },
-        "order": {
+        "sort": {
             "type": "array",
             "description": "排序"
         },
@@ -82,7 +82,7 @@
             "type": "array",
             "description": "过滤的字段"
         },
-        "sort": {
+        "sort_no": {
             "type": "number",
             "description": "显示顺序，从小到大"
         },

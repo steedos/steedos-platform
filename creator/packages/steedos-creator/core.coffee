@@ -566,7 +566,9 @@ Creator.getListViews = (object_name, spaceId, userId)->
 
 	isMobile = Steedos.isMobile()
 
-	_.each object.list_views, (item, item_name)->
+	listViews = _.sortBy(_.values(object.list_views) , 'sort_no');
+
+	_.each listViews, (item, item_name)->
 		if isMobile and item.type == "calendar"
 			# 手机上先不显示日历视图
 			return
