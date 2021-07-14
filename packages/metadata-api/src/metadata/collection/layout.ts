@@ -45,18 +45,35 @@ async function getAllLayouts(dbManager) {
 
     for(var i=0; i<layouts.length; i++){
         let layout = layouts[i]
+        deteleIdInproperties(layout)
         deleteCommonAttribute(layout);
         sortAttribute(layout);
     }
     return layouts;
 }
 
+function deteleIdInproperties(layout){
+
+    deteleIdInproperty(layout.buttons)
+    deteleIdInproperty(layout.fields)
+    deteleIdInproperty(layout.related_lists)
+}
+
+function deteleIdInproperty(list){
+
+    if(!list){
+        return
+    }
+    for(let item of list){
+        delete item._id
+    }
+}
 
 async function getLayoutByOjectName(dbManager, layoutName) {
 
     let parts = layoutName.split('.');
     var layout = await dbManager.findOne(collection_name, {object_name: parts[0], name: parts[1]});
-
+    deteleIdInproperties(layout)
     deleteCommonAttribute(layout);
     sortAttribute(layout);
     return layout;
