@@ -31,7 +31,9 @@
         "jsdom": "^16.2.2",
         "jshashes": "^1.0.8",
         "ts-node": "^8.4.1",
-        "wechat-crypto": "^0.0.2"
+        "wechat-crypto": "^0.0.2",
+        "wx-ding-aes": "^0.0.10"
+
     },
     "devDependencies": {
         "@steedos/accounts": "^2.0.39",

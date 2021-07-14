@@ -21,10 +21,19 @@ fields:
     type: text
     group: 钉钉
     hidden: false
+  dingtalk_aes_key:
+    label: AesSecret
+    type: text
+    group: 钉钉
+    hidden: false
+  dingtalk_token:
+    label: Token
+    type: text
+    group: 钉钉
+    hidden: false
   dingtalk_need_sync:
     label: 同步钉钉
     type: boolean
     group: 钉钉
     defaultValue: false
     hidden: false
-
