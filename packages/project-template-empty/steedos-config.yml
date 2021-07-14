@@ -31,3 +31,5 @@ tenant:
 plugins:
   - "@steedos/accounts"
   - "@steedos/metadata-api"
+cron:
+  build_index: 0 0 0 * * *
