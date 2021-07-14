@@ -88,10 +88,10 @@ fields:
         value: email
       - label: Image
         value: image
-      - label: Formula
-        value: formula
       - label: File
         value: file
+      - label: Formula
+        value: formula
       - label: Roll-Up Summary
         value: summary
   defaultValue:
@@ -123,16 +123,72 @@ fields:
     type: currency
     label: Precision
     defaultValue: 18
-    visible_on: "{{['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1 ? true: false}}"
-    required: "{{['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1 ? true: false}}"
+    visible_on: "{{
+      function(){
+        if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
+          return true;
+        }
+        else{
+          if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency', 'percent'].indexOf(formData.data_type) > -1){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+      }()
+    }}"
+    required: "{{
+      function(){
+        if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
+          return true;
+        }
+        else{
+          if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency', 'percent'].indexOf(formData.data_type) > -1){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+      }()
+    }}"
   scale:
     type: currency
     label: Scale
     defaultValue: 2
     min: 0
     inlineHelpText: If the field type is a Percent, this indicates the number of decimal places the field will display, for example, two decimal places will display as 10.20%.
-    visible_on: "{{['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1 ? true: false}}"
-    required: "{{['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1 ? true: false}}"
+    visible_on: "{{
+      function(){
+        if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
+          return true;
+        }
+        else{
+          if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency', 'percent'].indexOf(formData.data_type) > -1){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+      }()
+    }}"
+    required: "{{
+      function(){
+        if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
+          return true;
+        }
+        else{
+          if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency', 'percent'].indexOf(formData.data_type) > -1){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+      }()
+    }}"
   rows:
     type: currency
     label: Rows
