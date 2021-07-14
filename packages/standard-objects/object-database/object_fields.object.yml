@@ -5,6 +5,7 @@ enable_inline_edit: false
 enable_enhanced_lookup: true
 hidden: true
 label: Object Fields
+version: 2.0
 fields:
   object:
     type: master_detail
@@ -47,6 +48,7 @@ fields:
     index: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
+    omit: true
   type:
     type: select
     label: Type
@@ -88,6 +90,8 @@ fields:
         value: image
       - label: Formula
         value: formula
+      - label: File
+        value: file
       - label: Roll-Up Summary
         value: summary
   defaultValue:
@@ -104,28 +108,37 @@ fields:
       function () {
         return Steedos.getObjectsOptions();
       }
+    visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
   filtersFunction:
     label: filters Function
     type: textarea
     is_wide: true
+    visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
   optionsFunction:
     label: options Function
     type: textarea
     is_wide: true
+    visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
   precision:
     type: currency
     label: Precision
     defaultValue: 18
+    visible_on: "{{['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1 ? true: false}}"
   scale:
     type: currency
     label: Scale
     defaultValue: 2
     min: 0
     inlineHelpText: If the field type is a Percent, this indicates the number of decimal places the field will display, for example, two decimal places will display as 10.20%.
+    visible_on: "{{['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1 ? true: false}}"
   rows:
     type: currency
     label: Rows
     scale: 0
+    visible_on: "{{formData.type === 'textarea' ? true: false}}"
+    required: "{{formData.type === 'textarea' ? true: false}}"
   # allowedValues:
   #   type: text
   #   multiple: true
@@ -134,11 +147,14 @@ fields:
   multiple:
     type: boolean
     label: Multiple
+    visible_on: "{{['select', 'lookup'].indexOf(formData.type) > -1 ? true: false}}"
   options:
     type: grid
     label: Options
     is_wide: true
     inlineHelpText: The label and value of each option cannot be empty. Set the background color to FFFFFF in hexadecimal format.
+    visible_on: "{{formData.type === 'select' ? true: false}}"
+    required: "{{formData.type === 'select' ? true: false}}"
   options.$:
     label: Options
     blackbox: true
@@ -164,6 +180,8 @@ fields:
     type: text
     inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
     is_wide: true
+    visible_on: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
   data_type:
     type: select
     label: Data Type
@@ -183,6 +201,10 @@ fields:
         value: date
       - label: Datetime
         value: datetime
+    omit: true
+    # summary字段类型的data_type可以自动计算得到，所以不用在零代码界面设置
+    visible_on: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
   formula_blank_value:
     type: select
     label: Blank Field Handling
@@ -193,6 +215,8 @@ fields:
       - label: Treat blank fields as blanks
         value: blanks
     defaultValue: zeroes
+    visible_on: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
   summary_object:
     type: lookup
     label: Object to Summarize
@@ -226,6 +250,8 @@ fields:
         });
         return _options;
       }
+    visible_on: "{{formData.type === 'summary' ? true: false}}"
+    required: "{{formData.type === 'summary' ? true: false}}"
   summary_type:
     type: select
     label: Roll-Up Type
@@ -239,6 +265,8 @@ fields:
         value: min
       - label: MAX
         value: max
+    visible_on: "{{formData.type === 'summary' ? true: false}}"
+    required: "{{formData.type === 'summary' ? true: false}}"
   summary_field:
     type: lookup
     label: Field to Aggregate
@@ -284,6 +312,8 @@ fields:
           return options;
         }
       }
+    visible_on: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
+    required: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
   summary_filters:
     label: Filter Criteria
     type: 'grid'
@@ -291,6 +321,7 @@ fields:
     is_wide: true
     depend_on:
       - summary_object
+    visible_on: "{{formData.type === 'summary' ? true: false}}"
   summary_filters.$:
     label: Filter Criteria
     blackbox: true
@@ -349,14 +380,17 @@ fields:
     searchable: true
     index: true
     group: External data source
+    # visible_on: "{{true}}"
   primary:
     type: boolean
     label: Primary Key
     group: External data source
+    # visible_on: "{{true}}"
   generated:
     type: boolean
     label: Generated
     group: External data source
+    # visible_on: "{{formData.database_name || formData.datasource ? true: false}}"
   sort_no:
     label: Sort Number
     type: number
@@ -408,6 +442,7 @@ fields:
     type: boolean
     label: Show_as_qr
     group: Advanced
+    visible_on: "{{formData.type === 'url' ? true: false}}"
   inlineHelpText:
     label: Prompt text
     type: text
@@ -422,6 +457,7 @@ fields:
     label: Write requires master read
     type: boolean
     inlineHelpText: Sets the minimum sharing access level required on the master record to create, edit, or delete child records. This field applies only to master-detail or junction object custom field types. true—Allows users with “Read” access to the master record permission to create, edit, or delete child records. This setting makes sharing less restrictive. false—Allows users with “Read/Write” access to the master record permission to create, edit, or delete child records. This setting is more restrictive than true, and is the default value.
+    visible_on: "{{formData.type === 'master_detail' ? true: false}}"
 paging:
   enabled: false
 list_views:
@@ -474,18 +510,18 @@ form:
       }
       return {}
     }
-  beforeEdit: !!js/function |
-    function(){
-      return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
-    }
-  afterEdit: !!js/function |
-    function(){
-      return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
-    }
-  beforeView: !!js/function |
-    function(){
-      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'view');
-    }
+  # beforeEdit: !!js/function |
+  #   function(){
+  #     return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
+  #   }
+  # afterEdit: !!js/function |
+  #   function(){
+  #     return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
+  #   }
+  # beforeView: !!js/function |
+  #   function(){
+  #     Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'view');
+  #   }
   afterInsert: !!js/function |
     function(){
       Creator.objectLayoutMananger.appendField(this.doc);

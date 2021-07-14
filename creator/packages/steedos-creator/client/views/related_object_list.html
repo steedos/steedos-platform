@@ -32,7 +32,7 @@
 									{{#if recordPerminssion "allowCreateFiles"}}
 											<button class="slds-button slds-button_neutral btn-upload-file" title="{{_ "creator_actions_upload_file"}}">
 												{{_ "creator_actions_upload_file"}}
-												<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files">
+												<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files" data-target-related-field-name="{{relatedFieldName}}">
 											</button>
 									{{/if}}
 								{{else}}

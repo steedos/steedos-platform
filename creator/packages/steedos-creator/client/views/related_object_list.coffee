@@ -89,6 +89,8 @@ Template.related_object_list.helpers
 		return data
 	name: ()->
 		return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name") + '_' + getRelatedFieldName()
+	relatedFieldName: ()->
+		return getRelatedFieldName();
 	columnFields: ()->
 		related_list_item_props = getRelateObj()
 		columnFields = [];
@@ -193,9 +195,9 @@ Template.related_object_list.events
 				dataset = event.currentTarget.dataset
 				parent = dataset?.parent
 				targetObjectName = dataset?.targetObjectName
-				gridContainerWrap = $(event.currentTarget).closest(".related_object_list")
-				dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
-				Template.creator_grid.refresh dxDataGridInstance
+				related_field_name = dataset?.targetRelatedFieldName
+				mainObjectApiName = Session.get("object_name")
+				window.gridRefs["related_listview_#{mainObjectApiName}_#{targetObjectName}"+ '_' + related_field_name].current.api.refreshServerSideStore()
 
 
 Template.related_object_list.onCreated ->
