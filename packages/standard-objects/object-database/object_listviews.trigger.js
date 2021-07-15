@@ -3,6 +3,7 @@ const InternalData = require('../core/internalData');
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
+        let listviews = []
         if(filters._id){
             let id = filters._id
             id = id.replace(/\\/g, '');
@@ -11,19 +12,20 @@ module.exports = {
                 if(objectName){
                     let view = await InternalData.getObjectListView(objectName, this.userId, id);
                     if(view){
-                        this.data.values = [view];
+                        listviews = [view];
                     }
                 }
             }
         }else if(filters.object_name){
-            let views = await InternalData.getObjectListViews(filters.object_name, this.userId);
-            if(views){
-                this.data.values = this.data.values.concat(views)
-            }
+            listviews = await InternalData.getObjectListViews(filters.object_name, this.userId);
+        }
+        if(listviews){
+            this.data.values = this.data.values.concat(listviews)
         }
     },
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
+        let listviews = []
         if(filters._id){
             let id = filters._id
             id = id.replace(/\\/g, '');
@@ -32,19 +34,20 @@ module.exports = {
                 if(objectName){
                     let view = await InternalData.getObjectListView(objectName, this.userId, id);
                     if(view){
-                        this.data.values = [view];
+                        listviews = [view];
                     }
                 }
             }
         }else if(filters.object_name){
-            let views = await InternalData.getObjectListViews(filters.object_name, this.userId);
-            if(views){
-                this.data.values = this.data.values.concat(views)
-            }
+            listviews = await InternalData.getObjectListViews(filters.object_name, this.userId);
+        }
+        if(listviews){
+            this.data.values = this.data.values.concat(listviews)
         }
     },
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
+        let listviews = []
         if(filters._id){
             let id = filters._id
             id = id.replace(/\\/g, '');
@@ -53,15 +56,15 @@ module.exports = {
                 if(objectName){
                     let view = await InternalData.getObjectListView(objectName, this.userId, id);
                     if(view){
-                        this.data.values = [view];
+                        listviews = [view];
                     }
                 }
             }
         }else if(filters.object_name){
-            let views = await InternalData.getObjectListViews(filters.object_name, this.userId);
-            if(views){
-                this.data.values = this.data.values + views.length
-            }
+            listviews = await InternalData.getObjectListViews(filters.object_name, this.userId);
+        }
+        if(listviews){
+            this.data.values = this.data.values + listviews.length
         }
     },
     afterFindOne: async function(){
