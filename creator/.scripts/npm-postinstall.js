@@ -30,8 +30,12 @@ execSync('rm -rf ../apps/*/node_modules/steedos-server');
 execSync('cd .. && yarn bootstrap', {stdio: 'inherit'});
 
 if (process.platform == "win32") {
+    let appBuilderPath = '';
+    // appBuilderPath = 'F:/GitHub/app-builder'; //设置本地app builder path
+    execSync(`cd ${appBuilderPath} && yarn build`, {stdio: 'inherit'});
+    execSync(`cp -r ${appBuilderPath}/packages/builder-community/dist/builder-community.react.css public/`);
     execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos')+' '+ path.join(process.cwd(), '/../node_modules/@steedos'));
-    // execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos/builder-community')+' '+ path.join('F:/GitHub/app-builder/packages/builder-community')); 指向本地app-builder项目
+    execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos/builder-community')+' '+ path.join(`${appBuilderPath}/packages/builder-community`));
 }else{
     execSync('rm -rf '+ path.join(process.cwd(), '../node_modules/@steedos/builder-community'));
     execSync('ln -s '+ path.join(process.cwd(), '../../app-builder/packages/builder-community') + ' ' + path.join(process.cwd(), '../node_modules/@steedos'));
