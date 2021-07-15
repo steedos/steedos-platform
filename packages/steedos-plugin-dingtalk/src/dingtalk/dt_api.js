@@ -1,3 +1,6 @@
+let objectql = require('@steedos/objectql');
+let steedosConfig = objectql.getSteedosConfig();
+
 exports.accessTokenGet = function (key, secret) {
     var err, response;
     try {
@@ -710,9 +713,9 @@ exports.spaceGet = function(corpId){
         if(corpId){
             space = Creator.getCollection('spaces').findOne({"dingtalk_corp_id": corpId});
         }else if (spaceId){
-            space = Creator.getCollection('spaces').findOne({});
-        }else{
             space = Creator.getCollection('spaces').findOne({_id:spaceId});
+        }else{
+            space = Creator.getCollection('spaces').findOne({});
         }
 
         return space;

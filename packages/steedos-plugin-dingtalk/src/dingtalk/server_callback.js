@@ -5,6 +5,7 @@ let Cookies = require("cookies");
 let objectql = require('@steedos/objectql');
 let steedosConfig = objectql.getSteedosConfig();
 let dtApi = require('./dt_api');
+let dtSync = require('./dt_sync');
 let DingtalkManager = require('./dingtalk_manager');
 let push = require('./notifications');
 const auth = require("@steedos/auth");
@@ -322,5 +323,125 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
     }
 
 });
+
+// 同步数据
+router.get('/api/stockData', async function (req, res) {
+
+    access_token = dtSync.getAccessToken();
+
+    dtSync.write("================存量数据开始===================")
+    dtSync.write("access_token:" + access_token)
+    deptListRes = dtApi.departmentListGet(access_token)
+    for (let i = 0; i < deptListRes.length; i++) {
+        dtSync.write("部门ID:" + deptListRes[i]['id'])
+        dtSync.deptinfoPush(deptListRes[i]['id'])
+        userListRes = dtApi.userListGet(access_token, deptListRes[i].id)
+        for (let ui = 0; ui < userListRes.length; ui++) {
+            dtSync.write("用户ID:" + userListRes[ui]['userid'])
+            dtSync.userinfoPush(userListRes[ui]['userid'])
+        }
+
+    }
+
+
+    for (let i = 0; i < deptListRes.length; i++) {
+        userListRes = dtApi.userListGet(access_token, deptListRes[i].id)
+        for (let ui = 0; ui < userListRes.length; ui++) {
+            dtSync.userinfoPush(userListRes[ui]['userid'])
+        }
+
+    }
+    dtSync.write("================存量数据结束===================")
+    dtSync.write("\n")
+
+    res.status(200).send({ message: "dsa" });
+});
+
+// 订阅事件
+router.post('/api/listen', async function (req, res) {
+    var params = req.body
+    var query = req.query
+    // 获取工作区相关信息
+    var dtSpace = dtApi.spaceGet();
+    // console.log("dtSpace: ",dtSpace);
+    var APP_KEY = dtSpace.dingtalk_key;
+    var APP_SECRET = dtSpace.dingtalk_secret;
+    var AES_KEY = dtSpace.dingtalk_aes_key;
+    var TOKEN = dtSpace.dingtalk_token;
+
+    var signature = query['signature'];
+    var nonce = query['nonce'];
+    var timeStamp = query['timestamp'];
+    var suiteKey = APP_KEY;//必填，企业ID
+    var token = TOKEN;    //必须和在注册是一样
+    var aesKey = AES_KEY;
+
+    var encrypt = params['encrypt'];
+
+
+
+    data = dtSync.decrypt({
+        signature: signature,
+        nonce: nonce,
+        timeStamp: timeStamp,
+        suiteKey: suiteKey,
+        token: token,
+        aesKey: aesKey,
+        encrypt: encrypt
+    });
+    try {
+        // console.log(data.data.EventType)
+        switch (data.data.EventType) {
+            //通讯录用户增加。
+            case 'user_add_org':
+                break;
+            case 'user_leave_org':
+                data.data.UserId.forEach(element => {
+                    dtSync.userinfoPush(element, 2)
+                });
+                break;
+            //通讯录用户更改
+            case 'user_modify_org':
+                data.data.UserId.forEach(element => {
+                    dtSync.userinfoPush(element)
+                });
+                // for(let i=0;i<data.data.UserId.length;i++){
+                //     
+                // }
+                break;
+            case 'org_dept_modify':
+                data.data.DeptId.forEach(element => {
+                    dtSync.deptinfoPush(element)
+                });
+                break;
+            case 'org_dept_create':
+                data.data.DeptId.forEach(element => {
+                    dtSync.deptinfoPush(element, 1)
+                });
+                break;
+            case 'org_dept_remove':
+                data.data.DeptId.forEach(element => {
+                    dtSync.deptinfoPush(element, 2)
+                });
+                break;
+            default:
+
+                break;
+
+
+        }
+    } catch (e) {
+        dtSync.write("ERROR:")
+        dtSync.write(data.data.EventType)
+        dtSync.write(e)
+    }
+
+
+
+
+    // var decrypt = decode(aesKey_decode,aesKey_decode.substring(0,16),text)
+    res.status(200).send(data.res);
+
+})
 
 exports.router = router;
