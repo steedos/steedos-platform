@@ -2,6 +2,7 @@ const _ = require("underscore");
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const InternalData = require('../core/internalData');
+const util = require('../util')
 function check(objectName, profiles, id){
     let query = {
         object_name: objectName,
@@ -17,9 +18,12 @@ function check(objectName, profiles, id){
     }
 }
 module.exports = {
-    beforeInsert: function(){
+    beforeInsert: async function(){
         let doc = this.doc
         check(doc.object_name, doc.profiles);
+
+        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
+
         if(doc.fields){
             _.each(doc.fields, function(field){
                 if(field && field.required && field.readonly){
@@ -28,11 +32,14 @@ module.exports = {
             })
         }
     },
-    beforeUpdate: function(){
+    beforeUpdate: async function(){
         let doc = this.doc
         let id = this.id
         let record = Creator.getCollection("object_layouts").findOne({_id: id}) || {};
         check(doc.object_name || record.object_name, doc.profiles || record.profiles, id);
+
+        await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
+
         if(doc.fields){
             _.each(doc.fields, function(field){
                 if(field && field.required && field.readonly){
