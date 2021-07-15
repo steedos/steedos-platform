@@ -176,7 +176,7 @@ if (Meteor.isServer) {
         if (parents) {
             parents.push(org._id);
         } else {
-            parents = [doc._id];
+            parents = [org._id];
         }
         if (Creator.getCollection("company").findOne({
             organization: {
