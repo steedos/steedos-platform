@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node-RED on IBM Cloud</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
+    <link href="css/simplegrid.css" rel="stylesheet" media="screen">
+    <link href="css/style.css" rel="stylesheet" media="screen">
+</head>
+
+
+<body>
+
+    <div class="header">
+        <div class="header-content">
+            <div class="brand">Node-RED on IBM Cloud</div>
+        </div>
+    </div>
+    <!-- Grid 1 -->
+    <div class="title">
+        <div class="grid">
+            <div class="col-1-1">
+                <div class="content">
+                    <h1>Node-RED</h1>
+                    <h2>Flow-based programming for the Internet of Things</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid 1/2 -->
+    <div class="row2">
+        <div class="grid">
+            <div class="col-1-2">
+                <div class="content blurb">
+                    <p>Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways.</p>
+                    <p>This instance is running  as an IBM Cloud application, giving it access to the wide range of services available on the platform.</p>
+                    <p>More information about Node-RED, including documentation, can be found at <a href="https://nodered.org">nodered.org</a>.</p>
+                </div>
+            </div>
+            <div class="col-1-2">
+                <div class="content blurb">
+                    <p style="text-align: center"><a style="width:350px;" class="button" href="red/">Go to your Node-RED flow editor</a></p>
+                    <p style="text-align: center"><a href="#custom">Learn how to customise Node-RED</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid 1/2 -->
+    <div class="row3">
+        <div class="grid">
+            <div class="col-1-1">
+                <div class="content blurb">
+                    <h3 id="custom">Customising your instance of Node-RED</h3>
+                    <p>This instance of Node-RED is enough to get you started creating flows.</p>
+                    <p>You may want to customise it for your needs, for example replacing
+                        this introduction page with your own, adding http authentication to the flow editor or adding new nodes to
+                        the palette.
+                    </p>
+                    <p>To start customising your instance of Node-RED, you can either download the application locally or use IBM DevOps Services to edit and deploy your changes directly.</p>
+                    <ul class="customisations">
+                        <li>
+                            <h4 id="securing-the-editor"> + Securing the editor</h4>
+                            <div class="custom-content">
+                                <p>When you first ran this application you were presented with some options to secure the editor. To change those options,
+                                    you can set some environment variables from either the Bluemix console or the <code>cf</code> command-line
+                                </p>
+                                <p>The environment variables you can set are:</p>
+                                <ul>
+                                    <li><code>NODE_RED_USERNAME</code> - the username to secure the editor with</li>
+                                    <li><code>NODE_RED_PASSWORD</code> - the password to secure the editor with</li>
+                                    <li><code>NODE_RED_GUEST_USER</code> - set to <code>true</code> to allow anonymous users to have read-only access to the editor</li>
+                                </ul>
+
+                                <h5>Bluemix console</h5>
+                                <ol>
+                                    <li>On the Bluemix console page for this application, go to the 'Runtime' page and then the 'Environment Variables' section</li>
+                                    <li>Add the required user-defined variables</li>
+                                    <li>Click <code>Save</code> and restart your application</li>
+                                </ol>
+                                <h5><code>cf</code> command-line</h5>
+                                <ol>
+                                    <li>Run the command: <pre>cf set-env [APPLICATION_NAME] [ENV_VAR_NAME] [ENV_VAR_VALUE]</pre></li>
+                                </ol>
+                            </div>
+                        </li>
+                        <li>
+                            <h4 id="enabling-appmetrics"> + Enabling Application Metrics for Node.js monitoring</h4>
+                            <div class="custom-content">
+                                <p>When you first ran this application you were presented with an option to enable monitoring of your Node-RED
+                                    flows using the <a href="https://developer.ibm.com/node/monitoring-post-mortem/application-metrics-node-js/" target="_blank">Application Metrics for Node.js</a>
+                                    dashboard. To change those options, you can set an environment variable from either the Bluemix console or the <code>cf</code> command-line
+                                </p>
+                                <p>When enabled, the <a href="https://developer.ibm.com/node/monitoring-post-mortem/application-metrics-node-js/" target="_blank">Application Metrics for Node.js</a> dashboard will be available at </p>
+                                <p id="appdashURL"></p>
+                                <p>The environment variable you can set is:</p>
+                                <ul>
+                                    <li><code>NODE_RED_USE_APPMETRICS</code> - set to <code>true</code> to enable <a href="https://developer.ibm.com/node/monitoring-post-mortem/application-metrics-node-js/" target="_blank">Application Metrics for Node.js</a>
+                                         monitoring. Set to <code>false</code> to disable.
+                                    </li>
+                                </ul>
+                                <h5>Bluemix console</h5>
+                                <ol>
+                                    <li>On the Bluemix console page for this application, go to the 'Runtime' page and then the 'Environment Variables' section</li>
+                                    <li>Add the required user-defined variable</li>
+                                    <li>Click <code>Save</code> and restart your application</li>
+                                </ol>
+                                <h5><code>cf</code> command-line</h5>
+                                <ol>
+                                    <li>Run the command: <pre>cf set-env [APPLICATION_NAME] [ENV_VAR_NAME] [ENV_VAR_VALUE]</pre></li>
+                                </ol>
+                            </div>
+                        </li>
+                        <li>
+                            <h4> + Adding new nodes to the palette</h4>
+                            <div class="custom-content">
+                                <p>There is a growing collection of additional nodes that can be added to the Node-RED editor.
+                                    You can search for available nodes on the <a target="_blank" href="https://flows.nodered.org">Node-RED library</a>.
+                                </p>
+                                <p>To add a node to the editor you can either use the Palette Manager feature within the editor itself or manually edit the <code>package.json</code> file.</p>
+                                <h5>Palette Manager</h5>
+                                <ol>
+                                    <li>Within the editor, select the Manage Palette option from the drop-down menu</li>
+                                    <li>Go to the Install tab</li>
+                                    <li>Search for the module you're interested in and click <code>install</code></li>
+                                </ol>
+                                <h5>Edit <code>package.json</code></h5>
+                                <ol>
+                                    <li>Edit the file <code>package.json</code> and add the required node package to the <code>dependencies</code>
+                                        section. The format is:
+                                        <pre>"node-red-node-package-name":"x.x.x"</pre>
+                                        Where <code>x.x.x</code> is the desired version number.
+                                    </li>
+                                </ol>
+                            </div>
+                        </li>
+                        <li>
+                            <h4> + Upgrading the version of Node-RED</h4>
+                            <div class="custom-content">
+                                <p>The application's <code>package.json</code> is setup to grab the latest stable release of Node-RED.</p>
+                                <p>To trigger an upgrade following a new release being made available:</p>
+                                <ol>
+                                    <li>Set the <code>NODE_MODULES_CACHE</code> environment variable to <code>false</code>. You can either
+                                        do this on your application's Bluemix console page (Runtime -&gt; Environment  Variables), or by
+                                        using the <code>cf</code> command-line:
+                                        <pre>cf set-env [APPLICATION_NAME] NODE_MODULES_CACHE false</pre>
+                                    </li>
+                                    <li>Trigger a restage of your application. This cannot be done using the Bluemix console, so the <code>cf</code>
+                                        command-line should be used:
+                                        <pre> cf restage [APPLICATION_NAME]</pre>
+                                    </li>
+                                </ol>
+                            </div>
+                        </li>
+                        <li>
+                            <h4> + Changing the static web content</h4>
+                            <div class="custom-content">
+                                <p>The page you are reading now is served as static content from the application. This can be replaced
+                                    with whatever content you want in the <code>public</code> directory.
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <h4> + Remove static web content and serve the flow editor from the root path</h4>
+                            <div class="custom-content">
+                                <p>In the file <code>bluemix-settings.js</code>, delete the <code>httpStatic</code> and <code>httpAdminRoot</code> entries.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="links">
+        <div class="grid">
+            <div class="col-1-3">
+                <p><a href="https://nodered.org">Node-RED</a> is a visual wiring tool for the Internet of Things.</p>
+                <p>A project of the <a href="https://js.foundation/">JS Foundation</a>.</p>
+            </div>
+            <div class="col-1-6">
+                <ul>
+                    <li><a href="https://github.com/node-red">GitHub</a></li>
+                    <li><a href="https://www.npmjs.com/package/node-red">npm</a></li>
+                    <li><a href="https://nodered.org/docs">Documentation</a></li>
+                </ul>
+            </div>
+            <div class="col-1-6">
+                <ul>
+                    <li><a href="https://flows.nodered.org">Flow Library</a></li>
+                    <li><a href="https://nodered.org/about/">About</a></li>
+                </ul>
+            </div>
+            <div class="col-1-6">
+                <ul>
+                    <li><a href="https://nodered.org/blog/">Blog</a></li>
+                    <li><a href="https://twitter.com/nodered">Twitter</a></li>
+                    <li><a href="https://groups.google.com/forum/#!forum/node-red">Mailing List</a></li>
+                    <li><a href="https://nodered.org/slack">Slack</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+    var appdashURL = $("#appdashURL");
+    var urlString = location.origin + "/appmetrics-dash";
+    appdashURL.empty();
+    $('<a href="' + urlString + '" target="_blank">' + urlString + '</a>').appendTo(appdashURL);
+
+    $(function() {
+        $("ul.customisations h4").click(function(ev) {
+            $(this).next('.custom-content').slideToggle();
+        });
+    });
+    </script>
+</body>
+</html>

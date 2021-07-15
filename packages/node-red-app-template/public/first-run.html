@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Node-RED on IBM Cloud</title>
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+        <link href="css/simplegrid.css" rel="stylesheet" media="screen">
+        <link href="css/style.css" rel="stylesheet" media="screen">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+
+    </head>
+    <body>
+
+        <div class="header">
+            <div class="header-content">
+
+            </div>
+        </div>
+        <!-- Grid 1 -->
+        <div class="guide">
+            <div class="deploy hide">
+                <h3>Applying your settings and starting Node-RED</h3>
+                <p><img src="images/spin.svg"></p>
+            </div>
+            <div class="body">
+                <div class="page page-1">
+                    <h3>Welcome to your new Node-RED instance on IBM Cloud</h3>
+                    <p>We know you're eager to start wiring up your flows, but first there
+                        are a couple of tasks you should do:</p>
+                    <ul>
+                        <li>Secure your Node-RED editor</li>
+                        <li>Learn how to install additional nodes</li>
+                    </ul>
+                </div>
+                <div class="page page-2">
+                    <h3>Secure your Node-RED editor</h3>
+                    <ul class="box-list">
+                        <li>
+                            <label class="secureOptionLabel" for="secureOption-enabled"><input id="secureOption-enabled" type="radio" value="enabled" name="secureOption" checked> Secure your editor so only authorised users can access it</label>
+                            <div id="secureOption-enabled-info" class="secureOption-info">
+                                <div><label for="secureOption-username">Username</label> <input class="secureOption-input" id="secureOption-username" type="text"></div>
+                                <div><label for="secureOption-password">Password</label> <div class="secureOption-password-box"><input class="secureOption-input" id="secureOption-password" type="password"><meter max="5" id="password-meter"></meter><div class="password-strength"></div></div><div class="password-hints">Must be at least 8 characters</div></div>
+                                <div><label class="checkboxLabel" for="secureOption-anonymous"><input id="secureOption-anonymous" type="checkbox"> Allow anyone to view the editor, but not make any changes</label></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="secureOptionLabel" for="secureOption-disabled"><input id="secureOption-disabled" type="radio" value="disabled" name="secureOption"> <i>Not recommended:</i> Allow anyone to access the editor and make changes</label>
+                            <div id="secureOption-disabled-info" class="secureOption-info hide">
+                                Your editor will not be secured. Anyone with the URL will be able to access your flows, data and bound services.
+                                <div><label class="checkboxLabel" for="secureOption-insecure"><input id="secureOption-insecure" type="checkbox"> Tick this box to confirm you want your editor to be insecure</label></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="page page-3">
+                    <h3>Learn how to install additional nodes</h3>
+                    <p> Node-RED provides a <a href="https://flows.nodered.org" target="_blank">huge catalog of extra nodes</a> you can install into the editor.</p>
+                    <p> Many of these nodes can be installed directly from the editor's palette manager feature. However that can cause issues due to the limited
+                        memory of the default Node-RED starter application.</p>
+                    <p> The <i>recommended approach</i>  is to edit your application's <code>package.json</code> file to include the additional node modules and then redeploy the application.
+                        This can be done using the Continuous Delivery feature on the application's IBM Cloud dashboard.</p>
+                    <p> For more information, follow <a href="https://developer.ibm.com/tutorials/how-to-create-a-node-red-starter-application/" target="_blank">this tutorial on IBM Developer</a>.</p>
+                </div>
+                <div class="page page-4">
+                    <h3>Finish the install</h3>
+                    <p>You have made the following selections:</p>
+                    <ul id="summary"></ul>
+                    <p>You can change these settings at any time by setting the following environment variables via the IBM Cloud console:</p>
+                    <ul>
+                        <li><code>NODE_RED_USERNAME</code> - the username</li>
+                        <li><code>NODE_RED_PASSWORD</code> - the password</li>
+                        <li><code>NODE_RED_GUEST_ACCESS</code> - if set to `true`, allows anyone read-only access to the editor</li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="toolbar">
+                <div class="progress">
+                    <div class="progress-step progress-step-0 active"></div>
+                    <div class="progress-bar progress-bar-1"></div>
+                    <div class="progress-step progress-step-1"></div>
+                    <div class="progress-bar progress-bar-2"></div>
+                    <div class="progress-step progress-step-2"></div>
+                    <div class="progress-bar progress-bar-3"></div>
+                    <div class="progress-step progress-step-3"></div>
+                </div>
+                <div class="btn-group">
+                    <button id="btn-prev">Previous</button>
+                    <button id="btn-next">Next</button>
+                    <button id="btn-finish" class="hide">Finish</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        $(function() {
+            var currentPage = 0;
+            var totalPages = 4;
+            var passwordValid = false;
+
+            var password;
+
+            function updateProgress() {
+                for (var i = 0; i <totalPages; i++) {
+                    $(".progress-step-"+i).toggleClass("active",i<=currentPage);
+                    $(".progress-bar-"+i).toggleClass("active",i<=currentPage);
+                }
+                var pageValid = true;
+                if (currentPage === 1) {
+                    var v = $('input[name=secureOption]:checked').val();
+                    if (!v) {
+                        pageValid = false;
+                    } else if (v === 'enabled') {
+                        pageValid = $("#secureOption-username").val().length > 0 && passwordValid;
+                        $("#secureOption-insecure").prop("checked",false);
+                    } else {
+                        pageValid = $("#secureOption-insecure").prop("checked");
+                    }
+                }
+                $("#btn-next").prop("disabled",!pageValid);
+
+                $("#btn-prev").prop("disabled",currentPage === 0);
+                $("#btn-next").toggleClass("hide",currentPage+1===totalPages);
+                $("#btn-finish").toggleClass("hide",currentPage+1!==totalPages);
+            }
+
+            $("#btn-next").click(function(e) {
+                e.preventDefault();
+                if (currentPage+1 < totalPages) {
+                    if (currentPage === 1) {
+                        // Shuffle the password to stop password managers constantly prompting
+                        password = $("#secureOption-password").val();
+                        $("#secureOption-password").val("");
+                    }
+                    currentPage++;
+                    if (currentPage === 1) {
+                        $("#secureOption-password").val(password);
+                    } else if (currentPage === 3) {
+                        var summary = $("#summary");
+                        summary.empty();
+                        var v = $('input[name=secureOption]:checked').val();
+                        if (v === 'disabled') {
+                            $("<li><i>Not recommended:</i> Allow anyone to access the editor and make changes</li>").appendTo(summary);
+                        } else if (v === 'enabled') {
+                            $("<li>Secure your editor so only authorised users can access it</li>").appendTo(summary);
+                            if ($("#secureOption-anonymous").prop("checked")) {
+                                $("<li>Allow anyone to view the editor, but not make any changes</li>").appendTo(summary);
+                            }
+                        } else {
+                            $("<li>None - please go back and make a selection</li>").appendTo(summary);
+
+                        }
+                    }
+                    $(".body").animate({
+                        left: "-"+currentPage+"00%"
+                    });
+                    updateProgress();
+                }
+            });
+            $("#btn-prev").click(function(e) {
+                e.preventDefault();
+                if (currentPage > 0) {
+                    if (currentPage === 1) {
+                        // Shuffle the password to stop password managers constantly prompting
+                        password = $("#secureOption-password").val();
+                        $("#secureOption-password").val("");
+                    }
+                    currentPage--;
+                    if (currentPage === 1) {
+                        $("#secureOption-password").val(password);
+                    }
+                    $(".body").animate({
+                        left: "-"+currentPage+"00%"
+                    });
+                    updateProgress();
+                }
+            });
+            $(".body").css({
+                left: "-"+currentPage+"00%"
+            });
+            $('#secureOption-username').on('keyup',function() {
+                updateProgress();
+            });
+            $('input[name=secureOption]').on('change', function() {
+                updateProgress();
+                var v = $('input[name=secureOption]:checked').val();
+                if (v === 'enabled') {
+                    $("#secureOption-disabled-info").slideUp('fast');
+                    $("#secureOption-enabled-info").slideDown('fast');
+                } else {
+                    $("#secureOption-enabled-info").slideUp('fast');
+                    $("#secureOption-disabled-info").slideDown('fast');
+
+                }
+            });
+
+            $("#secureOption-insecure").on('change', function() {
+                updateProgress();
+            });
+            var meter = $("#password-meter");
+            var strengthColors = [
+                "red","red","red","yellowgreen","green"
+            ];
+            $("#secureOption-password").on('keyup', function() {
+                var val = $(this).val();
+                if (val.length === 0) {
+                    meter.val(0);
+                    $(".password-strength").text("");
+                    $(".password-hints").show();
+                    passwordValid = false;
+                } else if (val.length < 8) {
+                    meter.val(1);
+                    $(".password-strength").text("too short").css({color:strengthColors[1]});
+                    $(".password-hints").show();
+                    passwordValid = false;
+                } else {
+                    var result = zxcvbn(val);
+                    meter.val(result.score+1);
+                    $(".password-strength").text([
+                        'too weak','too weak','weak','good','strong'
+                    ][result.score]).css({color:strengthColors[result.score]});
+                    $(".password-hints").hide();
+                    passwordValid = (result.score >= 2);
+                }
+                updateProgress();
+            });
+
+            $("#btn-finish").click(function(e) {
+                var v = $('input[name=secureOption]:checked').val();
+                var config = {};
+                if (v === "enabled") {
+                    config.adminAuth = {
+                        username: $("#secureOption-username").val(),
+                        password: password,
+                        allowAnonymous: $("#secureOption-anonymous").prop("checked")
+                    };
+                }
+                $(".body").hide();
+                $(".toolbar").hide();
+                $(".deploy").show();
+                $.ajax({
+                    url:"/setup",
+                    type: "POST",
+                    data: JSON.stringify(config),
+                    contentType: "application/json; charset=utf-8"
+                }).done(function(data,textStatus,xhr) {
+                    waitForEditor();
+                });
+            });
+
+            function redirectToEditor() {
+                document.location.reload(true);
+            }
+            function waitForEditor() {
+                setTimeout(function() {
+                    $.ajax({
+                        dataType: "json",
+                        url: "/red/settings",
+                        success: function() {
+                            redirectToEditor();
+                        },
+                        error: function(jqXHR,textStatus,errorThrown) {
+                            if (jqXHR.status !== 401) {
+                                waitForEditor();
+                            } else {
+                                redirectToEditor();
+                            }
+                        }
+                    });
+                },2000);
+            }
+            updateProgress();
+        });
+        </script>
+    </body>
+    </html>
