@@ -96,11 +96,7 @@ module.exports = {
         }else if(filters.object_name){
             let layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
             if(layouts){
-                if(this.data.values){
-                    this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))    
-                }else{
-                    this.data.values = _.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 })    
-                }
+                this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
             }
         }
     },
