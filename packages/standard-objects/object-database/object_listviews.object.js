@@ -1,4 +1,5 @@
 const _ = require("underscore");
+const util = require("../util");
 
 function transformFilters(filters){
   let _filters = [];
@@ -52,22 +53,24 @@ Creator.Objects['object_listviews'].triggers = {
   "before.insert.server.object_listviews": {
     on: "server",
     when: "before.insert",
-    todo: function (userId, doc) {
+    todo: async function (userId, doc) {
       checkName(doc.name);
       if (!Steedos.isSpaceAdmin(doc.space, userId)) {
         doc.shared = false;
       }
+      await util.checkAPIName(this.object_name, 'name', doc.name, undefined, [['is_system','!=', true]]);
       doc.filters = transformFilters(doc.filters);
     }
   },
   "before.update.server.object_listviews": {
     on: "server",
     when: "before.update",
-    todo: function (userId, doc, fieldNames, modifier, options) {
+    todo: async function (userId, doc, fieldNames, modifier, options) {
       modifier.$set = modifier.$set || {}
 
       if(_.has(modifier.$set, "name") && modifier.$set.name != doc.name){
         checkName(modifier.$set.name);
+        await util.checkAPIName(this.object_name, 'name', doc.name, this.id, [['is_system','!=', true]]);
       }
 
       if (modifier.$set.shared && !Steedos.isSpaceAdmin(doc.space, userId)) {
