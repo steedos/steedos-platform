@@ -11,6 +11,7 @@
     "@steedos/plugin-dingtalk": "^2.0.39",
     "@steedos/plugin-enterprise": "^2.0.39",
     "@steedos/plugin-qywx": "^2.0.39",
+    "@steedos/service-accounts": "^2.0.39",
     "@steedos/service-api": "^2.0.39",
     "@steedos/service-fields-indexs": "^2.0.39",
     "@steedos/service-meteor-package-loader": "^2.0.39",
