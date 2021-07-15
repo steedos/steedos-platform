@@ -43,25 +43,65 @@ module.exports = {
     },
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        if(filters.object_name){
-            let layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
-            if(layouts){
-                this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
+        let layouts = []
+        if(filters._id && !filters._id.$ne){
+            let id = filters._id
+            id = id.replace(/\\/g, '');
+            let objectName = id.substr(0, id.indexOf("."));
+            if(objectName){
+                let layout = await InternalData.getObjectLayout(id);
+                if(layout){
+                    layouts = [layout]
+                }
             }
+        }else if(filters.object_name){
+            layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
+        }
+        if(layouts){
+            this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
         }
     },
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        if(filters.object_name){
-            let layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
-            if(layouts){
-                this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
+        let layouts = []
+        if(filters._id && !filters._id.$ne){
+            let id = filters._id
+            id = id.replace(/\\/g, '');
+            let objectName = id.substr(0, id.indexOf("."));
+            if(objectName){
+                let layout = await InternalData.getObjectLayout(id);
+                if(layout){
+                    layouts = [layout]
+                }
             }
+        }else if(filters.object_name){
+            layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
+        }
+        if(layouts){
+            this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
         }
     },
     afterCount: async function(){
-        let result = await objectql.getObject('object_layouts').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
-        this.data.values = result.length;
+        // let result = await objectql.getObject('object_layouts').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
+        // this.data.values = result.length;
+        let filters = InternalData.parserFilters(this.query.filters)
+        let layouts = []
+        if(filters._id && !filters._id.$ne){
+            let id = filters._id
+            id = id.replace(/\\/g, '');
+            let objectName = id.substr(0, id.indexOf("."));
+            if(objectName){
+                let layout = await InternalData.getObjectLayout(id);
+                if(layout){
+                    layouts = [layout]
+                }
+            }
+        }else if(filters.object_name){
+            layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
+        }
+        if(layouts){
+            this.data.values = this.data.values + _.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }).length
+        }
     },
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
