@@ -1,5 +1,15 @@
 const InternalData = require('../core/internalData');
+const util = require('../util');
 module.exports = {
+    beforeInsert: async function () {
+        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
+
+    },
+    beforeUpdate: async function () {
+        if (_.has(this.doc, 'name')) {
+            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
+        }
+    },
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         let views = []

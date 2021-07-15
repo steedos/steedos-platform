@@ -25,8 +25,7 @@ function checkName(name){
   return true
 }
 
-
-Creator.Objects['object_listviews'].triggers = {
+Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['object_listviews'].triggers || {}, {
   "before.insert.cilent.object_listviews": {
     on: "client",
     when: "before.insert",
@@ -88,4 +87,4 @@ Creator.Objects['object_listviews'].triggers = {
       }
     }
   }
-}
+})
