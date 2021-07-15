@@ -33748,6 +33748,11 @@ ws@~6.1.0:
   dependencies:
     async-limiter "~1.0.0"
 
+wx-ding-aes@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/wx-ding-aes/-/wx-ding-aes-0.0.10.tgz#7a4b1e0791e589189eda7d7170bf4afab1db8fb7"
+  integrity sha512-l2a97xNgQLaQThsJIz0h39Rwq2rmiX245OBPp1tqPDuM4q/qqEoTmou3E+H6eChfEQy0c5nhrn37sEOmZ0fH4Q==
+
 xdg-basedir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/xdg-basedir/download/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
