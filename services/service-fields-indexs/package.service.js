@@ -68,14 +68,17 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started(ctx) {
-		const steedosConfig = objectql.getSteedosConfig() || {};
-		const cron = steedosConfig.cron;
-		if(cron.build_index){
-			this.job = schedule.scheduleJob(cron.build_index, ()=>{
-				this.broker.call(`${serviceName}.refreshIndexes`)
-			});
+		try {
+			const steedosConfig = objectql.getSteedosConfig() || {};
+			const cron = steedosConfig.cron;
+			if(cron && cron.build_index){
+				this.job = schedule.scheduleJob(cron.build_index, ()=>{
+					this.broker.call(`${serviceName}.refreshIndexes`)
+				});
+			}
+		} catch (error) {
+			console.error(error)
 		}
-		
 	},
 
 	/**

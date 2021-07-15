@@ -164,6 +164,30 @@ db.organizations.helpers({
 });
 
 if (Meteor.isServer) {
+    const checkHasOrgAdminPermission = function (org, userId){
+        let result = false;
+        if(typeof org === "string"){
+            org = db.organizations.findOne(org);
+            if (!org) {
+                throw new Meteor.Error(400, `checkHasOrgAdminPermission organizations for '${org}' is not found`);
+            }
+        }
+        parents = org != null ? org.parents : void 0;
+        if (parents) {
+            parents.push(org._id);
+        } else {
+            parents = [doc._id];
+        }
+        if (Creator.getCollection("company").findOne({
+            organization: {
+                $in: parents
+            },
+            admins: userId
+        })) {
+            result = true;
+        }
+        return result;
+    };
     db.organizations.before.insert(function (userId, doc) {
         var broexisted, isOrgAdmin, isSpaceAdmin, nameOrg, orgexisted, parentOrg, parents, space;
         if (!userId && doc.owner) {
@@ -189,20 +213,7 @@ if (Meteor.isServer) {
                 if (!parentOrg) {
                     throw new Meteor.Error(400, "organizations_error_parent_is_not_found");
                 }
-                parents = parentOrg != null ? parentOrg.parents : void 0;
-                if (parents) {
-                    parents.push(doc.parent);
-                } else {
-                    parents = [doc.parent];
-                }
-                if (db.organizations.findOne({
-                    _id: {
-                        $in: parents
-                    },
-                    admins: userId
-                })) {
-                    isOrgAdmin = true;
-                }
+                isOrgAdmin = checkHasOrgAdminPermission(parentOrg, userId);
             } else {
                 // 注册用户的时候会触发"before.insert"，且其userId为underfined，所以这里需要通过parent为空来判断是否是新注册用户时进该函数。
                 isOrgAdmin = true;
@@ -255,11 +266,12 @@ if (Meteor.isServer) {
             // }
         }
         // only space admin can update organization.admins
-        if (!isSpaceAdmin) {
-            if (doc.admins) {
-                throw new Meteor.Error(400, "organizations_error_space_admins_only_for_org_admins");
-            }
-        }
+        // 组织对象的admins作废了就不用判断doc.admins了
+        // if (!isSpaceAdmin) {
+        //     if (doc.admins) {
+        //         throw new Meteor.Error(400, "organizations_error_space_admins_only_for_org_admins");
+        //     }
+        // }
     });
     db.organizations.after.insert(function (userId, doc) {
         var insertedDoc, obj, parent, rootOrg, sUser, space_users, updateFields;
@@ -676,20 +688,7 @@ if (Meteor.isServer) {
         isSpaceAdmin = space.admins.indexOf(userId) >= 0;
         // only space admin or org admin can remove organizations
         if (!isSpaceAdmin) {
-            isOrgAdmin = false;
-            if ((ref = doc.admins) != null ? ref.includes(userId) : void 0) {
-                isOrgAdmin = true;
-            } else if (doc.parent) {
-                parents = doc.parents;
-                if (db.organizations.findOne({
-                    _id: {
-                        $in: parents
-                    },
-                    admins: userId
-                })) {
-                    isOrgAdmin = true;
-                }
-            }
+            isOrgAdmin = checkHasOrgAdminPermission(doc, userId);
             if (!isOrgAdmin) {
                 throw new Meteor.Error(400, "organizations_error_org_admins_only");
             }

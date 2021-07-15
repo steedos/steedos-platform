@@ -569,13 +569,17 @@ Creator.getListViews = (object_name, spaceId, userId)->
 	isMobile = Steedos.isMobile()
 
 	_.each object.list_views, (item, item_name)->
+		item.name = item_name
+
+	listViews = _.sortBy(_.values(object.list_views) , 'sort_no');
+
+	_.each listViews, (item)->
 		if isMobile and item.type == "calendar"
 			# 手机上先不显示日历视图
 			return
-		if item_name != "default"
-			if _.indexOf(disabled_list_views, item_name) < 0 || item.owner == userId
+		if item.name  != "default"
+			if _.indexOf(disabled_list_views, item.name ) < 0 || item.owner == userId
 				list_views.push item
-
 	return list_views
 
 # 前台理论上不应该调用该函数，因为字段的权限都在Creator.getObject(object_name).fields的相关属性中有标识了

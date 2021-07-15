@@ -94,7 +94,7 @@ Template.related_object_list.helpers
 	columnFields: ()->
 		related_list_item_props = getRelateObj()
 		columnFields = [];
-		related_field_name = related_list_item_props.related_field_name
+		related_field_name = related_list_item_props?.related_field_name
 		_.each(related_list_item_props?.columns, (fieldName)->
 			if _.isObject(fieldName)
 				if fieldName.field != related_field_name

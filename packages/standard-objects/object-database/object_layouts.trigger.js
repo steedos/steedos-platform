@@ -43,7 +43,17 @@ module.exports = {
     },
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        if(filters.object_name){
+        if(filters._id){
+            let id = filters._id
+            id = id.replace(/\\/g, '');
+            let objectName = id.substr(0, id.indexOf("."));
+            if(objectName){
+                let layout = await InternalData.getObjectLayout(id);
+                if(layout){
+                    this.data.values = [layout];
+                }
+            }
+        }else if(filters.object_name){
             let layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
             if(layouts){
                 this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
@@ -52,7 +62,17 @@ module.exports = {
     },
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        if(filters.object_name){
+        if(filters._id){
+            let id = filters._id
+            id = id.replace(/\\/g, '');
+            let objectName = id.substr(0, id.indexOf("."));
+            if(objectName){
+                let layout = await InternalData.getObjectLayout(id);
+                if(layout){
+                    this.data.values = [layout];
+                }
+            }
+        }else if(filters.object_name){
             let layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
             if(layouts){
                 this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
@@ -60,8 +80,25 @@ module.exports = {
         }
     },
     afterCount: async function(){
-        let result = await objectql.getObject('object_layouts').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
-        this.data.values = result.length;
+        // let result = await objectql.getObject('object_layouts').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
+        // this.data.values = result.length;
+        let filters = InternalData.parserFilters(this.query.filters)
+        if(filters._id){
+            let id = filters._id
+            id = id.replace(/\\/g, '');
+            let objectName = id.substr(0, id.indexOf("."));
+            if(objectName){
+                let layout = await InternalData.getObjectLayout(id);
+                if(layout){
+                    this.data.values = [layout];
+                }
+            }
+        }else if(filters.object_name){
+            let layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
+            if(layouts){
+                this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
+            }
+        }
     },
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){

@@ -127,6 +127,8 @@ fields:
     label: 字段
     help: 
     description: 
+  sort_no:
+    label: 排序号
 listviews:
   all:
     label: 全部

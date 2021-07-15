@@ -8,3 +8,6 @@ fields:
     label: 钉钉工作区
     type: text
     hidden: true
+  job_number:
+    label: 工号
+    type: text

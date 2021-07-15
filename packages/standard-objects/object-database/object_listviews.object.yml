@@ -275,6 +275,11 @@ fields:
 
               return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
             }
+  sort_no:
+    label: Sort no
+    type: number
+    scale: 0
+    defaultValue: 100
 paging:
   enabled: false
 list_views:
