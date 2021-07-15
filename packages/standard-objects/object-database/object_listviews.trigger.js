@@ -3,19 +3,7 @@ const InternalData = require('../core/internalData');
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        if(filters._id){
-            let id = filters._id
-            id = id.replace(/\\/g, '');
-            if(_.isString(id)){
-                let objectName = id.substr(0, id.indexOf("."));
-                if(objectName){
-                    let view = await InternalData.getObjectListView(objectName, this.userId, id);
-                    if(view){
-                        this.data.values = [view];
-                    }
-                }
-            }
-        }else if(filters.object_name){
+        if(filters.object_name){
             let views = await InternalData.getObjectListViews(filters.object_name, this.userId);
             if(views){
                 this.data.values = this.data.values.concat(views)
@@ -24,19 +12,7 @@ module.exports = {
     },
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        if(filters._id){
-            let id = filters._id
-            id = id.replace(/\\/g, '');
-            if(_.isString(id)){
-                let objectName = id.substr(0, id.indexOf("."));
-                if(objectName){
-                    let view = await InternalData.getObjectListView(objectName, this.userId, id);
-                    if(view){
-                        this.data.values = [view];
-                    }
-                }
-            }
-        }else if(filters.object_name){
+        if(filters.object_name){
             let views = await InternalData.getObjectListViews(filters.object_name, this.userId);
             if(views){
                 this.data.values = this.data.values.concat(views)
@@ -45,19 +21,7 @@ module.exports = {
     },
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        if(filters._id){
-            let id = filters._id
-            id = id.replace(/\\/g, '');
-            if(_.isString(id)){
-                let objectName = id.substr(0, id.indexOf("."));
-                if(objectName){
-                    let view = await InternalData.getObjectListView(objectName, this.userId, id);
-                    if(view){
-                        this.data.values = [view];
-                    }
-                }
-            }
-        }else if(filters.object_name){
+        if(filters.object_name){
             let views = await InternalData.getObjectListViews(filters.object_name, this.userId);
             if(views){
                 this.data.values = this.data.values + views.length

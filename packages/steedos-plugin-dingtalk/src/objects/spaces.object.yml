@@ -22,7 +22,7 @@ fields:
     group: 钉钉
     hidden: false
   dingtalk_aes_key:
-    label: AesSecret
+    label: AesKey
     type: text
     group: 钉钉
     hidden: false

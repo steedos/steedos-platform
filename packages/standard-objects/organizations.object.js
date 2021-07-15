@@ -176,7 +176,7 @@ if (Meteor.isServer) {
         if (parents) {
             parents.push(org._id);
         } else {
-            parents = [doc._id];
+            parents = [org._id];
         }
         if (Creator.getCollection("company").findOne({
             organization: {
@@ -369,18 +369,18 @@ if (Meteor.isServer) {
             1.需要有原组织或原组织的父组织的管理员权限
             2.需要有改动后的父组织的权限
         */
-        // if (!isSpaceAdmin) {
-        //     isOrgAdmin = Steedos.isOrgAdminByAllOrgIds([doc._id], userId);
-        //     if (!isOrgAdmin) {
-        //         throw new Meteor.Error(400, "organizations_error_org_admins_only");
-        //     }
-        //     if (((ref = modifier.$set) != null ? ref.parent : void 0) && ((ref1 = modifier.$set) != null ? ref1.parent : void 0) !== doc.parent) {
-        //         isParentOrgAdmin = Steedos.isOrgAdminByAllOrgIds([modifier.$set.parent], userId);
-        //         if (!isParentOrgAdmin) {
-        //             throw new Meteor.Error(400, "您没有该上级部门的权限");
-        //         }
-        //     }
-        // }
+        if (!isSpaceAdmin) {
+            isOrgAdmin = checkHasOrgAdminPermission(doc._id, userId);
+            if (!isOrgAdmin) {
+                throw new Meteor.Error(400, "organizations_error_org_admins_only");
+            }
+            if (((ref = modifier.$set) != null ? ref.parent : void 0) && ((ref1 = modifier.$set) != null ? ref1.parent : void 0) !== doc.parent) {
+                isParentOrgAdmin = checkHasOrgAdminPermission(modifier.$set.parent, userId);
+                if (!isParentOrgAdmin) {
+                    throw new Meteor.Error(400, "您没有该上级部门的权限");
+                }
+            }
+        }
         if (modifier.$set.space && doc.space !== modifier.$set.space) {
             throw new Meteor.Error(400, "organizations_error_space_readonly");
         }
