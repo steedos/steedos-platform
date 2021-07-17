@@ -32,6 +32,8 @@ fields:
         value: select
       - label: 复选框
         value: boolean
+      - label: 开关
+        value: toggle
       - label: 日期
         value: date
       - label: 日期时间

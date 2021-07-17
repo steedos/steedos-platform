@@ -64,6 +64,8 @@ fields:
         value: select
       - label: Boolean
         value: boolean
+      - label: Toggle
+        value: toggle
       - label: Date
         value: date
       - label: Datetime

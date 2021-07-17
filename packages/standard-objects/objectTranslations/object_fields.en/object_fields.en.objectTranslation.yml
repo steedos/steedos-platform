@@ -35,6 +35,8 @@ fields:
         value: select
       - label: Checkbox
         value: boolean
+      - label: Toggle
+        value: toggle
       - label: Date
         value: date
       - label: Datetime
