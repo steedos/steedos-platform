@@ -21288,7 +21288,6 @@ textarea.ant-pagination-options-quick-jumper input {
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
-/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 .ant-pro-table-search {
   margin-bottom: 16px;
   padding: 24px;
@@ -29842,6 +29841,10 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 
 .type-file .ant-upload .ant-btn .anticon-upload svg {
   vertical-align: -0.125em;
+}
+
+.type-password.mode-read .ant-form-item-control .ant-form-item-control-input-content a .anticon.anticon-eye-invisible {
+  display: none;
 }
 
 .ant-modal-wrap {
