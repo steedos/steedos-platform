@@ -40,6 +40,7 @@ DataSource.Odata.lookup_options = (options)->
 	name_field_key = object.NAME_FIELD_KEY
 	idFieldName = object.idFieldName
 	query = {}
+	reference_to_field = options?.reference_to_field || "_id"
 	if options.params.space
 		query.space = options.params.space
 		sort = options?.sort
@@ -77,7 +78,7 @@ DataSource.Odata.lookup_options = (options)->
 
 		odataOptions = {
 			$top: options_limit,
-			$select: "#{name_field_key}"
+			$select: "#{name_field_key},#{reference_to_field}"
 		};
 
 		if options?.values?.length
@@ -110,7 +111,7 @@ DataSource.Odata.lookup_options = (options)->
 		_.each result, (item)->
 			options.push
 				label: item[name_field_key]
-				value: item._id
+				value: item[reference_to_field]
 		return options
 
 	return []

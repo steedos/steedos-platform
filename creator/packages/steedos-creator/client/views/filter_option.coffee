@@ -104,6 +104,8 @@ Template.filter_option.helpers
 					_field = object_fields[schema_key]
 					if _field.reference_limit
 						schema.value.autoform.optionsLimit = _field.reference_limit
+					if _field.reference_to_field
+						schema.value.autoform.referenceToField = _field.reference_to_field
 
 					if _field.type == "select"
 						schema.value.autoform.type = "steedosLookups"
