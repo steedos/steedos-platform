@@ -1,5 +1,5 @@
 try
-	if Meteor.isDevelopment
+	if process.env.CREATOR_NODE_ENV == 'development'
 		steedosCore = require('@steedos/core')
 		objectql = require('@steedos/objectql')
 		moleculer = require("moleculer");
