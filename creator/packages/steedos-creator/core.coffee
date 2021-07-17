@@ -578,6 +578,8 @@ Creator.getListViews = (object_name, spaceId, userId)->
 		if item.name  != "default"
 			if _.indexOf(disabled_list_views, item.name ) < 0 || item.owner == userId
 				list_views.push item
+			else if item._id && _.indexOf(disabled_list_views, item._id ) < 0
+				list_views.push item
 	return list_views
 
 # 前台理论上不应该调用该函数，因为字段的权限都在Creator.getObject(object_name).fields的相关属性中有标识了
