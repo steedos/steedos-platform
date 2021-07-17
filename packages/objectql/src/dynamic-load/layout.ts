@@ -27,7 +27,7 @@ export const getLayout = function(objectName: string, layoutName: string){
 
 export const addObjectLayoutConfig = (objectName: string, json: any) => {
     if (!json.name) {
-        throw new Error('missing attribute name')
+        throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
     addLayouts(objectName, json);
 }

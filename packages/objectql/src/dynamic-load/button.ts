@@ -29,7 +29,7 @@ export const loadObjectLazyButtons = function(objectName: string){
 
 export const addObjectButtonsConfig = (objectName: string, json: SteedosActionTypeConfig) => {
     if (!json.name) {
-        throw new Error('missing attribute name')
+        throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
 
     let object = getObjectConfig(objectName);
@@ -46,7 +46,7 @@ export const addObjectButtonsConfig = (objectName: string, json: SteedosActionTy
 
 export const removeObjectButtonsConfig = (objectName: string, json: SteedosActionTypeConfig)=>{
     if (!json.name) {
-        throw new Error('missing attribute name')
+        throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
     let object = getObjectConfig(objectName);
     if(object.actions){
