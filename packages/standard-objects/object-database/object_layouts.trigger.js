@@ -11,12 +11,31 @@ function check(objectName, profiles, id){
     if(id){
         query._id = {$ne: id}
     }
+    let abc = Creator.getCollection("object_layouts").find(query).fetch();
     let count = Creator.getCollection("object_layouts").find(query).count();
 
     if(count > 0){
         throw new Error("同一个对象、简档只能有一条记录");
     }
 }
+
+const getInternalLatouts = async function(sourceLayouts, filters){
+    let collection = await objectql.getObject("object_layouts");
+    let dbLayouts = await collection.directFind({filters, fields:['_id', 'name']});
+    let layouts = [];
+
+    if(!filters.is_system){
+        _.forEach(sourceLayouts, function(doc){
+            if(!_.find(dbLayouts, function(p){
+                return p.name === doc.name
+            })){
+                layouts.push(doc);
+            }
+        })
+    }
+    return layouts;
+}
+
 module.exports = {
     beforeInsert: async function(){
         let doc = this.doc
@@ -64,6 +83,9 @@ module.exports = {
         }else if(filters.object_name){
             layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
         }
+
+        layouts = await getInternalLatouts(layouts, filters);
+
         if(layouts){
             this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
         }
@@ -84,6 +106,9 @@ module.exports = {
         }else if(filters.object_name){
             layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
         }
+
+        layouts = await getInternalLatouts(layouts, filters);
+
         if(layouts){
             this.data.values = this.data.values.concat(_.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }))
         }
@@ -106,6 +131,9 @@ module.exports = {
         }else if(filters.object_name){
             layouts = await InternalData.getObjectLayouts(filters.object_name, this.spaceId);
         }
+
+        layouts = await getInternalLatouts(layouts, filters);
+        
         if(layouts){
             this.data.values = this.data.values + _.filter(layouts, function(layout){return layout._id && layout._id.indexOf('.') > 0 }).length
         }
