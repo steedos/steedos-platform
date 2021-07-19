@@ -33,7 +33,7 @@ export const ActionHandlers = {
         const metadataApiName = ctx.params.permissionsetApiName;
         const metadataConfig = await getServicePermissionsetConfig(ctx, serviceName, metadataApiName)
         if(metadataConfig && metadataConfig.metadata){
-            config = _.defaultsDeep(metadataConfig.metadata, config);
+            config = _.defaultsDeep(config, metadataConfig.metadata);
         }
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
         const permissionsetConfig = await refreshPermissionset(ctx, metadataApiName);
@@ -52,7 +52,7 @@ export const ActionHandlers = {
         const metadataApiName = ctx.params.profileApiName;
         const metadataConfig = await getServiceProfileConfig(ctx, serviceName, metadataApiName)
         if(metadataConfig && metadataConfig.metadata){
-            config = _.defaultsDeep(metadataConfig.metadata, config);
+            config = _.defaultsDeep(config, metadataConfig.metadata);
         }
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: PROFILE_METADATA_TYPE, metadataApiName: metadataApiName})})
         const profileConfig = await refreshProfile(ctx, metadataApiName);
