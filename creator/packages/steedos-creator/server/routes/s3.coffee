@@ -75,11 +75,13 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 					}
 					fileObj.update({$set: {'metadata.parent' : newFileObjId}})
 
+			newFile.once 'stored', (storeName)->
+				size = newFile.original.size
+				if !size
+					size = 1024
 				resp =
-					version_id: fileObj._id,
+					version_id: newFile._id,
 					size: size
-
-				res.setHeader("x-amz-version-id",fileObj._id);
 				res.end(JSON.stringify(resp));
 				return
 		else
