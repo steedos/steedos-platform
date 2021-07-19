@@ -480,6 +480,10 @@ export async function importWithCmsFile(importObjId, userSession) {
         queueImportId: importObjId
     }
 
+    if(options.operation != "insert" && (!options.externalIdName || _.isEmpty(options.externalIdName))){
+        throw new Error(`external_id_name is required with operation: update or upsert`);
+    }
+
     let fileCollection = await objectql.getObject('cfs_files_filerecord')
     files = await fileCollection.find({ filters: [['_id', '=', queueImport.file]] });
 
@@ -676,27 +680,31 @@ export async function importWithRecords(recordDatas, options) {
         if(!dataRow || dataRow.length == 0){
             continue;
         }
-        let key = getKeyString(dataRow, keyIndexes);
 
-        if (keyMap[key] > 1) {
-            failure_count = failure_count + 1;
-            errorList.push(`文件中存在重复的${options.externalIdName}: "${key}"`);
+        if(!options.externalIdName && !_.isEmpty(options.externalIdName)){
 
-        } else {
-
-            var insertInfo;
-            insertInfo = await insertRow(dataRow, objectName, options);
-
-            if (insertInfo != null ? insertInfo.errorInfo : void 0) {
-                errorList.push(dataRow + insertInfo.errorInfo);
-            }
-            // 	# 插入一行数据	
-            if (insertInfo != null ? insertInfo.insertState : void 0) {
-                success_count = success_count + 1;
-            } else {
+            let key = getKeyString(dataRow, keyIndexes);
+    
+            if (keyMap[key] > 1) {
                 failure_count = failure_count + 1;
+                errorList.push(`文件中存在重复的${options.externalIdName}: "${key}"`);
+                continue;
             }
         }
+
+        var insertInfo;
+        insertInfo = await insertRow(dataRow, objectName, options);
+
+        if (insertInfo != null ? insertInfo.errorInfo : void 0) {
+            errorList.push(dataRow + insertInfo.errorInfo);
+        }
+        // 	# 插入一行数据	
+        if (insertInfo != null ? insertInfo.insertState : void 0) {
+            success_count = success_count + 1;
+        } else {
+            failure_count = failure_count + 1;
+        }
+        
     }
 
     return {

@@ -37,6 +37,8 @@ if (process.platform == "win32") {
     execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos')+' '+ path.join(process.cwd(), '/../node_modules/@steedos'));
     execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos/builder-community')+' '+ path.join(`${appBuilderPath}/packages/builder-community`));
 }else{
+    execSync(`cd ../../app-builder/ && yarn build`, {stdio: 'inherit'});
+    execSync(`cp -r ../../app-builder/packages/builder-community/dist/builder-community.react.css public/`);
     execSync('rm -rf '+ path.join(process.cwd(), '../node_modules/@steedos/builder-community'));
     execSync('ln -s '+ path.join(process.cwd(), '../../app-builder/packages/builder-community') + ' ' + path.join(process.cwd(), '../node_modules/@steedos'));
     execSync('ln -s ' + path.join(process.cwd(), '../node_modules/@steedos') + ' ' + process.cwd() + '/node_modules/@steedos' );

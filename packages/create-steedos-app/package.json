@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-app",
-  "version": "2.0.40",
+  "version": "2.0.42",
   "keywords": [
     "steedos"
   ],
@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "bugs": {
     "url": "https://github.com/steedos/steedos-platform/issues"
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@geek/spinner": "^1.0.0",
-    "@steedos/project-template-empty": "^2.0.40",
+    "@steedos/project-template-empty": "^2.0.42",
     "chalk": "3.0.0",
     "commander": "4.1.0",
     "fs-extra": "8.1.0"

@@ -31,7 +31,7 @@ const getStandardpPermissionsets = function(){
 
 const addPermissionset = async function(json: SteedosPermissionsetTypeConfig, serviceName: string){
     if(!json.name){
-        throw new Error('missing attribute name');
+        throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
     let permissionsetConfig = null;
 

@@ -28,7 +28,7 @@ export const loadObjectLazyListViews = function(objectName: string){
 
 export const addObjectListViewConfig = (objectName: string, json: SteedosObjectListViewTypeConfig) => {
     if (!json.name) {
-        throw new Error('missing attribute name')
+        throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
 
     let object = getObjectConfig(objectName);

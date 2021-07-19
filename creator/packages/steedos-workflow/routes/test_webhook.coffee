@@ -1,4 +1,4 @@
-if Meteor.isDevelopment
+if process.env.CREATOR_NODE_ENV == 'development'
     JsonRoutes.add 'post', '/test/webhook', (req, res, next) ->
         try
 

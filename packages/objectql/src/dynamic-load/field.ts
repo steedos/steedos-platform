@@ -27,7 +27,7 @@ export const loadObjectLazyFields = function(objectName: string){
 
 export const addObjectFieldConfig = (objectName: string, json: SteedosFieldTypeConfig) => {
     if (!json.name) {
-        throw new Error('missing attribute name')
+        throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
     let object = getObjectConfig(objectName);
     let originalObject = getOriginalObjectConfig(objectName);
@@ -50,7 +50,7 @@ export const addObjectFieldConfig = (objectName: string, json: SteedosFieldTypeC
 
 export const removeObjectFieldConfig = (objectName: string, json: SteedosFieldTypeConfig)=>{
     if (!json.name) {
-        throw new Error('missing attribute name')
+        throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
     let object = getObjectConfig(objectName);
     let originalObject = getOriginalObjectConfig(objectName);

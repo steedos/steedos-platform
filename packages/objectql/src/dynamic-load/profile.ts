@@ -40,7 +40,7 @@ const getStandardProfiles = function(){
 
 const addProfile = async function(json: SteedosProfileTypeConfig, serviceName: string){
     if(!json.name){
-        throw new Error('missing attribute name');
+        throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
 
     let profileConfig = null;

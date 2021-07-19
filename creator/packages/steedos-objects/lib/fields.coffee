@@ -181,6 +181,8 @@ Creator.getObjectSchema = (obj) ->
 
 					if field.reference_limit
 						fs.autoform.optionsLimit = field.reference_limit
+					if field.reference_to_field
+						fs.autoform.referenceToField = field.reference_to_field
 
 					if field.reference_to == "users"
 						fs.autoform.type = "selectuser"

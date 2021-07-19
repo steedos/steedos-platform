@@ -1,0 +1,15 @@
+{
+  "name": "@steedos/node-red-app-template",
+  "version": "2.0.42",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pub_next": "npm publish --tag next --registry https://registry.npmjs.org"
+  },
+  "author": "",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": false
+}

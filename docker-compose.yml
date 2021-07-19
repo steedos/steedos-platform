@@ -2,7 +2,7 @@ version: "3"
 
 services:
   steedos:
-    image: steedos/steedos-project-community:2.0.40
+    image: steedos/steedos-project-community:2.0.42
     restart: always
     ports:
       - "3000:3000"
@@ -16,7 +16,7 @@ services:
       - STEEDOS_CFS_STORE=local
       - STEEDOS_STORAGE_DIR=/app/storage
       - TRANSPORTER=redis://redis:6379
-      - CACHER=redis://redis/1
+      - CACHER=redis://redis/2
     depends_on:
       - mongo
       - redis
@@ -26,7 +26,7 @@ services:
     restart: always
     volumes:
       - "./docker-volumes/redis/data:/data"
-    command: redis-server
+    command: ["/bin/sh","-c", "redis-server --save \"\" --appendonly no"]
     ports:
       - "6389:6379"
 
