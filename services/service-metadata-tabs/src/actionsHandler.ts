@@ -46,7 +46,7 @@ export const ActionHandlers = {
         const metadataApiName = ctx.params.tabApiName;
         const metadataConfig = await getServiceConfig(ctx, serviceName, `${config.object_name}.${metadataApiName}`)
         if(metadataConfig && metadataConfig.metadata){
-            config = _.defaultsDeep(metadataConfig.metadata, config);
+            config = _.defaultsDeep(config, metadataConfig.metadata);
         }
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
         const tabConfig = await refresh(ctx, metadataApiName);
