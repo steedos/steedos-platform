@@ -230,10 +230,10 @@ function checkMasterDetailTypeField(doc, oldReferenceTo) {
     throw new Meteor.Error(doc.name, "您无法创建此类字段，因为这将超出主表子表关系的最大深度。");
   }
 
-  const ownerField = _.find(obj.fields,(n)=>{ return n.name === "owner";});
-  if(!ownerField.omit){
-    throw new Meteor.Error(doc.name, "您无法创建此类字段，因为该对象上“所有者”字段未勾选“新建、编辑时隐藏”属性。");
-  }
+  // const ownerField = _.find(obj.fields,(n)=>{ return n.name === "owner";});
+  // if(!ownerField.omit){
+  //   throw new Meteor.Error(doc.name, "您无法创建此类字段，因为该对象上“所有者”字段未勾选“新建、编辑时隐藏”属性。");
+  // }
 }
 
 function onChangeName(oldName, newDoc){
