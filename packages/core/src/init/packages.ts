@@ -31,3 +31,20 @@ export async function loadPackages() {
         }
     }
 }
+
+export async function loadPackage(packagePath){
+    let schema = getSteedosSchema();
+    let broker = schema.broker;
+    if(broker){
+        const filePatten = [
+            path.join(packagePath, "**", "package.service.js")
+        ]
+        const matchedPaths:[string] = globby.sync(filePatten);
+        for await (const serviceFilePath of matchedPaths) {
+            const service = broker.loadService(serviceFilePath);
+            if (!broker.started) { //如果broker未启动则手动启动service
+                broker._restartService(service)
+            }
+        }
+    }
+}

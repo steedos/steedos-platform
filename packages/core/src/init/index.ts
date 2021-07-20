@@ -8,6 +8,7 @@ import { initPublicStaticRouter } from '../routes';
 import { loadPackages } from './packages';
 import { InitTranslations } from './translations';
 export { loadClientScripts } from './core'
+export { loadPackage } from './packages'
 export async function init(settings: any = {}) {
     getSteedosSchema();
     WebAppInternals.setInlineScriptsAllowed(false);
