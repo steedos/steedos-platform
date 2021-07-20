@@ -3,7 +3,7 @@ data_type: boolean
 defaultValue: null
 description: null
 filterable: false
-formula: state__c = 'completed'
+formula: ISPICKVAL(state__c , "completed")
 formula_blank_value: blanks
 group: null
 hidden: false
