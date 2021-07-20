@@ -1,0 +1,4 @@
+name: reload
+is_enable: true
+label: 重新加载
+'on': record
