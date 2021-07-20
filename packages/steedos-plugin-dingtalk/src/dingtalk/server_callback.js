@@ -1,13 +1,14 @@
 // let WXBizMsgCrypt = require('wechat-crypto');
-let express = require('express');
-let router = express.Router();
-let Cookies = require("cookies");
-let objectql = require('@steedos/objectql');
-let steedosConfig = objectql.getSteedosConfig();
-let dtApi = require('./dt_api');
-let dtSync = require('./dt_sync');
-let DingtalkManager = require('./dingtalk_manager');
-let push = require('./notifications');
+const express = require('express');
+const router = express.Router();
+const Cookies = require("cookies");
+const objectql = require('@steedos/objectql');
+const steedosConfig = objectql.getSteedosConfig();
+const steedosSchema = objectql.getSteedosSchema();
+const dtApi = require('./dt_api');
+const dtSync = require('./dt_sync');
+const DingtalkManager = require('./dingtalk_manager');
+const push = require('./notifications');
 const auth = require("@steedos/auth");
 // let jsapi = require('./jsapi');
 
@@ -271,29 +272,26 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
     cookies = new Cookies(req, res);
     userId = cookies.get("X-User-Id");
     authToken = cookies.get("X-Auth-Token");
-    
-    res.reply = function (result) {
-        JsonRoutes.sendResult(res, {
-            data: result
-        });
-    }
 
-    let space = dtApi.spaceGet(req.body.corpId);
+    let space = await dtApi.spaceGet(req.body.corpId);
     if (!space)
-        res.reply("缺少参数 corpId!");
+        return res.end("缺少参数 corpId!");
     
-    let access_token = dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret).access_token;
+    let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
     let code = req.body.code;
+    let access_token = response.access_token;
 
     if (!code || !access_token)
-        res.reply("缺少参数!");
+        return res.end("缺少参数!");
 
     let user_info, space_user;
-    user_info = dtApi.userInfoGet(access_token, code);
+    user_info = await dtApi.userInfoGet(access_token, code);
 
+    let userObj = steedosSchema.getObject('space_users');
+    // console.log("user_info: ",user_info);
     if (user_info && user_info.userid) {
-        space_user = db.space_users.findOne({
-            'dingtalk_id': user_info.userid
+        space_user = await userObj.findOne({
+            filters: [['dingtalk_id', '=', user_info.userid]]
         });
 
         if (!space_user){
@@ -312,6 +310,7 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
 
         let stampedAuthToken = auth.generateStampedLoginToken();
         let space_user_id = space_user.user;
+
         authtToken = stampedAuthToken.token;
         hashedToken = auth.hashStampedToken(stampedAuthToken);
         await auth.insertHashedLoginToken(space_user_id, hashedToken);
@@ -319,7 +318,7 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
         res.setHeader('X-Space-Token', space._id + ',' + authtToken);
         return res.end('user_exists');
     } else {
-        res.reply("用户不存在!");
+        return res.end("用户不存在!");
     }
 
 });

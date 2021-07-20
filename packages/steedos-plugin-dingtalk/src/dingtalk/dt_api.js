@@ -1,17 +1,18 @@
-let objectql = require('@steedos/objectql');
-let steedosConfig = objectql.getSteedosConfig();
+const objectql = require('@steedos/objectql');
+const steedosConfig = objectql.getSteedosConfig();
+const steedosSchema = objectql.getSteedosSchema();
+const fetch = require('node-fetch');
 
-exports.accessTokenGet = function (key, secret) {
+exports.accessTokenGet = async function (key, secret) {
     var err, response;
     try {
-        response = HTTP.get("https://oapi.dingtalk.com/gettoken?appkey=" + key + "&appsecret=" + secret);
-        if (response.error_code) {
-            throw response.msg;
+        // response = HTTP.get("https://oapi.dingtalk.com/gettoken?appkey=" + key + "&appsecret=" + secret);
+        response = await fetch("https://oapi.dingtalk.com/gettoken?appkey=" + key + "&appsecret=" + secret).then(res => res.json());
+        
+        if (response.errcode > 0) {
+            throw response.errmsg;
         }
-        if (response.data.errcode > 0) {
-            throw response.data.errmsg;
-        }
-        return response.data;
+        return response;
     } catch (_error) {
         err = _error;
         console.error(err);
@@ -264,25 +265,15 @@ let authInfoGet = function (suite_access_token, suite_key, auth_corpid, permanen
     }
 };
 
-exports.userInfoGet = function (access_token, code) {
+exports.userInfoGet = async function (access_token, code) {
     var err, response;
     try {
-        response = HTTP.get("https://oapi.dingtalk.com/user/getuserinfo?access_token=" + access_token + "&code=" + code, {
-            data: {
-                access_token: access_token,
-                code: code
-            },
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        if (response.error_code) {
-            throw response.msg;
+        response = await fetch("https://oapi.dingtalk.com/user/getuserinfo?access_token=" + access_token + "&code=" + code).then(res => res.json());
+        
+        if (response.errcode > 0) {
+            throw response.errmsg;
         }
-        if (response.data.errcode > 0) {
-            throw response.data.errmsg;
-        }
-        return response.data;
+        return response;
     } catch (_error) {
         err = _error;
         console.error(err);
@@ -706,16 +697,17 @@ let createOrg = function (depts, parentid, space_id, company_id, owner_id) {
     }
 };
 
-exports.spaceGet = function(corpId){
+exports.spaceGet = async function(corpId){
     try {
-        let space;
+        let space = "";
+        let spaceObj = steedosSchema.getObject("spaces");
         let spaceId = typeof steedosConfig !== "undefined" && steedosConfig !== null ? (_ref5 = steedosConfig.tenant) != null ? _ref5._id : void 0 : void 0;
         if(corpId){
-            space = Creator.getCollection('spaces').findOne({"dingtalk_corp_id": corpId});
+            space = await spaceObj.findOne({filters: [['dingtalk_corp_id', '=', corpId]]});
         }else if (spaceId){
-            space = Creator.getCollection('spaces').findOne({_id:spaceId});
+            space = await spaceObj.findOne({filters: [['_id', '=', spaceId]]});
         }else{
-            space = Creator.getCollection('spaces').findOne({});
+            space = await spaceObj.findOne({});
         }
 
         return space;
@@ -748,22 +740,24 @@ exports.clearAuthCookies = function(req, res) {
     });
 };
 
-exports.sendMessage = function(data, access_token){
+exports.sendMessage = async function(data, access_token){
     try {
         let url = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2";
         if (!url)
             return;
         
-        let response = HTTP.post(url + "?access_token=" + access_token, {
-            data: data,
+        let response = await fetch(url + "?access_token=" + access_token, {
+            method: 'post',
+            body: JSON.stringify(data),
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             }
-        });
-        if (response.statusCode !== 200) {
-            throw response;
+        }).then(res => res.json());
+        console.log("send response: ",response);
+        if (response.errcode > 0) {
+            throw response.errmsg;
         }
-        return response.data;
+        return response.errmsg;
     } catch (err) {
         console.error(err);
         throw _.extend(new Error("Failed to send message with error: " + err), {
