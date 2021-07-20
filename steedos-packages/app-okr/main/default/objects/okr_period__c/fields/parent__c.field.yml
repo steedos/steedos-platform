@@ -13,3 +13,4 @@ searchable: false
 sort_no: 105
 sortable: false
 type: lookup
+write_requires_master_read: false
