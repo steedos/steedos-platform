@@ -106,22 +106,15 @@ let activateSuitePost = function (suite_access_token, suite_key, auth_corpid, pe
     }
 };
 
-let departmentGet = function (access_token, department_id) {
+exports.departmentGet = async function (access_token, department_id) {
     var err, response;
     try {
-        response = HTTP.get("https://oapi.dingtalk.com/department/get", {
-            params: {
-                access_token: access_token,
-                id: department_id
-            }
-        });
-        if (response.error_code) {
-            throw response.msg;
+        response = await fetch("https://oapi.dingtalk.com/department/get?access_token=" + access_token + "&id=" + department_id).then(res => res.json());
+        
+        if (response.errcode > 0) {
+            throw response.errmsg;
         }
-        if (response.data.errcode > 0) {
-            throw response.data.errmsg;
-        }
-        return response.data;
+        return response;
     } catch (_error) {
         err = _error;
         console.error(err);
@@ -131,22 +124,15 @@ let departmentGet = function (access_token, department_id) {
     }
 };
 
-let departmentListGet = function (access_token) {
+exports.departmentListGet = async function (access_token) {
     var err, response;
     try {
-        response = HTTP.get("https://oapi.dingtalk.com/department/list", {
-            params: {
-                access_token: access_token
-            }
-        });
-        if (response.error_code) {
-            console.error(err);
-            throw response.msg;
+        response = await fetch("https://oapi.dingtalk.com/department/list?access_token=" + access_token).then(res => res.json());
+        
+        if (response.errcode > 0) {
+            throw response.errmsg;
         }
-        if (response.data.errcode > 0) {
-            throw response.data.errmsg;
-        }
-        return response.data.department;
+        return response.department;
     } catch (_error) {
         err = _error;
         console.error(err);
@@ -156,23 +142,15 @@ let departmentListGet = function (access_token) {
     }
 };
 
-let userListGet = function (access_token, department_id) {
+exports.userListGet = async function (access_token, department_id) {
     var err, response;
     try {
-        response = HTTP.get("https://oapi.dingtalk.com/user/list", {
-            params: {
-                access_token: access_token,
-                department_id: department_id
-            }
-        });
-        if (response.error_code) {
-            console.error(err);
-            throw response.msg;
+        response = await fetch("https://oapi.dingtalk.com/user/list?access_token=" + access_token + "&department_id=" + department_id).then(res => res.json());
+        
+        if (response.errcode > 0) {
+            throw response.errmsg;
         }
-        if (response.data.errcode > 0) {
-            throw response.data.errmsg;
-        }
-        return response.data.userlist;
+        return response.userlist;
     } catch (_error) {
         err = _error;
         console.error(err);
@@ -283,25 +261,15 @@ exports.userInfoGet = async function (access_token, code) {
     }
 };
 
-exports.userGet = function (access_token, userid) {
+exports.userGet = async function (access_token, userid) {
     var err, response;
     try {
-        response = HTTP.get("https://oapi.dingtalk.com/user/get?access_token=" + access_token + "&userid=" + userid, {
-            data: {
-                access_token: access_token,
-                userid: userid
-            },
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        if (response.error_code) {
-            throw response.msg;
+        response = await fetch("https://oapi.dingtalk.com/user/get?access_token=" + access_token + "&userid=" + userid).then(res => res.json());
+        
+        if (response.errcode > 0) {
+            throw response.errmsg;
         }
-        if (response.data.errcode > 0) {
-            throw response.data.errmsg;
-        }
-        return response.data;
+        return response;
     } catch (_error) {
         err = _error;
         console.error(err);
@@ -753,7 +721,7 @@ exports.sendMessage = async function(data, access_token){
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json());
-        console.log("send response: ",response);
+        
         if (response.errcode > 0) {
             throw response.errmsg;
         }
