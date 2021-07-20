@@ -1,3 +1,4 @@
 name: steedos_packages
 icon: apex
 label: Steedos Packages
+hidden: true

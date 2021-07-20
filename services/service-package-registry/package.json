@@ -15,5 +15,9 @@
     "lodash": "~4.17.21",
     "npm-package-arg": "~8.1.5",
     "radwag-mass": "~1.0.5"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }
