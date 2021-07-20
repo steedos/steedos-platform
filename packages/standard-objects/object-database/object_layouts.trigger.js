@@ -11,7 +11,6 @@ function check(objectName, profiles, id){
     if(id){
         query._id = {$ne: id}
     }
-    let abc = Creator.getCollection("object_layouts").find(query).fetch();
     let count = Creator.getCollection("object_layouts").find(query).count();
 
     if(count > 0){
