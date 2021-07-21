@@ -22,8 +22,5 @@
     "validator": "^13.6.0"
   },
   "author": "",
-  "license": "ISC",
-  "engines": {
-    "node": "12.x"
-  }
+  "license": "ISC"
 }
