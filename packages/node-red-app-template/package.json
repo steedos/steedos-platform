@@ -1,6 +1,6 @@
 {
   "name": "@steedos/node-red-app-template",
-  "version": "2.0.42",
+  "version": "2.0.45",
   "description": "",
   "main": "index.js",
   "scripts": {

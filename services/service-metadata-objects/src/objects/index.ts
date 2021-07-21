@@ -34,7 +34,7 @@ async function getObjectConfigs(ctx, objectApiName) {
         metadataType,
         metadataApiName: objectApiName
     })
-    return _.map(objectConfigs, 'metadata');
+    return _.compact(_.map(objectConfigs, 'metadata'));
 }
 
 function getObjectDatasource(objectConfigs: Array<any>) {

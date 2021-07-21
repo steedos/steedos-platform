@@ -1,0 +1,4 @@
+name: uninstall
+is_enable: true
+label: 卸载
+'on': record

@@ -47,7 +47,7 @@ const getDocEmptyConverts = (docConverts, oldDoc) => {
     }
   });
   return result;
-};
+}
 
 // 计算是否要新建业务机会联系人角色，以及是否是新建主要角色
 const getNewOpportunityContactRoleOptions = async (isLookupOpportunity, isLookupContact, recordOpportunity, recordContact, objOpportunityContactRole) => {
@@ -100,7 +100,7 @@ const getNewOpportunityContactRoleOptions = async (isLookupOpportunity, isLookup
     needAddOpportunityContactRole,
     isPrimaryRole
   }
-};
+}
 
 const validateBody = (body, recordAccount, recordContact, recordOpportunity) => {
   let validateResult = {};
@@ -133,7 +133,7 @@ const validateBody = (body, recordAccount, recordContact, recordOpportunity) => 
     }
   }
   return validateResult;
-};
+}
 
 module.exports = {
   convert: async function (req, res) {
@@ -269,4 +269,4 @@ module.exports = {
       return core.sendError(res, error, 400);
     }
   }
-};
+}

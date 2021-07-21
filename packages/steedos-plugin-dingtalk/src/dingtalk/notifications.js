@@ -1,11 +1,13 @@
-let dtApi = require("./dt_api");
+const objectql = require('@steedos/objectql');
+const steedosSchema = objectql.getSteedosSchema();
+const dtApi = require("./dt_api");
 // 网页授权url
-let oauthUrl = Meteor.absoluteUrl("/sso/dingtalk?corpid=");
+const oauthUrl = Meteor.absoluteUrl("/sso/dingtalk?corpid=");
 
-Meteor.startup(function () {
-    Push.oldSend = Push.send;
-    Push.send = function (options) {
-        Push.oldSend(options);
+Meteor.startup(async function () {
+    Push.oldDingtalkSend = Push.send;
+    Push.send = async function (options) {
+        Push.oldDingtalkSend(options);
         try {
             if (options.from !== 'workflow')
                 return;
@@ -13,7 +15,8 @@ Meteor.startup(function () {
             if (!options.payload)
                 return;
 
-            let space = Creator.getCollection('spaces').findOne({ _id: options.payload.space });
+            let spaceObj = steedosSchema.getObject('spaces');
+            let space = await spaceObj.findOne({ filters: [["_id", "=", options.payload.space]] });
 
             if (!space)
                 return;
@@ -21,9 +24,11 @@ Meteor.startup(function () {
             if (!space.dingtalk_corp_id || !space.dingtalk_agent_id || !space.dingtalk_key || !space.dingtalk_secret)
                 return;
 
-            let token = dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
+            let token = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
 
-            let space_user = Creator.getCollection('space_users').findOne({ space: space._id, user: options.query.userId });
+            let spaceUserObj = steedosSchema.getObject('space_users');
+            let space_user = await spaceUserObj.findOne({ filters: [["space", "=", space._id], ["user", "=", options.query.userId]] });
+            
             if (!space_user.dingtalk_id)
                 return;
 
@@ -38,9 +43,10 @@ Meteor.startup(function () {
 
             // 审批流程
             if (payload.instance) {
-                title = workflowPush(options, spaceId, corpId).text;
-                text = workflowPush(options, spaceId, corpId).title;
-                url = workflowPush(options, spaceId, corpId).url;
+                let pushInfo = await workflowPush(options, spaceId, corpId);
+                title = pushInfo.text;
+                text = pushInfo.title;
+                url = pushInfo.url;
             } else {
                 title = options.title;
                 url = oauthUrl + corpId + "&redirect_url=" + payload.url;
@@ -74,7 +80,7 @@ Meteor.startup(function () {
                 }
             }
             // 发送推送消息
-            dtApi.sendMessage(msg, token.access_token);
+            await dtApi.sendMessage(msg, token.access_token);
         } catch (error) {
             console.error("Push error reason: ", error);
         }
@@ -82,7 +88,7 @@ Meteor.startup(function () {
 })
 
 // 待审核推送
-let workflowPush = function (options, spaceId, corpId) {
+let workflowPush = async function (options, spaceId, corpId) {
     if (!options || (options == {}))
         return false;
 
@@ -92,7 +98,8 @@ let workflowPush = function (options, spaceId, corpId) {
     info.title = "审批王";
     // 获取申请单
     let instanceId = options.payload.instance;
-    let instance = Creator.getCollection('instances').findOne({ _id: instanceId });
+    let insObj = steedosSchema.getObject('instances');
+    let instance = await insObj.findOne({ filters: [["_id", "=", instanceId]] });
 
     let inboxUrl = oauthUrl + corpId + '&redirect_url=/workflow/space/' + spaceId + '/inbox/' + options.payload.instance;
 

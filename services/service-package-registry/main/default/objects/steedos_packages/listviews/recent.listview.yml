@@ -1,0 +1,18 @@
+name: recent
+columns:
+  - field: name
+    wrap: false
+  - field: new_version
+    wrap: false
+  - field: version
+    wrap: false
+  - field: description
+    width: '150'
+    wrap: false
+  - field: status
+filter_scope: space
+label: 最近查看
+scrolling_mode: standard
+shared: true
+show_count: false
+type: grid
