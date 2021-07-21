@@ -326,27 +326,33 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
 // 同步数据
 router.get('/api/stockData', async function (req, res) {
 
-    access_token = dtSync.getAccessToken();
+    let space = await dtApi.spaceGet();
+    if (!space)
+        return;
+    
+    let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
+    access_token = response.access_token;
 
     dtSync.write("================存量数据开始===================")
     dtSync.write("access_token:" + access_token)
-    deptListRes = dtApi.departmentListGet(access_token)
+    deptListRes = await dtApi.departmentListGet(access_token)
+    
     for (let i = 0; i < deptListRes.length; i++) {
         dtSync.write("部门ID:" + deptListRes[i]['id'])
-        dtSync.deptinfoPush(deptListRes[i]['id'])
-        userListRes = dtApi.userListGet(access_token, deptListRes[i].id)
+        await dtSync.deptinfoPush(deptListRes[i]['id'])
+        userListRes = await dtApi.userListGet(access_token, deptListRes[i].id)
         for (let ui = 0; ui < userListRes.length; ui++) {
             dtSync.write("用户ID:" + userListRes[ui]['userid'])
-            dtSync.userinfoPush(userListRes[ui]['userid'])
+            await dtSync.userinfoPush(userListRes[ui]['userid'])
         }
 
     }
 
 
     for (let i = 0; i < deptListRes.length; i++) {
-        userListRes = dtApi.userListGet(access_token, deptListRes[i].id)
+        userListRes = await dtApi.userListGet(access_token, deptListRes[i].id)
         for (let ui = 0; ui < userListRes.length; ui++) {
-            dtSync.userinfoPush(userListRes[ui]['userid'])
+            await dtSync.userinfoPush(userListRes[ui]['userid'])
         }
 
     }
@@ -361,7 +367,7 @@ router.post('/api/listen', async function (req, res) {
     var params = req.body
     var query = req.query
     // 获取工作区相关信息
-    var dtSpace = dtApi.spaceGet();
+    var dtSpace = await dtApi.spaceGet();
     // console.log("dtSpace: ",dtSpace);
     var APP_KEY = dtSpace.dingtalk_key;
     var APP_SECRET = dtSpace.dingtalk_secret;
@@ -395,32 +401,32 @@ router.post('/api/listen', async function (req, res) {
             case 'user_add_org':
                 break;
             case 'user_leave_org':
-                data.data.UserId.forEach(element => {
-                    dtSync.userinfoPush(element, 2)
+                data.data.UserId.forEach(async element => {
+                    await dtSync.userinfoPush(element, 2)
                 });
                 break;
             //通讯录用户更改
             case 'user_modify_org':
-                data.data.UserId.forEach(element => {
-                    dtSync.userinfoPush(element)
+                data.data.UserId.forEach(async element => {
+                    await dtSync.userinfoPush(element)
                 });
                 // for(let i=0;i<data.data.UserId.length;i++){
                 //     
                 // }
                 break;
             case 'org_dept_modify':
-                data.data.DeptId.forEach(element => {
-                    dtSync.deptinfoPush(element)
+                data.data.DeptId.forEach(async element => {
+                    await dtSync.deptinfoPush(element)
                 });
                 break;
             case 'org_dept_create':
-                data.data.DeptId.forEach(element => {
-                    dtSync.deptinfoPush(element, 1)
+                data.data.DeptId.forEach(async element => {
+                    await dtSync.deptinfoPush(element, 1)
                 });
                 break;
             case 'org_dept_remove':
-                data.data.DeptId.forEach(element => {
-                    dtSync.deptinfoPush(element, 2)
+                data.data.DeptId.forEach(async element => {
+                    await dtSync.deptinfoPush(element, 2)
                 });
                 break;
             default:

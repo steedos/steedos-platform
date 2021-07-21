@@ -1,4 +1,4 @@
-FROM node:12.16.3
+FROM node:12.19.1
 
 ENV community_dir=./steedos-projects/project-community
 
@@ -10,7 +10,7 @@ RUN npm config set registry http://registry.npm.taobao.org/
 
 RUN yarn config set registry http://registry.npm.taobao.org/
 
-RUN yarn install --production
+RUN yarn
 
 ENV NODE_ENV=production
 
