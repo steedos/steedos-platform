@@ -3,14 +3,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Node-RED on IBM Cloud</title>
+        <title>Node-RED on Steedos</title>
 
-        <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
-        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link href='fonts/css.css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
+        <script src="scripts/jquery-1.11.2.min.js"></script>
 
         <link href="css/simplegrid.css" rel="stylesheet" media="screen">
         <link href="css/style.css" rel="stylesheet" media="screen">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+        <script src="scripts/zxcvbn.js"></script>
 
     </head>
     <body>
@@ -28,7 +28,7 @@
             </div>
             <div class="body">
                 <div class="page page-1">
-                    <h3>Welcome to your new Node-RED instance on IBM Cloud</h3>
+                    <h3>Welcome to your new Node-RED instance on Steedos</h3>
                     <p>We know you're eager to start wiring up your flows, but first there
                         are a couple of tasks you should do:</p>
                     <ul>
@@ -62,14 +62,14 @@
                     <p> Many of these nodes can be installed directly from the editor's palette manager feature. However that can cause issues due to the limited
                         memory of the default Node-RED starter application.</p>
                     <p> The <i>recommended approach</i>  is to edit your application's <code>package.json</code> file to include the additional node modules and then redeploy the application.
-                        This can be done using the Continuous Delivery feature on the application's IBM Cloud dashboard.</p>
+                        This can be done using the Continuous Delivery feature on the application's Steedos dashboard.</p>
                     <p> For more information, follow <a href="https://developer.ibm.com/tutorials/how-to-create-a-node-red-starter-application/" target="_blank">this tutorial on IBM Developer</a>.</p>
                 </div>
                 <div class="page page-4">
                     <h3>Finish the install</h3>
                     <p>You have made the following selections:</p>
                     <ul id="summary"></ul>
-                    <p>You can change these settings at any time by setting the following environment variables via the IBM Cloud console:</p>
+                    <p>You can change these settings at any time by setting the following environment variables via the Steedos console:</p>
                     <ul>
                         <li><code>NODE_RED_USERNAME</code> - the username</li>
                         <li><code>NODE_RED_PASSWORD</code> - the password</li>
