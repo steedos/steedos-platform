@@ -173,15 +173,7 @@ const checkFormulaInfiniteLoop = async function(_doc, oldFieldName){
     if(_doc.type === "formula"){
       doc = clone(_doc)
       delete doc._id
-      let objects = await objectql.getObject("objects").directFind({filters: [['name', '=', doc.object], ['space', '=', doc.space]]})
-      let objectConfig = null;
-      if(objects && objects.length > 0){
-        objectConfig = objects[0];
-        console.log(`objectConfig`, objectConfig);
-      }
-      if(!objectConfig){
-        objectConfig = objectql.getObjectConfig(doc.object);
-      }
+      let objectConfig = await objectql.getObject(doc.object).toConfig();
     //   objectCore.loadDBObject(objectConfig)
       delete objectConfig._id;
       try {
