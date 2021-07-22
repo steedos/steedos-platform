@@ -48,6 +48,9 @@ let extendUserContext = (userContext, utcOffset) => {
 }
 
 let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, user: { utcOffset: 0 } }) => {
+    if(_.isNull(filters) || _.isUndefined(filters)){
+        return;
+    }
     let utcOffset = userContext.user ? userContext.user.utcOffset : 0;
     userContext = extendUserContext(userContext, utcOffset);
     // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
@@ -177,14 +180,19 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                             _.each(value, function (v) {
                                 return sub_selector.push([field, option, v], "and");
                             });
-                        } else if (isBetweenOperation && (value.length = 2)) {
-                            if (value[0] !== null || value[1] !== null) {
-                                if (value[0] !== null) {
-                                    sub_selector.push([field, ">=", value[0]], "and");
+                        } else if (isBetweenOperation) {
+                            if(value.length > 0){
+                                if ((!_.isNull(value[0]) && !_.isUndefined(value[0])) || (!_.isNull(value[1]) && !_.isUndefined(value[1]))) {
+                                    if (!_.isNull(value[0]) && !_.isUndefined(value[0])) {
+                                        sub_selector.push([field, ">=", value[0]], "and");
+                                    }
+                                    if (!_.isNull(value[1]) && !_.isUndefined(value[1])) {
+                                        sub_selector.push([field, "<=", value[1]], "and");
+                                    }
                                 }
-                                if (value[1] !== null) {
-                                    sub_selector.push([field, "<=", value[1]], "and");
-                                }
+                            }
+                            else{
+                                // 如果是between连的空数组，不加任何条件，即查找所有数据
                             }
                         } else {
                             // contains、startswith、endswith等，如果value为空数组，不加任何条件，即查找所有数据
