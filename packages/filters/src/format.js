@@ -182,11 +182,11 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                             });
                         } else if (isBetweenOperation) {
                             if(value.length > 0){
-                                if ((!_.isNull(value[0]) && !_.isUndefined(value[0])) || (!_.isNull(value[1]) && !_.isUndefined(value[1]))) {
-                                    if (!_.isNull(value[0]) && !_.isUndefined(value[0])) {
+                                if ([null, undefined, ''].indexOf(value[0]) < 0 || [null, undefined, ''].indexOf(value[1]) < 0) {
+                                    if ([null, undefined, ''].indexOf(value[0]) < 0) {
                                         sub_selector.push([field, ">=", value[0]], "and");
                                     }
-                                    if (!_.isNull(value[1]) && !_.isUndefined(value[1])) {
+                                    if ([null, undefined, ''].indexOf(value[1]) < 0) {
                                         sub_selector.push([field, "<=", value[1]], "and");
                                     }
                                 }
