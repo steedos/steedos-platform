@@ -2,7 +2,7 @@
   "name": "@steedos/service-package-registry",
   "version": "2.0.45",
   "description": "",
-  "main": "index.js",
+  "main": "package.service.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

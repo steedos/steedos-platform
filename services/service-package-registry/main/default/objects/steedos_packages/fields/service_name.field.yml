@@ -1,10 +1,10 @@
-name: name
+name: service_name
 filterable: false
 hidden: false
 index: true
 is_name: false
 is_wide: false
-label: 软件包名称
+label: 服务名称
 omit: false
 readonly: false
 required: true

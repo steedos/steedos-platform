@@ -1,5 +1,6 @@
 
 const metadata = require('@steedos/service-metadata');
+const packages = require('@steedos/service-packages');
 const apps = require('@steedos/service-metadata-apps');
 const objects = require('@steedos/service-metadata-objects');
 const layouts = require('@steedos/service-metadata-layouts');
@@ -16,6 +17,7 @@ module.exports = {
    */
   async created() {
     this.broker.createService(metadata);
+    this.broker.createService(packages);
     this.broker.createService(apps);
     this.broker.createService(objects);
     this.broker.createService(layouts);

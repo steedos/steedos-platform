@@ -97,12 +97,28 @@ async function getModuleVersionFromNPM(module, version) {
     })
 }
 
+function checkModuleIsInstall(module){
+    if(module){
+        try {
+            const path = path.dirname(require.resolve(module + '/package.json'));
+            return path;
+        } catch (Exception) {
+            return false;
+        }
+    }
+    return false
+}
 
 async function installModule(module,version,url) {
     if (Buffer.isBuffer(module)) {
         // return installTarball(module)
         return 
     }
+    const check = checkModuleIsInstall(module);
+    if( check !== false){
+        return check;
+    }
+
     console.log(`installModule`, module,version,url)
     module = module || "";
     activePromise = activePromise.then(async function() {
@@ -271,6 +287,28 @@ async function uninstallModule(module){
     });
     return activePromise;
 }
+
+// async function getPackageNewVersion(packageName){
+//     activePromise = activePromise.then(async function() {
+//         var yarnArgs = ['info', packageName, 'dist-tags']; //yarnCommand
+//         return exec.run(yarnCommand,yarnArgs,{
+            
+//         }, true).then(result => {
+//             if(result.stdout){
+
+//             }
+//             console.log(`result ok`, result)
+            
+//         }).catch(result => {
+//             console.log(`result error`, result)
+            
+//         })
+//     }).catch(err => {
+//         activePromise = Promise.resolve();
+//         throw err;
+//     });
+//     return activePromise;
+// }
 
 module.exports = {
     installModule,

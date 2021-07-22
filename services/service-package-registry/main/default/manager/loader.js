@@ -9,7 +9,7 @@ const userDir = path.join(process.cwd(), '.steedos');
 const packagesFilePath = path.join(process.cwd(), 'steedos-packages.yml'); 
 
 const loadPackagesConfig = ()=>{
-    return yaml.load(fs.readFileSync(packagesFilePath, 'utf8'));
+    return yaml.load(fs.readFileSync(packagesFilePath, 'utf8')) || {};
 }
 
 const appendToPackagesConfig = (packageName, options)=>{

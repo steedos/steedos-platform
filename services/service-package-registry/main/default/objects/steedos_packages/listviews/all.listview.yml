@@ -9,9 +9,12 @@ columns:
   - field: description
     width: '150'
     wrap: false
+  - field: service_name
+  - field: node_id
+  - field: instance_id
   - field: status
 filter_scope: space
-label: 所有项目
+label: 所有
 scrolling_mode: standard
 shared: true
 show_count: false

@@ -1,0 +1,14 @@
+{
+  "name": "@steedos/service-packages",
+  "version": "2.0.45",
+  "main": "index.js",
+  "scripts": {
+  },
+  "dependencies": {
+  },
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}

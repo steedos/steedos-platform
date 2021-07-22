@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@steedos/service-packages": "^2.0.45",
     "@steedos/service-metadata": "^2.0.45",
     "@steedos/service-metadata-apps": "^2.0.45",
     "@steedos/service-metadata-layouts": "^2.0.45",
