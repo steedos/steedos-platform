@@ -53,7 +53,6 @@ const loadPackages = async ()=>{
                     packagePath = path.resolve(process.cwd(), packagePath)
                 }
                 if(packagePath){
-                    console.log(`loadPackage `, packageName, packagePath)
                     await loadPackage(packageName, packagePath);
                 }
             }
