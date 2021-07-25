@@ -3,7 +3,7 @@ const path = require('path');
 const project = require('../steedos-app/package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
-const serviceName = `$packages-${packageName}`;
+const serviceName = `${packageName}`;
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
