@@ -175,6 +175,7 @@ export const loadRouters = (filePath: string)=>{
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
+        delete require.cache[matchedPath]
         let router = loadFile(matchedPath);
         results.push(router);
     })
