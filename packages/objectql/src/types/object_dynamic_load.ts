@@ -201,7 +201,7 @@ export const  addClientScriptFiles = (filePath: string) => {
 }
 
 export const getClientScripts = () => {
-    return _clientScripts;
+    return _.uniq(_clientScripts);
 }
 
 
