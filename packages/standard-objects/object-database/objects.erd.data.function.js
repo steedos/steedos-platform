@@ -36,8 +36,8 @@ async function getObjects(userId){
     let objects = {};
     let lng = await getLng(userId)
     let allObjectConfigs = await objectql.getSteedosSchema().getAllObject();
-    _.each(allObjectConfigs, function(objectConfig) {
-        var _obj = clone(objectConfig);
+    for (const objectConfig of allObjectConfigs) {
+        var _obj = clone(objectConfig.metadata);
         var k = _obj.name;
         if(!_obj.hidden &&  !_.include(InternalData.hiddenObjects, k)){
             if(!_obj._id){
@@ -45,10 +45,11 @@ async function getObjects(userId){
             }
             _obj.name = k;
             // _obj.datasource = name;
-            _obj.fields = {}
-            // _.each(getObjectFields(k, userId), function(_f){
-            //     _obj.fields[_f.name] = _f;
-            // });
+            _obj.fields = {};
+            let oFields = await getObjectFields(k, userId);
+            _.each(oFields, function(_f){
+                _obj.fields[_f.name] = _f;
+            });
             delete _obj.actions
             delete _obj.triggers
             delete _obj.list_views
@@ -59,9 +60,9 @@ async function getObjects(userId){
             }
             objects[_obj.name] = _obj
         }
-      });
-      steedosI18n.translationObjects(lng, objects)
-      return _.values(objects);
+    }
+    steedosI18n.translationObjects(lng, objects)
+    return _.values(objects);
 }
 
 module.exports = {
