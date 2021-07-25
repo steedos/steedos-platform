@@ -239,22 +239,40 @@ export class Core {
     private static initRouters(){
         let routers = objectql.getRouters()
         _.each(routers, (router)=>{
-            routersApp.use('', router.default)
+            routersApp.use('', router.router.default)
         })
         WebApp.connectHandlers.use(routersApp);
     }
 }
 
 export const loadRouters = (routers)=>{
-    const packageApp = express();
     _.each(routers, (router)=>{
-        packageApp.use('', router.default)
+        routersApp.use('', router.router.default)
     })
     try {
-        WebApp.connectHandlers.use(packageApp);
+        WebApp.connectHandlers.use(routersApp);
     } catch (error) {
         
     }
+}
+
+export const removeRouter = (path, methods)=>{
+    routersApp._router.stack.forEach(function(route,i,routes) {
+        if (route.route && route.route.path === path) {
+            if(JSON.stringify(route.route.methods) === JSON.stringify(methods)){
+                routes.splice(i,1);
+            }
+        }
+        if(route.handle.stack){
+            route.handle.stack.forEach(function(_route,i,routes) {
+                if (_route.route && _route.route.path === path) {
+                    if(JSON.stringify(_route.route.methods) === JSON.stringify(methods)){
+                        routes.splice(i,1);
+                    }
+                }
+            });
+        }
+    });
 }
 
 export const initPublic = () => {

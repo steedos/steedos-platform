@@ -168,6 +168,29 @@ export const loadTranslations = (filePath: string)=>{
     return results
 }
 
+
+const getRouterInfoList = (router, md5)=>{
+    const infoList = [];
+    if(router && router.default && router.default.stack && router.default.stack.length > 0){
+        _.each(router.default.stack, (_route)=>{
+            const info = {
+                path:'',
+                methods: '',
+                md5: md5
+            };
+            info.path = _route.route.path;
+            info.methods = _route.route.methods;
+            infoList.push(info);
+        })
+    }
+    return infoList
+}
+
+const getFileMD5 = (filePath)=>{
+    const buffer = fs.readFileSync(filePath);
+    return getMD5(buffer)
+}
+
 export const loadRouters = (filePath: string)=>{
     let results = []
     const filePatten = [
@@ -177,7 +200,9 @@ export const loadRouters = (filePath: string)=>{
     _.each(matchedPaths, (matchedPath:string)=>{
         delete require.cache[require.resolve(matchedPath)]
         let router = loadFile(matchedPath);
-        results.push(router);
+        let md5 = getFileMD5(matchedPath);
+        let infoList = getRouterInfoList(router, md5);
+        results.push({router: router, infoList: infoList});
     })
     return results
 }

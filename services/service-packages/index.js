@@ -10,6 +10,10 @@ const getCacherKey = (serviceInfo)=>{
     return `#packages.${serviceInfo.name}.${serviceInfo.instanceID}`
 }
 
+const getRoutersInfoCacherKey = (packageName)=>{
+	return `#packageRouter.${packageName}`
+}
+
 module.exports = {
 	name: packageName,
 	namespace: "steedos",
@@ -53,7 +57,17 @@ module.exports = {
             async handler(ctx) {
                 return await ctx.broker.call('metadata.filter', {key: getCacherKey({name: "*", instanceID: "*"})}, {meta: ctx.meta}) 
 			}
-        }
+        },
+		setPackageRoutersInfo: {
+			async handler(ctx) {
+                return await ctx.broker.call('metadata.add', {key: getRoutersInfoCacherKey(ctx.params.packageName), data: ctx.params.data}, {meta: ctx.meta}) 
+			} 
+		},
+		getPackageRoutersInfo: {
+			async handler(ctx) {
+                return await ctx.broker.call('metadata.get', {key: getRoutersInfoCacherKey(ctx.params.packageName)}, {meta: ctx.meta}) 
+			} 
+		}
 	},
 
 	/**
