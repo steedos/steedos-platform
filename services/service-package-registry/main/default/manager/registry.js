@@ -3,6 +3,7 @@ const child_process = require('child_process');
 const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm'; 
 const yarnCommand = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';  
 const path = require("path");
+const fs = require("fs");
 const moduleRe = /^(@[^/@]+?[/])?[^/@]+?$/;
 const slashRe = process.platform === "win32" ? /\\|[/]/ : /[/]/;
 const pkgurlRe = /^(https?|git(|\+https?|\+ssh|\+file)):\/\//;
@@ -100,9 +101,10 @@ async function getModuleVersionFromNPM(module, version) {
 function checkModuleIsInstall(module){
     if(module){
         try {
-            const path = path.dirname(require.resolve(module + '/package.json'));
-            return path;
+            const modulePath = path.dirname(require.resolve(module + '/package.json'));
+            return modulePath;
         } catch (Exception) {
+            console.log(`Exception`, Exception)
             return false;
         }
     }
@@ -204,6 +206,7 @@ async function installModule(module,version,url) {
                     throw new Error(`${module} is not steedos package`)
                 }
             } catch (error) {
+                console.log(`error`, error)
                 throw new Error(`${module} is not steedos package`)
             }
 

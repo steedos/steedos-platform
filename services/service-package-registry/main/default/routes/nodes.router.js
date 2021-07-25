@@ -3,6 +3,7 @@ const router = express.Router();
 const core = require('@steedos/core');
 const registry = require('../manager/registry');
 const loader = require('../manager/loader');
+const path = require('path');
 router.post('/api/nodes/install', core.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     // const spaceId = userSession.spaceId;
@@ -13,9 +14,9 @@ router.post('/api/nodes/install', core.requireAuthentication, async function (re
         return res.status(401).send({ message: 'No permission' });
     }
     try {
-        const path = await registry.installModule(body.module, body.version)
-        const packageInfo = await loader.loadPackage(body.module, path);
-		loader.appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: false});
+        const packagePath = await registry.installModule(body.module, body.version)
+        const packageInfo = await loader.loadPackage(body.module, packagePath);
+		loader.appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: !!packagePath, path: path.relative(process.cwd(), packageInfo.packagePath)});
         res.status(200).send({}); //TODO 完善返回信息
     } catch (error) {
         console.error(error);

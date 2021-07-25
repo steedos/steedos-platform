@@ -65,14 +65,16 @@ module.exports = {
 
 		packages.maintainSystemFiles()
 
-		const mPackages = metadata.getAllPackages(process.cwd());
 		try {
 			const packagePath = path.join(process.cwd(), 'steedos-app');
 			const packageInfo = require(path.join(packagePath, 'package.json'));
-			loader.appendToPackagesConfig(`$packages-${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: packagePath});
+			loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: packagePath});
 		} catch (error) {
 			console.log(`started error`, error)
 		}
+
+		await metadata.uncompressPackages(process.cwd());
+		const mPackages = metadata.getAllPackages(process.cwd());
 		_.each(mPackages, (packagePath)=>{
 			try {
 				const packageInfo = require(path.join(packagePath, 'package.json'));

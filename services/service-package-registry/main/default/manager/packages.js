@@ -75,6 +75,11 @@ const maintainSystemFiles = ()=>{
         fs.mkdirSync(userDir);
     }
 
+    const packages = path.join(userDir, 'steedos-packages.yml');
+    if(!fs.existsSync(packages)){
+        fs.writeFileSync(packages, ``)
+    }
+
     const packageJson = path.join(userDir, 'package.json')
     if(!fs.existsSync(packageJson)){
         fs.writeFileSync(packageJson, `

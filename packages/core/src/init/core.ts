@@ -245,6 +245,18 @@ export class Core {
     }
 }
 
+export const loadRouters = (routers)=>{
+    const packageApp = express();
+    _.each(routers, (router)=>{
+        packageApp.use('', router.default)
+    })
+    try {
+        WebApp.connectHandlers.use(packageApp);
+    } catch (error) {
+        
+    }
+}
+
 export const initPublic = () => {
     const router = express.Router()
 

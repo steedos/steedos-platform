@@ -6,7 +6,7 @@ const path = require('path');
 const objectql = require('@steedos/objectql');
 const registry = require('./registry');
 const userDir = path.join(process.cwd(), '.steedos');
-const packagesFilePath = path.join(process.cwd(), 'steedos-packages.yml'); 
+const packagesFilePath = path.join(userDir, 'steedos-packages.yml'); 
 
 const loadPackagesConfig = ()=>{
     return yaml.load(fs.readFileSync(packagesFilePath, 'utf8')) || {};
@@ -29,24 +29,36 @@ const loadPackages = async ()=>{
     const packages = loadPackagesConfig();
     for (const packageName in packages) {
         const package = packages[packageName]
-        if(package.enable && package.local !== true){
-
-            try {
-                const packagePath = path.dirname(require.resolve(`${packageName}/package.json`, {
-                    paths: [path.join(userDir, 'node_modules')]
-                }))
-                if(packagePath){
-                    await loadPackage(packageName);
-                }
-            } catch (error) {
+        if(package.enable){
+            if(package.local !== true){
                 try {
-                    await registry.installModule(packageName, package.version)
-                    const packageInfo = await loadPackage(packageName);
-                    appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: false});
+                    const packagePath = path.dirname(require.resolve(`${packageName}/package.json`, {
+                        paths: [path.join(userDir, 'node_modules')]
+                    }))
+                    if(packagePath){
+                        await loadPackage(packageName);
+                    }
                 } catch (error) {
-                    console.error(error)
+                    try {
+                        await registry.installModule(packageName, package.version)
+                        const packageInfo = await loadPackage(packageName);
+                        appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: false});
+                    } catch (error) {
+                        console.error(error)
+                    }
+                }
+            }else if(package.local === true){
+                let packagePath = package.path;
+                if(!path.isAbsolute(packagePath)){
+                    packagePath = path.resolve(process.cwd(), packagePath)
+                }
+                if(packagePath){
+                    console.log(`loadPackage `, packageName, packagePath)
+                    await loadPackage(packageName, packagePath);
                 }
             }
+
+            
 
         }
     }
@@ -61,7 +73,7 @@ const loadPackage = async (packageName, packagePath)=>{
         }
         const packageInfo = require(path.join(packagePath, 'package.json'));
         await steedos.loadPackage(packagePath)
-        return packageInfo;
+        return Object.assign({packagePath: packagePath}, packageInfo);
     } catch (error) {
         
     }

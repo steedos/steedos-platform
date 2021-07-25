@@ -65,6 +65,12 @@ module.exports = {
                 await datasource.init();
                 await triggerLoader.load(this.broker, packagePath, name);
                 core.loadClientScripts();
+                let routersData = objectql.loadRouters(packagePath);
+                const _routers = [];
+                routersData.forEach(element => {
+                    _routers.push(element)
+                });
+                core.loadRouters(_routers)
                 return;
             }).promise();
         }
