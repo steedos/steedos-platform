@@ -214,6 +214,7 @@ export const loadTriggers = (filePath: string)=>{
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
+        delete require.cache[require.resolve(matchedPath)]
         let json = loadFile(matchedPath);
         if(!_.has(json, 'listenTo')){
             json.listenTo = path.basename(matchedPath).split('.')[0]
@@ -230,6 +231,7 @@ export const loadActions = (filePath: string)=>{
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
+        delete require.cache[require.resolve(matchedPath)]
         let json = loadFile(matchedPath);
         if(!_.has(json, 'listenTo')){
             json.listenTo = path.basename(matchedPath).split('.')[0]
@@ -246,6 +248,7 @@ export const loadMethods = (filePath: string)=>{
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
+        delete require.cache[require.resolve(matchedPath)]
         let json = loadFile(matchedPath);
         if(!_.has(json, 'listenTo')){
             json.listenTo = path.basename(matchedPath).split('.')[0]
@@ -361,6 +364,7 @@ export const loadButtonScripts = (filePath: string)=>{
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
+        delete require.cache[require.resolve(matchedPath)]
         let json = loadFile(matchedPath);
         if(!_.has(json, 'listenTo')){
             json.listenTo = path.parse(path.dirname(path.dirname(matchedPath))).name
