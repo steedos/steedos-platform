@@ -29724,11 +29724,15 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 .ag-theme-balham .ag-cell-inline-editing .ant-picker {
   width: 100%;
 }
+.ag-theme-balham .ag-popup-editor .ant-input-number,
+.ag-theme-balham .ag-cell-inline-editing .ant-input-number {
+  width: 100%;
+}
 .ag-theme-balham .ag-body-viewport {
   min-height: 10px;
 }
 .ag-theme-balham .ag-tabs .ag-tabs-body .ag-filter .ant-picker {
-  width: 50%;
+  display: block;
 }
 .ag-theme-balham .ag-side-bar .ag-tool-panel-wrapper .ag-filter-toolpanel .ag-filter-list-panel .ag-filter-toolpanel-group-wrapper .ag-filter-toolpanel-group .ag-group-container .ag-filter .ant-picker {
   width: 100%;
