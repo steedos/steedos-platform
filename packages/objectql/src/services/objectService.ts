@@ -555,6 +555,21 @@ module.exports = {
             this.objectApiName = objectConfig.name;
         }
     },
+    events: {
+		"metadata.objects.deleted": {
+            async handler(ctx) {
+                const { objectApiName } = ctx.params
+                const { onDestroyObjectService } = this.settings
+				if(objectApiName === this.object.name){
+                    // console.log(`destroyService`, objectApiName)
+                    ctx.broker.destroyService(this)
+                    if(onDestroyObjectService && _.isFunction(onDestroyObjectService)){
+                        onDestroyObjectService(objectApiName)
+                    }
+                }
+            }
+        }
+    },
     merged(schema) {
         let settings = schema.settings;
         let objectConfig = settings.objectConfig;

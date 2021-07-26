@@ -1,21 +1,29 @@
 import * as _ from 'underscore';
+import { getObjectServiceName } from '../services/index';
 const objectService = require('../services/objectService');
 
-const LocalObjectServices = [];
+const LocalObjectServices = {};
+
+function onDestroyObjectService(objectApiName){
+    const serviceName = getObjectServiceName(objectApiName);
+    delete LocalObjectServices[serviceName]
+}
+
 export async function createObjectService(broker, serviceName, objectConfig) {
-    if(_.include(LocalObjectServices, serviceName)){
+    if(LocalObjectServices[serviceName]){
         return ;
     }
     let service = broker.createService({
         name: serviceName,
         mixins: [objectService],
         settings: {
-            objectConfig: objectConfig
+            objectConfig: objectConfig,
+            onDestroyObjectService,
         }
     })
     if (!broker.started) { //如果broker未启动则手动启动service
         await broker._restartService(service)
     }
-    LocalObjectServices.push(serviceName);
+    LocalObjectServices[serviceName] = true;
     return
 }

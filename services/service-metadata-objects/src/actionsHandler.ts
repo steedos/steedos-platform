@@ -116,6 +116,7 @@ export class ActionHandlers {
         const {data, oldData} = ctx.params;
         if(oldData.name != data.name){
             await ctx.broker.call('metadata.delete', {key: cacherKey(oldData.name)})
+            ctx.broker.emit("metadata.objects.deleted", {objectApiName: oldData.name, isDelete: true});
         }
         await ctx.broker.call('metadata.add', {key: cacherKey(data.name), data: data}, {meta: ctx.meta})
         ctx.broker.emit("metadata.objects.updated", {objectApiName: data.name, oldObjectApiName: oldData.name, isUpdate: true});
@@ -144,6 +145,7 @@ export class ActionHandlers {
                 const objectConfig = await refreshObject(ctx, metadataApiName);
                 if(!objectConfig){
                     await ctx.broker.call('metadata.delete', {key: cacherKey(metadataApiName)})
+                    ctx.broker.emit("metadata.objects.deleted", {objectApiName: metadataApiName, isDelete: true});
                 }else{
                     const objectServiceName = getObjectServiceName(metadataApiName);
                     await this.registerObject(ctx, metadataApiName, objectConfig, {
