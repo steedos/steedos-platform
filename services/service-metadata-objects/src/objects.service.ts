@@ -206,6 +206,8 @@ module.exports = {
             await this.lookupActionHandler.add(objectConfig);
             await this.formulaActionHandler.add(objectConfig);
             await this.summaryActionHandler.add(objectConfig);
+        }, async (objectConfig)=>{
+            await this.lookupActionHandler.deleteAll(objectConfig);
         })
     },
 

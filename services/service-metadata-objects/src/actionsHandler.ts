@@ -24,10 +24,12 @@ const DELAY_MESSAGE_OF_OBJECT_CHANGED  = 10; // 延迟通知对象事件的时�
 
 export class ActionHandlers {
     onRegister: any = null;
+    onDestroy: any = null;
 	registerObjectMemEntry: Map<string, number>;
 
-    constructor(onRegister){
+    constructor(onRegister, onDestroy){
         this.onRegister = onRegister;
+        this.onDestroy = onDestroy;
 		this.registerObjectMemEntry = new Map<string, number>();
     }
 
@@ -115,8 +117,7 @@ export class ActionHandlers {
     async change(ctx: any): Promise<boolean> {
         const {data, oldData} = ctx.params;
         if(oldData.name != data.name){
-            await ctx.broker.call('metadata.delete', {key: cacherKey(oldData.name)})
-            ctx.broker.emit("metadata.objects.deleted", {objectApiName: oldData.name, isDelete: true});
+            await this.deleteObject(ctx, oldData.name)
         }
         await ctx.broker.call('metadata.add', {key: cacherKey(data.name), data: data}, {meta: ctx.meta})
         ctx.broker.emit("metadata.objects.updated", {objectApiName: data.name, oldObjectApiName: oldData.name, isUpdate: true});
@@ -124,9 +125,7 @@ export class ActionHandlers {
     }
 
     async delete(ctx: any): Promise<boolean>{
-        await ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
-        ctx.broker.emit("metadata.objects.deleted", {objectApiName: ctx.params.objectApiName, isDelete: true});
-        return true;
+        return await this.deleteObject(ctx, ctx.params.objectApiName)
     }
 
     async verify(ctx: any): Promise<boolean>{
@@ -144,8 +143,7 @@ export class ActionHandlers {
             for await (const metadataApiName of metadataApiNames) {
                 const objectConfig = await refreshObject(ctx, metadataApiName);
                 if(!objectConfig){
-                    await ctx.broker.call('metadata.delete', {key: cacherKey(metadataApiName)})
-                    ctx.broker.emit("metadata.objects.deleted", {objectApiName: metadataApiName, isDelete: true});
+                    await this.deleteObject(ctx, metadataApiName)
                 }else{
                     const objectServiceName = getObjectServiceName(metadataApiName);
                     await this.registerObject(ctx, metadataApiName, objectConfig, {
@@ -161,5 +159,14 @@ export class ActionHandlers {
                 }
             }
         }
+    }
+    async deleteObject(ctx, objectApiName): Promise<boolean>{
+        const { metadata } = await ctx.broker.call('metadata.get', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
+        await ctx.broker.call('metadata.delete', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
+        if(this.onDestroy && _.isFunction(this.onDestroy)){
+            await this.onDestroy(metadata)
+        }
+        ctx.broker.emit("metadata.objects.deleted", {objectApiName: objectApiName, isDelete: true, objectConfig: metadata});
+        return true;
     }
 }

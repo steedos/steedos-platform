@@ -559,13 +559,18 @@ module.exports = {
 		"metadata.objects.deleted": {
             async handler(ctx) {
                 const { objectApiName } = ctx.params
-                const { onDestroyObjectService } = this.settings
+                const { onDestroyObjectService, objectConfig } = this.settings
 				if(objectApiName === this.object.name){
-                    // console.log(`destroyService`, objectApiName)
-                    ctx.broker.destroyService(this)
+                    _.each(objectConfig.fields, (field, name)=>{
+                        if( (field.type === 'lookup' || field.type === 'master_detail') && (field.reference_to && _.isString(field.reference_to)) ){
+                            ctx.broker.emit(`${getObjectServiceName(field.reference_to)}.refresh`, {});
+                        }
+                    })
+                    ctx.broker.destroyService(this);
                     if(onDestroyObjectService && _.isFunction(onDestroyObjectService)){
-                        onDestroyObjectService(objectApiName)
+                        onDestroyObjectService(objectApiName);
                     }
+                    ctx.emit('$services.changed');
                 }
             }
         }
@@ -651,6 +656,14 @@ module.exports = {
                 // let graphqlActions = getGraphqlActions(objectConfig);
                 // schema.actions = _.extend({}, graphqlActions, schema.actions);
                 ctx.emit('$services.changed');
+            }
+        }
+        schema.events[`${getObjectServiceName(objectConfig.name)}.refresh`] = {
+            handler: async function (ctx) {
+                const _objectConfig = getObjectConfig(objectConfig.name);
+                let gobj = generateSettingsGraphql(_objectConfig);
+                this.settings.graphql = gobj;
+                dealWithRelatedFields(_objectConfig, this.settings.graphql);
             }
         }
     },
