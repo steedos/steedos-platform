@@ -18,7 +18,8 @@ module.exports = {
 	settings: {
 		packageInfo: {
 			path: __dirname,
-			name: packageName
+			name: packageName,
+			isPackage: false
 		}
 	},
 

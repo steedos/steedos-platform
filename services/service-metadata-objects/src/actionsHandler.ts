@@ -85,17 +85,17 @@ export class ActionHandlers {
             config.name = config.extend
         }
         const metadataApiName = config.name;
-
-        const metadataConfig = await ctx.broker.call('metadata.getServiceMetadata', {
-            serviceName: ctx.meta.metadataServiceName,
-            metadataType: METADATA_TYPE,
-            metadataApiName: metadataApiName,
-        });
-
-        if(metadataConfig && metadataConfig.metadata){
-            config = _.defaultsDeep(config, metadataConfig.metadata);
+        if(!config.isMain){
+            const metadataConfig = await ctx.broker.call('metadata.getServiceMetadata', {
+                serviceName: ctx.meta.metadataServiceName,
+                metadataType: METADATA_TYPE,
+                metadataApiName: metadataApiName,
+            });
+    
+            if(metadataConfig && metadataConfig.metadata){
+                config = _.defaultsDeep(config, metadataConfig.metadata);
+            }
         }
-
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
         const objectConfig = await refreshObject(ctx, metadataApiName);
         if(!objectConfig){
