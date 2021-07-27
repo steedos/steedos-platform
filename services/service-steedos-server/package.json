@@ -16,6 +16,7 @@
     "@steedos/service-fields-indexs": "^2.0.45",
     "@steedos/service-meteor-package-loader": "^2.0.45",
     "@steedos/service-node-red": "^2.0.45",
+    "@steedos/service-package-registry": "^2.0.45",
     "@steedos/steedos-plugin-schema-builder": "^2.0.45",
     "@steedos/word-template": "^2.0.3",
     "@steedos/workflow": "^2.0.45",
