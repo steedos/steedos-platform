@@ -48,10 +48,13 @@ let extendUserContext = (userContext, utcOffset) => {
 }
 
 let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, user: { utcOffset: 0 } }) => {
+    if(_.isNull(filters) || _.isUndefined(filters)){
+        return;
+    }
     let utcOffset = userContext.user ? userContext.user.utcOffset : 0;
     userContext = extendUserContext(userContext, utcOffset);
     // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
-    var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
+    var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}(\:\d{1,2}(\.\d{1,3})?)?(Z)?$/;
     var filtersLooper, selector;
     if (!_.isFunction(filters) && !filters.length) {
         return;
@@ -177,14 +180,19 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                             _.each(value, function (v) {
                                 return sub_selector.push([field, option, v], "and");
                             });
-                        } else if (isBetweenOperation && (value.length = 2)) {
-                            if (value[0] !== null || value[1] !== null) {
-                                if (value[0] !== null) {
-                                    sub_selector.push([field, ">=", value[0]], "and");
+                        } else if (isBetweenOperation) {
+                            if(value.length > 0){
+                                if ([null, undefined, ''].indexOf(value[0]) < 0 || [null, undefined, ''].indexOf(value[1]) < 0) {
+                                    if ([null, undefined, ''].indexOf(value[0]) < 0) {
+                                        sub_selector.push([field, ">=", value[0]], "and");
+                                    }
+                                    if ([null, undefined, ''].indexOf(value[1]) < 0) {
+                                        sub_selector.push([field, "<=", value[1]], "and");
+                                    }
                                 }
-                                if (value[1] !== null) {
-                                    sub_selector.push([field, "<=", value[1]], "and");
-                                }
+                            }
+                            else{
+                                // 如果是between连的空数组，不加任何条件，即查找所有数据
                             }
                         } else {
                             // contains、startswith、endswith等，如果value为空数组，不加任何条件，即查找所有数据
