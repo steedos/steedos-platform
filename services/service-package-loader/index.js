@@ -109,18 +109,21 @@ module.exports = {
         if (!packageInfo) {
             return;
         }
-        const { path : _path, datasource } = packageInfo;
+        const { path : _path, datasource, isPackage } = packageInfo;
         if (!_path) {
             this.logger.error(`Please config packageInfo in your settings.`);
             console.log(`service ${this.name} started`);
             return;
         }
         await this.loadPackageMetadataFiles(_path, this.name, datasource);
-        try {
-            const _packageInfo = require(path.join(_path, 'package.json'));
-            await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
-        } catch (error) {
+        if(isPackage !== false){
+            try {
             
+                const _packageInfo = require(path.join(_path, 'package.json'));
+                await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
+            } catch (error) {
+                
+            }    
         }
         console.log(`service ${this.name} started`);
     },
