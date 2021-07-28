@@ -197,6 +197,7 @@ fields:
     scale: 0
     visible_on: "{{formData.type === 'textarea' ? true: false}}"
     required: "{{formData.type === 'textarea' ? true: false}}"
+    defaultValue: "{{formData.type === 'textarea' ? 3 : 0}}"
   # allowedValues:
   #   type: text
   #   multiple: true
