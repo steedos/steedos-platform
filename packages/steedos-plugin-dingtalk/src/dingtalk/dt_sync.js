@@ -160,6 +160,46 @@ exports.deptinfoPush = async function (deptId, status = 0) {
 
 }
 
+exports.useridPush = async function (userId, mobile) {
+    try {
+        access_token = await getAccessToken()
+
+        write("================获取用户详情===================")
+        write("access_token:" + access_token)
+        write("userId:" + userId)
+        userinfotRes = await dtApi.userGet(access_token, userId);
+        // console.log("userinfotRes: ", userinfotRes);
+        write(userinfotRes)
+        write("================获取用户详情 END===================")
+
+        userRes = await queryGraphql('{\n  space_users(filters: [[\"mobile\", \"=\", \"' + mobile + '\"]]) {\n    _id\n    name\n  profile\n}\n}');
+
+        if (userRes["space_users"].length == 0)
+            return;
+
+        // console.log("userRes: ", userRes);
+
+        userinfo = {}
+        
+        userinfo['dingtalk_id'] = userId;
+
+        // console.log("userinfo: ", userinfo);
+
+        doc = '{dingtalk_id:\"' + userinfo['dingtalk_id'] + '\"}';
+
+        updateUserRes = await queryGraphql('mutation {\n  space_users__update(id:\"' + userRes['space_users'][0]['_id'] + '\",doc: ' + doc + ') {\n    _id\n  }\n}')
+
+    } catch (error) {
+        if (error){
+            console.log("userinfoPush error: ",error);
+        }
+    }
+
+
+
+
+
+}
 
 async function getAccessToken () {
     write("================获取TOKEN===================")
