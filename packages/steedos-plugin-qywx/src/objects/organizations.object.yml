@@ -1,0 +1,10 @@
+extend: organizations
+fields:
+  qywx_id:
+    label: 企业微信部门ID
+    type: text
+    hidden: false
+  qywx_space:
+    label: 企业微信工作区
+    type: text
+    hidden: true
