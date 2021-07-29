@@ -77,8 +77,12 @@ function createProject(name) {
         // data = data + '\r\n' + 'steedos-config.yml'
         // fs.outputFileSync(gitignorePath, data)
       } else {
-        const gitignoreContent = fs.readFileSync(path.join(templateProjectDir, '.gitignore'), "utf8")
-        fs.outputFileSync(gitignorePath, gitignoreContent)
+        try {
+          const gitignoreContent = fs.readFileSync(path.join(templateProjectDir, '.gitignore'), "utf8")
+          fs.outputFileSync(gitignorePath, gitignoreContent)
+        } catch (error) {
+          
+        }
       }
       spinner.succeed()
       console.info('We suggest that you begin by typing:')
