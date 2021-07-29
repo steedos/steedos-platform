@@ -8,6 +8,9 @@ function SteedosGridContainer(prop){
 		window.gridRefs = {};
 	}
 	window.gridRefs[name] = gridRef;
+	if(!objectApiName){
+		return null;
+	}
 	return (
 		<SteedosProvider iconPath="/assets/icons">
 			<Router>
