@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-triggers",
-  "version": "2.0.49",
+  "version": "2.0.50",
   "description": "",
   "main": "lib/triggers.service.js",
   "scripts": {
