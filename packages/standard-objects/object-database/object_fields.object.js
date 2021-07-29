@@ -482,7 +482,6 @@ var triggers = {
       }
 
       // checkFormulaInfiniteLoop(doc);
-      throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版22本");
     }
   },
   "before.remove.server.object_fields": {
