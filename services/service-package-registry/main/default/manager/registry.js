@@ -193,7 +193,7 @@ async function installModule(module,version,url) {
 
         var installDir = settings.userDir || ".";
         var args = ['install','--no-audit','--no-update-notifier','--no-fund','--save','--save-prefix=~','--production',installName];
-        var yarnArgs = ['add', '-T', installName]; //yarnCommand
+        var yarnArgs = ['add', '-E', installName]; //yarnCommand
         return exec.run(yarnCommand,yarnArgs,{
             cwd: installDir
         }, true).then(result => {
