@@ -1,6 +1,6 @@
 module.exports = {
     show_packages_store: function () {
-        const packageService = 'http://192.168.3.2:5300';
+        const packageService = 'https://huayan.my.steedos.com:8443';
         SteedosUI.showModal(stores.ComponentRegistry.components.ObjectTable, {
             title: '安装软件包',
             listSchema:{
