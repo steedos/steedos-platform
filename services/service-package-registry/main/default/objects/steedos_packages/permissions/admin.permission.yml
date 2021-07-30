@@ -1,7 +1,7 @@
-allowCreate: true
-allowDelete: true
-allowEdit: true
+allowCreate: false
+allowDelete: false
+allowEdit: false
 allowRead: true
-modifyAllRecords: true
+modifyAllRecords: false
 permission_set_id: admin
 viewAllRecords: true
