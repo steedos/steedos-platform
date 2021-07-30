@@ -29,9 +29,6 @@ module.exports = {
     },
     disableVisible: function (object_name, record_id) {
         const record = Creator.odata.get(object_name, record_id);
-        if (record.local) {
-            return false;
-        }
         if (record.status === 'enable') {
             return true;
         }

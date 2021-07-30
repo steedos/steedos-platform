@@ -1,20 +1,15 @@
 name: all
 columns:
-  - field: name
-    wrap: false
-  - field: new_version
+  - field: label
     wrap: false
   - field: version
     wrap: false
   - field: description
     width: '150'
     wrap: false
-  - field: service_name
-  - field: node_id
-  - field: instance_id
   - field: status
 filter_scope: space
-label: 所有
+label: 已安装
 scrolling_mode: standard
 shared: true
 show_count: false

@@ -1,0 +1,23 @@
+_id: apps_admin
+name: Apps
+admin_menus:
+  - _id: apps
+    name: Apps
+    expanded: false
+    sort: 200
+    # parent: process_automation
+  - _id: steedos_packages
+    name: steedos_packages
+    label: 软件包
+    parent: apps
+    object_name: steedos_packages
+    srot: 100
+  - _id: app_manager
+    name: App Manager
+    object_name: apps
+    parent: apps
+    srot: 300
+  - _id: tabs
+    name: Tabs
+    object_name: tabs
+    parent: apps

@@ -16,7 +16,7 @@ router.post('/api/nodes/install', core.requireAuthentication, async function (re
     try {
         const packagePath = await registry.installModule(body.module, body.version)
         const packageInfo = await loader.loadPackage(body.module, packagePath);
-		loader.appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: !!packagePath, path: path.relative(process.cwd(), packageInfo.packagePath)});
+		loader.appendToPackagesConfig(packageInfo.name, {label: body.label, version: packageInfo.version, description: body.description || packageInfo.description, local: !!packagePath, path: path.relative(process.cwd(), packageInfo.packagePath)});
         res.status(200).send({}); //TODO 完善返回信息
     } catch (error) {
         console.error(error);

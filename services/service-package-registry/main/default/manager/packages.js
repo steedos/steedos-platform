@@ -7,8 +7,9 @@ const _ = require('lodash');
 
 const getAllPackages = async ()=>{
     const installPackages = loader.loadPackagesConfig();
-    const filePath = path.resolve(__dirname, path.join('..','..','..', "steedos-packages.json"));
-    const packages = JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
+    // const filePath = path.resolve(__dirname, path.join('..','..','..', "steedos-packages.json"));
+    // const packages = JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
+    const packages = [];
     const onlinePackages = await objectql.getSteedosSchema().broker.call(`@steedos/service-packages.getSteedosPackages`);
     // const pI = await registry.getPackageNewVersion(`@steedos/app-project-management`);
     _.map(packages, (package)=>{
@@ -32,7 +33,9 @@ const getAllPackages = async ()=>{
                 name: packageName,
                 status : package.enable ? 'enable' : 'disable',
                 version : package.version,
-                local: package.local
+                local: package.local,
+                label: package.label || packageName,
+                description: package.description
             })
         }
     })
@@ -53,6 +56,8 @@ const getAllPackages = async ()=>{
                 instance_id: packageInfo.instanceID,
                 status : 'enable',
                 version : packageInfo.version,
+                label: packageInfo.label || packageName,
+                description: packageInfo.description,
                 local: false
             })
         }
