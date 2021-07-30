@@ -31,7 +31,7 @@ module.exports = {
                 let result = []
                 var defOptions = {
                     type: "get",
-                    url: `${packageService}/api/public/steedos_packages`,
+                    url: `${packageService}/api/public/steedos_packages.json`,
                     dataType: "json",
                     contentType: 'application/json',
                     async: false,
@@ -49,7 +49,7 @@ module.exports = {
                     }
                 }
                 $.ajax(Object.assign({}, defOptions));
-                return result;
+                return result.modules || [];
             }(),
             checkboxSelection: false,
             rowButtons: [
@@ -107,7 +107,7 @@ module.exports = {
                 },
                 {
                     name: 'show_readme',
-                    label: '查看 readme',
+                    label: '查看',
                     visible: true,
                     todo: function (object_name, record_id) {
                         window.open(`${packageService}/api/public/steedos_packages/${record_id}/readme`)
