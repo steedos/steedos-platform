@@ -1,0 +1,5 @@
+name: standard_query
+is_enable: true
+label: standard_query
+'on': record_only
+visible: false
