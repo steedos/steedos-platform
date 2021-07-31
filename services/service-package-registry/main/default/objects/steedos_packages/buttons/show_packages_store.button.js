@@ -83,7 +83,7 @@ module.exports = {
                         const nodesSelect = Steedos.PackageRegistry.getNodesSelect();
                         swal({
                             title: `安装`,
-                            text: `确定要安装 <a href="${packageService}/api/public/steedos_packages/${record_id}/readme" target="_blank">${record.name}</a>?${nodesSelect}`,
+                            text: `确定要安装 <a href="${packageService}/api/public/steedos_packages/${record_id}/info" target="_blank">${record.name}</a>?${nodesSelect}`,
                             html: true,
                             showCancelButton: true,
                             confirmButtonText: '安装',
@@ -119,7 +119,7 @@ module.exports = {
                     label: '查看',
                     visible: true,
                     todo: function (object_name, record_id) {
-                        window.open(`${packageService}/api/public/steedos_packages/${record_id}/readme`)
+                        window.open(`${packageService}/api/public/steedos_packages/${record_id}/info`)
                     }
                 }
             ], 
