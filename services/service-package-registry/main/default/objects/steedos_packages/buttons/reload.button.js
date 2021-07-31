@@ -4,7 +4,8 @@ module.exports = {
         const record = Creator.odata.get(object_name,record_id);
         //TODO nodeID
         Steedos.authRequest(Steedos.absoluteUrl('/api/nodes/reload'), {type: 'post', async: false, data: JSON.stringify({
-                module: record.name
+                module: record.name,
+                nodeID: record.node_id
             }),
             success: function(){
                 setTimeout(function(){

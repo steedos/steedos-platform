@@ -73,6 +73,7 @@ module.exports = {
 				loader.appendToPackagesConfig(packageInfo.name, packageConfog);
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfog, {
+						name: packageInfo.name,
 						enable: true, 
 						nodeID: ctx.broker.nodeID, 
 						instanceID: ctx.broker.instanceID, 
