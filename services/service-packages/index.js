@@ -45,7 +45,6 @@ module.exports = {
                 serviceInfo: { type: "object"},
             },
 			async handler(ctx) {
-				console.log(`metadata.delete`, getCacherKey(ctx.params.serviceInfo))
                 await ctx.broker.call('metadata.delete', {key: getCacherKey(ctx.params.serviceInfo)}, {meta: ctx.meta})
 			}
 		},
@@ -70,7 +69,6 @@ module.exports = {
                 serviceInfo: { type: "object"},
             },
 			async handler(ctx) {
-				console.log(`metadata.delete uninstall`, getInstallCacherKey(ctx.params.serviceInfo))
                 await ctx.broker.call('metadata.delete', {key: getInstallCacherKey(ctx.params.serviceInfo), data: ctx.params.serviceInfo}, {meta: ctx.meta})
 			}
 		},
