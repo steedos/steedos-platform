@@ -63,7 +63,7 @@ export class ActionHandlers {
         const objects =  await ctx.broker.call('metadata.filter', {key: cacherKey("*")}, {meta: ctx.meta});
         if(datasource){
             return _.filter(objects, (object)=>{
-                return object.metadata?.datasource == datasource;
+                return object?.metadata?.datasource == datasource;
             });
         }
         return objects

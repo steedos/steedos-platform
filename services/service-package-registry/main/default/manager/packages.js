@@ -6,11 +6,12 @@ const objectql = require('@steedos/objectql');
 const _ = require('lodash');
 
 const getAllPackages = async ()=>{
-    const installPackages = loader.loadPackagesConfig();
+    // const installPackages = loader.loadPackagesConfig();
     // const filePath = path.resolve(__dirname, path.join('..','..','..', "steedos-packages.json"));
     // const packages = JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
     const packages = [];
     const onlinePackages = await objectql.getSteedosSchema().broker.call(`@steedos/service-packages.getSteedosPackages`);
+    const installPackages = await objectql.getSteedosSchema().broker.call(`@steedos/service-packages.getSteedosInstallPackages`);
     // const pI = await registry.getPackageNewVersion(`@steedos/app-project-management`);
     _.map(packages, (package)=>{
         package._id = package.name.replace("/", '_')
@@ -22,16 +23,17 @@ const getAllPackages = async ()=>{
             package.status = installPackages[package.name].enable ? 'enable' : 'disable'
         }
     })
-    _.map(installPackages, (package, packageName)=>{
+    _.map(_.map(installPackages, 'metadata'), (package)=>{
+        const packageName = package.name
         const _package = _.find(packages, (_p)=>{return _p.name == packageName})
         if(_package){
-            _package.status = package.enable ? 'enable' : 'disable'
+            _package.status = package.enable ? 'starting' : 'disable'
             _package.version = package.version
         }else{
             packages.push({
                 _id : packageName.replace("/", '_'),
                 name: packageName,
-                status : package.enable ? 'enable' : 'disable',
+                status : package.enable ? 'starting' : 'disable',
                 version : package.version,
                 local: package.local,
                 label: package.label || packageName,

@@ -87,13 +87,16 @@ const disablePackage = async (packageName)=>{
         await broker.destroyService(service);
     }
     const packages = loadPackagesConfig();
+    let packageInfo = {};
     _.map(packages, (package, name)=>{
         if(packageName == name){
-            package.enable = false
+            package.enable = false;
+            packageInfo = Object.assign({}, package, {name: packageName});
         }
     })
     let data = yaml.dump(packages);
     fs.writeFileSync(packagesFilePath, data);
+    return packageInfo;
 }
 
 const removePackage = async (packageName)=>{
@@ -116,13 +119,16 @@ const enablePackage = async (packageName)=>{
     }))
     await steedos.loadPackage(packagePath)
     const packages = loadPackagesConfig();
+    let packageInfo = {};
     _.map(packages, (package, name)=>{
         if(packageName == name){
-            package.enable = true
+            package.enable = true;
+            packageInfo = Object.assign({}, package, {name: packageName});
         }
     })
     let data = yaml.dump(packages);
     fs.writeFileSync(packagesFilePath, data);
+    return packageInfo;
 }
 
 

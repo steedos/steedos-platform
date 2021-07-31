@@ -9,6 +9,9 @@ const packageName = project.name;
 const getCacherKey = (serviceInfo)=>{
     return `#packages.${serviceInfo.name}.${serviceInfo.instanceID}`
 }
+const getInstallCacherKey = (serviceInfo)=>{
+    return `#packages_install.${serviceInfo.name}.${serviceInfo.nodeID}`
+}
 
 const getRoutersInfoCacherKey = (packageName)=>{
 	return `#packageRouter.${packageName}`
@@ -42,6 +45,7 @@ module.exports = {
                 serviceInfo: { type: "object"},
             },
 			async handler(ctx) {
+				console.log(`metadata.delete`, getCacherKey(ctx.params.serviceInfo))
                 await ctx.broker.call('metadata.delete', {key: getCacherKey(ctx.params.serviceInfo)}, {meta: ctx.meta})
 			}
 		},
@@ -53,9 +57,31 @@ module.exports = {
                 await ctx.broker.call('metadata.add', {key: getCacherKey(ctx.params.serviceInfo), data: ctx.params.serviceInfo}, {meta: ctx.meta})
 			}
 		},
+		install: {
+			params: {
+                serviceInfo: { type: "object"},
+            },
+			async handler(ctx) {
+                await ctx.broker.call('metadata.add', {key: getInstallCacherKey(ctx.params.serviceInfo), data: ctx.params.serviceInfo}, {meta: ctx.meta})
+			}
+		},
+		uninstall: {
+			params: {
+                serviceInfo: { type: "object"},
+            },
+			async handler(ctx) {
+				console.log(`metadata.delete uninstall`, getInstallCacherKey(ctx.params.serviceInfo))
+                await ctx.broker.call('metadata.delete', {key: getInstallCacherKey(ctx.params.serviceInfo), data: ctx.params.serviceInfo}, {meta: ctx.meta})
+			}
+		},
+		getSteedosInstallPackages: {
+            async handler(ctx) {
+                return await ctx.broker.call('metadata.filter', {key: getInstallCacherKey({name: "*", instanceID: "*", nodeID: "*"})}, {meta: ctx.meta}) 
+			}
+        },
         getSteedosPackages: {
             async handler(ctx) {
-                return await ctx.broker.call('metadata.filter', {key: getCacherKey({name: "*", instanceID: "*"})}, {meta: ctx.meta}) 
+                return await ctx.broker.call('metadata.filter', {key: getCacherKey({name: "*", instanceID: "*", nodeID: "*"})}, {meta: ctx.meta}) 
 			}
         },
 		setPackageRoutersInfo: {

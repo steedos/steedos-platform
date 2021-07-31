@@ -4,9 +4,11 @@ const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const loader = require('./main/default/manager/loader');
 const packages = require('./main/default/manager/packages');
+const registry = require('./main/default/manager/registry');
 const metadata = require('@steedos/metadata-core')
 const _ = require(`lodash`);
 const path = require(`path`);
+const objectql = require('@steedos/objectql');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -21,7 +23,7 @@ module.exports = {
 	settings: {
 		packageInfo: {
 			path: __dirname,
-			name: packageName,
+			name: this.name,
 			isPackage: false
 		}
 	},
@@ -35,7 +37,115 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
+		getProjectNodes: {
+			rest: {
+                method: "GET",
+                path: "/getProjectNodes"
+            },
+            async handler(ctx) {
+                // let schema = objectql.getSteedosSchema();
+				// let broker = schema.broker;
+				// const serviceList = broker.registry.getServiceList({ withActions: false });
+				// const services = _.filter(serviceList, (_service)=>{
+				// 	return _service.name == this.name;
+				// })
+				// return services;
+				const data = await ctx.broker.call('metadata.filter', {key: `#package_install_node.*`}, {meta: ctx.meta})
+				const nodes = [];
+				_.each(data,(item)=>{
+					nodes.push(item.metadata.nodeID)
+				})
+				return _.uniq(_.compact(nodes));
+            }
+		},
+		installPackage:{
+			async handler(ctx) {
+				const { module, version, label, description} = ctx.params
+                const packagePath = await registry.installModule(module, version)
+				const packageInfo = await loader.loadPackage(module, packagePath);
+				const packageConfog = {
+					label: label, 
+					version: packageInfo.version, 
+					description: description || packageInfo.description, 
+					local: !!packagePath, 
+					path: path.relative(process.cwd(), packageInfo.packagePath)
+				}
+				loader.appendToPackagesConfig(packageInfo.name, packageConfog);
+				await ctx.broker.call(`@steedos/service-packages.install`, {
+					serviceInfo: Object.assign({}, packageConfog, {
+						enable: true, 
+						nodeID: ctx.broker.nodeID, 
+						instanceID: ctx.broker.instanceID, 
+					})
+				})
+				return packageConfog;
+            }
+		},
+		uninstallPackage:{
+			async handler(ctx) {
+				const { module } = ctx.params
+                await loader.removePackage(module);
+        		await registry.uninstallModule(module)
+				await ctx.broker.call(`@steedos/service-packages.uninstall`, {
+					serviceInfo: {
+						name: module, 
+						nodeID: ctx.broker.nodeID, 
+						instanceID: ctx.broker.instanceID, 
+					}
+				})
+				return {};
+            }
+		},
+		reloadPackage:{
+			async handler(ctx) {
+				const { module } = ctx.params
+                const packages = loader.loadPackagesConfig();
+				const spackage = _.find(packages, (_p, pname)=>{
+					return pname === module;
+				})
+				if(spackage){
+					if(spackage.enable){
+						if(spackage.local){
+							await loader.loadPackage(module, spackage.path);
+						}else{
+							await loader.loadPackage(module);
+						}
+					}else{
+						throw new Error('package is disable: ' + module )
+					}
+				}else{
+					throw new Error('not find package: ' + module)
+				}
 
+				return {}
+            }
+		},
+		disablePackage:{
+			async handler(ctx) {
+				const { module } = ctx.params
+                const packageConfog = await loader.disablePackage(module);
+				await ctx.broker.call(`@steedos/service-packages.install`, {
+					serviceInfo: Object.assign({}, packageConfog, {
+						nodeID: ctx.broker.nodeID, 
+						instanceID: ctx.broker.instanceID, 
+					})
+				})
+				return {}
+            }
+		},
+		enablePackage:{
+			async handler(ctx) {
+				const { module } = ctx.params
+                const packageConfog = await loader.enablePackage(module);
+				await ctx.broker.call(`@steedos/service-packages.install`, {
+					serviceInfo: Object.assign({}, packageConfog, {
+						nodeID: ctx.broker.nodeID, 
+						instanceID: ctx.broker.instanceID, 
+					})
+				})
+				return {}
+            }
+		}
 	},
 
 	/**
@@ -63,9 +173,11 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-
+		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
+		if(PACKAGE_INSTALL_NODE){
+			await this.broker.call('metadata.add', {key: `#package_install_node.${this.broker.nodeID}`, data: {nodeID: PACKAGE_INSTALL_NODE}}, {meta: {}}) 
+		}
 		packages.maintainSystemFiles()
-
 		try {
 			const packagePath = path.join(process.cwd(), 'steedos-app');
 			const packageInfo = require(path.join(packagePath, 'package.json'));
@@ -85,12 +197,46 @@ module.exports = {
 			}
 		})
 		await loader.loadPackages();
+
+		//注册本地已安装的steedos packages
+		const installPackages = loader.loadPackagesConfig();
+		for (const name in installPackages) {
+			if (Object.hasOwnProperty.call(installPackages, name)) {
+				const _packageInfo = installPackages[name];
+				await this.broker.call(`@steedos/service-packages.install`, {
+					serviceInfo: {
+						name: name, 
+						nodeID: this.broker.nodeID, 
+						instanceID: this.broker.instanceID, 
+						path: _packageInfo.path,
+						local: _packageInfo.local, 
+						enable: _packageInfo.enable, 
+						version: _packageInfo.version, 
+						description: _packageInfo.description
+					}
+				})
+			}
+		}
+		
 	},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-
+		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
+		if(PACKAGE_INSTALL_NODE){
+			this.broker.call('metadata.delete', {key: `#package_install_node.${this.broker.nodeID}`}, {meta: {}}) 
+		}
+		const installPackages = loader.loadPackagesConfig();
+		for (const name in installPackages) {
+			this.broker.call(`@steedos/service-packages.uninstall`, {
+				serviceInfo: {
+					name: name, 
+					nodeID: this.broker.nodeID, 
+					instanceID: this.broker.instanceID, 
+				}
+			})
+		}
 	}
 };

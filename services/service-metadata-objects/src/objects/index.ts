@@ -23,7 +23,7 @@ async function getBaseObjectConfig(ctx, datasourceName) {
         metadataType,
         metadataApiName: metadataApiName
     })
-    return configs && configs.length > 0 ? configs[0].metadata : null;
+    return configs && configs.length > 0 ? configs[0]?.metadata : null;
 }
 
 async function getObjectConfigs(ctx, objectApiName) {

@@ -45,8 +45,7 @@ module.exports = {
 			"@steedos/plugin-dingtalk",
 			"@steedos/data-import",
 			"@steedos/service-fields-indexs",
-			"@steedos/service-accounts",
-			"@steedos/service-package-registry"
+			"@steedos/service-accounts"
 		],
 		plugins: []
 	},

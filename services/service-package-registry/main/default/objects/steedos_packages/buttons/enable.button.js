@@ -1,9 +1,10 @@
 module.exports = {
     enable: function (object_name, record_id) {
         const record = Creator.odata.get(object_name,record_id);
+        const nodesSelect = Steedos.PackageRegistry.getNodesSelect();
         swal({
             title: `启用`,
-            text: `确定要启用${record.name}?`,
+            text: `确定要启用${record.name}?${nodesSelect}`,
             html: true,
             showCancelButton: true,
             confirmButtonText: '启用',
@@ -12,16 +13,24 @@ module.exports = {
             if (option) {
                 toastr.info('启用中，请稍后...', null, {timeOut: false});
                 Steedos.authRequest(Steedos.absoluteUrl('/api/nodes/enable'), {type: 'post', async: false, data: JSON.stringify({
-                    module: record.name
-                })})
-                setTimeout(function(){
-                    if(record_id){
-                        SteedosUI.reloadRecord(object_name, record_id)
+                        module: record.name,
+                        nodeID: $("#steedos_package_main_node").val()
+                    }),
+                    success: function(){
+                        setTimeout(function(){
+                            if(record_id){
+                                SteedosUI.reloadRecord(object_name, record_id)
+                            }
+                            toastr.clear();
+                            toastr.success('已启用');
+                            FlowRouter.reload()
+                        }, 1000 * 8)
+                    },
+                    error: function(XMLHttpRequest){
+                        toastr.clear();
+                        toastr.error(XMLHttpRequest.responseJSON.error);
                     }
-                    toastr.clear();
-                    toastr.success('已启用');
-                    FlowRouter.reload()
-                }, 1000 * 8)
+                })
             }
         })
     },

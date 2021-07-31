@@ -1,6 +1,6 @@
 module.exports = {
     show_packages_store: function () {
-        const packageService = 'https://huayan.my.steedos.com:8443';
+        const packageService = 'http://192.168.3.2:5300';
         SteedosUI.showModal(stores.ComponentRegistry.components.ObjectTable, {
             title: '安装软件包',
             listSchema:{
@@ -80,9 +80,10 @@ module.exports = {
                         }
                         $.ajax(Object.assign({}, defOptions));
                         const record = result;
+                        const nodesSelect = Steedos.PackageRegistry.getNodesSelect();
                         swal({
                             title: `安装`,
-                            text: `确定要安装${record.name}?`,
+                            text: `确定要安装 <a href="${packageService}/api/public/steedos_packages/${record_id}/readme" target="_blank">${record.name}</a>?${nodesSelect}`,
                             html: true,
                             showCancelButton: true,
                             confirmButtonText: '安装',
@@ -91,16 +92,24 @@ module.exports = {
                             if (option) {
                                 toastr.info('安装中，请稍后...', null, {timeOut: false});
                                 Steedos.authRequest(Steedos.absoluteUrl('/api/nodes/install'), {type: 'post', async: false, data: JSON.stringify({
-                                    module: record.name,
-                                    version: record.version,
-                                    label: record.label,
-                                    description: record.description,
-                                })})
-                                setTimeout(function(){
-                                    toastr.clear();
-                                    toastr.success('已安装');
-                                    FlowRouter.reload()
-                                }, 1000 * 10)
+                                        module: record.name,
+                                        version: record.version,
+                                        label: record.label,
+                                        description: record.description,
+                                        nodeID: $("#steedos_package_main_node").val()
+                                    }),
+                                    success: function(){
+                                        setTimeout(function(){
+                                            toastr.clear();
+                                            toastr.success('已安装');
+                                            FlowRouter.reload()
+                                        }, 1000 * 10)
+                                    },
+                                    error: function(XMLHttpRequest){
+                                        toastr.clear();
+                                        toastr.error(XMLHttpRequest.responseJSON.error);
+                                    }
+                                })
                             }
                         })
                     }

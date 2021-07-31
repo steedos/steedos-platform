@@ -3,31 +3,32 @@ const router = express.Router();
 const core = require('@steedos/core');
 const registry = require('../manager/registry');
 const loader = require('../manager/loader');
-const path = require('path');
+const objectql = require('@steedos/objectql');
+let schema = objectql.getSteedosSchema();
 router.post('/api/nodes/install', core.requireAuthentication, async function (req, res) {
     const userSession = req.user;
-    // const spaceId = userSession.spaceId;
-    // const userId = userSession.userId;
     const isSpaceAdmin = userSession.is_space_admin;
     const body = req.body;
     if(!isSpaceAdmin){
         return res.status(401).send({ message: 'No permission' });
     }
     try {
-        const packagePath = await registry.installModule(body.module, body.version)
-        const packageInfo = await loader.loadPackage(body.module, packagePath);
-		loader.appendToPackagesConfig(packageInfo.name, {label: body.label, version: packageInfo.version, description: body.description || packageInfo.description, local: !!packagePath, path: path.relative(process.cwd(), packageInfo.packagePath)});
-        res.status(200).send({}); //TODO 完善返回信息
+        const { module, version, label, description, nodeID} = body || {};
+        let broker = schema.broker;
+        const result = await broker.call(`~packages-project-server.installPackage`, {
+            module, version, label, description
+        },{
+            nodeID: nodeID
+        })
+        res.status(200).send(result); //TODO 完善返回信息
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.message);
+        res.status(500).send({error: error.message});
     }
 });
 
 router.post('/api/nodes/uninstall', core.requireAuthentication, async function (req, res) {
     const userSession = req.user;
-    // const spaceId = userSession.spaceId;
-    // const userId = userSession.userId;
     const isSpaceAdmin = userSession.is_space_admin;
     const body = req.body;
     if(!isSpaceAdmin){
@@ -36,10 +37,17 @@ router.post('/api/nodes/uninstall', core.requireAuthentication, async function (
     try {
         await loader.removePackage(body.module);
         await registry.uninstallModule(body.module)
-        res.status(200).send({}); //TODO 完善返回信息
+        const { module, nodeID} = body || {};
+        let broker = schema.broker;
+        const result = await broker.call(`~packages-project-server.uninstallPackage`, {
+            module
+        },{
+            nodeID: nodeID
+        })
+        res.status(200).send(result); //TODO 完善返回信息
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.message);
+        res.status(500).send({error: error.message});
     }
 });
 
@@ -51,31 +59,17 @@ router.post('/api/nodes/reload', core.requireAuthentication, async function (req
         return res.status(401).send({ message: 'No permission' });
     }
     try {
-
-        const packages = loader.loadPackagesConfig();
-        const package = _.find(packages, (_p, pname)=>{
-            return pname === body.module;
+        const { module, nodeID} = body || {};
+        let broker = schema.broker;
+        const result = await broker.call(`~packages-project-server.reloadPackage`, {
+            module
+        },{
+            nodeID: nodeID
         })
-
-        if(package){
-            if(package.enable){
-                if(package.local){
-                    await loader.loadPackage(body.module, package.path);
-                }else{
-                    await loader.loadPackage(body.module);
-                }
-            }else{
-                return res.status(404).send({ message: 'package is disable: ' + body.module });
-            }
-            
-        }else{
-            return res.status(404).send({ message: 'not find package: ' + body.module });
-        }
-        
-        res.status(200).send({});
+        res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.message);
+        res.status(500).send({error: error.message});
     }
 });
 
@@ -87,11 +81,17 @@ router.post('/api/nodes/disable', core.requireAuthentication, async function (re
         return res.status(401).send({ message: 'No permission' });
     }
     try {
-        await loader.disablePackage(body.module);
-        res.status(200).send({});
+        const { module, nodeID} = body || {};
+        let broker = schema.broker;
+        const result = await broker.call(`~packages-project-server.disablePackage`, {
+            module
+        },{
+            nodeID: nodeID
+        })
+        res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.message);
+        res.status(500).send({error: error.message});
     }
 });
 
@@ -103,11 +103,17 @@ router.post('/api/nodes/enable', core.requireAuthentication, async function (req
         return res.status(401).send({ message: 'No permission' });
     }
     try {
-        await loader.enablePackage(body.module);
-        res.status(200).send({});
+        const { module, nodeID} = body || {};
+        let broker = schema.broker;
+        const result = await broker.call(`~packages-project-server.enablePackage`, {
+            module
+        },{
+            nodeID: nodeID
+        })
+        res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.message);
+        res.status(500).send({error: error.message});
     }
 });
 
