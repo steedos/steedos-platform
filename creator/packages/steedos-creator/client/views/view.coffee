@@ -751,7 +751,7 @@ Template.creator_view.events
 			if Steedos.isMobile()
 				Template.list.refresh getRelatedListTemplateId(targetObjectName)
 			else
-				window.gridRefs["related_listview_#{mainObjectApiName}_#{targetObjectName}"+ '_' + related_field_name].current.api.refreshServerSideStore()
+				window.refreshGrid("related_listview_#{mainObjectApiName}_#{targetObjectName}"+ '_' + related_field_name);
 #				gridContainerWrap = $(".related-object-tabular")
 #				dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
 #				Template.creator_grid.refresh dxDataGridInstance

@@ -133,7 +133,7 @@ onSuccess = (formType,result)->
 	if FlowRouter.current().route.path.endsWith("/:record_id")
 		FlowRouter.reload();
 	else
-		window.gridRef.current.api.refreshServerSideStore()
+		window.refreshGrid();
 
 
 AutoForm.hooks creatorAddRelatedForm:

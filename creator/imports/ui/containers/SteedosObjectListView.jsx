@@ -8,6 +8,22 @@ function SteedosGridContainer(prop){
 		window.gridRefs = {};
 	}
 	window.gridRefs[name] = gridRef;
+	window.refreshGrid = (name)=>{
+		const grid = name ? window.gridRefs[name] : window.gridRef;
+		if(!grid){
+			return;
+		}
+		const rowModel = grid.current.api.rowModel.getType();
+		if(rowModel === "serverSide"){
+			grid.current.api.refreshServerSideStore();
+		}
+		else{
+			// infinite
+			grid.current.api.rowModel.reset()
+			// grid.current.api.ensureIndexVisible(0);
+			// grid.current.api.purgeInfiniteCache()
+		}
+	}
 	if(!objectApiName){
 		return null;
 	}

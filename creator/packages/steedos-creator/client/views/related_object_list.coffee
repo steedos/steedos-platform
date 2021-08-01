@@ -168,7 +168,7 @@ Template.related_object_list.events
 		if Steedos.isMobile()
 			Template.list.refresh getRelatedListTemplateId()
 		else
-			return window.gridRef.current.api.refreshServerSideStore()
+			return window.refreshGrid()
 #			dxDataGridInstance = $(event.currentTarget).closest(".related_object_list").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
 #			Template.creator_grid.refresh(dxDataGridInstance)
 	'click .btn-export_list_view': (event, template)->
@@ -189,8 +189,7 @@ Template.related_object_list.events
 				targetObjectName = dataset?.targetObjectName
 				related_field_name = dataset?.targetRelatedFieldName
 				mainObjectApiName = Session.get("object_name")
-				window.gridRefs["related_listview_#{mainObjectApiName}_#{targetObjectName}"+ '_' + related_field_name].current.api.refreshServerSideStore()
-
+				window.refreshGrid("related_listview_#{mainObjectApiName}_#{targetObjectName}" + '_' + related_field_name);
 
 Template.related_object_list.onCreated ->
 	this.recordsTotal = new ReactiveVar(0)
