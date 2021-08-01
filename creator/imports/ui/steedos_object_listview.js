@@ -39,5 +39,9 @@ Template.steedos_object_listview.helpers({
 		// 记录详情页面子表需要根据记录个数自动适应grid高度
 		return this.autoFixGridHeight;
 	},
+	autoHideForEmptyData: function(){
+		// 记录详情页面子表需要在空数据时隐藏整个子表
+		return this.autoHideForEmptyData;
+	},
 })
 
