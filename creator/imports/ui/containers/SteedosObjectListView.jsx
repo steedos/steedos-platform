@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { ObjectListView, SteedosRouter as Router, SteedosProvider } from '@steedos/builder-community/dist/builder-community.react.js';
 function SteedosGridContainer(prop){
-	const { objectApiName, name, listName, filters, onModelUpdated, sideBar, pageSize, onUpdated, checkboxSelection, columnFields } = prop;
+	const { objectApiName, name, listName, filters, onModelUpdated, sideBar, pageSize, onUpdated, checkboxSelection, columnFields, autoFixGridHeight } = prop;
 	const gridRef = useRef();
 	window.gridRef = gridRef;
 	if(!window.gridRefs){
@@ -26,7 +26,8 @@ function SteedosGridContainer(prop){
 					onUpdated={onUpdated}
 					columnFields={columnFields}
 					checkboxSelection={checkboxSelection}
-				></ObjectListView>
+					autoFixGridHeight={autoFixGridHeight}
+					></ObjectListView>
 			</Router>
 		</SteedosProvider>
 	)

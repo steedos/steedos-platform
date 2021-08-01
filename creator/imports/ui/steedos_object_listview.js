@@ -34,6 +34,10 @@ Template.steedos_object_listview.helpers({
 	},
 	columnFields: function(){
 		return this.columnFields;
-	}
+	},
+	autoFixGridHeight: function(){
+		// 记录详情页面子表需要根据记录个数自动适应grid高度
+		return this.autoFixGridHeight;
+	},
 })
 
