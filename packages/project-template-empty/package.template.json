@@ -18,7 +18,7 @@
       "@steedos/service-metadata-server": "^2.0.51",
       "@steedos/service-package-loader": "^2.0.51",
       "@steedos/service-steedos-server": "^2.0.51",
-      "@steedos/service-package-registry": "^2.0.48",
+      "@steedos/service-package-registry": "^2.0.51",
       "cross-env": "^7.0.2",
       "ioredis": "^4.22.0",
       "moleculer": "^0.14.12",

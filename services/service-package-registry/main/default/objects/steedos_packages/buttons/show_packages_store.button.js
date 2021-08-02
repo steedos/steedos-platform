@@ -83,7 +83,7 @@ module.exports = {
                         const nodesSelect = Steedos.PackageRegistry.getNodesSelect();
                         swal({
                             title: `安装`,
-                            text: `确定要安装 <a href="${packageService}/api/public/steedos_packages/${record_id}/info" target="_blank">${record.name}</a>?${nodesSelect}`,
+                            text: `确定要安装 <a href="${packageService}/packages/${record.name}" target="_blank">${record.name}</a>?${nodesSelect}`,
                             html: true,
                             showCancelButton: true,
                             confirmButtonText: '安装',
@@ -119,7 +119,29 @@ module.exports = {
                     label: '查看',
                     visible: true,
                     todo: function (object_name, record_id) {
-                        window.open(`${packageService}/api/public/steedos_packages/${record_id}/info`)
+                        let result = {}
+                        var defOptions = {
+                            type: "get",
+                            url: `${packageService}/api/public/steedos_packages/${record_id}`,
+                            dataType: "json",
+                            contentType: 'application/json',
+                            async: false,
+                            success: function (data) {
+                                result = data;
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.error(XMLHttpRequest.responseJSON);
+                                if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
+                                    toastr.error(t(XMLHttpRequest.responseJSON.error.replace(/:/g, '：')))
+                                }
+                                else {
+                                    toastr.error(XMLHttpRequest.responseJSON)
+                                }
+                            }
+                        }
+                        $.ajax(Object.assign({}, defOptions));
+                        const record = result;
+                        window.open(`${packageService}/packages/${record.name}`)
                     }
                 }
             ], 
