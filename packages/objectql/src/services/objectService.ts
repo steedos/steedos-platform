@@ -661,9 +661,11 @@ module.exports = {
         schema.events[`${getObjectServiceName(objectConfig.name)}.refresh`] = {
             handler: async function (ctx) {
                 const _objectConfig = getObjectConfig(objectConfig.name);
-                let gobj = generateSettingsGraphql(_objectConfig);
-                this.settings.graphql = gobj;
-                dealWithRelatedFields(_objectConfig, this.settings.graphql);
+                if(_objectConfig){
+                    let gobj = generateSettingsGraphql(_objectConfig);
+                    this.settings.graphql = gobj;
+                    dealWithRelatedFields(_objectConfig, this.settings.graphql);
+                }
             }
         }
     },
