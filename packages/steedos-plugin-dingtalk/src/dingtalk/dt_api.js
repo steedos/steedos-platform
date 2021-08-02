@@ -279,6 +279,32 @@ exports.userGet = async function (access_token, userid) {
     }
 };
 
+exports.userGetByMobile = async function (access_token, mobile) {
+    var err, response;
+    try {
+        response = await fetch("https://oapi.dingtalk.com/topapi/v2/user/getbymobile?access_token=" + access_token, {
+            method: 'post',
+            body: JSON.stringify({
+                "mobile": mobile
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json());
+        
+        if (response.errcode > 0) {
+            throw response.errmsg;
+        }
+        return response;
+    } catch (_error) {
+        err = _error;
+        console.error(err);
+        throw _.extend(new Error("Failed to complete OAuth handshake with userGetByMobile. " + err), {
+            response: err
+        });
+    }
+};
+
 let syncCompany = function (access_token, auth_corp_info, permanent_code) {
     var admin_ids, deleted_org_ids, deleted_su_ids, forms_count, now, org_data, org_ids, owner_id, root_org, root_org_query, s, s_doc, s_dt, s_id, space_data, space_id, sq, su_ids, user_data;
     now = new Date;
@@ -684,6 +710,24 @@ exports.spaceGet = async function(corpId){
         throw _.extend(new Error("Failed to get space with error: " + err), {
             response: err
         });
+    }
+};
+
+exports.spaceUsersGet = async function(corpId){
+    try {
+        let spaceUsers = [];
+        let spaceUserObj = steedosSchema.getObject("space_users");
+        let spaceId = typeof steedosConfig !== "undefined" && steedosConfig !== null ? (_ref5 = steedosConfig.tenant) != null ? _ref5._id : void 0 : void 0;
+        if(corpId){
+            spaceUsers = await spaceUserObj.find({filters: [['space', '=', corpId]]});
+        }else if (spaceId){
+            spaceUsers = await spaceUserObj.find({filters: [['space', '=', spaceId]]});
+        }
+        console.log("spaceUsers: ",spaceUsers.length);
+        return spaceUsers;
+    } catch (err) {
+        console.error(err);
+        console.log("Failed to get space with error: " + err);
     }
 };
 
