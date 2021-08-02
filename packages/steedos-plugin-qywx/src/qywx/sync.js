@@ -1,365 +1,228 @@
-let addOrganization, addSpaceUser, addUser, initRootOrganization, manageOrganizations, manageSpaceUser, manageSpaces, manageUser, updateOrganization, updateSpaceUser, updateUser;
-let objectql = require('@steedos/objectql');
-const steedosConfig = objectql.getSteedosConfig();
+const crypto = require('crypto');
 const Qiyeweixin = require("./qywx");
-Meteor.startup(function() {
-  var ref;
-  if (((ref = steedosConfig.qiyeweixin) != null ? ref.sync_interval : void 0) > 0) {
-    return Meteor.setInterval(startSyncCompany(), steedosConfig.qiyeweixin.sync_interval);
-  }
-});
+const aes = require('wx-ding-aes')
+const fs = require('fs')
+const fetch = require('node-fetch');
+const objectql = require('@steedos/objectql');
+const steedosConfig = objectql.getSteedosConfig();
 
-exports.startSyncCompany = function() {
-  var spaces;
-  spaces = db.spaces.find({
-    $and: [
-      {
-        'is_deleted': false
-      }, {
-        'qywx_need_sync': true
-      }
-    ]
-  }).fetch();
-  if (spaces) {
-    return spaces.forEach(function(space) {
-      return syncCompany(space);
-    });
-  }
-};
+if (!steedosConfig.qywx)
+    return;
 
-exports.syncCompany = function(space) {
-  var allOrganizations, allUsers, at, o, orgIds, orgList, ref, service, space_id;
-  service = space.services.qiyeweixin;
-  space_id = space._id;
-  o = ServiceConfiguration.configurations.findOne({
-    service: "qiyeweixin"
-  });
-  at = Qiyeweixin.getCorpToken(service.corp_id, service.permanent_code, o.suite_access_token);
-  if (at && at.access_token) {
-    service.access_token = at.access_token;
+const API_KEY = steedosConfig.qywx.api_Key;
+const LOG_PATH = steedosConfig.qywx.log_path || './qywx_server.log';
+
+
+function write(content) {
+  try {
+    content = JSON.stringify(content);
+  } catch (Exception) {
+
   }
-  console.log("at.access_token------:",at.access_token);
-  allOrganizations = [];
-  allUsers = [];
-  orgList = Qiyeweixin.getDepartmentList(service.access_token);
-  orgIds = orgList.map(function(m) {
-    return m.id;
-  });
-  if (orgIds.indexOf(1) === -1) {
-    initRootOrganization(space, orgIds);
-    allOrganizations.push(space._id + '-1');
+  content = content + "\n"
+  fs.appendFileSync(LOG_PATH, content, (err) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    //file written successfully
+  })
+}
+
+
+//status = 新增 2:离职
+exports.deptinfoPush = async function (deptId, name, parentid, status = 0) {
+
+  if (status == 2) {
+    deptRes = await queryGraphql('{\n  organizations(filters: [[\"qywx_id\", \"=\", \"' + deptId + '\"]]) {\n    _id\n    name\n  }\n}');
+    if (deptRes.organizations.length != 0) {
+      deptRes = await queryGraphql('mutation {\n  organizations__delete(id:\"' + deptRes['organizations'][0]['_id'] + '\") \n}');
+    }
+
+    return true
   }
-  orgList.forEach(function(org) {
-    var children, orgParent, orgUsers, userList;
-    userList = Qiyeweixin.getUserList(service.access_token, org.id);
-    orgUsers = [];
-    userList.forEach(function(user) {
-      var _id;
-      _id = manageUser(user);
-      user._id = _id;
-      user.space = space_id;
-      manageSpaceUser(user, orgIds);
-      orgUsers.push(_id);
-      return allUsers.push(_id);
-    });
-    org.users = orgUsers;
-    org._id = space_id + '-' + org.id;
-    org.fullname = org.name;
-    org.space = space_id;
-    org.parent = space_id + '-' + org.parentid;
-    children = orgList.filter(function(m) {
-      return m.parentid === org.id;
-    }).map(function(m) {
-      return space_id + '-' + m.id;
-    });
-    org.children = children;
-    if (org.id === 1) {
-      org.is_company = true;
+
+  //获取部门详情
+  write("================获取部门详情===================")
+  deptinfotRes = {}
+  deptinfotRes['name'] = name;
+  deptinfotRes['parentid'] = parentid
+  write("================获取部门详情 END===================")
+  //查看数据库是否存在
+  deptRes = await queryGraphql('{\n  organizations(filters: [[\"qywx_id\", \"=\", \"' + deptId + '\"]]) {\n    _id\n    name\n  }\n}');
+
+  //找到数据库中上级信息，如果没有上级找到顶级信息
+  if (deptinfotRes['parentid'] == 0) {
+    parentDeptInfo = await queryGraphql('{\n  organizations(filters: [[\"parent\", \"=\", null]]) {\n    _id\n  }\n}');
+  } else {
+    parentDeptInfo = await queryGraphql('{\n  organizations(filters: [[\"qywx_id\", \"=\", \"' + deptinfotRes['parentid'] + '\"]]) {\n    _id\n    name\n  }\n}');
+  }
+
+  if (deptRes.organizations.length == 0) {
+    insertDeptRes = await queryGraphql('mutation {\n  organizations__insert(doc: {qywx_id :\"' + deptId + '\",name: \"' + deptinfotRes['name'] + '\", parent: \"' + parentDeptInfo['organizations'][0]['_id'] + '\"}) {\n    _id\n  }\n}')
+  } else {
+    if (parentid == "" || parentid == undefined) {
+      updateDeptRes = await queryGraphql('mutation {\n  organizations__update(id:\"' + deptRes['organizations'][0]['_id'] + '\",doc: {qywx_id :\"' + deptId + '\",name: \"' + deptinfotRes['name'] + '\"}) {\n    _id\n  }\n}')
     } else {
-      orgParent = db.organizations.findOne({
-        _id: org.parent
-      }, {
-        fullname: 1
-      });
-      if (orgParent && orgParent.fullname) {
-        org.fullname = orgParent.fullname + "/" + org.name;
-      }
+      updateDeptRes = await queryGraphql('mutation {\n  organizations__update(id:\"' + deptRes['organizations'][0]['_id'] + '\",doc: {qywx_id :\"' + deptId + '\",name: \"' + deptinfotRes['name'] + '\", parent: \"' + parentDeptInfo['organizations'][0]['_id'] + '\"}) {\n    _id\n  }\n}')
     }
-    manageOrganizations(org);
-    return allOrganizations.push(org._id);
-  });
-  manageSpaces(space);
-  db.space_users.direct.remove({
-    $and: [
-      {
-        space: space_id
-      }, {
-        user: {
-          $nin: allUsers
-        }
-      }
-    ]
-  });
-  return db.organizations.direct.remove({
-    $and: [
-      {
-        space: space_id
-      }, {
-        _id: {
-          $nin: allOrganizations
-        }
-      }
-    ]
-  });
-};
 
-initRootOrganization = function(space, orgIds) {
-  var rootOrg;
-  rootOrg = {};
-  rootOrg.id = 1;
-  rootOrg._id = space._id + '-1';
-  rootOrg.space = space._id;
-  rootOrg.name = space.name;
-  rootOrg.fullname = space.name;
-  rootOrg.parent = '';
-  rootOrg.children = orgIds.map(function(m) {
-    return space._id + '-' + m;
-  });
-  rootOrg.users = [];
-  rootOrg.is_company = true;
-  rootOrg.order = 100000000;
-  return manageOrganizations(rootOrg);
-};
+  }
 
-manageSpaces = function(space) {
-  var admins, doc, service, space_admin_data;
-  service = space.services.qiyeweixin;
-  space_admin_data = Qiyeweixin.getAdminList(service.corp_id, service.agentid);
-  admins = [];
-  space_admin_data.forEach(function(admin) {
-    var admin_user;
-    if (admin.auth_type) {
-      admin_user = db.space_users.findOne({
-        "qywx_id": admin.userid
-      }, {
-        _id: 1
-      });
-      if (admin_user) {
-        return admins.push(admin_user._id);
-      }
+}
+
+
+//status = 新增 2:离职
+exports.userinfoPush = async function (userId, status = 0) {
+
+  console.log(userId)
+  console.log(status)
+
+  if (status == 2) {
+    userRes = await queryGraphql('{\n  space_users(filters: [[\"qywx_id\", \"=\", \"' + userId + '\"]]) {\n    _id\n    name\n  }\n}');
+    if (userRes.space_users.length != 0) {
+      userRes = await queryGraphql('mutation {\n  space_users__update(id:\"' + userRes['space_users'][0]['_id'] + '\", doc: {user_accepted: false}) {\n    _id\n  }\n}');
     }
-  });
-  doc = {};
-  doc.admins = admins;
-  doc.owner = admins[0];
-  doc.modified = new Date;
-  service.sync_modified = new Date;
-  // service.need_sync = false;
-  doc.qywx_need_sync = false;
-  delete service.access_token;
-  doc.services = {
-    qiyeweixin: service
-  };
-  return db.spaces.direct.update(space._id, {
-    $set: doc
-  });
-};
 
-manageOrganizations = function(organization) {
-  var org;
-  org = db.organizations.findOne({
-    $and: [
-      {
-        _id: organization._id
-      }, {
-        space: organization.space
-      }
-    ]
-  });
-  if (org) {
-    return updateOrganization(org, organization);
-  } else {
-    return addOrganization(organization);
+    return true
   }
-};
 
-manageSpaceUser = function(user, orgIds) {
-  var su;
-  su = db.space_users.findOne({
-    $and: [
-      {
-        user: user._id
-      }, {
-        space: user.space
-      }
-    ]
-  });
-  if (su) {
-    return updateSpaceUser(su, user, orgIds);
-  } else {
-    return addSpaceUser(user, orgIds);
+  let space = Qiyeweixin.getSpace();
+  // 获取access_token
+  if(space.qywx_corp_id && space.qywx_secret)
+      access_token = await Qiyeweixin.getToken(space.qywx_corp_id,space.qywx_secret);
+
+  write("================获取用户详情===================")
+  write("access_token:" + access_token)
+  write("userId:" + userId)
+  userinfotRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token=" + access_token + "&userid=" + userId);
+  userinfotRes = await userinfotRes.json()
+  // userinfotRes = HTTP.get("https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token="+access_token+"&userid="+userId)
+  // userinfotRes = userinfotRes.data
+  write(userinfotRes)
+  write("================获取用户详情 END===================")
+
+  deptIdList = [];
+  for (let i = 0; i < userinfotRes['department'].length; i++) {
+    deptRes = await queryGraphql('{\n  organizations(filters: [[\"qywx_id\", \"=\", \"' + userinfotRes['department'][i] + '\"]]) {\n    _id\n    name\n  }\n}');
+    deptIdList.push(deptRes['organizations'][0]['_id'])
   }
-};
 
-manageUser = function(user) {
-  var u, userid;
-  u = db.space_users.findOne({
-    "qywx_id": user.userid
-  });
-  userid = '';
-  if (u) {
-    userid = u.user;
-    updateUser(u, user);
-  } else {
-    userid = addUser(user);
-  }
-  return userid;
-};
-
-addOrganization = function(organization) {
-  var doc, parents;
-  doc = {};
-  doc._id = organization._id;
-  doc.space = organization.space;
-  doc.name = organization.name;
-  doc.fullname = organization.fullname;
-  if (organization.is_company) {
-    doc.is_company = true;
-  }
-  doc.parent = organization.parent;
-  parents = [];
-  parents.push(organization.parent);
-  doc.parents = parents;
-  doc.children = organization.children;
-  doc.users = organization.users;
-  doc.sort_no = organization.order;
-  doc.created = new Date;
-  doc.modified = new Date;
-  return db.organizations.direct.insert(doc);
-};
-
-addSpaceUser = function(user, orgIds) {
-  var doc, organizations;
-  doc = {};
-  doc._id = user.space + '-' + user.userid;
-  doc.user = user._id;
-  doc.name = user.name;
-  doc.space = user.space;
-  organizations = user.department.filter(function(m) {
-    return m === 1 || orgIds.indexOf(m) > -1;
-  }).map(function(m) {
-    return user.space + "-" + m;
-  });
-  if (organizations === null || organizations.length === 0) {
-    organizations.push(user.space + "-1");
-  }
-  doc.organizations = organizations;
-  doc.organization = doc.organizations[0];
-  doc.user_accepted = true;
-  doc.created = new Date;
-  doc.modified = new Date;
-  doc.position = user.position;
-  doc.sort_no = user.order[0];
-  return db.space_users.direct.insert(doc);
-};
-
-addUser = function(user) {
-  var doc, userid;
-  doc = {};
-  doc._id = db.users._makeNewID();
-  doc.steedos_id = doc._id;
-  doc.name = user.name;
-  doc.avatarURL = user.avatar;
-  doc.locale = "zh-cn";
-  doc.is_deleted = false;
-  doc.created = new Date;
-  doc.modified = new Date;
-  doc.services = {
-    qiyeweixin: {
-      id: user.userid
+  userRes = await queryGraphql('{\n  space_users(filters: [[\"qywx_id\", \"=\", \"' + userId + '\"]]) {\n    _id\n    name\n  }\n}');
+  manage = userinfotRes['managerUserid'] == undefined ? "" : userinfotRes['managerUserid'];
+  if (manage != "") {
+    manageRes = await queryGraphql('{\n  space_users(filters: [[\"qywx_id\", \"=\", \"' + manage + '\"]]) {\n    _id\n    owner\n  }\n}');
+    if (manageRes.space_users.length == 0) {
+      manage = ""
+    } else {
+      manage = manageRes['space_users'][0]['owner']
     }
-  };
-  userid = db.users.direct.insert(doc);
-  return userid;
-};
+  }
 
-updateOrganization = function(old_org, new_org) {
-  var doc, parents;
-  doc = {};
-  if (old_org.name !== new_org.name) {
-    doc.name = new_org.name;
-  }
-  if (old_org.fullname !== new_org.fullname) {
-    doc.fullname = new_org.fullname;
-  }
-  if (old_org.sort_no !== new_org.order) {
-    doc.sort_no = new_org.order;
-  }
-  if (old_org.parent !== new_org.parent) {
-    doc.parent = new_org.parent;
-  }
-  parents = [];
-  parents.push(new_org.parent);
-  doc.parents = parents;
-  if (old_org.users.sort().toString() !== new_org.users.sort().toString()) {
-    doc.users = new_org.users;
-  }
-  if (old_org.children.sort().toString() !== new_org.children.sort().toString()) {
-    doc.children = new_org.children;
-  }
-  if (doc.hasOwnProperty('name') || doc.hasOwnProperty('fullname') || doc.hasOwnProperty('sort_no') || doc.hasOwnProperty('parent') || doc.hasOwnProperty('users') || doc.hasOwnProperty('children')) {
-    doc.modified = new Date;
-    return db.organizations.direct.update(old_org._id, {
-      $set: doc
-    });
-  }
-};
+  userinfo = {}
+  userinfo['name'] = userinfotRes['name'];
+  userinfo['mobile'] = userinfotRes['mobile'];
+  userinfo['organization'] = deptIdList[0];
+  userinfo['email'] = userinfotRes['email'] == "" ? userId + "@qq.com" : userinfotRes['email'];
+  userinfo['job_number'] = userId;
+  userinfo['position'] = userinfotRes['position'];
+  userinfo['manage'] = manage;
+  userinfo['qywx_id'] = userId;
+  userinfo['organizations'] = JSON.stringify(deptIdList)
 
-updateSpaceUser = function(old_su, new_su, orgIds) {
-  var doc, organizations;
-  doc = {};
-  if (old_su.name !== new_su.name) {
-    doc.name = new_su.name;
+  doc = '{user_accepted:true,organizations:' + userinfo['organizations'] + ',name:\"' + userinfo['name'] + '\",profile:\"user\",mobile:\"' + userinfo['mobile'] + '\",organization:\"' + userinfo['organization'] + '\",email:\"' + userinfo['email'] + '\",job_number:\"' + userinfo['job_number'] + '\",position:\"' + userinfo['position'] + '\",manager:\"' + userinfo['manage'] + '\",qywx_id:\"' + userinfo['qywx_id'] + '\"}';
+  console.log(userRes)
+  if (userRes.space_users.length == 0) {
+    insertUserRes = await queryGraphql('mutation {\n  space_users__insert(doc: ' + doc + ') {\n    _id\n  }\n}')
+  } else {
+    updateUserRes = await queryGraphql('mutation {\n  space_users__update(id:\"' + userRes['space_users'][0]['_id'] + '\",doc: ' + doc + ') {\n    _id\n  }\n}')
   }
-  if (old_su.position !== new_su.position || !old_su.position) {
-    doc.position = new_su.position;
-  }
-  if (old_su.sort_no !== new_su.order[0]) {
-    doc.sort_no = new_su.order[0];
-  }
-  organizations = new_su.department.filter(function(m) {
-    return m === 1 || orgIds.indexOf(m) > -1;
-  }).map(function(m) {
-    return new_su.space + "-" + m;
-  });
-  if (old_su.organizations.sort().toString() !== organizations.sort().toString()) {
-    doc.organizations = organizations;
-    doc.organization = organizations[0];
-  }
-  if (doc.hasOwnProperty('name') || doc.hasOwnProperty('sort_no') || doc.hasOwnProperty('organization')) {
-    doc.modified = new Date;
-    return db.space_users.direct.update(old_su._id, {
-      $set: doc
-    });
-  }
-};
 
-updateUser = function(old_user, new_user) {
-  var doc;
-  doc = {};
-  if (old_user.name !== new_user.name) {
-    doc.name = new_user.name;
-  }
-  if (old_user.avatarURL !== new_user.avatar) {
-    doc.avatarURL = new_user.avatar;
-  }
-  if (doc.hasOwnProperty('name') || doc.hasOwnProperty('avatarURL')) {
-    doc.modified = new Date;
-    return db.users.direct.update(old_user._id, {
-      $set: doc
-    });
-  }
-};
 
-// ---
-// generated by coffee-script 1.9.2
+
+
+}
+
+
+exports.decrypt = async function (data) {
+
+  const res = aes.decode(data['encrypt'], data['aesKey'])
+  // 开始加密
+  const res1 = aes.encode("success", data['aesKey'], data['suiteKey'])
+
+  const msg2 = aes.decode(res1, data['aesKey'])
+
+
+  Rdata = {}
+  Rdata['data'] = res + "";
+
+
+  let timeStamp = parseInt(new Date() / 1000);
+  let nonce = ''//随机字符串，不限制长度，但是不能出现中文
+  const charCollection = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  for (let i = 0; i < 10; i++) { nonce += charCollection[Math.round(Math.random() * (charCollection.length - 1))] }
+
+  sortList = [res1, data['token'], timeStamp, nonce]
+
+  sortList.sort();
+  var msg_signature = '';
+  for (var i = 0; i < sortList.length; i++) {
+    msg_signature += sortList[i];
+  }
+
+  const hash = crypto.createHash('sha1')
+  hash.update(msg_signature)
+  msg_signature = hash.digest('hex')
+
+  sdata = {}
+  sdata['msg_signature'] = msg_signature;
+  sdata['encrypt'] = res1
+  sdata['timeStamp'] = parseInt(timeStamp)
+  sdata['nonce'] = nonce
+
+  Rdata['res'] = JSON.stringify(sdata)
+
+
+
+  return Rdata
+}
+
+exports.write = function (content) {
+  try {
+    content = JSON.stringify(content);
+  } catch (Exception) {
+
+  }
+  content = content + "\n"
+  fs.appendFileSync(LOG_PATH, content, (err) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    //file written successfully
+  })
+}
+
+
+async function queryGraphql(queryStr) {
+  write("================Graphql===================")
+  write(queryStr)
+  var HTTP_DOMAIN = Steedos.absoluteUrl('graphql');
+  // console.log("HTTP_DOMAIN---: ",HTTP_DOMAIN);
+  var payload = JSON.stringify(
+    {
+      query: queryStr
+    }
+  )
+  res = await fetch(HTTP_DOMAIN, {
+    method: 'post',
+    body: payload,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer apikey,' + API_KEY
+    }
+  }).then(res => res.json());
+  write(res.data)
+  write("================Graphql END===================")
+  return res.data;
+}

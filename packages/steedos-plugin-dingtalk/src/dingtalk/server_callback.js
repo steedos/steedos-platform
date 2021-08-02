@@ -449,4 +449,33 @@ router.post('/api/listen', async function (req, res) {
 
 })
 
+// 同步钉钉id
+router.get('/api/sync/dingtalkId', async function (req, res) {
+
+    let space = await dtApi.spaceGet();
+    if (!space)
+        return;
+    
+    let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
+    access_token = response.access_token;
+
+    dtSync.write("================同步钉钉id开始===================")
+    dtSync.write("access_token:" + access_token)
+    deptListRes = await dtApi.departmentListGet(access_token)
+    
+    for (let i = 0; i < deptListRes.length; i++) {
+        userListRes = await dtApi.userListGet(access_token, deptListRes[i].id)
+        // console.log("userListRes: ",userListRes);
+        for (let ui = 0; ui < userListRes.length; ui++) {
+            dtSync.write("用户ID:" + userListRes[ui]['userid'])
+            await dtSync.useridPush(userListRes[ui]['userid'],userListRes[ui]['mobile'])
+        }
+
+    }
+    dtSync.write("================同步数据结束===================")
+    dtSync.write("\n")
+
+    res.status(200).send({ message: "ok" });
+});
+
 exports.router = router;

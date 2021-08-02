@@ -1,3 +1,17 @@
 <template name="steedos_object_listview">
-	<div>{{> React component=component objectApiName=objectApiName name=name columnFields=columnFields listName=listName filters=filters onModelUpdated=onModelUpdated sideBar=sideBar pageSize=pageSize onUpdated=onUpdated checkboxSelection=checkboxSelection}}</div>
+	<div>
+		{{> React component=component 
+			objectApiName=objectApiName 
+			name=name 
+			columnFields=columnFields 
+			listName=listName 
+			filters=filters 
+			onModelUpdated=onModelUpdated 
+			sideBar=sideBar 
+			pageSize=pageSize 
+			onUpdated=onUpdated 
+			checkboxSelection=checkboxSelection 
+			autoFixHeight=autoFixHeight 
+			autoHideForEmptyData=autoHideForEmptyData}}
+	</div>
 </template>

@@ -191,6 +191,26 @@ const checkFormulaInfiniteLoop = async function(_doc, oldFieldName){
     }
   }
 
+const initSummaryDoc = async (doc) => {
+    if (!doc.summary_object) {
+        throw new Error("object_fields_error_summary_object_required");
+    }
+    let summaryObject = objectql.getObjectConfig(doc.summary_object);
+    let summaryConfig = {
+        summary_object: doc.summary_object,
+        summary_type: doc.summary_type,
+        summary_field: doc.summary_field,
+        field_name: doc.name,
+        object_name: doc.object
+    };
+    const dataType = await objectql.getSummaryDataType(summaryConfig, summaryObject);
+    if (!dataType) {
+        throw new Error("object_fields_error_summary_data_type_not_found");
+    }
+    doc.data_type = dataType;
+    objectql.validateFilters(doc.summary_filters, summaryObject.fields);
+}
+
 module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
@@ -280,6 +300,10 @@ module.exports = {
         await checkFormulaInfiniteLoop(doc);
         await checkMasterDetailTypeField(doc);
         await checkOwnerField(doc);
+        
+        if(doc.type === "summary"){
+            await initSummaryDoc(doc);
+        }
     },
     beforeUpdate: async function () {
         let { doc, object_name, id} = this;
@@ -289,5 +313,9 @@ module.exports = {
         await checkFormulaInfiniteLoop(doc, dbDoc.name);
         await checkMasterDetailTypeField(doc, oldReferenceTo);
         await checkOwnerField(doc);
+        
+        if(doc.type === "summary"){
+            await initSummaryDoc(doc);
+        }
     }
 }

@@ -11,4 +11,5 @@ required: false
 searchable: true
 sort_no: 115
 sortable: false
-type: text
+type: lookup
+reference_to: accounts

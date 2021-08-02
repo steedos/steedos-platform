@@ -124,7 +124,7 @@ fields:
   precision:
     type: currency
     label: Precision
-    defaultValue: 18
+    # defaultValue: 18
     visible_on: "{{
       function(){
         if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
@@ -158,7 +158,7 @@ fields:
   scale:
     type: currency
     label: Scale
-    defaultValue: 2
+    # defaultValue: 2
     min: 0
     inlineHelpText: If the field type is a Percent, this indicates the number of decimal places the field will display, for example, two decimal places will display as 10.20%.
     visible_on: "{{
@@ -197,6 +197,7 @@ fields:
     scale: 0
     visible_on: "{{formData.type === 'textarea' ? true: false}}"
     required: "{{formData.type === 'textarea' ? true: false}}"
+    # defaultValue: "{{formData.type === 'textarea' ? 3 : 0}}"
   # allowedValues:
   #   type: text
   #   multiple: true
@@ -271,7 +272,7 @@ fields:
         value: zeroes
       - label: Treat blank fields as blanks
         value: blanks
-    defaultValue: zeroes
+    # defaultValue: zeroes
     visible_on: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
   summary_object:
@@ -582,4 +583,39 @@ form:
   afterInsert: !!js/function |
     function(){
       Creator.objectLayoutMananger.appendField(this.doc);
+    }
+  onValuesChange: !!js/function |
+    function(args){
+      const fieldType = args.values.type, 
+        changedFieldType = args.changedValues.type,
+        numberTypes = ['number', 'currency', 'percent'];
+
+      if(changedFieldType === 'textarea'){
+        args.form.setFieldsValue({rows: 3});
+      }
+      else if(fieldType !== 'textarea' && args.values.rows !== undefined){
+        args.form.setFieldsValue({rows: undefined});
+      }  
+
+      if(changedFieldType === 'formula'){
+        args.form.setFieldsValue({formula_blank_value: 'zeroes'});
+      }
+      else if(fieldType !== 'formula' && args.values.formula_blank_value !== undefined){
+        args.form.setFieldsValue({formula_blank_value: undefined});
+      }
+
+      if(numberTypes.indexOf(changedFieldType) > -1 || 'summary' === changedFieldType){
+         args.form.setFieldsValue({precision: 18, scale: 2});
+      }
+      if(['formula'].indexOf(fieldType) > -1 && numberTypes.indexOf(args.changedValues.data_type) > -1){
+        args.form.setFieldsValue({precision: 18, scale: 2});
+      }
+      if(numberTypes.indexOf(fieldType) < 0 && 'summary' !== fieldType && numberTypes.indexOf(args.values.data_type) < 0 ){
+        if(args.values.precision !== undefined){
+            args.form.setFieldsValue({precision: undefined});
+        }
+        if(args.values.scale !== undefined){
+            args.form.setFieldsValue({scale: undefined});
+        }
+      }
     }

@@ -330,26 +330,6 @@ function getFieldDefaultProps(field){
 //   }
 // }
 
-const initSummaryDoc = async (doc)=>{
-  if(!doc.summary_object){
-      throw new Error("object_fields_error_summary_object_required");
-  }
-  let summaryObject = objectql.getObjectConfig(doc.summary_object);
-  let summaryConfig = { 
-      summary_object: doc.summary_object, 
-      summary_type: doc.summary_type, 
-      summary_field: doc.summary_field, 
-      field_name: doc.name, 
-      object_name: doc.object
-  };
-  const dataType = await objectql.getSummaryDataType(summaryConfig, summaryObject);
-  if(!dataType){
-      throw new Error("object_fields_error_summary_data_type_not_found");
-  }
-  doc.data_type = dataType;
-  objectql.validateFilters(doc.summary_filters, summaryObject.fields);
-}
-
 var triggers = {
   "after.insert.server.object_fields": {
     on: "server",
@@ -380,7 +360,7 @@ var triggers = {
   "before.update.server.object_fields": {
     on: "server",
     when: "before.update",
-    todo: async function (userId, doc, fieldNames, modifier, options) {
+    todo: function (userId, doc, fieldNames, modifier, options) {
       if(!allowChangeObject()){
         throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
@@ -461,9 +441,6 @@ var triggers = {
         Object.assign(modifier.$set, defProps);
       }
       // checkFormulaInfiniteLoop(modifier.$set);
-      if(modifier.$set.type === "summary"){
-        await initSummaryDoc(modifier.$set);
-      }
     }
   },
   //					if modifier?.$set?.reference_to
@@ -472,7 +449,7 @@ var triggers = {
   "before.insert.server.object_fields": {
     on: "server",
     when: "before.insert",
-    todo: async function (userId, doc) {
+    todo: function (userId, doc) {
       if(!allowChangeObject()){
         throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
@@ -505,9 +482,6 @@ var triggers = {
       }
 
       // checkFormulaInfiniteLoop(doc);
-      if(doc.type === "summary"){
-        await initSummaryDoc(doc);
-      }
     }
   },
   "before.remove.server.object_fields": {

@@ -107,6 +107,8 @@ Creator.unionSelectColumnsWithExtraAndDepandOn = (selectColumns, curObject, obje
 	return selectColumns
 
 Creator.getListViewFilters = (object_name, list_view_id, is_related, related_object_name, record_id, related_list)->
+	if !object_name
+		return null
 	creator_obj = Creator.getObject(object_name)
 	if is_related
 		# 因为有权限判断需求，所以最近查看也需要调用过虑条件逻辑，而不应该设置为undefined

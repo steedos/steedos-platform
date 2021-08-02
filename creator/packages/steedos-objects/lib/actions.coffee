@@ -112,7 +112,7 @@ if Meteor.isClient
 								if FlowRouter.current().route.path.endsWith("/:record_id")
 									FlowRouter.reload()
 								else
-									window.gridRef.current.api.refreshServerSideStore()
+									window.refreshGrid();
 							, 1);
 							return true;
 					}, null, {iconPath: '/assets/icons'})
@@ -176,7 +176,7 @@ if Meteor.isClient
 									if object_name != Session.get("object_name")
 										FlowRouter.reload();
 								else
-									window.gridRef.current.api.refreshServerSideStore()
+									window.refreshGrid();
 							catch _e
 								console.error(_e);
 							if gridContainer?.length

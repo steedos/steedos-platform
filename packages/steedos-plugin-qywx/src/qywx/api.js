@@ -1,16 +1,17 @@
-let newCrypt, _ref, _ref2, _ref3, _ref4;
 const Cookies = require("cookies");
-let express = require('express');
+const express = require('express');
 const jsdom = require("jsdom");
 const JSDOM = jsdom.JSDOM;
-let router = express.Router();
-// let parser = require('xml2json');
-let Qiyeweixin = require('./qywx');
-let WXBizMsgCrypt = require('wechat-crypto');
-let objectql = require('@steedos/objectql');
+const router = express.Router();
+const Qiyeweixin = require('./qywx');
+const WXBizMsgCrypt = require('wechat-crypto');
+const objectql = require('@steedos/objectql');
 const auth = require("@steedos/auth");
 const steedosConfig = objectql.getSteedosConfig();
-let qywx_api = require('./router.js');
+const qywx_api = require('./router.js');
+const qywxSync = require('./sync.js');
+const xmlparser = require('express-xml-bodyparser');
+const xml2js = require('xml2js');
 
 router.use("/qywx", async function (req, res, next) {
     await next();
@@ -22,22 +23,22 @@ router.get("/api/qiyeweixin/mainpage", async function (req, res, next) {
     let target = "";
     let appid = "";
     o = Qiyeweixin.getSpace();
-    
+
     let signature = Qiyeweixin.getSignature();
 
     // 推送消息重定向url
     if (req.query.target)
         target = req.query.target;
-    
+
     if (o) {
         redirect_uri = encodeURIComponent(Meteor.absoluteUrl('api/qiyeweixin/auth_login'));
         authorize_uri = qywx_api.authorize_uri;
-        
+
         if (!authorize_uri)
             return;
         if (o.qywx_corp_id)
             appid = o.qywx_corp_id;
-        
+
         url = authorize_uri + '?appid=' + appid + '&redirect_uri=' + redirect_uri + `&response_type=code&scope=snsapi_base&state=${target}#wechat_redirect`;
         // console.log("url: ",url);
         res.writeHead(302, {
@@ -51,15 +52,15 @@ router.get("/api/qiyeweixin/mainpage", async function (req, res, next) {
 router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
     let authToken, cookies, hashedToken, user, userId, userInfo, state, redirect_url, _ref5, space, spaceId, token;
     cookies = new Cookies(req, res);
-    
+
     userId = cookies.get("X-User-Id");
     authToken = cookies.get("X-Auth-Token");
     state = req.query.state;
     space = Qiyeweixin.getSpace();
     // 获取access_token
-    if(space.qywx_corp_id && space.qywx_secret)
-        token = Qiyeweixin.getToken(space.qywx_corp_id,space.qywx_secret)
-    
+    if (space.qywx_corp_id && space.qywx_secret)
+        token = Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret)
+
     // 推送消息重定向url
     if (state != "")
         redirect_url = Meteor.absoluteUrl(state);
@@ -114,8 +115,8 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
     user = Creator.getCollection("space_users").findOne({
         'qywx_id': userInfo != null ? userInfo.UserId : void 0
     });
-    
-    
+
+
     // 默认工作区
     if (space)
         spaceId = space._id;
@@ -194,10 +195,10 @@ router.get("/api/qiyeweixin/sso_steedos", async function (req, res, next) {
     });
     at = Qiyeweixin.getProviderToken(o != null ? (_ref5 = o.secret) != null ? _ref5.corpid : void 0 : void 0, o != null ? (_ref6 = o.secret) != null ? _ref6.provider_secret : void 0 : void 0);
     if (at && at.provider_access_token) {
-        console.log("at.provider_access_token: ",at.provider_access_token);
+        console.log("at.provider_access_token: ", at.provider_access_token);
         loginInfo = Qiyeweixin.getLoginInfo(at.provider_access_token, req.query.auth_code);
         if (loginInfo != null ? (_ref7 = loginInfo.user_info) != null ? _ref7.userid : void 0 : void 0) {
-            console.log("loginInfo.user_info.userid: ",loginInfo.user_info.userid);
+            console.log("loginInfo.user_info.userid: ", loginInfo.user_info.userid);
             user = db.space_users.findOne({
                 'qywx_id': loginInfo.user_info.userid
             });
@@ -214,7 +215,7 @@ router.get("/api/qiyeweixin/sso_steedos", async function (req, res, next) {
                     'Content-Type': 'text/html'
                 });
                 res.write(
-                `<!DOCTYPE html>
+                    `<!DOCTYPE html>
                 <html>
                     <head>
                         <meta charset="utf-8">
@@ -280,7 +281,7 @@ router.post("/api/qiyeweixin/push", async function (req, res, next) {
     let text = req.body.text;
     let url = req.body.url;
     let title = req.body.title;
-    let space = Creator.getCollection('spaces').findOne({_id: spaceId});
+    let space = Creator.getCollection('spaces').findOne({ _id: spaceId });
     let service = space.services.qiyeweixin;
     let o = ServiceConfiguration.configurations.findOne({
         service: "qiyeweixin"
@@ -290,24 +291,164 @@ router.post("/api/qiyeweixin/push", async function (req, res, next) {
         service.access_token = at.access_token;
     }
     let msg = {
-        "touser" : qywx_userId,
-        "msgtype" : "textcard",
-        "agentid" : agentId,
-        "textcard" : {
-            "title" : title,
-            "description" : text,
-            "url" : url,
-            "btntxt":"详情"
+        "touser": qywx_userId,
+        "msgtype": "textcard",
+        "agentid": agentId,
+        "textcard": {
+            "title": title,
+            "description": text,
+            "url": url,
+            "btntxt": "详情"
         },
-        "safe":0,
+        "safe": 0,
         "enable_id_trans": 0,
         "enable_duplicate_check": 0,
         "duplicate_check_interval": 1
     }
 
-    Qiyeweixin.sendMessage(msg,service.access_token);
+    Qiyeweixin.sendMessage(msg, service.access_token);
     return res.end("success");
 });
+
+
+// 同步数据
+router.get('/api/qiyeweixin/stockData', async function (req, res) {
+    let space = Qiyeweixin.getSpace();
+    // 获取access_token
+    if (space.qywx_corp_id && space.qywx_secret)
+        access_token = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
+
+    qywxSync.write("================存量数据开始===================")
+    qywxSync.write("access_token:" + access_token)
+
+    deptListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + access_token);
+    deptListRes = await deptListRes.json()
+    deptListRes = deptListRes.department
+    console.log(deptListRes)
+    for (let i = 0; i < deptListRes.length; i++) {
+        qywxSync.write("部门ID:" + deptListRes[i]['id'])
+        await qywxSync.deptinfoPush(deptListRes[i]['id'], deptListRes[i]['name'], deptListRes[i]['parentid'])
+    }
+
+    for (let i = 0; i < deptListRes.length; i++) {
+        userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
+        userListRes = await userListRes.json()
+        userListRes = userListRes.userlist
+        for (let ui = 0; ui < userListRes.length; ui++) {
+            await qywxSync.userinfoPush(userListRes[ui]['userid'])
+        }
+
+    }
+
+    for (let i = 0; i < deptListRes.length; i++) {
+        userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
+        userListRes = await userListRes.json()
+        userListRes = userListRes.userlist
+        for (let ui = 0; ui < userListRes.length; ui++) {
+            await qywxSync.userinfoPush(userListRes[ui]['userid'])
+        }
+
+    }
+
+
+    res.status(200).send({ message: "dsa" });
+});
+
+
+// 订阅事件
+router.get('/api/qiyeweixin/listen', async function (req, res) {
+
+    var query = req.query
+
+    console.log(query)
+    var dtSpace = await Qiyeweixin.getSpace();
+    // console.log("dtSpace: ",dtSpace);
+    var APP_KEY = dtSpace.qywx_key;
+    var APP_SECRET = dtSpace.qywx_secret;
+    var AES_KEY = dtSpace.qywx_aes_key;
+    var TOKEN = dtSpace.qywx_token;
+    var CORPID = dtSpace.qywx_corp_id;
+
+    var signature = query['msg_signature'];
+    var timeStamp = query['timestamp'];
+    var nonce = query['nonce'];
+    var encrypt = query['echostr'];
+
+    var token = TOKEN;    //必须和在注册是一样
+    var aesKey = AES_KEY;
+    var suiteKey = CORPID;
+
+    data = await qywxSync.decrypt({
+        signature: signature,
+        nonce: nonce,
+        timeStamp: timeStamp,
+        suiteKey: suiteKey,
+        token: token,
+        aesKey: aesKey,
+        encrypt: encrypt
+    });
+    qywxSync.write(data)
+    res.writeHead(200, { 'Content-Type': 'html' });
+    res.write(data.data + "")
+    res.end();
+    // res.status(200).send(data.data);
+})
+
+
+router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: false }), async function (req, res) {
+
+    var query = req.query
+    var params = req.body
+
+    console.log(query)
+    console.log(params)
+
+    var dtSpace = await Qiyeweixin.getSpace();
+    // console.log("dtSpace: ",dtSpace);
+    var APP_KEY = dtSpace.qywx_key;
+    var APP_SECRET = dtSpace.qywx_secret;
+    var AES_KEY = dtSpace.qywx_aes_key;
+    var TOKEN = dtSpace.qywx_token;
+    var CORPID = dtSpace.qywx_corp_id;
+
+    var signature = query['msg_signature'];
+    var timeStamp = query['timestamp'];
+    var nonce = query['nonce'];
+    var encrypt = req.body.xml.encrypt;
+
+    var token = TOKEN;    //必须和在注册是一样
+    var aesKey = AES_KEY;
+    var suiteKey = CORPID;
+
+    data = await qywxSync.decrypt({
+        signature: signature,
+        nonce: nonce,
+        timeStamp: timeStamp,
+        suiteKey: suiteKey,
+        token: token,
+        aesKey: aesKey,
+        encrypt: encrypt
+    });
+
+    data = await parseXML(data.data);
+    console.log(data)
+    console.log(data.UserID)
+    if (data.ChangeType == "create_user" || data.ChangeType == "update_user") {
+        await qywxSync.userinfoPush(data.UserID)
+    } else if (data.ChangeType == "create_party" || data.ChangeType == "update_party") {
+        await qywxSync.deptinfoPush(data.Id, data.Name, data.ParentId)
+    } else if (data.ChangeType == "delete_user") {
+        await qywxSync.userinfoPush(data.UserID, 2)
+    } else if (data.ChangeType == "delete_party") {
+        await qywxSync.deptinfoPush(data.Id, "", "", 2)
+    }
+
+
+    res.writeHead(200, { 'Content-Type': 'html' });
+    res.write(data.data + "")
+    res.end();
+
+})
 
 // 通讯录变更，更新space表=============
 let ChangeContact = function (corp_id) {
@@ -342,10 +483,10 @@ let CancelAuth = function (message) {
         try {
             if (!space.services)
                 return;
-        
+
             if (!space.services.qiyeweixin)
                 return;
-            
+
             s_qywx = space.services.qiyeweixin;
             s_qywx.permanent_code = void 0;
             // s_qywx.need_sync = false;
@@ -359,7 +500,7 @@ let CancelAuth = function (message) {
                 }
             });
         } catch (error) {
-            console.error("CancelAuth Error: ",error);
+            console.error("CancelAuth Error: ", error);
             return;
         }
     }
@@ -438,10 +579,15 @@ let getAbsoluteUrl = function (url) {
     var rootUrl;
     rootUrl = __meteor_runtime_config__ ? __meteor_runtime_config__.ROOT_URL_PATH_PREFIX : "";
     if (rootUrl) {
-      url = rootUrl + url;
+        url = rootUrl + url;
     }
     return url;
 };
+
+parseXML = (xml) => new Promise((resolve, reject) => {
+    const opt = { trim: true, explicitArray: false, explicitRoot: false };
+    xml2js.parseString(xml, opt, (err, res) => err ? reject(new Error('XMLDataError')) : resolve(res || {}));
+});
 
 
 module.exports.router = router;

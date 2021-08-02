@@ -429,7 +429,7 @@ Template.creator_list_wrapper.events
 	'click .btn-refresh': (event, template)->
 
 		if true
-			return window.gridRef.current.api.refreshServerSideStore()
+			return window.refreshGrid()
 
 		$(".slds-icon-standard-refresh", event.currentTarget).animateCss("rotate")
 		object = Creator.getObject()
