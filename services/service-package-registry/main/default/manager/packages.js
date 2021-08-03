@@ -37,7 +37,8 @@ const getAllPackages = async ()=>{
                 version : package.version,
                 local: package.local,
                 label: package.label || packageName,
-                description: package.description
+                description: package.description,
+                metadata: package.metadata
             })
         }
     })
@@ -54,6 +55,7 @@ const getAllPackages = async ()=>{
             packages.push({
                 _id : packageName.replace("/", '_'),
                 name: packageName,
+                service_name: packageInfo.name,
                 node_id: packageInfo.nodeID,
                 instance_id: packageInfo.instanceID,
                 status : 'enable',
@@ -64,15 +66,16 @@ const getAllPackages = async ()=>{
             })
         }
     })
-    
-
-    _.map(packages, (package)=>{
+    for (const package of packages) {
         package.record_permissions = {
             allowEdit: false,
             allowDelete: false,
             allowRead: true,
         }
-    })
+        // if(!_.has(package, 'metadata')){
+        //     package.metadata = await objectql.getSteedosSchema().broker.call(`@steedos/service-packages.getPackageMetadata`, {packageName: package.name}); 
+        // }
+    }
     return packages;
 }
 
@@ -98,7 +101,7 @@ const maintainSystemFiles = ()=>{
 }
         `)
     }
-} 
+}
 
 module.exports = {
     maintainSystemFiles,

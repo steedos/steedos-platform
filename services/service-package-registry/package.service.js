@@ -9,6 +9,37 @@ const metadata = require('@steedos/metadata-core')
 const _ = require(`lodash`);
 const path = require(`path`);
 const objectql = require('@steedos/objectql');
+const metadataApi = require('@steedos/metadata-api');
+
+const getPackageMetadata = async (packagePath)=>{
+	const packageMetadata = [];
+	const result = await metadataApi.loadFileToJson(packagePath, {
+		CustomApplication: '*',
+		CustomPermissionset: '*',
+		CustomProfile: '*',
+		CustomObject: '*',
+		Layout: '*',
+		CustomReport: '*',
+		Workflow: '*',
+		Flow: '*',
+		ApprovalProcess: '*',
+		Role: '*',
+		FlowRole: '*',
+		Role: '*',
+	});
+
+	_.each(result, (metadataItems, metadataType)=>{
+		_.each(metadataItems, (metadata, apiName)=>{
+			packageMetadata.push({
+				label: metadata.label || metadata.name,
+				type: metadataType,
+				api_name: apiName
+			})
+		})
+	})
+	return packageMetadata;
+}
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -204,6 +235,7 @@ module.exports = {
 		for (const name in installPackages) {
 			if (Object.hasOwnProperty.call(installPackages, name)) {
 				const _packageInfo = installPackages[name];
+				const metadata = await getPackageMetadata(_packageInfo.path);
 				await this.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: {
 						name: name, 
@@ -213,7 +245,8 @@ module.exports = {
 						local: _packageInfo.local, 
 						enable: _packageInfo.enable, 
 						version: _packageInfo.version, 
-						description: _packageInfo.description
+						description: _packageInfo.description,
+						metadata: metadata
 					}
 				})
 			}

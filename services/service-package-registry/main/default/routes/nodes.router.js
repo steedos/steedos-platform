@@ -5,10 +5,10 @@ const registry = require('../manager/registry');
 const loader = require('../manager/loader');
 const objectql = require('@steedos/objectql');
 let schema = objectql.getSteedosSchema();
-router.post('/api/nodes/install', core.requireAuthentication, async function (req, res) {
+router.get('/api/nodes/install', core.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
-    const body = req.body;
+    const body = JSON.parse(decodeURIComponent(Buffer.from(req.query.data, "base64").toString('utf8')));
     if(!isSpaceAdmin){
         return res.status(401).send({ message: 'No permission' });
     }
@@ -20,7 +20,8 @@ router.post('/api/nodes/install', core.requireAuthentication, async function (re
         },{
             nodeID: nodeID
         })
-        res.status(200).send(result); //TODO 完善返回信息
+        res.redirect(302, `/app/admin/steedos_packages/grid/all`);
+        // res.status(200).send(result); //TODO 完善返回信息
     } catch (error) {
         console.error(error);
         res.status(500).send({error: error.message});

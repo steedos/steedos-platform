@@ -1,6 +1,8 @@
 module.exports = {
     show_packages_store: function () {
         const packageService = 'http://192.168.3.2:5300';
+        return window.open(`${packageService}/app-store?client=${window.btoa(Meteor.absoluteUrl('', window.location.origin))}&install_nodes=${window.btoa(Steedos.PackageRegistry.getNodes().join(','))}`)
+
         SteedosUI.showModal(stores.ComponentRegistry.components.ObjectTable, {
             title: '安装软件包',
             listSchema:{
@@ -83,7 +85,7 @@ module.exports = {
                         const nodesSelect = Steedos.PackageRegistry.getNodesSelect();
                         swal({
                             title: `安装`,
-                            text: `确定要安装 <a href="${packageService}/packages/${record.name}" target="_blank">${record.name}</a>?${nodesSelect}`,
+                            text: `确定要安装 <a href="${packageService}/app-store/${record.name}" target="_blank">${record.name}</a>?${nodesSelect}`,
                             html: true,
                             showCancelButton: true,
                             confirmButtonText: '安装',
@@ -141,7 +143,7 @@ module.exports = {
                         }
                         $.ajax(Object.assign({}, defOptions));
                         const record = result;
-                        window.open(`${packageService}/packages/${record.name}`)
+                        window.open(`${packageService}/app-store/${record.name}`)
                     }
                 }
             ], 

@@ -637,11 +637,17 @@ async function loadPackageYml(filePath:string){
     return json;
 }
 
-export async function loadFileToJson(packagePath:string){
+export async function loadFileToJson(packagePath:string, packageYml?){
 
-    let datefilePath = path.join(packagePath,'deploy.zip');
-    await compressing.zip.uncompress(datefilePath, packagePath);
-    let packageYml = await loadPackageYml(packagePath);
+    try {
+        let datefilePath = path.join(packagePath,'deploy.zip');
+        await compressing.zip.uncompress(datefilePath, packagePath);
+    } catch (error) {
+        
+    }
+    if(!packageYml){
+        packageYml = await loadPackageYml(packagePath);
+    }
     packagePath = path.join(packagePath, 'main', 'default')
 
     let objects = {};
@@ -665,6 +671,14 @@ export async function loadFileToJson(packagePath:string){
 
         let values = packageYml[metadataname];// 传来的对象列表名称
         if(metadataname === TypeInfoKeys.Object){
+            if(values === '*'){
+                let matchedPaths = glob.sync(path.join(packagePath, "objects", "*", "*.object.yml"));
+                values = [];
+                _.each(matchedPaths, function(matchedPath){
+                    let objectApiName = matchedPath.substring(matchedPath.lastIndexOf('/')+1, matchedPath.indexOf('.object'))
+                    values.push(objectApiName)
+                })
+            }
             for(let k in values){
                 let objectName = values[k];
                 if(typeof objectName === 'function'){
@@ -674,6 +688,7 @@ export async function loadFileToJson(packagePath:string){
                 let object = await loadObjects(packagePath, objectName);
                 objects[objectName] = object;
             }
+            
             mark = true;
         }else if(metadataname === TypeInfoKeys.Layout){
             layouts = await loadLayouts(packagePath);
