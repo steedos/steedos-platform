@@ -4,6 +4,7 @@ const odataMongodb = require("odata-v4-mongodb");
 const clone = require('clone');
 var objectCore = require('./objects.core.js');
 const objectql = require('@steedos/objectql');
+const auth = require('@steedos/auth');
 const MAX_MASTER_DETAIL_LEAVE = objectql.MAX_MASTER_DETAIL_LEAVE;
 const validateOptionValue = (value)=>{
     let color = value && value.split(":")[2];
@@ -213,13 +214,44 @@ const initSummaryDoc = async (doc) => {
 
 module.exports = {
     afterFind: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        console.log(`afterFind filters`, filters);
-        if(filters.object){
-            let fields = await InternalData.getObjectFields(filters.object, this.userId);
-            if(filters.name){
+        let filters = InternalData.parserFilters(this.query.filters);
+        let objectName = filters.object;
+        let fieldNames = [];
+        if(filters.name){
+            fieldNames.push(filters.name)
+        }
+        let filters2 = odataMongodb.createFilter(this.query.filters)
+        function getName(query){
+            if(query.name){
+                fieldNames.push(query.name)
+            }else if(query.$or){
+                _.each(query.$or, function(item){
+                    if(item.name){
+                        fieldNames.push(item.name)
+                    }else if(item.$or){
+                        getName(item)
+                    }
+                })
+            }
+        }
+        if(filters2){
+            try {
+                getName(filters2.$and[0].$and[0])
+            } catch (error) {
+                
+            }
+            try {
+                objectName = filters2.$and[0].$and[1].object
+            } catch (error) {
+                
+            }
+        }
+        if(objectName){
+            fieldNames = _.uniq(fieldNames);
+            let fields = await InternalData.getObjectFields(objectName, this.userId);
+            if(fieldNames && fieldNames.length > 0){
                 fields = _.filter(fields, function(field){
-                    return field.name === filters.name
+                    return _.include(fieldNames, field.name)
                 })
             }
             if(fields){
@@ -274,13 +306,8 @@ module.exports = {
         }
     },
     afterCount: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        if(filters.object){
-            let fields = await InternalData.getObjectFields(filters.object, this.userId);
-            if(fields){
-                this.data.values = this.data.values + fields.length
-            }
-        }
+        let result = await objectql.getObject('object_fields').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
+        this.data.values = result.length;
     },
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
