@@ -91,6 +91,24 @@ module.exports = {
 			async handler(ctx) {
                 return await ctx.broker.call('metadata.get', {key: getRoutersInfoCacherKey(ctx.params.packageName)}, {meta: ctx.meta}) 
 			} 
+		},
+		getPackageMetadata: {
+			async handler(ctx) {
+				const serviceName = `~packages-${ctx.params.packageName}`
+                const configs = await ctx.broker.call(`metadata.getServiceMetadatas`, {
+					serviceName,
+					metadataType: "*",
+					metadataApiName: "*"
+				});
+				const metadata = [];
+				_.each(configs, (config)=>{
+					if(config.metadataType && config.metadataApiName){
+						const {label,name} = config.metadata || {}
+						metadata.push({type: config.metadataType, api_name: config.metadataApiName, label: label || name})
+					}
+				})
+				return metadata;
+			} 
 		}
 	},
 
