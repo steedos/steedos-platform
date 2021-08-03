@@ -10,6 +10,9 @@ public:
     local: 
       folder: "./storage"
   templateSpaceId: 'template'
+  webservices:
+    app_store: 
+      url: ${STEEDOS_SERVICE_APPSTORE}
 email:
   host:
   port: 465

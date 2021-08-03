@@ -1,6 +1,9 @@
 module.exports = {
     show_packages_store: function () {
-        const packageService = 'http://192.168.3.2:5300';
+        if(!Meteor.settings.public.webservices.app_store){
+            return toastr.info('请配置参数：public.webservices.app_store.url')
+        }
+        const packageService = Meteor.settings.public.webservices.app_store.url;
         return window.open(`${packageService}/app-store?client=${window.btoa(Meteor.absoluteUrl('', window.location.origin))}&install_nodes=${window.btoa(Steedos.PackageRegistry.getNodes().join(','))}`)
 
         SteedosUI.showModal(stores.ComponentRegistry.components.ObjectTable, {
