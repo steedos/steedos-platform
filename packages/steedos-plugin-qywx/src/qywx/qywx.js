@@ -1,9 +1,11 @@
-let objectql = require('@steedos/objectql');
+const objectql = require('@steedos/objectql');
 const steedosConfig = objectql.getSteedosConfig();
+const steedosSchema = objectql.getSteedosSchema();
 const Cookies = require("cookies");
-let Hashes = require("jshashes");
-let qywx_api = require('./router.js');
-let SHA1 = new Hashes.SHA1;
+const Hashes = require("jshashes");
+const qywx_api = require('./router.js');
+const SHA1 = new Hashes.SHA1;
+const fetch =  require('node-fetch');
 
 // 获取登录信息
 exports.getLoginInfo = function (access_token, auth_code) {
@@ -396,38 +398,38 @@ exports.sendMessage = function(data,access_token){
 }
 
 // 企业内部获取access_token
-exports.getToken = function(corpid,secret){
+exports.getToken = async function(corpid,secret){
     try {
         let url = qywx_api.getToken;
         if (!url)
             return;
         
-        let response = HTTP.get(url + "?corpid=" + corpid + "&corpsecret=" + secret);
-        if (response.error_code) {
-            console.error(response.error_code);
-            throw response.msg;
+        let response = await fetch(url + "?corpid=" + corpid + "&corpsecret=" + secret).then(res => res.json());
+        if (response.errcode > 0) {
+            throw response.errmsg;
         }
-        if (response.data.errcode > 0) {
-            throw response.data.errmsg;
-        }
-        return response.data.access_token;
-    } catch (err) {
+        return response;
+    } catch (_error) {
+        err = _error;
         console.error(err);
-        throw _.extend(new Error("Failed to get token with error: " + err), {
+        throw _.extend(new Error("Failed to get Token with error: " + err), {
             response: err
         });
     }
 }
 
 // 企业内部获取工作区
-exports.getSpace = function(){
+exports.getSpace = async function(corpId){
     try {
-        let space;
+        let space = "";
+        let spaceObj = steedosSchema.getObject("spaces");
         let spaceId = typeof steedosConfig !== "undefined" && steedosConfig !== null ? (_ref5 = steedosConfig.tenant) != null ? _ref5._id : void 0 : void 0;
-        if (!spaceId){
-            space = Creator.getCollection('spaces').findOne({});
+        if(corpId){
+            space = await spaceObj.findOne({filters: [['dingtalk_corp_id', '=', corpId]]});
+        }else if (spaceId){
+            space = await spaceObj.findOne({filters: [['_id', '=', spaceId]]});
         }else{
-            space = Creator.getCollection('spaces').findOne({_id:spaceId});
+            space = await spaceObj.findOne({});
         }
 
         return space;
@@ -436,6 +438,25 @@ exports.getSpace = function(){
         throw _.extend(new Error("Failed to get space with error: " + err), {
             response: err
         });
+    }
+}
+
+// 企业内部获取人员信息
+exports.getSpaceUsers = async function(corpId){
+    try {
+        let spaceUsers = [];
+        let spaceUserObj = steedosSchema.getObject("space_users");
+        let spaceId = typeof steedosConfig !== "undefined" && steedosConfig !== null ? (_ref5 = steedosConfig.tenant) != null ? _ref5._id : void 0 : void 0;
+        if(corpId){
+            spaceUsers = await spaceUserObj.find({filters: [['space', '=', corpId]]});
+        }else if (spaceId){
+            spaceUsers = await spaceUserObj.find({filters: [['space', '=', spaceId]]});
+        }
+        console.log("spaceUsers: ",spaceUsers.length);
+        return spaceUsers;
+    } catch (err) {
+        console.error(err);
+        console.log("Failed to get space with error: " + err);
     }
 }
 

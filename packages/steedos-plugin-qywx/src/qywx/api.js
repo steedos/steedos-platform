@@ -12,6 +12,7 @@ const qywx_api = require('./router.js');
 const qywxSync = require('./sync.js');
 const xmlparser = require('express-xml-bodyparser');
 const xml2js = require('xml2js');
+const fetch =  require('node-fetch');
 
 router.use("/qywx", async function (req, res, next) {
     await next();
@@ -22,7 +23,7 @@ router.get("/api/qiyeweixin/mainpage", async function (req, res, next) {
     let authorize_uri, o, redirect_uri, url, _ref5, _ref6, _ref7;
     let target = "";
     let appid = "";
-    o = Qiyeweixin.getSpace();
+    o = await Qiyeweixin.getSpace();
 
     let signature = Qiyeweixin.getSignature();
 
@@ -56,7 +57,7 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
     userId = cookies.get("X-User-Id");
     authToken = cookies.get("X-Auth-Token");
     state = req.query.state;
-    space = Qiyeweixin.getSpace();
+    space = await Qiyeweixin.getSpace();
     // 获取access_token
     if (space.qywx_corp_id && space.qywx_secret)
         token = Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret)
@@ -313,7 +314,7 @@ router.post("/api/qiyeweixin/push", async function (req, res, next) {
 
 // 同步数据
 router.get('/api/qiyeweixin/stockData', async function (req, res) {
-    let space = Qiyeweixin.getSpace();
+    let space = await Qiyeweixin.getSpace();
     // 获取access_token
     if (space.qywx_corp_id && space.qywx_secret)
         access_token = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
@@ -324,7 +325,7 @@ router.get('/api/qiyeweixin/stockData', async function (req, res) {
     deptListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + access_token);
     deptListRes = await deptListRes.json()
     deptListRes = deptListRes.department
-    console.log(deptListRes)
+    // console.log(deptListRes)
     for (let i = 0; i < deptListRes.length; i++) {
         qywxSync.write("部门ID:" + deptListRes[i]['id'])
         await qywxSync.deptinfoPush(deptListRes[i]['id'], deptListRes[i]['name'], deptListRes[i]['parentid'])
@@ -360,7 +361,7 @@ router.get('/api/qiyeweixin/listen', async function (req, res) {
 
     var query = req.query
 
-    console.log(query)
+    // console.log(query)
     var dtSpace = await Qiyeweixin.getSpace();
     // console.log("dtSpace: ",dtSpace);
     var APP_KEY = dtSpace.qywx_key;
@@ -400,8 +401,8 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
     var query = req.query
     var params = req.body
 
-    console.log(query)
-    console.log(params)
+    // console.log(query)
+    // console.log(params)
 
     var dtSpace = await Qiyeweixin.getSpace();
     // console.log("dtSpace: ",dtSpace);
@@ -431,7 +432,7 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
     });
 
     data = await parseXML(data.data);
-    console.log(data)
+    // console.log(data)
     console.log(data.UserID)
     if (data.ChangeType == "create_user" || data.ChangeType == "update_user") {
         await qywxSync.userinfoPush(data.UserID)
@@ -449,6 +450,42 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
     res.end();
 
 })
+
+// 同步企业微信id
+router.get('/api/sync/qywxId', async function (req, res) {
+
+    let space = await Qiyeweixin.getSpace();
+    if (!space)
+        return;
+    
+    let response = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
+    access_token = response.access_token;
+
+    qywxSync.write("================同步企业微信id开始===================")
+    qywxSync.write("access_token:" + access_token)
+
+    deptListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + access_token);
+    deptListRes = await deptListRes.json()
+    deptListRes = deptListRes.department
+    // console.log(deptListRes)
+    
+    for (let i = 0; i < deptListRes.length; i++) {
+        userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
+        userListRes = await userListRes.json()
+        userListRes = userListRes.userlist
+        // console.log("userListRes: ",userListRes);
+        for (let ui = 0; ui < userListRes.length; ui++) {
+            // console.log("space._id: ",space._id);
+            qywxSync.write("用户ID:" + userListRes[ui]['userid'])
+            await qywxSync.useridPush(access_token, userListRes[ui]['userid'], userListRes[ui]['mobile'])
+        }
+
+    }
+    qywxSync.write("================同步数据结束===================")
+    qywxSync.write("\n")
+
+    res.status(200).send({ message: "ok" });
+});
 
 // 通讯录变更，更新space表=============
 let ChangeContact = function (corp_id) {
