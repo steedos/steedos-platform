@@ -1,4 +1,5 @@
 name: steedos_packages
 icon: apex
-label: Steedos Packages
+label: 软件包
 hidden: true
+version: 2

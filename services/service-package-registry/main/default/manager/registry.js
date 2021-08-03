@@ -116,11 +116,10 @@ async function installModule(module,version,url) {
         // return installTarball(module)
         return 
     }
-    const check = checkModuleIsInstall(module);
-    if( check !== false){
-        return check;
-    }
-
+    // const check = checkModuleIsInstall(module);
+    // if( check !== false){
+    //     return check;
+    // }
     console.log(`installModule`, module,version,url)
     module = module || "";
     activePromise = activePromise.then(async function() {
@@ -232,6 +231,8 @@ async function installModule(module,version,url) {
         }).catch(result => {
             console.log(`result error`, result)
             log.error(`result`, result);
+            activePromise = Promise.resolve();
+            throw result;
             // var output = result.stderr;
             // var e;
             // var lookFor404 = new RegExp(" 404 .*"+module,"m");

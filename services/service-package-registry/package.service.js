@@ -102,12 +102,14 @@ module.exports = {
 					path: path.relative(process.cwd(), packageInfo.packagePath)
 				}
 				loader.appendToPackagesConfig(packageInfo.name, packageConfog);
+				const metadata = await getPackageMetadata(path.relative(process.cwd(), packageInfo.packagePath));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfog, {
 						name: packageInfo.name,
 						enable: true, 
 						nodeID: ctx.broker.nodeID, 
-						instanceID: ctx.broker.instanceID, 
+						instanceID: ctx.broker.instanceID,
+						metadata: metadata
 					})
 				})
 				return packageConfog;
