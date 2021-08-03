@@ -264,6 +264,23 @@ Creator.getAppObjectNames = (app_id)->
 				objects.push v
 	return objects
 
+Creator.getAppMenus = (app_id)->
+	app = Creator.getApp(app_id)
+	if !app
+		return
+	appMenus = Session.get("app_menus");
+	unless appMenus
+		return []
+	curentAppMenus = appMenus.find (menuItem) ->
+		return menuItem.id == app._id
+	if curentAppMenus
+		return curentAppMenus.children
+
+Creator.loadAppMenus = ()->
+	options = { type: 'get' }
+	Steedos.authRequest Steedos.absoluteUrl("/service/api/apps/menus"), options, (result, error)->
+		Session.set("app_menus", result);
+
 Creator.getVisibleApps = (includeAdmin)->
 	changeApp = Creator._subApp.get();
 	ReactSteedos.store.getState().entities.apps = Object.assign({}, ReactSteedos.store.getState().entities.apps, {apps: changeApp});
