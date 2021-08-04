@@ -33,9 +33,16 @@ fields:
     label: Parent
     type: lookup
     reference_to: tabs
+    omit: true
+    hidden: true
   mobile: 
     label: Display on the Mobile
     type: boolean
+    defaultValue: true
+  desktop:
+    label: Display on the Desktop
+    type: boolean
+    defaultValue: true
   frame_height:
     hidden: true
     inlineHelpText: The height, in pixels of the tab frame. Required for frame and page tabs.
@@ -86,7 +93,8 @@ list_views:
     columns:
       - label
       - name
-      - parent
+      # - parent
+      - desktop
       - mobile
       - type
 permission_set:

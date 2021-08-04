@@ -12,7 +12,9 @@ fields:
   parent:
     label: 上级选项卡
   mobile:
-    label: 仅在手机上显示
+    label: 显示在手机菜单中
+  desktop:
+    label: 显示在桌面菜单中
   frame_height:
     label: Frame Height
     help: 选项卡框架的高度（以像素为单位）。

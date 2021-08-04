@@ -9,6 +9,7 @@ Steedos.TabsManager.changeSchema = function (doc, schema, when) {
         { "name": "icon", "required": true }, 
         { "name": "parent"}, 
         { "name": "mobile"}, 
+        { "name": "desktop"},
         { "name": "type"},
         { "name": "description" }
     ];
