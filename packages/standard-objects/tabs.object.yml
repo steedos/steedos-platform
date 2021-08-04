@@ -38,6 +38,16 @@ fields:
     reference_to: tabs
     omit: true
     hidden: true
+  type: 
+    type: select
+    inlineHelpText: 作为上级选项卡时，无需设置类型
+    options:
+    - label: Object
+      value: object
+    - label: Url
+      value: url
+    - label: Page
+      value: page
   mobile: 
     label: Display on the Mobile
     type: boolean
@@ -55,16 +65,6 @@ fields:
     hidden: true
     inlineHelpText: Indicates if the tab displays the sidebar panel.
     type: boolean
-  type: 
-    type: select
-    inlineHelpText: 作为上级选项卡时，无需设置类型
-    options:
-    - label: Object
-      value: object
-    - label: Url
-      value: url
-    - label: Page
-      value: page
   object:
     label: Object
     type: lookup
