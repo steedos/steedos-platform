@@ -175,7 +175,13 @@ Template.creatorNavigation.helpers
 
 	object_url: ()->
 		# 新的appMenu规则是以path为url
-		return if this.is_temp then (this.url || Creator.getObjectUrl(String(this.name))) else this.path
+		if this.is_temp
+			return this.url || Creator.getObjectUrl(String(this.name))
+		else
+			if this.type == "url"
+				return "/app/-/tab/#{this.id}?url=#{this.path}"
+			else
+				return this.path
 
 	object_label: ()->
 		# 新的appMenu规则是以id为name，name为label

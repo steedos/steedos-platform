@@ -258,6 +258,15 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 # 		Session.set("object_name", "cms_posts")
 # 		FlowRouter.go '/cms'
 
+FlowRouter.route '/app/:app_id/tab/:tab_id',
+	triggersEnter: [ checkUserSigned, checkAppPermission ],
+	action: (params, queryParams)->
+		tab_id = FlowRouter.getParam("tab_id")
+		console.log("=route tab==tab_id===", tab_id);
+		BlazeLayout.render Creator.getLayout(),
+			main: "creator_tab_iframe"
+			data: {tab_id}
+
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
 	name: 'objectRoutes',
