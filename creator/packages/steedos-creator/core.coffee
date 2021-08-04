@@ -265,8 +265,12 @@ Creator.getAppObjectNames = (app_id)->
 	return objects
 
 Creator.getAppMenuUrl = (menu)->
-	params = "?X-User-Id=#{Steedos.userId()}&X-Space-Id=#{Steedos.spaceId()}&X-Company-Id=#{Steedos.getUserCompanyId()}"
-	return menu.path + params
+	params = {};
+	params["X-Space-Id"] = Steedos.spaceId()
+	params["X-User-Id"] = Steedos.userId();
+	params["X-Company-Ids"] = Steedos.getUserCompanyIds();
+	params["X-Auth-Token"] = Accounts._storedLoginToken();
+	return "#{menu.path}?#{$.param(params)}"
 
 Creator.getAppMenus = (app_id)->
 	app = Creator.getApp(app_id)
