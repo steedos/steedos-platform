@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@steedos/filters": "^2.0.51",
+    "@steedos/filters": "2.0.51",
     "node-fetch": "^2.6.1"
   }
 }
