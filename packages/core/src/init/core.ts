@@ -257,7 +257,7 @@ export const loadRouters = (routers)=>{
 }
 
 export const removeRouter = (path, methods)=>{
-    routersApp._router.stack.forEach(function(route,i,routes) {
+    routersApp._router?.stack.forEach(function(route,i,routes) {
         if (route.route && route.route.path === path) {
             if(JSON.stringify(route.route.methods) === JSON.stringify(methods)){
                 routes.splice(i,1);
