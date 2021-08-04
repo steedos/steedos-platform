@@ -3,7 +3,7 @@
   "version": "2.0.51",
   "description": "contract-management-system",
   "main": "package.service.js",
-  "private": false,
+  "private": true,
   "files": [
     "/package.json",
     "/README.md",
