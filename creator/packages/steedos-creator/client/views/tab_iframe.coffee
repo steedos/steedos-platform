@@ -2,7 +2,7 @@ Template.creator_tab_iframe.helpers
 	subsReady: ->
 		return Steedos.subsBootstrap.ready()
 	url: ->
-		currentTabId = this.data().tab_id
+		currentTabId = Session.get("tab_name")
 		currentAppMenus = Creator.getAppMenus()
 		if currentAppMenus && currentAppMenus.length
 			currentMenu = currentAppMenus.find (menu)->

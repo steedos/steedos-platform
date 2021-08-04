@@ -160,10 +160,11 @@ Template.creatorNavigation.helpers
 			return
 		tempNavs = Creator.getTempNavs()
 		objectName = Session.get("object_name")
+		tabName = Session.get("tab_name")
 		recordId = Session.get("record_id")
 		# 新的appMenu规则是以id为name，name为label
 		objName = if obj.is_temp then obj.name else obj.id
-		isActive = objName == objectName
+		isActive = objName == objectName or objName == tabName
 		if isActive
 			if obj.url
 				isActive = obj.url == Creator.getObjectUrl(obj.name, recordId)

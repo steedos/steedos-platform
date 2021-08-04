@@ -31,6 +31,7 @@ set_sessions = (context, redirect)->
 	object_name = context.params.object_name
 	record_id = context.params.record_id
 	Session.set("object_name", object_name)
+	Session.set("tab_name", null)
 	# 手机上record_id从老值变更为新值时，要清除record，否则list组件不会处理加载
 	if record_id != oldRecordId
 		Template.creator_view.currentInstance?.record?.set(null)
@@ -262,10 +263,10 @@ FlowRouter.route '/app/:app_id/tab/:tab_id',
 	triggersEnter: [ checkUserSigned, checkAppPermission ],
 	action: (params, queryParams)->
 		tab_id = FlowRouter.getParam("tab_id")
-		console.log("=route tab==tab_id===", tab_id);
+		Session.set("tab_name", tab_id)
+		Session.set("object_name", null)
 		BlazeLayout.render Creator.getLayout(),
 			main: "creator_tab_iframe"
-			data: {tab_id}
 
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
