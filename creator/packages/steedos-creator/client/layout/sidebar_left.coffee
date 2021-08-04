@@ -12,14 +12,8 @@ Template.creatorSidebarLeft.helpers
 		return Creator.getObject(this)
 
 	app_objects: (_id)->
-		app = Creator.getApp(_id)
-		objects = []
-		if app
-			_.each app.mobile_objects, (v)->
-				obj = Creator.getObject(v)
-				if obj?.permissions.get().allowRead
-					objects.push v
-		return objects
+		menus = Creator.getAppMenus(_id)
+		return menus
 
 	isActive: (obj, appId)->
 		if (obj == Session.get("object_name") && appId == Session.get("app_id"))

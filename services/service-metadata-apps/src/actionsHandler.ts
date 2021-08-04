@@ -87,10 +87,31 @@ async function getChildren(ctx: any, tabApiName: string){
     return await ctx.broker.call('tabs.getChildren', {tabApiName});
 }
 
-async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
+/**
+ * 判断tab是否符号mobile配置
+ * @param tab 
+ * @param mobile 是否是在移动设备上显示tab
+ * @returns 
+ */
+function checkTabMobile(tab, mobile){
+    let isChecked = false;
+    if(mobile === true || mobile === "true"){
+        isChecked = tab.mobile !== false;
+    }
+    else{
+        isChecked = true;
+    }
+    return isChecked;
+}
+
+async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession){
     try {
         const tab = await getTab(ctx, tabApiName);
         if(tab){
+            const isMobileChecked = checkTabMobile(tab, mobile)
+            if(!isMobileChecked){
+                return;
+            }
             const tabChildren = await getChildren(ctx, tabApiName);
             if(tabChildren && tabChildren.length > 0){
                 const tabMenu = {
@@ -101,7 +122,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
                 };
                 for await (const {metadata: tabChild} of tabChildren) {
                     if(tabChild && tabChild.apiName){
-                        await tabMenus(ctx, appPath, tabChild.apiName, tabMenu, userSession);
+                        await tabMenus(ctx, appPath, tabChild.apiName, tabMenu, mobile, userSession);
                     }
                 }
                 menu.children.push(tabMenu);
@@ -206,7 +227,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
     if(_.isArray(app.tabs)){
         for await (const tabApiName of app.tabs) {
             try {
-                await tabMenus(ctx, appPath, tabApiName, menu, userSession)
+                await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession)
             } catch (error) {
                 ctx.broker.logger.info(error.message);
             }
