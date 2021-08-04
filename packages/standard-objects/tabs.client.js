@@ -51,4 +51,5 @@
 //   })
 
 //   var objectSchema = Creator.getObjectSchema({fields: fields});
+//   Object.assign(schema, new SimpleSchema(objectSchema)) 
 // }
