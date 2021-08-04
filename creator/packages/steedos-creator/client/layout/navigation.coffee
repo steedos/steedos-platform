@@ -180,7 +180,7 @@ Template.creatorNavigation.helpers
 			return this.url || Creator.getObjectUrl(String(this.name))
 		else
 			if this.type == "url"
-				return "/app/-/tab/#{this.id}?url=#{this.path}"
+				return "/app/-/tab/#{this.id}"
 			else
 				return this.path
 
