@@ -31,7 +31,7 @@ checkIsCurrentObject = (objItem, currentObjectName, currentObjectUrl)->
 
 computeObjects = (maxW, hasAppDashboard)->
 	menus = Creator.getAppMenus()
-	if !menus
+	if !menus or !menus.length
 		return {}
 	# 当导航字体相关样式变更时，应该变更该font变量，否则计算可能出现偏差
 	itemPaddingW = 24 # 每项的左右边距宽度之和
@@ -268,4 +268,4 @@ Template.creatorNavigation.onCreated ->
 			self.containerWidth.set($("body").width())
 
 	if !Session.get("app_menus")
-		Creator.loadAppMenus()
+		Creator.loadAppsMenus()

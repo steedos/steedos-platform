@@ -267,7 +267,7 @@ Creator.getAppObjectNames = (app_id)->
 Creator.getAppMenus = (app_id)->
 	app = Creator.getApp(app_id)
 	if !app
-		return
+		return []
 	appMenus = Session.get("app_menus");
 	unless appMenus
 		return []
@@ -276,8 +276,12 @@ Creator.getAppMenus = (app_id)->
 	if curentAppMenus
 		return curentAppMenus.children
 
-Creator.loadAppMenus = ()->
-	options = { type: 'get' }
+Creator.loadAppsMenus = ()->
+	isMobile = Steedos.isMobile()
+	data = { }
+	if isMobile
+		data.mobile = isMobile
+	options = { type: 'get', data: data }
 	Steedos.authRequest Steedos.absoluteUrl("/service/api/apps/menus"), options, (result, error)->
 		Session.set("app_menus", result);
 
