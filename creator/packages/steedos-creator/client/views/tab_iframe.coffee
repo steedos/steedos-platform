@@ -8,8 +8,7 @@ Template.creator_tab_iframe.helpers
 			currentMenu = currentAppMenus.find (menu)->
 				return menu.id == currentTabId
 			if currentMenu
-				params = "?X-User-Id=#{Steedos.userId()}&X-Space-Id=#{Steedos.spaceId()}&X-Company-Id=#{Steedos.getUserCompanyId()}"
-				return currentMenu.path + params
+				return Creator.getAppMenuUrl currentMenu
 
 Template.creator_tab_iframe.events
 

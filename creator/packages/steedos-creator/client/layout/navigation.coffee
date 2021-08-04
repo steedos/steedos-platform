@@ -175,12 +175,16 @@ Template.creatorNavigation.helpers
 			return "slds-is-active"
 
 	object_url: ()->
+		console.log("===object_url===", this);
 		# 新的appMenu规则是以path为url
 		if this.is_temp
 			return this.url || Creator.getObjectUrl(String(this.name))
 		else
 			if this.type == "url"
-				return "/app/-/tab/#{this.id}"
+				if this.is_new_window
+					return Creator.getAppMenuUrl this
+				else
+					return "/app/-/tab/#{this.id}"
 			else
 				return this.path
 

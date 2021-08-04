@@ -264,6 +264,10 @@ Creator.getAppObjectNames = (app_id)->
 				objects.push v
 	return objects
 
+Creator.getAppMenuUrl = (menu)->
+	params = "?X-User-Id=#{Steedos.userId()}&X-Space-Id=#{Steedos.spaceId()}&X-Company-Id=#{Steedos.getUserCompanyId()}"
+	return menu.path + params
+
 Creator.getAppMenus = (app_id)->
 	app = Creator.getApp(app_id)
 	if !app
