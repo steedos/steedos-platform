@@ -281,9 +281,13 @@ Creator.loadAppsMenus = ()->
 	data = { }
 	if isMobile
 		data.mobile = isMobile
-	options = { type: 'get', data: data }
-	Steedos.authRequest Steedos.absoluteUrl("/service/api/apps/menus"), options, (result, error)->
-		Session.set("app_menus", result);
+	options = { 
+		type: 'get', 
+		data: data, 
+		success: (data)->
+			Session.set("app_menus", data);
+	 }
+	Steedos.authRequest Steedos.absoluteUrl("/service/api/apps/menus"), options
 
 Creator.getVisibleApps = (includeAdmin)->
 	changeApp = Creator._subApp.get();
