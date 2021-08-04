@@ -160,14 +160,12 @@ exports.deptinfoPush = async function (deptId, status = 0) {
 
 }
 
-exports.useridPush = async function (userId, mobile) {
+exports.useridPush = async function (access_token, mobile) {
     try {
-        access_token = await getAccessToken()
-
         write("================获取用户详情===================")
         write("access_token:" + access_token)
-        write("userId:" + userId)
-        userinfotRes = await dtApi.userGet(access_token, userId);
+        write("mobile:" + mobile)
+        userinfotRes = await dtApi.userGetByMobile(access_token, mobile);
         // console.log("userinfotRes: ", userinfotRes);
         write(userinfotRes)
         write("================获取用户详情 END===================")
@@ -177,13 +175,9 @@ exports.useridPush = async function (userId, mobile) {
         if (userRes["space_users"].length == 0)
             return;
 
-        // console.log("userRes: ", userRes);
-
         userinfo = {}
         
-        userinfo['dingtalk_id'] = userId;
-
-        // console.log("userinfo: ", userinfo);
+        userinfo['dingtalk_id'] = userinfotRes['result'].userid;
 
         doc = '{dingtalk_id:\"' + userinfo['dingtalk_id'] + '\"}';
 
@@ -191,7 +185,8 @@ exports.useridPush = async function (userId, mobile) {
 
     } catch (error) {
         if (error){
-            console.log("userinfoPush error: ",error);
+            write("ERROR:")
+            write(error)
         }
     }
 

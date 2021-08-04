@@ -30,6 +30,9 @@ checkIsCurrentObject = (objItem, currentObjectName, currentObjectUrl)->
 		return objItem.name == currentObjectName
 
 computeObjects = (maxW, hasAppDashboard)->
+	menus = Creator.getAppMenus()
+	if !menus
+		return {}
 	# 当导航字体相关样式变更时，应该变更该font变量，否则计算可能出现偏差
 	itemPaddingW = 24 # 每项的左右边距宽度之和
 	tempNavItemLeftW = 10 # 每个临时项的左侧包含边距和星号图标在内的宽度
@@ -46,16 +49,17 @@ computeObjects = (maxW, hasAppDashboard)->
 		dashboardW = Creator.measureWidth(t("Home"), fontNavItem, measureMaxWidth) + itemPaddingW
 		maxW = maxW - dashboardW
 	allItemsW = 0
-	objectNames = Creator.getAppObjectNames()
+	# objectNames = Creator.getAppObjectNames()
 	currentObjectName = Session.get("object_name")
 	currentRecordId = Session.get("record_id")
 	currentObjectUrl = Creator.getObjectUrl(currentObjectName, currentRecordId)
 	hiddens = []
 	visiables = []
 	currentObjectHiddenIndex = -1
-	objectNames?.forEach (item, index)->
-		objItem = Creator.getObject(item)
-		labelItem = objItem.label
+	menus?.forEach (item, index)->
+		# objItem = Creator.getObject(item)
+		objItem = item
+		labelItem = objItem.name
 		widthItem = Creator.measureWidth(labelItem, fontNavItem, measureMaxWidth) + itemPaddingW
 		if allItemsW + widthItem >= maxW
 			if checkIsCurrentObject(objItem, currentObjectName, currentObjectUrl)
@@ -157,7 +161,9 @@ Template.creatorNavigation.helpers
 		tempNavs = Creator.getTempNavs()
 		objectName = Session.get("object_name")
 		recordId = Session.get("record_id")
-		isActive = obj.name == objectName
+		# 新的appMenu规则是以id为name，name为label
+		objName = if obj.is_temp then obj.name else obj.id
+		isActive = objName == objectName
 		if isActive
 			if obj.url
 				isActive = obj.url == Creator.getObjectUrl(obj.name, recordId)
@@ -168,7 +174,16 @@ Template.creatorNavigation.helpers
 			return "slds-is-active"
 
 	object_url: ()->
-		return this.url || Creator.getObjectUrl(String(this.name))
+		# 新的appMenu规则是以path为url
+		return if this.is_temp then (this.url || Creator.getObjectUrl(String(this.name))) else this.path
+
+	object_label: ()->
+		# 新的appMenu规则是以id为name，name为label
+		return if this.is_temp then this.label else this.name
+
+	object_name: ()->
+		# 新的appMenu规则是以id为name，name为label
+		return if this.is_temp then this.name else this.id
 
 	spaces: ->
 		return db.spaces.find();
@@ -251,3 +266,6 @@ Template.creatorNavigation.onCreated ->
 	unless Steedos.isMobile()
 		$(window).resize ->
 			self.containerWidth.set($("body").width())
+
+	if !Session.get("app_menus")
+		Creator.loadAppMenus()

@@ -1,4 +1,4 @@
-Steedos.authRequest = function (url, options) {
+Steedos.authRequest = function (url, options, callback) {
     var userSession = Creator.USER_CONTEXT;
     var spaceId = userSession.spaceId;
     var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
@@ -28,6 +28,9 @@ Steedos.authRequest = function (url, options) {
             },
             success: function (data) {
                 result = data;
+                if(callback instanceof Function){
+                    callback(result);
+                }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.error(XMLHttpRequest.responseJSON);
@@ -36,6 +39,9 @@ Steedos.authRequest = function (url, options) {
                 }
                 else {
                     toastr.error(XMLHttpRequest.responseJSON)
+                }
+                if(callback instanceof Function){
+                    callback(result, XMLHttpRequest.responseJSON.error);
                 }
             }
         }

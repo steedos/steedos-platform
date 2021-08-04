@@ -26,13 +26,13 @@ let config = {
 
 const Dingtalk = {};
 
-router.get("/steedos/dingtalk/sso_mobile", async function (req, res, next){
+router.get("/steedos/dingtalk/sso_mobile", async function (req, res, next) {
     let space = dtApi.spaceGet();
     let cookies = new Cookies(req, res);
     let userId = cookies.get("X-User-Id");
     let authToken = cookies.get("X-Auth-Token");
     if (!userId && space.dingtalk_corp_id) {
-        Meteor.call('dingtalk_sso', space.dingtalk_corp_id, Meteor.absoluteUrl(), function(error, result) {
+        Meteor.call('dingtalk_sso', space.dingtalk_corp_id, Meteor.absoluteUrl(), function (error, result) {
             if (error) {
                 throw _.extend(new Error("Error!" + error.message));
             }
@@ -45,14 +45,14 @@ router.get("/steedos/dingtalk/sso_mobile", async function (req, res, next){
     }
 });
 
-router.get('/steedos/dingtalk/sso_pc', async function (req, res, next){
+router.get('/steedos/dingtalk/sso_pc', async function (req, res, next) {
     let space = dtApi.spaceGet();
     let cookies = new Cookies(req, res);
     let userId = cookies.get("X-User-Id");
     let authToken = cookies.get("X-Auth-Token");
 
     if (!userId && space.dingtalk_corp_id) {
-        Meteor.call('dingtalk_sso', space.dingtalk_corp_id, Meteor.absoluteUrl(), function(error, result) {
+        Meteor.call('dingtalk_sso', space.dingtalk_corp_id, Meteor.absoluteUrl(), function (error, result) {
             if (error) {
                 throw _.extend(new Error("Error!" + error.message));
             }
@@ -268,7 +268,7 @@ router.post("/api/dingtalk/init", async function (req, res, next) {
 
 // dingtalk免登给用户设置cookies
 router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
-    let authtToken,hashedToken,userId,cookies;
+    let authtToken, hashedToken, userId, cookies;
     cookies = new Cookies(req, res);
     userId = cookies.get("X-User-Id");
     authToken = cookies.get("X-Auth-Token");
@@ -276,7 +276,7 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
     let space = await dtApi.spaceGet(req.body.corpId);
     if (!space)
         return res.end("缺少参数 corpId!");
-    
+
     let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
     let code = req.body.code;
     let access_token = response.access_token;
@@ -294,7 +294,7 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
             filters: [['dingtalk_id', '=', user_info.userid]]
         });
 
-        if (!space_user){
+        if (!space_user) {
             return res.end('no_space_user');
         }
 
@@ -324,19 +324,19 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
 });
 
 // 同步数据
-router.get('/api/stockData', async function (req, res) {
+router.get('/api/dingtalk/stockData', async function (req, res) {
 
     let space = await dtApi.spaceGet();
     if (!space)
         return;
-    
+
     let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
     access_token = response.access_token;
 
     dtSync.write("================存量数据开始===================")
     dtSync.write("access_token:" + access_token)
     deptListRes = await dtApi.departmentListGet(access_token)
-    
+
     for (let i = 0; i < deptListRes.length; i++) {
         dtSync.write("部门ID:" + deptListRes[i]['id'])
         await dtSync.deptinfoPush(deptListRes[i]['id'])
@@ -363,7 +363,7 @@ router.get('/api/stockData', async function (req, res) {
 });
 
 // 订阅事件
-router.post('/api/listen', async function (req, res) {
+router.post('/api/dingtalk/listen', async function (req, res) {
     var params = req.body
     var query = req.query
     // 获取工作区相关信息
@@ -433,7 +433,6 @@ router.post('/api/listen', async function (req, res) {
 
                 break;
 
-
         }
     } catch (e) {
         dtSync.write("ERROR:")
@@ -451,31 +450,35 @@ router.post('/api/listen', async function (req, res) {
 
 // 同步钉钉id
 router.get('/api/sync/dingtalkId', async function (req, res) {
+    try {
+        let space = await dtApi.spaceGet();
+        let spaceUsers = await dtApi.spaceUsersGet();
+        if ((spaceUsers.length == 0) || !space)
+            return;
 
-    let space = await dtApi.spaceGet();
-    if (!space)
-        return;
-    
-    let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
-    access_token = response.access_token;
+        let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
+        access_token = response.access_token;
 
-    dtSync.write("================同步钉钉id开始===================")
-    dtSync.write("access_token:" + access_token)
-    deptListRes = await dtApi.departmentListGet(access_token)
-    
-    for (let i = 0; i < deptListRes.length; i++) {
-        userListRes = await dtApi.userListGet(access_token, deptListRes[i].id)
-        // console.log("userListRes: ",userListRes);
-        for (let ui = 0; ui < userListRes.length; ui++) {
-            dtSync.write("用户ID:" + userListRes[ui]['userid'])
-            await dtSync.useridPush(userListRes[ui]['userid'],userListRes[ui]['mobile'])
+        dtSync.write("================同步钉钉id开始===================")
+
+        for (let ui = 0; ui < spaceUsers.length; ui++) {
+            // console.log("spaceUsers[ui]: ", spaceUsers[ui]);
+            dtSync.write("姓名:" + spaceUsers[ui]['name'])
+            dtSync.write("手机:" + spaceUsers[ui]['mobile'])
+            if (!spaceUsers[ui]['mobile'] || (spaceUsers[ui]['mobile'] == ""))
+                return;
+
+            await dtSync.useridPush(access_token, spaceUsers[ui]['mobile'])
         }
+        dtSync.write("================同步数据结束===================")
+        dtSync.write("\n")
 
+        res.status(200).send({ message: "ok" });
+    } catch (error) {
+        dtSync.write("ERROR:")
+        dtSync.write(error)
     }
-    dtSync.write("================同步数据结束===================")
-    dtSync.write("\n")
 
-    res.status(200).send({ message: "ok" });
 });
 
 exports.router = router;

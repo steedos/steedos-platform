@@ -406,10 +406,10 @@ fields:
             let options = Steedos.ObjectFieldManager.getSummaryFiltersOperation();
             return options;
           }
-          var index = Number(this.template.data.name.split('.')[1]);
-          var filters = values.summary_filters
-          if(filters && filters.length > index){
-            var filter = filters[index];
+          const filter = _.find(values.summary_filters, function (item) {
+            return item._id === values._grid_row_id
+          })
+          if(filter){
             var field = filter.field;
             if(field){
               var object_fields = Creator.getObject(values.summary_object).fields

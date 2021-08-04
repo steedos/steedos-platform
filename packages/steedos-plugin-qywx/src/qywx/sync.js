@@ -123,7 +123,7 @@ exports.userinfoPush = async function (userId, status = 0) {
   userinfo['name'] = userinfotRes['name'];
   userinfo['mobile'] = userinfotRes['mobile'];
   userinfo['organization'] = deptIdList[0];
-  userinfo['email'] = userinfotRes['email'] == "" ? userId + "@qq.com" : userinfotRes['email'];
+  userinfo['email'] = userinfotRes['email'] || "";
   userinfo['job_number'] = userId;
   userinfo['position'] = userinfotRes['position'];
   userinfo['manage'] = manage;
@@ -131,7 +131,7 @@ exports.userinfoPush = async function (userId, status = 0) {
   userinfo['organizations'] = JSON.stringify(deptIdList)
 
   doc = '{user_accepted:true,organizations:' + userinfo['organizations'] + ',name:\"' + userinfo['name'] + '\",profile:\"user\",mobile:\"' + userinfo['mobile'] + '\",organization:\"' + userinfo['organization'] + '\",email:\"' + userinfo['email'] + '\",job_number:\"' + userinfo['job_number'] + '\",position:\"' + userinfo['position'] + '\",manager:\"' + userinfo['manage'] + '\",qywx_id:\"' + userinfo['qywx_id'] + '\"}';
-  console.log(userRes)
+  // console.log(userRes)
   if (userRes.space_users.length == 0) {
     insertUserRes = await queryGraphql('mutation {\n  space_users__insert(doc: ' + doc + ') {\n    _id\n  }\n}')
   } else {
@@ -140,6 +140,32 @@ exports.userinfoPush = async function (userId, status = 0) {
 
 
 
+
+}
+
+exports.useridPush = async function (access_token, userId, mobile) {
+  
+  // 获取access_token
+  write("================获取用户详情===================")
+  write("access_token:" + access_token)
+  write("mobile:" + mobile)
+  userinfotRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token=" + access_token + "&userid=" + userId);
+  userinfotRes = await userinfotRes.json()
+
+  write(userinfotRes)
+  write("================获取用户详情 END===================")
+
+  userRes = await queryGraphql('{\n  space_users(filters: [[\"mobile\", \"=\", \"' + mobile + '\"]]) {\n    _id\n    name\n  }\n}');
+
+  userinfo = {}
+  userinfo['qywx_id'] = userId;
+
+  doc = '{qywx_id:\"' + userinfo['qywx_id'] + '\"}';
+  // console.log(userRes)
+
+  if (userRes.space_users.length > 0) {
+    updateUserRes = await queryGraphql('mutation {\n  space_users__update(id:\"' + userRes['space_users'][0]['_id'] + '\",doc: ' + doc + ') {\n    _id\n  }\n}')
+  }
 
 }
 
