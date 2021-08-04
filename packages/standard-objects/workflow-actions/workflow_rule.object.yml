@@ -44,6 +44,7 @@ fields:
     label: Field Update
     is_wide: true
     reference_to: action_field_updates
+    reference_to_field: name
     depend_on:
       - object_name
     filtersFunction: !!js/function |
@@ -52,6 +53,23 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('action_field_updates', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
+      }
   workflow_notifications_actions:
     group: Immediate Actions
     type: lookup
@@ -59,6 +77,7 @@ fields:
     label: Workflow Notification
     is_wide: true
     reference_to: workflow_notifications
+    reference_to_field: name
     depend_on:
       - object_name
     filtersFunction: !!js/function |
@@ -66,6 +85,23 @@ fields:
         if(dependValues && dependValues.object_name){
           return "object_name eq '" + dependValues.object_name + "'";
         }
+      }
+    optionsFunction: !!js/function |
+      function () {
+        
+        let selects = ["name", "label"]
+        let options = {
+            $select: selects.toString()
+        };
+        let records = Creator.odata.query('workflow_notifications', options, true);
+        let result = [];
+        records.forEach(function (item) {
+            result.push({
+                label: item.label,
+                value: item.name
+            });
+        });
+        return result;
       }
   # boolean_filter: # TODO 暂不支持
   #   type: text
@@ -102,3 +138,7 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+actions:
+  customize:
+    label: Customize
+    on: record

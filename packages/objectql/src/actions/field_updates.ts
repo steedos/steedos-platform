@@ -99,7 +99,7 @@ export async function runFieldUpdateActions(ids: Array<string>, recordId: any, u
     let targets: Array<FieldUpdateTarget> = [];
 
     if(!_.isEmpty(ids)){
-        filters.push(['_id', 'in', ids])
+        filters.push(['name', 'in', ids])
     }
     
     if(!_.isEmpty(filters)){

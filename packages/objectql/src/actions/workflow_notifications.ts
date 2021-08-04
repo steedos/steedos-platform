@@ -16,7 +16,7 @@ export async function runWorkflowNotifyActions(ids: Array<string>, recordId: any
     if (_.isEmpty(ids) || _.isEmpty(recordId) || _.isEmpty(userSession)) {
         return;
     }
-    let filters = ['_id', 'in', ids];
+    let filters = ['name', 'in', ids];
     let notifications = await getObject("workflow_notifications").find({ filters: filters })
     for (const wn of notifications) {
         await runWorkflowNotifyAction(wn, recordId, userSession);

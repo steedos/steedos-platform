@@ -29,13 +29,11 @@
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 							{{#if allowCreate}}
 								{{#if is_file}}
-									{{#if isUnlocked}}
-										{{#if hasPermission 'allowEdit' }}
+									{{#if recordPerminssion "allowCreateFiles"}}
 											<button class="slds-button slds-button_neutral btn-upload-file" title="{{_ "creator_actions_upload_file"}}">
 												{{_ "creator_actions_upload_file"}}
 												<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files" data-target-related-field-name="{{relatedFieldName}}">
 											</button>
-										{{/if}}
 									{{/if}}
 								{{else}}
 									<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{related_object_name}}" title="{{_ "New"}}">

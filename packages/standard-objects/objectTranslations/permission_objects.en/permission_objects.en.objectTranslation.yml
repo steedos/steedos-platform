@@ -46,6 +46,30 @@ fields:
     label: Modify Division's Records
     help: 
     description: 
+  allowReadFiles:
+    label: Allow Read Files
+    help: 
+    description: 
+  allowCreateFiles:
+    label: Allow Create Files
+    help: 
+    description: 
+  allowEditFiles:
+    label: Allow Edit Files
+    help: 
+    description: 
+  allowDeleteFiles:
+    label: Allow Delete Files
+    help: 
+    description: 
+  viewAllFiles:
+    label: View All Files
+    help: 
+    description: 
+  modifyAllFiles:
+    label: Modify All Files
+    help: 
+    description: 
   disabled_list_views:
     label: Disabled ListViews
     help: 
@@ -70,6 +94,8 @@ fields:
     label: 系统
     help: 
     description: 
+groups:
+  files_permissions: Files permissions
 listviews:
   customize:
     label: Customize

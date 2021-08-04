@@ -12,4 +12,8 @@ export * from './permissionset'
 export * from './translations'
 export * from './object_translations'
 export * from './validation_rule'
+export * from './role'
+export * from './flow_role'
+export * from './approval_process'
+export * from './workflow'
 export * from "./tabs"

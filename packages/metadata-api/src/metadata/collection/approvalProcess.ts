@@ -72,34 +72,34 @@ async function getApprovalProcessByName(dbManager, approvalProcessName) {
 }
 
 async function parseProcessActionNames(dbManager, approvalProcess) {
-    if(approvalProcess.initial_submission_updates_field_actions){
-        for(let i=0; i<approvalProcess.initial_submission_updates_field_actions.length; i++){
-            let fieldUpdateName = approvalProcess.initial_submission_updates_field_actions[i];
-            let fieldUpdateId = await getFieldUpdateIdByName(dbManager, fieldUpdateName);
-            approvalProcess.initial_submission_updates_field_actions[i] = fieldUpdateId;
-        } 
-    }
-    if(approvalProcess.final_approval_updates_field_actions){
-        for(let i=0; i<approvalProcess.final_approval_updates_field_actions.length; i++){
-            let fieldUpdateName = approvalProcess.final_approval_updates_field_actions[i];
-            let fieldUpdateId = await getFieldUpdateIdByName(dbManager, fieldUpdateName);
-            approvalProcess.final_approval_updates_field_actions[i] = fieldUpdateId;
-        } 
-    }
-    if(approvalProcess.final_rejection_updates_field_actions){
-        for(let i=0; i<approvalProcess.final_rejection_updates_field_actions.length; i++){
-            let fieldUpdateName = approvalProcess.final_rejection_updates_field_actions[i];
-            let fieldUpdateId = await getFieldUpdateIdByName(dbManager, fieldUpdateName);
-            approvalProcess.final_rejection_updates_field_actions[i] = fieldUpdateId;
-        } 
-    }
-    if(approvalProcess.recall_updates_field_actions){
-        for(let i=0; i<approvalProcess.recall_updates_field_actions.length; i++){
-            let fieldUpdateName = approvalProcess.recall_updates_field_actions[i];
-            let fieldUpdateId = await getFieldUpdateIdByName(dbManager, fieldUpdateName);
-            approvalProcess.recall_updates_field_actions[i] = fieldUpdateId;
-        } 
-    }
+    // if(approvalProcess.initial_submission_updates_field_actions){
+    //     for(let i=0; i<approvalProcess.initial_submission_updates_field_actions.length; i++){
+    //         let fieldUpdateName = approvalProcess.initial_submission_updates_field_actions[i];
+    //         let fieldUpdateId = await getFieldUpdateIdByName(dbManager, fieldUpdateName);
+    //         approvalProcess.initial_submission_updates_field_actions[i] = fieldUpdateId;
+    //     } 
+    // }
+    // if(approvalProcess.final_approval_updates_field_actions){
+    //     for(let i=0; i<approvalProcess.final_approval_updates_field_actions.length; i++){
+    //         let fieldUpdateName = approvalProcess.final_approval_updates_field_actions[i];
+    //         let fieldUpdateId = await getFieldUpdateIdByName(dbManager, fieldUpdateName);
+    //         approvalProcess.final_approval_updates_field_actions[i] = fieldUpdateId;
+    //     } 
+    // }
+    // if(approvalProcess.final_rejection_updates_field_actions){
+    //     for(let i=0; i<approvalProcess.final_rejection_updates_field_actions.length; i++){
+    //         let fieldUpdateName = approvalProcess.final_rejection_updates_field_actions[i];
+    //         let fieldUpdateId = await getFieldUpdateIdByName(dbManager, fieldUpdateName);
+    //         approvalProcess.final_rejection_updates_field_actions[i] = fieldUpdateId;
+    //     } 
+    // }
+    // if(approvalProcess.recall_updates_field_actions){
+    //     for(let i=0; i<approvalProcess.recall_updates_field_actions.length; i++){
+    //         let fieldUpdateName = approvalProcess.recall_updates_field_actions[i];
+    //         let fieldUpdateId = await getFieldUpdateIdByName(dbManager, fieldUpdateName);
+    //         approvalProcess.recall_updates_field_actions[i] = fieldUpdateId;
+    //     } 
+    // }
     
     // if(approvalProcess.initial_submission_workflow_notifications_actions){
     //     for(let i=0; i<approvalProcess.initial_submission_workflow_notifications_actions.length; i++){
@@ -201,7 +201,13 @@ async function getFieldUpdateNameById(dbManager, fieldUpdateId) {
     var actionFieldUpdate = await dbManager.findOne(action_field_updates, {_id: fieldUpdateId});
     // delete actionFieldUpdate._id;
     // deleteCommonAttribute(actionFieldUpdate);
-    return actionFieldUpdate.name;
+
+    //找得到就转换，找不到就原样返回
+    if(actionFieldUpdate){
+        return actionFieldUpdate.name;
+    }else{
+        return fieldUpdateId;
+    }
 }
 
 async function getProcessNodes(dbManager, approvalProcess) {
@@ -269,7 +275,7 @@ export async function approvalProcessesToDb(dbManager, approvalProcesses){
         var processNodes = approvalProcess.process_nodes
         delete approvalProcess.process_nodes;
 
-        await parseProcessActionNames(dbManager, approvalProcess);
+        // await parseProcessActionNames(dbManager, approvalProcess);
 
         // approvalProcess.name = `pd_${nowTime}`;
         let dbProcess = await dbManager.findOne(process_definition, {name: approvalProcess.name});
@@ -362,18 +368,18 @@ export async function approvalProcessesToDb(dbManager, approvalProcesses){
             //     }
             // }
             
-            if(processNode.approval_updates_field_actions){
-                for(let i=0; i<processNode.approval_updates_field_actions.length; i++){
-                    processNode.approval_updates_field_actions[i]
-                        = await getFieldUpdateIdByName(dbManager, processNode.approval_updates_field_actions[i]);
-                } 
-            }
-            if(processNode.rejection_updates_field_actions){
-                for(let i=0; i<processNode.rejection_updates_field_actions.length; i++){
-                    processNode.rejection_updates_field_actions[i]
-                        = await getFieldUpdateIdByName(dbManager, processNode.rejection_updates_field_actions[i]);
-                } 
-            }
+            // if(processNode.approval_updates_field_actions){
+            //     for(let i=0; i<processNode.approval_updates_field_actions.length; i++){
+            //         processNode.approval_updates_field_actions[i]
+            //             = await getFieldUpdateIdByName(dbManager, processNode.approval_updates_field_actions[i]);
+            //     } 
+            // }
+            // if(processNode.rejection_updates_field_actions){
+            //     for(let i=0; i<processNode.rejection_updates_field_actions.length; i++){
+            //         processNode.rejection_updates_field_actions[i]
+            //             = await getFieldUpdateIdByName(dbManager, processNode.rejection_updates_field_actions[i]);
+            //     } 
+            // }
             
             // if(processNode.approval_workflow_notifications_actions){
             //     for(let i=0; i<processNode.approval_workflow_notifications_actions.length; i++){
