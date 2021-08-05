@@ -103,6 +103,16 @@ function checkTabMobile(tab, mobile){
     }
     return isChecked;
 }
+function checkAppMobile(app, mobile){
+    let isChecked = false;
+    if(mobile === true || mobile === "true"){
+        isChecked = app.mobile !== false;
+    }
+    else{
+        isChecked = app.is_creator !== false;
+    }
+    return isChecked;
+}
 
 async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession){
     try {
@@ -181,7 +191,8 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
         return;
     }
 
-    if(!mobile && app.mobile){
+    const isAppShow = checkAppMobile(app, mobile);
+    if(!isAppShow){
         return;
     }
 

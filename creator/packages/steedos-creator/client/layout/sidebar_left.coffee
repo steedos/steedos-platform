@@ -29,7 +29,15 @@ Template.creatorSidebarLeft.helpers
 	object_url: (_id)->
 		unless _id
 			_id = "-"
-		return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
+		# return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
+		if this.type == "url"
+			# TODO: this中无is_new_window, 有target, 需要后续fix.
+			if this.is_new_window
+				return Creator.getAppMenuUrl this
+			else
+				return "/app/-/tab/#{this.id}"
+		else
+			return this.path
 
 	settings_url: ()->
 		return Creator.getRelativeUrl('/user_settings')
@@ -42,8 +50,10 @@ Template.creatorSidebarLeft.helpers
 		return t("none_space_selected_title")
 
 	getApps: ->
-		return _.filter Creator.getVisibleApps(true), (item)->
-			return item._id !='admin' && !_.isEmpty(item.mobile_objects)
+		return Session.get("app_menus")
+		# return _.filter Creator.getVisibleApps(true), (item)->
+		# 	return item._id !='admin' && !_.isEmpty(item.mobile_objects)
+		# 	return item._id !='admin' && (!_.isEmpty(item.mobile_objects) || !_.isEmpty(item.tabs))
 
 	logoUrl: ()->
 		avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar
