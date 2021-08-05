@@ -99,7 +99,7 @@ function checkTabMobile(tab, mobile){
         isChecked = tab.mobile !== false;
     }
     else{
-        isChecked = true;
+        isChecked = tab.desktop !== false;
     }
     return isChecked;
 }
