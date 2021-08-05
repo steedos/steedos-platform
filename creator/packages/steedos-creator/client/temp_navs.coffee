@@ -94,9 +94,12 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
                 toNavUrl = if toNav.url then toNav.url else Creator.getObjectUrl(toNav.name)
                 FlowRouter.redirect(toNavUrl)
             else
-                objectNames = Creator.getAppObjectNames()
-                lastObjectName = objectNames[objectNames.length - 1]
-                FlowRouter.redirect(Creator.getObjectUrl(lastObjectName))
+                # objectNames = Creator.getAppObjectNames()
+                # lastObjectName = objectNames[objectNames.length - 1]
+                # FlowRouter.redirect(Creator.getObjectUrl(lastObjectName))
+                menus = Creator.getAppMenus()
+                lastMenu = menus[menus.length - 1]
+                FlowRouter.redirect(lastMenu.path)
     else
         appendLastRemovedTempNavUrl(name, url)
 
@@ -202,11 +205,13 @@ Meteor.startup ()->
         objectName = Session.get("object_name")
         tabName = Session.get("tab_name")
         recordId = Session.get("record_id")
+        menus = Creator.getAppMenus()
         unless objectName
+            return
+        if !menus or !menus.length
             return
         record = Creator.getObjectRecord()
         # objectNames = Creator.getAppObjectNames()
-        menus = Creator.getAppMenus()
         record_name = Session.get('record_name')
         menuNames = _.pluck(menus, "id")
         # 如果当前所在的object_name不存在顶部导航中，则添加一个临时的导航栏项
