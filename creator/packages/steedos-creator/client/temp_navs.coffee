@@ -200,15 +200,19 @@ Meteor.startup ()->
 
     Tracker.autorun (c)->
         objectName = Session.get("object_name")
+        tabName = Session.get("tab_name")
         recordId = Session.get("record_id")
         unless objectName
             return
         record = Creator.getObjectRecord()
-        objectNames = Creator.getAppObjectNames()
+        # objectNames = Creator.getAppObjectNames()
+        menus = Creator.getAppMenus()
         record_name = Session.get('record_name')
+        menuNames = _.pluck(menus, "id")
         # 如果当前所在的object_name不存在顶部导航中，则添加一个临时的导航栏项
         forceCreate = Session.get("temp_navs_force_create")
-        if objectNames?.indexOf(objectName) < 0 or forceCreate
+        # objectName与tabName只会同时存在一个
+        if menuNames?.indexOf(objectName or tabName) < 0 or forceCreate
             if forceCreate and isRemovingTempNavItem
                 # 如果正在删除临时导航项，forceCreate为true说明强行添加的肯定是即将返回到的界面，没必要加，否则会闪现下即将返回到的界面的标题增加到临时导航中
                 Session.set("temp_navs_force_create", false)
