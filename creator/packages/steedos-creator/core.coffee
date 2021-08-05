@@ -270,7 +270,12 @@ Creator.getAppMenuUrl = (menu)->
 	params["X-User-Id"] = Steedos.userId();
 	params["X-Company-Ids"] = Steedos.getUserCompanyIds();
 	params["X-Auth-Token"] = Accounts._storedLoginToken();
-	return "#{menu.path}?#{$.param(params)}"
+	sdk = require("@steedos/builder-community/dist/builder-community.react.js")
+	url = menu.path
+	if sdk and sdk.Utils and sdk.Utils.isExpression(url)
+		url = sdk.Utils.parseSingleExpression(url, menu, "#", Creator.USER_CONTEXT)
+	linkStr = if url.indexOf("?") < 0 then "?" else "&"
+	return "#{url}#{linkStr}#{$.param(params)}"
 
 Creator.getAppMenus = (app_id)->
 	app = Creator.getApp(app_id)
