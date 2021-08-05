@@ -151,7 +151,9 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                     if (_.isArray(value)) {
                         value = value.map(function (item) {
                             if (typeof item === "string") {
-                                item = convertSpecialCharacter(item);
+                                if(["contains", "startswith", "endswith", "notcontains", "notstartswith", "notendswith"].indexOf(option) > -1){
+                                    item = convertSpecialCharacter(item);
+                                }
                                 if(regDate.test(item)){
                                     // 如果item正好是regDate格式，则转换为Date类型
                                     item = new Date(item);
@@ -222,7 +224,9 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                         }
                         else {
                             if (typeof value === "string") {
-                                value = convertSpecialCharacter(value);
+                                if(["contains", "startswith", "endswith", "notcontains", "notstartswith", "notendswith"].indexOf(option) > -1){
+                                    value = convertSpecialCharacter(value);
+                                }
                                 if(regDate.test(value)){
                                     // 如果value正好是regDate格式，则转换为Date类型
                                     value = new Date(value);
