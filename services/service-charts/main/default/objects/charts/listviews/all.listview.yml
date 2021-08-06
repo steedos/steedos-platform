@@ -6,6 +6,8 @@ columns:
     wrap: false
   - field: type
     wrap: false
+  - field: query
+    wrap: false
 filter_fields:
   - type
 filter_scope: space
