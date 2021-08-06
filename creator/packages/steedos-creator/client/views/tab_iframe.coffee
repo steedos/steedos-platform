@@ -8,7 +8,7 @@ Template.creator_tab_iframe.helpers
 			currentMenu = currentAppMenus.find (menu)->
 				return menu.id == currentTabId
 			if currentMenu
-				return Creator.getAppMenuUrl currentMenu
+				return Creator.getAppMenuUrlForInternet currentMenu
 
 Template.creator_tab_iframe.events
 

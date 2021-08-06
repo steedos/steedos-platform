@@ -179,13 +179,7 @@ Template.creatorNavigation.helpers
 		if this.is_temp
 			return this.url || Creator.getObjectUrl(String(this.name))
 		else
-			if this.type == "url"
-				if this.is_new_window
-					return Creator.getAppMenuUrl this
-				else
-					return "/app/-/tab/#{this.id}"
-			else
-				return this.path
+			return Creator.getAppMenuUrl this
 
 	object_label: ()->
 		# 新的appMenu规则是以id为name，name为label
@@ -276,6 +270,3 @@ Template.creatorNavigation.onCreated ->
 	unless Steedos.isMobile()
 		$(window).resize ->
 			self.containerWidth.set($("body").width())
-
-	if !Session.get("app_menus")
-		Creator.loadAppsMenus()

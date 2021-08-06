@@ -30,14 +30,7 @@ Template.creatorSidebarLeft.helpers
 		unless _id
 			_id = "-"
 		# return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
-		if this.type == "url"
-			# TODO: this中无is_new_window, 有target, 需要后续fix.
-			if this.is_new_window
-				return Creator.getAppMenuUrl this
-			else
-				return "/app/-/tab/#{this.id}"
-		else
-			return this.path
+		return Creator.getAppMenuUrl this
 
 	settings_url: ()->
 		return Creator.getRelativeUrl('/user_settings')

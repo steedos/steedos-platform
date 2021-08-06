@@ -79,7 +79,7 @@
 								<ul class="slds-dropdown__list slds-show">
 									{{#each this.hiddens}}
 										<li class="slds-dropdown__item slds-context-bar__item {{object_class_name this}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
-											<a role="option" tabindex="-1" data-object-name="{{object_name}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
+											<a role="option" tabindex="-1" data-object-name="{{object_name}}" target="{{#if this.target}}_blank{{/if}}" href="{{object_url}}" title="{{object_label}}" class="slds-context-bar__label-action creator-object-nav-{{this.id}}">
 												<span class="slds-truncate">
 													{{#if this.is_temp}}
 														<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="{{_ 'creator_navigation_nav_not_saved'}}" aria-label="{{_ 'creator_navigation_nav_not_saved'}}">*</abbr>

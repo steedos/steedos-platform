@@ -264,6 +264,8 @@ handleBootstrapData = (result, callback)->
 	if (!FlowRouter._initialized)
 		FlowRouter.initialize();
 
+	if !Session.get("app_menus")
+		Creator.loadAppsMenus()
 	if FlowRouter.current()?.context?.pathname == "/steedos/sign-in"
 		if FlowRouter.current()?.queryParams?.redirect
 			document.location.href = FlowRouter.current().queryParams.redirect;
