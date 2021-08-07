@@ -3,7 +3,7 @@ const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const objectql = require("@steedos/objectql");
-const _ = require('underscore');
+const _ = require('lodash');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -40,11 +40,13 @@ module.exports = {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { recordId } = ctx.params;
+				let results = null;
                 const record = await objectql.getObject("queries").findOne(recordId);
 				if(record){
 					if(!record.query){
 						throw new Error(`Invalid query.`)
 					}
+					console.log(`record.datasource`, record.datasource)
 					const datasource = objectql.getDataSource(record.datasource);
 					if(!datasource){
 						throw new Error(`not find Data Source.`)
@@ -62,7 +64,7 @@ module.exports = {
 						if(query.aggregate){
 							const driver = datasource.adapter;
 							await driver.connect();
-							return await driver.collection(query.collection).aggregate(query.aggregate).toArray();
+							results = await driver.collection(query.collection).aggregate(query.aggregate).toArray();
 						}else if(query.query){
 							const driver = datasource.adapter;
 							await driver.connect();
@@ -74,9 +76,9 @@ module.exports = {
 								skip: query.skip
 							}
 							if(query.count){
-								return await driver.collection(query.collection).find(filter, options).count();
+								results = await driver.collection(query.collection).find(filter, options).count();
 							}else{
-								return await driver.collection(query.collection).find(filter, options).toArray();
+								results = await driver.collection(query.collection).find(filter, options).toArray();
 							}
 						}
 
@@ -86,7 +88,33 @@ module.exports = {
 						throw new Error(`This data source [${datasource.driver}] is not supported.`)
 					}
 				}
-                return this.getRecordPermissions(record, userSession);
+				let data = {
+					columns: [],
+					rows: results
+				}
+				let columns = [];
+				_.each(results, function(result){
+					columns = _.union(_.concat(columns, _.keys(result))); 
+				})
+	
+				_.each(columns, function(column){
+					data.columns.push({type: '', name: column})
+				})
+				return {
+					query_result: {
+						retrieved_at: new Date(),
+						// "query_hash": "3b089af464ff50343365c7ab7e376c30",
+						query: record.query,
+						// runtime: 0.690132141113281,
+						data: {
+							columns: [],
+							rows: results
+						},
+						id: recordId,
+						_id: recordId,
+						data_source_id: record.datasource
+					}
+				}
             }
         },
 	},

@@ -49,21 +49,24 @@ module.exports = {
 				page.updated_at = page.modified
 				page.user_id = ''
 				page.widgets = await objectql.getObject('widgets').find({ filters: [['page', '=', pageId]] });
-
+				page.options = {};
 				for (const widget of page.widgets) {
 					if(widget.type === 'charts'){
-						const chart = await objectql.getObject('charts').findOne(widget.visualization)
-
-
-						widget.visualization = {
-							_id: chart._id,
-							description: chart.description,
-							query: await objectql.getObject('queries').findOne(chart.query),
-							type: chart.type,
-							options: chart.options,
-							name: chart.name,
+						if(widget.visualization){
+							const chart = await objectql.getObject('charts').findOne(widget.visualization)
+							const query = await objectql.getObject('queries').findOne(chart.query)
+							if(!query.options){
+								query.options = {}
+							}
+							widget.visualization = {
+								_id: chart._id,
+								description: chart.description,
+								query: query,
+								type: chart.type,
+								options: chart.options,
+								name: chart.name,
+							}
 						}
-
 					}
 				}
 
