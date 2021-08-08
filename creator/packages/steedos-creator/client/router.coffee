@@ -259,7 +259,7 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 # 		Session.set("object_name", "cms_posts")
 # 		FlowRouter.go '/cms'
 
-FlowRouter.route '/app/:app_id/tab/:tab_id',
+FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
 	triggersEnter: [ checkUserSigned, checkAppPermission ],
 	action: (params, queryParams)->
 		tab_id = FlowRouter.getParam("tab_id")

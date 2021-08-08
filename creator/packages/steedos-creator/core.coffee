@@ -289,7 +289,7 @@ Creator.getAppMenuUrl = (menu)->
 			return Creator.getAppMenuUrlForInternet(menu)
 		else
 			# 在iframe中显示url界面
-			return "/app/-/tab/#{menu.id}"
+			return "/app/-/tab_iframe/#{menu.id}"
 	else
 		return menu.path
 
