@@ -7,68 +7,7 @@ enable_events: true
 enable_tasks: true
 enable_api: true
 enable_audit: true
-# version: 2.0
 fields:
-  filterfun2:
-    type: lookup
-    label: filterfun2
-    reference_to: contacts
-    filtersFunction: !<tag:yaml.org,2002:js/function> |-
-        function(){
-          return [['name','contains','1']]
-        }
-  refetoAndrefetoField:
-    label: 两个共存1
-    group: refetoAndrefetoField
-    type: lookup
-    reference_to: contract_types
-    reference_to_field: name
-    modal_mode: 'dialog'
-  refetoAndrefetoField2:
-    label: 两个共存2
-    group: refetoAndrefetoField
-    type: lookup
-    reference_to: contract_types
-    reference_to_field: name
-    modal_mode: 'dialog'
-  # refetoAndrefetoField3:
-  #   label: 两个共存3
-  #   group: refetoAndrefetoField
-  #   type: lookup
-  #   reference_to: contract_types
-  #   # reference_to_field: name
-  #   modal_mode: 'dialog'
-  # omit_test:
-  #   group: '字段隐藏测试'
-  #   type: 'text'
-  #   label: 'omit'
-  #   omit: true
-  #   defaultValue: 'afjkse'
-  # omit_test2:
-  #   group: '字段隐藏测试'
-  #   reference_to: tasks
-  #   type: 'lookup'
-  #   omit: true
-  #   defaultValue: 'sAwrJbP8hvN997xnk'
-  # omit_test3:
-  #   group: '字段隐藏测试'
-  #   reference_to: tasks
-  #   type: 'lookup'
-  #   label: '任务3'
-  #   omit: false
-  #   defaultValue: 'sAwrJbP8hvN997xnk'
-  # hidden1:
-  #   group: hidden-visible_on测试
-  #   type: text
-  #   label: hidden测试
-  #   hidden: false
-  #   defaultValue: '天天向上'
-  # hidden2:
-  #   group: hidden-visible_on测试
-  #   type: text
-  #   label: visible_on测试
-  #   visible_on: '{{true}}'
-  #   defaultValue: '好好学习'
   name:
     type: text
     label: 姓名
