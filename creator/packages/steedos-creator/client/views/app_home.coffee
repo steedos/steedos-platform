@@ -11,7 +11,6 @@ Template.creator_app_home.onRendered ()->
 			else
 				menus = Creator.getAppMenus()
 				first_menu = _.first(menus)
-				console.log("==first_menu=", first_menu);
 				if first_menu
 					objectHomeComponent = Session.get("object_home_component")
 					if objectHomeComponent
