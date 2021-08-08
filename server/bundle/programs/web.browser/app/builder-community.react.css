@@ -29766,6 +29766,19 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   }
 }
 
+.type-select .ant-select .ant-select-selection-item {
+  display: flex;
+}
+.type-select .ant-select .ant-select-selection-item .anticon-smile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 7px;
+}
+.type-select .ant-select .ant-select-selection-item .ant-select-selection-item-content {
+  display: flex;
+}
+
 .type-lookup .ant-select .ant-select-selection-item {
   display: flex;
 }
