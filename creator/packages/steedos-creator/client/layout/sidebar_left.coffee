@@ -69,4 +69,15 @@ Template.creatorSidebarLeft.events
 	'click #sidebar-left': (e, t)->
 		$("#sidebar-left").addClass('hidden')
 		$(".steedos").removeClass('move--right')
+	'click #sidebar-left .sidebar-menu-item': (e, t)->
+		dataset = e.currentTarget.dataset
+		appId = dataset.appId
+		menuId = dataset.menuId
+		menu = Creator.getAppMenu(appId, menuId)
+		if menu.target
+			# 手机上新窗口中打开需要调用Steedos.openWindow因为手机APP不支持a标签的target="_blank"
+			menuUrl = Creator.getAppMenuUrl(menu)
+			Steedos.openWindow(menuUrl)
+			return false
+		
 		

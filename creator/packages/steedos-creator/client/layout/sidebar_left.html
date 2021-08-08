@@ -43,7 +43,7 @@
 									<!-- {{/each}} -->
 								<!-- {{/unless}} -->
 								{{#each children}}
-									<a href="{{object_url ../id}}" class="{{#if isActive this ../id}} bg-gray-100 text-gray-900 {{else}} hover:text-gray-900 hover:bg-gray-50 text-gray-600 {{/if}} flex justify-between no-underline group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150">
+									<a href="{{object_url ../id}}" data-app-id="{{../id}}" data-menu-id="{{id}}" class="sidebar-menu-item {{#if isActive this ../id}} bg-gray-100 text-gray-900 {{else}} hover:text-gray-900 hover:bg-gray-50 text-gray-600 {{/if}} flex justify-between no-underline group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150">
 										<div class="flex h-6">
 											{{> steedos_icon size="small" source="standard-sprite" name=this.icon}}
 											<span class="ml-3">{{_ this.name}}</span>
