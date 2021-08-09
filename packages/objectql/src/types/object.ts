@@ -1365,10 +1365,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
             // console.log("==returnValue==", returnValue);
             if(method == 'insert' && _.has(returnValue, '_id')){
+                afterTriggerContext.doc = returnValue;
                 afterTriggerContext = Object.assign({}, afterTriggerContext, { id: returnValue._id });
             }
             if (method == "update") {
                 if (returnValue) {
+                    afterTriggerContext.doc = returnValue;
                     await this.runAfterTriggers(method, afterTriggerContext)
                 }
             }
