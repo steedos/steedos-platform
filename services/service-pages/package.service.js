@@ -38,10 +38,10 @@ module.exports = {
 				path: "/page/:id"
 			},
 			async handler(ctx) {
+				const userSession = ctx.meta.user;
 				const { id: pageId } = ctx.params;
-				console.log(`pages findOne`, pageId)
 				let page = await objectql.getObject('pages').findOne(pageId)
-				page.can_edit = true //TODO
+				page.can_edit = userSession.is_space_admin //仅工作区管理员可以编辑
 				page.user = { name: 'true' } //TODO
 				page.layout = [] //TODO
 				page.public_url = '' //TODO
