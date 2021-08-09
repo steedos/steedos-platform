@@ -87,10 +87,41 @@ async function getChildren(ctx: any, tabApiName: string){
     return await ctx.broker.call('tabs.getChildren', {tabApiName});
 }
 
-async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
+/**
+ * 判断tab是否符号mobile配置
+ * @param tab 
+ * @param mobile 是否是在移动设备上显示tab
+ * @returns 
+ */
+function checkTabMobile(tab, mobile){
+    let isChecked = false;
+    if(mobile === true || mobile === "true"){
+        isChecked = tab.mobile !== false;
+    }
+    else{
+        isChecked = tab.desktop !== false;
+    }
+    return isChecked;
+}
+function checkAppMobile(app, mobile){
+    let isChecked = false;
+    if(mobile === true || mobile === "true"){
+        isChecked = app.mobile !== false;
+    }
+    else{
+        isChecked = app.is_creator !== false;
+    }
+    return isChecked;
+}
+
+async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession){
     try {
         const tab = await getTab(ctx, tabApiName);
         if(tab){
+            const isMobileChecked = checkTabMobile(tab, mobile)
+            if(!isMobileChecked){
+                return;
+            }
             const tabChildren = await getChildren(ctx, tabApiName);
             if(tabChildren && tabChildren.length > 0){
                 const tabMenu = {
@@ -101,7 +132,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, userSession){
                 };
                 for await (const {metadata: tabChild} of tabChildren) {
                     if(tabChild && tabChild.apiName){
-                        await tabMenus(ctx, appPath, tabChild.apiName, tabMenu, userSession);
+                        await tabMenus(ctx, appPath, tabChild.apiName, tabMenu, mobile, userSession);
                     }
                 }
                 menu.children.push(tabMenu);
@@ -160,7 +191,8 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
         return;
     }
 
-    if(!mobile && app.mobile){
+    const isAppShow = checkAppMobile(app, mobile);
+    if(!isAppShow){
         return;
     }
 
@@ -206,7 +238,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
     if(_.isArray(app.tabs)){
         for await (const tabApiName of app.tabs) {
             try {
-                await tabMenus(ctx, appPath, tabApiName, menu, userSession)
+                await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession)
             } catch (error) {
                 ctx.broker.logger.info(error.message);
             }
@@ -306,6 +338,18 @@ async function getAppsMenus(ctx) {
         if(menu){
             menus.push(menu);
         }
+    }
+    if(!mobile){
+        menus.push(
+            {
+                id: 'admin',
+                path: '/app/admin',
+                name: '设置',
+                icon: 'settings',
+                description: '管理员设置公司、人员、权限等。',
+                children: []
+            }
+        )
     }
     return menus;
 }

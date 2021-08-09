@@ -2,14 +2,17 @@ name: tabs
 label: Tabs
 icon: apps
 hidden: true
+version: 2.0
 fields:
   label:
     inlineHelpText: This is the label of the tab, for web tabs only.
     type: text
     is_name: true
+    required: true
   name:
     label: Api Name
     type: text
+    required: true
   icon:
     label: Icon
     type: lookup
@@ -33,18 +36,8 @@ fields:
     label: Parent
     type: lookup
     reference_to: tabs
-  mobile: 
-    label: Display on the Mobile
-    type: boolean
-  frame_height:
+    omit: true
     hidden: true
-    inlineHelpText: The height, in pixels of the tab frame. Required for frame and page tabs.
-    label: Height
-    type: number
-  has_sidebar:
-    hidden: true
-    inlineHelpText: Indicates if the tab displays the sidebar panel.
-    type: boolean
   type: 
     type: select
     inlineHelpText: 作为上级选项卡时，无需设置类型
@@ -55,6 +48,23 @@ fields:
       value: url
     - label: Page
       value: page
+  mobile: 
+    label: Display on the Mobile
+    type: boolean
+    defaultValue: true
+  desktop:
+    label: Display on the Desktop
+    type: boolean
+    defaultValue: true
+  frame_height:
+    hidden: true
+    inlineHelpText: The height, in pixels of the tab frame. Required for frame and page tabs.
+    label: Height
+    type: number
+  has_sidebar:
+    hidden: true
+    inlineHelpText: Indicates if the tab displays the sidebar panel.
+    type: boolean
   object:
     label: Object
     type: lookup
@@ -64,14 +74,21 @@ fields:
         return Steedos.getObjectsOptions()
       }
     filterable: true
+    required: "{{'object' === formData.type ? true: false}}"
+    visible_on: "{{'object' === formData.type ? true: false}}"
   url:
     type: url
     label: Url
+    required: "{{'url' === formData.type ? true: false}}"
+    visible_on: "{{'url' === formData.type ? true: false}}"
   is_new_window:
     type: boolean
+    visible_on: "{{'url' === formData.type ? true: false}}"
   page:
     type: text
     label: Page
+    required: "{{'page' === formData.type ? true: false}}"
+    visible_on: "{{'page' === formData.type ? true: false}}"
   action_overrides:
     type: text
     hidden: true
@@ -86,7 +103,8 @@ list_views:
     columns:
       - label
       - name
-      - parent
+      # - parent
+      - desktop
       - mobile
       - type
 permission_set:
@@ -104,16 +122,16 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-form:
-  beforeEdit: !!js/function |
-    function(){
-      return Steedos.TabsManager.changeSchema(this.doc, this.schema, 'edit');
-    }
-  afterEdit: !!js/function |
-    function(){
-      return Steedos.TabsManager.changeSchema(this.doc, this.schema, 'edit');
-    }
-  beforeView: !!js/function |
-    function(){
-      Steedos.TabsManager.changeSchema(this.doc, this.schema, 'view');
-    }
+# form:
+#   beforeEdit: !!js/function |
+#     function(){
+#       return Steedos.TabsManager.changeSchema(this.doc, this.schema, 'edit');
+#     }
+#   afterEdit: !!js/function |
+#     function(){
+#       return Steedos.TabsManager.changeSchema(this.doc, this.schema, 'edit');
+#     }
+#   beforeView: !!js/function |
+#     function(){
+#       Steedos.TabsManager.changeSchema(this.doc, this.schema, 'view');
+#     }

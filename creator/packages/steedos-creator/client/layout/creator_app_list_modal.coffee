@@ -4,7 +4,7 @@ Template.creator_app_list_modal.helpers Creator.helpers
 
 Template.creator_app_list_modal.helpers
 	apps: ()->
-		return Creator.getVisibleApps(true)
+		return Session.get("app_menus")
 
 	app_objects: ()->
 		objects = []
@@ -15,29 +15,37 @@ Template.creator_app_list_modal.helpers
 		return objects
 
 	all_objects: ()->
-		objects = []
-		_.each Steedos.getDisplayObjects(), (_object)->
-			object = Creator.getObject(_object.name)
-			if object.permissions.get().allowRead
-				objects.push object
-		return objects
+		menus = []
+		_.each Session.get("app_menus"), (menu)->
+			appMenus = Creator.getAppMenus(menu.id)
+			if appMenus.length
+				menus = _.union(menus,appMenus)
+		unionMenus = []
+		unionId = []
+		_.each menus, (menu)->
+			if !unionId.includes(menu.id)
+				unionMenus.push(menu);
+				unionId.push(menu.id);
+		return unionMenus
 	app_url: ()->
-		if this?.url
-			if /^http(s?):\/\//.test(this.url)
-				return this.url
+		app = Creator.getApp(this.id)
+		if app?.url
+			if /^http(s?):\/\//.test(app.url)
+				return app.url
 			else
-				return Creator.getRelativeUrl(this.url);
-		else if this._id
-			return Creator.getRelativeUrl("/app/#{this._id}/");
+				return Creator.getRelativeUrl(app.url);
+		else if this.id
+			return Creator.getRelativeUrl("/app/#{this.id}/");
 	
 	app_target: ()->
-		if this?.is_new_window
+		app = Creator.getApp(this.id)
+		if app?.is_new_window
 			return "_blank"
 		else
 			return ""
 
 	object_url: ()->
-		return Steedos.absoluteUrl("/app/-/#{this.name}")
+		return Steedos.absoluteUrl("/app/-/#{this.id}")
 
 	spaceName: ->
 		if Session.get("spaceId")

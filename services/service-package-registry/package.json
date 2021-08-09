@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-registry",
-  "version": "2.0.51",
+  "version": "2.0.56",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@node-red/util": "2.0.5",
-    "@steedos/service-package-loader": "^2.0.51",
+    "@steedos/service-package-loader": "^2.0.56",
     "fs-extra": "8.1.0",
     "lodash": "~4.17.21",
     "npm-package-arg": "~8.1.5",

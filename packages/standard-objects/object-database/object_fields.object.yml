@@ -464,6 +464,7 @@ fields:
     type: boolean
     label: Required
     group: Advanced
+    visible_on: "{{['autonumber','summary','formula'].indexOf(formData.type) > -1 ? false: true}}"
   is_wide:
     type: boolean
     label: Is Wide

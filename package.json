@@ -16,7 +16,7 @@
     "lerna-link": "lerna clean --yes && lerna link --force-local",
     "buildPackages": "lerna run buildPackage",
     "ver": "lerna version --force-publish",
-    "pub": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
+    "pub": "lerna publish from-package --registry https://registry.npmjs.org",
     "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
     "compile": "lerna run compile",
     "build": "lerna run prepare",

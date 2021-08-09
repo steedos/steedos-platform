@@ -87,7 +87,7 @@ fields:
   mobile:
     type: boolean
     label: Mobile App
-    defaultValue: false
+    defaultValue: true
 
   # members:
   #   type: object

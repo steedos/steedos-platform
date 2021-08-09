@@ -316,9 +316,11 @@ router.post("/api/qiyeweixin/push", async function (req, res, next) {
 router.get('/api/qiyeweixin/stockData', async function (req, res) {
     let space = await Qiyeweixin.getSpace();
     // 获取access_token
-    if (space.qywx_corp_id && space.qywx_secret)
-        access_token = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
-
+    if (space.qywx_corp_id && space.qywx_secret){
+        let response = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
+        access_token = response.access_token
+    }
+    
     qywxSync.write("================存量数据开始===================")
     qywxSync.write("access_token:" + access_token)
 

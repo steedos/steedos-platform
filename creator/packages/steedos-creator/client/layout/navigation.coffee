@@ -31,7 +31,7 @@ checkIsCurrentObject = (objItem, currentObjectName, currentObjectUrl)->
 
 computeObjects = (maxW, hasAppDashboard)->
 	menus = Creator.getAppMenus()
-	if !menus
+	if !menus or !menus.length
 		return {}
 	# 当导航字体相关样式变更时，应该变更该font变量，否则计算可能出现偏差
 	itemPaddingW = 24 # 每项的左右边距宽度之和
@@ -160,10 +160,11 @@ Template.creatorNavigation.helpers
 			return
 		tempNavs = Creator.getTempNavs()
 		objectName = Session.get("object_name")
+		tabName = Session.get("tab_name")
 		recordId = Session.get("record_id")
 		# 新的appMenu规则是以id为name，name为label
 		objName = if obj.is_temp then obj.name else obj.id
-		isActive = objName == objectName
+		isActive = objName == objectName or objName == tabName
 		if isActive
 			if obj.url
 				isActive = obj.url == Creator.getObjectUrl(obj.name, recordId)
@@ -175,7 +176,10 @@ Template.creatorNavigation.helpers
 
 	object_url: ()->
 		# 新的appMenu规则是以path为url
-		return if this.is_temp then (this.url || Creator.getObjectUrl(String(this.name))) else this.path
+		if this.is_temp
+			return this.url || Creator.getObjectUrl(String(this.name))
+		else
+			return Creator.getAppMenuUrl this
 
 	object_label: ()->
 		# 新的appMenu规则是以id为name，name为label
@@ -266,6 +270,3 @@ Template.creatorNavigation.onCreated ->
 	unless Steedos.isMobile()
 		$(window).resize ->
 			self.containerWidth.set($("body").width())
-
-	if !Session.get("app_menus")
-		Creator.loadAppMenus()

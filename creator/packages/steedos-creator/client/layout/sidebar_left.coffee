@@ -12,14 +12,8 @@ Template.creatorSidebarLeft.helpers
 		return Creator.getObject(this)
 
 	app_objects: (_id)->
-		app = Creator.getApp(_id)
-		objects = []
-		if app
-			_.each app.mobile_objects, (v)->
-				obj = Creator.getObject(v)
-				if obj?.permissions.get().allowRead
-					objects.push v
-		return objects
+		menus = Creator.getAppMenus(_id)
+		return menus
 
 	isActive: (obj, appId)->
 		if (obj == Session.get("object_name") && appId == Session.get("app_id"))
@@ -35,7 +29,8 @@ Template.creatorSidebarLeft.helpers
 	object_url: (_id)->
 		unless _id
 			_id = "-"
-		return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
+		# return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
+		return Creator.getAppMenuUrl this
 
 	settings_url: ()->
 		return Creator.getRelativeUrl('/user_settings')
@@ -48,8 +43,10 @@ Template.creatorSidebarLeft.helpers
 		return t("none_space_selected_title")
 
 	getApps: ->
-		return _.filter Creator.getVisibleApps(true), (item)->
-			return item._id !='admin' && !_.isEmpty(item.mobile_objects)
+		return Session.get("app_menus")
+		# return _.filter Creator.getVisibleApps(true), (item)->
+		# 	return item._id !='admin' && !_.isEmpty(item.mobile_objects)
+		# 	return item._id !='admin' && (!_.isEmpty(item.mobile_objects) || !_.isEmpty(item.tabs))
 
 	logoUrl: ()->
 		avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar
@@ -72,4 +69,15 @@ Template.creatorSidebarLeft.events
 	'click #sidebar-left': (e, t)->
 		$("#sidebar-left").addClass('hidden')
 		$(".steedos").removeClass('move--right')
+	'click #sidebar-left .sidebar-menu-item': (e, t)->
+		dataset = e.currentTarget.dataset
+		appId = dataset.appId
+		menuId = dataset.menuId
+		menu = Creator.getAppMenu(appId, menuId)
+		if menu.target
+			# 手机上新窗口中打开需要调用Steedos.openWindow因为手机APP不支持a标签的target="_blank"
+			menuUrl = Creator.getAppMenuUrl(menu)
+			Steedos.openWindow(menuUrl)
+			return false
+		
 		

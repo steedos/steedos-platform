@@ -1,6 +1,6 @@
 {
     "name": "@steedos/app-oa",
-    "version": "2.0.51",
+    "version": "2.0.56",
     "description": "",
     "main": "package.service.js",
     "scripts": {
@@ -12,17 +12,17 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
-    "private": false,
+    "private": true,
     "license": "MIT",
     "publishConfig": {
         "access": "public"
     },
     "devDependencies": {
-        "@steedos/app-contracts": "^2.0.51",
-        "@steedos/app-crm": "^2.0.51",
-        "@steedos/service-metadata-server": "^2.0.51",
-        "@steedos/service-package-loader": "^2.0.51",
-        "@steedos/service-steedos-server": "^2.0.51",
+        "@steedos/app-contracts": "^2.0.56",
+        "@steedos/app-crm": "^2.0.56",
+        "@steedos/service-metadata-server": "^2.0.56",
+        "@steedos/service-package-loader": "^2.0.56",
+        "@steedos/service-steedos-server": "^2.0.56",
         "dotenv-flow": "^3.1.0",
         "nodemon": "^1.19.1"
     },

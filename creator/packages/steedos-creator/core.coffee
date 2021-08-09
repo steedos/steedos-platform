@@ -264,10 +264,39 @@ Creator.getAppObjectNames = (app_id)->
 				objects.push v
 	return objects
 
+Creator.getAppMenu = (app_id, menu_id)->
+	menus = Creator.getAppMenus(app_id)
+	return menus && menus.find (menu)-> return menu.id == menu_id
+
+Creator.getAppMenuUrlForInternet = (menu)->
+	# 当tabs类型为url时，按外部链接处理，支持配置表达式并加上统一的url参数
+	params = {};
+	params["X-Space-Id"] = Steedos.spaceId()
+	params["X-User-Id"] = Steedos.userId();
+	params["X-Company-Ids"] = Steedos.getUserCompanyIds();
+	params["X-Auth-Token"] = Accounts._storedLoginToken();
+	sdk = require("@steedos/builder-community/dist/builder-community.react.js")
+	url = menu.path
+	if sdk and sdk.Utils and sdk.Utils.isExpression(url)
+		url = sdk.Utils.parseSingleExpression(url, menu, "#", Creator.USER_CONTEXT)
+	linkStr = if url.indexOf("?") < 0 then "?" else "&"
+	return "#{url}#{linkStr}#{$.param(params)}"
+
+Creator.getAppMenuUrl = (menu)->
+	url = menu.path
+	if menu.type == "url"
+		if menu.target
+			return Creator.getAppMenuUrlForInternet(menu)
+		else
+			# 在iframe中显示url界面
+			return "/app/-/tab_iframe/#{menu.id}"
+	else
+		return menu.path
+
 Creator.getAppMenus = (app_id)->
 	app = Creator.getApp(app_id)
 	if !app
-		return
+		return []
 	appMenus = Session.get("app_menus");
 	unless appMenus
 		return []
@@ -276,10 +305,18 @@ Creator.getAppMenus = (app_id)->
 	if curentAppMenus
 		return curentAppMenus.children
 
-Creator.loadAppMenus = ()->
-	options = { type: 'get' }
-	Steedos.authRequest Steedos.absoluteUrl("/service/api/apps/menus"), options, (result, error)->
-		Session.set("app_menus", result);
+Creator.loadAppsMenus = ()->
+	isMobile = Steedos.isMobile()
+	data = { }
+	if isMobile
+		data.mobile = isMobile
+	options = { 
+		type: 'get', 
+		data: data, 
+		success: (data)->
+			Session.set("app_menus", data);
+	 }
+	Steedos.authRequest Steedos.absoluteUrl("/service/api/apps/menus"), options
 
 Creator.getVisibleApps = (includeAdmin)->
 	changeApp = Creator._subApp.get();

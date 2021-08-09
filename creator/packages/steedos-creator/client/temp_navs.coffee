@@ -94,9 +94,12 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
                 toNavUrl = if toNav.url then toNav.url else Creator.getObjectUrl(toNav.name)
                 FlowRouter.redirect(toNavUrl)
             else
-                objectNames = Creator.getAppObjectNames()
-                lastObjectName = objectNames[objectNames.length - 1]
-                FlowRouter.redirect(Creator.getObjectUrl(lastObjectName))
+                # objectNames = Creator.getAppObjectNames()
+                # lastObjectName = objectNames[objectNames.length - 1]
+                # FlowRouter.redirect(Creator.getObjectUrl(lastObjectName))
+                menus = Creator.getAppMenus()
+                lastMenu = menus[menus.length - 1]
+                FlowRouter.redirect(lastMenu.path)
     else
         appendLastRemovedTempNavUrl(name, url)
 
@@ -200,15 +203,21 @@ Meteor.startup ()->
 
     Tracker.autorun (c)->
         objectName = Session.get("object_name")
+        tabName = Session.get("tab_name")
         recordId = Session.get("record_id")
+        menus = Creator.getAppMenus()
         unless objectName
             return
+        if !menus or !menus.length
+            return
         record = Creator.getObjectRecord()
-        objectNames = Creator.getAppObjectNames()
+        # objectNames = Creator.getAppObjectNames()
         record_name = Session.get('record_name')
+        menuNames = _.pluck(menus, "id")
         # 如果当前所在的object_name不存在顶部导航中，则添加一个临时的导航栏项
         forceCreate = Session.get("temp_navs_force_create")
-        if objectNames?.indexOf(objectName) < 0 or forceCreate
+        # objectName与tabName只会同时存在一个
+        if menuNames?.indexOf(objectName or tabName) < 0 or forceCreate
             if forceCreate and isRemovingTempNavItem
                 # 如果正在删除临时导航项，forceCreate为true说明强行添加的肯定是即将返回到的界面，没必要加，否则会闪现下即将返回到的界面的标题增加到临时导航中
                 Session.set("temp_navs_force_create", false)
