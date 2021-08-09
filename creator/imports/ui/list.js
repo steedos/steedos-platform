@@ -80,7 +80,7 @@ const getListProps = ({id, object_name, related_object_name, is_related, records
 		showIllustration = false;
 	}
 	let endpoint = Creator.getODataEndpointUrl(object_name, list_view_id, is_related, related_object_name);
-	let isFiltering = Creator.getIsFiltering();
+	let isFiltering = is_related ? false : Creator.getIsFiltering();
 	let filteringText = isFiltering ? "以下为过滤后结果" : null;
 	const handleResetFiltering = ()=> {
 		Session.set("filter_items", []);
