@@ -165,6 +165,8 @@ Template.list.onCreated(function () {
 	}
 	listInstances[listId] = this;
 	if(is_related){
+		const { related_list_item_props } = this.data.options;
+		const { related_field_name } = related_list_item_props;
 		if(this.unsubscribe){
 			this.unsubscribe();
 		}
@@ -175,7 +177,12 @@ Template.list.onCreated(function () {
 				if(recordsTotal){
 					// 详细界面相关列表
 					let recordsTotalValue = Tracker.nonreactive(()=>{return recordsTotal.get()});
-					recordsTotalValue[curObjectName] = listState.totalCount;
+					if (related_field_name){
+						recordsTotalValue[curObjectName + '/' + related_field_name] = listState.totalCount;
+					}
+					else{
+						recordsTotalValue[curObjectName] = listState.totalCount;
+					}
 					recordsTotal.set(recordsTotalValue);
 				}
 				else if(total){
