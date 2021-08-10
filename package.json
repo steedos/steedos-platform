@@ -15,7 +15,7 @@
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
     "lerna-link": "lerna clean --yes && lerna link --force-local",
     "buildPackages": "lerna run buildPackage",
-    "ver": "lerna version --force-publish",
+    "ver": "lerna version --force-publish --exact",
     "pub": "lerna publish from-package --registry https://registry.npmjs.org",
     "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
     "compile": "lerna run compile",
