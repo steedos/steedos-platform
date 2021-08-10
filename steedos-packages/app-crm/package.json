@@ -3,7 +3,6 @@
     "version": "2.0.56",
     "description": "",
     "main": "package.service.js",
-    "private": true,
     "scripts": {
         "start": "moleculer-runner services",
         "start:steedos": "cross-env NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",

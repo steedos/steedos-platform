@@ -12,7 +12,7 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
-    "private": true,
+    "private": false,
     "license": "MIT",
     "publishConfig": {
         "access": "public"

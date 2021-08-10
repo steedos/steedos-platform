@@ -1,6 +1,6 @@
 {
   "name": "@steedos/app-admin",
-  "private": true,
+  "private": false,
   "version": "2.0.56",
   "description": "Enterprise plugin for steedos",
   "main": "package.service.js",
