@@ -206,7 +206,7 @@ fields:
   multiple:
     type: boolean
     label: Multiple
-    visible_on: "{{['select', 'lookup', 'image'].indexOf(formData.type) > -1 ? true: false}}"
+    visible_on: "{{['select', 'lookup', 'image','file'].indexOf(formData.type) > -1 ? true: false}}"
   options:
     type: grid
     label: Options
