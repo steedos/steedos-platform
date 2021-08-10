@@ -29766,29 +29766,33 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   }
 }
 
-.type-select .ant-select .ant-select-selection-item {
+.select-field-container .ant-select .ant-select-selection-item {
   display: flex;
 }
-.type-select .ant-select .ant-select-selection-item .anticon-smile {
+.select-field-container .ant-select .ant-select-selection-item .anticon-smile {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-right: 7px;
 }
-.type-select .ant-select .ant-select-selection-item .ant-select-selection-item-content {
+.select-field-container .ant-select .ant-select-selection-item .ant-select-selection-item-content {
   display: flex;
 }
 
-.type-lookup .ant-select .ant-select-selection-item {
+.lookup-field-container {
+  display: flex;
+  width: 100%;
+}
+.lookup-field-container .ant-select .ant-select-selection-item {
   display: flex;
 }
-.type-lookup .ant-select .ant-select-selection-item .anticon-smile {
+.lookup-field-container .ant-select .ant-select-selection-item .anticon-smile {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-right: 7px;
 }
-.type-lookup .ant-select .ant-select-selection-item .ant-select-selection-item-content {
+.lookup-field-container .ant-select .ant-select-selection-item .ant-select-selection-item-content {
   display: flex;
 }
 .ant-select-dropdown .rc-virtual-list-holder-inner .ant-select-item-option-content {
@@ -29808,36 +29812,33 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 .ant-select .ant-select-clear {
   margin-top: -8px;
 }
-.type-lookup .ant-form-item-control-input .ant-select-selector .anticon-smile {
-  margin-top: 2px;
-}
 .type-lookup .ant-form-item-control-input .ant-select-selector .left_label {
   display: none;
 }
 .type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content {
   display: flex;
 }
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select {
   width: 55px;
   margin-right: -1px;
 }
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu .ant-select-selector {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select .ant-select-selector {
   border-radius: 2px 0 0 2px;
 }
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:hover .ant-select-selector,
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:active .ant-select-selector,
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu.ant-select-focused .ant-select-selector {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select:hover .ant-select-selector,
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select:active .ant-select-selector,
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select.ant-select-focused .ant-select-selector {
   z-index: 1;
 }
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:hover .ant-select-arrow,
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu:active .ant-select-arrow,
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu.ant-select-focused .ant-select-arrow {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select:hover .ant-select-arrow,
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select:active .ant-select-arrow,
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select.ant-select-focused .ant-select-arrow {
   z-index: 2;
 }
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu + .ant-pro-filed-search-select {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select + .ant-pro-filed-search-select {
   flex: auto;
 }
-.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .left_label_menu + .ant-pro-filed-search-select .ant-select-selector {
+.type-lookup.mode-edit.field-editable .ant-form-item-control .ant-form-item-control-input-content .lookup-field-left-select + .ant-pro-filed-search-select .ant-select-selector {
   border-radius: 0 2px 2px 0;
 }
 .rc-virtual-list .rc-virtual-list-holder-inner .ant-select-item-option-selected {
