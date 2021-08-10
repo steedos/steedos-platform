@@ -347,17 +347,18 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = [String]
 			fs.autoform.type = "select-checkbox"
 			fs.autoform.options = field.options
-		else if field.type == "file" and field.collection
+		else if field.type == "file"
+			collectionName = field.collection || "files" # collection 默认是 'files'
 			if field.multiple
 				fs.type = [String]
 				schema[field_name + ".$"] =
 					autoform:
 						type: 'fileUpload'
-						collection: field.collection
+						collection: collectionName
 			else
 				fs.type = String
 				fs.autoform.type = 'fileUpload'
-				fs.autoform.collection = field.collection
+				fs.autoform.collection = collectionName
 		else if field.type == "filesize"
 			fs.type = Number
 			fs.autoform.type = 'filesize'
