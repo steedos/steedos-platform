@@ -1,7 +1,8 @@
-name: name
+name: label
 index: true
-label: API Name
+label: 名称
 required: true
 searchable: true
 sort_no: 100
+is_name: true
 type: text

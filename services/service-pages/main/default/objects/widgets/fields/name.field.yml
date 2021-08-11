@@ -1,6 +1,6 @@
 name: name
 index: true
-label: 名称
+label: API Name
 required: true
 searchable: true
 sort_no: 100

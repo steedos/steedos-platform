@@ -15,3 +15,4 @@ enable_workflow: false
 icon: case
 is_enable: true
 label: 图表
+version: 2

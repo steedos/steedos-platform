@@ -3,7 +3,7 @@ filterable: false
 is_name: false
 is_wide: false
 label: 详细配置
-omit: false
+omit: true
 readonly: false
 required: false
 sort_no: 500

@@ -2,5 +2,6 @@ name: query
 type: master_detail
 label: Query
 reference_to: queries
+reference_to_field: name
 showIcon: false
 required: true

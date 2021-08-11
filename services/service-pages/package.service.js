@@ -4,6 +4,21 @@ const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const objectql = require('@steedos/objectql');
 const _ = require(`lodash`);
+
+const getCharts = async(apiName)=>{
+	const charts = await objectql.getObject('charts').find({ filters: [['name', '=', apiName]] });
+	if(charts.length > 0){
+		return charts[0]
+	}
+}
+
+const getQueries = async(apiName)=>{
+	const queries = await objectql.getObject('queries').find({ filters: [['name', '=', apiName]] });
+	if(queries.length > 0){
+		return queries[0]
+	}
+}
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -35,12 +50,16 @@ module.exports = {
 		getPageDetail: {
 			rest: {
 				method: "GET",
-				path: "/page/:id"
+				path: "/page/:apiName"
 			},
 			async handler(ctx) {
 				const userSession = ctx.meta.user;
-				const { id: pageId } = ctx.params;
-				let page = await objectql.getObject('pages').findOne(pageId)
+				const { apiName } = ctx.params;
+				let pages = await objectql.getObject('pages').find({filters: [['name', '=', apiName]]});
+				let page = null;
+				if(pages.length > 0){
+					page = pages[0];
+				}
 				page.can_edit = userSession.is_space_admin //仅工作区管理员可以编辑
 				page.user = { name: 'true' } //TODO
 				page.layout = [] //TODO
@@ -48,13 +67,13 @@ module.exports = {
 				page.tags = []
 				page.updated_at = page.modified
 				page.user_id = ''
-				page.widgets = await objectql.getObject('widgets').find({ filters: [['page', '=', pageId]] });
+				page.widgets = await objectql.getObject('widgets').find({ filters: [['page', '=', apiName]] });
 				page.options = {};
 				for (const widget of page.widgets) {
 					if(widget.type === 'charts'){
 						if(widget.visualization){
-							const chart = await objectql.getObject('charts').findOne(widget.visualization)
-							const query = await objectql.getObject('queries').findOne(chart.query)
+							const chart = await getCharts(widget.visualization)
+							const query = await getQueries(chart.query)
 							if(!query.options){
 								query.options = {}
 							}
