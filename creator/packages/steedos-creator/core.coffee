@@ -274,7 +274,7 @@ Creator.getAppMenuUrlForInternet = (menu)->
 	params["X-Space-Id"] = Steedos.spaceId()
 	params["X-User-Id"] = Steedos.userId();
 	params["X-Company-Ids"] = Steedos.getUserCompanyIds();
-	params["X-Auth-Token"] = Accounts._storedLoginToken();
+	# params["X-Auth-Token"] = Accounts._storedLoginToken();
 	sdk = require("@steedos/builder-community/dist/builder-community.react.js")
 	url = menu.path
 	if sdk and sdk.Utils and sdk.Utils.isExpression(url)
