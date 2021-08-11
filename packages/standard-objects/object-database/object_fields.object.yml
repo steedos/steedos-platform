@@ -21,11 +21,13 @@ fields:
               _options = [];
 
               _.forEach(Creator.objectsByName, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
+                if(!['base','core','space_users_invite','_object_reload_logs'].includes(k)){
+                  return _options.push({
+                    label: o.label,
+                    value: k,
+                    icon: o.icon
+                  });
+                }
               });
 
               return _options;
