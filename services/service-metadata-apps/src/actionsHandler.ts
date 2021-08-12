@@ -1,6 +1,7 @@
 import { getServiceAppConfig, METADATA_TYPE, refreshApp } from ".";
 import _ = require("lodash");
 import {translationApp, translationObject} from '@steedos/i18n';
+import {getAssignedApps} from "@steedos/objectql";
 
 function cacherKey(appApiName: string): string{
     return `$steedos.#${METADATA_TYPE}.${appApiName}`
@@ -250,6 +251,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
 
 async function getAppsMenus(ctx) {
     const userSession = ctx.meta.user;
+    let assigned_apps = await getAssignedApps(userSession);
     const mobile = ctx.params.mobile;
     if (!userSession) {
         throw new Error('no permission.')
@@ -257,8 +259,12 @@ async function getAppsMenus(ctx) {
     const spaceId = userSession.spaceId;
     const metadataApps = await getAll(ctx);
     const allApps = _.map(metadataApps, 'metadata');
-
-    const _userApps = _.filter(allApps, function (config) {
+    if(assigned_apps && assigned_apps.length){
+        assigned_apps = _.filter(allApps, (item)=>{ return assigned_apps.includes(item.code)});
+    }else{
+        assigned_apps = allApps;
+    }
+    const _userApps = _.filter(assigned_apps, function (config) {
         if(!config.is_creator || !config.visible){
             return false;
         }
