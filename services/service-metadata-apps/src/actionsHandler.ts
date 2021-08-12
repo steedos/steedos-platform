@@ -1,7 +1,7 @@
 import { getServiceAppConfig, METADATA_TYPE, refreshApp } from ".";
 import _ = require("lodash");
 import {translationApp, translationObject} from '@steedos/i18n';
-import {getAssignedApps} from "@steedos/objectql";
+import {getAssignedApps, getObject as _getObject} from "@steedos/objectql";
 
 function cacherKey(appApiName: string): string{
     return `$steedos.#${METADATA_TYPE}.${appApiName}`
@@ -139,6 +139,10 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                 menu.children.push(tabMenu);
             }else{
                 if(tab.type === 'object'){
+                    const allowRead = await objectAllowRead(tab.object, userSession);
+                    if(!allowRead){
+                        return;
+                    }
                     const objectMetadata = await getObject(ctx, tab.object);
                     if(objectMetadata){
                         const objectConfig = objectMetadata.metadata;
@@ -186,6 +190,10 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
         ctx.broker.logger.info(error.message);
     }
 }
+async function objectAllowRead(objectApiName: string, userSession) {
+    const userObjectPermission = await _getObject(objectApiName).getUserObjectPermission(userSession);
+    return userObjectPermission.allowRead;
+}
 
 async function transformAppToMenus(ctx, app, mobile, userSession){
     if(!app.code && !app._id){
@@ -217,6 +225,10 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
     if(_.isArray(objects)){
         for await (const objectApiName of objects) {
             try {
+                const allowRead = await objectAllowRead(objectApiName, userSession);
+                if(!allowRead){
+                    continue;
+                }
                 const objectMetadata = await getObject(ctx, objectApiName);
                 if(objectMetadata){
                     const objectConfig = objectMetadata.metadata;
