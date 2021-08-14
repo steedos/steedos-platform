@@ -197,9 +197,9 @@ const getProfile = async (spaceId, profileApiName)=>{
 }
 
 const getUserPermissionSet = async(spaceId, userId, profileApiName?)=>{
-    let filters = [['space', '=', spaceId], ['user', '=', userId]];
+    let filters = [['space', '=', spaceId], ['users', '=', userId]];
     if(profileApiName){
-        filters = [['space', '=', spaceId], [['user', '=', userId], 'or', ['name', '=', profileApiName]]];
+        filters = [['space', '=', spaceId], [['users', '=', userId], 'or', ['name', '=', profileApiName]]];
     }
 
     return await getObject('permission_set').find({filters: filters});
@@ -219,11 +219,11 @@ export const getAssignedApps = async(userSession)=>{
         if(userProfile?.assigned_apps?.length){
             apps = _.union(apps, userProfile.assigned_apps)
         }else{
-            return []
+            apps = []
         }
         const psets = await getUserPermissionSet(spaceId, userId, userProfileApiName);
         _.each(psets, (pset)=>{
-            if(!!pset.assigned_apps){
+            if(!pset.assigned_apps || pset.assigned_apps?.length === 0){
                 return ;
             }
             if(pset.name == "admin" ||  pset.name == "user" || pset.name == 'supplier' || pset.name == 'customer'){

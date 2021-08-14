@@ -127,7 +127,7 @@ Template.related_object_list.events
 		if object_name == 'objects'
 			record_id = template?.record?.get().name;
 		action_collection_name = relateObject.label
-		selectedRows = window.gridRef.current.api.getSelectedRows()
+		selectedRows = window.gridRef?.current.api.getSelectedRows()
 
 		initialValues = {};
 		if selectedRows?.length

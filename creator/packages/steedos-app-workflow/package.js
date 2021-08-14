@@ -33,6 +33,8 @@ Package.onUse(function(api) {
 	api.use('steedos:cfs-standard-packages@0.5.10');
 	api.use('steedos:cfs-s3@0.1.4');
 	api.use('steedos:cfs-aliyun@0.1.0');
+	api.use('steedos:cfs-steedos-cloud@0.0.4');
+
 
 	api.use('steedos:base@0.0.90');
 	api.use('steedos:webhookqueue@0.0.1');

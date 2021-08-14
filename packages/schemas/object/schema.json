@@ -494,6 +494,10 @@
                                                 "pattern": "^[0-9a-fA-F]{6}$"
                                             }
                                         ]
+                                    },
+                                    "icon": {
+                                        "type": "string",
+                                        "title": "Options icon name"
                                     }
                                 }
                             },
