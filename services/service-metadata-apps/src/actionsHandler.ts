@@ -174,7 +174,8 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                             id: `${tab.name}`,
                             icon: tab.icon,
                             type: tab.type,
-                            path: `${tab.page}`,
+                            page: tab.page,
+                            path: `${appPath}/${tab.type}/${tab.page}`,
                             name: `${tab.label}`
                         }
                     )

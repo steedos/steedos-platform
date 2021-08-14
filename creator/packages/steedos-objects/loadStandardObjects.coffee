@@ -16,7 +16,13 @@ try
 				"@steedos/steedos-plugin-schema-builder",
 				"@steedos/plugin-enterprise",
 				"@steedos/word-template",
-				"@steedos/metadata-api"],
+				"@steedos/metadata-api",
+				"@steedos/plugin-dingtalk",
+				"@steedos/data-import",
+				"@steedos/service-fields-indexs",
+				"@steedos/service-accounts",
+				"@steedos/service-charts",
+				"@steedos/service-pages"],
 			plugins: config.plugins
 		}
 		Meteor.startup ->

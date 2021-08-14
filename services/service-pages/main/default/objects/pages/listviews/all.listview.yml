@@ -1,6 +1,7 @@
 name: all
 columns:
   - field: name
+  - field: label
 filter_scope: space
 filters: []
 label: 所有

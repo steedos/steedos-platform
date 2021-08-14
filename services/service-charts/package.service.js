@@ -4,6 +4,14 @@ const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const objectql = require("@steedos/objectql");
 const _ = require('lodash');
+
+const getQueries = async(apiName)=>{
+	const queries = await objectql.getObject('queries').find({ filters: [['name', '=', apiName]] });
+	if(queries.length > 0){
+		return queries[0]
+	}
+}
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -41,12 +49,14 @@ module.exports = {
                 const userSession = ctx.meta.user;
                 const { recordId } = ctx.params;
 				let results = null;
-                const record = await objectql.getObject("queries").findOne(recordId);
+                let record = await objectql.getObject("queries").findOne(recordId);
+				if(!record){
+					record = await getQueries(recordId)
+				}
 				if(record){
 					if(!record.query){
 						throw new Error(`Invalid query.`)
 					}
-					console.log(`record.datasource`, record.datasource)
 					const datasource = objectql.getDataSource(record.datasource);
 					if(!datasource){
 						throw new Error(`not find Data Source.`)
@@ -106,10 +116,7 @@ module.exports = {
 						// "query_hash": "3b089af464ff50343365c7ab7e376c30",
 						query: record.query,
 						// runtime: 0.690132141113281,
-						data: {
-							columns: [],
-							rows: results
-						},
+						data: data,
 						id: recordId,
 						_id: recordId,
 						data_source_id: record.datasource

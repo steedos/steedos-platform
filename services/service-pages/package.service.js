@@ -84,6 +84,7 @@ module.exports = {
 								type: chart.type,
 								options: chart.options,
 								name: chart.name,
+								label: chart.label,
 							}
 						}
 					}

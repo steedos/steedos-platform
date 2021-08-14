@@ -161,13 +161,18 @@ Template.creatorNavigation.helpers
 		tempNavs = Creator.getTempNavs()
 		objectName = Session.get("object_name")
 		tabName = Session.get("tab_name")
+		pageApiName = Session.get("pageApiName")
 		recordId = Session.get("record_id")
 		# 新的appMenu规则是以id为name，name为label
 		objName = if obj.is_temp then obj.name else obj.id
-		isActive = objName == objectName or objName == tabName
+		if obj.type == 'page'
+			objName = obj.page
+		isActive = objName == objectName or objName == tabName or objName == pageApiName
 		if isActive
 			if obj.url
 				isActive = obj.url == Creator.getObjectUrl(obj.name, recordId)
+			else if obj.type == 'page'
+				isActive = obj.page == pageApiName
 			else if tempNavs?.length
 				# 如果在tempNavs中已经存在，则不选中当前对象主导航栏
 				isActive = !(recordId and !!tempNavs.find (n)-> return n.name == objectName and new RegExp(".+/view/#{recordId}$").test(n.url))

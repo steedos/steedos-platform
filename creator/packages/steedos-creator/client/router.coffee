@@ -32,6 +32,7 @@ set_sessions = (context, redirect)->
 	record_id = context.params.record_id
 	Session.set("object_name", object_name)
 	Session.set("tab_name", null)
+	Session.set("pageApiName", null)
 	# 手机上record_id从老值变更为新值时，要清除record，否则list组件不会处理加载
 	if record_id != oldRecordId
 		Template.creator_view.currentInstance?.record?.set(null)
@@ -142,7 +143,32 @@ FlowRouter.route '/app/:app_id/home',
 #		Session.set("app_id", app_id)
 #		BlazeLayout.render Creator.getLayout(),
 #			main: 'page'
+FlowRouter.route '/app/admin/page/:template_name',
+	triggersEnter: [ checkUserSigned ],
+	action: (params, queryParams)->
+		template_name = params?.template_name
+		if Meteor.userId()
+			Session.set("app_id", "admin")
+			Session.set("admin_template_name", template_name)
+			BlazeLayout.render Creator.getLayout(),
+				main: template_name
 
+FlowRouter.route '/app/:app_id/page/:page_id',
+	triggersEnter: [ checkUserSigned, checkAppPermission ],
+	action: (params, queryParams)->
+		console.log('params', params)
+		app_id = FlowRouter.getParam("app_id")
+		page_id = params?.page_id
+		Session.set("pageApiName", page_id)
+		Session.set("object_name", null)
+#		setTimeout(()->
+#			SteedosUI.render(stores.ComponentRegistry.components.PublicPage, { token: page_id }, $(".empty-template-root")[0])
+#		, 50)
+		BlazeLayout.render Creator.getLayout(),
+			main: 'page_template'
+	triggersExit: [(context, redirect) ->
+		Session.set("pageApiName", null)
+	]
 FlowRouter.route '/page/:page_id/',
 	action: (params, queryParams)->
 		BlazeLayout.render Creator.getLayout(),
@@ -267,6 +293,9 @@ FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
 		Session.set("object_name", null)
 		BlazeLayout.render Creator.getLayout(),
 			main: "creator_tab_iframe"
+	triggersExit: [(context, redirect) ->
+		Session.set("tab_name", null)
+	]
 
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
@@ -404,14 +433,3 @@ objectRoutes.route '/calendar/',
 		
 		BlazeLayout.render Creator.getLayout(),
 			main: "creator_calendar"
-
-FlowRouter.route '/app/admin/page/:template_name', 
-	triggersEnter: [ checkUserSigned ],
-	action: (params, queryParams)->
-		template_name = params?.template_name
-		if Meteor.userId()
-			Session.set("app_id", "admin")
-			Session.set("admin_template_name", template_name)
-			BlazeLayout.render Creator.getLayout(),
-				main: template_name
-

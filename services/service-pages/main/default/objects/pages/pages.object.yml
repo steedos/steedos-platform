@@ -17,3 +17,10 @@ icon: contract
 is_enable: true
 label: Page
 version: 2
+form:
+ afterView: !!js/function |
+      function(){
+        if(this.doc.name){
+          SteedosUI.render(stores.ComponentRegistry.components.Page, { pageId: this.doc.name }, $(".slds-template__container")[0])
+        }
+      }

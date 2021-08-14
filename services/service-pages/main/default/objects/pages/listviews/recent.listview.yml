@@ -1,6 +1,7 @@
 name: recent
 columns:
   - field: name
+  - field: label
 filter_scope: space
 filters: []
 label: 最近查看

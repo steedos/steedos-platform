@@ -1,7 +1,7 @@
 name: name
 index: true
 label: API Name
-required: true
+required: false
 searchable: true
 sort_no: 100
 type: text

@@ -1,7 +1,10 @@
-allowCreate: false
-allowDelete: false
-allowEdit: false
+name: 管理员
+allowCreate: true
+allowDelete: true
+allowEdit: true
 allowRead: true
-modifyAllRecords: false
+modifyAllRecords: true
+modifyCompanyRecords: true
 permission_set_id: admin
 viewAllRecords: true
+viewCompanyRecords: true

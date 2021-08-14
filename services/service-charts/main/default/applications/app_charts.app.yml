@@ -1,9 +1,20 @@
-_id: apps_user_apikey
+_id: apps_user_charts
 name: Apps
 admin_menus:
+  - _id: analysis
+    name: 统计分析
+    sort: 400
+    permission_sets:
+      - admin
+  - _id: app_queries
+    name: 查询
+    object_name: queries
+    parent: analysis
+    permission_sets:
+      - admin
   - _id: app_charts
-    name: Charts
+    name: 图表
     object_name: charts
-    parent: objects_manager
+    parent: analysis
     permission_sets:
       - admin

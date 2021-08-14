@@ -205,6 +205,11 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/calendarNew.html', 'client');
 	api.addFiles('client/views/calendarNew.coffee', 'client');
 
+	api.addFiles('client/views/empty_template.html', 'client');
+
+	api.addFiles('client/views/page_template.html', 'client');
+	api.addFiles('client/views/page_template.coffee', 'client');
+
 	api.addFiles('client/core.coffee', 'client');
 	api.addFiles('client/colors.coffee', 'client');
 	api.addFiles('client/temp_navs.coffee', 'client');
