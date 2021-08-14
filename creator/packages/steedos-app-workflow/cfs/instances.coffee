@@ -11,6 +11,12 @@ else if Meteor.settings.public.cfs?.store == "S3"
         fs_store = new FS.Store.S3(store_name)
     else if Meteor.isServer
         fs_store = new FS.Store.S3 store_name, Meteor.settings.cfs.aws
+
+else if Meteor.settings.public.cfs?.store == "STEEDOSCLOUD"
+    if Meteor.isClient
+        fs_store = new FS.Store.STEEDOSCLOUD(store_name)
+    else if Meteor.isServer
+        fs_store = new FS.Store.STEEDOSCLOUD store_name, Meteor.settings.cfs.steedosCloud
 else
     if Meteor.isClient
         fs_store = new FS.Store.FileSystem(store_name)
