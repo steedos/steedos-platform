@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/service-packages": "^2.0.59",
     "@steedos/service-metadata": "2.0.59",
     "@steedos/service-metadata-apps": "2.0.59",
     "@steedos/service-metadata-layouts": "2.0.59",
@@ -12,7 +11,8 @@
     "@steedos/service-metadata-permissionsets": "2.0.59",
     "@steedos/service-metadata-tabs": "2.0.59",
     "@steedos/service-metadata-translations": "2.0.59",
-    "@steedos/service-metadata-triggers": "2.0.59"
+    "@steedos/service-metadata-triggers": "2.0.59",
+    "@steedos/service-packages": "2.0.59"
   },
   "private": false,
   "publishConfig": {
