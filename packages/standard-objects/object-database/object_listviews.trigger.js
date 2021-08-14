@@ -21,13 +21,19 @@ const getInternalListviews = async function(sourceListviews, filters){
 
 module.exports = {
     beforeInsert: async function () {
-        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
+        await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true], ['object_name','=', this.doc.object_name]]);
 
     },
     beforeUpdate: async function () {
-        if (_.has(this.doc, 'name')) {
-            await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true]]);
+        const oldDoc = await objectql.getObject(this.name).findOne(this.id)
+        let name,object_name;
+        if(_.has(this.doc, 'name')){
+            name = this.doc.name
         }
+        if(_.has(this.doc, 'object_name')){
+            object_name = this.doc.object_name
+        }
+        await util.checkAPIName(this.object_name, 'name', name, this.id, [['is_system','!=', true], ['object_name','=', object_name]]);
     },
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)

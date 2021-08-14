@@ -132,7 +132,7 @@ admin_menus:
     permission_sets:
       - admin
     object_name: object_webhooks
-    parent: objects_manager
+    parent: advanced
     sort: 150
   # - _id: object_workflows
   #   name: Object Synchronization Rules
@@ -146,7 +146,7 @@ admin_menus:
     permission_sets:
       - admin
     object_name: web_forms
-    parent: objects_manager
+    parent: advanced
     sort: 90
   - _id: advanced
     name: Advanced
@@ -188,13 +188,13 @@ admin_menus:
     object_name: autonumber
     parent: advanced
     sort: 80
-  - _id: picklists
-    name: Picklist
-    permission_sets:
-      - admin
-    object_name: picklists
-    parent: advanced
-    sort: 40
+  # - _id: picklists
+  #   name: Picklist
+  #   permission_sets:
+  #     - admin
+  #   object_name: picklists
+  #   parent: advanced
+  #   sort: 40
   - _id: holidays
     name: Holidays
     permission_sets:
@@ -226,7 +226,7 @@ admin_menus:
     permission_sets:
       - admin
     object_name: queue_import
-    parent: advanced
+    parent: objects_manager
     sort: 200
   - _id: about
     name: About Steedos
