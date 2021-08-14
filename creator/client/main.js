@@ -1,8 +1,8 @@
 import("./browser");
 require("./theme.less");
-import 'core-js/proposals/url';
+// import 'core-js/proposals/url';
 // IE11支持SVG图标
-svg4everybody();
+// svg4everybody();
 
 import("./main.html");
 
