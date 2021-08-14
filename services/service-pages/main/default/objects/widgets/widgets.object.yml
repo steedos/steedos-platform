@@ -15,5 +15,5 @@ enable_tasks: false
 enable_workflow: false
 icon: shipment
 is_enable: true
-label: widgets
+label: 部件
 version: 2
