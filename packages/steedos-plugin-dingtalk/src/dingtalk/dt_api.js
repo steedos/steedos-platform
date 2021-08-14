@@ -777,3 +777,16 @@ exports.sendMessage = async function(data, access_token){
         });
     }
 }
+
+// Accounts.destroyToken
+exports.destroyToken = async function (userId, loginToken) {
+    try {
+        let user = await steedosSchema.getObject('users').findOne(userId);
+        let tokens = user.services.resume.loginTokens;
+        tokens.splice(tokens.findIndex(e => e.hashedToken === loginToken), 1)
+        await steedosSchema.getObject('users').update(userId,{"services.resume.loginTokens": tokens});
+    } catch (error) {
+        console.error(error);
+        console.log("Failed to destroyToken with error: " + error);
+    }
+}

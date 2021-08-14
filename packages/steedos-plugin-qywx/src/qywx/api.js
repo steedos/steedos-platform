@@ -59,15 +59,17 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
     state = req.query.state;
     space = await Qiyeweixin.getSpace();
     // 获取access_token
-    if (space.qywx_corp_id && space.qywx_secret)
-        token = Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret)
+    if (space.qywx_corp_id && space.qywx_secret){
+        let response = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
+        token = response.access_token;
+    }
 
     // 推送消息重定向url
     if (state != "")
         redirect_url = Meteor.absoluteUrl(state);
 
     if ((req != null ? (_ref5 = req.query) != null ? _ref5.code : void 0 : void 0) && token) {
-        userInfo = Qiyeweixin.getUserInfo(token, req.query.code);
+        userInfo = await Qiyeweixin.getUserInfo(token, req.query.code);
     } else {
         res.writeHead(200, {
             'Content-Type': 'text/html'
@@ -113,10 +115,7 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
     }
 
     // console.log("userInfo: ",userInfo);
-    user = Creator.getCollection("space_users").findOne({
-        'qywx_id': userInfo != null ? userInfo.UserId : void 0
-    });
-
+    user = await Qiyeweixin.getSpaceUser(space._id, userInfo);
 
     // 默认工作区
     if (space)
@@ -170,9 +169,10 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
     }
     if (userId && authToken) {
         if (user.user != userId) {
+            // console.log("userId: ",userId);
             Qiyeweixin.clearAuthCookies(req, res);
             hashedToken = Accounts._hashLoginToken(authToken);
-            Accounts.destroyToken(userId, hashedToken);
+            await Qiyeweixin.destroyToken(userId, hashedToken);
         } else {
             res.redirect(302, redirect_url || '/');
             return res.end('');

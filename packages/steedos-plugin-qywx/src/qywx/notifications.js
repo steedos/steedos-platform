@@ -1,12 +1,14 @@
-let Qiyeweixin = require("./qywx")
+const objectql = require('@steedos/objectql');
+const steedosSchema = objectql.getSteedosSchema();
+const Qiyeweixin = require("./qywx");
 
 module.exports = {
-    notify: function () {
+    notify: async function () {
         // 网页授权url
         let oauthUrl = Meteor.absoluteUrl('/api/qiyeweixin/mainpage?target=');
         
         Push.oldQywxSend = Push.send;
-        Push.send = function (options) {
+        Push.send = async function (options) {
             Push.oldQywxSend(options);
             try {
                 // console.log("options:---");
@@ -16,7 +18,8 @@ module.exports = {
                 if (!options.payload)
                     return;
 
-                let space = Creator.getCollection('spaces').findOne({ _id: options.payload.space });
+                let spaceObj = steedosSchema.getObject('spaces');
+                let space = await spaceObj.findOne({ _id: options.payload.space });
 
                 if (!space)
                     return;
@@ -24,9 +27,12 @@ module.exports = {
                 if (!space.qywx_corp_id || !space.qywx_agent_id || !space.qywx_secret)
                     return;
 
-                let access_token = Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
+                let response = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
+                let access_token = response.access_token;
 
-                let space_user = Creator.getCollection('space_users').findOne({ space: space._id, user: options.query.userId });
+                let spaceUserObj = steedosSchema.getObject('space_users');
+                let space_user = await spaceUserObj.findOne({ space: space._id, user: options.query.userId });
+                
                 if (!space_user.qywx_id)
                     return;
 
@@ -41,9 +47,10 @@ module.exports = {
 
                 // 审批流程
                 if (payload.instance) {
-                    title = Qiyeweixin.workflowPush(options, spaceId, oauthUrl).text;
-                    text = Qiyeweixin.workflowPush(options, spaceId, oauthUrl).title;
-                    url = Qiyeweixin.workflowPush(options, spaceId, oauthUrl).url;
+                    let pushInfo = await Qiyeweixin.workflowPush(options, spaceId, oauthUrl);
+                    title = pushInfo.text;
+                    text = pushInfo.title;
+                    url = pushInfo.url;
                 } else {
                     title = options.title;
                     url = oauthUrl + payload.url;
@@ -69,7 +76,7 @@ module.exports = {
                     "duplicate_check_interval": 1
                 }
                 // 发送推送消息
-                Qiyeweixin.sendMessage(msg, access_token);
+                await Qiyeweixin.sendMessage(msg, access_token);
             } catch (error) {
                 console.error("Push error reason: ", error);
             }

@@ -302,7 +302,7 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
             if (space_user.user != userId) {
                 dtApi.clearAuthCookies(req, res);
                 hashedToken = Accounts._hashLoginToken(authToken);
-                Accounts.destroyToken(userId, hashedToken);
+                await dtApi.destroyToken(userId, hashedToken);
             } else {
                 return res.end('login');
             }
