@@ -213,6 +213,7 @@ install("steedos:i18n-iso-countries");
 install("nimble:restivus");
 install("steedos:logger");
 install("steedos:objects");
+install("steedos:cfs-steedos-cloud");
 install("steedos:cfs-tempstore");
 install("steedos:cfs-http-methods");
 install("steedos:cfs-http-publish");
@@ -782,7 +783,34 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"connect":{"package.json":function module(require,exports,module){
+}},"aws-sdk":{"package.json":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/aws-sdk/package.json                                                                  //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.exports = {
+  "name": "aws-sdk",
+  "version": "2.0.23",
+  "main": "lib/aws.js"
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"aws.js":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/aws-sdk/lib/aws.js                                                                    //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.useNode();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}},"connect":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
@@ -991,7 +1019,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.0.57",
+  "version": "2.0.59",
   "main": "lib/index.js"
 };
 
@@ -1018,7 +1046,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.0.57",
+  "version": "2.0.59",
   "main": "lib/index.js"
 };
 
@@ -1045,7 +1073,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.0.57",
+  "version": "2.0.59",
   "main": "index.js"
 };
 
@@ -1072,7 +1100,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.0.57",
+  "version": "2.0.59",
   "main": "index.js"
 };
 
@@ -1099,7 +1127,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.0.57",
+  "version": "2.0.59",
   "main": "index.js"
 };
 
@@ -1126,7 +1154,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "2.0.57",
+  "version": "2.0.59",
   "main": "lib/index.js"
 };
 
@@ -1153,7 +1181,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.0.57",
+  "version": "2.0.59",
   "main": "lib/index.js"
 };
 
@@ -1180,7 +1208,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.0.57",
+  "version": "2.0.59",
   "main": "lib/index.js"
 };
 

@@ -547,6 +547,10 @@
       "path": "packages/steedos_objects.js"
     },
     {
+      "sourceMap": "packages/steedos_cfs-steedos-cloud.js.map",
+      "path": "packages/steedos_cfs-steedos-cloud.js"
+    },
+    {
       "sourceMap": "packages/steedos_cfs-tempstore.js.map",
       "path": "packages/steedos_cfs-tempstore.js"
     },
