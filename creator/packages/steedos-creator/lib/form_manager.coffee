@@ -20,7 +20,7 @@ FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related
 		mainSelect = mainSelect + ',' + relatedObject.fields[relatedKey].reference_to_field
 	main_record = Creator.odata.get(main_object_name, main_record_id, mainSelect)
 
-	if main_record && main_record[relatedObject.fields[relatedKey].reference_to_field]
+	if main_record && relatedKey && main_record[relatedObject.fields[relatedKey].reference_to_field]
 		main_record_id = main_record[relatedObject.fields[relatedKey].reference_to_field]
 #
 #	related_object = Creator.getObject(related_object_name);
