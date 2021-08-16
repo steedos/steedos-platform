@@ -1,6 +1,6 @@
 {
   "name": "@steedos/design-system-react",
-  "version": "2.0.59",
+  "version": "2.1.0",
   "description": "Steedos Lightning Design System for React",
   "license": "SEE LICENSE IN README.md",
   "engines": {
