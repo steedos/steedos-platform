@@ -10,10 +10,17 @@ admin_menus:
     name: App Manager
     object_name: apps
     parent: apps
-    srot: 100
+    sort: 100
   - _id: steedos_packages
     name: steedos_packages
     label: 软件包
     parent: apps
     object_name: steedos_packages
-    srot: 400
+    sort: 400
+  - _id: tabs
+    name: Tabs
+    object_name: tabs
+    parent: apps
+    sort: 500
+    permission_sets:
+      - admin

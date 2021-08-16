@@ -10,11 +10,13 @@ admin_menus:
     name: 查询
     object_name: queries
     parent: analysis
+    sort: 100
     permission_sets:
       - admin
   - _id: app_charts
     name: 图表
     object_name: charts
     parent: analysis
+    sort: 200
     permission_sets:
       - admin
