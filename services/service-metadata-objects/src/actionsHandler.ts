@@ -91,7 +91,7 @@ export class ActionHandlers {
         });
 
         if(metadataConfig && metadataConfig.metadata){
-            config = _.defaultsDeep(config, metadataConfig.metadata);
+            config = _.defaultsDeep(metadataConfig.metadata, config);
         }
 
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
