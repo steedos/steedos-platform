@@ -30,7 +30,7 @@ fields:
         value: object
       - label: 外部链接
         value: url
-      - label: Page
+      - label: 页面
         value: page
   object:
     label: 对象
