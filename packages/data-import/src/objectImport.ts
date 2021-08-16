@@ -307,6 +307,11 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                             case "currency":
                                 error = converteNum(field_name, dataCell, jsonObj);
                                 break;
+                            case "percent":
+                                error = converteNum(field_name, dataCell, jsonObj);
+                                break;
+                            default:
+                                throw new Error(`Unsupported data type: ${field.type}`);
                         }
                     }catch(err){
                         console.error(error)
