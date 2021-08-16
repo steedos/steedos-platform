@@ -29743,6 +29743,24 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   flex: 1 1 auto;
   overflow: auto;
 }
+@media (max-width: 768px) {
+  .ant-form .ant-modal {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    margin: 0;
+    padding-bottom: 0;
+  }
+  .ant-form .ant-modal .ant-modal-content {
+    max-height: 100%;
+  }
+  .ant-form .ant-modal .ant-form-item .ant-form-item-label,
+  .ant-form .ant-modal .ant-form-item .ant-form-item-control {
+    flex: auto;
+  }
+}
 
 .ant-modal-content {
   height: 100%;
