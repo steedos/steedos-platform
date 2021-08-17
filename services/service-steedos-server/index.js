@@ -46,6 +46,7 @@ module.exports = {
 			"@steedos/data-import",
 			"@steedos/service-fields-indexs",
 			"@steedos/service-accounts",
+			"@steedos/service-charts",
 			"@steedos/service-pages"
 		],
 		plugins: []

@@ -13,6 +13,7 @@
     "@steedos/plugin-qywx": "2.1.0",
     "@steedos/service-accounts": "2.1.0",
     "@steedos/service-api": "2.1.0",
+    "@steedos/service-charts": "2.1.0",
     "@steedos/service-fields-indexs": "2.1.0",
     "@steedos/service-meteor-package-loader": "2.1.0",
     "@steedos/service-pages": "2.1.0",
