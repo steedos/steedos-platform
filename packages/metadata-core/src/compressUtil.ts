@@ -46,6 +46,18 @@ export function compressFiles(appDir, sourceDir, zipPath, option, callBack){
     archive.finalize();
 }
 
+
+export function getPackageYml(appDir, sourceDir, option){
+
+    var includeJs = option.includeJs;
+    var inDeploy = option.inDeploy;
+
+    var des = new ZipDescription(null, appDir, includeJs, inDeploy);
+    scanOrAdd(des, sourceDir);
+    var description  = des.export();
+    return description;
+}
+
 function scanTargetDir(archive, rootpath, targetPath, option){
 
     var includeJs = option.includeJs;
@@ -194,7 +206,9 @@ class ZipDescription{
             }
         }
         // append files
-        archive.file(filePath, {name: zipFileName});
+        if(archive){
+            archive.file(filePath, {name: zipFileName});
+        }
         
         // filePath: C:\steedos-app\main\default\objects\test_object\test_object.object.yml
         // fileName: main\default\objects\test_object\test_object.object.yml
@@ -227,7 +241,6 @@ class ZipDescription{
                         throw new Error('The attribute "name" in the file does not match its filename.\nName:"'+fileContent['name']+'" Path:' + filePath)
                     }
                 }else{
-
                     if(itemName != fullName){
                         throw new Error('The attribute "name" in the file does not match its filename.\nName:"'+fileContent['name']+'" Path:' + filePath)
                     }

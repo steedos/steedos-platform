@@ -4,10 +4,11 @@ const chalk= require('chalk');
 const fs = require('fs');
 const path = require("path");
 const yaml = require("js-yaml");
+const _ = require('underscore');
 
 import { getFromServer } from '../../source/retrieve/index'
 
-import { resolveProjectPathSync, getPackagePath, decompressAndDeploy, getRetrievePackageInfo, getAllowSyncMetadataKeys } from '@steedos/metadata-core'
+import { resolveProjectPathSync, getPackagePath, decompressAndDeploy, getRetrievePackageInfo, getAllowSyncMetadataKeys, getPackageYml, hasParent, getParentMetadataName, SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core'
 
 
 class RetrieveCommand extends retOclif.Command {
@@ -22,14 +23,51 @@ class RetrieveCommand extends retOclif.Command {
         const projectPath = resolveProjectPathSync(serverDir);
         const packagePath = getPackagePath(serverDir);
         const appPath = path.join(projectPath, packagePath);
-
-        var options = { packageYmlDir: ymlDir, metadata, serverDir}
-
-        requestYmlBase64 = getRetrievePackageInfo(options);
         
-        // var file = Buffer.from(requestYmlBase64, 'base64');
-        // fs.writeFileSync("c:/cli/testReq.yml", file);
-        
+        //retrieve -p 
+
+        let is_directory = false;
+        if(flags.serverDir){
+            const stat = fs.lstatSync(flags.serverDir);
+            is_directory = stat.isDirectory();
+        }
+        if(!ymlDir && flags.serverDir && is_directory){
+            //getPackageYml 返回了所有源数据明细
+            var packageJson = getPackageYml(appPath, serverDir, {includeJs: false});
+            //如果是源数据的parent是object，则取*
+            for(const metadataName in packageJson){
+                if(hasParent(metadataName)){
+                  var parentMetadataName = getParentMetadataName(metadataName);
+                  if(parentMetadataName === TypeInfoKeys.Object){
+                      const info: any = [];
+                      _.map(packageJson[metadataName], (item)=>{
+                        const foo = item.split('.');
+                        if(foo.length > 0){
+                            info.push(`${foo[0]}.*`)
+                        }
+                      })
+                      packageJson[metadataName] = _.uniq(info)
+                  }
+                }
+                // else if(metadataName === TypeInfoKeys.Object){
+                //     const info: any = [];
+                //     _.map(packageJson[metadataName], (objectApiName)=>{
+                //         info.push(`${objectApiName}.*`)
+                //     })
+                //     packageJson[metadataName] = _.uniq(info)
+                // }
+            }
+
+            var packageYml = yaml.dump(packageJson);
+            var ymlBuffer = Buffer.from(packageYml);
+            requestYmlBase64 = ymlBuffer.toString('base64');
+            // fs.writeFileSync("F:/package.yml", packageYml);
+        }else{
+            var options = { packageYmlDir: ymlDir, metadata, serverDir}
+            requestYmlBase64 = getRetrievePackageInfo(options);
+            // fs.writeFileSync("F:/package.yml", Buffer.from(requestYmlBase64, 'base64'));
+        }
+
         getFromServer(requestYmlBase64, async function(zipBuffer){
             // 解压以后根据配置文件部署到相应位置
             await decompressAndDeploy(zipBuffer, appPath);

@@ -15,7 +15,7 @@ export * from './metadata'
 export * from './loadFile'
 export { jsonToFile } from './jsonToFile'
 export { mkTempFolder, createIfNotExist, mkdirsSync, deleteFolderRecursive, getRetrievePackageInfo } from './folderUtil'
-export { compressFiles, decompressAndDeploy } from './compressUtil'
+export { compressFiles, decompressAndDeploy, getPackageYml } from './compressUtil'
 export * from './packages'
 
 export * from './auth/index'
@@ -86,7 +86,7 @@ export function getFileinfoByFilename(filename) {
 
     }else if(filename.endsWith('.field.yml')){
         metadataName = TypeInfoKeys.Field;
-        itemName = _.first(filename.split('.'));
+        itemName = filename.replace('.field.yml', "");
 
     }else if(filename.endsWith('.button.yml')){
         metadataName = TypeInfoKeys.Action;
