@@ -215,7 +215,7 @@ module.exports = {
 		try {
 			const packagePath = path.join(process.cwd(), 'steedos-app');
 			const packageInfo = require(path.join(packagePath, 'package.json'));
-			loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: packagePath});
+			loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: path.relative(process.cwd(), packagePath)});
 		} catch (error) {
 			console.log(`started error`, error)
 		}
@@ -225,7 +225,7 @@ module.exports = {
 		_.each(mPackages, (packagePath)=>{
 			try {
 				const packageInfo = require(path.join(packagePath, 'package.json'));
-				loader.appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true, path: packagePath});
+				loader.appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true, path: path.relative(process.cwd(), packagePath)});
 			} catch (error) {
 				console.log(`started error`, error)
 			}
