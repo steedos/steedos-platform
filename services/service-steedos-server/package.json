@@ -15,6 +15,7 @@
     "@steedos/service-api": "2.1.0",
     "@steedos/service-fields-indexs": "2.1.0",
     "@steedos/service-meteor-package-loader": "2.1.0",
+    "@steedos/service-pages": "2.1.0",
     "@steedos/service-node-red": "2.1.0",
     "@steedos/steedos-plugin-schema-builder": "2.1.0",
     "@steedos/word-template": "^2.0.3",
