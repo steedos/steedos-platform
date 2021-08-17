@@ -54,7 +54,7 @@ if Meteor.isClient
 			#TODO 使用对象版本判断
 			object = Creator.getObject(object_name);
 			initialValues={}
-			selectedRows = window.gridRef && window.gridRef.current.api.getSelectedRows()	
+			selectedRows = window.gridRef?.current?.api?.getSelectedRows()	
 			if selectedRows?.length
 				record_id = selectedRows[0]._id;
 				if record_id
