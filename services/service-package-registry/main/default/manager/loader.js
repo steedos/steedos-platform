@@ -7,14 +7,13 @@ const objectql = require('@steedos/objectql');
 const registry = require('./registry');
 const userDir = path.join(process.cwd(), '.steedos');
 const packagesFilePath = path.join(userDir, 'steedos-packages.yml'); 
-const _ = require('lodash');
 
 const loadPackagesConfig = ()=>{
     return yaml.load(fs.readFileSync(packagesFilePath, 'utf8')) || {};
 }
 
 const appendToPackagesConfig = (packageName, options)=>{
-    const packages = loadPackagesConfig();
+    let packages = loadPackagesConfig();
     let changeNamePackage = null;
     if(options.local && !packages[packageName]){
         changeNamePackage = _.find(packages, (pInfo, key)=>{
@@ -37,8 +36,6 @@ const appendToPackagesConfig = (packageName, options)=>{
             packages[packageName] = Object.assign(packages[packageName], options)
         }
     }
-
-    
     let data = yaml.dump(packages);
     fs.writeFileSync(packagesFilePath, data);
 }
@@ -132,11 +129,23 @@ const removePackage = async (packageName)=>{
 }
 
 const enablePackage = async (packageName)=>{
-    const packagePath = path.dirname(require.resolve(`${packageName}/package.json`, {
-        paths: [path.join(userDir, 'node_modules')]
-    }))
-    await steedos.loadPackage(packagePath)
     const packages = loadPackagesConfig();
+    let packagePath = null;
+    const package = _.find(packages, (info, name)=>{
+        return packageName == name
+    })
+    if(package.local){
+        if(path.isAbsolute(package.path)){
+            packagePath = package.path
+        }else{
+            packagePath = path.resolve(process.cwd(), package.path)
+        }
+    }else{
+        packagePath = path.dirname(require.resolve(`${packageName}/package.json`, {
+            paths: [path.join(userDir, 'node_modules')]
+        }))
+    }
+    await steedos.loadPackage(packagePath)
     let packageInfo = {};
     _.map(packages, (package, name)=>{
         if(packageName == name){
