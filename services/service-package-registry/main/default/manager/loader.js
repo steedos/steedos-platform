@@ -7,6 +7,7 @@ const objectql = require('@steedos/objectql');
 const registry = require('./registry');
 const userDir = path.join(process.cwd(), '.steedos');
 const packagesFilePath = path.join(userDir, 'steedos-packages.yml'); 
+const _ = require('lodash');
 
 const loadPackagesConfig = ()=>{
     return yaml.load(fs.readFileSync(packagesFilePath, 'utf8')) || {};
@@ -14,13 +15,30 @@ const loadPackagesConfig = ()=>{
 
 const appendToPackagesConfig = (packageName, options)=>{
     const packages = loadPackagesConfig();
-    if(!packages[packageName]){
-        packages[packageName] = Object.assign({
-            enable: true
-        }, options)
-    }else{
-        packages[packageName] = Object.assign(packages[packageName], options)
+    let changeNamePackage = null;
+    if(options.local && !packages[packageName]){
+        changeNamePackage = _.find(packages, (pInfo, key)=>{
+            if(pInfo.path === options.path){
+                pInfo.module = key;
+                return true;
+            }
+        })
     }
+    if(changeNamePackage){
+        console.log(`changeNamePackage`, changeNamePackage)
+        packages[packageName] = Object.assign(changeNamePackage, options)
+        delete packages[changeNamePackage.module]
+    }else{
+        if(!packages[packageName]){
+            packages[packageName] = Object.assign({
+                enable: true
+            }, options)
+        }else{
+            packages[packageName] = Object.assign(packages[packageName], options)
+        }
+    }
+
+    
     let data = yaml.dump(packages);
     fs.writeFileSync(packagesFilePath, data);
 }
