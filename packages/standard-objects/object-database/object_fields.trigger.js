@@ -174,7 +174,9 @@ const checkFormulaInfiniteLoop = async function(_doc, oldFieldName){
     if(_doc.type === "formula"){
       doc = clone(_doc)
       delete doc._id
-      let objectConfig = await objectql.getObject(doc.object).toConfig();
+      const objectConfig = objectql.wrapAsync(async function(){
+        return await objectql.getObject(doc.object).toConfig();
+      })
     //   objectCore.loadDBObject(objectConfig)
       delete objectConfig._id;
       try {
