@@ -169,6 +169,9 @@ const updateRecord = async function(userId, object_name, new_doc, previous_doc, 
         new_value = v;
         db_previous_value = null;
         db_new_value = null;
+        if(!field){
+          continue
+        }
         switch (field.type) {
             case 'date':
             if ((new_value != null ? new_value.toString() : void 0) !== (previous_value != null ? previous_value.toString() : void 0)) {
