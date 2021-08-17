@@ -24,9 +24,17 @@ const appendToPackagesConfig = (packageName, options)=>{
         })
     }
     if(changeNamePackage){
-        console.log(`changeNamePackage`, changeNamePackage)
-        packages[packageName] = Object.assign(changeNamePackage, options)
-        delete packages[changeNamePackage.module]
+        //如果是修改package name, 在steedos-package.yml位置保持不变
+        const newPackages = {};
+        _.each(packages, (info, key)=>{
+            if(key === changeNamePackage.module){
+                delete changeNamePackage.module
+                newPackages[packageName] = Object.assign(changeNamePackage, options)
+            }else{
+                newPackages[key] = info
+            }
+        })
+        packages = newPackages
     }else{
         if(!packages[packageName]){
             packages[packageName] = Object.assign({
