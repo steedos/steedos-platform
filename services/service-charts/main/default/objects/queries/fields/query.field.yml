@@ -2,12 +2,17 @@ name: query
 filterable: false
 is_name: false
 is_wide: true
-label: Query
+label: 查询脚本
 omit: false
 readonly: false
-required: false
+required: true
 sort_no: 500
 sortable: false
 type: textarea
+defaultValue:
+  '{
+    "collection": "",
+    "query": {}
+  }'
 hidden: false
 blackbox: true
