@@ -70,7 +70,7 @@ const uploadMetadata = async function (req, res) {
         }
 
         //todo 限制要挪到jsonToDb里
-        const masterDetailLimit = 1;
+        const masterDetailLimit = 2;
         for(const metadataName in SteedosPackage){
             if(metadataName == TypeInfoKeys.Object){
                 const objects = SteedosPackage[metadataName];
