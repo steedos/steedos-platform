@@ -1,4 +1,4 @@
 name: disable
 is_enable: true
-label: 禁用
+label: 停用
 'on': record

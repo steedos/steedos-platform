@@ -3,15 +3,15 @@ module.exports = {
         const record = Creator.odata.get(object_name, record_id);
         const nodesSelect = Steedos.PackageRegistry.getNodesSelect();
         swal({
-            title: `禁用`,
-            text: `确定要禁用${record.name}?${nodesSelect}`,
+            title: `停用`,
+            text: `确定要停用${record.name}?${nodesSelect}`,
             html: true,
             showCancelButton: true,
-            confirmButtonText: '禁用',
+            confirmButtonText: '停用',
             cancelButtonText: TAPi18n.__('Cancel')
         }, function (option) {
             if (option) {
-                toastr.info('禁用中，请稍后...', null, {timeOut: false});
+                toastr.info('停用中，请稍后...', null, {timeOut: false});
                 Steedos.authRequest(Steedos.absoluteUrl('/api/nodes/disable'), {
                     type: 'post', async: false, data: JSON.stringify({
                         module: record.name,
@@ -23,7 +23,7 @@ module.exports = {
                                 SteedosUI.reloadRecord(object_name, record_id)
                             }
                             toastr.clear();
-                            toastr.success('已禁用');
+                            toastr.success('已停用');
                             FlowRouter.reload()
                         }, 1000 * 5)
                     },
