@@ -10,6 +10,7 @@ const _ = require(`lodash`);
 const path = require(`path`);
 const objectql = require('@steedos/objectql');
 const metadataApi = require('@steedos/metadata-api');
+const util = require('./main/default/manager/util');
 
 const getPackageMetadata = async (packagePath)=>{
 	const packageMetadata = [];
@@ -99,10 +100,10 @@ module.exports = {
 					version: packageInfo.version, 
 					description: description || packageInfo.description, 
 					local: !!packagePath, 
-					path: path.relative(process.cwd(), packageInfo.packagePath)
+					path: util.getPackageRelativePath(process.cwd(), packageInfo.packagePath)
 				}
 				loader.appendToPackagesConfig(packageInfo.name, packageConfog);
-				const metadata = await getPackageMetadata(path.relative(process.cwd(), packageInfo.packagePath));
+				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageInfo.packagePath));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfog, {
 						name: packageInfo.name,
@@ -215,7 +216,7 @@ module.exports = {
 		try {
 			const packagePath = path.join(process.cwd(), 'steedos-app');
 			const packageInfo = require(path.join(packagePath, 'package.json'));
-			loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: path.relative(process.cwd(), packagePath)});
+			loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
 		} catch (error) {
 			console.log(`started error`, error)
 		}
@@ -225,7 +226,7 @@ module.exports = {
 		_.each(mPackages, (packagePath)=>{
 			try {
 				const packageInfo = require(path.join(packagePath, 'package.json'));
-				loader.appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true, path: path.relative(process.cwd(), packagePath)});
+				loader.appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
 			} catch (error) {
 				console.log(`started error`, error)
 			}
