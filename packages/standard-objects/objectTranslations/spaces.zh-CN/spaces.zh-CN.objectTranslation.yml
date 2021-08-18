@@ -77,7 +77,7 @@ fields:
 groups:
   logon: 登录界面
   register_account: 用户自助注册
-  developer: 开发者
+  developer: 华炎云
 listviews:
   all:
     label: 所有
