@@ -630,9 +630,8 @@ Creator.getListViews = (object_name, spaceId, userId)->
 			# 手机上先不显示日历视图
 			return
 		if item.name  != "default"
-			if _.indexOf(disabled_list_views, item.name ) < 0 || item.owner == userId
-				list_views.push item
-			else if item._id && _.indexOf(disabled_list_views, item._id ) < 0
+			isDisabled = _.indexOf(disabled_list_views, item.name) > -1 || (item._id && _.indexOf(disabled_list_views, item._id) > -1)
+			if !isDisabled || item.owner == userId
 				list_views.push item
 	return list_views
 
