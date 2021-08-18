@@ -279,7 +279,7 @@ objectRoutes.route '/',
 		(context, redirect) -> 
 			object_name = context.params.object_name
 			unless Session.get("object_home_component")
-				list_view = Creator.getObjectDefaultView(object_name)
+				list_view = Creator.getObjectFirstListView(object_name)
 				list_view_id = list_view?._id
 				app_id = context.params.app_id
 				if object_name == "meeting"
