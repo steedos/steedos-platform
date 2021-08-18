@@ -175,9 +175,11 @@ Template.creatorNavigation.helpers
 			return "slds-is-active"
 
 	object_url: ()->
-		# 新的appMenu规则是以path为url
+		# 新的appMenu规则是以path为url， type为空或object表示对象，则采用之前老规则直接在a标签显示对象列表视图url
 		if this.is_temp
 			return this.url || Creator.getObjectUrl(String(this.name))
+		else if this.type == "object" or !this.type
+			return Creator.getObjectUrl(String(this.id))
 		else
 			return Creator.getAppMenuUrl this
 
