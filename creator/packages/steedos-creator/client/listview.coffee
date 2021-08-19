@@ -5,13 +5,13 @@ _listViewColumns = (object_name, listView, use_mobile_columns)->
 		if listView?.mobile_columns
 			columns = listView.mobile_columns
 		else
-			defaultView = Creator.getObjectDefaultView(object_name)
+			defaultView = Creator.getObjectFirstListView(object_name)
 			if defaultView?.mobile_columns
 				columns = defaultView.mobile_columns
 			else if columns
 				columns = Creator.pickObjectMobileColumns(object_name, columns)
 	unless columns
-		defaultColumns = Creator.getObjectDefaultColumns(object_name, use_mobile_columns)
+		defaultColumns = Creator.getObjectFirstListViewColumns(object_name, use_mobile_columns)
 		if defaultColumns
 			columns = defaultColumns
 	return columns

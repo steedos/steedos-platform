@@ -161,9 +161,9 @@ if Meteor.isClient
 			related_object = Creator.getObject(related_object_name)
 			unless related_object
 				return
-			columns = Creator.getObjectDefaultColumns(related_object_name) || ["name"]
+			columns = Creator.getObjectFirstListViewColumns(related_object_name) || ["name"]
 			columns = _.without(columns, related_field_name)
-			mobile_columns = Creator.getObjectDefaultColumns(related_object_name, true) || ["name"]
+			mobile_columns = Creator.getObjectFirstListViewColumns(related_object_name, true) || ["name"]
 			mobile_columns = _.without(mobile_columns, related_field_name)
 
 			order = Creator.getObjectDefaultSort(related_object_name)
@@ -246,7 +246,7 @@ Creator.getListView = (object_name, list_view_id, exac)->
 	listViews = Creator.getListViews(object_name)
 	unless listViews?.length
 		return
-	list_view = _.findWhere(listViews,{"_id":list_view_id})
+	list_view = _.find(listViews, (item)-> return item._id == list_view_id || item.name == list_view_id)
 	unless list_view
 		# 如果不需要强制按list_view_id精确查找，则默认返回第一个视图，反之返回空
 		if exac
@@ -340,6 +340,19 @@ Creator.getObjectDefaultView = (object_name)->
 ###
 Creator.getObjectDefaultColumns = (object_name, use_mobile_columns)->
 	defaultView = Creator.getObjectDefaultView(object_name)
+	columns = defaultView?.columns
+	if use_mobile_columns
+		if defaultView?.mobile_columns
+			columns = defaultView.mobile_columns
+		else if columns
+			columns = Creator.pickObjectMobileColumns(object_name, columns)
+	return columns
+
+###
+    获取对象的列表第一个视图显示的字段
+###
+Creator.getObjectFirstListViewColumns = (object_name, use_mobile_columns)->
+	defaultView = Creator.getObjectFirstListView(object_name)
 	columns = defaultView?.columns
 	if use_mobile_columns
 		if defaultView?.mobile_columns

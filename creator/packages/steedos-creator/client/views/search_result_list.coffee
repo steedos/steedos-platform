@@ -91,7 +91,7 @@ _select = (object_name) ->
 	obj = Creator.getObject(object_name)
 	if !obj
 		return
-	default_columns = Creator.getObjectDefaultColumns(object_name) || [obj.NAME_FIELD_KEY]
+	default_columns = Creator.getObjectFirstListViewColumns(object_name) || [obj.NAME_FIELD_KEY]
 	fields = obj.fields
 	default_columns = _.map default_columns, (column) ->
 		fieldName = column
