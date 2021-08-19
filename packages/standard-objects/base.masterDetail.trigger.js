@@ -1,6 +1,13 @@
 const objectql = require('@steedos/objectql');
 const steedosAuth = require("@steedos/auth");
 const _ = require('underscore');
+
+// 禁止同步子表owner值为主表记录owner值的主表对象
+// 禁止后有两个效果
+// 1.不再同步该对象的子表记录owner值为主表记录owner值
+// 2.不再确认修改子表记录时是否有该主表记录的编辑或只读权限
+const DISABLE_RELEVANT_OWNER_VALUE_MASTERS = ["objects"];
+
 const setDetailOwner = async function (doc, object_name, userId) {
     if(!userId){
         return;
@@ -21,6 +28,9 @@ const setDetailOwner = async function (doc, object_name, userId) {
         for(var index = 0; index < masters.length ; index++){
             const objFields = await obj.getFields();
             const master = masters[index];
+            if(DISABLE_RELEVANT_OWNER_VALUE_MASTERS.indexOf(master) > -1){
+                continue;
+            }
             const refField = _.find(objFields,(n)=>{ return n.type === "master_detail" && n.reference_to === master;});
             if(refField && refField.name){
                 let write_requires_master_read = refField.write_requires_master_read || false; /* 默认对主表有编辑权限才可新建或者编辑子表 */
@@ -78,7 +88,7 @@ module.exports = {
          const { object_name, id, previousDoc} = this;
          const dbDoc = await objectql.getObject(object_name).findOne(id);
          let docOwner = dbDoc.owner;
-         if (docOwner !== previousDoc.owner) {
+         if (docOwner !== previousDoc.owner && DISABLE_RELEVANT_OWNER_VALUE_MASTERS.indexOf(object_name) < 0) {
              let object_name = this.object_name;
              let docId = dbDoc._id;
              const obj = objectql.getObject(object_name);
