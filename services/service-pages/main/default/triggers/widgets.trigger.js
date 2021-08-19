@@ -14,7 +14,11 @@ const getQueries = async(apiName)=>{
 }
 module.exports = {
     listenTo: 'widgets',
-
+    beforeInsert: async function(){
+        if(!this.doc.name){
+            this.doc.name = await objectql.getObject(this.object_name)._makeNewID()
+        }
+    },
     afterInsert: async function(){
         if(this.doc.type === 'charts'){
             if(this.doc.visualization){
