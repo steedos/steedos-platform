@@ -1,0 +1,13 @@
+metadataName: Chart
+isAddressable: true
+isSourceTracked: true
+tableName: charts
+ext: chart
+hasContent: false
+defaultDirectory: charts
+nameForMsgs: Chart
+nameForMsgsPlural: Charts
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

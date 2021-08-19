@@ -32,7 +32,10 @@ export enum SteedosMetadataTypeInfoKeys {
     Flow = 'Flow',
     Role = 'Role',
     FlowRole = 'FlowRole',
-    ApprovalProcess = "ApprovalProcess"
+    ApprovalProcess = "ApprovalProcess",
+    Query = "Query",
+    Chart = "Chart",
+    Page = "Page"
 }
 
 const loadType = function (filePath){

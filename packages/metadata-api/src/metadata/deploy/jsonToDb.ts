@@ -16,11 +16,18 @@ import { rolesToDb } from '../collection/role'
 import { flowRolesToDb } from '../collection/flowRole'
 import { layoutsToDb } from '../collection/layout'
 
+import { QueryCollection } from '../collection/query';
+import { ChartCollection } from '../collection/chart';
+import { PageCollection } from '../collection/page';
+
+const queryCollection = new QueryCollection();
+const chartCollection = new ChartCollection();
+const pageCollection = new PageCollection();
+
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getMetadataTypeInfo, hasChild, getChilds } from '@steedos/metadata-core';
 
 async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, parentName?, assistRecords?){
 
-    
     switch(metadataName){
         case TypeInfoKeys.Object:
             await objectsToDb(dbManager, metatdataRecords);
@@ -84,6 +91,18 @@ async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, p
 
         case TypeInfoKeys.Layout:
             await layoutsToDb(dbManager, metatdataRecords);
+            break;
+
+        case TypeInfoKeys.Chart:
+            await chartCollection.deploy(dbManager, metatdataRecords);
+            break;
+        
+        case TypeInfoKeys.Query:
+            await queryCollection.deploy(dbManager, metatdataRecords);
+            break;
+
+        case TypeInfoKeys.Page:
+            await pageCollection.deploy(dbManager, metatdataRecords);
             break;
 
         default:

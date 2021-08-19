@@ -1,12 +1,17 @@
+import { loadFile, SteedosMetadataTypeInfoKeys as TypeInfoKeys, getChilds, hasParent } from '@steedos/metadata-core';
 import { checkNameEquals } from '../../util/check_name_equals'
-import { loadFile, SteedosMetadataTypeInfoKeys as TypeInfoKeys, 
-    getPackagePaths, hasChild, getChilds, hasParent } from '@steedos/metadata-core';
+import { LoadChartFile } from './loadChartFile';
+import { LoadPageFile } from './loadPageFile';
+import { LoadQueryFile } from './loadQueryFile';
 
 const path = require('path');
 const glob = require('glob');
 const _ = require('underscore');
 const compressing = require("compressing");
-const chalk = require("chalk");
+
+const loadChartFile = new LoadChartFile();
+const loadPageFile = new LoadPageFile();
+const loadQueryFile = new LoadQueryFile();
 
 //扫描Permissionsets并输出为json
 async function loadPermissionsets(filePath){
@@ -661,6 +666,9 @@ export async function loadFileToJson(packagePath:string, packageYml?){
     let approvalProcesses = {};
     let roles = {};
     let flowRoles = {};
+    let charts = {};
+    let queries = {};
+    let pages = {};
     let mark:boolean = false;
 
     for(const metadataname in packageYml){
@@ -737,6 +745,18 @@ export async function loadFileToJson(packagePath:string, packageYml?){
             
             layouts = await loadLayouts(packagePath);
             mark = true;
+        }else if(metadataname === TypeInfoKeys.Chart){
+            
+            charts = await loadChartFile.load(packagePath);
+            mark = true;
+        }else if(metadataname === TypeInfoKeys.Query){
+            
+            queries = await loadQueryFile.load(packagePath);
+            mark = true;
+        }else if(metadataname === TypeInfoKeys.Page){
+            
+            pages = await loadPageFile.load(packagePath);
+            mark = true;
         }
 
     }
@@ -766,6 +786,9 @@ export async function loadFileToJson(packagePath:string, packageYml?){
     steedosPackage[TypeInfoKeys.ApprovalProcess] = approvalProcesses;
     steedosPackage[TypeInfoKeys.Role] = roles;
     steedosPackage[TypeInfoKeys.FlowRole] = flowRoles;
+    steedosPackage[TypeInfoKeys.Query] = queries;
+    steedosPackage[TypeInfoKeys.Chart] = charts;
+    steedosPackage[TypeInfoKeys.Page] = pages;
 
     //用于测试查看本地生成的steedosPackage结构和属性是否完整
     // let targetFolderName = './data';

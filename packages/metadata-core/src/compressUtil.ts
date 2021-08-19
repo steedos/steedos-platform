@@ -228,7 +228,7 @@ class ZipDescription{
             //确认文件名和内部参数name是否相同
             if(basename.endsWith('role.yml') || basename.endsWith('flowRole.yml')){
                 if(itemName != fullName){
-                    throw new Error('The attribute "api_name" in the file does not match its filename.\nApiName:"'+fileContent['api_name']+'" Path:' + filePath)
+                    throw new Error('The attribute "api_name" in the file does not match its filename.\nApiName:"'+fileContent['api_name']+'" Path: ' + filePath)
                 }
             }else if(!(basename.endsWith('objectTranslation.yml') 
                     || basename.endsWith('translation.yml')
@@ -238,11 +238,11 @@ class ZipDescription{
                 if(parentName){
 
                     if(`${parentName}.${itemName}` != fullName){
-                        throw new Error('The attribute "name" in the file does not match its filename.\nName:"'+fileContent['name']+'" Path:' + filePath)
+                        throw new Error('The attribute "name" in the file does not match its filename.\nName:"'+fileContent['name']+'" Path: ' + filePath)
                     }
                 }else{
                     if(itemName != fullName){
-                        throw new Error('The attribute "name" in the file does not match its filename.\nName:"'+fileContent['name']+'" Path:' + filePath)
+                        throw new Error('The attribute "name" in the file does not match its filename.\nName:"'+fileContent['name']+'" Path: ' + filePath)
                     }
                 }
             }

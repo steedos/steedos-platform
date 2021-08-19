@@ -20,7 +20,13 @@ import {approvalProcessesFromDb} from '../collection/approvalProcess'
 import {rolesFromDb} from '../collection/role'
 import {flowRolesFromDb} from '../collection/flowRole'
 import {layoutsFromDb} from '../collection/layout'
+import { QueryCollection } from '../collection/query';
+import { ChartCollection } from '../collection/chart';
+import { PageCollection } from '../collection/page';
 
+const queryCollection = new QueryCollection();
+const chartCollection = new ChartCollection();
+const pageCollection = new PageCollection();
 
 import { hasParent, getParentMetadataName, hasChild, getMetadataTypeInfo, getFunctionFields,
    SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
@@ -108,6 +114,16 @@ export async function dbToJson(reqYml, steedosPackage, dbManager){
         await layoutsFromDb(dbManager, reqYml[metadataName], container);
         break;
 
+      case TypeInfoKeys.Chart:
+        await chartCollection.retrieve(dbManager, reqYml[metadataName], container);
+        break;
+  
+      case TypeInfoKeys.Query:
+        await queryCollection.retrieve(dbManager, reqYml[metadataName], container);
+        break;
+      case TypeInfoKeys.Page:
+        await pageCollection.retrieve(dbManager, reqYml[metadataName], container);
+        break;
       default:
         break;
     }

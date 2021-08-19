@@ -176,6 +176,17 @@ export function getFileinfoByFilename(filename) {
         metadataName = TypeInfoKeys.FlowRole;
         itemName = _.first(filename.split('.'));
 
+    }else if(filename.endsWith('.query.yml')){
+        metadataName = TypeInfoKeys.Query;
+        itemName = _.first(filename.split('.'));
+
+    }else if(filename.endsWith('.page.yml')){
+        metadataName = TypeInfoKeys.Page;
+        itemName = _.first(filename.split('.'));
+
+    }else if(filename.endsWith('.chart.yml')){
+        metadataName = TypeInfoKeys.Chart;
+        itemName = _.first(filename.split('.'));
     }else{
         unsupportedFile = filename;
         //throw new Error('unsupported filename:'+ filename);
