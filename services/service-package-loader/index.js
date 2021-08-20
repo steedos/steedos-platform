@@ -3,6 +3,7 @@
 const objectql = require('@steedos/objectql');
 const core = require('@steedos/core');
 const triggerLoader = require('./lib').triggerLoader;
+const sendPackageFlowToDb = require('./lib/loadPackageFlow').sendPackageFlowToDb;
 const path = require('path');
 const Future = require('fibers/future');
 const _ = require('lodash');
@@ -45,6 +46,18 @@ module.exports = {
         "translations.object.change": {
             handler() {
                 core.loadObjectTranslations()
+            }
+        },
+        "steedos-server.started": {
+            handler() {
+                let packageInfo = this.settings.packageInfo;
+                if (!packageInfo) {
+                    return;
+                }
+                const { path : _path } = packageInfo;
+                if(_path){
+                    sendPackageFlowToDb(this.broker, _path)
+                }
             }
         }
     },
@@ -115,6 +128,10 @@ module.exports = {
             console.log(`service ${this.name} started`);
             return;
         }
+        this.broker.waitForServices("steedos-server").then(async () => {
+			sendPackageFlowToDb(this.broker, _path, this.name)
+		});
+        
         await this.loadPackageMetadataFiles(_path, this.name, datasource);
         if(isPackage !== false){
             try {

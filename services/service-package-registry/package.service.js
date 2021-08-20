@@ -26,7 +26,9 @@ const getPackageMetadata = async (packagePath)=>{
 		ApprovalProcess: '*',
 		Role: '*',
 		FlowRole: '*',
-		// Role: '*',
+		Query: '*',
+		Chart: '*',
+		Page: '*',
 	});
 
 	_.each(result, (metadataItems, metadataType)=>{

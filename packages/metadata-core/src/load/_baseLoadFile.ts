@@ -9,12 +9,16 @@ import { checkNameEquals } from '../util/check_name_equals'
 export class BaseLoadMetadataFile{
     metadataName: string;
     metadataInfo: any;
-    constructor(metadataName){
+    ext: string = 'yml';
+    constructor(metadataName, ext?){
+        if(ext){
+            this.ext = ext;
+        }
         this.metadataName = metadataName;
         this.metadataInfo = getMetadataTypeInfo(metadataName)
     }
     load(filePath){
-        let matchedPaths = glob.sync(path.join(filePath, this.metadataInfo.defaultDirectory, `*.${this.metadataInfo.ext}.yml`));
+        let matchedPaths = glob.sync(path.join(filePath, this.metadataInfo.defaultDirectory, `*.${this.metadataInfo.ext}.${this.ext}`));
         let metadatasJSON = {};
         for (let k=0; k<matchedPaths.length; k++) {
             let matchedPath = matchedPaths[k];

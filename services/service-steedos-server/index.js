@@ -7,7 +7,9 @@ const MetadataService = require("@steedos/service-metadata-server");
 const NodeRedService = require('@steedos/service-node-red');
 const APIService = require('@steedos/service-api');
 const packageLoader = require('@steedos/service-meteor-package-loader');
+const objectql = require('@steedos/objectql');
 const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
+const _ = require('lodash');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -63,6 +65,60 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
+		importFlow: {
+			async handler(ctx) {
+				await Future.task(() => {
+					try {
+						const { flow } = ctx.params
+						const { name } = ctx.meta;
+						try {
+							if(!db){
+								return
+							}
+							if(!steedosImport){
+								return
+							}
+						} catch (error) {
+							return ;
+						}
+						
+						if(db && db.flows && steedosImport){
+							const steedosConfig = objectql.getSteedosConfig();
+							let space;
+							if(steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id){
+								space = db.spaces.findOne(steedosConfig.tenant._id)
+							}
+							if(!space){
+								space = db.spaces.findOne()
+							}
+							if(!space){
+								this.logger.warn(`import flow ${flow.name} fail. not find space in db`);
+								return ;
+							}
+							if(!flow.api_name){
+								this.logger.warn(`not find api_name in file`);
+								return ;
+							}
+							const dbFlow = db.forms.findOne({api_name: flow.api_name});
+							if(!dbFlow){
+								if(flow && flow.current){
+									if(!_.has(flow.current,'fields')){
+										flow.current.fields = [];
+									}
+								}
+								this.logger.info(`insert flow ${flow.api_name} from ${name}`)
+								return steedosImport.workflow(space.owner, space._id, flow, flow.state == 'enabled' ? true : false, null);
+							}
+							this.logger.debug(`not import flow. find flow `, dbFlow._id)
+						}
+	
+					} catch (error) {
+						this.logger.error(error)
+					}
+				}).promise();
+				
+			}
+		}
 	},
 
 	/**
@@ -183,6 +239,7 @@ module.exports = {
 
 			this.startAPIService();
 			console.log('耗时：', new Date().getTime() - time);
+			this.broker.emit("steedos-server.started"); //此处有异步函数，当前服务started后，实际上还未初始化完成。所以此服务初始化完成后，发出一个事件
 		});
 
 	},
@@ -192,5 +249,8 @@ module.exports = {
 	 */
 	async stopped() {
 
-	}
+	},
+    merged(schema) {
+        schema.name = 'steedos-server';  //steedo-server 服务禁止修改name
+    }
 };

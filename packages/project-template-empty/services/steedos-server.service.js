@@ -2,7 +2,7 @@ const SteedosService = require("@steedos/service-steedos-server");
 const path = require('path');
 
 module.exports = {
-    name: "steedos-project-template-steedos-server",
+    name: "steedos-server",
     namespace: "steedos",
     mixins: [SteedosService],
     dependencies: ['metadata-server'],
