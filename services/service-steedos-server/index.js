@@ -181,6 +181,8 @@ module.exports = {
 
 			this.startAPIService();
 			console.log('耗时：', new Date().getTime() - time);
+			// 广播steedos-server服务已完全启动好
+			this.broker.broadcastLocal('service-steedos-server-started');
 		});
 
 	},
