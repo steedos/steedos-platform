@@ -41,6 +41,7 @@ export class MetadataBaseCollection{
         for(const metadataName in metadataList){
             var metadata = metadataList[metadataName];
             // await checkComponentsExist(dbManager, layout);
+            delete metadata.__filename
             await this.save(dbManager, metadata);
         }
     }

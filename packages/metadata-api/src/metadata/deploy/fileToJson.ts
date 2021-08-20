@@ -1,8 +1,5 @@
-import { loadFile, SteedosMetadataTypeInfoKeys as TypeInfoKeys, getChilds, hasParent } from '@steedos/metadata-core';
+import { loadFile, SteedosMetadataTypeInfoKeys as TypeInfoKeys, getChilds, hasParent, LoadChartFile, LoadPageFile, LoadQueryFile } from '@steedos/metadata-core';
 import { checkNameEquals } from '../../util/check_name_equals'
-import { LoadChartFile } from './loadChartFile';
-import { LoadPageFile } from './loadPageFile';
-import { LoadQueryFile } from './loadQueryFile';
 
 const path = require('path');
 const glob = require('glob');
@@ -747,15 +744,15 @@ export async function loadFileToJson(packagePath:string, packageYml?){
             mark = true;
         }else if(metadataname === TypeInfoKeys.Chart){
             
-            charts = await loadChartFile.load(packagePath);
+            charts = loadChartFile.load(packagePath);
             mark = true;
         }else if(metadataname === TypeInfoKeys.Query){
             
-            queries = await loadQueryFile.load(packagePath);
+            queries = loadQueryFile.load(packagePath);
             mark = true;
         }else if(metadataname === TypeInfoKeys.Page){
             
-            pages = await loadPageFile.load(packagePath);
+            pages = loadPageFile.load(packagePath);
             mark = true;
         }
 

@@ -7,3 +7,6 @@ export * from "./summary"
 export * from "./errors"
 export * from "./actions"
 export * from "./dynamic-load"
+export * from './metadata-register/query'
+export * from './metadata-register/chart'
+export * from './metadata-register/page'

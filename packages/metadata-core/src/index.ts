@@ -22,6 +22,7 @@ export * from './auth/index'
 export * from './project/index'
 export * from './output'
 export * from './util/function';
+export * from './load';
 
 //TODO 待完善
 //record是数据库里的记录

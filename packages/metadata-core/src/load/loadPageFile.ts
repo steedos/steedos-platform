@@ -1,4 +1,4 @@
-import { SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
+import { SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '../typeInfo';
 import { BaseLoadMetadataFile } from "./_baseLoadFile";
 
 export class LoadPageFile extends BaseLoadMetadataFile{

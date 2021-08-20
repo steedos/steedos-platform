@@ -9,6 +9,10 @@ const tabs = require('@steedos/service-metadata-tabs');
 const translations = require('@steedos/service-metadata-translations');
 const triggers = require('@steedos/service-metadata-triggers');
 
+const queriesService = require('./lib/queriesService');
+const chartsService = require('./lib/chartsService');
+const pagesService = require('./lib/pagesService');
+
 module.exports = {
 	name: "metadata-server",
 
@@ -25,6 +29,9 @@ module.exports = {
     this.broker.createService(tabs);
     this.broker.createService(translations);
     this.broker.createService(triggers);
+    this.broker.createService(queriesService);
+    this.broker.createService(chartsService);
+    this.broker.createService(pagesService);
   },
 
   async started() {

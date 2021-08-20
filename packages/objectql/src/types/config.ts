@@ -4,6 +4,9 @@ import {loadJsonFiles} from '../util'
 import { addAppConfigFiles } from './app';
 import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectDataFiles, addRouterFiles } from '.';
 import { addTranslationsFiles, addObjectTranslationsFiles } from '../dynamic-load'
+import { registerPackageCharts } from '../dynamic-load/chart';
+import { registerPackageQueries } from '../dynamic-load/query';
+import { registerPackagePages } from '../dynamic-load/page';
 
 export const LOADED_OBJECT_RECORDS = {}
 
@@ -120,6 +123,10 @@ export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName
     addRouterFiles(filePath);
     await addObjectConfigFiles(filePath, datasourceApiName, serviceName);
     await addAppConfigFiles(filePath, serviceName);
+    await registerPackageQueries(filePath, serviceName);
+    await registerPackageCharts(filePath, serviceName);
+    await registerPackagePages(filePath, serviceName);
+
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     // addObjectI18nFiles(filePath);

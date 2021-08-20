@@ -7,6 +7,7 @@
 
 import { isJsonMap, JsonMap } from '@salesforce/ts-types';
 import { Validators, loadCoreValidators } from '../validators';
+const odataMongodb = require("odata-v4-mongodb");
 const Future  = require('fibers/future');
 const crypto = require('crypto')
 const yaml = require('js-yaml');
@@ -1033,6 +1034,61 @@ export function objectToJson(objectConfig){
 
 export function validateFilters(filters: [], objectFields: any) {
     processFilters(clone(filters), objectFields);
+}
+
+
+export function parserFilters(filters){
+    if(_.isString(filters)){
+        filters = odataMongodb.createFilter(filters)
+    }
+    let query: any = {};
+    if(_.isArray(filters) && filters.length > 0 && _.isArray(filters[0])){
+        _.each(filters,function(filter){
+            Object.assign(query, parserFilters(filter))
+        })
+    }else if(_.isArray(filters) && filters.length > 0){
+        if(filters[1] && filters[1] == '='){
+            let key = filters[0]
+            let value = filters[2]
+            Object.assign(query, {[key]: value})
+        }else if(filters[1] && (filters[1] == '!=' || filters[1] == '<>')){
+            let key = filters[0]
+            let value = filters[2]
+            Object.assign(query, {[key]: {$ne: value}})
+        }else if(filters[1] && filters[1] == 'in'){
+            let key = filters[0]
+            let value = filters[2]
+            Object.assign(query, {[key]: {$in: value}})
+        }else{
+            _.each(filters,function(filter){
+                let parsedFilters = parserFilters(filter);
+                if(query._id && query._id.$ne && parsedFilters._id && parsedFilters._id.$ne){
+                    parsedFilters._id.$ne = [parsedFilters._id.$ne]
+                    parsedFilters._id.$ne = parsedFilters._id.$ne.concat(query._id.$ne);
+                    delete query._id;
+                }
+                Object.assign(query, parsedFilters)
+            })
+        }
+    }else{
+        _.each(filters, function (v, k) {
+            if(_.isArray(v) && v.length > 0){
+                Object.assign(query, parserFilters(v))
+            }else{
+                if (k === '$and') {
+                    Object.assign(query, parserFilters(v))
+                } else {
+                    if(_.isArray(filters) && _.isObject(v)){
+                        Object.assign(query, v)
+                    }else{
+                        Object.assign(query, {[k]: v})
+                    }
+                }
+            }
+            
+        })
+    }
+    return query;
 }
 
 loadCoreValidators();

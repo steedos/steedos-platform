@@ -8,6 +8,8 @@ columns:
     wrap: false
   - field: query
     wrap: false
+  - field: is_system
+    wrap: false
 filter_fields:
   - type
 filter_scope: space

@@ -1,9 +1,10 @@
-import { loadFile, SteedosMetadataTypeInfoKeys as TypeInfoKeys, getMetadataTypeInfo } from '@steedos/metadata-core';
+import { getMetadataTypeInfo } from '../typeInfo';
+import { loadFile } from '../loadFile'
 import _ from 'underscore';
 const path = require('path');
 const glob = require('glob');
 
-import { checkNameEquals } from '../../util/check_name_equals'
+import { checkNameEquals } from '../util/check_name_equals'
 
 export class BaseLoadMetadataFile{
     metadataName: string;
@@ -12,12 +13,12 @@ export class BaseLoadMetadataFile{
         this.metadataName = metadataName;
         this.metadataInfo = getMetadataTypeInfo(metadataName)
     }
-    async load(filePath){
+    load(filePath){
         let matchedPaths = glob.sync(path.join(filePath, this.metadataInfo.defaultDirectory, `*.${this.metadataInfo.ext}.yml`));
         let metadatasJSON = {};
         for (let k=0; k<matchedPaths.length; k++) {
             let matchedPath = matchedPaths[k];
-            let json = loadFile(matchedPath);
+            let json: any = loadFile(matchedPath);
             let apiName = matchedPath.substring(matchedPath.lastIndexOf('/')+1, matchedPath.indexOf(`.${this.metadataInfo.ext}`));
             let metadata = {};
             try {
@@ -35,6 +36,7 @@ export class BaseLoadMetadataFile{
                         }
                         metadata[key] = json[key];
                     }
+                    json.__filename = matchedPath
                     metadatasJSON[apiName] = json;    
                 }
             } catch (error) {

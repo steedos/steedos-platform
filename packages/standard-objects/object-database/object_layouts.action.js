@@ -2,7 +2,6 @@ module.exports = {
   listenTo: 'objects',
 
   createDefaulRecordView: function (object_name, record_id, item_element) {
-    console.log(`createDefaulRecordView...`, object_name);
     if(object_name === 'objects' && this.record){
       const objectApiName = this.record.name;
       $("body").addClass("loading");

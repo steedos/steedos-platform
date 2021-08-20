@@ -60,7 +60,7 @@ module.exports = {
 				if(pages.length > 0){
 					page = pages[0];
 				}
-				page.can_edit = userSession.is_space_admin //仅工作区管理员可以编辑
+				page.can_edit = userSession.is_space_admin && page.is_system != true //仅工作区管理员可以编辑
 				page.user = { name: 'true' } //TODO
 				page.layout = [] //TODO
 				page.public_url = '' //TODO

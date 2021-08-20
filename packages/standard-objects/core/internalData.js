@@ -36,16 +36,16 @@ function parserFilters(filters){
         })
     }else if(_.isArray(filters) && filters.length > 0){
         if(filters[1] && filters[1] == '='){
-            key = filters[0]
-            value = filters[2]
+            let key = filters[0]
+            let value = filters[2]
             Object.assign(query, {[key]: value})
         }else if(filters[1] && (filters[1] == '!=' || filters[1] == '<>')){
-            key = filters[0]
-            value = filters[2]
+            let key = filters[0]
+            let value = filters[2]
             Object.assign(query, {[key]: {$ne: value}})
         }else if(filters[1] && filters[1] == 'in'){
-            key = filters[0]
-            value = filters[2]
+            let key = filters[0]
+            let value = filters[2]
             Object.assign(query, {[key]: {$in: value}})
         }else{
             _.each(filters,function(filter){

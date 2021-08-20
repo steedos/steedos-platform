@@ -3,6 +3,10 @@
   "version": "2.1.1",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "compile": "tsc",
+    "prepare": "tsc"
+  },
   "dependencies": {
     "@steedos/service-metadata": "2.1.1",
     "@steedos/service-metadata-apps": "2.1.1",
@@ -13,6 +17,9 @@
     "@steedos/service-metadata-translations": "2.1.1",
     "@steedos/service-metadata-triggers": "2.1.1",
     "@steedos/service-packages": "2.1.1"
+  },
+  "devDependencies": {
+    "typescript": "3.5.3"
   },
   "private": false,
   "publishConfig": {
