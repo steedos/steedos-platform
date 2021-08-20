@@ -29874,6 +29874,13 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   align-items: center;
   padding: 0px 7px 0px 2px;
 }
+.type-object.mode-edit .type-lookup .ant-col-6.ant-form-item-label-left {
+  flex: auto;
+}
+.type-object.mode-edit .type-lookup .ant-col-18.ant-form-item-control {
+  flex: auto;
+  max-width: 100%;
+}
 
 .type-image .ant-image .image-item {
   width: auto;

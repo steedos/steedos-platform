@@ -21288,6 +21288,7 @@ textarea.ant-pagination-options-quick-jumper input {
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 .ant-pro-table-search {
   margin-bottom: 16px;
   padding: 24px;
@@ -29872,6 +29873,13 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   display: flex;
   align-items: center;
   padding: 0px 7px 0px 2px;
+}
+.type-object.mode-edit .type-lookup .ant-col-6.ant-form-item-label-left {
+  flex: auto;
+}
+.type-object.mode-edit .type-lookup .ant-col-18.ant-form-item-control {
+  flex: auto;
+  max-width: 100%;
 }
 
 .type-image .ant-image .image-item {
