@@ -13,6 +13,7 @@ enable_share: false
 enable_tasks: false
 enable_workflow: false
 icon: case
+hidden: true
 is_enable: true
 label: 查询
 version: 2

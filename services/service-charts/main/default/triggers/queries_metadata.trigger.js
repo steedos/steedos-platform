@@ -40,6 +40,11 @@ module.exports = {
                     return item.name == filters.name
                 })
             }
+            if(filters.datasource){
+                dataList = _.filter(dataList, (item)=>{
+                    return item.datasource == filters.datasource
+                })
+            }
         }
 
         if(dataList){
@@ -62,6 +67,11 @@ module.exports = {
             if(filters.name){
                 dataList = _.filter(dataList, (item)=>{
                     return item.name == filters.name
+                })
+            }
+            if(filters.datasource){
+                dataList = _.filter(dataList, (item)=>{
+                    return item.datasource == filters.datasource
                 })
             }
         }

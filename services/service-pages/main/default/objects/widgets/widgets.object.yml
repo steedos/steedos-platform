@@ -13,6 +13,7 @@ enable_search: false
 enable_share: false
 enable_tasks: false
 enable_workflow: false
+hidden: true
 icon: shipment
 is_enable: true
 label: 部件
