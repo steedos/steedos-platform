@@ -1,9 +1,9 @@
 name: accounts
-label: 客户
+label: 业务伙伴
 description: 
 fields:
   name:
-    label: 客户名
+    label: 业务伙伴名称
     help: 
     description: 
   owner:
@@ -45,7 +45,7 @@ fields:
     description: 
   parent_id:
     label: 母公司
-    help: 作为大公司或组织的子公司的母公司。父级客户必须是华炎魔方中的现有客户。您可输入客户名，或使用查找图标选择（或创建）客户。
+    help: 作为大公司或组织的子公司的母公司。父级业务伙伴必须是华炎魔方中的现有业务伙伴。您可输入业务伙伴名称，或使用查找图标选择（或创建）业务伙伴。
     description: 
   credit_code:
     label: 纳税人识别号（身份证/其他）
@@ -142,7 +142,7 @@ fields:
     description: 
   state:
     label: 区域
-    help: 客户被分配至的区域。
+    help: 业务伙伴被分配至的区域。
     options:
       - label: 北京
         value: BJ
@@ -222,12 +222,12 @@ fields:
     help: 
     description: 
   account_number:
-    label: 客户编号
+    label: 业务伙伴编号
     help: 
     description: 
   rating:
     label: 分级
-    help: 您如何划分此客户等级的分类，例如，普通、重要。
+    help: 您如何划分此业务伙伴等级的分类，例如，普通、重要。
     options:
       - label: 非常重要
         value: Hot
@@ -253,12 +253,12 @@ fields:
     help: 
     description: 
   account_source:
-    label: 客户来源
+    label: 业务伙伴来源
     help: 
     description: 
   site:
-    label: 客户地点
-    help: 可用客户地点字段来指定同一公司的不同位置。例如，假设百度在北京和上海均设有办公室。创建两个名为百度的客户，但是客户地点的值分别为北京和上海。
+    label: 业务伙伴地点
+    help: 可用业务伙伴地点字段来指定同一公司的不同位置。例如，假设百度在北京和上海均设有办公室。创建两个名为百度的业务伙伴，但是业务伙伴地点的值分别为北京和上海。
     description: 
   annual_revenue:
     label: 年收入
@@ -278,11 +278,11 @@ fields:
         value: Others
     description: 
   account_division:
-    label: 客户分部
+    label: 业务伙伴分部
     help: 
     description: 
   partner_account:
-    label: 合作伙伴客户
+    label: 合作伙伴
     help: 
     description: 
   assistant:
@@ -322,12 +322,12 @@ fields:
     help: 
     description: 
   lead_source:
-    label: 潜在客户来源
-    help: 潜在客户来源，例如，广告、合作伙伴或 Web。
+    label: 潜在业务伙伴来源
+    help: 潜在业务伙伴来源，例如，广告、合作伙伴或 Web。
     options:
       - label: 广告
         value: Advertisement
-      - label: 客户活动
+      - label: 业务伙伴活动
         value: Customer_Event
       - label: 员工推荐
         value: Employee_Referral
@@ -395,19 +395,19 @@ listviews:
   recent:
     label: 最近查看
   all:
-    label: 所有客户
-  allCustomers:
-    label: 所有顾客
+    label: 所有业务伙伴
+  # allCustomers:
+  #   label: 所有顾客
   hotRating:
-    label: 非常重要的客户
+    label: 非常重要的业务伙伴
   mine:
-    label: 我的客户
+    label: 我的业务伙伴
 actions:
   enableSupplier:
     label: 作为供应商启用
   disableSupplier:
     label: 禁用供应商账户
   enableCustomer:
-    label: 作为客户启用
+    label: 作为业务伙伴启用
   disableCustomer:
-    label: 禁用客户账户
+    label: 禁用业务伙伴账户
