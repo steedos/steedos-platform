@@ -147,6 +147,9 @@ export function getRetrievePackageInfo(option) {
                     requestJson[TypeInfoKeys.Role] = ['*']
                     requestJson[TypeInfoKeys.FlowRole] = ['*']
                     requestJson[TypeInfoKeys.Layout] = ['*']
+                    requestJson[TypeInfoKeys.Query] = ['*']
+                    requestJson[TypeInfoKeys.Chart] = ['*']
+                    requestJson[TypeInfoKeys.Page] = ['*']
                 }
     
             }
