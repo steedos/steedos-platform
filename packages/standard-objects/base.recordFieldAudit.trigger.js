@@ -31,7 +31,11 @@ const getLookupFieldValue = async function(reference_to, value, space_id) {
       previous_ids = value.ids;
     }
     if (!_.isArray(previous_ids)) {
-      previous_ids = value ? [value] : [];
+      if(_.isArray(value)){
+        previous_ids = value;
+      }else{
+        previous_ids = value ? [value] : [];
+      }
     }
     reference_to_object = objectql.getObject(reference_to);
     name_field_key = await reference_to_object.getNameFieldKey();

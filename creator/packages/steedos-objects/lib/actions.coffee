@@ -169,7 +169,7 @@ if Meteor.isClient
 							gridContainer = $(".gridContainer.#{gridObjectNameClass}")
 							unless gridContainer?.length
 								if window.opener
-									isOpenerRemove = true
+									isOpenerRemove = false
 									gridContainer = window.opener.$(".gridContainer.#{gridObjectNameClass}")
 							try
 								if FlowRouter.current().route.path.endsWith("/:record_id")

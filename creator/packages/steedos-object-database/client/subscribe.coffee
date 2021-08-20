@@ -13,6 +13,8 @@ _changeClientObjects = (document, oldDocument)->
 	if !Steedos.isSpaceAdmin() && document.in_development != '0'
 		return ;
 
+	SteedosUI.reloadObject document.name
+
 #	type = "added"
 #	if !_.isEmpty(_.findWhere(Creator.objectsByName, {_id: document._id}))
 #		type = "changed"
@@ -40,6 +42,11 @@ _changeClientObjects = (document, oldDocument)->
 	catch e
 		console.error(e);
 
+
+_delayChangeClientObjects = (document, oldDocument)->
+	Meteor.setTimeout ()->
+		_changeClientObjects document, oldDocument
+	, 5000
 
 _removeClientObjects = (document)->
 	_object = _.findWhere Creator.objectsByName, {_id: document._id}
@@ -109,7 +116,7 @@ Meteor.startup ()->
 						if !Steedos.isSpaceAdmin() && (newDocument.is_enable == false || newDocument.in_development != '0')
 							_removeClientObjects newDocument
 						else
-							_changeClientObjects newDocument, oldDocument
+							_delayChangeClientObjects newDocument, oldDocument
 #							Meteor.setTimeout ()->
 #								_changeClientObjects newDocument
 #							, 5000
@@ -137,7 +144,7 @@ Meteor.startup ()->
 			Creator.getCollection("_object_reload_logs").find({}).observe {
 				added: (newDocument)->
 					if reload_objects_observer_init
-						_changeClientObjects({name: newDocument.object_name})
+						_delayChangeClientObjects({name: newDocument.object_name})
 			}
 			reload_objects_observer_init = true
 
@@ -155,11 +162,11 @@ Meteor.startup ()->
 					if layouts_observer_init
 						_object = Creator.getObject(newDocument.object_name)
 						if _object
-							_changeClientObjects _object
+							_delayChangeClientObjects _object
 				removed: (oldDocument)->
 					if layouts_observer_init
 						_object = Creator.getObject(oldDocument.object_name)
 						if _object
-							_changeClientObjects {_id: _object._id, name: oldDocument.object_name}
+							_delayChangeClientObjects {_id: _object._id, name: oldDocument.object_name}
 			}
 			layouts_observer_init = true

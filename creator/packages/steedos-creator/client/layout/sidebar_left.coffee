@@ -30,7 +30,10 @@ Template.creatorSidebarLeft.helpers
 		unless _id
 			_id = "-"
 		# return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
-		return Creator.getAppMenuUrl this
+		if this.type == "object" or !this.type
+			return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
+		else
+			return Creator.getAppMenuUrl this
 
 	settings_url: ()->
 		return Creator.getRelativeUrl('/user_settings')
