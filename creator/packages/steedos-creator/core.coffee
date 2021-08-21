@@ -316,7 +316,7 @@ Creator.loadAppsMenus = ()->
 		success: (data)->
 			Session.set("app_menus", data);
 	 }
-	Steedos.authRequest Steedos.absoluteUrl("/service/api/apps/menus"), options
+	Steedos.authRequest "/service/api/apps/menus", options
 
 Creator.getVisibleApps = (includeAdmin)->
 	changeApp = Creator._subApp.get();
