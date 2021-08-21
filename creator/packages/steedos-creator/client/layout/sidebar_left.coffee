@@ -31,7 +31,7 @@ Template.creatorSidebarLeft.helpers
 			_id = "-"
 		# return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
 		if this.type == "object" or !this.type
-			return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
+			return Creator.getRelativeUrl("/app/#{_id}/#{String(this.id)}")
 		else
 			return Creator.getAppMenuUrl this
 
