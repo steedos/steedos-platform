@@ -29897,6 +29897,11 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   display: flex;
   flex-direction: column;
 }
+@media (max-width: 768px) {
+  .ant-modal-content {
+    max-height: 100%;
+  }
+}
 .ant-modal-body {
   flex: 1;
   overflow: auto;
