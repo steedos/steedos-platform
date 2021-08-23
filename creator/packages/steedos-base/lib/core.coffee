@@ -36,6 +36,16 @@ Steedos =
 # Kick off the global namespace for Steedos.
 # @namespace Steedos
 ###
+if Meteor.isCordova
+	rootUrl = Meteor.absoluteUrl.defaultOptions.rootUrl
+	if rootUrl.endsWith('/')
+		rootUrl = rootUrl.substr(0, rootUrl.length - 1)
+
+	window.stores?.API?.client?.setUrl = rootUrl
+	window.stores?.Settings?.setRootUrl(rootUrl)
+	window['steedos.setting'] = {
+		rootUrl: rootUrl
+	}
 
 Steedos.getHelpUrl = (locale)->
 	country = locale.substring(3)
