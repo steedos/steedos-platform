@@ -337,7 +337,10 @@ module.exports = {
     beforeUpdate: async function () {
         let { doc, object_name, id} = this;
         validateDoc(doc);
-        const dbDoc = await objectql.getObject(object_name).findOne(id)
+        // const dbDoc = await objectql.getObject(object_name).findOne(id)
+        const dbDoc = objectql.wrapAsync(async function(){
+          return await objectql.getObject(object_name).findOne(id)
+        })
         let oldReferenceTo = dbDoc.type === "master_detail" && dbDoc.reference_to;
         await checkFormulaInfiniteLoop(doc, dbDoc.name);
         await checkMasterDetailTypeField(doc, oldReferenceTo);
