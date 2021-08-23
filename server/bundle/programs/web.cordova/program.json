@@ -2,34 +2,34 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "b9444ac98b11780b6f39818c385e91c2c1a85691.js",
+      "path": "eb4383700896756840d09b99f81d084c534a92e1.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/b9444ac98b11780b6f39818c385e91c2c1a85691.js?meteor_js_resource=true",
-      "size": 23111522,
-      "hash": "b9444ac98b11780b6f39818c385e91c2c1a85691",
-      "sri": "J5ZCXMs8STGY4f9gGu7ypFPzAxFopBEHIX5BzZD9G7IUd2E3E7pCsrSus/aEsjFcpmpynHGmgP4iFx6eNBMU+g=="
+      "url": "/__cordova/eb4383700896756840d09b99f81d084c534a92e1.js?meteor_js_resource=true",
+      "size": 23111914,
+      "hash": "eb4383700896756840d09b99f81d084c534a92e1",
+      "sri": "bPztUHN6OrckFS73gx9xI5OE0i/tBrHlrooCeolxF5aNy+ZIJHfAj+fLF7C0LuSACr2GZMnsMy2RuN2TouuDcA=="
     },
     {
-      "path": "b9444ac98b11780b6f39818c385e91c2c1a85691.stats.json",
+      "path": "eb4383700896756840d09b99f81d084c534a92e1.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/b9444ac98b11780b6f39818c385e91c2c1a85691.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/eb4383700896756840d09b99f81d084c534a92e1.stats.json?meteor_js_resource=true",
       "size": 153684,
-      "hash": "41eebcf00cff8548bf03b3b71a92affd2e6d12ba",
-      "sri": "c9V0uWxdxaiiARFskV7GsRPG99GhXcDj5E0J8CuTl4jwj2IKaRe4wOUBaYN+xivffn3oX+xR9pGPTbydDF/mvw=="
+      "hash": "93d4f726a1ce60bf8f917603be1a7799ab7e93e0",
+      "sri": "9YaKxwMabF8Ynfwnc6LbqamDektkzsjYKAOFoTSgKwFXsUYjhIgjZKX9iMHnYcxaOVfZG/kZ3ZyOFCZAIoMZqQ=="
     },
     {
-      "path": "52c339fae90d2d7e32e2498120e2429a703d3dd8.css",
+      "path": "0e51263b0093fe1baa2923e548fd08d1c11722e7.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/52c339fae90d2d7e32e2498120e2429a703d3dd8.css?meteor_css_resource=true",
-      "size": 1645955,
-      "hash": "52c339fae90d2d7e32e2498120e2429a703d3dd8",
-      "sri": "CCgW88AM9j4soZI+R2YiLsXlPbCjiVI6mVJO6uRM50RwcMUzXLB2Cl1qVdMbcpZrE8/qgEHTToVkb0P3N4/6dg=="
+      "url": "/__cordova/0e51263b0093fe1baa2923e548fd08d1c11722e7.css?meteor_css_resource=true",
+      "size": 1646150,
+      "hash": "0e51263b0093fe1baa2923e548fd08d1c11722e7",
+      "sri": "/jWxim7hmikk0SLrNunCXwfkDETBwcwAg/+BZmdB845ur+zXri3Md+T2BJUyMR8eMPVOxy+9bXYu1Xu9xJgfpg=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -1198,8 +1198,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_creator/assets/logo-square.png",
       "size": 11690,
-      "hash": "64004a554239896538cb4b92a9272b4255086b4f",
-      "sri": "tBt0KSmXEPbOXAP8mPgdp+Zbsf1h8+DCkyTMFaN9AR9ohnpuddjGHCi/HmPr/DZMzL8SGt/CAoGkqBGeGNhp0w=="
+      "hash": "9afd1a12da882436af1e8b57d647dd6587bc9dad",
+      "sri": null
     },
     {
       "path": "packages/steedos_creator/assets/logo-square.png",
@@ -1208,8 +1208,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.png",
       "size": 11690,
-      "hash": "64004a554239896538cb4b92a9272b4255086b4f",
-      "sri": "tBt0KSmXEPbOXAP8mPgdp+Zbsf1h8+DCkyTMFaN9AR9ohnpuddjGHCi/HmPr/DZMzL8SGt/CAoGkqBGeGNhp0w=="
+      "hash": "9afd1a12da882436af1e8b57d647dd6587bc9dad",
+      "sri": null
     },
     {
       "path": "packages/steedos_creator/assets/logo-square.en-us.png",
@@ -1218,8 +1218,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_creator/assets/logo-square.en-us.png",
       "size": 15294,
-      "hash": "563568609e446146f3ddc44368bcad43de10165f",
-      "sri": "FHY37rVUVS3d6DRq2ImEQQTJKTIpFNa8LObnx0Jvk9fDkMatx/6opYCIIT1Rm2FEQJroHeu2wQciQhRQGRha/Q=="
+      "hash": "e256fab7ec953bf744be35fed594fb44e60c51e7",
+      "sri": null
     },
     {
       "path": "packages/steedos_creator/assets/logo-square.en-us.png",
@@ -1228,8 +1228,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.en-us.png",
       "size": 15294,
-      "hash": "563568609e446146f3ddc44368bcad43de10165f",
-      "sri": "FHY37rVUVS3d6DRq2ImEQQTJKTIpFNa8LObnx0Jvk9fDkMatx/6opYCIIT1Rm2FEQJroHeu2wQciQhRQGRha/Q=="
+      "hash": "e256fab7ec953bf744be35fed594fb44e60c51e7",
+      "sri": null
     },
     {
       "path": "packages/steedos_users-import/assets/excel/steedos_import_users_simple.xls",
