@@ -6,6 +6,7 @@ import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGrap
 import { getObjectServiceName } from '.';
 import { jsonToObject } from '../metadata-register/object';
 import { extend } from '../util';
+const Future = require('fibers/future');
 // import { parse } from '@steedos/formula';
 // mongodb pipeline: https://docs.mongodb.com/manual/core/aggregation-pipeline/
 declare var Creator: any;
@@ -617,7 +618,14 @@ module.exports = {
                         }
                         extend(objectConfig, {triggers: (localObjectConfig as any)._baseTriggers})
                         Creator.Objects[objectConfig.name] = objectConfig;
-                        Creator.loadObjects(objectConfig, objectConfig.name);
+                        // Creator.loadObjects(objectConfig, objectConfig.name);
+                        await Future.task(() => {
+                            try {
+                                Creator.loadObjects(objectConfig, objectConfig.name);
+                            } catch (error) {
+                                this.logger.error(error)
+                            }
+                        }).promise();
                     }
                 }
                 
