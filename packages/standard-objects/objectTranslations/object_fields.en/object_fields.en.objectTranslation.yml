@@ -274,6 +274,10 @@ fields:
     label: Show as QR
     help: 
     description: 
+  visible_on:
+    label: Visible On
+    help: 
+    description: 
   inlineHelpText:
     label: Prompt text
     help: 

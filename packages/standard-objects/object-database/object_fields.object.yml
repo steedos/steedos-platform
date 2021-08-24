@@ -504,6 +504,11 @@ fields:
     label: Show_as_qr
     group: Advanced
     visible_on: "{{formData.type === 'url' ? true: false}}"
+  visible_on:
+    type: text
+    label: Visible On
+    is_wide: true
+    group: Advanced
   inlineHelpText:
     label: Prompt text
     type: text

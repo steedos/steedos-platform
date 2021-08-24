@@ -258,6 +258,10 @@ fields:
     label: 显示为二维码
     help: 
     description: 
+  visible_on:
+    label: 可见性公式
+    help: 
+    description: 
   inlineHelpText:
     label: 提示文本
     help: 
