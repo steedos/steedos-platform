@@ -7,7 +7,7 @@ if Meteor.isClient
 		_.each actions, (todo, action_name)->
 			Creator.actionsByName[action_name] = todo 
 
-	Creator.executeAction = (object_name, action, record_id, item_element, list_view_id, record)->
+	Creator.executeAction = (object_name, action, record_id, item_element, list_view_id, record, callback)->
 		if action && action.type == 'word-print'
 			if record_id
 				filters = ['_id', '=', record_id]
