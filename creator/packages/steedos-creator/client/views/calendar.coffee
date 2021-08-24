@@ -149,7 +149,7 @@ Template.creator_calendar.onRendered ->
 					type:"week",
 					maxAppointmentsPerCell:"unlimited"
 				}, "month", "agenda"]
-				currentView: "day"
+				currentView: "week"
 				currentDate: new Date()
 				firstDayOfWeek: 1
 				startDayHour: 8
