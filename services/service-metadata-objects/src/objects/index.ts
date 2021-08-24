@@ -23,7 +23,7 @@ async function getBaseObjectConfig(ctx, datasourceName) {
         metadataType,
         metadataApiName: metadataApiName
     })
-    return configs && configs.length > 0 ? configs[0].metadata : null;
+    return configs && configs.length > 0 ? configs[0]?.metadata : null;
 }
 
 async function getObjectConfigs(ctx, objectApiName) {
@@ -39,7 +39,7 @@ async function getObjectConfigs(ctx, objectApiName) {
 
 function getObjectDatasource(objectConfigs: Array<any>) {
     const config = _.find(objectConfigs, function (objectConfig) {
-        return objectConfig.datasource;
+        return objectConfig?.datasource;
     })
     // if(!config){
     //     console.log(`getObjectDatasource`, _.map(objectConfigs, 'name'))

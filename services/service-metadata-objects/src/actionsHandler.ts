@@ -24,10 +24,12 @@ const DELAY_MESSAGE_OF_OBJECT_CHANGED  = 10; // 延迟通知对象事件的时�
 
 export class ActionHandlers {
     onRegister: any = null;
+    onDestroy: any = null;
 	registerObjectMemEntry: Map<string, number>;
 
-    constructor(onRegister){
+    constructor(onRegister, onDestroy){
         this.onRegister = onRegister;
+        this.onDestroy = onDestroy;
 		this.registerObjectMemEntry = new Map<string, number>();
     }
 
@@ -61,7 +63,7 @@ export class ActionHandlers {
         const objects =  await ctx.broker.call('metadata.filter', {key: cacherKey("*")}, {meta: ctx.meta});
         if(datasource){
             return _.filter(objects, (object)=>{
-                return object.metadata?.datasource == datasource;
+                return object?.metadata?.datasource == datasource;
             });
         }
         return objects
@@ -83,17 +85,17 @@ export class ActionHandlers {
             config.name = config.extend
         }
         const metadataApiName = config.name;
-
-        const metadataConfig = await ctx.broker.call('metadata.getServiceMetadata', {
-            serviceName: ctx.meta.metadataServiceName,
-            metadataType: METADATA_TYPE,
-            metadataApiName: metadataApiName,
-        });
-
-        if(metadataConfig && metadataConfig.metadata){
-            config = _.defaultsDeep(metadataConfig.metadata, config);
+        if(!config.isMain){
+            const metadataConfig = await ctx.broker.call('metadata.getServiceMetadata', {
+                serviceName: ctx.meta.metadataServiceName,
+                metadataType: METADATA_TYPE,
+                metadataApiName: metadataApiName,
+            });
+    
+            if(metadataConfig && metadataConfig.metadata){
+                config = _.defaultsDeep(metadataConfig.metadata, config);
+            }
         }
-
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
         const objectConfig = await refreshObject(ctx, metadataApiName);
         if(!objectConfig){
@@ -115,7 +117,7 @@ export class ActionHandlers {
     async change(ctx: any): Promise<boolean> {
         const {data, oldData} = ctx.params;
         if(oldData.name != data.name){
-            await ctx.broker.call('metadata.delete', {key: cacherKey(oldData.name)})
+            await this.deleteObject(ctx, oldData.name)
         }
         await ctx.broker.call('metadata.add', {key: cacherKey(data.name), data: data}, {meta: ctx.meta})
         ctx.broker.emit("metadata.objects.updated", {objectApiName: data.name, oldObjectApiName: oldData.name, isUpdate: true});
@@ -123,9 +125,7 @@ export class ActionHandlers {
     }
 
     async delete(ctx: any): Promise<boolean>{
-        await ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.objectApiName)}, {meta: ctx.meta})
-        ctx.broker.emit("metadata.objects.deleted", {objectApiName: ctx.params.objectApiName, isDelete: true});
-        return true;
+        return await this.deleteObject(ctx, ctx.params.objectApiName)
     }
 
     async verify(ctx: any): Promise<boolean>{
@@ -143,7 +143,7 @@ export class ActionHandlers {
             for await (const metadataApiName of metadataApiNames) {
                 const objectConfig = await refreshObject(ctx, metadataApiName);
                 if(!objectConfig){
-                    await ctx.broker.call('metadata.delete', {key: cacherKey(metadataApiName)})
+                    await this.deleteObject(ctx, metadataApiName)
                 }else{
                     const objectServiceName = getObjectServiceName(metadataApiName);
                     await this.registerObject(ctx, metadataApiName, objectConfig, {
@@ -159,5 +159,14 @@ export class ActionHandlers {
                 }
             }
         }
+    }
+    async deleteObject(ctx, objectApiName): Promise<boolean>{
+        const { metadata } = await ctx.broker.call('metadata.get', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
+        await ctx.broker.call('metadata.delete', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
+        if(this.onDestroy && _.isFunction(this.onDestroy)){
+            await this.onDestroy(metadata)
+        }
+        ctx.broker.emit("metadata.objects.deleted", {objectApiName: objectApiName, isDelete: true, objectConfig: metadata});
+        return true;
     }
 }
