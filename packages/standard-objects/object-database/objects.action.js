@@ -9,7 +9,7 @@ module.exports = {
         return toastr.warning("请先启动对象");
     }
 
-    if(record.datasource && record.datasource != 'default'){
+    if(record.datasource && record.datasource != 'default' && record.datasource != 'meteor'){
         var datasource = Creator.odata.get('datasources', record.datasource, 'is_enable');
         if(!datasource){
             return toastr.error("未找到数据源");
