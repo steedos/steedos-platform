@@ -31,7 +31,7 @@ _deleteData = (data) ->
 	record_id = data._id
 	object_name = Session.get("object_name")
 	dxSchedulerInstance.hideAppointmentTooltip()
-	Creator.executeAction object_name, action, record_id, action_record_title, 'calendar', ()->
+	Creator.executeAction object_name, action, record_id, action_record_title, 'calendar',null, ()->
 		dxSchedulerInstance.option("dataSource", _dataSource())
 
 _dataSource = () ->
