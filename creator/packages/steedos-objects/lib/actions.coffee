@@ -67,7 +67,7 @@ if Meteor.isClient
 				return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
 					name: "#{object_name}_standard_new_form",
 					objectApiName: object_name,
-					title: '新建',
+					title: '新建' + object.label,
 					initialValues: initialValues,
 					afterInsert: (result)->
 						if(result.length > 0)
@@ -106,7 +106,7 @@ if Meteor.isClient
 						name: "#{object_name}_standard_edit_form",
 						objectApiName: object_name,
 						recordId: record_id,
-						title: '编辑',
+						title: '编辑' + object.label,
 						afterUpdate: ()->
 							setTimeout(()->
 								if FlowRouter.current().route.path.endsWith("/:record_id")
