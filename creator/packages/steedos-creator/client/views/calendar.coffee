@@ -19,8 +19,12 @@ _insertData = () ->
 	Session.set("action_collection", "Creator.Collections.#{object_name}")
 	Session.set("action_collection_name", action_collection_name)
 	Session.set("action_save_and_insert", false)
-	Meteor.defer ->
-		$(".creator-add").click();
+	dxSchedulerInstance.hideAppointmentTooltip()
+	actions = Creator.getActions()
+	action = _.find actions, (item)->
+		return item.name == 'standard_new'
+	if action
+		Creator.executeAction object_name, action
 
 _deleteData = (data) ->
 	action = {
