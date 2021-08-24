@@ -349,19 +349,22 @@ function reloadObject(changeLog){
         if(_mf && object.name){
             object.fields_serial_number = _mf.sort_no + 10;
         }
-
-        datasource.setObject(object.name, object);
-        try {
-            if(!objectDataSourceName || objectDataSourceName == defaultDatasourceName){
-                Creator.Objects[object.name] = object;
-                Creator.loadObjects(object, object.name);
+        objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, Object.assign({}, object, {isMain:false})).then(function(res){            
+            if(res){
+                datasource.setObject(object.name, object);
+                try {
+                    if(!objectDataSourceName || objectDataSourceName == defaultDatasourceName){
+                        Creator.Objects[object.name] = object;
+                        Creator.loadObjects(object, object.name);
+                    }
+                    if(data.type == 'field' || data.type == 'object'){
+                        buildGraphQLSchema();
+                    }
+                } catch (error) {
+                    console.log('error', error);
+                }
             }
-            if(data.type == 'field' || data.type == 'object'){
-                buildGraphQLSchema();
-            }
-        } catch (error) {
-            console.log('error', error);
-        }
+        })
     }
 
 }
