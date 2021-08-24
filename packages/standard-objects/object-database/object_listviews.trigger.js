@@ -26,7 +26,7 @@ module.exports = {
     },
     beforeUpdate: async function () {
         const oldDoc = await objectql.getObject(this.object_name).findOne(this.id)
-        let name,object_name;
+        let name = oldDoc.name,object_name = oldDoc.object_name;
         if(_.has(this.doc, 'name')){
             name = this.doc.name
         }
