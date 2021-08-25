@@ -9,6 +9,7 @@ admin_menus:
     permission_sets:
       - admin
       - workflow_admin
+      - user
     expanded: false
     sort: 500
     # parent: process_automation
