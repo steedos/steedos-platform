@@ -140,6 +140,8 @@ fields:
   disabled_actions:
     type: lookup
     label: Disabled Actions
+    hidden: true
+    omit: true
     multiple: true
     depend_on:
       - object_name
@@ -172,6 +174,8 @@ fields:
   unreadable_fields:
     type: lookup
     label: Unreadable Fields
+    hidden: true
+    omit: true
     multiple: true
     depend_on:
       - object_name
@@ -209,6 +213,8 @@ fields:
   uneditable_fields:
     type: lookup
     label: Uneditable Fields
+    hidden: true
+    omit: true
     multiple: true
     depend_on:
       - object_name
@@ -245,6 +251,8 @@ fields:
   unrelated_objects:
     type: lookup
     label: Unrelated Objects
+    hidden: true
+    omit: true
     multiple: true
     depend_on:
       - object_name
