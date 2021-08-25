@@ -259,7 +259,7 @@ fields:
     help: 
     description: 
   visible_on:
-    label: 可见性公式
+    label: 字段显示公式
     help: 
     description: 
   inlineHelpText:
