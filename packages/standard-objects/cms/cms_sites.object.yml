@@ -49,7 +49,7 @@ fields:
     is_wide: true
     reference_to: users
     multiple: true
-    defaultValue: "[{userId}]"
+    defaultValue: "{userId}"
   description:
     label: Description
     type: textarea
