@@ -263,7 +263,7 @@ _executeAction = (action_name, data)->
 		dxSchedulerInstance.hideAppointmentTooltip()
 
 		if action_name == 'standard_delete'
-			Creator.executeAction objectName, action, data._id, null, null, ()->
+			Creator.executeAction objectName, action, data._id, null, null, null, ()->
 				dxSchedulerInstance.getDataSource().reload()
 		else
 			Creator.executeAction objectName, action, data._id

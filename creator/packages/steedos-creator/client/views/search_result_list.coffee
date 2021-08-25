@@ -36,7 +36,7 @@ _itemClick = (e, object_name, dxSearchGridInstance)->
 			Session.set("action_save_and_insert", true)
 			if action.todo == "standard_delete"
 				action_record_title = value.itemData.record[name_field_key]
-				Creator.executeAction objectName, action, recordId, action_record_title, ()->
+				Creator.executeAction objectName, action, recordId, action_record_title, null, null, ()->
 					dxSearchGridInstance.refresh()
 			else
 				Creator.executeAction objectName, action, recordId
