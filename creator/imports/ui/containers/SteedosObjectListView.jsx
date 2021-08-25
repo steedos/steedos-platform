@@ -1,5 +1,23 @@
 import React, { useRef } from 'react';
 import { ObjectListView, SteedosRouter as Router, SteedosProvider } from '@steedos/builder-community/dist/builder-community.react.js';
+
+window.refreshGrid = (name)=>{
+	const grid = name ? window.gridRefs[name] : window.gridRef;
+	if(!grid || !grid.current){
+		return;
+	}
+	const rowModel = grid.current.api.rowModel.getType();
+	if(rowModel === "serverSide"){
+		grid.current.api.refreshServerSideStore();
+	}
+	else{
+		// infinite
+		grid.current.api.rowModel.reset()
+		// grid.current.api.ensureIndexVisible(0);
+		// grid.current.api.purgeInfiniteCache()
+	}
+}
+
 function SteedosGridContainer(prop){
 	const { objectApiName, name, listName, filters, onModelUpdated, sideBar, pageSize, onUpdated, checkboxSelection, columnFields, autoFixHeight, autoHideForEmptyData } = prop;
 	const gridRef = useRef();
@@ -8,22 +26,6 @@ function SteedosGridContainer(prop){
 		window.gridRefs = {};
 	}
 	window.gridRefs[name] = gridRef;
-	window.refreshGrid = (name)=>{
-		const grid = name ? window.gridRefs[name] : window.gridRef;
-		if(!grid){
-			return;
-		}
-		const rowModel = grid.current.api.rowModel.getType();
-		if(rowModel === "serverSide"){
-			grid.current.api.refreshServerSideStore();
-		}
-		else{
-			// infinite
-			grid.current.api.rowModel.reset()
-			// grid.current.api.ensureIndexVisible(0);
-			// grid.current.api.purgeInfiniteCache()
-		}
-	}
 	if(!objectApiName){
 		return null;
 	}
