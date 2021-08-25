@@ -16,6 +16,7 @@ fields:
   assignees:
     label: Assignees
     type: lookup
+    required: true
     reference_to: users
     defaultValue: "{userId}"
     multiple: true
@@ -23,6 +24,7 @@ fields:
     filterable: true
   due_date:
     label: Due Date
+    required: true
     type: date
     sortable: true
     name: due_date
