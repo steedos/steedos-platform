@@ -143,7 +143,11 @@ module.exports = {
 				if(spackage){
 					if(spackage.enable){
 						if(spackage.local){
-							await loader.loadPackage(module, spackage.path);
+							let packagePath = spackage.path;
+							if(!path.isAbsolute(packagePath)){
+								packagePath = path.resolve(process.cwd(), packagePath)
+							}
+							await loader.loadPackage(module, packagePath);
 						}else{
 							await loader.loadPackage(module);
 						}
