@@ -4,7 +4,8 @@ module.exports = {
             return toastr.info('请配置参数：public.webservices.app_store.url')
         }
         const packageService = Meteor.settings.public.webservices.app_store.url;
-        return window.open(`${packageService}/app-store?client=${window.btoa(Meteor.absoluteUrl('', window.location.origin))}&install_nodes=${window.btoa(Steedos.PackageRegistry.getNodes().join(','))}`)
+        return window.open(`${packageService}?client=${window.btoa(Meteor.absoluteUrl('', window.location.origin))}&install_nodes=${window.btoa(Steedos.PackageRegistry.getNodes().join(','))}`)
+        // return window.open(`${packageService}/app-store?client=${window.btoa(Meteor.absoluteUrl('', window.location.origin))}&install_nodes=${window.btoa(Steedos.PackageRegistry.getNodes().join(','))}`)
 
         SteedosUI.showModal(stores.ComponentRegistry.components.ObjectTable, {
             title: '安装软件包',
