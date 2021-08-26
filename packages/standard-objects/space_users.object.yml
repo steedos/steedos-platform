@@ -161,15 +161,18 @@ fields:
     type: lookup
     label: Contact
     reference_to: contacts
+    omit: true
     readonly: true
   is_supplier:
     type: boolean
     label: Supplier
+    omit: true
     readonly: true
     # hidden: true
   is_customer:
     type: boolean
     label: Customer
+    omit: true
     readonly: true
     # hidden: true
   work_phone:
