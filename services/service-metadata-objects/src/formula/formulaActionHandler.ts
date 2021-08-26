@@ -12,11 +12,6 @@ const isCodeObject = (objectApiName)=>{
 
 const refMapName = '$formula_ref_maps';
 
-
-function getDynamicCalcMapCacherKey(objectApiName: string, mainObjectApiName: string): string{
-    return `$dynamic_calc_map.${objectApiName}.${mainObjectApiName}`
-}
-
 export class FormulaActionHandler{
     broker: any = null;
     constructor(broker){
@@ -155,6 +150,7 @@ export class FormulaActionHandler{
                 // 暂时只支持reference_to为字符的情况，其他类型直接跳过
                 throw new Error(`Field ${tempFieldConfig.name} in formula ${formulaVar} does not define the "Reference Object" property or its "Reference Object" property is a function.`);
             }
+            // TODO：重新计算reference_to的对象是否存在
             tempObjectConfig = await this.getObjectConfig(tempFieldConfig.reference_to);
             if (!tempObjectConfig) {
                 // 没找到相关引用对象，直接退出
@@ -163,7 +159,6 @@ export class FormulaActionHandler{
                     throw new Error(`computeFormulaVarAndQuotes:Can't find the object reference_to '${tempFieldConfig.reference_to}' by the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
                 }
                 else{
-                    await this.broker.call('metadata.add', {key: this.cacherKey(getDynamicCalcMapCacherKey(tempFieldConfig.reference_to, objectConfig.name)), data: {objectApiName: objectConfig.name}}, {meta: {}})
                     return;
                 }
             }
@@ -280,32 +275,6 @@ export class FormulaActionHandler{
             await this.broker.call('metadata.add', {key: this.cacherKey(fieldFormula._id), data: fieldFormula}, {meta: {}})
         }
         return true;
-    }
-
-    async getObjectDynamicCalcFormulaMap(objectApiName){
-        return await this.broker.call('metadata.filter', {key: this.cacherKey(getDynamicCalcMapCacherKey(objectApiName, '*'))}, {meta: {}});
-    }
-
-    async recalcObjectsFormulaMap(objectConfig){
-        const recalcObjects = {};
-        const dynamicCalcFormulaMap = await this.getObjectDynamicCalcFormulaMap(objectConfig.name);
-        for await (const item of dynamicCalcFormulaMap) {
-            const recalcObjectApiName = item?.metadata?.objectApiName;
-            if(recalcObjectApiName){
-                const recalcObjectConfig = await this.getObjectConfig(recalcObjectApiName);
-                if(recalcObjectConfig){
-                    recalcObjects[recalcObjectApiName] = recalcObjectConfig
-                }
-            }
-        }
-        
-        for (const objectName in recalcObjects) {
-            if (Object.prototype.hasOwnProperty.call(recalcObjects, objectName)) {
-                const recalcObjectConfig = recalcObjects[objectName];
-                await this.addFormulaMetadata(recalcObjectConfig, recalcObjectConfig.datasource);
-                await this.broker.call('metadata.delete', {key: this.cacherKey(getDynamicCalcMapCacherKey(objectConfig.name, objectName))}, {meta: {}})
-            }
-        }
     }
 
     async add(objectConfig){

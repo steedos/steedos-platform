@@ -19,14 +19,7 @@
                 dd.runtime.permission.requestAuthCode({
                     corpId: corp_id,
                     onSuccess: function (info) {
-                        var target = getQueryString("target", currentUrl);
-                        var sso_api = window.location.origin + "/api/dingtalk/auth_login";
-                        if (target == '_blank'){
-                            var url = sso_api + "?corpId=" + corp_id + "&code=" + info.code;
-                            window.open(url);
-                        }else{
-                            dingTalkLogin(corp_id, info.code, getQueryString("redirect_url", currentUrl));
-                        }
+                        dingTalkLogin(corp_id, info.code, getQueryString("redirect_url", currentUrl));
                     },
                     onFail: function (err) {
                         console.log(err);

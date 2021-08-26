@@ -3,15 +3,13 @@ const express = require('express');
 const router = express.Router();
 const Cookies = require("cookies");
 const objectql = require('@steedos/objectql');
-const fs = require('fs');
 const steedosConfig = objectql.getSteedosConfig();
 const steedosSchema = objectql.getSteedosSchema();
 const dtApi = require('./dt_api');
-const dtSync = require('./dt_sync.js');
+const dtSync = require('./dt_sync');
 const DingtalkManager = require('./dingtalk_manager');
 const push = require('./notifications');
 const auth = require("@steedos/auth");
-const fetch = require('node-fetch');
 // let jsapi = require('./jsapi');
 
 //钉钉文档：http://ddtalk.github.io/dingTalkDoc/?spm=a3140.7785475.0.0.p5bAUd#2-回调接口（分为五个回调类型）
@@ -230,24 +228,6 @@ Dingtalk._jsonWrapper = function (timestamp, nonce, text) {
     };
 }
 
-Dingtalk.write = function (content) {
-    let LOG_PATH = steedosConfig.dingtalk.log_path || './ding_server.log';
-
-    try {
-        content = JSON.stringify(content);
-    } catch (Exception) {
-
-    }
-    content = content + "\n"
-    fs.appendFileSync(LOG_PATH, content, (err) => {
-        if (err) {
-            console.error(err)
-            return
-        }
-        //file written successfully
-    })
-}
-
 // 手动初始化
 router.post("/api/dingtalk/init", async function (req, res, next) {
 
@@ -288,24 +268,23 @@ router.post("/api/dingtalk/init", async function (req, res, next) {
 
 // dingtalk免登给用户设置cookies
 router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
-    let authtToken, hashedToken, userId, authToken, cookies, corpId, code, user_info, space_user;
+    let authtToken, hashedToken, userId, cookies;
     cookies = new Cookies(req, res);
     userId = cookies.get("X-User-Id");
     authToken = cookies.get("X-Auth-Token");
-    corpId = req.body.corpId;
-    code = req.body.code;
 
-    let space = await dtApi.spaceGet(corpId);
+    let space = await dtApi.spaceGet(req.body.corpId);
     if (!space)
         return res.end("缺少参数 corpId!");
 
     let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
-
+    let code = req.body.code;
     let access_token = response.access_token;
 
     if (!code || !access_token)
         return res.end("缺少参数!");
 
+    let user_info, space_user;
     user_info = await dtApi.userInfoGet(access_token, code);
 
     let userObj = steedosSchema.getObject('space_users');
@@ -344,72 +323,6 @@ router.post("/api/dingtalk/sso_steedos", async function (req, res, next) {
 
 });
 
-// 钉钉新窗口免登
-router.get('/api/dingtalk/auth_login', async function (req, res) {
-    try {
-        let authtToken, hashedToken, userId, authToken, cookies, corpId, code, params, user_info, space_user;
-        cookies = new Cookies(req, res);
-        userId = cookies.get("X-User-Id");
-        authToken = cookies.get("X-Auth-Token");
-        params = req.query;
-
-        corpId = params.corpId;
-        code = params.code;
-
-        let space = await dtApi.spaceGet(corpId);
-        if (!space)
-            return res.end("缺少参数 corpId!");
-
-        let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
-
-        let access_token = response.access_token;
-
-        if (!code || !access_token)
-            return res.end("缺少参数!");
-
-        user_info = await dtApi.userInfoGet(access_token, code);
-
-        let userObj = steedosSchema.getObject('space_users');
-        // console.log("user_info: ",user_info);
-        if (user_info && user_info.userid) {
-            space_user = await userObj.findOne({
-                filters: [['dingtalk_id', '=', user_info.userid]]
-            });
-
-            if (!space_user) {
-                return res.end('no_space_user');
-            }
-
-            if (space_user && authToken) {
-                if (space_user.user != userId) {
-                    dtApi.clearAuthCookies(req, res);
-                    hashedToken = Accounts._hashLoginToken(authToken);
-                    await dtApi.destroyToken(userId, hashedToken);
-                } else {
-                    res.redirect(302, '/');
-                    return res.end('');
-                }
-            }
-
-            let stampedAuthToken = auth.generateStampedLoginToken();
-            let space_user_id = space_user.user;
-
-            authtToken = stampedAuthToken.token;
-            hashedToken = auth.hashStampedToken(stampedAuthToken);
-            await auth.insertHashedLoginToken(space_user_id, hashedToken);
-            auth.setAuthCookies(req, res, space_user_id, authtToken, space._id);
-            res.setHeader('X-Space-Token', space._id + ',' + authtToken);
-            res.redirect(302, '/');
-            return res.end('');
-        }
-    } catch (error) {
-        Dingtalk.write("SSO ERROR:")
-        Dingtalk.write(error);
-        return res.end("");
-    }
-
-});
-
 // 同步数据
 router.get('/api/dingtalk/stockData', async function (req, res) {
 
@@ -420,16 +333,16 @@ router.get('/api/dingtalk/stockData', async function (req, res) {
     let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
     access_token = response.access_token;
 
-    Dingtalk.write("================存量数据开始===================")
-    Dingtalk.write("access_token:" + access_token)
+    dtSync.write("================存量数据开始===================")
+    dtSync.write("access_token:" + access_token)
     deptListRes = await dtApi.departmentListGet(access_token)
 
     for (let i = 0; i < deptListRes.length; i++) {
-        Dingtalk.write("部门ID:" + deptListRes[i]['id'])
+        dtSync.write("部门ID:" + deptListRes[i]['id'])
         await dtSync.deptinfoPush(deptListRes[i]['id'])
         userListRes = await dtApi.userListGet(access_token, deptListRes[i].id)
         for (let ui = 0; ui < userListRes.length; ui++) {
-            Dingtalk.write("用户ID:" + userListRes[ui]['userid'])
+            dtSync.write("用户ID:" + userListRes[ui]['userid'])
             await dtSync.userinfoPush(userListRes[ui]['userid'])
         }
 
@@ -443,8 +356,8 @@ router.get('/api/dingtalk/stockData', async function (req, res) {
         }
 
     }
-    Dingtalk.write("================存量数据结束===================")
-    Dingtalk.write("\n")
+    dtSync.write("================存量数据结束===================")
+    dtSync.write("\n")
 
     res.status(200).send({ message: "dsa" });
 });
@@ -522,9 +435,9 @@ router.post('/api/dingtalk/listen', async function (req, res) {
 
         }
     } catch (e) {
-        Dingtalk.write("ERROR:")
-        Dingtalk.write(data.data.EventType)
-        Dingtalk.write(e)
+        dtSync.write("ERROR:")
+        dtSync.write(data.data.EventType)
+        dtSync.write(e)
     }
 
 
@@ -546,24 +459,24 @@ router.get('/api/sync/dingtalkId', async function (req, res) {
         let response = await dtApi.accessTokenGet(space.dingtalk_key, space.dingtalk_secret);
         access_token = response.access_token;
 
-        Dingtalk.write("================同步钉钉id开始===================")
+        dtSync.write("================同步钉钉id开始===================")
 
         for (let ui = 0; ui < spaceUsers.length; ui++) {
             // console.log("spaceUsers[ui]: ", spaceUsers[ui]);
-            Dingtalk.write("姓名:" + spaceUsers[ui]['name'])
-            Dingtalk.write("手机:" + spaceUsers[ui]['mobile'])
+            dtSync.write("姓名:" + spaceUsers[ui]['name'])
+            dtSync.write("手机:" + spaceUsers[ui]['mobile'])
             if (!spaceUsers[ui]['mobile'] || (spaceUsers[ui]['mobile'] == ""))
                 return;
 
             await dtSync.useridPush(access_token, spaceUsers[ui]['mobile'])
         }
-        Dingtalk.write("================同步数据结束===================")
-        Dingtalk.write("\n")
+        dtSync.write("================同步数据结束===================")
+        dtSync.write("\n")
 
         res.status(200).send({ message: "ok" });
     } catch (error) {
-        Dingtalk.write("ERROR:")
-        Dingtalk.write(error)
+        dtSync.write("ERROR:")
+        dtSync.write(error)
     }
 
 });
