@@ -93,7 +93,8 @@ export class ActionHandlers {
             });
     
             if(metadataConfig && metadataConfig.metadata){
-                config = _.defaultsDeep(metadataConfig.metadata, config);
+                config.list_views = _.defaultsDeep(metadataConfig.metadata.list_views || {}, config.list_views || {});
+                config = _.defaultsDeep(config, metadataConfig.metadata);
             }
         }
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
