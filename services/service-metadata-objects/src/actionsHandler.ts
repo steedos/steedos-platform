@@ -25,11 +25,13 @@ const DELAY_MESSAGE_OF_OBJECT_CHANGED  = 10; // 延迟通知对象事件的时�
 export class ActionHandlers {
     onRegister: any = null;
     onDestroy: any = null;
+    onRegistered: any = null;
 	registerObjectMemEntry: Map<string, number>;
 
-    constructor(onRegister, onDestroy){
+    constructor(onRegister, onDestroy, onRegistered){
         this.onRegister = onRegister;
         this.onDestroy = onDestroy;
+        this.onRegistered = onRegistered;
 		this.registerObjectMemEntry = new Map<string, number>();
     }
 
@@ -38,7 +40,9 @@ export class ActionHandlers {
             await this.onRegister(data)
         }
         await ctx.broker.call('metadata.add', {key: cacherKey(objectApiName), data: data}, {meta: meta});
-
+        if(this.onRegistered && _.isFunction(this.onRegistered)){
+            await this.onRegistered(data)
+        }
 		// 为每个对象 setTimeout 延时执行
 		const registerObjectMemEntry = this.registerObjectMemEntry;
 		let timeoutId = registerObjectMemEntry.get(objectApiName);
