@@ -97,7 +97,7 @@ const loadPackage = async (packageName, packagePath)=>{
         await steedos.loadPackage(packagePath)
         return Object.assign({packagePath: packagePath}, packageInfo);
     } catch (error) {
-        
+        console.error(error)
     }
 }
 
