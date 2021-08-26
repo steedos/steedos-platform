@@ -155,7 +155,6 @@ export class FormulaActionHandler{
                 // 暂时只支持reference_to为字符的情况，其他类型直接跳过
                 throw new Error(`Field ${tempFieldConfig.name} in formula ${formulaVar} does not define the "Reference Object" property or its "Reference Object" property is a function.`);
             }
-            // TODO：重新计算reference_to的对象是否存在
             tempObjectConfig = await this.getObjectConfig(tempFieldConfig.reference_to);
             if (!tempObjectConfig) {
                 // 没找到相关引用对象，直接退出
