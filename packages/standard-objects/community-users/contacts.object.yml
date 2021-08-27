@@ -7,7 +7,7 @@ enable_events: true
 enable_tasks: true
 enable_api: true
 enable_audit: true
-version: 2
+# version: 2
 fields:
   name:
     type: text
