@@ -2,7 +2,7 @@ name: events
 label: Event
 icon: event
 enable_search: true
-# version: 2
+version: 2
 fields:
   name:
     label: Name
