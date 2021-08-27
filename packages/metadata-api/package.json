@@ -1,6 +1,6 @@
 {
     "name": "@steedos/metadata-api",
-    "version": "1.23.27",
+    "version": "1.23.37",
     "description": "",
     "main": "lib/index.js",
     "files": [
@@ -21,7 +21,7 @@
     },
     "dependencies": {
         "@salesforce/dev-config": "^2.0.0",
-        "@steedos/metadata-core": "^1.23.27",
+        "@steedos/metadata-core": "^1.23.37",
         "chalk": "^4.1.0",
         "compressing": "^1.5.1",
         "dotenv-flow": "^3.1.0",
@@ -32,12 +32,12 @@
         "underscore": "^1.11.0"
     },
     "devDependencies": {
-        "@steedos/accounts": "^1.23.0-alpha.13",
+        "@steedos/accounts": "^1.23.37",
         "@steedos/steedos-plugin-workflow": "^2.0.8",
         "javascript-obfuscator": "^2.9.1",
         "mocha": "^5",
         "nodemon": "^2.0.2",
-        "steedos-server": "^1.23.0-alpha.13",
+        "steedos-server": "^1.23.37",
         "ts-node": "^8.0.3",
         "typescript": "^3.9.3",
         "uglify-es": "^3.3.9",

@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-core",
-  "version": "1.23.27",
+  "version": "1.23.37",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -13,7 +13,7 @@
     "prepare": "tsc"
   },
   "dependencies": {
-    "@steedos/client": "^1.23.27",
+    "@steedos/client": "^1.23.37",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
