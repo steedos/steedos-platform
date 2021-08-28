@@ -179,9 +179,11 @@ const getRouterInfoList = (router, md5)=>{
                 methods: '',
                 md5: md5
             };
-            info.path = _route.route.path;
-            info.methods = _route.route.methods;
-            infoList.push(info);
+            if(_route.route){
+                info.path = _route.route.path;
+                info.methods = _route.route.methods;
+                infoList.push(info);
+            }
         })
     }
     return infoList
