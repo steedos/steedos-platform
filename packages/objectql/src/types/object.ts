@@ -922,7 +922,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         delete objectConfig.db
 
-        translationObject(lng, objectConfig.name, objectConfig);
+        translationObject(lng, objectConfig.name, objectConfig, true);
 
         const layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name);
         if(layouts && layouts.length > 0){
