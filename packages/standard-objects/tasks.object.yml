@@ -99,6 +99,13 @@ list_views:
   my_closed_tasks:
     label: My Closed Tasks
     filter_scope: space
+    columns:
+      - name
+      - due_date
+      - state
+      - priority
+      - assignees
+      - related_to
     filters:
       - - assignees
         - =
