@@ -227,7 +227,7 @@ actions:
   import:
     label: 'Perform Import'
     visible: true
-    'on': record
+    'on': record_only
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
         var record = Creator.getCollection('queue_import').findOne(record_id);
@@ -274,7 +274,7 @@ actions:
   downloadTemplate:
     label: 'Download Template'
     visible: true
-    'on': record
+    'on': record_only
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
         var record = Creator.getCollection('queue_import').findOne(record_id);
