@@ -57,6 +57,7 @@ fields:
       - label: ','
         value: ','
     omit: true
+    defaultValue: ','
     name: value_separator
     filterable: true
   
@@ -185,6 +186,9 @@ fields:
     omit: true
     name: state
     filterable: true
+    options:
+      - label: Finished
+        value: finished
   error:
     label: Error Message
     type: '[text]'
@@ -198,11 +202,10 @@ list_views:
   all:
     label: All Queues
     columns:
-      - object_name
-      - encoding
-      - field_mapping
       - description
+      - object_name
       - state
+      - encoding
     filter_scope: space
 permission_set:
   user:
@@ -257,6 +260,7 @@ actions:
           },
           success: function(res){
             $("body").removeClass("loading");
+            SteedosUI.reloadRecord(object_name, record_id);
             FlowRouter.reload();
             toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
           },
@@ -266,4 +270,18 @@ actions:
           }
 
         });
+      }
+  downloadTemplate:
+    label: 'Download Template'
+    visible: true
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        var record = Creator.getCollection('queue_import').findOne(record_id);
+        if (!record.field_mappings || record.field_mappings.length==0) {
+          toastr.info('请配置字段映射。');
+          return;
+        }
+        let url = Steedos.absoluteUrl(`api/data/download/template/${record_id}`);
+        window.open(url, '_self', 'EnableViewPortScale=yes');
       }

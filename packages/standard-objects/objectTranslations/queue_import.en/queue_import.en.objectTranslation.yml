@@ -71,7 +71,9 @@ fields:
   state:
     label: State
     help: 
-    options: 
+    options:
+      - label: Finished
+        value: finished
     description: 
   error:
     label: Error Message
@@ -84,12 +86,22 @@ fields:
   operation:
     label: Operation
     options:
+      - label: Insert
+        value: insert
+      - label: Update
+        value: update
+      - label: Upsert
+        value: upsert
+  file:
+    label: Excel File
 listviews:
   all:
     label: All Queues
 actions:
   import:
     label: Perform Import
+  downloadTemplate:
+    label: Download Template
 CustomLabels:
   queue_import_action_import_execute_success: Executed
   queue_import_action_import_need_file: Upload excel file, please.

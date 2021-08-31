@@ -72,6 +72,8 @@ fields:
     label: 状态
     help: 
     options: 
+      - label: 已完成
+        value: finished
     description: 
   error:
     label: 错误信息
@@ -84,6 +86,14 @@ fields:
   operation:
     label: 导入操作
     options:
+      - label: 新增
+        value: insert
+      - label: 更新
+        value: update
+      - label: 存在则更新，不存在则新增
+        value: upsert
+  file:
+    label: Excel文件
   field_mappings:
     label: 字段映射
   field_mappings.$.header:
@@ -100,6 +110,8 @@ listviews:
 actions:
   import:
     label: 执行导入
+  downloadTemplate:
+    label: 下载模板
 CustomLabels:
   queue_import_action_import_execute_success: 已执行
   queue_import_action_import_need_file: 请上传Excel文件
