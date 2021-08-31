@@ -4,6 +4,7 @@ label: Announcement
 hidden: true
 enable_files: true
 enable_chatter: true
+version: 2
 fields:
   name:
     label: Title
