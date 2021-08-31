@@ -50,12 +50,15 @@ function converteNum(field_name, dataCell, jsonObj) {
 };
 
 async function converterSelect(objectName, field_name, dataCell, jsonObj) {
-    var allowedValues, fields, ref, select_error;
+    var allowedValues, allowedLabels, fields, ref, select_error;
     select_error = "";
     let objectConfig = await objectql.getObject(objectName).toConfig();
     fields = objectConfig.fields;
     let field = fields[field_name]
     allowedValues = _.pluck(field.options, 'value');
+    allowedLabels = _.pluck(field.options, 'label');
+    let optionsMap = _.object(allowedLabels, allowedValues);
+
     let cellContents: any = [];
     let noResult = true;
     if (field.multiple) {
@@ -74,12 +77,12 @@ async function converterSelect(objectName, field_name, dataCell, jsonObj) {
             continue;
         }
 
-        if (allowedValues.indexOf(cellContent) >= 0) {
+        if (allowedLabels.indexOf(cellContent) >= 0) {
             noResult = false;
             if (field.multiple) {
-                jsonObj[field_name].push(cellContent);
+                jsonObj[field_name].push(optionsMap[cellContent]);
             } else {
-                jsonObj[field_name] = cellContent;
+                jsonObj[field_name] = optionsMap[cellContent];
             }
         } else {
             select_error = `${cellContent}不属于${field_name}的可选范围`;
