@@ -4,3 +4,9 @@ steedos-app-community:
   description: A Steedos App
   local: true
   path: steedos-app
+'@steedos/saas-contracts':
+  enable: true
+  version: 2.1.4
+  description: contract-management-system
+  local: true
+  path: ../../steedos-packages/app-contract
