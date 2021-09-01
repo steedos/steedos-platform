@@ -145,7 +145,13 @@ module.exports = {
                 let lng = await getLng(this.userId);
                 this.data.values = this.data.values.concat((await getInternalPermissionSet(this.spaceId, lng, filterType)))
             }
-            
+            // this.data.values （许可证： platform）有值 ，（许可证： community）没值。
+            // 拿数据库保存的值 再过滤一遍。
+            const allData = this.data.values;
+            const firstFilterKey = _.keys(filters)[0];
+            this.data.values = _.filter(allData, (item)=>{
+                return item[firstFilterKey] === filters[firstFilterKey];
+            })
         }
     },
     afterCount: async function () {
