@@ -1,9 +1,11 @@
 module.exports = {
     show_packages_store: function () {
-        if(!Meteor.settings.public.webservices.app_store){
-            return toastr.info('请配置参数：public.webservices.app_store.url')
+        let packageService = "https://appexchange.steedos.cn";
+
+        if(Meteor.settings.public.webservices.app_exchange && Meteor.settings.public.webservices.app_exchange.url){
+            packageService = Meteor.settings.public.webservices.app_exchange.url;
         }
-        const packageService = Meteor.settings.public.webservices.app_store.url;
+
         return window.open(`${packageService}?client=${window.btoa(Meteor.absoluteUrl('', window.location.origin))}&install_nodes=${window.btoa(Steedos.PackageRegistry.getNodes().join(','))}`)
         // return window.open(`${packageService}/app-store?client=${window.btoa(Meteor.absoluteUrl('', window.location.origin))}&install_nodes=${window.btoa(Steedos.PackageRegistry.getNodes().join(','))}`)
 

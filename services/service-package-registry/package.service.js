@@ -11,6 +11,11 @@ const path = require(`path`);
 const objectql = require('@steedos/objectql');
 const metadataApi = require('@steedos/metadata-api');
 const util = require('./main/default/manager/util');
+const fetch = require('node-fetch');
+const { MoleculerError } = require("moleculer").Errors;
+
+const HEADER_AUTH = 'Authorization';
+const AUTH_TYPE = 'Bearer';
 
 const getPackageMetadata = async (packagePath)=>{
 	const packageMetadata = [];
@@ -95,27 +100,7 @@ module.exports = {
 		installPackage:{
 			async handler(ctx) {
 				const { module, version, label, description} = ctx.params
-                const packagePath = await registry.installModule(module, version)
-				const packageInfo = await loader.loadPackage(module, packagePath);
-				const packageConfog = {
-					label: label, 
-					version: packageInfo.version, 
-					description: description || packageInfo.description, 
-					local: !!packagePath, 
-					path: util.getPackageRelativePath(process.cwd(), packageInfo.packagePath)
-				}
-				loader.appendToPackagesConfig(packageInfo.name, packageConfog);
-				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageInfo.packagePath));
-				await ctx.broker.call(`@steedos/service-packages.install`, {
-					serviceInfo: Object.assign({}, packageConfog, {
-						name: packageInfo.name,
-						enable: true, 
-						nodeID: ctx.broker.nodeID, 
-						instanceID: ctx.broker.instanceID,
-						metadata: metadata
-					})
-				})
-				return packageConfog;
+				return await this.installPackage(module, version, label, description, true, ctx.broker);
             }
 		},
 		uninstallPackage:{
@@ -186,6 +171,57 @@ module.exports = {
 				})
 				return {}
             }
+		},
+		getCloudSaasPurchasedPackages:{
+			rest: {
+                method: "GET",
+                path: "/cloud/saas/packages/purchased"
+            },
+			async handler(ctx) {
+				try {
+					
+					const user = ctx.meta.user;
+					if(!user.is_space_admin){
+						throw new Error('not permission!');
+					}
+					return await this.getCloudSaasPurchasedPackages();
+				} catch (error) {
+					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
+				}
+            }
+		},
+		installPurchasedPackages: {
+			rest: {
+                method: "POST",
+                path: "/cloud/saas/packages/purchased"
+            },
+			async handler(ctx){
+				const installErrors = {};
+				try {
+					console.log(`post cloud/saas/packages/purchased `)
+					const user = ctx.meta.user;
+					if(!user.is_space_admin){
+						throw new Error('not permission!');
+					}
+					const result = await this.getCloudSaasPurchasedPackages();
+					console.log(`result`, result)
+					for (const item of result.packages) {
+						try {
+							console.log(`item.package`, item.package)
+							const { name, version, label, description} = item.package
+							const { enable } = item
+							await this.installPackage(name, version, label, description, enable, ctx.broker);
+						} catch (error) {
+							installErrors[item.package.name] = error.message
+						}
+					}
+					if(!_.isEmpty(installErrors)){
+						throw new Error(JSON.stringify(installErrors))
+					}
+				} catch (error) {
+					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
+				}
+			}
 		}
 	},
 
@@ -200,7 +236,49 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
+		installPackage: {
+			async handler(module, version, label, description, enable, broker) {
+                const packagePath = await registry.installModule(module, version)
+				if(enable){
+					const packageInfo = await loader.loadPackage(module, packagePath);
+				}
+				const packageConfog = {
+					label: label, 
+					version: version, 
+					description: description, 
+					local: !!packagePath, 
+					path: util.getPackageRelativePath(process.cwd(), packagePath)
+				}
+				loader.appendToPackagesConfig(module, packageConfog);
+				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+				await broker.call(`@steedos/service-packages.install`, {
+					serviceInfo: Object.assign({}, packageConfog, {
+						name: module,
+						enable: enable, 
+						nodeID: broker.nodeID, 
+						instanceID: broker.instanceID,
+						metadata: metadata
+					})
+				})
+				return packageConfog;
+            }
+		},
+		getCloudSaasPurchasedPackages:{
+			async handler() {
+				const apiKey = process.env.STEEDOS_CLOUD_API_KEY
+				const spaceId = process.env.STEEDOS_CLOUD_SPACE_ID
+				const url = process.env.STEEDOS_CLOUD_URL
 
+				if(!apiKey || !spaceId || !url){
+					throw new Error(`请配置STEEDOS_CLOUD参数`);
+				}
+				const headers = Object.assign({}, {'Content-Type': 'application/json'}, { [HEADER_AUTH]: `${AUTH_TYPE} apikey,${apiKey}`});
+				const response = await fetch(`${url}/api/saas/packages/purchased/detail`, {
+					method: 'GET', headers: headers
+				});
+				return await response.json()
+            }
+		},
 	},
 
 	/**
@@ -281,5 +359,8 @@ module.exports = {
 				}
 			})
 		}
-	}
+	},
+    merged(schema) {
+        schema.name = '~packages-project-server';  //禁止修改name
+    }
 };

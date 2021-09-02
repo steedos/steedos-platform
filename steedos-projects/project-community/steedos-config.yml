@@ -10,6 +10,9 @@ public:
   password:
     policy: ^[A-Za-z0-9]{8,}$
     policyError: 密码不能少于8位
+  webservices:
+    app_exchange: 
+      url: ${STEEDOS_APP_EXCHANGE_URL}
 cfs:
   steedosCloud:
     bucket: ${STEEDOS_CFS_CLOUD_BUCKET}
