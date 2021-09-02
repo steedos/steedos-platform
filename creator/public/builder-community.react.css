@@ -21288,7 +21288,6 @@ textarea.ant-pagination-options-quick-jumper input {
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
-/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 .ant-pro-table-search {
   margin-bottom: 16px;
   padding: 24px;
@@ -29768,7 +29767,7 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 .ant-modal-content .ant-modal-body {
   height: calc(100% - 108px);
   overflow: auto;
-  padding: 12px;
+  padding: 12px 24px;
 }
 .ant-modal-content .ant-modal-body .ant-pro-card {
   height: 100%;
@@ -29783,6 +29782,26 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   .object-modal .ant-pro-table-list-toolbar .ant-pro-table-list-toolbar-right .ant-space-item .ant-space {
     width: 100%;
   }
+}
+
+body #block-menu-container,
+body .sc-gsTCUz {
+  z-index: 1100;
+}
+.type-html .ant-form-item-control .ant-form-item-control-input-content li {
+  list-style: auto;
+}
+.type-html .ant-form-item-control .ant-form-item-control-input-content ul li {
+  list-style: disc;
+}
+.type-html .ant-form-item-control .ant-form-item-control-input-content h1 {
+  font-size: 2em;
+}
+.type-html .ant-form-item-control .ant-form-item-control-input-content h2 {
+  font-size: 1.5em;
+}
+.type-html .ant-form-item-control .ant-form-item-control-input-content h3 {
+  font-size: 1.25em;
 }
 
 .select-field-container .ant-select .ant-select-selection-item {
