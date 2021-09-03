@@ -204,6 +204,8 @@ async function installModule(module,version,url) {
                 if(!fs.existsSync(path.join(packagePath, 'package.service.js'))){
                     throw new Error(`${module} is not steedos package`)
                 }
+                activePromise = Promise.resolve(packagePath);
+                return activePromise;
             } catch (error) {
                 console.log(`error`, error)
                 throw new Error(`${module} is not steedos package`)

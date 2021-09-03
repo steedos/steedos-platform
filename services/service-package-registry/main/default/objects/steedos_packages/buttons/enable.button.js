@@ -14,7 +14,7 @@ module.exports = {
                 toastr.info('启用中，请稍后...', null, {timeOut: false});
                 Steedos.authRequest(Steedos.absoluteUrl('/api/nodes/enable'), {type: 'post', async: false, data: JSON.stringify({
                         module: record.name,
-                        nodeID: $("#steedos_package_main_node").val()
+                        nodeID: window.$("#steedos_package_main_node").val()
                     }),
                     success: function(){
                         setTimeout(function(){

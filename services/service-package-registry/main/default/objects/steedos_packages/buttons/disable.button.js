@@ -15,7 +15,7 @@ module.exports = {
                 Steedos.authRequest(Steedos.absoluteUrl('/api/nodes/disable'), {
                     type: 'post', async: false, data: JSON.stringify({
                         module: record.name,
-                        nodeID: $("#steedos_package_main_node").val()
+                        nodeID: window.$("#steedos_package_main_node").val()
                     }),
                     success: function(){
                         setTimeout(function(){

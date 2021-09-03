@@ -94,7 +94,12 @@ module.exports = {
 				_.each(data,(item)=>{
 					nodes.push(item.metadata.nodeID)
 				})
-				return _.uniq(_.compact(nodes));
+				let installNodes = _.uniq(_.compact(nodes));
+
+				if(installNodes.length === 0){
+					installNodes = [ctx.broker.nodeID]
+				}
+				return installNodes;
             }
 		},
 		installPackage:{
@@ -198,21 +203,22 @@ module.exports = {
 			async handler(ctx){
 				const installErrors = {};
 				try {
-					console.log(`post cloud/saas/packages/purchased `)
 					const user = ctx.meta.user;
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
 					}
 					const result = await this.getCloudSaasPurchasedPackages();
-					console.log(`result`, result)
 					for (const item of result.packages) {
 						try {
-							console.log(`item.package`, item.package)
 							const { name, version, label, description} = item.package
 							const { enable } = item
 							await this.installPackage(name, version, label, description, enable, ctx.broker);
 						} catch (error) {
-							installErrors[item.package.name] = error.message
+							if(error.stderr){
+								installErrors[item.package.name] = error.stderr
+							}else{
+								installErrors[item.package.name] = error.message
+							}
 						}
 					}
 					if(!_.isEmpty(installErrors)){
@@ -241,12 +247,15 @@ module.exports = {
                 const packagePath = await registry.installModule(module, version)
 				if(enable){
 					const packageInfo = await loader.loadPackage(module, packagePath);
+				}else{
+					enable = false;
 				}
 				const packageConfog = {
 					label: label, 
 					version: version, 
-					description: description, 
-					local: !!packagePath, 
+					description: description || '', 
+					local: false, 
+					enable: enable,
 					path: util.getPackageRelativePath(process.cwd(), packagePath)
 				}
 				loader.appendToPackagesConfig(module, packageConfog);
