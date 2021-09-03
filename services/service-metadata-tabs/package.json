@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-tabs",
-  "version": "2.0.63",
+  "version": "2.0.64",
   "description": "",
   "main": "lib/tabs.service.js",
   "scripts": {
