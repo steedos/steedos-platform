@@ -8,11 +8,11 @@ const getChildrenFieldName = (objectConfig)=>{
     return objectConfig.children_field || "children"
 }
 
-const calculateChildren = async function (parentId, object) {
+const calculateChildren = async function (parentId, object, parentFieldName) {
     var children, childrenObjs;
     children = [];
     childrenObjs = await object.find({
-        filters: [["parent", "=", parentId]],
+        filters: [[parentFieldName, "=", parentId]],
         fields: ["_id"]
     });
     childrenObjs.forEach(function (child) {
@@ -21,8 +21,8 @@ const calculateChildren = async function (parentId, object) {
     return children;
 }
 
-const setChildren = async function (parentId, object, childrenFieldName) {
-    const children = await calculateChildren(parentId, object);
+const setChildren = async function (parentId, object, parentFieldName, childrenFieldName) {
+    const children = await calculateChildren(parentId, object, parentFieldName);
     const values = {};
     values[childrenFieldName] = children;
     await object.directUpdate(parentId, values);
@@ -39,7 +39,7 @@ module.exports = {
             const childrenFieldName = getChildrenFieldName(objectConfig);
             const parentId = doc[parentFieldName];
             if(parentId){
-                setChildren(parentId, object, childrenFieldName);
+                setChildren(parentId, object, parentFieldName, childrenFieldName);
             }
         }
     },
@@ -55,9 +55,9 @@ module.exports = {
             const parentId = doc[parentFieldName];
             const preParentId = previousDoc[parentFieldName];
             if(parentId && parentId !== preParentId){
-                setChildren(parentId, object, childrenFieldName);
+                setChildren(parentId, object, parentFieldName, childrenFieldName);
                 if(preParentId){
-                    setChildren(preParentId, object, childrenFieldName);
+                    setChildren(preParentId, object, parentFieldName, childrenFieldName);
                 }
             }
         }
@@ -73,7 +73,7 @@ module.exports = {
             const childrenFieldName = getChildrenFieldName(objectConfig);
             const parentId = doc[parentFieldName];
             if(parentId){
-                setChildren(parentId, object, childrenFieldName);
+                setChildren(parentId, object, parentFieldName, childrenFieldName);
             }
         }
     }
