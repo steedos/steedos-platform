@@ -32095,7 +32095,7 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 .ant-modal-content .ant-modal-body {
   height: calc(100% - 108px);
   overflow: auto;
-  padding: 12px 24px;
+  padding: 12px;
 }
 .ant-modal-content .ant-modal-body .ant-pro-card {
   height: 100%;
