@@ -118,7 +118,11 @@
         },
         "parent_field": {
             "type": "string",
-            "description": "树状结构父字段"
+            "description": "树状结构父字段，默认为parent"
+        },
+        "children_field": {
+            "type": "string",
+            "description": "树状结构子节点字段，默认为children"
         },
         "enable_approvals": {
             "type": "boolean",
