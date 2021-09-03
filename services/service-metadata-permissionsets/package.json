@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-permissionsets",
-  "version": "2.0.64",
+  "version": "2.0.65",
   "description": "",
   "main": "lib/permissionsets.service.js",
   "scripts": {
