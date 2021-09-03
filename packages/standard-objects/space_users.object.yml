@@ -357,7 +357,10 @@ actions:
     label: Unlock
     on: record_only
   standard_delete:
-    visible: false
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        return false;
+      }
 permission_set:
   user:
     allowCreate: false

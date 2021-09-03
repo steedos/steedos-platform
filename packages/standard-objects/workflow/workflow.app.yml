@@ -13,6 +13,21 @@ admin_menus:
     expanded: false
     sort: 500
     # parent: process_automation
+  - _id: roles
+    name: Roles
+    permission_sets:
+      - admin
+    object_name: roles
+    parent: menu_workflow
+    sort: 40
+  - _id: flow_roles
+    name: Approval Roles
+    permission_sets:
+      - admin
+      - workflow_admin
+    object_name: flow_roles
+    parent: menu_workflow
+    sort: 50
   - _id: flows
     name: Workflows
     permission_sets:
