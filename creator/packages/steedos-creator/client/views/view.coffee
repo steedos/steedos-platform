@@ -603,6 +603,7 @@ Template.creator_view.events
 		collection_name = relateObject.label
 		collection = "Creator.Collections.#{Creator.getObject(related_object_name)._collection_name}"
 		current_object_name = Session.get("object_name")
+		current_record_id = Session.get("record_id")
 		ids = Creator.TabularSelectedIds[related_object_name]
 		initialValues = {};
 		if ids?.length
@@ -614,7 +615,7 @@ Template.creator_view.events
 			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 			Session.set 'cmShowAgainDuplicated', true
 		else
-			defaultDoc = FormManager.getRelatedInitialValues(current_object_name, Session.get("record_id"), related_object_name);
+			defaultDoc = FormManager.getRelatedInitialValues(current_object_name, current_record_id, related_object_name);
 			if !_.isEmpty(defaultDoc)
 				initialValues = defaultDoc
 		if relateObject?.version >= 2
@@ -625,6 +626,9 @@ Template.creator_view.events
 				initialValues: initialValues,
 				afterInsert: (result)->
 					setTimeout(()->
+						# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
+						if Creator.getObject(current_object_name).version > 1
+							SteedosUI.reloadRecord(current_object_name, current_record_id)
 						FlowRouter.reload();
 					, 1);
 					return true;
