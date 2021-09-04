@@ -123,8 +123,8 @@ Template.related_object_list.events
 
 		initialValues = {};
 		if selectedRows?.length
-			record_id = selectedRows[0]._id;
-			doc = Creator.odata.get(related_object_name, record_id)
+			selectedId = selectedRows[0]._id;
+			doc = Creator.odata.get(related_object_name, selectedId)
 			initialValues = doc
 		else
 			defaultDoc = FormManager.getRelatedInitialValues(object_name, record_id, related_object_name);
@@ -140,6 +140,9 @@ Template.related_object_list.events
 				afterInsert: (result)->
 					if(result.length > 0)
 						record = result[0];
+						# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
+						if Creator.getObject(object_name).version > 1
+							SteedosUI.reloadRecord(object_name, record_id)
 						setTimeout(()->
 							app_id = Session.get("app_id")
 							url = "/app/#{app_id}/#{related_object_name}/view/#{record._id}"
