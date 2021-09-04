@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "5454dab165810115af8269ddfa378ea66c7d40c1.js",
+      "path": "0aa2724c9870fcf55fce0ff0a4cca817d3dddf72.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/5454dab165810115af8269ddfa378ea66c7d40c1.js?meteor_js_resource=true",
-      "size": 24274265,
-      "hash": "5454dab165810115af8269ddfa378ea66c7d40c1",
-      "sri": "h2NybQqP+kO/6nENs1cpGJ5IIfU9SQrTnI2hbN67cvSGKgrMGFJGmh8K7trG0zy8V7EKOcW2iHTa9UCa5FAyyA=="
+      "url": "/__cordova/0aa2724c9870fcf55fce0ff0a4cca817d3dddf72.js?meteor_js_resource=true",
+      "size": 24274635,
+      "hash": "0aa2724c9870fcf55fce0ff0a4cca817d3dddf72",
+      "sri": "Sh7iSdDSx13biDwBcED4SjX6d8E9JAVPmrUWDgtbNWkq04RSfrvAglFoK/mgtiBGhhmYgzf2uIVoLrEBzhFHwg=="
     },
     {
-      "path": "5454dab165810115af8269ddfa378ea66c7d40c1.stats.json",
+      "path": "0aa2724c9870fcf55fce0ff0a4cca817d3dddf72.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/5454dab165810115af8269ddfa378ea66c7d40c1.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/0aa2724c9870fcf55fce0ff0a4cca817d3dddf72.stats.json?meteor_js_resource=true",
       "size": 154291,
-      "hash": "ca8274c7940a06c2b6d0e90ed72e01fc96085b11",
-      "sri": "oit+hyEfN1lyH84a5Jb3MJvI4hNYU90rbysdoOdG1QyYPEe4E+AxQdP4Z89uHMRdfAxkwgENxhZPbMNkvtYRPg=="
+      "hash": "ba1a922f6ec729d9d0c8c24471df543feb602737",
+      "sri": "VVrNE4eMliiiKiQnbw8NY9DYO02XjQOQFHrnNoqzA8xL5WW324CHyjVeQgKPIHe14/uvc4lhf9oVdCVcXoo0fw=="
     },
     {
       "path": "0c93df0cb43b8f739276372cc69aa47c7846c615.css",
@@ -1417,8 +1417,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/__cordova/builder-community.react.css",
-      "size": 1417984,
-      "hash": "e7ed13ab20a2d71e108adb596ecd93033f129659",
+      "size": 1418064,
+      "hash": "bf0551c873d52e61cc3a80ba91af891e3abd7da3",
       "sri": null
     },
     {
@@ -1427,8 +1427,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/builder-community.react.css",
-      "size": 1417984,
-      "hash": "e7ed13ab20a2d71e108adb596ecd93033f129659",
+      "size": 1418064,
+      "hash": "bf0551c873d52e61cc3a80ba91af891e3abd7da3",
       "sri": null
     },
     {

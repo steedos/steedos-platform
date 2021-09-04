@@ -23766,6 +23766,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .creator-grid-wrap .ag-theme-balham .ag-root-wrapper {
   border: none;
 }
+.ag-theme-balham .ag-header .ag-header-cell .ag-sort-order {
+  display: none;
+}
 .ag-theme-balham .ag-filter-toolpanel-search {
   display: none;
 }
