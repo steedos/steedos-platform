@@ -87,7 +87,8 @@ const caculateAutonumber = async function (objectName, fieldName, formula, space
 module.exports = {
     listenTo: 'base',
     afterInsert: async function () {
-        const { spaceId, doc, object_name } = this;
+        const { doc, object_name } = this;
+        const spaceId = doc.space;
         if (!spaceId) {
             return;
         }
