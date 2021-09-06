@@ -127,11 +127,13 @@ export async function refreshObject(ctx, objectApiName) {
 
     objectConfig.fields = _.clone(_objectConfig.fields);
 
-    _.each(objectConfig.actions, (action) => {
-        if (!_.has(action, '_visible')) {
-            action._visible = `function(){ return ${action.visible || false} }`
-        }
-    })
+    if (objectApiName != MONGO_BASE_OBJECT && objectApiName != SQL_BASE_OBJECT){
+        _.each(objectConfig.actions, (action) => {
+            if (!_.has(action, '_visible') && _.has(action, 'visible')) {
+                action._visible = `function(){ return ${action.visible} }`
+            }
+        })
+    }
 
     objectConfig = _.defaultsDeep({}, clone(_objectConfig), baseObjectConfig, objectConfig);
 
