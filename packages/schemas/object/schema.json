@@ -499,6 +499,10 @@
                                             }
                                         ]
                                     },
+                                    "description" : {
+                                        "type": "string",
+                                        "title": "Options description "
+                                    },
                                     "icon": {
                                         "type": "string",
                                         "title": "Options icon name"
