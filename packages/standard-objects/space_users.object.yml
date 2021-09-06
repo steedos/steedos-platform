@@ -242,6 +242,11 @@ fields:
     name: user
     label: User
     filterable: true
+  password_expired:
+    label: Password expired
+    type: boolean
+    omit: false
+    hidden: false
   avatar:
     label: Avatar
     type: avatar
@@ -258,11 +263,6 @@ fields:
     hidden: true
     name: last_logon 
     label: Last Logon Date
-  password_expired:
-    label: Password expired
-    type: boolean
-    omit: false
-    hidden: false
 list_views:
   all:
     label: All Valid Users
