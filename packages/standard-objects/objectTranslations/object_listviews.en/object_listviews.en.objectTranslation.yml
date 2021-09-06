@@ -139,6 +139,9 @@ fields:
 listviews:
   all:
     label: All List View
+actions:
+  customize:
+    label: Customize
 CustomLabels:
   object_listviews_field_filters.$: 
   object_listviews_field_sort.$: 

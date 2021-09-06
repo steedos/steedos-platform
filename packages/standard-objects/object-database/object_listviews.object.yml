@@ -294,6 +294,10 @@ list_views:
       - modified
     label: All List View
     filter_scope: space
+actions:
+  customize:
+    label: Customize
+    on: record_only
 permission_set:
   user:
     allowCreate: true

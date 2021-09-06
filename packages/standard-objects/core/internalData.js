@@ -300,7 +300,7 @@ async function getObjectListViews(objectName, userId){
         _.each(object.list_views, function(listView, _name){
             if(!listView._id || listView._id === _name){
                 let name = listView.name || _name
-                listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`, name: name, object_name: objectName, is_enable: true, record_permissions: permissions}))
+                listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`,is_system: true, name: name, object_name: objectName, is_enable: true, record_permissions: permissions}))
             }
         })
         return listViews

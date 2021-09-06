@@ -132,6 +132,9 @@ fields:
 listviews:
   all:
     label: 全部
+actions:
+  customize:
+    label: 自定义
 CustomLabels:
   object_listviews_field_filters.$: 
   object_listviews_field_sort.$: 
