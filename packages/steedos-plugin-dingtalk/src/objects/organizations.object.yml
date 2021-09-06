@@ -4,6 +4,7 @@ fields:
     label: 钉钉部门ID
     type: text
     hidden: false
+    sort_no: 160
   dingtalk_space:
     label: 钉钉工作区
     type: text

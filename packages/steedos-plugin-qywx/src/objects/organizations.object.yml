@@ -4,6 +4,7 @@ fields:
     label: 企业微信部门ID
     type: text
     hidden: false
+    sort_no: 150
   qywx_space:
     label: 企业微信工作区
     type: text

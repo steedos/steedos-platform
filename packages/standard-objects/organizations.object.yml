@@ -101,6 +101,7 @@ fields:
     label: Hidden
     type: boolean
     name: hidden
+    sort_no: 65
 list_views:
   all:
     columns:
