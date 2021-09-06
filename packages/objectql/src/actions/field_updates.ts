@@ -45,7 +45,7 @@ export async function runFieldUpdateAction(action: any, recordId: any, userSessi
     if(isCrossedObject){
         // 跨对象字段更新
         recordIdToUpdate = record[action.target_object];
-        previousRecord = await getObject(mainObjectName).findOne(recordIdToUpdate, null);
+        previousRecord = recordIdToUpdate && await getObject(mainObjectName).findOne(recordIdToUpdate, null);
         //对于跨对象的字段更新，虽然始终不会重新评估字段更新关联对象的工作流规则，但是始终会重新评估其要更新的对象的所有工作流规则。
         needToReevaluate = true;
     }else{
@@ -62,7 +62,7 @@ export async function runFieldUpdateAction(action: any, recordId: any, userSessi
         return null;
     }
     const newFieldValue = await getFieldValue(action, recordId, userSession);
-    if(newFieldValue !== previousRecord[action.field_name]){
+    if(recordIdToUpdate && newFieldValue !== (previousRecord && previousRecord[action.field_name])){
         // 只有值变更时才执行字段更新、级联公式重算、级联汇总字段重算、重新评估工作流规则等操作
         await objectToUpdate.directUpdate(recordIdToUpdate, {[action.field_name]: newFieldValue});
 
