@@ -72,6 +72,7 @@ fields:
     type: object
     is_wide: true
     blackbox: true
+    omit: true
     name: current
   current.modified:
     label: Modification Time of Current
@@ -109,6 +110,7 @@ fields:
     label: Current Steps
     type: grid
     readonly: true
+    omit: true
     is_wide: true
     name: current.steps
   current.steps.$._id:
@@ -120,27 +122,32 @@ fields:
   current.steps.$.name:
     label: Name
     readonly: true
+    omit: true
     type: text
     name: current.steps.$.name
   current.steps.$.disableCC:
     label: Disable CC
     type: boolean
+    omit: true
     readonly: true
     name: current.steps.$.disableCC
   current.steps.$.allowDistribute:
     label: Can Distribute Instance 
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.allowDistribute
   current.steps.$.can_edit_main_attach:
     label: Can Edit Main Attach
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.can_edit_main_attach
   current.steps.$.can_edit_normal_attach:
     label: Can Edit Normal Attach
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.can_edit_normal_attach
   current.steps.$.distribute_optional_flows:
     label: Workflows of Distribution
@@ -155,26 +162,31 @@ fields:
     label: Must Wait for CC finished
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.cc_must_finished
   current.steps.$.cc_alert:
     label: Pop up CC Alert
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.cc_alert
   current.steps.$.allowBatch:
     label: Batch Processing
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.allowBatch
   current.steps.$.oneClickApproval:
     label: One Click Approval
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.oneClickApproval
   current.steps.$.oneClickRejection:
     label: One Click Rejection
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.oneClickRejection
   perms:
     label: Permissions
