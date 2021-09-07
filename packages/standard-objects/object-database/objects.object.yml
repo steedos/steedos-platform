@@ -34,13 +34,6 @@ fields:
     index: true
     required: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
-  table_name:
-    type: text
-    label: Table Name
-    index: true
-    searchable: true
-    inlineHelpText: The default data source does not support this property
-    group: External data source
   icon:
     type: lookup
     label: Icon
@@ -155,6 +148,13 @@ fields:
   #   label: 隐藏
   #   type: boolean
   #   omit: true
+  table_name:
+    type: text
+    label: Table Name
+    index: true
+    searchable: true
+    inlineHelpText: The default data source does not support this property
+    group: External data source
   version:
     readonly: true
     label: Version
