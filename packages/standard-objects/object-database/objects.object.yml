@@ -161,6 +161,7 @@ fields:
     type: number
     scale: 0
     defaultValue: 2
+    hidden: true
   description:
     label: Description
     type: textarea
