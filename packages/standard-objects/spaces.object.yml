@@ -50,6 +50,7 @@ fields:
     label: Enable User Registration
     type: boolean
     group: Register account
+    defaultValue: true
   default_profile:
     label: Default profile
     type: lookup
