@@ -241,7 +241,19 @@ Template.instance_attachment.events({
 		// 在手机、安卓和ios设备上弹出窗口显示附件
 		// 电脑上使用的是下载附件功能，由于手机上支持大部分文件类型在线预览，所以手机上默认使用打开新窗口查看方式
 		if (Steedos.isMobile() || Steedos.isAndroidOrIOS()) {
-			Steedos.openWindow(event.target.getAttribute("href"))
+			console.log("navigator.userAgent: ", navigator.userAgent);
+			var userAgent = navigator.userAgent;
+			var uAgentArry = userAgent.split(" ");
+			// 瑞信手机端调用内部函数预览附件
+			if (uAgentArry.indexOf("QiXinWebView") > 0){
+				alert(template.data.name())
+				richfit.docPreview({
+					"fileUrl": event.target.getAttribute("href"),
+					"fileName": template.data.name()
+				})
+			}else{
+				Steedos.openWindow(event.target.getAttribute("href"))
+			}
 			event.stopPropagation()
 			return false;
 		}
@@ -251,6 +263,7 @@ Template.instance_attachment.events({
 		var filename = template.data.name();
 		var rev = template.data._id;
 		var length = template.data.size();
+		console.log("navigator.userAgent",navigator.userAgent);
 		Steedos.cordovaDownload(url, filename, rev, length);
 	},
 	"click [name='ins_attach_isNode']": function(event, template) {
@@ -283,6 +296,7 @@ Template.instance_attachment.events({
 		NodeManager.downloadFile(url, filename, arg);
 	},
 	"click [name='ins_attach_preview']": function(event, template) {
+		console.log("navigator.userAgent: ", navigator.userAgent);
 		if (event.target.id) {
 			if (Steedos.isNode())
 				url = window.location.origin + "/api/files/instances/" + event.target.id;
