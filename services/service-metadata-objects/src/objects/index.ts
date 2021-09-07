@@ -145,6 +145,12 @@ export async function refreshObject(ctx, objectApiName) {
         }
     })
 
+    _.each(objectConfig.actions, (action, key) => {
+        if (!_.has(action, 'name')) {
+            action.name = key;
+        }
+    });
+
     objectConfig.datasource = mainConfig.datasource
 
     return objectConfig;
