@@ -15,7 +15,7 @@
     "buildPackages": "lerna run buildPackage",
     "pubBefore_push_submodules": "node .scripts/.git_push",
     "ver": "yarn gitSubmodulesReset && lerna version --skip-git --force-publish",
-    "pub": "lerna publish from-package --registry https://registry.npmjs.org --tag fssh",
+    "pub": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag fssh",
     "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
     "compile": "lerna run compile",
     "prepare": "lerna run prepare",
