@@ -238,7 +238,7 @@ fields:
     disabled: true
   is_deleted:
     hidden: false
-    omit: false
+    omit: true
     disabled: false
     readonly: false
   reload_time:
