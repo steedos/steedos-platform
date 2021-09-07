@@ -820,7 +820,7 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
             } else {
                 relatedObjectValue[relatedObject.foreign_key] = mainRecordId;
                 relatedObjectValue.space = spaceId;
-                relatedObjectValue.owner = ins.applicant;
+                relatedObjectValue.owner = relatedObjectValue.owner || ins.applicant;
                 relatedObjectValue.created_by = ins.applicant;
                 relatedObjectValue.modified_by = ins.applicant;
                 relatedObjectValue._id = objectCollection._makeNewID();
@@ -997,7 +997,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 }];
                 newObj.instance_state = instance_state;
 
-                newObj.owner = ins.applicant;
+                newObj.owner = newObj.owner || ins.applicant;
                 newObj.created_by = ins.applicant;
                 newObj.modified_by = ins.applicant;
                 // var r = objectCollection.insert(newObj);
