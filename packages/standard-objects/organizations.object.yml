@@ -113,8 +113,6 @@ list_views:
     sort:
       - field_name: sort_no
         order: desc
-      - field_name: name
-        order: asc
 actions:
   standard_query:
     label: Search
