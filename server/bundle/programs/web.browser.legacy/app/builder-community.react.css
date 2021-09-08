@@ -32134,6 +32134,11 @@ body .sc-gsTCUz {
 .type-html .ant-form-item-control .ant-form-item-control-input-content h3 {
   font-size: 1.25em;
 }
+.type-html.mode-edit .rich-markdown-editor {
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  padding: 10px 23px;
+}
 
 .select-field-container .ant-select .ant-select-selection-item {
   display: flex;
@@ -32146,6 +32151,20 @@ body .sc-gsTCUz {
 }
 .select-field-container .ant-select .ant-select-selection-item .ant-select-selection-item-content {
   display: flex;
+}
+.type-select.mode-read .select-color {
+  border-radius: 10px;
+  padding: 1px 6px;
+  border: 1px;
+  display: inline-block;
+}
+.type-select.mode-read .select-multiple {
+  margin-right: 1px;
+}
+@media (max-width: 767px) {
+  .type-select.mode-read .select-multiple {
+    margin-right: 4px;
+  }
 }
 
 .lookup-field-container {
