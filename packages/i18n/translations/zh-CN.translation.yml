@@ -902,8 +902,8 @@ CustomLabels:
   space_users_aciton_invite_space_users_success: 企业邀请链接已复制到剪贴板，用户点击此链接可以快速加入企业。
   space_users_aciton_invite_space_users_error: 团队邀请链接复制失败
   spaces_error_login_required: login必填
-  spaces_error_space_owner_only: 您不是该工作区的所有者
-  spaces_error_space_admins_required: 必须为工作区选择一个管理员
+  spaces_error_space_owner_only: 管理员简档只允许工作区所有者修改
+  spaces_error_space_admins_required: 工作区所有者简档必须为管理员
   spaces_error_space_readonly: 工作区无法修改
   users_error_email_exists: 该邮件地址已存在
   users_error_username_exists: 该用户名已存在
