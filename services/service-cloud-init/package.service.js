@@ -33,11 +33,28 @@ module.exports = {
 			const salt = await bcrypt.genSalt(10);
 			const hash = await bcrypt.hash(password, salt);
 			return hash;
+		},
+		/**
+		 * 调用主控接口获取许可证
+		 * @param {*} spaceName 
+		 * @param {*} spaceId 
+		 * @param {*} apiKey 
+		 * @param {*} consoleUrl 
+		 */
+		getLicense: async function (spaceId, apiKey, consoleUrl) {
+			let result = await axios({
+				url: `${consoleUrl}/api/saas/space/init/license/${spaceId}`,
+				method: 'get',
+				data: {},
+				headers: { "Content-Type": "application/json", "Authorization": `Bearer apikey,${apiKey}` }
+			});
+			return result.data.license;
 		}
+
 	},
 	events: {
 		'steedos-server.started': async function (ctx) {
-			// console.log(chalk.blue('steedos-server.started'));
+			console.log(chalk.blue('steedos-server.started'));
 			const settings = this.settings;
 			const objectql = require('@steedos/objectql');
 			const spaceObj = objectql.getObject('spaces');
@@ -93,6 +110,7 @@ module.exports = {
 			const comapnyObj = objectql.getObject('company');
 			const orgObj = objectql.getObject('organizations');
 			const spaceUserObj = objectql.getObject('space_users');
+			const apiKeysObj = objectql.getObject('api_keys');
 			const now = new Date();
 
 			try {
@@ -133,6 +151,30 @@ module.exports = {
 				// 默认不开启自助注册
 				await spaceObj.directUpdate(spaceId, { enable_register: false });
 
+				// 生成管理员的api_keys
+				const newApiKeyDoc = {
+					name: 'admin api key',
+					api_key: apiKey,
+					active: true,
+					space: spaceId,
+					...baseInfo
+				};
+				await apiKeysObj.insert(newApiKeyDoc);
+
+				// 给工作区添加许可证，调用导入许可证接口
+				const license = await this.getLicense(spaceId, apiKey, consoleUrl);
+				// console.log(license);
+				const licenseInfo = license.split(',');
+				let syncResult = await axios({
+					url: Steedos.absoluteUrl(`/api/v4/license/${spaceId}/sync`),
+					method: 'post',
+					data: { licenses: [{ license: licenseInfo[0], key: licenseInfo[1] }] },
+					headers: { "Content-Type": "application/json", "Authorization": `Bearer apikey,${apiKey}` }
+				})
+				if (syncResult.data.error) {
+					console.log(chalk.red('许可证初始化失败'));
+					throw new Error(syncResult.data.error);
+				}
 
 				// throw new Error('test');
 
@@ -156,7 +198,8 @@ module.exports = {
 				console.log(chalk.blue('工作区初始化完毕'));
 
 			} catch (error) {
-				console.log(chalk.red('工作区初始化失败：', error));
+				console.log(chalk.red('工作区初始化失败：'));
+				console.log(error);
 				let users = await userObj.find({ filters: [['mobile', '=', adminPhone]] });
 				for (const doc of users) {
 					await userObj.directDelete(doc._id);
@@ -174,6 +217,10 @@ module.exports = {
 				let spaceUserDocs = await spaceUserObj.directFind(spaceFilters);
 				for (const doc of spaceUserDocs) {
 					await spaceUserObj.directDelete(doc._id);
+				}
+				let apiKeyDocs = await apiKeysObj.directFind(spaceFilters);
+				for (const doc of apiKeyDocs) {
+					await apiKeysObj.directDelete(doc._id);
 				}
 			}
 
