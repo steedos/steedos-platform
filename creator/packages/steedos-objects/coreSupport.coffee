@@ -224,6 +224,10 @@ Creator.getObjectRelateds = (object_name)->
 		related_objects.push {object_name:"cms_files", foreign_key: "parent"}
 
 	_.each Creator.Objects, (related_object, related_object_name)->
+		if related_object_name == "cfs.files.filerecord"
+			# cfs.files.filerecord对象在第二次点击的时候related_object返回的是app-builder中的"metadata.parent"字段被删除了，记到metadata字段的sub_fields中了，所以要单独处理。
+			sfsFilesObject = Creator.getObject("cfs.files.filerecord")
+			sfsFilesObject && related_object = sfsFilesObject
 		_.each related_object.fields, (related_field, related_field_name)->
 			if (related_field.type == "master_detail" || (related_field.type == "lookup" && related_field.relatedList)) and related_field.reference_to and related_field.reference_to == object_name
 				if related_object_name == "object_fields"

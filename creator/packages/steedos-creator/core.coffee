@@ -543,6 +543,7 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 	return _.filter related_objects, (related_object)->
 		related_object_name = related_object.object_name
 		isActive = related_object_names.indexOf(related_object_name) > -1
+		# related_object_name = if related_object_name == "cfs_files_filerecord" then "cfs.files.filerecord" else related_object_name
 		allowRead = Creator.getPermissions(related_object_name, spaceId, userId)?.allowRead
 		return isActive and allowRead
 

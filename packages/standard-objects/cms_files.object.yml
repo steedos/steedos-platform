@@ -4,6 +4,7 @@ icon: drafts
 enable_search: true
 enable_api: true
 hidden: false
+version: 2
 fields:
   name:
     label: Name
@@ -88,6 +89,9 @@ actions:
     sort: 110
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions, record) {
+              if(!record){
+                return false;
+              }
               if (Meteor.isCordova){
                 return false;
               }
