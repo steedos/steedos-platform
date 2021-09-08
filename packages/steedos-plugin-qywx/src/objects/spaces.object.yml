@@ -30,6 +30,5 @@ fields:
     label: 同步企业微信
     type: boolean
     group: 企业微信
-    defaultValue: false
-    hidden: false
+    hidden: true
 

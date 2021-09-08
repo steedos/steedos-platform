@@ -35,5 +35,4 @@ fields:
     label: 同步钉钉
     type: boolean
     group: 钉钉
-    defaultValue: false
-    hidden: false
+    hidden: true
