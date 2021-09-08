@@ -54,7 +54,7 @@ module.exports = {
 	},
 	events: {
 		'steedos-server.started': async function (ctx) {
-			console.log(chalk.blue('steedos-server.started'));
+			// console.log(chalk.blue('steedos-server.started'));
 			const settings = this.settings;
 			const objectql = require('@steedos/objectql');
 			const spaceObj = objectql.getObject('spaces');
