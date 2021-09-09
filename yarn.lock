@@ -5218,10 +5218,10 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
-"@steedos/license@^1.22.7":
-  version "1.22.7"
-  resolved "https://registry.npm.taobao.org/@steedos/license/download/@steedos/license-1.22.7.tgz#3d4ece7aa1d25b36857cc349e607fca12616e233"
-  integrity sha1-PU7OeqHSWzaFfMNJ5gf8oSYW4jM=
+"@steedos/license@2.1.8":
+  version "2.1.8"
+  resolved "https://registry.nlark.com/@steedos/license/download/@steedos/license-2.1.8.tgz#67cdd6d5507acca2482b8226c32bee2f29767c20"
+  integrity sha1-Z83W1VB6zKJIK4ImwyvuLyl2fCA=
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
