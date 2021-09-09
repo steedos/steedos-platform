@@ -1381,7 +1381,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
             else {
                 await this.runAfterTriggers(method, afterTriggerContext)
             }
-            await brokeEmitEvents(objectName, method, afterTriggerContext);
             if (method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline') {
                 if (_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))) {
                     return returnValue
@@ -1406,6 +1405,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 await this.runRecordFormula(method, objectName, recordId, doc, userSession);
                 await this.runRecordSummaries(method, objectName, recordId, doc, previousDoc, userSession);
             }
+            await brokeEmitEvents(objectName, method, afterTriggerContext);
         }
         return returnValue
     };
