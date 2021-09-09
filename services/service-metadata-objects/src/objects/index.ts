@@ -130,7 +130,11 @@ export async function refreshObject(ctx, objectApiName) {
     if (objectApiName != MONGO_BASE_OBJECT && objectApiName != SQL_BASE_OBJECT){
         _.each(objectConfig.actions, (action) => {
             if (!_.has(action, '_visible') && _.has(action, 'visible')) {
-                action._visible = `function(){ return ${action.visible} }`
+                action._visible = `
+                    function(){ 
+                        return ${action.visible} 
+                    }
+                `;
             }
         })
     }
