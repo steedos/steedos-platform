@@ -6,9 +6,9 @@ WORKDIR /app
 
 ADD ${community_dir}/ ./
 
-RUN npm config set registry http://registry.npm.taobao.org/
+# RUN npm config set registry http://registry.npm.taobao.org/
 
-RUN yarn config set registry http://registry.npm.taobao.org/
+# RUN yarn config set registry http://registry.npm.taobao.org/
 
 RUN yarn
 
