@@ -14,6 +14,7 @@
     "@steedos/service-accounts": "2.1.8",
     "@steedos/service-api": "2.1.8",
     "@steedos/service-charts": "2.1.8",
+    "@steedos/service-cloud-init": "2.1.8",
     "@steedos/service-fields-indexs": "2.1.8",
     "@steedos/service-meteor-package-loader": "2.1.8",
     "@steedos/service-node-red": "2.1.8",
