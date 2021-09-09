@@ -67,7 +67,13 @@ module.exports = {
 				page.tags = []
 				page.updated_at = page.modified
 				page.user_id = ''
-				page.widgets = await objectql.getObject('widgets').find({ filters: [['page', '=', apiName]] });
+				if(page.is_system == true){
+					_.each(page.widgets, (widget)=>{
+						widget._id = widget.name;
+					})
+				}else{
+					page.widgets = await objectql.getObject('widgets').find({ filters: [['page', '=', apiName]] });
+				}
 				page.options = {};
 				for (const widget of page.widgets) {
 					if(widget.type === 'charts'){
