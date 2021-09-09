@@ -28,6 +28,7 @@ fields:
     type: lookup
     reference_to: users
     omit: true
+    hidden: true #前端显示成id了，直接隐藏
   "metadata.owner_name":
     label: Owner Name
     type: text
@@ -74,6 +75,9 @@ actions:
     sort: 110
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions, record) {
+              if(!record){
+                return false;
+              }
               if (Meteor.isCordova){
                 return false;
               }
@@ -92,6 +96,9 @@ actions:
       function (object_name, record_id) {
         var file, fileId, filename, length, ref, ref1, rev, url;
         file = this.record;
+        if(!file){
+          return false;
+        }
         fileId = record_id;
         if (fileId) {
           if (Meteor.isCordova) {
