@@ -32119,6 +32119,12 @@ body #block-menu-container,
 body .sc-gsTCUz {
   z-index: 1100;
 }
+.type-html .ant-form-item-control .ant-form-item-control-input-content .field-flex-container .field-flex-box-content {
+  overflow: auto;
+}
+.type-html .ant-form-item-control .ant-form-item-control-input-content .rich-markdown-editor pre code {
+  white-space: pre;
+}
 .type-html .ant-form-item-control .ant-form-item-control-input-content li {
   list-style: auto;
 }
