@@ -188,6 +188,9 @@ export function getFileinfoByFilename(filename) {
     }else if(filename.endsWith('.chart.yml')){
         metadataName = TypeInfoKeys.Chart;
         itemName = _.first(filename.split('.'));
+    }else if(filename.endsWith('.tab.yml')){
+        metadataName = TypeInfoKeys.Tab;
+        itemName = _.first(filename.split('.'));
     }else{
         unsupportedFile = filename;
         //throw new Error('unsupported filename:'+ filename);

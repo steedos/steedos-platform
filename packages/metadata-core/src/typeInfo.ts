@@ -35,7 +35,8 @@ export enum SteedosMetadataTypeInfoKeys {
     ApprovalProcess = "ApprovalProcess",
     Query = "Query",
     Chart = "Chart",
-    Page = "Page"
+    Page = "Page",
+    Tab = "Tab"
 }
 
 const loadType = function (filePath){

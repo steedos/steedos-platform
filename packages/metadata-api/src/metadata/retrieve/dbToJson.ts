@@ -23,10 +23,12 @@ import {layoutsFromDb} from '../collection/layout'
 import { QueryCollection } from '../collection/query';
 import { ChartCollection } from '../collection/chart';
 import { PageCollection } from '../collection/page';
+import { TabCollection } from '../collection/tab';
 
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
 const pageCollection = new PageCollection();
+const tabCollection = new TabCollection();
 
 import { hasParent, getParentMetadataName, hasChild, getMetadataTypeInfo, getFunctionFields,
    SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
@@ -123,6 +125,9 @@ export async function dbToJson(reqYml, steedosPackage, dbManager){
         break;
       case TypeInfoKeys.Page:
         await pageCollection.retrieve(dbManager, reqYml[metadataName], container);
+        break;
+      case TypeInfoKeys.Tab:
+        await tabCollection.retrieve(dbManager, reqYml[metadataName], container);
         break;
       default:
         break;

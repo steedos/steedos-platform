@@ -19,10 +19,12 @@ import { layoutsToDb } from '../collection/layout'
 import { QueryCollection } from '../collection/query';
 import { ChartCollection } from '../collection/chart';
 import { PageCollection } from '../collection/page';
+import { TabCollection } from '../collection/tab'
 
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
 const pageCollection = new PageCollection();
+const tabCollection = new TabCollection();
 
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getMetadataTypeInfo, hasChild, getChilds } from '@steedos/metadata-core';
 
@@ -104,7 +106,9 @@ async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, p
         case TypeInfoKeys.Page:
             await pageCollection.deploy(dbManager, metatdataRecords);
             break;
-
+        case TypeInfoKeys.Tab:
+            await tabCollection.deploy(dbManager, metatdataRecords);
+            break;
         default:
             break;
     }
