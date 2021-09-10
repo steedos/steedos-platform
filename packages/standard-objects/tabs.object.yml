@@ -98,6 +98,12 @@ fields:
   description:
     type: textarea
     is_wide: true
+  is_system:
+    type: boolean
+    label: System
+    omit: true
+    hidden: true
+    disabled: true
 list_views:
   all:
     label: All Apps
@@ -109,6 +115,7 @@ list_views:
       - desktop
       - mobile
       - type
+      - is_system
 permission_set:
   user:
     allowCreate: false

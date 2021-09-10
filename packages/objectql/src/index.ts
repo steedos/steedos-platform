@@ -10,3 +10,4 @@ export * from "./dynamic-load"
 export * from './metadata-register/query'
 export * from './metadata-register/chart'
 export * from './metadata-register/page'
+export * from './metadata-register/tab'

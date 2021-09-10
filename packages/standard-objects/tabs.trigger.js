@@ -25,11 +25,15 @@ module.exports = {
         await objectql.addTabConfig(record, SERVICE_NAME)
     },
     afterUpdate: async function () {
+        const {doc, previousDoc} = this;
         const record = await this.getObject('tabs').findOne(this.id);
-        await objectql.addTabConfig(record, SERVICE_NAME)
+        if(doc.name != previousDoc.name){
+            await objectql.removeTab(previousDoc.name)
+            await objectql.addTabConfig(record, SERVICE_NAME)
+        }
     },
     afterDelete: async function(){
-        let id = this.id;
-        await objectql.removeTab(id)
+        let previousDoc = this.previousDoc;
+        await objectql.removeTab(previousDoc.name)
     }
 }

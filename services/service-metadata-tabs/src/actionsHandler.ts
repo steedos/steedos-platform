@@ -32,10 +32,10 @@ async function register(ctx, tabApiName, data, meta){
 
 export const ActionHandlers = {
     async get(ctx: any): Promise<any> {
-        return await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.tabApiName)}, {meta: ctx.meta})
+        return await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.tabApiName || ctx.params.metadataApiName)}, {meta: ctx.meta})
     },
     async getChildren(ctx: any): Promise<any> {
-        return await getChildren(ctx, ctx.params.tabApiName);
+        return await getChildren(ctx, ctx.params.tabApiName || ctx.params.metadataApiName);
     },
     async getAll(ctx: any): Promise<any> {
         return await ctx.broker.call('metadata.filter', {key: cacherKey("*")}, {meta: ctx.meta})
@@ -43,7 +43,7 @@ export const ActionHandlers = {
     async add(ctx: any): Promise<boolean>{
         let config = ctx.params.data;
         const serviceName = ctx.meta.metadataServiceName
-        const metadataApiName = ctx.params.tabApiName;
+        const metadataApiName = ctx.params.tabApiName || ctx.params.apiName;
         const metadataConfig = await getServiceConfig(ctx, serviceName, `${config.object_name}.${metadataApiName}`)
         if(metadataConfig && metadataConfig.metadata){
             config = _.defaultsDeep(config, metadataConfig.metadata);
@@ -72,17 +72,17 @@ export const ActionHandlers = {
         return configs;
     },
     async delete(ctx: any): Promise<boolean>{
-        const metadataConfig = await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.tabApiName)}, {meta: ctx.meta});
+        const metadataConfig = await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.tabApiName || ctx.params.metadataApiName)}, {meta: ctx.meta});
         if(metadataConfig.metadata && metadataConfig.metadata.parent){
-            await deleteChildMap(ctx, metadataConfig.metadata.parent, ctx.params.tabApiName)
+            await deleteChildMap(ctx, metadataConfig.metadata.parent, ctx.params.tabApiName || ctx.params.metadataApiName)
         }
-        // const chidren = await getChildren(ctx, ctx.params.tabApiName);
+        // const chidren = await getChildren(ctx, ctx.params.tabApiName || ctx.params.metadataApiName);
         // if(chidren && _.isArray(chidren)){
         //     for await (const child of chidren) {
-        //         await deleteChildMap(ctx, ctx.params.tabApiName, child.apiName)
+        //         await deleteChildMap(ctx, ctx.params.tabApiName || ctx.params.metadataApiName, child.apiName)
         //     }
         // }
-        return await ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.tabApiName)}, {meta: ctx.meta})
+        return await ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.tabApiName || ctx.params.metadataApiName)}, {meta: ctx.meta})
     },
     async verify(ctx: any): Promise<boolean>{
         console.log("verify");

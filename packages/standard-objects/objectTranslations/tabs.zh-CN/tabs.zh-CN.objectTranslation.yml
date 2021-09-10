@@ -22,7 +22,7 @@ fields:
   has_sidebar:
     label: 显示侧边栏面板
     help: 指示选项卡是否显示侧边栏面板。
-    description: 
+    description:  
   type:
     label: 类型
     options:

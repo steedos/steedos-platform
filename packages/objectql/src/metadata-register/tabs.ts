@@ -1,9 +1,14 @@
 const clone = require('clone');
 const SERVICE_NAME = 'tabs';
+
+/***
+ * 此文件内容不再维护，迁移到tab.ts
+ */
+
 export async function registerTab(broker, serviceName, config) {
     const metadata = clone(config);
     delete metadata.triggers
-    const res = await broker.call(`${SERVICE_NAME}.add`, {tabApiName: metadata._id || metadata.name ,data: metadata}, {meta: {
+    const res = await broker.call(`${SERVICE_NAME}.add`, {tabApiName: metadata.name ,data: metadata}, {meta: {
         metadataServiceName: serviceName,
         caller: {
             nodeID: broker.nodeID,

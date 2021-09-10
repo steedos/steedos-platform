@@ -7,6 +7,7 @@ import { addTranslationsFiles, addObjectTranslationsFiles } from '../dynamic-loa
 import { registerPackageCharts } from '../dynamic-load/chart';
 import { registerPackageQueries } from '../dynamic-load/query';
 import { registerPackagePages } from '../dynamic-load/page';
+import { registerPackageTabs } from '../dynamic-load/tab';
 
 export const LOADED_OBJECT_RECORDS = {}
 
@@ -126,6 +127,7 @@ export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName
     await registerPackageQueries(filePath, serviceName);
     await registerPackageCharts(filePath, serviceName);
     await registerPackagePages(filePath, serviceName);
+    await registerPackageTabs(filePath, serviceName);
 
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
