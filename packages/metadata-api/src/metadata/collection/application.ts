@@ -50,6 +50,7 @@ async function getAllApplications(dbManager) {
         let application = applications[i]
 
         delete application.members
+        delete application.from_code_id
         deleteCommonAttribute(application);
     }
 
@@ -60,6 +61,7 @@ async function getApplicationByName(dbManager, applicationName) {
 
     var application = await dbManager.findOne(collection_name, {code: applicationName});
     delete application.members
+    delete application.from_code_id
     deleteCommonAttribute(application);
     return application;
 }
