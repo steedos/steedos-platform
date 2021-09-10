@@ -44,6 +44,19 @@ async function addFieldToObejcts(field, objects, objectName){
     delete field.reference_to;
     delete field.defaultValue;
   }
+
+  try {
+    if(field && field.options){
+      _.each(field.options, (item)=>{
+        if(_.isObject(item)){
+          delete item._id
+        }
+      })
+    }
+  } catch (error) {
+    
+  }
+
   deleteNullAttribute(field);
   sortAttribute(field);
 
