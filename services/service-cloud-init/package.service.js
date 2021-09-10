@@ -153,6 +153,7 @@ module.exports = {
 
 				// 生成管理员的api_keys
 				const newApiKeyDoc = {
+					_id: apiKey,
 					name: 'admin api key',
 					api_key: apiKey,
 					active: true,
