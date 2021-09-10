@@ -2,6 +2,7 @@ name: apps
 label: App
 icon: apps
 hidden: true
+version: 2
 fields:
   name:
     label: Name
@@ -71,6 +72,7 @@ fields:
     multiple: true
     is_wide: true
     reference_to: tabs
+    reference_to_field: name
   icon:
     label: Icon
     type: text
