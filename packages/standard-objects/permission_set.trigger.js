@@ -141,17 +141,20 @@ module.exports = {
                     }))
                 }
             }
+            // TODO: 目前排查出 权限集、简档的all视图才需要同时出示 权限集和简档 的记录， 这里需要做调整。
             if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
                 let lng = await getLng(this.userId);
                 this.data.values = this.data.values.concat((await getInternalPermissionSet(this.spaceId, lng, filterType)))
             }
             // this.data.values （许可证： platform）有值 ，（许可证： community）没值。
-            // 拿数据库保存的值 再过滤一遍。
+            // 人员对象 简档字段  还需要拿数据库保存的值 再过滤一遍。
             const allData = this.data.values;
             const firstFilterKey = _.keys(filters)[0];
-            this.data.values = _.filter(allData, (item)=>{
-                return item[firstFilterKey] === filters[firstFilterKey];
-            })
+            if(firstFilterKey === 'name'){
+                this.data.values = _.filter(allData, (item)=>{
+                    return item[firstFilterKey] === filters[firstFilterKey];
+                })
+            }
         }
     },
     afterCount: async function () {
