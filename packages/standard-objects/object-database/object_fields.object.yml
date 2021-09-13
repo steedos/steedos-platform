@@ -107,6 +107,8 @@ fields:
   reference_to:
     type: lookup
     label: Reference to
+    reference_to: objects
+    reference_to_field: name
     is_wide: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
