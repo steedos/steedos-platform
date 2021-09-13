@@ -67,6 +67,14 @@
             "type": "number",
             "description": "排序"
         },
+        "tabs": {
+            "type": "array",
+            "description": "用于指定此应用下的选项卡",
+            "items": {
+                "type": "string",
+                "description": "选项卡唯一标识。"
+            }
+        },
         "objects": {
             "type": "array",
             "description": "用于指定此应用下有多少对象。",
