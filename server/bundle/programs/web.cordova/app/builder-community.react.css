@@ -23786,6 +23786,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ag-theme-balham .ag-react-container {
   display: inline;
 }
+.ag-theme-balham .ag-cell .ant-image .ant-image-img {
+  width: auto;
+}
 
 /**
  ****************************
@@ -32140,7 +32143,7 @@ body .sc-gsTCUz {
 .type-html .ant-form-item-control .ant-form-item-control-input-content h3 {
   font-size: 1.25em;
 }
-.type-html.mode-edit .rich-markdown-editor {
+.type-html.mode-edit.field-editable .rich-markdown-editor {
   border: 1px solid #d9d9d9;
   border-radius: 2px;
   padding: 10px 23px;
@@ -32257,8 +32260,12 @@ body .sc-gsTCUz {
   max-width: 100%;
 }
 
+.type-image .ant-image {
+  height: 86px!important;
+}
 .type-image .ant-image .image-item {
   width: auto;
+  height: 100%!important;
 }
 .ant-image-preview-wrap .ant-image-preview-body .ant-image-preview-img-wrapper .ant-image-preview-img {
   display: inline;
