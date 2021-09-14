@@ -34,6 +34,7 @@ const getPackageMetadata = async (packagePath)=>{
 		Query: '*',
 		Chart: '*',
 		Page: '*',
+		Tab: '*',
 	});
 
 	_.each(result, (metadataItems, metadataType)=>{
@@ -64,7 +65,10 @@ module.exports = {
 			path: __dirname,
 			name: this.name,
 			isPackage: false
-		}
+		},
+		STEEDOS_CLOUD_URL: process.env.STEEDOS_CLOUD_URL ? process.env.STEEDOS_CLOUD_URL : 'https://console.steedos.cn',
+		STEEDOS_CLOUD_SPACE_ID: process.env.STEEDOS_CLOUD_SPACE_ID,
+		STEEDOS_CLOUD_API_KEY: process.env.STEEDOS_CLOUD_API_KEY
 	},
 
 	/**
@@ -277,9 +281,10 @@ module.exports = {
 		},
 		getCloudSaasPurchasedPackages:{
 			async handler() {
-				const apiKey = process.env.STEEDOS_CLOUD_API_KEY
-				const spaceId = process.env.STEEDOS_CLOUD_SPACE_ID
-				const url = process.env.STEEDOS_CLOUD_URL
+				const settings = this.settings;
+				const apiKey = settings.STEEDOS_CLOUD_API_KEY
+				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID
+				const url = settings.STEEDOS_CLOUD_URL
 
 				if(!apiKey || !spaceId || !url){
 					throw new Error(`请配置STEEDOS_CLOUD参数`);

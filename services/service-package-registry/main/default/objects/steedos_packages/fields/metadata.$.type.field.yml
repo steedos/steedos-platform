@@ -41,3 +41,5 @@ options:
     value: Chart
   - label: 页面
     value: Page
+  - label: 选项卡
+    value: Tab
