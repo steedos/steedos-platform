@@ -177,6 +177,18 @@ module.exports = {
 					throw new Error(syncResult.data.error);
 				}
 
+				try {
+					await ctx.broker.call('~packages-project-server.installPurchasedPackages', {}, {
+						meta: {
+							user: {
+								is_space_admin: true
+							}
+						}
+					});
+				} catch (error) {
+					console.error(`工作区初始化失败：installPurchasedPackages error`, error)
+				}
+
 				// throw new Error('test');
 
 				// // 通知主控初始化已完成
