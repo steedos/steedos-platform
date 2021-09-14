@@ -1,0 +1,234 @@
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * @ignore
+ **/
+
+/**
+ * Internationalization utilities
+ * @mixin @node-red/util_i18n
+ */
+
+var i18n = require("i18next");
+
+var path = require("path");
+var fs = require("fs-extra");
+
+var defaultLang = "en-US";
+
+var resourceMap = {};
+var resourceCache = {};
+var initPromise;
+
+/**
+ * Register multiple message catalogs with i18n.
+ * @memberof @node-red/util_i18n
+ */
+function registerMessageCatalogs(catalogs) {
+    var promises = catalogs.map(function(catalog) {
+        return registerMessageCatalog(catalog.namespace,catalog.dir,catalog.file).catch(err => {});
+    });
+    return Promise.all(promises);
+}
+
+/**
+ * Register a message catalog with i18n.
+ * @memberof @node-red/util_i18n
+ */
+async function registerMessageCatalog(namespace,dir,file) {
+    return initPromise.then(function() {
+        return new Promise((resolve,reject) => {
+            resourceMap[namespace] = { basedir:dir, file:file, lngs: []};
+            fs.readdir(dir,function(err, files) {
+                if (err) {
+                    resolve();
+                } else {
+                    files.forEach(function(f) {
+                        if (fs.existsSync(path.join(dir,f,file))) {
+                            resourceMap[namespace].lngs.push(f);
+                        }
+                    });
+                    i18n.loadNamespaces(namespace,function() {
+                        resolve();
+                    });
+                }
+            })
+        });
+    });
+}
+
+function mergeCatalog(fallback,catalog) {
+    for (var k in fallback) {
+        if (fallback.hasOwnProperty(k)) {
+            if (!catalog[k]) {
+                catalog[k] = fallback[k];
+            } else if (typeof fallback[k] === 'object') {
+                mergeCatalog(fallback[k],catalog[k]);
+            }
+        }
+    }
+}
+
+
+async function readFile(lng, ns) {
+    if (/[^a-z\-]/i.test(lng)) {
+        throw new Error("Invalid language: "+lng)
+    }
+    if (resourceCache[ns] && resourceCache[ns][lng]) {
+        return resourceCache[ns][lng];
+    } else if (resourceMap[ns]) {
+        const file = path.join(resourceMap[ns].basedir, lng, resourceMap[ns].file);
+        const content = await fs.readFile(file, "utf8");
+        resourceCache[ns] = resourceCache[ns] || {};
+        resourceCache[ns][lng] = JSON.parse(content.replace(/^\uFEFF/, ''));
+        var baseLng = lng.split('-')[0];
+        if (baseLng !== lng && resourceCache[ns][baseLng]) {
+            mergeCatalog(resourceCache[ns][baseLng], resourceCache[ns][lng]);
+        }
+        if (lng !== defaultLang) {
+            mergeCatalog(resourceCache[ns][defaultLang], resourceCache[ns][lng]);
+        }
+        return resourceCache[ns][lng];
+    } else {
+        throw new Error("Unrecognised namespace");
+    }
+}
+
+var MessageFileLoader = {
+    type: "backend",
+    init: function (services, backendOptions, i18nextOptions) { },
+    read: function (lng, ns, callback) {
+        readFile(lng, ns)
+            .then(data => callback(null, data))
+            .catch(err => {
+                if (/-/.test(lng)) {
+                    // if reading language file fails -> try reading base language (e. g. 'fr' instead of 'fr-FR' or 'de' for 'de-DE')
+                    var baseLng = lng.split('-')[0];
+                    readFile(baseLng, ns).then(baseData => callback(null, baseData)).catch(err => callback(err));
+                } else {
+                    callback(err);
+                }
+            });
+    }
+}
+
+function getCurrentLocale() {
+    var env = process.env;
+    for (var name of ['LC_ALL', 'LC_MESSAGES', 'LANG']) {
+        if (name in env) {
+            var val = env[name];
+            return val.substring(0, 2);
+        }
+    }
+    return undefined;
+}
+
+function init(settings) {
+    if (!initPromise) {
+        // Keep this as a 'when' promise as top-level red.js uses 'otherwise'
+        // and embedded users of NR may have copied that.
+        initPromise = new Promise((resolve,reject) => {
+            i18n.use(MessageFileLoader);
+            var opt = {
+                // debug: true,
+                defaultNS: "runtime",
+                ns: [],
+                fallbackLng: defaultLang,
+                interpolation: {
+                    unescapeSuffix: 'HTML',
+                    escapeValue: false,
+                    prefix: '__',
+                    suffix: '__'
+                }
+            };
+            var lang = settings.lang || getCurrentLocale();
+            if (lang) {
+                opt.lng = lang;
+            }
+            i18n.init(opt ,function() {
+                resolve();
+            });
+        });
+    }
+}
+
+
+/**
+ * Gets a message catalog.
+ * @name catalog
+ * @function
+ * @memberof @node-red/util_i18n
+ */
+function getCatalog(namespace,lang) {
+    var result = null;
+    lang = lang || defaultLang;
+    if (/[^a-z\-]/i.test(lang)) {
+        throw new Error("Invalid language: "+lng)
+    }
+
+    if (resourceCache.hasOwnProperty(namespace)) {
+        result = resourceCache[namespace][lang];
+        if (!result) {
+            var langParts = lang.split("-");
+            if (langParts.length == 2) {
+                result = resourceCache[namespace][langParts[0]];
+            }
+        }
+    }
+    return result;
+}
+
+/**
+ * Gets a list of languages a given catalog is available in.
+ * @name availableLanguages
+ * @function
+ * @memberof @node-red/util_i18n
+ */
+function availableLanguages(namespace) {
+    if (resourceMap.hasOwnProperty(namespace)) {
+        return resourceMap[namespace].lngs
+    }
+}
+
+var obj = module.exports = {
+    init: init,
+    registerMessageCatalog: registerMessageCatalog,
+    registerMessageCatalogs: registerMessageCatalogs,
+    catalog: getCatalog,
+    availableLanguages: availableLanguages,
+    /**
+     * The underlying i18n library for when direct access is really needed
+     */
+    i: i18n,
+    /**
+     * The default language of the runtime
+     */
+    defaultLang: defaultLang
+}
+
+/**
+ * Perform a message catalog lookup.
+ * @name _
+ * @function
+ * @memberof @node-red/util_i18n
+ */
+obj['_'] = function() {
+    //var opts = {};
+    //if (def) {
+    //    opts.defaultValue = def;
+    //}
+    //console.log(arguments);
+    var res = i18n.t.apply(i18n,arguments);
+    return res;
+}

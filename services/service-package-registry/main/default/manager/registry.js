@@ -1,4 +1,4 @@
-const {exec,log,events} = require("@node-red/util");
+const {exec,log,events} = require("../util");
 const child_process = require('child_process');
 const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm'; 
 const yarnCommand = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';  

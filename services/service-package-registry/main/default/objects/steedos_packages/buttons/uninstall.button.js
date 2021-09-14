@@ -19,7 +19,7 @@ module.exports = {
                     success: function(){
                         setTimeout(function(){
                             if(record_id){
-                                SteedosUI.reloadRecord(object_name, record_id)
+                                return FlowRouter.go("/app/admin/steedos_packages/grid/all")
                             }
                             toastr.clear();
                             toastr.success('已卸载');

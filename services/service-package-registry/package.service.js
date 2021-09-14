@@ -202,27 +202,30 @@ module.exports = {
             },
 			async handler(ctx){
 				const installErrors = {};
+				const installPackages = [];
 				try {
 					const user = ctx.meta.user;
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
 					}
 					const result = await this.getCloudSaasPurchasedPackages();
-					for (const item of result.packages) {
+					for (const _package of result.packages) {
 						try {
-							const { name, version, label, description} = item.package
-							const { enable } = item
-							await this.installPackage(name, version, label, description, enable, ctx.broker);
+							const { name, version, label, description } = _package
+							let enable = true; //安装已购买的软件包时先默认启用
+							const packageInfo = await this.installPackage(name, version, label, description, enable, ctx.broker);
+							installPackages.push(packageInfo)
 						} catch (error) {
 							if(error.stderr){
-								installErrors[item.package.name] = error.stderr
+								installErrors[_package.name] = error.stderr
 							}else{
-								installErrors[item.package.name] = error.message
+								installErrors[_package.name] = error.message
 							}
 						}
 					}
-					if(!_.isEmpty(installErrors)){
-						throw new Error(JSON.stringify(installErrors))
+					return {
+						installPackages: installPackages,
+						installErrors: installErrors
 					}
 				} catch (error) {
 					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
@@ -282,10 +285,27 @@ module.exports = {
 					throw new Error(`请配置STEEDOS_CLOUD参数`);
 				}
 				const headers = Object.assign({}, {'Content-Type': 'application/json'}, { [HEADER_AUTH]: `${AUTH_TYPE} apikey,${apiKey}`});
-				const response = await fetch(`${url}/api/saas/packages/purchased/detail`, {
+				const response = await fetch(`${url}/api/shop/product_subscriptions/apps`, {
 					method: 'GET', headers: headers
 				});
-				return await response.json()
+
+				const result = await response.json();
+
+				if(result.status === 'error'){
+					throw new Error(`${url}: ${result.message}`)
+				}
+
+				const packages = [];
+
+				_.each(result.data, (item)=>{
+					packages.push({
+						name: item.product.sku, 
+						version: null,  //始终安装latest最新版
+						label: item.product.name, 
+						description: item.product.description || ''
+					})
+				})
+				return { packages : packages}
             }
 		},
 	},

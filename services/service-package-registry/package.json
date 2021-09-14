@@ -9,12 +9,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@node-red/util": "2.0.5",
     "@steedos/service-package-loader": "2.1.10",
     "fs-extra": "8.1.0",
     "lodash": "~4.17.21",
     "npm-package-arg": "~8.1.5",
-    "radwag-mass": "~1.0.5"
+    "radwag-mass": "~1.0.5",
+    "i18next": "20.3.2",
+    "json-stringify-safe": "5.0.1",
+    "jsonata": "1.8.5",
+    "lodash.clonedeep": "^4.5.0",
+    "moment-timezone": "0.5.33"
   },
   "private": false,
   "publishConfig": {
