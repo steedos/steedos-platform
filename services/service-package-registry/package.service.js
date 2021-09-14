@@ -159,10 +159,12 @@ module.exports = {
 			async handler(ctx) {
 				const { module } = ctx.params
                 const packageConfog = await loader.disablePackage(module);
+				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfog.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfog, {
 						nodeID: ctx.broker.nodeID, 
-						instanceID: ctx.broker.instanceID, 
+						instanceID: ctx.broker.instanceID,
+						metadata: metadata 
 					})
 				})
 				return {}
@@ -172,10 +174,12 @@ module.exports = {
 			async handler(ctx) {
 				const { module } = ctx.params
                 const packageConfog = await loader.enablePackage(module);
+				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfog.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfog, {
 						nodeID: ctx.broker.nodeID, 
-						instanceID: ctx.broker.instanceID, 
+						instanceID: ctx.broker.instanceID,
+						metadata: metadata
 					})
 				})
 				return {}
@@ -303,12 +307,17 @@ module.exports = {
 				const packages = [];
 
 				_.each(result.data, (item)=>{
-					packages.push({
-						name: item.product.sku, 
-						version: null,  //始终安装latest最新版
-						label: item.product.name, 
-						description: item.product.description || ''
+					let isExist = _.find(packages, (_package)=>{
+						return _package.name === item.product.sku
 					})
+					if(!isExist){
+						packages.push({
+							name: item.product.sku, 
+							version: null,  //始终安装latest最新版
+							label: item.product.name, 
+							description: item.product.description || ''
+						})
+					}
 				})
 				return { packages : packages}
             }
