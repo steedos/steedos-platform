@@ -9,7 +9,7 @@ admin_menus:
     permission_sets:
       - admin
       - workflow_admin
-      - user
+      # - user
     expanded: false
     sort: 500
     # parent: process_automation
@@ -81,7 +81,7 @@ admin_menus:
     permission_sets:
       - user
     object_name: process_delegation_rules
-    parent: menu_workflow
+    parent: account
   - _id: object_workflows
     name: Object Synchronization Rule
     permission_sets:
