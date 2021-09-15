@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-cloud-init",
-  "version": "2.1.11",
+  "version": "2.1.12",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
