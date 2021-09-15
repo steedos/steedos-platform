@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
 const createHash = require('crypto').createHash;
+const steedosLicense = require("@steedos/license");
 // const randomstring = require("randomstring");
 const project = require('./package.json');
 const packageName = project.name;
@@ -101,7 +102,7 @@ module.exports = {
 			const { spaceName, adminName, adminPhone, adminPassword } = infoResult.data.info;
 
 			if (!spaceName || !adminName || !adminPhone) {
-				console.log(chalk.red('缺少初始化工作区信息，请检查'));
+				console.log(chalk.red('缺少初始化工作区信息 工作区名称、管理员姓名、管理员手机号，请检查'));
 				return;
 			}
 
@@ -166,47 +167,11 @@ module.exports = {
 				const license = await this.getLicense(spaceId, apiKey, consoleUrl);
 				// console.log(license);
 				const licenseInfo = license.split(',');
-				let syncResult = await axios({
-					url: Steedos.absoluteUrl(`/api/v4/license/${spaceId}/sync`),
-					method: 'post',
-					data: { licenses: [{ license: licenseInfo[0], key: licenseInfo[1] }] },
-					headers: { "Content-Type": "application/json", "Authorization": `Bearer apikey,${apiKey}` }
-				})
-				if (syncResult.data.error) {
-					console.log(chalk.red('许可证初始化失败'));
-					throw new Error(syncResult.data.error);
+				let license_decrypt = steedosLicense.verifyLicenseFile(licenseInfo[0], licenseInfo[1], spaceId);
+				if (license_decrypt.verify_error) {
+					throw new Error(license_decrypt.verify_error);
 				}
-
-				try {
-					await ctx.broker.call('~packages-project-server.installPurchasedPackages', {}, {
-						meta: {
-							user: {
-								is_space_admin: true
-							}
-						}
-					});
-				} catch (error) {
-					console.error(`工作区初始化失败：installPurchasedPackages error`, error)
-				}
-
-				// throw new Error('test');
-
-				// // 通知主控初始化已完成
-				// let requestResult = await axios({
-				//     url: `${consoleUrl}/api/saas/trial/application/space/init/finished`,
-				//     method: 'post',
-				//     data: {
-				//         subDomain,
-				//         userPassword
-				//     },
-				//     headers: { "Content-Type": "application/json", "Authorization": `Bearer apikey,${apiKey}` }
-				// })
-				// // console.log(chalk.blue(JSON.stringify(requestResult.data)));
-				// let resultData = requestResult.data;
-				// if (!resultData.success) {
-				//     console.log(chalk.red(resultData.error));
-				//     throw new Error('通知主控返回报错');
-				// }
+				await steedosLicense.save({ license: licenseInfo[0], is_local: license_decrypt.is_local, key: licenseInfo[1], verify_status: license_decrypt.verify_status, verify_error: license_decrypt.verify_erro, license_last_verify: new Date(), _id: license_decrypt._id, product: license_decrypt.product }, spaceId);
 
 				console.log(chalk.blue('工作区初始化完毕'));
 
