@@ -205,7 +205,7 @@ Creator.getObjectRelateds = (object_name)->
 			_.each related_object.fields, (related_field, related_field_name)->
 				if (related_field.type == "master_detail" || related_field.type == "lookup") and related_field.reference_to and related_field.reference_to == object_name and relatedListMap[related_object_name]
 					# 当related_object.fields中有两个或以上的字段指向object_name表示的对象时，优先取第一个作为外键关系字段，但是related_field为主子表时强行覆盖之前的relatedListMap[related_object_name]值
-					if !relatedListMap[related_object_name] || related_field.type == "master_detail"
+					if _.isEmpty relatedListMap[related_object_name] || related_field.type == "master_detail"
 						relatedListMap[related_object_name] = { object_name: related_object_name, foreign_key: related_field_name, write_requires_master_read: related_field.write_requires_master_read }
 		if relatedListMap['cms_files']
 			relatedListMap['cms_files'] = { object_name: "cms_files", foreign_key: "parent" }
