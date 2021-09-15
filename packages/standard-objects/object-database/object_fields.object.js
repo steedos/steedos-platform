@@ -454,7 +454,7 @@ var triggers = {
         throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
       checkName(doc._name);
-      if(doc._name === 'name' || doc._name === 'owner'){
+      if(['name','owner','parent','children'].indexOf(doc._name)>-1){
         doc.name = doc._name;
       }else{
         doc.name = getFieldName(doc.object,doc._name,doc.space);

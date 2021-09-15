@@ -1,6 +1,8 @@
 const InternalData = require('../core/internalData');
 const _ = require('underscore');
 const objectql = require('@steedos/objectql');
+const objectTree = require('./objects.tree.js');
+
 module.exports = {
     afterFind: async function(){
         let userId = this.userId
@@ -51,6 +53,10 @@ module.exports = {
         }
     },
     afterInsert: async function(){
+        const doc = this.doc;
+        if(doc.enable_tree){
+            objectTree.insertParentAndChildrenFieldForTreeObject(doc)
+        }
         // let spaceProfiles = await objectql.getObject('permission_set').find({space: this.spaceId, type: 'profile'});
         // await objectql.getObject('object_layouts').insert({
         //     label: 'default',
