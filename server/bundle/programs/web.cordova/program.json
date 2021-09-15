@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "6b53d62fac9d9cbe57001403e32866ad69ebfbd2.js",
+      "path": "08a32f842145e5d399aaf1e3232419268b11d36e.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/6b53d62fac9d9cbe57001403e32866ad69ebfbd2.js?meteor_js_resource=true",
-      "size": 24320236,
-      "hash": "6b53d62fac9d9cbe57001403e32866ad69ebfbd2",
-      "sri": "OeFWuj2qVMm+s8RK3EmLGdH0vYT8xRaoxF0kx3wLURoCPlVXNZRE3Uj7DIvfV5GfYAUZB2tVEipO8/qTcIfngw=="
+      "url": "/__cordova/08a32f842145e5d399aaf1e3232419268b11d36e.js?meteor_js_resource=true",
+      "size": 24299960,
+      "hash": "08a32f842145e5d399aaf1e3232419268b11d36e",
+      "sri": "0F/Z7ga1TPXOxnVvMlimCnaMrDCjvk/tcuAe7CsVMWuiheF5iTBKCYEBrTUSxfNvXZOHNEXW7dWHPNjZ6ULOhw=="
     },
     {
-      "path": "6b53d62fac9d9cbe57001403e32866ad69ebfbd2.stats.json",
+      "path": "08a32f842145e5d399aaf1e3232419268b11d36e.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/6b53d62fac9d9cbe57001403e32866ad69ebfbd2.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/08a32f842145e5d399aaf1e3232419268b11d36e.stats.json?meteor_js_resource=true",
       "size": 154291,
-      "hash": "e7eca0777532cfb466684d9b65d32669213d0c8e",
-      "sri": "9Vdwa4F4aVgqi6syX4EE3q1KEMi2KAAGXnA5R+lKdJeQfE3VT+pCzmhF83soTokUlNhXj0WVvUbl7sV+jFDeZQ=="
+      "hash": "af89e656f3a1036ff3c0b8fb07b61793cc0299de",
+      "sri": "dng58yV3/WGzQvso8Z4pNz0NWWaxWcUTJpkglthnMIbeSiYkrfs+MTQ2XjCXMI8YIo4CDkZ6r0j2cZ146g5SDg=="
     },
     {
       "path": "0c93df0cb43b8f739276372cc69aa47c7846c615.css",
@@ -1417,8 +1417,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/__cordova/builder-community.react.css",
-      "size": 1418741,
-      "hash": "2c05b7819a865ef6fc1b91804e2ae9c87c98cc47",
+      "size": 1418812,
+      "hash": "135b4d7578d0dde2739a55f5f77d32240c07c989",
       "sri": null
     },
     {
@@ -1427,8 +1427,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/builder-community.react.css",
-      "size": 1418741,
-      "hash": "2c05b7819a865ef6fc1b91804e2ae9c87c98cc47",
+      "size": 1418812,
+      "hash": "135b4d7578d0dde2739a55f5f77d32240c07c989",
       "sri": null
     },
     {
@@ -1437,8 +1437,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/__cordova/customize.css",
-      "size": 524,
-      "hash": "72c6cab9a3e495d5acfac9b4b6e510f321a0011b",
+      "size": 672,
+      "hash": "6184e35623415e90a81a464c036b0e695d9b6b03",
       "sri": null
     },
     {
@@ -1447,8 +1447,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/customize.css",
-      "size": 524,
-      "hash": "72c6cab9a3e495d5acfac9b4b6e510f321a0011b",
+      "size": 672,
+      "hash": "6184e35623415e90a81a464c036b0e695d9b6b03",
       "sri": null
     },
     {

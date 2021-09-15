@@ -32161,6 +32161,9 @@ body .sc-gsTCUz {
 .select-field-container .ant-select .ant-select-selection-item .ant-select-selection-item-content {
   display: flex;
 }
+.type-select.mode-read .select-container {
+  vertical-align: middle;
+}
 
 .lookup-field-container {
   display: flex;

@@ -27,3 +27,8 @@ body {
 .slds-illustration__svg {
   display: inline !important;
 }
+
+/* 隐藏左侧 ‘关于’ 菜单 */
+.creator-content-wrapper .split-left .dx-treeview-node-container li[data-item-id=about]{
+  display: none;
+}

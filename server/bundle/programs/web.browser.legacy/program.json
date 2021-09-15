@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "454291a8041fe9d25c0531e45aecf8722b0a980b.js",
+      "path": "d71c151e9105f56e9c7837bdffc5f716b57efbf9.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/454291a8041fe9d25c0531e45aecf8722b0a980b.js?meteor_js_resource=true",
-      "size": 21195407,
-      "hash": "454291a8041fe9d25c0531e45aecf8722b0a980b",
-      "sri": "FB+fTcDeGKRUx2wOdNs6FGxs5q0EBllS55JBH6mNqnD4GUnHnCZAXqDPktQ+Uv14xYvVARH8A/fXJSVBAZJ7Pw=="
+      "url": "/d71c151e9105f56e9c7837bdffc5f716b57efbf9.js?meteor_js_resource=true",
+      "size": 21175131,
+      "hash": "d71c151e9105f56e9c7837bdffc5f716b57efbf9",
+      "sri": "YAMTtcLpdPRcbPf+BJfInr9k4/vILMmyYWVNuPMzhhlkmJO/rLihxrcXV5AbP0LwvexZ8kHm04tX6gSXaV5x1A=="
     },
     {
-      "path": "454291a8041fe9d25c0531e45aecf8722b0a980b.stats.json",
+      "path": "d71c151e9105f56e9c7837bdffc5f716b57efbf9.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/454291a8041fe9d25c0531e45aecf8722b0a980b.stats.json?meteor_js_resource=true",
+      "url": "/d71c151e9105f56e9c7837bdffc5f716b57efbf9.stats.json?meteor_js_resource=true",
       "size": 153731,
-      "hash": "a56c78cc230a191e929f4a3176c440be183a6155",
-      "sri": "fGhhe7pEq+QOW/8a882I+Nk9H3JByY2e35XZK0F5DSvDf5NUSnTB/GEKstJ4KLp+azicLv0ICRp8C6dJ/30CHA=="
+      "hash": "6d1a83d7a30abee2bdb3a3a1dec82dc5fa230a3a",
+      "sri": "p5/PE8I3RCsne9pL5L49RS3Pw0AZoAHZDEBHTtrvbJLMyEtEa9pDGf9bKUT6WeBmMssxyZgHE6D8FjYIBc7xjw=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4127,8 +4127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/builder-community.react.css",
-      "size": 1418741,
-      "hash": "2c05b7819a865ef6fc1b91804e2ae9c87c98cc47",
+      "size": 1418812,
+      "hash": "135b4d7578d0dde2739a55f5f77d32240c07c989",
       "sri": null
     },
     {
@@ -4137,8 +4137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/customize.css",
-      "size": 524,
-      "hash": "72c6cab9a3e495d5acfac9b4b6e510f321a0011b",
+      "size": 672,
+      "hash": "6184e35623415e90a81a464c036b0e695d9b6b03",
       "sri": null
     },
     {
