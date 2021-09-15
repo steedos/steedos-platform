@@ -119,11 +119,11 @@ fields:
     defaultValue: true
     label: Enable Single Field Edit
     group: Switch
-  # enable_tree:
-  #   type: boolean
-  #   label: Enable Tree
-  #   inlineHelpText: Enable a tree structure to display records
-  #   group: Switch
+  enable_tree:
+    type: boolean
+    label: Enable Tree
+    inlineHelpText: Enable a tree structure to display records
+    group: Switch
   enable_enhanced_lookup:
     type: boolean
     label: Enable Enhanced Lookup

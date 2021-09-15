@@ -349,5 +349,21 @@ module.exports = {
         if(doc.type === "summary"){
             await initSummaryDoc(doc);
         }
+        if(["parent","children"].indexOf(dbDoc._name) > -1){
+            let isImportField = false;
+            if(doc._name !== dbDoc._name || doc.type !== dbDoc.type || doc.object !== dbDoc.object || doc.reference_to !== dbDoc.reference_to || !!doc.multiple !== !!dbDoc.multiple){
+                isImportField = true;
+            }
+            if(isImportField){
+                throw new Meteor.Error(500, "字段parent、children是启用树状结构显示记录的对象的内置字段，不能修改其”所属对象、字段名、字段类型、引用对象、多选”等属性");
+            }
+        }
+    },
+    beforeDelete: async function () {
+        const field = await this.getObject(this.object_name).findOne(this.id,{fields:['name','object']});
+        const enable_tree = await objectql.getObject(field.object).enable_tree;
+        if( ["parent","children"].indexOf(field.name) > -1 && enable_tree ){
+            throw new Meteor.Error(500, "启用树状结构显示记录的对象不能删除parent、children字段。");
+        }
     }
 }

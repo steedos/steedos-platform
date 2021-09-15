@@ -85,7 +85,7 @@ fields:
     description: 
   enable_tree:
     label: 启用树状结构显示记录
-    help: 
+    help: 当启用时，与此对象关联的查找字段将以树状结构的形式显示其选项。
     description: 
   enable_enhanced_lookup:
     label: 启用增强查找模式
