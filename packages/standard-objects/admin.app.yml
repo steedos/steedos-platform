@@ -137,6 +137,10 @@ admin_menus:
     name: Advanced
     permission_sets:
       - admin
+      - user
+      - customer
+      - supplier
+      - none
     sort: 10000
   - _id: permission_shares
     name: Permission Share
