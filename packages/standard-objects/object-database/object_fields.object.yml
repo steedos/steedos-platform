@@ -507,18 +507,18 @@ fields:
     group: Advanced
     visible_on: "{{formData.type === 'url' ? true: false}}"
   visible_on:
-    type: text
+    type: textarea
     label: Visible On
     is_wide: true
     group: Advanced
   inlineHelpText:
     label: Prompt text
-    type: text
+    type: textarea
     is_wide: true
     group: Advanced
   description:
     label: Description
-    type: text
+    type: textarea
     is_wide: true
     group: Advanced
   write_requires_master_read:
