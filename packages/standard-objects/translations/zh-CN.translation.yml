@@ -4,7 +4,7 @@ CustomApplications:
     description: 管理员设置公司、人员、权限等。
 CustomLabels:
   app_object_manager_name: 对象管理
-  menu_account: 个人账户设置
+  menu_account: 个人设置
   menu_account_profile: 我的资料
   menu_account_background: 背景图
   menu_menu_users: 公司设置
