@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-objects",
-  "version": "2.1.13",
+  "version": "2.1.14",
   "description": "",
   "main": "lib/objects.service.js",
   "scripts": {

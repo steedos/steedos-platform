@@ -1,6 +1,6 @@
 {
   "name": "@steedos/steedos-project-enterprise",
-  "version": "2.1.13",
+  "version": "2.1.14",
   "private": true,
   "workspaces.disabled": [
     "steedos-app",
@@ -26,11 +26,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-charts": "2.1.13",
-    "@steedos/service-metadata-server": "2.1.13",
-    "@steedos/service-mongodb-server": "2.1.13",
-    "@steedos/service-package-loader": "2.1.13",
-    "@steedos/service-steedos-server": "2.1.13",
+    "@steedos/service-charts": "2.1.14",
+    "@steedos/service-metadata-server": "2.1.14",
+    "@steedos/service-mongodb-server": "2.1.14",
+    "@steedos/service-package-loader": "2.1.14",
+    "@steedos/service-steedos-server": "2.1.14",
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
