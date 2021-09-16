@@ -108,7 +108,8 @@ if Meteor.isClient
 		_object = Creator.getObject(object_name)
 		if _object
 			layoutRelatedList = _object.related_lists;
-			if !_.isEmpty layoutRelatedList
+			# layoutRelatedList 是数组就表示配置过页面布局，就启用页面布局的相关子表。
+			if _.isArray layoutRelatedList
 				_.each layoutRelatedList, (item)->
 					reObjectName = item.related_field_fullname.split('.')[0]
 					reFieldName = item.related_field_fullname.split('.')[1]
