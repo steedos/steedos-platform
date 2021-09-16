@@ -113,11 +113,31 @@ export async function refreshObject(ctx, objectApiName) {
         delete baseObjectConfig.hidden;
     }
 
-    const mainConfig = _.find(objectConfigs, (conf)=>{
+    const mainConfigs = _.filter(objectConfigs, (conf) => {
         return conf.isMain;
-    })
+    });
 
-    if(!mainConfig){
+    let mainConfig = null;
+
+    if(mainConfigs.length == 1){
+        mainConfig = mainConfigs[0]
+    }else if(mainConfigs.length > 1){
+        let dbMainConfig = _.find(mainConfigs, (conf)=>{
+            return _.has(conf, '_id') && !_.has(conf, '__filename')
+        })
+
+        delete dbMainConfig.isMain
+
+        mainConfig = _.find(mainConfigs, (conf)=>{
+            return conf.isMain;
+        })
+
+        if(!mainConfig){
+            mainConfig = mainConfigs[0]
+        }
+    }
+
+    if (!mainConfig) {
         return null;
     }
 
