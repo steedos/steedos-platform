@@ -173,6 +173,18 @@ module.exports = {
 				}
 				await steedosLicense.save({ license: licenseInfo[0], is_local: license_decrypt.is_local, key: licenseInfo[1], verify_status: license_decrypt.verify_status, verify_error: license_decrypt.verify_erro, license_last_verify: new Date(), _id: license_decrypt._id, product: license_decrypt.product }, spaceId);
 
+				try {
+					await ctx.broker.call('~packages-project-server.installPurchasedPackages', {}, {
+						meta: {
+							user: {
+								is_space_admin: true
+							}
+						}
+					});
+				} catch (error) {
+					console.error(`工作区初始化失败：installPurchasedPackages error`, error)
+				}
+
 				console.log(chalk.blue('工作区初始化完毕'));
 
 			} catch (error) {
