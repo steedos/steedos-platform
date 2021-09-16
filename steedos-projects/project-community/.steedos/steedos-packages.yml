@@ -1,6 +1,6 @@
 steedos-app-community:
   enable: true
-  version: 2.1.13
+  version: 2.1.14
   description: A Steedos App
   local: true
   path: steedos-app
