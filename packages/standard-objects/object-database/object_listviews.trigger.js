@@ -2,12 +2,12 @@ const InternalData = require('../core/internalData');
 const util = require('../util');
 const objectql = require('@steedos/objectql');
 
-const getInternalListviews = async function(sourceListviews, filters){
+const getInternalListviews = async function(sourceListviews, filters, is_system){
     let collection = await objectql.getObject("object_listviews");
     let dbListviews = await collection.directFind({filters, fields:['_id', 'name']});
     let listviews = [];
 
-    if(!filters.is_system){
+    if(!is_system){
         _.forEach(sourceListviews, function(doc){
             if(!_.find(dbListviews, function(p){
                 return p.name === doc.name
@@ -54,7 +54,7 @@ module.exports = {
             views = await InternalData.getObjectListViews(filters.object_name, this.userId);
         }
 
-        views = await getInternalListviews(views, filters);
+        views = await getInternalListviews(views, this.query.filters, filters.is_system);
 
         if(views){
             this.data.values = this.data.values.concat(views)
@@ -79,7 +79,7 @@ module.exports = {
             views = await InternalData.getObjectListViews(filters.object_name, this.userId);
         }
 
-        views = await getInternalListviews(views, filters);
+        views = await getInternalListviews(views, this.query.filters, filters.is_system);
 
         if(views){
             this.data.values = this.data.values.concat(views)
@@ -104,7 +104,7 @@ module.exports = {
             views = await InternalData.getObjectListViews(filters.object_name, this.userId);
         }
 
-        views = await getInternalListviews(views, filters);
+        views = await getInternalListviews(views, this.query.filters, filters.is_system);
 
         if(views){
             this.data.values = this.data.values + views.length
