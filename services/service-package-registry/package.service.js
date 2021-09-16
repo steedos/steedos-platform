@@ -294,7 +294,7 @@ module.exports = {
 					throw new Error(`请配置STEEDOS_CLOUD参数`);
 				}
 				const headers = Object.assign({}, {'Content-Type': 'application/json'}, { [HEADER_AUTH]: `${AUTH_TYPE} apikey,${apiKey}`});
-				const response = await fetch(`${url}/api/shop/product_subscriptions/apps`, {
+				const response = await fetch(`${url}/api/shop/product_subscriptions/steedos-packages`, {
 					method: 'GET', headers: headers
 				});
 
