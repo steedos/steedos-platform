@@ -46,6 +46,14 @@ fields:
     label: Description
     type: textarea
     is_wide: true
+  tabs:
+    label: Tabs
+    type: lookup
+    multiple: true
+    group: Business object
+    is_wide: true
+    reference_to: tabs
+    reference_to_field: name
   objects:
     label: Objects
     type: lookup
@@ -66,13 +74,16 @@ fields:
         return Steedos.getObjectsOptions()
       }
     filterable: true
-  tabs:
-    label: Tabs
-    type: lookup
-    multiple: true
-    is_wide: true
-    reference_to: tabs
-    reference_to_field: name
+  is_creator:
+    type: boolean
+    label: Item of Menu  
+    defaultValue: true
+    group: Business object
+  mobile:
+    type: boolean
+    label: Mobile App
+    defaultValue: true
+    group: Business object
   icon:
     label: Icon
     type: text
@@ -82,14 +93,6 @@ fields:
     type: number
     defaultValue: 9100
     sortable: true
-  is_creator:
-    type: boolean
-    label: Item of Menu  
-    defaultValue: true
-  mobile:
-    type: boolean
-    label: Mobile App
-    defaultValue: true
 
   # members:
   #   type: object
