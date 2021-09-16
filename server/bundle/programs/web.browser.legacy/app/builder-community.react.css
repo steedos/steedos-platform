@@ -32143,10 +32143,22 @@ body .sc-gsTCUz {
 .type-html .ant-form-item-control .ant-form-item-control-input-content h3 {
   font-size: 1.25em;
 }
+.type-html .ant-form-item-control .ant-form-item-control-input-content .notice-block {
+  font-size: 16px;
+}
+.type-html .ant-form-item-control .ant-form-item-control-input-content .notice-block .content {
+  min-height: auto;
+  margin: 0;
+  padding: 0;
+  line-height: 1.7em;
+}
 .type-html.mode-edit.field-editable .rich-markdown-editor {
   border: 1px solid #d9d9d9;
   border-radius: 2px;
   padding: 10px 23px;
+}
+.type-html.mode-edit.field-editable .rich-markdown-editor > div {
+  min-height: 13em;
 }
 
 .select-field-container .ant-select .ant-select-selection-item {
