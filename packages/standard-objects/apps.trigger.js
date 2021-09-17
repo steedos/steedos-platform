@@ -100,16 +100,16 @@ module.exports = {
             })
         }
     },
-    afterInsert: async function () {
-        const record = await this.getObject('apps').findOne(this.doc._id);
-        await objectql.addAppConfig(record, SERVICE_NAME)
-    },
-    afterUpdate: async function () {
-        const record = await this.getObject('apps').findOne(this.id);
-        await objectql.addAppConfig(record, SERVICE_NAME)
-    },
-    afterDelete: async function(){
-        let id = this.id;
-        objectql.removeApp(id)
-    }
+    // afterInsert: async function () {
+    //     const record = await this.getObject('apps').findOne(this.doc._id);
+    //     await objectql.addAppConfig(record, SERVICE_NAME)
+    // },
+    // afterUpdate: async function () {
+    //     const record = await this.getObject('apps').findOne(this.id);
+    //     await objectql.addAppConfig(record, SERVICE_NAME)
+    // },
+    // afterDelete: async function(){
+    //     let id = this.id;
+    //     objectql.removeApp(id)
+    // }
 }
