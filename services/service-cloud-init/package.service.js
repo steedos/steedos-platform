@@ -227,7 +227,7 @@ module.exports = {
 			params: {},
 			handler: async function (ctx) {
 				try {
-					console.log(chalk.blue('manualSyncSpaceLicense...'));
+					// console.log(chalk.blue('manualSyncSpaceLicense...'));
 					const settings = this.settings;
 					// 配置主控地址
 					const consoleUrl = settings.STEEDOS_CLOUD_URL;
