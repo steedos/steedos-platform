@@ -117,11 +117,14 @@ JsonRoutes.add "post", "/s3/:collection",  (req, res, next) ->
 
 				collection.insert newFile
 
-				resultData = collection.files.findOne(newFile._id)
-				JsonRoutes.sendResult res,
-					code: 200
-					data: resultData
-				return
+				newFile.once 'stored', (storeName)->
+					resultData = collection.files.findOne(newFile._id)
+					JsonRoutes.sendResult res,
+						code: 200
+						data: resultData
+					return
+
+				
 			else
 				throw new Meteor.Error(500, "No File")
 
