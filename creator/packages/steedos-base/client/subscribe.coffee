@@ -44,4 +44,8 @@ Meteor.startup ->
 		locale = Steedos.locale()
 		$("body").addClass("locale-#{locale}")
 
+	Tracker.autorun (c)->
+		if Steedos.subsSpaceBase.ready("apps")
+			Creator.loadAppsMenus();
+
 

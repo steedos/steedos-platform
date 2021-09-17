@@ -1,6 +1,7 @@
 subs_objects = new SubsManager()
 Creator._subApp = new ReactiveVar({});
 _changeClientApps = (document)->
+	Creator.loadAppsMenus();
 	Creator.Apps[document.code] = document
 	Creator._subApp.set(Object.assign(document ,{ _id: document.code}))
 	if Session.get("app_id") == document._id
