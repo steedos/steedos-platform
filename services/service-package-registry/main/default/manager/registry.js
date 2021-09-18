@@ -120,7 +120,7 @@ async function installModule(module,version,url) {
     // if( check !== false){
     //     return check;
     // }
-    console.log(`installModule`, module,version,url)
+    // console.log(`installModule`, module,version,url)
     module = module || "";
     activePromise = activePromise.then(async function() {
         //TODO: ensure module is 'safe'
@@ -196,7 +196,7 @@ async function installModule(module,version,url) {
         return exec.run(yarnCommand,yarnArgs,{
             cwd: installDir
         }, true).then(result => {
-            console.log(`result ok`, result)
+            // console.log(`result ok`, result)
             try {
                 const packagePath = path.dirname(require.resolve(`${module}/package.json`, {
                     paths: [path.join(settings.userDir, 'node_modules')]
