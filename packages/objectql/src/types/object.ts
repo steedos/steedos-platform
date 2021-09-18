@@ -620,6 +620,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
             modifyAllRecords: false,
             viewCompanyRecords: false,
             modifyCompanyRecords: false,
+            allowReadFiles: null,
+            viewAllFiles: null,
+            allowCreateFiles: null,
+            allowEditFiles: null,
+            allowDeleteFiles: null,
             disabled_list_views: null,
             disabled_actions: null,
             unreadable_fields: null,
@@ -638,6 +643,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     let _v = rolePermission[k]
                     if (_.isBoolean(v)) {
                         if (v === false && _v === true) {
+                            userObjectPermission[k] = _v
+                        }
+                    } else if (['allowReadFiles','viewAllFiles','allowCreateFiles','allowEditFiles','allowDeleteFiles'].indexOf(k) > -1){
+                        if(_.isBoolean(_v)){
                             userObjectPermission[k] = _v
                         }
                     } else if ((_.isArray(v) || _.isNull(v))) {
