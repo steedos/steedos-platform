@@ -141,7 +141,8 @@ module.exports = {
                     }
                     const perSet = await objectql.getObject('permission_set').findOne(permission_set_id);
                     if(perSet){
-                        _ids.push(`${record.object_name}.${perSet.name}`)
+                        const _record = await objectql.getObject('permission_objects').findOne(record._id, {fields: ['object_name']});
+                        _ids.push(`${_record.object_name}.${perSet.name}`)
                     }
                 }
                 _.each(permissionObjects, function(_po){
@@ -180,7 +181,8 @@ module.exports = {
                     }
                     const perSet = await objectql.getObject('permission_set').findOne(permission_set_id);
                     if(perSet){
-                        _ids.push(`${record.object_name}.${perSet.name}`)
+                        const _record = await objectql.getObject('permission_objects').findOne(record._id, {fields: ['object_name']});
+                        _ids.push(`${_record.object_name}.${perSet.name}`)
                     }
                 }
                 _.each(permissionObjects, function(_po){
