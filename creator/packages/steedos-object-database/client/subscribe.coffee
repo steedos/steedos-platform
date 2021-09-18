@@ -15,6 +15,7 @@ _changeClientObjects = (document, oldDocument)->
 		return ;
 
 	SteedosUI.reloadObject document.name
+	Creator.loadAppsMenus();
 
 #	type = "added"
 #	if !_.isEmpty(_.findWhere(Creator.objectsByName, {_id: document._id}))
