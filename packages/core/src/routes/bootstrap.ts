@@ -66,6 +66,11 @@ async function getUserObject(userId, spaceId, object, layout?){
     }
     let _object = clone(object);
     if(_object && layout){
+        _.each(_object.actions, (action, key) => {
+            if (!_.has(action, 'name')) {
+                action.name = key;
+            }
+        });
         let _fields = {};
         _.each(layout.fields, function(_item){
             _fields[_item.field_name] = _object.fields[_item.field_name]
@@ -108,7 +113,7 @@ async function getUserObject(userId, spaceId, object, layout?){
             const action = _object.actions[button.button_name];
             if(action){
                 if(button.visible_on){
-                    action.visible = button.visible_on;
+                    action._visible = button.visible_on;
                 }
                 // _buttons[button.button_name] = action
             }
