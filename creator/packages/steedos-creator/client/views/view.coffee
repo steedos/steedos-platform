@@ -622,7 +622,7 @@ Template.creator_view.events
 			return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
 				name: "#{related_object_name}_standard_new_form",
 				objectApiName: related_object_name,
-				title: '新建',
+				title: '新建 ' + relateObject.label,
 				initialValues: initialValues,
 				afterInsert: (result)->
 					setTimeout(()->

@@ -143,7 +143,7 @@ Template.related_object_list.events
 			return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
 				name: "#{related_object_name}_standard_new_form",
 				objectApiName: related_object_name,
-				title: '新建',
+				title: '新建 ' + relateObject.label,
 				initialValues: initialValues,
 				afterInsert: (result)->
 					if(result.length > 0)
