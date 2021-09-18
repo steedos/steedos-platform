@@ -625,6 +625,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             allowCreateFiles: null,
             allowEditFiles: null,
             allowDeleteFiles: null,
+            modifyAllFiles: null,
             disabled_list_views: null,
             disabled_actions: null,
             unreadable_fields: null,
@@ -645,7 +646,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         if (v === false && _v === true) {
                             userObjectPermission[k] = _v
                         }
-                    } else if (['allowReadFiles','viewAllFiles','allowCreateFiles','allowEditFiles','allowDeleteFiles'].indexOf(k) > -1){
+                    } else if (['allowReadFiles','viewAllFiles','allowCreateFiles','allowEditFiles','allowDeleteFiles','modifyAllFiles'].indexOf(k) > -1){
                         if(_.isBoolean(_v)){
                             userObjectPermission[k] = _v
                         }
