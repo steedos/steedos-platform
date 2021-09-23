@@ -281,7 +281,7 @@ async function uninstallModule(module){
         return exec.run(yarnCommand,yarnArgs,{
             cwd: installDir
         }, true).then(result => {
-            console.log(`result ok`, result)
+            // console.log(`result ok`, result)
             
         }).catch(result => {
             console.log(`result error`, result)
