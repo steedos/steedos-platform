@@ -36,7 +36,8 @@ Steedos =
 # Kick off the global namespace for Steedos.
 # @namespace Steedos
 ###
-if Meteor.isCordova
+# if Meteor.isCordova
+if Meteor.isCordova || Meteor.isClient
 	rootUrl = Meteor.absoluteUrl.defaultOptions.rootUrl
 	if rootUrl.endsWith('/')
 		rootUrl = rootUrl.substr(0, rootUrl.length - 1)

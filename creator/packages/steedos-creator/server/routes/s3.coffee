@@ -1,3 +1,4 @@
+steedosAuth = require("@steedos/auth")
 JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 
 	JsonRoutes.parseFiles req, res, ()->
@@ -90,7 +91,12 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 
 JsonRoutes.add "post", "/s3/:collection",  (req, res, next) ->
 	try
-		userId = Steedos.getUserIdFromAuthToken(req, res)
+
+		userSession = Meteor.wrapAsync((req, res, cb)->
+			steedosAuth.auth(req, res).then (resolve, reject)->
+				cb(reject, resolve)
+		)(req, res)
+		userId = userSession.userId
 		if !userId
 			throw new Meteor.Error(500, "No permission")
 
