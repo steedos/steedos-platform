@@ -1,6 +1,6 @@
 module.exports = {
     show_packages_store: function () {
-        let packageService = "https://www.steedos.com.cn";
+        let packageService = "https://www.steedos.cn";
 
         if(Meteor.settings.public.webservices.app_exchange && Meteor.settings.public.webservices.app_exchange.url){
             packageService = Meteor.settings.public.webservices.app_exchange.url;
