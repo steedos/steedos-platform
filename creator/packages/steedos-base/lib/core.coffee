@@ -47,6 +47,11 @@ if Meteor.isCordova
 		rootUrl: rootUrl
 	}
 
+if Meteor.isClient
+	Meteor.autorun ()->
+		window.stores?.Settings?.setUserId(Steedos.userId())
+		window.stores?.Settings?.setTenantId(Steedos.spaceId())
+
 Steedos.getHelpUrl = (locale)->
 	country = locale.substring(3)
 	return "http://www.steedos.com/" + country + "/help/"
