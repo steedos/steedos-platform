@@ -29,6 +29,8 @@ async function insertParentAndChildrenFieldForTreeObject(doc){
           _name: 'children',
           label: '子' + doc.label,
           multiple: true, 
+          omit: true,
+          hidden: true,
           ...baseProps
         }
       )
