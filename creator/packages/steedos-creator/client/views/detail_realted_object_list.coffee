@@ -21,6 +21,15 @@ Template.detail_realted_object_list.helpers
 				columnFields.push({fieldName: fieldName})
 		)
 		return columnFields;
+	treeRootFilters: ()->
+		object_name = this.object_name
+		related_object_name = this.related_object_name
+		record_id = this.record_id
+		relatedObject = Creator.getObject(related_object_name)
+		isSelfTreeRelated = related_object_name == object_name and relatedObject?.enable_tree
+		if isSelfTreeRelated
+			parentField = relatedObject?.parent_field || "parent"
+			return [parentField, "=", record_id]
 	filters: ()->
 		object_name = this.object_name
 		record_id = this.record_id
