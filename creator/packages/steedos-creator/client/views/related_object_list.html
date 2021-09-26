@@ -62,7 +62,7 @@
 								{{> list options=list_data}}
 							{{else}}
 <!--								{{> Template.dynamic template="creator_grid" data=list_data}}-->
-								{{> steedos_object_listview objectApiName=related_object_name name=name columnFields=columnFields filters=filters onModelUpdated=onModelUpdated}}
+								{{> steedos_object_listview objectApiName=related_object_name name=name columnFields=columnFields filters=filters onModelUpdated=onModelUpdated treeRootFilters=treeRootFilters}}
 							{{/if}}
 						</div>
 					</div>
