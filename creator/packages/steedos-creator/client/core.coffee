@@ -205,6 +205,7 @@ if Meteor.isClient
 		return selector
 
 	Creator.getODataRelatedFilter = (object_name, related_object_name, record_id, list_view_id, related_list)->
+		# console.log("===Creator.getODataRelatedFilter===", object_name, related_object_name)
 		unless record_id
 			# record_id为空说明不是在记录详细界面，不存在相关列表
 			return undefined
@@ -264,15 +265,19 @@ if Meteor.isClient
 		if related_object_name == "cfs.files.filerecord"
 			addSelector(["metadata/space", "=", spaceId])
 
+		relatedObject = Creator.getObject(related_object_name)
+		#isSelfTreeRelated标识是否是在tree对象详细界面显示自身的子表， 为true的话，就不需要添加关联过滤条件，因为在treeRootFilters属性中处理相关过滤逻辑
+		isSelfTreeRelated = related_object_name == object_name and relatedObject?.enable_tree 
+
 		if related_object_name == "cms_files"
 			addSelector(["parent/o", "=", object_name])
 			addSelector(["parent/ids", "=", record_id])
 		else if object_name == "objects"
 #			record_object_name = Creator.getObjectRecord().name
 			addSelector([related_field_name, "=", record_id])
-		else
+		else if !isSelfTreeRelated
 
-			related_object_fields = Creator.getObject(related_object_name)?.fields
+			related_object_fields = relatedObject?.fields
 
 			if related_object_fields
 				related_field = related_object_fields[related_field_name]

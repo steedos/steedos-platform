@@ -113,6 +113,15 @@ Template.related_object_list.helpers
 			record_id = Template.instance()?.record.get().name;
 		related_list = getRelateObj()
 		return Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id, related_list)
+	treeRootFilters: ()->
+		object_name = Session.get "object_name"
+		related_object_name = Session.get "related_object_name"
+		record_id = Session.get("record_id")
+		relatedObject = Creator.getObject(related_object_name)
+		isSelfTreeRelated = related_object_name == object_name and relatedObject?.enable_tree
+		if isSelfTreeRelated
+			parentField = relatedObject?.parent_field || "parent"
+			return [parentField, "=", record_id]
 	onModelUpdated: ()->
 		recordsTotal = Template.instance().recordsTotal
 		return (event)->
