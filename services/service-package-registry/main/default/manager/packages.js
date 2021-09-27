@@ -3,6 +3,7 @@ const loader = require('./loader');
 const registry = require('./registry');
 const path = require("path");
 const objectql = require('@steedos/objectql');
+const packageJson = require('package-json');
 const _ = require('lodash');
 
 const getAllPackages = async ()=>{
@@ -97,13 +98,37 @@ const maintainSystemFiles = ()=>{
     "name": "steedos-project-packages",
     "version": "1.0.0",
     "description": "",
+    "license": "MIT",
     "author": ""
 }
         `)
     }
 }
 
+const getPackageVersions = async (packageName, options)=>{
+    const result = await packageJson(packageName.toLowerCase(), {
+        allVersions: true
+    });
+
+    const versions = [];
+
+    const distTags = result['dist-tags'];
+    _.each(distTags, function(version, tag){
+        versions.push({version: version, tag: tag})
+    });
+
+    _.each(_.reverse(_.keys(result.versions)), function(version){
+        if(versions.length < 50){
+            if(!_.find(versions, function(v){return v.version == version})){
+                versions.push({version: version})
+            }
+        }
+    });
+	return versions;
+}
+
 module.exports = {
     maintainSystemFiles,
-    getAllPackages
+    getAllPackages,
+    getPackageVersions
 }

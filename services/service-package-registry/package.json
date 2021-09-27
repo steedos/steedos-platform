@@ -18,6 +18,7 @@
     "lodash.clonedeep": "^4.5.0",
     "moment-timezone": "0.5.33",
     "npm-package-arg": "~8.1.5",
+    "package-json": "^7.0.0",
     "radwag-mass": "~1.0.5"
   },
   "private": false,

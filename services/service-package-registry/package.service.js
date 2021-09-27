@@ -158,10 +158,10 @@ module.exports = {
 		disablePackage:{
 			async handler(ctx) {
 				const { module } = ctx.params
-                const packageConfog = await loader.disablePackage(module);
-				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfog.path));
+                const packageConfig = await loader.disablePackage(module);
+				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
-					serviceInfo: Object.assign({}, packageConfog, {
+					serviceInfo: Object.assign({}, packageConfig, {
 						nodeID: ctx.broker.nodeID, 
 						instanceID: ctx.broker.instanceID,
 						metadata: metadata 
@@ -173,10 +173,10 @@ module.exports = {
 		enablePackage:{
 			async handler(ctx) {
 				const { module } = ctx.params
-                const packageConfog = await loader.enablePackage(module);
-				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfog.path));
+                const packageConfig = await loader.enablePackage(module);
+				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
-					serviceInfo: Object.assign({}, packageConfog, {
+					serviceInfo: Object.assign({}, packageConfig, {
 						nodeID: ctx.broker.nodeID, 
 						instanceID: ctx.broker.instanceID,
 						metadata: metadata
@@ -239,6 +239,18 @@ module.exports = {
 					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
 				}
 			}
+		},
+		getPackageVersions: {
+			async handler(ctx) {
+				const { module } = ctx.params
+				return await this.getPackageVersions(module);
+            }
+		},
+		upgradePackage: {
+			async handler(ctx) {
+				const { module, version } = ctx.params
+				return await this.upgradePackage(module, version);
+            }
 		}
 	},
 
@@ -261,7 +273,7 @@ module.exports = {
 				}else{
 					enable = false;
 				}
-				const packageConfog = {
+				const packageConfig = {
 					label: label, 
 					version: version, 
 					description: description || '', 
@@ -269,10 +281,10 @@ module.exports = {
 					enable: enable,
 					path: util.getPackageRelativePath(process.cwd(), packagePath)
 				}
-				loader.appendToPackagesConfig(module, packageConfog);
+				loader.appendToPackagesConfig(module, packageConfig);
 				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
 				await broker.call(`@steedos/service-packages.install`, {
-					serviceInfo: Object.assign({}, packageConfog, {
+					serviceInfo: Object.assign({}, packageConfig, {
 						name: module,
 						enable: enable, 
 						nodeID: broker.nodeID, 
@@ -280,7 +292,7 @@ module.exports = {
 						metadata: metadata
 					})
 				})
-				return packageConfog;
+				return packageConfig;
             }
 		},
 		getCloudSaasPurchasedPackages:{
@@ -322,6 +334,39 @@ module.exports = {
 				return { packages : packages}
             }
 		},
+		getPackageVersions: {
+			async handler(module) {
+                return packages.getPackageVersions(module);
+            }
+		},
+		upgradePackage: {
+			async handler(module, version) {
+                const packagePath = await registry.installModule(module, version);
+				const enable = true;
+				if(enable){
+					await loader.loadPackage(module, packagePath);
+				}else{
+					enable = false;
+				}
+				const packageConfig = {
+					version: version, 
+					enable: enable,
+					path: util.getPackageRelativePath(process.cwd(), packagePath)
+				}
+				const newConfig = loader.appendToPackagesConfig(module, packageConfig);
+				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+				await this.broker.call(`@steedos/service-packages.install`, {
+					serviceInfo: Object.assign({}, newConfig, {
+						name: module,
+						enable: enable, 
+						nodeID: this.broker.nodeID, 
+						instanceID: this.broker.instanceID,
+						metadata: metadata
+					})
+				})
+				return packageConfig;
+            }
+		}
 	},
 
 	/**

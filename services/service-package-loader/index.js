@@ -136,7 +136,7 @@ module.exports = {
         if(isPackage !== false){
             try {
             
-                const _packageInfo = require(path.join(_path, 'package.json'));
+                const _packageInfo = objectql.loadJSONFile(path.join(_path, 'package.json'));
                 await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
             } catch (error) {
                 
