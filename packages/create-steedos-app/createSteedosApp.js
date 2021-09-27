@@ -7,8 +7,8 @@ const path = require("path");
 
 const packageJson = require('./package.json');
 
-const projectConfigName = 'package.template.json'
-const templateProject = "@steedos/project-template-empty";
+const projectConfigName = 'package.json'
+const templateProject = "@steedos/steedos-project-template";
 
 
 let projectName;
@@ -43,7 +43,7 @@ function createProject(name) {
   const projectName = path.basename(root);
 
   const infoName = name === projectName?  projectName : name
-  let templateProjectDir = path.dirname(require.resolve(templateProject))
+  let templateProjectDir = path.dirname(require.resolve(templateProject, {paths: [process.cwd()]}))
 
   let projectDir = root || path.join(process.cwd(), projectName)
 
@@ -61,11 +61,11 @@ function createProject(name) {
 
   if (templateProjectDir) {
     spinner.start(`Create project ${projectName}`);
-    fs.copy(templateProjectDir, projectDir, { overwrite: true, filter: filterFunction, errorOnExist: true }).then(() => {
+    fs.copy(templateProjectDir, projectDir, { overwrite: true, errorOnExist: true }).then(() => { // filter: filterFunction, 
       const projectConfig = fs.readJsonSync(path.join(projectDir, projectConfigName))
       projectConfig.name = projectName
       fs.outputJsonSync(path.join(projectDir, 'package.json'), projectConfig, { spaces: 4, EOL: '\r\n' })
-      fs.removeSync(path.join(projectDir, projectConfigName))
+      // fs.removeSync(path.join(projectDir, projectConfigName))
 
       const appConfig = fs.readJsonSync(path.join(templateProjectDir, 'steedos-app', 'package.json'))
       // appConfig.name = projectName

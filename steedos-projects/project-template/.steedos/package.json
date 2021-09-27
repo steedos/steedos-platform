@@ -1,0 +1,9 @@
+{
+    "name": "steedos-project-packages",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "dependencies": {
+        "@steedos-labs/oa": "2.1.15"
+    }
+}

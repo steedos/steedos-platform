@@ -20,9 +20,7 @@
 - Start the MongoDB service.
 
 ## Run Project
-- Run `yarn start` on the command line to start a community project
-- Run `yarn start-project-community` on the command line to start a community project
-- Run `yarn start-project-enterprise` on the command line to start a enterprise project
+- Run `yarn start` on the command line to start a template project
 
 - Use your browser to access `http://127.0.0.1:5000`.
 
