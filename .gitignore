@@ -52,12 +52,9 @@ services/service-metadata-translations/.env.local
 services/service-metadata-apps/.env.local
 services/service-metadata-permissionsets/.env.local
 services/service-metadata/.env.local
-steedos-projects/project-community/logs/**
-steedos-projects/project-community/storage/**
-steedos-projects/project-community/.env.local
-steedos-projects/project-enterprise/logs/**
-steedos-projects/project-enterprise/storage/**
-steedos-projects/project-enterprise/.env.local
+steedos-projects/project-template/logs/**
+steedos-projects/project-template/storage/**
+steedos-projects/project-template/.env.local
 services/service-metadata-layouts/.env.local
 steedos-packages/**/node_modules/**
 steedos-projects/**/node_modules/**

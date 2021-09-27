@@ -68,6 +68,9 @@ module.exports = {
                                 setTimeout(function(){
                                     toastr.clear();
                                     toastr.success('升级成功');
+                                    if(record_id){
+                                        stores.Objects.getObject(object_name).deleteRecord(record_id)
+                                    }
                                     FlowRouter.reload()
                                 }, 1000 * 10)
                             },

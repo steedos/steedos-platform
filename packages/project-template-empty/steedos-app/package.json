@@ -1,8 +1,0 @@
-{
-  "name": "steedos-app",
-  "version": "2.1.17",
-  "description": "A Steedos App",
-  "main": "index.js",
-  "license": "MIT",
-  "private": true
-}

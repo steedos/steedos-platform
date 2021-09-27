@@ -1,0 +1,82 @@
+datasources:
+  default:
+    connection:
+      url: ${MONGO_URL}
+    objectFiles:
+      - "./steedos-app/**"
+public:
+  cfs:
+    store: ${STEEDOS_CFS_STORE}
+  templateSpaceId: 'template'
+  webservices:
+    jsreport:
+      url: ${JSREPORT_URL}
+      urlProvideForJsreport: ${JSREPORT_TO_ACQUIRE_DATA_URL}
+cfs:
+  store: ${STEEDOS_CFS_STORE}
+  aliyun:
+    region: ${STEEDOS_CFS_ALIYUN_REGION}
+    bucket: ${STEEDOS_CFS_ALIYUN_BUCKET}
+    folder: ${STEEDOS_CFS_ALIYUN_FOLDER}
+    accessKeyId: ${STEEDOS_CFS_ALIYUN_ACCESSKEYID}
+    secretAccessKey: ${STEEDOS_CFS_ALIYUN_SECRETACCESSKEY}
+  aws:
+    endpoint: ${STEEDOS_CFS_AWS_S3_ENDPOINT}
+    bucket: ${STEEDOS_CFS_AWS_S3_BUCKET}
+    accessKeyId: ${STEEDOS_CFS_AWS_S3_ACCESS_KEY_ID}
+    secretAccessKey: ${STEEDOS_CFS_AWS_S3_SECRET_ACCESS_KEY}
+    s3ForcePathStyle: ${STEEDOS_CFS_AWS_S3_FORCE_PATH_STYLE}
+    signatureVersion: ${STEEDOS_CFS_AWS_S3_SIGNATURE_VERSION}
+  steedosCloud:
+    bucket: ${STEEDOS_CFS_CLOUD_BUCKET}
+    endpoint: ${STEEDOS_CFS_CLOUD_ENDPOINT}
+    accessKeyId: ${STEEDOS_CFS_CLOUD_ACCESSKEYID}
+    secretAccessKey: ${STEEDOS_CFS_CLOUD_SECRETACCESSKEY}
+tenant:
+  _id: ${STEEDOS_TENANT_ID}
+  name: 华炎魔方
+  logo_url:
+  background_url:
+  enable_register: false
+  enable_forget_password: false
+  enable_create_tenant: false
+  enable_password_login: true
+  enable_bind_email: false
+  enable_bind_mobile: false
+sms:
+  qcloud:
+    smsqueue_interval: 1000
+    sdkappid: ${STEEDOS_SMS_QCLOUD_SDKAPPID}
+    appkey: ${STEEDOS_SMS_QCLOUD_APPKEY}
+    signname: ${STEEDOS_SMS_QCLOUD_SIGNNAME}
+email:
+  from: ${MAIL_FROM}
+  url: ${MAIL_URL}
+cron:
+  instancerecordqueue_interval: 10000
+  mailqueue_interval: 10000
+  push_interval: 1000
+  webhookqueue_interval: 1000
+dingtalk:
+  api_Key: ${APIKEY}
+  log_path: ${DING_LOGPATH}
+qywx:
+  api_Key: ${APIKEY}
+  log_path: ${QYWX_LOGPATH}
+push:
+  apn:
+    keyData: ${STEEDOS_PUSH_APN_DATA}
+    certData: ${STEEDOS_PUSH_APN_DATA}
+  gcm:
+    apiKey: xxx
+  xinge:
+    accessId: ${STEEDOS_PUSH_XINGE_ACCESSID}
+    secretKey: ${STEEDOS_PUSH_XINGE_SECRETKEY}
+  huawei:
+    appId: ${STEEDOS_PUSH_HUAWEI_APPID}
+    appSecret: ${STEEDOS_PUSH_HUAWEI_APPSECRET}
+    appPkgName: ${STEEDOS_PUSH_HUAWEI_APPPKGNAME}
+  mi:
+    appSecret: ${STEEDOS_PUSH_MI_APPSECRET}
+    production: ${STEEDOS_PUSH_MI_PRODUCTION}
+

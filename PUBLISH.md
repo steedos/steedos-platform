@@ -6,7 +6,6 @@ After passing the test of Creator Code, you should release a new version for bot
 - Enter to the root path of this repository on command line.
 - Run the shell `yarn ver` on command line, and select the version number.
 
-- Modify the version number in the file 'package.template.json' in the folder 'packages\project-template-empty'.
 - Modify the version number of 'services.steedos.image' in the file 'docker-compose.yml' which is in the root path of this repository.
 - Confirm the 'End-of-line sequence' of the file ‘packages\create-steedos-app\index.js’ is LF.
 - Commit and submit the code to Github.

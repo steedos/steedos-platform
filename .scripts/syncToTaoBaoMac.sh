@@ -19,7 +19,7 @@ open https://npm.taobao.org/sync/@steedos/migrate
 open https://npm.taobao.org/sync/@steedos/objectql
 open https://npm.taobao.org/sync/@steedos/plugin-enterprise
 open https://npm.taobao.org/sync/@steedos/process
-open https://npm.taobao.org/sync/@steedos/project-template-empty
+open https://npm.taobao.org/sync/@steedos/steedos-project-template
 open https://npm.taobao.org/sync/@steedos/react
 open https://npm.taobao.org/sync/@steedos/schemas
 open https://npm.taobao.org/sync/@steedos/standard-objects
