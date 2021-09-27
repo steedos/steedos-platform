@@ -159,6 +159,18 @@ module.exports = {
             on: "record_more",
             todo: "standard_delete"
         },
+        standard_delete_many: {
+            label: "Delete",
+            visible: function (object_name, record_id, record_permissions) {
+                var object = Creator.getObject(object_name);
+                var perms = object && object.permissions.get();
+                return perms && perms["allowDelete"];
+            },
+            on: "list",
+            todo: function () {
+                Creator.executeAction(this.object_name, {todo: 'standard_delete'})
+            }
+        },
         standard_approve: {
             label: "Initiate Approval",
             visible: function (object_name, record_id, record_permissions) {

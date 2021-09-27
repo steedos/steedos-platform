@@ -43,7 +43,26 @@ if Meteor.isClient
 		else
 			toastr.warning(t("_object_actions_none_todo"))
 
-				
+
+	_deleteRecord = (object_name, record_id, record_title, list_view_id, record, call_back, call_back_error)->
+		# console.log("===_deleteRecord===", object_name, record_id, record_title, list_view_id, record, call_back, call_back_error);
+		object = Creator.getObject(object_name)
+		previousDoc = FormManager.getPreviousDoc(object_name, record_id, 'delete')
+		Creator.odata.delete object_name, record_id, ()->
+			if record_title
+				# info = object.label + "\"#{record_title}\"" + "已删除"
+				info =t "creator_record_remove_swal_title_suc", object.label + "\"#{record_title}\""
+			else
+				info = t('creator_record_remove_swal_suc')
+			toastr.success info
+			if call_back and typeof call_back == "function"
+				call_back()
+
+			FormManager.runHook(object_name, 'delete', 'after', {_id: record_id, previousDoc: previousDoc})
+		, (error)->
+			if call_back_error and typeof call_back_error == "function"
+				call_back_error()
+			FormManager.runHook(object_name, 'delete', 'error', {_id: record_id, error: error})
 
 	Creator.actions 
 		# 在此定义全局 actions
@@ -135,20 +154,44 @@ if Meteor.isClient
 							$(".btn.creator-edit").click()
 
 		"standard_delete": (object_name, record_id, record_title, list_view_id, record, call_back)->
-			beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
-			if !beforeHook
-				return false;
+			# console.log("===standard_delete===", object_name, record_id, record_title, list_view_id, record, call_back);
+			debugger
+			if record_id
+				beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
+				if !beforeHook
+					return false;
 			object = Creator.getObject(object_name)
+			nameField = object.NAME_FIELD_KEY || "name"
 
-			if(!_.isString(record_title) && record_title?.name)
-				record_title = record_title?.name
+			unless list_view_id
+				list_view_id = Session.get("list_view_id")
+			unless list_view_id
+				list_view_id = "all"
+
+			if(!_.isString(record_title) && record_title)
+				record_title = record_title[nameField]
+			
+			if record && !record_title
+				record_title = record[nameField]
+			
+			i18nTitleKey = "creator_record_remove_swal_title"
+			i18nTextKey = "creator_record_remove_swal_text"
+
+			unless record_id
+				i18nTitleKey = "creator_record_remove_many_swal_title"
+				i18nTextKey = "creator_record_remove_many_swal_text"
+
+				selectedRecords = SteedosUI.getTableSelectedRows("listview_#{object_name}_#{list_view_id}")
+				if !selectedRecords || !selectedRecords.length
+					toastr.warning(t("creator_record_remove_many_no_selection"))
+					return
 
 			if record_title
-				text = t "creator_record_remove_swal_text", "#{object.label} \"#{record_title}\""
+				text = t i18nTextKey, "#{object.label} \"#{record_title}\""
 			else
-				text = t "creator_record_remove_swal_text", "#{object.label}"
+				text = t i18nTextKey, "#{object.label}"
 			swal
-				title: t "creator_record_remove_swal_title", "#{object.label}"
+				title: t i18nTitleKey, "#{object.label}"
 				text: "<div class='delete-creator-warning'>#{text}</div>"
 				html: true
 				showCancelButton:true
@@ -156,64 +199,73 @@ if Meteor.isClient
 				cancelButtonText: t('Cancel')
 				(option) ->
 					if option
-						previousDoc = FormManager.getPreviousDoc(object_name, record_id, 'delete')
-						Creator.odata.delete object_name, record_id, ()->
-							if record_title
-								# info = object.label + "\"#{record_title}\"" + "已删除"
-								info =t "creator_record_remove_swal_title_suc", object.label + "\"#{record_title}\""
-							else
-								info = t('creator_record_remove_swal_suc')
-							toastr.success info
-							# 文件版本为"cfs.files.filerecord"，需要替换为"cfs-files-filerecord"
-							gridObjectNameClass = object_name.replace(/\./g,"-")
-							gridContainer = $(".gridContainer.#{gridObjectNameClass}")
-							unless gridContainer?.length
-								if window.opener
-									isOpenerRemove = false
-									gridContainer = window.opener.$(".gridContainer.#{gridObjectNameClass}")
-							try
-								# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
-								current_object_name = Session.get("object_name")
-								current_record_id = Session.get("record_id")
-								if Creator.getObject(current_object_name).version > 1
-									SteedosUI.reloadRecord(current_object_name, current_record_id)
-								if FlowRouter.current().route.path.endsWith("/:record_id")
-									if object_name != Session.get("object_name")
-										FlowRouter.reload();
-								else
-									window.refreshGrid();
-							catch _e
-								console.error(_e);
-							if gridContainer?.length
-								if object.enable_tree
-									dxDataGridInstance = gridContainer.dxTreeList().dxTreeList('instance')
-								else
-									dxDataGridInstance = gridContainer.dxDataGrid().dxDataGrid('instance')
-							if dxDataGridInstance
-								if object.enable_tree
-									dxDataGridInstance.refresh()
-								else
-									if object_name != Session.get("object_name")
-										FlowRouter.reload();
+						if record_id
+							# 单条记录删除
+							_deleteRecord object_name, record_id, record_title, list_view_id, record, ()->
+								# 文件版本为"cfs.files.filerecord"，需要替换为"cfs-files-filerecord"
+								gridObjectNameClass = object_name.replace(/\./g,"-")
+								gridContainer = $(".gridContainer.#{gridObjectNameClass}")
+								unless gridContainer?.length
+									if window.opener
+										isOpenerRemove = false
+										gridContainer = window.opener.$(".gridContainer.#{gridObjectNameClass}")
+								try
+									# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
+									current_object_name = Session.get("object_name")
+									current_record_id = Session.get("record_id")
+									if Creator.getObject(current_object_name).version > 1
+										SteedosUI.reloadRecord(current_object_name, current_record_id)
+									if FlowRouter.current().route.path.endsWith("/:record_id")
+										if object_name != Session.get("object_name")
+											FlowRouter.reload();
 									else
-										Template.creator_grid.refresh(dxDataGridInstance)
-							recordUrl = Creator.getObjectUrl(object_name, record_id)
-							tempNavRemoved = Creator.removeTempNavItem(object_name, recordUrl) #无论是在记录详细界面还是列表界面执行删除操作，都会把临时导航删除掉
-							if isOpenerRemove or !dxDataGridInstance
-								if isOpenerRemove
-									window.close()
-								else if record_id == Session.get("record_id") and list_view_id != 'calendar'
-									appid = Session.get("app_id")
-									unless list_view_id
-										list_view_id = Session.get("list_view_id")
-									unless list_view_id
-										list_view_id = "all"
-									unless tempNavRemoved
-										# 如果确实删除了临时导航，就可能已经重定向到上一个页面了，没必要再重定向一次
-										FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
-							if call_back and typeof call_back == "function"
-								call_back()
-
-							FormManager.runHook(object_name, 'delete', 'after', {_id: record_id, previousDoc: previousDoc})
-						, (error)->
-							FormManager.runHook(object_name, 'delete', 'error', {_id: record_id, error: error})
+										window.refreshGrid();
+								catch _e
+									console.error(_e);
+								if gridContainer?.length
+									if object.enable_tree
+										dxDataGridInstance = gridContainer.dxTreeList().dxTreeList('instance')
+									else
+										dxDataGridInstance = gridContainer.dxDataGrid().dxDataGrid('instance')
+								if dxDataGridInstance
+									if object.enable_tree
+										dxDataGridInstance.refresh()
+									else
+										if object_name != Session.get("object_name")
+											FlowRouter.reload();
+										else
+											Template.creator_grid.refresh(dxDataGridInstance)
+								recordUrl = Creator.getObjectUrl(object_name, record_id)
+								tempNavRemoved = Creator.removeTempNavItem(object_name, recordUrl) #无论是在记录详细界面还是列表界面执行删除操作，都会把临时导航删除掉
+								if isOpenerRemove or !dxDataGridInstance
+									if isOpenerRemove
+										window.close()
+									else if record_id == Session.get("record_id") and list_view_id != 'calendar'
+										appid = Session.get("app_id")
+										unless tempNavRemoved
+											# 如果确实删除了临时导航，就可能已经重定向到上一个页面了，没必要再重定向一次
+											FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
+						else
+							# 批量删除
+							selectedRecords = SteedosUI.getTableSelectedRows("listview_#{object_name}_#{list_view_id}")
+							if selectedRecords && selectedRecords.length
+								$("body").addClass("loading")
+								deleteCounter = 0;
+								afterBatchesDelete = ()->
+									deleteCounter++
+									if deleteCounter >= selectedRecords.length
+										# console.log("deleteCounter, selectedRecords.length===", deleteCounter, selectedRecords.length);
+										$("body").removeClass("loading")
+										window.refreshGrid();
+								selectedRecords.forEach (record)->
+									beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
+									if !beforeHook
+										afterBatchesDelete()
+										return;
+									recordTitle = record[nameField] || record["_id"]
+									_deleteRecord object_name, record._id, recordTitle, list_view_id, record, (()->
+										recordUrl = Creator.getObjectUrl(object_name, record_id)
+										Creator.removeTempNavItem(object_name, recordUrl) #无论是在记录详细界面还是列表界面执行删除操作，都会把临时导航删除掉
+										afterBatchesDelete()
+									), ()->
+										afterBatchesDelete()

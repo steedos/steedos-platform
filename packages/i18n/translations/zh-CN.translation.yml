@@ -279,6 +279,9 @@ CustomLabels:
   afModal_cancel: 取消
   creator_record_remove_swal_title: 删除%s
   creator_record_remove_swal_text: 是否确定要删除此%s？
+  creator_record_remove_many_swal_title: 批量删除%s
+  creator_record_remove_many_swal_text: 是否确定要删除这些选中的%s？
+  creator_record_remove_many_no_selection: 请先勾选要删除哪些记录！
   creator_record_remove_swal_suc: 删除成功
   creator_record_remove_swal_title_suc: '%s已删除'
   creator_record_tab_detail: 详细
