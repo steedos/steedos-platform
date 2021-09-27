@@ -313,6 +313,8 @@ actions:
     label: Edit
   standard_delete: 
     label: Delete
+  standard_delete_many: 
+    label: Delete
   standard_approve: 
     label: Initiate Approval
   standard_view_instance: 

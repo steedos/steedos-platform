@@ -126,6 +126,8 @@ actions:
     label: 编辑
   standard_delete:
     label: 删除
+  standard_delete_many:
+    label: 删除
   standard_approve:
     label: 发起审批
   standard_view_instance:

@@ -291,6 +291,9 @@ CustomLabels:
   afModal_cancel: Cancel
   creator_record_remove_swal_title: Delete %s
   creator_record_remove_swal_text: Are you sure you want to delete this %s ?
+  creator_record_remove_many_swal_title: Batch Delete %s
+  creator_record_remove_many_swal_text: Are you sure you want to delete these selected %s ?
+  creator_record_remove_many_no_selection: Please check which records to delete first!
   creator_record_remove_swal_suc: Successfully deleted
   creator_record_remove_swal_title_suc: '%s Successfully deleted'
   creator_record_tab_detail: Detail
