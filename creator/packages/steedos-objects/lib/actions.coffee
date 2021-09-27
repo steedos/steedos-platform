@@ -155,7 +155,6 @@ if Meteor.isClient
 
 		"standard_delete": (object_name, record_id, record_title, list_view_id, record, call_back)->
 			# console.log("===standard_delete===", object_name, record_id, record_title, list_view_id, record, call_back);
-			debugger
 			if record_id
 				beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
 				if !beforeHook
@@ -258,11 +257,12 @@ if Meteor.isClient
 										$("body").removeClass("loading")
 										window.refreshGrid();
 								selectedRecords.forEach (record)->
+									record_id = record._id
 									beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
 									if !beforeHook
 										afterBatchesDelete()
 										return;
-									recordTitle = record[nameField] || record["_id"]
+									recordTitle = record[nameField] || record_id
 									_deleteRecord object_name, record._id, recordTitle, list_view_id, record, (()->
 										recordUrl = Creator.getObjectUrl(object_name, record_id)
 										Creator.removeTempNavItem(object_name, recordUrl) #无论是在记录详细界面还是列表界面执行删除操作，都会把临时导航删除掉
