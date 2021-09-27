@@ -6,7 +6,13 @@ steedos-app-default:
   path: steedos-app
 '@steedos-labs/oa':
   enable: true
-  version: 2.1.15
+  version: 2.1.16
   description: ''
   local: false
   path: .steedos/node_modules/@steedos-labs/oa
+'@steedos-labs/master':
+  enable: true
+  version: 2.1.16
+  description: ''
+  local: false
+  path: .steedos/node_modules/@steedos-labs/master
