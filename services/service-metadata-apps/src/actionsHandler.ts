@@ -221,6 +221,16 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
         children: []
     }
 
+    if(_.isArray(app.tabs)){
+        for await (const tabApiName of app.tabs) {
+            try {
+                await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession)
+            } catch (error) {
+                ctx.broker.logger.info(error.message);
+            }
+        }
+    }
+
     const objects = mobile ? app.mobile_objects : app.objects
 
     if(_.isArray(objects)){
@@ -243,16 +253,6 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
                         }
                     )
                 }
-            } catch (error) {
-                ctx.broker.logger.info(error.message);
-            }
-        }
-    }
-
-    if(_.isArray(app.tabs)){
-        for await (const tabApiName of app.tabs) {
-            try {
-                await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession)
             } catch (error) {
                 ctx.broker.logger.info(error.message);
             }
