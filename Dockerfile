@@ -1,10 +1,10 @@
 FROM node:12.19.1
 
-ENV community_dir=./steedos-projects/project-community
+ENV template_dir=./steedos-projects/project-template
 
 WORKDIR /app
 
-ADD ${community_dir}/ ./
+ADD ${template_dir}/ ./
 
 # RUN npm config set registry http://registry.npm.taobao.org/
 
