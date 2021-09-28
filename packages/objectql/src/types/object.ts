@@ -942,6 +942,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(layouts && layouts.length > 0){
             const layout = layouts[0];
             let _fields = {};
+            let sort_no = 1;
             _.each(layout.fields, function(_item){
                 _fields[_item.field_name] = objectConfig.fields[_item.field_name]
                 if(_fields[_item.field_name]){
@@ -962,6 +963,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     if(_item.visible_on){
                         _fields[_item.field_name].visible_on = _item.visible_on
                     }
+
+                    _fields[_item.field_name].sort_no = sort_no;
+                    sort_no++;
                 }
             })
 
@@ -976,6 +980,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             
             _.each(difference, function(fieldApiName){
                 objectConfig.fields[fieldApiName].hidden = true;
+                objectConfig.fields[fieldApiName].sort_no = 99999;
             })
 
             let _buttons = {};
