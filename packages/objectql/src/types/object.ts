@@ -14,6 +14,7 @@ import { runValidationRules } from './validation_rules';
 import { brokeEmitEvents } from "./object_events";
 import { translationObject } from "@steedos/i18n";
 import { getObjectLayouts } from "./object_layouts";
+import { sortBy } from 'lodash';
 declare var Creator: any;
 const clone = require('clone')
 
@@ -1041,7 +1042,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         const related_lists = [];
 
         const objectConfig: any = await this.callMetadataObjectServiceAction('getOriginalObject', {objectApiName: this.name});
-        _.each(objectConfig.fields, function(field, key){
+        _.each(sortBy(objectConfig.fields, function(o) { return o.sort_no; }), function(field, key){
             const layoutField: any = {};
             layoutField.field_name = field.name || key;
             layoutField.is_readonly = field.readonly;
