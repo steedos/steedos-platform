@@ -53,6 +53,8 @@ Template.detail_realted_object_list.helpers
 				recordsTotal.set recordsTotal
 	pageSize: ()->
 		return this.related_list_item_props.page_size || 5;
+	sort: ()->
+		return this.related_list_item_props.sort
 	onUpdated: ()->
 		return ()->
 			FlowRouter.reload();

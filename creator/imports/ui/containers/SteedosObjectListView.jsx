@@ -19,7 +19,7 @@ window.refreshGrid = (name)=>{
 }
 
 function SteedosGridContainer(prop){
-	const { objectApiName, name, listName, filters, treeRootFilters, onModelUpdated, sideBar, pageSize, onUpdated, checkboxSelection, columnFields, autoFixHeight, autoHideForEmptyData } = prop;
+	const { objectApiName, name, listName, filters, treeRootFilters, onModelUpdated, sideBar, pageSize, onUpdated, checkboxSelection, columnFields, autoFixHeight, autoHideForEmptyData, sort } = prop;
 	const gridRef = useRef();
 	window.gridRef = gridRef;
 	if(!window.gridRefs){
@@ -38,6 +38,7 @@ function SteedosGridContainer(prop){
 					objectApiName={objectApiName}
 					listName={listName}
 					filters={filters}
+					sort={sort}
 					treeRootFilters={treeRootFilters}
 					sideBar={sideBar}
 					onModelUpdated={onModelUpdated}

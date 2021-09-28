@@ -14,6 +14,9 @@ Template.steedos_object_listview.helpers({
 	listName: function(){
 		return this.listName;
 	},
+	sort: function(){
+		return this.sort;
+	},
 	filters: function (){
 		return this.filters;
 	},

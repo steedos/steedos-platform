@@ -116,6 +116,9 @@ Template.related_object_list.helpers
 			record_id = Template.instance()?.record.get().name;
 		related_list = getRelateObj()
 		return Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id, related_list)
+	sort: ()->
+		related_list_item_props = getRelateObj()
+		return related_list_item_props.sort
 	treeRootFilters: ()->
 		object_name = Session.get "object_name"
 		related_object_name = Session.get "related_object_name"

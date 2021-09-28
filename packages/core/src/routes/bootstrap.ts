@@ -136,6 +136,14 @@ async function getUserObject(userId, spaceId, object, layout?){
         // _object.allow_customActions = userObjectLayout.custom_actions || []
         // _object.exclude_actions = userObjectLayout.exclude_actions || []
         _object.related_lists = layout.related_lists || []
+        _.each(_object.related_lists, (related_list)=>{
+            if(related_list.sort_field_name && _.isArray(related_list.sort_field_name) && related_list.sort_field_name.length > 0){
+                related_list.sort = [];
+                _.each(related_list.sort_field_name, (fName)=>{
+                    related_list.sort.push({field_name: fName, order: related_list.sort_order || 'asc'})
+                })
+            }
+        })
     }
     return _object;
 }
