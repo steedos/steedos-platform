@@ -168,7 +168,10 @@ module.exports = {
             },
             on: "list",
             todo: function () {
-                Creator.executeAction(this.object_name, {todo: 'standard_delete'})
+                object_name = this.object_name;
+                list_view_id = Session.get("list_view_id") || "all";
+                listViewName = "listview_" + object_name + "_" + list_view_id;
+                Creator.executeAction(object_name, {todo: 'standard_delete'}, null, null, listViewName);
             }
         },
         standard_approve: {

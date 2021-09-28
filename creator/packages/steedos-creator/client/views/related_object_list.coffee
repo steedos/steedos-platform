@@ -13,6 +13,9 @@ getRelateObj = ()->
 			return rl.object_name == related_object_name
 	return relatedObj
 
+getListviewName = ()->
+	return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name") + '_' + getRelatedFieldName()
+
 Template.related_object_list.helpers
 	related_object_name: ()->
 		return Session.get("related_object_name")
@@ -39,14 +42,14 @@ Template.related_object_list.helpers
 		record_id = Session.get "record_id"
 		return Creator.getObjectUrl(object_name, record_id)
 
-	allowCreate: ()->
+	perms: (key)->
 		object_name = Session.get "object_name"
 		related_object_name = Session.get "related_object_name"
 		if related_object_name == object_name
 			# 说明是进入了已经新建成功的详细界面，此时会因为Session再进入该函数，不再需要处理
 			return false
 		related_list_item_props = getRelateObj()
-		return Creator.getRecordRelatedListPermissions(object_name, related_list_item_props).allowCreate
+		return Creator.getRecordRelatedListPermissions(object_name, related_list_item_props)[key]
 
 	isUnlocked: ()->
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
@@ -88,7 +91,7 @@ Template.related_object_list.helpers
 #		console.log("list_data", data)
 		return data
 	name: ()->
-		return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name") + '_' + getRelatedFieldName()
+		return getListviewName()
 	relatedFieldName: ()->
 		return getRelatedFieldName();
 	columnFields: ()->
@@ -183,6 +186,11 @@ Template.related_object_list.events
 		Session.set("action_save_and_insert", false)
 		Meteor.defer ->
 			$(".creator-add").click()
+
+	"click .delete-related-object-record": (event, template)->
+		related_object_name = Session.get "related_object_name"
+		listViewName = getListviewName()
+		Creator.executeAction(related_object_name, {todo: 'standard_delete'}, null, null, listViewName)
 
 	'click .btn-refresh': (event, template)->
 		if Steedos.isMobile()

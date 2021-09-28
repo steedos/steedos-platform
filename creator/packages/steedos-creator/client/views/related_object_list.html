@@ -27,7 +27,8 @@
 							</div>
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
-							{{#if allowCreate}}
+							<div class="slds-button-group" role="group">
+							{{#if perms "allowCreate"}}
 								{{#if is_file}}
 									{{#if recordPerminssion "allowCreateFiles"}}
 											<button class="slds-button slds-button_neutral btn-upload-file" title="{{_ "creator_actions_upload_file"}}">
@@ -41,6 +42,12 @@
 									</button>
 								{{/if}}
 							{{/if}}
+							{{#if perms "allowDelete"}}
+								<button class="slds-button slds-button_neutral delete-related-object-record" data-object-name="{{related_object_name}}" title="{{_ "Delete"}}">
+									{{_ "Delete"}}
+								</button>
+							{{/if}}
+							</div>
 						</div>
 					</div>
 					<div class="slds-grid">
