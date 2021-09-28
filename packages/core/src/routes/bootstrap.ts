@@ -72,6 +72,7 @@ async function getUserObject(userId, spaceId, object, layout?){
             }
         });
         let _fields = {};
+        let sort_no = 1;
         _.each(layout.fields, function(_item){
             _fields[_item.field_name] = _object.fields[_item.field_name]
             if(_fields[_item.field_name]){
@@ -92,6 +93,9 @@ async function getUserObject(userId, spaceId, object, layout?){
                 if(_item.visible_on){
                     _fields[_item.field_name].visible_on = _item.visible_on
                 }
+
+                _fields[_item.field_name].sort_no = sort_no;
+                sort_no++;
             }
         })
 
@@ -106,6 +110,7 @@ async function getUserObject(userId, spaceId, object, layout?){
         
         _.each(difference, function(fieldApiName){
             _object.fields[fieldApiName].hidden = true;
+            _object.fields[fieldApiName].sort_no = 99999;
         })
 
         // let _buttons = {};
@@ -119,17 +124,13 @@ async function getUserObject(userId, spaceId, object, layout?){
             }
         })
 
-        if(layout.buttons){
-            const layoutButtonsName = _.pluck(layout.buttons,'button_name');
-            if(layoutButtonsName.length > 0){
-                _.each(_object.actions, function(action){
-                    if(!_.include(layoutButtonsName, action.name)){
-                        action.visible = false
-                        action._visible = function(){return false}.toString()
-                    }
-                })
+        const layoutButtonsName = _.pluck(layout.buttons,'button_name');
+        _.each(_object.actions, function(action){
+            if(!_.include(layoutButtonsName, action.name)){
+                action.visible = false
+                action._visible = function(){return false}.toString()
             }
-        }
+        })
 
         // _object.actions = _buttons;
         // _object.allow_customActions = userObjectLayout.custom_actions || []
