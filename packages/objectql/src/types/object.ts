@@ -983,17 +983,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 objectConfig.fields[fieldApiName].sort_no = 99999;
             })
 
-            let _buttons = {};
             _.each(layout.buttons, function(button){
                 const action = objectConfig.actions[button.button_name];
                 if(action){
                     if(button.visible_on){
-                        action.visible = button.visible_on;
+                        action._visible = button.visible_on;
                     }
-                    _buttons[button.button_name] = action
                 }
             })
-            objectConfig.actions = _buttons;
+    
+            const layoutButtonsName = _.pluck(layout.buttons,'button_name');
+            _.each(objectConfig.actions, function(action){
+                if(!_.include(layoutButtonsName, action.name)){
+                    action.visible = false
+                    action._visible = function(){return false}.toString()
+                }
+            })
             // _object.allow_customActions = userObjectLayout.custom_actions || []
             // _object.exclude_actions = userObjectLayout.exclude_actions || []
             objectConfig.related_lists = layout.related_lists || []
