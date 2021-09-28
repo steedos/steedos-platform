@@ -180,7 +180,9 @@ if Meteor.isClient
 				i18nTitleKey = "creator_record_remove_many_swal_title"
 				i18nTextKey = "creator_record_remove_many_swal_text"
 
-				selectedRecords = SteedosUI.getTableSelectedRows("listview_#{object_name}_#{list_view_id}")
+				# 如果是批量删除，则传入的list_view_id为列表视图的name，用于获取列表选中项
+				# 主列表规则是"listview_#{object_name}_#{list_view_id}"，相关表规则是"related_listview_#{object_name}_#{related_object_name}_#{related_field_name}"
+				selectedRecords = SteedosUI.getTableSelectedRows(list_view_id)
 				if !selectedRecords || !selectedRecords.length
 					toastr.warning(t("creator_record_remove_many_no_selection"))
 					return
@@ -246,7 +248,6 @@ if Meteor.isClient
 											FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
 						else
 							# 批量删除
-							selectedRecords = SteedosUI.getTableSelectedRows("listview_#{object_name}_#{list_view_id}")
 							if selectedRecords && selectedRecords.length
 								$("body").addClass("loading")
 								deleteCounter = 0;
