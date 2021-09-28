@@ -15,7 +15,9 @@ module.exports = {
     Steedos.authRequest(`/api/v4/${object_name}/${record_id}`, { type: 'put', async: false, data: JSON.stringify({ active: false }) });
     FlowRouter.reload();
   },
-  copyVisible: true,
+  copyVisible: function(){
+    return true;
+  },
   copy: function (object_name, record_id, fields) {
     let result = Steedos.authRequest(`/api/v4/${object_name}/${record_id}/copy`, { type: 'get', async: false });
     FlowRouter.go(`/app/admin/process_definition/view/${result._id}`);
