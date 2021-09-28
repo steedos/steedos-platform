@@ -2,10 +2,15 @@
 # yarn lockfile v1
 
 
-"@steedos-labs/oa@2.1.15":
-  version "2.1.15"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/oa/-/oa-2.1.15.tgz#8bc842672cb98d1ed05f2d8a444e032fe3c0db55"
-  integrity sha512-timWG6GFzegEB1oDhTZjqfvjMyWNg1Va7idoZfcOe9Ejsz0IjWKcpvwWtVUbmb0X0UFCfI8gbSfj5MiRmIj6eQ==
+"@steedos-labs/master@2.1.16":
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/master/-/master-2.1.16.tgz#94f8f469134da9af126393cca0d3062c63e77f7b"
+  integrity sha512-94Y9l3EMcPo45tIzu2S0bwLple7/wFJHrYq9cJGJ4yGAXHXX0Ug7DWId1p8Shs0UTYoxrJjJySKqLFmBxO6xsQ==
+
+"@steedos-labs/oa@2.1.16":
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/oa/-/oa-2.1.16.tgz#d8f6677252ea76a6eb73f24a27fbd06c92233fb4"
+  integrity sha512-sf1rZdrc4YHLqNfaXkMx+eSk8+QjNev3XmXXrN7Ic+MZYcoAh52VzVRDOMJfluRPCbByvX8LfBPk913N95DLHw==
   dependencies:
     "@steedos/app-contracts" "2.0.51"
     "@steedos/app-crm" "2.0.51"
