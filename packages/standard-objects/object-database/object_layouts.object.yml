@@ -251,29 +251,29 @@ fields:
         value: asc
       - label: DESC
         value: desc
-  related_lists.$.buttons:
-    label: Buttons
-    type: lookup
-    is_wide: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-        let relatedFieldFullname = null;
-        const rowValue = _.find(values.related_lists, function(item){
-          return item._id === values._grid_row_id
-        })
-        if(rowValue){
-          relatedFieldFullname = rowValue.related_field_fullname
-        }
-        const options = [];
-        if(relatedFieldFullname){
-          const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
-          var actions = Creator.getObject(objectName).actions;
-          _.each(actions, function(action){
-            options.push({label: action.label, value: action.name})
-          })
-        }
-        return options
-      }
+  # related_lists.$.buttons:
+  #   label: Buttons
+  #   type: lookup
+  #   is_wide: true
+  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  #     function (values) {
+  #       let relatedFieldFullname = null;
+  #       const rowValue = _.find(values.related_lists, function(item){
+  #         return item._id === values._grid_row_id
+  #       })
+  #       if(rowValue){
+  #         relatedFieldFullname = rowValue.related_field_fullname
+  #       }
+  #       const options = [];
+  #       if(relatedFieldFullname){
+  #         const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
+  #         var actions = Creator.getObject(objectName).actions;
+  #         _.each(actions, function(action){
+  #           options.push({label: action.label, value: action.name})
+  #         })
+  #       }
+  #       return options
+  #     }
   related_lists.$.filters:
     label: Filters
     type: textarea
