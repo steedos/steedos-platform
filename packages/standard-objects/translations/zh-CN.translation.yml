@@ -20,7 +20,7 @@ CustomLabels:
   menu_objects_manager: 对象设置
   menu_permission_objects: 对象权限
   menu_permission_shares: 共享规则
-  menu_audit_records: 字段修改历史
+  menu_audit_records: 审计日志
   menu_object_webhooks: WebHooks
   menu_autonumber: 自动编号
   menu_picklists: 下拉框列表

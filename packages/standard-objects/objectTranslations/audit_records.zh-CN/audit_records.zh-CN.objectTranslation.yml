@@ -1,5 +1,5 @@
 name: audit_records
-label: 字段修改历史
+label: 审计日志
 description: 
 fields:
   related_to:
