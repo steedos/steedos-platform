@@ -299,20 +299,20 @@ let objectTriggers = {
                 index: true,
                 searchable: true
             });
-            Creator.getCollection("object_fields").insert({
-                object: doc.name,
-                owner: userId,
-                _name: "owner",
-                label: "所有者",
-                space: doc.space,
-                type: "lookup",
-                reference_to: "users",
-                sortable: true,
-                index: true,
-                defaultValue: "{userId}",
-                omit: true,
-                hidden: true
-            });
+            // Creator.getCollection("object_fields").insert({
+            //     object: doc.name,
+            //     owner: userId,
+            //     _name: "owner",
+            //     label: "所有者",
+            //     space: doc.space,
+            //     type: "lookup",
+            //     reference_to: "users",
+            //     sortable: true,
+            //     index: true,
+            //     defaultValue: "{userId}",
+            //     omit: true,
+            //     hidden: true
+            // });
             Creator.getCollection("object_listviews").insert({
                 name: "all",
                 label: "所有",
