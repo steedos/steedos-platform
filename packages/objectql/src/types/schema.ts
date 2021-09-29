@@ -9,6 +9,7 @@ import { getFromContainer } from 'typeorm';
 // import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
 import { buildGraphQLSchema } from '../graphql';
 import { MetadataRegister } from '../metadata-register';
+import { MetadataDriver } from '../driver/metadata';
 
 
 const defaultDatasourceName = 'default';
@@ -25,6 +26,7 @@ export class SteedosSchema {
     private _broker: any = null;
     private _metadataBroker: any = null;
     metadataRegister: MetadataRegister = null;
+    metadataDriver = new MetadataDriver();
     public get metadataBroker(): any {
         return this._metadataBroker;
     }

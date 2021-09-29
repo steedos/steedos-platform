@@ -6,10 +6,16 @@ const objectTree = require('./objects.tree.js');
 module.exports = {
     afterFind: async function(){
         let userId = this.userId
+        let spaceId = this.spaceId;
         for (const doc of this.data.values) {
             doc.fields =  Object.assign({}, doc.fields, await InternalData.getDefaultSysFields(doc.name, userId)) ;
         }
-        this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters))
+        // this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters));
+
+        this.data.values = this.data.values.concat(await InternalData.getObjects(userId));
+
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+        
         _.each(this.data.values, function(value){
             if(value){
                 delete value.actions;
@@ -22,10 +28,15 @@ module.exports = {
     },
     afterAggregate: async function(){
         let userId = this.userId
+        let spaceId = this.spaceId;
         for (const doc of this.data.values) {
             doc.fields =  Object.assign({}, doc.fields, await InternalData.getDefaultSysFields(doc.name, userId)) ;
         }
-        this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters));
+        // this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters));
+
+        this.data.values = this.data.values.concat(await InternalData.getObjects(userId));
+
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
         
         _.each(this.data.values, function(value){
             if(value){
@@ -38,7 +49,9 @@ module.exports = {
         })
     },
     afterCount: async function(){
-        this.data.values = this.data.values + (await InternalData.findObjects(this.userId, this.query.filters)).length
+        let userId = this.userId
+        let spaceId = this.spaceId;
+        this.data.values = this.data.values + objectql.getSteedosSchema().metadataDriver.count(await InternalData.getObjects(userId), this.query, spaceId);
     },
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){

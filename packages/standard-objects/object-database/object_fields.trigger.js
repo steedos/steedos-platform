@@ -218,92 +218,36 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters);
         let objectName = filters.object;
-        let fieldNames = [];
-        if(filters.name){
-            fieldNames.push(filters.name)
-        }
-        let filters2 = odataMongodb.createFilter(this.query.filters)
-        function getName(query){
-            if(query.name){
-                fieldNames.push(query.name)
-            }else if(query.$or){
-                _.each(query.$or, function(item){
-                    if(item.name){
-                        fieldNames.push(item.name)
-                    }else if(item.$or){
-                        getName(item)
-                    }
-                })
-            }
-        }
-        if(filters2){
-            try {
-                getName(filters2.$and[0].$and[0])
-            } catch (error) {
-                
-            }
-            try {
-                objectName = filters2.$and[0].$and[1].object
-            } catch (error) {
-                
-            }
-        }
         if(objectName){
-            fieldNames = _.uniq(fieldNames);
             let fields = await InternalData.getObjectFields(objectName, this.userId);
-            if(fieldNames && fieldNames.length > 0){
-                fields = _.filter(fields, function(field){
-                    return _.include(fieldNames, field.name)
-                })
-            }
             if(fields){
                 this.data.values = this.data.values.concat(fields)
+
+                this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, this.spaceId);
             }
+        }
+    },
+    beforeFind: async function(){
+        const { query } = this;
+        if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'object')){
+            query.fields.push('object')
+        }
+    },
+    beforeAggregate: async function(){
+        const { query } = this;
+        if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'object')){
+            query.fields.push('object')
         }
     },
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters);
         let objectName = filters.object;
-        let fieldNames = [];
-        if(filters.name){
-            fieldNames.push(filters.name)
-        }
-        let filters2 = odataMongodb.createFilter(this.query.filters)
-        function getName(query){
-            if(query.name){
-                fieldNames.push(query.name)
-            }else if(query.$or){
-                _.each(query.$or, function(item){
-                    if(item.name){
-                        fieldNames.push(item.name)
-                    }else if(item.$or){
-                        getName(item)
-                    }
-                })
-            }
-        }
-        if(filters2){
-            try {
-                getName(filters2.$and[0].$and[0])
-            } catch (error) {
-                
-            }
-            try {
-                objectName = filters2.$and[0].$and[1].object
-            } catch (error) {
-                
-            }
-        }
         if(objectName){
-            fieldNames = _.uniq(fieldNames);
             let fields = await InternalData.getObjectFields(objectName, this.userId);
-            if(fieldNames && fieldNames.length > 0){
-                fields = _.filter(fields, function(field){
-                    return _.include(fieldNames, field.name)
-                })
-            }
             if(fields){
                 this.data.values = this.data.values.concat(fields)
+
+                this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, this.spaceId);
             }
         }
     },
