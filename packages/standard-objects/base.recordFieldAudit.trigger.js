@@ -142,9 +142,11 @@ const getOwner = function(action, userId, doc){
           owner = doc.modified_by
         }
       }
-      if(!owner){
-        if(doc.owner && doc.owner != '{userId}'){
-          owner = doc.owner
+      if(action !== 'delete'){
+        if(!owner){
+          if(doc.owner && doc.owner != '{userId}'){
+            owner = doc.owner
+          }
         }
       }
     }
