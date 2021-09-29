@@ -115,6 +115,16 @@ fields:
     filtersFunction: !<tag:yaml.org,2002:js/function> |-
       function (filters, values) {
         if(values && values.object_name){
+          if(values._grid_row_id){
+            var selected = _.find(values.fields, function(item){return item._id==values._grid_row_id});
+            var selectedAll = _.pluck(values.fields, 'field_name');
+            if(selected){
+              selectedAll = _.difference(selectedAll, [selected.field_name]);
+            }
+            if(selectedAll && selectedAll.length > 0){
+              return [['object', '=', values.object_name], ['name', '!=', selectedAll]]
+            }
+          }
           return ['object', '=', values.object_name]
         }else{
           return ['_id', '=', 'no']
