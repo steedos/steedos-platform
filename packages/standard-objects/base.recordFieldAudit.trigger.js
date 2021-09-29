@@ -1,4 +1,6 @@
 const objectql = require('@steedos/objectql');
+const steedosI18n = require("@steedos/i18n");
+const auth = require('@steedos/auth');
 const _ = require('underscore');
 const moment = require('moment');
 const getOrderlySetByIds = function(docs, ids, id_key, hit_first) {
@@ -123,6 +125,35 @@ const transformFieldValue = async function(field, value, options) {
     }
   };
 
+const getOwner = function(action, userId, doc){
+  let owner = null;
+  try {
+    if(userId && userId != '{userId}'){
+      owner = userId
+    }
+  
+    if(!owner && doc){
+      if (action === 'insert') {
+        if(doc.created_by && doc.created_by != '{userId}'){
+          owner = doc.created_by
+        }
+      } else if (action === 'update') {
+        if(doc.modified_by && doc.modified_by != '{userId}'){
+          owner = doc.modified_by
+        }
+      }
+      if(!owner){
+        if(doc.owner && doc.owner != '{userId}'){
+          owner = doc.owner
+        }
+      }
+    }
+  } catch (error) {
+    
+  }
+  return owner;
+}
+
   // 新建时, 不记录明细
 const insertRecord = async function(userId, object_name, new_doc) {
     var auditRecordsObject, doc, record_id, space_id;
@@ -135,6 +166,7 @@ const insertRecord = async function(userId, object_name, new_doc) {
       _id: await auditRecordsObject._makeNewID(),
       space: space_id,
       field_name: "已创建。",
+      created_by: getOwner('insert', userId, new_doc),
       related_to: {
         o: object_name,
         ids: [record_id]
@@ -163,6 +195,19 @@ const updateRecord = async function(userId, object_name, new_doc, previous_doc, 
       utcOffset: utcOffset,
       space_id: space_id
     };
+
+    const owner = getOwner('update', userId, new_doc);
+    if(owner){
+      try {
+        const userSession = await auth.getSessionByUserId(owner, space_id);
+        const objectConfig = await objectql.getObject(object_name).toConfig();
+        steedosI18n.translationObject(userSession.language || 'zh-CN', objectConfig.name, objectConfig)
+        fields = objectConfig.fields
+      } catch (error) {
+        
+      }
+    }
+
     const keys = _.keys(modifier);
     for(var i = 0; i < keys.length; i++ ){
         const k = keys[i];
@@ -287,6 +332,7 @@ const updateRecord = async function(userId, object_name, new_doc, previous_doc, 
               doc = {
               _id: await auditRecordsObject._makeNewID(),
               space: space_id,
+              created_by: getOwner('update', userId, new_doc),
               field_name: field.label || field.name,
               previous_value: previous_value,
               new_value: new_value,
