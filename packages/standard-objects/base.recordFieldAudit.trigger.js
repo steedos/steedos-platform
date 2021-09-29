@@ -142,9 +142,11 @@ const getOwner = function(action, userId, doc){
           owner = doc.modified_by
         }
       }
-      if(!owner){
-        if(doc.owner && doc.owner != '{userId}'){
-          owner = doc.owner
+      if(action !== 'delete'){
+        if(!owner){
+          if(doc.owner && doc.owner != '{userId}'){
+            owner = doc.owner
+          }
         }
       }
     }
@@ -349,12 +351,32 @@ const updateRecord = async function(userId, object_name, new_doc, previous_doc, 
     };
   };
 
+// 删除时, 不记录明细
+const deleteRecord = async function(userId, object_name, previous_doc) {
+  var auditRecordsObject, doc, record_id, space_id;
+  auditRecordsObject = objectql.getObject('audit_records');
+  space_id = previous_doc.space;
+  record_id = previous_doc._id;
+  doc = {
+    _id: await auditRecordsObject._makeNewID(),
+    space: space_id,
+    field_name: "已删除。",
+    created_by: getOwner('delete', userId, previous_doc),
+    related_to: {
+      o: object_name,
+      ids: [record_id]
+    }
+  };
+  return auditRecordsObject.insert(doc);
+};
 
 const add = function(action, userId, object_name, new_doc, previous_doc, modifier) {
     if (action === 'update') {
       return updateRecord(userId, object_name, new_doc, previous_doc, modifier);
     } else if (action === 'insert') {
       return insertRecord(userId, object_name, new_doc);
+    } else if (action === 'delete') {
+      return deleteRecord(userId, object_name, previous_doc);
     }
   };
 
@@ -378,5 +400,13 @@ module.exports = {
             const dbDoc = await obj.findOne(id);
             return add('update', userId, object_name, dbDoc, previousDoc, doc);
         }
+    },
+    afterDelete: async function () {
+      const {previousDoc, userId, object_name, id } = this;
+      const obj = objectql.getObject(object_name);
+      const isEnableAudit = await obj.isEnableAudit();
+      if (isEnableAudit) {
+        return add('delete', userId, object_name, previousDoc, previousDoc, previousDoc);
+      }
     }
 }
