@@ -177,5 +177,14 @@ export async function refreshObject(ctx, objectApiName) {
 
     objectConfig.datasource = mainConfig.datasource
 
+    try {
+        const maxSortNoField = _.maxBy(_.values(objectConfig.fields), function(field) { return field.sort_no; })
+        if(maxSortNoField){
+            objectConfig.fields_serial_number = maxSortNoField.sort_no;
+        }
+    } catch (error) {
+        
+    }
+
     return objectConfig;
 }
