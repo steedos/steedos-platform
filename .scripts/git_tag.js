@@ -8,6 +8,6 @@ const loadJSONFile = (filePath)=>{
 const lernaInfo = loadJSONFile('lerna.json');
 
 if(lernaInfo && lernaInfo.version){
-    execSync(`git tag -a V${lernaInfo.version} -m 'published V${lernaInfo.version}' && git push origin --tags`);
+    execSync(`git tag -a v${lernaInfo.version} -m 'published v${lernaInfo.version}' && git push origin --tags`);
 }
 
