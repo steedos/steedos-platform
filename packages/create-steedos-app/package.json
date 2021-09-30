@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-app",
-  "version": "2.1.17",
+  "version": "2.1.18",
   "keywords": [
     "steedos"
   ],
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@geek/spinner": "^1.0.0",
-    "@steedos/steedos-project-template": "2.1.17",
+    "@steedos/steedos-project-template": "2.1.18",
     "chalk": "3.0.0",
     "commander": "4.1.0",
     "fs-extra": "8.1.0"
