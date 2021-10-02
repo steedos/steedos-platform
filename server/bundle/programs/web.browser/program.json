@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "a5e3f186e981d3eef83759aff56f423585c5e720.js",
+      "path": "44b86708e9c06b6ca8cc573bf8ebce786df81589.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/a5e3f186e981d3eef83759aff56f423585c5e720.js?meteor_js_resource=true",
-      "size": 21023542,
-      "hash": "a5e3f186e981d3eef83759aff56f423585c5e720",
-      "sri": "Ia5h24SifEs53hr2DiY1Io+xTvZ3YPE3n7bsWSPG9rds+DaVxbyxGpbIvcOHobeZ+znt4zTe7WBjiF89LdOdww=="
+      "url": "/44b86708e9c06b6ca8cc573bf8ebce786df81589.js?meteor_js_resource=true",
+      "size": 21025228,
+      "hash": "44b86708e9c06b6ca8cc573bf8ebce786df81589",
+      "sri": "4GVw96BGbZzUQ2ScOB570q6UxQQ/GDmoPXs1d6sNTKo3Sdcyw/nTpUVTiliVow6ano1W9wZhUgXH8RReATeYMg=="
     },
     {
-      "path": "a5e3f186e981d3eef83759aff56f423585c5e720.stats.json",
+      "path": "44b86708e9c06b6ca8cc573bf8ebce786df81589.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/a5e3f186e981d3eef83759aff56f423585c5e720.stats.json?meteor_js_resource=true",
+      "url": "/44b86708e9c06b6ca8cc573bf8ebce786df81589.stats.json?meteor_js_resource=true",
       "size": 146670,
-      "hash": "65728aac54cd3a572f94514540e60b2ec84ba4a0",
-      "sri": "d9UGfxhxQzXuaq5x8C6hpjgVFyoeovGxmONDYfAd4MCE+Rga4+FgCZRZiVVE+Hcw3aJo5C2upq8FUVmcI77e1Q=="
+      "hash": "fd7e63c708c920d98e2182aa40f3b11ed426cfae",
+      "sri": "djoMF5TG/OK6jlPn7i3zdw7P93zqXfqiKljKteB7B1dvyv760Zg0vrn3JYDZSwfhmm4nJ+IFH1Md8T0mXsSg6Q=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4018,8 +4018,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.png",
       "size": 11690,
-      "hash": "64004a554239896538cb4b92a9272b4255086b4f",
-      "sri": "tBt0KSmXEPbOXAP8mPgdp+Zbsf1h8+DCkyTMFaN9AR9ohnpuddjGHCi/HmPr/DZMzL8SGt/CAoGkqBGeGNhp0w=="
+      "hash": "9afd1a12da882436af1e8b57d647dd6587bc9dad",
+      "sri": null
     },
     {
       "path": "packages/steedos_creator/assets/logo-square.en-us.png",
@@ -4028,8 +4028,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.en-us.png",
       "size": 15294,
-      "hash": "563568609e446146f3ddc44368bcad43de10165f",
-      "sri": "FHY37rVUVS3d6DRq2ImEQQTJKTIpFNa8LObnx0Jvk9fDkMatx/6opYCIIT1Rm2FEQJroHeu2wQciQhRQGRha/Q=="
+      "hash": "e256fab7ec953bf744be35fed594fb44e60c51e7",
+      "sri": null
     },
     {
       "path": "packages/steedos_users-import/assets/excel/steedos_import_users_simple.xls",
@@ -4127,8 +4127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/builder-community.react.css",
-      "size": 1419175,
-      "hash": "f31d6a4632579f7c4c7089bae741fd99f4ea9cf8",
+      "size": 1419325,
+      "hash": "3f01c608a51308971063054cf1e4bf5ba61f322b",
       "sri": null
     },
     {

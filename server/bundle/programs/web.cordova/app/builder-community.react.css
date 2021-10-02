@@ -23758,6 +23758,12 @@ div.ant-typography-edit-content.ant-typography-rtl {
   border: none;
 }
 
+.ag-popup .ag-popup-editor .ag-grid-multiple-update-chckbox .ant-checkbox-wrapper {
+  vertical-align: middle;
+  height: 100%;
+  line-height: 100%;
+}
+
 .ag-filter .ant-select,
 .ag-filter .ant-input-number {
   width: 100%;
