@@ -1,4 +1,4 @@
 name: upgradePackage
 is_enable: true
 label: 升级
-'on': record
+'on': record_only
