@@ -3,7 +3,6 @@ export type SteedosListenerConfig = {
     name?: string,
     listenTo?: string | Function,
     beforeFind?: Function,
-    beforeFindOne?: Function,
     beforeInsert?: Function,
     beforeUpdate?: Function,
     beforeDelete?: Function,

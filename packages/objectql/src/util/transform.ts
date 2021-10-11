@@ -3,7 +3,7 @@ import { wrapAsync } from './index'
 import _ = require("underscore");
 import { SteedosTriggerContextConfig } from '../types/trigger';
 import { TriggerActionParams } from '../ts-types';
-const ENUM_WHEN = ['beforeFind', 'beforeFindOne', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete']
+const ENUM_WHEN = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete']
 
 function getBaseContext(object: SteedosObjectTypeConfig) {
     return {
@@ -17,8 +17,6 @@ function getTriggerWhen(when: string) {
     switch (when) {
         case 'beforeFind':
             return 'before.find';
-        case 'beforeFindOne':
-            return 'before.findOne';
         case 'beforeInsert':
             return 'before.insert';
         case 'beforeUpdate':
@@ -56,12 +54,6 @@ function transformListenerToTrigger(object: SteedosObjectTypeConfig, when: strin
 }
 
 function proxyBeforeFind(trigger: Function, baseContext) {
-    return function (userId, selector, options) {
-        return wrapAsync(trigger, Object.assign({ userId, spaceId: selector.space, selector, options }, baseContext));
-    }
-}
-
-function proxyBeforeFindOne(trigger: Function, baseContext) {
     return function (userId, selector, options) {
         return wrapAsync(trigger, Object.assign({ userId, spaceId: selector.space, selector, options }, baseContext));
     }
@@ -126,8 +118,6 @@ function transformTrigger(object: SteedosObjectTypeConfig, when: string, trigger
         switch (when) {
             case 'beforeFind':
                 return proxyBeforeFind(trigger, baseContext)
-            case 'beforeFindOne':
-                return proxyBeforeFindOne(trigger, baseContext)
             case 'beforeInsert':
                 return proxyBeforeInsert(trigger, baseContext)
             case 'beforeUpdate':
