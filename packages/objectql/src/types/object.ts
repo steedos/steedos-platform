@@ -1227,7 +1227,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async runBeforeTriggers(method: string, context: SteedosTriggerContextConfig) {
-        if (method === 'count') {
+        if (method === 'count' || method === "findOne") {
             method = 'find';
         }
         let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
