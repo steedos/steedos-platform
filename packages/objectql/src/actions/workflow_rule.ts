@@ -122,11 +122,11 @@ async function runWFRule(rule: WorkflowRule, record: JsonMap, userSession, previ
     let targets: Array<FieldUpdateTarget> = [];
     
     if(previousRecord){
-        previousIsTrue = await computeFormula(rule.formula, rule.object_name, previousRecord, userSession.userId, userSession.spaceId);
+        previousIsTrue = await computeFormula(rule.formula, rule.object_name, previousRecord, userSession?.userId, userSession?.spaceId);
     }
 
     if(!previousIsTrue){
-        let isTrue = await computeFormula(rule.formula, rule.object_name, record, userSession.userId, userSession.spaceId)
+        let isTrue = await computeFormula(rule.formula, rule.object_name, record, userSession?.userId, userSession?.spaceId)
         if (isTrue) {
             targets = await runFieldUpdateActions(rule.updates_field_actions, record._id, userSession);
             await runWorkflowNotifyActions(rule.workflow_notifications_actions, record._id, userSession);

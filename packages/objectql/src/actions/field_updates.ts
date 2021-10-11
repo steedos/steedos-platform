@@ -63,17 +63,20 @@ export async function runFieldUpdateAction(action: any, recordId: any, userSessi
     }
     const newFieldValue = await getFieldValue(action, recordId, userSession);
     if(recordIdToUpdate && newFieldValue !== (previousRecord && previousRecord[action.field_name])){
-        // 只有值变更时才执行字段更新、级联公式重算、级联汇总字段重算、重新评估工作流规则等操作
-        await objectToUpdate.directUpdate(recordIdToUpdate, {[action.field_name]: newFieldValue});
-
-        // 字段更新后，需要找到引用了该字段的公式字段并更新其值
-        await runQuotedByObjectFieldFormulas(mainObjectName, recordIdToUpdate, userSession, {
-            fieldNames: [action.field_name]
-        });
-        // 字段更新后，需要找到引用了该字段的累计汇总字段并更新其值
-        await runQuotedByObjectFieldSummaries(mainObjectName, recordIdToUpdate, null, userSession, {
-            fieldNames: [action.field_name]
-        });
+        if(action.undirect === true){
+            await objectToUpdate.update(recordIdToUpdate, {[action.field_name]: newFieldValue});        
+        }else{
+            // 只有值变更时才执行字段更新、级联公式重算、级联汇总字段重算、重新评估工作流规则等操作
+            await objectToUpdate.directUpdate(recordIdToUpdate, {[action.field_name]: newFieldValue});
+            // 字段更新后，需要找到引用了该字段的公式字段并更新其值
+            await runQuotedByObjectFieldFormulas(mainObjectName, recordIdToUpdate, userSession, {
+                fieldNames: [action.field_name]
+            });
+            // 字段更新后，需要找到引用了该字段的累计汇总字段并更新其值
+            await runQuotedByObjectFieldSummaries(mainObjectName, recordIdToUpdate, null, userSession, {
+                fieldNames: [action.field_name]
+            });
+        }
     }
     else{
         // 值没变更时强制重置needToReevaluate为false，即不需要执行相关工作流规则重新评估

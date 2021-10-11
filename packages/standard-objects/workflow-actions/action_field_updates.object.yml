@@ -139,6 +139,9 @@ fields:
   reevaluate_on_change:
     type: boolean
     label: Re-evaluate Workflow Rules after Field Change
+  undirect:
+    type: boolean
+    label: 触发对象触发器、工作流规则、字段验证规则
   # todo:
 form:
   beforeEdit: !!js/function |
