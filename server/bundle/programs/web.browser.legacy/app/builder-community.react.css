@@ -32124,6 +32124,10 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   }
 }
 
+.type-textarea.mode-read .ant-form-item-control .field-flex-box-content span {
+  white-space: pre-wrap;
+}
+
 body #block-menu-container,
 body .sc-gsTCUz {
   z-index: 1100;
