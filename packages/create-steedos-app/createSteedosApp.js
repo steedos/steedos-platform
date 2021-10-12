@@ -64,7 +64,10 @@ function createProject(name) {
   if (template) {
     spinner.start(`Create project ${projectName}`);
     cpy([
-      '**'
+      '**',
+      '.steedos/**',
+      '!.steedos/node_modules/**',
+      '.vscode/**',
     ], projectDir, {
       parents: true,
       flat: false,
