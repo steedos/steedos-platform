@@ -3,6 +3,7 @@
 
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import InputPassword from './InputPassword';
 
 type Props = {
     placeholder: {
@@ -12,6 +13,7 @@ type Props = {
     };
     value?: string;
     disabled?: boolean;
+    type?: string;
 };
 
 const LocalizedInput = React.forwardRef((props: Props, ref?: React.Ref<HTMLInputElement>) => {
@@ -24,11 +26,19 @@ const LocalizedInput = React.forwardRef((props: Props, ref?: React.Ref<HTMLInput
             values={placeholder.values}
         >
             {(localizedPlaceholder: (string | JSX.Element)) => (
-                <input
-                    {...otherProps}
-                    ref={ref}
-                    placeholder={localizedPlaceholder as string}
-                />
+                otherProps.type === "password" ? (
+                    <InputPassword 
+                        {...otherProps}
+                        ref={ref}
+                        placeholder={localizedPlaceholder as string}
+                    />
+                ) : (
+                    <input
+                        {...otherProps}
+                        ref={ref}
+                        placeholder={localizedPlaceholder as string}
+                    />
+                )
             )}
         </FormattedMessage>
     );
