@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-apps",
-  "version": "2.1.20",
+  "version": "2.1.21",
   "description": "",
   "main": "lib/apps.service.js",
   "scripts": {
