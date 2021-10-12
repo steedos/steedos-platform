@@ -4,8 +4,7 @@
     "description": "",
     "author": "",
     "dependencies": {
-        "@steedos-labs/master": "2.1.14",
-        "@steedos-labs/shop": "2.1.18",
-        "@steedos-labs/site": "2.1.18"
+        "@steedos-labs/master": "2.1.17",
+        "@steedos-labs/oa": "2.1.17"
     }
 }
