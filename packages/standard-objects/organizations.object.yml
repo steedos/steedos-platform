@@ -14,6 +14,7 @@ fields:
     index: true
     sortable: true
     name: name
+    is_wide: true
   fullname:
     label: Fullname
     type: text
