@@ -1,0 +1,24 @@
+steedos-app-default:
+  enable: true
+  version: 2.1.19
+  description: A Steedos App
+  local: true
+  path: steedos-app
+'@steedos-labs/master':
+  enable: true
+  version: 2.1.14
+  description: ''
+  local: false
+  path: .steedos/node_modules/@steedos-labs/master
+'@steedos-labs/site':
+  enable: true
+  version: 2.1.18
+  description: A Steedos App
+  local: false
+  path: .steedos/node_modules/@steedos-labs/site
+'@steedos-labs/shop':
+  enable: true
+  version: 2.1.18
+  description: A Steedos App
+  local: false
+  path: .steedos/node_modules/@steedos-labs/shop

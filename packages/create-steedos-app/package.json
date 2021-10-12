@@ -26,9 +26,9 @@
   },
   "dependencies": {
     "@geek/spinner": "^1.0.0",
-    "@steedos/steedos-project-template": "2.1.19",
     "chalk": "3.0.0",
     "commander": "4.1.0",
+    "cpy": "7.3.0",
     "fs-extra": "8.1.0"
   }
 }
