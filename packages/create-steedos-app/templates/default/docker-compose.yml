@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  steedos:
+    image: steedos/steedos-project-template:2.1.16
+    restart: always
+    # command: ['sh', '-c', "echo $(date +%T) start && /app/init_home.sh"]
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./storage:/app/storage"
+      - "./.env.local:/app/.env.local"
+    depends_on:
+      - redis
+    
+  redis:
+    image: redis:6.2.4
+    restart: always
+    volumes:
+      - "./docker-volumes/redis/data:/data"
+    command: ["/bin/sh","-c", "redis-server --save \"\" --appendonly no"]
+    ports:
+      - "6389:6379"

@@ -1,0 +1,17 @@
+{
+    "yaml.completion": true,
+    "yaml.customTags": [
+        "tag:yaml.org,2002:js/function"
+    ],
+    "yaml.schemas": {
+        "./node_modules/@steedos/schemas/app/schema.json": "/*.app.yml",
+        "./node_modules/@steedos/schemas/object/schema.json": "/*.object.yml",
+        "./node_modules/@steedos/schemas/field/schema.json": "/*.field.yml",
+        "./node_modules/@steedos/schemas/button/schema.json": "/*.button.yml",
+        "./node_modules/@steedos/schemas/listview/schema.json": "/*.listview.yml",
+        "./node_modules/@steedos/schemas/permission/schema.json": "/*.permission.yml",
+        "./node_modules/@steedos/schemas/permissionset/schema.json": "/*.permissionset.yml",
+        "./node_modules/@steedos/schemas/profile/schema.json": "/*.profile.yml",
+        "./node_modules/@steedos/schemas/dashboard/schema.json": "/*.dashboard.yml"
+    }
+}
