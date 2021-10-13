@@ -289,10 +289,10 @@ fields:
     type: textarea
     rows: 1
     is_wide: true
-  # related_lists.$.visible_on:
-  #   label: Visible on
-  #   type: textarea
-  #   rows: 1
+  related_lists.$.visible_on:
+    label: Visible on
+    type: textarea
+    rows: 1
   related_lists.$.page_size:
     label: Page Size
     type: number

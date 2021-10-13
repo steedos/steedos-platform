@@ -57,6 +57,50 @@ Steedos.getHelpUrl = (locale)->
 	country = locale.substring(3)
 	return "http://www.steedos.com/" + country + "/help/"
 
+Steedos.isExpression = (func) ->
+	if typeof func != 'string'
+		return false
+	pattern = /^{{(.+)}}$/
+	reg1 = /^{{(function.+)}}$/
+	reg2 = /^{{(.+=>.+)}}$/
+	if typeof func == 'string' and func.match(pattern) and !func.match(reg1) and !func.match(reg2)
+		return true
+	false
+
+Steedos.parseSingleExpression = (func, formData, dataPath, global) ->
+	getParentPath = (path) ->
+		if typeof path == 'string'
+			pathArr = path.split('.')
+			if pathArr.length == 1
+				return '#'
+			pathArr.pop()
+			return pathArr.join('.')
+		return '#'
+	getValueByPath = (formData, path) ->
+		if path == '#' or !path
+			return formData or {}
+		else if typeof path == 'string'
+			return _.get(formData, path)
+		else
+			console.error 'path has to be a string'
+		return
+	if formData == undefined
+		formData = {}
+	parentPath = getParentPath(dataPath)
+	parent = getValueByPath(formData, parentPath) or {}
+	if typeof func == 'string'
+		funcBody = func.substring(2, func.length - 2)
+		globalTag = '__G_L_O_B_A_L__'
+		str = '\n    return ' + funcBody.replace(/\bformData\b/g, JSON.stringify(formData).replace(/\bglobal\b/g, globalTag)).replace(/\bglobal\b/g, JSON.stringify(global)).replace(new RegExp('\\b' + globalTag + '\\b', 'g'), 'global').replace(/rootValue/g, JSON.stringify(parent))
+		try
+			return Function(str)()
+		catch error
+			console.log error, func, dataPath
+			return func
+	else
+		return func
+	return
+
 if Meteor.isClient
 
 	Steedos.spaceUpgradedModal = ()->

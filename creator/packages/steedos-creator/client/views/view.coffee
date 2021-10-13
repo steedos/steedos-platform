@@ -334,7 +334,21 @@ Template.creator_view.helpers
 		return Session.get "object_name"
 
 	related_list: ()->
-		return Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		record = Template.instance().__record?.get();
+		globalData = Object.assign({}, Creator.USER_CONTEXT, {now: new Date()});
+		return _.filter(relatedList, (item)->
+			if !_.has(item, 'visible_on') || item.visible_on == undefined
+				return true;
+			else
+				try
+					if _.isString(item.visible_on) && Steedos.isExpression(item.visible_on.trim())
+						return Steedos.parseSingleExpression(item.visible_on, record, "#", globalData);
+					return item.visible_on;
+				catch e
+					console.error(e)
+					return false
+		)
 
 	related_object_label: (relatedListObjLabel, relatedObjLabel) ->
 		return relatedListObjLabel || relatedObjLabel
