@@ -23792,6 +23792,10 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ag-theme-balham .ag-react-container {
   display: inline;
 }
+.ag-theme-balham .ag-react-container .slds-button_icon-container,
+.ag-theme-balham .ag-react-container .slds-button_icon-border-filled {
+  vertical-align: baseline;
+}
 .ag-theme-balham .ag-cell .ant-image .ant-image-img {
   width: auto;
 }
