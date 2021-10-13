@@ -1,6 +1,9 @@
 _eval = require('eval')
 objectql = require('@steedos/objectql');
 
+getObjectConfig = (objectApiName) ->
+	return objectql.getObject(objectApiName).toConfig()
+
 uuflowManagerForInitApproval = {}
 
 uuflowManagerForInitApproval.check_authorization = (req) ->
@@ -212,7 +215,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 	values = {}
 	objectName = recordIds.o
-	object = Creator.getObject(objectName, spaceId)
+	object = getObjectConfig(objectName)
 	recordId = recordIds.ids[0]
 	ow = Creator.Collections.object_workflows.findOne({
 		object_name: objectName,
@@ -260,7 +263,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 		getFieldOdataValue = (objName, id) ->
 			obj = Creator.getCollection(objName)
-			o = Creator.getObject(objName, spaceId)
+			o = getObjectConfig(objName)
 			nameKey = o.NAME_FIELD_KEY
 			if !obj
 				return
@@ -356,7 +359,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						fieldsObj[lookupFieldName] = 1
 						lookupObjectRecord = Creator.getCollection(objectField.reference_to, spaceId).findOne(record[objectFieldName], { fields: fieldsObj })
 						objectFieldObjectName = objectField.reference_to
-						lookupFieldObj = Creator.getObject(objectFieldObjectName, spaceId)
+						lookupFieldObj = getObjectConfig(objectFieldObjectName)
 						objectLookupField = lookupFieldObj.fields[lookupFieldName]
 						referenceToFieldValue = lookupObjectRecord[lookupFieldName]
 						if objectLookupField && formField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objectLookupField.type) && _.isString(objectLookupField.reference_to)
@@ -423,7 +426,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				relatedObjectName = key
 				tableValues = []
 				relatedTableItems = []
-				relatedObject = Creator.getObject(relatedObjectName, spaceId)
+				relatedObject = getObjectConfig(relatedObjectName)
 				relatedField = _.find relatedObject.fields, (f) ->
 					return ['lookup', 'master_detail'].includes(f.type) && f.reference_to == objectName
 
