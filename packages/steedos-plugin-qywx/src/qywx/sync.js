@@ -54,6 +54,10 @@ exports.deptinfoPush = async function (deptId, name, parentid, status = 0) {
   //找到数据库中上级信息，如果没有上级找到顶级信息
   if (deptinfotRes['parentid'] == 0) {
     parentDeptInfo = await queryGraphql('{\n  organizations(filters: [[\"parent\", \"=\", null]]) {\n    _id\n  }\n}');
+
+    updateDeptRes = await queryGraphql('mutation {\n  organizations__update(id:\"' + parentDeptInfo['organizations'][0]['_id'] + '\",doc: {qywx_id :\"' + deptId + '\",name: \"' + deptinfotRes['name'] + '\"}) {\n    _id\n  }\n}')
+    return false;
+    
   } else {
     parentDeptInfo = await queryGraphql('{\n  organizations(filters: [[\"qywx_id\", \"=\", \"' + deptinfotRes['parentid'] + '\"]]) {\n    _id\n    name\n  }\n}');
   }
