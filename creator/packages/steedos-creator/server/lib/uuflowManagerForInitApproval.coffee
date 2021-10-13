@@ -4,6 +4,9 @@ objectql = require('@steedos/objectql');
 getObjectConfig = (objectApiName) ->
 	return objectql.getObject(objectApiName).toConfig()
 
+getObjectNameFieldKey = (objectApiName) ->
+	return objectql.getObject(objectApiName).NAME_FIELD_KEY
+
 uuflowManagerForInitApproval = {}
 
 uuflowManagerForInitApproval.check_authorization = (req) ->
@@ -263,8 +266,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 		getFieldOdataValue = (objName, id) ->
 			obj = Creator.getCollection(objName)
-			o = getObjectConfig(objName)
-			nameKey = o.NAME_FIELD_KEY
+			nameKey = getObjectNameFieldKey(objName)
 			if !obj
 				return
 			if _.isString id
