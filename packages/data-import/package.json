@@ -1,6 +1,6 @@
 {
   "name": "@steedos/data-import",
-  "version": "2.1.21",
+  "version": "2.1.22",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
