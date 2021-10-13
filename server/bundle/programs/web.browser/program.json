@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "a7fed09e9a3e0c922067306f8efd438078b46841.js",
+      "path": "04749b65c5beb488d439a0444aef9abd6514c27a.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/a7fed09e9a3e0c922067306f8efd438078b46841.js?meteor_js_resource=true",
+      "url": "/04749b65c5beb488d439a0444aef9abd6514c27a.js?meteor_js_resource=true",
       "size": 21018866,
-      "hash": "a7fed09e9a3e0c922067306f8efd438078b46841",
-      "sri": "xrI4KWdKAJFvBwEY2bdaqo9srDjmXJZitYP53Ly5Y/yXnGpKWo1ANrkascaSuybNLb7n53frDpWUk4FfO1tcVg=="
+      "hash": "04749b65c5beb488d439a0444aef9abd6514c27a",
+      "sri": "JE8D4S7EoGoBdk/GIuHj3gH2vnb+jGOg2XzBSgxTFI94hAGUcKegloNUDJb5RDHahORIl/yrnL9JORMj6Pi4aw=="
     },
     {
-      "path": "a7fed09e9a3e0c922067306f8efd438078b46841.stats.json",
+      "path": "04749b65c5beb488d439a0444aef9abd6514c27a.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/a7fed09e9a3e0c922067306f8efd438078b46841.stats.json?meteor_js_resource=true",
+      "url": "/04749b65c5beb488d439a0444aef9abd6514c27a.stats.json?meteor_js_resource=true",
       "size": 146670,
-      "hash": "d62e38581392cb94ddee5b7a37116ee0e1d61668",
-      "sri": "r0MtQZTj6oRw7ZCkoj3cADhiDdGFVtUcy5caDKLmmUW4h/vUT/x4w3WdXoMlVsxLkBt3d1QpKqH3lTXsH43bZg=="
+      "hash": "fe6e7186b335c273525f2e69cb45ffc1453e779b",
+      "sri": "IRxoJ5gfcU5fFnBSb6sCSyGX0E88xoVGrorShcy8/CpWCeawbMa/NzEsL6IUhXJ/Lo4zHJsWH3KYcf3jX82elQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3958,8 +3958,8 @@
       "cacheable": false,
       "url": "/packages/steedos_base/client/images/default-avatar.png",
       "size": 216568,
-      "hash": "dd9b071f9d3183d35f6288b4532f5bfcb547e69a",
-      "sri": null
+      "hash": "907a88225a7d248d94fe0397ef3a93ccf2df4122",
+      "sri": "nCyfkrQxcr/UF80rhzFT59tZsAYLJ+7mwvmFwM4KveRN67vwyG2wwAo4rjOQjmbzhrGJnQLsHtiv7SorHKwoLQ=="
     },
     {
       "path": "packages/steedos_jstree/jstree/32px.png",
@@ -4127,8 +4127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/builder-community.react.css",
-      "size": 1419599,
-      "hash": "3cd3c2d3a233381e2d9b1904fc6b26d80e4eebc9",
+      "size": 1419669,
+      "hash": "df8830f1d082c4ab63a7b0ac1495b9bece1d9788",
       "sri": null
     },
     {

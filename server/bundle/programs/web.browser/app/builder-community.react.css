@@ -32295,6 +32295,10 @@ body .sc-gsTCUz {
   vertical-align: -0.125em;
 }
 
+.type-code .field-flex-box-content pre {
+  width: auto !important;
+}
+
 .type-password.mode-read .ant-form-item-control .ant-form-item-control-input-content a .anticon.anticon-eye-invisible {
   display: none;
 }
