@@ -14,7 +14,7 @@ import { runValidationRules } from './validation_rules';
 import { brokeEmitEvents } from "./object_events";
 import { translationObject } from "@steedos/i18n";
 import { getObjectLayouts } from "./object_layouts";
-import { sortBy } from 'lodash';
+import { sortBy, forEach } from 'lodash';
 declare var Creator: any;
 const clone = require('clone')
 
@@ -1050,9 +1050,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
         const related_lists = [];
 
         const objectConfig: any = await this.callMetadataObjectServiceAction('getOriginalObject', {objectApiName: this.name});
-        _.each(sortBy(objectConfig.fields, function(o) { return o.sort_no; }), function(field, key){
+        let sortedFields = [];
+        forEach(objectConfig.fields, (fieldItem, key)=>{
+            sortedFields.push(Object.assign({}, {name: key}, fieldItem));
+        });
+        sortedFields = sortBy(sortedFields, function(o) { return o.sort_no; });
+        _.each(sortedFields, function(field, key){
             const layoutField: any = {};
-            layoutField.field_name = field.name || key;
+            layoutField.field_name = field.name;
             layoutField.is_readonly = field.readonly;
             layoutField.is_required = field.required;
             layoutField.group = field.group;
