@@ -2,6 +2,8 @@ name: workflow_rule
 label: Workflow Rule
 icon: maintenance_work_rule
 hidden: true
+version: 2
+enable_enhanced_lookup: true
 fields:
   object_name:
     label: Object Name
@@ -53,23 +55,6 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "label"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('action_field_updates', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.label,
-                value: item.name
-            });
-        });
-        return result;
-      }
   workflow_notifications_actions:
     group: Immediate Actions
     type: lookup
@@ -85,23 +70,6 @@ fields:
         if(dependValues && dependValues.object_name){
           return "object_name eq '" + dependValues.object_name + "'";
         }
-      }
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "label"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('workflow_notifications', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.label,
-                value: item.name
-            });
-        });
-        return result;
       }
   # boolean_filter: # TODO 暂不支持
   #   type: text

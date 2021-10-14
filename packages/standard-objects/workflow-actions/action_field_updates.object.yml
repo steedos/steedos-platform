@@ -3,6 +3,8 @@ label: Field Updates
 icon: record
 hidden: true
 enable_inline_edit: false
+version: 2
+enable_enhanced_lookup: true
 fields:
   name:
     type: text
