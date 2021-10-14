@@ -149,6 +149,7 @@ getPermission = (data)->
 		allowCreate: permission.allowCreate,
 		allowEdit: permission.allowEdit && editAction?._visible,
 		allowDelete: permission.allowDelete && deleteAction?._visible
+		allowRead: permission.allowRead
 	}
 
 _getTooltipTemplate = (data, options) ->
@@ -174,6 +175,9 @@ _getTooltipTemplate = (data, options) ->
 		editBtn = """
 			<div class="dx-button dx-button-normal dx-widget dx-button-has-text edit dx-button-default" role="button" aria-label="编辑" tabindex="0">
 				<span class="dx-button-text">编辑</span>
+			</div>
+			<div class="dx-button dx-button-normal dx-widget dx-button-has-text read dx-button-default" role="button" aria-label="查看" tabindex="0">
+				<span class="dx-button-text">查看</span>
 			</div>
 		"""
 	titleView = ""
@@ -217,8 +221,8 @@ _getTooltipTemplate = (data, options) ->
 	action = """
 		<div class="action">
 			<div class="dx-scheduler-appointment-tooltip-buttons">
-				#{deleteBtn}
 				#{editBtn}
+				#{deleteBtn}
 			</div>
 		</div>
 	"""
@@ -299,6 +303,10 @@ getAppointmentContextMenuItems = (e, options)->
 	if permission.allowDelete
 		menuItems.push text: '删除', onItemClick: (itemE)->
 			_deleteData(itemE.targetedAppointmentData)
+
+	if permission.allowRead
+		menuItems.unshift text: '查看', onItemClick: (itemE)->
+			_readData(itemE.targetedAppointmentData)
 
 	if permission.allowEdit
 		menuItems.unshift text: '编辑', onItemClick: (itemE)->
