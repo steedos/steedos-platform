@@ -103,7 +103,7 @@ module.exports = {
 			const apiKey = settings.STEEDOS_CLOUD_API_KEY;
 
 			if (!spaceId || !apiKey) {
-				console.log(chalk.red('缺少初始化环境变量STEEDOS_CLOUD_SPACE_ID或STEEDOS_CLOUD_API_KEY，请检查'));
+				console.log(chalk.red('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。'));
 				return;
 			}
 
