@@ -238,7 +238,7 @@ module.exports = {
 					const spaceId = settings.STEEDOS_CLOUD_SPACE_ID;
 					const apiKey = settings.STEEDOS_CLOUD_API_KEY;
 					if (!spaceId || !apiKey) {
-						throw new Error('缺少环境变量STEEDOS_CLOUD_SPACE_ID或STEEDOS_CLOUD_API_KEY，请检查');
+						throw new Error('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。');
 					}
 					const userSession = ctx.meta.user;
 					const userId = userSession.userId;
