@@ -7,6 +7,12 @@ getObjectConfig = (objectApiName) ->
 getObjectNameFieldKey = (objectApiName) ->
 	return objectql.getObject(objectApiName).NAME_FIELD_KEY
 
+getRelateds = (objectApiName) ->
+	return Meteor.wrapAsync((objectApiName, cb) ->
+		objectql.getObject(objectApiName).getRelateds().then (resolve, reject) ->
+			cb(reject, resolve)
+		)(objectApiName)
+
 uuflowManagerForInitApproval = {}
 
 uuflowManagerForInitApproval.check_authorization = (req) ->
@@ -229,7 +235,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 	if ow and record
 		form = Creator.getCollection("forms").findOne(flow.form)
 		formFields = form.current.fields || []
-		relatedObjects = Creator.getRelatedObjects(objectName, spaceId)
+		relatedObjects = getRelateds(objectName)
 		relatedObjectsKeys = _.pluck(relatedObjects, 'object_name')
 		formTableFields = _.filter formFields, (formField) ->
 			return formField.type == 'table'
