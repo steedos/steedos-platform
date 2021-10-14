@@ -2,6 +2,7 @@ name: object_validation_rules
 icon: textbox
 hidden: true
 label: Object Validation Rules
+version: 2
 fields:
   name:
     type: text
