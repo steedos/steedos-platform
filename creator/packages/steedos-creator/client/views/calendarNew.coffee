@@ -107,6 +107,8 @@ _getAppointmentTemplate = (options)->
 
 					else if f.type == 'datetime'
 						fvalue = DevExpress.localization.formatDate(new Date(fvalue), 'yyyy-MM-dd hh:mm a')
+					else if f.type == 'date'
+						fvalue = DevExpress.localization.formatDate(new Date(fvalue), 'yyyy-MM-dd')
 				else
 					fvalue = ''
 
@@ -211,6 +213,8 @@ _getTooltipTemplate = (data, options) ->
 
 				else if f.type == 'datetime'
 					fvalue = DevExpress.localization.formatDate(new Date(fvalue), 'yyyy-MM-dd hh:mm a')
+				else if f.type == 'date'
+					fvalue = DevExpress.localization.formatDate(new Date(fvalue), 'yyyy-MM-dd')
 			else
 				fvalue = ''
 			titleView += "<div class='dx-scheduler-appointment-tooltip-title'>#{f.label || t}: #{fvalue}</div>"
