@@ -290,11 +290,11 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 		if Creator.getCollection("company").find({ _id: company_id, space: spaceId }).count() == 0
 			throw new Meteor.Error('error', "无效的字段: company_id")
 
-	if form?.flows
-		_.each form.flows, (flow)->
-			if flow.object_workflows
-				_.each flow.object_workflows, (_ow)->
-					checkObjectWorkflow(spaceId, _ow.object_name, _ow)
+#	if form?.flows
+#		_.each form.flows, (flow)->
+#			if flow.object_workflows
+#				_.each flow.object_workflows, (_ow)->
+#					checkObjectWorkflow(spaceId, _ow.object_name, _ow)
 
 	new_form_ids = new Array()
 
