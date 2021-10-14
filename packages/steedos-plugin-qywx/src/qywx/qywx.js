@@ -378,7 +378,7 @@ exports.sendMessage = async function (data, access_token) {
         let url = qywx_api.sendMessage;
         if (!url)
             return;
-
+        console.log("touser: ",data.touser);
         let response = await fetch(url + "?access_token=" + access_token, {
             method: 'post',
             body: JSON.stringify(data),
