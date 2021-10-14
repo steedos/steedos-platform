@@ -223,7 +223,7 @@ module.exports = {
                 }
                 return false;
             },
-            on: "record",
+            on: "record_only",
             todo: function () {
                 var data, instanceId, uobj, url;
                 if (!this.record.instances || !this.record.instances[0]) {
