@@ -100,15 +100,24 @@ module.exports = {
 								this.logger.warn(`not find api_name in file`);
 								return ;
 							}
-							const dbFlow = db.forms.findOne({api_name: flow.api_name});
+							const dbFlow = db.flows.findOne({api_name: flow.api_name});
 							if(!dbFlow){
 								if(flow && flow.current){
 									if(!_.has(flow.current,'fields')){
 										flow.current.fields = [];
 									}
 								}
-								this.logger.info(`insert flow ${flow.api_name} from ${name}`)
-								return steedosImport.workflow(space.owner, space._id, flow, flow.state == 'enabled' ? true : false, null);
+								this.logger.info(`insert flow ${flow.api_name} from ${name}`);
+
+								let company_id = null;
+								if(flow.company_id){
+									let count = Creator.getCollection("company").find({ _id: flow.company_id, space: space._id }).count();
+									if(count > 0){
+										company_id = flow.company_id
+									}
+								}
+
+								return steedosImport.workflow(space.owner, space._id, flow, flow.state == 'enabled' ? true : false, company_id);
 							}
 							this.logger.debug(`not import flow. find flow `, dbFlow._id)
 						}
