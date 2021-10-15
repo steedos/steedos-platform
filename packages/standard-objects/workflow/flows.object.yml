@@ -13,7 +13,7 @@ fields:
     name: name
   api_name:
     type: text
-    label: api_name
+    label: Api Name
     required: true
     searchable: true
     name: api_name

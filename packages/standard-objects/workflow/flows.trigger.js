@@ -2,12 +2,27 @@ const _ = require('underscore');
 const objectql = require("@steedos/objectql");
 const internalData = require("../core/internalData");
 const clone = require("clone");
+const util = require('../util');
 
 function getFlows(){
     return clone(objectql.getConfigs("flow"));
 }
 
 module.exports = {
+    beforeInsert: async function () {
+        if(this.doc.api_name){
+            await util.checkAPIName(this.object_name, 'api_name', this.doc.api_name, undefined, undefined);
+        }
+    },
+    beforeUpdate: async function () {
+        let api_name = null;
+        if(_.has(this.doc, 'api_name')){
+            api_name = this.doc.api_name
+        }
+        if(api_name){
+            await util.checkAPIName(this.object_name, 'api_name', api_name, this.id, null);
+        }
+    },
     afterFind: async function(){
         if(this.spaceId === 'template'){
             let filters = internalData.parserFilters(this.query.filters)

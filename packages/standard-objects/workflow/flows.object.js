@@ -47,9 +47,12 @@ if (Meteor.isServer) {
             form.name = newName;
             if ((ref = form.flows) != null) {
                 ref.forEach(function (f) {
+                    delete f.api_name
                     return f.name = newName;
                 });
             }
+            delete form.api_name
+
             return steedosImport.workflow(userId, spaceId, form, enabled, company_id);
         }
     };
@@ -86,7 +89,7 @@ if (Meteor.isServer) {
             checkName(modifier.$set.api_name)
             let count = db.flows.find({_id: {$ne: doc._id}, api_name: modifier.$set.api_name, space: doc.space}).count()
             if(count > 0){
-                throw new Error('api_name不能重复')
+                throw new Error('Api Name不能重复')
             }
         }
     });
