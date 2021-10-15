@@ -378,6 +378,21 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							else if !objectField.multiple && !formField.is_multiselect
 								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
 							values[workflow_field] = odataFieldValue
+						else if objectLookupField && formField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objectLookupField.type) && ['users', 'organizations'].includes(objectLookupField.reference_to)
+							if !_.isEmpty(referenceToFieldValue)
+								lookupSelectFieldValue
+								if formField.type == 'user'
+									if objectLookupField.multiple && formField.is_multiselect
+										lookupSelectFieldValue = getSelectUserValues(referenceToFieldValue, spaceId)
+									else if !objectLookupField.multiple && !formField.is_multiselect
+										lookupSelectFieldValue = getSelectUserValue(referenceToFieldValue, spaceId)
+								else if formField.type == 'group'
+									if objectLookupField.multiple && formField.is_multiselect
+										lookupSelectFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
+									else if !objectLookupField.multiple && !formField.is_multiselect
+										lookupSelectFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
+								if lookupSelectFieldValue
+									values[workflow_field] = lookupSelectFieldValue
 						else
 							values[workflow_field] = lookupObjectRecord[lookupFieldName]
 
