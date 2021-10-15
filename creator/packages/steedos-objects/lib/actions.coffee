@@ -246,6 +246,8 @@ if Meteor.isClient
 										unless tempNavRemoved
 											# 如果确实删除了临时导航，就可能已经重定向到上一个页面了，没必要再重定向一次
 											FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
+								if call_back and typeof call_back == "function"
+									call_back()			
 						else
 							# 批量删除
 							if selectedRecords && selectedRecords.length
