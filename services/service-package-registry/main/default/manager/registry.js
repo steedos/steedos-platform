@@ -6,7 +6,8 @@ const path = require("path");
 const fs = require("fs");
 const moduleRe = /^(@[^/@]+?[/])?[^/@]+?$/;
 const slashRe = process.platform === "win32" ? /\\|[/]/ : /[/]/;
-const pkgurlRe = /^(https?|git(|\+https?|\+ssh|\+file)):\/\//;
+// const pkgurlRe = /^(https?|git(|\+https?|\+ssh|\+file)):\/\//;
+const pkgurlRe = /^(https?):\/\/|(file|link):/;
 const localtgzRe = /^([a-zA-Z]:|\/).+tgz$/;
 let installAllowList = ['*'];
 let installDenyList = [];
@@ -184,15 +185,15 @@ async function installModule(module,version,url) {
             isUpgrade = false;
         }
 
-        if (!isUpgrade) {
-            log.info(log._("server.install.installing",{name: module,version: version||"latest"}));
-        } else {
-            log.info(log._("server.install.upgrading",{name: module,version: version||"latest"}));
-        }
+        // if (!isUpgrade) {
+        //     log.info(log._("server.install.installing",{name: module,version: version||"latest"}));
+        // } else {
+        //     log.info(log._("server.install.upgrading",{name: module,version: version||"latest"}));
+        // }
 
         var installDir = settings.userDir || ".";
         var args = ['install','--no-audit','--no-update-notifier','--no-fund','--save','--save-prefix=~','--production',installName];
-        var yarnArgs = ['add', '-E', installName]; //yarnCommand
+        var yarnArgs = ['add', '-E', installName]; //yarnCommand  , '--json' --registry
         return exec.run(yarnCommand,yarnArgs,{
             cwd: installDir
         }, true).then(result => {
@@ -204,6 +205,7 @@ async function installModule(module,version,url) {
                 if(!fs.existsSync(path.join(packagePath, 'package.service.js'))){
                     throw new Error(`${module} is not steedos package`)
                 }
+                console.log(`install package ${module} successful.`)
                 activePromise = Promise.resolve(packagePath);
                 return activePromise;
             } catch (error) {
@@ -316,7 +318,12 @@ async function uninstallModule(module){
 //     return activePromise;
 // }
 
+const isPackageUrl = (url)=>{
+    return pkgurlRe.test(url)
+}
+
 module.exports = {
     installModule,
-    uninstallModule
+    uninstallModule,
+    isPackageUrl
 }

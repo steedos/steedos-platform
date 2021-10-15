@@ -251,6 +251,25 @@ module.exports = {
 				const { module, version } = ctx.params
 				return await this.upgradePackage(module, version);
             }
+		},
+		installPackageFromUrl: {
+			rest: {
+                method: "POST",
+                path: "/cloud/saas/packages/url"
+            },
+			async handler(ctx){
+				try {
+					const user = ctx.meta.user;
+					if(!user.is_space_admin){
+						throw new Error('not permission!');
+					}
+					const { module, url } = ctx.params
+					const enable = true;
+					return await this.installPackageFromUrl(module, url, enable, ctx.broker)
+				} catch (error) {
+					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
+				}
+			}
 		}
 	},
 
@@ -319,16 +338,18 @@ module.exports = {
 				const packages = [];
 
 				_.each(result.data, (item)=>{
-					let isExist = _.find(packages, (_package)=>{
-						return _package.name === item.product.sku
-					})
-					if(!isExist){
-						packages.push({
-							name: item.product.sku, 
-							version: null,  //始终安装latest最新版
-							label: item.product.name, 
-							description: item.product.description || ''
+					if(item.product){
+						let isExist = _.find(packages, (_package)=>{
+							return _package.name === item.product.sku
 						})
+						if(!isExist){
+							packages.push({
+								name: item.product.sku, 
+								version: null,  //始终安装latest最新版
+								label: item.product.name, 
+								description: item.product.description || ''
+							})
+						}
 					}
 				})
 				return { packages : packages}
@@ -361,6 +382,45 @@ module.exports = {
 						enable: enable, 
 						nodeID: this.broker.nodeID, 
 						instanceID: this.broker.instanceID,
+						metadata: metadata
+					})
+				})
+				return packageConfig;
+            }
+		},
+		installPackageFromUrl: {
+			async handler(module, url, enable, broker) {
+				if(!module || !_.isString(module) || !module.trim()){
+					throw new Error(`无效的软件包名称`);
+				}
+				if(!registry.isPackageUrl(url)){
+					throw new Error(`无效的软件包地址`);
+				}
+                const packagePath = await registry.installModule(module, null, url);
+				const packageInfo = loader.getPackageInfo(null, packagePath);
+				const packageName = packageInfo.name;
+				if(enable){
+					await loader.loadPackage(packageName, packagePath);
+				}else{
+					enable = false;
+				}
+				const packageConfig = {
+					label: packageInfo.name, 
+					version: packageInfo.version, 
+					description: packageInfo.description || '', 
+					local: false, 
+					enable: enable,
+					url: url,
+					path: util.getPackageRelativePath(process.cwd(), packagePath)
+				}
+				loader.appendToPackagesConfig(packageName, packageConfig);
+				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+				await broker.call(`@steedos/service-packages.install`, {
+					serviceInfo: Object.assign({}, packageConfig, {
+						name: packageName,
+						enable: enable, 
+						nodeID: broker.nodeID, 
+						instanceID: broker.instanceID,
 						metadata: metadata
 					})
 				})

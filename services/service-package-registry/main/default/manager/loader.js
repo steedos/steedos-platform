@@ -63,7 +63,7 @@ const loadPackages = async ()=>{
                     }
                 } catch (error) {
                     try {
-                        await registry.installModule(packageName, package.version)
+                        await registry.installModule(packageName, package.version, package.url)
                         const packageInfo = await loadPackage(packageName);
                         appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: false});
                     } catch (error) {
@@ -83,6 +83,20 @@ const loadPackages = async ()=>{
             
 
         }
+    }
+}
+
+const getPackageInfo = (packageName, packagePath)=>{
+    try {
+        if(!packagePath){
+            packagePath = path.dirname(require.resolve(`${packageName}/package.json`, {
+                paths: [path.join(userDir, 'node_modules')]
+            }))
+        }
+        const packageInfo = require(path.join(packagePath, 'package.json'));
+        return Object.assign({packagePath: packagePath}, packageInfo);
+    } catch (error) {
+        console.error(error)
     }
 }
 
@@ -174,5 +188,6 @@ module.exports = {
     loadPackagesConfig,
     disablePackage,
     enablePackage,
-    removePackage
+    removePackage,
+    getPackageInfo
 }

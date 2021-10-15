@@ -40,7 +40,6 @@ module.exports = {
             rowSelection: 'single',
             rowKey: 'version',
             onFinish: async (selectedRowKeys, selectedRows) => {
-                console.log("selectedRows:", selectedRowKeys, selectedRows);
                 if(selectedRowKeys.length < 1){
                     throw new Error(`请选择要升级的版本`);
                 }
