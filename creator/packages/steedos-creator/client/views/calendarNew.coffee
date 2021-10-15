@@ -541,4 +541,6 @@ Template.creator_calendarNew.onRendered ->
 			module.dynamicImport("devextreme/ui/context_menu").then (dxContextMenu)->
 				DevExpress.ui.dxContextMenu = dxContextMenu;
 
-			window.dxSchedulerInstance = dxSchedulerInstance;
+window.refreshDxSchedulerInstance = ()->
+	if dxSchedulerInstance
+		dxSchedulerInstance.getDataSource().reload()

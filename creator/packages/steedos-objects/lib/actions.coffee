@@ -131,6 +131,7 @@ if Meteor.isClient
 								if FlowRouter.current().route.path.endsWith("/:record_id")
 									FlowRouter.reload()
 								else
+									window.refreshDxSchedulerInstance()
 									window.refreshGrid();
 							, 1);
 							return true;
