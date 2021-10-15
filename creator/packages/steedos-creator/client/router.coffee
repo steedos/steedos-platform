@@ -103,15 +103,12 @@ FlowRouter.route '/app/:app_id',
 			Session.set("app_id", app_id)
 		Session.set("admin_template_name", null)
 		app = Creator.getApp(app_id)
-		if app_id is "meeting"
-			FlowRouter.go('/app/' + app_id + '/meeting/calendar')
+		if app and app.is_use_iframe
+			main = 'creator_app_iframe'
 		else
-			if app and app.is_use_iframe
-				main = 'creator_app_iframe'
-			else
-				main = 'creator_app_home'
-			BlazeLayout.render Creator.getLayout(),
-				main: main
+			main = 'creator_app_home'
+		BlazeLayout.render Creator.getLayout(),
+			main: main
 
 FlowRouter.route '/app/:app_id/home',
 	triggersEnter: [ checkUserSigned, checkAppPermission ],
