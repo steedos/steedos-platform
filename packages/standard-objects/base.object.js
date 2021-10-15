@@ -201,7 +201,7 @@ module.exports = {
                 }
                 return true;
             },
-            on: "record",
+            on: "record_only",
             todo: function () {
                 return Modal.show('initiate_approval', {
                     object_name: this.object_name,

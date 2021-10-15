@@ -824,15 +824,15 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
                 relatedObjectValue.created_by = ins.applicant;
                 relatedObjectValue.modified_by = ins.applicant;
                 relatedObjectValue._id = objectCollection._makeNewID();
-                var instance_state = ins.state;
-                if (ins.state === 'completed' && ins.final_decision) {
-                    instance_state = ins.final_decision;
-                }
-                relatedObjectValue.instances = [{
-                    _id: insId,
-                    state: instance_state
-                }];
-                relatedObjectValue.instance_state = instance_state;
+                // var instance_state = ins.state;
+                // if (ins.state === 'completed' && ins.final_decision) {
+                //     instance_state = ins.final_decision;
+                // }
+                // relatedObjectValue.instances = [{
+                //     _id: insId,
+                //     state: instance_state
+                // }];
+                // relatedObjectValue.instance_state = instance_state;
                 if(Creator.Objects[relatedObject.object_name]){
                     Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, { validate: false, filter: false })
                 }else{
