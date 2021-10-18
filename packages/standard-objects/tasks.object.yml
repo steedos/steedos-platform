@@ -140,27 +140,27 @@ list_views:
         - '{userId}'
   recent:
     label: Recently Viewed Tasks
-  calendar_view:
-    type: calendar
-    label: Calendar View
-    filter_scope: space
-    filters:
-      - - assignees
-        - =
-        - '{userId}'
-      - - owner
-        - =
-        - '{userId}'
-    options:
-      startDateExpr: due_date
-      endDateExpr: due_date
-      textExpr: name
-      title:
-        - name
-        - due_date
-        - assignees
-        - state
-      currentView: month
+  # calendar_view:
+  #   type: calendar
+  #   label: Calendar View
+  #   filter_scope: space
+  #   filters:
+  #     - - assignees
+  #       - =
+  #       - '{userId}'
+  #     - - owner
+  #       - =
+  #       - '{userId}'
+  #   options:
+  #     startDateExpr: due_date
+  #     endDateExpr: due_date
+  #     textExpr: name
+  #     title:
+  #       - name
+  #       - due_date
+  #       - assignees
+  #       - state
+  #     currentView: month
 permission_set:
   user:
     allowCreate: true
