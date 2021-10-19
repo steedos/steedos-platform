@@ -530,6 +530,8 @@ Template.creator_calendarNew.onRendered ->
 					{ component, element, model } = e;
 					# 周、日视图滚动到7点30的位置上
 					this.scrollToTime(7, 30)
+					buttonsWidth = $(".steedos .steedos-brand-band .listViewManager .slds-page-header--object-home .slds-col.slds-grid").outerWidth();
+					$(".steedos .steedos-brand-band .listViewManager .weui-flex .dx-scheduler-header.dx-widget").css("right", buttonsWidth  + 20)
 			}
 
 			_.extend(dxSchedulerConfig, view.options)
