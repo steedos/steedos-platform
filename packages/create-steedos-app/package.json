@@ -19,6 +19,7 @@
   },
   "files": [
     "index.js",
+    "!default/**",
     "createSteedosApp.js"
   ],
   "bin": {
