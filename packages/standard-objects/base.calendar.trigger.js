@@ -15,7 +15,9 @@ const getCalendarListViews = function (object_name) {
 
 const validateStartEndDate = function (start, end) {
     if(start && end){
-        if(start.getTime() >= end.getTime()){
+        const startTime = start.getTime ? start.getTime() : (new Date(start)).getTime();
+        const endTime = end.getTime ? end.getTime() : (new Date(end)).getTime();
+        if(startTime >= endTime){
             throw new Error("base_error_start_end_date");
         }
     }

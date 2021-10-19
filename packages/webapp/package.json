@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp",
-  "version": "2.1.27",
+  "version": "2.1.28",
   "private": false,
   "main": "lib/exports.js",
   "scripts": {

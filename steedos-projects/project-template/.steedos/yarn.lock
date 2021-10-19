@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-labs/master/-/master-2.1.17.tgz#0dd693da48c46b0975c5bb9740d88c149390bcc2"
   integrity sha512-uFUxqq9FkSfq+8xc8rTT/FbyDB+C5/cwhFxO/G5OcTLZDuML2T7JpxecbymYISds8Sgg5a5gOe8x5Fv/+krEWQ==
 
-"@steedos-labs/oa@2.1.17":
-  version "2.1.17"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/oa/-/oa-2.1.17.tgz#4f5be9e5dc8a3b0aea9dc3dcce2fb9de7371086c"
-  integrity sha512-dezTijSp+sSSOfR6L5EAzYMe+49R2KEOWtdYSjAn9uLUickGiDU7Bwn2pX8dce0Ts6dGVKUiQrBjPFehZ/ICMg==
+"@steedos-labs/oa@2.1.20":
+  version "2.1.20"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/oa/-/oa-2.1.20.tgz#4942d2694246d0abfea31b623981c563bf086c5b"
+  integrity sha512-o0KaDuw8g4n4FcrrNlPJQyrGGiREm56RwA6scFhi4CTGkV/D6Tyz7EMuZgsvUaha8SUFFKWDFccWwWKdaOHvJg==
   dependencies:
     "@steedos/app-contracts" "2.0.51"
     "@steedos/app-crm" "2.0.51"
