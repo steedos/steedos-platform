@@ -76,28 +76,66 @@ module.exports = {
 					page.widgets = await objectql.getObject('widgets').find({ filters: [['page', '=', apiName]] });
 				}
 				page.options = {};
+				const widgets = [];
 				for (const widget of page.widgets) {
 					if(widget.type === 'charts'){
 						if(widget.visualization){
 							const chart = await getCharts(widget.visualization)
-							const query = await getQueries(chart.query)
-							if(!query.options){
-								query.options = {}
+							if(chart){
+								const query = await getQueries(chart.query)
+								if(query){
+									if(!query.options){
+										query.options = {}
+									}
+									widget.visualization = {
+										_id: chart._id,
+										description: chart.description,
+										query: query,
+										type: chart.type,
+										options: chart.options,
+										name: chart.name,
+										label: chart.label,
+									}
+									widgets.push(widget)
+								}
 							}
-							widget.visualization = {
-								_id: chart._id,
-								description: chart.description,
-								query: query,
-								type: chart.type,
-								options: chart.options,
-								name: chart.name,
-								label: chart.label,
-							}
+						}else{
+							widgets.push(widget)
 						}
+					}else{
+						widgets.push(widget)
 					}
 				}
-
+				page.widgets = widgets;
 				return page;
+			}
+		},
+		searchPage:{
+			rest: {
+				method: "GET",
+				path: "/search/page"
+			},
+			async handler(ctx){
+				try {
+					const { q } = ctx.params;
+					let pages = await objectql.getObject('pages').find({filters: [['label', 'contains', q],'or',['name', 'contains', q]]});
+					_.each(pages, function(page){
+						page.id = page.name
+					})
+					return {
+						count: pages.length,
+						page: 1,
+						page_size: pages.length + 1000,
+						results: pages
+					}
+				} catch (error) {
+					return {
+						count: 0,
+						page: 1,
+						page_size: 1000,
+						results: []
+					}
+				}
 			}
 		}
 	},

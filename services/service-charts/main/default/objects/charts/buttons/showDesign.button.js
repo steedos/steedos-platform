@@ -1,17 +1,7 @@
 module.exports = {
     showDesign: function (object_name, record_id) {
-        const rootId = `steedosChartDesignModalRoot`;
-        let modalRoot = document.getElementById(rootId);
-        if (!modalRoot) {
-            modalRoot = document.createElement('div');
-            modalRoot.setAttribute('id', rootId);
-            document.body.appendChild(modalRoot)
-        }
-        SteedosUI.render(stores.ComponentRegistry.components.ChartDesignModal, { chartId: record_id }, $(`#${rootId}`)[0]);
-        setTimeout(()=>{
-            let triggerDom = document.querySelector(`#${rootId} #chartDesignModalBtn`);
-            triggerDom && triggerDom.click();
-          }, 500);
+        const record = Creator.odata.get(object_name,record_id);
+        Steedos.openWindow(Steedos.absoluteUrl(`/charts-design/#/${record.query}`));
     },
     showDesignVisible: function (object_name, record_id, record_permissions) {
         var perms, record;

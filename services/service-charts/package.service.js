@@ -4,7 +4,8 @@ const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const objectql = require("@steedos/objectql");
 const _ = require('lodash');
-
+const express = require('express');
+const path = require('path');
 const getQueries = async(apiName)=>{
 	const queries = await objectql.getObject('queries').find({ filters: [['name', '=', apiName]] });
 	if(queries.length > 0){
@@ -92,7 +93,7 @@ module.exports = {
 							}
 						}
 
-					}else if(_.include(['sqlite','sqlserver','postgres','oracle','mysql'], datasource.driver)){
+					}else if(_.includes(['sqlite','sqlserver','postgres','oracle','mysql'], datasource.driver)){
 						throw new Error(`This data source [${datasource.driver}] is not supported.`)
 					}else {
 						throw new Error(`This data source [${datasource.driver}] is not supported.`)
@@ -124,20 +125,247 @@ module.exports = {
 				}
             }
         },
+		getQuery: {
+            rest: {
+                method: "GET",
+                path: "/queries/:recordId"
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { recordId } = ctx.params;
+                let queryRecord = await this.getQueryRecord(recordId);
+				return await this.formatQuery(queryRecord);
+            }
+        },
+		addQuery: {
+			rest: {
+                method: "POST",
+                path: "/queries/"
+            },
+            async handler(ctx) {
+				//TODO
+				const data = ctx.params;
+				console.log(`addQuery data`, data);
+				return {}
+            }
+		},
+		updateQuery: {
+			rest: {
+                method: "POST",
+                path: "/queries/:recordId"
+            },
+            async handler(ctx) {
+				const {recordId, query, label, description, data_source_id} = ctx.params;
+				const userSession = ctx.meta.user;
+				let doc = {};
+
+				if(_.has(ctx.params, 'query')){
+					doc.query = query
+				}
+
+				if(_.has(ctx.params, 'label')){
+					doc.label = label
+				}
+
+				if(_.has(ctx.params, 'description')){
+					doc.description = description
+				}
+
+				if(_.has(ctx.params, 'data_source_id')){
+					doc.datasource = data_source_id
+				}
+
+				const records = await objectql.getObject('queries').find({filters: [['name','=', recordId]]})
+
+				if(records && records.length > 0){
+					await objectql.getObject('queries').update(records[0]._id, doc, userSession)
+				}
+				let queryRecord = await this.getQueryRecord(recordId);
+				return await this.formatQuery(queryRecord);
+            }
+		},
+		dataSources: {
+			rest: {
+                method: "GET",
+                path: "/data_sources"
+            },
+            async handler(ctx) {
+                const dataSourcesAll = objectql.getSteedosSchema().getDataSources();
+				const dataSources = [];
+				_.each(dataSourcesAll, (dataSource, name)=>{
+					if(dataSource.driver === 'mongo'){
+						dataSources.push({
+							_id: name,
+							id: name,
+							name: dataSource.label || name,
+							syntax: 'json',
+							type: 'mongodb',
+							view_only: false
+						})
+					}
+				})
+				return dataSources;
+            }
+		},
+		dataSourcesSchema: {
+			rest: {
+                method: "GET",
+                path: "data_sources/:datasource/schema"
+            },
+            async handler(ctx) {
+				const { datasource } = ctx.params;
+                const objectConfig = objectql.getDataSource(datasource).getObjectsConfig();
+				let schema = [];
+				_.each(objectConfig, (config, name)=>{
+					schema.push({name: config.table_name || name, columns: _.keys(config.fields)})
+				})
+
+				if(datasource === 'default'){
+					const meteorObjectsConfig = objectql.getDataSource('meteor').getObjectsConfig();
+					_.each(meteorObjectsConfig, (config, name)=>{
+						schema.push({name: config.table_name || name, columns: _.keys(config.fields)})
+					})
+				}
+
+				schema = _.sortBy(schema, ['name'])
+				return {schema: schema};
+            }
+		},
+		querySnippets: {
+			rest: {
+                method: "GET",
+                path: "/query_snippets"
+            },
+            async handler(ctx) {
+				//	TODO : 查询片段
+				return []
+            }
+		},
 	},
 
 	/**
 	 * Events
 	 */
-	events: {
-
+	 events: {
+		'steedos-server.started': async function (ctx) {
+			const router = express.Router();
+			let publicPath = require.resolve("@steedos/service-charts/package.json");
+			publicPath = publicPath.replace("package.json", 'webapp');
+			let routerPath = "";
+			if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
+				routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+			}
+			const cacheTime = 86400000 * 1; // one day
+			router.use(`${routerPath}/charts-design`, express.static(publicPath, { maxAge: cacheTime }));
+			WebApp.rawConnectHandlers.use(router);
+		}
 	},
 
 	/**
 	 * Methods
 	 */
 	methods: {
+		getQueryRecord: {
+			async handler(recordId){
+				let queryRecord = await objectql.getObject("queries").findOne(recordId);
+				if(!queryRecord){
+					queryRecord = await getQueries(recordId)
+				}
+				return queryRecord;
+			}
+		},
+		formatQuery: {
+			async handler(queryRecord){
+				if(queryRecord){
+					const visualizations = await this.getQueryVisualizations(queryRecord.name);
+					return {
+						user: {
+							// auth_type: "password",
+							is_disabled: false,
+							// updated_at: "2021-10-15T07:31:10.579Z",
+							profile_image_url: Steedos.absoluteUrl(`/avatar/${queryRecord.created_by}`),
+							// is_invitation_pending: false,
+							// groups: [
+							// 	1,
+							// 	2
+							// ],
+							// id: 1,
+							name: "admin",
+							// created_at: "2021-07-27T06:50:26.282Z",
+							// disabled_at: null,
+							// is_email_verified: true,
+							// active_at: "2021-10-15T07:31:08Z",
+							// email: "chenzhipei@hotoa.com"
+						},
+						created_at: queryRecord.created,
+						// latest_query_data_id: null,
+						schedule: null,
+						description: queryRecord.description,
+						tags: [],
+						updated_at: queryRecord.modified,
+						last_modified_by: {
+							// auth_type: "password",
+							is_disabled: false,
+							// updated_at: "2021-10-15T07:31:10.579Z",
+							profile_image_url: Steedos.absoluteUrl(`/avatar/${queryRecord.modified_by}`),
+							// is_invitation_pending: false,
+							// groups: [
+							// 	1,
+							// 	2
+							// ],
+							// id: 1,
+							name: "admin",
+							// created_at: "2021-07-27T06:50:26.282Z",
+							// disabled_at: null,
+							// is_email_verified: true,
+							// active_at: "2021-10-15T07:31:08Z",
+							// email: "chenzhipei@hotoa.com"
+						},
+						options: {
+							"parameters": []
+						},
+						is_safe: true,
+						version: 1,
+						is_favorite: false,
+						query_hash: "",
+						is_archived: false,
+						can_edit: true,
+						visualizations: visualizations,
+						query: queryRecord.query,
+						api_key: "",
+						is_draft: true,
+						id: queryRecord.name,
+						data_source_id: queryRecord.datasource,
+						name: queryRecord.name,
+						label: queryRecord.label,
+						_id: queryRecord._id
+					}
+				}
 
+				return {}
+			}
+		},
+		getQueryVisualizations:{
+			async handler(queryApiName){
+				const charts = await objectql.getObject('charts').find({filters: [['query','=', queryApiName]]})
+				const visualizations = [];
+				_.each(charts, function(chart){
+					visualizations.push({
+						_id: chart._id,
+						id: chart._id,
+						description: chart.description,
+						query: queryApiName,
+						type: chart.type,
+						options: chart.options,
+						name: chart.name,
+						label: chart.label,
+						created_at: chart.created,
+						updated_at: chart.modified
+					})
+				})
+				return visualizations;
+			}
+		}
 	},
 
 	/**
