@@ -1,5 +1,5 @@
 import React from 'react';
-import { ObjectGrid, SteedosProvider, SteedosRouter as Router } from '@steedos/builder-community/dist/builder-community.react.js';
+import { ObjectGrid, SteedosProvider, SteedosRouter as Router } from '@steedos-ui/builder-community/dist/builder-community.react.js';
 function SteedosGridContainer(prop){
 	const { objectApiName, name, columnFields, filters, sort, onChange } = prop;
 	return (

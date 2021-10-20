@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { ObjectListView, SteedosRouter as Router, SteedosProvider } from '@steedos/builder-community/dist/builder-community.react.js';
+import { ObjectListView, SteedosRouter as Router, SteedosProvider } from '@steedos-ui/builder-community/dist/builder-community.react.js';
 
 window.refreshGrid = (name)=>{
 	const grid = name ? window.gridRefs[name] : window.gridRef;
