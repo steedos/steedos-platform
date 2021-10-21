@@ -2,6 +2,7 @@
   "name": "@steedos/webapp",
   "version": "2.1.30",
   "private": false,
+  "license": "MIT",
   "main": "lib/exports.js",
   "scripts": {
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/ react-scripts start",
