@@ -39,6 +39,7 @@ jobs:
           yarn bootstrap
       - name: Build platform
         run: |
+          npx browserslist@latest --update-db
           yarn build
       - name: Build creator
         run: |
