@@ -139,7 +139,7 @@ fields:
     label: Precision
     # defaultValue: 18
     visible_on: "{{
-      function(){
+      (function(){
         if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
           return true;
         }
@@ -151,10 +151,10 @@ fields:
             return false;
           }
         }
-      }()
+      })()
     }}"
     required: "{{
-      function(){
+      (function(){
         if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
           return true;
         }
@@ -166,7 +166,7 @@ fields:
             return false;
           }
         }
-      }()
+      })()
     }}"
   scale:
     type: currency
@@ -175,7 +175,7 @@ fields:
     min: 0
     inlineHelpText: If the field type is a Percent, this indicates the number of decimal places the field will display, for example, two decimal places will display as 10.20%.
     visible_on: "{{
-      function(){
+      (function(){
         if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
           return true;
         }
@@ -187,10 +187,10 @@ fields:
             return false;
           }
         }
-      }()
+      })()
     }}"
     required: "{{
-      function(){
+      (function(){
         if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
           return true;
         }
@@ -202,7 +202,7 @@ fields:
             return false;
           }
         }
-      }()
+      })()
     }}"
   rows:
     type: currency
