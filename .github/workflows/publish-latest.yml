@@ -34,6 +34,12 @@ jobs:
         with:
           meteor-release: '1.9.3'
       - run: yarn --frozen-lockfile
+      - name: Platform Bootstrap
+        run: |
+          yarn bootstrap
+      - name: Platform build
+        run: |
+          yarn build
       - name: Build creator
         run: |
           yarn build_creator
