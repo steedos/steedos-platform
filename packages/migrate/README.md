@@ -42,3 +42,5 @@ datasources:
 ```shell
 yarn migrate create :script_name
 ```
+## 功能说明
+- 此包用于执行升级脚本文件

@@ -31,3 +31,6 @@ yarn fe-build
 
 ### 了解更多
 - [开发文档](https://www.steedos.com/developer/)
+
+## 功能说明
+- 用于生成表结构关系图

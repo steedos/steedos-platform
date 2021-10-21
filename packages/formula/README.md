@@ -119,3 +119,6 @@ Formulon exists thanks to the following people who have contributed.
 
 - [Jordan Henderson](https://github.com/jordanhenderson)
 - [Leif Gensert](https://github.com/leifg)
+
+## 功能说明
+- 此包用于系统的公式计算功能

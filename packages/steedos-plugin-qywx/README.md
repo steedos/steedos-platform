@@ -20,3 +20,6 @@ yarn start
 
 ### 了解更多
 - [开发文档](https://www.steedos.com/developer/)
+
+## 功能说明
+- 华炎魔方与企业微信集成插件：单点登录、消息推送、用户同步

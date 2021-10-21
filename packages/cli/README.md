@@ -57,3 +57,6 @@ steedos run --help
 - 需要配置环境变量: METADATA_SERVER、METADATA_APIKEY，可以通过项目的env文件进行配置。
 - export: 从服务器获取数据生成本地文件。 比如 `steedos data:export -o accounts`或`steedos data:export -o accounts -p`
 - import: 将本地文件部署到服务器。 比如 `steedos data:import -f accounts.json`或`steedos data:import -p account-plan.json`
+
+## 功能说明
+- 此包用于生成steedos命令
