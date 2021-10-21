@@ -38,8 +38,11 @@ jobs:
         run: |
           yarn bootstrap
       - name: Build platform
+        env:
+          CI: false
         run: |
           npx browserslist@latest --update-db
+          npm install -g mkdirp
           yarn build
       - name: Build creator
         run: |
