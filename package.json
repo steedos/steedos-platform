@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "lerna": "^3.22.1",
+    "mkdirp": "1.0.4",
     "cpy": "7.3.0"
   },
   "peerDependencies": {
