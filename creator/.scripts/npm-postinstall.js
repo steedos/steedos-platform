@@ -25,13 +25,14 @@ execSync('cp -r .scripts/iconv-lite/* node_modules/iconv-lite/');
 execSync('rm -rf node_modules/@steedos');
 execSync('rm -rf node_modules/steedos-server');
 execSync('rm -rf ../apps/*/node_modules/steedos-server');
-
+execSync('rm -rf node_modules/@steedos-ui');
+execSync('mkdirp node_modules/@steedos-ui');
 // 执行 platform 下的 bootstrap
-execSync('cd .. && yarn bootstrap', {stdio: 'inherit'});
+// execSync('cd .. && yarn bootstrap', {stdio: 'inherit'});
 
 if (process.platform == "win32") {
     let appBuilderPath = '';
-    // appBuilderPath = 'F:/GitHub/app-builder'; //设置本地app builder path
+    //appBuilderPath = 'F:/GitHub/app-builder'; //设置本地app builder path
     execSync(`cd ${appBuilderPath} && yarn build`, {stdio: 'inherit'});
     execSync(`cp -r ${appBuilderPath}/packages/builder-community/dist/builder-community.react.css public/`);
     execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos')+' '+ path.join(process.cwd(), '/../node_modules/@steedos'));
@@ -39,7 +40,6 @@ if (process.platform == "win32") {
 }else{
     execSync(`cd ../../app-builder/ && yarn build`, {stdio: 'inherit'});
     execSync(`cp -r ../../app-builder/packages/builder-community/dist/builder-community.react.css public/`);
-    execSync('rm -rf '+ path.join(process.cwd(), '../node_modules/@steedos-ui/builder-community'));
     execSync('ln -s '+ path.join(process.cwd(), '../../app-builder/packages/builder-community') + ' ' + path.join(process.cwd(), '../node_modules/@steedos-ui'));
     execSync('ln -s ' + path.join(process.cwd(), '../node_modules/@steedos') + ' ' + process.cwd() + '/node_modules/@steedos' );
 }
