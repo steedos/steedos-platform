@@ -33,6 +33,10 @@ jobs:
       - uses: meteorengineer/setup-meteor@v1
         with:
           meteor-release: '1.9.3'
+      - name: set npm registry
+        run: |
+          yarn config set registry http://registry.npm.taobao.org/
+          npm config set registry http://registry.npm.taobao.org/
       - run: yarn --frozen-lockfile
       - name: Build creator
         run: |
