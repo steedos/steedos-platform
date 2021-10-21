@@ -9,7 +9,6 @@
     "testbuild": "cp -rf .dist/* ../steedos-contracts-app/node_modules/steedos-server/",
     "login": "npm login --registry https://registry.npmjs.org",
     "pub": "cd .dist && npm publish --registry https://registry.npmjs.org",
-    "postinstall": "node .scripts/npm-postinstall.js",
     "prepare": "node .scripts/npm-postinstall.js",
     "osw": "cd ../../steedos-webapp/ && yarn build-lib && cd ../object-server/creator/ && cp -r ../../steedos-webapp/lib/* node_modules/@steedos/react/lib/",
     "sr": "cp -r ../../steedos-plugin-stimulsoft-report/lib/* node_modules/@steedos/plugin-stimulsoft-report/lib/ && rm -rf node_modules/@steedos/plugin-stimulsoft-report/node_modules/@steedos"
@@ -21,6 +20,7 @@
     "@steedos/design-system-react": "^2.0.9",
     "@steedos/i18n": "^2.0.32",
     "@steedos/webapp": "^2.0.9",
+    "@steedos-ui/builder-community": "^1.0.3",
     "aliyun-sdk": "^1.12.3",
     "aws-sdk": "2.0.23",
     "basic-auth": "^2.0.1",
