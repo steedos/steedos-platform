@@ -10,7 +10,6 @@
     "build-after": "mkdirp build/accounts && mkdirp build/accounts/a && mv build/index.html build/accounts/a/",
     "copy-to-public": "rm -rf build/assets && mkdirp public/accounts && mv build ./public/accounts/a",
     "build-lib": "rm -rf lib && tsc --build tsconfig.lib.json",
-    "prepare": "yarn build && yarn build-lib",
     "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },
   "eslintConfig": {
