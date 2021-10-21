@@ -1,6 +1,6 @@
 {
   "name": "@steedos/data-import",
-  "version": "2.1.30",
+  "version": "2.1.31",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
@@ -8,8 +8,8 @@
     "prepare": "tsc"
   },
   "dependencies": {
-    "@steedos/objectql": "2.1.30",
-    "@steedos/core": "2.1.30",
+    "@steedos/core": "2.1.31",
+    "@steedos/objectql": "2.1.31",
     "dotenv-flow": "^3.1.0",
     "node-xlsx": "^0.16.1"
   },
