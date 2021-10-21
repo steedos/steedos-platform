@@ -25,6 +25,7 @@
     "dependencies": {
         "@salesforce/dev-config": "^2.0.0",
         "@steedos/metadata-core": "2.1.30",
+        "@steedos/core": "2.1.30",
         "chalk": "^4.1.0",
         "compressing": "^1.5.1",
         "dotenv-flow": "^3.1.0",
