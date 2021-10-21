@@ -26,7 +26,7 @@ execSync('rm -rf node_modules/@steedos');
 execSync('rm -rf node_modules/steedos-server');
 execSync('rm -rf ../apps/*/node_modules/steedos-server');
 execSync('rm -rf node_modules/@steedos-ui');
-execSync('mkdirp node_modules/@steedos-ui');
+execSync('mkdir node_modules/@steedos-ui');
 // 执行 platform 下的 bootstrap
 execSync('cd .. && yarn bootstrap', {stdio: 'inherit'});
 
