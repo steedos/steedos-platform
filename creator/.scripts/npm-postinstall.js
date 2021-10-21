@@ -28,7 +28,7 @@ execSync('rm -rf ../apps/*/node_modules/steedos-server');
 execSync('rm -rf node_modules/@steedos-ui');
 execSync('mkdirp node_modules/@steedos-ui');
 // 执行 platform 下的 bootstrap
-// execSync('cd .. && yarn bootstrap', {stdio: 'inherit'});
+execSync('cd .. && yarn bootstrap', {stdio: 'inherit'});
 
 if (process.platform == "win32") {
     let appBuilderPath = '';
