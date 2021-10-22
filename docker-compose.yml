@@ -8,6 +8,7 @@ services:
       - "3000:3000"
     volumes:
       - "./docker-volumes/steedos/storage:/app/storage"
+      - "./.steedos:/app/.steedos"
     environment:
       - PORT=3000
       - ROOT_URL=http://localhost:3000
