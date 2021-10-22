@@ -76,7 +76,7 @@ jobs:
       - name: Lerna publish
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish from-package --yes --dist-tag next
+          lerna publish from-package --yes
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
