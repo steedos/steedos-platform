@@ -12,6 +12,7 @@ cpy([
     '!steedos-config-k8s.yml',
     '!storage/**',
     '.gitignore',
+    '!init_home.sh',
     '.env',
 ], '../../packages/create-steedos-app/templates/default', {
     parents: true, 
