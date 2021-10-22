@@ -78,6 +78,7 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           lerna publish from-package --yes --dist-tag next
         env:
+          CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Create tag
         run: |
