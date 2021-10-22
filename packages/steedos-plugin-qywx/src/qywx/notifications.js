@@ -11,7 +11,7 @@ module.exports = {
         Push.send = async function (options) {
             Push.oldQywxSend(options);
             try {
-                // console.log("options:---");
+                // console.log("options:---",options);
                 if (options.from !== 'workflow')
                     return;
 
@@ -19,27 +19,28 @@ module.exports = {
                     return;
 
                 let spaceObj = steedosSchema.getObject('spaces');
-                let space = await spaceObj.findOne({ _id: options.payload.space });
+                let space = await spaceObj.find({ filters: [["_id", "=",options.payload.space]] });
 
-                if (!space)
+                if (!space[0])
                     return;
 
-                if (!space.qywx_corp_id || !space.qywx_agent_id || !space.qywx_secret)
+                if (!space[0].qywx_corp_id || !space[0].qywx_agent_id || !space[0].qywx_secret)
                     return;
 
-                let response = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
+                let response = await Qiyeweixin.getToken(space[0].qywx_corp_id, space[0].qywx_secret);
                 let access_token = response.access_token;
 
                 let spaceUserObj = steedosSchema.getObject('space_users');
-                let space_user = await spaceUserObj.findOne({ space: space._id, user: options.query.userId });
+                let userId = options.query.userId;
+                let space_user = await spaceUserObj.find({ filters: [["space", "=", space[0]._id], ["user", "=", userId]]});
                 
-                if (!space_user.qywx_id)
+                if (!space_user[0].qywx_id)
                     return;
 
-                // console.log("Push.send");
-                let qywx_userId = space_user.qywx_id;
-                let agentId = space.qywx_agent_id;
-                let spaceId = space._id;
+                // console.log("Push.send: ",space_user[0]);
+                let qywx_userId = space_user[0].qywx_id;
+                let agentId = space[0].qywx_agent_id;
+                let spaceId = space[0]._id;
                 let payload = options.payload;
                 let url = "";
                 let text = "";
@@ -76,6 +77,7 @@ module.exports = {
                     "duplicate_check_interval": 1
                 }
                 // 发送推送消息
+                // console.log("msg: ",msg);
                 await Qiyeweixin.sendMessage(msg, access_token);
             } catch (error) {
                 console.error("Push error reason: ", error);
