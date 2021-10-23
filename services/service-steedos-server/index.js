@@ -51,6 +51,7 @@ module.exports = {
 			"@steedos/service-charts",
 			"@steedos/service-pages",
 			"@steedos/service-cloud-init",
+			"@steedos/service-profile-security"
 		],
 		plugins: []
 	},

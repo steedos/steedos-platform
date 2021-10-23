@@ -1,5 +1,6 @@
 {
     "accounts.signin": "登录",
+    "accounts.signin-MFA": "多重身份验证",
     "accounts.signup": "创建账户",
     "accounts.no_account": "没有账户？",
     "accounts.has_account": "已有账户？",

@@ -18,6 +18,9 @@ export const login = (accountsServer: AccountsServer) => async (
       ip,
       userAgent
     });
+    if(result._next){
+      return res.json(result);
+    }
 
     setAuthCookies(req, res, result.user._id, result.token, result.tokens.accessToken);
     try {

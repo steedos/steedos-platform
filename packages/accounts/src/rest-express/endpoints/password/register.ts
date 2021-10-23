@@ -62,9 +62,22 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
     }
 
     const foundedUser = await password.findUserById(userId);
-    const result = await accountsServer.loginWithUser(foundedUser, {});
+    const result: any = await accountsServer.loginWithUser(foundedUser, {});
 
     setAuthCookies(req, res, result.user._id, result.token, result.tokens.accessToken);
+    let enable_MFA = false;
+    // 获取用户简档
+    const userProfile = await password.getUserProfile(result.user._id);
+    if(userProfile){
+      enable_MFA = userProfile.enable_MFA || false
+    }
+    //启用了多重验证
+    if(enable_MFA){
+      //不是验证码注册
+      if(!req.body.verifyCode){
+        result._next = 'TO_VERIFY_MOBILE';
+      }
+    }
 
     res.json(result)
 

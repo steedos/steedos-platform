@@ -299,7 +299,7 @@ class Signup extends React.Component {
     } else if (this.state.loginBy === 'email'){
       user.email = this.state.email
     }
-    this.props.actions.createUser(user).then(async ({error}) => {
+    this.props.actions.createUser(user).then(async ({error, _next}) => {
       if (error) {
         this.setState({
             serverError: (
@@ -310,12 +310,17 @@ class Signup extends React.Component {
         });
         return;
       }
-      this.finishSignin();
+      this.finishSignin(_next);
     });
   };
 
 
-  finishSignin = (team) => {
+  finishSignin = (_next) => {
+    if(_next === 'TO_VERIFY_MOBILE'){
+      const location = this.props.location;
+      return GlobalAction.redirectUserToVerifyMobile(location)
+    }
+
     const query = new URLSearchParams(this.props.location.search);
     const redirectTo = query.get('redirect_to');
 

@@ -106,7 +106,7 @@ export class AccountsServer {
       if (!this.services[serviceName]) {
         throw new Error(`No service with the name ${serviceName} was registered.`);
       }
-
+      
       const user: User | null = await this.services[serviceName].authenticate(params);
       hooksInfo.user = user;
       if (!user) {
@@ -120,11 +120,23 @@ export class AccountsServer {
       await this.hooks.emitSerial(ServerHooks.ValidateLogin, hooksInfo);
 
       let logout_other_clients = false;
-      
+      let enable_MFA = false;
       // 获取用户简档
       const userProfile = await this.services[serviceName].getUserProfile(user.id);
       if(userProfile){
         logout_other_clients = userProfile.logout_other_clients || false
+        enable_MFA = userProfile.enable_MFA || false
+      }
+      //启用了多重验证
+      if(enable_MFA){
+        //不是验证码登录
+        if(!(params.user && params.token)){
+          let _next = 'TO_MOBILE_CODE_LOGIN';
+          // if(!user.mobile_verified){
+          //   _next = 'TO_VERIFY_MOBILE';
+          // }
+          return {_next} as any
+        }
       }
 
       const loginResult = await this.loginWithUser(user, Object.assign({}, infos, {logout_other_clients}));
