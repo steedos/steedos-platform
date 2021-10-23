@@ -94,6 +94,11 @@ async function getUserObject(userId, spaceId, object, layout?){
                     _fields[_item.field_name].visible_on = _item.visible_on
                 }
 
+                if(['created','created_by','modified','modified_by'].indexOf(_item.field_name) < 0){
+                    _fields[_item.field_name].omit = false;
+                    _fields[_item.field_name].hidden = false;
+                }
+
                 _fields[_item.field_name].sort_no = sort_no;
                 sort_no++;
             }
