@@ -64,6 +64,15 @@ export class Mongo implements DatabaseInterface {
     this.inviteCollection = this.db.collection(this.options.inviteCollectionName);
     this.spaceUserCollection = this.db.collection(this.options.spaceUserCollectionName);
   }
+  public async findValidSessionsByUserId(userId: string): Promise<Array<Session>> {
+    const sessions: any = await this.sessionCollection.find({ userId, valid: true });
+    if (sessions) {
+      sessions.forEach(function(session){
+        session.id = session._id.toString();
+      })
+    }
+    return sessions;
+  }
 
   public async setupIndexes(): Promise<void> {
     await this.sessionCollection.createIndex('token', {

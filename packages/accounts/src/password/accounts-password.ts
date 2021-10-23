@@ -139,15 +139,15 @@ const getPathFragmentPrefix = function(){
   return pathFragmentPrefix;
 }
 
-interface MyDatabaseInterface extends DatabaseInterface{
-  updateUser?(userId: string, options: any): Promise<void>;
-}
+// interface MyDatabaseInterface extends DatabaseInterface{
+//   updateUser?(userId: string, options: any): Promise<void>;
+// }
 export default class AccountsPassword implements AuthenticationService {
   public serviceName = 'password';
   public server!: AccountsServer;
   public twoFactor: TwoFactor;
   private options: AccountsPasswordOptions & typeof defaultOptions;
-  private db!: MyDatabaseInterface;
+  private db!: DatabaseInterface;
 
   constructor(options: AccountsPasswordOptions = {}) {
     this.options = { ...defaultOptions, ...options };
@@ -361,6 +361,7 @@ export default class AccountsPassword implements AuthenticationService {
     let password_history = 3;
     let max_login_attempts = 10;
     let lockout_interval = 15;
+    let logout_other_clients = false;
     const spaceUsers = await getObject('space_users').find({filters: `(user eq '${userId}') and (space eq '${spaceId}')`})
     if(spaceUsers.length > 0){
       const spaceUser = spaceUsers[0];
@@ -376,9 +377,12 @@ export default class AccountsPassword implements AuthenticationService {
         if(_.has(userProfile, 'lockout_interval')){
           lockout_interval = Number(userProfile.lockout_interval)
         }
+        if(_.has(userProfile, 'logout_other_clients')){
+          logout_other_clients = userProfile.logout_other_clients
+        }
       }
     }
-    return Object.assign({password_history: password_history, max_login_attempts: max_login_attempts, lockout_interval: lockout_interval})
+    return Object.assign({password_history: password_history, max_login_attempts: max_login_attempts, lockout_interval: lockout_interval, logout_other_clients})
   }
 
   /**

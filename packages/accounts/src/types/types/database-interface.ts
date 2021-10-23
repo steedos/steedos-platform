@@ -73,12 +73,15 @@ export interface DatabaseInterface extends DatabaseInterfaceSessions {
   
   setEmail(userId: string, newEmail: string): Promise<void>;
   setMobile(userId: string, newMobile: string): Promise<void>;
+  updateUser(userId, options): Promise<any>;
 }
 
 export interface DatabaseInterfaceSessions {
   findSessionById(sessionId: string): Promise<Session | null>;
 
   findSessionByToken(token: string): Promise<Session | null>;
+
+  findValidSessionsByUserId(userId: string): Promise<Array<Session> | null>;
 
   createSession(
     userId: string,

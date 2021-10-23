@@ -1,0 +1,5 @@
+name: enable_MFA
+type: boolean
+label: 多重身份验证(需要开启短信服务)
+inlineHelpText: 密码登陆的基础上增加短信验证的两种组合的鉴别技术进行系统登陆.
+sort_no: 1200

@@ -118,7 +118,16 @@ export class AccountsServer {
 
       // Let the user validate the login attempt
       await this.hooks.emitSerial(ServerHooks.ValidateLogin, hooksInfo);
-      const loginResult = await this.loginWithUser(user, infos);
+
+      let logout_other_clients = false;
+      
+      // 获取用户简档
+      const userProfile = await this.services[serviceName].getUserProfile(user.id);
+      if(userProfile){
+        logout_other_clients = userProfile.logout_other_clients || false
+      }
+
+      const loginResult = await this.loginWithUser(user, Object.assign({}, infos, {logout_other_clients}));
       this.hooks.emit(ServerHooks.LoginSuccess, hooksInfo);
       return loginResult;
     } catch (err) {
@@ -137,7 +146,22 @@ export class AccountsServer {
    * @returns {Promise<LoginResult>} - Session tokens and user object.
    */
   public async loginWithUser(user: User, infos: ConnectionInformations): Promise<LoginResult> {
-    const { ip, userAgent } = infos;
+    const { ip, userAgent, logout_other_clients } = infos;
+    if(logout_other_clients){
+      //1 将当前user的所有 token 清空
+      await this.db.updateUser(user.id, {
+        $pull: {
+          "services.resume.loginTokens": { hashedToken: { $ne: [''] } }
+        }
+      })
+      //2 将当前user的所有有效 session 下线
+      const userSessions = await this.db.findValidSessionsByUserId(user.id);
+      if(userSessions){
+        for(const userSession of userSessions){
+          await this.db.invalidateSession(userSession.id);
+        }
+      }
+    }
     const token = generateRandomToken();
     const sessionId = await this.db.createSession(user.id, token, {
       ip,
