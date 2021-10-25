@@ -22,6 +22,8 @@ import { AccountsServerOptions } from './types/accounts-server-options';
 import { JwtData } from './types/jwt-data';
 import { EmailTemplateType } from './types/email-template-type';
 
+import { removeUserSessionsCacheByUserId } from '@steedos/auth';
+
 const defaultOptions = {
   ambiguousErrorMessages: true,
   tokenSecret: 'secret',
@@ -173,6 +175,8 @@ export class AccountsServer {
           await this.db.invalidateSession(userSession.id);
         }
       }
+      //3 清理用户所有session 缓存
+      removeUserSessionsCacheByUserId(user.id)
     }
     const token = generateRandomToken();
     const sessionId = await this.db.createSession(user.id, token, {

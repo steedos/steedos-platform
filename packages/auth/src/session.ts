@@ -1,6 +1,6 @@
 import { SteedosUserSession, isTemplateSpace, wrapAsync } from '@steedos/objectql';
 import { Response } from "express";
-import { getUserIdByToken } from './tokenMap'
+import { getUserIdByToken, removeUserTokens } from './tokenMap'
 import { getUserSession } from './userSession'
 import { getSpaceUserSession } from './spaceUserSession'
 
@@ -123,4 +123,8 @@ export async function setRequestUser(request: Request, response: Response, next:
     request.user = user;
   }
   next();
+}
+
+export async function removeUserSessionsCacheByUserId(userId){
+  return removeUserTokens(userId)
 }

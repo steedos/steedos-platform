@@ -1,5 +1,5 @@
 import crypto = require('crypto');
-import { getSteedosSchema, addConfig, getConfig } from '@steedos/objectql';
+import { getSteedosSchema, addConfig, getConfig, removeManyConfigs } from '@steedos/objectql';
 const TOKENMAPCACHENAME = 'token_map_cache';
 
 function getTokenMapCache(token) {
@@ -37,4 +37,8 @@ export async function getUserIdByToken(token){
         }
     }
     return tokenMap.userId;
+}
+
+export async function removeUserTokens(userId){
+    removeManyConfigs(TOKENMAPCACHENAME, {userId: userId})
 }
