@@ -1,5 +1,0 @@
-name: logout_other_clients
-type: boolean
-label: 单例登录
-inlineHelpText: 注销以当前用户身份登录的其他客户端，但不注销调用该函数的客户端。
-sort_no: 1100
