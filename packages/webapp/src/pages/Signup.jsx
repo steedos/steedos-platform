@@ -275,6 +275,17 @@ class Signup extends React.Component {
       return
     }
 
+    if (!this.state.name || !this.state.name.trim()) {
+      this.setState({
+        serverError: (
+          <FormattedMessage
+            id='accounts.nameRequired'
+          />
+        ),
+      });
+      return
+    }
+
     // if(!this.state.password.trim()){
     //   throw new Error('accounts.passwordRequired');
     // }
