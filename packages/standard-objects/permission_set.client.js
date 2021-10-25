@@ -18,12 +18,14 @@ Steedos.PermissionSetManager.changeSchema = function(doc, schema){
         schema._schema.lockout_interval = objectSchema.lockout_interval;
         schema._schema.logout_other_clients = objectSchema.logout_other_clients;
         schema._schema.enable_MFA = objectSchema.enable_MFA;
+        schema._schema.login_expiration_in_days = objectSchema.login_expiration_in_days;
     }else{
         hiddenField('password_history');
         hiddenField('max_login_attempts');
         hiddenField('lockout_interval');
         hiddenField('logout_other_clients');
         hiddenField('enable_MFA');
+        hiddenField('login_expiration_in_days');
         schema._schema.license.optional = true;
         schema._schema.license.defaultValue = null;
         schema._schema.license.autoform.defaultValue = null;

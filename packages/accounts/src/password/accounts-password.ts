@@ -363,30 +363,38 @@ export default class AccountsPassword implements AuthenticationService {
     let lockout_interval = 15;
     let logout_other_clients = false;
     let enable_MFA = false;
-    const spaceUsers = await getObject('space_users').find({filters: `(user eq '${userId}') and (space eq '${spaceId}')`})
-    if(spaceUsers.length > 0){
+    let login_expiration_in_days = null;
+    const spaceUsers = await getObject("space_users").find({
+      filters: `(user eq '${userId}') and (space eq '${spaceId}')`,
+    });
+    if (spaceUsers.length > 0) {
       const spaceUser = spaceUsers[0];
-      const profiles = await getObject('permission_set').find({filters: `(name eq '${spaceUser.profile}') and (type eq 'profile') and (space eq '${spaceId}')`})
-      if(profiles.length > 0){
-        const userProfile = profiles[0]
-        if(_.has(userProfile, 'password_history')){
-          password_history = Number(userProfile.password_history)
+      const profiles = await getObject("permission_set").find({
+        filters: `(name eq '${spaceUser.profile}') and (type eq 'profile') and (space eq '${spaceId}')`,
+      });
+      if (profiles.length > 0) {
+        const userProfile = profiles[0];
+        if (_.has(userProfile, "password_history")) {
+          password_history = Number(userProfile.password_history);
         }
-        if(_.has(userProfile, 'max_login_attempts')){
-          max_login_attempts = Number(userProfile.max_login_attempts)
+        if (_.has(userProfile, "max_login_attempts")) {
+          max_login_attempts = Number(userProfile.max_login_attempts);
         }
-        if(_.has(userProfile, 'lockout_interval')){
-          lockout_interval = Number(userProfile.lockout_interval)
+        if (_.has(userProfile, "lockout_interval")) {
+          lockout_interval = Number(userProfile.lockout_interval);
         }
-        if(_.has(userProfile, 'logout_other_clients')){
-          logout_other_clients = userProfile.logout_other_clients
+        if (_.has(userProfile, "logout_other_clients")) {
+          logout_other_clients = userProfile.logout_other_clients;
         }
-        if(_.has(userProfile, 'enable_MFA')){
-          enable_MFA = userProfile.enable_MFA
+        if (_.has(userProfile, "enable_MFA")) {
+          enable_MFA = userProfile.enable_MFA;
+        }
+        if (_.has(userProfile, "login_expiration_in_days")) {
+          login_expiration_in_days = userProfile.login_expiration_in_days;
         }
       }
     }
-    return Object.assign({password_history: password_history, max_login_attempts: max_login_attempts, lockout_interval: lockout_interval, logout_other_clients, enable_MFA})
+    return Object.assign({password_history: password_history, max_login_attempts: max_login_attempts, lockout_interval: lockout_interval, logout_other_clients, enable_MFA, login_expiration_in_days})
   }
 
   /**

@@ -123,25 +123,35 @@ export class AccountsServer {
 
       let logout_other_clients = false;
       let enable_MFA = false;
+      let login_expiration_in_days = null;
       // 获取用户简档
-      const userProfile = await this.services[serviceName].getUserProfile(user.id);
-      if(userProfile){
-        logout_other_clients = userProfile.logout_other_clients || false
-        enable_MFA = userProfile.enable_MFA || false
+      const userProfile = await this.services[serviceName].getUserProfile(
+        user.id
+      );
+      if (userProfile) {
+        logout_other_clients = userProfile.logout_other_clients || false;
+        enable_MFA = userProfile.enable_MFA || false;
+        login_expiration_in_days = userProfile.login_expiration_in_days;
       }
       //启用了多重验证
-      if(enable_MFA){
+      if (enable_MFA) {
         //不是验证码登录
-        if(!(params.user && params.token)){
-          let _next = 'TO_MOBILE_CODE_LOGIN';
+        if (!(params.user && params.token)) {
+          let _next = "TO_MOBILE_CODE_LOGIN";
           // if(!user.mobile_verified){
           //   _next = 'TO_VERIFY_MOBILE';
           // }
-          return {_next} as any
+          return { _next } as any;
         }
       }
 
-      const loginResult = await this.loginWithUser(user, Object.assign({}, infos, {logout_other_clients}));
+      const loginResult = await this.loginWithUser(
+        user,
+        Object.assign({}, infos, {
+          logout_other_clients,
+          login_expiration_in_days,
+        })
+      );
       this.hooks.emit(ServerHooks.LoginSuccess, hooksInfo);
       return loginResult;
     } catch (err) {
@@ -160,7 +170,7 @@ export class AccountsServer {
    * @returns {Promise<LoginResult>} - Session tokens and user object.
    */
   public async loginWithUser(user: User, infos: ConnectionInformations): Promise<LoginResult> {
-    const { ip, userAgent, logout_other_clients } = infos;
+    const { ip, userAgent, logout_other_clients, login_expiration_in_days } = infos;
     if(logout_other_clients){
       //1 将当前user的所有 token 清空
       await this.db.updateUser(user.id, {
@@ -182,6 +192,7 @@ export class AccountsServer {
     const sessionId = await this.db.createSession(user.id, token, {
       ip,
       userAgent,
+      login_expiration_in_days
     });
 
     const { accessToken, refreshToken } = this.createTokens({

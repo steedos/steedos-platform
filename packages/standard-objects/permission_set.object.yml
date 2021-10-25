@@ -128,6 +128,13 @@ fields:
     inlineHelpText: 注销以当前用户身份登录的其他客户端，但不注销调用该函数的客户端。
     sort_no: 1100
     group: 登录策略
+  login_expiration_in_days:
+    type: number
+    scale: 2
+    label: 登录到期时间（以天为单位）
+    sort_no: 1000
+    defaultValue: 90
+    group: 登录策略
 list_views:
   all:
     label: All
