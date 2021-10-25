@@ -43,6 +43,15 @@ module.exports = {
             }
         }
     },
+    beforeUpdate:  async function () {
+        const { id, doc, object_name } = this;
+        const object = objectql.getObject(object_name);
+        const objectConfig = object.toConfig();
+        const parentFieldName = getParentFieldName(objectConfig);
+        if(objectConfig.enable_tree && id === doc[parentFieldName]){
+            throw new Error("parent字段不能指向自身！");
+        }
+    },
     afterUpdate: async function () {
         const { previousDoc, object_name } = this;
         // 因为afterUpdate中没有this.doc._id，所以把previousDoc集成过去，编辑单个字段时也需要从previousDoc中集成其他字段
