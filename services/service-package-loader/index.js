@@ -56,7 +56,10 @@ module.exports = {
                 }
                 const { path : _path } = packageInfo;
                 if(_path){
-                    sendPackageFlowToDb(this.broker, _path)
+                    //此处延迟10秒加载流程文件，防止工作区初始化未完成
+                    setTimeout(() => {
+                        sendPackageFlowToDb(this.broker, _path)
+                    }, 10 * 1000)
                 }
             }
         }
