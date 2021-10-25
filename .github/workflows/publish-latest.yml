@@ -97,28 +97,28 @@ jobs:
       - name: Sync to taobao registry
         run: |
           npm install cnpm -g
-          cnpm sync @steedos/app-admin
-          cnpm sync @steedos/app-contracts
-          cnpm sync @steedos/app-crm
-          cnpm sync @steedos/app-oa
-          cnpm sync @steedos/app-okr-management
-          cnpm sync @steedos/app-project-management
           cnpm sync @steedos/accounts
           cnpm sync @steedos/auth
+          cnpm sync steedos-cli
           cnpm sync @steedos/client
           cnpm sync @steedos/core
           cnpm sync create-steedos-app
+          cnpm sync create-steedos-node-red-app
+          cnpm sync @steedos/data-import
           cnpm sync @steedos/design-system-react
           cnpm sync @steedos/filters
           cnpm sync @steedos/formula
           cnpm sync @steedos/i18n
+          cnpm sync @steedos/metadata-api
+          cnpm sync @steedos/metadata-core
           cnpm sync @steedos/meteor-bundle-dependencies
           cnpm sync @steedos/meteor-bundle-runner
           cnpm sync @steedos/migrate
+          cnpm sync @steedos/mongodb-bi-connector
+          cnpm sync @steedos/node-red-app-template
           cnpm sync @steedos/objectql
           cnpm sync @steedos/plugin-enterprise
           cnpm sync @steedos/process
-          cnpm sync @steedos/steedos-project-template
           cnpm sync @steedos/react
           cnpm sync @steedos/schemas
           cnpm sync @steedos/standard-objects
@@ -129,11 +129,17 @@ jobs:
           cnpm sync @steedos/webapp
           cnpm sync @steedos/workflow
           cnpm sync steedos-server
+          cnpm sync @steedos/service-accounts
           cnpm sync @steedos/service-api
+          cnpm sync @steedos/service-charts
+          cnpm sync @steedos/service-cloud-init
+          cnpm sync @steedos/service-fields-indexs
           cnpm sync @steedos/service-metadata-apps
+          cnpm sync @steedos/service-metadata-layouts
           cnpm sync @steedos/service-metadata-objects
           cnpm sync @steedos/service-metadata-permissionsets
           cnpm sync @steedos/service-metadata-server
+          cnpm sync @steedos/service-metadata-tabs
           cnpm sync @steedos/service-metadata-translations
           cnpm sync @steedos/service-metadata-triggers
           cnpm sync @steedos/service-metadata
@@ -141,13 +147,14 @@ jobs:
           cnpm sync @steedos/service-mongodb-server
           cnpm sync @steedos/service-node-red
           cnpm sync @steedos/service-package-loader
-          cnpm sync @steedos/service-steedos-server
-          cnpm sync @steedos/service-charts
           cnpm sync @steedos/service-package-registry
           cnpm sync @steedos/service-packages
           cnpm sync @steedos/service-pages
-          cnpm sync @steedos/service-metadata-tabs
-          cnpm sync @steedos/service-fields-indexs
-          cnpm sync @steedos/service-cloud-init
-          cnpm sync @steedos/metadata-api
-          cnpm sync @steedos/service-accounts
+          cnpm sync @steedos/service-steedos-server
+          cnpm sync @steedos/app-admin
+          cnpm sync @steedos/app-contracts
+          cnpm sync @steedos/app-crm
+          cnpm sync @steedos/app-oa
+          cnpm sync @steedos/app-okr-management
+          cnpm sync @steedos/app-project-management
+          cnpm sync @steedos/steedos-project-template
