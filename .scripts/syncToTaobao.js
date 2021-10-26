@@ -64,7 +64,8 @@ const packages = [
 ];
 
 packages.forEach(function (packageName) {
-    request.put(`https://npmmirror.com/sync/${packageName}?sync_upstream=true`, (error, response, body) => {
-        console.log(`put https://npmmirror.com/sync/${packageName}?sync_upstream=true`, response.statusCode, body)
+    const url = `https://npmmirror.com/sync/${packageName}?sync_upstream=true`;
+    request.put(url, (error, response, body) => {
+        console.log(url, response.statusCode, body)
     })
 })
