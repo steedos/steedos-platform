@@ -18,7 +18,8 @@ module.exports = {
                         is_wide: true,
                         label: "版本号",
                         inlineHelpText: "如果未填写, 则安装最新正式版",
-                        defaultValue: "latest",
+                        help: "latest",
+                        value: undefined,
                         visible_on: "{{formData.url ? false : true}}"
                     },
                     url: {
