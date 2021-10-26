@@ -94,7 +94,10 @@ jobs:
           release_name: v${{ env.CURRENT_VERSION }}
           draft: false
           prerelease: false
-      - name: Sync to taobao registry
+      - name: Sync to taobao 
+        run: |
+          yarn syncToTaoBao
+      - name: Sync to cnpm
         run: |
           npm install cnpm -g
           cnpm sync @steedos/accounts
