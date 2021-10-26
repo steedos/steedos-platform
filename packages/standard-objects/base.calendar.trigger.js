@@ -17,7 +17,7 @@ const validateStartEndDate = function (start, end) {
     if(start && end){
         const startTime = start.getTime ? start.getTime() : (new Date(start)).getTime();
         const endTime = end.getTime ? end.getTime() : (new Date(end)).getTime();
-        if(startTime >= endTime){
+        if(endTime - startTime < 1000){
             throw new Error("base_error_start_end_date");
         }
     }
