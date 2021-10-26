@@ -37,8 +37,9 @@ export async function loadPackage(packagePath){
     let broker = schema.broker;
     if(broker){
         const filePatten = [
-            path.join(packagePath, "**", "package.service.js")
-        ]
+          path.join(packagePath, "**", "package.service.js"),
+          "!" + path.join(packagePath, "**", "node_modules"),
+        ];
         const matchedPaths:[string] = globby.sync(filePatten);
         for await (const serviceFilePath of matchedPaths) {
             const service = broker.loadService(serviceFilePath);

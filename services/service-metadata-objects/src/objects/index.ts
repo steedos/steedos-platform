@@ -125,8 +125,9 @@ export async function refreshObject(ctx, objectApiName) {
         let dbMainConfig = _.find(mainConfigs, (conf)=>{
             return _.has(conf, '_id') && !_.has(conf, '__filename')
         })
-
-        delete dbMainConfig.isMain
+        if (dbMainConfig) {
+          delete dbMainConfig.isMain;
+        }
 
         mainConfig = _.find(mainConfigs, (conf)=>{
             return conf.isMain;

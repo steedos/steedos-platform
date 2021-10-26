@@ -12,46 +12,47 @@ import { registerPackageTabs } from '../dynamic-load/tab';
 export const LOADED_OBJECT_RECORDS = {}
 
 
-export function addConfigDataFiles(filePath: string){
-    if(!path.isAbsolute(filePath)){
-        throw new Error(`${filePath} must be an absolute path`);
-    }
+export function addConfigDataFiles(filePath: string) {
+  if (!path.isAbsolute(filePath)) {
+    throw new Error(`${filePath} must be an absolute path`);
+  }
 
-    const filePatten = [
-        path.join(filePath, "*.data.yml"),
-        path.join(filePath, "*.data.js"),
-        path.join(filePath, "*.data.json")
-    ]
+  const filePatten = [
+    path.join(filePath, "*.data.yml"),
+    path.join(filePath, "*.data.js"),
+    path.join(filePath, "*.data.json"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
 
-    let jsons = loadJsonFiles(filePatten);
-    _.each(jsons, (json: any) => {
-        let objectName = path.basename(json.file).split(".data.")[0]
-        _.each(json.data, (record) => {
-            addConfig(objectName, record);
-        })
-    })
+  let jsons = loadJsonFiles(filePatten);
+  _.each(jsons, (json: any) => {
+    let objectName = path.basename(json.file).split(".data.")[0];
+    _.each(json.data, (record) => {
+      addConfig(objectName, record);
+    });
+  });
 }
 
-export function getConfigsFormFiles(objectName: string, filePath: string){
-    if(!path.isAbsolute(filePath)){
-        throw new Error(`${filePath} must be an absolute path`);
-    }
+export function getConfigsFormFiles(objectName: string, filePath: string) {
+  if (!path.isAbsolute(filePath)) {
+    throw new Error(`${filePath} must be an absolute path`);
+  }
 
-    const filePatten = [
-        path.join(filePath, `*.${objectName}.yml`),
-        path.join(filePath, `*.${objectName}.js`),
-        path.join(filePath, `*.${objectName}.json`)
-    ]
+  const filePatten = [
+    path.join(filePath, `*.${objectName}.yml`),
+    path.join(filePath, `*.${objectName}.js`),
+    path.join(filePath, `*.${objectName}.json`),
+    "!" + path.join(filePath, "node_modules"),
+  ];
 
-    let jsons = loadJsonFiles(filePatten);
-    const configs = [];
-    _.each(jsons, (json: any) => {
-        let recordId = path.basename(json.file).split(`.${objectName}.`)[0]
-        if (typeof json.data._id === "undefined")
-            json.data._id = recordId
-        configs.push(json.data)
-    })
-    return configs;
+  let jsons = loadJsonFiles(filePatten);
+  const configs = [];
+  _.each(jsons, (json: any) => {
+    let recordId = path.basename(json.file).split(`.${objectName}.`)[0];
+    if (typeof json.data._id === "undefined") json.data._id = recordId;
+    configs.push(json.data);
+  });
+  return configs;
 }
 
 export function addConfigFiles(objectName: string, filePath: string){
@@ -62,7 +63,8 @@ export function addConfigFiles(objectName: string, filePath: string){
     const filePatten = [
         path.join(filePath, `*.${objectName}.yml`),
         path.join(filePath, `*.${objectName}.js`),
-        path.join(filePath, `*.${objectName}.json`)
+        path.join(filePath, `*.${objectName}.json`),
+        "!" + path.join(filePath, "node_modules"),
     ]
 
     let jsons = loadJsonFiles(filePatten);

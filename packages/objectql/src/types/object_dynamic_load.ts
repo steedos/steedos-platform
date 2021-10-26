@@ -153,60 +153,60 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
 }
 
 export const addServerScriptFiles = (filePath: string) => {
-    const filePatten = [
-        path.join(filePath, "*.object.js"),
-    ]
-    const matchedPaths:[string] = globby.sync(filePatten);
-    _.each(matchedPaths, (matchedPath:string)=>{
-        _serverScripts.push(matchedPath)
-    })
-}
+  const filePatten = [
+    path.join(filePath, "*.object.js"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    _serverScripts.push(matchedPath);
+  });
+};
 
 export const getServerScripts = () => {
-    return _serverScripts;
-}
+  return _serverScripts;
+};
 
-export const addObjectI18nFiles = (filePath: string)=>{
-    if(!path.isAbsolute(filePath)){
-        throw new Error(`${filePath} must be an absolute path`);
-    }
+export const addObjectI18nFiles = (filePath: string) => {
+  if (!path.isAbsolute(filePath)) {
+    throw new Error(`${filePath} must be an absolute path`);
+  }
 
-    let i18nData = util.loadI18n(filePath)
-    i18nData.forEach(element => {
-        _objectsI18n.push(element)
-    });
-}
+  let i18nData = util.loadI18n(filePath);
+  i18nData.forEach((element) => {
+    _objectsI18n.push(element);
+  });
+};
 
-export const getObjectsI18n = ()=>{
-    return _objectsI18n;
-}
+export const getObjectsI18n = () => {
+  return _objectsI18n;
+};
 
-export const addRouterFiles = (filePath: string)=>{
-    if(!path.isAbsolute(filePath)){
-        throw new Error(`${filePath} must be an absolute path`);
-    }
-    let routersData = util.loadRouters(filePath);
-    routersData.forEach(element => {
-        _routers.push(element)
-    });
-}
+export const addRouterFiles = (filePath: string) => {
+  if (!path.isAbsolute(filePath)) {
+    throw new Error(`${filePath} must be an absolute path`);
+  }
+  let routersData = util.loadRouters(filePath);
+  routersData.forEach((element) => {
+    _routers.push(element);
+  });
+};
 
-export const getRouters = ()=>{
-    return _routers;
-}
+export const getRouters = () => {
+  return _routers;
+};
 
-
-
-export const  addClientScriptFiles = (filePath: string) => {
-    const filePatten = [
-        path.join(filePath, "*.client.js")
-    ]
-    let matchedPaths: Array<string> = globby.sync(filePatten);
-    matchedPaths = _.sortBy(matchedPaths)
-    _.each(matchedPaths, (matchedPath) => {
-        _clientScripts.push(matchedPath)
-    })
-}
+export const addClientScriptFiles = (filePath: string) => {
+  const filePatten = [
+    path.join(filePath, "*.client.js"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  let matchedPaths: Array<string> = globby.sync(filePatten);
+  matchedPaths = _.sortBy(matchedPaths);
+  _.each(matchedPaths, (matchedPath) => {
+    _clientScripts.push(matchedPath);
+  });
+};
 
 export const getClientScripts = () => {
     return _.uniq(_clientScripts);
