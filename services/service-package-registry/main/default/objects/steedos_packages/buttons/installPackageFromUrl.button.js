@@ -4,20 +4,30 @@ module.exports = {
             name: "install_package_from_url",
             title: '手动安装软件包',
             objectSchema: {
-                fields:{
-                  module: {
-                    type: 'text',
-                    is_wide: true,
-                    required: true,
-                    label: "软件包名称",
-                    inlineHelpText: 'package.json 中的 name值',
-                  },
-                  url: {
-                    required: true,
-                    type: 'text',
-                    is_wide: true,
-                    label: "软件包URL"
-                  }
+                fields: {
+                    module: {
+                        type: 'text',
+                        is_wide: true,
+                        required: true,
+                        label: "软件包名称",
+                        inlineHelpText: 'package.json 中的 name值',
+                    },
+                    version: {
+                        // required: "{{formData.url ? false : true}}",
+                        type: 'text',
+                        is_wide: true,
+                        label: "版本号",
+                        inlineHelpText: "如果未填写, 则安装最新正式版",
+                        defaultValue: "latest",
+                        visible_on: "{{formData.url ? false : true}}"
+                    },
+                    url: {
+                        // required: "{{formData.version ? false : true}}",
+                        type: 'text',
+                        is_wide: true,
+                        label: "软件包URL",
+                        visible_on: "{{formData.version ? false : true}}"
+                    }
                 }
             },
             onFinish: async (values = {}) => {
@@ -25,6 +35,7 @@ module.exports = {
                     Steedos.authRequest(Steedos.absoluteUrl('service/api/~packages-project-server/cloud/saas/packages/url'), {
                         type: 'post', async: true, data: JSON.stringify({
                             module: values.module,
+                            version: values.version,
                             url: values.url
                         }),
                         success: function () {
@@ -45,7 +56,6 @@ module.exports = {
                         }
                     })
                 })
-                
             }
         }, null, { iconPath: '/assets/icons' })
     },

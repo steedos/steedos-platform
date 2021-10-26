@@ -263,9 +263,9 @@ module.exports = {
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
 					}
-					const { module, url } = ctx.params
+					const { module, version, url } = ctx.params
 					const enable = true;
-					return await this.installPackageFromUrl(module, url, enable, ctx.broker)
+					return await this.installPackageFromUrl(module, version, url, enable, ctx.broker)
 				} catch (error) {
 					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
 				}
@@ -389,14 +389,23 @@ module.exports = {
             }
 		},
 		installPackageFromUrl: {
-			async handler(module, url, enable, broker) {
+			async handler(module, version, url, enable, broker) {
 				if(!module || !_.isString(module) || !module.trim()){
 					throw new Error(`无效的软件包名称`);
 				}
-				if(!registry.isPackageUrl(url)){
+				if (url && !registry.isPackageUrl(url)) {
 					throw new Error(`无效的软件包地址`);
 				}
-                const packagePath = await registry.installModule(module, null, url);
+				if (url) {
+					version = null;
+				} else {
+					url = null;
+					if (!version) {
+						version = 'latest'
+					}
+				}
+
+				const packagePath = await registry.installModule(module, version, url);
 				const packageInfo = loader.getPackageInfo(null, packagePath);
 				const packageName = packageInfo.name;
 				if(enable){
