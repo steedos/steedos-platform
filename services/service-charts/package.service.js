@@ -6,6 +6,7 @@ const objectql = require("@steedos/objectql");
 const _ = require('lodash');
 const express = require('express');
 const path = require('path');
+const mustache = require('mustache');
 const getQueries = async(apiName)=>{
 	const queries = await objectql.getObject('queries').find({ filters: [['name', '=', apiName]] });
 	if(queries.length > 0){
@@ -48,7 +49,7 @@ module.exports = {
             },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
-                const { recordId } = ctx.params;
+				const { recordId, parameters } = ctx.params;
 				let results = null;
                 let record = await objectql.getObject("queries").findOne(recordId);
 				if(!record){
@@ -72,6 +73,9 @@ module.exports = {
 						if(!query.collection){
 							throw new Error(`collection is required`)
 						}
+
+						query = JSON.parse(this.mustacheRender(JSON.stringify(query), parameters))
+
 						if(query.aggregate){
 							const driver = datasource.adapter;
 							await driver.connect();
@@ -155,7 +159,7 @@ module.exports = {
                 path: "/queries/:recordId"
             },
             async handler(ctx) {
-				const {recordId, query, label, description, data_source_id} = ctx.params;
+				const { recordId, query, label, description, data_source_id, options, schedule } = ctx.params;
 				const userSession = ctx.meta.user;
 				let doc = {};
 
@@ -173,6 +177,14 @@ module.exports = {
 
 				if(_.has(ctx.params, 'data_source_id')){
 					doc.datasource = data_source_id
+				}
+
+				if (_.has(ctx.params, 'options')) {
+					doc.options = options
+				}
+
+				if (_.has(ctx.params, 'schedule')) {
+					doc.schedule = schedule
 				}
 
 				const records = await objectql.getObject('queries').find({filters: [['name','=', recordId]]})
@@ -299,7 +311,7 @@ module.exports = {
 						},
 						created_at: queryRecord.created,
 						// latest_query_data_id: null,
-						schedule: null,
+						schedule: queryRecord.schedule,
 						description: queryRecord.description,
 						tags: [],
 						updated_at: queryRecord.modified,
@@ -321,7 +333,7 @@ module.exports = {
 							// active_at: "2021-10-15T07:31:08Z",
 							// email: "chenzhipei@hotoa.com"
 						},
-						options: {
+						options: queryRecord.options || {
 							"parameters": []
 						},
 						is_safe: true,
@@ -365,7 +377,12 @@ module.exports = {
 				})
 				return visualizations;
 			}
-		}
+		},
+		mustacheRender: {
+			handler(template, context = {}) {
+				return mustache.render(template, context);
+			}
+		},
 	},
 
 	/**
