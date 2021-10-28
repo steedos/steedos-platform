@@ -37,6 +37,7 @@
   },
   "gitHead": "239c96e246e777a9cc9d6cb8230fc45c2380997b",
   "dependencies": {
+    "duration": "^0.2.2",
     "mustache": "^4.2.0"
   }
 }
