@@ -577,6 +577,7 @@ module.exports = {
 							console.error(error);
 						}
 					});
+					this.broker.logger.info(`add query job`, queryId, rule, end);
 					this.querySCheduleMaps.push({ queryId, job })
 				} else {
 					if (_queryJob) {
