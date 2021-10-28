@@ -139,7 +139,7 @@ module.exports = {
 					})
 				}
 				let queryInfo = await this.getQueryInfo(recordId, parameters)
-				this.changeQuerySchedule(queryInfo, true)
+				this.startOrUpdateQuerySchedule(queryInfo, true)
 
 				return await this.formatQuery(queryRecord);
             }
@@ -386,7 +386,7 @@ module.exports = {
 					let result = await this.getLatestQueryResult(queryInfo.data_source_id, queryInfo.queryString, max_age);
 					if (!result) {
 						result = await this.runQueryExecutor(queryInfo);
-						this.changeQuerySchedule(queryInfo)
+						this.startOrUpdateQuerySchedule(queryInfo)
 					}
 					return result;
 				} else {
@@ -424,6 +424,9 @@ module.exports = {
 				const key = this.getQueryResultCacheKey(dataSourceId, queryHash);
 				const result = await this.broker.cacher.get(key);
 				if (maxAge === -1) {
+					if (result) {
+						result.retrieved_at = new Date(result.retrieved_at);
+					}
 					return result
 				} else {
 					if (result && result.retrieved_at + maxAge * 1000 >= new Date().getTime()) {
@@ -529,7 +532,7 @@ module.exports = {
 				this.querySCheduleMaps = _.compact(this.querySCheduleMaps);
 			}
 		},
-		changeQuerySchedule: {
+		startOrUpdateQuerySchedule: {
 			handler(queryInfo, refresh) {
 				const { queryId, schedule } = queryInfo
 				let _queryJob = _.find(this.querySCheduleMaps, (item) => {
