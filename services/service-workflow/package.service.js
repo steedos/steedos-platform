@@ -51,6 +51,30 @@ module.exports = {
 					return false;
 				}
 			}
+		},
+		send_badge_to_user: {
+			params: {
+				send_from: { type: 'string', optional: false },
+				user_id: { type: 'string', optional: false }
+			},
+			async handler(ctx) {
+				try {
+					return new Promise(function (resolve, reject) {
+						Fiber(function () {
+							try {
+								const { send_from, user_id } = ctx.params;
+								pushManager.send_message_to_specifyUser(send_from, user_id);
+								resolve(true);
+							} catch (error) {
+								console.error(error);
+								reject(error);
+							}
+						}).run();
+					})
+				} catch (error) {
+					return false;
+				}
+			}
 		}
 	},
 
