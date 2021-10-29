@@ -1,7 +1,7 @@
 name: permission_set
 label: Permission Set
 icon: groups
-hidden: true
+hidden: false
 enable_inline_edit: false
 fields:
   name:
