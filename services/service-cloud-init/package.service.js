@@ -277,7 +277,7 @@ module.exports = {
 		},
 
 		saveLicenses: {
-			parms: {
+			params: {
 				spaceId: { type: 'string', optional: false },
 				apiKey: { type: 'string', optional: false },
 				consoleUrl: { type: 'string', optional: false }

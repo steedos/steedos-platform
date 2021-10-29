@@ -55,7 +55,7 @@ email:
 cron:
   instancerecordqueue_interval: 10000
   mailqueue_interval: 10000
-  # push_interval: 1000
+  push_interval: 1000
   webhookqueue_interval: 1000
 dingtalk:
   api_Key: ${APIKEY}

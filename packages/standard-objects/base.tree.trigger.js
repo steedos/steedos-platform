@@ -63,8 +63,10 @@ module.exports = {
             const childrenFieldName = getChildrenFieldName(objectConfig);
             const parentId = doc[parentFieldName];
             const preParentId = previousDoc[parentFieldName];
-            if(parentId && parentId !== preParentId){
-                setChildren(parentId, object, parentFieldName, childrenFieldName);
+            if(parentId !== preParentId){
+                if(parentId){
+                    setChildren(parentId, object, parentFieldName, childrenFieldName);
+                }
                 if(preParentId){
                     setChildren(preParentId, object, parentFieldName, childrenFieldName);
                 }
