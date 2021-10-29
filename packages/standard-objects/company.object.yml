@@ -2,7 +2,7 @@ name: company
 label: Division
 icon: account
 enable_api: true
-hidden: true
+hidden: false
 fields:
   name:
     label: Name
