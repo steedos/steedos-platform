@@ -38,6 +38,9 @@
   "gitHead": "239c96e246e777a9cc9d6cb8230fc45c2380997b",
   "dependencies": {
     "duration": "^0.2.2",
-    "mustache": "^4.2.0"
+    "mustache": "^4.2.0",
+    "json2xls": "^0.1.2",
+    "json2csv": "5.0.6",
+    "string-to-stream": "3.0.1"
   }
 }

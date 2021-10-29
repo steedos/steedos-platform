@@ -11,6 +11,9 @@ const Schedule = require('node-schedule');
 const moment = require('moment');
 const validator = require('validator');
 const duration = require('duration');
+const json2xls = require('json2xls');
+const json2csv = require('json2csv');
+const str = require('string-to-stream')
 
 const getQueries = async(apiName)=>{
 	const queries = await objectql.getObject('queries').find({ filters: [['name', '=', apiName]] });
@@ -50,6 +53,45 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
+		exportResults: {
+			rest: {
+				method: "GET",
+				path: "/queries/:queryId/results/:queryHash.:type"
+			},
+			async handler(ctx) {
+				let { queryId, queryHash, type } = ctx.params;
+				const allowTypes = ['csv', 'xlsx'];
+				if (!_.includes(allowTypes, type)) {
+					throw new Error(`Invalid type`);
+				}
+				const queryRecord = await this.getQueryRecord(queryId);
+				let queryResult = await this.getLatestQueryResult(queryRecord.datasource, queryHash, -1);
+				if (!queryResult) {
+					queryResult = {
+						columns: [],
+						rows: []
+					}
+				}
+				if (type == 'csv') {
+					ctx.meta.$responseType = "text/csv; charset=UTF-8";
+					ctx.meta.$responseHeaders = {
+						"Content-Disposition": `attachment; filename="${encodeURI(queryRecord.name + '.csv')}"`
+					};
+					const fields = _.map(queryResult.data.columns, 'name');
+					const opts = { fields };
+					const parser = new json2csv.Parser(opts);
+					return parser.parse(queryResult.data.rows);
+				} else if ('xlsx') {
+					ctx.meta.$responseType = "application/octet-stream";
+					const xls = json2xls(queryResult.data.rows || { "": "" });
+					ctx.meta.$responseHeaders = {
+						"Content-Disposition": `attachment; filename="${encodeURI(queryRecord.name + '.xlsx')}"`,
+						'Content-Length': xls.length
+					};
+					return str(xls, 'binary')
+				}
+			}
+		},
 		queries: {
             rest: {
                 method: "POST",
@@ -425,7 +467,8 @@ module.exports = {
 			async handler(queryId, parameters, max_age) {
 				const queryInfo = await this.getQueryInfo(queryId, parameters);
 				if (queryInfo) {
-					let result = await this.getLatestQueryResult(queryInfo.data_source_id, queryInfo.queryString, max_age);
+					const queryHash = this.getQueryHash(queryInfo.queryString);
+					let result = await this.getLatestQueryResult(queryInfo.data_source_id, queryHash, max_age);
 					if (!result) {
 						result = await this.runQueryExecutor(queryInfo);
 						this.startOrUpdateQuerySchedule(queryInfo)
@@ -516,8 +559,7 @@ module.exports = {
 			}
 		},
 		getLatestQueryResult: {
-			async handler(dataSourceId, queryString, maxAge = 0) {
-				const queryHash = this.getQueryHash(queryString);
+			async handler(dataSourceId, queryHash, maxAge = 0) {
 				const key = this.getQueryResultCacheKey(dataSourceId, queryHash);
 				const result = await this.broker.cacher.get(key);
 				if (maxAge === -1) {
