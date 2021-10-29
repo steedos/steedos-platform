@@ -133,13 +133,17 @@ module.exports = {
 				let queryRecord = await this.getQueryRecord(recordId);
 				let parameters = {};
 				if (queryRecord && queryRecord.options && queryRecord.options.parameters) {
-					//TODO 此处需要支持日期范围
 					_.each(queryRecord.options.parameters, (parameter) => {
 						parameters[parameter.name] = parameter.value
 					})
 				}
-				let queryInfo = await this.getQueryInfo(recordId, parameters)
-				this.startOrUpdateQuerySchedule(queryInfo, true)
+
+				try {
+					let queryInfo = await this.getQueryInfo(recordId, parameters)
+					this.startOrUpdateQuerySchedule(queryInfo, true)
+				} catch (error) {
+
+				}
 
 				return await this.formatQuery(queryRecord);
             }
@@ -326,6 +330,32 @@ module.exports = {
 				return visualizations;
 			}
 		},
+		joinParameterListValues: {
+			handler(parameters, schema) {
+				const updatedParameters = {};
+				_.each(parameters, (val, key) => {
+					if (_.isArray(val)) {
+						const definition = _.find(schema, (item) => {
+							return item.name == key
+						})
+						const multi_values_options = definition.multiValuesOptions || {};
+						const separator = String(multi_values_options.separator || ",");
+						const prefix = String(multi_values_options.prefix || "");
+						const suffix = String(multi_values_options.suffix || "");
+						let newValue = '';
+						_.each(val, (item, index) => {
+							newValue = newValue + `${prefix}${item}${suffix}` + (index < val.length - 1 ? separator : '')
+						})
+
+						updatedParameters[key] = newValue
+					} else {
+						updatedParameters[key] = val
+					}
+				})
+
+				return updatedParameters;
+			}
+		},
 		getQueryInfo: {
 			async handler(queryId, parameters) {
 				let record = await objectql.getObject("queries").findOne(queryId);
@@ -350,9 +380,21 @@ module.exports = {
 						if (!query.collection) {
 							throw new Error(`collection is required`)
 						}
-
-						const queryString = this.mustacheRender(JSON.stringify(query), parameters);
-						query = JSON.parse(queryString);
+						const parameterized_query = this.joinParameterListValues(parameters, record.options.parameters || [])
+						const invalidParameterNames = _.compact(_.map(record.options.parameters, (definition) => {
+							if (!this.validParameter(definition, parameterized_query[definition.name])) {
+								return definition.name
+							}
+						}))
+						if (invalidParameterNames && invalidParameterNames.length > 0) {
+							throw new Error(`The following parameter values are incompatible with their definitions: ${invalidParameterNames.join(',')}`)
+						}
+						const queryString = this.mustacheRender(JSON.stringify(query), parameterized_query);
+						try {
+							query = JSON.parse(queryString);
+						} catch (Exception) {
+							throw new Error(`Invalid query.`)
+						}
 
 						return {
 							query,
@@ -394,9 +436,64 @@ module.exports = {
 				}
 			}
 		},
+		validParameter: {
+			handler(definition, value) {
+				let enum_options = definition.enumOptions
+				// let query_id = definition.queryId
+				let type = definition.type
+				let allow_multiple_values = _.isObject(definition.multiValuesOptions)
+				if (_.isString(enum_options)) {
+					enum_options = enum_options.split("\n")
+				}
+
+				const _isDate = (value) => {
+					return !_.isNaN(Date.parse(value))
+				}
+
+				const _isDateRange = (value) => {
+					try {
+						return _isDate(value["start"]) && _isDate(value["end"])
+					} catch (error) {
+						return false;
+					}
+				}
+
+				const validators = {
+					text: (value) => {
+						return _.isString(value)
+					},
+					number: (value) => {
+						return _.isNumber(value)
+					},
+					enum: (value) => {
+						if (_.isArray(value)) {
+							return allow_multiple_values && _.difference(value, enum_options).length == 0
+						} else {
+							return _.includes(enum_options, String(value))
+						}
+					},
+					query: (value) => {
+						//暂时不支持query
+						return false;
+					},
+					date: _isDate,
+					"datetime-local": _isDate,
+					"datetime-with-seconds": _isDate,
+					"date-range": _isDateRange,
+					"datetime-range": _isDateRange,
+					"datetime-range-with-seconds": _isDateRange
+				}
+				return validators[type](value);
+			}
+		},
 		mustacheRender: {
 			handler(template, context = {}) {
-				return mustache.render(template, context);
+				return mustache.render(template, context, undefined, {
+					// tags: ["\"{{", "}}\""],
+					escape: function (value) {
+						return value;
+					}
+				});
 			}
 		},
 		getQueryHash: {
@@ -449,13 +546,13 @@ module.exports = {
 				try {
 					results = await this.runQuery(datasource, query);
 				} catch (error) {
-					console.error(error, query)
+					console.error(error, JSON.stringify(query))
 				}
 				retrievedAt = new Date();
 				runtime = (retrievedAt.getTime() - startedAt) / 1000;
 				let data = {
 					columns: [],
-					rows: results
+					rows: results || []
 				}
 				let columns = [];
 				_.each(results, function (result) {
