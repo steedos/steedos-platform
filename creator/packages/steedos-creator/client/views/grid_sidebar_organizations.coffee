@@ -107,6 +107,13 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 		userId = Meteor.userId()
 		loginToken = Accounts._storedLoginToken()
 		needToRefreshTree = self.needToRefreshTree.get()
+
+		is_admin = Steedos.isSpaceAdmin()
+		orgIds = Steedos.getUserCompanyOrganizationIds()
+		if !is_admin 
+			if  !orgIds || !orgIds.length
+				return null
+
 		if spaceId and userId
 			url = "/api/odata/v4/#{spaceId}/#{object_name}"
 			dxOptions = 
@@ -214,7 +221,10 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 			dxOptions.parentIdExpr = "parent"
 			dxOptions.displayExpr = "name"
 			dxOptions.hasItemsExpr = "hasItems"
-			dxOptions.rootValue = null
+			if is_admin
+				dxOptions.rootValue = null
+			else
+				dxOptions.rootValue = orgIds[0]
 			dxOptions.dataStructure = "plain"
 			dxOptions.virtualModeEnabled = true 
 
