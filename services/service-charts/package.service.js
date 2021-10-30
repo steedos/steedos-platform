@@ -422,6 +422,12 @@ module.exports = {
 						if (!query.collection) {
 							throw new Error(`collection is required`)
 						}
+						if (!record.options) {
+							record.options = { parameters: [] }
+						}
+						if (!record.options.parameters) {
+							record.options.parameters = []
+						}
 						const parameterized_query = this.joinParameterListValues(parameters, record.options.parameters || [])
 						const invalidParameterNames = _.compact(_.map(record.options.parameters, (definition) => {
 							if (!this.validParameter(definition, parameterized_query[definition.name])) {
