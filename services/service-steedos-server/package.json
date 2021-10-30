@@ -20,6 +20,7 @@
     "@steedos/service-node-red": "2.1.35",
     "@steedos/service-pages": "2.1.35",
     "@steedos/steedos-plugin-schema-builder": "2.1.35",
+    "@steedos/service-workflow": "2.1.35",
     "@steedos/word-template": "^2.0.3",
     "@steedos/workflow": "2.1.35",
     "dotenv-flow": "^3.2.0",
