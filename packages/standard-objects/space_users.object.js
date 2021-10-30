@@ -894,13 +894,41 @@ let actions = {
         label: "Change Password",
         on: "record",
         visible: function (object_name, record_id, record_permissions) {
+            var organization = Session.get("organization");
+            var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+            if(!allowEdit){
+                // permissions配置没有权限则不给权限
+                return false
+            }
             if(Session.get("app_id") === 'admin'){
                 var space_userId = db.space_users.findOne({user: Steedos.userId(), space: Steedos.spaceId()})._id
                 if(space_userId === record_id){
                     return true
                 }
             }
-            return Creator.isSpaceAdmin();
+
+            // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+            if(Steedos.isSpaceAdmin()){
+                return true;
+            }
+            else{
+                var userId = Steedos.userId();
+                if(organization){
+                    //当前选中组织所属分部的管理员才有权限
+                    if(organization.company_id && organization.company_id.admins){
+                        return organization.company_id.admins.indexOf(userId) > -1;
+                    }
+                }
+                else{
+                    // 用户详细界面拿不到当前选中组织时，只能从记录本身所属分部的管理员中判断，只要当前用户是任何一个所属分部的管理员则有权限
+                    var record = Creator.getObjectRecord(object_name, record_id);
+                    if(record && record.company_ids && record.company_ids.length){
+                        return _.any(record.company_ids,function(item){
+                            return item.admins && item.admins.indexOf(userId) > -1
+                        });
+                    }
+                }
+            }
         },
         todo: function (object_name, record_id, fields) {
 
