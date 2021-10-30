@@ -594,7 +594,8 @@ actions:
     'on': list
     todo: !<tag:yaml.org,2002:js/function> |-
       function () {
-              var ids = Creator.TabularSelectedIds["flows"]
+              let selectedRows = SteedosUI.getTableSelectedRows(`listview_flows_${Session.get("list_view_id")}`);
+              let ids = _.pluck(selectedRows, '_id');
               if(ids && ids.length > 0){
                 window.open(Steedos.absoluteUrl("/api/workflow/export/form?flows=" + ids.join(',')), '_blank');
               }else{
