@@ -54,6 +54,7 @@ const packages = [
     "@steedos/service-packages",
     "@steedos/service-pages",
     "@steedos/service-steedos-server",
+    "@steedos/service-workflow",
     "@steedos/app-admin",
     "@steedos/app-contracts",
     "@steedos/app-crm",
