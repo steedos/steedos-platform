@@ -5,40 +5,40 @@ var runQuoted = function (objectName, recordId) {
     objectql.runQuotedByObjectFieldSummaries(objectName, recordId);
 }
 
-const getObjectFields = function(objectApiName){
-    return objectql.wrapAsync(async function(){
+const getObjectFields = function (objectApiName) {
+    return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).getFields()
-    },{objectApiName:objectApiName})
+    }, { objectApiName: objectApiName })
 }
 
-const getObjectNameFieldKey = function(objectApiName){
-    return objectql.wrapAsync(async function(){
+const getObjectNameFieldKey = function (objectApiName) {
+    return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).getNameFieldKey()
-    },{objectApiName:objectApiName})
+    }, { objectApiName: objectApiName })
 }
 
-const getObjectConfig = function(objectApiName){
-    return objectql.wrapAsync(async function(){
+const getObjectConfig = function (objectApiName) {
+    return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).toConfig()
-    },{objectApiName:objectApiName})
+    }, { objectApiName: objectApiName })
 }
 
-const objectInsert = function(objectApiName, data){
-    return objectql.wrapAsync(async function(){
+const objectInsert = function (objectApiName, data) {
+    return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).insert(this.data)
-    },{objectApiName:objectApiName, data:data})
+    }, { objectApiName: objectApiName, data: data })
 }
 
-const objectUpdate = function(objectApiName, id, data){
-    return objectql.wrapAsync(async function(){
+const objectUpdate = function (objectApiName, id, data) {
+    return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).update(this.id, this.data)
-    },{objectApiName:objectApiName, id:id, data:data})
+    }, { objectApiName: objectApiName, id: id, data: data })
 }
 
-const getRelateds = function(objectApiName){
-    return objectql.wrapAsync(async function(){
+const getRelateds = function (objectApiName) {
+    return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).getRelateds()
-    },{objectApiName:objectApiName})
+    }, { objectApiName: objectApiName })
 }
 
 var _eval = require('eval');
@@ -52,13 +52,13 @@ var sendWorker = function (task, interval) {
     return Meteor.setInterval(function () {
         try {
             Future.task(() => {
-				try {
-					task();
-				} catch (error) {
-					this.logger.error(error)
-				}
-			}).promise();
-            
+                try {
+                    task();
+                } catch (error) {
+                    this.logger.error(error)
+                }
+            }).promise();
+
         } catch (error) {
             console.log('InstanceRecordQueue: Error while sending: ' + error.message);
         }
@@ -596,6 +596,11 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             obj[fm.object_field] = tmp_field_value;
                         }
                     }
+                    else if (oField.type === 'number' || oField.type === 'currency' || oField.type === 'percent') {
+                        if (values[fm.workflow_field] && typeof (Number(values[fm.workflow_field])) === 'number') {
+                            obj[fm.object_field] = Number(values[fm.workflow_field]);
+                        }
+                    }
                     else if (['lookup', 'master_detail'].includes(oField.type) && wField.type === 'odata') {
                         if (oField.multiple && wField.is_multiselect) {
                             obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], '_id'))
@@ -833,9 +838,9 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
                 //     state: instance_state
                 // }];
                 // relatedObjectValue.instance_state = instance_state;
-                if(Creator.Objects[relatedObject.object_name]){
+                if (Creator.Objects[relatedObject.object_name]) {
                     Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, { validate: false, filter: false })
-                }else{
+                } else {
                     objectInsert(relatedObject.object_name, relatedObjectValue)
                 }
             }
@@ -905,7 +910,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     instance_state = ins.final_decision;
                 }
                 setObj['instances.$.state'] = setObj.instance_state = instance_state;
-                objectUpdate(objectName, {filters: [['_id', '=', record._id],['instances._id', '=', insId]]}, setObj)
+                objectUpdate(objectName, { filters: [['_id', '=', record._id], ['instances._id', '=', insId]] }, setObj)
                 // objectCollection.update({
                 //     _id: record._id,
                 //     'instances._id': insId
@@ -938,8 +943,8 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 runQuoted(objectName, record._id);
             } catch (error) {
                 console.error(error.stack);
-                
-                objectUpdate(objectName, {filters: [['_id', '=', record._id],['instances._id', '=', insId]]}, {
+
+                objectUpdate(objectName, { filters: [['_id', '=', record._id], ['instances._id', '=', insId]] }, {
                     'instances.$.state': 'pending',
                     'instance_state': 'pending'
                 })
