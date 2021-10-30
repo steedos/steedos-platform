@@ -335,10 +335,10 @@
   resolved "https://registry.nlark.com/@sindresorhus/is/download/@sindresorhus/is-0.7.0.tgz?cache=0&sync_timestamp=1619082778503&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sindresorhus%2Fis%2Fdownload%2F%40sindresorhus%2Fis-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha1-mgb08TfuhNffBGDB/bETX/psUP0=
 
-"@steedos-ui/builder-community@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.0.7.tgz#3a0c958bc3cc6919991942ec924cb65b14a8b379"
-  integrity sha512-9HzYX3MuBjMBUsuYEg8ktvbstuTVS1wMkdrUJOMQIWclIJ4/UDV2sfHcwtivesP9DpS1vJMcTSM+ALgiKGBm5w==
+"@steedos-ui/builder-community@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.0.8.tgz#8866f3265a48bf1f2ad27eb59417834f3753ff65"
+  integrity sha512-w1xoYNvPWxfh0jbGIFKNudL6RFYA4kFsOY+yF5DpC18zrdFdaz5fi+VzqRJVCzzwmFfkZ69seQoTwwYJBZU41Q==
 
 "@steedos/design-system-react@^2.0.9":
   version "2.0.32"
