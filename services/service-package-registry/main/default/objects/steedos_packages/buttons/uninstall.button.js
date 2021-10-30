@@ -18,7 +18,7 @@ module.exports = {
                     }),
                     success: function(){
                         setTimeout(function(){
-                            if(record_id){
+                            if (FlowRouter.current().params.record_id) {
                                 return FlowRouter.go("/app/admin/steedos_packages/grid/all")
                             }
                             toastr.clear();

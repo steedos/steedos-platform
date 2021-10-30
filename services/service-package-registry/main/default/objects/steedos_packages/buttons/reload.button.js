@@ -9,7 +9,7 @@ module.exports = {
             }),
             success: function(){
                 setTimeout(function(){
-                    if(record_id){
+                    if (FlowRouter.current().params.record_id) {
                         SteedosUI.reloadRecord(object_name, record_id)
                     }
                     toastr.clear();

@@ -67,7 +67,7 @@ module.exports = {
                                 setTimeout(function(){
                                     toastr.clear();
                                     toastr.success('升级成功');
-                                    if(record_id){
+                                    if (FlowRouter.current().params.record_id) {
                                         SteedosUI.reloadRecord(object_name, record_id)
                                     }
                                     FlowRouter.reload()
