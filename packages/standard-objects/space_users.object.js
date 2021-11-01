@@ -834,25 +834,6 @@ Meteor.startup(function () {
     }
 });
 
-let isCompanyAdmin = function(object_name, record_id, organization){
-    var userId = Steedos.userId();
-    if(organization){
-        //当前选中组织所属分部的管理员才有权限
-        if(organization.company_id && organization.company_id.admins){
-            return organization.company_id.admins.indexOf(userId) > -1;
-        }
-    }
-    else{
-        // 用户详细界面拿不到当前选中组织时，只能从记录本身所属分部的管理员中判断，只要当前用户是任何一个所属分部的管理员则有权限
-        var record = Creator.getObjectRecord(object_name, record_id);
-        if(record && record.company_ids && record.company_ids.length){
-            return _.any(record.company_ids,function(item){
-                return item.admins && item.admins.indexOf(userId) > -1
-            });
-        }
-    }
-}
-
 let actions = {
     import: {
         label: "导入",
@@ -913,6 +894,7 @@ let actions = {
         label: "Change Password",
         on: "record",
         visible: function (object_name, record_id, record_permissions) {
+            console.log("===setPassword====");
             var organization = Session.get("organization");
             var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
             if(!allowEdit){
@@ -931,14 +913,14 @@ let actions = {
                 return true;
             }
             else{
-                return isCompanyAdmin(object_name, record_id, organization);
+                return SpaceUsersCore.isCompanyAdmin(record_id, organization);
             }
         },
         todo: function (object_name, record_id, fields) {
             var organization = Session.get("organization");
             var isAdmin = Creator.isSpaceAdmin();
             if(!isAdmin){
-                isAdmin = isCompanyAdmin(object_name, record_id, organization);
+                isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
             }
 
             if(!isAdmin){
@@ -1031,7 +1013,7 @@ let actions = {
                 return true;
             }
             else{
-                return isCompanyAdmin(object_name, record_id, organization);
+                return SpaceUsersCore.isCompanyAdmin(record_id, organization);
             }
         }
     },
