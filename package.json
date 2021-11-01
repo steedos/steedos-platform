@@ -26,7 +26,7 @@
     "changed": "lerna changed",
     "git": "git config core.autocrlf true && git config core.filemode false",
     "update-yarn": "curl --compressed -o- -L https://yarnpkg.com/install.sh | bash",
-    "sync-to-taobao": "node .scripts/sync-to-taobao.js",
+    "sync-to-taobao": "node .scripts/sync_to_taobao.js",
     "build_image": "node build_image.js",
     "build_creator": "cd creator && yarn run build"
   },
