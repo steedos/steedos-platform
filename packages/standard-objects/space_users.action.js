@@ -177,6 +177,9 @@ module.exports = {
     })
   },
   lockoutVisible: function (object_name, record_id, record_permissions, record) {
+    if((record.user && record.user._id) === Steedos.userId()){
+      return;
+    }
     var organization = Session.get("organization");
     var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
     if(!allowEdit){
@@ -227,6 +230,9 @@ module.exports = {
     })
   },
   unlockVisible: function (object_name, record_id, record_permissions, record) {
+    if((record.user && record.user._id) === Steedos.userId()){
+      return;
+    }
     var organization = Session.get("organization");
     var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
     if(!allowEdit){
