@@ -1063,7 +1063,7 @@ CustomLabels:
   space_users_method_unlock_error: space_users_method_unlock_error
   space_users_method_lockout_success: space_users_method_lockout_success
   space_users_method_lockout_error: space_users_method_lockout_error
-  space_users_method_unlock_lockout_error_only_space_admin: space_users_method_unlock_lockout_error_only_space_admin
+  space_users_method_unlock_lockout_error_only_admin: space_users_method_unlock_lockout_error_only_admin
   is_enable: 已启用
   objects: 对象
   objects_name: 对象名

@@ -1273,17 +1273,33 @@ let methods = {
         try {
             const params = req.params;
             const user = req.user;
-            if (!user.is_space_admin){
+
+            const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+
+            const companyIds = spaceUser.company_ids;
+            
+            let isAdmin = user.is_space_admin;
+            if(!isAdmin && companyIds && companyIds.length){
+                const query = {
+                    fields: ['admins'],
+                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+                }
+                const companys = await objectql.getObject("company").find(query);
+                isAdmin = _.any(companys, (item)=>{
+                    return item.admins && item.admins.indexOf(user.userId) > -1
+                })
+            }
+
+            if(!isAdmin){
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "space_users_method_unlock_lockout_error_only_space_admin"
+                        reason: "space_users_method_unlock_lockout_error_only_admin"
                     }
                 });
                 return;
             }
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
             if (spaceUser.user === user.userId) {
                 res.status(400).send({
                     success: false,
@@ -1321,17 +1337,33 @@ let methods = {
         try {
             const params = req.params;
             const user = req.user;
-            if (!user.is_space_admin){
+
+            const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+
+            const companyIds = spaceUser.company_ids;
+            
+            let isAdmin = user.is_space_admin;
+            if(!isAdmin && companyIds && companyIds.length){
+                const query = {
+                    fields: ['admins'],
+                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+                }
+                const companys = await objectql.getObject("company").find(query);
+                isAdmin = _.any(companys, (item)=>{
+                    return item.admins && item.admins.indexOf(user.userId) > -1
+                })
+            }
+
+            if(!isAdmin){
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "space_users_method_unlock_lockout_error_only_space_admin"
+                        reason: "space_users_method_unlock_lockout_error_only_admin"
                     }
                 });
                 return;
             }
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
             let result = await steedosSchema.getObject('users').updateOne(spaceUser.user, {lockout: false, login_failed_number: 0, login_failed_lockout_time: undefined});
             if(result){
                 res.status(200).send({ success: true });

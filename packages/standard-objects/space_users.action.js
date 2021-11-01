@@ -167,7 +167,8 @@ module.exports = {
         var userSession = Creator.USER_CONTEXT;
         var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/lockout", {type: 'post', async: false, data: JSON.stringify({})});
         if(result.error){
-          toastr.error(t("space_users_method_lockout_error", t(data.error.reason)));
+          // 报错信息重复
+          // toastr.error(t("space_users_method_lockout_error", t(result.error.reason)));
         }else{
           toastr.success(t("space_users_method_lockout_success"));
           FlowRouter.reload()
@@ -200,7 +201,7 @@ module.exports = {
       var userSession = Creator.USER_CONTEXT;
       var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
       if(result.error){
-        toastr.error(data.error.reason);
+        toastr.error(result.error.reason);
       }else{
         return !result.lockout
       }
@@ -220,7 +221,8 @@ module.exports = {
         var userSession = Creator.USER_CONTEXT;
         var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/unlock", {type: 'post', async: false, data: JSON.stringify({})});
         if(result.error){
-          toastr.error(t("space_users_method_unlock_error", t(data.error.reason)));
+          // 报错信息重复
+          // toastr.error(t("space_users_method_unlock_error", t(result.error.reason)));
         }else{
           toastr.success(t("space_users_method_unlock_success"));
           FlowRouter.reload()
@@ -253,7 +255,7 @@ module.exports = {
       var userSession = Creator.USER_CONTEXT;
       var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
       if(result.error){
-        toastr.error(data.error.reason);
+        toastr.error(result.error.reason);
       }else{
         return result.lockout
       }

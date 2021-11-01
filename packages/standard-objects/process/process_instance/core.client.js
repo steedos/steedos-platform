@@ -32,7 +32,19 @@ Steedos.authRequest = function (url, options) {
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.error(XMLHttpRequest.responseJSON);
                 if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
-                    toastr.error(t(XMLHttpRequest.responseJSON.error.replace(/:/g, '：')))
+                    const errorInfo = XMLHttpRequest.responseJSON.error;
+                    result = { error: errorInfo }
+                    let errorMsg;
+                    if (errorInfo.reason) {
+                        errorMsg = errorInfo.reason;
+                    }
+                    else if (errorInfo.message) {
+                        errorMsg = errorInfo.message;
+                    }
+                    else {
+                        errorMsg = errorInfo;
+                    }
+                    toastr.error(t(errorMsg.replace(/:/g, '：')))
                 }
                 else {
                     toastr.error(XMLHttpRequest.responseJSON)

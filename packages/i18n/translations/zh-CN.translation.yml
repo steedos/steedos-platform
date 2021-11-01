@@ -978,7 +978,7 @@ CustomLabels:
   space_users_method_unlock_error: 解除锁定用户失败，%s
   space_users_method_lockout_success: 已成功锁定该用户。
   space_users_method_lockout_error: 锁定用户失败，%s
-  space_users_method_unlock_lockout_error_only_space_admin: 只有工作区管理员可以解除锁定/锁定账户。
+  space_users_method_unlock_lockout_error_only_admin: 只有管理员可以解除锁定/锁定账户。
   is_enable: 已启用
   objects: 对象
   objects_name: 对象名
