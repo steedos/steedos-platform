@@ -3,13 +3,14 @@ Meteor.methods
 		if !this.userId
 			throw new Meteor.Error(400, "请先登录")
 		
-		userId = this.userId
-		space = db.spaces.findOne({_id: space_id})
-		isSpaceAdmin = space?.admins?.includes(this.userId)
-
-		canEdit = isSpaceAdmin
-
 		spaceUser = db.space_users.findOne({_id: space_user_id, space: space_id})
+		userId = this.userId
+		canEdit = spaceUser.user == userId
+		unless canEdit
+			space = db.spaces.findOne({_id: space_id})
+			isSpaceAdmin = space?.admins?.includes(this.userId)
+			canEdit = isSpaceAdmin
+
 		companyIds = spaceUser.company_ids
 		if !canEdit && companyIds && companyIds.length
 			# 组织管理员也能修改密码

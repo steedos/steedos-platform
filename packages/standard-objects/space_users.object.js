@@ -922,15 +922,23 @@ let actions = {
                 isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
             }
 
+            var userSession = Creator.USER_CONTEXT;
+
             if(!isAdmin){
-                // Modal.show("reset_password_modal");
-                Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
-                return;
+                var isPasswordEmpty = false;
+                var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_password_empty", {type: 'get', async: false});
+                if(!result.error){
+                    isPasswordEmpty = result.empty;
+                }
+                if(!isPasswordEmpty){
+                    // Modal.show("reset_password_modal");
+                    Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
+                    return;
+                }
             }
 
             var doUpdate = function (inputValue) {
                 $("body").addClass("loading");
-                var userSession = Creator.USER_CONTEXT;
                 try {
                     Meteor.call("setSpaceUserPassword", record_id, userSession.spaceId, inputValue, function (error, result) {
                         $("body").removeClass("loading");
@@ -1387,7 +1395,36 @@ let methods = {
                 }
             });
         }
-    }
+    },
+    is_password_empty: async function (req, res) {
+        try {
+            const params = req.params;
+            const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user"] });
+            const result = await steedosSchema.getObject('users').findOne(spaceUser.user, { fields:["services.password"] });
+            if(result){
+                res.status(200).send({ empty: !!!(result.services && result.services.password && (result.services.password.bcrypt || result.services.password.bcrypts)) });
+            }
+            else{
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "未找到用户"
+                    }
+                });
+            }
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                error: {
+                    reason: error.reason,
+                    message: error.message,
+                    details: error.details,
+                    stack: error.stack
+                }
+            });
+        }
+    },
 };
 
 Creator.Objects.space_users.methods = Object.assign({}, Creator.Objects.space_users.methods, methods);
