@@ -894,7 +894,6 @@ let actions = {
         label: "Change Password",
         on: "record",
         visible: function (object_name, record_id, record_permissions) {
-            console.log("===setPassword====");
             var organization = Session.get("organization");
             var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
             if(!allowEdit){
