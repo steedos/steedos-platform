@@ -177,9 +177,22 @@ module.exports = {
     })
   },
   lockoutVisible: function (object_name, record_id, record_permissions, record) {
-    if (!Steedos.isSpaceAdmin()) {
+    var organization = Session.get("organization");
+    var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+    if(!allowEdit){
+        // permissions配置没有权限则不给权限
+        return false
+    }
+    var isAdmin = Steedos.isSpaceAdmin();
+    if(!isAdmin){
+      // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+      isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
+    }
+    if (!isAdmin) {
       return;
     }
+    //以上为权限判断
+
     if (record){
       var userSession = Creator.USER_CONTEXT;
       var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
@@ -214,9 +227,22 @@ module.exports = {
     })
   },
   unlockVisible: function (object_name, record_id, record_permissions, record) {
-    if (!Steedos.isSpaceAdmin()) {
+    var organization = Session.get("organization");
+    var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+    if(!allowEdit){
+        // permissions配置没有权限则不给权限
+        return false
+    }
+    var isAdmin = Steedos.isSpaceAdmin();
+    if(!isAdmin){
+      // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+      isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
+    }
+    if (!isAdmin) {
       return;
     }
+    //以上为权限判断
+    
     if (record){
       var userSession = Creator.USER_CONTEXT;
       var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
