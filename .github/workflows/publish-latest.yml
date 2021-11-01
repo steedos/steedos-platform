@@ -96,7 +96,7 @@ jobs:
           prerelease: false
       - name: Sync to taobao 
         run: |
-          yarn syncToTaoBao
+          yarn sync-to-taobao
       - name: Sync to cnpm
         run: |
           npm install cnpm -g
