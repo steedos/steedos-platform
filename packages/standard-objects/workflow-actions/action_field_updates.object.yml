@@ -81,6 +81,8 @@ fields:
     showIcon: false
     depend_on:
       - field_name
+      - target_object
+      - object_name
     optionsFunction: !!js/function |
       function (doc) {
         var mainObjectName = null;
