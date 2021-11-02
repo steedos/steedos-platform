@@ -202,7 +202,6 @@ fields:
   filters.$:
     label: Filter
     blackbox: true
-    type: object
   filters.$.field:
     label: Field
     type: lookup
