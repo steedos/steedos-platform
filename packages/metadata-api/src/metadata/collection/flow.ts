@@ -183,7 +183,11 @@ async function _getFlowByForm(dbManager, form, flowId?, is_copy?, company_id?) {
                 for (let step of flow.current.steps) {
                     let roles_name = []
                     if (!_.isEmpty(step.approver_roles)) {
-                        let roles = await dbManager.findWithProjection(_flow_roles, { _id: { $in: step.approver_roles } }, { fields: { name: 1 } });
+                        let roles = await dbManager.findWithProjection(
+                          _flow_roles,
+                          { _id: { $in: step.approver_roles } },
+                          { name: 1 }
+                        );
                         roles_name = _.pluck(roles, 'name');
                     }
 
