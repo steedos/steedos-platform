@@ -14,29 +14,53 @@ import _ from 'lodash';
 // declare var Meteor: any;
 declare var Steedos: any;
 
+/**
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 const initiateImport = async function (req, res) {
     try {
-        const userSession = req.user;
-        // const spaceId = userSession.spaceId;
+      const userSession = req.user;
+      // const spaceId = userSession.spaceId;
+      let { importObjId, importObjectHistoryId } = req.body;
+      let fileId = null;
+      const isSpaceAdmin = req.user.is_space_admin;
+      //传入了importObjId参数，必须是工作区管理员权限
+      if (importObjId && !isSpaceAdmin) {
+        return res
+          .status(401)
+          .send({ status: "error", message: "Permission denied" });
+      }
 
-        const isSpaceAdmin = req.user.is_space_admin;
-        if (!isSpaceAdmin) {
-            return res.status(401).send({ status: 'error', message: 'Permission denied' });
-        }
+      if (importObjectHistoryId) {
+          const record = await getObject('queue_import_history').findOne(importObjectHistoryId);
+          if(!record){
+            throw new Error(
+                `can not find queue_import_history record with given id "${importObjectHistoryId}"`
+              );
+          }
+          if(!record.file){
+            throw new Error(`Upload excel file, please.`);
+          }
+          fileId = record.file
+          importObjId = record.queue_import
+      }
 
-        // if (!Steedos.hasFeature('metadata_api', spaceId)) {
-        //     return res.status(403).send({ status: 'error', message: 'Please upgrade the platform license to Enterprise Edition' });
-        // }
-        const importObjId = req.body.importObjId;
-        try {
-            let result = await importWithCmsFile(importObjId, userSession);
-            return res.status(200).send({ status: 'success', result });
-        } catch (error) {
-            return res.status(500).send({ status: 'failed', message: error.message });
-        }
+      // if (!Steedos.hasFeature('metadata_api', spaceId)) {
+      //     return res.status(403).send({ status: 'error', message: 'Please upgrade the platform license to Enterprise Edition' });
+      // }
 
+      try {
+        let result = await importWithCmsFile(importObjId, userSession, importObjectHistoryId, fileId);
+        return res.status(200).send({ status: "success", result });
+      } catch (error) {
+        return res
+          .status(500)
+          .send({ status: "failed", message: error.message });
+      }
     } catch (error) {
-        return res.status(500).send({ status: 'failed', error: error.message });
+      return res.status(500).send({ status: "failed", error: error.message });
     }
 }
 

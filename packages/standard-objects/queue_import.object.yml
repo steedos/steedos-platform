@@ -155,56 +155,20 @@ fields:
     required: false
     name: external_id_name
     filterable: true
-  success_count:
-    label: Number of Successful Records
-    type: number
+  template_url:
+    label: 导入模板
+    type: html
+    hidden: false
     omit: true
-    name: success_count
-  failure_count:
-    label: Number of Failed Records
-    type: number
-    omit: true
-    name: failure_count
-  total_count:
-    label: Total Number
-    type: number
-    omit: true
-    name: total_count
-  start_time:
-    label: Start Time
-    type: datetime
-    omit: true
-    name: start_time
-  end_time:
-    label: End Time
-    type: datetime
-    omit: true
-    name: end_time
-  state:
-    label: State
-    type: select
-    omit: true
-    name: state
-    filterable: true
-    options:
-      - label: Finished
-        value: finished
-  error:
-    label: Error Message
-    type: '[text]'
-    omit: true
-    name: error
-  file:
-    label: Excel File
-    type: file
-    name: file
+    readonly: true
+    disabled: true
 list_views:
   all:
     label: All Queues
     columns:
       - description
       - object_name
-      - state
+      - template_url
       - encoding
     filter_scope: space
 permission_set:
@@ -212,9 +176,9 @@ permission_set:
     allowCreate: false
     allowDelete: false
     allowEdit: false
-    allowRead: false
+    allowRead: true
     modifyAllRecords: false
-    viewAllRecords: false
+    viewAllRecords: true
   admin:
     allowCreate: true
     allowDelete: true
@@ -222,66 +186,5 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-
-actions:
-  import:
-    label: 'Perform Import'
-    visible: true
-    'on': record_only
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, fields) {
-        var record = Creator.getCollection('queue_import').findOne(record_id);
-        console.log(record);
-        if (!record.file) {
-          toastr.error(TAPi18n.__("queue_import_action_import_need_file"));
-          return;
-        }
-        var files = Creator.odata.query('cfs_files_filerecord', {$filter:`(_id eq \'${record.file}\')`, $select: "_id"}, true);
-        if (_.isEmpty(files)) {
-          toastr.error(TAPi18n.__("queue_import_action_import_need_files"));
-          return;
-        }
-        if (files.length > 1) {
-          toastr.error(TAPi18n.__("queue_import_action_import_just_need_one_file"));
-          return;
-        }
-
-        $("body").addClass("loading");
-        var space;
-        space = Session.get("spaceId");
-        $.ajax({
-          url: "/api/data/initiateImport",
-          type: "post",
-          data: {
-            importObjId: record_id
-          },
-          xhrFields: {
-            withCredentials: true
-          },
-          success: function(res){
-            $("body").removeClass("loading");
-            SteedosUI.reloadRecord(object_name, record_id);
-            FlowRouter.reload();
-            toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
-          },
-          error: function(res){
-            $("body").removeClass("loading");
-            toastr.error(res.responseJSON.message);
-          }
-
-        });
-      }
-  downloadTemplate:
-    label: 'Download Template'
-    visible: true
-    'on': record_only
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, fields) {
-        var record = Creator.getCollection('queue_import').findOne(record_id);
-        if (!record.field_mappings || record.field_mappings.length==0) {
-          toastr.info('请配置字段映射。');
-          return;
-        }
-        let url = Steedos.absoluteUrl(`api/data/download/template/${record_id}`);
-        window.open(url, '_self', 'EnableViewPortScale=yes');
-      }
+relatedList:
+  - queue_import_history

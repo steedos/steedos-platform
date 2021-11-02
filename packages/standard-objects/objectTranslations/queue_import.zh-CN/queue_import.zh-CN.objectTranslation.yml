@@ -104,6 +104,8 @@ fields:
     label: 关联对象的key
   field_mappings.$.save_key_while_fail:
     label: 关联失败时保存key
+  template_url:
+    label: 导入模板
 listviews:
   all:
     label: 全部

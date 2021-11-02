@@ -136,3 +136,5 @@ actions:
     label: Follow
   standard_submit_for_approval:
     label: Submit for Approval
+  standard_import_data:
+    label: Import Data

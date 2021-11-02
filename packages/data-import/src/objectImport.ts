@@ -3,598 +3,698 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('underscore');
 const objectql = require('@steedos/objectql');
-
-const xlsx = require('node-xlsx');
+const Fiber = require("fibers");
+const xlsx = require("node-xlsx");
 declare var Creator: any;
 
 type ImportOptions = {
-    objectName: string,
-    externalIdName: string | null,
-    lookupFieldMap: any,
-    fireWorkflows: boolean,
-    operation: string,
-    userSession: any,
-    mappings: any[],
-    keyIndexes: number,
-    queueImportId: string | null,
-}
-
+  objectName: string;
+  externalIdName: string | null;
+  lookupFieldMap: any;
+  fireWorkflows: boolean;
+  operation: string;
+  userSession: any;
+  mappings: any[];
+  keyIndexes: number;
+  queueImportId: string | null;
+};
 
 function converterString(field_name, dataCell, jsonObj) {
-    jsonObj[field_name] = dataCell + '';
-    return '';
-};
-
-function converterDate(field_name, dataCell, jsonObj) {
-    var date, date_error;
-    date_error = "";
-    date = new Date(dataCell);
-    if (date.getFullYear() && Object.prototype.toString.call(date) === '[object Date]') {
-        jsonObj[field_name] = date;
-    } else {
-        date_error = `${dataCell}不是日期类型数据`;
-    }
-    return date_error;
-};
-
-function converteNum(field_name, dataCell, jsonObj) {
-    var number, number_error;
-    number_error = "";
-    number = parseFloat(dataCell);
-    if (!isNaN(number)) {
-        jsonObj[field_name] = number;
-    } else {
-        number_error = `${dataCell}不是数值类型数据`;
-    }
-    return number_error;
-};
-
-async function converterSelect(objectName, field_name, dataCell, jsonObj) {
-    var allowedValues, allowedLabels, fields, ref, select_error;
-    select_error = "";
-    let objectConfig = await objectql.getObject(objectName).toConfig();
-    fields = objectConfig.fields;
-    let field = fields[field_name]
-    allowedValues = _.pluck(field.options, 'value');
-    allowedLabels = _.pluck(field.options, 'label');
-    let optionsMap = _.object(allowedLabels, allowedValues);
-
-    let cellContents: any = [];
-    let noResult = true;
-    if (field.multiple) {
-        jsonObj[field_name] = [];
-        if (dataCell) {
-            cellContents = dataCell.split(';');
-        }
-    } else {
-        jsonObj[field_name] = null;
-        cellContents.push(dataCell);
-    }
-
-    for (let cellContent of cellContents) {
-
-        if (!cellContent) {
-            continue;
-        }
-
-        if (allowedLabels.indexOf(cellContent) >= 0) {
-            noResult = false;
-            if (field.multiple) {
-                jsonObj[field_name].push(optionsMap[cellContent]);
-            } else {
-                jsonObj[field_name] = optionsMap[cellContent];
-            }
-        } else {
-            select_error = `${cellContent}不属于${field_name}的可选范围`;
-        }
-    }
-
-    if (noResult && field.required) { // 
-        select_error += `${field_name}字段为必填项`;
-    }
-    return select_error;
-};
-
-function getNameFieldKey(fields) {
-    let NAME_FIELD_KEY = 'name'
-    for (let fieldName in fields) {
-        let field = fields[fieldName];
-        if (field.is_name) {
-            NAME_FIELD_KEY = fieldName
-            break;
-        }
-    }
-    return NAME_FIELD_KEY;
+  jsonObj[field_name] = dataCell + "";
+  return "";
 }
 
-async function converterLookup(objectName, field_name, dataCell, jsonObj, fieldMap, options) {
-    var fields, lookups, lookup_error, field, reference_to_object, reference_to_field, selectfield;
-    lookup_error = "";
-    let objectConfig = await objectql.getObject(objectName).toConfig();
-    fields = objectConfig.fields;
-    field = fields[field_name]
-    reference_to_object = field.reference_to;
-    
-    reference_to_field = field.reference_to_field;
-    let noResult = true;  // 判断是否所有数据都找不到结果
+function converterDate(field_name, dataCell, jsonObj) {
+  var date, date_error;
+  date_error = "";
+  date = new Date(dataCell);
+  if (
+    date.getFullYear() &&
+    Object.prototype.toString.call(date) === "[object Date]"
+  ) {
+    jsonObj[field_name] = date;
+  } else {
+    date_error = `${dataCell}不是日期类型数据`;
+  }
+  return date_error;
+}
 
-    if (!reference_to_field) {
-        reference_to_field = "_id"
+function converteNum(field_name, dataCell, jsonObj) {
+  var number, number_error;
+  number_error = "";
+  number = parseFloat(dataCell);
+  if (!isNaN(number)) {
+    jsonObj[field_name] = number;
+  } else {
+    number_error = `${dataCell}不是数值类型数据`;
+  }
+  return number_error;
+}
+
+async function converterSelect(objectName, field_name, dataCell, jsonObj) {
+  var allowedValues, allowedLabels, fields, ref, select_error;
+  select_error = "";
+  let objectConfig = await objectql.getObject(objectName).toConfig();
+  fields = objectConfig.fields;
+  let field = fields[field_name];
+  allowedValues = _.pluck(field.options, "value");
+  allowedLabels = _.pluck(field.options, "label");
+  let optionsMap = _.object(allowedLabels, allowedValues);
+
+  let cellContents: any = [];
+  let noResult = true;
+  if (field.multiple) {
+    jsonObj[field_name] = [];
+    if (dataCell) {
+      cellContents = dataCell.split(";");
     }
-    if (fieldMap[field_name].matched_by) {
-        selectfield = fieldMap[field_name].matched_by;
+  } else {
+    jsonObj[field_name] = null;
+    cellContents.push(dataCell);
+  }
+
+  for (let cellContent of cellContents) {
+    if (!cellContent) {
+      continue;
+    }
+
+    if (allowedLabels.indexOf(cellContent) >= 0) {
+      noResult = false;
+      if (field.multiple) {
+        jsonObj[field_name].push(optionsMap[cellContent]);
+      } else {
+        jsonObj[field_name] = optionsMap[cellContent];
+      }
     } else {
-        selectfield = getNameFieldKey(fields);
+      select_error = `${cellContent}不属于${field_name}的可选范围`;
+    }
+  }
+
+  if (noResult && field.required) {
+    //
+    select_error += `${field_name}字段为必填项`;
+  }
+  return select_error;
+}
+
+function getNameFieldKey(fields) {
+  let NAME_FIELD_KEY = "name";
+  for (let fieldName in fields) {
+    let field = fields[fieldName];
+    if (field.is_name) {
+      NAME_FIELD_KEY = fieldName;
+      break;
+    }
+  }
+  return NAME_FIELD_KEY;
+}
+
+async function converterLookup(
+  objectName,
+  field_name,
+  dataCell,
+  jsonObj,
+  fieldMap,
+  options
+) {
+  var fields,
+    lookups,
+    lookup_error,
+    field,
+    reference_to_object,
+    reference_to_field,
+    selectfield;
+  lookup_error = "";
+  let objectConfig = await objectql.getObject(objectName).toConfig();
+  fields = objectConfig.fields;
+  field = fields[field_name];
+  reference_to_object = field.reference_to;
+
+  reference_to_field = field.reference_to_field;
+  let noResult = true; // 判断是否所有数据都找不到结果
+
+  if (!reference_to_field) {
+    reference_to_field = "_id";
+  }
+  if (fieldMap[field_name].matched_by) {
+    selectfield = fieldMap[field_name].matched_by;
+  } else {
+    selectfield = getNameFieldKey(fields);
+  }
+
+  // 这一条加在了permission_set.object.yml里面
+  // if(field_name == 'profile'){
+  //     reference_to_object = 'permission_set'
+  // }
+
+  let lookupCollection = await objectql.getObject(reference_to_object);
+
+  let cellContents: any = [];
+  if (field.multiple) {
+    jsonObj[field_name] = [];
+    if (dataCell) {
+      cellContents = dataCell.split(";");
+    }
+  } else {
+    jsonObj[field_name] = null;
+    cellContents.push(dataCell);
+  }
+
+  for (let cellContent of cellContents) {
+    if (!cellContent) {
+      continue;
+    }
+    let cellFilter = [selectfield, "=", cellContent];
+    let spaceFilter = ["space", "=", options.userSession.spaceId];
+    let filters = [cellFilter, spaceFilter];
+    lookups = await lookupCollection.find({ filters: filters });
+
+    if (lookups.length == 0) {
+      //找不到记录可能是对象上没有space属性
+      lookups = await lookupCollection.find({ filters: cellFilter });
+      let hasSpace = false;
+      for (let lookup of lookups) {
+        if (lookup.space) {
+          hasSpace = true;
+          break;
+        }
+      }
+      if (hasSpace) {
+        lookup_error += `所查找的${reference_to_object}不属于当前space`;
+        continue;
+      }
     }
 
-    // 这一条加在了permission_set.object.yml里面
-    // if(field_name == 'profile'){
-    //     reference_to_object = 'permission_set'
-    // }
+    // [[selectfield, '=', dataCell], ['space', '=', options.userSession.spaceId]]
 
-    let lookupCollection = await objectql.getObject(reference_to_object)
-
-    let cellContents: any = [];
-    if (field.multiple) {
-        jsonObj[field_name] = []
-        if (dataCell) {
-            cellContents = dataCell.split(';');
-        }
-    } else {
-        jsonObj[field_name] = null;
-        cellContents.push(dataCell);
+    let allRecordCount = lookups.length;
+    let dbRecordCount = lookups.length;
+    for (let lookup of lookups) {
+      if (lookup.is_system) {
+        dbRecordCount--;
+      }
     }
+    if (dbRecordCount == 1 || allRecordCount == 1) {
+      noResult = false;
+      if (field.multiple) {
+        jsonObj[field_name].push(lookups[0][reference_to_field]);
+      } else {
+        jsonObj[field_name] = lookups[0][reference_to_field];
+      }
+    } else if (dbRecordCount.length == 0) {
+      if (!dataCell) {
+        // 单元格没有填写
 
-    for (let cellContent of cellContents) {
-
-        if (!cellContent) {
-            continue;
+        if (!field.multiple) {
+          jsonObj[field_name] = null;
         }
-        let cellFilter = [selectfield, "=", cellContent]
-        let spaceFilter = ['space', "=", options.userSession.spaceId]
-        let filters = [cellFilter, spaceFilter] 
-        lookups = await lookupCollection.find({ filters: filters });
-
-        if (lookups.length == 0) { //找不到记录可能是对象上没有space属性
-            lookups = await lookupCollection.find({ filters: cellFilter });
-            let hasSpace = false;
-            for (let lookup of lookups) {
-                if (lookup.space) {
-                    hasSpace = true;
-                    break;
-                }
-            }
-            if (hasSpace) {
-                lookup_error += `所查找的${reference_to_object}不属于当前space`;
-                continue;
-            }
-        }
-
-        // [[selectfield, '=', dataCell], ['space', '=', options.userSession.spaceId]]
-
-        let allRecordCount = lookups.length;
-        let dbRecordCount = lookups.length;
-        for (let lookup of lookups) {
-            if (lookup.is_system) {
-                dbRecordCount--;
-            }
-        }
-        if (dbRecordCount == 1 || allRecordCount == 1) {
-            noResult = false;
-            if (field.multiple) {
-                jsonObj[field_name].push(lookups[0][reference_to_field]);
-
-            } else {
-                jsonObj[field_name] = lookups[0][reference_to_field];
-            }
-        } else if (dbRecordCount.length == 0) {
-
-            if (!dataCell) {// 单元格没有填写
-
-                if (!field.multiple) {
-                    jsonObj[field_name] = null;
-                }
-
-            } else {  // 单元格有值却找不到记录
-                if (fieldMap[field_name].save_key_while_fail) {
-                    jsonObj[field_name] = cellContent
-
-                } else {
-                    lookup_error += `${dataCell}不是${field_name}类型数据的key`;
-                }
-            }
+      } else {
+        // 单元格有值却找不到记录
+        if (fieldMap[field_name].save_key_while_fail) {
+          jsonObj[field_name] = cellContent;
         } else {
-            noResult = false;
-            lookup_error += `无法根据${selectfield}: ${dataCell}找到唯一的${reference_to_object}`;
+          lookup_error += `${dataCell}不是${field_name}类型数据的key`;
         }
+      }
+    } else {
+      noResult = false;
+      lookup_error += `无法根据${selectfield}: ${dataCell}找到唯一的${reference_to_object}`;
     }
+  }
 
-    if (noResult && field.multiple) { // 
-        jsonObj[field_name] = null;
-    }
-    if (noResult && field.required) { // 
-        lookup_error += `${field_name}字段为必填项`;
-    }
-    return lookup_error;
-};
+  if (noResult && field.multiple) {
+    //
+    jsonObj[field_name] = null;
+  }
+  if (noResult && field.required) {
+    //
+    lookup_error += `${field_name}字段为必填项`;
+  }
+  return lookup_error;
+}
 
 function converterBool(field_name, dataCell, jsonObj) {
-    var bool_error, flag;
-    bool_error = "";
-    flag = dataCell.toString().toLowerCase();
-    if (flag === "是" || flag === "1" || flag === "yes" || flag === "true") {
-        jsonObj[field_name] = true;
-    } else if (flag === "否" || flag === "0" || flag === "no" || flag === "false") {
-        jsonObj[field_name] = false;
-    } else {
-        bool_error = `${dataCell}不是bool类型数据`;
-    }
-    return bool_error;
-};
+  var bool_error, flag;
+  bool_error = "";
+  flag = dataCell.toString().toLowerCase();
+  if (flag === "是" || flag === "1" || flag === "yes" || flag === "true") {
+    jsonObj[field_name] = true;
+  } else if (
+    flag === "否" ||
+    flag === "0" ||
+    flag === "no" ||
+    flag === "false"
+  ) {
+    jsonObj[field_name] = false;
+  } else {
+    bool_error = `${dataCell}不是bool类型数据`;
+  }
+  return bool_error;
+}
 
 async function insertRow(dataRow, objectName, options: ImportOptions) {
-    var errorInfo, insertInfo, jsonObj, objFields, ref, lookupFieldMap;
-    jsonObj = {};
-    insertInfo = {};
-    insertInfo["create"] = false;
-    insertInfo["update"] = false;
-    errorInfo = "";
-    lookupFieldMap = options.lookupFieldMap;
+  var errorInfo, insertInfo, jsonObj, objFields, ref, lookupFieldMap;
+  jsonObj = {};
+  insertInfo = {};
+  insertInfo["create"] = false;
+  insertInfo["update"] = false;
+  errorInfo = "";
+  lookupFieldMap = options.lookupFieldMap;
 
-    let mappings = options.mappings;
-    let space = options.userSession.spaceId;
+  let mappings = options.mappings;
+  let space = options.userSession.spaceId;
 
-    // 对象的fields
-    ref = await objectql.getObject(objectName).toConfig()
-    objFields = ref.fields;
-    objFields = Object.assign({ _id: { name: "_id", type: "text" } }, objFields);
+  // 对象的fields
+  ref = await objectql.getObject(objectName).toConfig();
+  objFields = ref.fields;
+  objFields = Object.assign({ _id: { name: "_id", type: "text" } }, objFields);
 
-    let dataLength = dataRow.length > mappings.length ? dataRow.length : mappings.length;
-    for (let i = 0; i < dataLength; i++) {
-        let dataCell = dataRow[i];
-        if (!dataCell) {
-            dataCell = null;
-        }
-
-        var error, mapping, noField;
-        mapping = mappings[i];
-        if (!mapping) {
-            continue;
-        }
-
-        // 找到需要插入的数据
-        for (let apiName of mapping) {
-            error = null;
-            noField = true;
-            for (let field_name in objFields) {
-                let field = objFields[field_name]
-                if (field_name == apiName) {
-                    noField = false;
-                    try{
-
-                        switch (field != null ? field.type : void 0) {
-                            case "date":
-                            case "datetime":
-                                error = converterDate(field_name, dataCell, jsonObj);
-                                break;
-                            case "number":
-                                error = converteNum(field_name, dataCell, jsonObj);
-                                break;
-                            case "boolean":
-                                error = converterBool(field_name, dataCell, jsonObj);
-                                break;
-                            case "select":
-                                error = await converterSelect(objectName, field_name, dataCell, jsonObj);
-                                break;
-                            case "lookup":
-                                error = await converterLookup(objectName, field_name, dataCell, jsonObj, lookupFieldMap, options);
-                                break;
-                            case "text":
-                                error = converterString(field_name, dataCell, jsonObj);
-                                break;
-                            case "textarea":
-                                error = converterString(field_name, dataCell, jsonObj);
-                                break;
-                            case "master_detail":
-                                error = await converterLookup(objectName, field_name, dataCell, jsonObj, lookupFieldMap, options);
-                                break;
-                            case "email":
-                                error = converterString(field_name, dataCell, jsonObj);
-                                break;
-                            case "toggle":
-                                error = converterBool(field_name, dataCell, jsonObj);
-                                break;
-                            case "url":
-                                error = converterString(field_name, dataCell, jsonObj);
-                                break;
-                            case "currency":
-                                error = converteNum(field_name, dataCell, jsonObj);
-                                break;
-                            case "percent":
-                                error = converteNum(field_name, dataCell, jsonObj);
-                                break;
-                            default:
-                                throw new Error(`Unsupported data type: ${field.type}`);
-                        }
-                    }catch(err){
-                        console.error(error)
-                        error = err.message;
-                    }
-                }
-            }
-            if (noField) {
-                if (objectName == 'space_users' && apiName == 'password') {
-                    jsonObj[apiName] = dataCell
-                } else {
-                    error = `${apiName}不是对象${objectName}的属性`;
-                }
-            }
-            if (error) {
-                errorInfo = errorInfo + "," + error;
-            }
-        }
-
+  let dataLength =
+    dataRow.length > mappings.length ? dataRow.length : mappings.length;
+  for (let i = 0; i < dataLength; i++) {
+    let dataCell = dataRow[i];
+    if (!dataCell) {
+      dataCell = null;
     }
 
-    insertInfo["insertState"] = true;
-    let selectObj = {};
-    let recordExists = false;
-    let objectCollection = await objectql.getObject(objectName);
-
-    if (jsonObj && !errorInfo) {
-        if (objectCollection.datasource.name == 'default' || objectCollection.datasource.name == 'meteor') {
-            jsonObj.space = space;
-        }
-        // 不存在则新建，存在则更新
-        let external_id_name = options.externalIdName
-        if (external_id_name) {
-            let allUndefined = true;
-            for(let _external_id_name of external_id_name){
-                selectObj[_external_id_name] = jsonObj[_external_id_name];
-                if (selectObj[_external_id_name] != undefined) {
-                    allUndefined = false;
-                }
-            }
-            if(!allUndefined){
-                let filters = selectObjectToFilters(selectObj);
-                let records = await objectCollection.find({ filters });
-                if (records.length == 1) {
-    
-                    selectObj['space'] = space
-                    filters = selectObjectToFilters(selectObj);
-                    records = await objectCollection.find({ filters });
-    
-                    if (records.length == 1) {
-                        recordExists = true;
-                    } else if (records.length > 1) {
-                        errorInfo = `无法根据${external_id_name}: ${selectObj[external_id_name]}找到唯一的${objectName}记录`
-                    } else {
-                        errorInfo = `所查找的记录不属于当前space`
-                    }
-                } else if (records.length > 1) {
-                    errorInfo = `无法根据${external_id_name}: ${selectObj[external_id_name]}找到唯一的${objectName}记录`
-                }
-            }
-        }
+    var error, mapping, noField;
+    mapping = mappings[i];
+    if (!mapping) {
+      continue;
     }
-    if (!errorInfo) {
-        let operation = options.operation // insert update upsert
-        let filters = selectObjectToFilters(selectObj);
-        delete jsonObj._id;
-        if (recordExists && (operation == 'update' || operation == "upsert")) {
-            try {
-                // if(options.userSession){
-                //     jsonObj['modified_by'] = options.userSession.userId;
-                // }
-                await objectCollection.update({ filters }, jsonObj);
-                insertInfo["create"] = false;
-                insertInfo["update"] = true;
-            } catch (error) {
-                console.error(error)
-                errorInfo = error.message;
-                insertInfo["update"] = false;
-                insertInfo["insertState"] = false;
+
+    // 找到需要插入的数据
+    for (let apiName of mapping) {
+      error = null;
+      noField = true;
+      for (let field_name in objFields) {
+        let field = objFields[field_name];
+        if (field_name == apiName) {
+          noField = false;
+          try {
+            switch (field != null ? field.type : void 0) {
+              case "date":
+              case "datetime":
+                error = converterDate(field_name, dataCell, jsonObj);
+                break;
+              case "number":
+                error = converteNum(field_name, dataCell, jsonObj);
+                break;
+              case "boolean":
+                error = converterBool(field_name, dataCell, jsonObj);
+                break;
+              case "select":
+                error = await converterSelect(
+                  objectName,
+                  field_name,
+                  dataCell,
+                  jsonObj
+                );
+                break;
+              case "lookup":
+                error = await converterLookup(
+                  objectName,
+                  field_name,
+                  dataCell,
+                  jsonObj,
+                  lookupFieldMap,
+                  options
+                );
+                break;
+              case "text":
+                error = converterString(field_name, dataCell, jsonObj);
+                break;
+              case "textarea":
+                error = converterString(field_name, dataCell, jsonObj);
+                break;
+              case "master_detail":
+                error = await converterLookup(
+                  objectName,
+                  field_name,
+                  dataCell,
+                  jsonObj,
+                  lookupFieldMap,
+                  options
+                );
+                break;
+              case "email":
+                error = converterString(field_name, dataCell, jsonObj);
+                break;
+              case "toggle":
+                error = converterBool(field_name, dataCell, jsonObj);
+                break;
+              case "url":
+                error = converterString(field_name, dataCell, jsonObj);
+                break;
+              case "currency":
+                error = converteNum(field_name, dataCell, jsonObj);
+                break;
+              case "percent":
+                error = converteNum(field_name, dataCell, jsonObj);
+                break;
+              default:
+                throw new Error(`Unsupported data type: ${field.type}`);
             }
-        } else if (!recordExists && (operation == 'insert' || operation == "upsert")) {
-            try {
-                if (objectCollection.datasource.name == 'default' || objectCollection.datasource.name == 'meteor') {
-
-                    if (!jsonObj.owner && options.userSession) {
-                        let userId = options.userSession.userId;
-                        jsonObj['owner'] = userId;
-                    }
-                }
-
-                // if (jsonObj.owner) {
-                //     let space_user_collection = await objectql.getObject('space_users')
-                //     let space_users = await space_user_collection.find(['user', '=', jsonObj.owner]);
-                //     let space_user = space_users [0]
-                //     jsonObj['created_by'] = space_user.user;
-                //     jsonObj['modified_by'] = space_user.user;
-                //     // jsonObj['company_id'] = space_user.company_id;
-                //     // jsonObj['company_ids'] = space_user.company_ids
-
-                // }
-                await objectCollection.insert(jsonObj, options.userSession);
-                insertInfo["create"] = true;
-                insertInfo["update"] = false;
-            } catch (error) {
-                console.error(error)
-                errorInfo = error.message;
-                insertInfo["create"] = false;
-                insertInfo["insertState"] = false;
-
-            }
+          } catch (err) {
+            console.error(error);
+            error = err.message;
+          }
+        }
+      }
+      if (noField) {
+        if (objectName == "space_users" && apiName == "password") {
+          jsonObj[apiName] = dataCell;
         } else {
-            insertInfo["ignored"] = true;
+          error = `${apiName}不是对象${objectName}的属性`;
         }
-    } else {
-        insertInfo["insertState"] = false;
+      }
+      if (error) {
+        errorInfo = errorInfo + "," + error;
+      }
     }
-    insertInfo["errorInfo"] = errorInfo;
-    return insertInfo;
-};
+  }
+
+  insertInfo["insertState"] = true;
+  let selectObj = {};
+  let recordExists = false;
+  let objectCollection = await objectql.getObject(objectName);
+
+  if (jsonObj && !errorInfo) {
+    if (
+      objectCollection.datasource.name == "default" ||
+      objectCollection.datasource.name == "meteor"
+    ) {
+      jsonObj.space = space;
+    }
+    // 不存在则新建，存在则更新
+    let external_id_name = options.externalIdName;
+    if (external_id_name) {
+      let allUndefined = true;
+      for (let _external_id_name of external_id_name) {
+        selectObj[_external_id_name] = jsonObj[_external_id_name];
+        if (selectObj[_external_id_name] != undefined) {
+          allUndefined = false;
+        }
+      }
+      if (!allUndefined) {
+        let filters = selectObjectToFilters(selectObj);
+        let records = await objectCollection.find({ filters });
+        if (records.length == 1) {
+          selectObj["space"] = space;
+          filters = selectObjectToFilters(selectObj);
+          records = await objectCollection.find({ filters });
+
+          if (records.length == 1) {
+            recordExists = true;
+          } else if (records.length > 1) {
+            errorInfo = `无法根据${external_id_name}: ${selectObj[external_id_name]}找到唯一的${objectName}记录`;
+          } else {
+            errorInfo = `所查找的记录不属于当前space`;
+          }
+        } else if (records.length > 1) {
+          errorInfo = `无法根据${external_id_name}: ${selectObj[external_id_name]}找到唯一的${objectName}记录`;
+        }
+      }
+    }
+  }
+  if (!errorInfo) {
+    let operation = options.operation; // insert update upsert
+    let filters = selectObjectToFilters(selectObj);
+    delete jsonObj._id;
+    if (recordExists && (operation == "update" || operation == "upsert")) {
+      try {
+        // if(options.userSession){
+        //     jsonObj['modified_by'] = options.userSession.userId;
+        // }
+        await objectCollection.update({ filters }, jsonObj);
+        insertInfo["create"] = false;
+        insertInfo["update"] = true;
+      } catch (error) {
+        console.error(error);
+        errorInfo = error.message;
+        insertInfo["update"] = false;
+        insertInfo["insertState"] = false;
+      }
+    } else if (
+      !recordExists &&
+      (operation == "insert" || operation == "upsert")
+    ) {
+      try {
+        if (
+          objectCollection.datasource.name == "default" ||
+          objectCollection.datasource.name == "meteor"
+        ) {
+          if (!jsonObj.owner && options.userSession) {
+            let userId = options.userSession.userId;
+            jsonObj["owner"] = userId;
+          }
+        }
+
+        // if (jsonObj.owner) {
+        //     let space_user_collection = await objectql.getObject('space_users')
+        //     let space_users = await space_user_collection.find(['user', '=', jsonObj.owner]);
+        //     let space_user = space_users [0]
+        //     jsonObj['created_by'] = space_user.user;
+        //     jsonObj['modified_by'] = space_user.user;
+        //     // jsonObj['company_id'] = space_user.company_id;
+        //     // jsonObj['company_ids'] = space_user.company_ids
+
+        // }
+        await objectCollection.insert(jsonObj, options.userSession);
+        insertInfo["create"] = true;
+        insertInfo["update"] = false;
+      } catch (error) {
+        console.error(error);
+        errorInfo = error.message;
+        insertInfo["create"] = false;
+        insertInfo["insertState"] = false;
+      }
+    } else {
+      insertInfo["ignored"] = true;
+    }
+  } else {
+    insertInfo["insertState"] = false;
+  }
+  insertInfo["errorInfo"] = errorInfo;
+  return insertInfo;
+}
 
 function selectObjectToFilters(selectObj) {
-
-    let filters: any = [];
-    for (let k in selectObj) {
-        let filter: any = [];
-        filter.push(k);
-        filter.push('=');
-        filter.push(selectObj[k]);
-        filters.push(filter);
-    }
-    return filters;
+  let filters: any = [];
+  for (let k in selectObj) {
+    let filter: any = [];
+    filter.push(k);
+    filter.push("=");
+    filter.push(selectObj[k]);
+    filters.push(filter);
+  }
+  return filters;
 }
 
 function loadWorkbook(file) {
-    var stream, chunks;
-    stream = file.createReadStream('files');
-    chunks = [];
+  var stream, chunks;
+  stream = file.createReadStream("files");
+  chunks = [];
 
-    let loadStream = new Promise(function (resolve, reject) {
-        stream.on('data', function (chunk) {
-            return chunks.push(chunk);
-        });
-        stream.on('end', function () {
-            let workbook = xlsx.parse(Buffer.concat(chunks), {
-                cellDates: true
-            });
-            resolve(workbook);
-        });
-    })
+  let loadStream = new Promise(function(resolve, reject) {
+    stream.on("data", function(chunk) {
+      return chunks.push(chunk);
+    });
+    stream.on("end", function() {
+      let workbook = xlsx.parse(Buffer.concat(chunks), {
+        cellDates: true,
+      });
+      resolve(workbook);
+    });
+  });
 
-    return loadStream;
+  return loadStream;
 }
 
-export async function importWithCmsFile(importObjId, userSession) {
+/**
+ *
+ * @param importObjId
+ * @param userSession
+ * @param fileId 如果指定了fileId，则使用此id; 否则使用importObject的file
+ * @returns
+ */
+export async function importWithCmsFile(
+  importObjId,
+  userSession,
+  importObjectHistoryId,
+  fileId
+) {
+  var file, files;
 
-    
+  let queueImport = await objectql
+    .getObject("queue_import")
+    .findOne(importObjId);
 
-    var file, files;
+  if (!queueImport) {
+    throw new Error(
+      `can not find queue_import record with given id "${importObjId}"`
+    );
+  }
+  let options: any = {
+    userSession,
+    objectName: queueImport.object_name,
+    operation: queueImport.operation,
+    externalIdName: queueImport.external_id_name,
+    fieldMappings: queueImport.field_mappings,
+    queueImportId: importObjId,
+    importObjectHistoryId: importObjectHistoryId,
+  };
 
-    let queueImport = await objectql.getObject("queue_import").findOne(importObjId);
+  if (
+    options.operation != "insert" &&
+    (!options.externalIdName || _.isEmpty(options.externalIdName))
+  ) {
+    throw new Error(
+      `external_id_name is required with operation: update or upsert`
+    );
+  }
 
-    if (!queueImport) {
-        throw new Error(`can not find queue_import record with given id "${importObjId}"`);
-    }
-    let options: any = {
-        userSession,
-        objectName: queueImport.object_name,
-        operation: queueImport.operation,
-        externalIdName: queueImport.external_id_name,
-        fieldMappings: queueImport.field_mappings,
-        queueImportId: importObjId
-    }
+  let fileCollection = await objectql.getObject("cfs_files_filerecord");
+  files = await fileCollection.find({
+    filters: [["_id", "=", fileId || queueImport.file]],
+  });
 
-    if(options.operation != "insert" && (!options.externalIdName || _.isEmpty(options.externalIdName))){
-        throw new Error(`external_id_name is required with operation: update or upsert`);
-    }
+  if (files && files.length == 0) {
+    throw new Error(`Upload excel file, please.`);
+  } else if (files.length > 1) {
+    throw new Error(`Just need one file.`);
+  }
+  file = files[0];
 
-    let fileCollection = await objectql.getObject('cfs_files_filerecord')
-    files = await fileCollection.find({ filters: [['_id', '=', queueImport.file]] });
+  await importWithExcelFile(file, options);
 
-    if (files && files.length == 0) {
-        throw new Error(`Upload excel file, please.`)
-    } else if (files.length > 1) {
-        throw new Error(`Just need one file.`)
-    }
-    file = files[0];
-
-    await importWithExcelFile(file, options);
-    
-    //先返回数据导入对象的id
-    return {
-        status: "success",
-        msg: ``,
-        queueImportId: queueImport._id
-    };
-
+  //先返回数据导入对象的id
+  return {
+    status: "success",
+    msg: ``,
+    queueImportId: queueImport._id,
+    importObjectHistoryId: importObjectHistoryId,
+  };
 }
 
 export async function importWithExcelFile(file, options) {
+  const start_time = new Date();
 
-    const start_time = new Date();
+  const allowedOperation = ["insert", "update", "upsert"];
+  if (!options.operation || !_.contains(allowedOperation, options.operation)) {
+    throw new Error(`unsupported operation "${options.operation}"`);
+  }
+  let fieldMappings = options.fieldMappings;
+  if (!fieldMappings) {
+    throw new Error(`fieldMapping is required`);
+  }
+  let objectConfig = await objectql.getObject(options.objectName).toConfig();
+  if (!objectConfig) {
+    throw new Error(`can not find object "${options.objectName}"`);
+  }
+  if (options.operation != "insert" && !options.externalIdName) {
+    throw new Error(`missing option: externalIdName`);
+  }
 
-    const allowedOperation = ['insert', 'update', 'upsert'];
-    if (!options.operation || !_.contains(allowedOperation, options.operation)) {
-        throw new Error(`unsupported operation "${options.operation}"`);
-    }
-    let fieldMappings = options.fieldMappings
-    if (!fieldMappings) {
-        throw new Error(`fieldMapping is required`)
-    }
-    let objectConfig = await objectql.getObject(options.objectName).toConfig();
-    if (!objectConfig) {
-        throw new Error(`can not find object "${options.objectName}"`)
-    }
-    if (!options.externalIdName) {
-        throw new Error(`missing option: externalIdName`)
+  let mappedFieldNames: any = [];
+  for (let i = 0; i < fieldMappings.length; i++) {
+    let mapping = fieldMappings[i];
+
+    if (!mapping || !mapping.api_name) {
+      continue;
     }
 
-    let mappedFieldNames: any = []
-    for (let i = 0; i < fieldMappings.length; i++) {
-        let mapping = fieldMappings[i];
+    if (_.contains(mappedFieldNames, mapping.api_name)) {
+      throw new Error(`field "${mapping.api_name}" should be mapped only once`);
+    }
+    mappedFieldNames.push(mapping.api_name);
+  }
 
-        if (!mapping || !mapping.api_name) {
-            continue;
+  if (options.operation != "insert") {
+    for (let _externalIdName of options.externalIdName) {
+      if (!_.contains(mappedFieldNames, _externalIdName)) {
+        throw new Error(
+          `externalIdName "${_externalIdName}" is not mapped in fieldMapping`
+        );
+      }
+      if (!_.contains(_.keys(objectConfig.fields), _externalIdName)) {
+        if (_externalIdName != "_id") {
+          throw new Error(
+            `externalIdName "${_externalIdName}" should be a field of object  "${options.objectName}"`
+          );
         }
+      }
+    }
+  }
 
-        if (_.contains(mappedFieldNames, mapping.api_name)) {
-            throw new Error(`field "${mapping.api_name}" should be mapped only once`)
+  for (let fieldName in objectConfig.fields) {
+    let field = objectConfig.fields[fieldName];
+    // update时必填字段需要被映射
+    if (
+      options.operation == "update" &&
+      field.required &&
+      !_.contains(mappedFieldNames, fieldName)
+    ) {
+      throw new Error(
+        `field "${fieldName}" is required but not mapped in fieldMapping`
+      );
+    }
+  }
+  let recordDatas = await filetoRecords(file, options);
+
+  async function importDataAsync(recordDatas) {
+    //在回调函数里面异步处理导入
+
+    let importResult: any = await importWithRecords(recordDatas, options);
+
+    //最后更新导入结果
+    const end_time = new Date();
+
+    if (options.queueImportId) {
+      await objectql.getObject("queue_import_history").directUpdate(
+        {
+          filters: ["_id", "=", options.importObjectHistoryId],
+        },
+        {
+          modified_by: options.userSession.userId,
+          error: importResult.errorList,
+          total_count: importResult.total_count,
+          success_count: importResult.success_count,
+          failure_count: importResult.failure_count,
+          state: "finished",
+          start_time,
+          end_time,
         }
-        mappedFieldNames.push(mapping.api_name);
+      );
+    }
+    let notificationBody = `总共导入${importResult.total_count}条记录;\n成功: ${importResult.success_count}条;\n失败: ${importResult.failure_count};`;
+    if (importResult.errorList && importResult.errorList.length > 0) {
+      notificationBody = `${notificationBody}\n错误信息: ${importResult.errorList.join(
+        "\n  "
+      )}`;
     }
 
-    for(let _externalIdName of options.externalIdName){
-        if (!_.contains(mappedFieldNames, _externalIdName)) {
-            throw new Error(`externalIdName "${_externalIdName}" is not mapped in fieldMapping`)
-        }
-        if (!_.contains(_.keys(objectConfig.fields), _externalIdName)) {
-            if (_externalIdName != "_id") {
-                throw new Error(`externalIdName "${_externalIdName}" should be a field of object  "${options.objectName}"`)
-            }
-        }
-    }
+    //发送通知
+    return Fiber(function() {
+      Creator.addNotifications(
+        {
+          name: `导入完成: ${file.original.name}`,
+          body: notificationBody,
+          related_to: {
+            o: "queue_import_history",
+            ids: [options.importObjectHistoryId],
+          },
+          related_name: file.original.name,
+          from: options.userSession.userId,
+          space: options.userSession.spaceId,
+        },
+        options.userSession.userId,
+        options.userSession.userId
+      );
+    }).run();
+  }
 
-    for (let fieldName in objectConfig.fields) {
-        let field = objectConfig.fields[fieldName];
-        // update时必填字段需要被映射
-        if (options.operation == 'update' && field.required && !_.contains(mappedFieldNames, fieldName)) {
-            throw new Error(`field "${fieldName}" is required but not mapped in fieldMapping`)
-        }
-    }
-    let recordDatas = await filetoRecords(file, options);
-
-    async function importDataAsync(recordDatas) {
-        //在回调函数里面异步处理导入
-
-        let importResult:any = await importWithRecords(recordDatas, options);
-
-        //最后更新导入结果
-        const end_time = new Date();
-
-        if(options.queueImportId){
-            await objectql.getObject("queue_import").directUpdate({
-                filters: ['_id', '=', options.queueImportId]
-            }, {
-                "object_name": options.objectName,
-                "external_id_name": options.externalIdName,
-                "modified_by": options.userSession.userId,
-                error: importResult.errorList,
-                total_count: importResult.total_count,
-                success_count: importResult.success_count,
-                failure_count: importResult.failure_count,
-                state: "finished",
-                start_time,
-                end_time
-            });
-        }
-
-    }
-
-    importDataAsync(recordDatas);
+  importDataAsync(recordDatas);
 }
 
 export async function filetoRecords (file, options) {

@@ -94,6 +94,8 @@ fields:
         value: upsert
   file:
     label: Excel File
+  template_url:
+    label: Template
 listviews:
   all:
     label: All Queues

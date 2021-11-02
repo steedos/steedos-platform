@@ -1,0 +1,57 @@
+name: queue_import_history
+label: Data Import History
+description: 
+fields:
+  queue_import:
+    label: Data Import Queue
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  success_count:
+    label: Number of Successful Records
+    help: 
+    description: 
+  failure_count:
+    label: Number of Failed Records
+    help: 
+    description: 
+  total_count:
+    label: Total Number
+    help: 
+    description: 
+  start_time:
+    label: Start Time
+    help: 
+    description: 
+  end_time:
+    label: End Time
+    help: 
+    description: 
+  state:
+    label: State
+    help: 
+    options:
+      - label: Finished
+        value: finished
+    description: 
+  error:
+    label: Error Message
+    help: 
+    description: 
+  file:
+    label: Excel File
+listviews:
+  all:
+    label: All Queues
+actions:
+  import:
+    label: Perform Import
+  downloadTemplate:
+    label: Download Template
+CustomLabels:
+  queue_import_action_import_execute_success: Executed
+  queue_import_action_import_need_file: Upload excel file, please.
+  queue_import_action_import_just_need_one_file: Just need one file.

@@ -136,3 +136,5 @@ actions:
     label: 关注
   standard_submit_for_approval:
     label: 提请批准
+  standard_import_data:
+    label: 导入数据

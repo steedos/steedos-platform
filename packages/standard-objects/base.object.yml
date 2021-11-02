@@ -19,7 +19,7 @@ fields:
     defaultValue: "{spaceId}"
   created:
     type: datetime
-    label: Creation Time 
+    label: Creation Time
     readonly: true
     sortable: true
     omit: true
@@ -302,27 +302,93 @@ fields:
     label: Object Workflow Related Form Table Code
     omit: true
     hidden: true
-actions: 
+actions:
   standard_query:
     label: Search
-  standard_new: 
+  standard_new:
     label: New
-  standard_open_view: 
+  standard_open_view:
     label: Open
-  standard_edit: 
+  standard_edit:
     label: Edit
-  standard_delete: 
+  standard_delete:
     label: Delete
-  standard_delete_many: 
+  standard_delete_many:
     label: Delete
-  standard_approve: 
+  standard_approve:
     label: Initiate Approval
-  standard_view_instance: 
+  standard_view_instance:
     label: View Instance
-  standard_follow: 
+  standard_follow:
     label: Follow
   standard_submit_for_approval:
     label: Submit for Approval
+  standard_import_data:
+    label: Import Data
+    on: list
+    todo: !!js/function |
+      function(object_name){
+        const clone = require('clone');
+        const objectName = "queue_import_history";
+        const object = Creator.getObject(objectName);
+        const initialValues = {object_name: object_name};
+        const objectSchema = {
+            fields: clone(object.fields)
+        };
+        objectSchema.fields.object_name.hidden = true;
+        SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+          name: `${objectName}_standard_new_form`,
+          objectApiName: objectName,
+          objectSchema: objectSchema,
+          title: '新建 ' + object.label,
+          initialValues: initialValues,
+          afterInsert: function(result){
+            if(result && result.length > 0){
+              const record_id = result[0]._id;
+              $("body").addClass("loading");
+              $.ajax({
+                url: Steedos.absoluteUrl("/api/data/initiateImport"),
+                type: "post",
+                data: {
+                  importObjectHistoryId: record_id
+                },
+                xhrFields: {
+                  withCredentials: true
+                },
+                success: function(res){
+                  $("body").removeClass("loading");
+                  SteedosUI.reloadRecord(objectName, record_id);
+                  FlowRouter.reload();
+                  toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
+                },
+                error: function(res){
+                  $("body").removeClass("loading");
+                  toastr.error(res.responseJSON.message);
+                }
+              });
+              FlowRouter.reload();
+              return true;
+            }
+            return false;
+            }
+        }, null, {iconPath: '/assets/icons'})
+      }
+    visible: !!js/function |
+      function(){
+        var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
+        var objectName = FlowRouter.current().params.object_name;
+        if(allowCreate){
+          var hasImportTemplates =  Creator.odata.query('queue_import', {
+            $filter: `(object_name eq '${objectName}')`,
+            $count: true,
+            $select: '_id'
+          }, true);
+          if(hasImportTemplates && hasImportTemplates.length > 0){
+            return true;
+          }
+        }
+        return false;
+      }
 permission_set:
   none:
     allowCreate: false
