@@ -1,6 +1,6 @@
 steedos-app-default:
   enable: true
-  version: 2.1.33
+  version: 2.1.37
   description: A Steedos App
   local: true
   path: steedos-app
