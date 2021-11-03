@@ -892,7 +892,9 @@ export class Mongo implements DatabaseInterface {
       isNumber(login_expiration_in_days) &&
       login_expiration_in_days > 0
     ) {
-      when = moment().subtract(login_expiration_in_days * 24 * 60, "minute").toDate();
+      when = moment()
+        .subtract((90 - login_expiration_in_days) * 24 * 60, "minute")
+        .toDate();
     }
 
     //创建Meteor token
@@ -915,7 +917,6 @@ export class Mongo implements DatabaseInterface {
     _user["services"]["resume"]["loginTokens"].push(hashedToken);
     let data = { services: _user["services"] };
     await this.collection.updateOne({ _id: userId }, { $set: data });
-
     return true;
   }
 
