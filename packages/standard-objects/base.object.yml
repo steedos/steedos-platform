@@ -378,12 +378,12 @@ actions:
         var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
         var objectName = FlowRouter.current().params.object_name;
         if(allowCreate){
-          var hasImportTemplates =  Creator.odata.query('queue_import', {
+          var hasImportTemplates = Steedos.authRequest("/api/v4/queue_import", {type: 'get', async: false, data: {
             $filter: `(object_name eq '${objectName}')`,
             $count: true,
             $select: '_id'
-          }, true);
-          if(hasImportTemplates && hasImportTemplates.length > 0){
+          }, error: function(){}});
+          if(hasImportTemplates && hasImportTemplates.value && hasImportTemplates.value.length > 0){
             return true;
           }
         }
