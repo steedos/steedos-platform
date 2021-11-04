@@ -414,15 +414,11 @@ module.exports = {
 						throw new Error(`请配置STEEDOS_CLOUD参数`);
 					}
 					const headers = Object.assign({}, { 'Content-Type': 'application/json' }, { [HEADER_AUTH]: `${AUTH_TYPE} apikey,${apiKey}` });
-					console.log(`headers`, headers);
-					console.log(`body`, JSON.stringify({ _authToken: auth }));
 					const response = await fetch(url, {
 						method: 'POST', headers: headers, body: JSON.stringify({ _authToken: auth })
 					});
 
 					const result = await response.json();
-
-					console.log(`result`, result);
 
 					if (result.error) {
 						throw new Error(`安装失败，软件包URL或认证信息错误`)
