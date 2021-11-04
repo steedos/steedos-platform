@@ -28,6 +28,12 @@ module.exports = {
                         is_wide: true,
                         label: "软件包URL",
                         visible_on: "{{formData.version ? false : true}}"
+                    },
+                    auth: {
+                        // required: "{{formData.version ? false : true}}",
+                        type: 'password',
+                        is_wide: true,
+                        label: "认证信息"
                     }
                 }
             },
@@ -37,7 +43,8 @@ module.exports = {
                         type: 'post', async: true, data: JSON.stringify({
                             module: values.module,
                             version: values.version,
-                            url: values.url
+                            url: values.url,
+                            auth: values.auth
                         }),
                         success: function () {
                             setTimeout(function () {

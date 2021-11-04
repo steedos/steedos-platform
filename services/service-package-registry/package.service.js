@@ -263,9 +263,9 @@ module.exports = {
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
 					}
-					const { module, version, url } = ctx.params
+					const { module, version, url, auth } = ctx.params
 					const enable = true;
-					return await this.installPackageFromUrl(module, version, url, enable, ctx.broker)
+					return await this.installPackageFromUrl(module, version, url, auth, enable, ctx.broker)
 				} catch (error) {
 					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
 				}
@@ -389,7 +389,7 @@ module.exports = {
             }
 		},
 		installPackageFromUrl: {
-			async handler(module, version, url, enable, broker) {
+			async handler(module, version, url, auth, enable, broker) {
 				if(!module || !_.isString(module) || !module.trim()){
 					throw new Error(`无效的软件包名称`);
 				}
@@ -403,6 +403,31 @@ module.exports = {
 					if (!version) {
 						version = 'latest'
 					}
+				}
+				const settings = this.settings;
+				if (url.startsWith(settings.STEEDOS_CLOUD_URL + '/api/pkg/download')) {
+					const apiKey = settings.STEEDOS_CLOUD_API_KEY
+					const spaceId = settings.STEEDOS_CLOUD_SPACE_ID
+					const cloudUrl = settings.STEEDOS_CLOUD_URL
+
+					if (!apiKey || !spaceId || !cloudUrl) {
+						throw new Error(`请配置STEEDOS_CLOUD参数`);
+					}
+					const headers = Object.assign({}, { 'Content-Type': 'application/json' }, { [HEADER_AUTH]: `${AUTH_TYPE} apikey,${apiKey}` });
+					console.log(`headers`, headers);
+					console.log(`body`, JSON.stringify({ _authToken: auth }));
+					const response = await fetch(url, {
+						method: 'POST', headers: headers, body: JSON.stringify({ _authToken: auth })
+					});
+
+					const result = await response.json();
+
+					console.log(`result`, result);
+
+					if (result.error) {
+						throw new Error(`安装失败，软件包URL或认证信息错误`)
+					}
+					url = `${url}/${result.token}`
 				}
 
 				const packagePath = await registry.installModule(module, version, url);
