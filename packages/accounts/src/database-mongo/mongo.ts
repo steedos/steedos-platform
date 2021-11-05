@@ -12,6 +12,7 @@ import { Collection, Db, ObjectID } from 'mongodb';
 import { AccountsMongoOptions, MongoUser } from './types';
 import { getSessionByUserId, hashStampedToken } from '@steedos/auth';
 import { isNumber } from "lodash";
+
 const moment = require("moment");
 
 const toMongoID = (objectId: string | ObjectID) => {
@@ -72,12 +73,22 @@ export class Mongo implements DatabaseInterface {
     );
   }
   public async findValidSessionsByUserId(
-    userId: string
+    userId: string,
+    is_phone: boolean
   ): Promise<Array<Session>> {
-    const sessions: any = await this.sessionCollection.find({
+    let query: any = {
       userId,
       valid: true,
-    });
+    };
+    if (is_phone) {
+      query.is_phone = true;
+    } else {
+      query.is_phone = { $ne: true };
+    }
+    const sessions: any = await this.sessionCollection
+      .find(query)
+      .project({ _id: 1 })
+      .toArray();
     if (sessions) {
       sessions.forEach(function(session) {
         session.id = session._id.toString();
@@ -544,7 +555,11 @@ export class Mongo implements DatabaseInterface {
     let ip = connection.ip;
     let userAgent = connection.userAgent;
     let login_expiration_in_days = connection.login_expiration_in_days;
-    let space = "";
+    let phone_login_expiration_in_days =
+      connection.phone_login_expiration_in_days;
+    let is_phone = connection.is_phone;
+    let is_tablet = connection.is_tablet;
+    let space = connection.space;
     if (userAgent) {
       const foo = userAgent.split(" Space/");
       if (foo.length > 1) {
@@ -553,11 +568,28 @@ export class Mongo implements DatabaseInterface {
       }
     }
 
-    if (space) {
-      return { ip, userAgent, space };
+    if (is_phone) {
+      login_expiration_in_days = phone_login_expiration_in_days;
     }
 
-    return { ip, userAgent, login_expiration_in_days };
+    if (space) {
+      return {
+        ip,
+        userAgent,
+        space,
+        is_phone,
+        is_tablet,
+        login_expiration_in_days,
+      };
+    }
+
+    return {
+      ip,
+      userAgent,
+      is_phone,
+      is_tablet,
+      login_expiration_in_days,
+    };
   }
 
   public async createSession(
@@ -582,11 +614,7 @@ export class Mongo implements DatabaseInterface {
     }
 
     const ret = await this.sessionCollection.insertOne(session);
-    await this.updateMeteorSession(
-      userId,
-      token,
-      infos.login_expiration_in_days
-    );
+    await this.updateMeteorSession(userId, token, infos);
     return ret.ops[0]._id.toString();
   }
 
@@ -883,10 +911,10 @@ export class Mongo implements DatabaseInterface {
   public async updateMeteorSession(
     userId: string,
     token: string,
-    login_expiration_in_days: number
+    infos: ConnectionInformations
   ): Promise<boolean | null> {
     let when = new Date();
-
+    const { login_expiration_in_days, is_phone, is_tablet } = infos;
     if (
       login_expiration_in_days &&
       isNumber(login_expiration_in_days) &&
@@ -904,6 +932,8 @@ export class Mongo implements DatabaseInterface {
     };
     let hashedToken: any = hashStampedToken(stampedAuthToken);
     hashedToken.created = new Date();
+    hashedToken.is_phone = is_phone;
+    hashedToken.is_tablet = is_tablet;
     let _user = await this.collection.findOne({ _id: userId });
     if (!_user["services"]) {
       _user["services"] = {};

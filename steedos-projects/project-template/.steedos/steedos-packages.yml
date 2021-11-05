@@ -1,6 +1,6 @@
 steedos-app-default:
   enable: true
-  version: 2.1.37
+  version: 2.1.38
   description: A Steedos App
   local: true
   path: steedos-app
@@ -16,3 +16,12 @@ steedos-app-default:
   description: ''
   local: false
   path: .steedos/node_modules/@steedos-labs/master
+try-package-test-crm:
+  enable: true
+  label: try-package-test-crm
+  version: 2.1.26
+  description: A Steedos App
+  local: false
+  url: >-
+    http://192.168.3.2:5000/api/pkg/download/try-package-test-crm/2.1.26/61837f7bdd2a5044680c468c
+  path: .steedos/node_modules/try-package-test-crm

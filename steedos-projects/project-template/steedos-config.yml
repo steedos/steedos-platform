@@ -39,10 +39,11 @@ tenant:
   background_url:
   enable_register: ${STEEDOS_TENANT_CONFIG_ENABLE_REGISTER} # 启用注册功能 true / false
   enable_forget_password: false
-  enable_create_tenant: true
-  enable_password_login: true
+  enable_create_tenant: false
+  enable_password_login: false
   enable_bind_email: false
-  enable_bind_mobile: false
+  enable_bind_mobile: true
+  enable_mobile_code_login: true
 sms:
   qcloud:
     smsqueue_interval: 1000

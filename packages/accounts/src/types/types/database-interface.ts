@@ -81,7 +81,10 @@ export interface DatabaseInterfaceSessions {
 
   findSessionByToken(token: string): Promise<Session | null>;
 
-  findValidSessionsByUserId(userId: string): Promise<Array<Session> | null>;
+  findValidSessionsByUserId(
+    userId: string,
+    is_phone: boolean
+  ): Promise<Array<Session> | null>;
 
   createSession(
     userId: string,
@@ -90,7 +93,10 @@ export interface DatabaseInterfaceSessions {
     extraData?: object
   ): Promise<string>;
 
-  updateSession(sessionId: string, connection: ConnectionInformations): Promise<void>;
+  updateSession(
+    sessionId: string,
+    connection: ConnectionInformations
+  ): Promise<void>;
 
   invalidateSession(sessionId: string): Promise<void>;
 
