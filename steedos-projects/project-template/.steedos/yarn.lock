@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@babel/runtime@^7.13.10":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.0.tgz#e27b977f2e2088ba24748bf99b5e1dece64e4f0b"
-  integrity sha512-Nht8L0O8YCktmsDV6FqFue7vQLRx3Hb0B37lS5y0jDRqRxlBG4wIJHnf9/bgSE2UyipKFA01YtS+npRdTWBUyw==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
 "@steedos-labs/master@2.1.17":
   version "2.1.17"
   resolved "https://registry.yarnpkg.com/@steedos-labs/master/-/master-2.1.17.tgz#0dd693da48c46b0975c5bb9740d88c149390bcc2"
@@ -31,14 +24,3 @@
   version "2.0.51"
   resolved "https://registry.nlark.com/@steedos/app-crm/download/@steedos/app-crm-2.0.51.tgz#2db47346be1afc38a5f05b37efe3b79d30c25eab"
   integrity sha1-LbRzRr4a/Dil8Fs37+O3nTDCXqs=
-
-regenerator-runtime@^0.13.4:
-  version "0.13.9"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
-  integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
-
-"try-package-test-crm@http://192.168.3.2:5000/api/pkg/download/try-package-test-crm/2.1.26/61837f7bdd2a5044680c468c":
-  version "2.1.26"
-  resolved "http://192.168.3.2:5000/api/pkg/download/try-package-test-crm/2.1.26/61837f7bdd2a5044680c468c#3ada46a042ffe7c0ecbe0fe1ee66980dbd11142c"
-  dependencies:
-    "@babel/runtime" "^7.13.10"
