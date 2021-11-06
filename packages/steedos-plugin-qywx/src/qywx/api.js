@@ -366,7 +366,7 @@ router.get('/api/qiyeweixin/listen', async function (req, res) {
     // console.log(query)
     var dtSpace = await Qiyeweixin.getSpace();
     // console.log("dtSpace: ",dtSpace);
-    var APP_KEY = dtSpace.qywx_key;
+    // var APP_KEY = dtSpace.qywx_key;
     var APP_SECRET = dtSpace.qywx_secret;
     var AES_KEY = dtSpace.qywx_aes_key;
     var TOKEN = dtSpace.qywx_token;
@@ -408,7 +408,7 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
 
     var dtSpace = await Qiyeweixin.getSpace();
     // console.log("dtSpace: ",dtSpace);
-    var APP_KEY = dtSpace.qywx_key;
+    // var APP_KEY = dtSpace.qywx_key;
     var APP_SECRET = dtSpace.qywx_secret;
     var AES_KEY = dtSpace.qywx_aes_key;
     var TOKEN = dtSpace.qywx_token;
