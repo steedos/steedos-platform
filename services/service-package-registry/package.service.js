@@ -405,7 +405,7 @@ module.exports = {
 					}
 				}
 				const settings = this.settings;
-				if (url.startsWith(settings.STEEDOS_CLOUD_URL + '/api/pkg/download')) {
+				if (url && url.startsWith(settings.STEEDOS_CLOUD_URL + '/api/pkg/download')) {
 					const apiKey = settings.STEEDOS_CLOUD_API_KEY
 					const spaceId = settings.STEEDOS_CLOUD_SPACE_ID
 					const cloudUrl = settings.STEEDOS_CLOUD_URL
