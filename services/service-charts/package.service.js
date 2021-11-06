@@ -119,8 +119,45 @@ module.exports = {
                 const { recordId } = ctx.params;
                 let queryRecord = await this.getQueryRecord(recordId);
 				return await this.formatQuery(queryRecord);
-            }
-        },
+			}
+		},
+		searchQueries: {
+			rest: {
+				method: "GET",
+				path: "/queries"
+			},
+			async handler(ctx) {
+				const { q } = ctx.params;
+				const queries = await objectql.getObject('queries').find({ filters: [['label', 'contains', q], 'or', ['name', 'contains', q]], sort: 'modified desc' });
+				return {
+					count: queries.length,
+					page: 1,
+					page_size: queries.length,
+					results: queries
+				}
+			}
+		},
+		queryDropdowns: {
+			rest: {
+				method: "GET",
+				path: "/queries/:queryId/dropdowns/:dropdownQueryId"
+			},
+			async handler(ctx) {
+				const { queryId, dropdownQueryId } = ctx.params;
+
+				return await this.dropdownValues(dropdownQueryId);
+			}
+		},
+		getQueriesRecent: {
+			rest: {
+				method: "GET",
+				path: "/queries/recent"
+			},
+			async handler(ctx) {
+				const queries = await objectql.getObject('queries').find({ sort: 'modified desc', top: 10 });
+				return queries;
+			}
+		},
 		addQuery: {
 			rest: {
                 method: "POST",
@@ -413,34 +450,39 @@ module.exports = {
 						throw new Error(`not find Data Source.`)
 					}
 					if ('mongo' === datasource.driver) {
-						let query = null;
-						try {
-							query = JSON.parse(record.query);
-						} catch (error) {
-							throw new Error(`Invalid query.`)
-						}
-						if (!query.collection) {
-							throw new Error(`collection is required`)
-						}
+						// let query = null;
+						// try {
+						// 	query = JSON.parse(record.query);
+						// } catch (error) {
+						// 	throw new Error(`Invalid query.`)
+						// }
+						// if (!query.collection) {
+						// 	throw new Error(`collection is required`)
+						// }
 						if (!record.options) {
 							record.options = { parameters: [] }
 						}
 						if (!record.options.parameters) {
 							record.options.parameters = []
 						}
-						const parameterized_query = this.joinParameterListValues(parameters, record.options.parameters || [])
-						const invalidParameterNames = _.compact(_.map(record.options.parameters, (definition) => {
-							if (!this.validParameter(definition, parameterized_query[definition.name])) {
-								return definition.name
+						const invalidParameterNames = [];
+						for (const definition of record.options.parameters) {
+							const valid = await this.validParameter(definition, parameters[definition.name])
+							if (!valid) {
+								invalidParameterNames.push(definition.name)
 							}
-						}))
+						}
 						if (invalidParameterNames && invalidParameterNames.length > 0) {
 							throw new Error(`The following parameter values are incompatible with their definitions: ${invalidParameterNames.join(',')}`)
 						}
-						const queryString = this.mustacheRender(JSON.stringify(query), parameterized_query);
+
+						const parameterized_query = this.joinParameterListValues(parameters, record.options.parameters || [])
+						const queryString = this.mustacheRender(record.query, parameterized_query);
+						let query = null;
 						try {
 							query = JSON.parse(queryString);
 						} catch (Exception) {
+							console.error(`queryString`, queryString, Exception);
 							throw new Error(`Invalid query.`)
 						}
 
@@ -486,9 +528,9 @@ module.exports = {
 			}
 		},
 		validParameter: {
-			handler(definition, value) {
+			async handler(definition, value) {
 				let enum_options = definition.enumOptions
-				// let query_id = definition.queryId
+				let query_id = definition.queryId
 				let type = definition.type
 				let allow_multiple_values = _.isObject(definition.multiValuesOptions)
 				if (_.isString(enum_options)) {
@@ -506,6 +548,10 @@ module.exports = {
 						return false;
 					}
 				}
+				let dropdownValues = []
+				if (query_id) {
+					dropdownValues = _.map(await this.dropdownValues(query_id), 'value');
+				}
 
 				const validators = {
 					text: (value) => {
@@ -522,8 +568,11 @@ module.exports = {
 						}
 					},
 					query: (value) => {
-						//暂时不支持query
-						return false;
+						if (_.isArray(value)) {
+							return allow_multiple_values && _.difference(value, dropdownValues).length == 0
+						} else {
+							return _.includes(dropdownValues, String(value))
+						}
 					},
 					date: _isDate,
 					"datetime-local": _isDate,
@@ -732,6 +781,32 @@ module.exports = {
 						this.cleaupQueryJob(queryId);
 					}
 				}
+			}
+		},
+		dropdownValues: {
+			async handler(dropdownQueryId) {
+				const { data } = await this.getQueryResult(dropdownQueryId, {}, 0);
+
+				if (!data || !data.columns || data.columns.length === 0) {
+					return [];
+				}
+
+				const first_column = data["columns"][0]["name"];
+
+				return _.map(data.rows, (row) => {
+					const rowKeys = _.keys(row);
+					const name_column = _.find(rowKeys, (key) => {
+						if (key && key.toLocaleLowerCase() == 'name') {
+							return true;
+						}
+					}) || first_column;
+					const value_column = _.find(rowKeys, (key) => {
+						if (key && key.toLocaleLowerCase() == 'value') {
+							return true;
+						}
+					}) || first_column;
+					return { "name": row[name_column], "value": String(row[value_column]) }
+				})
 			}
 		}
 	},

@@ -5,18 +5,18 @@ const checkQuery = (queryStr)=>{
     // if(!query){
     //     throw new Error('查询脚本为必填');
     // }
-    let query = null;
-    try {
-        query = JSON.parse(queryStr);
-    } catch (error) {
-        throw new Error(`无效的查询脚本.`)
-    }
-    if(!query.collection){
-        throw new Error(`查询脚本缺少collection`)
-    }
-    if(!query.aggregate && !query.query){
-        throw new Error(`查询脚本需要配置aggregate或query`)
-    }
+    // let query = null;
+    // try {
+    //     query = JSON.parse(queryStr);
+    // } catch (error) {
+    //     throw new Error(`无效的查询脚本.`)
+    // }
+    // if(!query.collection){
+    //     throw new Error(`查询脚本缺少collection`)
+    // }
+    // if(!query.aggregate && !query.query){
+    //     throw new Error(`查询脚本需要配置aggregate或query`)
+    // }
 }
 
 
