@@ -147,4 +147,6 @@ Meteor.methods
 			# 如果是会签则给会签未提交的人发送push
 			_.each rest_counter_users, (user_id)->
 				pushManager.send_message_to_specifyUser("current_user", user_id)
+			# 如果已经配置webhook并已激活则触发
+			pushManager.triggerWebhook(instance.flow, instance, {}, 'return', current_user, instance.inbox_users)
 		return true
