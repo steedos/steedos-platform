@@ -35,6 +35,12 @@ const objectUpdate = function (objectApiName, id, data) {
     }, { objectApiName: objectApiName, id: id, data: data })
 }
 
+const objectUpdateMany = function (objectApiName, filters, data) {
+    return objectql.wrapAsync(async function () {
+        return await objectql.getObject(this.objectApiName).updateMany(this.filters, this.data)
+    }, { objectApiName: objectApiName, filters: filters, data: data })
+}
+
 const getRelateds = function (objectApiName) {
     return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).getRelateds()
@@ -910,7 +916,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     instance_state = ins.final_decision;
                 }
                 setObj['instances.$.state'] = setObj.instance_state = instance_state;
-                objectUpdate(objectName, { filters: [['_id', '=', record._id], ['instances._id', '=', insId]] }, setObj)
+                objectUpdateMany(objectName, [['_id', '=', record._id], ['instances._id', '=', insId]], setObj)
                 // objectCollection.update({
                 //     _id: record._id,
                 //     'instances._id': insId
@@ -944,7 +950,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
             } catch (error) {
                 console.error(error.stack);
 
-                objectUpdate(objectName, { filters: [['_id', '=', record._id], ['instances._id', '=', insId]] }, {
+                objectUpdateMany(objectName, [['_id', '=', record._id], ['instances._id', '=', insId]], {
                     'instances.$.state': 'pending',
                     'instance_state': 'pending'
                 })
