@@ -69,6 +69,9 @@ async function converterSelect(objectName, field_name, dataCell, jsonObj) {
   allowedLabels = _.pluck(field.options, "label");
   let optionsMap = _.object(allowedLabels, allowedValues);
 
+  let hasOptionsFunction =
+    !_.isEmpty(field.optionsFunction) || _.isFunction(field.optionsFunction);
+
   let cellContents: any = [];
   let noResult = true;
   if (field.multiple) {
@@ -86,7 +89,7 @@ async function converterSelect(objectName, field_name, dataCell, jsonObj) {
       continue;
     }
 
-    if (allowedLabels.indexOf(cellContent) >= 0) {
+    if (allowedLabels.indexOf(cellContent) >= 0 || hasOptionsFunction) {
       noResult = false;
       if (field.multiple) {
         jsonObj[field_name].push(optionsMap[cellContent]);
