@@ -263,7 +263,7 @@ module.exports = {
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
 					}
-					const { module, version, url, auth } = ctx.params
+					let { module, version, url, auth } = ctx.params
 					const enable = true;
 					return await this.installPackageFromUrl(module, version, url, auth, enable, ctx.broker)
 				} catch (error) {
@@ -392,18 +392,24 @@ module.exports = {
 			async handler(module, version, url, auth, enable, broker) {
 				if(!module || !_.isString(module) || !module.trim()){
 					throw new Error(`无效的软件包名称`);
+				} else {
+					module = module.trim();
 				}
 				if (url && !registry.isPackageUrl(url)) {
 					throw new Error(`无效的软件包地址`);
 				}
 				if (url) {
+					url = url.trim();
 					version = null;
 				} else {
 					url = null;
 					if (!version) {
 						version = 'latest'
+					} else {
+						version = version.trim();
 					}
 				}
+
 				const settings = this.settings;
 				if (url && url.startsWith(settings.STEEDOS_CLOUD_URL + '/api/pkg/download')) {
 					const apiKey = settings.STEEDOS_CLOUD_API_KEY
@@ -424,6 +430,7 @@ module.exports = {
 						throw new Error(`安装失败，软件包URL或认证信息错误`)
 					}
 					url = `${url}/${result.token}`
+					console.log(`url`, url);
 				}
 
 				const packagePath = await registry.installModule(module, version, url);
