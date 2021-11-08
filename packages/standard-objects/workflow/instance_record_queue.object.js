@@ -824,7 +824,7 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
                 tableMap[table_code] = []
             };
             tableMap[table_code].push(table_id);
-            var oldRelatedRecord = Creator.getCollection(relatedObject.object_name, spaceId).findOne({ [relatedObject.foreign_key]: mainRecordId, "instances._id": insId, _table: relatedObjectValue._table }, { fields: { _id: 1 } })
+            var oldRelatedRecord = Creator.getCollection(relatedObject.object_name, spaceId).findOne({ [relatedObject.foreign_key]: mainRecordId, _table: relatedObjectValue._table }, { fields: { _id: 1 } })
             if (oldRelatedRecord) {
                 objectUpdate(relatedObject.object_name, oldRelatedRecord._id, relatedObjectValue)
                 // Creator.getCollection(relatedObject.object_name, spaceId).update({ _id: oldRelatedRecord._id }, { $set: relatedObjectValue })
@@ -856,7 +856,7 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
             tableIds = _.compact(tableIds);
             objectCollection.remove({
                 [relatedObject.foreign_key]: mainRecordId,
-                "instances._id": insId,
+                // "instances._id": insId,
                 "_table._code": tableCode,
                 "_table._id": { $nin: tableIds }
             })
