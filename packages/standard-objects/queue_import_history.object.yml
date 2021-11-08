@@ -75,6 +75,7 @@ list_views:
       - state
       - created_by
     filter_scope: space
+    sort: [["start_time", "desc"]]
 permission_set:
   user:
     allowCreate: true
