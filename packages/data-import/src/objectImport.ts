@@ -70,7 +70,9 @@ async function converterSelect(objectName, field_name, dataCell, jsonObj) {
   let optionsMap = _.object(allowedLabels, allowedValues);
 
   let hasOptionsFunction =
-    !_.isEmpty(field.optionsFunction) || _.isFunction(field.optionsFunction);
+    !_.isEmpty(field.optionsFunction) ||
+    !_.isEmpty(field._optionsFunction) ||
+    _.isFunction(field.optionsFunction);
 
   let cellContents: any = [];
   let noResult = true;
