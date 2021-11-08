@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp",
-  "version": "2.1.41",
+  "version": "2.1.42",
   "private": false,
   "license": "MIT",
   "main": "lib/exports.js",
