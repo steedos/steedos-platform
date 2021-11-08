@@ -388,6 +388,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
   insertInfo["insertState"] = true;
   let selectObj = {};
   let recordExists = false;
+  let recordExistsDoc: any = null;
   let objectCollection = await objectql.getObject(objectName);
 
   if (jsonObj && !errorInfo) {
@@ -417,6 +418,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
 
           if (records.length == 1) {
             recordExists = true;
+            recordExistsDoc = records[0];
           } else if (records.length > 1) {
             errorInfo = `无法根据${external_id_name}: ${selectObj[external_id_name]}找到唯一的${objectName}记录`;
           } else {
@@ -432,12 +434,16 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
     let operation = options.operation; // insert update upsert
     let filters = selectObjectToFilters(selectObj);
     delete jsonObj._id;
-    if (recordExists && (operation == "update" || operation == "upsert")) {
+    if (
+      recordExists &&
+      recordExistsDoc &&
+      (operation == "update" || operation == "upsert")
+    ) {
       try {
         // if(options.userSession){
         //     jsonObj['modified_by'] = options.userSession.userId;
         // }
-        await objectCollection.update({ filters }, jsonObj);
+        await objectCollection.update(recordExistsDoc._id, jsonObj);
         insertInfo["create"] = false;
         insertInfo["update"] = true;
       } catch (error) {
