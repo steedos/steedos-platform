@@ -152,7 +152,7 @@ fields:
                 return []
               }
             }
-    required: false
+    required: "{{formData.operation != 'insert' ? true : false}}"
     name: external_id_name
     filterable: true
   template_url:
