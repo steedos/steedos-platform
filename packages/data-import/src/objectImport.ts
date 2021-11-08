@@ -1,8 +1,7 @@
-
-const fs = require('fs');
-const path = require('path');
-const _ = require('underscore');
-const objectql = require('@steedos/objectql');
+const fs = require("fs");
+const path = require("path");
+const _ = require("underscore");
+const objectql = require("@steedos/objectql");
 const Fiber = require("fibers");
 const xlsx = require("node-xlsx");
 declare var Creator: any;
@@ -39,15 +38,24 @@ function converterDate(field_name, dataCell, jsonObj) {
   return date_error;
 }
 
-function converteNum(field_name, dataCell, jsonObj) {
+function converteNum(field, field_name, dataCell, jsonObj) {
   var number, number_error;
   number_error = "";
-  number = parseFloat(dataCell);
-  if (!isNaN(number)) {
-    jsonObj[field_name] = number;
-  } else {
-    number_error = `${dataCell}不是数值类型数据`;
+  if(_.isNumber(dataCell) || _.isNull(dataCell)){
+    jsonObj[field_name] = dataCell;
+  }else{
+    number = parseFloat(dataCell);
+    if (!isNaN(number)) {
+      jsonObj[field_name] = number;
+    } else {
+      number_error = `${dataCell}不是数值类型数据`;
+    }
   }
+
+  if (field.required && _.isEmpty(number_error) && _.isNull(jsonObj[field_name])) {
+    number_error += `${field_name}字段为必填项`;
+  }
+  
   return number_error;
 }
 
@@ -273,7 +281,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
     dataRow.length > mappings.length ? dataRow.length : mappings.length;
   for (let i = 0; i < dataLength; i++) {
     let dataCell = dataRow[i];
-    if (!dataCell) {
+    if (!dataCell && !_.isNumber(dataCell)) {
       dataCell = null;
     }
 
@@ -298,7 +306,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                 error = converterDate(field_name, dataCell, jsonObj);
                 break;
               case "number":
-                error = converteNum(field_name, dataCell, jsonObj);
+                error = converteNum(field, field_name, dataCell, jsonObj);
                 break;
               case "boolean":
                 error = converterBool(field_name, dataCell, jsonObj);
@@ -347,10 +355,10 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                 error = converterString(field_name, dataCell, jsonObj);
                 break;
               case "currency":
-                error = converteNum(field_name, dataCell, jsonObj);
+                error = converteNum(field, field_name, dataCell, jsonObj);
                 break;
               case "percent":
-                error = converteNum(field_name, dataCell, jsonObj);
+                error = converteNum(field, field_name, dataCell, jsonObj);
                 break;
               default:
                 throw new Error(`Unsupported data type: ${field.type}`);
@@ -697,128 +705,130 @@ export async function importWithExcelFile(file, options) {
   importDataAsync(recordDatas);
 }
 
-export async function filetoRecords (file, options) {
-    let workbook: any = await loadWorkbook(file)
-    var data, headers, recordDatas;
+export async function filetoRecords(file, options) {
+  let workbook: any = await loadWorkbook(file);
+  var data, headers, recordDatas;
 
-    data = workbook[0].data;
-    headers = data[0]
-    recordDatas = data.slice(1);
+  data = workbook[0].data;
+  headers = data[0];
+  recordDatas = data.slice(1);
 
-    let fieldMappings = options.fieldMappings
-    let keyIndexes:number[] = [], lookupFieldMap = {};
-    let parsedMappings: any = []
+  let fieldMappings = options.fieldMappings;
+  let keyIndexes: number[] = [],
+    lookupFieldMap = {};
+  let parsedMappings: any = [];
 
-    let headerMap = {}
-    for (let i = 0; i < headers.length; i++) {
-        let header = headers[i]
-        for (let j = 0; j < fieldMappings.length; j++) {
-            let mapping = fieldMappings[j];
-            if (mapping.header == header) {
-                if (_.contains(options.externalIdName, mapping.api_name)) {
-                    keyIndexes.push(i);
-                }
-                lookupFieldMap[mapping.api_name] = { save_key_while_fail: mapping.save_key_while_fail }
-                if (mapping.matched_by) {
-                    lookupFieldMap[mapping.api_name]['matched_by'] = mapping.matched_by
-                }
-                mapping.mapped = true;
-                if (!parsedMappings[i]) {
-                    parsedMappings[i] = [];
-                }
-                parsedMappings[i].push(mapping.api_name)
-                headers[i] = null
-                // break;
-            }
+  let headerMap = {};
+  for (let i = 0; i < headers.length; i++) {
+    let header = headers[i];
+    for (let j = 0; j < fieldMappings.length; j++) {
+      let mapping = fieldMappings[j];
+      if (mapping.header == header) {
+        if (_.contains(options.externalIdName, mapping.api_name)) {
+          keyIndexes.push(i);
         }
+        lookupFieldMap[mapping.api_name] = {
+          save_key_while_fail: mapping.save_key_while_fail,
+        };
+        if (mapping.matched_by) {
+          lookupFieldMap[mapping.api_name]["matched_by"] = mapping.matched_by;
+        }
+        mapping.mapped = true;
         if (!parsedMappings[i]) {
-            parsedMappings[i] = null;
+          parsedMappings[i] = [];
         }
-        if (headerMap[header]) {
-            throw new Error(`The Excel file contained duplicate header(s): ${header}`)
-        } else {
-            headerMap[header] = true;
-        }
+        parsedMappings[i].push(mapping.api_name);
+        headers[i] = null;
+        // break;
+      }
     }
-    options.mappings = parsedMappings;
-    options.keyIndexes = keyIndexes;
-
-
-    if (recordDatas.length > 50000) {
-        throw new Error(`The data file exceeds the row limit of 50,000.`);
+    if (!parsedMappings[i]) {
+      parsedMappings[i] = null;
     }
-    options.lookupFieldMap = lookupFieldMap;
-    return recordDatas;
+    if (headerMap[header]) {
+      throw new Error(
+        `The Excel file contained duplicate header(s): ${header}`
+      );
+    } else {
+      headerMap[header] = true;
+    }
+  }
+  options.mappings = parsedMappings;
+  options.keyIndexes = keyIndexes;
+
+  if (recordDatas.length > 50000) {
+    throw new Error(`The data file exceeds the row limit of 50,000.`);
+  }
+  options.lookupFieldMap = lookupFieldMap;
+  return recordDatas;
 }
 
-function getKeyString(dataRow, keyIndexes){
-    let key = '';
+function getKeyString(dataRow, keyIndexes) {
+  let key = "";
 
-    for(let j=0; j<keyIndexes.length; j++){
-        key += dataRow[keyIndexes[j]];
-    }
-    return key;
+  for (let j = 0; j < keyIndexes.length; j++) {
+    key += dataRow[keyIndexes[j]];
+  }
+  return key;
 }
 export async function importWithRecords(recordDatas, options) {
-    var failure_count, success_count;
-    success_count = 0;
-    failure_count = 0;
-    var errorList:any[] = [];
-    var total_count = recordDatas.length;
-    let keyMap: any = {};
+  var failure_count, success_count;
+  success_count = 0;
+  failure_count = 0;
+  var errorList: any[] = [];
+  var total_count = recordDatas.length;
+  let keyMap: any = {};
 
-    let objectName = options.objectName
-    let keyIndexes = options.keyIndexes;
+  let objectName = options.objectName;
+  let keyIndexes = options.keyIndexes;
 
-    for (let i = 0; i < recordDatas.length; i++) {
-        let dataRow = recordDatas[i];
-        
-        let key = getKeyString(dataRow, keyIndexes);
+  for (let i = 0; i < recordDatas.length; i++) {
+    let dataRow = recordDatas[i];
 
-        let keyCount = keyMap[key]
-        if (typeof keyCount == 'undefined') {
-            keyCount = keyMap[key] = 1
-        } else {
-            keyMap[key] = keyMap[key] + 1
-        }
+    let key = getKeyString(dataRow, keyIndexes);
+
+    let keyCount = keyMap[key];
+    if (typeof keyCount == "undefined") {
+      keyCount = keyMap[key] = 1;
+    } else {
+      keyMap[key] = keyMap[key] + 1;
+    }
+  }
+
+  for (let i = 0; i < recordDatas.length; i++) {
+    let dataRow = recordDatas[i];
+    if (!dataRow || dataRow.length == 0) {
+      continue;
     }
 
-    for (let i = 0; i < recordDatas.length; i++) {
-        let dataRow = recordDatas[i];
-        if(!dataRow || dataRow.length == 0){
-            continue;
-        }
+    if (!options.externalIdName && !_.isEmpty(options.externalIdName)) {
+      let key = getKeyString(dataRow, keyIndexes);
 
-        if(!options.externalIdName && !_.isEmpty(options.externalIdName)){
-
-            let key = getKeyString(dataRow, keyIndexes);
-    
-            if (keyMap[key] > 1) {
-                failure_count = failure_count + 1;
-                errorList.push(`文件中存在重复的${options.externalIdName}: "${key}"`);
-                continue;
-            }
-        }
-
-        var insertInfo;
-        insertInfo = await insertRow(dataRow, objectName, options);
-
-        if (insertInfo != null ? insertInfo.errorInfo : void 0) {
-            errorList.push(dataRow + insertInfo.errorInfo);
-        }
-        // 	# 插入一行数据	
-        if (insertInfo != null ? insertInfo.insertState : void 0) {
-            success_count = success_count + 1;
-        } else {
-            failure_count = failure_count + 1;
-        }
-        
+      if (keyMap[key] > 1) {
+        failure_count = failure_count + 1;
+        errorList.push(`文件中存在重复的${options.externalIdName}: "${key}"`);
+        continue;
+      }
     }
 
-    return {
-        errorList,
-        total_count,
-        success_count,
-        failure_count
+    var insertInfo;
+    insertInfo = await insertRow(dataRow, objectName, options);
+
+    if (insertInfo != null ? insertInfo.errorInfo : void 0) {
+      errorList.push(dataRow + insertInfo.errorInfo);
     }
+    // 	# 插入一行数据
+    if (insertInfo != null ? insertInfo.insertState : void 0) {
+      success_count = success_count + 1;
+    } else {
+      failure_count = failure_count + 1;
+    }
+  }
+
+  return {
+    errorList,
+    total_count,
+    success_count,
+    failure_count,
+  };
 }
