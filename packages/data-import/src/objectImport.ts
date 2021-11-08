@@ -90,8 +90,14 @@ async function converterSelect(objectName, field_name, dataCell, jsonObj) {
     if (!cellContent) {
       continue;
     }
-
-    if (allowedLabels.indexOf(cellContent) >= 0 || hasOptionsFunction) {
+    if (hasOptionsFunction) {
+      noResult = false;
+      if (field.multiple) {
+        jsonObj[field_name].push(cellContent);
+      } else {
+        jsonObj[field_name] = cellContent;
+      }
+    } else if (allowedLabels.indexOf(cellContent) >= 0) {
       noResult = false;
       if (field.multiple) {
         jsonObj[field_name].push(optionsMap[cellContent]);
