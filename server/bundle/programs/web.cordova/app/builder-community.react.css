@@ -36742,6 +36742,63 @@ table.pvtTable tbody tr td {
 }
 
 
+.parameters-mapping-list .keyword {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.parameters-mapping-list .keyword code {
+  white-space: nowrap;
+}
+.parameters-mapping-list .tag {
+  margin: 0;
+  pointer-events: none;
+}
+.parameters-mapping-list .tag:empty {
+  display: none;
+}
+.parameter-mapping-editor {
+  width: 390px;
+}
+.parameter-mapping-editor .radio {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+}
+.parameter-mapping-editor .form-item {
+  margin-bottom: 10px;
+}
+.parameter-mapping-editor header {
+  padding: 0 16px 10px;
+  margin: 0 -16px 20px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+.parameter-mapping-editor footer {
+  padding: 10px 16px 0;
+  margin: 0 -16px;
+  text-align: right;
+}
+.parameter-mapping-editor footer button {
+  margin-left: 8px;
+}
+.parameter-mapping-title .text {
+  margin-right: 3px;
+}
+.parameter-mapping-title.disabled,
+.parameter-mapping-title .fa {
+  color: #a4a4a4;
+}
+.parameter-mapping-title .fa-eye-slash {
+  margin-left: 1px;
+}
+.parameter-mapping-title-editor input {
+  width: 100px;
+}
+.parameter-mapping-title-editor button {
+  margin-left: 2px;
+}
 
 .steedos-page {
   /* --------------------------------------------------------
