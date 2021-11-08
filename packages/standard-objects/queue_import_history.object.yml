@@ -53,7 +53,8 @@ fields:
         value: finished
   error:
     label: Error Message
-    type: '[text]'
+    type: html
+    is_wide: true
     omit: true
     name: error
   file:

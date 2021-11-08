@@ -594,6 +594,19 @@ export async function importWithCmsFile(
   };
 }
 
+const formatErrors = function(errorList) {
+  let errors: any = null;
+
+  if (errorList && _.isArray(errorList) && errorList.length > 0) {
+    errors = "";
+    _.each(errorList, (item, index) => {
+      errors = `${errors}\n:::warning\n${item}\n\n:::\n\n\\\n`;
+    });
+  }
+
+  return errors;
+};
+
 export async function importWithExcelFile(file, options) {
   const start_time = new Date();
 
@@ -674,7 +687,7 @@ export async function importWithExcelFile(file, options) {
         },
         {
           modified_by: options.userSession.userId,
-          error: importResult.errorList,
+          error: formatErrors(importResult.errorList),
           total_count: importResult.total_count,
           success_count: importResult.success_count,
           failure_count: importResult.failure_count,
