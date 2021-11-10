@@ -12,6 +12,7 @@ admin_menus:
     permission_sets:
       - user
       - customer
+      - supplier
     expanded: false
     mobile: false
     sort: 100
@@ -20,6 +21,7 @@ admin_menus:
     permission_sets:
       - user
       - customer
+      - supplier
     parent: account
     object_name: users
     mobile: false
