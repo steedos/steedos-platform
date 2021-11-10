@@ -15,7 +15,7 @@ try
 				"@steedos/accounts",
 				"@steedos/steedos-plugin-schema-builder",
 				"@steedos/plugin-enterprise",
-				"@steedos/word-template",
+				# "@steedos/word-template",
 				"@steedos/metadata-api",
 				"@steedos/plugin-dingtalk",
 				"@steedos/data-import",
