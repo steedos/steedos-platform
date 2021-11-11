@@ -488,10 +488,10 @@ fields:
     type: boolean
     label: Hidden
     group: Advanced
-  omit:
-    type: boolean
-    label: Omit
-    group: Advanced
+  # omit:
+  #   type: boolean
+  #   label: Omit
+  #   group: Advanced
   index:
     type: boolean
     label: Is Index Field
