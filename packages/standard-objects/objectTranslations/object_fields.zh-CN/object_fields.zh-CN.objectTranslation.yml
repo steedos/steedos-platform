@@ -173,6 +173,8 @@ fields:
         value: min
       - label: MAX
         value: max
+      - label: AVG
+        value: avg
     description: 
   summary_field:
     label: 要聚合的字段

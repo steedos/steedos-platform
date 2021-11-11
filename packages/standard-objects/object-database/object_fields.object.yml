@@ -332,6 +332,8 @@ fields:
         value: min
       - label: MAX
         value: max
+      - label: AVG
+        value: avg
     visible_on: "{{formData.type === 'summary' ? true: false}}"
     required: "{{formData.type === 'summary' ? true: false}}"
   summary_field:
@@ -354,8 +356,8 @@ fields:
           if(!fields){
             return [];
           }
-          if(values.summary_type === "sum"){
-            /*sum类型可以汇总数值、金额、百分比字段*/
+          if(values.summary_type === "sum" || values.summary_type === "avg"){
+            /*sum/avg类型可以汇总数值、金额、百分比字段*/
             options = options.filter(function(option){
               var optionFieldType = fields[option.value] && fields[option.value].type;
               if(["formula", "summary"].indexOf(optionFieldType) > -1){

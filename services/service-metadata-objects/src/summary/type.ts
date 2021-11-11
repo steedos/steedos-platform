@@ -43,6 +43,7 @@ export enum SteedosSummaryDataTypeValue {
  */
 export const SupportedSummaryFieldTypes = {
     "sum": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency, SteedosSummaryDataTypeValue.Percent],
+    "avg": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency, SteedosSummaryDataTypeValue.Percent],
     "min": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency, SteedosSummaryDataTypeValue.Percent, SteedosSummaryDataTypeValue.Date, SteedosSummaryDataTypeValue.Datetime],
     "max": [SteedosSummaryDataTypeValue.Number, SteedosSummaryDataTypeValue.Currency, SteedosSummaryDataTypeValue.Percent, SteedosSummaryDataTypeValue.Date, SteedosSummaryDataTypeValue.Datetime]
 };

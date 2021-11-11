@@ -69,6 +69,9 @@ export const getSummaryAggregateGroups = (summary_type: SteedosSummaryTypeValue,
         case SteedosSummaryTypeValue.SUM:
             group[groupKey] = { $sum: `$${summary_field}` };
             break;
+        case SteedosSummaryTypeValue.AVG:
+            group[groupKey] = { $avg: `$${summary_field}` };
+            break;
 
     }
     return [{
