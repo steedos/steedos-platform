@@ -130,6 +130,8 @@ if Meteor.isClient
 							setTimeout(()->
 								if FlowRouter.current().route.path.endsWith("/:record_id")
 									FlowRouter.reload()
+									# ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新表单数据
+									SteedosUI.reloadRecord(Session.get("object_name"), Session.get("record_id"))
 								else
 									window.refreshDxSchedulerInstance()
 									window.refreshGrid();
