@@ -346,7 +346,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 				tableToRelatedMap[tableToRelatedMapKey][oTableFieldCode] = workflow_field
 			# 判断是否是表格字段
-			else if workflow_field.indexOf('.$.') > 0 and object_field.indexOf('.$.') > 0
+			else if workflow_field.indexOf('.') > 0 and object_field.indexOf('.$.') > 0
 				wTableCode = workflow_field.split('.$.')[0]
 				oTableCode = object_field.split('.$.')[0]
 				if record.hasOwnProperty(oTableCode) and _.isArray(record[oTableCode])
@@ -434,7 +434,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				_.each tr, (v, k) ->
 					tableFieldMap.forEach (tfm) ->
 						if tfm.object_field is (c.object_table_field_code + '.$.' + k)
-							wTdCode = tfm.workflow_field.split('.$.')[1]
+							wTdCode = tfm.workflow_field.split('.')[1]
 							newTr[wTdCode] = v
 				if not _.isEmpty(newTr)
 					values[c.workflow_table_field_code].push(newTr)
