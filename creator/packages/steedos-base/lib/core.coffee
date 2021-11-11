@@ -48,6 +48,11 @@ if Meteor.isCordova || Meteor.isClient
 		rootUrl: rootUrl
 	}
 
+if !Meteor.isCordova && Meteor.isClient
+	# 配置是否新窗口打开的全局变量
+	Meteor.startup ()->
+		window.stores?.Settings?.setHrefPopup(Meteor.settings.public?.ui?.href_popup)
+
 if Meteor.isClient
 	Meteor.autorun ()->
 		window.stores?.Settings?.setUserId(Steedos.userId())
