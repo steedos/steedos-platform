@@ -83,37 +83,52 @@ Steedos.getDisplayObjects = function(filterFunction){
 }
 
 Steedos.getFieldDataTypes = function (field) {
-    var options = [
-        {
-          "label": "Checkbox",
-          "value": "boolean"
-        },
-        {
-          "label": "Number",
-          "value": "number"
-        },
-        {
-          "label": "Currency",
-          "value": "currency"
-        },
-        {
-          "label": "Percent",
-          "value": "percent"
-        },
-        {
-          "label": "Text",
-          "value": "text"
-        }
-    ];
-    if(field.type !== "select"){
-        options.push({
-            "label": "Date",
-            "value": "date"
-        });
-        options.push({
-            "label": "Datetime",
-            "value": "datetime"
-        });
+    if(field.type === "select"){
+        return [
+            {
+              "label": "Checkbox",
+              "value": "boolean"
+            },
+            {
+              "label": "Number",
+              "value": "number"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            }
+        ];
     }
-    return options;
+    else{
+        return [
+            {
+              "label": "Checkbox",
+              "value": "boolean"
+            },
+            {
+              "label": "Number",
+              "value": "number"
+            },
+            {
+              "label": "Currency",
+              "value": "currency"
+            },
+            {
+              "label": "Percent",
+              "value": "percent"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            },
+            {
+              "label": "Date",
+              "value": "date"
+            },
+            {
+              "label": "Datetime",
+              "value": "datetime"
+            }
+        ];
+    }
 }
