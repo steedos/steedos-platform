@@ -254,24 +254,15 @@ fields:
     type: select
     label: Data Type
     inlineHelpText: This field must be filled when the field type is 'Formula'
-    options: 
-      - label: Checkbox
-        value: boolean
-      - label: Number
-        value: number
-      - label: Currency
-        value: currency
-      - label: Percent
-        value: percent
-      - label: Text
-        value: text
-      - label: Date
-        value: date
-      - label: Datetime
-        value: datetime
+    depend_on:
+      - type
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+        return Steedos.getFieldDataTypes(values);
+      }
     # summary字段类型的data_type可以自动计算得到，所以不用在零代码界面设置
-    visible_on: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
-    required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
+    visible_on: "{{['formula','select'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['formula','select'].indexOf(formData.type) > -1 ? true: false}}"
   formula_blank_value:
     type: select
     label: Blank Field Handling
@@ -598,6 +589,7 @@ form:
     }
   onValuesChange: !!js/function |
     function(args){
+      /*以下代码是为解决issue:优化：使用新版form新建字段后，每种字段类型都多了3个属性formula_blank_value、precision、scale #1920*/
       const fieldType = args.values.type, 
         changedFieldType = args.changedValues.type,
         numberTypes = ['number', 'currency', 'percent'];

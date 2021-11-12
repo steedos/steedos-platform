@@ -81,3 +81,39 @@ Steedos.getDisplayObjects = function(filterFunction){
     objects.sort(Creator.sortingMethod.bind({key:"label"}))
     return objects;
 }
+
+Steedos.getFieldDataTypes = function (field) {
+    var options = [
+        {
+          "label": "Checkbox",
+          "value": "boolean"
+        },
+        {
+          "label": "Number",
+          "value": "number"
+        },
+        {
+          "label": "Currency",
+          "value": "currency"
+        },
+        {
+          "label": "Percent",
+          "value": "percent"
+        },
+        {
+          "label": "Text",
+          "value": "text"
+        }
+    ];
+    if(field.type !== "select"){
+        options.push({
+            "label": "Date",
+            "value": "date"
+        });
+        options.push({
+            "label": "Datetime",
+            "value": "datetime"
+        });
+    }
+    return options;
+}

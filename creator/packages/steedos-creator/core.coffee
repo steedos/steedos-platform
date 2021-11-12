@@ -788,6 +788,8 @@ Creator.getFieldDataType = (objectFields, key)->
 		result = objectFields[key]?.type
 		if ["formula", "summary"].indexOf(result) > -1
 			result = objectFields[key].data_type
+		else if result == "select" and objectFields[key]?.data_type and objectFields[key].data_type != "text"
+			result = objectFields[key].data_type
 		return result
 	else
 		return "text"

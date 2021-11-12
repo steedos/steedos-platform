@@ -487,7 +487,7 @@
                                         "title": "Options display name"
                                     },
                                     "value": {
-                                        "type": "string",
+                                        "type": ["string", "number", "boolean"],
                                         "title": "Options value saved as"
                                     },
                                     "color": {

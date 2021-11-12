@@ -301,19 +301,30 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.defaultIcon = field.defaultIcon
 
 		else if field.type == "select"
-			fs.type = String
-			if field.multiple
-				fs.type = [String]
-				fs.autoform.type = "steedosLookups"
-				fs.autoform.showIcon = false
-				fs.autoform.options = field.options
-			else
-				fs.autoform.type = "select"
-				fs.autoform.options = field.options
-				if _.has(field, 'firstOption')
-					fs.autoform.firstOption = field.firstOption
+			if field.data_type and field.data_type != "text"
+				if ["number", "currency", "percent", "boolean"].indexOf(field.data_type) > -1
+					fsType = Number
+				else if field.data_type == "boolean"
+					fsType = Boolean
 				else
-					fs.autoform.firstOption = ""
+					fsType = String
+				fs.type = fsType
+				if field.multiple
+					fs.type = [fsType]
+			else
+				fs.type = String
+				if field.multiple
+					fs.type = [String]
+					fs.autoform.type = "steedosLookups"
+					fs.autoform.showIcon = false
+					fs.autoform.options = field.options
+				else
+					fs.autoform.type = "select"
+					fs.autoform.options = field.options
+					if _.has(field, 'firstOption')
+						fs.autoform.firstOption = field.firstOption
+					else
+						fs.autoform.firstOption = ""
 		else if field.type == "currency"
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"
@@ -445,6 +456,8 @@ Creator.getObjectSchema = (obj) ->
 			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
 		else if field.type == 'summary'
 			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
+		# else if field.type == 'select'
+		# 	fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
 		else if field.type == 'percent'
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"

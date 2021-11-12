@@ -619,6 +619,8 @@ if Meteor.isClient
 		if _field.type == "formula"
 			# 公式类型字段，其字段类型按data_type来
 			_filedType = _field.data_type
+		else if _field.type == "select" and _field.data_type and _field.data_type != "text"
+			_filedType = _field.data_type
 		else if _field.type == "summary"
 			# 汇总类型字段，其字段类型按summary_type和summary_count来
 			if _field.summary_type == "count"
