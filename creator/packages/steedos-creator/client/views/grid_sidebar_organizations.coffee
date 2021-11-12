@@ -110,7 +110,7 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 
 		is_admin = Steedos.isSpaceAdmin()
 		orgIds = Steedos.getUserCompanyOrganizationIds()
-		orgDocs = db.organizations.find({_id:{$in:orgIds}}).fetch()
+		orgDocs = db.organizations.find({$or:[{_id:{$in:orgIds}},{parents:{$in:orgIds}}]}).fetch()
 		if !is_admin 
 			if !orgIds || !orgIds.length
 				return null
