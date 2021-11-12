@@ -41,7 +41,7 @@ module.exports = {
 			"@steedos/accounts",
 			"@steedos/steedos-plugin-schema-builder",
 			"@steedos/plugin-enterprise",
-			"@steedos/word-template",
+			// "@steedos/word-template",
 			"@steedos/plugin-qywx",
 			"@steedos/metadata-api",
 			"@steedos/plugin-dingtalk",
