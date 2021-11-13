@@ -6111,15 +6111,6 @@
     express "^4.17.1"
     underscore "^1.9.1"
 
-"@steedos/word-template@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.nlark.com/@steedos/word-template/download/@steedos/word-template-2.0.3.tgz#d5a6c2aa4dff63c7ab63e4eb411bd77088f5c799"
-  integrity sha1-1abCqk3/Y8erY+TrQRvXcIj1x5k=
-  dependencies:
-    docxtemplater "^3.19.7"
-    dotenv-flow "^3.2.0"
-    jszip "^3.6.0"
-
 "@storybook/addon-actions@^5.3.0-alpha.22":
   version "5.3.21"
   resolved "https://registry.npm.taobao.org/@storybook/addon-actions/download/@storybook/addon-actions-5.3.21.tgz#16eed3eb24996adfcbf70bd476a261324d6de593"
@@ -14815,13 +14806,6 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-docxtemplater@^3.19.7:
-  version "3.19.7"
-  resolved "https://registry.yarnpkg.com/docxtemplater/-/docxtemplater-3.19.7.tgz#a622b9451a58208cfdefa96fbff62a2a90c5d637"
-  integrity sha512-OVl0rTRBy/IQ/X4OBicLxjXzTotM1qcfE+U1Gujp9WEnMgqidr9ZdzdLByjH1Nd8507GD6FRAJkQBNGxDr2tJg==
-  dependencies:
-    xmldom "^0.3.0"
-
 dom-accessibility-api@^0.3.0:
   version "0.3.0"
   resolved "https://registry.npm.taobao.org/dom-accessibility-api/download/dom-accessibility-api-0.3.0.tgz?cache=0&sync_timestamp=1602242317726&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdom-accessibility-api%2Fdownload%2Fdom-accessibility-api-0.3.0.tgz#511e5993dd673b97c87ea47dba0e3892f7e0c983"
@@ -21994,16 +21978,6 @@ jszip@^3.1.5:
   version "3.5.0"
   resolved "https://registry.npm.taobao.org/jszip/download/jszip-3.5.0.tgz#b4fd1f368245346658e781fec9675802489e15f6"
   integrity sha1-tP0fNoJFNGZY54H+yWdYAkieFfY=
-  dependencies:
-    lie "~3.3.0"
-    pako "~1.0.2"
-    readable-stream "~2.3.6"
-    set-immediate-shim "~1.0.1"
-
-jszip@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.nlark.com/jszip/download/jszip-3.6.0.tgz#839b72812e3f97819cc13ac4134ffced95dd6af9"
-  integrity sha1-g5tygS4/l4GcwTrEE0/87ZXdavk=
   dependencies:
     lie "~3.3.0"
     pako "~1.0.2"
