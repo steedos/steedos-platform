@@ -26,7 +26,15 @@
 							{{/if}}
 						{{/if}}
 					{{else}}
-						<a href="{{getUrl this._id}}" class="ins_attach_href" target="_parent">{{this.name}}</a>
+						{{#if isRuixinApp}}
+							{{#if canRuixinPreviw this.name}}
+								<a href="#" data-downloadurl="{{getUrl this._id}}" id="{{this._id}}" class="ins_attach_href_ruixin">{{this.name}}</a>
+							{{else}}
+								<a href="{{getUrl this._id}}" class="ins_attach_href" target="_parent">{{this.name}}</a>
+							{{/if}}
+						{{else}}
+							<a href="{{getUrl this._id}}" class="ins_attach_href" target="_parent">{{this.name}}</a>
+						{{/if}}
 					{{/if}}
 				{{/if}}
 				{{#if isMobile}}

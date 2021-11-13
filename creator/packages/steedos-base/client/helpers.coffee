@@ -826,6 +826,14 @@ TemplateHelpers =
 
 	isCordova: ()->
 		return Meteor.isCordova
+	
+	isRuixinApp: ()->
+		uAgentArry = navigator.userAgent.split(" ");
+		
+		if uAgentArry.indexOf("QiXinWebView") > -1
+			return true
+		
+		false
 
 _.extend Steedos, TemplateHelpers
 

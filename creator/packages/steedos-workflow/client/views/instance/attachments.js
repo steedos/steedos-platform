@@ -229,6 +229,22 @@ Template.instance_attachment.helpers({
 
 	can_unlock: function(locked_by) {
 		return locked_by == Meteor.userId();
+	},
+
+	canRuixinPreviw: function(filename){
+		// # 无文件类型时
+		if (filename.split('.').length < 2)
+			return false
+		// # 获取文件类型
+		var type = filename.split('.').pop().toLowerCase();
+		
+		// # 可以预览的类型
+		var array = ["pdf","txt","html","doc","docx","jpg","gif","bmp","xlsx","xls"];
+
+		if (array.indexOf(type) > -1)
+			return true
+		
+		return false
 	}
 });
 
@@ -241,20 +257,28 @@ Template.instance_attachment.events({
 		// 在手机、安卓和ios设备上弹出窗口显示附件
 		// 电脑上使用的是下载附件功能，由于手机上支持大部分文件类型在线预览，所以手机上默认使用打开新窗口查看方式
 		if (Steedos.isMobile() || Steedos.isAndroidOrIOS()) {
-			console.log("navigator.userAgent: ", navigator.userAgent);
-			var userAgent = navigator.userAgent;
-			var uAgentArry = userAgent.split(" ");
-			// 瑞信手机端调用内部函数预览附件
-			if (uAgentArry.indexOf("QiXinWebView") > 0){
-				alert(template.data.name())
+			Steedos.openWindow(event.target.getAttribute("href"))
+			event.stopPropagation()
+			return false;
+		}
+	},
+	"click .ins_attach_href_ruixin": function(event, template) {
+		var href = event.target.dataset.downloadurl;
+		var webservices = Meteor.settings.public.webservices;
+		var domain = webservices.ruixin.previewDomain;
+		var fileUrl = domain + Steedos.absoluteUrl("creator/api/files/instances/") + event.target.id + "/" + template.data.name();
+		// 在手机、安卓和ios设备中，瑞信客户端调用自己接口预览附件
+		if (Steedos.isMobile() || Steedos.isAndroidOrIOS()) {
+			if (Steedos.isAndroidApp()){
 				richfit.docPreview({
-					"fileUrl": event.target.getAttribute("href"),
+					"fileUrl": fileUrl,
 					"fileName": template.data.name()
 				})
 			}else{
-				Steedos.openWindow(event.target.getAttribute("href"))
+				console.log("href: ",href);
+				Steedos.openWindow(href)
 			}
-			event.stopPropagation()
+			event.stopPropagation();
 			return false;
 		}
 	},
