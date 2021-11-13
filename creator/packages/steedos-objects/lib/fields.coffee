@@ -302,7 +302,7 @@ Creator.getObjectSchema = (obj) ->
 
 		else if field.type == "select"
 			if field.data_type and field.data_type != "text"
-				if ["number", "currency", "percent", "boolean"].indexOf(field.data_type) > -1
+				if ["number", "currency", "percent"].indexOf(field.data_type) > -1
 					fsType = Number
 				else if field.data_type == "boolean"
 					fsType = Boolean
