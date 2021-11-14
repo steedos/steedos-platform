@@ -1,5 +1,7 @@
 getAutoformSelectOptions = (fieldSchema) ->
 	options = fieldSchema.options
+	unless options
+		return
 	data_type = fieldSchema.data_type
 	if !_.isFunction(options) and data_type and data_type != 'text'
 		# 零代码界面配置options选项值只支持字符串，所以当data_type为数值或boolean时，只能强行把选项值先转换为对应的类型
