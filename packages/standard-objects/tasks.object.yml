@@ -61,7 +61,6 @@ fields:
     sortable: true
     required: true
     filterable: true
-        value: 3
   related_to:
     label: Related to
     type: lookup
