@@ -338,6 +338,7 @@ Creator.getObjectSchema = (obj) ->
 			if field.data_type and field.data_type != "text"
 				if ["number", "currency", "percent"].indexOf(field.data_type) > -1
 					fsType = Number
+					fs.decimal = true
 				else if field.data_type == "boolean"
 					fsType = Boolean
 				else

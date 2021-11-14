@@ -280,6 +280,19 @@ module.exports = {
         if(doc.type === "summary"){
             await initSummaryDoc(doc);
         }
+        if(doc.type === "select" && doc.data_type && doc.data_type != 'text'){
+            const options = doc.options;
+            _.each(options, (item)=>{
+                const value = item.value;
+                const numberValue = Number(item.value);
+                if( doc.data_type === 'number' && !(_.isNumber(numberValue) && !_.isNaN(numberValue)) ){
+                    throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入合法的数值。");
+                }
+                if( doc.data_type === 'boolean' && ['true','false'].indexOf(value) < 0){
+                    throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入 true 或 false。");
+                }
+            })
+        }
     },
     beforeUpdate: async function () {
         let { doc, object_name, id} = this;
@@ -304,6 +317,21 @@ module.exports = {
             if(isImportField){
                 throw new Meteor.Error(500, "字段parent、children是启用树状结构显示记录的对象的内置字段，不能修改其”所属对象、字段名、字段类型、引用对象、多选、新建/编辑时隐藏”等属性");
             }
+        }
+
+        if(doc.type === "select" && doc.data_type && doc.data_type != 'text'){
+            const options = doc.options;
+            _.each(options, (item)=>{
+                const value = item.value;
+                const numberValue = Number(item.value);
+                if( doc.data_type === 'number' && !(_.isNumber(numberValue) && !_.isNaN(numberValue)) ){
+                    throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入合法的数值。");
+                }
+                console.log('doc==>',doc.data_type , value)
+                if( doc.data_type === 'boolean' && ['true','false'].indexOf(value) < 0){
+                    throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入 true 或 false。");
+                }
+            })
         }
     },
     beforeDelete: async function () {

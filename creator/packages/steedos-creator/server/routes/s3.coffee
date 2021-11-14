@@ -50,6 +50,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 				if parent
 					fileCollection.update({_id:parent},{
 						$set:
+							name: filename
 							extention: extention
 							size: size
 							modified: (new Date())
