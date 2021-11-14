@@ -113,7 +113,7 @@ Template.filter_option.helpers
 						if _field.data_type and _field.data_type != "text"
 							if ["number", "currency", "percent"].indexOf(_field.data_type) > -1
 								fsType = Number
-							else if field.data_type == "boolean"
+							else if _field.data_type == "boolean"
 								fsType = Boolean
 							else
 								fsType = String
