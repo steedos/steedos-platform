@@ -1,3 +1,22 @@
+getAutoformSelectOptions = (fieldSchema) ->
+	options = fieldSchema.options
+	data_type = fieldSchema.data_type
+	if !_.isFunction(options) and data_type and data_type != 'text'
+		# 零代码界面配置options选项值只支持字符串，所以当data_type为数值或boolean时，只能强行把选项值先转换为对应的类型
+		options.forEach (optionItem) ->
+			if typeof optionItem.value != 'string'
+				return
+			if [
+				'number'
+				'currency'
+				'percent'
+			].indexOf(data_type) > -1
+				optionItem.value = Number(optionItem.value)
+			else if data_type == 'boolean'
+				# 只有为true才为真
+				optionItem.value = optionItem.value == 'true'
+	return options
+
 Creator.getObjectSchema = (obj) ->
 	unless obj
 		return
@@ -301,6 +320,21 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.defaultIcon = field.defaultIcon
 
 		else if field.type == "select"
+			fs.type = String
+			if field.multiple
+				fs.type = [String]
+				fs.autoform.type = "steedosLookups"
+				fs.autoform.showIcon = false
+				fs.autoform.options = field.options
+			else
+				fs.autoform.type = "select"
+				fs.autoform.options = field.options
+				if _.has(field, 'firstOption')
+					fs.autoform.firstOption = field.firstOption
+				else
+					fs.autoform.firstOption = ""
+			# 因为列表视图右侧过滤器还是用的老表单的lookup和select控件，所以上面的代码始终保持原样需要执行
+			# 下面是配置了data_type时，额外处理的逻辑
 			if field.data_type and field.data_type != "text"
 				if ["number", "currency", "percent"].indexOf(field.data_type) > -1
 					fsType = Number
@@ -311,20 +345,8 @@ Creator.getObjectSchema = (obj) ->
 				fs.type = fsType
 				if field.multiple
 					fs.type = [fsType]
-			else
-				fs.type = String
-				if field.multiple
-					fs.type = [String]
-					fs.autoform.type = "steedosLookups"
-					fs.autoform.showIcon = false
-					fs.autoform.options = field.options
-				else
-					fs.autoform.type = "select"
-					fs.autoform.options = field.options
-					if _.has(field, 'firstOption')
-						fs.autoform.firstOption = field.firstOption
-					else
-						fs.autoform.firstOption = ""
+					
+				fs.autoform.options = getAutoformSelectOptions(field)
 		else if field.type == "currency"
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"

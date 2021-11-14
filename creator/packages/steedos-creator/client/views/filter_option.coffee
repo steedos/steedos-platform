@@ -110,6 +110,15 @@ Template.filter_option.helpers
 					if _field.type == "select"
 						schema.value.autoform.type = "steedosLookups"
 						schema.value.autoform.showIcon = false
+						if _field.data_type and _field.data_type != "text"
+							if ["number", "currency", "percent"].indexOf(_field.data_type) > -1
+								fsType = Number
+							else if field.data_type == "boolean"
+								fsType = Boolean
+							else
+								fsType = String
+							schema.value.type = [fsType]
+
 
 					if _field.type == 'lookup' || _field.type == 'master_detail'
 						_reference_to = _field.reference_to
