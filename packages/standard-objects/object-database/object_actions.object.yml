@@ -87,14 +87,14 @@ fields:
     options:
       - label: Custom JavaScript
         value: script
-      - label: 打印模板(word)
-        value: word-print
+      # - label: 打印模板(word)
+      #   value: word-print
     defaultValue: script
-  word_template:
-    type: lookup
-    reference_to: word_templates
-    visible_on: "{{formData.type === 'word-print' ? true: false}}"
-    create: false
+  # word_template:
+  #   type: lookup
+  #   reference_to: word_templates
+  #   visible_on: "{{formData.type === 'word-print' ? true: false}}"
+  #   create: false
   todo:
     label: Execute Script
     type: code
