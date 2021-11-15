@@ -1,4 +1,4 @@
-getAutoformSelectOptions = (fieldSchema) ->
+Creator.getSelectOptions = (fieldSchema) ->
 	options = fieldSchema.options
 	unless options
 		return
@@ -349,7 +349,7 @@ Creator.getObjectSchema = (obj) ->
 				if field.multiple
 					fs.type = [fsType]
 					
-				fs.autoform.options = getAutoformSelectOptions(field)
+				fs.autoform.options = Creator.getSelectOptions(field)
 		else if field.type == "currency"
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"

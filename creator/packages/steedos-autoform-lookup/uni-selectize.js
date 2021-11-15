@@ -124,7 +124,8 @@ UniSelectize.prototype.setItems = function (items, value) {
 	var values = value && (_.isArray(value) ? value : [value]);
 
 	items = _.filter(items, function (item) {
-		if (!item || !item.value || !item.label) {
+		// item.value要支持boolean和number类型值
+		if (!item || _.isNull(item.value) || _.isUndefined(item.value) || item.value === "" || !item.label) {
 			console.info('invalid option', item);
 			return false;
 		}

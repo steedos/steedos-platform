@@ -118,7 +118,7 @@ Template.filter_option.helpers
 							else
 								fsType = String
 							schema.value.type = [fsType]
-
+							schema.value.autoform.options = Creator.getSelectOptions(_field)
 
 					if _field.type == 'lookup' || _field.type == 'master_detail'
 						_reference_to = _field.reference_to
