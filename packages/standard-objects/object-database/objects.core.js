@@ -116,7 +116,6 @@ function getObjectFields(object) {
         }
     });
     _.each(table_fields, function (f, k) {
-        k = getFieldName(doc.object, k, doc.space);
         if (fields[k].type === "grid") {
             if (!_.size(fields[k].fields)) {
                 fields[k].fields = {};
