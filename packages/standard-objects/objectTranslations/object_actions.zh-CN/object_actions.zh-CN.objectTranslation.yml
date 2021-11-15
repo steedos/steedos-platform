@@ -31,8 +31,8 @@ fields:
     options:
       - label: JavaScript
         value: script
-      - label: 打印模板(word)
-        value: word-print
+      # - label: 打印模板(word)
+      #   value: word-print
     defaultValue: script
   word_template:
     label: 打印模板
