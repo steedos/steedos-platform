@@ -347,7 +347,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				tableToRelatedMap[tableToRelatedMapKey][oTableFieldCode] = workflow_field
 			# 判断是否是表格字段
 			else if workflow_field.indexOf('.') > 0 and object_field.indexOf('.$.') > 0
-				wTableCode = workflow_field.split('.$.')[0]
+				wTableCode = workflow_field.split('.')[0]
 				oTableCode = object_field.split('.$.')[0]
 				if record.hasOwnProperty(oTableCode) and _.isArray(record[oTableCode])
 					tableFieldCodes.push(JSON.stringify({
@@ -355,6 +355,23 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						object_table_field_code: oTableCode
 					}))
 					tableFieldMap.push(fm)
+				else if oTableCode.indexOf('.') > 0 # 说明是关联表的grid字段
+					oTableCodeReferenceFieldCode = oTableCode.split('.')[0];
+					gridCode = oTableCode.split('.')[1];
+					oTableCodeReferenceField = object.fields[oTableCodeReferenceFieldCode];
+					if oTableCodeReferenceField && ['lookup', 'master_detail'].includes(oTableCodeReferenceField.type) && _.isString(oTableCodeReferenceField.reference_to)
+						if record[oTableCode]
+							return;
+						referenceToObjectName = oTableCodeReferenceField.reference_to;
+						referenceToFieldValue = record[oTableCodeReferenceField.name];
+						referenceToDoc = getFieldOdataValue(referenceToObjectName, referenceToFieldValue);
+						if referenceToDoc[gridCode]
+							record[oTableCode] = referenceToDoc[gridCode];
+							tableFieldCodes.push(JSON.stringify({
+								workflow_table_field_code: wTableCode,
+								object_table_field_code: oTableCode
+							}));
+							return tableFieldMap.push(fm);
 
 			# 处理lookup、master_detail类型字段
 			else if object_field.indexOf('.') > 0 and object_field.indexOf('.$.') == -1
