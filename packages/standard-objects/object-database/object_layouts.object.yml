@@ -311,6 +311,9 @@ actions:
     on: list
     label: 创建默认页面布局
     visible: false
+  customize:
+    label: Customize
+    on: record_only
 permission_set:
   user:
     allowCreate: false

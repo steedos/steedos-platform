@@ -226,7 +226,7 @@ exports.getObjectLayouts = async function(objectApiName, spaceId){
 
 exports.getObjectLayout = async function(objectLayoutFullName){
     const layout = await objectql.getObjectLayout(objectLayoutFullName);
-    return Object.assign({}, layout, objectBaseFields);
+    return Object.assign({},{_id: `${layout.object_name}.${layout.name}`}, layout, objectBaseFields);
 }
 
 exports.getObjectAction = async function(objectName, userId, id){

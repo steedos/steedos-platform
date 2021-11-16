@@ -102,6 +102,9 @@ fields:
 listviews:
   all:
     label: 所有
+actions:
+  customize:
+    label: 自定义
 CustomLabels:
   object_layouts_group_field_info: 字段信息
   object_layouts__object: 页面布局
