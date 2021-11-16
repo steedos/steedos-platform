@@ -1,6 +1,7 @@
 {
   "name": "jsreport-server",
   "main": "server.js",
+  "private": true,
   "scripts": {
     "start": "node server",
     "jsreport": "jsreport"
