@@ -654,7 +654,8 @@
                                 "count",
                                 "sum",
                                 "min",
-                                "max"
+                                "max",
+                                "avg"
                             ]
                         }
                     ]
