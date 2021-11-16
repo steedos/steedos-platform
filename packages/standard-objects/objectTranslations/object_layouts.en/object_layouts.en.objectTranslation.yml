@@ -53,6 +53,9 @@ fields:
 listviews:
   all:
     label: All
+actions:
+  customize:
+    label: Customize
 CustomLabels:
   object_layouts_group_field_info: Field Info
   object_layouts__object: Object Layouts
