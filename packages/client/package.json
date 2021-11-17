@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@steedos/client",
-  "version": "1.22.11",
+  "version": "1.22.12",
   "description": "client lib for steedos",
   "main": "lib/index.js",
   "scripts": {
