@@ -71,7 +71,7 @@ JsonRoutes.add 'get', '/oauth2/sso', (req, res, next)->
 			Setup.clearAuthCookies(req, res)
 			hashedToken = Accounts._hashLoginToken(authToken)
 			Accounts.destroyToken(userId, hashedToken)
-		else
+		else if Steedos.checkAuthToken(userId, authToken)
 			res.writeHead 301, {'Location': redirectUrl }
 			return res.end ''
 	# 验证成功，登录
