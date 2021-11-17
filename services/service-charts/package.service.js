@@ -60,7 +60,7 @@ module.exports = {
 			},
 			async handler(ctx) {
 				let { queryId, queryHash, type } = ctx.params;
-				const allowTypes = ['csv', 'xlsx'];
+				const allowTypes = ['csv', 'xlsx', 'json'];
 				if (!_.includes(allowTypes, type)) {
 					throw new Error(`Invalid type`);
 				}
@@ -81,7 +81,7 @@ module.exports = {
 					const opts = { fields };
 					const parser = new json2csv.Parser(opts);
 					return parser.parse(queryResult.data.rows);
-				} else if ('xlsx') {
+				} else if (type == 'xlsx') {
 					ctx.meta.$responseType = "application/octet-stream";
 					const xls = json2xls(queryResult.data.rows || { "": "" });
 					ctx.meta.$responseHeaders = {
@@ -89,6 +89,12 @@ module.exports = {
 						'Content-Length': xls.length
 					};
 					return str(xls, 'binary')
+				} else if (type == 'json') {
+					ctx.meta.$responseType = "application/json";
+					ctx.meta.$responseHeaders = {
+						"Content-Disposition": `attachment; filename="${encodeURI(queryRecord.name + '.json')}"`
+					};
+					return queryResult.data.rows
 				}
 			}
 		},
@@ -685,7 +691,7 @@ module.exports = {
 					await driver.connect();
 					const filter = query.query;
 					const options = {
-						projection: query.projection,
+						projection: query.projection || query.fields,
 						sort: query.sort,
 						limit: query.limit,
 						skip: query.skip
