@@ -12,7 +12,7 @@
     "bootstrap": "yarn submodules && lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
     "link": "lerna link --force-local",
     "ver": "lerna version --skip-git --force-publish",
-    "pub": "lerna publish from-package --registry https://registry.npmjs.org",
+    "pub": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag untagged",
     "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
     "compile": "lerna run compile",
     "prepare": "lerna run prepare",
