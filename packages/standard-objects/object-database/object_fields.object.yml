@@ -124,6 +124,26 @@ fields:
     type: boolean
     inlineHelpText: Sets the minimum sharing access level required on the master record to create, edit, or delete child records. This field applies only to master-detail or junction object custom field types. true—Allows users with “Read” access to the master record permission to create, edit, or delete child records. This setting makes sharing less restrictive. false—Allows users with “Read/Write” access to the master record permission to create, edit, or delete child records. This setting is more restrictive than true, and is the default value.
     visible_on: "{{formData.type === 'master_detail' ? true: false}}"
+  formula:
+    label: Formula
+    type: textarea
+    inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
+    is_wide: true
+    visible_on: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
+  data_type:
+    type: select
+    label: Data Type
+    inlineHelpText: This field must be filled when the field type is 'Formula'
+    depend_on:
+      - type
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+        return Steedos.getFieldDataTypes(values);
+      }
+    # summary字段类型的data_type可以自动计算得到，所以不用在零代码界面设置
+    visible_on: "{{['formula','select'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
   filtersFunction:
     label: filters Function
     type: textarea
@@ -243,26 +263,6 @@ fields:
     label: Description
     type: text
     required: false
-  formula:
-    label: Formula
-    type: textarea
-    inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
-    is_wide: true
-    visible_on: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
-    required: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
-  data_type:
-    type: select
-    label: Data Type
-    inlineHelpText: This field must be filled when the field type is 'Formula'
-    depend_on:
-      - type
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-        return Steedos.getFieldDataTypes(values);
-      }
-    # summary字段类型的data_type可以自动计算得到，所以不用在零代码界面设置
-    visible_on: "{{['formula','select'].indexOf(formData.type) > -1 ? true: false}}"
-    required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
   formula_blank_value:
     type: select
     label: Blank Field Handling
