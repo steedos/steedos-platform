@@ -1,11 +1,11 @@
 Template.instance_attachments.helpers(InstanceAttachmentTemplate.helpers)
 
-Template.instance_attachments.onCreated(function() {
+Template.instance_attachments.onCreated(function () {
 	self = this;
 	self.workflowMainAttachTitle = new ReactiveVar(true);
 })
 
-Template.instance_attachments.onRendered(function() {
+Template.instance_attachments.onRendered(function () {
 
 	self = this;
 
@@ -45,7 +45,7 @@ Template.instance_attachments.onRendered(function() {
 
 Template.instance_attachment.helpers({
 
-	can_delete: function(currentApproveId, parent_id) {
+	can_delete: function (currentApproveId, parent_id) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
@@ -99,8 +99,8 @@ Template.instance_attachment.helpers({
 		if (!currentApprove)
 			return false;
 
-		_.each(ins.traces, function(t) {
-			_.each(t.approves, function(a) {
+		_.each(ins.traces, function (t) {
+			_.each(t.approves, function (a) {
 				if (a._id == currentApprove._id) {
 					var step = WorkflowManager.getInstanceStep(t.step);
 					if (current.metadata.main == true) {
@@ -122,7 +122,7 @@ Template.instance_attachment.helpers({
 		return can_remove_attach && isDraftOrInbox && isFlowEnable && isHistoryLenthZero && !isLocked;
 	},
 
-	getUrl: function(_rev, isPreview) {
+	getUrl: function (_rev, isPreview) {
 		// url = Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename;
 		if (Steedos.isNode())
 			url = window.location.origin + "/api/files/instances/" + _rev;
@@ -135,7 +135,7 @@ Template.instance_attachment.helpers({
 		return url;
 	},
 
-	canView: function(filename) {
+	canView: function (filename) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
@@ -144,7 +144,7 @@ Template.instance_attachment.helpers({
 			return true;
 	},
 
-	canEdit: function(mainFile, filename, locked_by) {
+	canEdit: function (mainFile, filename, locked_by) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
@@ -193,14 +193,14 @@ Template.instance_attachment.helpers({
 		return false;
 	},
 
-	canOfficeOnlinePreview: function(filename) {
+	canOfficeOnlinePreview: function (filename) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
 		return Creator.showPreviewButton(filename);
 	},
 
-	IsImageAttachment: function(attachment) {
+	IsImageAttachment: function (attachment) {
 		if (!attachment)
 			return;
 		var type = attachment.original.type;
@@ -210,50 +210,50 @@ Template.instance_attachment.helpers({
 			return type.startsWith("image/");
 	},
 
-	IsHtmlAttachment: function(attachment) {
+	IsHtmlAttachment: function (attachment) {
 		if (!attachment)
 			return;
 		return attachment.original.type == "text/html"
 	},
 
-	isPrint: function() {
+	isPrint: function () {
 		if (Session && Session.get("instancePrint"))
 			return true
 		else
 			false
 	},
 
-	locked_info: function(locked_by_name) {
+	locked_info: function (locked_by_name) {
 		return TAPi18n.__('workflow_attach_locked_by', locked_by_name);
 	},
 
-	can_unlock: function(locked_by) {
+	can_unlock: function (locked_by) {
 		return locked_by == Meteor.userId();
 	},
 
-	canRuixinPreviw: function(filename){
+	canRuixinPreviw: function (filename) {
 		// # 无文件类型时
 		if (filename.split('.').length < 2)
 			return false
 		// # 获取文件类型
 		var type = filename.split('.').pop().toLowerCase();
-		
+
 		// # 可以预览的类型
-		var array = ["pdf","txt","html","doc","docx","jpg","gif","bmp","xlsx","xls"];
+		var array = ["pdf", "txt", "html", "doc", "docx", "jpg", "gif", "bmp", "xlsx", "xls"];
 
 		if (array.indexOf(type) > -1)
 			return true
-		
+
 		return false
 	}
 });
 
 Template.instance_attachment.events({
-	"click [name='ins_attach_version']": function(event, template) {
+	"click [name='ins_attach_version']": function (event, template) {
 		Session.set("attach_parent_id", event.target.dataset.parent);
 		Modal.show('ins_attach_version_modal');
 	},
-	"click .ins_attach_href": function(event, template) {
+	"click .ins_attach_href": function (event, template) {
 		// 在手机、安卓和ios设备上弹出窗口显示附件
 		// 电脑上使用的是下载附件功能，由于手机上支持大部分文件类型在线预览，所以手机上默认使用打开新窗口查看方式
 		if (Steedos.isMobile() || Steedos.isAndroidOrIOS()) {
@@ -262,35 +262,42 @@ Template.instance_attachment.events({
 			return false;
 		}
 	},
-	"click .ins_attach_href_ruixin": function(event, template) {
-		var href = event.target.dataset.downloadurl;
-		var webservices = Meteor.settings.public.webservices;
-		var domain = webservices.ruixin.previewDomain;
-		var fileUrl = domain + Steedos.absoluteUrl("creator/api/files/instances/") + event.target.id + "/" + template.data.name();
-		// 在手机、安卓和ios设备中，瑞信客户端调用自己接口预览附件
-		if (Steedos.isMobile() || Steedos.isAndroidOrIOS()) {
-			if (Steedos.isAndroidApp()){
-				richfit.docPreview({
-					"fileUrl": fileUrl,
-					"fileName": template.data.name()
-				})
-			}else{
-				console.log("href: ",href);
-				Steedos.openWindow(href)
+	"click .ins_attach_href_ruixin": function (event, template) {
+		try {
+			// 在手机、安卓和ios设备中，瑞信客户端调用自己接口预览附件
+			if (Steedos.isMobile() || Steedos.isAndroidOrIOS()) {
+				var href = event.target.dataset.downloadurl;
+				var webservices = Meteor.settings.public.webservices;
+				var ruixin = new RuixinApi();
+				if (ruixin && webservices.ruixin) {
+					var domain = webservices.ruixin.previewDomain;
+					var fileUrl = domain + Steedos.absoluteUrl("creator") + href;
+					ruixin.docPreview({
+						"fileUrl": fileUrl,
+						"fileName": template.data.name()
+					})
+				} else {
+					Steedos.openWindow(event.target.getAttribute("href"))
+				}
+
+				event.stopPropagation();
+				return false;
 			}
-			event.stopPropagation();
-			return false;
+		} catch (error) {
+			if (error) {
+				console.error(error);
+			}
 		}
+
 	},
-	"click [name='ins_attach_mobile']": function(event, template) {
+	"click [name='ins_attach_mobile']": function (event, template) {
 		var url = event.target.dataset.downloadurl;
 		var filename = template.data.name();
 		var rev = template.data._id;
 		var length = template.data.size();
-		console.log("navigator.userAgent",navigator.userAgent);
 		Steedos.cordovaDownload(url, filename, rev, length);
 	},
-	"click [name='ins_attach_isNode']": function(event, template) {
+	"click [name='ins_attach_isNode']": function (event, template) {
 		Session.set('cfs_file_id', event.target.id);
 		Session.set('attach_parent_id', event.target.dataset.parent);
 		Session.set('attach_instance_id', Session.get("instanceId"));
@@ -304,14 +311,14 @@ Template.instance_attachment.events({
 		var filename = event.target.dataset.name;
 		NodeManager.downloadFile(url, filename);
 	},
-	"click [name='ins_attach_edit']": function(event, template) {
+	"click [name='ins_attach_edit']": function (event, template) {
 		Session.set("attach_id", event.target.id);
 		Session.set('cfs_file_id', event.target.id);
 		Session.set('attach_parent_id', event.target.dataset.parent);
 		Session.set('cfs_filename', event.target.dataset.name);
 		Modal.show('ins_attach_edit_modal');
 	},
-	"click [name='ins_attach_isView']": function(event, template) {
+	"click [name='ins_attach_isView']": function (event, template) {
 		Session.set('cfs_file_id', event.target.id);
 		Session.set('attach_parent_id', event.target.dataset.parent);
 		var url = event.target.dataset.downloadurl;
@@ -319,7 +326,7 @@ Template.instance_attachment.events({
 		var arg = "Steedos.User.isView";
 		NodeManager.downloadFile(url, filename, arg);
 	},
-	"click [name='ins_attach_preview']": function(event, template) {
+	"click [name='ins_attach_preview']": function (event, template) {
 		console.log("navigator.userAgent: ", navigator.userAgent);
 		if (event.target.id) {
 			if (Steedos.isNode())
@@ -330,7 +337,7 @@ Template.instance_attachment.events({
 			Steedos.openWindow(url);
 		}
 	},
-	"click .ins-attach-delete": function(event, template) {
+	"click .ins-attach-delete": function (event, template) {
 		var file_id = event.target.id;
 		var file_name = event.target.dataset.name;
 		if (!file_id) {
@@ -346,8 +353,8 @@ Template.instance_attachment.events({
 			confirmButtonText: t("workflow_attach_confirm"),
 			cancelButtonText: t("workflow_attach_cancel"),
 			closeOnConfirm: true
-		}, function() {
-			Meteor.call('cfs_instances_remove', file_id, function(error, result) {
+		}, function () {
+			Meteor.call('cfs_instances_remove', file_id, function (error, result) {
 				if (error) {
 					toastr.error(error.message);
 				}
@@ -360,17 +367,17 @@ Template.instance_attachment.events({
 		});
 	},
 
-	"click .ins-attach-unlock": function(event, template) {
+	"click .ins-attach-unlock": function (event, template) {
 		InstanceManager.unlockAttach(event.target.id);
 	},
 
-	"click [name='ins_attach_office_online_preview']": function(event, template){
+	"click [name='ins_attach_office_online_preview']": function (event, template) {
 		var file_name = event.target.dataset.name;
 		if (event.target.id) {
 			// 考虑rootUrl带路由和内外网服务地址一样等问题
 			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id + "/" + encodeURIComponent(file_name);
 
-			Creator.officeOnlinePreview(url,file_name);
+			Creator.officeOnlinePreview(url, file_name);
 		}
 	}
 })
@@ -378,7 +385,7 @@ Template.instance_attachment.events({
 
 Template.ins_attach_version_modal.helpers({
 
-	attach_versions: function() {
+	attach_versions: function () {
 		var parent = Session.get('attach_parent_id');
 		if (!parent) return;
 
@@ -406,7 +413,7 @@ Template.ins_attach_version_modal.helpers({
 		}).fetch();
 	},
 
-	attach_current_version: function() {
+	attach_current_version: function () {
 		var parent = Session.get('attach_parent_id');
 		if (!parent) return;
 
@@ -417,11 +424,11 @@ Template.ins_attach_version_modal.helpers({
 	},
 
 
-	attach_version_info: function(owner_name, uploadedAt) {
+	attach_version_info: function (owner_name, uploadedAt) {
 		return uploadedAt ? (owner_name + " , " + $.format.date(uploadedAt, "yyyy-MM-dd HH:mm")) : owner_name;
 	},
 
-	enabled_add_attachment: function() {
+	enabled_add_attachment: function () {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false
@@ -479,7 +486,7 @@ Template.ins_attach_version_modal.helpers({
 		return false
 	},
 
-	current_can_delete: function(currentApproveId, parent_id) {
+	current_can_delete: function (currentApproveId, parent_id) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
@@ -532,8 +539,8 @@ Template.ins_attach_version_modal.helpers({
 		if (!currentApprove)
 			return false;
 
-		_.each(ins.traces, function(t) {
-			_.each(t.approves, function(a) {
+		_.each(ins.traces, function (t) {
+			_.each(t.approves, function (a) {
 				if (a._id == currentApprove._id) {
 					var step = WorkflowManager.getInstanceStep(t.step);
 					if (current.metadata.main == true) {
@@ -555,7 +562,7 @@ Template.ins_attach_version_modal.helpers({
 		return can_remove_attach && isDraftOrInbox && isFlowEnable && !isHistoryLenthZero && !isLocked;
 	},
 
-	canView: function(filename) {
+	canView: function (filename) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
@@ -564,7 +571,7 @@ Template.ins_attach_version_modal.helpers({
 			return true;
 	},
 
-	canEdit: function(mainFile, filename, locked_by) {
+	canEdit: function (mainFile, filename, locked_by) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
@@ -608,7 +615,7 @@ Template.ins_attach_version_modal.helpers({
 		return false;
 	},
 
-	canConvertToPdf: function(mainFile, filename, locked_by) {
+	canConvertToPdf: function (mainFile, filename, locked_by) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
@@ -640,7 +647,7 @@ Template.ins_attach_version_modal.helpers({
 		return false;
 	},
 
-	canSign: function(mainFile, filename, locked_by) {
+	canSign: function (mainFile, filename, locked_by) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
@@ -671,14 +678,14 @@ Template.ins_attach_version_modal.helpers({
 		return false;
 	},
 
-	canOfficeOnlinePreview: function(filename) {
+	canOfficeOnlinePreview: function (filename) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
 			return false;
 		return Creator.showPreviewButton(filename);
 	},
 
-	getUrl: function(_rev, isPreview) {
+	getUrl: function (_rev, isPreview) {
 		// url = Meteor.absoluteUrl("api/files/instances/") + attachVersion._rev + "/" + attachVersion.filename;
 		if (Steedos.isNode())
 			url = window.location.origin + "/api/files/instances/" + _rev;
@@ -691,19 +698,19 @@ Template.ins_attach_version_modal.helpers({
 		return url;
 	},
 
-	locked_info: function(locked_by_name, locked_time) {
+	locked_info: function (locked_by_name, locked_time) {
 		if (locked_time)
 			return TAPi18n.__('workflow_attach_locked_by', locked_by_name) + " , " + moment(locked_time).format("YYYY-MM-DD HH:mm");
 		else
 			return TAPi18n.__('workflow_attach_locked_by', locked_by_name);
 	},
 
-	can_unlock: function(locked_by) {
+	can_unlock: function (locked_by) {
 		if (locked_by)
 			return Steedos.isSpaceAdmin(Session.get("spaceId"), Meteor.userId()) || (locked_by == Meteor.userId());
 	},
 
-	IsImageAttachment: function(attachment) {
+	IsImageAttachment: function (attachment) {
 		if (!attachment)
 			return;
 		var type = attachment.original.type;
@@ -714,7 +721,7 @@ Template.ins_attach_version_modal.helpers({
 			return type.startsWith("image/");
 	},
 
-	IsHtmlAttachment: function(attachment) {
+	IsHtmlAttachment: function (attachment) {
 		if (!attachment)
 			return;
 		return attachment.original.type == "text/html"
@@ -724,7 +731,7 @@ Template.ins_attach_version_modal.helpers({
 
 Template.ins_attach_version_modal.events({
 
-	'change .ins-file-version-input': function(event, template) {
+	'change .ins-file-version-input': function (event, template) {
 
 		element = $("#" + event.currentTarget.id)
 
@@ -743,7 +750,7 @@ Template.ins_attach_version_modal.events({
 
 		$(".ins-file-version-input").val('')
 	},
-	"click .ins_attach_href": function(event, template) {
+	"click .ins_attach_href": function (event, template) {
 		// 在手机、安卓和ios设备上弹出窗口显示附件
 		// 电脑上使用的是下载附件功能，由于手机上支持大部分文件类型在线预览，所以手机上默认使用打开新窗口查看方式
 		if (Steedos.isMobile() || Steedos.isAndroidOrIOS()) {
@@ -752,17 +759,17 @@ Template.ins_attach_version_modal.events({
 			return false;
 		}
 	},
-	"click [name='ins_attach_mobile']": function(event, template) {
+	"click [name='ins_attach_mobile']": function (event, template) {
 		var url = event.target.dataset.downloadurl;
 		var filename = this.name();
 		var rev = this._id;
 		var length = this.size();
 		Steedos.cordovaDownload(url, filename, rev, length);
 	},
-	"click .btn-primary": function(event, template) {
+	"click .btn-primary": function (event, template) {
 		InstanceManager.unlockAttach(event.target.id);
 	},
-	"click [name='ins_attach_isNode']": function(event, template) {
+	"click [name='ins_attach_isNode']": function (event, template) {
 		Modal.hide('ins_attach_version_modal');
 		Session.set('cfs_file_id', event.target.id);
 		Session.set('attach_parent_id', event.target.dataset.parent);
@@ -776,7 +783,7 @@ Template.ins_attach_version_modal.events({
 		var filename = event.target.dataset.name;
 		NodeManager.downloadFile(url, filename);
 	},
-	"click [name='ins_attach_isView']": function(event, template) {
+	"click [name='ins_attach_isView']": function (event, template) {
 		Session.set('cfs_file_id', event.target.id);
 		Session.set('attach_parent_id', event.target.dataset.parent);
 		var url = event.target.dataset.downloadurl;
@@ -784,7 +791,7 @@ Template.ins_attach_version_modal.events({
 		var arg = "Steedos.User.isView";
 		NodeManager.downloadFile(url, filename, arg);
 	},
-	"click [name='ins_attach_preview']": function(event, template) {
+	"click [name='ins_attach_preview']": function (event, template) {
 		if (event.target.id) {
 			if (Steedos.isNode())
 				url = window.location.origin + "/api/files/instances/" + event.target.id;
@@ -794,7 +801,7 @@ Template.ins_attach_version_modal.events({
 			Steedos.openWindow(url);
 		}
 	},
-	"click [name='ins_attach_convert_to_pdf']": function(event, template) {
+	"click [name='ins_attach_convert_to_pdf']": function (event, template) {
 		Session.set('cfs_file_id', event.target.id);
 		Session.set('attach_parent_id', event.target.dataset.parent);
 		Session.set('attach_instance_id', Session.get("instanceId"));
@@ -816,7 +823,7 @@ Template.ins_attach_version_modal.events({
 			confirmButtonText: t("node_office_confirm"),
 			cancelButtonText: t("node_office_cancel"),
 			closeOnConfirm: true
-		}, function(confirm) {
+		}, function (confirm) {
 			if (confirm) {
 				NodeManager.downloadFile(url, filename, arg);
 			} else {
@@ -826,7 +833,7 @@ Template.ins_attach_version_modal.events({
 		})
 	},
 
-	"click [name ='ins_attach_signature']": function(event, template) {
+	"click [name ='ins_attach_signature']": function (event, template) {
 		Session.set('cfs_file_id', event.target.id);
 		Session.set('attach_parent_id', event.target.dataset.parent);
 		Session.set('attach_instance_id', Session.get("instanceId"));
@@ -844,7 +851,7 @@ Template.ins_attach_version_modal.events({
 		NodeManager.downloadFile(url, filename, arg);
 	},
 
-	"click .ins-attach-version-delete": function(event, template) {
+	"click .ins-attach-version-delete": function (event, template) {
 		var file_id = event.target.id;
 		var file_name = event.target.dataset.name;
 		if (!file_id) {
@@ -861,8 +868,8 @@ Template.ins_attach_version_modal.events({
 			confirmButtonText: t("workflow_attach_confirm"),
 			cancelButtonText: t("workflow_attach_cancel"),
 			closeOnConfirm: true
-		}, function() {
-			Meteor.call('cfs_instances_remove', file_id, function(error, result) {
+		}, function () {
+			Meteor.call('cfs_instances_remove', file_id, function (error, result) {
 				if (error) {
 					toastr.error(error.message);
 				}
@@ -877,7 +884,7 @@ Template.ins_attach_version_modal.events({
 						}
 					}).fetch()[0];
 
-					Meteor.call('cfs_instances_set_current', current._id, function(error, result) {
+					Meteor.call('cfs_instances_set_current', current._id, function (error, result) {
 						if (error) {
 							toastr.error(error.message);
 						}
@@ -891,19 +898,19 @@ Template.ins_attach_version_modal.events({
 		});
 	},
 
-	"click [name='ins_attach_office_online_preview']": function(event, template){
+	"click [name='ins_attach_office_online_preview']": function (event, template) {
 		var file_name = event.target.dataset.name;
 		if (event.target.id) {
 			// 考虑rootUrl带路由和内外网服务地址一样等问题
 			url = window.location.origin + Steedos.absoluteUrl("api/files/instances/") + event.target.id + "/" + encodeURIComponent(file_name);
 
-			Creator.officeOnlinePreview(url,file_name);
+			Creator.officeOnlinePreview(url, file_name);
 		}
 	}
 
 })
 
-Template.ins_attach_version_modal.onRendered(function() {
+Template.ins_attach_version_modal.onRendered(function () {
 
 	var instance = WorkflowManager.getInstance();
 
@@ -917,13 +924,13 @@ Template.ins_attach_version_modal.onRendered(function() {
 
 Template.ins_attach_edit_modal.helpers({
 
-	name: function() {
+	name: function () {
 		return Session.get('cfs_filename');
 	}
 
 })
 
-Template.ins_attach_edit_modal.onRendered(function() {
+Template.ins_attach_edit_modal.onRendered(function () {
 
 	var cfs_file_id = Session.get('cfs_file_id');
 	if (!cfs_file_id)
@@ -947,7 +954,7 @@ Template.ins_attach_edit_modal.onRendered(function() {
 
 		if (fileType == ('doc' || 'docx')) {
 			//设置office用户名
-			with(TANGER_OCX_OBJ.ActiveDocument.Application) {
+			with (TANGER_OCX_OBJ.ActiveDocument.Application) {
 				UserName = Meteor.user().name;
 			}
 
@@ -956,7 +963,7 @@ Template.ins_attach_edit_modal.onRendered(function() {
 
 	}
 
-	setTimeout(function() {
+	setTimeout(function () {
 		// set body height
 		var total = document.documentElement.clientHeight;
 		var header = document.getElementById("attach_edit_modal_header").offsetHeight;
@@ -967,7 +974,7 @@ Template.ins_attach_edit_modal.onRendered(function() {
 
 Template.ins_attach_edit_modal.events({
 	// save attach
-	'click .btn-primary': function(event, template) {
+	'click .btn-primary': function (event, template) {
 		var filename = event.target.dataset.filename;
 
 		var TANGER_OCX_OBJ = document.getElementById("TANGER_OCX_OBJ");
@@ -1014,7 +1021,7 @@ Template.ins_attach_edit_modal.events({
 	},
 
 	// 关闭编辑页面
-	'click .btn-default': function(event, template) {
+	'click .btn-default': function (event, template) {
 		InstanceManager.unlockAttach(Session.get('cfs_file_id'));
 	}
 
