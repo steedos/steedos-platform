@@ -202,6 +202,7 @@ module.exports = {
         this.summaryActionHandler = new SummaryActionHandler(this.broker);
         this.lookupActionHandler = new LookupActionHandler(this.broker);
         this.objetActionHandlers = new ActionHandlers(async (objectConfig)=>{
+            await this.masterDetailActionHandler.remove(objectConfig);
             await this.masterDetailActionHandler.add(objectConfig);
             await this.lookupActionHandler.add(objectConfig);
             await this.formulaActionHandler.add(objectConfig);

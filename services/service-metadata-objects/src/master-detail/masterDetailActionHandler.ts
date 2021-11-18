@@ -80,6 +80,39 @@ export class MasterDetailActionHandler{
         return false
     }
 
+    async remove(objectConfig){
+        try {
+            await this.removeObjectMasterDetails(objectConfig);
+            return true
+        } catch (error) {
+            this.broker.logger.error(error);
+        }
+        return false
+    }
+    
+    /**
+     * 删除 主表子表类型字段 时，清理关联对象上masters 、details属性。
+     * TODO: 解决的问题： master_detail字段删除后重建一个同名同类型字段不报错。
+     * 测试过程中发现的问题： 在graphql查询数据时，如果删除一个相关的主表子表字段， 此时还能查询到相关表信息， 重启服务和刷新页面后才查询不到。
+     * @param objectConfig 
+     */
+    async removeObjectMasterDetails(objectConfig){
+        const { name: objectApiName } = objectConfig;
+        let masters = await this.getMastersInfo(objectApiName);
+        if(masters.length){
+            for await (const item of masters){
+                const fieldNameReferenceTo = item.split('.')[0];
+                const fieldName = item.split('.')[1];
+                const field = objectConfig.fields[fieldName];
+                field.name = fieldName;
+                if( !field || field.type !== 'master_detail' || field.reference_to !== fieldNameReferenceTo){
+                    await this.removeMaster(objectApiName, fieldNameReferenceTo, field);
+                    await this.removeDetail(fieldNameReferenceTo, objectApiName, field);
+                }
+            }
+        }
+    }
+
     async checkMasterDetails(objectApiName: string) {
         const mastersCount = (await this.getMasters(objectApiName)).length;
         const detailsCount = (await this.getDetails(objectApiName)).length;
@@ -192,13 +225,16 @@ export class MasterDetailActionHandler{
         return false;
     }
 
-    async removeMaster(objectApiName: any, masterObjectApiName: string){
-        let master = await this.getMasters(objectApiName);
-        let index = master.indexOf(masterObjectApiName);
-        if (index >= 0) {
-            master.splice(index, 1);
+    async removeMaster(objectApiName: any, masterObjectApiName: string, masterField: any){
+        let master = await this.getMastersInfo(objectApiName);
+        let maps = [];
+        if (master) {
+            maps = master;
         }
-        await this.broker.call('metadata.add', {key: this.getMasterKey(objectApiName), data: master}, {meta: {}})
+        const masterFullName = `${masterObjectApiName}.${masterField.name}`
+        maps = _.difference(maps, [masterFullName]);
+        await this.broker.call('metadata.add', { key: this.getMasterKey(objectApiName), data: maps }, { meta: {} })
+        return true;
     }
 
     getDetailKey(objectApiName){
@@ -243,13 +279,16 @@ export class MasterDetailActionHandler{
     }
 
     
-    async removeDetail(objectApiName: any, detailObjectApiName: string){
-        let detail = await this.getDetails(objectApiName);
-        let index = detail.indexOf(detailObjectApiName);
-        if (index >= 0) {
-            detail.splice(index, 1);
+    async removeDetail(objectApiName: any, detailObjectApiName: string, detailField: any){
+        let detail = await this.getDetailsInfo(objectApiName);
+        let maps = [];
+        if (detail) {
+            maps = detail;
         }
-        await this.broker.call('metadata.add', {key: this.getDetailKey(objectApiName), data: detail}, {meta: {}})
+        const detailFullName = `${detailObjectApiName}.${detailField.name}`
+        maps = _.difference(maps, [detailFullName]);
+        await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName), data: maps }, { meta: {} })
+        return true;
     }
 
     async getDetailPaths(objectApiName: string){
