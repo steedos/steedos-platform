@@ -271,7 +271,7 @@ Template.instance_attachment.events({
 				var ruixin = new RuixinApi();
 				if (ruixin && webservices.ruixin) {
 					var domain = webservices.ruixin.previewDomain;
-					var fileUrl = domain + Steedos.absoluteUrl("creator") + href;
+					var fileUrl = domain + Steedos.absoluteUrl(href);
 					ruixin.docPreview({
 						"fileUrl": fileUrl,
 						"fileName": template.data.name()
