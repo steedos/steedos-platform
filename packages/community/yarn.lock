@@ -1528,10 +1528,10 @@
   resolved "https://registry.npm.taobao.org/@sheerun/mutationobserver-shim/download/@sheerun/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
   integrity sha1-VAXujkRO0hLbROeTUfDHClgqriU=
 
-"@steedos/webapp@^1.22.0-alpha.8":
-  version "1.22.0-alpha.8"
-  resolved "https://registry.npm.taobao.org/@steedos/webapp/download/@steedos/webapp-1.22.0-alpha.8.tgz#ce6c56b4c245da91e49ffe79f3e71552efb8b90f"
-  integrity sha1-zmxWtMJF2pHkn/558+cVUu+4uQ8=
+"@steedos/webapp@2.1.46":
+  version "2.1.46"
+  resolved "https://registry.yarnpkg.com/@steedos/webapp/-/webapp-2.1.46.tgz#27b8ac16cb39b0bce990ea2132fba560e7d8c438"
+  integrity sha512-kZ4PsyMnhG7vGfzHX8QZ6a/AdcU5PxImZSWg34g+5y4XNN0DuD/XPf8aiB17gDj47PCtB1UQIyYoy6rNds/FXQ==
   dependencies:
     "@accounts/client" "^0.19.0"
     "@accounts/client-password" "^0.19.0"
@@ -1544,9 +1544,7 @@
     react-intl "^3.1.13"
     react-redux "^7.1.0"
     react-router-dom "^5.2.0"
-    react-scripts "^3.4.3"
     redux "^4.0.4"
-    redux-devtools-extension "^2.13.8"
     redux-thunk "^2.3.0"
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
@@ -7946,9 +7944,9 @@ path-key@^3.1.0:
   integrity sha1-WB9q3mWMu6ZaDTOA3ndTKVBU83U=
 
 path-parse@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.npm.taobao.org/path-parse/download/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
-  integrity sha1-1i27VnlAXXLEc37FhgDp3c8G0kw=
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
+  integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
 
 path-to-regexp@0.1.7:
   version "0.1.7"
@@ -9138,7 +9136,7 @@ react-router@5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-scripts@3.4.3, react-scripts@^3.4.3:
+react-scripts@3.4.3:
   version "3.4.3"
   resolved "https://registry.npm.taobao.org/react-scripts/download/react-scripts-3.4.3.tgz#21de5eb93de41ee92cd0b85b0e1298d0bb2e6c51"
   integrity sha1-Id5euT3kHuks0LhbDhKY0LsubFE=
@@ -9310,11 +9308,6 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
-
-redux-devtools-extension@^2.13.8:
-  version "2.13.8"
-  resolved "https://registry.npm.taobao.org/redux-devtools-extension/download/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
-  integrity sha1-N7mCaIYm5eSZP/hyIMm7t80tluE=
 
 redux-thunk@^2.3.0:
   version "2.3.0"
