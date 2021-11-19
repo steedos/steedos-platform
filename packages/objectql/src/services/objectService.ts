@@ -630,6 +630,13 @@ module.exports = {
                     datasource.setLocalObject(objectConfig.name, object);
                     this.object = object;
 
+                    if (
+                      datasource.name != "meteor" &&
+                      datasource.name != "default"
+                    ) {
+                      await datasource.init();
+                    }
+
                     if(datasource.name === 'meteor' && Creator.Objects[objectConfig.name]){
                         jsonToObject(objectConfig);
                         const localTriggers = (localObjectConfig as any).triggers;

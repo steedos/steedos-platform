@@ -163,6 +163,20 @@ export async function refreshObject(ctx, objectApiName) {
     objectConfig = _.defaultsDeep({}, clone(_objectConfig), baseObjectConfig, objectConfig);
 
     _.each(objectConfig.fields, function(field, field_name){
+        if (objectDatasource != "default" && objectDatasource != "meteor") {
+          if (field.primary) {
+            objectConfig.idFieldName = field.name;
+            if (!objectConfig.idFieldNames) {
+              objectConfig.idFieldNames = [];
+            }
+            if (objectConfig.idFieldNames.indexOf(field.name) < 0) {
+              objectConfig.idFieldNames.push(field.name);
+            }
+          }
+          if (field.generated) {
+            field.omit = true;
+          }
+        }
         if (field.is_name) {
             objectConfig.NAME_FIELD_KEY = field_name
         } else if (field_name == 'name' && !objectConfig.NAME_FIELD_KEY) {

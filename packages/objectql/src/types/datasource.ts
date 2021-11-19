@@ -470,17 +470,24 @@ export class SteedosDataSourceType implements Dictionary {
 
     async init() {
         await this.initObjects();
-        this.initTypeORM();
+        await this.initTypeORM();
         // initObjectFieldsSummarys(this.name);
         // this.schema.transformReferenceOfObject(this);
     }
 
-    initTypeORM() {
+    async initTypeORM() {
+        const _objects = {};
+        _.map(await this.getObjects(), (item)=>{
+            if(item && item.metadata){
+                _objects[item.metadata.name] = item.metadata
+            }
+        })
+        
         if (this._adapter.init) {
             let self = this;
             Fiber(function(){
                 let fiber = Fiber.current;
-                self._adapter.init(self._objects).then(result => {
+                self._adapter.init(_objects).then(result => {
                     fiber.run();
                 }).catch(result => {
                     console.error(result)
