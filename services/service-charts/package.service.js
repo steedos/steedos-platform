@@ -242,15 +242,30 @@ module.exports = {
                 const dataSourcesAll = objectql.getSteedosSchema().getDataSources();
 				const dataSources = [];
 				_.each(dataSourcesAll, (dataSource, name)=>{
-					if(dataSource.driver === 'mongo'){
-						dataSources.push({
-							_id: name,
-							id: name,
-							name: dataSource.label || name,
-							syntax: 'json',
-							type: 'mongodb',
-							view_only: false
-						})
+					if (dataSource.driver != 'meteor-mongo') {
+						const dataSourceType = this.getDataSourceType(dataSource.driver)
+						switch (dataSource.driver) {
+							case 'mongo':
+								dataSources.push({
+									_id: name,
+									id: name,
+									name: dataSource.label || name,
+									syntax: 'json',
+									type: dataSourceType,
+									view_only: false
+								})
+								break;
+							default:
+								dataSources.push({
+									_id: name,
+									id: name,
+									name: dataSource.label || name,
+									syntax: 'sql',
+									type: dataSourceType,
+									view_only: false
+								})
+								break;
+						}
 					}
 				})
 				return dataSources;
@@ -314,6 +329,26 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
+		getDataSourceType: {
+			handler(driver) {
+				switch (driver) {
+					case 'mongo':
+						return 'mongodb'
+					case 'sqlite':
+						return 'sqlite'
+					case 'sqlserver':
+						return 'mssql'
+					case 'postgres':
+						return 'pg'
+					case 'oracle':
+						return 'oracle'
+					case 'mysql':
+						return 'mysql'
+					default:
+						break;
+				}
+			}
+		},
 		getQueryRecord: {
 			async handler(recordId){
 				let queryRecord = await objectql.getObject("queries").findOne(recordId);
@@ -443,9 +478,10 @@ module.exports = {
 		},
 		getQueryInfo: {
 			async handler(queryId, parameters) {
+				let queryInfo = null;
 				let record = await objectql.getObject("queries").findOne(queryId);
 				if (!record) {
-					record = await getQueries(queryId)
+					record = await getQueries(queryId);
 				}
 				if (record) {
 					if (!record.query) {
@@ -455,59 +491,54 @@ module.exports = {
 					if (!datasource) {
 						throw new Error(`not find Data Source.`)
 					}
-					if ('mongo' === datasource.driver) {
-						// let query = null;
-						// try {
-						// 	query = JSON.parse(record.query);
-						// } catch (error) {
-						// 	throw new Error(`Invalid query.`)
-						// }
-						// if (!query.collection) {
-						// 	throw new Error(`collection is required`)
-						// }
-						if (!record.options) {
-							record.options = { parameters: [] }
+					if (!record.options) {
+						record.options = { parameters: [] }
+					}
+					if (!record.options.parameters) {
+						record.options.parameters = []
+					}
+					const invalidParameterNames = [];
+					for (const definition of record.options.parameters) {
+						const valid = await this.validParameter(definition, parameters[definition.name])
+						if (!valid) {
+							invalidParameterNames.push(definition.name)
 						}
-						if (!record.options.parameters) {
-							record.options.parameters = []
-						}
-						const invalidParameterNames = [];
-						for (const definition of record.options.parameters) {
-							const valid = await this.validParameter(definition, parameters[definition.name])
-							if (!valid) {
-								invalidParameterNames.push(definition.name)
+					}
+					if (invalidParameterNames && invalidParameterNames.length > 0) {
+						throw new Error(`The following parameter values are incompatible with their definitions: ${invalidParameterNames.join(',')}`)
+					}
+					const parameterized_query = this.joinParameterListValues(parameters, record.options.parameters || [])
+					const queryString = this.mustacheRender(record.query, parameterized_query);
+					queryInfo = {
+						queryString,
+						queryId,
+						data_source_id: record.datasource,
+						datasource,
+						options: record.options,
+						schedule: record.schedule
+					};
+
+					switch (datasource.driver) {
+						case 'mongo':
+							try {
+								JSON.parse(queryString);
+							} catch (Exception) {
+								console.error(`queryString`, queryString, Exception);
+								throw new Error(`Invalid query.`);
 							}
-						}
-						if (invalidParameterNames && invalidParameterNames.length > 0) {
-							throw new Error(`The following parameter values are incompatible with their definitions: ${invalidParameterNames.join(',')}`)
-						}
-
-						const parameterized_query = this.joinParameterListValues(parameters, record.options.parameters || [])
-						const queryString = this.mustacheRender(record.query, parameterized_query);
-						let query = null;
-						try {
-							query = JSON.parse(queryString);
-						} catch (Exception) {
-							console.error(`queryString`, queryString, Exception);
-							throw new Error(`Invalid query.`)
-						}
-
-						return {
-							query,
-							queryString,
-							queryId,
-							data_source_id: record.datasource,
-							datasource,
-							options: record.options,
-							schedule: record.schedule
-						}
-
-					} else if (_.includes(['sqlite', 'sqlserver', 'postgres', 'oracle', 'mysql'], datasource.driver)) {
-						throw new Error(`This data source [${datasource.driver}] is not supported.`)
-					} else {
-						throw new Error(`This data source [${datasource.driver}] is not supported.`)
+							break;
+						case 'sqlite':
+						case 'sqlserver':
+						case 'postgres':
+						case 'oracle':
+						case 'mysql':
+							//TODO check is sql
+							break;
+						default:
+							throw new Error(`This data source [${datasource.driver}] is not supported.`)
 					}
 				}
+				return queryInfo;
 			}
 		},
 		getQueryResult: {
@@ -639,7 +670,7 @@ module.exports = {
 		},
 		runQueryExecutor: {
 			async handler(queryInfo) {
-				const { queryId, data_source_id, query, queryString, datasource } = queryInfo
+				const { queryId, data_source_id, queryString, datasource } = queryInfo
 				let queryHash = this.getQueryHash(queryString);
 				let retrievedAt = null;
 				let runtime = 0.00;
@@ -647,9 +678,9 @@ module.exports = {
 				let results = null;
 				const startedAt = new Date().getTime();
 				try {
-					results = await this.runQuery(datasource, query);
+					results = await this.runQuery(datasource, queryString);
 				} catch (error) {
-					console.error(error, JSON.stringify(query))
+					console.error(error, queryString)
 				}
 				retrievedAt = new Date();
 				runtime = (retrievedAt.getTime() - startedAt) / 1000;
@@ -673,33 +704,45 @@ module.exports = {
 					data: data,
 					id: queryId,
 					_id: queryId,
-					data_source_id: data_source_id
+					data_source_id: data_source_id,
+					data_source_type: this.getDataSourceType(datasource.driver)
 				}
 				await this.storeQueryResult(queryResult);
 				return queryResult;
 			}
 		},
 		runQuery: {
-			async handler(datasource, query) {
+			async handler(datasource, queryString) {
 				let results = null;
-				if (query.aggregate) {
+				if (queryString && datasource) {
 					const driver = datasource.adapter;
 					await driver.connect();
-					results = await driver.collection(query.collection).aggregate(query.aggregate).toArray();
-				} else if (query.query) {
-					const driver = datasource.adapter;
-					await driver.connect();
-					const filter = query.query;
-					const options = {
-						projection: query.projection || query.fields,
-						sort: query.sort,
-						limit: query.limit,
-						skip: query.skip
-					}
-					if (query.count) {
-						results = await driver.collection(query.collection).find(filter, options).count();
-					} else {
-						results = await driver.collection(query.collection).find(filter, options).toArray();
+					if ('mongo' === datasource.driver) {
+						let query = null;
+						try {
+							query = JSON.parse(queryString);
+						} catch (Exception) {
+							console.error(`queryString`, queryString, Exception);
+							throw new Error(`Invalid query.`);
+						}
+						if (query.aggregate) {
+							results = await driver.collection(query.collection).aggregate(query.aggregate).toArray();
+						} else if (query.query) {
+							const filter = query.query;
+							const options = {
+								projection: query.projection || query.fields,
+								sort: query.sort,
+								limit: query.limit,
+								skip: query.skip
+							}
+							if (query.count) {
+								results = await driver.collection(query.collection).find(filter, options).count();
+							} else {
+								results = await driver.collection(query.collection).find(filter, options).toArray();
+							}
+						}
+					} else if (_.includes(['sqlite', 'sqlserver', 'postgres', 'oracle', 'mysql'], datasource.driver)) {
+						results = await driver.run(queryString);
 					}
 				}
 				return results;
