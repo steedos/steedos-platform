@@ -123,6 +123,9 @@ export class SteedosSchema {
         if (!name) {
             throw new Error('Object name is required');
         }
+        if (!name.split) {
+          return;
+        }
         let args = name.split('.')
         if (args.length == 1) {
             object_name = name
