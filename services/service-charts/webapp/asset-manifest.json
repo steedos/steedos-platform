@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "./static/css/main.985c219b.chunk.css",
-    "main.js": "./static/js/main.de3d1f57.chunk.js",
-    "main.js.map": "./static/js/main.de3d1f57.chunk.js.map",
+    "main.js": "./static/js/main.a4824ca7.chunk.js",
+    "main.js.map": "./static/js/main.a4824ca7.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.e06ec583.js",
     "runtime-main.js.map": "./static/js/runtime-main.e06ec583.js.map",
     "static/css/2.57597a90.chunk.css": "./static/css/2.57597a90.chunk.css",
-    "static/js/2.20f415da.chunk.js": "./static/js/2.20f415da.chunk.js",
-    "static/js/2.20f415da.chunk.js.map": "./static/js/2.20f415da.chunk.js.map",
+    "static/js/2.42229c1b.chunk.js": "./static/js/2.42229c1b.chunk.js",
+    "static/js/2.42229c1b.chunk.js.map": "./static/js/2.42229c1b.chunk.js.map",
     "static/js/3.c1f4360c.chunk.js": "./static/js/3.c1f4360c.chunk.js",
     "static/js/3.c1f4360c.chunk.js.map": "./static/js/3.c1f4360c.chunk.js.map",
     "../dist/types/apps/charts-design/src/App.d.ts": "./../dist/types/apps/charts-design/src/App.d.ts",
@@ -306,8 +306,8 @@
     "index.html": "./index.html",
     "static/css/2.57597a90.chunk.css.map": "./static/css/2.57597a90.chunk.css.map",
     "static/css/main.985c219b.chunk.css.map": "./static/css/main.985c219b.chunk.css.map",
-    "static/js/2.20f415da.chunk.js.LICENSE.txt": "./static/js/2.20f415da.chunk.js.LICENSE.txt",
-    "static/js/main.de3d1f57.chunk.js.LICENSE.txt": "./static/js/main.de3d1f57.chunk.js.LICENSE.txt",
+    "static/js/2.42229c1b.chunk.js.LICENSE.txt": "./static/js/2.42229c1b.chunk.js.LICENSE.txt",
+    "static/js/main.a4824ca7.chunk.js.LICENSE.txt": "./static/js/main.a4824ca7.chunk.js.LICENSE.txt",
     "static/media/Material-Design-Iconic-Font.ttf": "./static/media/Material-Design-Iconic-Font.5a588d6a.ttf",
     "static/media/Material-Design-Iconic-Font.eot": "./static/media/Material-Design-Iconic-Font.84b88bb7.eot",
     "static/media/Material-Design-Iconic-Font.svg": "./static/media/Material-Design-Iconic-Font.84fbd35b.svg",
@@ -323,17 +323,21 @@
     "static/media/glyphicons-halflings-regular.woff": "./static/media/glyphicons-halflings-regular.82b1212e.woff",
     "static/media/glyphicons-halflings-regular.woff2": "./static/media/glyphicons-halflings-regular.be810be3.woff2",
     "static/media/json.dd875e1c.png": "./static/media/json.dd875e1c.png",
+    "static/media/mssql.d40b4078.png": "./static/media/mssql.d40b4078.png",
+    "static/media/mysql.f8b6f74e.png": "./static/media/mysql.f8b6f74e.png",
+    "static/media/pg.0fd9775b.png": "./static/media/pg.0fd9775b.png",
     "static/media/redash-icons.ttf?ehpufm": "./static/media/redash-icons.5ea5c3ce.ttf",
     "static/media/redash-icons.svg?ehpufm": "./static/media/redash-icons.62eba999.svg",
     "static/media/redash-icons.eot?ehpufm": "./static/media/redash-icons.73408d9c.eot",
     "static/media/redash-icons.woff?ehpufm": "./static/media/redash-icons.d7fb865d.woff",
+    "static/media/sqlite.1252518f.png": "./static/media/sqlite.1252518f.png",
     "static/media/symbols.svg": "./static/media/symbols.a8a4c23c.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.e06ec583.js",
     "static/css/2.57597a90.chunk.css",
-    "static/js/2.20f415da.chunk.js",
+    "static/js/2.42229c1b.chunk.js",
     "static/css/main.985c219b.chunk.css",
-    "static/js/main.de3d1f57.chunk.js"
+    "static/js/main.a4824ca7.chunk.js"
   ]
 }
