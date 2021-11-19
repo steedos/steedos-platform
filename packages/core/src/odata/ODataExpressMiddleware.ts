@@ -48,7 +48,7 @@ const getObjectList = async function (req: Request, res: Response) {
             if (queryParams.$select) {
                 fields = _.keys(createQuery.projection)
             }
-            if(collection.datasource ==="dafault"){
+            if(collection.datasource === "dafault"){
                 filters = getODataManager().excludeDeleted(filters);
             }
 
