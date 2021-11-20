@@ -1,6 +1,6 @@
 {
     "name": "@steedos/steedos-plugin-schema-builder",
-    "version": "2.1.47",
+    "version": "2.1.48",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -25,7 +25,7 @@
     "devDependencies": {
         "@antv/g6": "^3.6.0",
         "@iarna/rtf-to-html": "^1.1.0",
-        "@steedos/accounts": "2.1.47",
+        "@steedos/accounts": "2.1.48",
         "@steedos/steedos-plugin-workflow": "^2.0.8",
         "@types/react": "^16.9.22",
         "@types/react-dom": "^16.8.4",
@@ -46,7 +46,7 @@
         "react-scrollbars-custom": "^4.0.21",
         "stats": "^1.0.0",
         "stats.js": "^0.17.0",
-        "steedos-server": "2.1.47",
+        "steedos-server": "2.1.48",
         "typescript": "^3.8.2",
         "unstated-next": "^1.1.0",
         "with-dnd-context": "^1.0.4",

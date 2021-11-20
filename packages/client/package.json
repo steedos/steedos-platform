@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@steedos/client",
-  "version": "2.1.47",
+  "version": "2.1.48",
   "description": "client lib for steedos",
   "main": "lib/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@steedos/filters": "2.1.47",
+    "@steedos/filters": "2.1.48",
     "node-fetch": "^2.6.1"
   }
 }

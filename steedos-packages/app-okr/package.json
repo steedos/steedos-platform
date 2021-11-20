@@ -1,6 +1,6 @@
 {
     "name": "@steedos/app-okr-management",
-    "version": "2.1.47",
+    "version": "2.1.48",
     "description": "",
     "main": "package.service.js",
     "scripts": {
@@ -18,9 +18,9 @@
         "access": "public"
     },
     "devDependencies": {
-        "@steedos/service-metadata-server": "2.1.47",
-        "@steedos/service-package-loader": "2.1.47",
-        "@steedos/service-steedos-server": "2.1.47",
+        "@steedos/service-metadata-server": "2.1.48",
+        "@steedos/service-package-loader": "2.1.48",
+        "@steedos/service-steedos-server": "2.1.48",
         "dotenv-flow": "^3.1.0",
         "nodemon": "^1.19.1"
     },
