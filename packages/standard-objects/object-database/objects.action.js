@@ -18,14 +18,14 @@ module.exports = {
             return toastr.warning("请先启动数据源");
         }
     }
+    Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name));
 
-        var allViews = Creator.odata.query('object_listviews', { $select: '_id', $filter: `((object_name eq '${record.name}') and (name eq 'all'))` }, true);
-
-    if(allViews && allViews.length > 0){
-        Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/" + allViews[0]._id))
-    }else{
-        Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
-    }
+    // var allViews = Creator.odata.query('object_listviews', { $select: '_id', $filter: `((object_name eq '${record.name}') and (name eq 'all'))` }, true);
+    // if(allViews && allViews.length > 0){
+    //     Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/" + allViews[0]._id))
+    // }else{
+    //     Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
+    // }
   },
   show_objectVisible: function(object_name, record_id, record_permissions, record){
     if(!Creator.isSpaceAdmin()){
