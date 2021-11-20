@@ -63,11 +63,12 @@ getSchemaTalbeProps = ()->
 			return true;
 	}
 Template.page_template.onRendered ->
-	rootId = "steedosPageRoot";
-	modalRoot = document.getElementById(rootId);
-	if !modalRoot
-		modalRoot = document.createElement('div');
-		modalRoot.setAttribute('id', rootId);
-		$(".page-template-root")[0].appendChild(modalRoot)
-#	SteedosUI.render(stores.ComponentRegistry.components.ObjectTable, getSchemaTalbeProps(), $("##{rootId}")[0])
-	SteedosUI.render(stores.ComponentRegistry.components.PublicPage, { token: Session.get("pageApiName") }, $("##{rootId}")[0])
+	this.autorun ()->
+		rootId = "steedosPageRoot";
+		modalRoot = document.getElementById(rootId);
+		if !modalRoot
+			modalRoot = document.createElement('div');
+			modalRoot.setAttribute('id', rootId);
+			$(".page-template-root")[0].appendChild(modalRoot)
+	#	SteedosUI.render(stores.ComponentRegistry.components.ObjectTable, getSchemaTalbeProps(), $("##{rootId}")[0])
+		SteedosUI.render(stores.ComponentRegistry.components.PublicPage, { token: Session.get("pageApiName") }, $("##{rootId}")[0])
