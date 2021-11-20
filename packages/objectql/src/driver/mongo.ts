@@ -375,12 +375,10 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async directInsert(tableName: string, data: Dictionary<any>) {
-        data = this.convertDataForOperate(data);
         return this.insert(tableName, data)
     }
 
     async directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>) {
-        data = this.convertDataForOperate(data);
         return this.update(tableName, id, data)
     }
 

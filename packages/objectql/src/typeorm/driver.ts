@@ -6,7 +6,7 @@ import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { executeQuery, executeCountQuery, SqlOptions } from '@steedos/odata-v4-typeorm';
 import { SQLLang } from 'odata-v4-sql';
-import { getPrimaryKeys } from "../typeorm";
+import { getPrimaryKeys, convertDataForOperate } from "../typeorm";
 
 import _ = require("underscore");
 
@@ -272,6 +272,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
         }
         let repository = this._client.getRepository(entity);
+        data = convertDataForOperate(data);
         let result = await repository.insert(data);
         if (result.identifiers && result.identifiers.length) {
             let primaryKeys: string[] = getPrimaryKeys(repository);
@@ -295,6 +296,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
             throw new Error("the params 'data' must not be empty");
         }
         let repository = this._client.getRepository(entity);
+        data = convertDataForOperate(data);
         await repository.update(id, data);
         return await this.findOne(tableName, id);
     }
@@ -310,6 +312,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
             throw new Error("the params 'data' must not be empty");
         }
         let repository = this._client.getRepository(entity);
+        data = convertDataForOperate(data);
         await repository.update(id, data);
         return await this.findOne(tableName, id);
     }
