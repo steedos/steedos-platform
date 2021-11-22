@@ -84,6 +84,7 @@
   },
   "homepage": "https://www.steedos.org",
   "resolutions": {
+    "typeorm": "0.2.28",
     "**/lodash": "^4.17.15",
     "**/handlebars": "^4.3.0",
     "**/debug": "^3.1.0",
