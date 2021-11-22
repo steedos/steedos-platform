@@ -24804,7 +24804,7 @@ mv@~2:
     ncp "~2.0.0"
     rimraf "~2.4.0"
 
-mysql@^2.17.1:
+mysql@^2.17.1, mysql@^2.18.1:
   version "2.18.1"
   resolved "https://registry.npm.taobao.org/mysql/download/mysql-2.18.1.tgz#2254143855c5a8c73825e4522baf2ea021766717"
   integrity sha1-IlQUOFXFqMc4JeRSK68uoCF2Zxc=
