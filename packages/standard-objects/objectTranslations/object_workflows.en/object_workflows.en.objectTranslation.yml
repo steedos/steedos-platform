@@ -57,6 +57,15 @@ fields:
       - label: Synchronize All Versions
         value: all
     description: 
+  sync_type:
+    label: Synchronization Mode
+    help: 
+    options:
+      - label: Every Step
+        value: "every_step"
+      - label: Final Step
+        value: "final_step"
+    description: 
 groups:
   script: Script
 listviews:

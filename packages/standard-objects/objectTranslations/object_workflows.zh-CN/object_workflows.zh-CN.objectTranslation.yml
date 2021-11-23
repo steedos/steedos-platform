@@ -57,6 +57,15 @@ fields:
       - label: 同步所有版本
         value: all
     description: 
+  sync_type:
+    label: 表单至对象同步模式
+    help: 
+    options:
+      - label: 每个节点同步
+        value: "every_step"
+      - label: 结束节点同步
+        value: "final_step"
+    description: 
 groups:
   script: 脚本
 listviews:

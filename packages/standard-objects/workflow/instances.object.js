@@ -131,10 +131,8 @@ if (Meteor.isServer) {
     return modifier.$unset.is_recorded = 1;
   });
   db.instances.after.update(function (userId, doc, fieldNames, modifier, options) {
-    if (doc.state === "pending" && this.previous.state === "draft") {
-      return uuflowManager.triggerRecordInstanceQueue(doc._id, doc.record_ids, doc.current_step_name, doc.flow);
-    } else if (!_.isEmpty(doc.record_ids) && doc.current_step_name !== this.previous.current_step_name) {
-      return uuflowManager.triggerRecordInstanceQueue(doc._id, doc.record_ids, doc.current_step_name, doc.flow);
+    if (doc.current_step_name !== this.previous.current_step_name) {
+      return uuflowManager.triggerRecordInstanceQueue(doc._id, doc.record_ids, doc.current_step_name, doc.flow, doc.state);
     }
   });
   db.instances.after.remove(function (userId, doc) {

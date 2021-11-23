@@ -2620,23 +2620,25 @@ uuflowManager.checkValueFieldsRequire = (values, form, form_version) ->
 
 	return require_but_empty_fields
 
-uuflowManager.triggerRecordInstanceQueue = (ins_id, record_ids, step_name, flow_id) ->
-
-	if Creator.getCollection('object_workflows').find({ flow_id: flow_id }).count() > 0
-		newObj = {
-			info: {
-				instance_id: ins_id
-				records: record_ids
-				step_name: step_name
-				instance_finish_date: new Date()
+uuflowManager.triggerRecordInstanceQueue = (ins_id, record_ids, step_name, flow_id, ins_state) ->
+	owDoc = Creator.getCollection('object_workflows').findOne({ flow_id: flow_id })
+	if owDoc
+		syncType = owDoc.sync_type
+		if (!syncType || syncType == 'every_step') || (syncType == 'final_step' && ins_state == 'completed')
+			newObj = {
+				info: {
+					instance_id: ins_id
+					records: record_ids
+					step_name: step_name
+					instance_finish_date: new Date()
+				}
+				sent: false
+				sending: 0
+				createdAt: new Date()
+				createdBy: '<SERVER>'
 			}
-			sent: false
-			sending: 0
-			createdAt: new Date()
-			createdBy: '<SERVER>'
-		}
 
-		db.instance_record_queue.insert(newObj)
+			db.instance_record_queue.insert(newObj)
 
 	return
 

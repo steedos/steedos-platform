@@ -297,6 +297,16 @@ fields:
       - label: Synchronize All Versions
         value: all
     required: true
+  sync_type:
+    label: Synchronization Mode
+    type: select
+    options:
+      - label: Every Step
+        value: "every_step"
+      - label: Final Step
+        value: "final_step"
+    defaultValue: every_step
+    required: true
 list_views:
   default:
     columns:
