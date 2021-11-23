@@ -103,9 +103,14 @@ export class MasterDetailActionHandler{
             for await (const item of masters){
                 const fieldNameReferenceTo = item.split('.')[0];
                 const fieldName = item.split('.')[1];
-                const field = objectConfig.fields[fieldName];
+                let field = objectConfig.fields[fieldName];
+                // 当字段被删除 || 字段类型 不是 主表子表 || 字段引用对象 改变了
                 if( !field || field.type !== 'master_detail' || field.reference_to !== fieldNameReferenceTo){
-                    field.name = fieldName;
+                    if(field){
+                        field.name = fieldName
+                    }else{
+                        field = { name: fieldName}
+                    }
                     await this.removeMaster(objectApiName, fieldNameReferenceTo, field);
                     await this.removeDetail(fieldNameReferenceTo, objectApiName, field);
                 }
