@@ -20,7 +20,7 @@
     "@steedos/design-system-react": "^2.0.9",
     "@steedos/i18n": "^2.0.32",
     "@steedos/webapp": "^2.0.9",
-    "@steedos-ui/builder-community": "^1.0.14",
+    "@steedos-ui/builder-community": "^1.0.15",
     "aliyun-sdk": "^1.12.3",
     "aws-sdk": "2.0.23",
     "basic-auth": "^2.0.1",
