@@ -104,8 +104,8 @@ export class MasterDetailActionHandler{
                 const fieldNameReferenceTo = item.split('.')[0];
                 const fieldName = item.split('.')[1];
                 const field = objectConfig.fields[fieldName];
-                field.name = fieldName;
                 if( !field || field.type !== 'master_detail' || field.reference_to !== fieldNameReferenceTo){
+                    field.name = fieldName;
                     await this.removeMaster(objectApiName, fieldNameReferenceTo, field);
                     await this.removeDetail(fieldNameReferenceTo, objectApiName, field);
                 }
