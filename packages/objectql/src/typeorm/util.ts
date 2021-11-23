@@ -2,7 +2,6 @@ import { EntitySchema, ColumnType, EntitySchemaColumnOptions, EntitySchemaRelati
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType, SteedosFieldType } from "../types";
 import { SteedosFieldDBType } from "../driver";
-import _ = require("lodash");
 
 export interface EntitySchemaColumnDictionary {
     [x: string]: EntitySchemaColumnOptions;
@@ -133,19 +132,4 @@ export function getPrimaryKeys(repository: Repository<any>): Array<string> {
         });
     }
     return primaryKeys;
-}
-
-export function convertDataForOperate(data: any): any {
-    var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
-    const result = {};
-    const keys = _.keys(data);
-    _.each(keys, function(key){
-        const value = data[key];
-        if(_.isString(value) && regDate.test(value)){
-            result[key] = new Date(value);
-        }else{
-            result[key] = value;
-        }
-    })
-    return result;
 }
