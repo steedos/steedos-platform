@@ -103,16 +103,11 @@ export class MasterDetailActionHandler{
             for await (const item of masters){
                 const fieldNameReferenceTo = item.split('.')[0];
                 const fieldName = item.split('.')[1];
-                let field = objectConfig.fields[fieldName];
-                // 当字段被删除 || 字段类型 不是 主表子表 || 字段引用对象 改变了
+                const field = objectConfig.fields[fieldName];
+                // 考虑以下情况： (字段删除 | 字段名改变） 、 字段类型改变、 字段引用对象改变
                 if( !field || field.type !== 'master_detail' || field.reference_to !== fieldNameReferenceTo){
-                    if(field){
-                        field.name = fieldName
-                    }else{
-                        field = { name: fieldName}
-                    }
-                    await this.removeMaster(objectApiName, fieldNameReferenceTo, field);
-                    await this.removeDetail(fieldNameReferenceTo, objectApiName, field);
+                    await this.removeMaster(objectApiName, fieldNameReferenceTo, fieldName);
+                    await this.removeDetail(fieldNameReferenceTo, objectApiName, fieldName);
                 }
             }
         }
@@ -230,13 +225,13 @@ export class MasterDetailActionHandler{
         return false;
     }
 
-    async removeMaster(objectApiName: any, masterObjectApiName: string, masterField: any){
+    async removeMaster(objectApiName: any, masterObjectApiName: string, masterFieldName: any){
         let master = await this.getMastersInfo(objectApiName);
         let maps = [];
         if (master) {
             maps = master;
         }
-        const masterFullName = `${masterObjectApiName}.${masterField.name}`
+        const masterFullName = `${masterObjectApiName}.${masterFieldName}`
         maps = _.difference(maps, [masterFullName]);
         await this.broker.call('metadata.add', { key: this.getMasterKey(objectApiName), data: maps }, { meta: {} })
         return true;
@@ -284,13 +279,13 @@ export class MasterDetailActionHandler{
     }
 
     
-    async removeDetail(objectApiName: any, detailObjectApiName: string, detailField: any){
+    async removeDetail(objectApiName: any, detailObjectApiName: string, detailFieldName: any){
         let detail = await this.getDetailsInfo(objectApiName);
         let maps = [];
         if (detail) {
             maps = detail;
         }
-        const detailFullName = `${detailObjectApiName}.${detailField.name}`
+        const detailFullName = `${detailObjectApiName}.${detailFieldName}`
         maps = _.difference(maps, [detailFullName]);
         await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName), data: maps }, { meta: {} })
         return true;
