@@ -909,7 +909,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
             if(!permissions.viewAllRecords && !isOwner && !permissions.viewCompanyRecords){
                 permissions.allowRead = false
-            }else{
+            }else if(!permissions.viewAllRecords && permissions.viewCompanyRecords){
                 if(record_company_ids && record_company_ids.length){
                     if(user_company_ids && user_company_ids.length){
                         if(!_.intersection(user_company_ids, record_company_ids).length){
