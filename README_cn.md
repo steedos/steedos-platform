@@ -81,7 +81,7 @@
 
 华炎魔方是一组 [npm package](https://www.npmjs.com/package/steedos-server) 软件包，直接在nodejs项目中安装引用即可。
 
-具体如何安装部署华炎魔方，请参考[官网安装部署文档](https://www.steedos.com/help/deploy)
+具体如何安装部署华炎魔方，请参考[官网安装部署文档](https://www.steedos.com/docs/deploy)
 
 ## 学习华炎魔方
 
