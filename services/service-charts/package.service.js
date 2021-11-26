@@ -68,8 +68,10 @@ module.exports = {
 				let queryResult = await this.getLatestQueryResult(queryRecord.datasource, queryHash, -1);
 				if (!queryResult) {
 					queryResult = {
-						columns: [],
-						rows: []
+						data: {
+							columns: [],
+							rows: []
+						}
 					}
 				}
 				if (type == 'csv') {
