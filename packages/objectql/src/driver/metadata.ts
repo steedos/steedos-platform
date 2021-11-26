@@ -120,7 +120,13 @@ export class MetadataDriver implements SteedosDriver {
     
     queryMetadata(collection, queryOptions, spaceId){
         const _collection = clone(collection);
-        _.each(_collection, function(item){ item.space = spaceId})
+        _.each(_collection, function(item) {
+            try {
+                item.space = spaceId;
+            } catch (error) {
+                console.error(`metadata driver queryMetadata: ${item} is not json data`);
+            }
+        });
         let mongoFilters = this.getMongoFilters(queryOptions.filters);
         let mongoOptions = this.getMongoOptions(queryOptions);
         // console.log(`mongoFilters`, JSON.stringify(mongoFilters));
