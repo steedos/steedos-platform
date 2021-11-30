@@ -6,15 +6,15 @@ fields:
     label: Driver
     help: 
     options:
-      - label: Mongo
+      - label: MongoDB
         value: mongo
-      - label: Mssql
+      - label: SQL Server
         value: sqlserver
-      - label: Postgres
+      - label: PostgreSQL
         value: postgres
       - label: Oracle
         value: oracle
-      - label: Mysql
+      - label: MySQL
         value: mysql
       - label: Sqlite
         value: sqlite

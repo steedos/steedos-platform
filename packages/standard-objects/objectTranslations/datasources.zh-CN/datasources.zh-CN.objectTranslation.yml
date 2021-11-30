@@ -6,15 +6,15 @@ fields:
     label: 数据库类型
     help: 
     options:
-      - label: Mongo
+      - label: MongoDB
         value: mongo
-      - label: SqlServer
+      - label: SQL Server
         value: sqlserver
-      - label: Postgres
+      - label: PostgreSQL
         value: postgres
       - label: Oracle
         value: oracle
-      - label: MySql
+      - label: MySQL
         value: mysql
       - label: Sqlite
         value: sqlite
