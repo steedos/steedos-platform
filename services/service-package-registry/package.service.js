@@ -6,6 +6,7 @@ const loader = require('./main/default/manager/loader');
 const packages = require('./main/default/manager/packages');
 const registry = require('./main/default/manager/registry');
 const metadata = require('@steedos/metadata-core')
+const axios = require('axios');
 const _ = require(`lodash`);
 const path = require(`path`);
 const objectql = require('@steedos/objectql');
@@ -13,6 +14,8 @@ const metadataApi = require('@steedos/metadata-api');
 const util = require('./main/default/manager/util');
 const fetch = require('node-fetch');
 const { MoleculerError } = require("moleculer").Errors;
+
+const login = require('./main/default/manager/login');
 
 const HEADER_AUTH = 'Authorization';
 const AUTH_TYPE = 'Bearer';
@@ -68,7 +71,8 @@ module.exports = {
 		},
 		STEEDOS_CLOUD_URL: process.env.STEEDOS_CLOUD_URL ? process.env.STEEDOS_CLOUD_URL : 'https://console.steedos.cn',
 		STEEDOS_CLOUD_SPACE_ID: process.env.STEEDOS_CLOUD_SPACE_ID,
-		STEEDOS_CLOUD_API_KEY: process.env.STEEDOS_CLOUD_API_KEY
+		STEEDOS_CLOUD_API_KEY: process.env.STEEDOS_CLOUD_API_KEY,
+		STEEDOS_REGISTRY_URL: process.env.STEEDOS_REGISTRY_URL ? process.env.STEEDOS_REGISTRY_URL : 'https://registry.steedos.cn/',
 	},
 
 	/**
@@ -221,6 +225,7 @@ module.exports = {
 						try {
 							const { name, version, label, description } = _package
 							let enable = true; //安装已购买的软件包时先默认启用
+							//TODO 处理 registry_url
 							const packageInfo = await this.installPackage(name, version, label, description, enable, ctx.broker);
 							installPackages.push(packageInfo)
 						} catch (error) {
@@ -263,11 +268,26 @@ module.exports = {
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
 					}
-					let { module, version, url, auth } = ctx.params
+					let { module, version, url, auth, registry_url } = ctx.params
 					const enable = true;
-					return await this.installPackageFromUrl(module, version, url, auth, enable, ctx.broker)
+					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker)
 				} catch (error) {
-					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
+					let errorInfo = error.message || '';
+					if (error.stderr) {
+						const errors = error.stderr.split('\n');
+						errors.forEach(element => {
+							if (element) {
+								try {
+									const item = JSON.parse(element);
+									if (item.type === 'error') {
+										errorInfo = errorInfo + item.data + '\n'
+									}
+								} catch (error) {
+								}
+							}
+						});
+					}
+					throw new MoleculerError(errorInfo, 500, "ERR_SOMETHING");
 				}
 			}
 		}
@@ -362,6 +382,7 @@ module.exports = {
 		},
 		upgradePackage: {
 			async handler(module, version) {
+				//TODO 处理 registry_url
                 const packagePath = await registry.installModule(module, version);
 				const enable = true;
 				if(enable){
@@ -389,7 +410,7 @@ module.exports = {
             }
 		},
 		installPackageFromUrl: {
-			async handler(module, version, url, auth, enable, broker) {
+			async handler(module, version, url, auth, enable, registry_url, broker) {
 				if(!module || !_.isString(module) || !module.trim()){
 					throw new Error(`无效的软件包名称`);
 				} else {
@@ -432,8 +453,7 @@ module.exports = {
 					url = `${url}/${result.token}`
 					console.log(`url`, url);
 				}
-
-				const packagePath = await registry.installModule(module, version, url);
+				const packagePath = await registry.installModule(module, version, url, registry_url);
 				const packageInfo = loader.getPackageInfo(null, packagePath);
 				const packageName = packageInfo.name;
 				if(enable){
@@ -448,6 +468,7 @@ module.exports = {
 					local: false, 
 					enable: enable,
 					url: url,
+					// registry_url: registry_url,
 					path: util.getPackageRelativePath(process.cwd(), packagePath)
 				}
 				loader.appendToPackagesConfig(packageName, packageConfig);
@@ -462,7 +483,61 @@ module.exports = {
 					})
 				})
 				return packageConfig;
-            }
+			}
+		},
+		getSafeScopes: {
+			async handler(spaceId, apiKey, consoleUrl) {
+				let result = await axios({
+					url: `${consoleUrl}/api/npm-scopes/safe`,
+					method: 'post',
+					data: {
+						cloudSpaceId: spaceId
+					},
+					timeout: 5 * 1000,
+					headers: { "Content-Type": "application/json", "Authorization": `Bearer apikey,${apiKey}` }
+				})
+				if (!result.data.success) {
+					throw new Error(result.data.error);
+				}
+				return result.data;
+			}
+		},
+		loginSteedosRegistry: {
+			async handler() {
+				const settings = this.settings;
+				// 配置主控地址
+				const consoleUrl = settings.STEEDOS_CLOUD_URL;
+				if (!consoleUrl) {
+					console.log(chalk.red('请配置主控地址'));
+					return;
+				}
+
+				// 初始化工作区数据
+				// 获取环境变量中工作区信息
+				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID;
+				const apiKey = settings.STEEDOS_CLOUD_API_KEY;
+
+				if (!spaceId || !apiKey) {
+					console.log(chalk.red('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。'));
+					return;
+				}
+
+				const registryUrl = settings.STEEDOS_REGISTRY_URL
+
+				// 调用接口获取初始化信息
+				const { info, scopes } = await this.getSafeScopes(spaceId, apiKey, consoleUrl);
+				const { adminPhone } = info;
+				if (!adminPhone) {
+					console.log(chalk.red('缺少工作区信息 工作区名称、管理员姓名、管理员手机号，请检查'));
+					return;
+				}
+				// let scope = '';
+				// if (scopes && scopes.length > 0) {
+				// 	scope = scopes[0];
+				// }
+				await login.loginToRegistry(adminPhone, apiKey, `${adminPhone}@steedos.com`, registryUrl, undefined);
+				login.setYarnrcScopes(scopes, registryUrl);
+			}
 		}
 	},
 
@@ -477,6 +552,12 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
+		try {
+			await this.loginSteedosRegistry();
+			console.info(`login steedos registry success`);
+		} catch (error) {
+			console.error(`login steedos registry fail: `, error.message);
+		}
 		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
 		if(PACKAGE_INSTALL_NODE){
 			await this.broker.call('metadata.add', {key: `#package_install_node.${this.broker.nodeID}`, data: {nodeID: PACKAGE_INSTALL_NODE}}, {meta: {}}) 

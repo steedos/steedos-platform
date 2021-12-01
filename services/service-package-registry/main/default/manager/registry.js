@@ -112,7 +112,7 @@ function checkModuleIsInstall(module){
     return false
 }
 
-async function installModule(module,version,url) {
+async function installModule(module, version, url, registry_url) {
     if (Buffer.isBuffer(module)) {
         // return installTarball(module)
         return 
@@ -193,7 +193,11 @@ async function installModule(module,version,url) {
 
         var installDir = settings.userDir || ".";
         var args = ['install','--no-audit','--no-update-notifier','--no-fund','--save','--save-prefix=~','--production',installName];
-        var yarnArgs = ['add', '-E', installName]; //yarnCommand  , '--json' --registry
+        var yarnArgs = ['add', '-E', installName, '--json']; //yarnCommand  , '--json' --registry
+        if (false && registry_url) {
+            yarnArgs.push('--registry')
+            yarnArgs.push(registry_url)
+        }
         return exec.run(yarnCommand,yarnArgs,{
             cwd: installDir
         }, true).then(result => {
@@ -233,8 +237,6 @@ async function installModule(module,version,url) {
                 // return require("./registry").setModulePendingUpdated(module,version);
             }
         }).catch(result => {
-            console.log(`result error`, result)
-            log.error(`result`, result);
             activePromise = Promise.resolve();
             throw result;
             // var output = result.stderr;

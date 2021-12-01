@@ -63,7 +63,7 @@ const loadPackages = async ()=>{
                     }
                 } catch (error) {
                     try {
-                        await registry.installModule(packageName, package.version, package.url)
+                        await registry.installModule(packageName, package.version, package.url, package.registry_url || '')
                         const packageInfo = await loadPackage(packageName);
                         appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: false});
                     } catch (error) {

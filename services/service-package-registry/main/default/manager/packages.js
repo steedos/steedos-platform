@@ -3,8 +3,17 @@ const loader = require('./loader');
 const registry = require('./registry');
 const path = require("path");
 const objectql = require('@steedos/objectql');
-const packageJson = require('package-json');
+const packageJson = require('./package-json');
 const _ = require('lodash');
+const login = require('./login');
+
+function registryUrl(scope) {
+    const result = login.getYarnrcScopes();
+    const url = result[`${scope}:registry`];
+    if (url) {
+        return url.slice(-1) === '/' ? url : `${url}/`;
+    }
+}
 
 const getAllPackages = async ()=>{
     // const installPackages = loader.loadPackagesConfig();
@@ -106,8 +115,14 @@ const maintainSystemFiles = ()=>{
 }
 
 const getPackageVersions = async (packageName, options)=>{
+    //TODO 处理 registry_url
+
+    let registry_url = registryUrl(packageName.toLowerCase().split('/')[0]);
+
     const result = await packageJson(packageName.toLowerCase(), {
-        allVersions: true
+        allVersions: true,
+        registryUrl: registry_url,
+        authInfo: login.getNpmAuthInfo(registry_url)
     });
 
     const versions = [];
