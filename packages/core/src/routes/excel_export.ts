@@ -287,6 +287,13 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
             return moment(fieldValue).format("YYYY-MM-DD");
         case "datetime":
             return moment(fieldValue).utcOffset(userSession.utcOffset).format("YYYY-MM-DD H:mm");
+        case "summary":
+            let summaryObj = await objectql.getObject(fieldConfig.summary_object);
+            let summaryField = summaryObj.fields[fieldConfig.summary_field];
+            if (summaryField) {
+                return await key2value(fieldValue, summaryField, userSession);
+            }
+            return fieldValue;
         default:
             return fieldValue;
     }
