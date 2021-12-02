@@ -312,20 +312,20 @@ module.exports = {
 	/**
 	 * Events
 	 */
-	 events: {
-		'steedos-server.started': async function (ctx) {
-			const router = express.Router();
-			let publicPath = require.resolve("@steedos/service-charts/package.json");
-			publicPath = publicPath.replace("package.json", 'webapp');
-			let routerPath = "";
-			if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
-				routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
-			}
-			const cacheTime = 86400000 * 1; // one day
-			router.use(`${routerPath}/charts-design`, express.static(publicPath, { maxAge: cacheTime }));
-			WebApp.rawConnectHandlers.use(router);
-		}
-	},
+    events: {
+        'steedos-server.started': async function (ctx) {
+            const router = express.Router();
+            let publicPath = require.resolve("@steedos/service-charts/package.json");
+            publicPath = publicPath.replace("package.json", 'webapp');
+            let routerPath = "";
+            if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
+                routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+            }
+            const cacheTime = 86400000 * 1; // one day
+            router.use(`${routerPath}/builder`, express.static(publicPath, { maxAge: cacheTime }));
+            WebApp.rawConnectHandlers.use(router);
+        }
+    },
 
 	/**
 	 * Methods
