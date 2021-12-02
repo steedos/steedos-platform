@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-registry",
-  "version": "2.1.50",
+  "version": "2.1.51",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-package-loader": "2.1.50",
+    "@steedos/service-package-loader": "2.1.51",
     "fs-extra": "8.1.0",
     "i18next": "20.3.2",
     "json-stringify-safe": "5.0.1",
@@ -17,8 +17,8 @@
     "lodash": "~4.17.21",
     "lodash.clonedeep": "^4.5.0",
     "moment-timezone": "0.5.33",
-    "npm-registry-client": "8.6.0",
     "npm-package-arg": "~8.1.5",
+    "npm-registry-client": "8.6.0",
     "package-json": "^7.0.0",
     "radwag-mass": "~1.0.5"
   },
