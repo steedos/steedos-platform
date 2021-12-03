@@ -215,15 +215,21 @@ module.exports = {
 		async startStandardObjectsPackageLoader() {
 			let settings = this.settings.packageInfo;
 			if (settings.path) {
-				this.standardObjectsPackageLoaderService = this.broker.createService({
-					name: 'standard-objects',
-					mixins: [packageLoader],
-					settings: { packageInfo: settings }
-				});
-				if (!this.broker.started) {
-					this.broker._restartService(this.standardObjectsPackageLoaderService)
-				}
-				await this.broker.waitForServices(this.standardObjectsPackageLoaderService.name);
+				return await new Promise((resolve, reject) => {
+					this.standardObjectsPackageLoaderService = this.broker.createService({
+						name: 'standard-objects',
+						mixins: [packageLoader],
+						settings: { packageInfo: settings }
+					}, {
+						started: () => {
+							resolve(true)
+						}
+					});
+					if (!this.broker.started) {
+						this.broker._restartService(this.standardObjectsPackageLoaderService)
+					}
+				})
+				// await this.broker.waitForServices(this.standardObjectsPackageLoaderService.name);
 			}
 
 		}
