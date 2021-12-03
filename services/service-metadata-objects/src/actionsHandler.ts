@@ -166,7 +166,7 @@ export class ActionHandlers {
         }
     }
     async deleteObject(ctx, objectApiName): Promise<boolean>{
-        const { metadata } = await ctx.broker.call('metadata.get', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
+        const { metadata } = (await ctx.broker.call("metadata.get", { key: cacherKey(objectApiName) }, { meta: ctx.meta })) || {};
         await ctx.broker.call('metadata.delete', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
         if(this.onDestroy && _.isFunction(this.onDestroy)){
             await this.onDestroy(metadata)

@@ -18,6 +18,9 @@ export class LookupActionHandler {
 
     async deleteAll(objectConfig){
         try {
+            if (!objectConfig) {
+                return;
+            }
             await this.deleteAllLookups(objectConfig);
             return true
         } catch (error) {

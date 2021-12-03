@@ -209,6 +209,7 @@ module.exports = {
             await this.summaryActionHandler.add(objectConfig);
         }, async (objectConfig)=>{
             await this.lookupActionHandler.deleteAll(objectConfig);
+            await this.masterDetailActionHandler.deleteAll(objectConfig);
         }, async (objectConfig)=>{
             /**
              * 重算公式关系链时，可能存在待重算的对象还未进入缓存(但已经过了公式关系链计算过程)。所以进行延时
