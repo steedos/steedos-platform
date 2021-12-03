@@ -34,5 +34,7 @@ export const addObjectTranslationsFiles = async (filePath: string)=>{
 
 export const getObjectTranslations = async ()=>{
     const metadataObjectTranslations = await getSteedosSchema().metadataBroker.call('translations.getObjectTranslations')
-    return _.pluck(metadataObjectTranslations, 'metadata')
+    if(metadataObjectTranslations){
+        return _.pluck(metadataObjectTranslations, 'metadata')
+    }
 }   
