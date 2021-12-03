@@ -1,4 +1,4 @@
-db.instances_statistic = new Mongo.Collection("instances_statistic")
+db.instances_statistic = Creator.getCollection('instances_statistic') || new Mongo.Collection("instances_statistic")
 
 
 // instances_stat.coffee

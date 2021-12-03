@@ -3,7 +3,7 @@ const config = objectql.getSteedosConfig();
 
 if (!db.instances) {
   const core = require('@steedos/core');
-  db.instances = core.newCollection('instances');
+  db.instances = Creator.getCollection('instances') || core.newCollection('instances');
 }
 
 if (Meteor.isServer) {
