@@ -15,25 +15,25 @@ module.exports = {
             }
         },
         getServiceConfig: {
-            async handler(serviceName, apiName) {
+            async handler(serviceName, apiName, meta) {
                 const metadataType = this.settings.metadataType;
                 const metadataConfig = await this.broker.call(`metadata.getServiceMetadata`, {
                     serviceName,
                     metadataType,
                     metadataApiName: apiName
-                })
+                }, {meta: meta})
                 return metadataConfig?.metadata;
             }
         },
         getServicesConfigs:{
-            async handler(apiName) {
+            async handler(apiName, meta) {
                 const serviceName = '*';
                 const metadataType = this.settings.metadataType;
                 const configs = await this.broker.call(`metadata.getServiceMetadatas`, {
                     serviceName,
                     metadataType,
                     metadataApiName: apiName
-                })
+                }, {meta: meta})
                 return _.map(configs, 'metadata');
             }
         },
@@ -43,9 +43,9 @@ module.exports = {
             }
         },
         refresh: {
-            async handler(apiName) {
+            async handler(apiName, meta) {
                 let config: any = {};
-                const configs = await this.getServicesConfigs(apiName);
+                const configs = await this.getServicesConfigs(apiName, meta);
                 if(configs.length == 0){
                     return null
                 }
@@ -99,12 +99,12 @@ module.exports = {
                 let config = ctx.params.data;
                 const serviceName = ctx.meta.metadataServiceName
                 const metadataApiName = ctx.params.apiName;
-                const metadataConfig = await this.getServiceConfig(serviceName, `${metadataApiName}`)
+                const metadataConfig = await this.getServiceConfig(serviceName, `${metadataApiName}`, ctx.meta)
                 if(metadataConfig && metadataConfig.metadata){
                     config = _.defaultsDeep(config, metadataConfig.metadata);
                 }
                 await ctx.broker.call('metadata.addServiceMetadata', {key: this.getMatadataCacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: this.settings.metadataType, metadataApiName: metadataApiName})})
-                const newConfig = await this.refresh(metadataApiName);
+                const newConfig = await this.refresh(metadataApiName, ctx.meta);
                 return await this.register(metadataApiName, newConfig, ctx.meta)
             }
         },
@@ -128,7 +128,7 @@ module.exports = {
                 const { isClear, metadataApiNames } = ctx.params
                 if(isClear){
                     for await (const metadataApiName of metadataApiNames) {
-                        const config = await this.refresh(metadataApiName);
+                        const config = await this.refresh(metadataApiName, ctx.meta);
                         if(!config){
                             await ctx.broker.call('metadata.delete', {key: this.getMatadataCacherKey(metadataApiName)})
                         }else{

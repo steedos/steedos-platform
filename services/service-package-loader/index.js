@@ -153,7 +153,7 @@ module.exports = {
      */
     async stopped() {
         this.broker.call(`@steedos/service-packages.offline`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
-        await this.broker.call(`metadata.refreshServiceMetadatas`, { offlinePackageServices: [this.name] });
+        await this.broker.call(`metadata.refreshServiceMetadatas`, { offlinePackageServices: [`${this.broker.nodeID}.${this.name}`] });
         console.log(`service ${this.name} stopped`);
     }
 };

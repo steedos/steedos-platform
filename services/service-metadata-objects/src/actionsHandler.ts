@@ -94,7 +94,7 @@ export class ActionHandlers {
                 serviceName: ctx.meta.metadataServiceName,
                 metadataType: METADATA_TYPE,
                 metadataApiName: metadataApiName,
-            });
+            }, {meta: ctx.meta});
     
             if(metadataConfig && metadataConfig.metadata){
                 config.list_views = _.defaultsDeep(metadataConfig.metadata.list_views || {}, config.list_views || {});
@@ -122,6 +122,7 @@ export class ActionHandlers {
     async change(ctx: any): Promise<boolean> {
         const {data, oldData} = ctx.params;
         if(oldData.name != data.name){
+            console.log(`change==================`, oldData.name, data.name);
             await this.deleteObject(ctx, oldData.name)
         }
         await ctx.broker.call('metadata.add', {key: cacherKey(data.name), data: data}, {meta: ctx.meta})
@@ -130,6 +131,7 @@ export class ActionHandlers {
     }
 
     async delete(ctx: any): Promise<boolean>{
+        console.log(`delete==================`, ctx.params.objectApiName);
         return await this.deleteObject(ctx, ctx.params.objectApiName)
     }
 
@@ -148,6 +150,7 @@ export class ActionHandlers {
             for await (const metadataApiName of metadataApiNames) {
                 const objectConfig = await refreshObject(ctx, metadataApiName);
                 if(!objectConfig){
+                    console.log(`refresh deleteObject==================`, metadataApiName);
                     await this.deleteObject(ctx, metadataApiName)
                 }else{
                     const objectServiceName = getObjectServiceName(metadataApiName);
@@ -166,6 +169,7 @@ export class ActionHandlers {
         }
     }
     async deleteObject(ctx, objectApiName): Promise<boolean>{
+        console.log(`deleteObject=======================`, objectApiName)
         const { metadata } = (await ctx.broker.call("metadata.get", { key: cacherKey(objectApiName) }, { meta: ctx.meta })) || {};
         await ctx.broker.call('metadata.delete', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
         if(this.onDestroy && _.isFunction(this.onDestroy)){

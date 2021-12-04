@@ -96,7 +96,11 @@ export class LookupActionHandler {
         }
         const detailFullName = `${detailObjectApiName}.${detailField.name}`
         maps = _.difference(maps, [detailFullName]);
-        await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName), data: maps }, { meta: {} })
+        if(maps.length > 0){
+            await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName), data: maps }, { meta: {} })
+        }else{
+            await this.deleteObjectLookups(objectApiName)
+        }
         // this.broker.emit(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
         return true;
     }

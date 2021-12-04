@@ -85,7 +85,7 @@ export class MasterDetailActionHandler{
             if (!objectConfig) {
                 return;
             }
-            await this.removeObjectMasterDetails(objectConfig);
+            await this.deleteObjectMasterDetails(objectConfig.name);
             return true;
         } catch (error) {
             this.broker.logger.error(error);

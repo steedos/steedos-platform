@@ -7,7 +7,7 @@ export async function getServiceAppConfig(ctx, serviceName, appApiName) {
         serviceName,
         metadataType,
         metadataApiName: appApiName
-    })
+    }, {meta: ctx.meta})
     return metadataConfig?.metadata;
 }
 
@@ -18,7 +18,7 @@ async function getServicesAppConfigs(ctx, appApiName) {
         serviceName,
         metadataType,
         metadataApiName: appApiName
-    })
+    }, {meta: ctx.meta})
     return _.map(configs, 'metadata');
 }
 

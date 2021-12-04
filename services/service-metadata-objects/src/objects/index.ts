@@ -22,7 +22,7 @@ async function getBaseObjectConfig(ctx, datasourceName) {
         serviceName,
         metadataType,
         metadataApiName: metadataApiName,
-    });
+    }, {meta: ctx.meta});
     return configs && configs.length > 0 ? configs[0]?.metadata : null;
 }
 
@@ -35,8 +35,9 @@ async function getObjectConfigs(ctx, objectApiName) {
             serviceName,
             metadataType,
             metadataApiName: objectApiName,
-        }
+        }, {meta: ctx.meta}
     );
+    // console.log(`getObjectConfigs ==== `, getObjectConfigs.length);
     return _.compact(_.map(objectConfigs, "metadata"));
 }
 
@@ -105,8 +106,8 @@ export async function refreshObject(ctx, objectApiName) {
     let objectConfig: any = {};
 
     const objectConfigs = await getObjectConfigs(ctx, objectApiName);
-
     if (objectConfigs.length == 0) {
+        console.log(`refreshObject objectConfigs`, objectConfigs.length)
         return null;
     }
 
@@ -144,6 +145,7 @@ export async function refreshObject(ctx, objectApiName) {
     }
 
     if (!mainConfig) {
+        console.log(`refreshObject mainConfig`, mainConfigs.length, mainConfig)
         return null;
     }
 
@@ -232,7 +234,9 @@ export async function refreshObject(ctx, objectApiName) {
         if (maxSortNoField) {
             objectConfig.fields_serial_number = maxSortNoField.sort_no;
         }
-    } catch (error) {}
+    } catch (error) {
+        console.log(`refreshObject error`, error)
+    }
 
     return objectConfig;
 }

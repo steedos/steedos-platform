@@ -48,10 +48,13 @@ export function newCollection(tableName: string, datasourceName?: string, option
             return ObjectWebhooksQueue.collection
         }
     }
-
     if (options) {
         return new Meteor.Collection(tableName, options)
     } else {
+        const _collection = Creator.getCollection(tableName)
+        if(_collection){
+            return _collection
+        }
         return new Meteor.Collection(tableName)
     }
 

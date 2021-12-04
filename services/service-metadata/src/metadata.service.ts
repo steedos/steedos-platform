@@ -22,12 +22,21 @@ module.exports = {
 	methods: {
 		refreshServiceMetadatas:async function (ctx) {
 			return await ActionHandlers.refreshServiceMetadatas(ctx)
+		},
+		clearPackageServices:async function (ctx) {
+			const { offlinePackageServicesName } = ctx.params;
+			console.log(`$metadata.clearPackageServices`, offlinePackageServicesName)
+			await ActionHandlers.clearPackageServices(ctx, offlinePackageServicesName);
+			await ActionHandlers.clearPackageServicesMetadatas(ctx, offlinePackageServicesName);
 		}
 	},
 
 	events: {
 		"$services.changed"(ctx) {
 			this.refreshServiceMetadatas(ctx);
+		},
+		"$metadata.clearPackageServices"(ctx) {
+			this.clearPackageServices(ctx);
 		}
 	},
 	/**
@@ -57,6 +66,11 @@ module.exports = {
 		delete: {
 			async handler(ctx) {
 				return await ActionHandlers.delete(ctx);
+			}
+		},
+		fuzzyDelete: {
+			async handler(ctx) {
+				return await ActionHandlers.fuzzyDelete(ctx);
 			}
 		},
 		refreshServiceMetadatas: {

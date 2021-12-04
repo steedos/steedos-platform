@@ -566,6 +566,7 @@ module.exports = {
                             ctx.broker.emit(`${getObjectServiceName(field.reference_to)}.refresh`, {});
                         }
                     })
+                    console.log(`ctx.broker.destroyService`, this.object.name);
                     ctx.broker.destroyService(this);
                     if(onDestroyObjectService && _.isFunction(onDestroyObjectService)){
                         onDestroyObjectService(objectApiName);
@@ -650,7 +651,7 @@ module.exports = {
                             try {
                                 Creator.loadObjects(objectConfig, objectConfig.name);
                             } catch (error) {
-                                this.logger.error(error)
+                                this.logger.error('metadata.objects.inserted error', objectConfig.name, error)
                             }
                         }).promise();
                     }

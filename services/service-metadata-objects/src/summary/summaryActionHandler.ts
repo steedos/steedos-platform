@@ -16,6 +16,20 @@ export class SummaryActionHandler {
         this.broker = broker;
     }
 
+    async deleteAll(objectConfig){
+        try {
+            if (!objectConfig) {
+                return;
+            }
+            console.log(`deleteAll summary`, this.cacherKey(objectConfig.name, '*'))
+            await this.broker.call('metadata.fuzzyDelete', {key: this.cacherKey(objectConfig.name, '*')}, {meta: {}})
+            return true
+        } catch (error) {
+            this.broker.logger.error(error);
+        }
+        return false
+    }
+
     async getObjectConfig(objectApiName: string) {
         const data = await this.broker.call('objects.get', { objectApiName: objectApiName })
         return data ? data.metadata : null;

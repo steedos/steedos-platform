@@ -7,7 +7,7 @@ export async function getServicePermissionsetConfig(ctx, serviceName, permission
         serviceName,
         metadataType,
         metadataApiName: permissionsetApiName
-    })
+    }, {meta: ctx.meta})
     return metadataConfig?.metadata;
 }
 
@@ -18,7 +18,7 @@ async function getServicesPermissionsetConfigs(ctx, permissionsetApiName) {
         serviceName,
         metadataType,
         metadataApiName: permissionsetApiName
-    })
+    }, {meta: ctx.meta})
     return _.map(configs, 'metadata');
 }
 

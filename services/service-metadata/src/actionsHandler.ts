@@ -4,6 +4,8 @@ const PACKAGE_SERVICE_PREFIX = '~packages-';
 const METADATA_SERVICES_PERFIX = '$METADATA-SERVICES';
 import * as _ from 'underscore';
 
+let savePackageServicesTimeoutID = null;
+
 //////////////// mock for redis cacher ////////////////
 // let mockCacherData: string[] = [];
 // let mock_prefix = "";
@@ -86,12 +88,16 @@ function getKey(key, keyPrefix) {
     return key.replace(keyPrefix, "");
 }
 
-function getServiceMetadataCacherKey(serviceName: string, metadataType: string, metadataApiName: string) {
-    return `${SERVICE_METADATA_PREFIX}.${serviceName}.${metadataType}.${metadataApiName}`;
+function getServiceMetadataCacherKey(nodeID: string, serviceName: string, metadataType: string, metadataApiName: string) {
+    return `$${nodeID}.${SERVICE_METADATA_PREFIX}.${serviceName}.${metadataType}.${metadataApiName}`;
 }
 
 async function addServiceMetadata(ctx) {
     const { nodeID } = ctx.meta.caller || { nodeID: undefined };
+    if(!nodeID){
+        console.log(`addServiceMetadata ctx.meta`, ctx.meta);
+    }
+    
     const { metadataType, metadataApiName, metadataServiceName } = ctx.meta || { metadataType: undefined, metadataApiName: undefined, metadataServiceName: undefined };
     // if(metadataType){
     //     console.log('saveServiceMetadataMap', metadataType, metadataApiName, metadataServiceName )
@@ -99,18 +105,21 @@ async function addServiceMetadata(ctx) {
     if (!metadataServiceName) {
         return;
     }
-    const key = getServiceMetadataCacherKey(metadataServiceName, metadataType, metadataApiName);
-    let data = await ctx.broker.cacher.get(key);// REPLACE: await mockCacherGet(ctx, key); 
-    let nodeIds = [];
-    if (data) {
-        if (data.nodeIds) {
-            nodeIds = data.nodeIds;
-        }
+    const key = getServiceMetadataCacherKey(nodeID, metadataServiceName, metadataType, metadataApiName);
+    if (false && metadataType === 'objects') {
+        console.log(`addServiceMetadata`, key);
     }
-    nodeIds.push(nodeID);
+    // let data = await ctx.broker.cacher.get(key);// REPLACE: await mockCacherGet(ctx, key); 
+    // let nodeIds = [];
+    // if (data) {
+    //     if (data.nodeIds) {
+    //         nodeIds = data.nodeIds;
+    //     }
+    // }
+    // nodeIds.push(nodeID);
 
     await ctx.broker.cacher.set(key, {
-        nodeIds: nodeIds,
+        nodeIds: [nodeID],
         metadataType,
         metadataApiName,
         metadata: ctx.params.data,
@@ -137,46 +146,68 @@ async function query(ctx, queryKey) {
     return values;
 }
 
-function getPackageServiceCacherKey(serviceName) {
-    return `${PACKAGE_SERVICES_KEY}.${serviceName}`;
+function getPackageServiceCacherKey(nodeID, serviceName) {
+    return `$${nodeID}.${PACKAGE_SERVICES_KEY}.${serviceName}`;
 }
 
-async function setPackageServices(ctx, packageServicesName) {
-    for await (const packageServiceName of packageServicesName) {
-        ctx.broker.cacher.set(getPackageServiceCacherKey(packageServiceName), { service: packageServiceName });
+async function setPackageServices(ctx, packageServices) {
+    console.log(`setPackageServices.................................`)
+    for await (const packageService of packageServices) {
+        ctx.broker.cacher.set(getPackageServiceCacherKey(packageService.nodeID, packageService.name), { service: packageService });
         // REPLACE: await await mockCacherSet(ctx, getPackageServiceCacherKey(packageServiceName), { service: packageServiceName });
     }
 }
 
-async function clearPackageServices(ctx, packageServicesName) {
-    for await (const packageServiceName of packageServicesName) {
-        await ctx.broker.cacher.del(getPackageServiceCacherKey(packageServiceName));
+async function clearPackageServices(ctx, packageServices) {
+    for await (const packageService of packageServices) {
+        let nodeID = null;
+        let name = null;
+        if(_.isString(packageService)){
+            let foo = packageService.split('.');
+            nodeID = foo[0];
+            name = foo[1];
+        }else if(_.isObject(packageService)){
+            nodeID = packageService.nodeID;
+            name = packageService.nodeID;
+        }
+        console.log(`clearPackageServices del ===== `, getPackageServiceCacherKey(nodeID, name))
+        await ctx.broker.cacher.del(getPackageServiceCacherKey(nodeID, name));
         // REPLACE: await mockCacherDel(ctx, getPackageServiceCacherKey(packageServiceName));
     }
 }
 
 async function getLastPackageServices(ctx) {
-    const packageServices = await query(ctx, getPackageServiceCacherKey("*"));
-    const servicesName = [];
+    const packageServices = await query(ctx, getPackageServiceCacherKey("*", "*"));
+    const services = [];
     packageServices.forEach((element) => {
         if (element) {
-            servicesName.push(element.service);
+            services.push(element.service);
         }
     });
-    return servicesName;
+    return services;
 }
 
 async function getPackageServices(ctx) {
-    const servicesName = _.pluck(ctx.broker.registry.getServiceList({ withActions: true }), "name");
-    let packageServicesName = _.filter(servicesName, (serviceName) => {
-        return serviceName.startsWith(PACKAGE_SERVICE_PREFIX);
-    });
-    packageServicesName = _.uniq(packageServicesName);
-    return packageServicesName;
+    const packageServices = [];
+    const services = ctx.broker.registry.getServiceList({ withActions: true });
+    _.each(services, (serviceItem)=>{
+        const { name, nodeID } = serviceItem; //, version, fullName, settings, local, available, nodeID
+        if(name.startsWith(PACKAGE_SERVICE_PREFIX)){
+            // console.log(`serviceItem`, serviceItem)
+            packageServices.push(Object.assign({}, serviceItem, {apiName: `${nodeID}.${name}`}))
+        }
+    })
+    return packageServices;
+    // const servicesName = _.pluck(services, "name");
+    // let packageServicesName = _.filter(servicesName, (serviceName) => {
+    //     return serviceName.startsWith(PACKAGE_SERVICE_PREFIX);
+    // });
+    // packageServicesName = _.uniq(packageServicesName);
+    // return packageServicesName;
 }
 
-async function clearPackageServiceMetadatas(ctx, packageServiceName) {
-    const key = getServiceMetadataCacherKey(packageServiceName, "*", "*");
+async function clearPackageServiceMetadatas(ctx, nodeID, packageServiceName) {
+    const key = getServiceMetadataCacherKey(nodeID, packageServiceName, "*", "*");
     const clearMetadatas = await query(ctx, key);
     await ctx.broker.cacher.clean(key);
     // REPLACE: await mockCacherClean(ctx, key);
@@ -185,8 +216,18 @@ async function clearPackageServiceMetadatas(ctx, packageServiceName) {
 
 async function clearPackageServicesMetadatas(ctx, offlinePackageServices) {
     let clearMetadatas = [];
-    for await (const packageServiceName of offlinePackageServices) {
-        const clearPackageMetadatas = await clearPackageServiceMetadatas(ctx, packageServiceName);
+    for await (const packageService of offlinePackageServices) {
+        let nodeID = null;
+        let name = null;
+        if(_.isString(packageService)){
+            let foo = packageService.split('.');
+            nodeID = foo[0];
+            name = foo[1];
+        }else if(_.isObject(packageService)){
+            nodeID = packageService.nodeID;
+            name = packageService.nodeID;
+        }
+        const clearPackageMetadatas = await clearPackageServiceMetadatas(ctx, nodeID, name);
         clearMetadatas = clearMetadatas.concat(clearPackageMetadatas);
     }
     _.each(_.groupBy(clearMetadatas, "metadataType"), function(data: any, metadataType) {
@@ -224,8 +265,14 @@ export async function stopped(broker) {
 }
 
 export const ActionHandlers = {
+    clearPackageServices,
+    clearPackageServicesMetadatas,
     async get(ctx: any): Promise<any> {
-        return await ctx.broker.cacher.get(ctx.params.key);
+        try {
+            return await ctx.broker.cacher.get(ctx.params.key);
+        } catch (error) {
+            
+        }
         // REPLACE: return await mockCacherGet(ctx, ctx.params.key)
     },
     async filter(ctx: any): Promise<Array<any>> {
@@ -245,8 +292,17 @@ export const ActionHandlers = {
     async addServiceMetadata(ctx: any) {
         return await addServiceMetadata(ctx);
     },
+    async fuzzyDelete(ctx: any){
+        const { key } = ctx.params
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const keys = await ctx.broker.cacher.client.keys(`${keyPrefix}${key}`);
+        for (const _key of keys) {
+            await ctx.broker.cacher.del(getKey(_key, keyPrefix));
+        }
+    },
     async delete(ctx: any) {
         try {
+            console.log(`delete======================= `, ctx.params.key);
             await ctx.broker.cacher.del(ctx.params.key);
             // REPLACE: await mockCacherDel(ctx, ctx.params.key);
         } catch (error) {
@@ -255,7 +311,10 @@ export const ActionHandlers = {
         return true;
     },
     async getServiceMetadatas(ctx: any) {
-        let { serviceName, metadataType, metadataApiName } = ctx.params;
+        let { nodeID, serviceName, metadataType, metadataApiName } = ctx.params;
+        if (!nodeID) {
+            nodeID = "*";
+        }
         if (!serviceName) {
             serviceName = "*";
         }
@@ -265,31 +324,59 @@ export const ActionHandlers = {
         if (!metadataApiName) {
             metadataApiName = "*";
         }
-        const key = getServiceMetadataCacherKey(serviceName, metadataType, metadataApiName);
+        const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
         return await query(ctx, key);
     },
     async getServiceMetadata(ctx: any) {
         let { serviceName, metadataType, metadataApiName } = ctx.params;
-        const key = getServiceMetadataCacherKey(serviceName, metadataType, metadataApiName);
+        const { nodeID } = ctx.meta.caller || { nodeID: undefined };
+        if(!nodeID){
+            console.log(`getServiceMetadata ctx.meta`, ctx.meta);
+        }
+        const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
         return await ctx.broker.cacher.get(key)
         // REPLACE: return await mockCacherGet(ctx, key);
     },
     async refreshServiceMetadatas(ctx: any) {
         const { offlinePackageServices: _offlinePackageServices } = ctx.params || { offlinePackageServices: undefined };
         if (_offlinePackageServices && _offlinePackageServices.length > 0) {
-            await clearPackageServices(ctx, _offlinePackageServices);
+            console.log(`refreshServiceMetadatas _offlinePackageServices`, _offlinePackageServices);
+            // await clearPackageServices(ctx, _offlinePackageServices);
+            ctx.broker.broadcast(`$metadata.clearPackageServices`, { offlinePackageServicesName: _offlinePackageServices });
         }
         let packageServices = await getPackageServices(ctx);
+        const packageServicesName = _.pluck(packageServices, "apiName");
         const lastPackageServices = await getLastPackageServices(ctx);
-        let offlinePackageServices = _.difference(lastPackageServices, packageServices);
+        const lastPackageServicesNames = _.pluck(lastPackageServices, "apiName");
+        let offlinePackageServicesName = _.difference(lastPackageServicesNames, packageServicesName);
         if (_offlinePackageServices && _offlinePackageServices.length > 0) {
-            offlinePackageServices = offlinePackageServices.concat(_offlinePackageServices);
-            packageServices = _.difference(lastPackageServices, _offlinePackageServices);
+            offlinePackageServicesName = offlinePackageServicesName.concat(_offlinePackageServices);
+            const onlinePackageServicesName = _.difference(lastPackageServices, _offlinePackageServices);
+            packageServices = _.filter(packageServices, (ps)=>{
+                return ps && _.include(onlinePackageServicesName, ps.apiName)
+            })
         }
-        if (offlinePackageServices.length > 0) {
-            await clearPackageServices(ctx, offlinePackageServices);
-            await clearPackageServicesMetadatas(ctx, offlinePackageServices);
+        if (offlinePackageServicesName.length > 0) {
+            // console.log(`lastPackageServicesNames`, lastPackageServicesNames)
+            // console.log(`packageServicesName`, packageServicesName)
+            console.log(`offlinePackageServicesName`, offlinePackageServicesName);
+            //await clearPackageServices(ctx, offlinePackageServicesName);
+            //await clearPackageServicesMetadatas(ctx, offlinePackageServicesName);
+
+            ctx.broker.broadcast(`$metadata.clearPackageServices`, { offlinePackageServicesName });
         }
-        await setPackageServices(ctx, packageServices);
+
+        //使用延时方式存储软件包记录， 防止多服务之间服务发现延时导致数据清理异常。延时来自moleculer内部的服务发现机制(broker.registry.getServiceList)
+        //清理数据无需做到实时，延时30秒
+        if(savePackageServicesTimeoutID){
+            clearTimeout(savePackageServicesTimeoutID);
+            savePackageServicesTimeoutID = null;
+        }
+        if(!savePackageServicesTimeoutID){
+            savePackageServicesTimeoutID = setTimeout(()=>{
+                setPackageServices(ctx, packageServices);
+            }, 30 * 1000)
+        }
+        
     },
 };
