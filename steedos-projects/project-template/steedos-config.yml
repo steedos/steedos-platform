@@ -36,6 +36,7 @@ tenant:
   _id: ${STEEDOS_CLOUD_SPACE_ID}
   name: 华炎魔方
   logo_url:
+  logo_square_url:
   background_url:
   enable_register: ${STEEDOS_TENANT_CONFIG_ENABLE_REGISTER} # 启用注册功能 true / false
   enable_forget_password: false

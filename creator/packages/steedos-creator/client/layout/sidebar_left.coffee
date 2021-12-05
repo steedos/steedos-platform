@@ -52,14 +52,22 @@ Template.creatorSidebarLeft.helpers
 		# 	return item._id !='admin' && (!_.isEmpty(item.mobile_objects) || !_.isEmpty(item.tabs))
 
 	logoUrl: ()->
+		# 公司logo可以通过配置文件配置
+		settings = Session.get("tenant_settings");
+		if settings
+			avatar_url = settings?.logo_square_url;
+		
 		avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar
 		if avatar
 			return Steedos.absoluteUrl("/api/files/avatars/#{avatar}")
+		else if settings && avatar_url
+			return Steedos.absoluteUrl(avatar_url)
 		else
 			logo_url = "/packages/steedos_creator/assets/logo-square.png"
 			if(Meteor.user()?.locale != 'zh-cn')
 				logo_url = "/packages/steedos_creator/assets/logo-square.en-us.png"
 			return Creator.getRelativeUrl(logo_url)
+		
 
 Template.creatorSidebarLeft.events
 	"click #sidebarSwitcherButton": (e, t)->
