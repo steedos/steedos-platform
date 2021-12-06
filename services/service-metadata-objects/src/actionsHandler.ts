@@ -169,13 +169,17 @@ export class ActionHandlers {
         }
     }
     async deleteObject(ctx, objectApiName): Promise<boolean>{
+        ctx.broker.broadcast(`delete.metadata.${METADATA_TYPE}`, {objectApiName: objectApiName});
+        return true;
+    }
+    async handleDeleteObject(ctx, objectApiName): Promise<boolean>{
         console.log(`deleteObject=======================`, objectApiName)
         const { metadata } = (await ctx.broker.call("metadata.get", { key: cacherKey(objectApiName) }, { meta: ctx.meta })) || {};
         await ctx.broker.call('metadata.delete', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
         if(this.onDestroy && _.isFunction(this.onDestroy)){
             await this.onDestroy(metadata)
         }
-        ctx.broker.emit("metadata.objects.deleted", {objectApiName: objectApiName, isDelete: true, objectConfig: metadata});
+        ctx.broker.broadcast("metadata.objects.deleted", {objectApiName: objectApiName, isDelete: true, objectConfig: metadata});
         return true;
     }
 }

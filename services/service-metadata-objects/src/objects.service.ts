@@ -20,6 +20,12 @@ module.exports = {
     dependencies: ['metadata'],
 
     events: {
+        [`delete.metadata.${METADATA_TYPE}`]: {
+            async handler(ctx) {
+                const { objectApiName } = ctx.params;
+                return await this.objetActionHandlers.handleDeleteObject(ctx, objectApiName);
+            }
+        },
 		[`$METADATA.${METADATA_TYPE}.*`]: {
             async handler(ctx) {
                 return await this.objetActionHandlers.refresh(ctx);
