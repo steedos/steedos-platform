@@ -8,10 +8,14 @@ const _ = require('lodash');
 const login = require('./login');
 
 function registryUrl(scope) {
-    const result = login.getYarnrcScopes();
-    const url = result[`${scope}:registry`];
-    if (url) {
-        return url.slice(-1) === '/' ? url : `${url}/`;
+    try {
+        const result = login.getYarnrcScopes();
+        const url = result[`${scope}:registry`];
+        if (url) {
+            return url.slice(-1) === '/' ? url : `${url}/`;
+        }
+    } catch (Exception) {
+
     }
 }
 
