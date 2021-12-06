@@ -151,7 +151,6 @@ function getPackageServiceCacherKey(nodeID, serviceName) {
 }
 
 async function setPackageServices(ctx, packageServices) {
-    console.log(`setPackageServices.................................`)
     for await (const packageService of packageServices) {
         ctx.broker.cacher.set(getPackageServiceCacherKey(packageService.nodeID, packageService.name), { service: packageService });
         // REPLACE: await await mockCacherSet(ctx, getPackageServiceCacherKey(packageServiceName), { service: packageServiceName });
