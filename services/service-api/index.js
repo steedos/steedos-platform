@@ -201,8 +201,6 @@ module.exports = {
 		 * Check the token value & resolve the user by the token.
 		 * The resolved user will be available in `ctx.meta.user`
 		 *
-		 * PLEASE NOTE, IT'S JUST AN EXAMPLE IMPLEMENTATION. DO NOT USE IN PRODUCTION!
-		 *
 		 * @param {Context} ctx
 		 * @param {Object} route
 		 * @param {IncomingRequest} req
@@ -220,8 +218,6 @@ module.exports = {
 		/**
 		 * Authorize the request. Check that the authenticated user has right to access the resource.
 		 *
-		 * PLEASE NOTE, IT'S JUST AN EXAMPLE IMPLEMENTATION. DO NOT USE IN PRODUCTION!
-		 *
 		 * @param {Context} ctx
 		 * @param {Object} route
 		 * @param {IncomingRequest} req
@@ -232,7 +228,7 @@ module.exports = {
 			const user = ctx.meta.user;
 
 			if (!user) {
-				throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
+				return res.status(401).send('NO_RIGHTS');
 			}
 
 			// // It check the `auth` property in action schema.

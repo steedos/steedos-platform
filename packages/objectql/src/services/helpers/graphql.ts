@@ -28,6 +28,9 @@ const GRAPHQL_ACTION_PREFIX = 'graphql_';
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {
     let gplObj: any = {};
     let objectName = objectConfig.name;
+    if (objectName == 'users') {
+        return gplObj;
+    }
     switch (actionName) {
         case 'count':
             gplObj.query = gql`

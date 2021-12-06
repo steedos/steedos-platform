@@ -216,6 +216,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/favorites.coffee', 'client');
 	api.addFiles('client/router.coffee', 'client');
 	api.addFiles('client/subscribe.coffee', 'client');
+	api.addFiles('client/tenant.coffee', 'client');
 
 	api.addFiles('client/animate.css', 'client');
 	api.addFiles('client/animate.js', 'client');
