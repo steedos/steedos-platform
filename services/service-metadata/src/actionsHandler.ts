@@ -170,7 +170,7 @@ async function clearPackageServices(ctx, packageServices) {
             nodeID = packageService.nodeID;
             name = packageService.nodeID;
         }
-        console.log(`clearPackageServices del ===== `, getPackageServiceCacherKey(nodeID, name))
+        // console.log(`clearPackageServices del ===== `, getPackageServiceCacherKey(nodeID, name))
         await ctx.broker.cacher.del(getPackageServiceCacherKey(nodeID, name));
         // REPLACE: await mockCacherDel(ctx, getPackageServiceCacherKey(packageServiceName));
     }
@@ -302,7 +302,6 @@ export const ActionHandlers = {
     },
     async delete(ctx: any) {
         try {
-            console.log(`delete======================= `, ctx.params.key);
             await ctx.broker.cacher.del(ctx.params.key);
             // REPLACE: await mockCacherDel(ctx, ctx.params.key);
         } catch (error) {
@@ -340,7 +339,6 @@ export const ActionHandlers = {
     async refreshServiceMetadatas(ctx: any) {
         const { offlinePackageServices: _offlinePackageServices } = ctx.params || { offlinePackageServices: undefined };
         if (_offlinePackageServices && _offlinePackageServices.length > 0) {
-            console.log(`refreshServiceMetadatas _offlinePackageServices`, _offlinePackageServices);
             // await clearPackageServices(ctx, _offlinePackageServices);
             ctx.broker.broadcast(`$metadata.clearPackageServices`, { offlinePackageServicesName: _offlinePackageServices });
         }
@@ -359,10 +357,7 @@ export const ActionHandlers = {
         if (offlinePackageServicesName.length > 0) {
             // console.log(`lastPackageServicesNames`, lastPackageServicesNames)
             // console.log(`packageServicesName`, packageServicesName)
-            console.log(`offlinePackageServicesName`, offlinePackageServicesName);
-            //await clearPackageServices(ctx, offlinePackageServicesName);
-            //await clearPackageServicesMetadatas(ctx, offlinePackageServicesName);
-
+            // console.log(`offlinePackageServicesName`, offlinePackageServicesName);
             ctx.broker.broadcast(`$metadata.clearPackageServices`, { offlinePackageServicesName });
         }
 

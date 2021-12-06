@@ -28,7 +28,7 @@ export class FormulaActionHandler{
             if (!objectConfig) {
                 return;
             }
-            console.log(`deleteAll formula`, `${this.cacherKey(objectConfig.name)}.*`)
+            // console.log(`deleteAll formula`, `${this.cacherKey(objectConfig.name)}.*`)
             await this.broker.call('metadata.fuzzyDelete', {key: `${this.cacherKey(objectConfig.name)}.*`}, {meta: {}})
             return true
         } catch (error) {

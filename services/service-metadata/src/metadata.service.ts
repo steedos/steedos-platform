@@ -25,7 +25,7 @@ module.exports = {
 		},
 		clearPackageServices:async function (ctx) {
 			const { offlinePackageServicesName } = ctx.params;
-			console.log(`$metadata.clearPackageServices`, offlinePackageServicesName)
+			// console.log(`$metadata.clearPackageServices`, offlinePackageServicesName)
 			await ActionHandlers.clearPackageServices(ctx, offlinePackageServicesName);
 			await ActionHandlers.clearPackageServicesMetadatas(ctx, offlinePackageServicesName);
 		}

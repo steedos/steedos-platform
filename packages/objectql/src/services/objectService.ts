@@ -566,7 +566,7 @@ module.exports = {
                             ctx.broker.emit(`${getObjectServiceName(field.reference_to)}.refresh`, {});
                         }
                     })
-                    console.log(`ctx.broker.destroyService`, this.object.name);
+                    // console.log(`ctx.broker.destroyService`, this.object.name);
                     ctx.broker.destroyService(this);
                     if(onDestroyObjectService && _.isFunction(onDestroyObjectService)){
                         onDestroyObjectService(objectApiName);

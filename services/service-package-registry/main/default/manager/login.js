@@ -61,7 +61,7 @@ function getYarnrcScopes() {
     const data = fs.readFileSync(yarnrcConfigPath, 'utf-8');
     const scopes = {};
     if (data) {
-        console.log(`data`, data);
+        // console.log(`data`, data);
         try {
             const lines = data.split('\n');
             _.each(lines, (line) => {

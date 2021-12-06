@@ -107,7 +107,7 @@ export async function refreshObject(ctx, objectApiName) {
 
     const objectConfigs = await getObjectConfigs(ctx, objectApiName);
     if (objectConfigs.length == 0) {
-        console.log(`refreshObject objectConfigs`, objectConfigs.length)
+        // console.log(`refreshObject objectConfigs`, objectConfigs.length)
         return null;
     }
 

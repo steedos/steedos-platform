@@ -122,7 +122,7 @@ export class ActionHandlers {
     async change(ctx: any): Promise<boolean> {
         const {data, oldData} = ctx.params;
         if(oldData.name != data.name){
-            console.log(`change==================`, oldData.name, data.name);
+            // console.log(`change==================`, oldData.name, data.name);
             await this.deleteObject(ctx, oldData.name)
         }
         await ctx.broker.call('metadata.add', {key: cacherKey(data.name), data: data}, {meta: ctx.meta})
@@ -131,7 +131,7 @@ export class ActionHandlers {
     }
 
     async delete(ctx: any): Promise<boolean>{
-        console.log(`delete==================`, ctx.params.objectApiName);
+        // console.log(`delete==================`, ctx.params.objectApiName);
         return await this.deleteObject(ctx, ctx.params.objectApiName)
     }
 
@@ -150,7 +150,7 @@ export class ActionHandlers {
             for await (const metadataApiName of metadataApiNames) {
                 const objectConfig = await refreshObject(ctx, metadataApiName);
                 if(!objectConfig){
-                    console.log(`refresh deleteObject==================`, metadataApiName);
+                    // console.log(`refresh deleteObject==================`, metadataApiName);
                     await this.deleteObject(ctx, metadataApiName)
                 }else{
                     const objectServiceName = getObjectServiceName(metadataApiName);
@@ -173,7 +173,6 @@ export class ActionHandlers {
         return true;
     }
     async handleDeleteObject(ctx, objectApiName): Promise<boolean>{
-        console.log(`deleteObject=======================`, objectApiName)
         const { metadata } = (await ctx.broker.call("metadata.get", { key: cacherKey(objectApiName) }, { meta: ctx.meta })) || {};
         await ctx.broker.call('metadata.delete', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
         if(this.onDestroy && _.isFunction(this.onDestroy)){
