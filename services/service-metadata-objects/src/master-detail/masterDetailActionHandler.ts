@@ -86,6 +86,7 @@ export class MasterDetailActionHandler{
                 return;
             }
             await this.deleteObjectMasterDetails(objectConfig.name);
+            await this.broker.call('metadata.fuzzyDelete', {key: this.getDetailKey('*', objectConfig.name, '*')}, {meta: {}});
             return true;
         } catch (error) {
             this.broker.logger.error(error);
@@ -196,15 +197,14 @@ export class MasterDetailActionHandler{
         await this.checkMasterDetails(objectApiName);
     }
 
-
-    getMasterKey(objectApiName){
-        return `$steedos.$masterDetail.#${objectApiName}.master`
+    getMasterKey(objectApiName, masterApiName){
+        return `$steedos.$masterDetail.#${objectApiName}.$master.${masterApiName}`
     }
 
     async getMasters(objectApiName: string){
-        let { metadata } = (await this.broker.call('metadata.get', {key: this.getMasterKey(objectApiName)}, {meta: {}})) || {};
+        let mastersInfo = await this.getMastersInfo(objectApiName);
         let mastersName = [];
-        _.each(metadata, function(item){
+        _.each(mastersInfo, function(item){
             if(item && _.isString(item)){
                 const foo = item.split('.');
                 if(foo.length > 0){
@@ -216,48 +216,37 @@ export class MasterDetailActionHandler{
     }
 
     async getMastersInfo(objectApiName: string){
-        let { metadata } = (await this.broker.call('metadata.get', {key: this.getMasterKey(objectApiName)}, {meta: {}})) || {};
-        return metadata || [];
+        const mastersInfo = [];
+        let records = (await this.broker.call('metadata.filter', { key: this.getMasterKey(objectApiName, "*") }, { meta: {} })) || {};
+        for await (const item of records) {
+            const metadata = item?.metadata;
+            if(metadata){
+                mastersInfo.push(metadata);
+            }
+        }
+        return mastersInfo;
     }
 
     async addMaster(objectApiName: any, masterObjectApiName: string, field: any){
-        let master = await this.getMastersInfo(objectApiName);
-        let maps = [];
-        if(master){
-            maps = master;
-        }
         const masterFullName = `${masterObjectApiName}.${field.name}`
-        let count = _.filter(maps, function(o) { return o.startsWith(`${masterObjectApiName}.`) && o != masterFullName});
-        if (count.length < 1) {
-            maps.push(masterFullName);
-            maps = _.uniq(maps);
-            await this.broker.call('metadata.add', {key: this.getMasterKey(objectApiName), data: maps}, {meta: {}})
-            return true;
-        }
-        console.log(`maps`, maps, masterFullName)
-        return false;
-    }
-
-    async removeMaster(objectApiName: any, masterObjectApiName: string, masterFieldName: any){
-        let master = await this.getMastersInfo(objectApiName);
-        let maps = [];
-        if (master) {
-            maps = master;
-        }
-        const masterFullName = `${masterObjectApiName}.${masterFieldName}`
-        maps = _.difference(maps, [masterFullName]);
-        await this.broker.call('metadata.add', { key: this.getMasterKey(objectApiName), data: maps }, { meta: {} })
+        await this.broker.call('metadata.add', {key: this.getMasterKey(objectApiName, masterFullName), data: masterFullName}, {meta: {}})
         return true;
     }
 
-    getDetailKey(objectApiName){
-        return `$steedos.$masterDetail.#${objectApiName}.detail`
+    async removeMaster(objectApiName: any, masterObjectApiName: string, masterFieldName: any){
+        const masterFullName = `${masterObjectApiName}.${masterFieldName}`
+        await this.broker.call('metadata.delete', { key: this.getMasterKey(objectApiName, masterFullName) }, { meta: {} })
+        return true;
+    }
+
+    getDetailKey(objectApiName, detailObjectApiName, detailFieldName){
+        return `$steedos.$masterDetail.#${objectApiName}.$detail.${detailObjectApiName}.${detailFieldName}`
     }
 
     async getDetails(objectApiName: string){
-        let { metadata } = (await this.broker.call('metadata.get', {key: this.getDetailKey(objectApiName)}, {meta: {}})) || {};
+        let detailsInfo = await this.getDetailsInfo(objectApiName);
         let detailsName = [];
-        _.each(metadata, function(item){
+        _.each(detailsInfo, function(item){
             if(item && _.isString(item)){
                 const foo = item.split('.');
                 if(foo.length > 0){
@@ -269,38 +258,26 @@ export class MasterDetailActionHandler{
     }
 
     async getDetailsInfo(objectApiName: string){
-        let { metadata } = (await this.broker.call('metadata.get', {key: this.getDetailKey(objectApiName)}, {meta: {}})) || {};
-        return metadata || [];
+        const detailsInfo = [];
+        let records = (await this.broker.call('metadata.filter', { key: this.getDetailKey(objectApiName, "*", "*") }, { meta: {} })) || {};
+        for await (const item of records) {
+            const metadata = item?.metadata;
+            if(metadata){
+                detailsInfo.push(metadata);
+            }
+        }
+        return detailsInfo;
     }
 
     async addDetail(objectApiName: any, detailObjectApiName: string, detailField: any){
-        let detail = await this.getDetailsInfo(objectApiName);
-        let maps = [];
-        if(detail){
-            maps = detail;
-        }
         const detailFullName = `${detailObjectApiName}.${detailField.name}`
-        let count = _.filter(maps, function(o) { return o.startsWith(`${detailObjectApiName}.`) && o != detailFullName});
-        if (count.length < 1) {
-            maps.push(detailFullName);
-            maps = _.uniq(maps);
-            await this.broker.call('metadata.add', {key: this.getDetailKey(objectApiName), data: maps}, {meta: {}})
-            this.broker.emit(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
-            return true;
-        }
-        return false;
+        await this.broker.call('metadata.add', {key: this.getDetailKey(objectApiName, detailObjectApiName, detailField.name), data: detailFullName}, {meta: {}})
+        this.broker.broadcast(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
+        return true;
     }
-
     
     async removeDetail(objectApiName: any, detailObjectApiName: string, detailFieldName: any){
-        let detail = await this.getDetailsInfo(objectApiName);
-        let maps = [];
-        if (detail) {
-            maps = detail;
-        }
-        const detailFullName = `${detailObjectApiName}.${detailFieldName}`
-        maps = _.difference(maps, [detailFullName]);
-        await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName), data: maps }, { meta: {} })
+        await this.broker.call('metadata.delete', { key: this.getDetailKey(objectApiName, detailObjectApiName, detailFieldName)}, { meta: {} })
         return true;
     }
 
@@ -370,8 +347,8 @@ export class MasterDetailActionHandler{
     }
 
     async deleteObjectMasterDetails(objectApiName: string){
-        await this.broker.call('metadata.delete', {key: this.getMasterKey(objectApiName)}, {meta: {}});
-        await this.broker.call('metadata.delete', {key: this.getDetailKey(objectApiName)}, {meta: {}});
+        await this.broker.call('metadata.fuzzyDelete', {key: this.getMasterKey(objectApiName, '*')}, {meta: {}});
+        await this.broker.call('metadata.fuzzyDelete', {key: this.getDetailKey(objectApiName, '*', '*')}, {meta: {}});
         return true;
     }
 }

@@ -66,14 +66,14 @@ export class LookupActionHandler {
         }
     }
 
-    getDetailKey(objectApiName) {
-        return `$steedos.$lookup.#${objectApiName}.detail`
+    getDetailKey(objectApiName, detailApiName) {
+        return `$steedos.$lookup.#${objectApiName}.$detail.${detailApiName}`
     }
 
     async getDetails(objectApiName: string) {
-        let { metadata } = (await this.broker.call('metadata.get', { key: this.getDetailKey(objectApiName) }, { meta: {} })) || {};
         let detailName = [];
-        _.each(metadata, function(item){
+        const detailsInfo = await this.getDetailsInfo(objectApiName);
+        _.each(detailsInfo, function(item){
             if(item && _.isString(item)){
                 const foo = item.split('.');
                 if(foo.length > 0){
@@ -84,43 +84,28 @@ export class LookupActionHandler {
         return _.uniq(detailName);
     }
     async getDetailsInfo(objectApiName: string){
-        let { metadata } = (await this.broker.call('metadata.get', { key: this.getDetailKey(objectApiName) }, { meta: {} })) || {};
-        return metadata || [];
+        const detailsInfo = [];
+        let records = (await this.broker.call('metadata.filter', { key: this.getDetailKey(objectApiName, "*") }, { meta: {} })) || {};
+        for await (const item of records) {
+            const metadata = item?.metadata;
+            if(metadata){
+                detailsInfo.push(metadata);
+            }
+        }
+        return detailsInfo;
     }
 
     async removeDetail(objectApiName: any, detailObjectApiName: string, detailField: any) {
-        let detail = await this.getDetailsInfo(objectApiName);
-        let maps = [];
-        if (detail) {
-            maps = detail;
-        }
         const detailFullName = `${detailObjectApiName}.${detailField.name}`
-        maps = _.difference(maps, [detailFullName]);
-        if(maps.length > 0){
-            await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName), data: maps }, { meta: {} })
-        }else{
-            await this.deleteObjectLookups(objectApiName)
-        }
-        // this.broker.emit(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
+        await this.broker.call('metadata.delete', { key: this.getDetailKey(objectApiName, detailFullName) }, { meta: {} });
         return true;
     }
 
     async addDetail(objectApiName: any, detailObjectApiName: string, detailField: any) {
-        let detail = await this.getDetailsInfo(objectApiName);
-        let maps = [];
-        if (detail) {
-            maps = detail;
-        }
         const detailFullName = `${detailObjectApiName}.${detailField.name}`
-        let count = _.filter(maps, function(o) { return o.startsWith(`${detailObjectApiName}.`) && o != detailFullName});
-        if (count.length < 1) {
-            maps.push(detailFullName);
-            maps = _.uniq(maps);
-            await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName), data: maps }, { meta: {} })
-            this.broker.emit(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
-            return true;
-        }
-        return false;
+        await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName, detailFullName), data: detailFullName }, { meta: {} })
+        this.broker.broadcast(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
+        return true;
     }
 
     // async removeDetail(objectApiName: any, detailObjectApiName: string) {
@@ -133,7 +118,7 @@ export class LookupActionHandler {
     // }
 
     async deleteObjectLookups(objectApiName: string) {
-        await this.broker.call('metadata.delete', { key: this.getDetailKey(objectApiName) }, { meta: {} });
+        await this.broker.call('metadata.fuzzyDelete', { key: this.getDetailKey(objectApiName, '*') }, { meta: {} });
         return true;
     }
 }
