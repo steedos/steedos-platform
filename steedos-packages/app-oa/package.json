@@ -1,6 +1,6 @@
 {
     "name": "@steedos/app-oa",
-    "version": "2.1.52",
+    "version": "2.1.53",
     "description": "",
     "main": "package.service.js",
     "scripts": {
@@ -18,11 +18,11 @@
         "access": "public"
     },
     "devDependencies": {
-        "@steedos/app-contracts": "2.1.52",
-        "@steedos/app-crm": "2.1.52",
-        "@steedos/service-metadata-server": "2.1.52",
-        "@steedos/service-package-loader": "2.1.52",
-        "@steedos/service-steedos-server": "2.1.52",
+        "@steedos/app-contracts": "2.1.53",
+        "@steedos/app-crm": "2.1.53",
+        "@steedos/service-metadata-server": "2.1.53",
+        "@steedos/service-package-loader": "2.1.53",
+        "@steedos/service-steedos-server": "2.1.53",
         "dotenv-flow": "^3.1.0",
         "nodemon": "^1.19.1"
     },

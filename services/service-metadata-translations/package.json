@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-translations",
-  "version": "2.1.52",
+  "version": "2.1.53",
   "description": "",
   "main": "lib/translations.service.js",
   "scripts": {
