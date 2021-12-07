@@ -20,7 +20,7 @@ Template.creator_tab_iframe.onRendered ->
 		url = ""
 		if currentAppMenus && currentAppMenus.length
 			currentMenu = currentAppMenus.find (menu)->
-				url = menu.id == currentTabId
+				return menu.id == currentTabId
 			if currentMenu
 				url = Creator.getAppMenuUrlForInternet currentMenu
 		Meteor.defer ()->
