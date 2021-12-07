@@ -41,9 +41,17 @@ if (!Array.prototype.findIndex) {
 }
 // jshint freeze:true
 
+function removeSuffix(pattern, suffix) {
+    if (pattern.endsWith(suffix)) {
+        return pattern.slice(0, -suffix.length);
+    }
+    return pattern;
+}
+
 module.exports = {
     processArguments: function (npmUser, npmPass, npmEmail, npmRegistry, npmScope, quotes, configPath) {
         var registry = npmRegistry || 'https://registry.npmjs.org';
+        registry = removeSuffix(registry, '/')
         var homePath = process.env.HOME ? process.env.HOME : process.env.USERPROFILE;
         var finalPath = configPath ? configPath : path.join(homePath, '.npmrc');
         var hasQuotes = quotes ? quotes : false;

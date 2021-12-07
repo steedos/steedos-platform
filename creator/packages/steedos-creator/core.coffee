@@ -279,7 +279,9 @@ Creator.getAppMenuUrlForInternet = (menu)->
 	url = menu.path
 	if sdk and sdk.Utils and sdk.Utils.isExpression(url)
 		url = sdk.Utils.parseSingleExpression(url, menu, "#", Creator.USER_CONTEXT)
-	linkStr = if url.indexOf("?") < 0 then "?" else "&"
+	hasQuerySymbol = /(\#.+\?)|(\?[^#]*$)/g.test(url)
+	# 如果没有#号时去判断是否有？号，有末尾加&，无末尾加？；    有#号时判断#号后面是否有？号，有末尾加&，无末尾加？
+	linkStr = if hasQuerySymbol then "&" else "?"
 	return "#{url}#{linkStr}#{$.param(params)}"
 
 Creator.getAppMenuUrl = (menu)->
