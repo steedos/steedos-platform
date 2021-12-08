@@ -52,6 +52,15 @@ function isPatternTrigger(data){
         return true;
     }else if(_.isRegExp(listenTo)){
         return true;
+    }else if(_.isString(listenTo) && listenTo.startsWith("/")){
+        try {
+            if(_.isRegExp(eval(listenTo))){
+                return true;
+            }
+        } catch (error) {
+            return false
+        }
+        return false;
     }
     return false;
 }
@@ -76,6 +85,13 @@ async function getPatternTriggers(ctx){
                     patternTriggers.push(item);
                 }else if(_.isRegExp(metadata.listenTo) && metadata.listenTo.test(objectApiName)){
                     patternTriggers.push(item);
+                }else if(_.isString(metadata.listenTo) && metadata.listenTo.startsWith("/")){
+                    try {
+                        if(_.isRegExp(eval(metadata.listenTo)) && eval(metadata.listenTo).test(objectApiName)){
+                            patternTriggers.push(item);
+                        }
+                    } catch (error) {
+                    }
                 }
             } catch (error) {
                 console.log(`error`, error);

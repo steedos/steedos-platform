@@ -35,8 +35,8 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
         throw new Error('missing attribute listenTo')
     }
 
-    if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo)) {
-        throw new Error('listenTo must be a function or string')
+    if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo) && !_.isArray(json.listenTo) && !_.isRegExp(json.listenTo)) {
+        throw new Error('listenTo must be a function or string or array or regExp')
     }
 
     let object_name = '';
@@ -46,22 +46,29 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
     } else if (_.isFunction(json.listenTo)) {
         object_name = json.listenTo()
     }
-
-    let object = getObjectConfig(object_name);
-    if (object) {
-        if(!object.listeners){
-            object.listeners = {}
+    if(object_name){
+        let object = getObjectConfig(object_name);
+        if (object) {
+            if(!object.listeners){
+                object.listeners = {}
+            }
+            delete json.listenTo
+            const license = clone(json);
+            license.name = json._id || getMD5(JSONStringify(json));
+            object.listeners[license.name] = license
+            if(object.datasource === 'meteor'){
+                util.extend(object, {triggers: transformListenersToTriggers(object, license)})
+            }
         }
-        delete json.listenTo
-        const license = clone(json);
-        license.name = json._id || getMD5(JSONStringify(json));
-        object.listeners[license.name] = license
-        if(object.datasource === 'meteor'){
-            util.extend(object, {triggers: transformListenersToTriggers(object, license)})
+        addLazyLoadListeners(object_name, Object.assign({}, json, {listenTo: object_name}));
+        return Object.assign({}, json, {listenTo: object_name}); 
+    }else{
+        if(_.isRegExp(json.listenTo)){
+            return Object.assign({}, json, {listenTo: json.listenTo.toString()}); 
+        }else{
+            return json; 
         }
     }
-    addLazyLoadListeners(object_name, Object.assign({}, json, {listenTo: object_name}));
-    return Object.assign({}, json, {listenTo: object_name}); 
 }
 
 export const loadObjectTriggers = function (filePath: string){
