@@ -508,7 +508,7 @@ module.exports = {
 				// 配置主控地址
 				const consoleUrl = settings.STEEDOS_CLOUD_URL;
 				if (!consoleUrl) {
-					console.log(chalk.red('请配置主控地址'));
+					console.log('请配置主控地址');
 					return;
 				}
 
@@ -518,7 +518,7 @@ module.exports = {
 				const apiKey = settings.STEEDOS_CLOUD_API_KEY;
 
 				if (!spaceId || !apiKey) {
-					console.log(chalk.red('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。'));
+					console.log('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。');
 					return;
 				}
 
@@ -528,7 +528,7 @@ module.exports = {
 				const { info, scopes } = await this.getSafeScopes(spaceId, apiKey, consoleUrl);
 				const { adminPhone } = info;
 				if (!adminPhone) {
-					console.log(chalk.red('缺少工作区信息 工作区名称、管理员姓名、管理员手机号，请检查'));
+					console.log('缺少工作区信息 工作区名称、管理员姓名、管理员手机号，请检查');
 					return;
 				}
 				// let scope = '';
