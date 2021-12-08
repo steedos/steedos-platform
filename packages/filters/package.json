@@ -1,7 +1,7 @@
 {
   "name": "@steedos/filters",
   "private": false,
-  "version": "2.1.52",
+  "version": "2.1.54",
   "description": "filters lib for steedos",
   "main": "lib/index.js",
   "files": [
