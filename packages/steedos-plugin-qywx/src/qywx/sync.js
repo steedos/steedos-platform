@@ -91,11 +91,14 @@ exports.userinfoPush = async function (userId, status = 0) {
     return true
   }
 
-  let space = Qiyeweixin.getSpace();
+  let space = await Qiyeweixin.getSpace();
   // 获取access_token
-  if(space.qywx_corp_id && space.qywx_secret)
-      access_token = await Qiyeweixin.getToken(space.qywx_corp_id,space.qywx_secret);
+  if(space.qywx_corp_id && space.qywx_secret){
+    response = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
+    access_token = response.access_token;
+  }
 
+  // console.log("access_token: ", access_token);
   write("================获取用户详情===================")
   write("access_token:" + access_token)
   write("userId:" + userId)
@@ -134,7 +137,13 @@ exports.userinfoPush = async function (userId, status = 0) {
   userinfo['qywx_id'] = userId;
   userinfo['organizations'] = JSON.stringify(deptIdList)
 
-  doc = '{user_accepted:true,organizations:' + userinfo['organizations'] + ',name:\"' + userinfo['name'] + '\",profile:\"user\",mobile:\"' + userinfo['mobile'] + '\",organization:\"' + userinfo['organization'] + '\",email:\"' + userinfo['email'] + '\",job_number:\"' + userinfo['job_number'] + '\",position:\"' + userinfo['position'] + '\",manager:\"' + userinfo['manage'] + '\",qywx_id:\"' + userinfo['qywx_id'] + '\"}';
+  if (userinfo['email'] == ""){
+    delete userinfo.email;
+    doc = '{user_accepted:true,organizations:' + userinfo['organizations'] + ',name:\"' + userinfo['name'] + '\",profile:\"user\",mobile:\"' + userinfo['mobile'] + '\",organization:\"' + userinfo['organization'] + '\",job_number:\"' + userinfo['job_number'] + '\",position:\"' + userinfo['position'] + '\",manager:\"' + userinfo['manage'] + '\",qywx_id:\"' + userinfo['qywx_id'] + '\"}';
+  }else{
+    doc = '{user_accepted:true,organizations:' + userinfo['organizations'] + ',name:\"' + userinfo['name'] + '\",profile:\"user\",mobile:\"' + userinfo['mobile'] + '\",organization:\"' + userinfo['organization'] + '\",email:\"' + userinfo['email'] + '\",job_number:\"' + userinfo['job_number'] + '\",position:\"' + userinfo['position'] + '\",manager:\"' + userinfo['manage'] + '\",qywx_id:\"' + userinfo['qywx_id'] + '\"}';
+  }
+  
   // console.log(userRes)
   if (userRes.space_users.length == 0) {
     insertUserRes = await queryGraphql('mutation {\n  space_users__insert(doc: ' + doc + ') {\n    _id\n  }\n}')

@@ -16,6 +16,11 @@ fields:
     type: text
     group: 企业微信
     hidden: false
+  qywx_contact_secret:
+    label: 通讯录同步Secret
+    type: text
+    group: 企业微信
+    hidden: false
   qywx_token:
     label: Token
     type: text
