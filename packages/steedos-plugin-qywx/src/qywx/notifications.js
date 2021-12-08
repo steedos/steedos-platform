@@ -60,14 +60,16 @@ module.exports = {
                 if (payload.related_to) {
                     text = options.text;
                 }
-
+                // 替换&#x2F为'/'
+                let rg = new RegExp("&#x2F;","g")
+                
                 let msg = {
                     "touser": qywx_userId,
                     "msgtype": "textcard",
                     "agentid": agentId,
                     "textcard": {
-                        "title": title,
-                        "description": text,
+                        "title": title.replace(rg,'/'),
+                        "description": text.replace(rg,'/'),
                         "url": url,
                         "btntxt": "详情"
                     },

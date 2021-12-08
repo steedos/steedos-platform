@@ -167,6 +167,7 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
         // res.write('<h2>请联系管理员配置企业微信工作区ID和用户ID...</h2>');
         return res.end('');
     }
+    // console.log("user: ",user);
     if (userId && authToken) {
         if (user.user != userId) {
             // console.log("userId: ",userId);
