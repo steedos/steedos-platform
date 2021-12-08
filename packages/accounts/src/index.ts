@@ -21,9 +21,12 @@ const config = getSteedosConfig();
 
 function getAccountsServer() {
   let accountsConfig = config.accounts || {};
+  let emailConfig = config.email || {};
   let tokenSecret = accountsConfig.tokenSecret || "secret";
   let accessTokenExpiresIn = accountsConfig.accessTokenExpiresIn || "90d";
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
+  let mailSignname = emailConfig.signname || "华炎魔方";
+
 
   mongoose.connect(mongoUrl, { useNewUrlParser: true });
   const connection = mongoose.connection;
@@ -67,7 +70,7 @@ function getAccountsServer() {
       emailTemplates: {
         from: emailFrom,
         verificationCode: {
-          subject: (user, token) => `【华炎魔方】验证码：${token}`,
+          subject: (user, token) => `【${mailSignname}】验证码：${token}`,
           text: (user: any, url: string, token) =>
             `您的验证码是: ${token}，请不要泄露给他人。`,
           html: (user: any, url: string, token: string) =>

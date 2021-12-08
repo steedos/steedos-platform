@@ -36,6 +36,7 @@ tenant:
   _id: ${STEEDOS_CLOUD_SPACE_ID}
   name: 华炎魔方
   logo_url:
+  logo_square_url:
   background_url:
   enable_register: false
   enable_forget_password: false
@@ -52,6 +53,7 @@ sms:
 email:
   from: ${MAIL_FROM}
   url: ${MAIL_URL}
+  signname: ${MAIL_SIGNNAME}
 cron:
   instancerecordqueue_interval: 10000
   mailqueue_interval: 10000
