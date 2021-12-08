@@ -491,9 +491,9 @@ exports.getSpaceUser = async function (spaceId, userInfo) {
         let spaceUser = [];
         let spaceUserObj = steedosSchema.getObject("space_users");
         let userId = userInfo != null ? userInfo.UserId : void 0;
-        console.log("userId: ", userId);
+        // console.log("userId: ", userId);
         if (userId)
-            spaceUser = await spaceUserObj.findOne({ filters: [['space', '=', spaceId], ['qywx_id', '=', userId]] });
+            spaceUser = await spaceUserObj.findOne({ filters: [['space', '=', spaceId], ['qywx_id', '=', userId]]}, { fields:["name","user"] });
 
         // console.log("spaceUser: ", spaceUser);
         return spaceUser;
