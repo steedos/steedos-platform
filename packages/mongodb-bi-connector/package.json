@@ -1,6 +1,6 @@
 {
   "name": "@steedos/mongodb-bi-connector",
-  "version": "2.1.54",
+  "version": "2.1.55",
   "main": "package.service.js",
   "license": "MIT",
   "scripts": {
