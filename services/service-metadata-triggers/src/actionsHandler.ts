@@ -29,8 +29,60 @@ function cacherKey(apiName: string, when: string, name: string): string{
     return key
 }
 
-function getDelKey(metadataApiName: string){
-    return `$steedos.#${METADATA_TYPE}.${metadataApiName}`;
+function getDelKey(metadataType, metadataApiName: string){
+    return `$steedos.#${metadataType}.${metadataApiName}`;
+}
+
+function getPatternTriggerKey( when: string, name: string): string{
+    if(!when){
+        when = '*'
+    }
+    if(!name){
+        name = '*'
+    }
+    let key = `$steedos.#${METADATA_TYPE}-pattern.${when}.${name}`;
+    return key
+}
+
+function isPatternTrigger(data){
+    const {listenTo} = data;
+    if(listenTo === '*'){
+        return true;
+    }else if(_.isArray(listenTo)){
+        return true;
+    }else if(_.isRegExp(listenTo)){
+        return true;
+    }
+    return false;
+}
+
+async function registerPatternTrigger(broker, data, meta, item){
+    await broker.call('metadata.addServiceMetadata', {data: data}, {meta: Object.assign({}, meta, {metadataType: `${METADATA_TYPE}-pattern`, metadataApiName: `${item}.${data.name}`})})
+    await broker.call('metadata.add', {key: getPatternTriggerKey(item, data.name), data: data}, {meta: meta});
+}
+
+async function getPatternTriggers(ctx){
+    const patternTriggers = [];
+    const {objectApiName, when , name } = ctx.params;
+    const result = await ctx.broker.call('metadata.filter', {key: getPatternTriggerKey(when, name)}, {meta: ctx.meta});
+    
+    _.each(result, (item)=>{
+        if(item && item.metadata){
+            const { metadata } = item
+            try {
+                if(metadata.listenTo === '*'){
+                    patternTriggers.push(item);
+                }else if(_.isArray(metadata.listenTo) && _.include(metadata.listenTo, objectApiName)){
+                    patternTriggers.push(item);
+                }else if(_.isRegExp(metadata.listenTo) && metadata.listenTo.test(objectApiName)){
+                    patternTriggers.push(item);
+                }
+            } catch (error) {
+                console.log(`error`, error);
+            }
+        }
+    })
+    return patternTriggers;
 }
 
 async function registerTrigger(broker, data, meta){
@@ -41,8 +93,12 @@ async function registerTrigger(broker, data, meta){
         when = data.when;
     }
     for (const item of when) {
-        await broker.call('metadata.addServiceMetadata', {data: data}, {meta: Object.assign({}, meta, {metadataType: METADATA_TYPE, metadataApiName: `${data.listenTo}.${item}.${data.name}`})})
-        await broker.call('metadata.add', {key: cacherKey(data.listenTo, item, data.name), data: data}, {meta: meta});
+        if(isPatternTrigger(data)){
+            await registerPatternTrigger(broker, data, meta, item)
+        }else{
+            await broker.call('metadata.addServiceMetadata', {data: data}, {meta: Object.assign({}, meta, {metadataType: METADATA_TYPE, metadataApiName: `${data.listenTo}.${item}.${data.name}`})})
+            await broker.call('metadata.add', {key: cacherKey(data.listenTo, item, data.name), data: data}, {meta: meta});
+        }
     }
     return true
 }
@@ -52,7 +108,10 @@ export const ActionHandlers = {
         return ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectApiName, ctx.params.when, ctx.params.name)}, {meta: ctx.meta})
     },
     async filter(ctx: any): Promise<Array<MetadataObject>> {
-        return ctx.broker.call('metadata.filter', {key: cacherKey(ctx.params.objectApiName, ctx.params.when, ctx.params.name)}, {meta: ctx.meta})
+        const result = await ctx.broker.call('metadata.filter', {key: cacherKey(ctx.params.objectApiName, ctx.params.when, ctx.params.name)}, {meta: ctx.meta});
+        //get Pattern Triggers
+        const patternTriggers = await getPatternTriggers(ctx);
+        return result.concat(patternTriggers);
     },
     async add(ctx: any): Promise<boolean>{
         return await registerTrigger(ctx.broker, ctx.params.data, ctx.meta)
@@ -81,11 +140,11 @@ export const ActionHandlers = {
         return true;
     },
     async refresh(ctx){
-        const { isClear, metadataApiNames } = ctx.params
+        const { isClear, metadataApiNames, metadataType } = ctx.params
         if(isClear){
             for await (const metadataApiName of metadataApiNames) {
                 try {
-                    await ctx.broker.call('metadata.delete', {key: getDelKey(metadataApiName)}, {meta: ctx.meta})
+                    await ctx.broker.call('metadata.delete', {key: getDelKey(metadataType, metadataApiName)}, {meta: ctx.meta})
                 } catch (error) {
                     ctx.broker.logger.info(error.message)
                 }

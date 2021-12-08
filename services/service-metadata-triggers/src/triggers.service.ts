@@ -178,6 +178,11 @@ module.exports = {
             async handler(ctx) {
                 return await ActionHandlers.refresh(ctx);
             }
+        },
+		[`$METADATA.${METADATA_TYPE}-pattern.*`]: {
+            async handler(ctx) {
+                return await ActionHandlers.refresh(ctx);
+            }
         }
 	},
 

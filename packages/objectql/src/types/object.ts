@@ -366,11 +366,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         for (const trigger of triggers) {
             let params = generateActionParams(when, context); //参考sf
-            try {
-                await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params)
-            } catch (error) {
-                console.error(error)
-            }
+            await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
+                //如果action trigger 下线，则只打印error
+                if(error && _.isObject(error) && error.type === 'SERVICE_NOT_AVAILABLE'){
+                    console.error(`runTriggerActions error`, error)
+                }else{
+                    throw error
+                }
+            })
         }
 
     }
@@ -1257,7 +1260,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         let userSession = args[args.length - 1]
 
-        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined, spaceId: userSession ? userSession.spaceId : undefined }
+        let context: SteedosTriggerContextConfig = { objectName: this.name, userId: userSession ? userSession.userId : undefined, spaceId: userSession ? userSession.spaceId : undefined }
 
         if (method === 'find' || method === 'findOne' || method === 'count') {
             context.query = args[args.length - 2]

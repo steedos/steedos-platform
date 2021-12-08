@@ -2,6 +2,7 @@ import { JsonMap } from "@salesforce/ts-types";
 import { SteedosIDType } from "..";
 
 export type TriggerActionParams = {
+    objectName?: string
     isExecuting?: boolean,
     isInsert?: boolean,
     isUpdate?: boolean,
