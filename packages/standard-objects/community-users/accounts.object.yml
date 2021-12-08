@@ -354,9 +354,11 @@ fields:
   department:
     label: 部门
     type: text
+    hidden: true
   email:
     label: 电子邮件
     type: email
+    hidden: true
   do_not_call:
     label: 请勿致电
     type: boolean
@@ -438,9 +440,11 @@ fields:
   mobile:
     label: 手机
     type: text
+    hidden: true
   salutation:
     type: select
     label: 性别
+    hidden: true
     options:
       - label: 男
         value: Male
