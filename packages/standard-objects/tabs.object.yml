@@ -69,6 +69,7 @@ fields:
     label: Object
     type: lookup
     reference_to: objects
+    reference_to_field: name
     optionsFunction: !!js/function |
       function () {
         return Steedos.getObjectsOptions()
