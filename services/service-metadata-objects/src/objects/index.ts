@@ -145,7 +145,6 @@ export async function refreshObject(ctx, objectApiName) {
     }
 
     if (!mainConfig) {
-        console.log(`refreshObject mainConfig`, mainConfigs.length, mainConfig)
         return null;
     }
 
