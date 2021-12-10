@@ -508,8 +508,7 @@ module.exports = {
 				// 配置主控地址
 				const consoleUrl = settings.STEEDOS_CLOUD_URL;
 				if (!consoleUrl) {
-					console.log('请配置主控地址');
-					return;
+					throw new Error('请配置主控地址');
 				}
 
 				// 初始化工作区数据
@@ -518,8 +517,7 @@ module.exports = {
 				const apiKey = settings.STEEDOS_CLOUD_API_KEY;
 
 				if (!spaceId || !apiKey) {
-					console.log('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。');
-					return;
+					throw new Error('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。');
 				}
 
 				const registryUrl = settings.STEEDOS_REGISTRY_URL
@@ -528,8 +526,7 @@ module.exports = {
 				const { info, scopes } = await this.getSafeScopes(spaceId, apiKey, consoleUrl);
 				const { adminPhone } = info;
 				if (!adminPhone) {
-					console.log('缺少工作区信息 工作区名称、管理员姓名、管理员手机号，请检查');
-					return;
+					throw new Error('缺少工作区信息 工作区名称、管理员姓名、管理员手机号，请检查');
 				}
 				// let scope = '';
 				// if (scopes && scopes.length > 0) {
