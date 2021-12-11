@@ -12,6 +12,7 @@ interface Request extends core.Request {
 }
 
 const getObjectList = async function (req: Request, res: Response) {
+    res.setTimeout(3600*1000); // 设置超时时间
     try {
         let userSession = req.user;
         let userId = userSession.userId;

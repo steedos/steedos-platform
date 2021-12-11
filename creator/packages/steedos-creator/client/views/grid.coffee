@@ -448,6 +448,7 @@ Template.creator_grid.onRendered ->
 						url: url
 						withCredentials: false
 						beforeSend: (request) ->
+							request.timeout = 3600*1000;
 							request.headers['X-User-Id'] = Meteor.userId()
 							request.headers['X-Space-Id'] = Steedos.spaceId()
 							request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
