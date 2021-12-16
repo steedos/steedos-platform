@@ -11,6 +11,7 @@ import _ = require('lodash')
 // import _eval = require('eval')
 import { extract, parse } from '@steedos/formula';
 import { getFieldSubstitution, FormulonDataType } from './params'
+import { getSimpleParamSubstitution } from './simple_params'
 
 /**
  * 根据公式内容，取出其中{}中的变量
@@ -63,7 +64,7 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
     let params: Array<SteedosFormulaParamTypeConfig> = [];
     const spaceId = doc.space;
     if (vars && vars.length) {
-        for (let { key, paths, is_user_var: isUserVar } of vars) {
+        for (let { key, paths, is_user_var: isUserVar, is_simple_var: isSimpleVar } of vars) {
             key = key.trim();
             // 如果变量key以$user开头,则解析为userSession,此时paths为空
             let tempValue: any;
@@ -82,6 +83,16 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
                 // tepmFormula = `return ${tepmFormula}`
                 // tempFormulaParams[FormulaUserKey] = currentUserId;
                 // tempValue = evalFieldFormula(tepmFormula, tempFormulaParams);
+            }
+            if(isSimpleVar){
+                // 普通变量，取参数值时直接取值，而不用走变量上的paths属性。
+                // 注意未传入objectName时，公式中的user var的isSimpleVar为false，还是走下面的paths取值逻辑。
+                tempValue = <any>doc[key];
+                params.push({
+                    key: key,
+                    value: tempValue
+                });
+                continue;
             }
             tempValue = _.reduce(paths, (reslut, next, index) => {
                 if (index === 0) {
@@ -176,7 +187,13 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
         // formulaParams[key] = value;
         // 把{}括起来的变量替换为计算得到的变量值
         // formula = formula.replace(`{${key}}`, `__params["${key}"]`);
-        formulaParams[key] = getFieldSubstitution(path.reference_from, path.field_name, value, blankValue);
+        if(path){
+            formulaParams[key] = getFieldSubstitution(path.reference_from, path.field_name, value, blankValue);
+        }
+        else{
+            // 变量中没有path属性说明是普通变量
+            formulaParams[key] = getSimpleParamSubstitution(value, blankValue);
+        }
     });
     
     // console.log("===runFormula===formula====", formula);
