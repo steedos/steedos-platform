@@ -96,6 +96,13 @@ fields:
     label: 回调 URL
     help: 
     description: 
+  oauth2_home_url:
+    label: 应用首页
+  oauth2_logo:
+    label: 应用 Logo
+  oauth2_client_secret:
+    label: 应用密钥
+    help: 请妥善保管
   oauth2_scopes:
     label: 范围
     help: 

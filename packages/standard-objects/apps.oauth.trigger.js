@@ -1,6 +1,7 @@
 const _ = require('underscore');
 const randomString = require("crypto-random-string");
 const accounts = require('@steedos/accounts');
+const objectql = require('@steedos/objectql')
 
 const GrantTypes = ['authorization_code', 'refresh_token']
 
@@ -33,8 +34,7 @@ const deleteOAuth2Client = async (clientId) => {
 }
 
 const updateOAuth2Client = async (clientId, clientName, clientSecret, clientUri, logoUri, responseTypes, scope, callbacks) => {
-    console.log(`updateOAuth2Client`, clientId);
-    return await accounts.hydraAdmin.createOAuth2Client(getOAuth2ClientBody(clientId, clientName, clientSecret, clientUri, logoUri, responseTypes, scope, callbacks))
+    return await accounts.hydraAdmin.updateOAuth2Client(clientId, getOAuth2ClientBody(clientId, clientName, clientSecret, clientUri, logoUri, responseTypes, scope, callbacks))
 };
 
 const upsetOAuth2Client = async (clientId, clientName, clientSecret, clientUri, logoUri, responseTypes, scope, callbacks) => {
