@@ -94,7 +94,7 @@ fields:
     options:
       - label: Access to Your Unique Identifier (openid)
         value: openid
-      - label: 'Access Basic Information (id, profile, email, address, phone)'
+      - label: 'Access Basic Information (id, email, address, phone, locale)'
         value: profile
       - label: Access Fully (full)
         value: full

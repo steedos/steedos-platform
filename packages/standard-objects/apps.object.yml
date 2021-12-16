@@ -156,15 +156,17 @@ fields:
     group: OAuth2
     label: Callback URL
     type: text
+    required: "{{formData.oauth2_enabled}}"
   oauth2_scopes:
     group: OAuth2
     label: Scopes
     type: select
     multiple: true
+    required: "{{formData.oauth2_enabled}}"
     options:
       - label: Access to Your Unique Identifier (openid)
         value: openid
-      - label: Access Basic Information (id, profile, email, address, phone)
+      - label: Access Basic Information (id, email, address, phone, locale)
         value: profile
       - label: Access Fully (full)
         value: full
@@ -176,40 +178,64 @@ fields:
     group: OAuth2
     label: OAuth2 Logout URL
     type: url
+  oauth2_home_url:
+    group: OAuth2
+    label: Homepage URL
+    type: url
+    required: "{{formData.oauth2_enabled}}"
+  oauth2_logo:
+    group: OAuth2
+    label: OAuth2 Logo
+    type: image
+    required: "{{formData.oauth2_enabled}}"
+  oauth2_client_secret:
+    group: OAuth2
+    label: OAuth2 Client secret
+    type: text
+    omit: true
   
   saml_enabled:
+    hidden: true
     group: SAML
     label: SAML Enabled
     type: boolean
   saml_entity_id:
+    hidden: true
     group: SAML
     label: Entity Id
     type: text
   saml_issuer:
+    hidden: true
     group: SAML
     label: Issuer
     type: text
   saml_idp_cert:
+    hidden: true
     group: SAML
     label: IDP Cert
     type: text
   saml_acs_url:
+    hidden: true
     group: SAML
     label: ACS URL
     type: url
   saml_name_id_format:
+    hidden: true
     group: SAML
     label: Name
     type: text
   saml_logout_enabled: 
+    hidden: true
     group: SAML
     label: SAML Logout Enabled
     type: boolean
   saml_logout_url:
+    hidden: true
     group: SAML
     label: SAML Logout URL
     type: url
   saml_logout_block:
+    hidden: true
     group: SAML
     label: SAML Logout Block
     type: select
@@ -238,6 +264,10 @@ actions:
   reset:
     label: Reset
     on: record_only
+  createOAuth2App:
+    label: 创建 OAuth 应用
+    on: list
+    sort: 180
 list_views:
   all:
     label: All Apps

@@ -102,7 +102,7 @@ fields:
     options:
       - label: 允许访问您的唯一标志符 (openid)
         value: openid
-      - label: '访问基本信息 (id, profile, email, address, phone)'
+      - label: '访问基本信息 (id, email, address, phone, locale)'
         value: profile
       - label: 完全访问权限 (full)
         value: full
