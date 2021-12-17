@@ -59,3 +59,23 @@ async function _computeFormula(formula: string, objectName:string, data: any, cu
 }
 
 export const computeFormula = _computeFormula 
+
+async function _computeSimpleFormula(formula: string, data: any, currentUserId?: string, spaceId?: string, options?: SteedosFormulaOptions) {
+    // objectConfig参数值设置为null传入computeFormulaVarsAndQuotes表示计算不带objectConfig参数的普通公式变量
+    const varsAndQuotes = await computeFormulaVarsAndQuotes(formula, null);
+    const vars = varsAndQuotes.vars;
+    if (!currentUserId) {
+        const required = isCurrentUserIdRequiredForFormulaVars(vars);
+        if(required){
+            throw new Error(`The param 'currentUserId' is required for formula ${formula.replace("$", "\\$")}`);
+        }
+    }
+    if(spaceId){
+        data.space = spaceId;
+    }
+
+    let params = await computeFormulaParams(data, vars, currentUserId);
+    return runFormula(formula, params, options);
+}
+
+export const computeSimpleFormula = _computeSimpleFormula 
