@@ -1,7 +1,7 @@
 name: announcements
 icon: announcement
 label: Announcement
-hidden: true
+hidden: false
 enable_files: true
 enable_chatter: true
 version: 2
