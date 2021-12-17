@@ -634,7 +634,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
             disabled_actions: null,
             unreadable_fields: null,
             uneditable_fields: null,
-            unrelated_objects: null
+            unrelated_objects: null,
+            field_permissions: null
         }
 
         if (_.isEmpty(roles)) {
@@ -643,6 +644,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         roles.forEach((role) => {
             let rolePermission = objectRolesPermission[role]
+            if (this.name === 'test2__c') {
+                console.log(`rolePermission`, rolePermission);
+            }
             if (rolePermission) {
                 _.each(userObjectPermission, (v, k) => {
                     let _v = rolePermission[k]
@@ -654,20 +658,46 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         if(_.isBoolean(_v)){
                             userObjectPermission[k] = _v
                         }
-                    } else if ((_.isArray(v) || _.isNull(v))) {
+                    }
+                    else if ((_.isArray(v) || _.isNull(v))) {
                         if (!_.isArray(_v)) {
                             _v = []
                         }
                         if (_.isNull(v)) {
                             userObjectPermission[k] = _v
                         } else {
-                            userObjectPermission[k] = _.intersection(v, _v)
+                            if (k === 'field_permissions') {
+                                userObjectPermission[k] = _.union(v, _v)
+                            } else {
+                                userObjectPermission[k] = _.intersection(v, _v)
+                            }
                         }
                     }
                 })
             }
-        })
+        });
 
+        const field_permissions = {};
+        if (userObjectPermission.field_permissions) {
+            _.each(userObjectPermission.field_permissions, (field_permission) => {
+                const { field, read, edit } = field_permission;
+                if (field_permissions[field]) {
+                    field_permissions[field].edit = field_permissions[field].edit || edit;
+                    if (field_permissions[field].edit) {
+                        field_permissions[field].read = true
+                    } else {
+                        field_permissions[field].read = field_permissions[field].read || read;
+                    }
+                } else {
+                    field_permissions[field] = {
+                        read: edit || read,
+                        edit: edit
+                    }
+                }
+            })
+        }
+
+        userObjectPermission.field_permissions = field_permissions;
 
         userObjectPermission.disabled_list_views = userObjectPermission.disabled_list_views || []
         userObjectPermission.disabled_actions = userObjectPermission.disabled_actions || []
@@ -990,6 +1020,25 @@ export class SteedosObjectType extends SteedosObjectProperties {
             _.each(difference, function(fieldApiName){
                 objectConfig.fields[fieldApiName].hidden = true;
                 objectConfig.fields[fieldApiName].sort_no = 99999;
+            })
+
+            // 使用字段级安全性作为限制用户对字段的访问权限的手段；然后使用页面布局主要在选项卡中组织详细信息和编辑页面。这可以减少需要维护的页面布局数量。
+            // 例如，如果字段在页面布局中是必需的，并且在字段级安全性设置中是只读的，则字段级安全性将覆盖页面布局，并且该字段将对用户是只读的。
+            const userObjectFields = objectConfig.fields;
+            _.each(objectConfig.permissions.field_permissions, (field_permission) => {
+                const { field, read, edit } = field_permission;
+                if (read) {
+                    userObjectFields[field].omit = true;
+                }
+                if (edit) {
+                    userObjectFields[field].omit = false;
+                    userObjectFields[field].hidden = false;
+                    userObjectFields[field].readonly = false;
+                    userObjectFields[field].disabled = false;
+                }
+                if (!read && !edit) {
+                    delete userObjectFields[field]
+                }
             })
 
             _.each(layout.buttons, function(button){

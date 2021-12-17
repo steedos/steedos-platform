@@ -283,6 +283,41 @@ fields:
             }
     name: unrelated_objects
     filterable: true
+  read_filters:
+    type: textarea
+    is_wide: true
+  edit_filters:
+    type: textarea
+    is_wide: true
+  field_permissions:
+    type: grid
+    label: 字段权限
+    is_wide: true
+  field_permissions.$:
+    type: object
+  field_permissions.$.field:
+    type: lookup
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+        var object_name = null;
+        if(values && values.object_name){
+          object_name = values.object_name;
+          if(_.isObject(object_name)){
+            object_name = object_name.name
+          }
+        }
+        var options = Creator.getObjectLookupFieldOptions(object_name, false, true, false);
+        return _.filter(options, function(option){
+          return ['created','created_by','modified','modified_by'].indexOf(option.value) < 0
+        })
+      }
+  field_permissions.$.read:
+    type: boolean
+  field_permissions.$.edit:
+    type: boolean
   is_system:
     type: boolean
     label: 系统

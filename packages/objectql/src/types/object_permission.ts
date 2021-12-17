@@ -22,6 +22,7 @@ abstract class SteedosObjectPermissionTypeProperties {
     unreadable_fields?: string[]
     uneditable_fields?: string[]
     unrelated_objects?: string[]
+    field_permissions?: any
 }
 
 export interface SteedosObjectPermissionTypeConfig extends SteedosObjectPermissionTypeProperties { }
