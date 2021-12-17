@@ -644,9 +644,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         roles.forEach((role) => {
             let rolePermission = objectRolesPermission[role]
-            if (this.name === 'test2__c') {
-                console.log(`rolePermission`, rolePermission);
-            }
             if (rolePermission) {
                 _.each(userObjectPermission, (v, k) => {
                     let _v = rolePermission[k]
