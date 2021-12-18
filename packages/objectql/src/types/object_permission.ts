@@ -71,6 +71,37 @@ export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProp
             this.allowRead = true;
         }
 
+        if (this.allowRead) {
+            typeof this.allowReadFiles !== "boolean" && (this.allowReadFiles = true);
+            typeof this.viewAllFiles !== "boolean" && (this.viewAllFiles = true);
+        }
+        if (this.allowEdit) {
+            typeof this.allowCreateFiles !== "boolean" && (this.allowCreateFiles = true);
+            typeof this.allowEditFiles !== "boolean" && (this.allowEditFiles = true);
+            typeof this.allowDeleteFiles !== "boolean" && (this.allowDeleteFiles = true);
+        }
+        if (this.modifyAllRecords) {
+            typeof this.modifyAllFiles !== "boolean" && (this.modifyAllFiles = true);
+        }
+        if (this.allowCreateFiles) {
+            this.allowReadFiles = true;
+        }
+        if (this.allowEditFiles) {
+            this.allowReadFiles = true;
+        }
+        if (this.allowDeleteFiles) {
+            this.allowEditFiles = true;
+            this.allowReadFiles = true;
+        }
+        if (this.viewAllFiles) {
+            this.allowReadFiles = true;
+        }
+        if (this.modifyAllFiles) {
+            this.allowReadFiles = true;
+            this.allowEditFiles = true;
+            this.allowDeleteFiles = true;
+            this.viewAllFiles = true;
+        }
         this.object_name = object_name
     }
 
