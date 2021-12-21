@@ -15,7 +15,7 @@ import { brokeEmitEvents } from "./object_events";
 import { translationObject } from "@steedos/i18n";
 import { getObjectLayouts } from "./object_layouts";
 import { sortBy, forEach } from 'lodash';
-declare var Creator: any;
+
 const clone = require('clone')
 
 // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
@@ -707,7 +707,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
             return Object.assign({}, userObjectPermission, { allowRead: true, viewAllRecords: true, viewCompanyRecords: true })
         }
 
-        Creator.processPermissions(userObjectPermission)
         return userObjectPermission;
     }
 
