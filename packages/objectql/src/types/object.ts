@@ -687,6 +687,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     }
                 } else {
                     field_permissions[field] = {
+                        field: field,
                         read: edit || read,
                         edit: edit
                     }
@@ -1018,25 +1019,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 objectConfig.fields[fieldApiName].sort_no = 99999;
             })
 
-            // 使用字段级安全性作为限制用户对字段的访问权限的手段；然后使用页面布局主要在选项卡中组织详细信息和编辑页面。这可以减少需要维护的页面布局数量。
-            // 例如，如果字段在页面布局中是必需的，并且在字段级安全性设置中是只读的，则字段级安全性将覆盖页面布局，并且该字段将对用户是只读的。
-            const userObjectFields = objectConfig.fields;
-            _.each(objectConfig.permissions.field_permissions, (field_permission) => {
-                const { field, read, edit } = field_permission;
-                if (read) {
-                    userObjectFields[field].omit = true;
-                }
-                if (edit) {
-                    userObjectFields[field].omit = false;
-                    userObjectFields[field].hidden = false;
-                    userObjectFields[field].readonly = false;
-                    userObjectFields[field].disabled = false;
-                }
-                if (!read && !edit) {
-                    delete userObjectFields[field]
-                }
-            })
-
             _.each(layout.buttons, function(button){
                 const action = objectConfig.actions[button.button_name];
                 if(action){
@@ -1065,6 +1047,27 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             })
         }
+
+        // 使用字段级安全性作为限制用户对字段的访问权限的手段；然后使用页面布局主要在选项卡中组织详细信息和编辑页面。这可以减少需要维护的页面布局数量。
+        // 例如，如果字段在页面布局中是必需的，并且在字段级安全性设置中是只读的，则字段级安全性将覆盖页面布局，并且该字段将对用户是只读的。
+        const userObjectFields = objectConfig.fields;
+        _.each(objectConfig.permissions.field_permissions, (field_permission, field) => {
+            const { read, edit } = field_permission;
+            if (read) {
+                userObjectFields[field].omit = true;
+            }
+            if (edit) {
+                userObjectFields[field].omit = false;
+                userObjectFields[field].hidden = false;
+                userObjectFields[field].readonly = false;
+                userObjectFields[field].disabled = false;
+            }
+            if (!read && !edit) {
+                delete userObjectFields[field]
+            }
+        })
+
+        objectConfig.fields = userObjectFields
 
         // TODO object layout 是否需要控制审批记录显示？
         let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] })
