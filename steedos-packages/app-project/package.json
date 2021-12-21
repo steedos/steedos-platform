@@ -1,6 +1,6 @@
 {
   "name": "@steedos/app-project-management",
-  "version": "2.1.55",
+  "version": "2.1.56",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -18,9 +18,9 @@
     "access": "public"
   },
   "devDependencies": {
-    "@steedos/service-metadata-server": "2.1.55",
-    "@steedos/service-package-loader": "2.1.55",
-    "@steedos/service-steedos-server": "2.1.55",
+    "@steedos/service-metadata-server": "2.1.56",
+    "@steedos/service-package-loader": "2.1.56",
+    "@steedos/service-steedos-server": "2.1.56",
     "dotenv-flow": "^3.1.0",
     "nodemon": "^1.19.1"
   },
