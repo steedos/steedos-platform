@@ -65,6 +65,6 @@ module.exports = {
         }, null, { iconPath: '/assets/icons' })
     },
     createOAuth2AppVisible: function () {
-        return Creator.baseObject.actions.standard_new.visible();
+        return false && Creator.baseObject.actions.standard_new.visible();
     }
 }

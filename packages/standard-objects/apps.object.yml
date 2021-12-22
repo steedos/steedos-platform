@@ -152,15 +152,18 @@ fields:
     group: OAuth2 
     label: OAuth2 Enabled
     type: boolean
+    hidden: true
   oauth2_callback_url:
     group: OAuth2
     label: Callback URL
     type: text
     required: "{{formData.oauth2_enabled}}"
+    hidden: true
   oauth2_scopes:
     group: OAuth2
     label: Scopes
     type: select
+    hidden: true
     multiple: true
     required: "{{formData.oauth2_enabled}}"
     options:
@@ -174,26 +177,30 @@ fields:
     group: OAuth2
     label: OAuth2 Logout Enabled
     type: boolean
+    hidden: true
   oauth2_logout_url:
     group: OAuth2
     label: OAuth2 Logout URL
     type: url
+    hidden: true
   oauth2_home_url:
     group: OAuth2
     label: Homepage URL
     type: url
     required: "{{formData.oauth2_enabled}}"
+    hidden: true
   oauth2_logo:
     group: OAuth2
     label: OAuth2 Logo
     type: image
     required: "{{formData.oauth2_enabled}}"
+    hidden: true
   oauth2_client_secret:
     group: OAuth2
     label: OAuth2 Client secret
     type: text
     omit: true
-  
+    hidden: true
   saml_enabled:
     hidden: true
     group: SAML
