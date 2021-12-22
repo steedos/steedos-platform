@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema } from ".";
-import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl } from '../util'
+import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl, isExpression, parseSingleExpression } from '../util'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -15,7 +15,7 @@ import { brokeEmitEvents } from "./object_events";
 import { translationObject } from "@steedos/i18n";
 import { getObjectLayouts } from "./object_layouts";
 import { sortBy, forEach } from 'lodash';
-declare var Creator: any;
+
 const clone = require('clone')
 
 // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
@@ -634,7 +634,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
             disabled_actions: null,
             unreadable_fields: null,
             uneditable_fields: null,
-            unrelated_objects: null
+            unrelated_objects: null,
+            field_permissions: null,
+            read_filters: [],
+            edit_filters: []
         }
 
         if (_.isEmpty(roles)) {
@@ -654,20 +657,56 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         if(_.isBoolean(_v)){
                             userObjectPermission[k] = _v
                         }
-                    } else if ((_.isArray(v) || _.isNull(v))) {
+                    } else if (['read_filters', 'edit_filters'].indexOf(k) > -1) {
+                        if ('edit_filters' === k) {
+                            if (!_.isEmpty(_v)) {
+                                userObjectPermission['read_filters'].push(_v);
+                            }
+                        }
+                        if (!_.isEmpty(_v)) {
+                            userObjectPermission[k].push(_v);
+                        }
+                    }
+                    else if ((_.isArray(v) || _.isNull(v))) {
                         if (!_.isArray(_v)) {
                             _v = []
                         }
                         if (_.isNull(v)) {
                             userObjectPermission[k] = _v
                         } else {
-                            userObjectPermission[k] = _.intersection(v, _v)
+                            if (k === 'field_permissions') {
+                                userObjectPermission[k] = _.union(v, _v)
+                            } else {
+                                userObjectPermission[k] = _.intersection(v, _v)
+                            }
                         }
                     }
                 })
             }
-        })
+        });
 
+        const field_permissions = {};
+        if (userObjectPermission.field_permissions) {
+            _.each(userObjectPermission.field_permissions, (field_permission) => {
+                const { field, read, edit } = field_permission;
+                if (field_permissions[field]) {
+                    field_permissions[field].edit = field_permissions[field].edit || edit;
+                    if (field_permissions[field].edit) {
+                        field_permissions[field].read = true
+                    } else {
+                        field_permissions[field].read = field_permissions[field].read || read;
+                    }
+                } else {
+                    field_permissions[field] = {
+                        field: field,
+                        read: edit || read,
+                        edit: edit
+                    }
+                }
+            })
+        }
+
+        userObjectPermission.field_permissions = field_permissions;
 
         userObjectPermission.disabled_list_views = userObjectPermission.disabled_list_views || []
         userObjectPermission.disabled_actions = userObjectPermission.disabled_actions || []
@@ -680,7 +719,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
             return Object.assign({}, userObjectPermission, { allowRead: true, viewAllRecords: true, viewCompanyRecords: true })
         }
 
-        Creator.processPermissions(userObjectPermission)
         return userObjectPermission;
     }
 
@@ -1021,6 +1059,27 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
+        // 使用字段级安全性作为限制用户对字段的访问权限的手段；然后使用页面布局主要在选项卡中组织详细信息和编辑页面。这可以减少需要维护的页面布局数量。
+        // 例如，如果字段在页面布局中是必需的，并且在字段级安全性设置中是只读的，则字段级安全性将覆盖页面布局，并且该字段将对用户是只读的。
+        const userObjectFields = objectConfig.fields;
+        _.each(objectConfig.permissions.field_permissions, (field_permission, field) => {
+            const { read, edit } = field_permission;
+            if (read) {
+                userObjectFields[field].omit = true;
+            }
+            if (edit) {
+                userObjectFields[field].omit = false;
+                userObjectFields[field].hidden = false;
+                userObjectFields[field].readonly = false;
+                userObjectFields[field].disabled = false;
+            }
+            if (!read && !edit) {
+                delete userObjectFields[field]
+            }
+        })
+
+        objectConfig.fields = userObjectFields
+
         // TODO object layout 是否需要控制审批记录显示？
         let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] })
         if (spaceProcessDefinition.length > 0) {
@@ -1256,6 +1315,32 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.runTriggerActions(when, context)
     }
 
+    private async appendRecordPermission(records, userSession) {
+        const _ids = _.pluck(records, '_id');
+        const objPm = await this.getUserObjectPermission(userSession);
+        const permissionFilters = this.getObjectPermissionFilters(objPm, userSession, true);
+        if (_.isEmpty(permissionFilters)) {
+            return;
+        }
+        const filters = formatFiltersToODataQuery(['_id', 'in', _ids])
+
+        const results = await this.directFind({
+            fields: ['_id'],
+            filters: `(${filters}) and (${permissionFilters.join(' or ')})`
+        });
+        const allowEditIds = _.pluck(results, '_id');
+        _.each(records, (record) => {
+            if (_.include(allowEditIds, record._id)) {
+                record.record_permissions = {
+                    allowRead: true,
+                    allowEdit: true,
+                    allowDelete: true,
+                }
+            }
+        })
+
+    }
+
     private async getTriggerContext(when: string, method: string, args: any[], recordId?: string) {
 
         let userSession = args[args.length - 1]
@@ -1406,6 +1491,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 let values = returnValue || {}
                 if (method === 'count') {
                     values = returnValue || 0
+                } else {
+                    if (userSession) {
+                        let _records = returnValue
+                        if (method == 'findOne' && returnValue) {
+                            _records = [_records]
+                        }
+                        await this.appendRecordPermission(_records, userSession);
+                    }
                 }
                 Object.assign(afterTriggerContext, { data: { values: values } })
             }
@@ -1484,6 +1577,33 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
+    private getObjectPermissionFilters(objectPermission, userSession, isEdit) {
+        const objectPermissionFilters = [];
+
+        let permissionFiltersKey = 'read_filters';
+        if (isEdit) {
+            permissionFiltersKey = 'edit_filters';
+        }
+
+        const globalData = Object.assign({}, userSession, { now: new Date() });
+
+        let permissionFilters = objectPermission[permissionFiltersKey];
+
+        _.each(permissionFilters, (permissionFilter) => {
+            if (_.isString(permissionFilter) && isExpression(permissionFilter.trim())) {
+                try {
+                    const filters = parseSingleExpression(permissionFilter, {}, "#", globalData);
+                    if (filters && !_.isString(filters)) {
+                        objectPermissionFilters.push(`(${formatFiltersToODataQuery(filters, userSession)})`)
+                    }
+                } catch (error) {
+                    console.error(`getObjectPermissionFilters error`, permissionFilter, error.message);
+                }
+            }
+        })
+        return objectPermissionFilters;
+    }
+
     /**
      * 把query.filters用formatFiltersToODataQuery转为odata query
      * 主要是为了把userSession中的utcOffset逻辑传入formatFiltersToODataQuery函数处理
@@ -1514,7 +1634,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                     query = args[args.length - 3];
                 }
-
                 if (query.filters && !_.isString(query.filters)) {
                     query.filters = formatFiltersToODataQuery(query.filters);
                 }
@@ -1527,7 +1646,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return
                 }
 
-                let spaceFilter, companyFilter, ownerFilter, sharesFilter, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
+                let spaceFilter, companyFilter, ownerFilter, sharesFilter, objectPermissionFilters, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
 
                 if (spaceId) {
                     spaceFilter = `(space eq '${spaceId}')`;
@@ -1547,9 +1666,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     ownerFilter = `(owner eq '${userId}')`;
                 }
 
-                if (!objPm.viewAllRecords) {
-                    sharesFilter = getUserObjectSharesFilters(this.name, userSession);
+                objectPermissionFilters = this.getObjectPermissionFilters(objPm, userSession, false);
+
+                if (!_.isEmpty(objectPermissionFilters)) {
+                    permissionFilters.push(`(${objectPermissionFilters.join(' or ')})`);
                 }
+
+                sharesFilter = getUserObjectSharesFilters(this.name, userSession);
 
                 if (!_.isEmpty(companyFilter)) {
                     permissionFilters.push(`(${companyFilter.join(' or ')})`);
@@ -1587,8 +1710,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             else if (method === 'update' || method === 'updateOne') {
-                if (!objPm.allowEdit) {
+                const permissionFilters = this.getObjectPermissionFilters(objPm, userSession, true);
+                if (!objPm.allowEdit && _.isEmpty(permissionFilters)) {
                     throw new Error(`no ${method} permission!`);
+                }
+                let objectPermissionEditFilters = '';
+                if (!_.isEmpty(permissionFilters)) {
+                    objectPermissionEditFilters = ` or (${permissionFilters.join(' or ')})`
                 }
                 let id = args[args.length - 3];
                 if (!objPm.modifyAllRecords && objPm.modifyCompanyRecords) {
@@ -1597,25 +1725,35 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     }).join(' or ')
                     if (companyFilters) {
                         if (_.isString(id)) {
-                            id = { filters: `(_id eq \'${id}\') and (${companyFilters})` }
+                            id = { filters: `(_id eq \'${id}\') and (${companyFilters}${objectPermissionEditFilters})` }
                         }
                         else if (_.isObject(id)) {
                             if (id.filters && !_.isString(id.filters)) {
                                 id.filters = formatFiltersToODataQuery(id.filters);
                             }
-                            id.filters = id.filters ? `(${id.filters}) and (${companyFilters})` : `(${companyFilters})`;
+                            id.filters = id.filters ? `(${id.filters}) and (${companyFilters}${objectPermissionEditFilters})` : `(${companyFilters}${objectPermissionEditFilters})`;
                         }
                     }
                 }
                 else if (!objPm.modifyAllRecords && !objPm.modifyCompanyRecords && objPm.allowEdit) {
                     if (_.isString(id)) {
-                        id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\')` }
+                        id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\' ${objectPermissionEditFilters})` }
                     }
                     else if (_.isObject(id)) {
                         if (id.filters && !_.isString(id.filters)) {
                             id.filters = formatFiltersToODataQuery(id.filters);
                         }
-                        id.filters = id.filters ? `(${id.filters}) and (owner eq \'${userId}\')` : `(owner eq \'${userId}\')`;
+                        id.filters = id.filters ? `(${id.filters}) and (owner eq \'${userId}\' ${objectPermissionEditFilters})` : `(owner eq \'${userId}\' ${objectPermissionEditFilters})`;
+                    }
+                } else if (objectPermissionEditFilters) {
+                    if (_.isString(id)) {
+                        id = { filters: `(_id eq \'${id}\') and (${objectPermissionEditFilters})` }
+                    }
+                    else if (_.isObject(id)) {
+                        if (id.filters && !_.isString(id.filters)) {
+                            id.filters = formatFiltersToODataQuery(id.filters);
+                        }
+                        id.filters = id.filters ? `(${id.filters}) and (${objectPermissionEditFilters})` : `(${objectPermissionEditFilters})`;
                     }
                 }
                 args[args.length - 3] = id;
@@ -1639,20 +1777,37 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             else if (method === 'delete') {
-                if (!objPm.allowDelete) {
+                const permissionFilters = this.getObjectPermissionFilters(objPm, userSession, true);
+                if (!objPm.allowDelete && _.isEmpty(permissionFilters)) {
                     throw new Error(`no ${method} permission!`);
                 }
+
+                let objectPermissionEditFilters = '';
+                if (!_.isEmpty(permissionFilters)) {
+                    objectPermissionEditFilters = ` or (${permissionFilters.join(' or ')})`
+                }
+
                 let id = args[args.length - 2];
                 if (!objPm.modifyAllRecords && objPm.modifyCompanyRecords) {
                     let companyFilters = _.map(userSession.companies, function (comp: any) {
                         return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
                     }).join(' or ')
                     if (companyFilters) {
-                        id = { filters: `(_id eq \'${id}\') and (${companyFilters})` };
+                        id = { filters: `(_id eq \'${id}\') and (${companyFilters}${objectPermissionEditFilters})` };
                     }
                 }
                 else if (!objPm.modifyAllRecords && !objPm.modifyCompanyRecords) {
-                    id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\')` };
+                    id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\'${objectPermissionEditFilters})` };
+                } else if (objectPermissionEditFilters) {
+                    if (_.isString(id)) {
+                        id = { filters: `(_id eq \'${id}\') and (${objectPermissionEditFilters})` }
+                    }
+                    else if (_.isObject(id)) {
+                        if (id.filters && !_.isString(id.filters)) {
+                            id.filters = formatFiltersToODataQuery(id.filters);
+                        }
+                        id.filters = id.filters ? `(${id.filters}) and (${objectPermissionEditFilters})` : `(${objectPermissionEditFilters})`;
+                    }
                 }
                 args[args.length - 2] = id;
             }

@@ -71,13 +71,13 @@ export const getFieldsByType = (doc, type: string, dataType?: string) => {
             fields.push({ name: 'formula_blank_value', required: false });
             fields.push({ name: 'summary_object', required: true });
             fields.push({ name: 'summary_type', required: true });
-            fields.push({ name: 'summary_filters', required: true });
+            fields.push({ name: 'summary_filters', required: false });
             if (doc.summary_type != 'count') {
                 fields.push({ name: 'summary_field', required: true });
             }
-            fields.push({ name: 'data_type', required: true });
-            fields.push({ name: 'precision', required: false });
-            fields.push({ name: 'scale', required: false });
+            fields.push({ name: 'data_type', required: false });
+            fields.push({ name: 'precision', required: true });
+            fields.push({ name: 'scale', required: true });
             fields.push({ name: 'filters' });
             fields.push({ name: 'filters.$' });
             fields.push({ name: 'filters.$.field' });
