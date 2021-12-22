@@ -3,6 +3,7 @@ label: Permission Set
 icon: groups
 hidden: false
 enable_inline_edit: false
+version: 2
 fields:
   name:
     label: Name

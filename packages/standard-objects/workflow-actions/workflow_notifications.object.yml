@@ -3,6 +3,7 @@ label: Workflow Notification
 icon: quick_text
 hidden: true
 enable_inline_edit: false
+version: 2
 fields:
   name:
     type: text
