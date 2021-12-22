@@ -9,6 +9,7 @@
     "/plugin.config.yml",
     "/src",
     "/lib",
+    "/views",
     "/webapp/src/i18n",
     "/webapp/build",
     "package.service.js"
