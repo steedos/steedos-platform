@@ -96,13 +96,20 @@ fields:
     label: 回调 URL
     help: 
     description: 
+  oauth2_home_url:
+    label: 应用首页
+  oauth2_logo:
+    label: 应用 Logo
+  oauth2_client_secret:
+    label: 应用密钥
+    help: 请妥善保管
   oauth2_scopes:
     label: 范围
     help: 
     options:
       - label: 允许访问您的唯一标志符 (openid)
         value: openid
-      - label: '访问基本信息 (id, profile, email, address, phone)'
+      - label: '访问基本信息 (id, email, address, phone, locale)'
         value: profile
       - label: 完全访问权限 (full)
         value: full

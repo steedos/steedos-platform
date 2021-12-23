@@ -15,6 +15,11 @@ import { URL } from 'url';
 import * as bodyParser from 'body-parser';
 import { sendMail, sendSMS} from './core';
 
+import oauth2Consent from './oauth2/consent';
+import oauth2Login from './oauth2/login';
+import oauth2Logout from './oauth2/logout';
+export { hydraAdmin } from './oauth2/config';
+
 declare var WebApp;
 
 const config = getSteedosConfig();
@@ -153,6 +158,10 @@ export function init(context){
   }
   getAccountsRouter(context).then( (accountsRouter) => {
     context.app.use("/accounts", accountsRouter);
+
+    context.app.use("/oauth2/consent", userLoader(accountsServer), oauth2Consent);
+    context.app.use("/oauth2/login", userLoader(accountsServer), oauth2Login);
+    context.app.use("/oauth2/logout", oauth2Logout);
     // if (typeof WebApp !== 'undefined'){
     //   const app = express();
     //   app.use("/accounts", bodyParser.urlencoded({ extended: false }), bodyParser.json(), accountsRouter)
