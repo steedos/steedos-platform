@@ -36,7 +36,9 @@ export enum SteedosMetadataTypeInfoKeys {
     Query = "Query",
     Chart = "Chart",
     Page = "Page",
-    Tab = "Tab"
+    Tab = "Tab",
+    RestrictionRule = "RestrictionRule",
+    ShareRule = "ShareRule"
 }
 
 const loadType = function (filePath){

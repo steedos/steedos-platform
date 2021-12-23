@@ -39,7 +39,7 @@ export const isExpression = function (func) {
     return false;
 };
 
-export const parseSingleExpression = function (func, formData, dataPath, global) {
+export const parseSingleExpression = function (func, formData, dataPath, global, userSession = {}) {
     var error, funcBody, parent, parentPath, str;
 
     if (formData === void 0) {
@@ -49,7 +49,7 @@ export const parseSingleExpression = function (func, formData, dataPath, global)
     parent = getValueByPath(formData, parentPath) || {};
     if (typeof func === 'string') {
         funcBody = func.substring(2, func.length - 2);
-        str = '\n    return ' + funcBody.replace(/\bformData\b/g, JSON.stringify(formData).replace(/\bglobal\b/g, globalTag)).replace(/\bglobal\b/g, JSON.stringify(global)).replace(new RegExp('\\b' + globalTag + '\\b', 'g'), 'global').replace(/rootValue/g, JSON.stringify(parent));
+        str = `\n  var $user=${JSON.stringify(userSession)};   return ` + funcBody.replace(/\bformData\b/g, JSON.stringify(formData).replace(/\bglobal\b/g, globalTag)).replace(/\bglobal\b/g, JSON.stringify(global)).replace(new RegExp('\\b' + globalTag + '\\b', 'g'), 'global').replace(/rootValue/g, JSON.stringify(parent));
         try {
             return Function(str)();
         } catch (_error) {

@@ -73,27 +73,12 @@ module.exports = {
                 return await ctx.broker.call('metadata.filter', {key: this.getMatadataCacherKey("*")}, {meta: ctx.meta})
             }
         },
-        // filter: {
-        //     async handler(ctx){
-        //         let {spaceId, profileApiName} = ctx.params;
-        //         const layouts = await ctx.broker.call('metadata.filter', {key: cacherKey("*", "*")}, {meta: ctx.meta});
-        //         const configs = _.filter(layouts, function(item){
-        //             const layout = item.metadata;
-        //             let rev = true;
-        //             if(objectApiName){
-        //                 rev = layout.object_name === objectApiName;
-        //             }
-        //             if(rev && spaceId){
-        //                 rev = (layout.space === spaceId || !_.has(layout, 'space'));
-        //             }
-        //             if(rev && profileApiName){
-        //                 rev = _.includes(layout.profiles, profileApiName);
-        //             }
-        //             return rev;
-        //         })
-        //         return configs;
-        //     }
-        // },
+        filter: {
+            async handler(ctx) {
+                let { pattern } = ctx.params;
+                return await ctx.broker.call('metadata.filter', { key: this.getMatadataCacherKey(pattern) }, { meta: ctx.meta })
+            }
+        },
         add: {
             async handler(ctx) {
                 let config = ctx.params.data;

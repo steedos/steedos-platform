@@ -151,6 +151,8 @@ export function getRetrievePackageInfo(option) {
                     requestJson[TypeInfoKeys.Chart] = ['*']
                     requestJson[TypeInfoKeys.Page] = ['*']
                     requestJson[TypeInfoKeys.Tab] = ['*']
+                    requestJson[TypeInfoKeys.ShareRule] = ['*']
+                    requestJson[TypeInfoKeys.RestrictionRule] = ['*']
                 }
     
             }

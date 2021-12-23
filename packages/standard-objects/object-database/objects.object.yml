@@ -354,6 +354,8 @@ relatedList:
   - object_workflows
   - process_definition
   - object_validation_rules
+  - restriction_rules
+  - share_rules
 list_views:
   all:
     columns:

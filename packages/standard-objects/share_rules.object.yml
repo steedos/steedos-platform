@@ -1,0 +1,69 @@
+name: share_rules
+label: Share Rules
+version: 2
+fields:
+  name:
+    label: Api Name
+    type: text
+    sort_no: 110
+    required: true
+  object_name:
+    type: lookup
+    label: Object
+    reference_to: objects
+    write_requires_master_read: true
+    reference_to_field: name
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        return Steedos.getObjectsOptions();
+      }
+    sort_no: 120
+  active:
+    label: 启用
+    type: boolean
+    sort_no: 130
+  entry_criteria:
+    label: 指定条目条件
+    inlineHelpText: "满足此条件的时，使用该记录过滤器。语法为函数表达式, 例如: {{$user.profile !='user'}}"
+    type: textarea
+    is_wide: true
+    sort_no: 140
+    required: true
+  record_filter:
+    label: 记录过滤器
+    type: textarea
+    is_wide: true
+    sort_no: 150
+    required: true
+  description:
+    label: 描述
+    type: textarea
+    is_wide: true
+    sort_no: 160
+list_views:
+  all:
+    label: All Roles
+    filter_scope: space
+    columns:
+      - name
+      - object_name
+      - active
+      - entry_criteria
+      - record_filter
+      - description
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

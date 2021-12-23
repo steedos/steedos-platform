@@ -1,0 +1,13 @@
+metadataName: ShareRule
+isAddressable: true
+isSourceTracked: true
+tableName: share_rules
+ext: shareRule
+hasContent: false
+defaultDirectory: shareRules
+nameForMsgs: ShareRule
+nameForMsgsPlural: shareRules
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

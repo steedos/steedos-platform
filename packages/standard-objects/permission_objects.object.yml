@@ -283,18 +283,6 @@ fields:
             }
     name: unrelated_objects
     filterable: true
-  read_filters:
-    type: textarea
-    is_wide: true
-    label: 允许查看
-    inlineHelpText: '允许查看满足刷选条件的记录。语法为函数表达式, 例如{{["_id", "=", "xxx"]}}'
-    group: '权限筛选条件'
-  edit_filters:
-    type: textarea
-    is_wide: true
-    label: 允许编辑
-    inlineHelpText: '允许编辑(查看、编辑、删除)满刷选条件的记录。语法为函数表达式, 例如{{["_id", "=", "xxx"]}}'
-    group: '权限筛选条件'
   field_permissions:
     type: grid
     label: 字段权限

@@ -12,6 +12,8 @@ const triggers = require('@steedos/service-metadata-triggers');
 const queriesService = require('./lib/queriesService');
 const chartsService = require('./lib/chartsService');
 const pagesService = require('./lib/pagesService');
+const shareRulesService = require('./lib/shareRulesService');
+const restrictionRulesService = require('./lib/restrictionRulesService');
 
 module.exports = {
 	name: "metadata-server",
@@ -32,6 +34,8 @@ module.exports = {
     this.broker.createService(queriesService);
     this.broker.createService(chartsService);
     this.broker.createService(pagesService);
+    this.broker.createService(shareRulesService);
+    this.broker.createService(restrictionRulesService);
   },
 
   async started() {

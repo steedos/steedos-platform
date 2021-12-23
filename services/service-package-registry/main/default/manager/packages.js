@@ -146,8 +146,41 @@ const getPackageVersions = async (packageName, options)=>{
 	return versions;
 }
 
+const scanPackageMetadatas = async (packagePath) => {
+    const packageMetadatas = [];
+    const result = await metadataApi.loadFileToJson(packagePath, {
+        CustomApplication: '*',
+        CustomPermissionset: '*',
+        CustomProfile: '*',
+        CustomObject: '*',
+        Layout: '*',
+        CustomReport: '*',
+        Workflow: '*',
+        Flow: '*',
+        ApprovalProcess: '*',
+        Role: '*',
+        FlowRole: '*',
+        Query: '*',
+        Chart: '*',
+        Page: '*',
+        Tab: '*',
+    });
+
+    _.each(result, (metadataItems, metadataType) => {
+        _.each(metadataItems, (metadata, apiName) => {
+            packageMetadatas.push({
+                label: metadata.label || metadata.name,
+                type: metadataType,
+                api_name: apiName
+            })
+        })
+    })
+    return packageMetadatas;
+}
+
 module.exports = {
     maintainSystemFiles,
     getAllPackages,
-    getPackageVersions
+    getPackageVersions,
+    scanPackageMetadatas
 }
