@@ -558,6 +558,8 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+relatedList:
+  - permission_fields
 form:
   initialValues: !!js/function |
     function(){

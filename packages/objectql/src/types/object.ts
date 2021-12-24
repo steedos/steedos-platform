@@ -17,6 +17,7 @@ import { getObjectLayouts } from "./object_layouts";
 import { sortBy, forEach } from 'lodash';
 import { ShareRules } from './shareRule';
 import { RestrictionRule } from './restrictionRule';
+import { FieldPermission } from './field_permission';
 
 const clone = require('clone')
 
@@ -646,11 +647,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('not find user permission');
         }
 
+        const rolesFieldsPermission = await FieldPermission.getObjectFieldsPermissionGroupRole(this.name);
+
         roles.forEach((role) => {
-            let rolePermission = objectRolesPermission[role]
+            let rolePermission = objectRolesPermission[role];
             if (rolePermission) {
+                let roleFieldsPermission = rolesFieldsPermission[role];
                 _.each(userObjectPermission, (v, k) => {
-                    let _v = rolePermission[k]
+                    let _v = rolePermission[k];
+                    if (k === 'field_permissions') {
+                        _v = roleFieldsPermission
+                    }
                     if (_.isBoolean(v)) {
                         if (v === false && _v === true) {
                             userObjectPermission[k] = _v

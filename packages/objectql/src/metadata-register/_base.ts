@@ -31,7 +31,7 @@ export class RegisterBase{
         if (_.isObject(metadataApiName)) {
             metadataApiName = this.getApiName(metadataApiNameOrConfig);
         }
-        const res = await broker.call(`${this.serviceName}.delete`, {fullName: metadataApiName});
+        const res = await broker.call(`${this.serviceName}.delete`, { fullName: metadataApiName, metadataApiName: metadataApiName });
         return res;
     }
 

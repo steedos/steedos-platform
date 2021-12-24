@@ -4,6 +4,7 @@ import { addAppConfig, loadObjectLayoutMetadata, SteedosDataSourceType } from '.
 import { addTabConfig } from './tabs';
 import { registerRestrictionRules } from '../metadata-register/restrictionRules';
 import { registerShareRules } from '../metadata-register/shareRules';
+import { registerPermissionFields } from '../metadata-register/permissionFields';
 import { getSteedosSchema } from '../types/schema';
 
 declare var Creator: any;
@@ -87,5 +88,18 @@ export const preloadDBShareRules = async function (datasource: SteedosDataSource
 
     for await (const element of records) {
         await registerShareRules.register(schema.broker, `~database-${tableName}`, element);
+    }
+}
+
+export const preloadDBPermissionFields = async function (datasource: SteedosDataSourceType) {
+    const schema = getSteedosSchema();
+    const tableName = "permission_fields";
+    if (datasource.name === 'meteor') {
+        Creator.Collections[tableName] = Creator.createCollection({ name: tableName });
+    }
+    let records: any = await datasource.find(tableName, {});
+
+    for await (const element of records) {
+        await registerPermissionFields.register(schema.broker, `~database-${tableName}`, element);
     }
 }

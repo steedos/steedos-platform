@@ -1,9 +1,10 @@
 name: restriction_rules
-label: Restriction rules
+label: 限制规则
+icon: filter_criteria
 version: 2
 fields:
   name:
-    label: Api Name
+    label: Api 名称
     type: text
     sort_no: 110
     required: true
@@ -41,6 +42,12 @@ fields:
     type: textarea
     is_wide: true
     sort_no: 160
+  is_system:
+    type: boolean
+    label: 系统
+    omit: true
+    hidden: true
+    disabled: true
 list_views:
   all:
     label: All Roles
@@ -52,6 +59,7 @@ list_views:
       - entry_criteria
       - record_filter
       - description
+      - is_system
 permission_set:
   user:
     allowCreate: true

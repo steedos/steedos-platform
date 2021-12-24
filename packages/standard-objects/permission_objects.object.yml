@@ -283,38 +283,6 @@ fields:
             }
     name: unrelated_objects
     filterable: true
-  field_permissions:
-    type: grid
-    label: 字段权限
-    is_wide: true
-  field_permissions.$:
-    type: object
-  field_permissions.$.field:
-    type: lookup
-    label: 字段
-    depend_on:
-      - object_name
-    defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-        var object_name = null;
-        if(values && values.object_name){
-          object_name = values.object_name;
-          if(_.isObject(object_name)){
-            object_name = object_name.name
-          }
-        }
-        var options = Creator.getObjectLookupFieldOptions(object_name, false, true, false);
-        return _.filter(options, function(option){
-          return ['created','created_by','modified','modified_by'].indexOf(option.value) < 0
-        })
-      }
-  field_permissions.$.read:
-    type: boolean
-    label: 允许查看
-  field_permissions.$.edit:
-    label: 允许编辑
-    type: boolean
   is_system:
     type: boolean
     label: 系统
@@ -377,6 +345,16 @@ actions:
   customize:
     label: Customize
     on: record
+  resetFieldPermissions:
+    label: 重置字段权限
+    on: record
+relatedList:
+  - objectName: permission_fields
+    columns:
+      - field
+      - editable
+      - readable
+      - is_system
 permission_set:
   user:
     allowCreate: false

@@ -1,0 +1,149 @@
+name: permission_fields
+label: 字段权限
+icon: omni_supervisor
+version: 2
+hidden: true
+fields:
+  name:
+    label: Api 名称
+    type: text
+  permission_set_id:
+    label: 权限集
+    type: lookup
+    required: true
+    reference_to: permission_set
+    index: true
+    name: permission_set_id
+    filterable: true
+    reference_to_field: name
+  permission_object:
+    label: 对象权限
+    type: master_detail
+    required: true
+    reference_to: permission_objects
+    index: true
+    name: permission_object
+    filterable: true
+  object_name:
+    label: 对象
+    type: lookup
+    reference_to: objects
+    write_requires_master_read: true
+    reference_to_field: name
+    index: true
+    required: true
+    create: false
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, k) {
+                if (!o.hidden) {
+                  return _options.push({
+                    label: o.label,
+                    value: k,
+                    icon: o.icon
+                  });
+                }
+              });
+
+              return _options;
+            }
+    name: object_name
+    filterable: true
+  field:
+    type: lookup
+    label: 字段
+    reference_to: object_fields
+    reference_to_field: name
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        if(values && values.object_name){
+          if(values._grid_row_id){
+            var selected = _.find(values.fields, function(item){return item._id==values._grid_row_id});
+            var selectedAll = _.pluck(values.fields, 'field_name');
+            if(selected){
+              selectedAll = _.difference(selectedAll, [selected.field_name]);
+            }
+            if(selectedAll && selectedAll.length > 0){
+              return [['object', '=', values.object_name], ['name', '!=', selectedAll]]
+            }
+          }
+          return ['object', '=', values.object_name]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
+  readable:
+    type: boolean
+    label: 允许查看
+  editable:
+    label: 允许编辑
+    type: boolean
+  is_system:
+    type: boolean
+    label: 系统
+    omit: true
+    hidden: true
+    disabled: true
+paging:
+  enabled: false
+actions:
+  standard_new:
+    label: standard_new
+    visible: !!js/function |
+      function(){
+        return false;
+      }
+list_views:
+  customize:
+    columns:
+      - permission_set_id
+      - field
+      - readable
+      - editable
+      - is_system
+    label: Customize
+    filters:
+      - ["is_system","<>",true]
+    filter_scope: space
+  system:
+    columns:
+      - permission_set_id
+      - field
+      - readable
+      - editable
+      - is_system
+    label: System
+    filters:
+      - ["is_system","=",true]
+    filter_scope: space
+  all:
+    label: All
+    columns:
+      - permission_set_id
+      - field
+      - readable
+      - editable
+      - is_system
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

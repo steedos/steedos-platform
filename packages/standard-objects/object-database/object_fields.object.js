@@ -100,7 +100,7 @@ function _syncToObject(doc, event) {
       // Creator.loadObjects(_doc, _doc.name);
     }
   }
-  console.log('reloadObject', doc.object);
+  // console.log('reloadObject', doc.object);
   objectCore.triggerReloadObject(doc.object, 'field', doc, event);
 };
 
