@@ -84,5 +84,29 @@ module.exports = {
                 }
             }
         }
+    },
+    afterDelete: async function () {
+        const { object_name, previousDoc } = this;
+        const object = objectql.getObject(object_name);
+        const objectConfig = object.toConfig();
+        const fields = objectConfig.fields;
+        const fieldsName = _.keys(previousDoc);
+
+        _.each(fieldsName, function (fieldName) {
+            const fieldProps = fields[fieldName];
+            const indexOfType = fieldProps && ['file','image'].indexOf(fieldProps.type);
+            if( indexOfType > -1 && previousDoc[fieldName] && previousDoc[fieldName].length ){
+                const collection = [cfs.files,cfs.images][indexOfType];
+                let ids = previousDoc[fieldName]
+                if(typeof ids === 'string'){
+                    ids = [ids]
+                }
+                _.each(ids,function (id){
+                    collection.remove({
+                        "_id": id
+                    });
+                })
+            }
+        });
     }
 }
