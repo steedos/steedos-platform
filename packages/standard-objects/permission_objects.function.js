@@ -31,11 +31,12 @@ module.exports = {
       const record = await objectql.getObject('permission_objects').findOne(recordId)
       const permissionSet = await objectql.getObject('permission_set').findOne(record.permission_set_id)
       //获取对象所有字段
-      const fields = await objectql.getObject('object_fields').find({ filters: [['object', '=', record.object_name]] })
+      const fields = await objectql.getObject('object_fields').find({ filters: [['object', '=', record.object_name]] });
+      const now = new Date();
       for (const field of fields) {
         const count = await objectql.getObject('permission_fields').count({ filters: [['permission_object', '=', recordId], ['object_name', '=', record.object_name], ['field', '=', field.name]] });
         if (count == 0) {
-          await objectql.getObject('permission_fields').insert({
+          await objectql.getObject('permission_fields').directInsert({
             name: `${permissionSet.name}.${record.object_name}.${field.name}`,
             permission_set_id: permissionSet.name,
             permission_object: recordId,
@@ -43,8 +44,15 @@ module.exports = {
             field: field.name,
             editable: getFieldDefaultEditable(field),
             readable: getFieldDefaultReadable(field),
-            space: userSession.spaceId,
-          }, userSession)
+            owner: userSession.userId,
+            space: userSession.spaceId, 
+            created: now,
+            modified: now,
+            created_by: userSession.userId,
+            modified_by: userSession.userId,
+            company_id: userSession.company_id,
+            company_ids: userSession.company_ids
+          })
         }
       }
       //删除已删除、卸载的字段权限

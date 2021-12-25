@@ -7,6 +7,7 @@ fields:
   name:
     label: Api 名称
     type: text
+    omit: true
   permission_set_id:
     label: 权限集
     type: lookup
@@ -16,6 +17,7 @@ fields:
     name: permission_set_id
     filterable: true
     reference_to_field: name
+    omit: true
   permission_object:
     label: 对象权限
     type: master_detail
@@ -24,7 +26,9 @@ fields:
     index: true
     name: permission_object
     filterable: true
+    hidden: true
   object_name:
+    omit: true
     label: 对象
     type: lookup
     reference_to: objects
@@ -54,6 +58,7 @@ fields:
     name: object_name
     filterable: true
   field:
+    omit: true
     type: lookup
     label: 字段
     reference_to: object_fields
@@ -141,7 +146,7 @@ permission_set:
     modifyAllRecords: false
     viewAllRecords: false
   admin:
-    allowCreate: true
+    allowCreate: false
     allowDelete: true
     allowEdit: true
     allowRead: true
