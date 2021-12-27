@@ -74,6 +74,18 @@
 						<a data-downloadurl="{{getUrl this._id}}" class="mouse-hover" name="ins_attach_office_online_preview" id="{{this._id}}" data-name="{{this.name}}">{{_ "workflow_attachment_office_online_preview"}}</a>
 					{{/if}}
 					<a name="ins_attach_version" class="mouse-hover" data-parent="{{this.metadata.parent}}">{{_ "workflow_attachment_versions"}}</a>
+					{{#if enabled_add_attachment this}}
+						<a class="mouse-hover">
+							<div class="ins-upload">
+								{{#if this.metadata.main}}
+									<input type="file" name="file" class="ins-file-version-input" id="ins_upload_main_attach_version">
+								{{else}}
+									<input type="file" name="file" class="ins-file-version-input" id="ins_upload_normal_attach_version">
+								{{/if}}
+								<span>上传新版本</span>
+							</div>
+						</a>
+					{{/if}}
 					{{#if this.metadata.locked_by}}
 						<span style="margin-left: 10px;">{{locked_info this.metadata.locked_by_name}}</span>
 					{{/if}}

@@ -193,6 +193,56 @@ Template.instance_attachment.helpers({
 		return false;
 	},
 
+	enabled_add_attachment: function(current) {
+		var ins = WorkflowManager.getInstance();
+		if (!ins)
+			return false
+
+		// 已经结束的单子不能改附件
+		if (ins.state == "completed") {
+			return false
+		}
+
+		if (!current)
+			return false
+
+		// 分发后的 正文、附件，不可以编辑/删除，也不让上传新的正文/附件版本
+		if (ins.distribute_from_instances && ins.distribute_from_instances.includes(current.metadata.instance))
+			return false
+
+		if (current && current.metadata && current.metadata.locked_by)
+			return false
+
+		if (Session.get("box") == "draft" || Session.get("box") == "inbox") {
+			if (InstanceManager.isCC(ins)) {
+				var step = InstanceManager.getCCStep();
+				// 如果是正文 则判断是否有编辑权限
+				if (current.metadata.main == true) {
+					if (step && step.can_edit_main_attach == true)
+						return true
+				} else {
+					// 如果是附件 则判断是否有编辑权限
+					if (step && (step.can_edit_normal_attach == true || step.can_edit_normal_attach == undefined))
+						return true
+				}
+			} else {
+				var current_step = InstanceManager.getCurrentStep();
+				// 如果是正文 则判断是否有编辑权限
+				if (current.metadata.main == true) {
+					if (current_step && current_step.can_edit_main_attach == true)
+						return true
+				} else {
+					// 如果是附件 则判断是否有编辑权限
+					if (current_step && (current_step.can_edit_normal_attach == true || current_step.can_edit_normal_attach == undefined))
+						return true
+				}
+			}
+
+		}
+
+		return false
+	},
+
 	canOfficeOnlinePreview: function(filename) {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
@@ -233,6 +283,29 @@ Template.instance_attachment.helpers({
 });
 
 Template.instance_attachment.events({
+
+	'change .ins-file-version-input': function(event, template) {
+		element = $("#" + event.currentTarget.id)
+
+		if (event.target.files.length > 0) {
+			if (!InstanceEvent.run(element, "instance-before-upload")) {
+				$("#ins_upload_main_attach").val('')
+				return
+			}
+		}
+
+		Session.set('attach_parent_id', this.metadata.parent || this._id);
+
+		if (this.metadata.main == true) {
+			InstanceManager.uploadAttach(event.target.files, true, true);
+		} else {
+			InstanceManager.uploadAttach(event.target.files, true, false);
+		}
+
+		$(".ins-file-version-input").val('')
+		Session.set('attach_parent_id', '');
+	},
+
 	"click [name='ins_attach_version']": function(event, template) {
 		Session.set("attach_parent_id", event.target.dataset.parent);
 		Modal.show('ins_attach_version_modal');
