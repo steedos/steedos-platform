@@ -25,8 +25,6 @@ services:
   redis:
     image: redis:6.2.4
     restart: always
-    volumes:
-      - "./docker-volumes/redis/data:/data"
     command: ["/bin/sh","-c", "redis-server --save \"\" --appendonly no"]
     ports:
       - "6389:6379"
