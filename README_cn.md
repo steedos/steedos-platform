@@ -10,10 +10,10 @@
 </h1>
 
 <p align="center">
-<a href="https://github.com/steedos/steedos-platform/blob/1.22/README.md">English</a>
-<a href="https://www.steedos.com/help/"> · 文档</a>
+<a href="./README.md">English</a>
+<a href="https://www.steedos.com/docs/"> · 文档</a>
 <a href="https://github.com/steedos/steedos-platform/issues/"> · 报告错误</a>
-<a href="https://github.com/steedos/steedos-platform/discussions"> · 讨论</a>
+<a href="https://community.steedos.cn"> · 社区</a>
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
