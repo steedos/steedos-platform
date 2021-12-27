@@ -1,7 +1,0 @@
-name: subtotal
-data_type: currency
-formula: 'ROUND(unit_price * quantity,2)'
-inlineHelpText: 行项目的销售价格与数量相乘。
-label: 小计
-sort_no: 120
-type: formula

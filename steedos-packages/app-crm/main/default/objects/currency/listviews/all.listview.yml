@@ -1,7 +1,0 @@
-name: all
-columns:
-  - name
-  - shorthand
-  - exchange_rate
-label: 所有货币
-shared: true

@@ -1,5 +1,0 @@
-name: list_price
-inlineHelpText: 价格手册中的产品价格（包含币种）。只读。
-label: 价目表价格
-sort_no: 190
-type: currency

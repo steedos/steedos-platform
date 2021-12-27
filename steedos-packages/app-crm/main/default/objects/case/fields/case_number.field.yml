@@ -1,9 +1,0 @@
-name: case_number
-formula: '{YYYY}{MM}{0000}'
-index: true
-is_name: true
-label: 个案编号
-readonly: true
-searchable: true
-sort_no: 120
-type: autonumber

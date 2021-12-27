@@ -1,8 +1,0 @@
-name: unreceived_amount
-label: 未收款总金额
-type: formula
-scale: 2
-sortable: true
-formula: 'IF(ISPICKVAL(bop, "付款合同"),0,amount - received_amount)'
-data_type: currency
-sort_no: 300

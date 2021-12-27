@@ -1,9 +1,0 @@
-name: all
-columns:
-  - product_id
-  - quantity
-  - unit_price
-  - service_date
-filter_scope: space
-label: 全部业务机会产品
-shared: true

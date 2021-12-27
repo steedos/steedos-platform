@@ -1,6 +1,0 @@
-name: modified_by
-label: 修改人
-sortable: true
-type: lookup
-reference_to: users
-sort_no: 180

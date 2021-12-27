@@ -1,6 +1,0 @@
-name: shipping_name
-group: 地址信息
-inlineHelpText: 报价行项目的收货的实体（如个人或公司）名称。
-label: 收货人姓名
-sort_no: 280
-type: text

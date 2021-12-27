@@ -1,6 +1,0 @@
-name: product_id
-inlineHelpText: 价格手册中所列的行项目产品的名称。
-label: 产品
-reference_to: product
-sort_no: 100
-type: lookup

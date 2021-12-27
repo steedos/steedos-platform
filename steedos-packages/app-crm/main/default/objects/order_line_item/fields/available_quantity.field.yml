@@ -1,7 +1,0 @@
-name: available_quantity
-hidden: true
-inlineHelpText: 可用于减少的单位数量。当启用减单时，订单产品的可用数量将更新，以反映出相关减单产品的数量。值必须始终大于或等于 0。（只读）
-label: 可用数量
-readonly: true
-sort_no: 210
-type: number

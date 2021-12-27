@@ -1,5 +1,0 @@
-name: agreement_term
-label: 主协议期限（月）
-required: true
-sort_no: 150
-type: number

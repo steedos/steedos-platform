@@ -1,9 +1,0 @@
-name: order_number
-formula: '{YYYY}{MM}{0000}'
-index: true
-is_name: true
-label: 订单编号
-readonly: true
-searchable: true
-sort_no: 100
-type: autonumber

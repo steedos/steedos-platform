@@ -1,6 +1,0 @@
-name: product_id
-label: 产品
-reference_to: product
-required: true
-sort_no: 110
-type: lookup

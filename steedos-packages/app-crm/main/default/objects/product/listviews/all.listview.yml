@@ -1,9 +1,0 @@
-name: all
-columns:
-  - name
-  - product_code
-  - product_currency
-  - description
-filter_scope: space
-label: 所有产品
-shared: true

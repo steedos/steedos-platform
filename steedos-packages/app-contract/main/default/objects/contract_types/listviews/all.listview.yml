@@ -1,6 +1,0 @@
-name: all
-label: 全部
-filter_scope: space
-columns:
-  - name
-  - remarks

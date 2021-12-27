@@ -1,6 +1,0 @@
-name: first_responded_date
-inlineHelpText: 市场活动成员首次响应的日期。（只读）
-label: 首次响应日期
-readonly: true
-sort_no: 230
-type: date

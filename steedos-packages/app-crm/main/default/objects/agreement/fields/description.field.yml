@@ -1,6 +1,0 @@
-name: description
-group: 备注信息
-label: 备注
-rows: 3
-sort_no: 220
-type: textarea

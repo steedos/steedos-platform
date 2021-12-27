@@ -1,6 +1,0 @@
-name: expected_revenue
-group: 计划
-inlineHelpText: 预期市场活动产生的收入金额。
-label: 市场活动中的预期收入
-sort_no: 230
-type: currency

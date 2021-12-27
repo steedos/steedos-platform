@@ -1,8 +1,0 @@
-name: unpaid_amount
-label: 未支付付款总金额
-type: formula
-scale: 2
-sortable: true
-formula: 'IF(ISPICKVAL(bop, "收款合同"),0,amount - paid_amount)'
-data_type: currency
-sort_no: 280

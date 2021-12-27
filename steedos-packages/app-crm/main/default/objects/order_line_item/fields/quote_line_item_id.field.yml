@@ -1,7 +1,0 @@
-name: quote_line_item_id
-hidden: true
-inlineHelpText: 与订单产品关联的报价行项目。报价行项目的报价必须与和订单产品的父级订单相关联的报价相匹配。
-label: 报价行项目
-reference_to: quote_line_item
-sort_no: 170
-type: lookup

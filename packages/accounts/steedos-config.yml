@@ -36,7 +36,6 @@ password:
 webservices:
   steedos: http://127.0.0.1:5000/
 plugins:
-  - "@steedos/app-crm"
 -sms:
   qcloud:
     smsqueue_interval: 1000

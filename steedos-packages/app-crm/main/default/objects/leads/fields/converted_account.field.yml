@@ -1,6 +1,0 @@
-name: converted_account
-hidden: true
-label: 已转换的客户
-reference_to: accounts
-sort_no: 380
-type: lookup

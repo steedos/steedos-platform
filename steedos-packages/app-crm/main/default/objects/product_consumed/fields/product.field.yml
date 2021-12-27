@@ -1,8 +1,0 @@
-name: product
-data_type: text
-formula: product_items.product.name
-inlineHelpText: 产品项下对应的产品名。
-label: 产品名
-omit: true
-sort_no: 110
-type: formula

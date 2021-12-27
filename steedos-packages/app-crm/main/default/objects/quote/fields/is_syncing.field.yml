@@ -1,5 +1,0 @@
-name: is_syncing
-inlineHelpText: 报价是否与关联的业务机会同步。(只读)
-label: 正在同步
-sort_no: 130
-type: boolean

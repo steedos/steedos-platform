@@ -1,8 +1,0 @@
-name: inhierarchy_amount_won_opportunities
-hidden: true
-inlineHelpText: >-
-  市场活动层次结构相关赢得客户业务机会的价值金额计算字段。（只读）层次结构中的所有市场活动必须使用相同的币种。对于采用多币种的组织，业务机会价值金额应转换为市场活动币种。如果您的币种与市场活动币种不符，金额将转换成您的币种并显示在括号中。
-label: 层次结构中的赢得客户业务机会金额
-readonly: true
-sort_no: 260
-type: currency

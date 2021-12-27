@@ -1,8 +1,0 @@
-name: addContact
-is_enable: true
-label: 新建联系人
-'on': list
-visible: |-
-  function(){
-          return true
-        }

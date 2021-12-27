@@ -1,7 +1,0 @@
-name: expected_revenue
-data_type: currency
-formula: 'ROUND(amount * (VALUE(TEXT(probability)) * 0.01),2)'
-inlineHelpText: 基于金额和业务机会赢率计算的收入。
-label: 预测收入
-sort_no: 330
-type: formula

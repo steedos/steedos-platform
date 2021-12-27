@@ -1,6 +1,0 @@
-name: fax
-group: 准备用于
-inlineHelpText: 与报价关联的联系人传真号码。如果可用，则在您添加联系人时自动填写。
-label: 传真
-sort_no: 260
-type: text

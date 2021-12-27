@@ -1,5 +1,0 @@
-name: okr_admin
-assigned_apps:
-  - okr
-label: OKR管理员
-type: permission_set

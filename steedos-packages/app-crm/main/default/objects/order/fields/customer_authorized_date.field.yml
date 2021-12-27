@@ -1,5 +1,0 @@
-name: customer_authorized_date
-hidden: true
-label: 客户授权日期
-sort_no: 280
-type: date

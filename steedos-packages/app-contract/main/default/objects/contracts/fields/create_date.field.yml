@@ -1,7 +1,0 @@
-name: create_date
-label: 登记日期
-type: date
-sortable: true
-filterable: true
-defaultValue: '{now}'
-sort_no: 140

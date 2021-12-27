@@ -1,6 +1,0 @@
-name: location
-enable_audit: true
-enable_files: true
-enable_search: true
-icon: location
-label: 位置

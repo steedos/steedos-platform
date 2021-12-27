@@ -1,5 +1,0 @@
-name: quantity_scheduling_enabled
-hidden: true
-label: 已启用数量计划
-sort_no: 200
-type: boolean

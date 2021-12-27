@@ -1,8 +1,0 @@
-name: asset
-enable_events: true
-enable_files: true
-enable_notes: true
-enable_search: true
-enable_workflow: true
-icon: entity
-label: 资产

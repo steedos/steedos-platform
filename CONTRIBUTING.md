@@ -58,7 +58,7 @@ The content of the `setting.json` may like this:
     "email": {
         "from": "Steedos <noreply@message.steedos.com>"
     },
-    "plugins": ["@steedos/app-crm", "@steedos/plugin-enterprise"]
+    "plugins": ["@steedos/plugin-enterprise"]
 }
 ```
 

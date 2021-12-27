@@ -1,6 +1,0 @@
-name: product_items
-label: 产品项
-reference_to: product_items
-required: true
-sort_no: 120
-type: master_detail

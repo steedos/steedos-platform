@@ -1,6 +1,0 @@
-name: product_items
-enable_audit: true
-enable_files: true
-enable_search: true
-icon: poll
-label: 产品项

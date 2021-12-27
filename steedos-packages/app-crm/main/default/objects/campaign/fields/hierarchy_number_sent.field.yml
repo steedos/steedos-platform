@@ -1,7 +1,0 @@
-name: hierarchy_number_sent
-hidden: true
-inlineHelpText: 为市场活动层次结构作为目标的个体总数计算的字段，例如已发送电子邮件的总数。（只读）
-label: 层次结构中的发送次数
-readonly: true
-sort_no: 270
-type: number

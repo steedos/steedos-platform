@@ -1,8 +1,0 @@
-name: all
-columns:
-  - field: item_transaction_number
-  - field: transaction_type
-  - field: quantity
-    width: 100
-label: 所有产品项交易
-shared: true

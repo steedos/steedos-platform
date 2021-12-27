@@ -1,5 +1,0 @@
-name: installed_date
-label: 安装日期
-searchable: true
-sort_no: 190
-type: date

@@ -1,6 +1,0 @@
-name: ship_to_contact_id
-hidden: true
-label: 收货方联系人
-reference_to: contacts
-sort_no: 320
-type: lookup

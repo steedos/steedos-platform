@@ -1,5 +1,0 @@
-name: total_amount
-hidden: true
-label: 订单金额
-sort_no: 390
-type: currency

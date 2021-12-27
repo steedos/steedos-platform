@@ -1,8 +1,0 @@
-name: total_price
-data_type: currency
-formula: 'ROUND(unit_price * quantity,2)'
-inlineHelpText: 业务机会产品所有产品金额的总计。
-label: 总价
-scale: 2
-sort_no: 180
-type: formula

@@ -1,6 +1,0 @@
-name: quote_line_item
-enable_audit: true
-enable_files: true
-enable_search: true
-icon: quotes
-label: 报价行条目
