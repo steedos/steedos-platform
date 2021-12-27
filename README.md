@@ -9,10 +9,10 @@
 </h1>
 
 <p align="center">
-<a href="https://github.com/steedos/steedos-platform/blob/1.22/README_cn.md">中文</a>
-<a href="http://www.steedos.org/docs/overview"> · Docs</a>
+<a href="./README_cn.md">中文</a>
+<a href="https://www.steedos.com/docs> · Docs</a>
 <a href="https://github.com/steedos/steedos-platform/issues/"> · Report a bug</a>
-<a href="https://github.com/steedos/steedos-platform/discussions"> · Discussions</a>
+<a href="https://community.steedos.cn"> · Discussions</a>
 </p>
 
 <p align="center">
