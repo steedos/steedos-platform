@@ -1,0 +1,31 @@
+image:
+  file: .gitpod.Dockerfile
+
+# List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 5000
+    onOpen: open-preview
+    visibility: public
+# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - init: |
+      mkdir -p /workspace/mongodb/data/db
+    command: |
+      mongod --replSet rs0 --dbpath /workspace/mongodb/data/db
+  - command: |
+      gp await-port 27017
+      mongo steedos --eval "rs.initiate()"
+  - command: |
+      redis-server --save ""
+  - init: |
+      yarn install
+      yarn bootstrap
+    command: |
+      gp await-port 27017
+      gp await-port 6379
+      export ROOT_URL=$(gp url 5000)
+      yarn start
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
