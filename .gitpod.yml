@@ -20,6 +20,7 @@ tasks:
   - init: |
       yarn install
       yarn bootstrap
+      yarn compile
     command: |
       gp await-port 27017
       gp await-port 6379
