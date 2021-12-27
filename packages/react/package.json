@@ -1,6 +1,6 @@
 {
   "name": "@steedos/react",
-  "version": "2.1.59",
+  "version": "2.1.60",
   "private": false,
   "files": [
     "package.json",
@@ -14,7 +14,7 @@
     "@material-ui/core": "^4.4.0",
     "@material-ui/icons": "^4.2.1",
     "@salesforce-ux/icons": "^9.38.0",
-    "@steedos/design-system-react": "2.1.59",
+    "@steedos/design-system-react": "2.1.60",
     "dotenv-flow": "^3.1.0",
     "immer": "^6.0.9",
     "marked": "^0.8.0",
@@ -38,7 +38,7 @@
     "@devexpress/dx-react-grid": "^2.0.4",
     "@devexpress/dx-react-grid-material-ui": "^2.0.4",
     "@salesforce-ux/design-system": "^2.11.0",
-    "@steedos/filters": "2.1.59",
+    "@steedos/filters": "2.1.60",
     "@storybook/addon-actions": "^5.3.0-alpha.22",
     "@storybook/addon-cssresources": "^5.3.0-alpha.22",
     "@storybook/addon-links": "^5.3.0-alpha.22",
