@@ -17,7 +17,7 @@
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是Salesforce低代码平台的开源替代方案，助力使用可视化方式构建管理软件后端业务逻辑，包括数据建模、权限控制、流程审批、统计分析、应用集成，并可以编写“高代码”实现复杂的业务逻辑。
+  华炎魔方是Salesforce低代码平台的开源替代方案，助力企业使用“低代码”技术，快速构建管理软件后端，包括数据建模、权限控制、流程审批、统计分析、应用集成，并可以编写“高代码”实现高级业务逻辑。
 </p>
 
 <h3 align="center">
@@ -36,15 +36,23 @@
 
 元数据是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
 
-元数据可以导入到华炎魔方中，可以在可视化界面中进行修改，也可以通过Steedos Metadata API进行操作。
+元数据可以在可视化界面中进行修改，也可以使用VS Code插件同步到代码，实现版本管理，并进一步编写代码、调试、测试、打包、部署。[点击了解华炎魔方元数据类型](https://www.steedos.cn/docs/developer/meta-types)
 
 ![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
-华炎魔方支持几十种元数据类型，每种元数据用来定义一种业务功能。 以下是元数据类型的几大类：
+## 快速向导
 
-- **数据**：构建大多数定制的数据结构的核心组成部分。 例如：[自定义对象](http://www.steedos.org/docs/metadata/object/summary)，[字段](http://www.steedos.org/docs/metadata/object/field)和自定义应用。
-- **业务逻辑**：在平台中开发的自定义代码。 例如：验证规则、工作流规则，按钮，表单事件，触发器，批准过程。
-- **界面**：定制用户与平台的交互方式。 例如：组件，列表视图和页面布局。
+### 启动远程开发环境
+
+点击这里，[使用 Gitpod 启动远程开发环境](https://gitpod.io/#https://github.com/steedos/steedos-project-template) ，远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等。
+
+### 创建一个新项目
+
+如需开发自己的软件包，建议输入以下命令，创建一个新项目。
+
+```shell
+npx create-steedos-app my-app 
+```
 
 ## 华炎魔方功能
 
@@ -77,12 +85,6 @@
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
 
-## 安装
-
-华炎魔方是一组 [npm package](https://www.npmjs.com/package/steedos-server) 软件包，直接在nodejs项目中安装引用即可。
-
-具体如何安装部署华炎魔方，请参考[官网安装部署文档](https://www.steedos.com/docs/deploy)
-
 ## 学习华炎魔方
 
 您还可以根据华炎魔方快速构建应用程序的视频教程进行操作。
@@ -91,12 +93,6 @@
 - [使用入门](https://www.steedos.com/help/user/)
 - [设置和维护华炎魔方](https://www.steedos.com/help/admin/)
 - [开发人员](https://www.steedos.com/developer/)
-
-## 2.0 微服务版本的如何在platform 源码平台运行项目：
-- 配置环境变量：TRANSPORTER、CACHER 使用redis
-- 先启动platform: yarn start
-- 项目下也配置环境变量TRANSPORTER、CACHER 值与platform 一致。
-- 启动项目时，如果程序都在steedos-app文件夹下， 就通过 yarn start:app 启动
 
 停止项目服务后，platform平台中的项目对象会自动下线。
 
