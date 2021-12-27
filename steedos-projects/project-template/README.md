@@ -10,7 +10,7 @@
 
 ### 激活华炎魔方
 
-请参考该 [文档](https://www.steedos.cn/docs/deploy/deploy-activate)，准备好后续运行项目时激活华炎魔方项目依赖的两个环境变量。
+请参考该 [文档](https://www.steedos.cn/docs/deploy/deploy-activate)，准备好后续运行项目时激活华炎魔方依赖的两个环境变量。
 
 ### 注册GitPod账户
 
