@@ -27,7 +27,7 @@
     "git": "git config core.autocrlf true && git config core.filemode false",
     "update-yarn": "curl --compressed -o- -L https://yarnpkg.com/install.sh | bash",
     "sync-to-taobao": "node .scripts/sync_to_taobao.js",
-    "build_image": "node build_image.js",
+    "build_image": "node .scripts/build_image.js",
     "build_creator": "cd creator && yarn run build",
     "create_dev_project": "node .scripts/create_dev_project.js",
     "start-dev": "yarn create_dev_project && cd steedos-projects && cd project-dev && yarn start"
