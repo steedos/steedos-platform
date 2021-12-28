@@ -17,7 +17,7 @@
     "typescript": "3.5.3"
   },
   "dependencies": {
-    "@steedos/core": "2.1.61",
+    "@steedos/auth": "2.1.61",
     "@steedos/objectql": "2.1.61"
   }
 }

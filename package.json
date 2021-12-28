@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "cpy": "7.3.0",
-    "lerna": "^3.22.1",
+    "lerna": "4.0.0",
     "mkdirp": "1.0.4"
   },
   "peerDependencies": {
