@@ -21,9 +21,15 @@
 
 请Fork本项目到本地，后续我们使用GitPod在线开发Fork后的项目的话就可以把开发后的代码提交到Git仓库。
 
+也可以执行以下命令来创建一个新项目，然后把该项目提交到Git仓库，而不是Fork本项目来创建自己的魔方项目。
+
+```sh
+npx create-steedos-app my-app 
+```
+
 ## 运行项目
 
-只要在浏览器中输入地址 `https://gitpod.io/#{之前Fork下来的Git仓库地址}`即可使用在线版的vscode运行项目了。
+只要在浏览器中输入地址 `https://gitpod.io/#{之前Fork下来的Git仓库地址}`即可使用 Gitpod 启动远程开发环境，远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等。
 
 比如访问地址 https://gitpod.io/#https://github.com/steedos/steedos-project-template 即可在线运行该Git仓库项目，可以把`#`号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
 
