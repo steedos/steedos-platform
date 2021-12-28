@@ -1,5 +1,5 @@
 const objectql = require('@steedos/objectql');
-import { Util } from '@steedos/core';
+import { getUserLocale } from '@steedos/objectql';
 const Fiber = require('fibers');
 declare var Creator;
 declare var TAPi18n;
@@ -16,7 +16,7 @@ export const sendNotifications = async (from: string, to: string, {instanceHisto
     const targetObject = objectql.getObject(targetObjectName);
     var relatedDoc = await targetObject.findOne(instance.target_object.ids[0]);
     let relatedDocName = relatedDoc.name; //TODO
-    const lng = Util.getUserLocale(fromUser);
+    const lng = getUserLocale(fromUser);
     var notificationTitle = TAPi18n.__(`process_notification_${status}_title`, {submitter: fromUser.name, recordName: relatedDocName}, lng);
     var notificationBody = targetObject.label;
     let linkToObjectName, linkToId;
