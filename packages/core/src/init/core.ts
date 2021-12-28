@@ -2,7 +2,6 @@ import { bootStrapExpress, exportExcelExpress } from '../routes'
 const Future = require('fibers/future');
 const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
-const steedosProcess = require("@steedos/process");
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
@@ -221,6 +220,7 @@ export class Core {
     }
 
     private static initCoreRoutes() {
+        const steedosProcess = require("@steedos/process");
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
         app.use(bootStrapExpress);
