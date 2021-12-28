@@ -48,6 +48,10 @@ fields:
     omit: true
     hidden: true
     disabled: true
+actions:
+  customize:
+    label: 自定义
+    on: record
 list_views:
   all:
     label: All Roles

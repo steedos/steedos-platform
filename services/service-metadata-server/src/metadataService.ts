@@ -50,7 +50,7 @@ module.exports = {
                     return null
                 }
                 config = _.defaultsDeep({}, ..._.sortBy(configs, function (o) {
-                    return o && o._id != o.name ? 1 : -1;
+                    return o && o._id ? -1 : 1;
                 }), config)
                 return config;
             }

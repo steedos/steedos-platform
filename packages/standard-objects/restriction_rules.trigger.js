@@ -1,6 +1,7 @@
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
+const clone = require('clone');
 async function getAll() {
     const schema = objectql.getSteedosSchema();
     const configs = await objectql.registerRestrictionRules.getAll(schema.broker)
@@ -26,27 +27,28 @@ module.exports = {
     afterFind: async function () {
         let spaceId = this.spaceId;
         let dataList = await getAll();
+        const values = clone(this.data.values);
         _.each(dataList, (item) => {
             if (!_.find(this.data.values, (value) => {
                 return value._id === item._id
             })) {
-                this.data.values.push(dataList)
+                values.push(item)
             }
         })
-        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
-
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(values, this.query, spaceId);
     },
     afterAggregate: async function () {
         let spaceId = this.spaceId;
         let dataList = await getAll();
+        const values = clone(this.data.values);
         _.each(dataList, (item) => {
             if (!_.find(this.data.values, (value) => {
                 return value._id === item._id
             })) {
-                this.data.values.push(item)
+                values.push(item)
             }
         })
-        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(values, this.query, spaceId);
 
     },
     afterCount: async function () {

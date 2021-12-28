@@ -50,7 +50,7 @@ fields:
     disabled: true
 actions:
   customize:
-    label: Customize
+    label: 自定义
     on: record
 list_views:
   all:

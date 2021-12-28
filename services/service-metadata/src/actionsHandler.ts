@@ -342,7 +342,6 @@ export const ActionHandlers = {
             console.log(`getServiceMetadata ctx.meta`, ctx.meta);
         }
         const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
-        console.log(`removeServiceMetadata key`, key);
         return await ctx.broker.cacher.del(key)
     },
     async refreshServiceMetadatas(ctx: any) {
