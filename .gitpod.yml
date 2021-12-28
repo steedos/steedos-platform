@@ -20,6 +20,7 @@ tasks:
   - init: |
       yarn
       yarn bootstrap
+      sleep 5
       yarn build
     command: |
       gp await-port 27017
