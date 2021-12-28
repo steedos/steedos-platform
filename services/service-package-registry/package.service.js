@@ -220,6 +220,12 @@ module.exports = {
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
 					}
+					try {
+						await this.loginSteedosRegistry();
+						console.info(`login steedos registry success`);
+					} catch (error) {
+						console.error(`login steedos registry fail: `, error.message);
+					}
 					const result = await this.getCloudSaasPurchasedPackages();
 					for (const _package of result.packages) {
 						try {
@@ -267,6 +273,12 @@ module.exports = {
 					const user = ctx.meta.user;
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
+					}
+					try {
+						await this.loginSteedosRegistry();
+						console.info(`login steedos registry success`);
+					} catch (error) {
+						console.error(`login steedos registry fail: `, error.message);
 					}
 					let { module, version, url, auth, registry_url } = ctx.params
 					const enable = true;
