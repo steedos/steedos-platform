@@ -18,9 +18,9 @@ tasks:
   - command: |
       redis-server --save ""
   - init: |
-      yarn install
+      yarn
       yarn bootstrap
-      yarn compile
+      yarn build
     command: |
       gp await-port 27017
       gp await-port 6379
