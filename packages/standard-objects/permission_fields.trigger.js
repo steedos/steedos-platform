@@ -26,7 +26,6 @@ module.exports = {
     afterFind: async function () {
         let spaceId = this.spaceId;
         let dataList = await getAll();
-        console.log(`this.data.values`, this.data.values);
         this.data.values = this.data.values.concat(dataList);
         this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
 
