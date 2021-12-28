@@ -8,7 +8,7 @@ Meteor.startup(function () {
         objectql.registerShareRules.register(schema.broker, SERVICE_NAME, document)
     };
     _remove = function (document) {
-        objectql.registerShareRules.remove(schema.broker, document)
+        objectql.registerShareRules.remove(schema.broker, SERVICE_NAME, document)
     };
     Creator.getCollection(objectName).find({}, {
         fields: {

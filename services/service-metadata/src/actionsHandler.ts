@@ -335,6 +335,16 @@ export const ActionHandlers = {
         return await ctx.broker.cacher.get(key)
         // REPLACE: return await mockCacherGet(ctx, key);
     },
+    async removeServiceMetadata(ctx: any) {
+        let { serviceName, metadataType, metadataApiName } = ctx.params;
+        const { nodeID } = ctx.meta.caller || { nodeID: undefined };
+        if (!nodeID) {
+            console.log(`getServiceMetadata ctx.meta`, ctx.meta);
+        }
+        const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
+        console.log(`removeServiceMetadata key`, key);
+        return await ctx.broker.cacher.del(key)
+    },
     async refreshServiceMetadatas(ctx: any) {
         const { offlinePackageServices: _offlinePackageServices } = ctx.params || { offlinePackageServices: undefined };
         if (_offlinePackageServices && _offlinePackageServices.length > 0) {

@@ -48,6 +48,10 @@ fields:
     omit: true
     hidden: true
     disabled: true
+actions:
+  customize:
+    label: Customize
+    on: record
 list_views:
   all:
     label: All Roles

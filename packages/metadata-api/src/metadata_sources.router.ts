@@ -15,25 +15,30 @@ import { DbManager } from './util/dbManager';
 import { getFullName } from '@steedos/metadata-core';
 
 const getSources = async function (req, res) {
-    const userSession = req.user;
-    const isSpaceAdmin = req.user.is_space_admin;
-    // const spaceId = userSession.spaceId;
+    try {
+        const userSession = req.user;
+        const isSpaceAdmin = req.user.is_space_admin;
+        // const spaceId = userSession.spaceId;
 
-    let urlParams = req.params;
-    let metadataName = urlParams.metadataName;
-    if(!isSpaceAdmin){
-        return res.status(401).send({ status: 'error', message: 'Permission denied' });
+        let urlParams = req.params;
+        let metadataName = urlParams.metadataName;
+        if (!isSpaceAdmin) {
+            return res.status(401).send({ status: 'error', message: 'Permission denied' });
+        }
+        var dbManager = new DbManager(userSession);
+        await dbManager.connect();
+        const records = await getMetadataSources(dbManager, metadataName);
+        await dbManager.close();
+        let sources: any = [];
+        _.each(records, function (reocrd) {
+            sources.push({ fullName: getFullName(metadataName, reocrd), type: metadataName })
+        })
+
+        return res.status(200).send(sources);
+    } catch (error) {
+        console.log(`sources error`, error);
+        return res.status(500).send(error.message);
     }
-    var dbManager = new DbManager(userSession);
-    await dbManager.connect();
-    const records = await getMetadataSources(dbManager, metadataName);
-    await dbManager.close();
-    let sources: any = [];
-    _.each(records, function(reocrd){
-        sources.push({fullName: getFullName(metadataName, reocrd), type: metadataName})
-    })
-
-    return res.status(200).send(sources);
 }
 
 

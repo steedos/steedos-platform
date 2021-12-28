@@ -49,8 +49,25 @@ module.exports = {
                 if(configs.length == 0){
                     return null
                 }
-                config = _.defaultsDeep({}, ..._.reverse(configs), config)
+                config = _.defaultsDeep({}, ..._.sortBy(configs, function (o) {
+                    return o && o._id != o.name ? 1 : -1;
+                }), config)
                 return config;
+            }
+        },
+        removeServiceMetadata: {
+            async handler(serviceName, apiName, meta) {
+                const metadataType = this.settings.metadataType;
+                console.log(`removeServiceMetadata`, {
+                    serviceName,
+                    metadataType,
+                    metadataApiName: apiName
+                });
+                return await this.broker.call('metadata.removeServiceMetadata', {
+                    serviceName,
+                    metadataType,
+                    metadataApiName: apiName
+                }, meta);
             }
         }
     },
@@ -95,7 +112,15 @@ module.exports = {
         },
         delete: {
             async handler(ctx) {
-                return await ctx.broker.call('metadata.delete', {key: this.getMatadataCacherKey(ctx.params.metadataApiName)}, {meta: ctx.meta})
+                const metadataApiName = ctx.params.apiName;
+                const serviceName = ctx.meta.metadataServiceName
+                await this.removeServiceMetadata(serviceName, metadataApiName, { meta: Object.assign({}, ctx.meta, { metadataType: this.settings.metadataType, metadataApiName: metadataApiName }) });
+                const config = await this.refresh(metadataApiName, ctx.meta);
+                if (!config) {
+                    await ctx.broker.call('metadata.delete', { key: this.getMatadataCacherKey(metadataApiName) })
+                } else {
+                    await this.register(metadataApiName, config, ctx.meta);
+                }
             }
         },
         verify: {

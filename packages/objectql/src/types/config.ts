@@ -9,6 +9,9 @@ import { registerPackageQueries } from '../dynamic-load/query';
 import { registerPackagePages } from '../dynamic-load/page';
 import { registerPackageTabs } from '../dynamic-load/tab';
 
+import { registerPackageShareRules } from '../dynamic-load/shareRules';
+import { registerPackageRestrictionRules } from '../dynamic-load/restrictionRules';
+
 export const LOADED_OBJECT_RECORDS = {}
 
 
@@ -130,7 +133,9 @@ export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName
     await registerPackageCharts(filePath, serviceName);
     await registerPackagePages(filePath, serviceName);
     await registerPackageTabs(filePath, serviceName);
-
+    await registerPackageShareRules(filePath, serviceName);
+    await registerPackageRestrictionRules(filePath, serviceName);
+    
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     // addObjectI18nFiles(filePath);

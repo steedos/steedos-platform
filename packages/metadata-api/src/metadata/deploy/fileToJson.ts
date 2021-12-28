@@ -1,4 +1,4 @@
-import { loadFile, SteedosMetadataTypeInfoKeys as TypeInfoKeys, getChilds, hasParent, LoadChartFile, LoadPageFile, LoadQueryFile, LoadTabFile } from '@steedos/metadata-core';
+import { loadFile, SteedosMetadataTypeInfoKeys as TypeInfoKeys, getChilds, hasParent, LoadChartFile, LoadPageFile, LoadQueryFile, LoadTabFile, LoadShareRules, LoadRestrictionRules } from '@steedos/metadata-core';
 import { checkNameEquals } from '../../util/check_name_equals'
 
 const path = require('path');
@@ -10,6 +10,8 @@ const loadChartFile = new LoadChartFile();
 const loadPageFile = new LoadPageFile();
 const loadQueryFile = new LoadQueryFile();
 const loadTabFile = new LoadTabFile();
+const loadShareRules = new LoadShareRules();
+const loadRestrictionRules = new LoadRestrictionRules();
 
 //扫描Permissionsets并输出为json
 async function loadPermissionsets(filePath){
@@ -668,6 +670,8 @@ export async function loadFileToJson(packagePath:string, packageYml?){
     let queries = {};
     let pages = {};
     let tabs = {};
+    let shareRules = {};
+    let restrictionRules = {};
     let mark:boolean = false;
 
     for(const metadataname in packageYml){
@@ -759,6 +763,12 @@ export async function loadFileToJson(packagePath:string, packageYml?){
         }else if(metadataname === TypeInfoKeys.Tab){
             tabs = loadTabFile.load(packagePath);
             mark = true;
+        } else if (metadataname === TypeInfoKeys.ShareRule) {
+            shareRules = loadShareRules.load(packagePath);
+            mark = true;
+        } else if (metadataname === TypeInfoKeys.RestrictionRule) {
+            restrictionRules = loadRestrictionRules.load(packagePath);
+            mark = true;
         }
 
     }
@@ -792,6 +802,8 @@ export async function loadFileToJson(packagePath:string, packageYml?){
     steedosPackage[TypeInfoKeys.Chart] = charts;
     steedosPackage[TypeInfoKeys.Page] = pages;
     steedosPackage[TypeInfoKeys.Tab] = tabs;
+    steedosPackage[TypeInfoKeys.ShareRule] = shareRules;
+    steedosPackage[TypeInfoKeys.RestrictionRule] = restrictionRules;
 
     //用于测试查看本地生成的steedosPackage结构和属性是否完整
     // let targetFolderName = './data';

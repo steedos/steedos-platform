@@ -95,6 +95,16 @@ module.exports = {
 			async handler(ctx) {
 				return await ActionHandlers.getServiceMetadata(ctx);
 			}
+		},
+		removeServiceMetadata: {
+			params: {
+				serviceName: { type: "string" },
+				metadataType: { type: "string" },
+				metadataApiName: { type: "string" },
+			},
+			async handler(ctx) {
+				return await ActionHandlers.removeServiceMetadata(ctx);
+			}
 		}
 	},
 	/**

@@ -2,6 +2,7 @@ import {getPermissionsetById, getPermissionsetIdByName} from './permissionset'
 import {deleteCommonAttribute, sortAttribute} from '../../util/attributeUtil'
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getFullName } from '@steedos/metadata-core';
 import { permissionSetsToDb, isSystemProfile } from './permissionset';
+import { getObjectFieldPermissions, saveOrUpdateFieldPermissions } from './fieldPermission';
 
 const collection_name = 'permission_objects'
 const collection_metadata_name = TypeInfoKeys.Permission;
@@ -30,6 +31,8 @@ export async function objectPermissionsFromDb(dbManager, permissionList, objects
     
                 var permissionName = getFullName(collection_metadata_name, permission)
                 delete permission.object_name;
+
+                permission.field_permissions = await getObjectFieldPermissions(dbManager, objectName, permission.permission_set_id)
                 permissions_final[permissionName] = permission;
     
             }           
@@ -49,6 +52,8 @@ export async function objectPermissionsFromDb(dbManager, permissionList, objects
            
             var permissionName = getFullName(collection_metadata_name, permission);
             delete permission.object_name;
+
+            permission.field_permissions = await getObjectFieldPermissions(dbManager, objectName, permission.permission_set_id)
             permissions_final[permissionName] = permission;
         }
 
@@ -117,6 +122,8 @@ export async function objectPermissionsToDb(dbManager, permissions, permissionse
                 await permissionSetsToDb(dbManager, permissionSet, true);
             }
         }
+        await saveOrUpdateFieldPermissions(dbManager, permissionName, objectName, permission);
+        delete permission.field_permissions;
         await saveOrUpdatePermission(dbManager, permission);
     }
   }

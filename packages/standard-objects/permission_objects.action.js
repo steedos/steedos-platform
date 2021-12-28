@@ -23,6 +23,7 @@ module.exports = {
         }
         Creator.odata.insert(object_name, Object.assign(newDoc, {permission_set_id: permissionSetId}), function(result, error){
             if(result){
+                Steedos.authRequest(`/api/v4/${object_name}/${result._id}/resetFieldPermissions`, { type: 'get', async: false })
                 if(Session.get("object_name") === 'permission_objects'){
                     FlowRouter.go(`/app/-/${object_name}/view/${result._id}`)
                 }else{
@@ -49,6 +50,9 @@ module.exports = {
         }
     },
     resetFieldPermissionsVisible: function (object_name, record_id, record_permissions, record) {
-        return true;
+        if (!record) {
+            record = {}
+        }
+        return !(Creator.baseObject.actions.standard_new.visible() && record.is_system);
     }
 }

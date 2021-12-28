@@ -26,12 +26,22 @@ export class RegisterBase{
         return res;
     }
 
-    async remove(broker, metadataApiNameOrConfig: string | JsonMap) {
+    async remove(broker, packageServiceName, metadataApiNameOrConfig: string | JsonMap) {
         let metadataApiName = metadataApiNameOrConfig;
         if (_.isObject(metadataApiName)) {
             metadataApiName = this.getApiName(metadataApiNameOrConfig);
         }
-        const res = await broker.call(`${this.serviceName}.delete`, { fullName: metadataApiName, metadataApiName: metadataApiName });
+        const res = await broker.call(`${this.serviceName}.delete`, { apiName: this.getApiName(metadataApiNameOrConfig) }, {
+            meta: {
+                metadataServiceName: packageServiceName,
+                caller: {
+                    nodeID: broker.nodeID,
+                    service: {
+                        name: packageServiceName,
+                    }
+                }
+            }
+        });
         return res;
     }
 

@@ -1,5 +1,6 @@
 import { Dictionary } from '@salesforce/ts-types';
 import { getObjectConfig, getSteedosSchema, SteedosObjectPermissionTypeConfig } from '../types'
+import { registerPermissionFields } from '../metadata-register/permissionFields'
 import _ = require('lodash');
 var util = require('../util');
 var clone = require('clone');
@@ -47,8 +48,24 @@ export const loadObjectPermissions = async function (filePath: string, serviceNa
     });
     if(serviceName)
         for await (const permission of permissions) {
+            const { field_permissions } = permission;
+            delete permission.field_permissions;
             await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: permission.object_name}, {permission_set: {
                 [permission.name]: permission
             }}));
+            if (field_permissions) {
+                for await (const field_permission of field_permissions) {
+                    await registerPermissionFields.register(getSteedosSchema().broker, serviceName, {
+                        "name": `${permission.name}.${permission.object_name}.${field_permission.field}`,
+                        "permission_set_id": permission.name,
+                        "permission_object": `${permission.name}_${permission.object_name}`,
+                        "object_name": permission.object_name,
+                        "field": field_permission.field,
+                        "readable": field_permission.readable,
+                        "editable": field_permission.editable,
+                        "is_system": true,
+                    })
+                }
+            }
         }
 }

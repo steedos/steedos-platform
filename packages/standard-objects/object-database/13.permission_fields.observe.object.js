@@ -8,7 +8,7 @@ Meteor.startup(function () {
         objectql.registerPermissionFields.register(schema.broker, SERVICE_NAME, document)
     };
     _remove = function (document) {
-        objectql.registerPermissionFields.remove(schema.broker, document)
+        objectql.registerPermissionFields.remove(schema.broker, SERVICE_NAME, document)
     };
     Creator.getCollection(objectName).find({}, {
         fields: {

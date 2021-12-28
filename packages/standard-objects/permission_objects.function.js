@@ -2,6 +2,13 @@ const objectql = require("@steedos/objectql");
 const _ = require('lodash');
 const systemFields = ['owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids', 'instance_state'];
 
+async function getFieldPermission(apiName) {
+  const schema = objectql.getSteedosSchema();
+  const config = await objectql.registerPermissionFields.get(schema.broker, apiName)
+  return config ? config.metadata : null;
+}
+
+
 const getFieldDefaultEditable = (field) => {
   if (_.includes(systemFields, field.name) && (field.omit || field.hidden || field.readonly || field.disabled)) {
     return false;
@@ -34,16 +41,18 @@ module.exports = {
       const fields = await objectql.getObject('object_fields').find({ filters: [['object', '=', record.object_name]] });
       const now = new Date();
       for (const field of fields) {
-        const count = await objectql.getObject('permission_fields').count({ filters: [['permission_object', '=', recordId], ['object_name', '=', record.object_name], ['field', '=', field.name]] });
+        const count = await objectql.getObject('permission_fields').count({ filters: [['permission_set_id', '=', permissionSet.name], ['object_name', '=', record.object_name], ['field', '=', field.name], ['is_system', '!=', true]] });
         if (count == 0) {
+          const apiName = `${permissionSet.name}.${record.object_name}.${field.name}`
+          const fieldPermission = await getFieldPermission(apiName)
           await objectql.getObject('permission_fields').directInsert({
-            name: `${permissionSet.name}.${record.object_name}.${field.name}`,
+            name: apiName,
             permission_set_id: permissionSet.name,
-            permission_object: recordId,
+            permission_object: record.name,
             object_name: record.object_name,
             field: field.name,
-            editable: getFieldDefaultEditable(field),
-            readable: getFieldDefaultReadable(field),
+            editable: fieldPermission ? fieldPermission.editable : getFieldDefaultEditable(field),
+            readable: fieldPermission ? fieldPermission.readable : getFieldDefaultReadable(field),
             owner: userSession.userId,
             space: userSession.spaceId, 
             created: now,
@@ -56,7 +65,7 @@ module.exports = {
         }
       }
       //删除已删除、卸载的字段权限
-      const fieldsPermission = await objectql.getObject('permission_fields').find({ filters: [['permission_object', '=', recordId], ['object_name', '=', record.object_name]] });
+      const fieldsPermission = await objectql.getObject('permission_fields').find({ filters: [['permission_set_id', '=', permissionSet.name], ['object_name', '=', record.object_name]] });
       const allFields = _.map(fieldsPermission, 'field');
       const objectFields = _.map(fields, 'name');
       const diffFields = _.difference(allFields, objectFields);

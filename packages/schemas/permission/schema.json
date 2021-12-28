@@ -114,6 +114,36 @@
         "uneditable_related_list": {
             "type": "array",
             "description": "关联对象只读"
+        },
+        "field_permissions": {
+            "anyOf": [
+                {
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "field"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                            "field": {
+                                "type": "string",
+                                "title": "字段 Api 名称"
+                            },
+                            "readable": {
+                                "type": "boolean",
+                                "title": "允许查看"
+                            },
+                            "editable": {
+                                "type": "boolean",
+                                "title": "允许编辑"
+                            }
+                        }
+                    },
+                    "type": "array",
+                    "title": "字段权限"
+                }
+            ],
+            "description": "字段权限"
         }
     }
 }
