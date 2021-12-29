@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-fields-indexs",
-  "version": "2.1.63",
+  "version": "2.1.64",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
