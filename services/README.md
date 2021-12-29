@@ -44,7 +44,7 @@
 
 ## service-metadata-server
 
-?
+管理内核微服务之间的加载、依赖关系
 
 ## service-metadata-tabs
 
