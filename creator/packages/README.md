@@ -218,3 +218,99 @@
 
 ？？
 
+## steedos-mini-web
+
+？？
+
+## steedos-oauth2-messenger
+
+？？
+
+## steedos-oauth2-server
+
+Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员通过配置第三方授权应用，可实现让第三方应用通过调用相关接口，申请授权登录。
+
+？？还在用？？作废？
+
+## steedos-object-database
+
+迁移到standard-objects包中了吧？？作废？
+
+## steedos-object-webhooks-queue
+
+该包实现服务端webhooks队列相关功能，用于按队列次序依次执行webhooks。
+
+## steedos-objects
+
+迁移到standard-objects包中了吧？？作废？
+
+## steedos-objects-billing
+
+迁移到standard-objects包中了吧？？作废？
+
+## steedos-objects-core
+
+迁移到standard-objects包中了吧？？作废？
+
+## steedos-objects-to-yaml
+
+该包用于把creator中的对象转为yaml格式内容，已经不需要了吧？？作废？?
+
+## steedos-odata
+
+上一代华炎魔方OData接口功能是在这个包中实现的，已作废？？
+
+## steedos-pay
+
+已作废？？
+
+## steedos-post
+
+该包中包含了几个上一代魔方格式定义的对象，已作废。
+
+## steedos-qcloud-smsqueue
+
+已作废？？？
+
+## steedos-smsqueue
+
+该包实现服务端待发送短信队列相关功能，用于按队列次序依次发送短信。
+
+已作废？？？
+
+## steedos-theme
+
+该包实现了上一代华炎魔方很多样式皮肤功能。
+
+## steedos-users-import
+
+该包实现了上一代华炎魔方用户导入功能，已作废，新版华炎魔方支持了统一的数据导入功能。
+
+## steedos-webkit-notification
+
+该包实现了华炎魔方桌面客户端消息推送功能。
+
+## steedos-weixin
+
+？？已作废？？
+
+## steedos-weixin-aes
+
+？？已作废？？
+
+## steedos-weixin-template-message-queue
+
+？？已作废？？
+
+## steedos-workflow
+
+该包实现了审批王应用核心业务功能，包括前端UI和后端审批业务逻辑。
+
+## steedos-workflow-chart
+
+该包基于 [mermaid-js](https://github.com/mermaid-js/mermaid) 实现了审批王应该中查看流程图功能。
+
+## tap-i18n
+
+我们本地化了名为 [tap:i18n](https://github.com/TAPevents/tap-i18n) 的Meteor包，使用它可以在Meteor项目中实现国际化翻译相关功能。
+
