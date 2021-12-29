@@ -16,16 +16,15 @@ steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用�
 
 ## clinet
 
-此包用于创建客户端连接，方便对数据执行数据库操作
+此包用于创建客户端连接，方便对数据执行数据库操作。
 
 ## community
-应该没用了，可以删除
+
+已作废。
 
 ## core
 
 华炎魔方内核功能包，该包中实现了元数据、元数据国际化资源、插件、Creator等内核功能的初始化，还有OData接口，Bootstrap接口等内核功能也是在该包中实现的。
-
-?请包老师帮check补充下？
 
 ## create-steedos-app
 
@@ -61,27 +60,21 @@ steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用�
 
 该包实现了元数据同步API相关功能。
 
-？更多说明？
-
 ## metadata-core
 
 该包是元数据同步功能内核包，其内实现了元数据同步相关内核功能。
-
-？更多说明？
 
 ## meteor-bundle-dependencies
 
 该包中定义了华炎魔方运行时依赖的 [meteor](https://www.meteor.com/) 相关包。
 
-？更多说明？
-
 ## meteor-bundle-runner
 
-该包中定义了华炎魔方[meteor](https://www.meteor.com/) 运行时
+该包中定义了华炎魔方[meteor](https://www.meteor.com/) 运行时。
 
 ## migrate
 
-？更多说明？作废？
+该包用来编写数据库升级脚本。
 
 ## mongodb-bi-connector
 
@@ -91,13 +84,9 @@ steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用�
 
 该包是运行`npx create-steedos-node-red-app`命令时创建的Node-Red项目的模板。
 
-？没错吧？
-
 ## objectql
 
 该包是华炎魔方实现对象模型相关功能的内核包，包括对象数据的增删改查、各种元数据注册及动态加载、公式运算、工作流规则、GraphQL接口、连接MongoDB、My SQL等各种数据库驱动等功能都是在该包中实现的，使用说明请参考文档 [ObjectQL服务端语法说明](https://www.steedos.cn/docs/developer/objectql)。
-
-？更多说明？
 
 ## plugin-enterprise
 
@@ -123,7 +112,7 @@ steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用�
 
 ## steedos-oauth2-messenger
 
-还在用？
+该包实现使用oauth2协议集成华信接口，与华信通信。
 
 ## steedos-plugin-dingtalk
 
@@ -148,4 +137,3 @@ steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用�
 ## workflow
 
 该包实现了审批王应用的流程设计器相关功能。
-？应该没错吧？
