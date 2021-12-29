@@ -12,6 +12,8 @@ public:
     jsreport:
       url: ${JSREPORT_URL}
       urlProvideForJsreport: ${JSREPORT_TO_ACQUIRE_DATA_URL}
+    app_exchange:
+      url: ${STEEDOS_APP_EXCHANGE_URL}
 cfs:
   store: ${STEEDOS_CFS_STORE}
   aliyun:

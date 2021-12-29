@@ -1,7 +1,7 @@
 {
   "name": "@steedos/tailwind",
   "private": false,
-  "version": "2.1.61",
+  "version": "2.1.62",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
