@@ -278,8 +278,16 @@ export class FormulaActionHandler{
         }
     }
 
-    async getFormulaReferenceMaps(broker: any){
-        return await broker.call('metadata.get', {key: this.cacherKey(refMapName)}, {meta: {}});
+    async getFormulaReferenceMaps(broker: any): Promise<any>{
+        const maps = [];
+        let records = (await broker.call('metadata.filter', { key: this.cacherKey(`${refMapName}.*`) }, { meta: {} })) || {};
+        for await (const item of records) {
+            const metadata = item?.metadata;
+            if(metadata){
+                maps.push(item);
+            }
+        }
+        return { metadata: maps };
     }
     async addFormulaReferenceMaps(broker: any, key: string, value: string){
         let { metadata } = (await this.getFormulaReferenceMaps(broker)) || [];
@@ -293,10 +301,11 @@ export class FormulaActionHandler{
             value: value
         }
 
-        //checkData
+        // //checkData
         this.checkRefMapData(maps, data);
-        maps.push(data);
-        await broker.call('metadata.add', {key: this.cacherKey(refMapName), data: maps}, {meta: {}})
+        // maps.push(data);
+        
+        await broker.call('metadata.add', {key: this.cacherKey(`${refMapName}.${key}.${value}`), data: data}, {meta: {}})
     }
 
     async addFormulaMetadata(config: any, datasource: string){
