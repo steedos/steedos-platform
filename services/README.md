@@ -16,7 +16,7 @@
 
 ## service-cloud-init
 
-?
+环境初始化：工作区、账户、已购买软件包安装
 
 ## service-fields-indexs
 
