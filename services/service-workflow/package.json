@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-workflow",
-  "version": "2.1.62",
+  "version": "2.1.63",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
