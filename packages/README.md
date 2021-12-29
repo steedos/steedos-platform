@@ -16,11 +16,10 @@ steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用�
 
 ## clinet
 
-?迁移到app-builder中了？还有用吗？
+此包用于创建客户端连接，方便对数据执行数据库操作
 
 ## community
-
-？
+应该没用了，可以删除
 
 ## core
 
@@ -78,7 +77,7 @@ steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用�
 
 ## meteor-bundle-runner
 
-？更多说明？
+该包中定义了华炎魔方[meteor](https://www.meteor.com/) 运行时
 
 ## migrate
 
