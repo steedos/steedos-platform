@@ -1,5 +1,0 @@
-name: number_of_quantity_installments
-hidden: true
-label: 数量分期付款期数
-sort_no: 250
-type: number

@@ -1,7 +1,0 @@
-name: product_id
-index: true
-label: 产品
-reference_to: product
-required: true
-sort_no: 100
-type: lookup

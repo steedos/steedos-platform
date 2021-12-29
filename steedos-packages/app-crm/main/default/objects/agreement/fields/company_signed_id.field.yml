@@ -1,6 +1,0 @@
-name: company_signed_id
-group: 签名信息
-label: 公司签字人
-reference_to: users
-sort_no: 240
-type: lookup

@@ -1,6 +1,0 @@
-name: quantity
-defaultValue: 1
-inlineHelpText: 报价中包含的该行项目产品的套数。值必须大于或等于 1。如果报价与业务机会同步，该字段会从报价行项目更新到业务机会产品。
-label: 数量
-sort_no: 160
-type: number

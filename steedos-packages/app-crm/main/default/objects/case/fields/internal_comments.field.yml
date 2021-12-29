@@ -1,7 +1,0 @@
-name: internal_comments
-group: 备注信息
-is_wide: true
-label: 内部注释
-rows: 3
-sort_no: 230
-type: textarea

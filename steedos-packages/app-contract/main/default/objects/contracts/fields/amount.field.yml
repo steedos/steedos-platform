@@ -1,7 +1,0 @@
-name: amount
-label: 合同金额
-type: number
-scale: 2
-required: true
-sortable: true
-sort_no: 200

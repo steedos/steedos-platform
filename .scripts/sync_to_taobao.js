@@ -55,12 +55,6 @@ const packages = [
     "@steedos/service-pages",
     "@steedos/service-steedos-server",
     "@steedos/service-workflow",
-    "@steedos/app-admin",
-    "@steedos/app-contracts",
-    "@steedos/app-crm",
-    "@steedos/app-oa",
-    "@steedos/app-okr-management",
-    "@steedos/app-project-management",
     "@steedos/steedos-project-template",
 ];
 

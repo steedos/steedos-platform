@@ -1,6 +1,0 @@
-name: signed_date
-label: 签订日期
-type: date
-sortable: true
-filterable: true
-sort_no: 210

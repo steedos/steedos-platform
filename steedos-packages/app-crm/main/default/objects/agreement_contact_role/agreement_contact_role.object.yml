@@ -1,6 +1,0 @@
-name: agreement_contact_role
-enable_audit: true
-enable_files: true
-enable_search: true
-icon: contract
-label: 主协议联系人角色

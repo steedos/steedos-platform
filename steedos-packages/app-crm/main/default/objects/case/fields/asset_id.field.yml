@@ -1,6 +1,0 @@
-name: asset_id
-hidden: true
-label: 资产
-reference_to: asset
-sort_no: 280
-type: lookup

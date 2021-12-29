@@ -1,9 +1,0 @@
-allowCreate: false
-allowDelete: true
-allowEdit: true
-allowRead: true
-modifyAllRecords: true
-modifyCompanyRecords: false
-permission_set_id: project_manager
-viewAllRecords: true
-viewCompanyRecords: false

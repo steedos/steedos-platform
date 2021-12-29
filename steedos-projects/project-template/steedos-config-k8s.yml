@@ -12,6 +12,8 @@ public:
     jsreport:
       url: ${JSREPORT_URL}
       urlProvideForJsreport: ${JSREPORT_TO_ACQUIRE_DATA_URL}
+    app_exchange:
+      url: ${STEEDOS_APP_EXCHANGE_URL}
 cfs:
   store: ${STEEDOS_CFS_STORE}
   aliyun:
@@ -34,9 +36,9 @@ cfs:
     secretAccessKey: ${STEEDOS_CFS_CLOUD_SECRETACCESSKEY}
 tenant:
   _id: ${STEEDOS_CLOUD_SPACE_ID}
-  name: 华炎魔方
-  logo_url:
-  logo_square_url:
+  name: ${STEEDOS_CLOUD_NAME}
+  logo_url: ${STEEDOS_CLOUD_LOGO_URL}
+  logo_square_url: ${STEEDOS_CLOUD_LOGO_SQUARE_URL}
   background_url:
   enable_register: false
   enable_forget_password: false

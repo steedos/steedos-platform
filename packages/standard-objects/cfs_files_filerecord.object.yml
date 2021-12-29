@@ -56,17 +56,17 @@ list_views:
 permission_set:
   user:
     allowCreate: false
-    allowDelete: false
+    allowDelete: true
     allowEdit: false
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true 
   admin:
     allowCreate: false
-    allowDelete: false
-    allowEdit: false
+    allowDelete: true
+    allowEdit: true
     allowRead: true
-    modifyAllRecords: false
+    modifyAllRecords: true
     viewAllRecords: true 
 
 actions:

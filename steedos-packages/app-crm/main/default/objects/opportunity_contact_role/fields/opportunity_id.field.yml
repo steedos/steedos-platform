@@ -1,8 +1,0 @@
-name: opportunity_id
-inlineHelpText: 与联系人相关的业务机会的名称。
-label: 业务机会名
-reference_to: opportunity
-required: true
-searchable: true
-sort_no: 110
-type: master_detail

@@ -1,5 +1,0 @@
-name: contact_phone
-label: 联系人电话
-readonly: true
-sort_no: 110
-type: text

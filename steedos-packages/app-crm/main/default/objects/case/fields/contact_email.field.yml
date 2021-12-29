@@ -1,5 +1,0 @@
-name: contact_email
-label: 联系人电子邮件
-readonly: true
-sort_no: 130
-type: email

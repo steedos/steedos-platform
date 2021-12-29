@@ -1,5 +1,0 @@
-name: company_signed_date
-group: 签名信息
-label: 公司签字日期
-sort_no: 260
-type: date

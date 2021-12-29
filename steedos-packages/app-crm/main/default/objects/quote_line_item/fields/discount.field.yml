@@ -1,6 +1,0 @@
-name: discount
-inlineHelpText: 您应用到行项目的折扣。您可以使用百分比符号输入数字，也可以不使用百分比符号输入数字。您可以使用最多两个小数位。
-label: 折扣
-scale: 2
-sort_no: 140
-type: number

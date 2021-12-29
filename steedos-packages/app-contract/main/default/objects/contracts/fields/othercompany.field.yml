@@ -1,8 +1,0 @@
-name: othercompany
-type: lookup
-relatedList: true
-label: 业务伙伴
-searchable: true
-reference_to: accounts
-required: true
-sort_no: 120

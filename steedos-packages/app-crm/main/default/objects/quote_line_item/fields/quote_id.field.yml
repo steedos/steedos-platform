@@ -1,6 +1,0 @@
-name: quote_id
-label: 报价名称
-reference_to: quote
-searchable: true
-sort_no: 150
-type: master_detail

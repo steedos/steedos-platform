@@ -1,6 +1,0 @@
-name: subject
-group: 备注信息
-is_wide: true
-label: 主题
-sort_no: 210
-type: text

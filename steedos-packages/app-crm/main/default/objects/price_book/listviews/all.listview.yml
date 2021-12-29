@@ -1,9 +1,0 @@
-name: all
-columns:
-  - name
-  - is_active
-  - is_standard
-  - description
-filter_scope: space
-label: 所有价格手册
-shared: true

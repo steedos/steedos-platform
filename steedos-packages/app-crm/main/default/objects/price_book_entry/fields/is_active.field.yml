@@ -1,6 +1,0 @@
-name: is_active
-defaultValue: true
-inlineHelpText: 价格手册条目（产品和列表价格）是否是有效的并可添加到业务机会或报价。
-label: 已启用
-sort_no: 110
-type: toggle

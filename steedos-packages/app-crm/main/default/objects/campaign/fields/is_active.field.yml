@@ -1,5 +1,0 @@
-name: is_active
-inlineHelpText: 标记市场活动是否启用。
-label: 启用
-sort_no: 120
-type: toggle

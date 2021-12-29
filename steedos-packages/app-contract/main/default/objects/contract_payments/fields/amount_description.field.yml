@@ -1,6 +1,0 @@
-name: amount_description
-label: 付款说明
-type: textarea
-is_wide: true
-rows: 2
-sort_no: 110

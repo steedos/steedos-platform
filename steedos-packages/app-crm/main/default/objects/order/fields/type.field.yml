@@ -1,7 +1,0 @@
-name: type
-label: 订单类型
-options:
-  - label: 无
-    value: none
-sort_no: 130
-type: select

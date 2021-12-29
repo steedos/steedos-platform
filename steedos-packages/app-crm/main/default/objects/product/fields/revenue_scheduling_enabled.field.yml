@@ -1,5 +1,0 @@
-name: revenue_scheduling_enabled
-hidden: true
-label: 已启用收入计划
-sort_no: 190
-type: boolean

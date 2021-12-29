@@ -1,8 +1,0 @@
-name: contract
-label: 合同
-type: master_detail
-reference_to: contracts
-required: true
-sortable: true
-filterable: true
-sort_no: 160

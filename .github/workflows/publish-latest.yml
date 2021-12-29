@@ -154,10 +154,4 @@ jobs:
           cnpm sync @steedos/service-packages
           cnpm sync @steedos/service-pages
           cnpm sync @steedos/service-steedos-server
-          cnpm sync @steedos/app-admin
-          cnpm sync @steedos/app-contracts
-          cnpm sync @steedos/app-crm
-          cnpm sync @steedos/app-oa
-          cnpm sync @steedos/app-okr-management
-          cnpm sync @steedos/app-project-management
           cnpm sync @steedos/steedos-project-template

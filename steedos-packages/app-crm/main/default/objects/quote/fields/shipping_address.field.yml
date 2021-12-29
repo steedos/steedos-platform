@@ -1,7 +1,0 @@
-name: shipping_address
-group: 地址信息
-inlineHelpText: 与报价关联的客户的发货地址。
-label: 收货人地址
-rows: 3
-sort_no: 300
-type: textarea

@@ -1,5 +1,0 @@
-name: service_date
-inlineHelpText: 订单产品的开始日期。
-label: 开始日期
-sort_no: 150
-type: date

@@ -1,9 +1,0 @@
-name: all
-columns:
-  - product_consumed_number
-  - product
-  - product_items
-  - field: quantity
-    width: 100
-label: 所有产品消耗
-shared: true

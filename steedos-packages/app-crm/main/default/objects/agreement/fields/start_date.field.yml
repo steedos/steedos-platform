@@ -1,5 +1,0 @@
-name: start_date
-label: 主协议开始日期
-required: true
-sort_no: 110
-type: date

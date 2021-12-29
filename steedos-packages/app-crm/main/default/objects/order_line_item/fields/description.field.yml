@@ -1,6 +1,0 @@
-name: description
-is_wide: true
-label: 行备注
-rows: 3
-sort_no: 140
-type: textarea

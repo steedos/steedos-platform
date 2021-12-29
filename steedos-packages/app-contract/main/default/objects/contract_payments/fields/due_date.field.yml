@@ -1,5 +1,0 @@
-name: due_date
-label: 计划付款时间
-type: date
-sortable: true
-sort_no: 130

@@ -1,6 +1,0 @@
-name: converted_opportunity
-hidden: true
-label: 已转换的业务机会
-reference_to: opportunity
-sort_no: 400
-type: lookup

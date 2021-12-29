@@ -1,8 +1,8 @@
-import { bootStrapExpress, exportExcelExpress } from '../routes'
+import { bootStrapExpress, exportExcelExpress } from '../routes';
+import { processExpress } from "@steedos/process";
 const Future = require('fibers/future');
 const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
-const steedosProcess = require("@steedos/process");
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
@@ -225,7 +225,7 @@ export class Core {
         app.use(steedosAuth.authExpress);
         app.use(bootStrapExpress);
         app.use(exportExcelExpress);
-        app.use(steedosProcess.processExpress)
+        app.use(processExpress)
         app.use(coreExpress);
 
         let routers = objectql.getRouterConfigs()

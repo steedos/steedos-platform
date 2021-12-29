@@ -1,5 +1,0 @@
-name: opportunity_id
-label: 业务机会名
-reference_to: opportunity
-sort_no: 210
-type: master_detail

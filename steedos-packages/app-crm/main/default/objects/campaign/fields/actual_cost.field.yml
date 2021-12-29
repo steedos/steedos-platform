@@ -1,6 +1,0 @@
-name: actual_cost
-group: 计划
-inlineHelpText: 运行市场活动所花费的实际金额。
-label: 市场活动中的实际成本
-sort_no: 220
-type: currency

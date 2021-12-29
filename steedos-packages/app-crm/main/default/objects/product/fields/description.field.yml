@@ -1,6 +1,0 @@
-name: description
-is_wide: true
-label: 产品描述
-rows: 3
-sort_no: 150
-type: textarea

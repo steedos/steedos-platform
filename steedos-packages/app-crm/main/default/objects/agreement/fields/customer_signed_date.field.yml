@@ -1,5 +1,0 @@
-name: customer_signed_date
-group: 签名信息
-label: 客户签字日期
-sort_no: 270
-type: date

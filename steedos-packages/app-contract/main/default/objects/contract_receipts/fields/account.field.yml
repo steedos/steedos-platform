@@ -1,8 +1,0 @@
-name: account
-type: lookup
-label: 付款方
-reference_to: accounts
-relatedList: true
-searchable: true
-omit: true
-sort_no: 170

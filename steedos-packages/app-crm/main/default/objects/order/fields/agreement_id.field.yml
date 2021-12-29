@@ -1,5 +1,0 @@
-name: agreement_id
-label: 主协议编号
-reference_to: agreement
-sort_no: 110
-type: master_detail

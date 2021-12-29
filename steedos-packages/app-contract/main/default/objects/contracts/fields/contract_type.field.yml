@@ -1,6 +1,0 @@
-name: contract_type
-type: lookup
-label: 分类
-reference_to: contract_types
-required: true
-sort_no: 130

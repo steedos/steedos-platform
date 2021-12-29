@@ -1,5 +1,0 @@
-name: real_date
-label: 实际收款时间
-type: date
-sortable: true
-sort_no: 150

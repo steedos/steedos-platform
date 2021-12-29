@@ -1,5 +1,0 @@
-name: agreement_end_date
-hidden: true
-label: 主协议结束日期
-sort_no: 250
-type: date

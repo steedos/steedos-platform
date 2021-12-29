@@ -32164,6 +32164,7 @@ body .sc-gsTCUz {
   font-size: 16px;
 }
 .type-html .ant-form-item-control .ant-form-item-control-input-content .notice-block .content {
+  overflow: auto;
   min-height: auto;
   margin: 0;
   padding: 0;

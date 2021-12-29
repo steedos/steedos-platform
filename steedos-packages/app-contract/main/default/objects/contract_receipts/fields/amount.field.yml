@@ -1,6 +1,0 @@
-name: amount
-label: 收款金额
-type: currency
-required: true
-sortable: true
-sort_no: 120

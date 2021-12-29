@@ -1,5 +1,0 @@
-name: product_items
-label: 产品项
-reference_to: product_items
-sort_no: 130
-type: master_detail

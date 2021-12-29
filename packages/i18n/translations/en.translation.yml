@@ -1316,6 +1316,7 @@ CustomLabels:
   workflow_attachment_view: View
   workflow_attachment_isReadOnly: ReadOnly-
   workflow_attachment_versions: Versions
+  workflow_attachment_versions_upload: Upload New Version
   workflow_attachment_uploading: 'Uploading '
   workflow_attachment_downloading: Downloading %s...
   workflow_attachment_creating: 'Creating a new file: %s...'

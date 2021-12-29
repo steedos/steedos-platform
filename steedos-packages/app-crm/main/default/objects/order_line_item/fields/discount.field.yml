@@ -1,5 +1,0 @@
-name: discount
-hidden: true
-label: 折扣（%）
-sort_no: 250
-type: number

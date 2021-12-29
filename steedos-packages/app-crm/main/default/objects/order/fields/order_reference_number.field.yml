@@ -1,5 +1,0 @@
-name: order_reference_number
-hidden: true
-label: 订单参考编号
-sort_no: 330
-type: text

@@ -1,5 +1,0 @@
-name: account
-label: 客户
-reference_to: accounts
-sort_no: 140
-type: lookup

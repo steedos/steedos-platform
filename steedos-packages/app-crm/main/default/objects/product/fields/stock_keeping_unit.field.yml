@@ -1,5 +1,0 @@
-name: stock_keeping_unit
-hidden: true
-label: 产品最小存货单位
-sort_no: 160
-type: text

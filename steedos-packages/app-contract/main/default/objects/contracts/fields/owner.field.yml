@@ -1,8 +1,0 @@
-name: owner
-label: 执行人
-sortable: true
-type: lookup
-reference_to: users
-omit: false
-hidden: false
-sort_no: 160

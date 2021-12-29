@@ -1,7 +1,0 @@
-name: name
-label: 合同名称
-type: text
-required: true
-searchable: true
-index: true
-sort_no: 100

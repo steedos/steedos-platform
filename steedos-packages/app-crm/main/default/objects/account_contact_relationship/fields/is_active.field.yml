@@ -1,6 +1,0 @@
-name: is_active
-defaultValue: true
-inlineHelpText: 表示联系人是否积极参与该公司。
-label: 启用
-sort_no: 120
-type: toggle

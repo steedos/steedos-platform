@@ -1,6 +1,0 @@
-name: tax
-group: 总计
-inlineHelpText: 报价的总税额。
-label: 税收
-sort_no: 200
-type: currency

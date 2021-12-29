@@ -1,5 +1,0 @@
-name: quantity
-inlineHelpText: 产品的单位数量。
-label: 数量
-sort_no: 110
-type: number

@@ -1,7 +1,0 @@
-name: order_id
-inlineHelpText: 本订单产品的父级订单。
-label: 订单
-reference_to: order
-searchable: true
-sort_no: 190
-type: master_detail

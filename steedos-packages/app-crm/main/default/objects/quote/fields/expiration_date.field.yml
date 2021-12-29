@@ -1,5 +1,0 @@
-name: expiration_date
-inlineHelpText: 该报价的失效日期。
-label: 到期日期
-sort_no: 110
-type: date

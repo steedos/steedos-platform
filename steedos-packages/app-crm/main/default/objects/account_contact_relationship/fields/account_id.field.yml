@@ -1,8 +1,0 @@
-name: account_id
-inlineHelpText: 与联系人相关的公司的名称。
-label: 客户
-reference_to: accounts
-required: true
-searchable: true
-sort_no: 130
-type: master_detail

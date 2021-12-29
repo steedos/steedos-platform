@@ -1,6 +1,0 @@
-name: total_opportunity_quantity
-hidden: true
-inlineHelpText: 如果业务机会具有产品则为“产品”相关列表中所有产品的所有数量字段值的总计。如果业务机会没有产品则为通用字段。
-label: 数量
-sort_no: 320
-type: number

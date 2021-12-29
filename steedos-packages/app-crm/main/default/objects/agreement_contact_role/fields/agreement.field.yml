@@ -1,5 +1,0 @@
-name: agreement
-label: 主协议
-reference_to: agreement
-sort_no: 100
-type: master_detail

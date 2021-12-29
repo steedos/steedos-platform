@@ -1,5 +1,0 @@
-name: is_active
-inlineHelpText: 指示产品已准备好在价目表、业务机会或报价中使用，以及您是否可以在视图中查看产品。
-label: 已启用
-sort_no: 140
-type: toggle

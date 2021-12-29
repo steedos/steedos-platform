@@ -1,9 +1,0 @@
-name: all
-columns:
-  - name
-  - location_type
-  - is_inv_location
-  - is_mobile
-  - description
-label: 所有位置
-shared: true

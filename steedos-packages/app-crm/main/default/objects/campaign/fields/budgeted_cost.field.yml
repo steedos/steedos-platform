@@ -1,6 +1,0 @@
-name: budgeted_cost
-group: 计划
-inlineHelpText: 市场活动的预算金额。
-label: 市场活动中的预算成本
-sort_no: 200
-type: currency

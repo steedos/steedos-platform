@@ -1,8 +1,0 @@
-name: name
-index: true
-label: 产品名称
-required: true
-searchable: true
-sort_no: 100
-sortable: true
-type: text

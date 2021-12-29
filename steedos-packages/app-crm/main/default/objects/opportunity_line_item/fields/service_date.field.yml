@@ -1,5 +1,0 @@
-name: service_date
-inlineHelpText: 某个业务机会产品的关闭日期。
-label: 日期
-sort_no: 140
-type: date

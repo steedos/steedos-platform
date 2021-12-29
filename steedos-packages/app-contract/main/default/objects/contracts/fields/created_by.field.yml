@@ -1,6 +1,0 @@
-name: created_by
-label: 创建人
-sortable: true
-type: lookup
-reference_to: users
-sort_no: 170

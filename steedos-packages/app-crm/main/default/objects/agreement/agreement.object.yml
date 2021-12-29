@@ -1,9 +1,0 @@
-name: agreement
-enable_api: true
-enable_audit: true
-enable_files: true
-enable_instances: true
-enable_search: true
-enable_trash: true
-icon: contract
-label: 主协议
