@@ -58,11 +58,6 @@ module.exports = {
         removeServiceMetadata: {
             async handler(serviceName, apiName, meta) {
                 const metadataType = this.settings.metadataType;
-                console.log(`removeServiceMetadata`, {
-                    serviceName,
-                    metadataType,
-                    metadataApiName: apiName
-                });
                 return await this.broker.call('metadata.removeServiceMetadata', {
                     serviceName,
                     metadataType,
