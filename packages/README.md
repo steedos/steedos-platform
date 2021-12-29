@@ -85,7 +85,7 @@ steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用�
 
 ## mongodb-bi-connector
 
-？更多说明？作废？
+将系统对象转换为mongodb bi schema ，允许用户使用SQL创建查询，并使用Tableau， MicroStrategy和 Qlik等现有的关系商业智能工具可视化，图形化和报告其MongoDB数据。[MongoDB BI Connector](https://www.mongodb.com/zh-cn/products/bi-connector)
 
 ## node-red-app-template
 
