@@ -203,7 +203,7 @@ module.exports = {
             },
             on: "record_only",
             todo: function () {
-                return Modal.show('initiate_approval', {
+                return window.Modal.show('initiate_approval', {
                     object_name: this.object_name,
                     record_id: this.record_id
                 });
