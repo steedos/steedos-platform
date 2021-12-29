@@ -22,8 +22,7 @@ module.exports = {
             }
         }
         Creator.odata.insert(object_name, Object.assign(newDoc, {permission_set_id: permissionSetId}), function(result, error){
-            if(result){
-                Steedos.authRequest(`/api/v4/${object_name}/${result._id}/resetFieldPermissions`, { type: 'get', async: false })
+            if (result) {
                 if(Session.get("object_name") === 'permission_objects'){
                     FlowRouter.go(`/app/-/${object_name}/view/${result._id}`)
                 }else{
