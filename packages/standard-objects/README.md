@@ -84,28 +84,32 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 节假日 holidays
 
-用于设置自定义节假日。
+用于自定义节假日。
 
 #### 工作时间 business_hours
 
-用于设置自定义工作时间。
+用于自定义工作时间。
 
 #### 外部应用 connected_apps
 
-作废？ 用于系统引用外部应用。
+用于系统引用外部应用。
+
 #### core core
 
 作废？
+
 #### 自定义主页 dashboard
 
-在“系统设置=>高级设置=>自定义主页"中定义应用的主页。
+用于定义应用的主页。
 
 #### 我的收藏夹 favorites
 
 [没有启用该对象，作废？]
+
 #### 关注 follows
 
 用于保存用户关注的对象。
+
 #### license_auth_token license_auth_token
 
 【不懂？】
@@ -121,28 +125,35 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 #### 最近查看 object_recent_viewed
 
 【不懂怎么解释】 ？
+
 #### WebHooks object_webhooks
 
 【不懂怎么解释】 ？
 
 #### 字段权限 permission_fields
 
-用于设置字段权限的配置。
+用于设置字段权限。
+
 #### 选项列表值 picklist_options
 
 【不懂怎么解释】 ？
+
 #### 下拉框列表 picklists
 
 【不懂怎么解释】 ？
+
 #### 限制规则 restriction_rules
 
-【不懂怎么解释】 ？
+作废？
+
 #### 登录会话 sessions
 
-【不懂怎么解释】 ？
+用于保存登录的用户、ip地址、登录时间等信息。
+
 #### 设置 settings
 
-【不懂怎么解释】 ？
+作废？ 【没有启用】
+
 #### 共享规则 share_rules
 
 用于给授权组织、用户共享指定对象的规则。
@@ -150,6 +161,7 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 #### 选项卡 tabs
 
 用于接收对象显示在应用中。
+
 #### 验证码 users_verify_code
 
 【不懂怎么解释】 ？
@@ -163,7 +175,7 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### API Key ： api_keys
 
-【不懂怎么解释】 ？
+接口验证是以 API Key 作为 Token 进行验证。
 
 #### 消息 chat_messages
 
@@ -184,12 +196,14 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 #### 联系人 contacts
 
 用于保存业务伙伴联系人信息。
+
 #### 邀请用户 space_users_invite
 
 用于邀请新用户注册账号。
+
 #### _object_reload_logs
 
-【不懂如何解释？】
+作废？
 
 #### 外部数据源 datasources
 
