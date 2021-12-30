@@ -178,7 +178,7 @@ json router 的认证中间件
 
 ## steedos-instance-record-queue
 
-？
+申请单、台账数据之间同步队列
 
 ## steedos-lightning-design-system
 
@@ -194,7 +194,7 @@ json router 的认证中间件
 
 ## steedos-meteor-fix
 
-？？
+meteor mongo mongoOptions 初始化
 
 ## steedos-mini-web
 
