@@ -102,11 +102,11 @@ json router 的认证中间件
 
 ## steedos-application-package
 
-老版本软件包？？
+已作废。软件包导入
 
 ## steedos-audit
 
-上一代审计功能？？审计功能都迁移到standard-objects中了？
+已作废。
 
 ## steedos-autoform
 
