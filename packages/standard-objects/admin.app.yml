@@ -26,6 +26,12 @@ admin_menus:
     object_name: users
     mobile: false
     sort: 10
+  - _id: process_delegation_rules
+    name: Delegation
+    permission_sets:
+      - user
+    object_name: process_delegation_rules
+    parent: account
   # - _id: account_background
   #   name: Background
   #   permission_sets:

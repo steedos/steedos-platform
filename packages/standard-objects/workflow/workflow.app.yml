@@ -76,12 +76,6 @@ admin_menus:
       - admin
     object_name: webhooks
     parent: menu_workflow
-  - _id: process_delegation_rules
-    name: Delegation
-    permission_sets:
-      - user
-    object_name: process_delegation_rules
-    parent: account
   - _id: object_workflows
     name: Object Synchronization Rule
     permission_sets:
