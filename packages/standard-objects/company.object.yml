@@ -3,6 +3,7 @@ label: Division
 icon: account
 enable_api: true
 hidden: false
+enable_enhanced_lookup: true
 fields:
   name:
     label: Name

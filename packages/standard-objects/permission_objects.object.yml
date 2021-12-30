@@ -6,6 +6,7 @@ fields:
   name:
     label: Name
     type: formula
+    is_wide: true
     data_type: text
     formula: object_name.label + '.' + permission_set_id.label
     searchable: true
@@ -81,6 +82,16 @@ fields:
     type: boolean
     label: Modify Division's Records
     name: modifyCompanyRecords
+  viewAssignCompanysRecords:
+    type: lookup
+    reference_to: company
+    label: 查看指定分部
+    multiple: true
+  modifyAssignCompanysRecords:
+    type: lookup
+    reference_to: company
+    label: 修改指定分部
+    multiple: true
   allowReadFiles:
     type: boolean
     label: Allow Read Files

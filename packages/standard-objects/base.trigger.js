@@ -1,5 +1,49 @@
 const objectql = require('@steedos/objectql');
+const auth = require('@steedos/auth');
 const _ = require('underscore');
+
+/**
+ * 校验记录的 company 是否在指定授权范围内
+ * @param {*} object_name
+ * @param {*} userId 
+ * @param {*} doc 
+ */
+const checkCompany = async (object_name, userId, doc) => {
+    const userSession = await auth.getSessionByUserId(userId, doc.space);
+
+    if (!userSession || userSession.is_space_admin) {
+        return;
+    }
+
+    const userObjectPermission = await objectql.getObject(object_name).getUserObjectPermission(userSession);
+
+    if (userObjectPermission.modifyAllRecords) {
+        return true;
+    }
+
+    let allowCompanyIds = [];
+
+    //与client端保持一致，始终授权用户所属分部
+    if (!_.isEmpty(userSession.company_ids)) {
+        allowCompanyIds.push(...userSession.company_ids);
+    }
+    if (!_.isEmpty(userObjectPermission.modifyAssignCompanysRecords)) {
+        allowCompanyIds.push(...userObjectPermission.modifyAssignCompanysRecords);
+    }
+
+    if (_.has(doc, "company_id")) {
+        if (!_.include(allowCompanyIds, doc.company_id)) {
+            throw new Error(`未获得分部授权`);
+        }
+    }
+
+    if (_.has(doc, "company_ids")) {
+        if (!_.difference(doc.company_ids, allowCompanyIds)) {
+            throw new Error(`未获得分部授权`);
+        }
+    }
+}
+
 module.exports = {
     listenTo: 'base',
     beforeInsert: async function () {
@@ -44,6 +88,7 @@ module.exports = {
                     }
                 }
             }
+            await checkCompany(this.object_name, userId, doc);
         }
     },
     beforeUpdate: async function () {
@@ -83,6 +128,7 @@ module.exports = {
                     doc.company_ids = null;
                 }
             }
+            await checkCompany(this.object_name, userId, doc);
         }
     },
     afterDelete: async function () {

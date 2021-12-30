@@ -148,8 +148,18 @@ fields:
           /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择分部时可以能从所有分部中选择。*/
         }
         else{
-          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。*/
-          var company_ids = Creator.USER_CONTEXT.user.company_ids;
+          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。此规则只用于前端限制, 服务端有触发器给记录处理company_id*/
+          var company_ids =  [];
+
+          /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
+          if(true || perms.modifyCompanyRecords){
+            company_ids = Creator.USER_CONTEXT.user.company_ids
+          }
+
+          /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
+          var modifyAssignCompanysRecords = perms.modifyAssignCompanysRecords || [];
+          company_ids = window._.uniq(company_ids.concat(modifyAssignCompanysRecords));
+
           if(!company_ids.length){
             console.warn("当前用户不属于任何分部，无权修改该字段。");
             queryFilters = ["_id", "=", -1];
@@ -227,8 +237,18 @@ fields:
           /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择分部时可以能从所有分部中选择。*/
         }
         else{
-          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。*/
-          var company_ids = Creator.USER_CONTEXT.user.company_ids;
+          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。此规则只用于前端限制, 服务端有触发器给记录处理company_id*/
+          var company_ids =  [];
+
+          /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
+          if(true || perms.modifyCompanyRecords){
+            company_ids = Creator.USER_CONTEXT.user.company_ids
+          }
+
+          /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
+          var modifyAssignCompanysRecords = perms.modifyAssignCompanysRecords || [];
+          company_ids = window._.uniq(company_ids.concat(modifyAssignCompanysRecords));
+
           if(!company_ids.length){
             console.warn("当前用户不属于任何分部，无权修改该字段。");
             queryFilters = ["_id", "=", -1];

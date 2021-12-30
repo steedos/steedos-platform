@@ -23,6 +23,8 @@ abstract class SteedosObjectPermissionTypeProperties {
     uneditable_fields?: string[]
     unrelated_objects?: string[]
     field_permissions?: any
+    viewAssignCompanysRecords?: string[]
+    modifyAssignCompanysRecords?: string[]
 }
 
 export interface SteedosObjectPermissionTypeConfig extends SteedosObjectPermissionTypeProperties { }
@@ -70,6 +72,15 @@ export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProp
         }
         if (this.viewCompanyRecords) {
             this.allowRead = true;
+        }
+
+        if (!_.isEmpty(this.viewAssignCompanysRecords)) {
+            this.allowRead = true;
+        }
+
+        if (!_.isEmpty(this.modifyAssignCompanysRecords)) {
+            this.allowRead = true;
+            this.allowEdit = true;
         }
 
         if (this.allowRead) {

@@ -639,6 +639,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
             uneditable_fields: null,
             unrelated_objects: null,
             field_permissions: null,
+            viewAssignCompanysRecords: [],
+            modifyAssignCompanysRecords: [],
             // read_filters: [],
             // edit_filters: []
         }
@@ -674,6 +676,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         }
                         if (!_.isEmpty(_v)) {
                             userObjectPermission[k].push(_v);
+                        }
+                    } else if (['viewAssignCompanysRecords', 'modifyAssignCompanysRecords'].indexOf(k) > -1) {
+                        if ('modifyAssignCompanysRecords' === k) {
+                            if (!_.isEmpty(_v) && _.isArray(_v)) {
+                                userObjectPermission['viewAssignCompanysRecords'].push(..._v);
+                            }
+                        }
+                        if (!_.isEmpty(_v) && _.isArray(_v)) {
+                            userObjectPermission[k].push(..._v);
                         }
                     }
                     else if ((_.isArray(v) || _.isNull(v))) {
@@ -1324,31 +1335,31 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.runTriggerActions(when, context)
     }
 
-    // private async appendRecordPermission(records, userSession) {
-    //     const _ids = _.pluck(records, '_id');
-    //     const objPm = await this.getUserObjectPermission(userSession);
-    //     const permissionFilters = this.getObjectPermissionFilters(objPm, userSession, true);
-    //     if (_.isEmpty(permissionFilters)) {
-    //         return;
-    //     }
-    //     const filters = formatFiltersToODataQuery(['_id', 'in', _ids])
+    private async appendRecordPermission(records, userSession) {
+        const _ids = _.pluck(records, '_id');
+        const objPm = await this.getUserObjectPermission(userSession);
+        const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
+        if (_.isEmpty(permissionFilters)) {
+            return;
+        }
+        const filters = formatFiltersToODataQuery(['_id', 'in', _ids])
 
-    //     const results = await this.directFind({
-    //         fields: ['_id'],
-    //         filters: `(${filters}) and (${permissionFilters.join(' or ')})`
-    //     });
-    //     const allowEditIds = _.pluck(results, '_id');
-    //     _.each(records, (record) => {
-    //         if (_.include(allowEditIds, record._id)) {
-    //             record.record_permissions = {
-    //                 allowRead: true,
-    //                 allowEdit: true,
-    //                 allowDelete: true,
-    //             }
-    //         }
-    //     })
+        const results = await this.directFind({
+            fields: ['_id'],
+            filters: `(${filters}) and (${permissionFilters.join(' or ')})`
+        });
+        const allowEditIds = _.pluck(results, '_id');
+        _.each(records, (record) => {
+            if (_.include(allowEditIds, record._id)) {
+                record.record_permissions = {
+                    allowRead: true,
+                    allowEdit: true,
+                    allowDelete: true,
+                }
+            }
+        })
 
-    // }
+    }
 
     private async getTriggerContext(when: string, method: string, args: any[], recordId?: string) {
 
@@ -1501,15 +1512,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 if (method === 'count') {
                     values = returnValue || 0
                 } 
-                // else{
-                //     if (userSession) {
-                //         let _records = returnValue
-                //         if (method == 'findOne' && returnValue) {
-                //             _records = [_records]
-                //         }
-                //         await this.appendRecordPermission(_records, userSession);
-                //     }
-                // }
+                else {
+                    if (userSession) {
+                        let _records = returnValue
+                        if (method == 'findOne' && returnValue) {
+                            _records = [_records]
+                        }
+                        await this.appendRecordPermission(_records, userSession);
+                    }
+                }
                 Object.assign(afterTriggerContext, { data: { values: values } })
             }
             // console.log("==returnValue==", returnValue);
@@ -1587,32 +1598,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    // private getObjectPermissionFilters(objectPermission, userSession, isEdit) {
-    //     const objectPermissionFilters = [];
-
-    //     let permissionFiltersKey = 'read_filters';
-    //     if (isEdit) {
-    //         permissionFiltersKey = 'edit_filters';
-    //     }
-
-    //     const globalData = Object.assign({}, userSession, { now: new Date() });
-
-    //     let permissionFilters = objectPermission[permissionFiltersKey];
-
-    //     _.each(permissionFilters, (permissionFilter) => {
-    //         if (_.isString(permissionFilter) && isExpression(permissionFilter.trim())) {
-    //             try {
-    //                 const filters = parseSingleExpression(permissionFilter, {}, "#", globalData);
-    //                 if (filters && !_.isString(filters)) {
-    //                     objectPermissionFilters.push(`(${formatFiltersToODataQuery(filters, userSession)})`)
-    //                 }
-    //             } catch (error) {
-    //                 console.error(`getObjectPermissionFilters error`, permissionFilter, error.message);
-    //             }
-    //         }
-    //     })
-    //     return objectPermissionFilters;
-    // }
+    private getObjectEditPermissionFilters(objectPermission, userSession) {
+        const objectPermissionFilters = [];
+        if (!_.isEmpty(objectPermission.modifyAssignCompanysRecords)) {
+            objectPermissionFilters.push(`(${formatFiltersToODataQuery([['company_id', 'in', objectPermission.modifyAssignCompanysRecords], 'or', ['company_ids', 'in', objectPermission.modifyAssignCompanysRecords]], userSession)})`)
+        }
+        return objectPermissionFilters;
+    }
 
     /**
      * 把query.filters用formatFiltersToODataQuery转为odata query
@@ -1658,11 +1650,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
                 let spaceFilter, companyFilter, ownerFilter, sharesFilter, shareRuleFilters, restrictionRuleFilters, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
 
+                //space 权限
                 if (spaceId) {
                     spaceFilter = `(space eq '${spaceId}')`;
                 }
 
-                if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { // 公司级
+                // 本公司权限
+                if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { 
                     if (_.isEmpty(userSession.companies)) {
                         console.log('objPm', objPm);
                         throw new Error("user not belong any company!");
@@ -1676,12 +1670,25 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     ownerFilter = `(owner eq '${userId}')`;
                 }
 
+                // 指定公司权限
+                let viewAssignCompanysRecordsFilter = [];
+                if (objPm.viewAssignCompanysRecords) {
+                    _.each(objPm.viewAssignCompanysRecords, (assignCompanyId) => {
+                        viewAssignCompanysRecordsFilter.push(`((company_id eq '${assignCompanyId}') or (company_ids eq '${assignCompanyId}'))`)
+                    })
+                }
+                if (!_.isEmpty(viewAssignCompanysRecordsFilter)) {
+                    permissionFilters.push(`(${viewAssignCompanysRecordsFilter.join(' or ')})`);
+                }
+
+                //共享规则
                 shareRuleFilters = await ShareRules.getUserObjectFilters(this.name, userSession);
 
                 if (!_.isEmpty(shareRuleFilters)) {
                     permissionFilters.push(`(${shareRuleFilters.join(' or ')})`);
                 }
 
+                // 限制规则
                 restrictionRuleFilters = await RestrictionRule.getUserObjectFilters(this.name, userSession);
 
                 if (!_.isEmpty(restrictionRuleFilters)) {
@@ -1693,6 +1700,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 //     permissionFilters.push(`(${objectPermissionFilters.join(' or ')})`);
                 // }
 
+                //共享规则(旧)
                 sharesFilter = getUserObjectSharesFilters(this.name, userSession);
 
                 if (!_.isEmpty(companyFilter)) {
@@ -1731,7 +1739,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             else if (method === 'update' || method === 'updateOne') {
-                const permissionFilters = null; //this.getObjectPermissionFilters(objPm, userSession, true);
+                const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
                 if (!objPm.allowEdit && _.isEmpty(permissionFilters)) {
                     throw new Error(`no ${method} permission!`);
                 }
@@ -1798,7 +1806,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             else if (method === 'delete') {
-                const permissionFilters = null; //this.getObjectPermissionFilters(objPm, userSession, true);
+                const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
                 if (!objPm.allowDelete && _.isEmpty(permissionFilters)) {
                     throw new Error(`no ${method} permission!`);
                 }

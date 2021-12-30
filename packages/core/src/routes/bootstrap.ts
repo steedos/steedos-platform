@@ -207,7 +207,14 @@ export async function getSpaceBootStrap(req, res) {
                 const objectConfig  = object.metadata;
                 if(!result.objects[objectConfig.name]){
                     try {
-                        const _obj = Creator.convertObject(clone(objectConfig), spaceId)
+                        const userObjectConfig = await getObject(objectConfig.name).getRecordView(userSession);
+                        let _objectConfig = null;
+                        if (userObjectConfig) {
+                            _objectConfig = userObjectConfig
+                        } else {
+                            _objectConfig = clone(objectConfig)
+                        }
+                        const _obj = Creator.convertObject(_objectConfig, spaceId)
                         _obj.name = objectConfig.name
                         _obj.database_name = datasourceName
                         _obj.permissions = await getObject(objectConfig.name).getUserObjectPermission(userSession)
@@ -314,7 +321,14 @@ async function getObjectConfig(objectName, spaceId, userSession) {
     let objectConfig: any = {}
     try {
         let object = getObject(objectName)
-        objectConfig = Creator.convertObject(clone(object.toConfig()), spaceId);
+        let _objectConfig = null;
+        const userObjectConfig = await object.getRecordView(userSession);
+        if (userObjectConfig) {
+            _objectConfig = userObjectConfig
+        } else {
+            _objectConfig = clone(object.toConfig())
+        }
+        objectConfig = Creator.convertObject(_objectConfig, spaceId);
         objectConfig.name = objectName
         objectConfig.datasource = object.datasource.name;
         objectConfig.permissions = await object.getUserObjectPermission(userSession);
