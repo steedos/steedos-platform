@@ -18,9 +18,9 @@ ENV NODE_VERSION=12.22.7
 ENV TRIGGER_REBUILD=1
 RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | PROFILE=/dev/null bash \
     && bash -c ". .nvm/nvm.sh \
-        && nvm install $NODE_VERSION \
-        && nvm alias default $NODE_VERSION \
-        && npm install -g typescript yarn node-gyp"
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && npm install -g typescript yarn node-gyp"
 ENV PATH=$PATH:/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin
 
 # Install Redis
@@ -32,5 +32,8 @@ RUN wget https://download.redis.io/releases/redis-6.2.6.tar.gz && \
     cd .. && \
     rm -f redis-6.2.6.tar.gz
 ENV PATH=$PATH:/home/gitpod/redis-6.2.6/src
+
+# Install Meteor
+RUN curl https://install.meteor.com/?release=1.9.3 | sh
 
 USER gitpod
