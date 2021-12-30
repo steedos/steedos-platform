@@ -8,7 +8,7 @@
 
 ## boilerplate-generator
 
-？
+meteor 模板生成器
 
 ## check-npm-versions
 
@@ -86,11 +86,11 @@
 
 ## steedos-api-authenticate-user
 
-？
+json router 的认证中间件
 
 ## steedos-app-chat
 
-?
+消息模块
 
 ## steedos-app-tableau
 
