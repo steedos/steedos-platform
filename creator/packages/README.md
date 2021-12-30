@@ -8,7 +8,7 @@
 
 ## boilerplate-generator
 
-?
+？
 
 ## check-npm-versions
 
@@ -32,13 +32,13 @@
 
 我们本地化了名为 [aldeed:autoform](https://atmospherejs.com/aldeed/autoform) 的Meteor包，这是一个在Meteor项目中可以根据字段类型自动生成表单UI的包。
 
-已作废，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
+这是华炎魔方上一代表单控件，目前大部分表单已经升级为使用 [Ant Design](https://ant.design/) 作为新表单实现相关功能了。
+
+> 要想在对象上使用新表单功能，需要把对象上的version属性配置为2，不配置的话默认还是使用上一代表单控件。
 
 ## meteor-collection-hooks
 
 我们本地化了名为 [meteor-collection-hooks](https://github.com/Meteor-Community-Packages/meteor-collection-hooks) 的Meteor包，这是一个扩展了Mongo.Collection的包，有了它，就可以在Meteor项目中编写before/after hooks来实现触发器。
-
-还在用？作废？
 
 ## meteor-moment
 
@@ -56,7 +56,7 @@
 
 这是实现下拉框UI控件的Meteor包。
 
-已作废，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
+这是华炎魔方上一代下拉框控件，目前大部分表单已经升级为使用 [Ant Design](https://ant.design/) 作为新控件库实现相关功能了。
 
 ## meteor-simple-json-routes
 
@@ -90,11 +90,11 @@
 
 ## steedos-app-chat
 
-？还有用？作废？
+?
 
 ## steedos-app-tableau
 
-该包使用 [aldeed:tabular](https://github.com/Meteor-Community-Packages/meteor-tabular) 实现了审批王应用中一些列表界面。
+已作废。
 
 ## steedos-app-workflow
 
@@ -102,71 +102,51 @@
 
 ## steedos-application-package
 
-作废？？？老版本软件包？
+老版本软件包？？
 
 ## steedos-audit
 
-作废？？审计功能都迁移到standard-objects中了？
+上一代审计功能？？审计功能都迁移到standard-objects中了？
 
 ## steedos-autoform
 
-该包实现了上一代各种字段类型对应的UI组件。
-
-已作废，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
+该包实现了上一代华炎魔方各种字段类型对应的UI组件，目前大部分表单已经升级为使用 [Ant Design](https://ant.design/) 作为新控件库实现相关功能了。
 
 ## steedos-autoform-dx-date-box
 
-该包实现了上一代日期以及日期时间字段类型对应的UI组件。
-
-已作废，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
+该包实现了上一代华炎魔方日期以及日期时间字段类型对应的UI组件，目前大部分表单已经升级为使用 [Ant Design](https://ant.design/) 作为新控件库实现相关功能了。
 
 ## steedos-autoform-file
 
-该包实现了上一代附件字段类型相关功能。
-
-已作废，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
+该包实现了上一代华炎魔方附件字段类型对应的UI组件，目前大部分表单已经升级为使用 [Ant Design](https://ant.design/) 作为新控件库实现相关功能了。
 
 ## steedos-autoform-filesize
 
-该包实现了上一代附件字段类型相关功能。
-
-已作废，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
+该包实现了上一代华炎魔方附件字段类型对应的UI组件，目前大部分表单已经升级为使用 [Ant Design](https://ant.design/) 作为新控件库实现相关功能了。
 
 ## steedos-autoform-location
 
-该包实现了上一代地理位置字段类型相关功能。
-
-已作废。
+该包实现了上一代华炎魔方地理位置字段类型对应的UI组件。
 
 ## steedos-autoform-lookup
 
-该包实现了上一代相关表，即lookup字段类型相关功能。
-
-已作废，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
+该包实现了上一代华炎魔方相关表，即lookup字段类型对应的UI组件，目前大部分表单已经升级为使用 [Ant Design](https://ant.design/) 作为新控件库实现相关功能了。
 
 ## steedos-autoform-markdown
 
-该包实现了上一代markdown字段类型相关功能。
-
-已作废，相关功能已经用其他开源控件替换了。
+该包实现了上一代华炎魔方markdown字段类型对应的UI组件，目前大部分表单已经升级为使用其他开源控件实现相关功能了。
 
 ## steedos-autoform-tags
 
-该包实现了上一代tag字段类型相关功能。
-
-已作废，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
+该包实现了上一代华炎魔方tag字段类型对应的UI组件，目前大部分表单已经升级为使用 [Ant Design](https://ant.design/) 作为新控件库实现相关功能了。
 
 ## steedos-base
 
 该包是上一代华炎魔方基础功能包。
 
-已作废？？？？
-
 ## steedos-bootstrap
 
 我们本地化了名为 [twbs:bootstrap](https://atmospherejs.com/twbs/bootstrap) 的Meteor包，有了它，就可以在Meteor中使用 [Bootstrap](https://getbootstrap.com/) 了。
-
-已作废？？？？
 
 ## steedos-creator
 
@@ -178,7 +158,7 @@
 
 我们本地化了名为 [yogiben:autoform-modals](https://github.com/yogiben/meteor-autoform-modals) 的Meteor包，使用它可以在Meteor项目中实现弹出Modal窗口。
 
-目前可能只有审批王应用在使用该包，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
+这是上一代华炎魔方实现弹出窗口UI组件功能包，目前可能只有审批王应用在使用该包，相关功能已经用 [Ant Design](https://ant.design/) 替换了。
 
 ## steedos-devexpress
 
@@ -190,25 +170,23 @@
 
 ## steedos-huaweipush
 
-还在用？作废？？
+该包实现了华为手机APP推送消息相关功能。
 
 ## steedos-i18n
 
-还在用？作废？？
+该包实现了在Meteor项目中使用国际化翻译相关功能。
 
 ## steedos-instance-record-queue
 
-还在用？作废？？
+？
 
 ## steedos-lightning-design-system
 
 华炎魔方依赖了 [lightning-design-system](https://github.com/salesforce/design-system-react)，该包实现在Meteor项目中使用它们。
 
-看起来作废了？
-
 ## steedos-logger
 
-还在用？作废？？
+该包实现了上一代华炎魔方在浏览器上查看服务端日志的功能。
 
 ## steedos-mailqueue
 
@@ -220,21 +198,19 @@
 
 ## steedos-mini-web
 
-？？
+已作废。
 
 ## steedos-oauth2-messenger
 
-？？
+已作废。
 
 ## steedos-oauth2-server
 
 Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员通过配置第三方授权应用，可实现让第三方应用通过调用相关接口，申请授权登录。
 
-？？还在用？？作废？
-
 ## steedos-object-database
 
-迁移到standard-objects包中了吧？？作废？
+该包实现了上一代华炎魔方对象模型基础功能，新版相关功能已经迁移到 [模板项目](https://github.com/steedos/steedos-platform/tree/2.1/packages/standard-objects) 中了。
 
 ## steedos-object-webhooks-queue
 
@@ -242,41 +218,39 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 
 ## steedos-objects
 
-迁移到standard-objects包中了吧？？作废？
+该包实现了上一代华炎魔方对象模型内核功能，新版相关功能已经迁移到 [模板项目](https://github.com/steedos/steedos-platform/tree/2.1/packages/standard-objects) 中了。
 
 ## steedos-objects-billing
 
-迁移到standard-objects包中了吧？？作废？
+作废。
 
 ## steedos-objects-core
 
-迁移到standard-objects包中了吧？？作废？
+该包中包含上一代华炎魔方部分上传附件相关业务逻辑，新版相关功能已经迁移到 [模板项目](https://github.com/steedos/steedos-platform/tree/2.1/packages/standard-objects) 中了。
 
 ## steedos-objects-to-yaml
 
-该包用于把creator中的对象转为yaml格式内容，已经不需要了吧？？作废？?
+该包用于把creator中的对象转为yaml格式内容，已作废。
 
 ## steedos-odata
 
-上一代华炎魔方OData接口功能是在这个包中实现的，已作废？？
+上一代华炎魔方OData接口功能是在这个包中实现的。
 
 ## steedos-pay
 
-已作废？？
+已作废。
 
 ## steedos-post
 
-该包中包含了几个上一代魔方格式定义的对象，已作废。
+已作废。
 
 ## steedos-qcloud-smsqueue
 
-已作废？？？
+该包实现了服务端待发送短信队列相关功能，用于按队列次序依次发送短信。
 
 ## steedos-smsqueue
 
-该包实现服务端待发送短信队列相关功能，用于按队列次序依次发送短信。
-
-已作废？？？
+该包实现了服务端待发送短信队列相关功能，用于按队列次序依次发送短信。
 
 ## steedos-theme
 
@@ -292,15 +266,15 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 
 ## steedos-weixin
 
-？？已作废？？
+已作废。
 
 ## steedos-weixin-aes
 
-？？已作废？？
+已作废。
 
 ## steedos-weixin-template-message-queue
 
-？？已作废？？
+已作废。
 
 ## steedos-workflow
 
