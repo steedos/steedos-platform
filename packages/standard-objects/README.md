@@ -50,13 +50,9 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 用于发布给指定人员的告示。
 
-#### 知识 cms_posts
-
-？？？
-
 #### 通知 notifications
 
-作废？
+用于创建任务、日程、公告后发送通知给指定人员。
 
 #### 附件 cms_files
 
@@ -68,7 +64,7 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 订单 billing_pay_records
 
-作废？
+已作废。
 
 #### 数据导入 queue_import
 
@@ -96,31 +92,31 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 外部应用 connected_apps
 
-作废？
+作废？ 用于系统引用外部应用。
 #### core core
 
 作废？
 #### 自定义主页 dashboard
 
-用于定义应用的主页。
+在“系统设置=>高级设置=>自定义主页"中定义应用的主页。
 
 #### 我的收藏夹 favorites
 
-作废？
+[没有启用该对象，作废？]
 #### 关注 follows
 
-作废？
+用于保存用户关注的对象。
 #### license_auth_token license_auth_token
 
-作废？
+【不懂？】
 
 #### 许可证 license
 
-【不懂怎么解释】 ？
+华炎魔方平台私有部署版完全免费，云服务需要购买相关的许可证。
 
 #### OAuth2应用 OAuth2Clients
 
-作废？
+【不懂怎么解释】 ？
 
 #### 最近查看 object_recent_viewed
 
@@ -169,7 +165,85 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 【不懂怎么解释】 ？
 
+#### 消息 chat_messages
 
+用于显示任务、公告、日程关键信息。
+
+#### 房间 chat_rooms
+
+【不懂怎么解释】 ？
+
+#### 订阅 chat_subscriptions
+
+用于阅读预定的内容。
+
+#### 业务伙伴 accounts
+
+用于保存公司合作的业务伙伴信息。
+
+#### 联系人 contacts
+
+用于保存业务伙伴联系人信息。
+#### 邀请用户 space_users_invite
+
+用于邀请新用户注册账号。
+#### _object_reload_logs
+
+【不懂如何解释？】
+
+#### 外部数据源 datasources
+
+用于定义对象使用外部数据源。
+
+#### 对象 objects
+
+用于创建对象，配置数据源、功能开关、是否启用等信息。
+
+#### 操作按钮 object_actions
+
+用于对象定义操作按钮显示的位置、是否启用等配置信息。
+
+#### 对象字段 object_fields
+
+用于创建字段时的配置信息。
+
+#### 页面布局 object_layouts
+
+用于对象详细页显示的字段内容。
+
+#### 列表视图 object_listviews
+
+用于对象记录在列表页显示的内容。
+
+#### 相关子表 object_related_list
+
+用于对象详细页携带相关子表内容。
+
+#### 对象触发器 object_triggers
+
+用于对象创建、修改、删除时触发指定事件。
+
+#### 对象验证规则 object_validation_rules
+
+设置对象验证规则可以提高数据质量。
+
+#### object_webhooks_queue
+
+作废？ 
+
+#### 字段更新 action_field_updates
+
+字段更新操作允许您自动更新字段值。您可以将字段更新与工作流规则、批准过程关联。
+
+#### 工作流通知 workflow_notifications
+
+您可以在新建、编辑工作流规则或新建、编辑批准过程，批准步骤时，在各种操作分组中选择已有工作流通知选项或创建新的工作流通知操作。
+
+有新消息到达时，Steedos 在页面右上角显示推送通知提醒，点击推送通知小铃铛图标，可以查看通知中心。
+
+#### 工作流规则 workflow_rule
+
+实现系统的自动化处理过程。
 ### 权限
 
 #### 权限集 permission_set
@@ -210,13 +284,37 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 用于配置每个岗位对应的员工。
 
-#### 申请单 instances
+#### 审批（申请单） instances
 
 用于保存业务人员填写的申请单和签核历程。
 
 #### 对象流程映射 object_workflows
 
-？？？
+流程创建完成后需要创建对象流程映射与相关对象关联。
+
+#### 历史步骤 approvals 
+
+用于记录审批流程的各个步骤。
+
+#### 流程编号 instance_number_rules
+
+用于识别流程的特殊编号。
+
+#### 效率统计 instances_statistic
+
+用于保存业务审批效率。
+
+#### 流程委托 process_delegation_rules
+
+【不懂如何解释？】
+
+#### 图片签名 space_user_signs
+
+用于审批流程时保存图片签名。
+
+#### 流程触发器 webhooks
+
+用于审批流程到达特定环节时触发指定事件。
 
 ## 内置标准权限集
 
@@ -232,105 +330,39 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 ### 设置应用 admin
 
-【不懂怎么解释】 ？
-### chatter
-作废？
-#### 消息 chat_messages
+用于应用之间切换使用。
 
-【不懂怎么解释】 ？
-
-#### 房间 chat_rooms
-
-【不懂怎么解释】 ？
-
-#### 订阅 chat_subscriptions
-
-【不懂怎么解释】 ？
 ### cms
 
-作废？
 #### 栏目 cms_categories
 
-【不懂怎么解释】 ？
+【不懂怎么解释】 ？ 【该对象没有放开，哪里新建栏目？】
 
 #### 知识 cms_posts
 
-【不懂怎么解释】 ？
+用于保存用户的文章。
 
 #### 站点 cms_sites
 
-【不懂怎么解释】 ？
+用于管理站点用户及站点下的文章。
 
-### community-users
-
-#### 业务伙伴 accounts
-
-用于保存公司合作的业务伙伴信息。
-
-#### 联系人 contacts
-
-用于保存业务伙伴联系人信息。
-
-### invite
-#### 邀请用户 space_users_invite
-
-用于邀请新用户注册账号。
-
-### object-database
-
-#### _object_reload_logs
-作废？
-
-#### 外部数据源 datasources
-
-用于定义对象使用外部数据源。
-
-#### 对象 objects
-
-用于创建对象。
-
-#### 操作按钮 object_actions
-
-用于对象定义操作按钮显示的位置、是否启用等配置信息。
-
-#### 对象字段 object_fields
-
-用于创建字段时的配置信息。
-
-#### 页面布局 object_layouts
-
-用于对象详细页显示的字段内容。
-
-#### 列表视图 object_listviews
-
-用于对象记录在列表页显示的内容。
-
-#### 相关子表 object_related_list
-
-用于对象详细页携带相关子表内容。
-
-#### 对象触发器 object_triggers
-
-用于对象创建、修改、删除时触发某些事件。
-
-#### 对象验证规则 object_validation_rules
-
-【】？
 
 ### packages-app
 
 #### 软件包 package
 
- ？？？
+软件包中有各个对象源代码。
+#### 已安装的软件包 imported_package
 
+用于查看已安装的软件包。
 #### 软件包组件 package_type_members
 
 ？？？ 
 #### 软件包版本 package_version
 
-【不懂】？
+用于查看安装的软件包版本
 
-### process
+### 批准应用 process
 
 #### 批准过程 process_definition
 
@@ -343,6 +375,7 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 #### 批准流程 process_flows
 
 定义批准流程。
+
 #### process_flows_criteria
 
 作废 ？
@@ -354,47 +387,11 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 #### process_instance
 
 作废 ？
+
 #### process_instance_node
 
 作废 ？
+
 #### 批准历史 process_instance_history
 
 查看批准记录的历史记录。
-
-#### object_webhooks_queue
-
-作废吧？ 
-
-### workflow
-
-#### 历史步骤 approvals 
-
-#### 流程分类 categories
-
-#### 岗位成员 flow_positions
-
-#### 岗位 flow_roles
-
-#### 审批流程 flows
-
-#### 表单 forms
-
-#### 流程编号 instance_number_rules
-
-#### 效率统计 instances_statistic
-
-#### 审批 instances
-
-#### 流程委托 process_delegation_rules
-
-#### 图片签名 space_user_signs
-
-#### 流程触发器 webhooks
-
-### workflow-actions
-
-#### 字段更新 action_field_updates
-
-#### 工作流通知 workflow_notifications
-
-#### 工作流规则 workflow_rule
