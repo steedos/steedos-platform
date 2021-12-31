@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "b3b526731a8bd9804f75967048e4c1b47f8cbc94.js",
+      "path": "d2827cbce818d70f6f4c201675ec2170a8390773.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/b3b526731a8bd9804f75967048e4c1b47f8cbc94.js?meteor_js_resource=true",
+      "url": "/d2827cbce818d70f6f4c201675ec2170a8390773.js?meteor_js_resource=true",
       "size": 22085092,
-      "hash": "b3b526731a8bd9804f75967048e4c1b47f8cbc94",
-      "sri": "ZtiVz9yYXZywFQCz6ttTGV72ngHdOO87o1XvnN6zar4IegmL/iP5vpTW9z2aoZz592PbR8vxOsz3mMwZim03yw=="
+      "hash": "d2827cbce818d70f6f4c201675ec2170a8390773",
+      "sri": "gTZTdHn2ZLu4ofDg93vBIDYmbKdsinxQsfj0qp27IJ0OI+TK2wDw0Gfn0MCHG7GmWLqKBxXlHWQpTPa7/YcZbw=="
     },
     {
-      "path": "b3b526731a8bd9804f75967048e4c1b47f8cbc94.stats.json",
+      "path": "d2827cbce818d70f6f4c201675ec2170a8390773.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/b3b526731a8bd9804f75967048e4c1b47f8cbc94.stats.json?meteor_js_resource=true",
+      "url": "/d2827cbce818d70f6f4c201675ec2170a8390773.stats.json?meteor_js_resource=true",
       "size": 154010,
-      "hash": "8ee036bdcedae4141ec968fe282fb7f2565bc626",
-      "sri": "uqEpm/L/5lUcPvlYaykbcSGBXhcewlXC3X+BdHlbiqAauuEXTHJaUdQSnEa+LQN/0xEEvFtFP7ixqKmj3FsRVg=="
+      "hash": "0de165297a28d45a271da44c2c67d4308cad96eb",
+      "sri": "ikJF0wca604XhrdZEwfOd9biukv5dKgcsOOKWlBbbF0IAFZIyVNfF9qIZzEiz7wWYHrptp6okGu+98dE8D90Bg=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4119,6 +4119,16 @@
       "url": "/packages/steedos_workflow-chart/assets/index.css",
       "size": 37,
       "hash": "e781e9783dc62c679656e631823f01903affe59b",
+      "sri": null
+    },
+    {
+      "path": "app/README.md",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/README.md",
+      "size": 102,
+      "hash": "4782828ed3228470ec280443ae380fec238b6aee",
       "sri": null
     },
     {

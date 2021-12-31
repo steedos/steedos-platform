@@ -1,6 +1,6 @@
 steedos-app-default:
   enable: true
-  version: 2.1.61
+  version: 2.1.64
   description: A Steedos App
   local: true
   path: steedos-app
@@ -16,3 +16,9 @@ steedos-app-default:
   description: ''
   local: false
   path: .steedos/node_modules/@steedos-labs/master
+'@steedos-labs/workflow':
+  enable: true
+  version: 2.1.45
+  description: ''
+  local: false
+  path: .steedos/node_modules/@steedos-labs/workflow
