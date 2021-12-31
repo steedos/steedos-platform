@@ -16,7 +16,7 @@ tasks:
       gp await-port 27017
       mongo steedos --eval "rs.initiate()"
   - command: |
-      redis-server --save ""
+      redis-server --save "" --appendonly no --client-output-buffer-limit replica 0 0 0 --client-output-buffer-limit pubsub 0 0 0 --client-output-buffer-limit slave 0 0 0
   - init: |
       yarn
       yarn bootstrap
