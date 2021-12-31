@@ -26,6 +26,9 @@ function converterString(field_name, dataCell, jsonObj) {
 function converterDate(field_name, dataCell, jsonObj) {
   var date, date_error;
   date_error = "";
+  if (_.isEmpty(dataCell) && !_.isDate(dataCell)) {
+    return
+  }
   date = new Date(dataCell);
   if (
     date.getFullYear() &&
@@ -185,7 +188,7 @@ async function converterLookup(
     }
     let cellFilter = [selectfield, "=", cellContent];
     let spaceFilter = ["space", "=", options.userSession.spaceId];
-    let filters = [cellFilter, spaceFilter];
+    let filters = [cellFilter, spaceFilter, ['is_deleted', '!=', true]];
     lookups = await lookupCollection.find({ filters: filters });
 
     if (lookups.length == 0) {
@@ -505,7 +508,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
 }
 
 function selectObjectToFilters(selectObj) {
-  let filters: any = [];
+  let filters: any = [['is_deleted', '!=', true]];
   for (let k in selectObj) {
     let filter: any = [];
     filter.push(k);
