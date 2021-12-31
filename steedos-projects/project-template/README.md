@@ -43,11 +43,11 @@ npx create-steedos-app my-app
 
 ### 零代码开发
 
-可以参考文档 [如何创建自定义应用程序？](https://www.steedos.com/docs/admin/create_object) 在界面上开发业务需求，开发完成后可以参考 [同步元数据](https://www.steedos.com/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE) 把代码同步到 GitPod 本地，然后本地代码可以提交到 Git仓库中。
+可以参考文档 [如何创建自定义应用程序？](https://www.steedos.cn/docs/admin/create_object) 在界面上开发业务需求，开发完成后可以参考 [同步元数据](https://www.steedos.cn/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE) 把代码同步到 GitPod 本地，然后本地代码可以提交到 Git仓库中。
 
 ### 低代码开发
 
-可以参考文档 [开发人员快速向导](https://www.steedos.com/docs/developer/getting-started) 在GitPod中在线写代码来开发业务需求。
+可以参考文档 [开发人员快速向导](https://www.steedos.cn/docs/developer/getting-started) 在GitPod中在线写代码来开发业务需求。
 
 ## 软件包
 
