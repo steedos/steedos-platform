@@ -1528,10 +1528,10 @@
   resolved "https://registry.npm.taobao.org/@sheerun/mutationobserver-shim/download/@sheerun/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
   integrity sha1-VAXujkRO0hLbROeTUfDHClgqriU=
 
-"@steedos/webapp@^1.22.0-alpha.8":
-  version "1.22.0-alpha.8"
-  resolved "https://registry.npm.taobao.org/@steedos/webapp/download/@steedos/webapp-1.22.0-alpha.8.tgz#ce6c56b4c245da91e49ffe79f3e71552efb8b90f"
-  integrity sha1-zmxWtMJF2pHkn/558+cVUu+4uQ8=
+"@steedos/webapp@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/webapp/-/webapp-2.1.65.tgz#2ba4b71fea8d1fa98307724d071d4b2adeccaba8"
+  integrity sha512-j0gEeos7OSdrys5kMr79MlzTWTWbwAb7/5H5yoxXESjmDtRXTlYkiVDuM1nIrDXKvWzpTjaZxfLgadz3eexvfg==
   dependencies:
     "@accounts/client" "^0.19.0"
     "@accounts/client-password" "^0.19.0"
@@ -1544,9 +1544,7 @@
     react-intl "^3.1.13"
     react-redux "^7.1.0"
     react-router-dom "^5.2.0"
-    react-scripts "^3.4.3"
     redux "^4.0.4"
-    redux-devtools-extension "^2.13.8"
     redux-thunk "^2.3.0"
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
@@ -2445,8 +2443,8 @@ async-each@^1.0.1:
 
 async-limiter@~1.0.0:
   version "1.0.1"
-  resolved "https://registry.npm.taobao.org/async-limiter/download/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
-  integrity sha1-3TeelPDbgxCwgpH51kwyCXZmF/0=
+  resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
+  integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
 
 async@^2.6.2:
   version "2.6.3"
@@ -9138,7 +9136,7 @@ react-router@5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-scripts@3.4.3, react-scripts@^3.4.3:
+react-scripts@3.4.3:
   version "3.4.3"
   resolved "https://registry.npm.taobao.org/react-scripts/download/react-scripts-3.4.3.tgz#21de5eb93de41ee92cd0b85b0e1298d0bb2e6c51"
   integrity sha1-Id5euT3kHuks0LhbDhKY0LsubFE=
@@ -9310,11 +9308,6 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
-
-redux-devtools-extension@^2.13.8:
-  version "2.13.8"
-  resolved "https://registry.npm.taobao.org/redux-devtools-extension/download/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
-  integrity sha1-N7mCaIYm5eSZP/hyIMm7t80tluE=
 
 redux-thunk@^2.3.0:
   version "2.3.0"
@@ -11354,9 +11347,9 @@ write@1.0.3:
     mkdirp "^0.5.1"
 
 ws@^5.2.0:
-  version "5.2.2"
-  resolved "https://registry.npm.taobao.org/ws/download/ws-5.2.2.tgz#dffef14866b8e8dc9133582514d1befaf96e980f"
-  integrity sha1-3/7xSGa46NyRM1glFNG++vlumA8=
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-5.2.3.tgz#05541053414921bc29c63bee14b8b0dd50b07b3d"
+  integrity sha512-jZArVERrMsKUatIdnLzqvcfydI85dvd/Fp1u/VOpfdDWQ4c9qWXe+VIeAbQ5FrDwciAkr+lzofXLz3Kuf26AOA==
   dependencies:
     async-limiter "~1.0.0"
 
