@@ -38,7 +38,10 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 			if Creator.getObjectHomeComponent(object_name)
 				return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name)
 			else
-				return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+				if list_view_id
+					return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+				else
+					return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name)
 
 Creator.getObjectAbsoluteUrl = (object_name, record_id, app_id) ->
 	if !app_id
