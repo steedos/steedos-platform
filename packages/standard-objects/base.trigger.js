@@ -15,7 +15,13 @@ const checkCompany = async (object_name, userId, doc) => {
         return;
     }
 
-    const userObjectPermission = await objectql.getObject(object_name).getUserObjectPermission(userSession);
+    let userObjectPermission = null;
+
+    try {
+        userObjectPermission = await objectql.getObject(object_name).getUserObjectPermission(userSession);
+    } catch (error) {
+        return;
+    }
 
     if (userObjectPermission.modifyAllRecords) {
         return true;
