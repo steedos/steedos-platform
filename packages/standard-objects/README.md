@@ -114,11 +114,11 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 关注 follows
 
-用于保存用户关注的对象。？
+用于保存用户关注的对象
 
 #### 激活华炎魔方时的Token license_auth_token
 
-？
+已作废
 
 #### 许可证 license
 
@@ -126,7 +126,7 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### OAuth2应用 OAuth2Clients
 
-？
+存储oauth2 client 信息 或 jwt 的client secret
 
 #### 最近查看 object_recent_viewed
 
@@ -135,7 +135,6 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 #### WebHooks object_webhooks
 
 用于订阅对象记录增、删、改事件，当相关事件触发时会自动回调指定的url。
-？？
 
 #### 字段权限 permission_fields
 
@@ -143,11 +142,11 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 选项列表值 picklist_options
 
-已作废？设置应用中已经没有该菜单。
+已作废
 
 #### 下拉框列表 picklists
 
-已作废？设置应用中已经没有该菜单。
+已作废
 
 #### 限制规则 restriction_rules
 
@@ -163,7 +162,7 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 设置 settings
 
-作废？ 
+配置表
 
 #### 选项卡 tabs
 
@@ -189,15 +188,15 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 消息 chat_messages
 
-？
+基础模块：记录留言
 
 #### 房间 chat_rooms
 
-？
+基础模块：记录留言
 
 #### 订阅 chat_subscriptions
 
-？
+基础模块：记录留言
 
 #### 业务伙伴 accounts
 
@@ -209,11 +208,11 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 邀请用户 space_users_invite
 
-作废了？
+记录邀请信息
 
 #### _object_reload_logs
 
-作废？
+用于解决objects 、fields 变化时，自动加载
 
 #### 外部数据源 datasources
 
@@ -325,7 +324,7 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 效率统计 instances_statistic
 
-用于保存业务审批效率。？
+审批王效率统计
 
 #### 流程委托 process_delegation_rules
 
@@ -399,23 +398,23 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 #### 批准流程 process_flows
 
-？作废，或者还没实现？
+自动化流程, 还未实现
 
 #### process_flows_criteria
 
-？作废，或者还没实现？
+自动化流程, 还未实现
 
 #### process_flows_criteria_action
 
-？作废，或者还没实现？
+自动化流程, 还未实现
 
 #### process_instance
 
-？作废，或者还没实现？
+批准过程实例
 
 #### process_instance_node
 
-？作废，或者还没实现？
+批准过程步骤实例
 
 #### 批准历史 process_instance_history
 
