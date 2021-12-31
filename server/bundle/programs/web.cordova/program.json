@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "e48feab2af7bb6c7a2f39bb57b68f30b3fb9a1c3.js",
+      "path": "bbc7fa4a7a1eb178fbe815af1657aa9d135631c8.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/e48feab2af7bb6c7a2f39bb57b68f30b3fb9a1c3.js?meteor_js_resource=true",
+      "url": "/__cordova/bbc7fa4a7a1eb178fbe815af1657aa9d135631c8.js?meteor_js_resource=true",
       "size": 25209921,
-      "hash": "e48feab2af7bb6c7a2f39bb57b68f30b3fb9a1c3",
-      "sri": "6Xg1YojzO2EcvSOrR0hDfsn1xu9KV4iLfphYsyuYfGUEBuhTTmUg0jcaLKrHmgQfVhnJQA30wc3j+AXcC2ABZg=="
+      "hash": "bbc7fa4a7a1eb178fbe815af1657aa9d135631c8",
+      "sri": "z81U3kBZcJN/hddiaUHBrPgUsOTIUR315f0y/E4Z9cn4kJZiqW7/ZMX1OfprhwfnsETQk3xv+7/nfvdaYuLMGQ=="
     },
     {
-      "path": "e48feab2af7bb6c7a2f39bb57b68f30b3fb9a1c3.stats.json",
+      "path": "bbc7fa4a7a1eb178fbe815af1657aa9d135631c8.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/e48feab2af7bb6c7a2f39bb57b68f30b3fb9a1c3.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/bbc7fa4a7a1eb178fbe815af1657aa9d135631c8.stats.json?meteor_js_resource=true",
       "size": 154570,
-      "hash": "a39411a76d553512ecf63d3198f12075d1e1004c",
-      "sri": "aTgAmcn/ia+W3evECQXARdCJbOXwPmHb5HHuqqdMhV3RTvu57VXhhw29ViwO4vvNHRzd7T0c9KtGUEtTvSwX2g=="
+      "hash": "3ee29e67c34fd3ed365de18b526a044aa9298f42",
+      "sri": "xaqksx6CvG3C6+HZSMEqgMPDh7PskukxM2DjRvoC9wx3/M4CQ4JRkKD93ZU8aEkkpREdestNHQgBIuzkSfTdDQ=="
     },
     {
       "path": "0c93df0cb43b8f739276372cc69aa47c7846c615.css",
@@ -1409,6 +1409,26 @@
       "url": "/packages/steedos_workflow-chart/assets/index.css",
       "size": 37,
       "hash": "e781e9783dc62c679656e631823f01903affe59b",
+      "sri": null
+    },
+    {
+      "path": "app/README.md",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/README.md",
+      "size": 102,
+      "hash": "4782828ed3228470ec280443ae380fec238b6aee",
+      "sri": null
+    },
+    {
+      "path": "app/README.md",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/README.md",
+      "size": 102,
+      "hash": "4782828ed3228470ec280443ae380fec238b6aee",
       "sri": null
     },
     {
