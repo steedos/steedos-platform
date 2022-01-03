@@ -119,7 +119,7 @@ npx create-steedos-app my-app
 
 ### 前端
 
-华炎魔方前端使用 React 开发表单、列表视图控件，并基于 Meter 实现完整界面。
+华炎魔方前端使用 React 开发表单、列表视图控件，并基于 Meteor 实现完整界面。
 
 - [Ant Design ProForm](https://procomponents.ant.design/components/form): 基于 ProForm 开发表单控件，根据自定义对象动态创建表单、操作业务数据。
 - [AG Grid](https://www.ag-grid.com/): 因为ProTable功能太弱，我们选择 AG Grid 构建列表视图控件。
