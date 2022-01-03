@@ -59,8 +59,7 @@ npx create-steedos-app my-app
 - [报表引擎](https://steedos.cn/docs/admin/record_report)：使用华炎魔方的可视华报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。华炎魔方全新推出 [仪表盘](https://www.steedos.cn/docs/developer/dashboard)、[Stimulsoft报表](https://www.steedos.cn/docs/developer/stimulsoft) 和 [JsReport报表](https://www.steedos.cn/docs/developer/jsreport)，可以满足各种报表需求场景。
 - [审批王](https://www.steedos.cn/docs/admin/workflow-admin)：审批王是华炎自主研发的流程引擎，功能可媲美泛微且完全免费。系统内置了流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务审批过程。  
 - [自动化工具](https://steedos.cn/docs/admin/auto_process)：系统内置了批准过程、工作流规则、验证规则等自动化工具，通过设定自动化工具，可以在特定条件下自动化创建和更新记录、发送邮件、短信或系统内通知，也可以自动调用第三方系统的接口。
-- [公式引擎](https://steedos.cn/docs/admin/field_type#%E9%80%9A%E8%BF%87%E5%85%AC%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5%E5%80%BC)：华炎魔方内置了与Excel同级别的公式引擎，可通过配置公式实现自动化条件判断、数据计算、引用关联表的数据，或是汇总子表中的相关数据。
-- [华炎魔方DX](https://marketplace.visualstudio.com/items?itemName=Steedos.steedosdx-vscode): 华炎魔方DX包含一组 Visual Studio Code 插件，你可以在熟悉的环境中开发、调试、打包、发布华炎魔方软件包。您在可视化界面上定义的元数据可以导出为配置文件，您可以进一步编写代码，实现高级业务逻辑功能。您可以定义数据导入文件，并轻松指定开发，测试和生产环境的版本，功能和配置参数。您可以充分利用Git提供的版本管理与协作功能管理您的的代码、元数据和配置参数。
+- [华炎魔方DX](https://marketplace.visualstudio.com/items?itemName=Steedos.steedosdx-vscode): 华炎魔方DX包含一组 Visual Studio Code 插件，帮助您将可视化界面定义的元数据导出为源码，您可以进一步编写代码，实现高级业务逻辑功能。你可以在熟悉的环境中开发、调试、打包、发布华炎魔方软件包，并管理您的项目版本。
 
 ## 技术框架
 
