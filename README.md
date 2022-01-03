@@ -44,6 +44,8 @@
 
 远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等，详情请参考教程 [启动远程开发环境](https://www.steedos.cn/docs/developer/gitpod)。
 
+我们为企业客户提供 Gitpod 中国区域云服务，了解更多请[联系我们](https://www.steedos.cn/company/contact-us)。
+
 ### 运行模板项目
 
 访问网址 <https://gitpod.io/#https://github.com/steedos/steedos-project-template> 即可在线开发调式 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)，可以把#号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
