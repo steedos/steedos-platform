@@ -1,6 +1,6 @@
 # Creator
 
-华炎魔方最终打包运行的是一个Meteor项目，其源码都在该文件夹内。
+华炎魔方最终打包运行的是一个Meteor应用，其源码都在该文件夹内。
 
 ## 目录索引
 
@@ -17,6 +17,8 @@
 要运行该项目调式开发源码，需要先安装开发环境，我们推荐使用 [Gitpod](https://gitpod.io/) 来启动远程开发环境，以免去本地安装开发环境的繁琐过程。
 
 远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode, meteor 等，只需要在浏览器中输入地址 `https://gitpod.io/#{Git仓库地址}` 即可使用 [Gitpod](https://gitpod.io/) 启动远程开发环境。
+
+以下开发步骤适用于开发调式`/creator`路径下的源码，它是一个Meteor应用，如果想开发调式的是该Meteor应用依赖的华炎魔方平台源码，即`/packages`路径下的各种NPM包源码，请查阅另一个远程开发调式教程：[启动远程开发环境](https://www.steedos.cn/docs/developer/gitpod)。
 
 ### 开发前准备
 
@@ -68,9 +70,9 @@ STEEDOS_CLOUD_SPACE_ID=
 
 如果项目根目录中没有`.env.local`文件的话，请创建一个，然后在该文件中配置好以上环境变量值。
 
-### 平台模板项目访问地址
+### 访问平台模板项目
 
-如果项目运行完成后没有自动打开浏览器窗口访问项目的话，可以手动在浏览器中输入Gitpod-Workspaces访问地址并加上要访问的项目端口号作为前缀即可访问它。
+如果项目运行完成后没有自动打开浏览器窗口访问项目的话，可以手动在浏览器中输入Gitpod-Workspaces访问地址并加上要访问的项目端口号`5000-`作为前缀即可访问它。
 
 比如假设之前开启的远程开发环境打开的Workspaces访问地址为`https://white-silverfish-e5vy4oyh.ws-us25.gitpod.io`，我们只要输入地址 `https://5000-white-silverfish-e5vy4oyh.ws-us25.gitpod.io`即可访问刚运行起来的项目。
 
@@ -104,3 +106,23 @@ STEEDOS_CLOUD_SPACE_ID=
 
 需要注意的是，在Creator项目中的系统配置文件 `steedos-config.yml` 并没有生效，而是使用根目录下名为 `settings.json` 配置文件来配置系统参数，它支持的参数与前者是一样的，只是编写格式不一样而已。
 
+### 打包Creator项目
+
+在命令行执行以下指令即可打包`/creator`目录下的Meteor项目，当打包成功后会把打包后的文件自动拷贝到`/server`文件夹下作为一个名为"steedos-server"的NPM包被华炎魔方平台引用。
+
+```sh
+cd creator/
+export TOOL_NODE_FLAGS="--max-old-space-size=3800"
+yarn run build
+```
+
+### 测试
+
+按以上指令打包完Creator项目后，打包后的文件会被自动拷贝到`/server`文件夹下，要测试打包后的Creator项目，只需要执行以下指令来重新运行华炎魔方平台根目录下的模板项目即可：
+
+```sh
+cd ../
+yarn start
+```
+
+如果项目运行完成后没有自动打开浏览器窗口访问项目的话，可以手动在浏览器中输入Gitpod-Workspaces访问地址并加上要访问的项目端口号`5000-`作为前缀即可访问它。
