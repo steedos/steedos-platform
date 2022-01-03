@@ -17,7 +17,7 @@
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是Salesforce低代码平台的开源替代方案，助力企业使用“低代码”技术，快速构建管理软件后端，包括数据建模、权限控制、流程审批、统计分析、应用集成，并可以编写“高代码”实现高级业务逻辑。
+  华炎魔方是Salesforce低代码平台的开源替代方案，华炎魔方将低代码技术与企业业务场景结合，助力企业在最短时间内开发数字化解决方案，包括数据建模、权限控制、流程审批、统计分析、应用集成，并可以编写“高代码”实现高级业务逻辑。
 </p>
 
 <h3 align="center">
@@ -26,19 +26,15 @@
 
 ![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/project_object.jpg)
 
-## 点击鼠标，就能编程
-
-使用传统的命令式编程语言开发企业应用程序极其复杂，需要使用精确的指令控制计算机执行的每一步操作。使用描述式编程工具，您只需告诉计算机想要的结果，计算机会按照您的需求自动完成编程，生成你想要的应用程序。
-
-华炎魔方就是这样一套可视化建模，描述式编程的企业应用程序开发平台。华炎魔方把开发难度降低到Excel公式级别，只需简单的点击鼠标，几乎任何人都可以创建功能强大的企业应用程序，实现业务流程自动化。您为企业创建的应用程序可以部署在移动，平板电脑和Web上，您创建的应用程序可以很简单，也可以非常复杂，并且可以连接到几乎任何数据源。
-
 ## 基于元数据
 
 元数据是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
 
-元数据可以在可视化界面中进行修改，也可以使用VS Code插件同步到代码，实现版本管理，并进一步编写代码、调试、测试、打包、部署。[点击了解华炎魔方元数据类型](https://www.steedos.cn/docs/developer/meta-types)
+元数据可以在可视化界面中进行修改，也可以使用VS Code插件同步到代码，实现版本管理，并进一步编写代码、调试、测试、打包、部署。
 
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+![Steedos Packages Overview](./docs/diagrams/Steedos%20Packages.drawio.svg)
+
+[点击了解华炎魔方元数据类型](https://www.steedos.cn/docs/developer/meta-types)
 
 ## 快速向导
 
@@ -69,11 +65,6 @@ npx create-steedos-app my-app
 - [报表引擎](https://steedos.cn/docs/admin/record_report)：使用华炎魔方的可视华报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。华炎魔方全新推出 [仪表盘](https://www.steedos.cn/docs/developer/dashboard)、[Stimulsoft报表](https://www.steedos.cn/docs/developer/stimulsoft) 和 [JsReport报表](https://www.steedos.cn/docs/developer/jsreport)，可以满足各种报表需求场景。
 - **高级业务逻辑开发**：华炎魔方提供了代码开发的入口，开发人员通过编写代码，实现特定条件下的自动运行、截停、回滚等高级业务逻辑。或是开发与第三方系统的接口。
 - **开源、可定制**：华炎魔方是开源的。这会让您充满信心，华炎魔方将永远存在。您还可以将其源码Fork下来，并根据需要进行更改。
-
-## 华炎魔方软件包
-
-软件包是一个容器，可以只存放一个组件，也可以存放一组功能相关的应用程序。创建软件包后，您可以将其分发给其他使用华炎魔方的用户和组织，包括公司外部的用户和组织。
-我们下一步将推出华炎魔方应用市场，您可以将您开发的软件包发布到应用市场中定价销售。
 
 ## 华炎魔方DX
 
