@@ -75,8 +75,9 @@ npx create-steedos-app my-app
 - [MongoDB](https://www.mongodb.com/try/download/) 版本 >= 4.2， 华炎魔方使用 MongoDB 作为元数据仓库和默认数据源.
 - [Node.js](https://nodejs.org/en/download/) 版本 >= 12。华炎魔方平台源码运行于 nodejs 环境。
 - [Meteor](https://www.meteor.com): 基于 Meteor 开发环境魔方元数据解释引擎(steedos-server)。
-- [Node Red](https://nodered.org/): 基于 Node Red，开发可视化应用系统集成解决方案。
+- [Moleculer](https://moleculer.services/zh/): 基于 Node.js 的响应式微服务框架。
 - [GraphQL](https://graphql.org/): 华炎魔方自动为业务对象生成 GraphQL API。
+- [Lerna](https://github.com/lerna/lerna): 多包管理工具，用于管理和批量发布 npm 软件包。
 
 ### 前端
 
@@ -84,19 +85,26 @@ npx create-steedos-app my-app
 
 - [Ant Design ProForm](https://procomponents.ant.design/components/form): 基于 ProForm 开发表单控件，根据自定义对象动态创建表单、操作业务数据。
 - [AG Grid](https://www.ag-grid.com/): 因为ProTable功能太弱，我们选择 AG Grid 构建列表视图控件。
-- [Stimulsoft Reports](https://www.stimulsoft.com/en/products/reports): 引入此控件为对象自定义像素级打印报表。
 - [Redash](https://github.com/getredash/redash): 引入Redash部分前端源码，开发查询设计器、图表设计器、仪表盘设计器。
+
+### 第三方工具
+
+华炎魔方（企业版）已实现与以下开源项目集成和整合，以满足企业客户的需求。了解更多请[联系我们](https://www.steedos.cn/company/contact-us)。
+
+- [Node Red](https://nodered.org/): 基于 Node Red，实现可视化应用系统集成解决方案。
 - [App Smith](https://github.com/getredash/redash): 使用 App Smith，开发前端自定义页面。
-- [NextJS]()
+- [Stimulsoft Reports](https://www.stimulsoft.com/en/products/reports): 可视化开发像素级打印报表。
+- [Gitpod](https://gitpod.io): 点击鼠标就能远程创建华炎魔方开发环境，支持中国区域私有部署。
+- [Gitlab](https://gitlab.steedos.cn): 实现 Devops 开发生命中周期管理。
 
 ## 源码目录索引
 
 - [平台脚本文件](/.scripts)：华炎魔方平台源码在打包、运行或发布版本时依赖的各种脚本文件。
 - [VS Code配置](/.vscode)：vscode编辑器的配置文件。
-- [Creator项目源码](/creator)：华炎魔方最终打包运行的是一个Meteor项目，其源码都在该文件夹内。
-- [内核功能包](/packages)：华炎魔方各种内核功能包，其内每个子文件夹都是一个标准的NPM包。
-- [Creator项目打包编译结果](/server)：Creator项目源码最终打包编译生成的文件都在该文件夹内。
-- [微服务内核包](/services)：华炎魔方采用的是微服务架构，这里存放的是各种微服务功能包，其内每个子文件夹都是一个标准的NPM包。
+- [Steedos Server](/creator)：华炎魔方最终打包运行的是一个Meteor项目，其源码都在该文件夹内。
+- [Steedos Server Build](/server)：Creator项目源码最终打包编译生成的文件都在该文件夹内，最终会发布为 NPM 包在华炎魔方项目中引用即可。
+- [NPM Packages](/packages)：华炎魔方各种内核功能包，其内每个子文件夹都是一个标准的NPM包。
+- [Moleculer Services](/services)：华炎魔方采用的是Moleculer微服务架构，这里存放的是各种微服务功能包，其内每个子文件夹都是一个标准的NPM包。
 - [项目模板](/steedos-projects/project-template)：这是华炎魔方模板项目，通过`steedos cli`命令行创建魔方项目时会自动生成的就是这个模板项目，另外Git仓库中有一个用于演示的 [模板项目](https://github.com/steedos/steedos-project-template) 也是从这个项目中同步过去的。
 
 ## 学习华炎魔方
@@ -109,7 +117,6 @@ npx create-steedos-app my-app
 - [设置和维护华炎魔方](https://steedos.cn/docs/admin)
 - [开发人员](https://www.steedos.cn/docs/developer/)
 - [低代码学院](https://www.steedos.cn/docs/low-code-academy)
-
 
 ## 为华炎魔方做贡献
 
