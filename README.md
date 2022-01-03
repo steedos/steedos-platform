@@ -44,7 +44,9 @@
 
 ### 启动远程开发环境
 
-点击这里，[使用 Gitpod 启动远程开发环境](https://gitpod.io/#https://github.com/steedos/steedos-project-template) ，远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等。
+无论是使用华炎魔方作为开发工具来开发项目，还是调式运行华炎魔方平台源码，都需要安装开发环境，我们推荐使用 [Gitpod](https://gitpod.io/) 来启动远程开发环境，以免去本地安装开发环境的繁琐过程。
+
+远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等，详细请参考文档 [启动远程开发环境](https://beta.steedos.cn/docs/developer/gitpod)。
 
 ### 创建一个新项目
 
