@@ -56,8 +56,13 @@ npx create-steedos-app my-app
 
 - [创建自定义应用程序](https://www.steedos.cn/docs/admin/create_object)：华炎魔方基于元数据驱动，把传统通过代码实现的业务需求抽象为可配置的元数据 ，只需点击⿏标修改配置项，就能实现绝⼤多数业务需求，必要时仍可编写代码。
 - [权限引擎](https://www.steedos.cn/docs/admin/permission_set)：华炎魔方基于权限集为每一个对象设置权限，支持公司级、记录级、字段级的权限控制，可配置共享规则和限制规则实现权限的收缩。并可通过编写 beforeFind 触发器的方式，根据业务需求叠加任意想要的权限控制。
-- [报表引擎](https://steedos.cn/docs/admin/record_report)：使用华炎魔方的可视华报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。华炎魔方全新推出 [仪表盘](https://www.steedos.cn/docs/developer/dashboard)、[Stimulsoft报表](https://www.steedos.cn/docs/developer/stimulsoft) 和 [JsReport报表](https://www.steedos.cn/docs/developer/jsreport)，可以满足各种报表需求场景。
+- [API 引擎](https://www.steedos.cn/docs/developer/graphql-api): 华炎魔方自动为业务对象生成 GraphQL API， API自带身份验证并于华炎魔方权限引擎集成，实现数据权限控制。
 - [审批王](https://www.steedos.cn/docs/admin/workflow-admin)：审批王是华炎自主研发的流程引擎，功能可媲美泛微且完全免费。系统内置了流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务审批过程。  
+- 报表引擎：使用华炎魔方的可视华报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。
+  - [基本报表](https://steedos.cn/docs/admin/record_report)
+  - [仪表盘](https://www.steedos.cn/docs/developer/dashboard)
+  - [Stimulsoft报表](https://www.steedos.cn/docs/developer/stimulsoft)
+  - [JsReport报表](https://www.steedos.cn/docs/developer/jsreport)
 - [自动化工具](https://steedos.cn/docs/admin/auto_process)：系统内置了批准过程、工作流规则、验证规则等自动化工具，通过设定自动化工具，可以在特定条件下自动化创建和更新记录、发送邮件、短信或系统内通知，也可以自动调用第三方系统的接口。
 - [华炎魔方DX](https://marketplace.visualstudio.com/items?itemName=Steedos.steedosdx-vscode): 华炎魔方DX包含一组 Visual Studio Code 插件，帮助您将可视化界面定义的元数据导出为源码，您可以进一步编写代码，实现高级业务逻辑功能。你可以在熟悉的环境中开发、调试、打包、发布华炎魔方软件包，并管理您的项目版本。
 
@@ -71,6 +76,7 @@ npx create-steedos-app my-app
 - [Node.js](https://nodejs.org/en/download/) 版本 >= 12。华炎魔方平台源码运行于 nodejs 环境。
 - [Meteor](https://www.meteor.com): 基于 Meteor 开发环境魔方元数据解释引擎(steedos-server)。
 - [Node Red](https://nodered.org/): 基于 Node Red，开发可视化应用系统集成解决方案。
+- [GraphQL](https://graphql.org/): 华炎魔方自动为业务对象生成 GraphQL API。
 
 ### 前端
 
