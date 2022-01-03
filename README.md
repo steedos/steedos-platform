@@ -80,7 +80,7 @@ npx create-steedos-app my-app
 - [权限引擎](https://www.steedos.cn/docs/admin/permission_set)：华炎魔方基于权限集为每一个对象设置权限，支持公司级、记录级、字段级的权限控制。
 - [API 引擎](https://www.steedos.cn/docs/developer/graphql-api): 华炎魔方自动为业务对象生成 GraphQL API， API自带身份验证并于华炎魔方权限引擎集成，实现数据权限控制。
 - [审批王](https://www.steedos.cn/docs/admin/workflow-admin)：审批王是华炎自主研发的流程引擎，功能可媲美泛微且完全免费。系统内置了流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务审批过程。  
-- 报表引擎：使用华炎魔方的可视华报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。
+- 报表引擎：使用华炎魔方的可视化报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。
   - [基本报表](https://steedos.cn/docs/admin/record_report)
   - [仪表盘](https://www.steedos.cn/docs/developer/dashboard)
   - [JsReport报表](https://www.steedos.cn/docs/developer/jsreport)
