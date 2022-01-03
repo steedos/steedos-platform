@@ -55,10 +55,10 @@ npx create-steedos-app my-app
 ## 华炎魔方功能
 
 - [创建自定义应用程序](https://www.steedos.cn/docs/admin/create_object)：华炎魔方基于元数据驱动，把传统通过代码实现的业务需求抽象为可配置的元数据 ，只需点击⿏标修改配置项，就能实现绝⼤多数业务需求，必要时仍可编写代码。
-- [权限引擎](https://www.steedos.cn/docs/admin/permission_set)：华炎魔方通过给每个用户配置“简档”和“权限集”的方式来标识用户所属权限范围；通过华炎魔方权限引擎，可以给每个用户分配不同的查看、创建、编辑、删除每个对象记录的对象级权限；可以给每个用户分配不同的字段级权限，让某些用户只能查看或编辑对象上的特定字段；可以给每个用户分配不同的记录级权限，限制某些特定范围内的记录只允许部分特定用户才能访问；还可以按分部来划分权限，限制某些用户只能查看或编辑其被授权的分部下的对象记录。详细请参阅文档 [管理数据访问权限](https://www.steedos.cn/docs/admin/permission_set)。
+- [权限引擎](https://www.steedos.cn/docs/admin/permission_set)：华炎魔方基于权限集为每一个对象设置权限，支持公司级、记录级、字段级的权限控制，可配置共享规则和限制规则实现权限的收缩。并可通过编写 beforeFind 触发器的方式，根据业务需求叠加任意想要的权限控制。
 - [报表引擎](https://steedos.cn/docs/admin/record_report)：使用华炎魔方的可视华报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。华炎魔方全新推出 [仪表盘](https://www.steedos.cn/docs/developer/dashboard)、[Stimulsoft报表](https://www.steedos.cn/docs/developer/stimulsoft) 和 [JsReport报表](https://www.steedos.cn/docs/developer/jsreport)，可以满足各种报表需求场景。
-- [审批王](https://www.steedos.cn/docs/admin/workflow-admin)：系统内置了流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务审批过程。  
-- [自动化工具](https://steedos.cn/docs/admin/auto_process)：通过设定自动化操作，可以在特定条件下自动化创建和更新记录、发送邮件、短信或系统内通知，也可以自动调用第三方系统的接口。
+- [审批王](https://www.steedos.cn/docs/admin/workflow-admin)：审批王是华炎自主研发的流程引擎，功能可媲美泛微且完全免费。系统内置了流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务审批过程。  
+- [自动化工具](https://steedos.cn/docs/admin/auto_process)：系统内置了批准过程、工作流规则、验证规则等自动化工具，通过设定自动化工具，可以在特定条件下自动化创建和更新记录、发送邮件、短信或系统内通知，也可以自动调用第三方系统的接口。
 - [公式引擎](https://steedos.cn/docs/admin/field_type#%E9%80%9A%E8%BF%87%E5%85%AC%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5%E5%80%BC)：华炎魔方内置了与Excel同级别的公式引擎，可通过配置公式实现自动化条件判断、数据计算、引用关联表的数据，或是汇总子表中的相关数据。
 - [华炎魔方DX](https://marketplace.visualstudio.com/items?itemName=Steedos.steedosdx-vscode): 华炎魔方DX包含一组 Visual Studio Code 插件，你可以在熟悉的环境中开发、调试、打包、发布华炎魔方软件包。您在可视化界面上定义的元数据可以导出为配置文件，您可以进一步编写代码，实现高级业务逻辑功能。您可以定义数据导入文件，并轻松指定开发，测试和生产环境的版本，功能和配置参数。您可以充分利用Git提供的版本管理与协作功能管理您的的代码、元数据和配置参数。
 
@@ -70,6 +70,7 @@ npx create-steedos-app my-app
 
 - [MongoDB](https://www.mongodb.com/try/download/) 版本 >= 4.2， 华炎魔方使用 MongoDB 作为元数据仓库和默认数据源.
 - [Node.js](https://nodejs.org/en/download/) 版本 >= 12。华炎魔方平台源码运行于 nodejs 环境。
+- [Meteor](https://www.meteor.com): 基于 Meteor 开发环境魔方元数据解释引擎(steedos-server)。
 - [Node Red](https://nodered.org/): 基于 Node Red，开发可视化应用系统集成解决方案。
 
 ### 前端
@@ -81,6 +82,7 @@ npx create-steedos-app my-app
 - [Stimulsoft Reports](https://www.stimulsoft.com/en/products/reports): 引入此控件为对象自定义像素级打印报表。
 - [Redash](https://github.com/getredash/redash): 引入Redash部分前端源码，开发查询设计器、图表设计器、仪表盘设计器。
 - [App Smith](https://github.com/getredash/redash): 使用 App Smith，开发前端自定义页面。
+- [NextJS]()
 
 ## 源码目录索引
 
