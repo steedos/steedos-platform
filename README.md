@@ -44,6 +44,26 @@
 
 远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等，详情请参考教程 [启动远程开发环境](https://www.steedos.cn/docs/developer/gitpod)。
 
+#### 模板项目
+
+访问网址 <https://gitpod.io/#https://github.com/steedos/steedos-project-template> 即可在线开发调式 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)，可以把#号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
+
+#### 新项目
+
+您可以 Fork [华炎魔方模板项目](https://github.com/steedos/steedos-project-template) 作为自己创建的新项目，也可以在本地命令行窗口执行以下命令来创建一个华炎魔方模板项目。
+
+```shell
+npx create-steedos-app my-app 
+```
+
+只要把新项目的Git仓库地址追加到网址 `https://gitpod.io/#` 后面，用浏览器访问该地址就可以启动远程开发环境来开发项目了。
+
+#### 平台源码
+
+访问网址 <https://gitpod.io/#https://github.com/steedos/steedos-platform> 即可在线开发调式 [华炎魔方平台源码](https://github.com/steedos/steedos-platform)。
+
+如果需要提交代码到Git仓库，请先Fork [华炎魔方平台源码](https://github.com/steedos/steedos-platform)，然后用 Fork 后的Git仓库地址替换掉上面网址`#`号后的Git仓库地址即可。
+
 ### 创建一个新项目
 
 如需开发自己的软件包，建议输入以下命令，创建一个新项目。
