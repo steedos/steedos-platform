@@ -92,8 +92,8 @@ npx create-steedos-app my-app
 您还可以根据华炎魔方快速构建应用程序的视频教程进行操作。
 
 - [视频演示](https://www.steedos.com/videos/)
-- [使用入门](https://www.steedos.com/help/user/)
-- [设置和维护华炎魔方](https://www.steedos.com/help/admin/)
+- [使用入门](https://www.steedos.com/docs/user)
+- [设置和维护华炎魔方](https://steedos.com/docs/admin)
 - [开发人员](https://www.steedos.com/developer/)
 
 停止项目服务后，platform平台中的项目对象会自动下线。
