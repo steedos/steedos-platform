@@ -72,15 +72,17 @@ npx create-steedos-app my-app
 华炎魔方开源社区版基于MIT协议，包含开发工具的所有必备功能，不限制用户数。基于华炎魔方开发的软件包可以任意销售而无需支付授权费用。
 
 - [创建自定义应用程序](https://www.steedos.cn/docs/admin/create_object)：华炎魔方基于元数据驱动，把传统通过代码实现的业务需求抽象为可配置的元数据 ，只需点击⿏标修改配置项，就能实现绝⼤多数业务需求，必要时仍可编写代码。
+- [自定义字段](https://www.steedos.cn/docs/admin/field_type): 基本字段类型、相关表、主表/子表、公式字段、累计汇总字段、自动编号字段。
 - [权限引擎](https://www.steedos.cn/docs/admin/permission_set)：华炎魔方基于权限集为每一个对象设置权限，支持公司级、记录级、字段级的权限控制。
-- [API 引擎](https://www.steedos.cn/docs/developer/graphql-api): 华炎魔方自动为业务对象生成 GraphQL API， API自带身份验证并于华炎魔方权限引擎集成，实现数据权限控制。
+- [API引擎](https://www.steedos.cn/docs/developer/graphql-api): 华炎魔方自动为业务对象生成 GraphQL API， API自带身份验证并于华炎魔方权限引擎集成，实现数据权限控制。
 - [审批王](https://www.steedos.cn/docs/admin/workflow-admin)：审批王是华炎自主研发的流程引擎，功能可媲美泛微且完全免费。系统内置了流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务审批过程。  
-- 报表引擎：使用华炎魔方的可视化报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。
-  - [基本报表](https://steedos.cn/docs/admin/record_report)
-  - [仪表盘](https://www.steedos.cn/docs/developer/dashboard)
-  - [JsReport报表](https://www.steedos.cn/docs/developer/jsreport)
+- [报表](https://steedos.cn/docs/admin/record_report)：使用华炎魔方的可视化报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。
+- [Dashboard](https://www.steedos.cn/docs/developer/dashboard): 连接第三方数据源，编写SQL语句，可视化设计各种统计图并汇总显示在仪表盘中。
+- [JsReport报表](https://www.steedos.cn/docs/developer/jsreport): 可视化编写代码，开发自定义报表。
 - [自动化工具](https://steedos.cn/docs/admin/auto_process)：系统内置了批准过程、工作流规则、验证规则等自动化工具，通过设定自动化工具，可以在特定条件下自动化创建和更新记录、发送邮件、短信或系统内通知，也可以自动调用第三方系统的接口。
+- [数据导入](https://www.steedos.cn/docs/admin/import): 根据对象字段，配置Excel导入模版，通过Excel将数据批量导入到华炎魔方中。
 - [华炎魔方DX](https://marketplace.visualstudio.com/items?itemName=Steedos.steedosdx-vscode): 华炎魔方DX包含一组 Visual Studio Code 插件，帮助您将可视化界面定义的元数据导出为源码，您可以进一步编写代码，实现高级业务逻辑功能。你可以在熟悉的环境中开发、调试、打包、发布华炎魔方软件包，并管理您的项目版本。
+- [软件包打包、发布](https://www.steedos.cn/docs/developer/package)
 
 ## 华炎魔方（企业版）功能
 
@@ -88,9 +90,9 @@ npx create-steedos-app my-app
 
 - 高级权限控制: 配置共享规则和限制规则实现权限在特定条件下的共享和的收缩，并可通过编写 beforeFind 触发器的方式，根据业务需求叠加任意想要的权限控制。
 - 审计日志：为对象启用审计日志，每一条记录的增删改均会自动记录日志。
-- [Node Red](https://nodered.org/): 基于 Node Red，可视化开发华炎魔方与第三方业务系统的集成接口。
+- [Node Red](https://www.steedos.cn/docs/developer/node-red): 基于 Node Red，可视化开发华炎魔方与第三方业务系统的集成接口。
 - [App Smith](https://github.com/getredash/redash): 使用 App Smith，开发华炎魔方前端自定义页面。
-- [Stimulsoft Reports](https://www.stimulsoft.com/en/products/reports): 调用华炎魔方中的查询，可视化开发像素级打印报表与仪表盘。
+- [Stimulsoft Reports](https://www.steedos.cn/docs/developer/stimulsoft): 调用华炎魔方中的查询，可视化开发像素级打印报表与仪表盘。
 - [Gitpod](https://gitpod.io/): 点击鼠标就能远程创建华炎魔方开发环境，支持中国区域私有部署。
 - [Gitlab](https://about.gitlab.com/): 为华炎魔方软件包实现 Devops 开发生命周期管理，支持中国区域私有部署。
 
