@@ -1,7 +1,7 @@
 
 
 <p align="center">
-  <a href="https://www.steedos.com/cn">
+  <a href="https://www.steedos.cn/">
     <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
   </a>
 </p>
@@ -11,7 +11,7 @@
 
 <p align="center">
 <a href="./README_en.md">English</a>
-<a href="https://www.steedos.com/docs/"> · 文档</a>
+<a href="https://www.steedos.cn/docs/"> · 文档</a>
 <a href="https://github.com/steedos/steedos-platform/issues/"> · 报告错误</a>
 <a href="https://community.steedos.cn"> · 社区</a>
 </p>
@@ -70,8 +70,6 @@ npx create-steedos-app my-app
 
 华炎魔方DX是我们即将发布的一套敏捷开发工具，包含一组 Visual Studio Code 插件，你可以在熟悉的环境中开发、调试、打包、发布华炎魔方软件包。您在可视化界面上定义的元数据可以导出为配置文件，您可以进一步编写代码，实现高级业务逻辑功能。您可以定义数据导入文件，并轻松指定开发，测试和生产环境的版本，功能和配置参数。您可以充分利用Git提供的版本管理与协作功能管理您的的代码、元数据和配置参数。
 
-华炎魔方DX工具按开发者收费，我们为开源项目和教育机构免费提供华炎魔方DX工具。
-
 ## 技术架构
 
 华炎魔方服务端使用nodejs开发，您定义的元数据，和系统中录入的业务数据均保存在mongodb中。
@@ -83,10 +81,12 @@ npx create-steedos-app my-app
 
 您还可以根据华炎魔方快速构建应用程序的视频教程进行操作。
 
-- [视频演示](https://www.steedos.com/videos/)
-- [使用入门](https://www.steedos.com/docs/user)
-- [设置和维护华炎魔方](https://steedos.com/docs/admin)
-- [开发人员](https://www.steedos.com/developer/)
+- [视频教程](https://www.steedos.cn/videos/)
+- [安装部署](https://www.steedos.cn/docs/deploy)
+- [使用入门](https://www.steedos.cn/docs/user)
+- [设置和维护华炎魔方](https://steedos.cn/docs/admin)
+- [开发人员](https://www.steedos.cn/docs/developer/)
+- [低代码学院](https://www.steedos.cn/docs/low-code-academy)
 
 停止项目服务后，platform平台中的项目对象会自动下线。
 
