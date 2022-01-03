@@ -130,7 +130,7 @@
 
 - 对象验证规则 [object_validation_rules](/packages/standard-objects/object-database/object_validation_rules.object.yml)：用于保存在对象上配置的验证规则，验证规则主要用于验证该对象的数据是否符合特定的规则。当用户对于对象的某个字段的更改不符合用户创建的验证规则时，用户输入的信息无法提交保存。
 
-- [object_webhooks_queue](/packages/standard-objects/queue/object_webhooks_queue.object.yml)：用于保存待执行的Webhooks队列。
+- webhooks队列[object_webhooks_queue](/packages/standard-objects/queue/object_webhooks_queue.object.yml)：用于保存待执行的Webhooks队列。
 
 - 字段更新 [action_field_updates](/packages/standard-objects/workflow-actions/action_field_updates.object.yml)：用于保存管理员在流程自动化配置中配置的字段更新信息，详细请参考文档 [字段更新](https://www.steedos.cn/docs/admin/auto_process#%E5%AD%97%E6%AE%B5%E6%9B%B4%E6%96%B0)。
 
