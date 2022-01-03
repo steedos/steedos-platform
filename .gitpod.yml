@@ -6,6 +6,9 @@ ports:
   - port: 5000
     onOpen: open-preview
     visibility: public
+  - port: 3100 # Creator
+    onOpen: open-preview
+    visibility: public
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
 tasks:
   - init: |
