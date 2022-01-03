@@ -38,7 +38,15 @@
 
 ## 快速向导
 
-### Gitpod 远程开发环境
+### 部署华炎魔方平台
+
+部署华炎魔方平台后，可以下载、安装和运行华炎魔方软件包，包含一整套第代码可视化设计工具。如需同步和编写代码，请参考后续步骤部署开发环境。
+
+- [开通华炎魔方云服务](https://www.steedos.cn/docs/deploy/deploy-cloud)
+- [Docker 私有部署](https://www.steedos.cn/docs/deploy/deploy-docker)
+- [版本升级](https://www.steedos.cn/docs/deploy/upgrade)
+
+### Gitpod 部署远程开发环境
 
 无论是使用华炎魔方作为开发工具来开发项目，还是调式运行华炎魔方平台源码，都需要安装开发环境，我们推荐使用 [Gitpod](https://gitpod.io/) 来启动远程开发环境，以免去本地安装开发环境的繁琐过程。
 
@@ -89,7 +97,7 @@ npx create-steedos-app my-app
 华炎魔方（企业版）实现可更多企业级安全控制功能，并与相关第三方开源项目集成，满足企业客户的高级需求。了解更多请[联系我们](https://www.steedos.cn/company/contact-us)。
 
 - 高级权限控制: 配置共享规则和限制规则实现权限在特定条件下的共享和的收缩，并可通过编写 beforeFind 触发器的方式，根据业务需求叠加任意想要的权限控制。
-- 审计日志：为对象启用审计日志，每一条记录的增删改均会自动记录日志。
+- 审计日志：为对象启用审计日志，每一条记录的增删改均会自动记录日志；系统登录日志；系统操作日志。
 - [Node Red](https://www.steedos.cn/docs/developer/node-red): 基于 Node Red，可视化开发华炎魔方与第三方业务系统的集成接口。
 - [App Smith](https://github.com/getredash/redash): 使用 App Smith，开发华炎魔方前端自定义页面。
 - [Stimulsoft Reports](https://www.steedos.cn/docs/developer/stimulsoft): 调用华炎魔方中的查询，可视化开发像素级打印报表与仪表盘。
