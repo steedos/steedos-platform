@@ -77,6 +77,16 @@ npx create-steedos-app my-app
 - [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
 
+## 目录索引
+
+- [平台脚本文件](/.scripts)：华炎魔方平台源码在打包、运行或发布版本时依赖的各种脚本文件。
+- [VS Code配置](/.vscode)：vscode编辑器的配置文件。
+- [Creator项目源码](/creator)：华炎魔方最终打包运行的是一个Meteor项目，其源码都在该文件夹内。
+- [内核功能包](/packages)：华炎魔方各种内核功能包，其内每个子文件夹都是一个标准的NPM包。
+- [Creator项目打包编译结果](/server)：Creator项目源码最终打包编译生成的文件都在该文件夹内。
+- [微服务内核包](/services)：华炎魔方采用的是微服务架构，这里存放的是各种微服务功能包，其内每个子文件夹都是一个标准的NPM包。
+- [项目模板](/steedos-projects/project-template)：这是华炎魔方模板项目，通过`steedos cli`命令行创建魔方项目时会自动生成的就是这个模板项目，另外Git仓库中有一个用于演示的 [模板项目](https://github.com/steedos/steedos-project-template) 也是从这个项目中同步过去的。
+
 ## 学习华炎魔方
 
 您还可以根据华炎魔方快速构建应用程序的视频教程进行操作。
