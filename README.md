@@ -77,7 +77,7 @@ npx create-steedos-app my-app
 华炎魔方开源社区版基于MIT协议，包含开发工具的所有必备功能，不限制用户数。基于华炎魔方开发的软件包可以任意销售而无需支付授权费用。
 
 - [创建自定义应用程序](https://www.steedos.cn/docs/admin/create_object)：华炎魔方基于元数据驱动，把传统通过代码实现的业务需求抽象为可配置的元数据 ，只需点击⿏标修改配置项，就能实现绝⼤多数业务需求，必要时仍可编写代码。
-- [权限引擎](https://www.steedos.cn/docs/admin/permission_set)：华炎魔方基于权限集为每一个对象设置权限，支持公司级、记录级、字段级的权限控制。并可通过编写 beforeFind 触发器的方式，根据业务需求叠加任意想要的权限控制。
+- [权限引擎](https://www.steedos.cn/docs/admin/permission_set)：华炎魔方基于权限集为每一个对象设置权限，支持公司级、记录级、字段级的权限控制。
 - [API 引擎](https://www.steedos.cn/docs/developer/graphql-api): 华炎魔方自动为业务对象生成 GraphQL API， API自带身份验证并于华炎魔方权限引擎集成，实现数据权限控制。
 - [审批王](https://www.steedos.cn/docs/admin/workflow-admin)：审批王是华炎自主研发的流程引擎，功能可媲美泛微且完全免费。系统内置了流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务审批过程。  
 - 报表引擎：使用华炎魔方的可视华报表工具，您可以快速配置统计图表，包括数据列表、分组报表、数据透视图、柱状图、饼图等，方便查看、分析和决策。
@@ -89,9 +89,10 @@ npx create-steedos-app my-app
 
 ## 华炎魔方（企业版）功能
 
-华炎魔方（企业版）实现可更高级的权限，并与Github主流的企业级低代码及Devops工具集成和整合，满足企业客户的高级需求。了解更多请[联系我们](https://www.steedos.cn/company/contact-us)。
+华炎魔方（企业版）实现可更多企业级安全控制功能，并与相关第三方开源项目集成，满足企业客户的高级需求。了解更多请[联系我们](https://www.steedos.cn/company/contact-us)。
 
-- 高级权限控制: 配置共享规则和限制规则实现权限在特定条件下的共享和的收缩；为对象启用审计日志，每一条记录的增删改均会自动记录日志。
+- 高级权限控制: 配置共享规则和限制规则实现权限在特定条件下的共享和的收缩，并可通过编写 beforeFind 触发器的方式，根据业务需求叠加任意想要的权限控制。
+- 审计日志：为对象启用审计日志，每一条记录的增删改均会自动记录日志。
 - [Node Red](https://nodered.org/): 基于 Node Red，可视化开发华炎魔方与第三方业务系统的集成接口。
 - [App Smith](https://github.com/getredash/redash): 使用 App Smith，开发华炎魔方前端自定义页面。
 - [Stimulsoft Reports](https://www.stimulsoft.com/en/products/reports): 调用华炎魔方中的查询，可视化开发像素级打印报表与仪表盘。
