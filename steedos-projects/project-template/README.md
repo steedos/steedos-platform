@@ -31,7 +31,7 @@ npx create-steedos-app my-app
 
 只要在浏览器中输入地址 `https://gitpod.io/#{之前Fork下来的Git仓库地址}`即可使用 Gitpod 启动远程开发环境，远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等。
 
-比如访问地址 https://gitpod.io/#https://github.com/steedos/steedos-project-template 即可在线运行该Git仓库项目，可以把`#`号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
+比如访问地址 <https://gitpod.io/#https://github.com/steedos/steedos-project-template> 即可在线运行该Git仓库项目，可以把`#`号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
 
 在浏览器中打开项目后，会自动执行`yarn`指令安装项目依赖项，并自动执行`yarn start`指令运行项目。
 
