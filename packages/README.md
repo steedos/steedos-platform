@@ -1,6 +1,6 @@
 # 华炎魔方内核NPM包简介
 
-这里每个文件夹都是一个标准的NPM包。
+这里每个文件夹都是一个标准的NPM包，编译后发布到 [@steedos](https://www.npmjs.com/search?q=%40steedos) scrope 中。
 
 - [accounts](/packages/accounts)：基于开源项目 <https://github.com/accounts-js/accounts> 开发的华炎魔方登录账户相关的服务端功能。
 - [auth](/packages/auth)：解析、验证接口中用户认证信息、缓存登录用户基本信息，提供获取当前登录用户信息，即`UserSession`相关的内核函数。
