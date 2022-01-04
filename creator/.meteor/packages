@@ -167,7 +167,6 @@ steedos:users-import
 
 
 # steedos:version
-steedos:audit
 steedos:formbuilder
 steedos:app-workflow
 
