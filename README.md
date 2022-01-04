@@ -127,8 +127,6 @@ npx create-steedos-app my-app
 
 ## 源码目录索引
 
-- [平台脚本文件](/.scripts)：华炎魔方平台源码在打包、运行或发布版本时依赖的各种脚本文件。
-- [VS Code配置](/.vscode)：vscode编辑器的配置文件。
 - [Steedos Server](/creator)：华炎魔方最终打包运行的是一个Meteor项目，其源码都在该文件夹内。
 - [Steedos Server Build](/server)：Creator项目源码最终打包编译生成的文件都在该文件夹内，最终会发布为 NPM 包在华炎魔方项目中引用即可。
 - [NPM Packages](/packages)：华炎魔方各种内核功能包，其内每个子文件夹都是一个标准的NPM包。
