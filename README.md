@@ -34,6 +34,12 @@
 
 [点击了解华炎魔方元数据类型](https://www.steedos.cn/docs/developer/meta-types)
 
+## 企业级权限控制
+
+华炎魔方定义了基于角色（简档/权限集）的权限控制体系，通过多种配置和编程入口，满足企业级软件对权限控制的各种需求。
+
+![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
+
 ## 软件包
 
 元数据可以在可视化界面中进行修改，也可以使用Steeods VS Code插件同步为软件包，实现版本管理，并进一步编写代码、调试、测试、打包、部署。
