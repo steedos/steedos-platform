@@ -6,7 +6,6 @@
 - [auth](/packages/auth)：解析、验证接口中用户认证信息、缓存登录用户基本信息，提供获取当前登录用户信息，即`UserSession`相关的内核函数。
 - [cli](/packages/cli)：steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用于同步代码的Visual Studio Code 插件依赖了该包中相关功能。
 - [client](/packages/client)：此包用于创建客户端连接，方便对数据执行数据库操作。
-- [community](/packages/community)：已作废。
 - [core](/packages/core)：华炎魔方内核功能包，该包中实现了元数据、元数据国际化资源、插件、Creator等内核功能的初始化，还有OData接口，Bootstrap接口等内核功能也是在该包中实现的。
 - [create-steedos-app](/packages/create-steedos-app)：该包中实现了 `npx create-steedos-app` 相关命令行功能，用于创建一个华炎魔方项目，创建出来的是一个模板项目，而不是空的魔方项目，华炎魔方模板项目说明请参考文档 [华炎魔方模板项目](https://github.com/steedos/steedos-platform/blob/2.1/steedos-projects/project-template/README.md)。
 - [create-steedos-node-red-app](/packages/create-steedos-node-red-app)：该包中实现了 `npx create-steedos-node-red-app` 相关命令行功能，用于创建一个Node-Red项目，使用说明请参考文档 [与现有业务系统整合](https://www.steedos.cn/docs/developer/node-red)。

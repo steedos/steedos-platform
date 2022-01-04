@@ -3,7 +3,6 @@
   "private": true,
   "workspaces": [
     "packages/**",
-    "steedos-packages/**",
     "services/**",
     "server",
     "steedos-projects/**"
