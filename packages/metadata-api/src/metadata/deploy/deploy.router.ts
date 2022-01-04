@@ -3,23 +3,16 @@ const router = express.Router();
 const fs = require('fs');
 const os = require('os');
 const path = require("path");
-const chalk = require("chalk");
 const Fiber = require('fibers');
 
-import { DbManager } from '../../util/dbManager'
 import { requireAuthentication } from '@steedos/core';
-import { jsonToDb } from './jsonToDb';
-import { deleteFolderRecursive, SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core'
-import { loadFileToJson } from './fileToJson';
-
-declare var Steedos: any;
+import { deleteFolderRecursive } from '@steedos/metadata-core';
+import { deployMetadata } from './';
 
 const uploadMetadata = async function (req, res) {
 
     const userSession = req.user;
     const isSpaceAdmin = req.user.is_space_admin;
-    const spaceId = userSession.spaceId;
-    // const userId = userSession.userId;
 
     if(!isSpaceAdmin){
         return res.status(401).send({ status: 'error', message: 'Permission denied' });
@@ -49,61 +42,13 @@ const uploadMetadata = async function (req, res) {
         status: '', 
         msg: '',
     };
-    
-    var dbManager = new DbManager(userSession);
+
     try {
-        let SteedosPackage = await loadFileToJson(tempDir);
-
-        // console.log('SteedosPackageJson=', SteedosPackage);
-        var isEmptyPackage = true;
-        for(const metadataName in SteedosPackage){
-            const metadata = SteedosPackage[metadataName];
-            for(const key in metadata){
-                if(metadata[key]){
-                    isEmptyPackage = false;
-                    break;
-                }
-            }
-        }
-        if(isEmptyPackage){
-            throw new Error('data not found in package');
-        }
-
-        //todo 限制要挪到jsonToDb里
-        const masterDetailLimit = 2;
-        for(const metadataName in SteedosPackage){
-            if(metadataName == TypeInfoKeys.Object){
-                const objects = SteedosPackage[metadataName];
-                for(const objectName in objects){
-                    const object = objects[objectName];
-                    const fields = object[TypeInfoKeys.Field];
-                    let masterDetailCount = 0;
-                    for(const FieldName in fields){
-                        const field = fields[FieldName];
-                        if(field['type'] == 'master_detail'){
-                            if(++masterDetailCount > masterDetailLimit){
-                                throw new Error('Field type [master_detail] over limit in Object: '+objectName +", max:"+ masterDetailLimit);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
-        await dbManager.connect();
-        var session = await dbManager.startSession();
-        await jsonToDb(SteedosPackage, dbManager, session);
-        
-        resMsg.status = "200";
-        resMsg.msg = "deploy success!";
-        
+        await deployMetadata(tempDir, userSession);
     } catch (err) {
         resMsg.status = "500";
         resMsg.msg = err.message;
-    }finally{
-        await dbManager.endSession();
-        await dbManager.close();
-    }  
+    } 
 
     deleteFolderRecursive(tempDir);
     return res.status(resMsg.status).send(resMsg.msg);

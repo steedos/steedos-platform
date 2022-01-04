@@ -43,3 +43,7 @@ options:
     value: Page
   - label: 选项卡
     value: Tab
+  - label: 限制规则
+    value: RestrictionRule
+  - label: 共享规则
+    value: ShareRule

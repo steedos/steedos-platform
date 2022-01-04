@@ -20,37 +20,7 @@ const login = require('./main/default/manager/login');
 const HEADER_AUTH = 'Authorization';
 const AUTH_TYPE = 'Bearer';
 
-const getPackageMetadata = async (packagePath)=>{
-	const packageMetadata = [];
-	const result = await metadataApi.loadFileToJson(packagePath, {
-		CustomApplication: '*',
-		CustomPermissionset: '*',
-		CustomProfile: '*',
-		CustomObject: '*',
-		Layout: '*',
-		CustomReport: '*',
-		Workflow: '*',
-		Flow: '*',
-		ApprovalProcess: '*',
-		Role: '*',
-		FlowRole: '*',
-		Query: '*',
-		Chart: '*',
-		Page: '*',
-		Tab: '*',
-	});
-
-	_.each(result, (metadataItems, metadataType)=>{
-		_.each(metadataItems, (metadata, apiName)=>{
-			packageMetadata.push({
-				label: metadata.label || metadata.name,
-				type: metadataType,
-				api_name: apiName
-			})
-		})
-	})
-	return packageMetadata;
-}
+const getPackageMetadata = packages.scanPackageMetadatas;
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -282,7 +252,7 @@ module.exports = {
 					}
 					let { module, version, url, auth, registry_url } = ctx.params
 					const enable = true;
-					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker)
+					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker, user)
 				} catch (error) {
 					let errorInfo = error.message || '';
 					if (error.stderr) {
@@ -422,7 +392,7 @@ module.exports = {
             }
 		},
 		installPackageFromUrl: {
-			async handler(module, version, url, auth, enable, registry_url, broker) {
+			async handler(module, version, url, auth, enable, registry_url, broker, userSession) {
 				if(!module || !_.isString(module) || !module.trim()){
 					throw new Error(`无效的软件包名称`);
 				} else {
@@ -494,6 +464,7 @@ module.exports = {
 						metadata: metadata
 					})
 				})
+				await this.deployPackage(packagePath, userSession);
 				return packageConfig;
 			}
 		},
@@ -546,6 +517,26 @@ module.exports = {
 				// }
 				await login.loginToRegistry(adminPhone, apiKey, `${adminPhone}@steedos.com`, registryUrl, undefined);
 				login.setYarnrcScopes(scopes, registryUrl);
+			}
+		},
+		deployPackage: {
+			async handler(packagePath, userSession) {
+				try {
+					const packageInfo = require(path.join(packagePath, 'package.json'));
+					if (packageInfo && packageInfo.steedos) {
+						const steedosConfig = packageInfo.steedos;
+						const packageType = steedosConfig['package-type'];
+						if (packageType === 'unmanaged') {
+							//deployPackage
+							const packageYml = await getPackageMetadata(packagePath)
+							return await metadataApi.deployMetadata(packagePath, userSession, packageYml)
+						}
+					}
+					// throw new Error(`仅支持部署非受管软件包`);
+				} catch (error) {
+					console.error(`error`, error)
+					throw error;
+				}
 			}
 		}
 	},

@@ -1,10 +1,11 @@
 const fs = require("fs");
+const objectql = require('@steedos/objectql');
+const metadataApi = require('@steedos/metadata-api');
+const path = require("path");
+const _ = require('lodash');
 const loader = require('./loader');
 const registry = require('./registry');
-const path = require("path");
-const objectql = require('@steedos/objectql');
 const packageJson = require('./package-json');
-const _ = require('lodash');
 const login = require('./login');
 
 function registryUrl(scope) {
@@ -164,6 +165,8 @@ const scanPackageMetadatas = async (packagePath) => {
         Chart: '*',
         Page: '*',
         Tab: '*',
+        RestrictionRule: '*',
+        ShareRule: '*',
     });
 
     _.each(result, (metadataItems, metadataType) => {
