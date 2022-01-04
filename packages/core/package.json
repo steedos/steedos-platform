@@ -20,7 +20,7 @@
     "@salesforce/ts-types": "^1.1.1",
     "@steedos/auth": "2.1.65",
     "@steedos/i18n": "2.1.65",
-    "@steedos/license": "2.1.8",
+    "@steedos/license": "2.1.9",
     "@steedos/metadata-core": "2.1.65",
     "@steedos/migrate": "2.1.65",
     "@steedos/objectql": "2.1.65",
