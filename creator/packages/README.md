@@ -212,10 +212,6 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 
 上一代华炎魔方OData接口功能是在这个包中实现的。
 
-## steedos-pay
-
-已作废。
-
 ## steedos-post
 
 已作废。
