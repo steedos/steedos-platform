@@ -200,10 +200,6 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 
 该包实现了上一代华炎魔方对象模型内核功能，新版相关功能已经迁移到 [模板项目](https://github.com/steedos/steedos-platform/tree/2.1/packages/standard-objects) 中了。
 
-## steedos-objects-billing
-
-作废。
-
 ## steedos-objects-core
 
 该包中包含上一代华炎魔方部分上传附件相关业务逻辑，新版相关功能已经迁移到 [模板项目](https://github.com/steedos/steedos-platform/tree/2.1/packages/standard-objects) 中了。
