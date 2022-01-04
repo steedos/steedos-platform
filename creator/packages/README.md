@@ -212,10 +212,6 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 
 上一代华炎魔方OData接口功能是在这个包中实现的。
 
-## steedos-post
-
-已作废。
-
 ## steedos-qcloud-smsqueue
 
 该包基于腾讯云实现了服务端待发送短信队列相关功能，用于按队列次序依次发送短信。
