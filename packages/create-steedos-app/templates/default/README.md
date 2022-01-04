@@ -31,7 +31,7 @@ npx create-steedos-app my-app
 
 只要在浏览器中输入地址 `https://gitpod.io/#{之前Fork下来的Git仓库地址}`即可使用 Gitpod 启动远程开发环境，远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等。
 
-比如访问地址 https://gitpod.io/#https://github.com/steedos/steedos-project-template 即可在线运行该Git仓库项目，可以把`#`号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
+比如访问地址 <https://gitpod.io/#https://github.com/steedos/steedos-project-template> 即可在线运行该Git仓库项目，可以把`#`号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
 
 在浏览器中打开项目后，会自动执行`yarn`指令安装项目依赖项，并自动执行`yarn start`指令运行项目。
 
@@ -43,11 +43,11 @@ npx create-steedos-app my-app
 
 ### 零代码开发
 
-可以参考文档 [如何创建自定义应用程序？](https://www.steedos.com/docs/admin/create_object) 在界面上开发业务需求，开发完成后可以参考 [同步元数据](https://www.steedos.com/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE) 把代码同步到 GitPod 本地，然后本地代码可以提交到 Git仓库中。
+可以参考文档 [如何创建自定义应用程序？](https://www.steedos.cn/docs/admin/create_object) 在界面上开发业务需求，开发完成后可以参考 [同步元数据](https://www.steedos.cn/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE) 把代码同步到 GitPod 本地，然后本地代码可以提交到 Git仓库中。
 
 ### 低代码开发
 
-可以参考文档 [开发人员快速向导](https://www.steedos.com/docs/developer/getting-started) 在GitPod中在线写代码来开发业务需求。
+可以参考文档 [开发人员快速向导](https://www.steedos.cn/docs/developer/getting-started) 在GitPod中在线写代码来开发业务需求。
 
 ## 软件包
 
