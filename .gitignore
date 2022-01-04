@@ -67,3 +67,4 @@ steedos-projects/project-dev/**
 
 .npmrc
 .yarnrc
+steedos-projects/project-template/yarn.lock
