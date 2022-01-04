@@ -92,10 +92,6 @@ json router 的认证中间件
 
 消息模块
 
-## steedos-app-tableau
-
-已作废。
-
 ## steedos-app-workflow
 
 该包中实现了审批王应用中一些内核功能。
