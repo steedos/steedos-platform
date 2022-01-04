@@ -848,7 +848,7 @@ export async function importWithRecords(recordDatas, options) {
     insertInfo = await insertRow(dataRow, objectName, options);
 
     if (insertInfo != null ? insertInfo.errorInfo : void 0) {
-      errorList.push(dataRow + insertInfo.errorInfo);
+      errorList.push(`第${i + 2}行  ` + dataRow + insertInfo.errorInfo);
     }
     // 	# 插入一行数据
     if (insertInfo != null ? insertInfo.insertState : void 0) {
