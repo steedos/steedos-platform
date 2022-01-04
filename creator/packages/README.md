@@ -184,10 +184,6 @@ json router 的认证中间件
 
 meteor mongo mongoOptions 初始化
 
-## steedos-mini-web
-
-已作废。
-
 ## steedos-oauth2-messenger
 
 已作废。
