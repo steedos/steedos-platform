@@ -14,10 +14,6 @@ To view or edit .drawio files, you can
 
 ![Steedos Metadata Overview](./Steedos%20Metadata.drawio.svg)
 
-## Steedos Permission Check
+## Steedos Permissions
 
-![Steedos Permissions Overview](./Steedos%20Permission%20Check.drawio.svg)
-
-## Metadata Loading
-
-![Steedos Metadata Loading](./Steedos%20Metadata%20Loading.drawio.svg)
+![Steedos Permissions](./Steedos%20Permissions.drawio.svg)
