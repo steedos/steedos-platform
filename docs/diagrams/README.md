@@ -13,3 +13,7 @@ To view or edit .drawio files, you can
 ## Steedos Permissions
 
 ![Steedos Permissions Overview](./Steedos%20Permissions.drawio.svg)
+
+## Metadata Loading
+
+![Steedos Metadata Loading](./Metadata%20Loading.drawio.svg)
