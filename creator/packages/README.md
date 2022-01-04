@@ -232,18 +232,6 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 
 该包实现了华炎魔方桌面客户端消息推送功能。
 
-## steedos-weixin
-
-已作废。
-
-## steedos-weixin-aes
-
-已作废。
-
-## steedos-weixin-template-message-queue
-
-已作废。
-
 ## steedos-workflow
 
 该包实现了审批王应用核心业务功能，包括前端UI和后端审批业务逻辑。
