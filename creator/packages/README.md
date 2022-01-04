@@ -184,10 +184,6 @@ json router 的认证中间件
 
 meteor mongo mongoOptions 初始化
 
-## steedos-oauth2-messenger
-
-已作废。
-
 ## steedos-oauth2-server
 
 Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员通过配置第三方授权应用，可实现让第三方应用通过调用相关接口，申请授权登录。
