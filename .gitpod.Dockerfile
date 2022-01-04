@@ -36,4 +36,6 @@ ENV PATH=$PATH:/home/gitpod/redis-6.2.6/src
 # Install Meteor
 RUN curl https://install.meteor.com/?release=1.9.3 | sh
 
+RUN mkdir -p /dev/disk/by-id/
+
 USER gitpod
