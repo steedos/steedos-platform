@@ -96,14 +96,6 @@ json router 的认证中间件
 
 该包中实现了审批王应用中一些内核功能。
 
-## steedos-application-package
-
-已作废。软件包导入
-
-## steedos-audit
-
-已作废。
-
 ## steedos-autoform
 
 该包实现了上一代华炎魔方各种字段类型对应的UI组件，目前大部分表单已经升级为使用 [Ant Design](https://ant.design/) 作为新控件库实现相关功能了。
