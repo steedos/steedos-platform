@@ -1,7 +1,6 @@
 {
   "packages": [
     "packages/**",
-    "steedos-packages/**",
     "steedos-projects/**",
     "services/**",
     "server"
