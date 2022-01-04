@@ -1,0 +1,148 @@
+name: object_listviews
+label: List View
+description: 
+fields:
+  label:
+    label: Label
+    help: 
+    description: 
+  name:
+    label: API Name
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  filter_scope:
+    label: Filter Scope
+    help: 
+    description: 
+  shared:
+    label: Shared to All Users
+    help: 
+    description: 
+  show_count:
+    label: Show Record Count
+    help: 
+    description: 
+  type:
+    label: Type
+    help: 
+    options:
+      - label: Grid
+        value: grid
+      - label: Calendar
+        value: calendar
+    description: 
+  scrolling_mode:
+    label: Scrolling Mode
+    help: Define the scroll bar display style for the data list.
+    options:
+      - label: >-
+          Standard ( Click the page number to load the data of the corresponding
+          page. )
+        value: standard
+      - label: >-
+          Virtual ( Switch the page through the scroll bar. When you scroll to
+          the corresponding page, the data will be loaded remotely. )
+        value: virtual
+      - label: >-
+          Infinite ( Initially, only the first page will be loaded, and the next
+          page will be loaded while scrolling. )
+        value: infinite
+    description: 
+  columns:
+    label: Columns
+    help: 
+    description: 
+  columns.$:
+    label: Column
+    help: 
+    description: 
+  columns.$.field:
+    label: Field
+    help: 
+    description: 
+  columns.$.width:
+    label: Width
+    help: 
+    description: 
+  columns.$.wrap:
+    label: Wrap
+    help: 
+    description: 
+  filter_fields:
+    label: Default Filter Fields
+    help: 
+    description: 
+  sort:
+    label: Default Sort Order
+    help: 
+    description: 
+  sort.$:
+    label: Order
+    help: 
+    description: 
+  sort.$.field_name:
+    label: Field Name
+    help: 
+    description: 
+  sort.$.order:
+    label: Sort Order
+    help: 
+    options:
+      - label: ASC
+        value: asc
+      - label: DESC
+        value: desc
+    description: 
+  filters:
+    label: Filters
+    help: 
+    description: 
+  filters.$:
+    label: Filter
+    help: 
+    description: 
+  filters.$.field:
+    label: Field
+    help: 
+    description: 
+  filters.$.operation:
+    label: Operator
+    help: 
+    description: 
+  filters.$.value:
+    label: Value
+    help: 
+    description: 
+  filter_logic:
+    label: Logic
+    help: 
+    description: 
+  mobile_columns:
+    label: Mobile Columns
+    help: 
+    description: 
+  mobile_columns.$:
+    label: Column
+    help: 
+    description: 
+  mobile_columns.$.field:
+    label: Field
+    help: 
+    description: 
+listviews:
+  all:
+    label: All List View
+actions:
+  customize:
+    label: Customize
+CustomLabels:
+  object_listviews_field_filters.$: 
+  object_listviews_field_sort.$: 
+  object_listviews__error_name_invalid_format: 

@@ -6,7 +6,7 @@ fields:
   driver:
     type: select
     label: Driver
-    options: Mongo:mongo,Mssql:sqlserver,Postgres:postgres,Oracle:oracle,Mysql:mysql,Sqlite:sqlite
+    options: MongoDB:mongo,SQL Server:sqlserver,PostgreSQL:postgres,Oracle:oracle,MySQL:mysql,Sqlite:sqlite
     required: true
   label:
     type: text

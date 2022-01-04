@@ -7,3 +7,5 @@ declare var WebApp;
 declare var WebAppInternals;
 declare var __meteor_runtime_config__;
 declare var TAPi18n;
+declare var db;
+declare var ObjectWebhooksQueue;

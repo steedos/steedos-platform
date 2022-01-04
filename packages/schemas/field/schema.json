@@ -1,0 +1,436 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "name": "steedos-schema_object_field",
+    "type": "object",
+    "additionalProperties": false,
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "library"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "name"
+            ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "not": {
+                        "enum": [
+                            "library"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "字段名称"
+        },
+        "label": {
+            "type": "string",
+            "description": "字段显示名称"
+        },
+        "is_name": {
+            "type": "boolean",
+            "description": "将当前字段叫标记为name字段，用于选择数据时的显示名称"
+        },
+        "column_name": {
+            "type": "string",
+            "description": "数据库字段名"
+        },
+        "object": {
+            "type": "string",
+            "description": "字段所属对象"
+        },
+        "type": {
+            "type": "string",
+            "description": "字段类型",
+            "anyOf": [
+                {
+                    "enum": [
+                        "text",
+                        "textarea",
+                        "html",
+                        "select",
+                        "boolean",
+                        "toggle",
+                        "date",
+                        "datetime",
+                        "number",
+                        "currency",
+                        "percent",
+                        "password",
+                        "lookup",
+                        "master_detail",
+                        "grid",
+                        "url",
+                        "email",
+                        "avatar",
+                        "location",
+                        "image",
+                        "object",
+                        "[object]",
+                        "[Object]",
+                        "[grid]",
+                        "[text]",
+                        "selectCity",
+                        "audio",
+                        "filesize",
+                        "file",
+                        "code",
+                        "autonumber",
+                        "markdown",
+                        "formula",
+                        "summary"
+                    ]
+                }
+            ]
+        },
+        "sort_no": {
+            "type": "integer",
+            "description": "排序号, 默认值100"
+        },
+        "group": {
+            "type": "string",
+            "description": "分组名称"
+        },
+        "defaultValue": {
+            "type": [
+                "string",
+                "boolean",
+                "array",
+                "integer"
+            ],
+            "description": "默认值"
+        },
+        "allowedValues": {
+            "type": [
+                "string",
+                "boolean",
+                "array"
+            ],
+            "description": "允许的值"
+        },
+        "multiple": {
+            "type": "boolean",
+            "description": "支持多选"
+        },
+        "required": {
+            "type": "boolean",
+            "description": "是否必填"
+        },
+        "is_wide": {
+            "type": "boolean",
+            "description": "是否宽字段，如果为true，则在详细页面，一个字段占一行"
+        },
+        "readonly": {
+            "type": "boolean",
+            "description": "是否只读"
+        },
+        "hidden": {
+            "type": "boolean",
+            "description": "是否隐藏"
+        },
+        "omit": {
+            "type": "boolean",
+            "description": "忽略此字段"
+        },
+        "index": {
+            "type": "boolean",
+            "description": "创建索引"
+        },
+        "searchable": {
+            "type": "boolean",
+            "description": "允许搜索"
+        },
+        "sortable": {
+            "type": "boolean",
+            "description": "允许排序"
+        },
+        "precision": {
+            "type": "integer",
+            "description": "数值类型字段的最大长度，默认值18"
+        },
+        "scale": {
+            "type": "integer",
+            "description": "数值类型的小数位数，默认值2"
+        },
+        "reference_to": {
+            "type": [
+                "string",
+                "array"
+            ],
+            "description": "引用的对象"
+        },
+        "reference_to_field": {
+            "type": "string",
+            "description": "引用的对象的字段，按照此字段去查找相关记录"
+        },
+        "modal_mode": {
+            "type": "string",
+            "description": "lookup字段弹出框模式: 'dialog' | 'drawer' ",
+            "enum": [
+                "dialog",
+                "drawer"
+            ]
+        },
+        "show_as_qr": {
+            "type": "boolean",
+            "description": "显示为二维码"
+        },
+        "table_schema": {
+            "type": ["string", "object"],
+            "description": "lookup字段弹出框表格定义，可以定义为列表视图名称或列表属性"
+        },
+        "rows": {
+            "type": "integer",
+            "description": "多行文本默认行数"
+        },
+        "firstOption": {
+            "type": "boolean"
+        },
+        "options": {
+            "anyOf": [
+                {
+                    "items": {
+                        "type": "string",
+                        "pattern": "^[^:]+(:[^:]+)?(:[0-9a-fA-F]{6})?$"
+                    },
+                    "type": "array",
+                    "title": "One option per line. Three definition formats are supported. value, label:value, label:value:FFFFFF, the third format can set the color of each option, if supply as a string array."
+                },
+                {
+                    "items": {
+                        "type": "object",
+                        "required": ["label", "value"],
+                        "additionalProperties": false,
+                        "properties": {
+                            "label" : {
+                                "type": "string",
+                                "title": "Options display name"
+                            },
+                            "value" : {
+                                "type": ["string", "number", "boolean"],
+                                "title": "Options value saved as"
+                            },
+                            "color" : {
+                                "title": "Options color showed as background",
+                                "anyOf": [{
+                                    "type": "string",
+                                    "pattern": "^[0-9a-fA-F]{6}$"
+                                }]
+                            },
+                            "description" : {
+                                "type": "string",
+                                "title": "Options description "
+                            },
+                            "icon": {
+                                "type": "string",
+                                "title": "Options icon name"
+                            }
+                        }
+                    },
+                    "type": "array",
+                    "title": "The label and value propertie is required if supply as a object array."
+                },
+                {
+                    "type": "string",
+                    "title": "Only support a function string if supply as a string."
+                }
+            ],
+            "description": "字段选项"
+        },
+        "description": {
+            "type": "string",
+            "description": "字段描述"
+        },
+        "filterable": {
+            "type": "boolean",
+            "description": "过滤器默认字段"
+        },
+        "inlineHelpText": {
+            "type": "string",
+            "description": "提示文本"
+        },
+        "unique": {
+            "type": "boolean",
+            "description": "重复"
+        },
+        "optionsFunction": {
+            "type": "string",
+            "description": "字段选项函数名称"
+        },
+        "min": {
+            "type": ["integer", "string"],
+            "description": "最小长度。支持字符串，数字，金额，日期类型字段"
+        },
+        "max": {
+            "type": ["integer", "string"],
+            "description": "最大长度。支持字符串，数字，金额，日期类型字段"
+        },
+        "blackbox": {
+            "type": "boolean",
+            "description": "不校验字段类型"
+        },
+        "disabled": {
+            "type": "boolean",
+            "description": "禁用"
+        },
+        "reference_sort": {
+            "type": "object",
+            "description": "排序方式"
+        },
+        "reference_limit": {
+            "type": "number",
+            "description": "一次最多显示数据"
+        },
+        "is_company_only": {
+            "type": "boolean",
+            "description": "本公司"
+        },
+        "is_company_limited": {
+            "type": ["boolean", "string"],
+            "description": "本公司"
+        },
+        "system": {
+            "type": "string"
+        },
+        "depend_on": {
+            "type": "array"
+        },
+        "defaultIcon": {
+            "type": "string"
+        },
+        "showIcon": {
+            "type": "boolean"
+        },
+        "primary": {
+            "type": "boolean",
+            "description": "主键"
+        },
+        "generated": {
+            "type": "boolean",
+            "description": "自增"
+        },
+        "fieldDBType": {
+            "type": "string",
+            "description": "字段数据库类型"
+        },
+        "collection": {
+            "type": "string",
+            "description": "对应对象名"
+        },
+        "language": {
+            "type": "string",
+            "description": "模板名"
+        },
+        "create": {
+            "type": "boolean",
+            "description": "关联时是否允许创建"
+        },
+        "regEx": {
+            "type": "object",
+            "description": "正则表达式"
+        },
+        "formula": {
+            "type": "string",
+            "description": "公式"
+        },
+        "data_type": {
+            "type": "string",
+            "description": "数据类型",
+            "anyOf": [
+                {
+                    "enum": [
+                        "text",
+                        "boolean",
+                        "date",
+                        "datetime",
+                        "number",
+                        "currency",
+                        "percent"
+                    ]
+                }
+            ]
+        },
+        "summary_object": {
+            "type": "string",
+            "description": "要汇总的对象"
+        },
+        "summary_type": {
+            "type": "string",
+            "description": "汇总类型",
+            "anyOf": [
+                {
+                    "enum": [
+                        "count",
+                        "sum",
+                        "min",
+                        "max",
+                        "avg"
+                    ]
+                }
+            ]
+        },
+        "summary_field": {
+            "type": "string",
+            "description": "要聚合的字段"
+        },
+        "summary_filters": {
+            "type": [
+                "array",
+                "string"
+            ],
+            "description": "要汇总的子表记录的过滤条件"
+        },
+        "formula_blank_value": {
+            "type": "string",
+            "description": "空白字段处理，zeroes表示将空白字段视为零，blanks表示将空白字段视为空白，默认为zeroes",
+            "anyOf": [
+                {
+                    "enum": [
+                        "zeroes",
+                        "blanks"
+                    ]
+                }
+            ]
+        },
+        "filters": {
+            "type": [
+                "array",
+                "string"
+            ],
+            "description": "过滤条件"
+        },
+        "filtersFunction": {
+            "type": "string",
+            "description": "过滤条件函数名称"
+        },
+        "write_requires_master_read": {
+            "type": "boolean",
+            "description": "设置主记录上创建、编辑或删除子记录所需的最低访问级别。此字段仅适用于master_detail字段类型。true--允许具有'读取'访问权限的用户创建、编辑或删除子记录。false = 允许具有'读取/写入'访问权限的用户创建、编辑或删除子记录的权限。此设置比 true 更严格，并且是默认值。"
+        },
+        "relatedList": {
+            "type": "boolean",
+            "description": "用于表示是否在相关表的详细页面中作为子表显示"
+        },
+        "picklist": {
+            "type": "string",
+            "description": "指定字段的选项列表值集"
+        },
+        "modal_mode": {
+            "type": "string"
+        },
+        "visible_on": {
+            "type": "string"
+        }
+    }
+}

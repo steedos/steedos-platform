@@ -1,0 +1,22 @@
+_id: apps_user_charts
+name: Apps
+admin_menus:
+  - _id: analysis
+    name: 统计分析
+    sort: 400
+    permission_sets:
+      - admin
+  - _id: app_queries
+    name: 查询
+    object_name: queries
+    parent: analysis
+    sort: 100
+    permission_sets:
+      - admin
+  - _id: app_charts
+    name: 图表
+    object_name: charts
+    parent: analysis
+    sort: 200
+    permission_sets:
+      - admin

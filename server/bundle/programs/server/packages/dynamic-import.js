@@ -8,14 +8,14 @@ var meteorInstall = Package.modules.meteorInstall;
 var Promise = Package.promise.Promise;
 var fetch = Package.fetch.fetch;
 
-var require = meteorInstall({"node_modules":{"meteor":{"dynamic-import":{"server.js":function(require,exports,module){
+var require = meteorInstall({"node_modules":{"meteor":{"dynamic-import":{"server.js":function module(require,exports,module){
 
-/////////////////////////////////////////////////////////////////////////////////
-//                                                                             //
-// packages/dynamic-import/server.js                                           //
-//                                                                             //
-/////////////////////////////////////////////////////////////////////////////////
-                                                                               //
+//////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                      //
+// packages/dynamic-import/server.js                                                    //
+//                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////
+                                                                                        //
 "use strict";
 
 const assert = require("assert");
@@ -115,7 +115,7 @@ function middleware(request, response) {
         });
 
         response.end(JSON.stringify(
-          Meteor.isDevelopment && e.message || "bad request"
+            process.env.CREATOR_NODE_ENV == 'development' && e.message || "bad request"
         ));
       }
     });
@@ -238,16 +238,16 @@ onMessage("client-refresh", () => {
   });
 });
 
-/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-},"cache.js":function(require,exports,module){
+},"cache.js":function module(require,exports,module){
 
-/////////////////////////////////////////////////////////////////////////////////
-//                                                                             //
-// packages/dynamic-import/cache.js                                            //
-//                                                                             //
-/////////////////////////////////////////////////////////////////////////////////
-                                                                               //
+//////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                      //
+// packages/dynamic-import/cache.js                                                     //
+//                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////
+                                                                                        //
 var dbPromise;
 
 var canUseCache =
@@ -437,16 +437,16 @@ function flushSetMany() {
   });
 }
 
-/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-},"client.js":function(require,exports,module){
+},"client.js":function module(require,exports,module){
 
-/////////////////////////////////////////////////////////////////////////////////
-//                                                                             //
-// packages/dynamic-import/client.js                                           //
-//                                                                             //
-/////////////////////////////////////////////////////////////////////////////////
-                                                                               //
+//////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                      //
+// packages/dynamic-import/client.js                                                    //
+//                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////
+                                                                                        //
 var Module = module.constructor;
 var cache = require("./cache.js");
 var meteorInstall = require("meteor/modules").meteorInstall;
@@ -623,28 +623,28 @@ function getNamespace(module, id) {
   return namespace;
 }
 
-/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-},"common.js":function(require,exports){
+},"common.js":function module(require,exports){
 
-/////////////////////////////////////////////////////////////////////////////////
-//                                                                             //
-// packages/dynamic-import/common.js                                           //
-//                                                                             //
-/////////////////////////////////////////////////////////////////////////////////
-                                                                               //
+//////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                      //
+// packages/dynamic-import/common.js                                                    //
+//                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////
+                                                                                        //
 exports.fetchURL = "/__meteor__/dynamic-import/fetch";
 
-/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-},"dynamic-versions.js":function(require,exports,module){
+},"dynamic-versions.js":function module(require,exports,module){
 
-/////////////////////////////////////////////////////////////////////////////////
-//                                                                             //
-// packages/dynamic-import/dynamic-versions.js                                 //
-//                                                                             //
-/////////////////////////////////////////////////////////////////////////////////
-                                                                               //
+//////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                      //
+// packages/dynamic-import/dynamic-versions.js                                          //
+//                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////
+                                                                                        //
 // This magic double-underscored identifier gets replaced in
 // tools/isobuild/bundler.js with a tree of hashes of all dynamic
 // modules, for use in client.js and cache.js.
@@ -734,16 +734,16 @@ if (global.addEventListener) {
   global.attachEvent('onload', precacheOnLoad);
 }
 
-/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
-},"security.js":function(require,exports,module){
+},"security.js":function module(require,exports,module){
 
-/////////////////////////////////////////////////////////////////////////////////
-//                                                                             //
-// packages/dynamic-import/security.js                                         //
-//                                                                             //
-/////////////////////////////////////////////////////////////////////////////////
-                                                                               //
+//////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                      //
+// packages/dynamic-import/security.js                                                  //
+//                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////
+                                                                                        //
 Meteor.startup(function () {
   const bpc = Package["browser-policy-content"];
   const BP = bpc && bpc.BrowserPolicy;
@@ -767,7 +767,7 @@ Meteor.startup(function () {
   }
 });
 
-/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 }}}}},{
   "extensions": [

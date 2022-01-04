@@ -4,6 +4,7 @@ icon: timesheet_entry
 enable_search: true
 enable_files: true
 enable_chatter: true
+version: 2
 fields:
   name:
     label: Name
@@ -16,6 +17,7 @@ fields:
   assignees:
     label: Assignees
     type: lookup
+    required: true
     reference_to: users
     defaultValue: "{userId}"
     multiple: true
@@ -23,6 +25,7 @@ fields:
     filterable: true
   due_date:
     label: Due Date
+    required: true
     type: date
     sortable: true
     name: due_date
@@ -96,6 +99,13 @@ list_views:
   my_closed_tasks:
     label: My Closed Tasks
     filter_scope: space
+    columns:
+      - name
+      - due_date
+      - state
+      - priority
+      - assignees
+      - related_to
     filters:
       - - assignees
         - =
@@ -130,27 +140,27 @@ list_views:
         - '{userId}'
   recent:
     label: Recently Viewed Tasks
-  calendar_view:
-    type: calendar
-    label: Calendar View
-    filter_scope: space
-    filters:
-      - - assignees
-        - =
-        - '{userId}'
-      - - owner
-        - =
-        - '{userId}'
-    options:
-      startDateExpr: due_date
-      endDateExpr: due_date
-      textExpr: name
-      title:
-        - name
-        - due_date
-        - assignees
-        - state
-      currentView: month
+  # calendar_view:
+  #   type: calendar
+  #   label: Calendar View
+  #   filter_scope: space
+  #   filters:
+  #     - - assignees
+  #       - =
+  #       - '{userId}'
+  #     - - owner
+  #       - =
+  #       - '{userId}'
+  #   options:
+  #     startDateExpr: due_date
+  #     endDateExpr: due_date
+  #     textExpr: name
+  #     title:
+  #       - name
+  #       - due_date
+  #       - assignees
+  #       - state
+  #     currentView: month
 permission_set:
   user:
     allowCreate: true

@@ -1,0 +1,87 @@
+name: permission_set
+label: Permission Set
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  type:
+    label: Type
+    help: 
+    options:
+      - label: Profile
+        value: profile
+      - label: Permission set
+        value: permission_set
+    description: 
+  license:
+    label: License
+    help: 
+    description: 
+  assigned_apps:
+    label: Assigned Apps
+    help: 
+    description: 
+  users:
+    label: Users
+    help: 'When the type is a profile, no user needs to be selected'
+    description: 
+  is_system:
+    label: System
+    help: 
+    description: 
+  password_history:
+    label: 强制密码历史
+    help: 
+    description: 
+  max_login_attempts:
+    label: 最大无效登录尝试次数
+    help: 
+    options:
+      - label: '3'
+        value: '3'
+      - label: '5'
+        value: '5'
+      - label: '10'
+        value: '10'
+      - label: 无限制
+        value: '0'
+    description: 
+  lockout_interval:
+    label: 锁定有效期间
+    help: 
+    options:
+      - label: 15 分钟
+        value: '15'
+      - label: 30 分钟
+        value: '30'
+      - label: 60 分钟
+        value: '60'
+      - label: 始终(必须由管理员重置)
+        value: '0'
+    description: 
+groups:
+  profile_password_policy: profile password policy
+listviews:
+  all:
+    label: All
+  permission_set:
+    label: Permission Set
+  profile:
+    label: Profile
+actions:
+  customize:
+    label: Customize
+CustomLabels:
+  permission_set_admin: Admin
+  permission_set_user: User
+  permission_set_supplier: Supplier
+  permission_set_customer: Customer
+  permission_set_field_license_options_platform: 
+  permission_set_field_license_options_community: 
+  permission_set_field_password_history_options: 

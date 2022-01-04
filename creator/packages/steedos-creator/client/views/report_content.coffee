@@ -152,7 +152,9 @@ getFieldLabel = (field, key)->
 				fieldLabel += " " + relate_field.label
 	return fieldLabel
 
-getSelectFieldLabel = (value, options)->
+getSelectFieldLabel = (value, {options, optionsFunction})->
+	if _.isFunction(optionsFunction)
+		options = optionsFunction({})
 	label = _.findWhere(options,{value:value})?.label
 	label = if label then label else value
 	return if label then label else "--"
@@ -224,7 +226,7 @@ renderChart = (self)->
 		if isSelectType or isDateType or isDatetimeType
 			_.each dataSourceItems, (dsi)->
 				if isSelectType
-					dsi.key = getSelectFieldLabel dsi.key, objectGroupField.options
+					dsi.key = getSelectFieldLabel dsi.key, objectGroupField
 				else if isDateType
 					# 如果不加这个转换语句，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
 					dsi.key = DevExpress.localization.formatDate(dsi.key, 'yyyy-MM-dd')
@@ -348,7 +350,7 @@ renderTabularReport = (reportObject)->
 		}
 		if itemField.type == "select"
 			field.calculateDisplayValue = (rowData)->
-				return getSelectFieldLabel rowData[item], itemField.options
+				return getSelectFieldLabel rowData[item], itemField
 		else if (itemField.type == "lookup" or itemField.type == "master_detail") and itemField.multiple
 			field.calculateDisplayValue = (rowData)->
 				cellData = rowData[itemField.name]
@@ -485,7 +487,7 @@ renderSummaryReport = (reportObject)->
 		}
 		if itemField.type == "select"
 			field.calculateDisplayValue = (rowData)->
-				return getSelectFieldLabel rowData[item], itemField.options
+				return getSelectFieldLabel rowData[item], itemField
 		else if (itemField.type == "lookup" or itemField.type == "master_detail") and itemField.multiple
 			field.calculateDisplayValue = (rowData)->
 				cellData = rowData[itemField.name]
@@ -532,7 +534,7 @@ renderSummaryReport = (reportObject)->
 		}
 		if groupField.type == "select"
 			field.calculateDisplayValue = (rowData)->
-				return getSelectFieldLabel rowData[group], groupField.options
+				return getSelectFieldLabel rowData[group], groupField
 		else if (groupField.type == "lookup" or groupField.type == "master_detail") and groupField.multiple
 			field.calculateDisplayValue = (rowData)->
 				cellData = rowData[groupField.name]
@@ -755,7 +757,7 @@ renderMatrixReport = (reportObject)->
 			}
 			if rowField.type == "select"
 				field.customizeText = (data)->
-					return getSelectFieldLabel data.value, rowField.options
+					return getSelectFieldLabel data.value, rowField
 			else if rowField.type == 'boolean'
 				field.customizeText = (data)->
 					return getBooleanFieldLabel(data.value, caption)
@@ -787,7 +789,7 @@ renderMatrixReport = (reportObject)->
 			}
 			if columnField.type == "select"
 				field.customizeText = (data)->
-					return getSelectFieldLabel data.value, columnField.options
+					return getSelectFieldLabel data.value, columnField
 			else if columnField.type == 'boolean'
 				field.customizeText = (data)->
 					return getBooleanFieldLabel(data.value, caption)

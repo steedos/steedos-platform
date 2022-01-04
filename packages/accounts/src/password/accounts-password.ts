@@ -139,15 +139,15 @@ const getPathFragmentPrefix = function(){
   return pathFragmentPrefix;
 }
 
-interface MyDatabaseInterface extends DatabaseInterface{
-  updateUser?(userId: string, options: any): Promise<void>;
-}
+// interface MyDatabaseInterface extends DatabaseInterface{
+//   updateUser?(userId: string, options: any): Promise<void>;
+// }
 export default class AccountsPassword implements AuthenticationService {
   public serviceName = 'password';
   public server!: AccountsServer;
   public twoFactor: TwoFactor;
   private options: AccountsPasswordOptions & typeof defaultOptions;
-  private db!: MyDatabaseInterface;
+  private db!: DatabaseInterface;
 
   constructor(options: AccountsPasswordOptions = {}) {
     this.options = { ...defaultOptions, ...options };
@@ -361,24 +361,59 @@ export default class AccountsPassword implements AuthenticationService {
     let password_history = 3;
     let max_login_attempts = 10;
     let lockout_interval = 15;
-    const spaceUsers = await getObject('space_users').find({filters: `(user eq '${userId}') and (space eq '${spaceId}')`})
-    if(spaceUsers.length > 0){
+    let enable_MFA = false;
+    let logout_other_clients = false;
+    let login_expiration_in_days = null;
+    let phone_logout_other_clients = false;
+    let phone_login_expiration_in_days = null;
+    const spaceUsers = await getObject("space_users").find({
+      filters: `(user eq '${userId}') and (space eq '${spaceId}')`,
+    });
+    if (spaceUsers.length > 0) {
       const spaceUser = spaceUsers[0];
-      const profiles = await getObject('permission_set').find({filters: `(name eq '${spaceUser.profile}') and (type eq 'profile') and (space eq '${spaceId}')`})
-      if(profiles.length > 0){
-        const userProfile = profiles[0]
-        if(_.has(userProfile, 'password_history')){
-          password_history = Number(userProfile.password_history)
+      const profiles = await getObject("permission_set").find({
+        filters: `(name eq '${spaceUser.profile}') and (type eq 'profile') and (space eq '${spaceId}')`,
+      });
+      if (profiles.length > 0) {
+        const userProfile = profiles[0];
+        if (_.has(userProfile, "password_history")) {
+          password_history = Number(userProfile.password_history);
         }
-        if(_.has(userProfile, 'max_login_attempts')){
-          max_login_attempts = Number(userProfile.max_login_attempts)
+        if (_.has(userProfile, "max_login_attempts")) {
+          max_login_attempts = Number(userProfile.max_login_attempts);
         }
-        if(_.has(userProfile, 'lockout_interval')){
-          lockout_interval = Number(userProfile.lockout_interval)
+        if (_.has(userProfile, "lockout_interval")) {
+          lockout_interval = Number(userProfile.lockout_interval);
+        }
+        if (_.has(userProfile, "enable_MFA")) {
+          enable_MFA = userProfile.enable_MFA;
+        }
+        if (_.has(userProfile, "logout_other_clients")) {
+          logout_other_clients = userProfile.logout_other_clients;
+        }
+        if (_.has(userProfile, "login_expiration_in_days")) {
+          login_expiration_in_days = userProfile.login_expiration_in_days;
+        }
+        if (_.has(userProfile, "phone_logout_other_clients")) {
+          phone_logout_other_clients = userProfile.phone_logout_other_clients;
+        }
+        if (_.has(userProfile, "phone_login_expiration_in_days")) {
+          phone_login_expiration_in_days =
+            userProfile.phone_login_expiration_in_days;
         }
       }
     }
-    return Object.assign({password_history: password_history, max_login_attempts: max_login_attempts, lockout_interval: lockout_interval})
+    return Object.assign({
+      space: spaceId,
+      password_history: password_history,
+      max_login_attempts: max_login_attempts,
+      lockout_interval: lockout_interval,
+      logout_other_clients,
+      enable_MFA,
+      login_expiration_in_days,
+      phone_logout_other_clients,
+      phone_login_expiration_in_days,
+    });
   }
 
   /**

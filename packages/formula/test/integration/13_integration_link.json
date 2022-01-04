@@ -1,0 +1,159 @@
+{
+  "name": "Sample Integration Link Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_integration.htm",
+  "examples": [
+    {
+      "name": "Application API Link",
+      "formula": "HYPERLINK (\"https://www.myintegration.com?sId=\" & GETSESSIONID() & \"?&rowID=\" & Name & \"action=CreateTask\",\"Create a Meeting Request\")",
+      "suites": [
+        {
+          "context": "filled",
+          "identifiers": {
+            "Name": {
+              "dataType": "text",
+              "value": "Charlie"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"https://www.myintegration.com?sId=00D3z000001eRlg!AQMAQC3Y4aM9sFux6SRWhyFcOUKin4taGaBxNMU8TN_R_1R0Y7ArI95eSyzQZVIlrnV_unTbmwHZlXex8xhlXz2kXZNP49Fa?&rowID=Charlieaction=CreateTask\">Create a Meeting Request</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shipment Tracking Integration",
+      "formula": "CASE(Shipping_Method__c,\n\"Fedex\",\nHYPERLINK(\"http://www.fedex.com/Tracking?ascend_header=1&clienttype=dotcom&cntry_code=us&language=english&tracknumbers=\"& tracking_id__c,\"Track\"),\n\"UPS\",\nHYPERLINK(\"http://wwwapps.ups.com/WebTracking/processInputRequest?HTMLVersion=5.0&sort_by=status&loc=en_US&InquiryNumber1=\"& tracking_id__c & \"&track.x=32&track.y=7\", \"Track\") ,\n\"DHL\",\nHYPERLINK(\"http://track.dhl-usa.com/TrackByNbr.asp?ShipmentNumber=\" & tracking_id__c,\"Track\"), \"\")",
+      "suites": [
+        {
+          "context": "Fedex",
+          "identifiers": {
+            "Shipping_Method__c": {
+              "dataType": "picklist",
+              "value": "Fedex",
+              "options": {
+                "values": ["Fedex", "UPS", "DHL", "Royal Mail"]
+              }
+            },
+            "tracking_id__c": {
+              "dataType": "text",
+              "value": "425563133589"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://www.fedex.com/Tracking?ascend_header=1&clienttype=dotcom&cntry_code=us&language=english&tracknumbers=425563133589\">Track</a>"
+          }
+        },
+        {
+          "context": "UPS",
+          "identifiers": {
+            "Shipping_Method__c": {
+              "dataType": "picklist",
+              "value": "UPS",
+              "options": {
+                "values": ["Fedex", "UPS", "DHL", "Royal Mail"]
+              }
+            },
+            "tracking_id__c": {
+              "dataType": "text",
+              "value": "1Z999AA10123456784"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://wwwapps.ups.com/WebTracking/processInputRequest?HTMLVersion=5.0&sort_by=status&loc=en_US&InquiryNumber1=1Z999AA10123456784&track.x=32&track.y=7\">Track</a>"
+          }
+        },
+        {
+          "context": "DHL",
+          "identifiers": {
+            "Shipping_Method__c": {
+              "dataType": "picklist",
+              "value": "DHL",
+              "options": {
+                "values": ["Fedex", "UPS", "DHL", "Royal Mail"]
+              }
+            },
+            "tracking_id__c": {
+              "dataType": "text",
+              "value": "JJD0099999999"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://track.dhl-usa.com/TrackByNbr.asp?ShipmentNumber=JJD0099999999\">Track</a>"
+          }
+        },
+        {
+          "context": "Royal Mail",
+          "identifiers": {
+            "Shipping_Method__c": {
+              "dataType": "picklist",
+              "value": "Royal Mail",
+              "options": {
+                "values": ["Fedex", "UPS", "DHL", "Royal Mail"]
+              }
+            },
+            "tracking_id__c": {
+              "dataType": "text",
+              "value": "EC080250821GB"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Skype™ Auto Dialer Integration",
+      "formula": "HYPERLINK(\"callto://+\" & Country_Code__c & Phone_Unformatted__c, Phone)",
+      "suites": [
+        {
+          "context": "USA",
+          "identifiers": {
+            "Country_Code__c": {
+              "dataType": "text",
+              "value": "1"
+            },
+            "Phone": {
+              "dataType": "text",
+              "value": "(202) 555-0110"
+            },
+            "Phone_Unformatted__c": {
+              "dataType": "text",
+              "value": "2025550110"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"callto://+12025550110\">(202) 555-0110</a>"
+          }
+        },
+        {
+          "context": "Germany",
+          "identifiers": {
+            "Country_Code__c": {
+              "dataType": "text",
+              "value": "49"
+            },
+            "Phone": {
+              "dataType": "text",
+              "value": "0151 / 5551 085"
+            },
+            "Phone_Unformatted__c": {
+              "dataType": "text",
+              "value": "1515551085"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"callto://+491515551085\">0151 / 5551 085</a>"
+          }
+        }
+      ]
+    }
+  ]
+}

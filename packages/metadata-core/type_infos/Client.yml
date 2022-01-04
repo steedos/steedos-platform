@@ -1,0 +1,11 @@
+metadataName: Client
+defaultDirectory: client
+ext: client
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Client
+nameForMsgsPlural: Custom Clients
+deleteSupported: true

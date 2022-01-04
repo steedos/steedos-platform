@@ -1,0 +1,14 @@
+name: api_key
+filterable: false
+hidden: false
+index: false
+is_name: true
+is_wide: false
+label: API Key
+omit: false
+readonly: false
+required: false
+searchable: false
+sort_no: 140
+sortable: false
+type: text

@@ -11,6 +11,12 @@ fields:
     searchable: true
     readonly: true
     name: name
+  api_name:
+    type: text
+    label: Api Name
+    required: true
+    searchable: true
+    name: api_name
   form:
     label: Form
     type: lookup
@@ -66,6 +72,7 @@ fields:
     type: object
     is_wide: true
     blackbox: true
+    omit: true
     name: current
   current.modified:
     label: Modification Time of Current
@@ -103,6 +110,7 @@ fields:
     label: Current Steps
     type: grid
     readonly: true
+    omit: true
     is_wide: true
     name: current.steps
   current.steps.$._id:
@@ -114,27 +122,32 @@ fields:
   current.steps.$.name:
     label: Name
     readonly: true
+    omit: true
     type: text
     name: current.steps.$.name
   current.steps.$.disableCC:
     label: Disable CC
     type: boolean
+    omit: true
     readonly: true
     name: current.steps.$.disableCC
   current.steps.$.allowDistribute:
     label: Can Distribute Instance 
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.allowDistribute
   current.steps.$.can_edit_main_attach:
     label: Can Edit Main Attach
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.can_edit_main_attach
   current.steps.$.can_edit_normal_attach:
     label: Can Edit Normal Attach
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.can_edit_normal_attach
   current.steps.$.distribute_optional_flows:
     label: Workflows of Distribution
@@ -149,26 +162,31 @@ fields:
     label: Must Wait for CC finished
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.cc_must_finished
   current.steps.$.cc_alert:
     label: Pop up CC Alert
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.cc_alert
   current.steps.$.allowBatch:
     label: Batch Processing
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.allowBatch
   current.steps.$.oneClickApproval:
     label: One Click Approval
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.oneClickApproval
   current.steps.$.oneClickRejection:
     label: One Click Rejection
     type: boolean
     readonly: true
+    omit: true
     name: current.steps.$.oneClickRejection
   perms:
     label: Permissions
@@ -446,12 +464,12 @@ actions:
     'on': record
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-        $("body").addClass("loading");
+        window.$("body").addClass("loading");
         var record = Creator.getObjectRecord(object_name, record_id, 'space,form,state');
         var userSession = Creator.USER_CONTEXT;
         var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
         var formId = _.isObject(record.form) ? record.form._id : record.form;
-        $.ajax({
+        window.$.ajax({
           type: "POST",
           url: Steedos.absoluteUrl("/am/flows/state?methodOverride=PUT"),
           data: JSON.stringify({ 'Flows': [{id: record._id, space: record.space, state: 'enabled', form: formId }] }),
@@ -462,12 +480,16 @@ actions:
             XHR.setRequestHeader('Authorization', authorization);
           },
           success: function (data) {
-            $("body").removeClass("loading");
+            window.$("body").removeClass("loading");
             toastr.success("操作已成功！");
-            Template.creator_view.currentInstance.onEditSuccess();
+            if (Template.creator_view.currentInstance) {
+              Template.creator_view.currentInstance.onEditSuccess();
+            } else {
+              FlowRouter.reload();
+            }
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
-            $("body").removeClass("loading");
+            window.$("body").removeClass("loading");
             toastr.error(XMLHttpRequest.responseJSON);
           }
         });
@@ -485,12 +507,12 @@ actions:
     'on': record
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-        $("body").addClass("loading");
+        window.$("body").addClass("loading");
         var record = Creator.getObjectRecord(object_name, record_id, 'space,form,state');
         var userSession = Creator.USER_CONTEXT;
         var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
         var formId = _.isObject(record.form) ? record.form._id : record.form;
-        $.ajax({
+        window.$.ajax({
           type: "POST",
           url: Steedos.absoluteUrl("/am/flows/state?methodOverride=PUT"),
           data: JSON.stringify({ 'Flows': [{id: record._id, space: record.space, state: 'disabled', form: formId }] }),
@@ -501,12 +523,16 @@ actions:
             XHR.setRequestHeader('Authorization', authorization);
           },
           success: function (data) {
-            $("body").removeClass("loading");
+            window.$("body").removeClass("loading");
             toastr.success("操作已成功！");
-            Template.creator_view.currentInstance.onEditSuccess();
+            if (Template.creator_view.currentInstance) {
+              Template.creator_view.currentInstance.onEditSuccess();
+            } else {
+              FlowRouter.reload();
+            }
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
-            $("body").removeClass("loading");
+            window.$("body").removeClass("loading");
             toastr.error(XMLHttpRequest.responseJSON);
           }
         });
@@ -568,7 +594,8 @@ actions:
     'on': list
     todo: !<tag:yaml.org,2002:js/function> |-
       function () {
-              var ids = Creator.TabularSelectedIds["flows"]
+              let selectedRows = SteedosUI.getTableSelectedRows(`listview_flows_${Session.get("list_view_id")}`);
+              let ids = _.pluck(selectedRows, '_id');
               if(ids && ids.length > 0){
                 window.open(Steedos.absoluteUrl("/api/workflow/export/form?flows=" + ids.join(',')), '_blank');
               }else{

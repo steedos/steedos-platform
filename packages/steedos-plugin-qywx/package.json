@@ -1,0 +1,57 @@
+{
+    "name": "@steedos/plugin-qywx",
+    "version": "2.1.65",
+    "private": false,
+    "description": "",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
+    "author": "Jack Zhuang",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/steedos/steedos-plugin-qywx.git"
+    },
+    "main": "index.js",
+    "scripts": {
+        "debug": "tsc && nodemon server.js",
+        "start": "node server",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "@salesforce/dev-config": "^1.4.4",
+        "@steedos/service-meteor-package-loader": "2.1.65",
+        "bcrypt": "3.0.6",
+        "bootstrap": "^3.3.7",
+        "cookies": "^0.8.0",
+        "dotenv-flow": "^3.1.0",
+        "express": "^4.17.1",
+        "express-xml-bodyparser": "0.3.0",
+        "jsdom": "^16.2.2",
+        "jshashes": "^1.0.8",
+        "ts-node": "^8.4.1",
+        "wechat-crypto": "^0.0.2",
+        "xml2js": "0.4.23"
+    },
+    "devDependencies": {
+        "@steedos/accounts": "2.1.65",
+        "@steedos/steedos-plugin-workflow": "2.1.1",
+        "babel-runtime": "^6.23.0",
+        "nodemon": "^1.19.1",
+        "steedos-server": "2.1.65"
+    },
+    "homepage": "https://github.com/steedos/steedos-plugin-qywx#readme",
+    "resolutions": {
+        "**/lodash": "^4.17.15",
+        "**/handlebars": "^4.3.0",
+        "**/debug": "^3.1.0",
+        "**/hoek": "^5.0.3",
+        "**/cryptiles": "^4.1.2",
+        "**/bcrypt": "3.0.6",
+        "**/samlp": "3.4.1",
+        "**/xmldom": "0.2.1",
+        "**/tslib": "1.11.2",
+        "**/fibers": "^4.0.3"
+    }
+}

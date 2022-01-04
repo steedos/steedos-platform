@@ -107,6 +107,8 @@ _getAppointmentTemplate = (options)->
 
 					else if f.type == 'datetime'
 						fvalue = DevExpress.localization.formatDate(new Date(fvalue), 'yyyy-MM-dd hh:mm a')
+					else if f.type == 'date'
+						fvalue = DevExpress.localization.formatDate(new Date(fvalue), 'yyyy-MM-dd')
 				else
 					fvalue = ''
 
@@ -149,6 +151,7 @@ getPermission = (data)->
 		allowCreate: permission.allowCreate,
 		allowEdit: permission.allowEdit && editAction?._visible,
 		allowDelete: permission.allowDelete && deleteAction?._visible
+		allowRead: permission.allowRead
 	}
 
 _getTooltipTemplate = (data, options) ->
@@ -175,6 +178,9 @@ _getTooltipTemplate = (data, options) ->
 			<div class="dx-button dx-button-normal dx-widget dx-button-has-text edit dx-button-default" role="button" aria-label="编辑" tabindex="0">
 				<span class="dx-button-text">编辑</span>
 			</div>
+			<div class="dx-button dx-button-normal dx-widget dx-button-has-text read dx-button-default" role="button" aria-label="查看" tabindex="0">
+				<span class="dx-button-text">查看</span>
+			</div>
 		"""
 	titleView = ""
 	fields = Creator.getObject().fields;
@@ -190,8 +196,10 @@ _getTooltipTemplate = (data, options) ->
 							fvalueHtml.push "<a onclick=\"window.open('#{Creator.getObjectUrl(item['reference_to._o'], item._id)}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false\" href='#'>#{item['_NAME_FIELD_VALUE']}</a>"
 						fvalue = fvalueHtml.join(',')
 					else
-						if !_.isEmpty(fvalue)
+						if !_.isEmpty(fvalue) && !_.isEmpty(fvalue['_NAME_FIELD_VALUE'])
 							fvalue = "<a onclick=\"window.open('#{Creator.getObjectUrl(fvalue['reference_to._o'], fvalue._id)}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false\" href='#'>#{fvalue['_NAME_FIELD_VALUE']}</a>"
+						else
+							fvalue = ""
 				else if f.type == 'select'
 					f_options = f.options
 
@@ -205,6 +213,8 @@ _getTooltipTemplate = (data, options) ->
 
 				else if f.type == 'datetime'
 					fvalue = DevExpress.localization.formatDate(new Date(fvalue), 'yyyy-MM-dd hh:mm a')
+				else if f.type == 'date'
+					fvalue = DevExpress.localization.formatDate(new Date(fvalue), 'yyyy-MM-dd')
 			else
 				fvalue = ''
 			titleView += "<div class='dx-scheduler-appointment-tooltip-title'>#{f.label || t}: #{fvalue}</div>"
@@ -215,8 +225,8 @@ _getTooltipTemplate = (data, options) ->
 	action = """
 		<div class="action">
 			<div class="dx-scheduler-appointment-tooltip-buttons">
-				#{deleteBtn}
 				#{editBtn}
+				#{deleteBtn}
 			</div>
 		</div>
 	"""
@@ -261,7 +271,7 @@ _executeAction = (action_name, data)->
 		dxSchedulerInstance.hideAppointmentTooltip()
 
 		if action_name == 'standard_delete'
-			Creator.executeAction objectName, action, data._id, null, null, ()->
+			Creator.executeAction objectName, action, data._id, null, null, null, ()->
 				dxSchedulerInstance.getDataSource().reload()
 		else
 			Creator.executeAction objectName, action, data._id
@@ -297,6 +307,10 @@ getAppointmentContextMenuItems = (e, options)->
 	if permission.allowDelete
 		menuItems.push text: '删除', onItemClick: (itemE)->
 			_deleteData(itemE.targetedAppointmentData)
+
+	if permission.allowRead
+		menuItems.unshift text: '查看', onItemClick: (itemE)->
+			_readData(itemE.targetedAppointmentData)
 
 	if permission.allowEdit
 		menuItems.unshift text: '编辑', onItemClick: (itemE)->
@@ -516,6 +530,8 @@ Template.creator_calendarNew.onRendered ->
 					{ component, element, model } = e;
 					# 周、日视图滚动到7点30的位置上
 					this.scrollToTime(7, 30)
+					buttonsWidth = $(".steedos .steedos-brand-band .listViewManager .slds-page-header--object-home .slds-col.slds-grid").outerWidth();
+					$(".steedos .steedos-brand-band .listViewManager .weui-flex .dx-scheduler-header.dx-widget").css("right", buttonsWidth  + 20)
 			}
 
 			_.extend(dxSchedulerConfig, view.options)
@@ -527,4 +543,6 @@ Template.creator_calendarNew.onRendered ->
 			module.dynamicImport("devextreme/ui/context_menu").then (dxContextMenu)->
 				DevExpress.ui.dxContextMenu = dxContextMenu;
 
-			window.dxSchedulerInstance = dxSchedulerInstance;
+window.refreshDxSchedulerInstance = ()->
+	if dxSchedulerInstance
+		dxSchedulerInstance.getDataSource().reload()

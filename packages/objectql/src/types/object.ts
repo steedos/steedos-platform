@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema } from ".";
-import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace } from '../util'
+import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl } from '../util'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -9,9 +9,52 @@ import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
 import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { runObjectWorkflowRules } from '../actions';
+import { WorkflowRulesRunner } from '../actions';
 import { runValidationRules } from './validation_rules';
+import { brokeEmitEvents } from "./object_events";
+import { translationObject } from "@steedos/i18n";
+import { getObjectLayouts } from "./object_layouts";
+import { sortBy, forEach } from 'lodash';
+import { ShareRules } from './shareRule';
+import { RestrictionRule } from './restrictionRule';
+import { FieldPermission } from './field_permission';
+
 const clone = require('clone')
+
+// 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
+// 其3层指的是A-B-C-D，它们都有父子关系，A作为最顶层，该对象上不可以再创建主表子表关系字段，但是B、C、D上可以；
+// 或者如果当前对象上创建的主表子表关系字段指向的对象是D，那么也会超过3层的层级限制；
+// 又或者中间加一层M先连接B再连接C，形成A-B-M-C-D，也会超过3层的层级限制；
+export const MAX_MASTER_DETAIL_LEAVE = 3;
+
+/**
+ * 判断传入的paths中每条path下是否有重复对象名称，返回第一个重复的对象名称
+ * 有可能传入的paths有多个链条，只要其中任何一个链条上有同名对象名说明异常，返回第一个异常的同名对象名即可
+ * 比如传入下面示例中的paths，表示当前对象b向下有4条主子关系链，将返回第三条链中的重复对象名b
+ * @param paths 对象上getDetailPaths或getMasterPaths函数返回的当前对象向下或向上取主表子表关联对象名称列表链条
+ * [
+    [ 'b', 't1', 't2' ],
+    [ 'b', 't1', 'm1', 'm2' ],
+    [ 'b', 't1', 'm2', 'b' ],
+    [ 'b', 'c', 'd' ]
+ * ]
+ */
+export const getRepeatObjectNameFromPaths = (paths: string[]) => {
+    let repeatItem: string;
+    for (let p of paths) {
+        if (repeatItem) {
+            break;
+        }
+        let g = _.groupBy(p);
+        for (let k in g) {
+            if (g[k].length > 1) {
+                repeatItem = k;
+                break;
+            }
+        }
+    }
+    return repeatItem;
+}
 
 abstract class SteedosObjectProperties {
     _id?: string
@@ -34,7 +77,12 @@ abstract class SteedosObjectProperties {
     enable_trash?: boolean
     enable_space_global?: boolean
     enable_tree?: boolean
+    parent_field?: string
+    children_field?: string
+    enable_enhanced_lookup?: boolean
     enable_inline_edit?: boolean
+    enable_approvals?: boolean
+    enable_process?: boolean
     is_view?: boolean
     hidden?: boolean
     description?: string
@@ -49,6 +97,7 @@ abstract class SteedosObjectProperties {
     list_views?: Dictionary<SteedosObjectListViewTypeConfig>
     permissions?: Dictionary<SteedosObjectPermissionTypeConfig>
     methods?: Dictionary<Function>
+    fields_serial_number?: number
 }
 
 
@@ -56,6 +105,7 @@ abstract class SteedosObjectProperties {
 export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     __filename?: string
     name?: string
+    isMain?: boolean
     datasource?: string
     fields: Dictionary<SteedosFieldTypeConfig>
     actions?: Dictionary<SteedosActionTypeConfig>
@@ -65,7 +115,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
 
 const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
 
-const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList']
+const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'parent_field', 'children_field', 'enable_enhanced_lookup', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number', "is_enable", "in_development", "version"]
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -85,6 +135,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _idFieldName: string;
     private _idFieldNames: string[] = [];
     private _NAME_FIELD_KEY: string;
+    private _masters: string[] = [];
+    private _details: string[] = [];
 
     private _enable_audit: boolean;
     public get enable_audit(): boolean {
@@ -146,18 +198,25 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._idFieldNames;
     }
 
+    public get masters(): string[] {
+        return this._masters;
+    }
+
+    public get details(): string[] {
+        return this._details;
+    }
+
+    private async callMetadataObjectServiceAction(action, params?){
+        const actionFullName = `objects.${action}`
+        const result = await this.schema.metadataBroker.call(actionFullName, params);
+        return result;
+    }
+
     private checkField() {
         let driverSupportedColumnTypes = this._datasource.adapter.getSupportedColumnTypes()
-        let masterDetailFieldCount = 0
         _.each(this.fields, (field: SteedosFieldType, key: string) => {
             if (SteedosFieldDBType[field.fieldDBType] && !driverSupportedColumnTypes.includes(field.fieldDBType)) {
                 throw new Error(`driver ${this._datasource.driver} can not support field ${key} config`)
-            }
-            if (field.type === 'master_detail') {
-                masterDetailFieldCount++
-                if (masterDetailFieldCount > 1) {
-                    throw new Error(`object ${this._name} can not set multiple master_detail field type.`)
-                }
             }
         })
     }
@@ -222,6 +281,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this.schema.setObjectMap(this.name, { datasourceName: this.datasource.name, _id: config._id })
     }
 
+    getConfig(){
+        return this.datasource.getObjectConfig(this.name);
+    }
+
     setPermission(config: SteedosObjectPermissionTypeConfig) {
         this._datasource.setObjectPermission(this._name, config)
     }
@@ -251,6 +314,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
     registerTrigger(trigger: SteedosTriggerType) {
         //如果是meteor mongo 则不做任何处理
         if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo || trigger.when === 'beforeFind' || trigger.when === 'afterFind' || trigger.when === 'afterFindOne' || trigger.when === 'afterCount' || trigger.when === 'beforeAggregate' || trigger.when === 'afterAggregate') {
+            if (!trigger.todo) {
+                return;
+            }
             if (!this._triggersQueue[trigger.when]) {
                 this._triggersQueue[trigger.when] = {}
             }
@@ -293,6 +359,26 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let trigger = triggers[triggerKeys[index]];
             await this.runTirgger(trigger, context)
         }
+    }
+
+    async runTriggerActions(when: string, context: SteedosTriggerContextConfig) {
+        let triggers = await this._schema.metadataBroker.call('triggers.filter', { objectApiName: this.name, when: when })
+        if (_.isEmpty(triggers)) {
+            return;
+        }
+
+        for (const trigger of triggers) {
+            let params = generateActionParams(when, context); //参考sf
+            await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
+                //如果action trigger 下线，则只打印error
+                if(error && _.isObject(error) && error.type === 'SERVICE_NOT_AVAILABLE'){
+                    console.error(`runTriggerActions error`, error)
+                }else{
+                    throw error
+                }
+            })
+        }
+
     }
 
     toConfig() {
@@ -343,6 +429,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
+        config.datasource = this.datasource.name;
+
         return config
     }
 
@@ -357,15 +445,71 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         }
 
-        if(field.is_name){
+        if (field.is_name) {
             this._NAME_FIELD_KEY = field_name
-        }else if(field_name == 'name' && !this._NAME_FIELD_KEY){
+        } else if (field_name == 'name' && !this._NAME_FIELD_KEY) {
             this._NAME_FIELD_KEY = field_name
         }
     }
 
     getField(field_name: string) {
         return this.fields[field_name]
+    }
+
+    getFields(){
+        return this.toConfig().fields
+    }
+
+    getNameFieldKey(){
+        return this.NAME_FIELD_KEY;
+    }
+
+    async getDetailPaths(){
+        return await this.callMetadataObjectServiceAction(`getDetailPaths`, {objectApiName: this.name});
+    }
+
+    async getMasterPaths(){
+        return await this.callMetadataObjectServiceAction(`getMasterPaths`, {objectApiName: this.name});
+    }
+
+    async getMaxDetailsLeave(paths?){
+        return await this.callMetadataObjectServiceAction(`getMaxDetailsLeave`, {objectApiName: this.name, paths});
+    }
+
+    async getMaxMastersLeave(paths?){
+        return await this.callMetadataObjectServiceAction(`getMaxMastersLeave`, {objectApiName: this.name, paths});
+    }
+   
+    addMaster(object_name: string) {
+        let index = this._masters.indexOf(object_name);
+        if (index < 0) {
+            this._masters.push(object_name);
+            return true;
+        }
+        return false;
+    }
+
+    removeMaster(object_name: string) {
+        let index = this._masters.indexOf(object_name);
+        if (index >= 0) {
+            this._masters.splice(index, 1);
+        }
+    }
+
+    addDetail(object_name: string) {
+        let index = this._details.indexOf(object_name);
+        if (index < 0) {
+            this._details.push(object_name);
+            return true;
+        }
+        return false;
+    }
+
+    removeDetail(object_name: string) {
+        let index = this._details.indexOf(object_name);
+        if (index >= 0) {
+            this._details.splice(index, 1);
+        }
     }
 
     setListView(list_view_name: string, config: SteedosObjectListViewTypeConfig) {
@@ -378,6 +522,55 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     getAction(action_name: string) {
         return this._actions[action_name]
+    }
+
+    async refreshIndexes(){
+        if(this.datasource.driver === SteedosDatabaseDriverType.Mongo){
+            const adapter = this.datasource.adapter;
+            await adapter.connect()
+            const collection = (adapter as any).collection(this.name);
+            const indexesInfo = [];
+            const dropIndexNames = [];
+            for (const key in this.fields) {
+                const field = this.fields[key];
+                const info = field.getIndexInfo();
+                if(info){
+                    indexesInfo.push(info);
+                }else{
+                    dropIndexNames.push(field.getIndexName());
+                }
+            }
+            if(indexesInfo && indexesInfo.length > 0){
+                try {
+                    for await (const indexInfo of indexesInfo) {
+                        const key = indexInfo.key;
+                        delete indexInfo.key;
+                        try {
+                            await collection.createIndex(key, indexInfo)
+                        } catch (error) {
+                            console.error(error)
+                        }
+                    }
+                    // await collection.createIndexes(indexesInfo)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+            if(dropIndexNames && dropIndexNames.length > 0){
+                try {
+                    for await (const indexName of dropIndexNames) {
+                        try {
+                            await collection.dropIndex(indexName)
+                        } catch (error) {
+                            
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+        }
     }
 
     //TODO 处理对象继承
@@ -407,9 +600,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     getObjectRolesPermission(spaceId?: string) {
         let globalPermission = this._datasource.getObjectRolesPermission(this._name)
-        if(spaceId){
+        if (spaceId) {
             let permission = this._datasource.getObjectSpaceRolesPermission(this._name, spaceId);
-            if(!_.isEmpty(permission)){
+            if (!_.isEmpty(permission)) {
                 return Object.assign({}, globalPermission || {}, permission);
             }
         }
@@ -434,40 +627,106 @@ export class SteedosObjectType extends SteedosObjectProperties {
             modifyAllRecords: false,
             viewCompanyRecords: false,
             modifyCompanyRecords: false,
+            allowReadFiles: null,
+            viewAllFiles: null,
+            allowCreateFiles: null,
+            allowEditFiles: null,
+            allowDeleteFiles: null,
+            modifyAllFiles: null,
             disabled_list_views: null,
             disabled_actions: null,
             unreadable_fields: null,
             uneditable_fields: null,
-            unrelated_objects: null
+            unrelated_objects: null,
+            field_permissions: null,
+            viewAssignCompanysRecords: [],
+            modifyAssignCompanysRecords: [],
+            // read_filters: [],
+            // edit_filters: []
         }
 
         if (_.isEmpty(roles)) {
             throw new Error('not find user permission');
         }
 
+        const rolesFieldsPermission = await FieldPermission.getObjectFieldsPermissionGroupRole(this.name);
+
         roles.forEach((role) => {
-            let rolePermission = objectRolesPermission[role]
+            let rolePermission = objectRolesPermission[role];
             if (rolePermission) {
+                let roleFieldsPermission = rolesFieldsPermission[role];
                 _.each(userObjectPermission, (v, k) => {
-                    let _v = rolePermission[k]
+                    let _v = rolePermission[k];
+                    if (k === 'field_permissions') {
+                        _v = roleFieldsPermission
+                    }
                     if (_.isBoolean(v)) {
                         if (v === false && _v === true) {
                             userObjectPermission[k] = _v
                         }
-                    } else if ((_.isArray(v) || _.isNull(v))) {
-                        if(!_.isArray(_v)){
+                    } else if (['allowReadFiles','viewAllFiles','allowCreateFiles','allowEditFiles','allowDeleteFiles','modifyAllFiles'].indexOf(k) > -1){
+                        if(_.isBoolean(_v)){
+                            userObjectPermission[k] = _v
+                        }
+                    } else if (['read_filters', 'edit_filters'].indexOf(k) > -1) {
+                        if ('edit_filters' === k) {
+                            if (!_.isEmpty(_v)) {
+                                userObjectPermission['read_filters'].push(_v);
+                            }
+                        }
+                        if (!_.isEmpty(_v)) {
+                            userObjectPermission[k].push(_v);
+                        }
+                    } else if (['viewAssignCompanysRecords', 'modifyAssignCompanysRecords'].indexOf(k) > -1) {
+                        if ('modifyAssignCompanysRecords' === k) {
+                            if (!_.isEmpty(_v) && _.isArray(_v)) {
+                                userObjectPermission['viewAssignCompanysRecords'].push(..._v);
+                            }
+                        }
+                        if (!_.isEmpty(_v) && _.isArray(_v)) {
+                            userObjectPermission[k].push(..._v);
+                        }
+                    }
+                    else if ((_.isArray(v) || _.isNull(v))) {
+                        if (!_.isArray(_v)) {
                             _v = []
                         }
-                        if(_.isNull(v)){
+                        if (_.isNull(v)) {
                             userObjectPermission[k] = _v
-                        }else{
-                            userObjectPermission[k] = _.intersection(v, _v)
+                        } else {
+                            if (k === 'field_permissions') {
+                                userObjectPermission[k] = _.union(v, _v)
+                            } else {
+                                userObjectPermission[k] = _.intersection(v, _v)
+                            }
                         }
                     }
                 })
             }
-        })
+        });
 
+        const field_permissions = {};
+        if (userObjectPermission.field_permissions) {
+            _.each(userObjectPermission.field_permissions, (field_permission) => {
+                const { field, read, edit } = field_permission;
+                if (field_permissions[field]) {
+                    field_permissions[field].edit = field_permissions[field].edit || edit;
+                    if (field_permissions[field].edit) {
+                        field_permissions[field].read = true
+                    } else {
+                        field_permissions[field].read = field_permissions[field].read || read;
+                    }
+                } else {
+                    field_permissions[field] = {
+                        field: field,
+                        read: edit || read,
+                        edit: edit
+                    }
+                }
+            })
+        }
+
+        userObjectPermission.field_permissions = field_permissions;
 
         userObjectPermission.disabled_list_views = userObjectPermission.disabled_list_views || []
         userObjectPermission.disabled_actions = userObjectPermission.disabled_actions || []
@@ -587,6 +846,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('delete', this.table_name, clonedId, userSession)
     }
 
+    async directFind(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('directFind', this.table_name, clonedQuery, userSession)
+    }
+
     async directInsert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
         return await this.callAdapter('directInsert', this.table_name, doc, userSession)
     }
@@ -600,6 +865,432 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async directDelete(id: SteedosIDType, userSession?: SteedosUserSession) {
         let clonedId = id;
         return await this.callAdapter('directDelete', this.table_name, clonedId, userSession)
+    }
+
+    async _makeNewID(){
+        return await this._datasource._makeNewID(this.table_name);
+    }
+
+    async getFirstListView(){
+        return this.list_views[0];
+    }
+
+    async getAbsoluteUrl(app_id, record_id?){
+        const object_name = this.name;
+        const list_view:any = await this.getFirstListView();
+        const list_view_id = list_view ? list_view._id || list_view.name : 'all'
+        if(record_id)
+            return absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
+        else{
+            if(object_name === 'meeting'){
+                return absoluteUrl("/app/" + app_id + "/" + object_name + "/calendar/")
+            }else{
+                return absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+            }
+        }
+    }
+
+    async getRecordAbsoluteUrl(app_id, record_id){
+        return await this.getAbsoluteUrl(app_id, record_id)
+    }
+
+    async getGridAbsoluteUrl(app_id){
+        return await this.getAbsoluteUrl(app_id)
+    }
+
+    async isEnableAudit(){
+        return this.enable_audit;
+    }
+
+    async getDetails(){
+        return await this.callMetadataObjectServiceAction(`getDetails`, {objectApiName: this.name});
+    }
+
+    async getMasters(){
+        return await this.callMetadataObjectServiceAction(`getMasters`, {objectApiName: this.name});
+    }
+
+    async getLookupDetails(){
+        return await this.callMetadataObjectServiceAction(`getLookupDetails`, {objectApiName: this.name});
+    }
+
+    async getDetailsInfo(){
+        return await this.callMetadataObjectServiceAction(`getDetailsInfo`, {objectApiName: this.name});
+    }
+
+    async getMastersInfo(){
+        return await this.callMetadataObjectServiceAction(`getMastersInfo`, {objectApiName: this.name});
+    }
+
+    async getLookupDetailsInfo(){
+        return await this.callMetadataObjectServiceAction(`getLookupDetailsInfo`, {objectApiName: this.name});
+    }
+
+    async getRecordPermissions(record, userSession){
+        const permissions = await this.getUserObjectPermission(userSession);
+        const { userId, company_ids: user_company_ids } = userSession;
+        if(record){
+            if(record.record_permissions){
+                return record.record_permissions
+            }
+            let recordOwnerId = record.owner;
+            if(_.isObject(recordOwnerId)){
+                recordOwnerId = recordOwnerId._id;
+            }
+            const isOwner = recordOwnerId == userId;
+            let record_company_id = record.company_id;
+            if(record_company_id && _.isObject(record_company_id) && record_company_id._id){
+                record_company_id = record_company_id._id;
+            }
+            let record_company_ids = record.company_ids;
+            if(record_company_ids && record_company_ids.length && _.isObject(record_company_ids[0])){
+                record_company_ids = record_company_ids.map((n)=> n._id)
+            }
+            record_company_ids = _.union(record_company_ids, [record_company_id]);
+            record_company_ids = _.compact(record_company_ids);
+            if(!permissions.modifyAllRecords && !isOwner && !permissions.modifyCompanyRecords){
+                permissions.allowEdit = false
+			    permissions.allowDelete = false
+            }else if(!permissions.modifyAllRecords && permissions.modifyCompanyRecords){
+                if(record_company_ids && record_company_ids.length){
+                    if(user_company_ids && user_company_ids.length){
+                        if(!_.intersection(user_company_ids, record_company_ids).length){
+                            permissions.allowEdit = false
+						    permissions.allowDelete = false
+                        }
+                    }else{
+                        permissions.allowEdit = false
+                        permissions.allowDelete = false
+                    }
+                }
+            }
+            if(record.locked && !permissions.modifyAllRecords){
+                permissions.allowEdit = false
+			    permissions.allowDelete = false
+            }
+            if(!permissions.viewAllRecords && !isOwner && !permissions.viewCompanyRecords){
+                permissions.allowRead = false
+            }else if(!permissions.viewAllRecords && permissions.viewCompanyRecords){
+                if(record_company_ids && record_company_ids.length){
+                    if(user_company_ids && user_company_ids.length){
+                        if(!_.intersection(user_company_ids, record_company_ids).length){
+                            permissions.allowRead = false
+                        }
+                    }else{
+                        permissions.allowRead = false
+                    }
+                }
+            }
+        }
+        return permissions
+    }
+
+    async getRecordView(userSession){
+        const lng = userSession.language;
+        const objectMetadataConfig: any = await this.callMetadataObjectServiceAction('get', {objectApiName: this.name});
+        let objectConfig = objectMetadataConfig.metadata;
+        objectConfig.name = this.name
+        objectConfig.datasource = this.datasource.name;
+        objectConfig.permissions = await this.getUserObjectPermission(userSession);
+        objectConfig.details = await this.getDetailsInfo();
+        objectConfig.masters = await this.getMastersInfo();
+        objectConfig.lookup_details = await this.getLookupDetailsInfo();
+
+        delete objectConfig.db
+
+        translationObject(lng, objectConfig.name, objectConfig, true);
+
+        const layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name);
+        if(layouts && layouts.length > 0){
+            const layout = layouts[0];
+            let _fields = {};
+            let sort_no = 1;
+            _.each(layout.fields, function(_item){
+                _fields[_item.field_name] = objectConfig.fields[_item.field_name]
+                if(_fields[_item.field_name]){
+                    if(_.has(_item, 'group')){
+                        _fields[_item.field_name].group = _item.group
+                    }
+                    
+                    if(_item.is_required){
+                        _fields[_item.field_name].readonly = false
+                        _fields[_item.field_name].disabled = false
+                        _fields[_item.field_name].required = true
+                    }else if(_item.is_readonly){
+                        _fields[_item.field_name].readonly = true
+                        _fields[_item.field_name].disabled = true
+                        _fields[_item.field_name].required = false
+                    }
+
+                    if(_item.visible_on){
+                        _fields[_item.field_name].visible_on = _item.visible_on
+                    }
+
+                    if(['created','created_by','modified','modified_by'].indexOf(_item.field_name) < 0){
+                        _fields[_item.field_name].omit = false;
+                        _fields[_item.field_name].hidden = false;
+                    }
+
+                    _fields[_item.field_name].sort_no = sort_no;
+                    sort_no++;
+                }
+            })
+
+            const layoutFieldKeys = _.keys(_fields);
+            const objectFieldKeys = _.keys(objectConfig.fields);
+
+            const difference = _.difference(objectFieldKeys, layoutFieldKeys);
+
+            _.each(layoutFieldKeys, function(fieldApiName){
+                objectConfig.fields[fieldApiName] = _fields[fieldApiName];
+            })
+            
+            _.each(difference, function(fieldApiName){
+                objectConfig.fields[fieldApiName].hidden = true;
+                objectConfig.fields[fieldApiName].sort_no = 99999;
+            })
+
+            _.each(layout.buttons, function(button){
+                const action = objectConfig.actions[button.button_name];
+                if(action){
+                    if(button.visible_on){
+                        action._visible = button.visible_on;
+                    }
+                }
+            })
+    
+            const layoutButtonsName = _.pluck(layout.buttons,'button_name');
+            _.each(objectConfig.actions, function(action){
+                if(!_.include(layoutButtonsName, action.name)){
+                    action.visible = false
+                    action._visible = function(){return false}.toString()
+                }
+            })
+            // _object.allow_customActions = userObjectLayout.custom_actions || []
+            // _object.exclude_actions = userObjectLayout.exclude_actions || []
+            objectConfig.related_lists = layout.related_lists || []
+            _.each(objectConfig.related_lists, (related_list)=>{
+                if(related_list.sort_field_name && _.isArray(related_list.sort_field_name) && related_list.sort_field_name.length > 0){
+                    related_list.sort = [];
+                    _.each(related_list.sort_field_name, (fName)=>{
+                        related_list.sort.push({field_name: fName, order: related_list.sort_order || 'asc'})
+                    })
+                }
+            })
+        }
+
+        // 使用字段级安全性作为限制用户对字段的访问权限的手段；然后使用页面布局主要在选项卡中组织详细信息和编辑页面。这可以减少需要维护的页面布局数量。
+        // 例如，如果字段在页面布局中是必需的，并且在字段级安全性设置中是只读的，则字段级安全性将覆盖页面布局，并且该字段将对用户是只读的。
+        const userObjectFields = objectConfig.fields;
+        _.each(objectConfig.permissions.field_permissions, (field_permission, field) => {
+            const { read, edit } = field_permission;
+            if (read) {
+                userObjectFields[field].omit = true;
+            }
+            if (edit) {
+                userObjectFields[field].omit = false;
+                userObjectFields[field].hidden = false;
+                userObjectFields[field].readonly = false;
+                userObjectFields[field].disabled = false;
+            }
+            if (!read && !edit) {
+                delete userObjectFields[field]
+            }
+        })
+
+        objectConfig.fields = userObjectFields
+
+        // TODO object layout 是否需要控制审批记录显示？
+        let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] })
+        if (spaceProcessDefinition.length > 0) {
+            objectConfig.enable_process = true
+        }
+
+        //清理数据
+
+        _.each(objectConfig.triggers, function(trigger, key){
+            if(trigger?.on != 'client'){
+                delete objectConfig.triggers[key];
+            }
+        })
+
+        const dbListViews = await getObject("object_listviews").find({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] })
+        objectConfig.list_views = Object.assign({}, objectConfig.list_views)
+        _.each(dbListViews, function(dbListView){
+            delete dbListView.created;
+            delete dbListView.created_by;
+            delete dbListView.modified;
+            delete dbListView.modified_by;
+            objectConfig.list_views[dbListView.name] = dbListView;
+        })
+        delete objectConfig.listeners
+        delete objectConfig.__filename
+        delete objectConfig.extend
+        return objectConfig;
+    }
+
+    async getDefaulRecordView(userSession){
+        const object_name = this.name;
+        const type = 'record';
+        const buttons = [];
+        const fields = []; 
+        const related_lists = [];
+
+        const objectConfig: any = await this.callMetadataObjectServiceAction('getOriginalObject', {objectApiName: this.name});
+        let sortedFields = [];
+        forEach(objectConfig.fields, (fieldItem, key)=>{
+            sortedFields.push(Object.assign({}, {name: key}, fieldItem));
+        });
+        sortedFields = sortBy(sortedFields, function(o) { return o.sort_no; });
+        _.each(sortedFields, function(field, key){
+            const layoutField: any = {};
+            layoutField.field_name = field.name;
+            layoutField.is_readonly = field.readonly;
+            layoutField.is_required = field.required;
+            layoutField.group = field.group;
+            // layoutField.visible_on = `${!field.hidden}`;
+            fields.push(layoutField);
+        });
+
+        let relatedLists = []
+        if(this.enable_files){
+            relatedLists.push("cms_files.parent")
+        }
+
+        const details = await this.getDetailsInfo();
+        const lookup_details = await this.getLookupDetailsInfo();
+        relatedLists = relatedLists.concat(_.union(details, lookup_details));
+
+        if(this.enable_tasks){
+            relatedLists.push("tasks.related_to")
+        }
+        if(this.enable_notes){
+            relatedLists.push("notes.related_to")
+        }
+        if(this.enable_events){
+            relatedLists.push("events.related_to")
+        }
+        if(this.enable_instances){
+            relatedLists.push("instances.record_ids")
+        }
+        if(this.enable_approvals){
+            relatedLists.push("approvals.related_to")
+        }
+        if(this.enable_process){
+            relatedLists.push("process_instance_history.target_object")
+        }
+        for await (const related of relatedLists) {
+            if(related){
+                const relatedItem: any = {}
+                relatedItem.related_field_fullname = related;
+                let foo = (related as any).split('.');
+                let rObjectName = foo[0];
+
+                const relatedObject = await getObject(rObjectName).toConfig();
+                const relatedObjectAllListView = _.find(relatedObject.list_views, function(listview){
+                    return listview.name === 'all'
+                })
+
+                if(relatedObjectAllListView && relatedObjectAllListView.columns){
+                    const fieldNames = [];
+                    _.each(relatedObjectAllListView.columns, (column)=>{
+                        if(_.isString(column)){
+                            fieldNames.push(column);
+                        }else if(_.isObject(column)){
+                            fieldNames.push(column.field);
+                        }
+                    })
+
+                    relatedItem.field_names = fieldNames
+                }
+                related_lists.push(relatedItem)
+            }
+        }
+
+        buttons.push({
+            button_name: 'standard_new'
+        })
+
+        buttons.push({
+            button_name: 'standard_edit'
+        })
+
+        buttons.push({
+            button_name: 'standard_delete'
+        })
+
+        _.each(objectConfig.actions, function(action, key){
+            if(action.is_enable){
+                buttons.push({
+                    button_name: action.name
+                })
+            }
+        });
+
+        return {
+            object_name, type, buttons, fields, related_lists,
+            space: userSession.spaceId
+        }
+    }
+
+    async createDefaulRecordView(userSession){
+        const name = 'default';
+        const label = 'Default';
+        const profiles = ['user'];
+        try {
+            let defaultRecordView = await this.getDefaulRecordView(userSession);
+            return await getObject('object_layouts').insert(Object.assign({},defaultRecordView, {name, label, profiles}), userSession)
+        } catch (error) {
+            return {error: error.message}
+        }
+    }
+
+    async getRelateds(){
+        const related_objects = [];
+        if(this.enable_files){
+            related_objects.push({object_name:"cms_files", foreign_key: "parent"})
+        }
+        let detailsInfo = await this.getDetailsInfo();
+        let lookupsInfo = await this.getLookupDetailsInfo();
+        let relatedInfos = detailsInfo.concat(lookupsInfo);
+        for (const info of relatedInfos) {
+            if (!info.startsWith('__')) {
+                let infos = info.split('.');
+                let detailObjectApiName = infos[0];
+                let detailFieldName = infos[1];
+                let related_field = await getObject(detailObjectApiName).getField(detailFieldName);
+                if(related_field){
+                    if((related_field.type == "master_detail" || (related_field.type == "lookup" && related_field.relatedList)) && related_field.reference_to && related_field.reference_to == this.name){
+                        if(detailObjectApiName == "object_fields"){
+                            related_objects.splice(0, 0, {object_name: detailObjectApiName, foreign_key: detailFieldName})
+                        }else{
+                            related_objects.push({object_name:detailObjectApiName, foreign_key: detailFieldName, write_requires_master_read: related_field.write_requires_master_read})
+                        }
+                    }
+                }
+            }
+        }
+        if(this.enable_tasks){
+            related_objects.push({object_name:"tasks", foreign_key: "related_to"})
+        }
+        if(this.enable_notes){
+            related_objects.push({object_name:"notes", foreign_key: "related_to"})
+        }
+        if(this.enable_events){
+            related_objects.push({object_name:"events", foreign_key: "related_to"});
+        }
+        if(this.enable_instances){
+            related_objects.push({object_name:"instances", foreign_key: "record_ids"})
+        }
+            
+        if(this.enable_approvals){
+            related_objects.push({object_name:"approvals", foreign_key: "related_to"})
+        }
+            
+        if(this.enable_process){
+            related_objects.push({object_name:"process_instance_history", foreign_key: "target_object"})
+        }
+        return related_objects;
     }
 
     private isDirectCRUD(methodName: string) {
@@ -628,23 +1319,53 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async runBeforeTriggers(method: string, context: SteedosTriggerContextConfig) {
-        if (method === 'count') {
+        if (method === 'count' || method === "findOne") {
             method = 'find';
         }
-        let when = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        return await this.runTriggers(when, context)
+        let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
+        let when = `before.${method}`;
+        await this.runTriggers(meteorWhen, context);
+        return await this.runTriggerActions(when, context)
     }
 
     private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
-        let when = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        return await this.runTriggers(when, context)
+        let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
+        let when = `after.${method}`;
+        await this.runTriggers(meteorWhen, context);
+        return await this.runTriggerActions(when, context)
     }
 
-    private async getTriggerContext(when: string, method: string, args: any[]) {
+    private async appendRecordPermission(records, userSession) {
+        const _ids = _.pluck(records, '_id');
+        const objPm = await this.getUserObjectPermission(userSession);
+        const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
+        if (_.isEmpty(permissionFilters)) {
+            return;
+        }
+        const filters = formatFiltersToODataQuery(['_id', 'in', _ids])
+
+        const results = await this.directFind({
+            fields: ['_id'],
+            filters: `(${filters}) and (${permissionFilters.join(' or ')})`
+        });
+        const allowEditIds = _.pluck(results, '_id');
+        _.each(records, (record) => {
+            if (_.include(allowEditIds, record._id)) {
+                record.record_permissions = {
+                    allowRead: true,
+                    allowEdit: true,
+                    allowDelete: true,
+                }
+            }
+        })
+
+    }
+
+    private async getTriggerContext(when: string, method: string, args: any[], recordId?: string) {
 
         let userSession = args[args.length - 1]
 
-        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined, spaceId: userSession ? userSession.spaceId : undefined }
+        let context: SteedosTriggerContextConfig = { objectName: this.name, userId: userSession ? userSession.userId : undefined, spaceId: userSession ? userSession.spaceId : undefined }
 
         if (method === 'find' || method === 'findOne' || method === 'count') {
             context.query = args[args.length - 2]
@@ -663,7 +1384,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         if (when === 'after' && (method === 'update' || method === 'delete')) {
-            context.previousDoc = await this.findOne(context.id, {}, userSession)
+            context.previousDoc = await this.findOne(recordId, {}, userSession)
         }
 
         return context
@@ -686,8 +1407,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
             if (!(query.fields && query.fields.length)) {
                 queryFields = _.keys(this.toConfig().fields)
-                _.each(queryFields, function(fieldName, index){
-                    if(fieldName && fieldName.indexOf("$") > -1){
+                _.each(queryFields, function (fieldName, index) {
+                    if (fieldName && fieldName.indexOf("$") > -1) {
                         delete queryFields[index];
                     }
                 })
@@ -740,17 +1461,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         let objectName = args[0], recordId: string, doc: JsonMap;
-        if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
+        if (["insert", "update", "updateMany", "delete"].indexOf(method) > -1) {
             // 因下面的代码，比如函数dealWithMethodPermission可能改写args变量，所以需要提前从args取出对应变量值。
-            if(method === "insert"){
+            if (method === "insert") {
                 // 此处doc不带_id值，得执行完adapterMethod.apply后，doc中才有_id属性，所以这里的doc及recordId都不准确
                 doc = args[1];
                 recordId = <string>doc._id;
             }
-            else{
+            else {
                 recordId = args[1];
                 doc = args[2];
             }
+        }
+
+        let paramRecordId; // 用于记录原始的id参数值
+        if (method === 'findOne' || method === 'update' || method === 'delete') {
+            paramRecordId = args[1];
         }
 
         // 判断处理工作区权限，公司级权限，owner权限
@@ -768,39 +1494,65 @@ export class SteedosObjectType extends SteedosObjectProperties {
         } else {
             userSession = args[args.length - 1]
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
+            if (paramRecordId) {
+                beforeTriggerContext = Object.assign({} , beforeTriggerContext, { id: paramRecordId });
+            }
             await this.runBeforeTriggers(method, beforeTriggerContext)
             await runValidationRules(method, beforeTriggerContext, args[0], userSession)
 
-            let afterTriggerContext = await this.getTriggerContext('after', method, args)
+            let afterTriggerContext = await this.getTriggerContext('after', method, args, paramRecordId)
+            if (paramRecordId) {
+                afterTriggerContext = Object.assign({}, afterTriggerContext, { id: paramRecordId });
+            }
             let previousDoc = clone(afterTriggerContext.previousDoc);
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
-            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
+            if (method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline') {
                 let values = returnValue || {}
-                if(method === 'count'){
+                if (method === 'count') {
                     values = returnValue || 0
+                } 
+                else {
+                    if (userSession) {
+                        let _records = returnValue
+                        if (method == 'findOne' && returnValue) {
+                            _records = [_records]
+                        }
+                        await this.appendRecordPermission(_records, userSession);
+                    }
                 }
-                Object.assign(afterTriggerContext, {data: {values: values}})
+                Object.assign(afterTriggerContext, { data: { values: values } })
             }
             // console.log("==returnValue==", returnValue);
-            if(method == "update"){
-                if(returnValue){
+            if(method == 'insert' && _.has(returnValue, '_id')){
+                afterTriggerContext.doc = returnValue;
+                afterTriggerContext = Object.assign({}, afterTriggerContext, { id: returnValue._id });
+            }
+            if (method == "update") {
+                if (returnValue) {
+                    afterTriggerContext.doc = returnValue;
                     await this.runAfterTriggers(method, afterTriggerContext)
                 }
             }
-            else{
+            else {
                 await this.runAfterTriggers(method, afterTriggerContext)
             }
-            if(method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline'){
-                if(_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))){
+            if (method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline') {
+                if (_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))) {
                     return returnValue
-                }else{
+                } else {
                     return afterTriggerContext.data.values
                 }
             }
-            await runObjectWorkflowRules(this.name, method, returnValue, userSession, afterTriggerContext.previousDoc);
-            if(returnValue){
-                if(method === "insert"){
+            await new WorkflowRulesRunner({
+                object_name: this.name,
+                event: method,
+                record: returnValue,
+                user_session: userSession,
+                previous_record: afterTriggerContext.previousDoc
+            }).run();
+            if (returnValue) {
+                if (method === "insert") {
                     // 当为insert时，上面代码执行后的doc不带_id，只能从returnValue中取
                     doc = returnValue;
                     recordId = <string>doc._id;
@@ -809,21 +1561,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 await this.runRecordFormula(method, objectName, recordId, doc, userSession);
                 await this.runRecordSummaries(method, objectName, recordId, doc, previousDoc, userSession);
             }
+            await brokeEmitEvents(objectName, method, afterTriggerContext);
         }
         return returnValue
     };
 
     private async runRecordFormula(method: string, objectName: string, recordId: string, doc: any, userSession: any) {
-        if(["insert", "update", "updateMany"].indexOf(method) > -1){
-            if(method === "updateMany"){
+        if (["insert", "update", "updateMany"].indexOf(method) > -1) {
+            if (method === "updateMany") {
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
                 // let filters: SteedosQueryFilters = args[1];
                 // await runManyCurrentObjectFieldFormulas(objectName, filters, userSession);
             }
-            else{
+            else {
                 let currentUserId = userSession ? userSession.userId : undefined;
                 await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
-                if(method === "update"){
+                if (method === "update") {
                     // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
                     await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
                 }
@@ -832,17 +1585,25 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async runRecordSummaries(method: string, objectName: string, recordId: string, doc: any, previousDoc: any, userSession: any) {
-        if(["insert", "update", "updateMany", "delete"].indexOf(method) > -1){
-            if(method === "updateMany"){
+        if (["insert", "update", "updateMany", "delete"].indexOf(method) > -1) {
+            if (method === "updateMany") {
                 // TODO:暂时不支持updateMany汇总计算，因为拿不到修改了哪些数据
             }
-            else{
-                if(method === "insert"){
+            else {
+                if (method === "insert") {
                     await runCurrentObjectFieldSummaries(objectName, recordId);
                 }
                 await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, userSession);
             }
         }
+    }
+
+    private getObjectEditPermissionFilters(objectPermission, userSession) {
+        const objectPermissionFilters = [];
+        if (!_.isEmpty(objectPermission.modifyAssignCompanysRecords)) {
+            objectPermissionFilters.push(`(${formatFiltersToODataQuery([['company_id', 'in', objectPermission.modifyAssignCompanysRecords], 'or', ['company_ids', 'in', objectPermission.modifyAssignCompanysRecords]], userSession)})`)
+        }
+        return objectPermissionFilters;
     }
 
     /**
@@ -875,7 +1636,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                     query = args[args.length - 3];
                 }
-
                 if (query.filters && !_.isString(query.filters)) {
                     query.filters = formatFiltersToODataQuery(query.filters);
                 }
@@ -888,13 +1648,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return
                 }
 
-                let spaceFilter, companyFilter, ownerFilter, sharesFilter, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
+                let spaceFilter, companyFilter, ownerFilter, sharesFilter, shareRuleFilters, restrictionRuleFilters, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
 
+                //space 权限
                 if (spaceId) {
                     spaceFilter = `(space eq '${spaceId}')`;
                 }
 
-                if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { // 公司级
+                // 本公司权限
+                if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { 
                     if (_.isEmpty(userSession.companies)) {
                         console.log('objPm', objPm);
                         throw new Error("user not belong any company!");
@@ -908,12 +1670,41 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     ownerFilter = `(owner eq '${userId}')`;
                 }
 
-                if (!objPm.viewAllRecords) {
-                    sharesFilter = getUserObjectSharesFilters(this.name, userSession);
+                // 指定公司权限
+                let viewAssignCompanysRecordsFilter = [];
+                if (objPm.viewAssignCompanysRecords) {
+                    _.each(objPm.viewAssignCompanysRecords, (assignCompanyId) => {
+                        viewAssignCompanysRecordsFilter.push(`((company_id eq '${assignCompanyId}') or (company_ids eq '${assignCompanyId}'))`)
+                    })
+                }
+                if (!_.isEmpty(viewAssignCompanysRecordsFilter)) {
+                    permissionFilters.push(`(${viewAssignCompanysRecordsFilter.join(' or ')})`);
                 }
 
+                //共享规则
+                shareRuleFilters = await ShareRules.getUserObjectFilters(this.name, userSession);
+
+                if (!_.isEmpty(shareRuleFilters)) {
+                    permissionFilters.push(`(${shareRuleFilters.join(' or ')})`);
+                }
+
+                // 限制规则
+                restrictionRuleFilters = await RestrictionRule.getUserObjectFilters(this.name, userSession);
+
+                if (!_.isEmpty(restrictionRuleFilters)) {
+                    userFilters.push(`(${restrictionRuleFilters.join(' or ')})`);
+                }
+                // objectPermissionFilters = this.getObjectPermissionFilters(objPm, userSession, false);
+
+                // if (!_.isEmpty(objectPermissionFilters)) {
+                //     permissionFilters.push(`(${objectPermissionFilters.join(' or ')})`);
+                // }
+
+                //共享规则(旧)
+                sharesFilter = getUserObjectSharesFilters(this.name, userSession);
+
                 if (!_.isEmpty(companyFilter)) {
-                    permissionFilters.push(`(${companyFilter.join(' or ')})`);
+                    permissionFilters.push(`(${companyFilter.join(' and ')})`);
                 }
 
                 if (ownerFilter) {
@@ -948,8 +1739,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             else if (method === 'update' || method === 'updateOne') {
-                if (!objPm.allowEdit) {
+                const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
+                if (!objPm.allowEdit && _.isEmpty(permissionFilters)) {
                     throw new Error(`no ${method} permission!`);
+                }
+                let objectPermissionEditFilters = '';
+                if (!_.isEmpty(permissionFilters)) {
+                    objectPermissionEditFilters = ` or (${permissionFilters.join(' or ')})`
                 }
                 let id = args[args.length - 3];
                 if (!objPm.modifyAllRecords && objPm.modifyCompanyRecords) {
@@ -958,25 +1754,35 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     }).join(' or ')
                     if (companyFilters) {
                         if (_.isString(id)) {
-                            id = { filters: `(_id eq \'${id}\') and (${companyFilters})` }
+                            id = { filters: `(_id eq \'${id}\') and (${companyFilters}${objectPermissionEditFilters})` }
                         }
                         else if (_.isObject(id)) {
                             if (id.filters && !_.isString(id.filters)) {
                                 id.filters = formatFiltersToODataQuery(id.filters);
                             }
-                            id.filters = id.filters ? `(${id.filters}) and (${companyFilters})` : `(${companyFilters})`;
+                            id.filters = id.filters ? `(${id.filters}) and (${companyFilters}${objectPermissionEditFilters})` : `(${companyFilters}${objectPermissionEditFilters})`;
                         }
                     }
                 }
                 else if (!objPm.modifyAllRecords && !objPm.modifyCompanyRecords && objPm.allowEdit) {
                     if (_.isString(id)) {
-                        id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\')` }
+                        id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\' ${objectPermissionEditFilters})` }
                     }
                     else if (_.isObject(id)) {
                         if (id.filters && !_.isString(id.filters)) {
                             id.filters = formatFiltersToODataQuery(id.filters);
                         }
-                        id.filters = id.filters ? `(${id.filters}) and (owner eq \'${userId}\')` : `(owner eq \'${userId}\')`;
+                        id.filters = id.filters ? `(${id.filters}) and (owner eq \'${userId}\' ${objectPermissionEditFilters})` : `(owner eq \'${userId}\' ${objectPermissionEditFilters})`;
+                    }
+                } else if (objectPermissionEditFilters) {
+                    if (_.isString(id)) {
+                        id = { filters: `(_id eq \'${id}\') and (${objectPermissionEditFilters})` }
+                    }
+                    else if (_.isObject(id)) {
+                        if (id.filters && !_.isString(id.filters)) {
+                            id.filters = formatFiltersToODataQuery(id.filters);
+                        }
+                        id.filters = id.filters ? `(${id.filters}) and (${objectPermissionEditFilters})` : `(${objectPermissionEditFilters})`;
                     }
                 }
                 args[args.length - 3] = id;
@@ -1000,20 +1806,37 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             }
             else if (method === 'delete') {
-                if (!objPm.allowDelete) {
+                const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
+                if (!objPm.allowDelete && _.isEmpty(permissionFilters)) {
                     throw new Error(`no ${method} permission!`);
                 }
+
+                let objectPermissionEditFilters = '';
+                if (!_.isEmpty(permissionFilters)) {
+                    objectPermissionEditFilters = ` or (${permissionFilters.join(' or ')})`
+                }
+
                 let id = args[args.length - 2];
                 if (!objPm.modifyAllRecords && objPm.modifyCompanyRecords) {
                     let companyFilters = _.map(userSession.companies, function (comp: any) {
                         return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
                     }).join(' or ')
                     if (companyFilters) {
-                        id = { filters: `(_id eq \'${id}\') and (${companyFilters})` };
+                        id = { filters: `(_id eq \'${id}\') and (${companyFilters}${objectPermissionEditFilters})` };
                     }
                 }
                 else if (!objPm.modifyAllRecords && !objPm.modifyCompanyRecords) {
-                    id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\')` };
+                    id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\'${objectPermissionEditFilters})` };
+                } else if (objectPermissionEditFilters) {
+                    if (_.isString(id)) {
+                        id = { filters: `(_id eq \'${id}\') and (${objectPermissionEditFilters})` }
+                    }
+                    else if (_.isObject(id)) {
+                        if (id.filters && !_.isString(id.filters)) {
+                            id.filters = formatFiltersToODataQuery(id.filters);
+                        }
+                        id.filters = id.filters ? `(${id.filters}) and (${objectPermissionEditFilters})` : `(${objectPermissionEditFilters})`;
+                    }
                 }
                 args[args.length - 2] = id;
             }
@@ -1071,4 +1894,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
 export function getObject(objectName: string, schema?: SteedosSchema) {
     return (schema ? schema : getSteedosSchema()).getObject(objectName);
+}
+export function getLocalObject(objectName: string, schema?: SteedosSchema) {
+    return (schema ? schema : getSteedosSchema()).getLocalObject(objectName);
 }

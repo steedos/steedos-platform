@@ -24,13 +24,17 @@ Creator.Object = (options)->
 	self.is_view = options.is_view
 	self.form = options.form
 	self.relatedList = options.relatedList
+	self.related_lists = options.related_lists
+	self.version = options.version || 1.0
 	if !_.isBoolean(options.is_enable)  || options.is_enable == true
 		self.is_enable = true
 	else
 		self.is_enable = false
 	if Meteor.isClient
-		if _.has(options, 'allow_actions')
-			self.allow_actions = options.allow_actions
+		if _.has(options, 'allow_customActions')
+			self.allow_customActions = options.allow_customActions
+		if _.has(options, 'exclude_actions')
+			self.exclude_actions = options.exclude_actions
 		if _.has(options, 'allow_relatedList')
 			self.allow_relatedList = options.allow_relatedList
 	self.enable_search = options.enable_search
@@ -38,6 +42,7 @@ Creator.Object = (options)->
 	self.enable_tasks = options.enable_tasks
 	self.enable_notes = options.enable_notes
 	self.enable_audit = options.enable_audit
+	self.enable_events = options.enable_events
 	if options.paging
 		self.paging = options.paging
 	self.hidden = options.hidden
@@ -65,6 +70,9 @@ Creator.Object = (options)->
 	self.enable_follow = options.enable_follow
 	self.enable_workflow = options.enable_workflow
 	self.enable_inline_edit = options.enable_inline_edit
+	self.details = options.details
+	self.masters = options.masters
+	self.lookup_details = options.lookup_details
 	if _.has(options, 'in_development')
 		self.in_development = options.in_development
 	self.idFieldName = '_id'
@@ -201,7 +209,7 @@ Creator.Object = (options)->
 
 	schema = Creator.getObjectSchema(self)
 	self.schema = new SimpleSchema(schema)
-	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view && !_.contains(["flows", "forms", "instances", "organizations", "action_field_updates"], self.name)
+	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view && !_.contains(["flows", "forms", "instances", "organizations", "action_field_updates", "object_listviews"], self.name)
 		if Meteor.isClient
 			_db.attachSchema(self.schema, {replace: true})
 		else
@@ -250,11 +258,12 @@ Creator.Object = (options)->
 
 
 Creator.getObjectODataRouterPrefix = (object)->
-	if object
-		if !object.database_name || object.database_name == 'meteor-mongo'
-			return "/api/odata/v4"
-		else
-			return "/api/odata/#{object.database_name}"
+	return "/api/odata/v4"
+	# if object
+	# 	if !object.database_name || object.database_name == 'meteor-mongo'
+	# 		return "/api/odata/v4"
+	# 	else
+	# 		return "/api/odata/#{object.database_name}"
 
 # if Meteor.isClient
 

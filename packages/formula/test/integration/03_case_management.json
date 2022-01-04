@@ -1,0 +1,221 @@
+{
+  "name": "Sample Case Management Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_case_mgmt.htm",
+  "examples": [
+    {
+      "name": "Autodial",
+      "formula": "HYPERLINK(\"http://servername/call?id=\" & Id & \"&phone=\" &\n\tPhone, Phone)",
+      "suites": [
+        {
+          "context": "US Phone number",
+          "identifiers": {
+            "Id": {
+              "dataType": "text",
+              "value": "906F0000000AX9RIAW"
+            },
+            "Phone": {
+              "dataType": "text",
+              "value": "202-555-0139"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://servername/call?id=906F0000000AX9RIAW&phone=202-555-0139\">202-555-0139</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Case Categorization",
+      "formula": "IF(DaysOpen__c > 20, \"RED\",\nIF(DaysOpen__c > 10, \"YELLOW\",\n\"GREEN\") )",
+      "suites": [
+        {
+          "context": "21 Days",
+          "identifiers": {
+            "DaysOpen__c": {
+              "dataType": "number",
+              "value": 21
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "RED"
+          }
+        },
+        {
+          "context": "20 Days",
+          "identifiers": {
+            "DaysOpen__c": {
+              "dataType": "number",
+              "value": 20
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "YELLOW"
+          }
+        },
+        {
+          "context": "10 Days",
+          "identifiers": {
+            "DaysOpen__c": {
+              "dataType": "number",
+              "value": 10
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "GREEN"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Case Data Completeness Tracking",
+      "formula": "(IF(ISBLANK(Problem_Num__c), 0, 1) + IF(ISBLANK(Severity_Num__c ), 0,1)) * 50",
+      "suites": [
+        {
+          "context": "Problem Number Empty",
+          "identifiers": {
+            "Problem_Num__c": {
+              "dataType": "null",
+              "value": null
+            },
+            "Severity_Num__c": {
+              "dataType": "number",
+              "value": 2
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 50
+          }
+        },
+        {
+          "context": "Severity Number Empty",
+          "identifiers": {
+            "Problem_Num__c": {
+              "dataType": "number",
+              "value": 3
+            },
+            "Severity_Num__c": {
+              "dataType": "null",
+              "value": null
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 50
+          }
+        },
+        {
+          "context": "Both numbers filled",
+          "identifiers": {
+            "Problem_Num__c": {
+              "dataType": "number",
+              "value": 3
+            },
+            "Severity_Num__c": {
+              "dataType": "number",
+              "value": 2
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 100
+          }
+        }
+      ]
+    },
+    {
+      "name": "Suggested Agent Prompts",
+      "formula": "CASE(Product_Purch__c, \n\"Printer\", \"Extra toner cartridges\", \"Camera\", \"Memory cards\",\n\"Special of the day\")",
+      "suites": [
+        {
+          "context": "Printer",
+          "identifiers": {
+            "Product_Purch__c": {
+              "dataType": "text",
+              "value": "Printer"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Extra toner cartridges"
+          }
+        },
+        {
+          "context": "Camera",
+          "identifiers": {
+            "Product_Purch__c": {
+              "dataType": "text",
+              "value": "Camera"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Memory cards"
+          }
+        },
+        {
+          "context": "Schnitzel",
+          "identifiers": {
+            "Product_Purch__c": {
+              "dataType": "text",
+              "value": "Schnitzel"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Special of the day"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Suggested Offers",
+      "formula": "CASE(Problem__c, \n\"Memory\", \"Suggest new memory cards\", \"Hard Drive failure\", \"Suggest new hard drive with tape backup\",\n\"\")",
+      "suites": [
+        {
+          "context": "Printer",
+          "identifiers": {
+            "Problem__c": {
+              "dataType": "text",
+              "value": "Memory"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Suggest new memory cards"
+          }
+        },
+        {
+          "context": "Hard Drive failure",
+          "identifiers": {
+            "Problem__c": {
+              "dataType": "text",
+              "value": "Hard Drive failure"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Suggest new hard drive with tape backup"
+          }
+        },
+        {
+          "context": "Money",
+          "identifiers": {
+            "Problem__c": {
+              "dataType": "text",
+              "value": "Money"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": ""
+          }
+        }
+      ]
+    }
+  ]
+}

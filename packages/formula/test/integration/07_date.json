@@ -1,0 +1,1380 @@
+{
+  "name": "Sample Date Formulas",
+  "link": "https://help.salesforce.com/articleView?id=formula_examples_dates.htm",
+  "examples": [
+    {
+      "name": "Finding Out if a Year Is a Leap Year",
+      "formula": "OR(\nMOD( YEAR( date ), 400 ) = 0,\nAND(\nMOD( YEAR( date ), 4 ) = 0,\nMOD( YEAR( date ), 100 ) != 0\n)\n)",
+      "suites": [
+        {
+          "context": "1984",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "1984-01-25"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": true
+          }
+        },
+        {
+          "context": "1900",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "1900-12-13"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": false
+          }
+        },
+        {
+          "context": "2000",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2000-08-23"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding Which Quarter a Date Is In",
+      "formula": "CEILING( MONTH ( date ) / 3 )",
+      "suites": [
+        {
+          "context": "First Quarter",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-03-31"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1
+          }
+        },
+        {
+          "context": "Second Quarter",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-04-13"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 2
+          }
+        },
+        {
+          "context": "Third Quarter",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-07-05"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 3
+          }
+        },
+        {
+          "context": "Fourth Quarter",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-12-16"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 4
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding Which Quarter a Date Is In (shifted)",
+      "formula": "CEILING( ( MONTH ( date ) - 1 ) / 3)",
+      "suites": [
+        {
+          "context": "First Quarter",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-02-28"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1
+          }
+        },
+        {
+          "context": "Second Quarter",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-07-13"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 2
+          }
+        },
+        {
+          "context": "Third Quarter",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-09-05"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 3
+          }
+        },
+        {
+          "context": "Fourth Quarter",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-12-16"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 4
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding if Date is in Current Quarter",
+      "formula": "AND(\nCEILING( MONTH( date ) / 3 ) = CEILING( MONTH( today ) / 3 ),\nYEAR( date ) = YEAR( today )\n)",
+      "suites": [
+        {
+          "context": "In current quarter",
+          "identifiers": {
+            "today": {
+              "dataType": "date",
+              "value": "2019-01-01"
+            },
+            "date": {
+              "dataType": "date",
+              "value": "2019-03-31"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": true
+          }
+        },
+        {
+          "context": "Not In current quarter",
+          "identifiers": {
+            "today": {
+              "dataType": "date",
+              "value": "2019-01-01"
+            },
+            "date": {
+              "dataType": "date",
+              "value": "2018-03-31"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Week of the Year a Date Is In",
+      "formula": "IF(\nCEILING( ( date - DATE( YEAR( date ), 1, 1) + 1) / 7) > 52,\n52,\nCEILING( ( date - DATE( YEAR( date ), 1, 1) + 1) / 7)\n)",
+      "suites": [
+        {
+          "context": "First Day",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-01-01"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1
+          }
+        },
+        {
+          "context": "Last Day",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-12-31"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 52
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding Whether Two Dates Are in the Same Month",
+      "formula": "AND(\nMONTH( date_1 ) == MONTH( date_2 ),\nYEAR( date_1 ) == YEAR( date_2 )\n)",
+      "suites": [
+        {
+          "context": "Dates are in the same month",
+          "identifiers": {
+            "date_1": {
+              "dataType": "date",
+              "value": "2020-02-01"
+            },
+            "date_2": {
+              "dataType": "date",
+              "value": "2020-02-29"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": true
+          }
+        },
+        {
+          "context": "Dates are not in the same month",
+          "identifiers": {
+            "date_1": {
+              "dataType": "date",
+              "value": "2019-02-01"
+            },
+            "date_2": {
+              "dataType": "date",
+              "value": "2020-02-29"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Last Day of the Month",
+      "formula": "IF(\nMONTH( date ) = 12,\nDATE( YEAR( date ), 12, 31 ),\nDATE( YEAR( date ), MONTH ( date ) + 1, 1 ) - 1\n)",
+      "suites": [
+        {
+          "context": "February in a Leap Year",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-02-01"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-02-29"
+          }
+        },
+        {
+          "context": "December",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-12-16"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-12-31"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Displaying the Month as a String Instead of a Number",
+      "formula": "CASE(\nMONTH( date ),\n1, \"January\",\n2, \"February\",\n3, \"March\",\n4, \"April\",\n5, \"May\",\n6, \"June\",\n7, \"July\",\n8, \"August\",\n9, \"September\",\n10, \"October\",\n11, \"November\",\"December\"\n)",
+      "suites": [
+        {
+          "context": "January",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-01-01"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "January"
+          }
+        },
+        {
+          "context": "February",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-02-11"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "February"
+          }
+        },
+        {
+          "context": "February",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-02-11"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "February"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Displaying the Month as a String Instead of a Number",
+      "formula": "CASE(\nMONTH( date ),\n1, $Label.Month_of_Year_1,\n2, $Label.Month_of_Year_2,\n3, $Label.Month_of_Year_3,\n4, $Label.Month_of_Year_4,\n5, $Label.Month_of_Year_5,\n6, $Label.Month_of_Year_6,\n7, $Label.Month_of_Year_7,\n8, $Label.Month_of_Year_8,\n9, $Label.Month_of_Year_9,\n10, $Label.Month_of_Year_10,\n11, $Label.Month_of_Year_11,\n$Label.Month_of_Year_12\n)",
+      "suites": [
+        {
+          "context": "January",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-01-01"
+            },
+            "$Label.Month_of_Year_1": {
+              "dataType": "text",
+              "value": "Januar"
+            },
+            "$Label.Month_of_Year_2": {
+              "dataType": "text",
+              "value": "Februar"
+            },
+            "$Label.Month_of_Year_3": {
+              "dataType": "text",
+              "value": "März"
+            },
+            "$Label.Month_of_Year_4": {
+              "dataType": "text",
+              "value": "April"
+            },
+            "$Label.Month_of_Year_5": {
+              "dataType": "text",
+              "value": "Mai"
+            },
+            "$Label.Month_of_Year_6": {
+              "dataType": "text",
+              "value": "Juni"
+            },
+            "$Label.Month_of_Year_7": {
+              "dataType": "text",
+              "value": "Juli"
+            },
+            "$Label.Month_of_Year_8": {
+              "dataType": "text",
+              "value": "August"
+            },
+            "$Label.Month_of_Year_9": {
+              "dataType": "text",
+              "value": "September"
+            },
+            "$Label.Month_of_Year_10": {
+              "dataType": "text",
+              "value": "Oktober"
+            },
+            "$Label.Month_of_Year_11": {
+              "dataType": "text",
+              "value": "November"
+            },
+            "$Label.Month_of_Year_12": {
+              "dataType": "text",
+              "value": "Dezember"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Januar"
+          }
+        },
+        {
+          "context": "March",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-03-15"
+            },
+            "$Label.Month_of_Year_1": {
+              "dataType": "text",
+              "value": "Januar"
+            },
+            "$Label.Month_of_Year_2": {
+              "dataType": "text",
+              "value": "Februar"
+            },
+            "$Label.Month_of_Year_3": {
+              "dataType": "text",
+              "value": "März"
+            },
+            "$Label.Month_of_Year_4": {
+              "dataType": "text",
+              "value": "April"
+            },
+            "$Label.Month_of_Year_5": {
+              "dataType": "text",
+              "value": "Mai"
+            },
+            "$Label.Month_of_Year_6": {
+              "dataType": "text",
+              "value": "Juni"
+            },
+            "$Label.Month_of_Year_7": {
+              "dataType": "text",
+              "value": "Juli"
+            },
+            "$Label.Month_of_Year_8": {
+              "dataType": "text",
+              "value": "August"
+            },
+            "$Label.Month_of_Year_9": {
+              "dataType": "text",
+              "value": "September"
+            },
+            "$Label.Month_of_Year_10": {
+              "dataType": "text",
+              "value": "Oktober"
+            },
+            "$Label.Month_of_Year_11": {
+              "dataType": "text",
+              "value": "November"
+            },
+            "$Label.Month_of_Year_12": {
+              "dataType": "text",
+              "value": "August"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "März"
+          }
+        },
+        {
+          "context": "October",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-10-03"
+            },
+            "$Label.Month_of_Year_1": {
+              "dataType": "text",
+              "value": "Januar"
+            },
+            "$Label.Month_of_Year_2": {
+              "dataType": "text",
+              "value": "Februar"
+            },
+            "$Label.Month_of_Year_3": {
+              "dataType": "text",
+              "value": "März"
+            },
+            "$Label.Month_of_Year_4": {
+              "dataType": "text",
+              "value": "April"
+            },
+            "$Label.Month_of_Year_5": {
+              "dataType": "text",
+              "value": "Mai"
+            },
+            "$Label.Month_of_Year_6": {
+              "dataType": "text",
+              "value": "Juni"
+            },
+            "$Label.Month_of_Year_7": {
+              "dataType": "text",
+              "value": "Juli"
+            },
+            "$Label.Month_of_Year_8": {
+              "dataType": "text",
+              "value": "August"
+            },
+            "$Label.Month_of_Year_9": {
+              "dataType": "text",
+              "value": "September"
+            },
+            "$Label.Month_of_Year_10": {
+              "dataType": "text",
+              "value": "Oktober"
+            },
+            "$Label.Month_of_Year_11": {
+              "dataType": "text",
+              "value": "November"
+            },
+            "$Label.Month_of_Year_12": {
+              "dataType": "text",
+              "value": "August"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Oktober"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding and Displaying the Day of the Week From a Date (Start on Sunday)",
+      "formula": "CASE(\nMOD( date - DATE( 1900, 1, 7 ), 7 ),\n0, \"Sunday\",\n1,\"Monday\",\n2, \"Tuesday\",\n3, \"Wednesday\",\n4, \"Thursday\",5, \"Friday\",\n\"Saturday\"\n)",
+      "suites": [
+        {
+          "context": "Sunday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-09-08"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Sunday"
+          }
+        },
+        {
+          "context": "Monday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-12-16"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Monday"
+          }
+        },
+        {
+          "context": "Saturday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-02-29"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Saturday"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding and Displaying the Day of the Week From a Date (Start on Sunday)",
+      "formula": "CASE(\nMOD( date - DATE( 1900, 1, 7 ), 7 ),\n0, \"Sunday\",\n1,\"Monday\",\n2, \"Tuesday\",\n3, \"Wednesday\",\n4, \"Thursday\",5, \"Friday\",\n\"Saturday\"\n)",
+      "suites": [
+        {
+          "context": "Sunday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-09-08"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Sunday"
+          }
+        },
+        {
+          "context": "Monday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-12-16"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Monday"
+          }
+        },
+        {
+          "context": "Saturday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-02-29"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Saturday"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding and Displaying the Day of the Week From a Date (Start on Monday)",
+      "formula": "CASE(\nMOD( date - DATE( 1900, 1, 8 ), 7 ),\n0, \"Monday\",\n1, \"Tuesday\",\n2, \"Wednesday\",\n3, \"Thursday\",\n4, \"Friday\",\n5, \"Saturday\", \n\"Sunday\"\n)",
+      "suites": [
+        {
+          "context": "Sunday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-09-08"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Sunday"
+          }
+        },
+        {
+          "context": "Monday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-12-16"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Monday"
+          }
+        },
+        {
+          "context": "Saturday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-02-29"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Saturday"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Next Day of the Week After a Date",
+      "formula": "date + ( day_of_week - MOD( date - DATE( 1900, 1, 7 ), 7 ) )\n+\nIF(\nMOD( date - DATE( 1900, 1, 7 ), 7 ) >= day_of_week,\n7,\n0\n)",
+      "suites": [
+        {
+          "context": "Saturday after Tuesday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-02-11"
+            },
+            "day_of_week": {
+              "dataType": "number",
+              "value": 6
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-02-15"
+          }
+        },
+        {
+          "context": "Wednesday after Saturday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-09-21"
+            },
+            "day_of_week": {
+              "dataType": "number",
+              "value": 3
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2019-09-25"
+          }
+        },
+        {
+          "context": "Monday after Monday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-12-09"
+            },
+            "day_of_week": {
+              "dataType": "number",
+              "value": 1
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2019-12-16"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Number of Days Between Two Dates",
+      "formula": "today - 30 > date",
+      "suites": [
+        {
+          "context": "More than 30 days ago",
+          "identifiers": {
+            "today": {
+              "dataType": "date",
+              "value": "2020-04-13"
+            },
+            "date": {
+              "dataType": "date",
+              "value": "2020-02-11"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": true
+          }
+        },
+        {
+          "context": "Exactly 30 days ago",
+          "identifiers": {
+            "today": {
+              "dataType": "date",
+              "value": "2020-04-13"
+            },
+            "date": {
+              "dataType": "date",
+              "value": "2020-03-14"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": false
+          }
+        },
+        {
+          "context": "Less than 30 days ago",
+          "identifiers": {
+            "today": {
+              "dataType": "date",
+              "value": "2020-04-13"
+            },
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-12"
+            }
+          },
+          "expectedResult": {
+            "dataType": "checkbox",
+            "value": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Number of Business Days Between Two Dates",
+      "formula": "(5 * ( FLOOR( ( date_1 - DATE( 1900, 1, 8) ) / 7 ) ) + MIN( 5, MOD( date_1 - DATE( 1900, 1, 8), 7 ) ) )\n-\n(5 * ( FLOOR( ( date_2 - DATE( 1900, 1, 8) ) / 7 ) ) + MIN( 5, MOD( date_2 - DATE( 1900, 1, 8), 7 ) ) )",
+      "suites": [
+        {
+          "context": "Within a week",
+          "identifiers": {
+            "date_1": {
+              "dataType": "date",
+              "value": "2020-04-17"
+            },
+            "date_2": {
+              "dataType": "date",
+              "value": "2020-04-13"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 4
+          }
+        },
+        {
+          "context": "Whole month",
+          "identifiers": {
+            "date_1": {
+              "dataType": "date",
+              "value": "2020-02-29"
+            },
+            "date_2": {
+              "dataType": "date",
+              "value": "2020-02-01"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 20
+          }
+        }
+      ]
+    },
+    {
+      "name": "Adding Years to a Date",
+      "formula": "IF(\nAND(\nMONTH( date ) = 2,\nDAY( date ) = 29,\nNOT(\nOR(\nMOD( YEAR( date ), 400 ) = 0,\nAND(\nMOD( YEAR( date ), 4 ) = 0,\nMOD( YEAR( date ), 100 ) != 0\n)\n)\n)\n),\nDATE( YEAR( date ) + num_years, 3, 1),\nDATE( YEAR( date ) + num_years, MONTH( date ), DAY( date ) )\n)",
+      "suites": [
+        {
+          "context": "Not Including Leap Year",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2016-03-26"
+            },
+            "num_years": {
+              "dataType": "number",
+              "value": 3
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2019-03-26"
+          }
+        },
+        {
+          "context": "Including Leap Year",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-11-30"
+            },
+            "num_years": {
+              "dataType": "number",
+              "value": 1
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-11-30"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Adding Months to a Date (Simple)",
+      "formula": "date + ( ( 365 / 12 ) * Number_months )",
+      "suites": [
+        {
+          "context": "1 Months",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-09-03"
+            },
+            "Number_months": {
+              "dataType": "number",
+              "value": 1
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-10-03"
+          }
+        },
+        {
+          "context": "2 Months",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-30"
+            },
+            "Number_months": {
+              "dataType": "number",
+              "value": 2
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-06-29"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Adding 2 Months to a Date (Complex)",
+      "formula": "DATE(\nYEAR( date ) + FLOOR( ( MONTH ( date ) + 2 - 1 ) / 12 ),\nMOD( MONTH ( date ) + 2 - 1 +\nIF( DAY ( date ) > CASE( MOD( MONTH( date ) + 2 - 1, 12 ) + 1,\n2, 28,\n4, 30,\n6, 30,\n9, 30, \n11, 30,\n31 ), 1, 0 ), 12 ) + 1,\nIF( DAY( date ) > CASE( MOD( MONTH( date ) + 2 - 1, 12 ) + 1,\n2, 28,\n4, 30, \n6, 30, \n9, 30, \n11, 30, \n31 ),\n1, DAY( date )\n)\n)",
+      "suites": [
+        {
+          "context": "within the year",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-30"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-06-30"
+          }
+        },
+        {
+          "context": "Year Overflow",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2019-12-31"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-03-01"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Adding Business Days to a Date",
+      "formula": "CASE( \nMOD( date - DATE( 1900, 1, 7 ), 7 ),\n3, date + 2 + 3,\n4, date + 2 + 3,\n5, date + 2 + 3,\n6, date + 1 + 3,\ndate + 3)",
+      "suites": [
+        {
+          "context": "Monday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-06"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-04-09"
+          }
+        },
+        {
+          "context": "Tuesday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-07"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-04-10"
+          }
+        },
+        {
+          "context": "Wednesday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-08"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-04-13"
+          }
+        },
+        {
+          "context": "Thursday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-09"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-04-14"
+          }
+        },
+        {
+          "context": "Friday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-10"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-04-15"
+          }
+        },
+        {
+          "context": "Saturday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-11"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-04-15"
+          }
+        },
+        {
+          "context": "Sunday",
+          "identifiers": {
+            "date": {
+              "dataType": "date",
+              "value": "2020-04-12"
+            }
+          },
+          "expectedResult": {
+            "dataType": "date",
+            "value": "2020-04-15"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Hour from a Date/Time (24h)",
+      "formula": "VALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) )",
+      "suites": [
+        {
+          "context": "Before Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 6
+          }
+        },
+        {
+          "context": "After Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T17:39:29Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 17
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Hour from a Date/Time (AM/PM)",
+      "formula": "IF(\nOR(\nVALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) ) = 0,\nVALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) ) = 12\n),\n12,\nVALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) )\n-\nIF(\nVALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) ) < 12,\n0,\n12\n)\n)",
+      "suites": [
+        {
+          "context": "Before Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 6
+          }
+        },
+        {
+          "context": "After Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T17:39:29Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 5
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Minute from a Date/Time",
+      "formula": "VALUE( MID( TEXT( datetime - TZoffset ), 15, 2 ) )",
+      "suites": [
+        {
+          "context": "Before Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 14
+          }
+        },
+        {
+          "context": "After Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T17:39:29Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 39
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Second from a Date/Time",
+      "formula": "VALUE( MID( TEXT( datetime - TZoffset ), 18, 2 ) )",
+      "suites": [
+        {
+          "context": "Before Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 3
+          }
+        },
+        {
+          "context": "After Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T17:39:29Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 29
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the AM/PM part from a Date/Time",
+      "formula": "IF(\nVALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) ) < 12,\n\"AM\",\"PM\"\n)",
+      "suites": [
+        {
+          "context": "Before Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "AM"
+          }
+        },
+        {
+          "context": "After Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T17:39:29Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "PM"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Format datetime as \"HH:MM:SS A/PM\"",
+      "formula": "IF(\nOR(\nVALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) ) = 0,\nVALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) ) = 12\n),\n\"12\",\nTEXT( VALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) )\n-\nIF(\nVALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) ) < 12,\n0,\n12\n)\n)\n)\n& \":\" &\nMID( TEXT( datetime - TZoffset ), 15, 2 )\n& \":\" &\nMID( TEXT( datetime - TZoffset ), 18, 2 )\n& \" \" &\nIF(\nVALUE( MID( TEXT( datetime - TZoffset ), 12, 2 ) ) < 12,\n\"AM\",\n\"PM\")",
+      "suites": [
+        {
+          "context": "Before Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "6:14:03 AM"
+          }
+        },
+        {
+          "context": "After Noon",
+          "identifiers": {
+            "datetime": {
+              "dataType": "datetime",
+              "value": "2020-04-13T17:39:29Z"
+            },
+            "TZoffset": {
+              "dataType": "number",
+              "value": -7
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "5:39:29 PM"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Elapsed Time Between Date/Times",
+      "formula": "IF(\ndatetime_1 - datetime_2 > 0 ,\nTEXT( FLOOR( datetime_1 - datetime_2 ) ) & \" days \"\n& TEXT( FLOOR( MOD( (datetime_1 - datetime_2 ) * 24, 24 ) ) ) & \" hours \"\n& TEXT( ROUND( MOD( (datetime_1 - datetime_2 ) * 24 * 60, 60 ), 0 ) ) & \" minutes\",\n\"\"\n)",
+      "suites": [
+        {
+          "context": "Less than a minute",
+          "identifiers": {
+            "datetime_1": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "datetime_2": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:01Z"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "0 days 0 hours 0 minutes"
+          }
+        },
+        {
+          "context": "Less than an hour",
+          "identifiers": {
+            "datetime_1": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "datetime_2": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:10:02Z"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "0 days 0 hours 4 minutes"
+          }
+        },
+        {
+          "context": "Less than a day",
+          "identifiers": {
+            "datetime_1": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "datetime_2": {
+              "dataType": "datetime",
+              "value": "2020-04-12T06:15:02Z"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "0 days 23 hours 59 minutes"
+          }
+        },
+        {
+          "context": "More than a day",
+          "identifiers": {
+            "datetime_1": {
+              "dataType": "datetime",
+              "value": "2020-04-13T06:14:03Z"
+            },
+            "datetime_2": {
+              "dataType": "datetime",
+              "value": "2019-04-12T06:15:02Z"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "366 days 23 hours 59 minutes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finding the Elapsed Time Between Date/Times",
+      "formula": "ROUND( 8 * (\n( 5 * FLOOR( ( DATEVALUE( datetime_1 ) - DATE( 1900, 1, 8) ) / 7) +\nMIN(5,\nMOD( DATEVALUE( datetime_1 ) - DATE( 1900, 1, 8), 7) +\nMIN( 1, 24 / 8 * ( MOD( datetime_1 - DATETIMEVALUE( '1900-01-08 16:00:00' ), 1 ) ) )\n)\n)\n-\n( 5 * FLOOR( ( DATEVALUE( datetime_2 ) - DATE( 1900, 1, 8) ) / 7) +\nMIN( 5,\nMOD( DATEVALUE( datetime_2 ) - DATE( 1996, 1, 1), 7 ) +\nMIN( 1, 24 / 8 * ( MOD( datetime_2 - DATETIMEVALUE( '1900-01-08 16:00:00' ), 1) ) )\n)\n)\n),\n0 )",
+      "suites": [
+        {
+          "context": "Work Week",
+          "identifiers": {
+            "datetime_1": {
+              "dataType": "datetime",
+              "value": "2020-04-17T10:00:00Z"
+            },
+            "datetime_2": {
+              "dataType": "datetime",
+              "value": "2020-04-12T02:00:00Z"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 40
+          }
+        }
+      ]
+    }
+  ]
+}

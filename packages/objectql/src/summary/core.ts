@@ -20,7 +20,7 @@ export const runQuotedByObjectFieldSummaries = async function (objectName: strin
 } = {}) {
     let { fieldNames, quotedByConfigs } = options;
     if (!quotedByConfigs) {
-        quotedByConfigs = getObjectQuotedByFieldSummaryConfigs(objectName, fieldNames);
+        quotedByConfigs = await getObjectQuotedByFieldSummaryConfigs(objectName, fieldNames);
     }
     if (!quotedByConfigs.length) {
         return;
@@ -68,6 +68,9 @@ export const getSummaryAggregateGroups = (summary_type: SteedosSummaryTypeValue,
             break;
         case SteedosSummaryTypeValue.SUM:
             group[groupKey] = { $sum: `$${summary_field}` };
+            break;
+        case SteedosSummaryTypeValue.AVG:
+            group[groupKey] = { $avg: `$${summary_field}` };
             break;
 
     }
@@ -241,7 +244,7 @@ export const updateQuotedByReferenceTosForSummaryType = async (referenceToIds: A
  * @param recordId 
  */
 export const runCurrentObjectFieldSummaries = async function (objectName: string, recordId: string) {
-    const configs = getObjectFieldSummaryConfigs(objectName);
+    const configs = await getObjectFieldSummaryConfigs(objectName);
     if (!configs.length) {
         return;
     }

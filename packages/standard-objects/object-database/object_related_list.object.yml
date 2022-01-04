@@ -67,6 +67,8 @@ fields:
     type: grid
     is_wide: true
     required: true
+    depend_on:
+      - objectName
   columns.$:
     label: Column
     blackbox: true
@@ -77,8 +79,6 @@ fields:
     multiple: false
     is_wide: false
     required: true
-    depend_on:
-      - objectName
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               if (!(values != null ? values.objectName : void 0)) {
@@ -101,6 +101,8 @@ fields:
     label: Mobile Columns
     type: grid
     is_wide: true
+    depend_on:
+      - objectName
   mobile_columns.$:
     label: Column
     blackbox: true
@@ -110,8 +112,6 @@ fields:
     type: lookup
     multiple: false
     is_wide: false
-    depend_on:
-      - objectName
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               if (!(values != null ? values.objectName : void 0)) {
@@ -128,6 +128,8 @@ fields:
     label: Default Sort Order
     type: grid
     is_wide: true
+    depend_on:
+      - objectName
   sort.$:
     label: Order
     blackbox: true
@@ -135,8 +137,6 @@ fields:
   sort.$.field_name:
     label: Field Name
     type: lookup
-    depend_on:
-      - objectName
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               var _object, _options, fields, icon;
@@ -204,5 +204,5 @@ permission_set:
     allowDelete: true
     allowEdit: true
     allowRead: false
-    modifyAllRecords: false
-    viewAllRecords: false
+    modifyAllRecords: true
+    viewAllRecords: true

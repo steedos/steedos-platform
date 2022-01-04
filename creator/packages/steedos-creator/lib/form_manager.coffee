@@ -14,8 +14,14 @@ FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related
 	Creator.getRelatedList(main_object_name, main_record_id).forEach (related_obj) ->
 		if related_object_name == related_obj.object_name
 			relatedKey = related_obj.related_field_name
+	relatedObject = Creator.getObject(related_object_name);
+	mainSelect = 'company_id';
+	if relatedObject && relatedKey && relatedObject.fields[relatedKey] && relatedObject.fields[relatedKey].reference_to_field
+		mainSelect = mainSelect + ',' + relatedObject.fields[relatedKey].reference_to_field
+	main_record = Creator.odata.get(main_object_name, main_record_id, mainSelect)
 
-	main_record = Creator.odata.get(main_object_name, main_record_id, 'company_id')
+	if main_record && relatedKey && main_record[relatedObject.fields[relatedKey].reference_to_field]
+		main_record_id = main_record[relatedObject.fields[relatedKey].reference_to_field]
 #
 #	related_object = Creator.getObject(related_object_name);
 #
@@ -23,24 +29,31 @@ FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related
 #		if main_record[field.name]
 #			defaultValue[field.name] = main_record[field.name]
 
-	defaultValue = FormManager.getInitialValues(related_object_name)
+	defaultValue = {}
 
 	if relatedKey
 		if main_object_name == "objects"
 			defaultValue[relatedKey] = Creator.getObjectRecord().name
 		else
-			defaultValue[relatedKey] = {o: main_object_name, ids: [main_record_id]}
+			relatedObject = Creator.getObject(related_object_name);
+			if _.isString(relatedObject.fields[relatedKey].reference_to)
+				if relatedObject.fields[relatedKey].multiple
+					defaultValue[relatedKey] = [main_record_id]
+				else
+					defaultValue[relatedKey] = main_record_id
+			else
+				defaultValue[relatedKey] = {o: main_object_name, ids: [main_record_id]}
 	if !_.has(defaultValue, "company_id") && main_record?.company_id
 		defaultValue['company_id'] = main_record.company_id
-
+	defaultValue = Object.assign({}, defaultValue, FormManager.getInitialValues(related_object_name, defaultValue))
 	return defaultValue;
 
 
-FormManager.getInitialValues = (object_name)->
+FormManager.getInitialValues = (object_name, defaultValue)->
 	object = Creator.getObject(object_name);
 	objectFormInitialValuesFun = object?.form?.initialValues
 	if _.isFunction(objectFormInitialValuesFun)
-		return objectFormInitialValuesFun.apply({})
+		return objectFormInitialValuesFun.apply({doc: defaultValue || {} })
 	else
 		return {}
 

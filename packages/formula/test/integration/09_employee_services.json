@@ -1,0 +1,177 @@
+{
+  "name": "Sample Employee Services Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_employee_svcs.htm",
+  "examples": [
+    {
+      "name": "Bonus Calculation",
+      "formula": "MIN(Gross__c * Bonus_Percent__c, ​\nPerformance__c / Number_of_Employees__c)",
+      "suites": [
+        {
+          "context": "employee's gross times bonus lower",
+          "identifiers": {
+            "Gross__c": {
+              "dataType": "number",
+              "value": 75000
+            },
+            "Bonus_Percent__c": {
+              "dataType": "number",
+              "value": 0.1
+            },
+            "Performance__c": {
+              "dataType": "number",
+              "value": 100000
+            },
+            "Number_of_Employees__c": {
+              "dataType": "number",
+              "value": 10
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 7500
+          }
+        },
+        {
+          "context": "company's performance lower",
+          "identifiers": {
+            "Gross__c": {
+              "dataType": "number",
+              "value": 120000
+            },
+            "Bonus_Percent__c": {
+              "dataType": "number",
+              "value": 0.1
+            },
+            "Performance__c": {
+              "dataType": "number",
+              "value": 100000
+            },
+            "Number_of_Employees__c": {
+              "dataType": "number",
+              "value": 10
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 10000
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employee 401K",
+      "formula": "MIN(250, Contribution__c /2)",
+      "suites": [
+        {
+          "context": "Contribution lower than 500",
+          "identifiers": {
+            "Contribution__c": {
+              "dataType": "number",
+              "value": 400
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 200
+          }
+        },
+        {
+          "context": "Contribution higher than 500",
+          "identifiers": {
+            "Contribution__c": {
+              "dataType": "number",
+              "value": 600
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 250
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hours Worked Per Week",
+      "formula": "MonHours__c + TuesHours__c + WedsHours__c + ThursHours__c + FriHours__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "MonHours__c": {
+              "dataType": "number",
+              "value": 8
+            },
+            "TuesHours__c": {
+              "dataType": "number",
+              "value": 7
+            },
+            "WedsHours__c": {
+              "dataType": "number",
+              "value": 6
+            },
+            "ThursHours__c": {
+              "dataType": "number",
+              "value": 5
+            },
+            "FriHours__c": {
+              "dataType": "number",
+              "value": 4
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 30
+          }
+        }
+      ]
+    },
+    {
+      "name": "Total Pay Amount",
+      "formula": "IF(Total_Hours__c <= 40, Total_Hours__c * Hourly_Rate__c, \n40 * Hourly_Rate__c +\n(Total_Hours__c - 40) * Overtime_Rate__c)",
+      "suites": [
+        {
+          "context": "Overtime",
+          "identifiers": {
+            "Total_Hours__c": {
+              "dataType": "number",
+              "value": 55
+            },
+            "Hourly_Rate__c": {
+              "dataType": "number",
+              "value": 20
+            },
+            "Overtime_Rate__c": {
+              "dataType": "number",
+              "value": 30
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1250
+          }
+        },
+        {
+          "context": "No Overtime",
+          "identifiers": {
+            "Total_Hours__c": {
+              "dataType": "number",
+              "value": 40
+            },
+            "Hourly_Rate__c": {
+              "dataType": "number",
+              "value": 20
+            },
+            "Overtime_Rate__c": {
+              "dataType": "number",
+              "value": 30
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 800
+          }
+        }
+      ]
+    }
+  ]
+}

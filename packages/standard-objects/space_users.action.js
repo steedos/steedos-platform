@@ -56,14 +56,26 @@ module.exports = {
   },
 
   disableVisible: function (object_name, record_id, record_permissions, record) {
-    if (!Steedos.isSpaceAdmin()){
+    var canDisable = record && record.user_accepted && (record.user && record.user._id) != Steedos.userId()
+    if(!canDisable){
       return;
     }
-    if (record && record.user_accepted && (record.user && record.user._id) != Steedos.userId()) {
-      return true
+    //以下为权限判断
+    var organization = Session.get("organization");
+    var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+    if(!allowEdit){
+        // permissions配置没有权限则不给权限
+        return false
+    }
+
+    // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+    if(Steedos.isSpaceAdmin()){
+        return true;
+    }
+    else{
+        return SpaceUsersCore.isCompanyAdmin(record_id, organization);
     }
   },
-
   enable: function (object_name, record_id) {
     $("body").addClass("loading");
     var userSession = Creator.USER_CONTEXT;
@@ -121,11 +133,24 @@ module.exports = {
   },
 
   enableVisible: function (object_name, record_id, record_permissions, record) {
-    if (!Steedos.isSpaceAdmin()) {
+    var canEnable = record && !record.user_accepted && (record.user && record.user._id) != Steedos.userId()
+    if(!canEnable){
       return;
     }
-    if (record && !record.user_accepted && (record.user && record.user._id) != Steedos.userId()){
-      return true
+    //以下为权限判断
+    var organization = Session.get("organization");
+    var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+    if(!allowEdit){
+        // permissions配置没有权限则不给权限
+        return false
+    }
+
+    // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+    if(Steedos.isSpaceAdmin()){
+        return true;
+    }
+    else{
+        return SpaceUsersCore.isCompanyAdmin(record_id, organization);
     }
   },
   lockout: function(object_name, record_id){
@@ -142,7 +167,8 @@ module.exports = {
         var userSession = Creator.USER_CONTEXT;
         var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/lockout", {type: 'post', async: false, data: JSON.stringify({})});
         if(result.error){
-          toastr.error(t("space_users_method_lockout_error", t(data.error.reason)));
+          // 报错信息重复
+          // toastr.error(t("space_users_method_lockout_error", t(result.error.reason)));
         }else{
           toastr.success(t("space_users_method_lockout_success"));
           FlowRouter.reload()
@@ -152,14 +178,30 @@ module.exports = {
     })
   },
   lockoutVisible: function (object_name, record_id, record_permissions, record) {
-    if (!Steedos.isSpaceAdmin()) {
+    if((record.user && record.user._id) === Steedos.userId()){
       return;
     }
+    var organization = Session.get("organization");
+    var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+    if(!allowEdit){
+        // permissions配置没有权限则不给权限
+        return false
+    }
+    var isAdmin = Steedos.isSpaceAdmin();
+    if(!isAdmin){
+      // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+      isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
+    }
+    if (!isAdmin) {
+      return;
+    }
+    //以上为权限判断
+
     if (record){
       var userSession = Creator.USER_CONTEXT;
       var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
       if(result.error){
-        toastr.error(data.error.reason);
+        toastr.error(result.error.reason);
       }else{
         return !result.lockout
       }
@@ -179,7 +221,8 @@ module.exports = {
         var userSession = Creator.USER_CONTEXT;
         var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/unlock", {type: 'post', async: false, data: JSON.stringify({})});
         if(result.error){
-          toastr.error(t("space_users_method_unlock_error", t(data.error.reason)));
+          // 报错信息重复
+          // toastr.error(t("space_users_method_unlock_error", t(result.error.reason)));
         }else{
           toastr.success(t("space_users_method_unlock_success"));
           FlowRouter.reload()
@@ -189,14 +232,30 @@ module.exports = {
     })
   },
   unlockVisible: function (object_name, record_id, record_permissions, record) {
-    if (!Steedos.isSpaceAdmin()) {
+    if((record.user && record.user._id) === Steedos.userId()){
       return;
     }
+    var organization = Session.get("organization");
+    var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+    if(!allowEdit){
+        // permissions配置没有权限则不给权限
+        return false
+    }
+    var isAdmin = Steedos.isSpaceAdmin();
+    if(!isAdmin){
+      // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+      isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
+    }
+    if (!isAdmin) {
+      return;
+    }
+    //以上为权限判断
+    
     if (record){
       var userSession = Creator.USER_CONTEXT;
       var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
       if(result.error){
-        toastr.error(data.error.reason);
+        toastr.error(result.error.reason);
       }else{
         return result.lockout
       }

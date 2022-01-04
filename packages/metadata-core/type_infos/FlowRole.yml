@@ -1,0 +1,13 @@
+metadataName: FlowRole
+isAddressable: true
+isSourceTracked: true
+ext: flowRole
+tableName: flow_roles
+hasContent: false
+defaultDirectory: flowRoles
+nameForMsgs: FlowRole
+nameForMsgsPlural: FlowRoles
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

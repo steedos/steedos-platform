@@ -1,0 +1,99 @@
+name: spaces
+label: Company
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  avatar:
+    label: Logo
+    help: 
+    description: 
+  avatar_square:
+    label: Square Logo
+    help: 
+    description: 
+  avatar_dark:
+    label: Dark Logo
+    help: 
+    description: 
+  owner:
+    label: Space Owner
+    help: 
+    description: 
+  admins:
+    label: Admins
+    help: 
+    description: 
+  account_logo:
+    label: Account logo
+    help: 
+    description: 
+  background:
+    label: Background
+    help: 
+    description: 
+  enable_register:
+    label: Enable User Registration
+    help: 
+    description: 
+  default_profile:
+    label: Default profile
+    help: 
+    description: 
+  default_organization:
+    label: Default organization
+    help: 
+    description: 
+  balance:
+    label: Account Balance
+    help: 
+    description: 
+  services:
+    label: 
+    help: 
+    description: 
+  billing.remaining_months:
+    label: 
+    help: 
+    description: 
+  company_id:
+    label: 
+    help: 
+    description: 
+  company_ids:
+    label: 
+    help: 
+    description: 
+  features:
+    label: 
+    help: 
+    description: 
+  api_key:
+    label: API Key
+    help: 
+    description: 
+groups:
+  logon: Logon
+  register_account: Register account
+  developer: Developer
+listviews:
+  all:
+    label: All Companies
+actions:
+  standard_new:
+    label: New
+  invite_space_users:
+    label: Invite Users
+CustomLabels:
+  spaces_action_pay_records: 
+  spaces_action_upgrade: 
+  spaces_field_end_date: 
+  spaces_field_hostname: 
+  spaces_field_is_paid: 
+  spaces_field_modules: 
+  spaces_field_start_date: 
+  spaces_field_user_limit: 
+  spaces_group_payment: 
+  space_apikey_notfind: Please set your company's API Key

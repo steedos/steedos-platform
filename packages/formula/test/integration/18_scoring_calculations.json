@@ -1,0 +1,128 @@
+{
+  "name": "Sample Scoring Calculations Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_scoring.htm",
+  "examples": [
+    {
+      "name": "Lead Scoring",
+      "formula": "CASE(LeadSource, \"Phone\", 2, \"Web\", 1, 0)",
+      "suites": [
+        {
+          "context": "Phone",
+          "identifiers": {
+            "LeadSource": {
+              "dataType": "picklist",
+              "value": "Phone",
+              "options": ["Phone", "Web", "Other"]
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 2
+          }
+        },
+        {
+          "context": "Web",
+          "identifiers": {
+            "LeadSource": {
+              "dataType": "picklist",
+              "value": "Web",
+              "options": ["Phone", "Web", "Other"]
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1
+          }
+        },
+        {
+          "context": "Other",
+          "identifiers": {
+            "LeadSource": {
+              "dataType": "picklist",
+              "value": "Other",
+              "options": ["Phone", "Web", "Other"]
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customer Success Scoring",
+      "formula": "Survey_Question_1__c * 5 + Survey_Question_2__c *2",
+      "suites": [
+        {
+          "context": "1 and 2 positive",
+          "identifiers": {
+            "Survey_Question_1__c": {
+              "dataType": "number",
+              "value": 1
+            },
+            "Survey_Question_2__c": {
+              "dataType": "number",
+              "value": 1
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 7
+          }
+        },
+        {
+          "context": "1 positive",
+          "identifiers": {
+            "Survey_Question_1__c": {
+              "dataType": "number",
+              "value": 1
+            },
+            "Survey_Question_2__c": {
+              "dataType": "number",
+              "value": 0
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 5
+          }
+        },
+        {
+          "context": "2 positive",
+          "identifiers": {
+            "Survey_Question_1__c": {
+              "dataType": "number",
+              "value": 0
+            },
+            "Survey_Question_2__c": {
+              "dataType": "number",
+              "value": 1
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 2
+          }
+        },
+        {
+          "context": "both negative",
+          "identifiers": {
+            "Survey_Question_1__c": {
+              "dataType": "number",
+              "value": 0
+            },
+            "Survey_Question_2__c": {
+              "dataType": "number",
+              "value": 0
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0
+          }
+        }
+      ]
+    }
+  ]
+}

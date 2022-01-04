@@ -43,6 +43,10 @@
             "description": "应用显示名称。",
             "type": "string"
         },
+        "code": {
+            "description": "应用的唯一标识。",
+            "type": "string"
+        },
         "description": {
             "type": "string",
             "description": "应用描述。"
@@ -57,11 +61,19 @@
         },
         "is_creator": {
             "type": "boolean",
-            "description": "TODO....。"
+            "description": ""
         },
         "sort": {
             "type": "number",
             "description": "排序"
+        },
+        "tabs": {
+            "type": "array",
+            "description": "用于指定此应用下的选项卡",
+            "items": {
+                "type": "string",
+                "description": "选项卡唯一标识。"
+            }
         },
         "objects": {
             "type": "array",
@@ -86,6 +98,42 @@
                 "type": "object",
                 "description": "菜单详情"
             }
+        },
+        "visible": {
+            "type": "boolean",
+            "description": "启用"
+        },
+        "is_new_window": {
+            "type": "boolean",
+            "description": "新窗口打开"
+        },
+        "mobile": {
+            "type": "boolean",
+            "description": "在手机端显示"
+        },
+        "oauth2_enabled": {
+            "type": "boolean",
+            "description": "启用OAuth2认证"
+        },
+        "oauth2_logout_enabled": {
+            "type": "boolean",
+            "description": "启用OAuth2单点注销"
+        },
+        "saml_enabled": {
+            "type": "boolean",
+            "description": "启用SAML"
+        },
+        "saml_logout_enabled": {
+            "type": "boolean",
+            "description": "启用SAML单点注销"
+        },
+        "is_use_iframe": {
+            "type": "boolean",
+            "description": "使用iframe打开"
+        },
+        "is_use_ie": {
+            "type": "boolean",
+            "description": "使用IE打开(需使用Steedos桌面客户端)"
         }
     }
 }

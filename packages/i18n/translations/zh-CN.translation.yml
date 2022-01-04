@@ -1,0 +1,1798 @@
+CustomLabels:
+  process_notification_pending_title: "{$submitter} 正在请求批准 {$recordName}"
+  process_notification_approved_title: "您的申请已被核准 {$recordName}"
+  process_notification_rejected_title: "您的申请已被驳回 {$recordName}"
+  process_approval_comment: 评论
+  process_approval_title_reassign: 转签核批准请求
+  process_approval_approver_label_reassign: 转签核处理人
+  process_approval_confirmBtnText_reassign: 转签核
+  process_approval_title_recall: 取消申请
+  process_approval_confirmBtnText_recall: 取消申请
+  process_approval_title_submit: 提交待审核
+  process_approval_confirmBtnText_submit: 提交
+  process_approval_confirmBtnText_approve: 批准
+  process_approval_approver_label: 选择下一位批准人
+  process_approval_confirmBtnText_reject: 拒绝
+  process_approval_empty_node_title: 已提交的批准请求
+  process_approval_error_notFindProcessDefinition: 未找到适用批准流程。
+  process_approval_error_NoApproval: 其他用户已取消申请或响应此请求。
+  process_approval_error_processInstancePending: 此记录当前正在批准过程中。记录一次只能在一个批准过程中。
+  instance_select: '-请选择-'
+  meteor_autoform_remove: 移除
+  meteor_autoform_choose_file: 选择文件
+  coreform_select: 请选择
+  coreform_select_user_title: 请选择人员
+  coreform_select_org_title: 请选择部门
+  accounts-sign-in: 登录
+  accounts-sign-out: 退出
+  accounts-sign-up: 注册
+  dataTables:
+    none: None
+    emptyTable: '&nbsp;'
+    info: 显示第 _START_ 至 _END_ 项记录，共 _TOTAL_ 项
+    infoEmpty: 显示第 0 至 0 项记录，共 0 项
+    infoFiltered: (由 _MAX_ 项记录过滤)
+    infoPostFix: 
+    infoThousands: ','
+    lengthMenu: 显示 _MENU_ 项记录
+    loadingRecords: 载入中...
+    processing: 加载中...
+    search: '搜索:'
+    zeroRecords: 没有记录
+    zero: 没有
+    paginate:
+      first: 首页
+      last: 末页
+      next: 下页
+      previous: 上页
+    aria:
+      sortAscending: ': 以升序排列此列'
+      sortDescending: ': 以降序排列此列'
+    select:
+      rows: 选中%d行
+  tabbar_workflow: 审批
+  tabbar_cms: 信息
+  tabbar_apps: 工作台
+  tabbar_admin: 我
+  password_invalid: 密码必须包含字母和数字，且不能少于8位
+  Steedos: Steedos
+  Apps: 应用
+  Steedos Workflow: 审批
+  Steedos Chat: 即时通讯
+  Steedos Drive: 云盘
+  Steedos Mail: 邮件
+  Steedos Calendar: 日程安排
+  Steedos Contacts: 通讯录
+  Steedos Admin: 设置
+  Flow Designer: 流程设计器
+  Steedos CMS: 信息发布
+  Steedos Boards: 看板
+  Steedos OldCalendar: 日历(旧版)
+  Forgot Password: 忘记密码
+  Forgot Password Description: >-
+    Enter your email address below and we will send you password reset
+    instructions.
+  Email: 邮件
+  Reset Password: 重置密码
+  Log in: 登录
+  Forgot your password?: 忘记密码?
+  Confirm Password: 确认密码
+  Sign up: 注册
+  Sign out: 退出
+  Profile Information: 账户信息
+  Name: 姓名
+  Gender: 性别
+  Male: 男
+  Female: 女
+  Location: 位置
+  Website: 网站
+  Gravatar: 头像
+  Update Profile: 更新资料
+  Change Password: 更改密码
+  New Password: 新密码
+  Delete Account: 删除帐户
+  'You can delete your account, but keep in mind this action is irreversible.': 'You can delete your account, but keep in mind this action is irreversible.'
+  Delete my account: 删除我的帐户
+  Linked Accounts: 关联账户
+  Link your Google account: Link your Google account
+  Link your Facebook account: Link your Facebook account
+  Link your Twitter account: Link your Twitter account
+  Link your GitHub account: Link your GitHub account
+  Link your LinkedIn account: Link your LinkedIn account
+  Link your Instagram account: Link your Instagram account
+  Chat with us: 在线交谈
+  Support Request: 提交服务单
+  Online Help: 帮助文档
+  My Account: 我的账户
+  Logout: 退出
+  Contact Form: 联系我们
+  Full Name: 姓名
+  Body: 内容
+  Send: 发送
+  Terms: 使用条款
+  Privacy: 隐私保护
+  Avatar: 头像
+  Change Avatar: 更换头像
+  Submit: 提交
+  Search: 搜索
+  Online: 在线
+  Developer: 开发人员
+  Home: 主页
+  Profile: 个人信息
+  Help: 帮助
+  New: 新建
+  Account Settings: 账户设置
+  Account: 账户
+  Settings: 设置
+  Select Space: 选择工作区
+  Add space: 新增工作区
+  Switch Company: 切换公司
+  bqq: 企业QQ
+  dingtalk: 钉钉
+  google: 谷歌
+  facebook: 脸书
+  OK: 确认
+  Cancel: 取消
+  About: 关于
+  Password: 密码
+  Accountzoom: 字体
+  Backgroundimage: 背景
+  binding_mailbox: 绑定邮箱
+  Reset: 重置
+  primary_email_needed: 绑定邮件地址
+  primary_email_needed_description: 请输入您的工作邮件地址，此邮件地址可以用来登录华炎云，也可以用来重置密码。
+  primary_email_updated: 邮件地址绑定成功
+  steedos_previous_version: 点击访问旧版华炎云
+  steedos_only_paid: 只有付费工作区才能执行此操作.
+  steedos_customize_apps: 自定义应用
+  steedos_about_us: 关于华炎云
+  steedos_quick_guide: 快速向导
+  steedos_help: 帮助
+  steedos_home: 首页
+  steedos_apps: 华炎魔方
+  steedos_about: 关于
+  steedos_info: 华炎魔方，创新的使用配置文件描述业务模型和业务功能，开发人员只需要编写简单的配置文件就可以构建自定义应用程序，并部署到电脑、平板、手机三个平台。
+  steedos_version: 版本
+  steedos_commit_date: 修订日期
+  steedos_build_date: 发布日期
+  steedos_company: 技术支持
+  steedos_hotlong_software: 上海华炎软件科技有限公司
+  steedos_phone: 客服热线
+  steedos_email: 客服邮箱
+  steedos_copyright: ©华炎软件. 保留所有权利.
+  Profile_saved_successfully: 个人信息保存成功
+  Old_and_new_password_required: 旧密码或新密码为空
+  Incorrect_Password: 旧密码不正确
+  Password_changed_successfully: 密码修改成功
+  Confirm_Password_Not_Match: 请确认两次输入的密码是否一致
+  saved_successfully: 保存成功
+  Language_changed_reloading: 语言已修改，重新载入中
+  email: 邮件
+  email_setting: 设置邮件
+  email_login_required: 请登录
+  email_required: 邮件为空
+  email_format_error: 邮件格式错误
+  mobile_format_error: 手机号式错误
+  email_exists: 邮件已存在
+  email_at_least_one: 需要至少一个邮件地址
+  email_verify_sent: 验证邮件已发送.
+  email_vrified: 已验证
+  email_unvrified: 未验证
+  email_send_verify: 重新发送
+  email_set_primary: 设置为主要邮件
+  email_is_primary: 主要邮件
+  email_set_primary_success: 已设置为主要邮件
+  email_remove_success: 邮件删除成功
+  mail_inbox: 收件箱
+  mail_sent: 已发送
+  mail_drafts: 草稿
+  mail_junk: 垃圾邮件
+  mail_trash: 已删除
+  mail_archive: 归档
+  mail_accounts: 账户
+  mail_accounts_email: 邮箱名
+  mail_accounts_password: 邮箱密码
+  mail_domains: 邮件域
+  mail_domains_domain: 邮件域名
+  mail_domains_smtp_server: SMTP服务器
+  mail_domains_smtp_ssl: SMTP加密
+  mail_domains_smtp_port: SMTP端口
+  mail_domains_imap_server: IMAP服务器
+  mail_domains_imap_ssl: IMAP加密
+  mail_domains_imap_port: IMAP端口
+  mail_domains_sensitive_keywords_alert: 警告关键字
+  mail_domains_sensitive_keywords_forbidden: 禁止关键字
+  mail_domains_before_send: 发送验证
+  mail_domains_before_save: 暂存验证
+  mail_folders: 文件夹
+  upload_empty_file_error: 禁止上传空附件
+  url_invalid: 无效的链接
+  Steedos Cloud: 华炎云
+  Save: 保存
+  Add: 添加
+  Edit: 编辑
+  Delete: 删除
+  Spaces_isPaid: 已付费
+  users_error:
+    steedos_id_required: Steedos ID 不能为空
+  personalization: 个性化
+  bg_body: 背景
+  bg_body_setting: 设置背景
+  remove: 清空
+  profile_save_bg_setting: 保存背景
+  profile_upload_image: 上传图片
+  profile_save_bg_suc: 背景保存成功
+  space_user_signs: 图片签名
+  space_user_signs_user: 用户
+  space_user_signs_sign: 签名
+  space_user_signs_signImage(): 签名
+  space_user_signs_userName(): 用户
+  spaceUserSigns_error_user_sign_exists: 用户签名已存在
+  skin: 主题
+  skin_setting: 设置主题
+  profile_save_skin_setting: 保存主题
+  profile_save_skin_suc: 主题保存成功
+  zoom: 字体
+  zoom_setting: 设置字体
+  zoom_title_normal: 标准
+  zoom_title_large: 大字体
+  zoom_title_extra_large: 超大字体
+  profile_save_zoom_setting: 保存字体
+  profile_save_zoom_suc: 字体保存成功
+  space_balance_insufficient: 租用即将到期，请及时充值以免影响正常使用
+  close: 关闭
+  billings_billing_date: 日期
+  billings_transaction: 交易说明
+  billings_user_count: 人数
+  billings_debits: 支出
+  billings_credits: 存入
+  billings_balance: 余额
+  billings: 账务
+  billings_transaction_i18n(): 交易说明
+  billing_tranDetail:
+    starting: 初始化账户
+    payment: 付款
+    workflow: 审批王专业版
+    chat: 享聊专业版
+    adjustment: 账单调整
+  spaces_edit: 编辑工作区
+  spaces_edit_help: 修改工作区名称、所有者及管理员。
+  spaces_new: 新建工作区
+  spaces_new_help: 一个工作区就是一个工作团队，可以邀请同事、工作伙伴加入工作区，然后一起协同办公。
+  spaces_new_swal_title: 请输入工作区名称
+  spaces_new_swal_help: 一个工作区就是一个工作团队，可以邀请同事、工作伙伴加入工作区，然后一起协同办公。
+  spaces_new_swal_success: 工作区创建成功
+  space_info: 工作区信息
+  Change username: 更改用户名
+  Change username successfully: 更改用户名成功
+  username-invalid: 用户名非法，仅使用汉字，字母，数字，点，连字符和下划线
+  username-unavailable: 此用户名已经被使用，请填写其他用户名
+  username-minrequiredlength: 用户名最小长度不能小于6位字符
+  afModal_insert: 保存
+  afModal_update: 保存
+  afModal_save_insert: 保存并新建
+  afModal_multiple_update: 更新 %d 个选定记录
+  afModal_remove: 删除
+  afModal_remove_confirm: 是否确定要删除本条数据？
+  afModal_remove_suc: 删除成功
+  afModal_update_suc: 更新成功
+  afModal_cancel: 取消
+  creator_record_remove_swal_title: 删除%s
+  creator_record_remove_swal_text: 是否确定要删除此%s？
+  creator_record_remove_many_swal_title: 批量删除%s
+  creator_record_remove_many_swal_text: 是否确定要删除这些选中的%s？
+  creator_record_remove_many_no_selection: 请先勾选要删除哪些记录！
+  creator_record_remove_swal_suc: 删除成功
+  creator_record_remove_swal_title_suc: '%s已删除'
+  creator_record_tab_detail: 详细
+  creator_record_tab_chatter: 留言
+  creator_record_chat: 留言
+  creator_record_chat_write: 写评论
+  creator_record_chat_send: 留言
+  creator_record_chat_upload: 添加文件
+  change_phone: 绑定手机号
+  set_password_by_phone: 重置密码
+  account_phone_invalid: 请先绑定手机号
+  back_admin_home: 返回
+  none_space_selected_title: 请选择工作区
+  account_phone_verified_text: 已验证
+  account_phone_unverified_text: 未验证
+  account_phone_unbind_text: 您的账户尚未绑定手机号，绑定手机号后，可以用手机短信登录、取回密码以及接收短信通知等。
+  space_users_user_accepted_yes: 是
+  space_users_user_accepted_no: 否
+  space_users_empty_phone: 空
+  'YES': 是
+  'NO': 否
+  username_unset_text: 您的账户尚未设置用户名，设置用户名后，可以使用用户名登录系统。
+  space_paid_info_title: 当前工作区版本不能使用此功能
+  space_paid_info_text: >-
+    请联络系统管理员<a href='https://www.steedos.com/cn/workflow/pricing/'
+    target='_blank'>升级版本</a>
+  login_title: 华炎办公平台
+  Steedos Home: 首页
+  description: 描述
+  warning_description: 请输入描述
+  delete_confirm: 确定删除吗?
+  get_secret_successfully: 新建成功
+  Secret: API Token
+  meteor_status_connected: 已连接
+  meteor_status_connecting: 连接中...
+  meteor_status_failed: 无法连接服务器
+  meteor_status_waiting: '等待连接,'
+  meteor_status_offline: 离线状态。
+  meteor_status_reconnect_in: "{$count}秒后重试..."
+  meteor_status_reconnect_in_plural: "{$count}秒后重试..."
+  meteor_status_try_now_waiting: 立即连接
+  meteor_status_try_now_offline: 重新连接
+  btn_back_title: 返回
+  space_users_remove_mail_subject: 您的帐户已被管理员从工作区中删除
+  space_users_remove_mail_content: "您好,<br/><br/>您的帐户\"{$steedos_id}\"已被管理员从工作区\"{$space_name}\"中删除。<br/><br/>谢谢！"
+  steedos_i18n_404_not_found: 很抱歉，您要访问的网页不存在
+  Steedos Records: 全文检索
+  Client download: 下载客户端
+  steedos_desktop_zone_info: 当前服务为美国区域，是否跳转到中国区域？
+  steedos_desktop_confirm: 确定
+  steedos_desktop_cancel: 取消
+  steedos_desktop_update_info: 当前客户端版本过旧，请下载安装最新客户端！
+  steedos_desktop_edit_office_info: 您正在编辑文档，请关闭后再打开新公文！
+  steedos_desktop_edit_warning: 当前文档已被管理员解锁，请重新编辑后上传！
+  billing:
+    upgrade: 升级
+    total_user_count: 总用户数
+    accepted_user_count: 已启用用户
+    paid_user_count: 已购买用户
+    paid_modules: 已购买应用
+    expire_date: 购买日期至
+    buy_modules: 购买应用
+    buy_user_count: 用户数
+    buy_additional_user_count: 购买额外用户数(非必填)
+    buy_date: 购买日期至
+    amount: 付款金额 ￥
+    has_paid: 支付成功
+    not_paid: 未支付
+    price: 单价
+  billing_pay_records: 订单
+  billing_pay_records_order_created(): 创建时间
+  billing_pay_records_modules: 模块
+  billing_pay_records_user_count: 名额
+  billing_pay_records_end_date: 租用日期至
+  billing_pay_records_order_total_fee(): 金额 ￥
+  billing_pay_records_order_paid(): 状态
+  loading_reload_button_title: 重新加载
+  apps_members: 授权对象
+  apps_members_users: 授权人员
+  apps_members_organizations: 授权部门
+  nw_menu_cut: 剪切
+  nw_menu_copy: 复制
+  nw_menu_paste: 粘贴
+  nw_menu_selectall: 全选
+  nw_menu_reload: 刷新
+  space_viewing_limits: 限制查看外部门
+  space_viewing_limits_tips: 被限制的部门，只能看到本部门的通讯录
+  space_viewing_limits_froms_label: 限制部门
+  space_viewing_limits_tos_label: 只允许查看本部门通讯录，并额外可见以下部门
+  space_viewing_limits_froms_required: 限制部门不能为空
+  pay_records: 购买记录
+  workflow_designer_use_pc: 请在PC端打开
+  customize_apps: 企业应用
+  space_users_error_roles_used: "已有角色指定该用户：{$names}"
+  space_users_error_flows_used: "已有流程指定该用户为处理人：{$names}"
+  space_users_error_can_not_remove: 不能删除用户
+  contact_need_phone_or_email: 手机和邮箱不能同时为空
+  organizations_error_is_company_false_in_root: 根部门“公司级”属性不能为否
+  organizations_error_parent_is_company_false_for_current_company: 公司级的部门的父部门必须也是公司级的部门
+  organizations_error_children_is_company_true_for_current_company: 部门的子部门中存在公司级的部门时，不能直接把该部门设置为非公司级
+  organizations_error_parent_is_not_found: 未找到父组织
+  organizations_error_root_parent_can_not_set: 不能修改根组织的父组织属性
+  organizations_error_space_admins_only_for_is_company: 只有工作区的管理员才能设置部门的公司级属性
+  creator_odata_api_not_found: 很抱歉，您要访问的资源不存在或者您没有权限访问该资源！
+  creator_odata_unexpected_character: 不支持的特殊字符
+  creator_odata_authentication: 您需要提供身份验证
+  creator_odata_user_privileges: 用户没有访问实体的权限
+  creator_list_no_actions_tip: 没有可做的操作
+  creator_list_view_permissions_lost: 您没有权限访问该视图
+  creator_report_drill_down_label: 下钻数据
+  creator_report_drill_down_total_label: 总
+  creator_report_dropdown_menu_options: 选项
+  creator_report_dropdown_menu_options_show: 显示
+  creator_report_dropdown_menu_options_grouping: 小计
+  creator_report_dropdown_menu_options_totaling: 总计
+  creator_report_dropdown_menu_options_counting: 记录计数
+  creator_report_dropdown_menu_export_excel: 导出为EXCEL
+  creator_report_dropdown_menu_export_pdf: 导出为PDF
+  creator_report_switch_chart_open: 切换图表
+  creator_report_design_mode: 设计模式
+  creator_report_filter_empty: 请在右侧设定报表筛选条件。
+  creator_report_caption_sum: 总和
+  creator_report_caption_count: 计数
+  creator_report_format_sum_count: 总计 (%s条记录)
+  creator_report_error_object_not_found: 未找到对象“%s”，请确认该报表指定的对象名是否正确
+  creator_report_error_object_field_not_found: "未找到对象“{$object_name}”的字段“{$field_name}”，请确认该报表中指定的字段名是否正确"
+  creator_report_error_max: "统计数据达{$count}条记录，已超出限制，以下统计结果基于前{$max}条记录"
+  creator_report_error_tabular_miss_fields: 表格类型报表至少需要填写”列“项
+  creator_report_error_summary_miss_fields: 摘要类型报表至少需要填写”列“项
+  creator_report_error_matrix_miss_fields: 矩阵类型报表至少需要填写”行“或”列“项
+  creator_report_error_stimulsoft_report_miss_fields: StimulsoftReport类型报表至少需要填写“字段”项
+  creator_report_error_jsreport_miss_fields: JsReport类型报表至少需要填写“字段”项
+  creator_listview_update: 列表视图已更新
+  creator_request_oversized: 请求文件太大了
+  creator_permission_share_miss: 请在授权组织或授权用户中至少填写一个值
+  no_force_phone: 不强制绑定手机号的用户
+  no_force_phone_tips: 除了不强制绑定手机号的用户外，都要求绑定手机号后才能进入系统
+  creator_odata_post_fail: 记录添加失败
+  creator_odata_record_query_fail: 未找到符合查询条件的记录
+  creator_odata_collection_query_fail: 未找到符合查询条件的集合
+  creator_odata_authentication_required: creator_odata_authentication_required
+  creator_odata_user_access_fail: 用户无访问该对象的权限
+  creator_odata_user_create_fail: 用户无创建该对象的权限
+  creator_odata_user_update_fail: 用户无更新该对象的权限
+  creator_odata_user_remove_fail: 用户无删除该对象的权限
+  Steedos Sogo: 华邮
+  sogo_mail_account: 邮件账户
+  downloading: 正在下载
+  download_progress: 进度
+  'True': 是
+  'False': 否
+  sms:
+    remind:
+      code: SMS_67200967
+      template: 催办通知：{$instance_name}，办结时限：{$deadline}。申请单：{$open_app_url}
+    notify_wenshu:
+      code: SMS_61725087
+      template: 您好，用户{$handler}在申请单{$instance}中填写的批阅意见为：{$description}。
+    chnage_mobile:
+      code: SMS_67660108
+      template: 通讯录中您的手机号已被修改为{$number}。
+    mobile_verification_code:
+      code: SMS_63370455
+      template: 您的验证码为：{$code}。如非本人操作，请忽略本短信。
+    change_password:
+      code: SMS_67200967
+      template: 系统通知：您的登录密码已被修改
+  standard_query: 查找
+  standard_query_more: 高级
+  app_admin_name: 设置
+  nw_top_button_history_back: 点击可后退
+  nw_top_button_history_forward: 点击可前进
+  nw_top_button_refresh: 重新加载此页面
+  menu_account: 个人设置
+  menu_account_background: 背景图
+  notifications__object: 通知
+  favorites__object: 我的收藏夹
+  duplicate_unique_key: 字段%s值不能重复
+  copy_success: 复制成功
+  copy_failed: 复制失败
+  System Settings: 系统设置
+  Language: 语言
+  Timezone: 时区
+  Company: 公司
+  Mobile: 手机
+  Old Password: 旧密码
+  Workflow: 审批
+  refresh: 刷新
+  creator_odata_creator_odata_authentication_required: 用户需提供身份认证
+  cms_home: 首页
+  cms_label_dashboard: 导航
+  cms_button_new: 发布
+  cms_button_edit: 编辑文章
+  cms_button_admin: 设置
+  cms_button_back: 返回
+  cms_button_remove: 删除文章
+  cms_sites_preview: 预览
+  cms_sites_edit: 编辑站点
+  cms_sites_remove: 删除站点
+  cms_sites_back: 返回
+  cms_post_error_remove_reads_fail: 删除文章阅读记录失败
+  cms_posts_error_no_object: 未找到当前对象：
+  cms_posts_none: 没有文章.
+  cms_posts_new: 新建文章
+  cms_categories_menu: 在菜单中显示
+  cms_categories_error_has_children: 该栏目下有子栏目，不能删除
+  cms_categories_error_has_posts: 该栏目下有文章，不能删除
+  cms_categories_new: 新建栏目
+  cms_categories_error_no_object: 未找到当前对象：
+  cms_sites_error_login_required: 请先登录
+  cms_sites_error_site_owner_only: 所有者才能进行修改
+  cms_sites_error_has_categories: 该站点下有栏目，不能删除
+  cms_sites_error_has_posts: 该站点下有文章，不能删除
+  cms_sites_visibility: 可见性
+  cms_sites_visibility_private: 私有（此站点不公开，只有站点成员可见。）
+  cms_sites_visibility_team: 工作区（此工作区的所有用户都可见，但只有站点成员可以编辑。）
+  cms_sites_visibility_public: 公开（发布到互联网，所有人都可见，但只有站点成员可以编辑。）
+  cms_welcome_title: 欢迎使用知识库应用
+  cms_welcome_body: >-
+    您可以在这里与同事快速分享各类信息，管理员可以维护信息分类。<br/>目前您还没有任何站点，可以点击<a href =
+    "javasxript:void(0)" class = "btn-new-site">这里</a>来新建一个站点。
+  cms_categories_edit: 编辑栏目
+  cms_categories_remove: 删除栏目
+  cms_categories_error_deny_set_self: 不能修改上级栏目为当前栏目自身
+  cms_post_error_remove_unreads_fail: 删除文章未读记录失败
+  cms_posts_visibility: 可见性
+  cms_posts_visibility_private: 私有（文章作者及发布对象可见，且只有作者或站点成员可以编辑。）
+  cms_posts_visibility_space: 工作区（此工作区的所有用户都可见，但只有作者或站点成员可以编辑。）
+  cms_error_login_required: 请先登录
+  cms_new_site: 新建站点
+  CMS_attachment_download: 下载
+  CMS_attachment_view: 查看
+  cms_site_empty_help: 没有文章
+  cms_home_mobile_top_title: 请选择站点
+  cms_sites_action_new_category_of_site: 新建栏目
+  cms_categories_action_new_sub_category_of_category: 新建子栏目
+  cms_error_required_members_value: 授权查看不能为空
+  cms_sites_is_needto_limit_unit: 文章只能发布到单位
+  mail_check_all: 全选
+  mail_delete: 删除
+  mail_refresh: 刷新
+  mail_page_forward: 前一页
+  mail_page_back: 后一页
+  mail_back: 返回
+  mail_alert_disposition_notification_checklabel: 需要回执
+  mail_alert_disposition_notification_title: 发件人希望得到您的回执，是否发送？
+  mail_alert_disposition_notification_yes: 发送
+  mail_alert_disposition_notification_no: 不发送
+  mail_alert_disposition_notification_subject: 对方已阅读：%s
+  mail_alert_disposition_notification_body: 对方已经阅读您在%s发给 %s &lt;%s&gt;，主题为%s的邮件。
+  steedos_emailjs_serach: 搜索邮件
+  steedos_emailjs_add_to_contacts: 添加至联系人
+  steedos_emailjs_compose: 写邮件
+  steedos_contacts_copy: 复制
+  steedos_contacts_close: 关闭
+  steedos_contacts_name: 姓名
+  steedos_contacts_email: 邮箱
+  steedos_contacts_position: 职务
+  steedos_contacts_mobile: 手机
+  steedos_contacts_work_phone: 固定电话
+  steedos_contacts_organizations: 所属部门
+  steedos_contacts_copy_successfully: 已成功拷贝到剪贴板！
+  steedos_contacts_copy_failed: 拷贝失败！
+  address_groups: 通讯录分组
+  address_groups_name: 组名
+  address_books: 通讯录人员
+  address_books_name: 姓名
+  address_books_email: 邮箱
+  address_books_group: 分组
+  address_books_group_name(): 分组
+  address_groups_error_address_group_has_address_books: 此分组中仍有联系人！
+  mail_removeto_success: 邮件成功转移至%s
+  contacts_organizations: 组织架构
+  contacts_personal_contacts: 个人联系人
+  steedos_contacts_invite_users: 邀请用户
+  steedos_contacts_add_users_btn: 添加用户
+  steedos_contacts_invite_users_success: 已发送邀请信息
+  steedos_contacts_invite_users_rule: '请输入邮件地址,多个邮件地址之间请用换行相隔'
+  steedos_contacts_invite_users_input: 请输入邮件地址，邀请用户
+  steedos_contacts_import_success: 联系人添加成功
+  steedos_contacts_users: 人员
+  steedos_contacts_import: 导入
+  steedos_contacts_import_contacts: 从组织架构中导入联系人
+  contacts_add: 添加
+  contacts_edit: 编辑
+  contacts_delete: 删除
+  steedos_contacts_move_suc: 移动用户成功
+  steedos_contacts_error_equal_move_reject: 不能移动到该人员当前所处组织
+  steedos_contacts_error_space_user_not_found: 该用户不存在
+  steedos_contacts_error_space_user_not_found_dragging: 操作异常，没有获取到被拖动的用户数据
+  steedos_contacts_error_contact_exists: 联系人已存在
+  steedos_contacts_export: 导出
+  address_books_mobile: 手机
+  address_books_company: 单位
+  steedos_contacts__books_export_error: 请选择联系人
+  steedos_contact_books_exprot_vcf_title: 导出vCard...
+  mail_subject_empty: '[无主题]'
+  contacts_organization_permission_alert: 您的账户与第三方系统自动同步，无法在Steedos中维护组织结构
+  emailjs_mail_refresh: 邮件服务器中断，请重新刷新！
+  mail_server_interrupte: 邮件服务器中断
+  emailjs_mail_cancel: 取消
+  invite_users_help: 'https://www.steedos.com/cn/help/workflow/admin_space_users.html'
+  steedos_contacts_import_users: 导入用户
+  steedos_contacts_import_users_note: 导入规则
+  steedos_contacts_import_users_note_detail: >-
+    <p>数据文件必须为Excel</p><p>1、部门必须为全路径（例如：上海华炎软件/研发部）。如果部门不存在，请先创建</p><p>2、导入用户如果不存在，则自动创建;
+    只有新建的用户支持设置密码</p><p>3、导入用户如果存在，并且已加入当前工作区，则修改用户信息。如果导入的属性为空，则不修改此属性值</p>
+  steedos_contacts_import_users_data_file_title: 数据文件(Excel)
+  steedos_contacts_import_users_download_simple_data_file: 下载导入模板
+  steedos_contacts_import_users_match_user_base_username: 根据用户名匹配用户
+  steedos_contacts_import_users_match_user_base_email: 根据邮箱匹配用户
+  steedos_contacts_import_users_match_user_base_mobile: 根据手机号匹配用户
+  steedos_contacts_import_users_preview: 数据预览
+  steedos_contacts_import_users_title: 导入
+  steedos_contacts_import_users_check: 数据校验
+  steedos_contacts_import_users_organization: 所属部门
+  steedos_contacts_import_users_username: 用户名
+  steedos_contacts_import_users_email: 邮箱
+  steedos_contacts_import_users_name: 姓名
+  steedos_contacts_import_users_position: 职务
+  steedos_contacts_import_users_work_phone: 固定电话
+  steedos_contacts_import_users_phone: 手机
+  steedos_contacts_import_users_user_accepted: 有效
+  steedos_contacts_import_users_sort_no: 排序号
+  steedos_contacts_import_users_password: 密码
+  steedos_contacts_import_users_file_error: 文件必须为excel
+  steedos_contacts_import_users_select_file: 请选择需要导入的文件
+  steedos_contacts_import_users_import_success: 导入已完成
+  steedos_contacts_import_users_check_success: 校验通过
+  btn_set_primary_title: 设为主部门
+  steedos_contacts_settings: 通讯录权限
+  steedos_contacts_settings_hidden_users: 隐藏的用户
+  steedos_contacts_settings_hidden_users_tips: 被隐藏的用户，不会显示在通讯录中
+  steedos_contacts_settings_hidden_users_edit: 编辑要隐藏的用户
+  steedos_contacts_mobile_edit_power: 需由用户自行修改手机号
+  users_organizations: 部门
+  contact_space_user_needed: 工作区管理员才能修改用户名
+  contact_invite_state: 受邀状态
+  contact_invite_pending: 待反馈
+  contact_invite_refused: 已拒绝
+  contact_needs_name: 请填写姓名
+  contact_needs_email: 请填写邮件
+  contact_needs_organizations: 请填写所属部门
+  contact_invitation_sends: 邀请通知已发送，请等待用户反馈
+  contact_invite_success: 已成功邀请该用户
+  contact_space_user_exist: 该用户已在该工作区
+  cantact_add_space_user: 添加成员
+  contact_save_user: 保存
+  contact_invite_info: __inviter__邀请您加入__space__
+  contact_mail_not_match_phine: 邮件和手机号不匹配
+  contact_reinvite_user: 已再次邀请该用户
+  search_contact: 搜索联系人
+  add_sub_department: 添加子部门
+  edit_department: 编辑
+  delete_department: 删除
+  edit_current_department: 编辑当前部门
+  contacts_tableau_modify_username: 更改用户名
+  contacts_tableau_modify_password: 更改密码
+  Change password successfully: 更改密码成功
+  Steedos Creator: 开发平台
+  Refresh: 刷新
+  Confirm: 确定
+  list_view_recent: 最近访问
+  list_view_all: 全部
+  list_view_mine: 我的
+  list_view_no_records: 没有可显示的项目。
+  please_select: 请选择
+  list_view: 列表视图
+  creator_list_item_counts: '%s个项目'
+  creator_list_new_list_view: 新建
+  creator_list_delete_list_view: 删除
+  creator_list_select_fields: 选择要显示的字段
+  creator_available_fields: 可利用字段
+  creator_visible_fields: 已显示字段
+  creator_list_filter: 筛选条件
+  creator_list_filter_cancel: 取消
+  creator_list_filter_save_as: 另存为
+  creator_list_filter_save: 保存
+  creator_list_filter_apply: 应用
+  creator_list_new_filter: 新建筛选条件
+  creator_list_add_filter: 添加筛选条件
+  creator_list_remove_all_filters: 清空
+  creator_list_matching_all_filters: 匹配所有筛选条件
+  creator_list_view_controls: 列表视图设置
+  creator_list_export_list_view: 导出Excel
+  creator_list_copy_list_view: 复制视图
+  reset_column_width: 重置列宽
+  creator_list_edit: 编辑视图
+  creator_filter_option_field: 字段
+  creator_filter_option_operation: 运算符
+  creator_filter_option_value: 值
+  creator_filter_option_start_value: 起始值
+  creator_filter_option_end_value: 结束值
+  creator_filter_option_start_end_error: 起始值不能大于结束值
+  creator_filter_option_done: 完成
+  creator_filter_operation_required_error: 请选择运算符
+  creator_filter_operation_equal: 等于
+  creator_filter_operation_unequal: 不等于
+  creator_filter_operation_less_than: 小于
+  creator_filter_operation_greater_than: 大于
+  creator_filter_operation_less_or_equal: 小于或等于
+  creator_filter_operation_greater_or_equal: 大于或等于
+  creator_filter_operation_contains: 包含
+  creator_filter_operation_does_not_contain: 不包含
+  creator_filter_operation_starts_with: 起始字符
+  creator_app_launcher: 应用程序启动器
+  creator_app_launcher_all_apps: 所有应用程序
+  creator_app_launcher_all_items: 所有项目
+  creator_filter_operation_between: 范围
+  creator_filter_operation_between_last_year: 去年
+  creator_filter_operation_between_this_year: 今年
+  creator_filter_operation_between_next_year: 明年
+  creator_filter_operation_between_today: 今天
+  creator_filter_operation_between_yestday: 昨天
+  creator_filter_operation_between_last_quarter: 上季度
+  creator_filter_operation_between_this_quarter: 本季度
+  creator_filter_operation_between_next_quarter: 下季度
+  creator_filter_operation_between_tomorrow: 明天
+  creator_filter_operation_between_this_week: 本周
+  creator_filter_operation_between_last_week: 上周
+  creator_filter_operation_between_next_week: 下周
+  creator_filter_operation_between_this_month: 本月
+  creator_filter_operation_between_last_month: 上月
+  creator_filter_operation_between_next_month: 下月
+  creator_filter_operation_between_last_7_days: 过去7天
+  creator_filter_operation_between_last_30_days: 过去30天
+  creator_filter_operation_between_last_60_days: 过去60天
+  creator_filter_operation_between_last_90_days: 过去90天
+  creator_filter_operation_between_last_120_days: 过去120天
+  creator_filter_operation_between_next_7_days: 未来7天
+  creator_filter_operation_between_next_30_days: 未来30天
+  creator_filter_operation_between_next_60_days: 未来60天
+  creator_filter_operation_between_next_90_days: 未来90天
+  creator_filter_operation_between_next_120_days: 未来120天
+  creator_filter_close_filter_panel: 关闭过滤面板
+  creator_header_search: 搜索 %s 和更多...
+  creator_header_search_recent_items: 最近项目
+  creator_view_related_objects: 相关
+  creator_view_details: 详细信息
+  creator_actions_upload_file: 上传
+  creator_home_apps: 华炎办公
+  creator_detail_info: 详细信息
+  creator_detail_related: 相关
+  creator_new: 新建
+  creator_change_view: 修改视图
+  creator_edit_list: 编辑列表
+  creator_refresh: 刷新
+  creator_charts: 图表
+  creator_filters: 过滤器
+  'true': 是
+  'false': 否
+  dashboard: 门户
+  follow: 关注
+  unfollow: 取消关注
+  following: 已关注
+  pending_space_invite_info: "{$inviter} 邀请您加入 {$space}"
+  creator_list_show_as: 显示为
+  creator_list_show_as_one_column: 列表
+  creator_list_show_as_two_columns: 列表 ｜ 记录
+  creator_list_show_as_three_columns: 菜单 ｜ 列表 ｜ 记录
+  creator_files_download_error_not_found: 未找到附件，可能该附件已被删除。
+  creator_navigation_nav_not_saved: 未添加到导航栏
+  creator_navigation_nav_more: 更多
+  creator_not_found_heading: 似乎出现了一个问题。
+  creator_not_found_message_body: 我们无法找到您尝试访问的记录。此记录可能已被其他用户删除，或您没有此记录的访问权限，也可能发生了系统错误。请向您的管理员寻求帮助。
+  creator_office_online_web_url_required: 请配置Office Online Web服务地址。
+  accounts: 单位
+  license_trial_day_left: 试用剩余天数
+  license_trial_subscribeNow: 升级企业版
+  license_trial_feedback: 技术支持
+  license_trial_guide: 快速向导
+  license_trial_header_swal_title: 已经创建授权？
+  license_trial_header_swal_cancelButtonText: 关闭
+  license_trial_header_swal_confirmButtonText: 确认
+  authorize: 授权
+  get_user_info: 获取您的账户信息
+  get_follow_permission: 将获得以下权限
+  users: 用户
+  users_steedos_id: Steedos ID
+  users_name: 姓名
+  users_username: 用户名
+  users_email: 邮件
+  users_company: 公司
+  users_position: 职务
+  users_work_phone: 固定电话
+  users_mobile: 手机
+  users_locale: 语言
+  users_timezone: 时区
+  users_emails: 邮件
+  users_createdAt: 创建日期
+  users_email_notification: 接收邮件通知
+  apps: 应用
+  apps_space: 工作区
+  apps_name: 名称
+  apps_description: 描述
+  apps_auth_name: 验证域名
+  apps_url: 链接
+  apps_on_click: 链接脚本
+  apps_is_use_ie: 使用IE打开(需使用Steedos桌面客户端)
+  apps_is_use_iframe: 使用iframe打开
+  apps_is_new_window: 新窗口打开
+  apps_iconURL: 图标链接
+  apps_icon: 图标
+  apps_space_sort: 排序号
+  apps_mobile: 在移动应用中显示
+  apps_desktop: 在桌面应用中显示
+  apps_menu: 在左侧菜单显示
+  apps_sort_no: 排序号
+  apps_secret: API 密钥
+  apps_internal: App内置
+  apps_sort: 排序
+  apps_id: ID
+  space: 工作区
+  spaces: 工作区
+  spaces_id: ID
+  spaces_name: 名称
+  spaces_admins: 管理员
+  spaces_owner: 所有者
+  spaces_balance: 账户余额
+  spaces_is_paid: 已付费
+  spaces_owner_name(): 所有者
+  spaces_admins_name(): 管理员
+  spaces_enable_register: 是否允许注册
+  spaces_apps_enabled: 启用应用
+  spaces_max_user_count: 最大用户数
+  spaces_is_deleted: 已删除
+  spaces_created: 创建时间
+  spaces_created_by: 创建者
+  spaces_modified: 修改时间
+  spaces_modified_by: 修改者
+  spaces_modules: 已购买应用
+  spaces_prefs: 首选项
+  spaces_avatar: Logo
+  organizations: 组织
+  organizations_id: ID
+  organizations_children: 下级组织
+  organizations_fullname: 组织全名
+  organizations_users: 组织成员
+  organizations_name: 组织名称
+  organizations_parent: 上级组织
+  organizations_space_name(): 工作区
+  organizations_users_count(): 人数
+  organizations_created: 创建时间
+  organizations_created_by: 创建者
+  organizations_is_company: 公司级
+  organizations_modified: 修改时间
+  organizations_modified_by: 修改者
+  organizations_parents: 所有上级组织
+  organizations_space: 所属工作区
+  organizations_sort_no: 排序号
+  organizations_hidden: 隐藏
+  organizations_admins: 组织管理员
+  space_users: 人员
+  space_users_id: ID
+  space_users_user: 用户ID
+  space_users_space_name(): 工作区
+  space_users_name: 姓名
+  space_users_email: 邮件
+  space_users_organization: 主部门
+  space_users_organizations: 所属部门
+  space_users_user_accepted: 有效
+  space_users_manager: 上级主管
+  space_users_organization_name(): 部门
+  space_users_space: 所属工作区
+  space_users_created: 创建时间
+  space_users_modified: 修改时间
+  space_users_created_by: 创建者
+  space_users_modified_by: 修改者
+  space_users_mobile: 手机
+  space_users_work_phone: 固定电话
+  space_users_company: 单位
+  space_users_position: 职务
+  space_users_managers: 所有上级主管
+  space_users_apps: Apps
+  space_users_sort_no: 排序号
+  users_changelogs_id: ID
+  users_changelogs_change_data: 修改日期
+  users_changelogs_operator: 操作者
+  users_changelogs_space: 工作区
+  users_changelogs_operation: 操作
+  users_changelogs_user_count: 用户数
+  users_changelogs_created: 创建时间
+  users_changelogs_user: 用户
+  users_changelogs_created_by: 创建者
+  organizations_error_space_required: 工作区必填
+  organizations_error_space_not_found: 未找到该工作区
+  organizations_error_space_admins_only: 您不是该工作区的管理员
+  organizations_error_users_readonly: 您无法修改部门成员
+  organizations_error_organizations_name_exists: 该部门名称已经存在
+  organizations_error_space_readonly: 无法修改工作区
+  organizations_error_parents_readonly: 无法修改上级部门
+  organizations_error_children_readonly: 无法修改下级部门
+  organizations_error_fullname_readonly: 无法修改部门全名
+  organizations_error_parent_is_self: 上级部门不能是自己
+  organizations_error_organization_has_children: 该部门已有下级部门
+  organizations_error_can_not_remove_root_organization: 您无法删除一级部门
+  organizations_error_organization_is_company: 根部门的名字无法修改
+  organizations_error_organization_name_required: 部门名称必填
+  organizations_error_organizations_parent_required: 请选择上级部门
+  organizations_error_space_admins_only_for_org_admins: 只有该工作区的管理员才能处理“组织管理员”
+  organizations_error_org_admins_only: 无权访问，只有组织机构管理员可以执行此操作。
+  organizations_error_organization_has_users: '部门内有人员,所以不能删除'
+  space_users_error_space_required: 工作区必填
+  space_users_error_space_not_found: 未找到该工作区
+  space_users_error_space_admins_only: 您不是该工作区的管理员
+  space_users_error_user_required: user必填
+  space_users_error_user_not_found: 未找到该用户
+  space_users_error_name_required: 用户名必填
+  space_users_error_user_exists: '用户已存在, 请使用邀请功能'
+  space_users_error_space_user_exists: 公司已有此用户
+  space_users_error_space_users_exists: 该用户已经存在
+  space_users_error_email_readonly: 用户邮箱不允许修改
+  space_users_error_space_readonly: 无法修改工作区
+  space_users_error_user_readonly: 无法修改用户
+  space_users_error_unaccepted_user_readonly: 该用户还未接受加入工作区，不能修改他的个人信息
+  space_users_error_email_required: 必须填写邮件
+  space_users_error_email_already_existed: 该邮箱已被占用
+  space_users_error_remove_space_owner: 不能删除工作区拥有者
+  space_users_error_phone_already_existed: 该手机号已被其他用户注册
+  space_users_error_not_change_contact_id: 不能修改联系人
+  space_users_aciton_invite_space_users_success: 企业邀请链接已复制到剪贴板，用户点击此链接可以快速加入企业。
+  space_users_aciton_invite_space_users_error: 团队邀请链接复制失败
+  spaces_error_login_required: login必填
+  spaces_error_space_owner_only: 管理员简档只允许工作区所有者修改
+  spaces_error_space_admins_required: 工作区所有者简档必须为管理员
+  spaces_error_space_readonly: 工作区无法修改
+  users_error_email_exists: 该邮件地址已存在
+  users_error_username_exists: 该用户名已存在
+  users_error_steedos_id_required: 登录账户为必填项
+  users_error_steedos_id_readonly: 登录账户无法修改
+  users_error_cloud_admin_required: 您无权删除该用户
+  users_email_create_account: 已为您创建华炎云账号
+  users_email_start_service: 请点击以下链接，填写相关信息。
+  users_email_verify_account: '您已注册华炎云账号,请点击以下链接进行验证。'
+  users_email_verify_email: 验证您的登录邮箱
+  users_email_reset_password: 重新设置您的密码
+  users_email_reset_password_body: "您的验证码为：{$token_code}\r\n请在密码重置界面输入上面的验证码，或点击以下链接，重新设置您的登录密码。"
+  users_email_hello: 您好
+  users_email_thanks: 谢谢！
+  tasks_js_addNotifications_notificationTitle: 为您分配了一个任务
+  events_js_addNotifications_notificationTitle: 为您安排了日程
+  wweb_forms_error_object_name_not_found: wweb_forms_error_object_name_not_found
+  web_forms_aciton_copyHtmlCode_success: 表单HTML已复制到剪贴板，复制到网页中即可实现在线填写表单。
+  web_forms_aciton_copyHtmlCode_error: 表单HTML复制失败。
+  web_forms_default_notification_body: 在线表单有一条新记录提交。
+  web_forms_select_option_none: '--无--'
+  object_fields_error_option_label_required: 选择项属性中每个选项的显示名不能为空。
+  object_fields_error_option_value_required: 选择项属性中每个选项的选项值不能为空。
+  object_fields_error_option_color_not_valid: 该字段选择项属性中定义了错误格式的选项颜色值，请输入正确的16进制颜色值，如ffffff。
+  picklist_options_error_color_not_valid: 选项背景色格式不对，请输入正确的16进制颜色代码，如#ffffff。
+  space_users_method_disable_success: 已成功停用该用户。
+  space_users_method_disable_error: 停用用户失败，%s
+  space_users_method_enable_success: 已成功启用该用户。
+  space_users_method_enable_error: 启用用户失败，%s
+  space_users_method_disable_enable_error_only_admin: 只有管理员可以启用/停用账户。
+  space_users_method_disable_enable_error_can_not_own: 无法启用/停用您自己的帐户。
+  space_users_method_disable_error_can_not_disable_disabled: 无法停用已停用的帐户。
+  space_users_method_enable_error_can_not_enable_enabled: 无法启用已启用的帐户。
+  reports_field_report_type_options_tabular: 表格
+  reports_field_report_type_options_summary: 摘要
+  reports_field_report_type_options_matrix: 矩阵
+  reports_field_report_type_options_jsreport: JsReport
+  reports_field_report_type_options_stimulsoft-report: StimulsoftReport
+  object_fields_error_formula_required: 字段类型为自动编号时，必须填写公式字段。
+  holidays_error_date_repeated: 此日期已存在。
+  business_hours_error_is_default_repeated: 默认工作时间只能有一个，要让当前工作时间生效，请先设置其它工作时间为非默认工作时间。
+  business_hours_error_start_format: '开始时间格式错误，请输入HH:MM这种格式的24小时制时间字符。'
+  business_hours_error_end_format: '结束时间格式错误，请输入HH:MM这种格式的24小时制时间字符。'
+  business_hours_error_start_lt_end: 结束时间值必须晚于开始时间。
+  business_hours_error_lunch_start_format: '午休开始时间格式错误，请输入HH:MM这种格式的24小时制时间字符。'
+  business_hours_error_lunch_end_format: '午休结束时间格式错误，请输入HH:MM这种格式的24小时制时间字符。'
+  business_hours_error_lunch_start_lt_lunch_end: 午休结束时间值必须晚于午休开始时间。
+  business_hours_error_lunch_start_end_overflow: 午休时间必须在工作时间范围内。
+  object_fields_function_recomputeFormulaValues_success: 已成功重算该公式字段值。
+  object_fields_function_recomputeFormulaValues_error: 未能成功重算该公式字段值，%s
+  object_fields_function_recomputeSummaryValues_success: 已成功重算该汇总字段值。
+  object_fields_function_recomputeSummaryValues_error: 未能成功重算该汇总字段值，%s
+  object_fields_error_summary_object_required: 字段类型为累计汇总时，必须填写要汇总的对象。
+  object_fields_error_summary_data_type_not_found: 未找到该累计汇总字段对应的数据类型。
+  object_fields_error_filter_item_invalid_number: '过滤条件设置有误, 数值类型字段值必须是一个有效的数值。'
+  object_fields_error_filter_item_invalid_date: >-
+    过滤条件设置有误, 日期、日期时间类型字段值必须是一个有效的日期值，请输入2020-01-01这种格式的字符表示日期，2020-01-01
+    12:00这种格式的字符表示日期时间。
+  object_fields_error_filter_item_invalid_boolean: >-
+    过滤条件设置有误,
+    复选框类型字段值无效，请输入'1/true/True/TRUE/真'表示真，或输入'0/false/False/FALSE/假'表示假。
+  object_fields_error_filter_item_field_required: '过滤条件设置有误, 字段不能为空。'
+  object_fields_error_filter_item_operation_required: '过滤条件设置有误, 运算符不能为空。'
+  object_fields_error_filter_item_value_required: '过滤条件设置有误, 值不能为空。'
+  organizations_error_can_not_set_checkbox_true: 不能设置管理员或拥有者为无效
+  space_users_error_remove_space_admins: 不能删除工作区管理员
+  web_forms_error_object_name_not_found: 关联对象未找到
+  space_users_method_unlock_success: 已成功解除锁定该用户。
+  space_users_method_unlock_error: 解除锁定用户失败，%s
+  space_users_method_lockout_success: 已成功锁定该用户。
+  space_users_method_lockout_error: 锁定用户失败，%s
+  space_users_method_unlock_lockout_error_only_admin: 只有管理员可以解除锁定/锁定账户。
+  is_enable: 已启用
+  objects: 对象
+  objects_name: 对象名
+  objects_label: 显示名称
+  objects_icon: 图标
+  objects_is_view: 视图
+  objects_is_enable: 已启用
+  objects_enable_search: 允许搜索
+  objects_enable_files: 允许上传附件
+  objects_enable_tasks: 允许添加任务
+  objects_enable_notes: 允许添加备注
+  objects_enable_events: 允许添加事件
+  objects_enable_chatter: 允许添加留言
+  objects_enable_audit: 记录字段历史
+  objects_enable_api: 允许 API 访问
+  objects_enable_share: 允许共享记录
+  objects_enable_instances: 允许查看申请单
+  objects_description: 描述
+  object_fields: 字段
+  object_fields_name: 字段名
+  object_fields_label: 显示名称
+  object_fields_object: 所属对象
+  object_fields_type: 字段类型
+  object_fields_group: 字段分组
+  object_fields_defaultValue: 默认值
+  object_fields_allowedValues: 允许的值
+  object_fields_multiple: 多选
+  object_fields_required: 必填
+  object_fields_is_wide: 宽字段
+  object_fields_readonly: 只读
+  object_fields_disabled: 禁用
+  object_fields_omit: 忽略
+  object_fields_index: 创建索引
+  object_fields_sortable: 可排序
+  object_fields_reference_to: 引用对象
+  object_fields_rows: 多行文本行数
+  object_fields_precision: 精度(数字长度)
+  object_fields_scale: 小数位数
+  object_fields_options: 选择项
+  object_fields_description: 描述
+  object_fields_searchable: 可搜索
+  object_triggers: 触发器
+  object_triggers_name: 名称
+  object_triggers_label: 显示名称
+  object_triggers_object: 所属对象
+  object_triggers_on: 运行于
+  object_triggers_when: 运行时
+  object_triggers_is_enable: 已启用
+  object_triggers_todo: 执行的脚本
+  object_actions: 操作按钮
+  object_actions_name: 名称
+  object_actions_label: 显示名称
+  object_actions_object: 所属对象
+  object_actions_is_enable: 已启用
+  object_actions_visible: visible
+  object_actions_on: 显示位置
+  object_actions_todo: 执行的脚本
+  view_object: 查看对象
+  object_validation_rules_wrong_formula: 公式错误，请检查错误条件公式。
+  simpleschema:
+    messages:
+      required: '必须填写[label]'
+      minString: '[label]最短[min]字符长'
+      maxString: '[label]不能超过[max]字符'
+      minNumber: '[label]至少是[min]'
+      maxNumber: '[label]不能超过[max]'
+      minNumberExclusive: '[label]必须大于[min]'
+      maxNumberExclusive: '[label]必须小于[max]'
+      minDate: '[label]必须在[min]时或之后'
+      maxDate: '[label]不能在[max]之后'
+      badDate: '[label]不是一个正确的日期'
+      minCount: '至少包含[minCount]项'
+      maxCount: '不能超过[maxCount]项'
+      noDecimal: '[label]必须是整数'
+      notAllowed: '[value]填写不正确'
+      expectedString: '[label]必须是字符串'
+      expectedNumber: '[label]必须是数字'
+      expectedBoolean: '[label]必须是是/否类型'
+      expectedArray: '[label]必须是一组值'
+      expectedObject: '[label]必须是一个对象'
+      expectedConstructor: '[label]必须是[type]'
+      keyNotInSchema: '[key]不符合结构规则'
+      notUnique: '[label]必须是唯一的'
+      regEx:
+        '0':
+          msg: '[label]正则校验失败'
+        '1':
+          exp: 'SimpleSchema.RegEx.Email'
+          msg: '[label]必须是合法的电邮地址'
+        '2':
+          exp: 'SimpleSchema.RegEx.WeakEmail'
+          msg: '[label]必须是合法的电邮地址'
+        '3':
+          exp: 'SimpleSchema.RegEx.Domain'
+          msg: '[label]必须是合法的域名'
+        '4':
+          exp: 'SimpleSchema.RegEx.WeakDomain'
+          msg: '[label]必须是合法的域名'
+        '5':
+          exp: 'SimpleSchema.RegEx.IP'
+          msg: '[label]必须是一个合法的 IPv4 或 IPv6 地址'
+        '6':
+          exp: 'SimpleSchema.RegEx.IPv4'
+          msg: '[label]必须是一个合法的 IPv4地址'
+        '7':
+          exp: 'SimpleSchema.RegEx.IPv6'
+          msg: '[label]必须是一个合法的 IPv6 地址'
+        '8':
+          exp: 'SimpleSchema.RegEx.Url'
+          msg: '[label]必须是一个合法的 URL'
+        '9':
+          exp: 'SimpleSchema.RegEx.Id'
+          msg: '[label]必须是一个数字序号'
+  steedos_tableau: 统计分析
+  steedos_tableau_workflow: 流程列表
+  steedos_tableau_info: Steedos Tableau
+  steedos_tableau_url_copy_success: Tableau Web 数据连接器已复制
+  steedos_tableau_introduction: Tableau 介绍
+  steedos_tableau_use: Tableau 使用
+  steedos_tableau_url_copy: Tableau Web 数据连接器
+  steedos_tableau_forward: 敬请期待
+  steedos_tableau_select_workflow: 选择流程
+  steedos_tableau_request_statistics: 申请单内容统计
+  steedos_tableau_workflow_request_statistic: 按流程统计申请单内容
+  steedos_tableau_copy_Link: 复制链接
+  steedos_tableau_organization_statistics: 按用户所属部门进行统计
+  steedos_tableau_efficiency_statistics: 审批效率统计
+  steedos_tableau_function: 此功能基于
+  steedos_tableau_statistics_analysis: 通过使用Tableau 客户端的Web 数据连接器，连接审批王数据接口，对审批数据进行统计分析
+  steedos_tableau_download: 下载Tableau public 客户端(免费)
+  steedos_tableau_button_copy_link: 点击下方Steedos Tableau Web 数据连接器的
+  steedos_tableau_get_link: 按钮获取链接
+  steedos_tableau_use_step: 打开Tableau客户端，点击新建 -> 连接到数据 -> Web 数据连接器，在打开的窗口中将复制的链接粘贴到地址栏
+  steedos_tableau_web_connect: Web 数据连接器
+  steedos_tableau_button_copy: 点击下方的
+  steedos_tableau_instance_link: 按钮，即可获取到已选定流程的数据链接
+  steedos_tableau_simple_introduction: >-
+    统计分析是基于Tableau软件所研发出的全新功能。您随时可以选择不同的流程，对申请单内容进行统计，统计得到的结果可以通过图表的形式，清晰直观的显示在您的面前。
+  steedos_tableau_function_introduction: 统计分析功能介绍
+  webapp_notifications: 通知
+  webapp_notifications_mark_all_as_read: 全部标记为已读
+  webapp_notifications_empty: 您现在没有任何通知。
+  webapp_notifications_new_after: 条新通知
+  webapp_notifications_new_before: 收到
+  webapp_notifications_new_no: 无新通知
+  webapp_favorites_edit: 编辑收藏夹
+  webapp_favorites_more: 收藏夹列表
+  webapp_favorites_action_not_support: 此项目不支持收藏夹
+  webapp_favorites_action_remove: 删除收藏夹
+  webapp_favorites_action_add: 添加收藏夹
+  webapp_header_profile_settings: 设置
+  webapp_header_profile_logout: 退出
+  webapp_dashboard_widgets_type_instances_pendings: 待审核文件
+  webapp_dashboard_widgets_type_apps: 应用
+  webapp_dashboard_widgets_type_announcements_week: 本周公告
+  webapp_dashboard_widgets_type_tasks_today: 今日任务
+  webapp_dashboard_widgets_type_events_today: 今日日程
+  webapp_dashboard_widgets_type_html: HTML
+  webapp_dashboard_widgets_position_center_top: 左上角
+  webapp_dashboard_widgets_position_center_bottom_left: 左下角左侧
+  webapp_dashboard_widgets_position_center_bottom_right: 左下角右侧
+  webapp_dashboard_widgets_position_center_right: 右边栏
+  webapp_dashboard_widgets_apps_tiles_section_label: 所有应用
+  webapp_dashboard_widgets_apps_links_section_label: 所有对象
+  webapp_dashboard_widgets_object_label: 对象名称
+  webapp_dashboard_widgets_object_all_link_label: 查看全部
+  webapp_dashboard_widgets_object_illustration_message_body: 没有可显示的项目。
+  webapp_dashboard_widgets_instances_pendings_label: 待审核文件
+  webapp_dashboard_widgets_instances_pendings_illustration_message_body: 您没有待审核文件。
+  webapp_dashboard_widgets_announcements_week_label: 本周公告
+  webapp_dashboard_widgets_announcements_week_illustration_message_body: 本周没有新公告。
+  webapp_dashboard_widgets_tasks_today_label: 今日任务
+  webapp_dashboard_widgets_tasks_today_illustration_message_body: 您今天没有待办任务。
+  webapp_dashboard_widgets_events_today_label: 今日日程
+  webapp_dashboard_widgets_events_today_illustration_message_body: 您今天没有日程。
+  inbox: 待审核
+  outbox: 已审核
+  draft: 草稿
+  pending: 进行中
+  completed: 已完成
+  monitor: 监控箱
+  FlowName: 名称
+  My Approval: 审核
+  My Applications: 我的申请单
+  steedos_desktop: 华炎云
+  menu_navigation: 导航
+  instance__object: 审批
+  form_new: 新建表单
+  instances: 审批
+  instances_name: 标题
+  instances_applicant_name: 提交人
+  instances_modified: 处理时间
+  instances_applicant_organization_name: 部门
+  instances_submit_date: 提交时间
+  instances_flow: 流程
+  instances_step_current_name: 当前步骤
+  instances_flow_name: 流程
+  instances_current_step_name: 当前步骤
+  instance_approve: 核准
+  instance_reject: 驳回
+  instance_readed: 已阅
+  instance_next_step: 下一步
+  instance_next_step_users: 处理人
+  instance_next_step_user_countersign: 会签节点下一步需要预先指定好处理人，请联系管理员
+  instance_initiator: 提交人
+  instance_approval_history: 签核历程
+  instance_in_progress: 处理中
+  instance_submit: 提交
+  instance_save: 保存
+  instance_delete: 删除
+  instance_attachment: 附件
+  instance_cancel: 取消申请
+  instance_reassign: 转签核
+  instance_relocate: 重定位
+  instance_print: 打印
+  flow_roles: 审批岗位
+  flow_roles_name: 岗位名称
+  flow_positions: 岗位成员
+  flow_positions_role: 岗位
+  flow_positions_org: 审批范围
+  flow_positions_users: 岗位成员
+  flow_positions_role_name(): 岗位
+  flow_positions_org_name(): 审批范围
+  flow_positions_users_name(): 岗位成员
+  workflow_table_confirm: 确认
+  workflow_table_delete: 删除
+  Attachment deleted successfully: 文件删除成功!
+  Attachment was added successfully: 文件添加成功!
+  Saved successfully: 申请单已暂存.
+  Added successfully: 创建成功!
+  Deleted successfully: 删除成功!
+  Submitted successfully: 提交成功!
+  Canceled successfully: 取消申请成功!
+  Reassigned successfully: Reassigned successfully
+  Relocated successfully: 重定位成功!
+  Attachments: 附件
+  Versions: 版本
+  Current Version: （最新版本）
+  workflow_attachment_free_size_limit: 抱歉，免费版工作区只能上传10M以内的文件。
+  workflow_attachment_paid_size_limit: 您上传的文件大小不得超过
+  workflow_attachment_download: 下载
+  workflow_attachment_view: 查看
+  workflow_attachment_isReadOnly: 只读-
+  workflow_attachment_versions: 历史版本
+  workflow_attachment_versions_upload: 上传新版本
+  workflow_attachment_uploading: '正在上传 '
+  workflow_attachment_downloading: 正在下载 %s...
+  workflow_attachment_creating: 正在新建word文档 %s...
+  workflow_attachment_officeOnline: 编辑
+  workflow_attachment_save: 保存
+  workflow_attachment_close: 关闭
+  workflow_attachment_delete: 删除
+  workflow_attachment_convert_to_pdf: 正在将 '%s' 转换为pdf格式文件...
+  workflow_attachment_wordToPdf: 转为pdf
+  workflow_attachment_wordToPdf_failed: 未转换成功，请重新尝试！
+  workflow_attachment_locked_tip: 您有文件正在编辑，请解锁后提交
+  Instance State approved: 已核准
+  Instance State rejected: 已驳回
+  Instance State terminated: 被取回
+  Instance State finished: 已完成
+  Instance State pending: 审核中
+  Instance State reassigned: 转签核
+  Instance State relocated: 重定位
+  Instance Relocate Hint: 请填写重定位的理由。
+  Instance Relocate Title: 重定位
+  Instance Relocate Reason: 请填写重定位的理由。
+  Instance Relocate NewInboxUsers: 请选择重定位审核人。
+  Instance Relocate Ok: 重定位提交成功。
+  Instance Relocate CurStep: '当前步骤: '
+  instance_reassign_title: 转签核
+  instance_reassign_curstep: '当前步骤: '
+  instance_reassign_reason: 请填写转签核的理由。
+  instance_reassign_ok: 转签核提交成功。
+  instance_reassign_user: 变更处理人
+  instance_cancel_title: 取消申请
+  instance_cancel_reason: 请填写取消申请的理由
+  instance_reassign_error_reason_required: 请填写转签核的理由。
+  instance_reassign_error_users_required: 请指定处理人。
+  instance_cancel_error_reason_required: 请填写取消申请的理由。
+  instance_select_next_step: 请选择下一步步骤
+  instance_multi_next_step_tips: 步骤选项有多个，请选择下一步步骤，并使用底部发送按钮提交文件
+  instance_next_step_user: 请选择下一步处理人
+  instance_reasons_reject: 驳回时必须填写意见
+  instance_field: 字段
+  instance_is_required: 为必填
+  instance_email_format_error: 邮件地址格式错误
+  node_office_edit_online: 在线编辑
+  node_office_message: 您正在使用在线编辑功能，编辑完成后请关闭Office软件。
+  node_office_warning: 文件已修改，请确认是否保存为新版本？
+  node_office_upload: '上传 '
+  node_office_confirm: 确定
+  node_office_cancel: 取消
+  node_office_uploaded: 文件已上传
+  node_office_filePath: 文件：
+  node_office_exists_message: 文件已存在，是否替换？
+  node_office_workflow: 审批王
+  node_pdf_error: pdf签章失败，请重新进行签章！
+  node_pdf_sign_online: 在线签章
+  node_pdf_message: 您正在使用在线签章功能。
+  node_pdf_filePath: 文件：
+  workflow_export_thismonth: 导出当月申请单
+  workflow_export_lastmonth: 导出上月申请单
+  workflow_export_thisyear: 导出当年申请单
+  workflow_export_all: 导出所有申请单
+  workflow_export_filter: 按流程过滤
+  workflow_export_search: 按流程查看申请单
+  workflow_export_data: 导出申请单
+  spaces_isarrearageSpace: 您的工作区已欠费
+  cc_help: 'https://www.steedos.com/help/workflow/instance_carboncopy'
+  relocate_help: >-
+    https://www.steedos.com/help/workflow/instance_monitor#%E9%87%8D%E5%AE%9A%E4%BD%8D
+  reassign_help: >-
+    https://www.steedos.com/help/workflow/instance_monitor#%E8%BD%AC%E7%AD%BE%E6%A0%B8
+  forward_help: 'https://www.steedos.com/help/workflow/instance_forward'
+  export_filter_help: 'https://www.steedos.com/help/workflow/instance_search'
+  new_help: 'https://www.steedos.com/help/workflow/instance_add'
+  Inbox Suggestion NextSteps Label: '下一步骤: '
+  Inbox Suggestion NextSteps Handler Label: '处理人: '
+  Workflow Designer: 流程设计器
+  User Management: 用户管理
+  All flows: 所有流程
+  Select a flow: 请点击流程分类选择相应流程
+  Fill in form: 填写表单
+  Flow upgraded: 流程已升级，请检查您填写的内容是否符合修改后的要求。
+  Are you sure?: 确认删除吗？
+  Select placeholder: 请选择
+  workflow_no_category: 未分类
+  flow_roles_error_positions_exists: 已有用户担任该角色
+  workflow_left_parenthesis: （
+  workflow_right_parenthesis: ）
+  instance_cc_description: 传阅说明
+  instance_cc_from: 传阅自
+  instance_cc_title: 传阅
+  instance_cc_done: 已传阅
+  instance_curstep: '当前步骤: '
+  instance_cc_user: 传阅对象
+  instance_cc_error_users_required: 请选择传阅对象。
+  workflow_form_edit: 流程列表
+  flows_template: 申请单模板
+  flows_name: 流程名称
+  flows_print_template: 打印模板
+  flows_instance_template: 表单模板
+  flows_description: 流程描述
+  workflow_attach_unlock: 解锁
+  workflow_attach_locked_by: '%s 正在编辑'
+  workflow_attach_confirm_delete: 确认删除
+  workflow_attach_confirm_delete_messages: 你确定删除'%s'吗？
+  workflow_attach_confirm: 删除
+  workflow_attach_cancel: 取消
+  workflow_attach_to_pdf: 转为pdf
+  workflow_attach_to_pdf_message: 是否将'%s'转为pdf格式文件？
+  workflow_attach_upload: 上传
+  workflow_attach_new: 新建
+  workflow_attachment_signature: 签章
+  workflow_select_an_app: 应用
+  workflow_suggestion_placeholder: 请填写意见。
+  workflow_draft_suggestion_placeholder: 请填写备注。
+  instance_opinion_title: 常用意见
+  instance_opinion_btn: 常用</br>意见
+  instance_opinion_input: 请输入常用意见
+  instance_opinion_add_success: 添加成功!
+  instance_opinion_remove_success: 移除成功!
+  instance_opinion_error: 出错了
+  instance_opinion_exists: 常用意见已存在
+  instance_opinion_add_tip: 您还没有设置常用意见。
+  instance_forward_title: 转发
+  form_field_checkbox_yes: 是
+  form_field_checkbox_no: 否
+  flows_events: 自定义脚本
+  flows_events_error: '自定义脚本错误: '
+  instance_search_advanced_search: 高级搜索
+  instance_search_flow: 流程
+  instance_search_name: 申请单标题
+  instance_search_file: 文件标题
+  instance_search_applicant_name: 提交人姓名
+  instance_search_applicant_organization_name: 提交人所属部门名称
+  instance_search_submit_date: 提交日期
+  instance_search_start: 起
+  instance_search_end: 至
+  instance_search_result_tip: 过滤的结果
+  instance_search_state: 申请单状态
+  instance_search_state_options:
+    pending: 流转中
+    completed: 已结束
+  instance:
+    formatter:
+      date:
+        simple_date: YYYY年MM月DD日
+        simple_datetime: YYYY年MM月DD日 HH:mm
+        export_date: YYYY-MM-DD
+        export_datetime: YYYY-MM-DD HH:mm
+      checkbox:
+        checked: 是
+        unchecked: 否
+    instance_view: "<br/><br/>申请单内容摘要如下:<br/>工作区 : {$space_name};<br/>提交 : {$applicant_name};<br/>提交日期
+      : {$submit_date};"
+    push:
+      final_decision_approved: 被核准，
+      final_decision_rejected: 被驳回，
+      final_decision_nil: ''
+      title:
+        first_submit_applicant: "{$from_username}"
+        first_submit_inbox: "{$from_username}"
+        submit_pending_rejected_applicant_inbox: "{$from_username}"
+        submit_pending_rejected_applicant: "{$from_username}"
+        submit_pending_rejected_approve: "{$from_username}"
+        submit_pending_rejected_inbox: "{$from_username}"
+        submit_pending_inbox: "{$from_username}"
+        submit_terminate_applicant: "{$from_username}"
+        submit_terminate_approve: "{$from_username}"
+        monitor_delete_applicant: "{$applicant_name}"
+        submit_completed_applicant: "{$applicant_name}"
+        submit_completed_approve: "{$from_username}"
+        approved_completed_applicant: "{$applicant_name}"
+        approved_completed_approve: "{$from_username}"
+        rejected_completed_applicant: "{$applicant_name}"
+        rejected_completed_approve: "{$from_username}"
+        reassign_new_inbox_users: "{$from_username}"
+        trace_approve_cc: "{$from_username}"
+        trace_approve_cc_submit: "{$from_username}"
+        auto_submit_pending_inbox: "{$from_username}"
+        return_pending_inbox: "{$from_username}"
+      body:
+        input: 确认
+        approval: 审批
+        first_submit_applicant: 请确认:我已代您提交了{$instance_name}
+        first_submit_inbox: "{$instance_name}"
+        submit_pending_rejected_applicant_inbox: 请修改:{$instance_name}
+        submit_pending_rejected_applicant: 您的{$instance_name}已驳回给{$nextApprove_usersname}
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: "{$instance_name}"
+        submit_pending_inbox: "{$instance_name}"
+        submit_terminate_applicant: "{$instance_name}被我取消申请了"
+        submit_terminate_approve: ''
+        monitor_delete_applicant: 您的{$instance_name}已被删除
+        submit_completed_applicant: 您的{$instance_name}已被确认
+        submit_completed_approve: ''
+        approved_completed_applicant: 您的{$instance_name}已被核准
+        approved_completed_approve: ''
+        rejected_completed_applicant: 您的{$instance_name}已被驳回
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: "{$instance_name}"
+        trace_approve_cc: "{$instance_name}"
+        remind: 催办通知：{$instance_name}，办结时限：{$deadline}。
+        trace_approve_cc_submit: 我已提交了传阅的申请单{$instance_name}
+        distribute_remind: 您分发的{$instance_name}申请单已结束。
+        auto_submit_pending_inbox: 您的申请单{$instance_name}处理已超时，现已自动发送至{$current_step_name}
+        return_pending_inbox: 您的{$instance_name}已被退回
+    email:
+      final_decision_approved: 被核准，
+      final_decision_rejected: 被驳回，
+      final_decision_nil: ''
+      inscribed: "<br/><br/>"
+      footnote: 这是由审批王自动发送的邮件, 请不要直接回复。
+      title:
+        input: 确认
+        approval: 审批
+        first_submit_applicant: "{$from_username}代您提交了{$instance_name}"
+        first_submit_inbox: 请{$approve_type}:{$instance_name}
+        submit_pending_rejected_applicant_inbox: 请修改:{$instance_name}
+        submit_pending_rejected_applicant: 您的{$instance_name}已驳回给{$nextApprove_usersname}
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: 请重新{$approve_type}:{$instance_name}
+        submit_pending_inbox: 请{$approve_type}:{$instance_name}
+        submit_terminate_applicant: "{$instance_name}被我取消申请了"
+        submit_terminate_approve: ''
+        monitor_delete_applicant: 删除了您的{$instance_name}
+        submit_completed_applicant: 确认了您的{$instance_name}
+        submit_completed_approve: ''
+        approved_completed_applicant: 核准了您的{$instance_name}
+        approved_completed_approve: ''
+        rejected_completed_applicant: 驳回了您的{$instance_name}
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: 请{$approve_type}:{$instance_name}
+        trace_approve_cc: 请{$approve_type}:{$instance_name}
+        auto_submit_pending_inbox: 您的{$instance_name}已超时自动流转
+        return_pending_inbox: 退回了您的{$instance_name}
+      body:
+        url_input: 查看并确认
+        url_approval: 进行审批
+        input: 确认
+        approval: 审批
+        judge_approved: 核准
+        judge_submitted: 确认
+        email_description: 驳回理由是:{$description} 。
+        first_submit_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>我已代您提交了{$instance_name}。<br/><a
+          href = {$href}>请点击查看</a>。"
+        first_submit_applicant_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>我已代您提交了{$instance_name}。<br/>备注是
+          : {$approves_description}<br/><a href = {$href}>请点击查看</a>。"
+        first_submit_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>{$applicant_name}提交了{$instance_name}。<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        first_submit_inbox_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>{$applicant_name}提交了{$instance_name}。<br/>备注是
+          : {$approves_description}<br/><a href = {$href}>请点击{$url_approve_type}</a>。"
+        submit_pending_rejected_applicant_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>您的申请单被{$lastApprove_usersname}驳回，请确认是否要修改。<br/>{$description}<br/><a
+          href = {$href}>请点击查看</a>。"
+        submit_pending_rejected_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}被{$lastApprove_usersname}驳回,
+          目前{$nextApprove_usersname}正在处理中。<br/>{$description} <br/><a href = {$href}>请点击查看</a>。"
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>请重新{$approve_type}
+          : {$applicant_name}的{$instance_name}, 此申请单被{$lastApprove_usersname}驳回。<br/>{$description}<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        submit_pending_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>请{$approve_type}
+          : {$applicant_name}的{$instance_name}。{$lastApprove_usersname}已{$last_approve_judge}此申请单。<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        submit_pending_inbox_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>请{$approve_type}
+          : {$applicant_name}的{$instance_name}。{$lastApprove_usersname}已{$last_approve_judge}此申请单。<br/>他/她的意见是
+          : {$approves_description}<br/><a href = {$href}>请点击{$url_approve_type}</a>。"
+        submit_pending_inbox_beApproveDescription_counterSign: "{$to_username}:<br/><br/>您好！<br/><br/>请{$approve_type}
+          : {$applicant_name}的{$instance_name}。{$lastApprove_usersname}已确认此申请单。<br/>他/她们的意见是
+          : <br/>"
+        submit_terminate_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}被取消申请。<br/>取消申请的理由是：{$description}。"
+        submit_terminate_approve: ''
+        monitor_delete_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被删除。"
+        submit_completed_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}确认,
+          完成审核。<br/><a href = {$href}>请点击查看</a>。"
+        submit_completed_applicant_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}确认,
+          完成审核。<br/>他/她的意见是 : {$approves_description}<br/><a href = {$href}>请点击查看</a>。"
+        submit_completed_applicant_beApproveDescription_counterSign: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}确认,
+          完成审核。<br/>他/她们的意见是 :<br/> "
+        submit_completed_approve: ''
+        approved_completed_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}核准,
+          完成审核。<br/><a href = {$href}>请点击查看</a>。"
+        approved_completed_applicant_beApproveDescription: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}核准,
+          完成审核。<br/>他/她的意见是 : {$approves_description}<br/><a href = {$href}>请点击查看</a>。"
+        approved_completed_approve: ''
+        rejected_completed_applicant: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}已被{$lastApprove_usersname}驳回。<br/>{$description}<br/><a
+          href = {$href}>请点击查看</a>。"
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: "{$to_username}:<br/><br/>您好！<br/><br/>{$current_user_name}将{$applicant_name}的{$instance_name}转发给您{$approve_type}。<br/>转发的理由是：{$description}<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        trace_approve_cc: "{$to_username}:<br/><br/>您好！<br/><br/>{$applicant_name}传阅了{$instance_name}。<br/><a
+          href = {$href}>请点击{$url_approve_type}</a>。"
+        auto_submit_pending_inbox: 您的申请单{$instance_name}处理已超时，现已自动发送至{$current_step_name}
+        return_pending_inbox: "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}被退回。<br/>退回的理由是：{$description}。"
+    sms:
+      submit_pending_inbox: 您有新的待审核：{$instance_name}，提交人：{$applicant_name}
+    remindMessage:
+      update_failed: 申请单状态已更新，您的操作未能执行。
+      has_deleted: 申请单已删除。
+    judge:
+      approved: 核准
+      rejected: 驳回
+  flow:
+    point_upgraded: 流程已升级，请检查您填写的内容是否符合修改后的要求。
+    print_select_template_alert: 只有专业版才有自定义模板功能，如有需要请升级到专业版或联系客服
+    print_select_title: 打印样式
+    print_default_print_title: 默认
+    print_custom_print_title: 自定义
+    print_button_title: 打印
+    print_html_title: 审批王
+    template_files: 模板
+  help:
+    href: "<a href = {$href}>请点击查看</a>。"
+    approves: 签核历程
+    initiator: '提交人 : '
+    attachment: 附件
+  export:
+    code: 编号
+    name: 名称
+    initiator: 提交人
+    initiator_org: 提交人所属部门
+    submit_date: 提交日期
+    status: 状态
+    current_step_name: 当前步骤
+    current_step_start_date: 当前步骤开始日期
+    state:
+      pending: 审核中
+      approved: 已核准
+      rejected: 已驳回
+      terminated: 被取回
+      finished: 已完成
+      reassigned: 转签核
+      inhand: 处理中
+      relocated: 重定位
+  steedos: 华炎云
+  cc: 传阅
+  saveInstanceToAttachment: 将原表单存储为附件
+  forwardFlowText: 备注
+  instanceForwardNote: 将当前选中的文件转发到新的流程，继续执行审批操作
+  button_preview: 预览
+  remove_cc_approve: 传阅删除成功
+  forward_instance_success: 文件转发成功
+  isForwardAttachments: 同时转发原表单附件
+  instance_retrieve: 取回
+  instance_retrieve_reason: 备注
+  instance_retrieve_rules_title: 无法取回
+  instance_retrieve_rules_content: 下一步处理人已读无法取回；会签节点无法取回。
+  Retrieved successfully: 取回成功!
+  Instance State retrieved: 取回
+  instance_chrome_print_warning: 请使用Chrome浏览器进行打印
+  instance_sign: 签批
+  instance_default_opinion: 已阅
+  instance_submit_date: 提交日期
+  instance_opinion_edit: 请修改常用意见
+  instance_opinion_edit_success: 修改成功
+  instance_opinion_field: 签批字段
+  instance_cc_error_opinion_field_required: 请选择签批字段
+  instance_suggestion_toggle: 签批
+  instance_approve_read: 已读
+  instance_approve_from_user_name_label: 传阅自
+  instance_approve_status_text_label: 操作
+  instance_approve_description_label: 处理意见
+  instance_approve_start_date_label: 开始时间
+  instance_approve_finish_date_label: 结束时间
+  instance_approve_read_yes: 是
+  instance_approve_read_no: 否
+  instance_approve_cc_remove: 取消传阅
+  instance_approve_close_modal: 关闭
+  instance_approve_title_label: 处理人：
+  instance_forward_users: 转发对象
+  instance_forward_error_users_required: 请选择对象!
+  instance_approve_from_user_name_label_forward: 转发自
+  instance_approve_forward_remove: 取消转发
+  instance_approve_forward_remove_success: 取消成功
+  instance_forward_instance_look: 查看转发后申请单
+  instance_forward_cannot_cancel: 不符合取消条件！
+  instance_forward_instance_state_changed: 申请单状态已更新，不能取消！
+  webhooks: Webhooks
+  webhooks_flow: 流程
+  webhooks_payload_url: URL
+  webhooks_content_type: 传输数据类型
+  webhooks_active: 激活
+  webhooks_flow_name(): 流程
+  webhooks_description: 描述
+  workflow_list: 流程列表
+  workflow_import_flow: 导入流程
+  workflow_import_flow_success: 导入成功
+  workflow_import_flow_error: 导入失败
+  workflow_import_flow_info: 请选择需要导入的流程
+  flows: 流程
+  instance_readonly_view_url_copy: 复制链接
+  instance_readonly_view_url_copy_success: Tableau Web 数据连接器已复制
+  instance_related_instances: 相关文件
+  instance_related_instances_title: 关联文件
+  instance_related_instances_placeholder: 请输入文件名称搜索关联文件
+  workflow_install_desktop: 安装客户端
+  workflow_chart: 流程图
+  instance_return: 退回
+  instance_return_success: 退回成功
+  instance_return_confirm: "确认退回至{$step_name}({$handlers_name})?"
+  Instance State returned: 已退回
+  instance_main_attachment: 正文
+  flows_field_map: 归档关系
+  Instance State readed: 已阅
+  instance_distribute_title: 分发
+  instance_distribute_users: 分发对象
+  instance_distribute_error_users_required: 请选择分发对象!
+  instance_distribute_approve_from_user_name_label: 分发自
+  instance_distribute_approve_remove: 取消分发
+  instance_distribute_instance_look: 查看分发后申请单
+  instance_distribute_note: 将当前选中的文件分发到新的流程，继续执行审批操作
+  instance_distribute_attachments: 同时分发原表单附件
+  instance_distribute_success: 文件分发成功
+  instance_no_add_permission: "{$actiontype}未成功。以下用户没有新建此申请单的权限：{$usernames}"
+  instance_workflow_chart_ie_warning: 暂不支持在IE中查看流程图，请在客户端软件或chrome上执行该操作。
+  instance_remind_title: 催办
+  instance_remind_select_users: 催办对象
+  instance_remind_count: 催办方式
+  instance_remind_deadline: 办结时限
+  instance_remind_success: 催办成功
+  instance_remind_need_remind_users: 缺少催办对象
+  instance_remind_need_remind_count: 缺少催办方式
+  instance_remind_need_remind_deadline: 缺少办结时限
+  instance_remind_count_options:
+    single: 单次提醒
+    multi: 多次提醒
+  instance_opinion_title_select: 其他常用意见
+  categories: 流程分类
+  categories_name: 名称
+  categories_sort_no: 排序号
+  not_found_user: 未找到处理人
+  next_step_users_not_found:
+    aplicant_superior: 申请人上级未配置，请联系管理员。
+    applicant_role: 您要找的「{$role_name}」还未配置，请联系管理员。
+    hr_role: 您要找的「{$role_name}」角色还未配置，请联系管理员。
+    field_value_empty: 获取处理人，请先填写「{$field_name}」。
+    org_no_members: 下一步需「{$org_name}」处理，请联系管理员。
+  instanc_admin_role_text: <a href='%s' target='_blank'>岗位中进行配置。</a>
+  instanc_user_role_text: 岗位中进行配置
+  instanc_set_applicant_role_text: 设置
+  instance_sign_read: 已阅
+  instance_sign_done: 已办
+  instance_sign_agree: 同意
+  instance_sign_period: 。
+  instance_cc_alert: 还需传阅给其他人员吗？
+  instance_cc_must_finished: "当前步骤被传阅人员：{$not_finished_users_name} 还未处理，故不能提交至下一步"
+  instance_number_rules: 流程编号规则
+  instance_number_rules_name: 名称
+  instance_number_rules_year: 年份
+  instance_number_rules_first_number: 起始序号
+  instance_number_rules_number: 序号
+  instance_number_rules_rules: 编号规则
+  instance_number_rules_number_builder_error_title: 文件编号生成失败
+  instance_number_rules_number_builder_error_not_exist: '流程编号规则不存在: '
+  ConfirmDeletion?: 确认删除?
+  instance_number_rules_name_only: 名称已存在
+  flows_btn_export_title: 导出流程
+  flows_btn_copylink_title: 复制链接
+  instance_distribute_related_instances_title: 自动创建关联文件
+  instance_next_step_users_placeholder: 请选择下一步处理人
+  instance_distribute_to_self: 同时分发给自己
+  my_instances: 我的文件
+  workflow_import_export_flows: 流程导入导出
+  workflow_history_approve_counts: 已显示%s条历史意见
+  workflow_history_approve_description: 历史意见
+  instances_start_date: 接收时间
+  instances_is_archived: 已归档
+  instances_archive: 归档
+  instances_archived: 已归档
+  instances_not_archived: 未归档
+  workflow_more_inbox: 更多待审核
+  instance_back: 返回
+  steedos_tableau_statistical_analysis: 统计分析
+  steedos_tableau_copy_link: 复制链接
+  tableau_introduction_modal_close: 关闭
+  ERROR: 错误
+  steedos_table_add_item: 新增一行
+  approved_description: 同意
+  rejected_description: 不同意
+  copy: 复制并新建
+  from: 来自
+  admin_flow_roles_create: 新建
+  flow_roles_delete_success: 删除成功
+  add_positions: 新增
+  save_role: 保存
+  delete_role: 删除
+  flow_roles_update_success: 更新成功
+  flow_roles_necessary: 请填写岗位名称
+  flow_positions_add_suceess: 添加成功
+  flow_positions_add_failed: 添加失败
+  flow_positions_update_suceess: 更新成功
+  flow_positions_update_failed: 更新失败
+  flow_positions_delete_suceess: 删除成功
+  instance_role_set_is_complete: 岗位设置完成？
+  instance_hr_role_set_is_complete: 角色设置完成？
+  instance_set_is_complete: 设置完成？
+  flow_roles_help: 帮助
+  set_org_members: 设置部门成员
+  set_applicant_manager: 设置申请人上级主管
+  instance_permissions_error: 您没有权限查看此申请单
+  star_flows: 星标流程
+  chart_traces: 图形化历程
+  cc_tag: （传阅中）
+  workflow_batch_approval: 批量核准
+  workflow_batch_approval_btn: 批量<br/>核准
+  workflow_batch_approval_processing: 处理中
+  workflow_batch_approval_message: 本次处理文件%s份
+  workflow_error_multiple_next_step_users: "「{$insname}」的下一步处理人有多个"
+  workflow_error_multiple_next_step: "「{$insname}」的下一步步骤有多个"
+  workflow_batch_instances_empty: 没有可批量审批的数据
+  workflow_sign_opinion_to_completed_instance: 此文件已结束，签署的意见不会显示在申请单上
+  workflow_copy_flow: 复制流程
+  workflow_copy_flow_text: 请填写新流程名称
+  workflow_copy_flow_success: 复制流程成功
+  workflow_copy_flow_error_reason_required: 请填写新流程名称
+  workflow_enabled: 启用
+  workflow_disabled: 停用
+  flows_state: 状态
+  flows_current_modified: 修改时间
+  flows_modified_by_name(): 修改者
+  flows_category_name(): 流程分类
+  flow_list_title_set_template: 设置模版
+  flow_list_title_set_script: 设置脚本
+  flow_list_title_set_fieldsMap: 设置归档关系
+  distribute_edit_flow_select_users: 流程被分发时分发对象选择范围
+  distribute_edit_flow_select_flows: 搜索此步骤可分发流程
+  flow_list_title_set_distribute: 设置分发
+  distribute_to_self: 分发时可分发给自己
+  distribute_end_notification: 分发结束后提醒发起人
+  instance_deleted: 已删除
+  workflow_flow_state_disabled: "此申请单对应流程\"{$name}\"已被禁用，如想正常修改及提交请联系管理员启用流程"
+  flow_roles_error_flows_used: "已有以下流程使用此角色：{$names}"
+  instance_approve_not_yet_handled: 未处理
+  instance_approve_distribute_date_label: 分发时间
+  flows_auto_remind: 自动催办
+  flows_upload_after_being_distributed: 被分发后是否允许上传附件
+  instances_my_finish_date: 处理时间
+  pager_input_hint: 点击输入页码，然后按回车可跳转到指定页
+  instance_hide_title: 隐藏
+  instance_hide_success: 隐藏成功
+  instance_reopen_title: 取消隐藏
+  instance_reopen_success: 取消隐藏成功
+  workflow_design_flow: 设计流程
+  process_delegation_rules: 流程委托
+  process_delegation_rules_from: 委托人
+  process_delegation_rules_to: 被委托人
+  process_delegation_rules_enabled: 启用
+  process_delegation_rules_start_time: 委托开始
+  process_delegation_rules_end_time: 委托结束
+  process_delegation_rules_from_name: 委托人
+  process_delegation_rules_to_name: 被委托人
+  process_delegation_rules_start_must_lt_end: 开始时间应小于结束时间
+  process_delegation_rules_description: "{$userName}委托"
+  process_delegation_rules_cannot_deltegation_eachother: 只允许单向委托， 请更换被委托人或者调整委托时间
+  instance_handler_name: 处理人
+  instance_handler_organization_fullname: 部门
+  instance_approve_timeout_auto_submitted: 超时自动跳过
+  categories_in_use: 分类在使用中，不能删除
+  process_delegation_rules_only_one: 您已设置委托规则，修改即可
+  instance_approve_modal_modificationsave: 您的修改保存成功
+  instance_print_traces_simplify: 精简
+  instance_print_a4_vertical: A4纵向
+  instance_print_a4_horizontal: A4横向
+  object_workflows_sync_history_instances_success: 同步完成
+  object_workflows_sync_history_instances_failed: 请处理以下同步失败申请单
+  workflow_attachment_office_online_preview: 预览
+  Reasigned successfully: 转签核成功!
+  instance_approve_modal_modification: 修改
+  instance_approve_modal_save: 保存
+  instance_approve_moda_back: 取消
+  edit: 编辑
+  flow_list: 流程列表
+  import_flow: 导入流程
+  import_flow_success: 导入成功
+  import_flow_error: 导入失败
+  import_flow_info: 请选择需要导入的流程
+  base_error_start_end_date: 开始时间必须小于结束时间

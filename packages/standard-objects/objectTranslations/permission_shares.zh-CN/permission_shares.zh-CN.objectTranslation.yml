@@ -1,0 +1,27 @@
+name: permission_shares
+label: 共享规则
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  filters:
+    label: 过滤条件
+    help: 格式为odata filters
+    description: 
+  organizations:
+    label: 授权组织
+    help: 
+    description: 
+  users:
+    label: 授权用户
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部

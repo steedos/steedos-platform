@@ -1,0 +1,46 @@
+name: object_webhooks
+label: Object Webhook
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  events:
+    label: Events
+    help: 
+    options:
+      - label: create
+        value: create
+      - label: update
+        value: update
+      - label: delete
+        value: delete
+    description: 
+  fields:
+    label: Fields
+    help: 
+    description: 
+  payload_url:
+    label: Payload URL
+    help: 
+    description: 
+  content_type:
+    label: Format of Request
+    help: 
+    description: 
+  active:
+    label: Active
+    help: 
+    description: 
+  space:
+    label: Company
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Object Webhooks

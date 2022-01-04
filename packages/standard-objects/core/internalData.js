@@ -2,7 +2,11 @@ const objectql = require("@steedos/objectql");
 const steedosI18n = require("@steedos/i18n");
 const odataMongodb = require("odata-v4-mongodb");
 const clone = require("clone");
-
+const auth = require("@steedos/auth");
+const getLng = async function(userId){
+    const userSession = await auth.getSessionByUserId(userId);
+    return userSession ? userSession.language : null;
+}
 const permissions = {
     allowEdit: false,
     allowDelete: false,
@@ -26,17 +30,50 @@ function parserFilters(filters){
         filters = odataMongodb.createFilter(filters)
     }
     let query = {};
-    if(_.isArray(filters)){
+    if(_.isArray(filters) && filters.length > 0 && _.isArray(filters[0])){
         _.each(filters,function(filter){
             Object.assign(query, parserFilters(filter))
         })
+    }else if(_.isArray(filters) && filters.length > 0){
+        if(filters[1] && filters[1] == '='){
+            let key = filters[0]
+            let value = filters[2]
+            Object.assign(query, {[key]: value})
+        }else if(filters[1] && (filters[1] == '!=' || filters[1] == '<>')){
+            let key = filters[0]
+            let value = filters[2]
+            Object.assign(query, {[key]: {$ne: value}})
+        }else if(filters[1] && filters[1] == 'in'){
+            let key = filters[0]
+            let value = filters[2]
+            Object.assign(query, {[key]: {$in: value}})
+        }else{
+            _.each(filters,function(filter){
+                let parsedFilters = parserFilters(filter);
+                if(query._id && query._id.$ne && parsedFilters._id && parsedFilters._id.$ne){
+                    parsedFilters._id.$ne = [parsedFilters._id.$ne]
+                    parsedFilters._id.$ne = parsedFilters._id.$ne.concat(query._id.$ne);
+                    delete query._id;
+                }
+                Object.assign(query, parsedFilters)
+            })
+        }
     }else{
         _.each(filters, function (v, k) {
-            if (k === '$and') {
+            if(_.isArray(v) && v.length > 0){
                 Object.assign(query, parserFilters(v))
-            } else {
-                Object.assign(query, {[k]: v})
+            }else{
+                if (k === '$and') {
+                    Object.assign(query, parserFilters(v))
+                } else {
+                    if(_.isArray(filters) && _.isObject(v)){
+                        Object.assign(query, v)
+                    }else{
+                        Object.assign(query, {[k]: v})
+                    }
+                }
             }
+            
         })
     }
     return query;
@@ -44,36 +81,32 @@ function parserFilters(filters){
 
 exports.parserFilters = parserFilters
 
-const getLng = function(userId){
-    return Steedos.locale(userId, true);
-}
-
-function getObjects(userId){
+async function getObjects(userId){
     let objects = {};
-    let lng = getLng(userId)
-    _.each(Creator.steedosSchema.getDataSources(), function(datasource, name) {
-        var datasourceObjects = datasource.getObjects();
-          _.each(datasourceObjects, function(v, k) {
-            var _obj = clone(v.toConfig());
-            if(!_obj._id && !_obj.hidden &&  !_.include(hiddenObjects, k)){
-                _obj._id = k;
-                _obj.name = k;
-                _obj.datasource = name;
-                _obj.fields = {}
-                _.each(getObjectFields(k, userId), function(_f){
-                    _obj.fields[_f.name] = _f;
-                });
-                delete _obj.actions
-                delete _obj.triggers
-                delete _obj.list_views
-                delete _obj.permission_set
-                if(_obj.enable_inline_edit !== false){
-                    // 默认值配置为true
-                    _obj.enable_inline_edit = true;
-                }
-                objects[_obj.name] = Object.assign({}, _obj, objectBaseFields)
+    let lng = await getLng(userId)
+    let allObjectConfigs = await objectql.getSteedosSchema().getAllObject();
+    _.each(allObjectConfigs, function(objectConfig) {
+        var _obj = clone(objectConfig.metadata);
+        var k = _obj.name;
+        if(!_obj._id && !_obj.hidden &&  !_.include(hiddenObjects, k)){
+            _obj._id = k;
+            _obj.name = k;
+            // _obj.datasource = name;
+            _obj.fields = {}
+            // TODO 测试字段是否齐全
+            // _.each(getObjectFields(k, userId), function(_f){
+            //     _obj.fields[_f.name] = _f;
+            // });
+            delete _obj.actions
+            delete _obj.triggers
+            delete _obj.list_views
+            delete _obj.permission_set
+            if(_obj.enable_inline_edit !== false){
+                // 默认值配置为true
+                _obj.enable_inline_edit = true;
             }
-          });
+            objects[_obj.name] = Object.assign({}, _obj, objectBaseFields)
+        }
       });
       steedosI18n.translationObjects(lng, objects)
       return _.values(objects);
@@ -81,14 +114,24 @@ function getObjects(userId){
 
 exports.getObjects = getObjects
 
-exports.findObjects = function(userId, filters){
+exports.findObjects = async function(userId, filters){
     let query = parserFilters(filters);
     let isSystem = query.is_system;
     let datasource = query.datasource;
-    let objects = getObjects(userId);
+    let name = query.name;
+    let _id = query._id;
+    let objects = await getObjects(userId);
 
     if(datasource){
         objects = _.filter(objects, function(obj){ return obj.datasource === datasource})
+    }
+
+    if(name){
+        objects = _.filter(objects, function(obj){ return obj.name === name})
+    }
+
+    if(_id){
+        objects = _.filter(objects, function(obj){ return obj._id === _id})
     }
 
     if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
@@ -101,13 +144,14 @@ exports.findObjects = function(userId, filters){
         return objects;
     }
 }
-function getObject(id, userId){
+async function getObject(id, userId){
     try {
-        let lng = getLng(userId);
-        let _object = objectql.getObject(id)
-        let object = clone(_object.toConfig());
+        let lng = await getLng(userId);
+        let _object = objectql.getObject(id);
+        let objectConfig = await _object.toConfig();
+        let object = clone(objectConfig);
         object._id = object.name;
-        object.datasource = _object.datasource.name;
+        object.datasource = objectConfig.datasource;
         steedosI18n.translationObject(lng, object.name, object)
         if(object.enable_inline_edit !== false){
             // 默认值配置为true
@@ -115,20 +159,21 @@ function getObject(id, userId){
         }
         return Object.assign({}, object, objectBaseFields);
     } catch (error) {
+        console.log(`error`, error)
         return null;
     }
 }
 exports.getObject = getObject
 
 function getOriginalObjectFields(objectName){
-    return objectql.getOriginalObjectConfig(objectName).fields
+    return objectql.getOriginalObjectConfig(objectName).fields || {}
 }
 
-function getObjectFields(objectName, userId){
-    let object = getObject(objectName, userId);
+async function getObjectFields(objectName, userId){
+    let object = await getObject(objectName, userId);
     if(object){
         let fields = [];
-        let originalFieldsName = ['created_by', 'modified_by'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified', 'owner'
+        let originalFieldsName = ['owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids','instance_state'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified', 'owner'
         _.each(object.fields, function(field){
             if(!field._id && _.include(originalFieldsName, field.name)){
                 fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
@@ -139,15 +184,15 @@ function getObjectFields(objectName, userId){
 }
 exports.getObjectFields = getObjectFields
 
-exports.getDefaultSysFields = function(object, userId){
-    if(object && (!object.datasource || object.datasource === 'default')){
-        let baseObject = getObject('base', userId)
-        return _.pick(baseObject.fields, 'created_by', 'modified_by');
+exports.getDefaultSysFields = async function(object, userId){
+    if(object && (!object.datasource || object.datasource === 'default' || object.datasource === 'meteor')){
+        let baseObject = await getObject('base', userId)
+        return _.pick(baseObject.fields, 'owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids','instance_state');
     }
 }
 
-exports.getObjectField = function(objectName, userId, fieldId){
-    let fields = getObjectFields(objectName, userId);
+exports.getObjectField = async function(objectName, userId, fieldId){
+    let fields = await getObjectFields(objectName, userId);
     return _.find(fields, function(field){ return field._id === fieldId})
 }
 
@@ -155,8 +200,8 @@ function getOriginalObjectActions(objectName){
     return objectql.getOriginalObjectConfig(objectName).actions || {}
 }
 
-function getObjectActions(objectName, userId){
-    let object = getObject(objectName, userId);
+async function getObjectActions(objectName, userId){
+    let object = await getObject(objectName, userId);
     if(object){
         let actions = [];
         let originalActions = _.keys(getOriginalObjectActions(objectName))
@@ -170,8 +215,22 @@ function getObjectActions(objectName, userId){
 }
 exports.getObjectActions = getObjectActions
 
-exports.getObjectAction = function(objectName, userId, id){
-    let actions = getObjectActions(objectName, userId);
+exports.getObjectLayouts = async function(objectApiName, spaceId){
+    const layouts = await objectql.getObjectLayouts(null, spaceId, objectApiName);
+    const _layouts = []
+    _.each(layouts, function(layout){
+        _layouts.push(Object.assign({}, layout, objectBaseFields))
+    })
+    return _layouts;
+}
+
+exports.getObjectLayout = async function(objectLayoutFullName){
+    const layout = await objectql.getObjectLayout(objectLayoutFullName);
+    return Object.assign({},{_id: `${layout.object_name}.${layout.name}`}, layout, objectBaseFields);
+}
+
+exports.getObjectAction = async function(objectName, userId, id){
+    let actions = await getObjectActions(objectName, userId);
     return _.find(actions, function(action){ return action._id === id})
 }
 
@@ -194,15 +253,15 @@ function getTriggerWhen(when){
     }
 }
 
-function getObjectTriggers(objectName, userId){
-    let object = getObject(objectName, userId);
+async function getObjectTriggers(objectName, userId){
+    let object = await getObject(objectName, userId);
     if(object){
         let baseTriggers, baseTriggersKey=[];
         if(objectName != 'base' && objectName != 'core'){
             if(object.datasource === 'default'){
-                baseTriggers = getObjectTriggers('base', userId);
+                baseTriggers = await getObjectTriggers('base', userId);
             }else{
-                baseTriggers = getObjectTriggers('core', userId);
+                baseTriggers = await getObjectTriggers('core', userId);
             }
             if(baseTriggers){
                 baseTriggersKey = _.pluck(baseTriggers, 'name');
@@ -229,19 +288,19 @@ function getObjectTriggers(objectName, userId){
 }
 exports.getObjectTriggers = getObjectTriggers
 
-exports.getObjectTrigger = function(objectName, userId, id){
-    let triggers = getObjectTriggers(objectName, userId);
+exports.getObjectTrigger = async function(objectName, userId, id){
+    let triggers = await getObjectTriggers(objectName, userId);
     return _.find(triggers, function(trigger){ return trigger._id === id})
 }
 
-function getObjectListViews(objectName, userId){
-    let object = getObject(objectName, userId);
+async function getObjectListViews(objectName, userId){
+    let object = await getObject(objectName, userId);
     if(object){
         let listViews = [];
         _.each(object.list_views, function(listView, _name){
             if(!listView._id || listView._id === _name){
                 let name = listView.name || _name
-                listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`, name: name, object_name: objectName, is_enable: true, record_permissions: permissions}))
+                listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`,is_system: true, name: name, object_name: objectName, is_enable: true, record_permissions: permissions}))
             }
         })
         return listViews
@@ -292,7 +351,7 @@ function formatListView(listView){
 
 exports.getObjectListViews = getObjectListViews
 
-exports.getObjectListView = function(objectName, userId, id){
-    let listViews = getObjectListViews(objectName, userId);
+exports.getObjectListView = async function(objectName, userId, id){
+    let listViews = await getObjectListViews(objectName, userId);
     return formatListView(_.find(listViews, function(listView){ return listView._id === id}))
 }

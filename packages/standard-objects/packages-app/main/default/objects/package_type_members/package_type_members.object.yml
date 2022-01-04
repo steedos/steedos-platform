@@ -1,0 +1,27 @@
+name: package_type_members
+custom: true
+hidden: true
+enable_api: true
+enable_audit: false
+enable_chatter: false
+enable_events: false
+enable_files: false
+enable_inline_edit: false
+enable_instances: false
+enable_notes: false
+enable_search: false
+enable_share: false
+enable_tasks: false
+enable_workflow: false
+paging:
+  enabled: false
+icon: entity
+is_enable: true
+label: 软件包组件
+form:
+  beforeEdit: !!js/function |
+    function(){
+      Meteor.setTimeout(function(){$(".creator-modal .slds-modal__content form").children(':first').children(':first').hide();}, 300);
+      $(".creator-modal .slds-modal__content").css('min-height', '460px');
+      return false;
+    }

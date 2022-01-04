@@ -1,0 +1,15 @@
+name: recent
+columns:
+  - field: name
+  - field: publisher
+  - field: version
+  - field: namespace
+  - field: installed
+  - field: apps
+  - field: objects
+filter_scope: space
+filters: []
+label: 最近查看
+scrolling_mode: standard
+shared: true
+type: grid

@@ -1,0 +1,21 @@
+datasources:
+  default:
+    connection:
+      url: ${MONGO_URL}
+    objectFiles:
+      - "./lib/**"
+    appFiles:
+      - "./src/**"
+public:
+  cfs:
+    store: "local"
+    local: 
+      folder: "./storage"
+plugins:
+  - "@steedos/accounts"
+  - "@steedos/plugin-enterprise"
+tenant:
+  enable_register: true
+  enable_forget_password: false
+  saas: false
+  enable_password_login: true

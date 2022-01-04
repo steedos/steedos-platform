@@ -24,6 +24,7 @@ export const approve = async (req: Request, res: express.Response) => {
         }
         throw new SteedosError("process_approval_error_NoApproval");
     } catch (error) {
+        console.log(error);
         return sendError(res, error, 200);
     }
 }

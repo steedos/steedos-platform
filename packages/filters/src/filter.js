@@ -80,7 +80,7 @@ const DevExpressOData = {
         //     return value.valueOf();
         // }
         if (Array.isArray(value)) {
-            return "[" + value.map(function (item) {
+            return "[" + value.map((item)=>{
                 return this.serializeValueV4(item);
             }).join(",") + "]";
         }

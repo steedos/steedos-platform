@@ -36,10 +36,75 @@ Steedos =
 # Kick off the global namespace for Steedos.
 # @namespace Steedos
 ###
+# if Meteor.isCordova
+if Meteor.isCordova || Meteor.isClient
+	rootUrl = Meteor.absoluteUrl.defaultOptions.rootUrl
+	if rootUrl.endsWith('/')
+		rootUrl = rootUrl.substr(0, rootUrl.length - 1)
+
+	window.stores?.API?.client?.setUrl = rootUrl
+	window.stores?.Settings?.setRootUrl(rootUrl)
+	window['steedos.setting'] = {
+		rootUrl: rootUrl
+	}
+
+if !Meteor.isCordova && Meteor.isClient
+	# 配置是否新窗口打开的全局变量
+	Meteor.startup ()->
+		window.stores?.Settings?.setHrefPopup(Meteor.settings.public?.ui?.href_popup)
+
+if Meteor.isClient
+	Meteor.autorun ()->
+		window.stores?.Settings?.setUserId(Steedos.userId())
+		window.stores?.Settings?.setTenantId(Steedos.spaceId())
 
 Steedos.getHelpUrl = (locale)->
 	country = locale.substring(3)
 	return "http://www.steedos.com/" + country + "/help/"
+
+Steedos.isExpression = (func) ->
+	if typeof func != 'string'
+		return false
+	pattern = /^{{(.+)}}$/
+	reg1 = /^{{(function.+)}}$/
+	reg2 = /^{{(.+=>.+)}}$/
+	if typeof func == 'string' and func.match(pattern) and !func.match(reg1) and !func.match(reg2)
+		return true
+	false
+
+Steedos.parseSingleExpression = (func, formData, dataPath, global) ->
+	getParentPath = (path) ->
+		if typeof path == 'string'
+			pathArr = path.split('.')
+			if pathArr.length == 1
+				return '#'
+			pathArr.pop()
+			return pathArr.join('.')
+		return '#'
+	getValueByPath = (formData, path) ->
+		if path == '#' or !path
+			return formData or {}
+		else if typeof path == 'string'
+			return _.get(formData, path)
+		else
+			console.error 'path has to be a string'
+		return
+	if formData == undefined
+		formData = {}
+	parentPath = getParentPath(dataPath)
+	parent = getValueByPath(formData, parentPath) or {}
+	if typeof func == 'string'
+		funcBody = func.substring(2, func.length - 2)
+		globalTag = '__G_L_O_B_A_L__'
+		str = '\n    return ' + funcBody.replace(/\bformData\b/g, JSON.stringify(formData).replace(/\bglobal\b/g, globalTag)).replace(/\bglobal\b/g, JSON.stringify(global)).replace(new RegExp('\\b' + globalTag + '\\b', 'g'), 'global').replace(/rootValue/g, JSON.stringify(parent))
+		try
+			return Function(str)()
+		catch error
+			console.log error, func, dataPath
+			return func
+	else
+		return func
+	return
 
 if Meteor.isClient
 
@@ -900,3 +965,19 @@ if Meteor.isClient
 			return Session.get('app_id')
 		else
 			return sessionStorage.getItem('current_app_id');
+
+if Meteor.isServer
+	Steedos.formatIndex = (array) ->
+		object = {
+        	background: true
+    	};
+		isdocumentDB = Meteor.settings?.datasources?.default?.documentDB || false;
+		if isdocumentDB
+			if array.length > 0
+				indexName = array.join(".");
+				object.name = indexName;
+				
+				if (indexName.length > 52)
+					object.name = indexName.substring(0,52);
+
+		return object;

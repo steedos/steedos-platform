@@ -1,0 +1,55 @@
+name: object_actions
+label: Object Action
+description: 
+fields:
+  object:
+    label: Object
+    help: 
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  name:
+    label: API Name
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
+    description: 
+  is_enable:
+    label: Enable
+    help: 
+    description: 
+  visible:
+    label: Visible
+    help: 
+    description: 
+  'on':
+    label: 'On'
+    help: 
+    description: 
+  type: 
+    label: Type
+    options:
+      - label: Custom JavaScript
+        value: script
+      - label: Print Word Template
+        value: word-print
+    defaultValue: script
+  word_template:
+    label: Word Template
+  todo:
+    label: Execute Script
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+CustomLabels:
+  _object_actions_none_todo: >-
+    The action instance is not configured, please configure it in the code.<a
+    target='_blank'
+    href='https://developer.steedos.com/developer/object_action#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E6%93%8D%E4%BD%9C%E6%8C%89%E9%92%AE%E5%AE%9E%E4%BE%8B'>Click
+    to view document</a>
+  object_actions__error_name_invalid_format: 

@@ -1,0 +1,13 @@
+metadataName: RestrictionRule
+isAddressable: true
+isSourceTracked: true
+tableName: restriction_rules
+ext: restrictionRule
+hasContent: false
+defaultDirectory: restrictionRules
+nameForMsgs: RestrictionRule
+nameForMsgsPlural: RestrictionRules
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

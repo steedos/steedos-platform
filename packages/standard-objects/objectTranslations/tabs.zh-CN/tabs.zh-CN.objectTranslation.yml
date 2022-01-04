@@ -1,0 +1,63 @@
+name: tabs
+label: 选项卡
+description: 
+fields:
+  label:
+    label: 显示名称
+    help: 仅适用于Web标签。
+  name:
+    label: API 名称
+  icon:
+    label: 图标
+  parent:
+    label: 上级选项卡
+  mobile:
+    label: 显示在手机菜单中
+  desktop:
+    label: 显示在桌面菜单中
+  frame_height:
+    label: Frame Height
+    help: 选项卡框架的高度（以像素为单位）。
+    description: 
+  has_sidebar:
+    label: 显示侧边栏面板
+    help: 指示选项卡是否显示侧边栏面板。
+    description:  
+  type:
+    label: 类型
+    options:
+      - label: 对象
+        value: object
+      - label: 外部链接
+        value: url
+      - label: 页面
+        value: page
+  object:
+    label: 对象
+    help: 
+    description: 
+  url:
+    label: 外部链接
+    help: 
+    description: 
+  page:
+    label: Page
+    help: 
+    description: 
+  action_overrides:
+    label: Action Overrides
+    help: 分配给选项卡的操作替代列表。 对于给定的标签，每个formFactor只允许一个替代。
+    description:  
+  is_system:
+    label: 系统
+    help: 
+    description: 
+  description: 
+    label: 描述
+  is_new_window:
+    label: 在新窗口打开
+    help: 
+    description:
+listviews:
+  all:
+    label: 所有

@@ -1,0 +1,62 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "name": "steedos-schema_profile",
+    "type": "object",
+    "additionalProperties": false,
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "library"
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "license"
+            ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "not": {
+                        "enum": [
+                            "library"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "API 名称"
+        },
+        "label": {
+            "type": "string",
+            "description": "显示名称"
+        },
+        "license": {
+            "type": "boolean",
+            "description": "许可证"
+        },
+        "assigned_apps": {
+            "type": "array",
+            "description": "授权应用"
+        },
+        "password_history": {
+            "type": "string",
+            "description": "强制密码历史。默认值3"
+        },
+        "max_login_attempts": {
+            "type": "string",
+            "description": "最大无效登录尝试次数。默认值10"
+        },
+        "lockout_interval": {
+            "type": "string",
+            "description": "锁定有效期间。默认值15"
+        }
+    }
+}

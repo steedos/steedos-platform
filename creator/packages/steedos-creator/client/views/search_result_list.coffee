@@ -36,7 +36,7 @@ _itemClick = (e, object_name, dxSearchGridInstance)->
 			Session.set("action_save_and_insert", true)
 			if action.todo == "standard_delete"
 				action_record_title = value.itemData.record[name_field_key]
-				Creator.executeAction objectName, action, recordId, action_record_title, ()->
+				Creator.executeAction objectName, action, recordId, action_record_title, null, null, ()->
 					dxSearchGridInstance.refresh()
 			else
 				Creator.executeAction objectName, action, recordId
@@ -91,7 +91,7 @@ _select = (object_name) ->
 	obj = Creator.getObject(object_name)
 	if !obj
 		return
-	default_columns = Creator.getObjectDefaultColumns(object_name) || [obj.NAME_FIELD_KEY]
+	default_columns = Creator.getObjectFirstListViewColumns(object_name) || [obj.NAME_FIELD_KEY]
 	fields = obj.fields
 	default_columns = _.map default_columns, (column) ->
 		fieldName = column

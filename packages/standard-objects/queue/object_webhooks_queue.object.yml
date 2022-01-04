@@ -1,0 +1,75 @@
+name: object_webhooks_queue
+label: Object Webhooks Queue
+icon: sms
+fields:
+  webhook: 
+    type: object
+    is_wide: true
+  webhook.data:
+    type: object
+    blackbox: true
+    omit: true
+  webhook.payload_url:
+    type: text
+    omit: true
+  webhook.content_type:
+    type: text
+    omit: true
+  webhook.action:
+    type: text
+    omit: true
+  webhook.actionUserInfo:
+    type: object
+    blackbox: true
+    omit: true
+  webhook.objectName:
+    type: text
+    label: Object Name
+    searchable: true
+  webhook.objectDisplayName:
+    type: text
+    label: Object Display Name
+  webhook.nameFieldKey:
+    type: text
+    label: Name Field Key
+  webhook.redirectUrl:
+    type: text
+    label: Redirect Url
+  sent:
+    type: boolean
+    label: 是否发送
+    defaultValue: false
+  sending:
+    type: number
+    defaultValue: 0
+  createdAt:
+    type: datetime
+    label: 发送时间
+  createdBy:
+    type: lookup
+    reference_to: users
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - webhook.objectDisplayName
+      - sent
+      - sending
+      - createdAt
+      - createdBy
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

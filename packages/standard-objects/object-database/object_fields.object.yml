@@ -2,8 +2,10 @@ name: object_fields
 icon: textbox
 enable_api: true
 enable_inline_edit: false
+enable_enhanced_lookup: true
 hidden: true
 label: Object Fields
+version: 2.0
 fields:
   object:
     type: master_detail
@@ -11,6 +13,7 @@ fields:
     reference_to: objects
     reference_to_field: name
     required: true
+    write_requires_master_read: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -18,11 +21,13 @@ fields:
               _options = [];
 
               _.forEach(Creator.objectsByName, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
+                if(!['base','core','space_users_invite','_object_reload_logs'].includes(k)){
+                  return _options.push({
+                    label: o.label,
+                    value: k,
+                    icon: o.icon
+                  });
+                }
               });
 
               return _options;
@@ -45,6 +50,7 @@ fields:
     index: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
+    omit: true
   type:
     type: select
     label: Type
@@ -60,6 +66,8 @@ fields:
         value: select
       - label: Boolean
         value: boolean
+      - label: Toggle
+        value: toggle
       - label: Date
         value: date
       - label: Datetime
@@ -82,6 +90,10 @@ fields:
         value: url
       - label: Email
         value: email
+      - label: Image
+        value: image
+      - label: File
+        value: file
       - label: Formula
         value: formula
       - label: Roll-Up Summary
@@ -95,46 +107,142 @@ fields:
   reference_to:
     type: lookup
     label: Reference to
-    is_wide: true
+    reference_to: objects
+    reference_to_field: name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
         return Steedos.getObjectsOptions();
       }
+    visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['master_detail'].indexOf(formData.type) > -1 ? true: false}}"
+  multiple:
+    type: boolean
+    label: Multiple
+    visible_on: "{{['select', 'lookup', 'image','file'].indexOf(formData.type) > -1 ? true: false}}"
+  write_requires_master_read:
+    label: Write requires master read
+    type: boolean
+    inlineHelpText: Sets the minimum sharing access level required on the master record to create, edit, or delete child records. This field applies only to master-detail or junction object custom field types. true—Allows users with “Read” access to the master record permission to create, edit, or delete child records. This setting makes sharing less restrictive. false—Allows users with “Read/Write” access to the master record permission to create, edit, or delete child records. This setting is more restrictive than true, and is the default value.
+    visible_on: "{{formData.type === 'master_detail' ? true: false}}"
+  formula:
+    label: Formula
+    type: textarea
+    inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
+    is_wide: true
+    visible_on: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
+  data_type:
+    type: select
+    label: Data Type
+    inlineHelpText: This field must be filled when the field type is 'Formula'
+    depend_on:
+      - type
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+        return Steedos.getFieldDataTypes(values);
+      }
+    # summary字段类型的data_type可以自动计算得到，所以不用在零代码界面设置
+    visible_on: "{{['formula','select'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
   filtersFunction:
     label: filters Function
     type: textarea
     is_wide: true
+    visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
   optionsFunction:
     label: options Function
     type: textarea
     is_wide: true
+    visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
   precision:
     type: currency
     label: Precision
-    defaultValue: 18
+    # defaultValue: 18
+    visible_on: "{{
+      (function(){
+        if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
+          return true;
+        }
+        else{
+          if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency', 'percent'].indexOf(formData.data_type) > -1){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+      })()
+      }}"
+    required: "{{
+      (function(){
+        if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
+          return true;
+        }
+        else{
+          if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency', 'percent'].indexOf(formData.data_type) > -1){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+      })()
+      }}"
   scale:
     type: currency
     label: Scale
-    defaultValue: 2
+    # defaultValue: 2
     min: 0
     inlineHelpText: If the field type is a Percent, this indicates the number of decimal places the field will display, for example, two decimal places will display as 10.20%.
+    visible_on: "{{
+      (function(){
+        if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
+          return true;
+        }
+        else{
+          if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency', 'percent'].indexOf(formData.data_type) > -1){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+      })()
+      }}"
+    required: "{{
+      (function(){
+        if(['number', 'currency', 'percent', 'summary'].indexOf(formData.type) > -1){
+          return true;
+        }
+        else{
+          if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency', 'percent'].indexOf(formData.data_type) > -1){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+      })()
+      }}"
   rows:
     type: currency
     label: Rows
     scale: 0
+    visible_on: "{{formData.type === 'textarea' ? true: false}}"
+    required: "{{formData.type === 'textarea' ? true: false}}"
+    # defaultValue: "{{formData.type === 'textarea' ? 3 : 0}}"
   # allowedValues:
   #   type: text
   #   multiple: true
   #   label: Allowed Values
   #   group: Advanced
-  multiple:
-    type: boolean
-    label: Multiple
   options:
     type: grid
     label: Options
     is_wide: true
     inlineHelpText: The label and value of each option cannot be empty. Set the background color to FFFFFF in hexadecimal format.
+    visible_on: "{{formData.type === 'select' ? true: false}}"
+    required: "{{formData.type === 'select' ? true: false}}"
   options.$:
     label: Options
     blackbox: true
@@ -151,28 +259,10 @@ fields:
     label: Color
     type: text
     required: false
-  formula:
-    label: Formula
+  options.$.description:
+    label: Description
     type: text
-    inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
-    is_wide: true
-  data_type:
-    type: select
-    label: Data Type
-    inlineHelpText: This field must be filled when the field type is 'Formula'
-    options: 
-      - label: Checkbox
-        value: boolean
-      - label: Number
-        value: number
-      - label: Currency
-        value: currency
-      - label: Text
-        value: text
-      - label: Date
-        value: date
-      - label: Datetime
-        value: datetime
+    required: false
   formula_blank_value:
     type: select
     label: Blank Field Handling
@@ -182,7 +272,9 @@ fields:
         value: zeroes
       - label: Treat blank fields as blanks
         value: blanks
-    defaultValue: zeroes
+    # defaultValue: zeroes
+    visible_on: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
+    required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
   summary_object:
     type: lookup
     label: Object to Summarize
@@ -216,6 +308,8 @@ fields:
         });
         return _options;
       }
+    visible_on: "{{formData.type === 'summary' ? true: false}}"
+    required: "{{formData.type === 'summary' ? true: false}}"
   summary_type:
     type: select
     label: Roll-Up Type
@@ -229,6 +323,10 @@ fields:
         value: min
       - label: MAX
         value: max
+      - label: AVG
+        value: avg
+    visible_on: "{{formData.type === 'summary' ? true: false}}"
+    required: "{{formData.type === 'summary' ? true: false}}"
   summary_field:
     type: lookup
     label: Field to Aggregate
@@ -249,36 +347,41 @@ fields:
           if(!fields){
             return [];
           }
-          if(values.summary_type === "sum"){
-            /*sum类型可以汇总数值、金额字段*/
+          if(values.summary_type === "sum" || values.summary_type === "avg"){
+            /*sum/avg类型可以汇总数值、金额、百分比字段*/
             options = options.filter(function(option){
               var optionFieldType = fields[option.value] && fields[option.value].type;
               if(["formula", "summary"].indexOf(optionFieldType) > -1){
                 /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
                 optionFieldType = fields[option.value].data_type;
               }
-              return ["number", "currency"].indexOf(optionFieldType) > -1
+              return ["number", "currency", "percent"].indexOf(optionFieldType) > -1
             });
           }
           else{
-            /*min、max类型可以汇总数值、金额、日期、日期时间字段*/
+            /*min、max类型可以汇总数值、金额、百分比、日期、日期时间字段*/
             options = options.filter(function(option){
               var optionFieldType = fields[option.value] && fields[option.value].type;
               if(["formula", "summary"].indexOf(optionFieldType) > -1){
                 /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
                 optionFieldType = fields[option.value].data_type;
               }
-              return ["number", "currency", "date", "datetime"].indexOf(optionFieldType) > -1
+              return ["number", "currency", "percent", "date", "datetime"].indexOf(optionFieldType) > -1
             });
           }
           return options;
         }
       }
+    visible_on: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
+    required: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
   summary_filters:
     label: Filter Criteria
     type: 'grid'
     inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
     is_wide: true
+    depend_on:
+      - summary_object
+    visible_on: "{{formData.type === 'summary' ? true: false}}"
   summary_filters.$:
     label: Filter Criteria
     blackbox: true
@@ -287,8 +390,6 @@ fields:
     label: Field
     type: lookup
     showIcon: false
-    depend_on:
-      - summary_object
     optionsFunction: !!js/function |
       function(values){
         if(values.summary_object){
@@ -307,10 +408,10 @@ fields:
             let options = Steedos.ObjectFieldManager.getSummaryFiltersOperation();
             return options;
           }
-          var index = Number(this.template.data.name.split('.')[1]);
-          var filters = values.summary_filters
-          if(filters && filters.length > index){
-            var filter = filters[index];
+          const filter = _.find(values.summary_filters, function (item) {
+            return item._id === values._grid_row_id
+          })
+          if(filter){
             var field = filter.field;
             if(field){
               var object_fields = Creator.getObject(values.summary_object).fields
@@ -339,14 +440,17 @@ fields:
     searchable: true
     index: true
     group: External data source
+    # visible_on: "{{true}}"
   primary:
     type: boolean
     label: Primary Key
     group: External data source
+    # visible_on: "{{true}}"
   generated:
     type: boolean
     label: Generated
     group: External data source
+    # visible_on: "{{formData.database_name || formData.datasource ? true: false}}"
   sort_no:
     label: Sort Number
     type: number
@@ -362,6 +466,7 @@ fields:
     type: boolean
     label: Required
     group: Advanced
+    visible_on: "{{['autonumber','summary','formula'].indexOf(formData.type) > -1 ? false: true}}"
   is_wide:
     type: boolean
     label: Is Wide
@@ -374,10 +479,10 @@ fields:
     type: boolean
     label: Hidden
     group: Advanced
-  omit:
-    type: boolean
-    label: Omit
-    group: Advanced
+  # omit:
+  #   type: boolean
+  #   label: Omit
+  #   group: Advanced
   index:
     type: boolean
     label: Is Index Field
@@ -394,14 +499,24 @@ fields:
     type: boolean
     label: Filterable
     group: Advanced
+  show_as_qr:
+    type: boolean
+    label: Show_as_qr
+    group: Advanced
+    visible_on: "{{formData.type === 'url' ? true: false}}"
+  visible_on:
+    type: textarea
+    label: Visible On
+    is_wide: true
+    group: Advanced
   inlineHelpText:
     label: Prompt text
-    type: text
+    type: textarea
     is_wide: true
     group: Advanced
   description:
     label: Description
-    type: text
+    type: textarea
     is_wide: true
     group: Advanced
 paging:
@@ -443,6 +558,8 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+relatedList:
+  - permission_fields
 form:
   initialValues: !!js/function |
     function(){
@@ -456,15 +573,55 @@ form:
       }
       return {}
     }
-  beforeEdit: !!js/function |
+  # beforeEdit: !!js/function |
+  #   function(){
+  #     return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
+  #   }
+  # afterEdit: !!js/function |
+  #   function(){
+  #     return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
+  #   }
+  # beforeView: !!js/function |
+  #   function(){
+  #     Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'view');
+  #   }
+  afterInsert: !!js/function |
     function(){
-      return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
+      Creator.objectLayoutMananger.appendField(this.doc);
     }
-  afterEdit: !!js/function |
-    function(){
-      return Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'edit');
-    }
-  beforeView: !!js/function |
-    function(){
-      Steedos.ObjectFieldManager.changeSchema(this.doc, this.schema, 'view');
+  onValuesChange: !!js/function |
+    function(args){
+      /*以下代码是为解决issue:优化：使用新版form新建字段后，每种字段类型都多了3个属性formula_blank_value、precision、scale #1920*/
+      const fieldType = args.values.type, 
+        changedFieldType = args.changedValues.type,
+        numberTypes = ['number', 'currency', 'percent'];
+
+      if(changedFieldType === 'textarea'){
+        args.form.setFieldsValue({rows: 3});
+      }
+      else if(fieldType !== 'textarea' && args.values.rows !== undefined){
+        args.form.setFieldsValue({rows: undefined});
+      }  
+
+      if(changedFieldType === 'formula'){
+        args.form.setFieldsValue({formula_blank_value: 'zeroes'});
+      }
+      else if(fieldType !== 'formula' && args.values.formula_blank_value !== undefined){
+        args.form.setFieldsValue({formula_blank_value: undefined});
+      }
+
+      if(numberTypes.indexOf(changedFieldType) > -1 || 'summary' === changedFieldType){
+         args.form.setFieldsValue({precision: 18, scale: 2});
+      }
+      if(['formula'].indexOf(fieldType) > -1 && numberTypes.indexOf(args.changedValues.data_type) > -1){
+        args.form.setFieldsValue({precision: 18, scale: 2});
+      }
+      if(numberTypes.indexOf(fieldType) < 0 && 'summary' !== fieldType && numberTypes.indexOf(args.values.data_type) < 0 ){
+        if(args.values.precision !== undefined){
+            args.form.setFieldsValue({precision: undefined});
+        }
+        if(args.values.scale !== undefined){
+            args.form.setFieldsValue({scale: undefined});
+        }
+      }
     }

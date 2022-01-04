@@ -32,7 +32,19 @@ Steedos.authRequest = function (url, options) {
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.error(XMLHttpRequest.responseJSON);
                 if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
-                    toastr.error(t(XMLHttpRequest.responseJSON.error.replace(/:/g, '：')))
+                    const errorInfo = XMLHttpRequest.responseJSON.error;
+                    result = { error: errorInfo }
+                    let errorMsg;
+                    if (errorInfo.reason) {
+                        errorMsg = errorInfo.reason;
+                    }
+                    else if (errorInfo.message) {
+                        errorMsg = errorInfo.message;
+                    }
+                    else {
+                        errorMsg = errorInfo;
+                    }
+                    toastr.error(t(errorMsg.replace(/:/g, '：')))
                 }
                 else {
                     toastr.error(XMLHttpRequest.responseJSON)
@@ -68,4 +80,55 @@ Steedos.getDisplayObjects = function(filterFunction){
     })
     objects.sort(Creator.sortingMethod.bind({key:"label"}))
     return objects;
+}
+
+Steedos.getFieldDataTypes = function (field) {
+    if(field.type === "select"){
+        return [
+            {
+              "label": "Checkbox",
+              "value": "boolean"
+            },
+            {
+              "label": "Number",
+              "value": "number"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            }
+        ];
+    }
+    else{
+        return [
+            {
+              "label": "Checkbox",
+              "value": "boolean"
+            },
+            {
+              "label": "Number",
+              "value": "number"
+            },
+            {
+              "label": "Currency",
+              "value": "currency"
+            },
+            {
+              "label": "Percent",
+              "value": "percent"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            },
+            {
+              "label": "Date",
+              "value": "date"
+            },
+            {
+              "label": "Datetime",
+              "value": "datetime"
+            }
+        ];
+    }
 }

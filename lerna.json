@@ -1,10 +1,12 @@
 {
   "packages": [
-    "packages/*",
-    "apps/*",
+    "packages/**",
+    "steedos-packages/**",
+    "steedos-projects/**",
+    "services/**",
     "server"
   ],
   "useWorkspaces": true,
   "npmClient": "yarn",
-  "version": "1.22.10"
+  "version": "2.1.65"
 }

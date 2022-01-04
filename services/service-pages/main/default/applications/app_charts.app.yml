@@ -1,0 +1,22 @@
+_id: apps_pages
+name: Apps
+admin_menus:
+  # - _id: ui
+  #   name: 用户界面
+  #   sort: 450
+  #   permission_sets:
+  #     - admin
+  - _id: pages
+    name: 页面
+    object_name: pages
+    parent: analysis
+    sort: 300
+    permission_sets:
+      - admin
+  # - _id: word_templates
+  #   name: Word Templates
+  #   permission_sets:
+  #     - admin
+  #   object_name: word_templates
+  #   parent: ui
+  #   sort: 300

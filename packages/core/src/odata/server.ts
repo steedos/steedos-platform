@@ -12,7 +12,8 @@ export function getODataManager(): ODataManager {
 }
 
 export async function getObjectList(req, res) {
-   if (_isMeteorDriver(req)) {
+   const isMeteorDriver = await _isMeteorDriver(req);
+   if (isMeteorDriver) {
       return await meteorODataExpressMiddleware.getObjectList(req, res);
    }
    else {
@@ -20,7 +21,8 @@ export async function getObjectList(req, res) {
    }
 }
 export async function getObjectRecent(req, res) {
-   if (_isMeteorDriver(req)) {
+   const isMeteorDriver = await _isMeteorDriver(req);
+   if (isMeteorDriver) {
       return await meteorODataExpressMiddleware.getObjectRecent(req, res);
    }
    else {
@@ -28,7 +30,8 @@ export async function getObjectRecent(req, res) {
    }
 }
 export async function createObjectData(req, res) {
-   if (_isMeteorDriver(req)) {
+   const isMeteorDriver = await _isMeteorDriver(req);
+   if (isMeteorDriver) {
       return await meteorODataExpressMiddleware.createObjectData(req, res);
    }
    else {
@@ -36,7 +39,8 @@ export async function createObjectData(req, res) {
    }
 }
 export async function getObjectData(req, res) {
-   if (_isMeteorDriver(req)) {
+   const isMeteorDriver = await _isMeteorDriver(req);
+   if (isMeteorDriver) {
       return await meteorODataExpressMiddleware.getObjectData(req, res);
    }
    else {
@@ -44,7 +48,8 @@ export async function getObjectData(req, res) {
    }
 }
 export async function updateObjectData(req, res) {
-   if (_isMeteorDriver(req)) {
+   const isMeteorDriver = await _isMeteorDriver(req);
+   if (isMeteorDriver) {
       return await meteorODataExpressMiddleware.updateObjectData(req, res);
    }
    else {
@@ -52,7 +57,8 @@ export async function updateObjectData(req, res) {
    }
 }
 export async function deleteObjectData(req, res) {
-   if (_isMeteorDriver(req)) {
+   const isMeteorDriver = await _isMeteorDriver(req);
+   if (isMeteorDriver) {
       return await meteorODataExpressMiddleware.deleteObjectData(req, res);
    }
    else {
@@ -63,9 +69,10 @@ export async function excuteObjectMethod(req, res) {
    return await meteorODataExpressMiddleware.excuteObjectMethod(req, res);
 }
 
-function _isMeteorDriver(req) {
+async function _isMeteorDriver(req) {
    let urlParams = req.params;
    let key = urlParams.objectName;
-   let collection = getSteedosSchema().getObject(key);
-   return collection.datasource.enable_space;
+   let objectConfig = await getSteedosSchema().getObject(key).toConfig();
+   return objectConfig.datasource === 'meteor';
+   // return collection != null;
 }

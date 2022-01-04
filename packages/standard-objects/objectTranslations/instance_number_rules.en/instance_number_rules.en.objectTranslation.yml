@@ -1,0 +1,27 @@
+name: instance_number_rules
+label: Instance Number Rule
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  year:
+    label: Year
+    help: 
+    description: 
+  first_number:
+    label: First Number
+    help: 
+    description: 
+  number:
+    label: Current Number
+    help: 
+    description: 
+  rules:
+    label: Appearance Formular
+    help: 
+    description: 
+listviews:
+  all:
+    label: All Rules

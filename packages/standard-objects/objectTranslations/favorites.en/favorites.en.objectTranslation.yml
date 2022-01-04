@@ -1,0 +1,35 @@
+name: favorites
+label: My Favorite
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  record_type:
+    label: Type
+    help: 
+    options:
+      - label: Record
+        value: RECORD
+      - label: List View
+        value: LIST_VIEW
+    description: 
+  record_id:
+    label: Record ID or List View ID（code）
+    help: 
+    description: 
+  sort_no:
+    label: Sort Number
+    help: High Value First
+    description: 
+listviews:
+  all:
+    label: All
+actions:
+  standard_new:
+    label: New

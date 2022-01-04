@@ -25,7 +25,7 @@ const compatibleVersionIsInstalled = (name, range) => {
 };
 
 export const checkNpmVersions = (packages, packageName) => {
-  if (!Meteor.isDevelopment) {
+  if (!process.env.CREATOR_NODE_ENV == 'development') {
     return;
   }
   const failures = {};

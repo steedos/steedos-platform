@@ -1,0 +1,60 @@
+name: workflow_rule
+label: 工作流规则
+description: 
+fields:
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  name:
+    label: API 名称
+    help: 
+    description: 
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  active:
+    label: 启用
+    help: 
+    description: 
+  trigger_type:
+    label: 评估条件
+    help: 
+    options:
+      - label: 新建时
+        value: onCreateOnly
+      - label: 新建时，和每次编辑时
+        value: onAllChanges
+      - label: 新建时，或编辑数据导致条件成立
+        value: onCreateOrTriggeringUpdate
+    description: 
+  formula:
+    label: 公式
+    help: 
+    description: 
+  updates_field_actions:
+    label: 字段更新
+    help: 
+    description: 
+  workflow_notifications_actions:
+    label: 工作流通知
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+groups:
+  rule_criteria: 规则条件
+  immediate_actions: 即时操作
+listviews:
+  all:
+    label: 所有
+CustomLabels:
+  workflow_rule_field_trigger_type_options_onAllChanges: 新建时，和每次编辑时
+  workflow_rule_field_trigger_type_options_onCreateOnly: 新建时
+  workflow_rule_field_trigger_type_options_onCreateOrTriggeringUpdate: 新建时，或编辑数据导致条件成立
+actions:
+  customize:
+    label: 自定义

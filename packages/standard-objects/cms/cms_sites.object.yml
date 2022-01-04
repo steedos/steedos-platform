@@ -2,6 +2,7 @@ name: cms_sites
 icon: app
 label: Site
 hidden: true
+version: 2
 fields:
   type:
     label: Type
@@ -49,7 +50,7 @@ fields:
     is_wide: true
     reference_to: users
     multiple: true
-    defaultValue: "[{userId}]"
+    defaultValue: "{userId}"
   description:
     label: Description
     type: textarea

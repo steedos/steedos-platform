@@ -1,0 +1,13 @@
+parent: CustomObject
+metadataName: CustomValidationRule
+defaultDirectory: validationRules
+tableName: object_validation_rules
+ext: validationRule
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom ValidationRule
+nameForMsgsPlural: Custom ValidationRules
+deleteSupported: true

@@ -8,6 +8,12 @@ fields:
     label: Name
     name: name
     searchable: true
+  api_name:
+    type: text
+    label: API Name
+    required: true
+    searchable: true
+    name: api_name
   # company_id:
   #   required: false
   #   omit: false
@@ -50,3 +56,7 @@ permission_set:
     unreadable_fields: []
     uneditable_fields: []
     unrelated_objects: []
+actions:
+  customize:
+    label: Customize
+    on: record

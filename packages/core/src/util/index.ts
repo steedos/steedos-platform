@@ -8,6 +8,7 @@
 import { findKey } from '@salesforce/kit';
 import { AnyJson, asJsonMap, isJsonMap, JsonMap, Optional } from '@salesforce/ts-types';
 import { URL } from 'url';
+import { getUserLocale, getLocale } from '@steedos/objectql';
 
 const util = {
   /**
@@ -122,25 +123,12 @@ const util = {
   /**
    * Returns the locale string of the user
    */
-  getUserLocale: (user: any)=>{
-    let userLocale = user && user.locale && user.locale.toLocaleLowerCase();
-    return util.getLocale(userLocale);
-  },
+  getUserLocale: getUserLocale,
 
   /**
    * Returns the locale string of the user locale
    */
-  getLocale: (userLocale: string)=>{
-    let locale: string;
-    if (userLocale === 'zh-cn') {
-      locale = "zh-CN";
-    } else if (userLocale == 'en-us') {
-      locale = "en";
-    } else {
-      locale = "zh-CN";
-    }
-    return locale;
-  }
+  getLocale: getLocale
 };
 
 export default util;

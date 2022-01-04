@@ -1,0 +1,13 @@
+metadataName: Layout
+isAddressable: true
+isSourceTracked: true
+tableName: object_layouts
+ext: layout
+hasContent: false
+defaultDirectory: layouts
+nameForMsgs: Layout
+nameForMsgsPlural: Layouts
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

@@ -13,7 +13,7 @@
 											<li class="slds-breadcrumb__item slds-text-title_caps">
 												<a href="{{record_url}}">{{object_label}}</a>
 											</li>
-											<li class="slds-breadcrumb__item slds-text-title_caps">
+											<li class="slds-breadcrumb__item slds-text-title_caps related-main-record-name" data-name="{{record_name}}">
 												<a href="{{record_url}}">{{record_name}}</a>
 											</li>
 										</ol>
@@ -27,15 +27,14 @@
 							</div>
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
-							{{#if allowCreate}}
+							<div class="slds-button-group" role="group">
+							{{#if perms "allowCreate"}}
 								{{#if is_file}}
-									{{#if isUnlocked}}
-										{{#if hasPermission 'allowEdit' }}
+									{{#if recordPerminssion "allowCreateFiles"}}
 											<button class="slds-button slds-button_neutral btn-upload-file" title="{{_ "creator_actions_upload_file"}}">
 												{{_ "creator_actions_upload_file"}}
-												<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files">
+												<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files" data-target-related-field-name="{{relatedFieldName}}">
 											</button>
-										{{/if}}
 									{{/if}}
 								{{else}}
 									<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{related_object_name}}" title="{{_ "New"}}">
@@ -43,6 +42,12 @@
 									</button>
 								{{/if}}
 							{{/if}}
+							{{#if perms "allowDelete"}}
+								<button class="slds-button slds-button_neutral delete-related-object-record" data-object-name="{{related_object_name}}" title="{{_ "Delete"}}">
+									{{_ "Delete"}}
+								</button>
+							{{/if}}
+							</div>
 						</div>
 					</div>
 					<div class="slds-grid">
@@ -50,6 +55,8 @@
 							<p class="slds-text-body_small tabular_info">{{#if recordsTotalCount}}{{_ "creator_list_item_counts" recordsTotalCount}}{{/if}}</p>
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+							{{> steedos_button className="slds-m-left_xx-small slds-button_icon-border-filled btn-export_list_view"
+									iconCategory="utility" iconName="download" variant="icon" title=(_ "creator_list_export_list_view")}}
 							{{> steedos_button className="slds-m-left_xx-small slds-button_icon-border-filled btn-refresh"
 								iconCategory="utility" iconName="refresh" variant="icon" title=(_ "creator_refresh")}}
 						</div>
@@ -61,7 +68,8 @@
 							{{#if isMobile}}
 								{{> list options=list_data}}
 							{{else}}
-								{{> Template.dynamic template="creator_grid" data=list_data}}
+<!--								{{> Template.dynamic template="creator_grid" data=list_data}}-->
+								{{> steedos_object_listview objectApiName=related_object_name name=name columnFields=columnFields filters=filters sort=sort onModelUpdated=onModelUpdated treeRootFilters=treeRootFilters}}
 							{{/if}}
 						</div>
 					</div>

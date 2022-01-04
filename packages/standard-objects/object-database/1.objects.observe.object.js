@@ -4,10 +4,18 @@ var objectCore = require('./objects.core.js');
 Meteor.startup(function () {
     var server_objects_init;
     var _changeServerObjects = function (document, oldDocument) {
-        objectCore.loadObject(document, oldDocument)
+        try {
+            objectCore.loadObject(document, oldDocument)
+        } catch (error) {
+            throw error
+        }
     };
     var _removeServerObjects = function (document) {
-        objectCore.removeObject(document);
+        try {
+            objectCore.removeObject(document, false, true);
+        } catch (error) {
+            throw error
+        }
     };
 
     var config = objectql.getSteedosConfig();
@@ -24,11 +32,11 @@ Meteor.startup(function () {
             }
         }).observe({
             added: function (newDocument) {
-                if (!server_objects_init || _.has(newDocument, "fields")) {
+                // if (!server_objects_init || _.has(newDocument, "fields")) {
                     if(newDocument.is_enable != false){
                         return _changeServerObjects(newDocument, null);
                     }
-                }
+                // }
             },
             changed: function (newDocument, oldDocument) {
                 if(newDocument.is_enable === false){

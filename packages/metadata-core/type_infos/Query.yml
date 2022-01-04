@@ -1,0 +1,13 @@
+metadataName: Query
+isAddressable: true
+isSourceTracked: true
+tableName: queries
+ext: query
+hasContent: false
+defaultDirectory: queries
+nameForMsgs: Query
+nameForMsgsPlural: Queries
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

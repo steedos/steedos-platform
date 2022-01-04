@@ -1,0 +1,182 @@
+{
+  "name": "Sample Discounting Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_discounting.htm",
+  "examples": [
+    {
+      "name": "Maintenance and Services Discount",
+      "formula": "IF(Maintenance_Amount__c + Services_Amount__c <> Amount,\n\"Discounted\",\n\"Full Price\")",
+      "suites": [
+        {
+          "context": "Full Price",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 1000
+            },
+            "Maintenance_Amount__c": {
+              "dataType": "number",
+              "value": 250
+            },
+            "Services_Amount__c": {
+              "dataType": "number",
+              "value": 750
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Full Price"
+          }
+        },
+        {
+          "context": "Discounted",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 1000
+            },
+            "Maintenance_Amount__c": {
+              "dataType": "number",
+              "value": 200
+            },
+            "Services_Amount__c": {
+              "dataType": "number",
+              "value": 700
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Discounted"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Discount Amount",
+      "formula": "Amount - \n Discount_Amount__c",
+      "suites": [
+        {
+          "context": "Full Price",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 1000
+            },
+            "Discount_Amount__c": {
+              "dataType": "number",
+              "value": 0
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1000
+          }
+        },
+        {
+          "context": "Discounted",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 1000
+            },
+            "Discount_Amount__c": {
+              "dataType": "number",
+              "value": 100
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 900
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Discount Rounded",
+      "formula": "ROUND(Amount-Amount* Discount_Percent__c,2)",
+      "suites": [
+        {
+          "context": "Full Price",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 1000
+            },
+            "Discount_Percent__c": {
+              "dataType": "number",
+              "value": 0
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1000
+          }
+        },
+        {
+          "context": "Discounted",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 925
+            },
+            "Discount_Percent__c": {
+              "dataType": "number",
+              "value": 0.001
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 924.08
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Discount with Approval",
+      "formula": "IF(Discount_Approved__c, ROUND(Amount - Amount * DiscountPercent__c, 2), Amount)",
+      "suites": [
+        {
+          "context": "Discount Not Approved",
+          "identifiers": {
+            "Discount_Approved__c": {
+              "dataType": "checkbox",
+              "value": false
+            },
+            "Amount": {
+              "dataType": "number",
+              "value": 1000
+            },
+            "DiscountPercent__c": {
+              "dataType": "number",
+              "value": 0.1
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1000
+          }
+        },
+        {
+          "context": "Discount Approved",
+          "identifiers": {
+            "Discount_Approved__c": {
+              "dataType": "checkbox",
+              "value": true
+            },
+            "Amount": {
+              "dataType": "number",
+              "value": 1000
+            },
+            "DiscountPercent__c": {
+              "dataType": "number",
+              "value": 0.1
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 900
+          }
+        }
+      ]
+    }
+  ]
+}

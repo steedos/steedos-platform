@@ -1,0 +1,6 @@
+name: page
+label: page
+reference_to: pages
+reference_to_field: name
+sort_no: 130
+type: lookup

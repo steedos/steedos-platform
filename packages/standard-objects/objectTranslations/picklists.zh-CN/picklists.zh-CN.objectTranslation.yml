@@ -1,0 +1,19 @@
+name: picklists
+label: 下拉框列表
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  code:
+    label: 唯一编码
+    help: 可以通过`对象名.字段名`的格式重写对象字段选项
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部

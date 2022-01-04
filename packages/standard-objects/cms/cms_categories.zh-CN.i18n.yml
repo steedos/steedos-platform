@@ -1,9 +1,0 @@
-cms_categories__object: 栏目
-cms_categories_field_description: 描述
-cms_categories_field_featured: 
-cms_categories_field_name: 名称
-cms_categories_field_order: 排序号
-cms_categories_field_parent: 上级栏目
-cms_categories_field_parents: 上级栏目（多层）
-cms_categories_field_site: 站点
-cms_categories_listview_all: 所有

@@ -58,6 +58,10 @@ class Signup extends React.Component {
     if ((new URLSearchParams(this.props.location.search)).get('email')) {
       email = (new URLSearchParams(this.props.location.search)).get('email');
     }
+    let mobile = '';
+    if ((new URLSearchParams(this.props.location.search)).get('mobile')) {
+      mobile = (new URLSearchParams(this.props.location.search)).get('mobile');
+    }
     let invite_token = '';
     if ((new URLSearchParams(this.props.location.search)).get('invite_token')) {
       invite_token = (new URLSearchParams(this.props.location.search)).get('invite_token');
@@ -71,7 +75,7 @@ class Signup extends React.Component {
         invite_token,
         spaceId,
         email,
-        mobile: '',
+        mobile,
         userId: '',
         password: '',
         verifyCode: '',
@@ -271,6 +275,17 @@ class Signup extends React.Component {
       return
     }
 
+    if (!this.state.name || !this.state.name.trim()) {
+      this.setState({
+        serverError: (
+          <FormattedMessage
+            id='accounts.nameRequired'
+          />
+        ),
+      });
+      return
+    }
+
     // if(!this.state.password.trim()){
     //   throw new Error('accounts.passwordRequired');
     // }
@@ -278,7 +293,7 @@ class Signup extends React.Component {
     const user = {
       password: this.state.password?this.state.password.trim():this.state.password,
       name: this.state.name.trim(),
-      locale: 'zh-cn',
+      locale: Utils.getBrowserLocale(),
       verifyCode: this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode,
     }
 
@@ -295,7 +310,7 @@ class Signup extends React.Component {
     } else if (this.state.loginBy === 'email'){
       user.email = this.state.email
     }
-    this.props.actions.createUser(user).then(async ({error}) => {
+    this.props.actions.createUser(user).then(async ({error, _next}) => {
       if (error) {
         this.setState({
             serverError: (
@@ -306,12 +321,17 @@ class Signup extends React.Component {
         });
         return;
       }
-      this.finishSignin();
+      this.finishSignin(_next);
     });
   };
 
 
-  finishSignin = (team) => {
+  finishSignin = (_next) => {
+    if(_next === 'TO_VERIFY_MOBILE'){
+      const location = this.props.location;
+      return GlobalAction.redirectUserToVerifyMobile(location)
+    }
+
     const query = new URLSearchParams(this.props.location.search);
     const redirectTo = query.get('redirect_to');
 

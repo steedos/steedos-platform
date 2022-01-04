@@ -1,8 +1,0 @@
-base_action_standard_query: Search
-base_action_standard_new: New
-base_action_standard_open_view: Open View
-base_action_standard_edit: Edit
-base_action_standard_delete: Delete
-base_action_standard_approve: New Instance
-base_action_standard_view_instance: View Instance
-base_action_standard_follow: Follow

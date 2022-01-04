@@ -1,7 +1,7 @@
 {
   "name": "@steedos/tailwind",
   "private": false,
-  "version": "1.22.10",
+  "version": "2.1.65",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -14,6 +14,7 @@
     "@tailwindcss/custom-forms": "^0.2.1",
     "@tailwindcss/typography": "^0.2.0",
     "@tailwindcss/ui": "^0.6.1",
+    "cross-env": "^7.0.3",
     "hex-rgb": "^4.1.0",
     "postcss-cli": "^6.1.2",
     "postcss-selector-parser": "^6.0.2",

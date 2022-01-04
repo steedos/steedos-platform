@@ -1,10 +1,11 @@
-import { SteedosActionTypeConfig } from './action'
 import _ = require('lodash')
 import path = require('path')
-import { getMD5, JSONStringify } from '../util'
-import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles } from '.'
-import { isMeteor, transformListenersToTriggers } from '../util'
-import { Dictionary, JsonMap } from '@salesforce/ts-types';
+import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig, getDataSource } from '.'
+// import { isMeteor } from '../util'
+import { Dictionary } from '@salesforce/ts-types';
+import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules, loadSourceRoles, loadSourceFlowRoles, loadSourceApprovalProcesses, loadSourceWorkflows, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts, preloadDBTabs, preloadDBShareRules, preloadDBRestrictionRules, preloadDBPermissionFields } from '../dynamic-load'
+import { transformListenersToTriggers } from '..';
+import { getSteedosSchema } from './schema';
 
 var util = require('../util')
 var clone = require('clone')
@@ -20,12 +21,16 @@ const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
 const _routers: Array<any> = [];
-const _lazyLoadListeners: Dictionary<any> = {};
-const _lazyLoadActions: Dictionary<any> = {};
-const _lazyLoadMethods: Dictionary<any> = {};
 const _objectsData: Dictionary<any> = {};
-
+const delayLoadExtendObjectConfigQueue: Dictionary<any> = {};
 let standardObjectsLoaded: boolean = false;
+
+const addDelayLoadExtendObjectConfig = function (extend: string, config: SteedosObjectTypeConfig){
+    if(!delayLoadExtendObjectConfigQueue[extend]){
+        delayLoadExtendObjectConfigQueue[extend] = [];
+    }
+    delayLoadExtendObjectConfigQueue[extend].push(config);
+}
 
 const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
     if(objectName === MONGO_BASE_OBJECT || objectName === SQL_BASE_OBJECT){
@@ -48,65 +53,11 @@ const extendOriginalObjectConfig = function(objectName: string, datasource: stri
     addOriginalObjectConfigs(objectName, datasource, clone(originalObjectConfig));
 }
 
-const addLazyLoadActions = function(objectName: string, json: SteedosActionTypeConfig){
-    if(!_lazyLoadActions[objectName]){
-        _lazyLoadActions[objectName] = []
-    }
-    _lazyLoadActions[objectName].push(json)
-}
-
-const getLazyLoadActions = function(objectName: string){
-    return _lazyLoadActions[objectName]
-}
-
-export const loadObjectLazyActions = function(objectName: string){
-    let actions = getLazyLoadActions(objectName);
-    _.each(actions, function(action){
-        addObjectActionConfig(clone(action));
-    })
-}
-
-const addLazyLoadListeners = function(objectName: string, json: SteedosListenerConfig){
-    if(!_lazyLoadListeners[objectName]){
-        _lazyLoadListeners[objectName] = []
-    }
-    _lazyLoadListeners[objectName].push(json)
-}
-
-const getLazyLoadListeners = function(objectName: string){
-    return _lazyLoadListeners[objectName]
-}
-
 const perfectObjectConfig = (objectConfig: SteedosObjectTypeConfig)=>{
     _.each(objectConfig.fields, (field: SteedosObjectTypeConfig, key: string)=>{
         if(!field.name){
             field.name = key;
         }
-    })
-}
-
-export const loadObjectLazyListenners = function(objectName: string){
-    let listenners = getLazyLoadListeners(objectName);
-    _.each(listenners, function(listenner){
-        addObjectListenerConfig(clone(listenner));
-    })
-}
-
-const addLazyLoadMethods = function(objectName: string, json: SteedosActionTypeConfig){
-    if(!_lazyLoadMethods[objectName]){
-        _lazyLoadMethods[objectName] = []
-    }
-    _lazyLoadMethods[objectName].push(json)
-}
-
-const getLazyLoadMethods = function(objectName: string){
-    return _lazyLoadMethods[objectName]
-}
-
-export const loadObjectLazyMethods = function(objectName: string){
-    let methods = getLazyLoadMethods(objectName);
-    _.each(methods, function(methods){
-        addObjectMethodConfig(clone(methods));
     })
 }
 
@@ -134,130 +85,146 @@ export const getObjectConfig = (object_name: string):SteedosObjectTypeConfig => 
     return _.find(_objectConfigs, {name: object_name})
 }
 
-export const addObjectConfigFiles = (filePath: string, datasource: string) => {
+export const addObjectConfigFiles = async (filePath: string, datasource: string, serviceName?: string) => {
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
 
     if (!datasource)
-      datasource = 'default'
+      datasource = 'meteor'
 
-    let objectJsons = util.loadObjects(filePath)
-    objectJsons.forEach(element => {
-        addObjectConfig(element, datasource);
-    });
+    let objectJsons = util.loadObjects(filePath);
+    for await (const element of objectJsons) {
+        let startNo = 10;
+        _.each(element.fields, function(field){
+            if(!_.has(field, 'sort_no')){
+                field.sort_no = startNo;
+                startNo = startNo + 10;
+            }
+        })
+        if(!element.fields){
+            element.fields = {}
+        }
+        _.each(getLazyLoadFields(element.name), function(field){
+            util.extend(element.fields, {[field.name]: field})
+        })
+        if(!element.actions){
+            element.actions = {}
+        }
+        _.each(getLazyLoadButtons(element.name), function(action){
+            util.extend(element.actions, {[action.name]: action})
+        })
+        let _mf =  _.maxBy(_.values(element.fields), function (field) { return field.sort_no; });
+        if(_mf && element.name){
+            element.fields_serial_number = _mf.sort_no + 10;
+        }
+        await addObjectConfig(element, datasource, serviceName);
+    }
 
-    let triggerJsons = util.loadTriggers(filePath)
-    _.each(triggerJsons, (json: SteedosListenerConfig) => {
-        addObjectListenerConfig(json);
-    })
+    await loadObjectFields(filePath, serviceName);
 
-    let actions = util.loadActions(filePath)
+    await loadObjectListViews(filePath, serviceName);
 
-    _.each(actions, (json: SteedosActionTypeConfig) => {
-        addObjectActionConfig(json);
-    })
+    await loadObjectButtons(filePath, serviceName);
 
-    let methods = util.loadMethods(filePath)
+    loadObjectTriggers(filePath);
 
-    _.each(methods, (json: JsonMap) => {
-        addObjectMethodConfig(json);
-    })
+    await loadObjectActions(filePath, serviceName);
 
+    loadObjectMethods(filePath);  //此功能不支持微服务模式
+
+    await loadObjectLayouts(filePath, serviceName);
+
+    await loadObjectPermissions(filePath, serviceName);
+
+    await loadSourceProfiles(filePath, serviceName);
+
+    await loadSourcePermissionset(filePath, serviceName);
+
+    loadObjectValidationRules(filePath);
+
+    loadSourceRoles(filePath);
+
+    loadSourceFlowRoles(filePath);
+
+    loadSourceApprovalProcesses(filePath);
+
+    loadSourceWorkflows(filePath);
 }
 
 export const addServerScriptFiles = (filePath: string) => {
-    const filePatten = [
-        path.join(filePath, "*.object.js"),
-    ]
-    const matchedPaths:[string] = globby.sync(filePatten);
-    _.each(matchedPaths, (matchedPath:string)=>{
-        _serverScripts.push(matchedPath)
-    })
-}
+  const filePatten = [
+    path.join(filePath, "*.object.js"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    _serverScripts.push(matchedPath);
+  });
+};
 
 export const getServerScripts = () => {
-    return _serverScripts;
-}
+  return _serverScripts;
+};
 
-export const addObjectI18nFiles = (filePath: string)=>{
-    if(!path.isAbsolute(filePath)){
-        throw new Error(`${filePath} must be an absolute path`);
-    }
+export const addObjectI18nFiles = (filePath: string) => {
+  if (!path.isAbsolute(filePath)) {
+    throw new Error(`${filePath} must be an absolute path`);
+  }
 
-    let i18nData = util.loadI18n(filePath)
-    i18nData.forEach(element => {
-        _objectsI18n.push(element)
-    });
-}
+  let i18nData = util.loadI18n(filePath);
+  i18nData.forEach((element) => {
+    _objectsI18n.push(element);
+  });
+};
 
-export const getObjectsI18n = ()=>{
-    return _objectsI18n;
-}
+export const getObjectsI18n = () => {
+  return _objectsI18n;
+};
 
-export const addRouterFiles = (filePath: string)=>{
-    if(!path.isAbsolute(filePath)){
-        throw new Error(`${filePath} must be an absolute path`);
-    }
-    let routersData = util.loadRouters(filePath);
-    routersData.forEach(element => {
-        _routers.push(element)
-    });
-}
+export const addRouterFiles = (filePath: string) => {
+  if (!path.isAbsolute(filePath)) {
+    throw new Error(`${filePath} must be an absolute path`);
+  }
+  let routersData = util.loadRouters(filePath);
+  routersData.forEach((element) => {
+    _routers.push(element);
+  });
+};
 
-export const getRouters = ()=>{
-    return _routers;
-}
+export const getRouters = () => {
+  return _routers;
+};
 
-export const addObjectMethodConfig = (json: JsonMap)=>{
-    if (!json.listenTo) {
-        throw new Error('missing attribute listenTo')
-    }
-
-    if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo)) {
-        throw new Error('listenTo must be a function or string')
-    }
-
-    let object_name = '';
-
-    if (_.isString(json.listenTo)) {
-        object_name = json.listenTo
-    } else if (_.isFunction(json.listenTo)) {
-        object_name = json.listenTo()
-    }
-
-    let object = getObjectConfig(object_name);
-    if (object) {
-        if(!object.methods){
-            object.methods = {}
-        }
-        delete json.listenTo
-
-        Object.assign(object.methods, json);
-
-    } else {
-        addLazyLoadMethods(object_name, json)
-    }
-}
-
-export const  addClientScriptFiles = (filePath: string) => {
-    const filePatten = [
-        path.join(filePath, "*.client.js")
-    ]
-    let matchedPaths: Array<string> = globby.sync(filePatten);
-    matchedPaths = _.sortBy(matchedPaths)
-    _.each(matchedPaths, (matchedPath) => {
-        _clientScripts.push(matchedPath)
-    })
-}
+export const addClientScriptFiles = (filePath: string) => {
+  const filePatten = [
+    path.join(filePath, "*.client.js"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  let matchedPaths: Array<string> = globby.sync(filePatten);
+  matchedPaths = _.sortBy(matchedPaths);
+  _.each(matchedPaths, (matchedPath) => {
+    _clientScripts.push(matchedPath);
+  });
+};
 
 export const getClientScripts = () => {
-    return _clientScripts;
+    return _.uniq(_clientScripts);
 }
 
 
-export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasource: string) => {
+export const addObjectConfig = async (objectConfig: SteedosObjectTypeConfig, datasource: string, serviceName?: string) => {
     let object_name = objectConfig.name;
+    if(serviceName && getSteedosSchema().metadataRegister){
+        if(datasource){
+            objectConfig.datasource = datasource
+        }
+        if(!objectConfig.extend){
+            objectConfig.isMain = true;
+        }
+        await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, objectConfig);
+    }
+    // if(true){return;}
     let config:SteedosObjectTypeConfig = {
         name: object_name,
         fields: {}
@@ -269,19 +236,28 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         object_name = objectConfig.extend
         let parentObjectConfig = getObjectConfig(object_name);
         if(_.isEmpty(parentObjectConfig)){
+            return addDelayLoadExtendObjectConfig(objectConfig.extend, objectConfig);
             throw new Error(`Object extend failed, object not exist: ${objectConfig.extend}`);
         }
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
+        config.name = object_name;
         delete config.extend
+        datasource = parentObjectConfig.datasource
         extendOriginalObjectConfig(object_name, datasource, clone(objectConfig));
     } else {
         addOriginalObjectConfigs(object_name, datasource, clone(objectConfig));
-        if (isMeteor() && (datasource === 'default')) {
+        if (datasource === 'default' || datasource === 'meteor') { // isMeteor() && (datasource === 'default')
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
             // 确保字段顺序正确，避免base中的字段跑到前面
             config.fields = _.clone(objectConfig.fields);
             let _baseObjectConfig = clone(baseObjectConfig);
             delete _baseObjectConfig.hidden;
+            if(datasource === 'meteor'){
+                _.each(_baseObjectConfig.listeners, function(license){
+                    const triggers = transformListenersToTriggers(config, license)
+                    util.extend(config, {triggers, _baseTriggers: triggers})
+                })
+            }
             config = util.extend(config, _baseObjectConfig, clone(objectConfig));
         } else {
             let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
@@ -296,82 +272,22 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
     _.remove(_objectConfigs, {name: object_name, datasource: datasource});
     delete config.__filename
     perfectObjectConfig(config)
-    _objectConfigs.push(config)
+    if(object_name === 'objects' && datasource==='default'){throw new Error(`debug error`)}
+    _objectConfigs.push(config);
+    const delayLoadQueue = clone(delayLoadExtendObjectConfigQueue[object_name]);
+    if(delayLoadQueue && delayLoadQueue.length > 0){
+        delayLoadExtendObjectConfigQueue[object_name] = [];
+        for (const index in delayLoadQueue) {
+            const delayLoadConfig = delayLoadQueue[index]
+            await addObjectConfig(delayLoadConfig, delayLoadConfig.datasource, null)
+        }
+    }
+
 }
 
 export const removeObjectConfig = (object_name: string, datasource: string)=>{
     _.remove(_objectConfigs, {name: object_name, datasource: datasource});
     _.remove(_original_objectConfigs, {name: object_name, datasource: datasource});
-}
-
-export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
-    if (!json.listenTo) {
-        throw new Error('missing attribute listenTo')
-    }
-
-    if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo)) {
-        throw new Error('listenTo must be a function or string')
-    }
-
-    let object_name = '';
-
-    if (_.isString(json.listenTo)) {
-        object_name = json.listenTo
-    } else if (_.isFunction(json.listenTo)) {
-        object_name = json.listenTo()
-    }
-
-    let object = getObjectConfig(object_name);
-    if (object) {
-        if(!object.listeners){
-            object.listeners = {}
-        }
-        delete json.listenTo
-        json.name = json._id || getMD5(JSONStringify(json));
-        object.listeners[json.name] = json
-        if(object.datasource === 'default'){
-            util.extend(object, {triggers: transformListenersToTriggers(object, json)})
-        }
-    } else {
-        addLazyLoadListeners(object_name, json);
-        // throw new Error(`Error add listener, object not found: ${object_name}`);
-    }
-}
-
-export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
-    if (!json.listenTo) {
-        throw new Error('missing attribute listenTo')
-    }
-
-    if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo)) {
-        throw new Error('listenTo must be a function or string')
-    }
-
-    let object_name = '';
-
-    if (_.isString(json.listenTo)) {
-        object_name = json.listenTo
-    } else if (_.isFunction(json.listenTo)) {
-        object_name = json.listenTo()
-    }
-
-    let object = getObjectConfig(object_name);
-    if (object) {
-        if(!object.listeners){
-            object.listeners = {}
-        }
-        _.each(object.actions, function(action, key){
-            if(json[key]){
-                action.todo = json[key]
-            }
-            if(json[`${key}Visible`]){
-                action.visible = json[`${key}Visible`]
-            }
-        })
-    } else {
-        // throw new Error(`Error add action, object not found: ${object_name}`);
-        addLazyLoadActions(object_name, json)
-    }
 }
 
 export const removeObjectListenerConfig = (_id, listenTo, when)=>{
@@ -407,7 +323,29 @@ export const removeObjectListenerConfig = (_id, listenTo, when)=>{
     }
 }
 
-export const loadStandardObjects = () => {
+export const loadStandardMetadata = async (serviceName: string, datasourceApiName: string) =>{
+    await loadStandardProfiles(serviceName);
+    await loadStandardPermissionsets(serviceName);
+    await loadStandardBaseObjects(serviceName);
+    if(datasourceApiName === 'default' || datasourceApiName === 'meteor'){
+        const datasource = getDataSource(datasourceApiName)
+        if(datasource && datasourceApiName === 'default'){
+            await datasource.initTypeORM();
+        }
+        if(datasource){
+            await preloadDBApps(datasource);
+            await preloadDBTabs(datasource);
+            await preloadDBObjectLayouts(datasource);
+            await preloadDBObjectFields(datasource);
+            await preloadDBObjectButtons(datasource);
+            await preloadDBShareRules(datasource);
+            await preloadDBRestrictionRules(datasource);
+            await preloadDBPermissionFields(datasource);
+        }
+    }
+}
+
+export const loadStandardBaseObjects = async (serviceName: string) => {
     
     if (standardObjectsLoaded)
         return;
@@ -417,22 +355,25 @@ export const loadStandardObjects = () => {
     let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
     let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
     baseObject.name = MONGO_BASE_OBJECT;
-    addObjectConfig(baseObject, SYSTEM_DATASOURCE);
+    await addObjectConfig(baseObject, SYSTEM_DATASOURCE, serviceName);
     let baseObjectJs = util.loadFile(path.join(standardObjectsDir, "base.object.js"))
     baseObjectJs.extend = MONGO_BASE_OBJECT;
-    addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE);
-    let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, "base.trigger.js"))
-    baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
-    addObjectListenerConfig(baseObjectTrigger)
+    await addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE, serviceName);
+    const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.objectwebhooks.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js','base.tree.trigger.js','base.calendar.trigger.js'];
+    _.forEach(baseTriggers, function(triggerFileName){
+        let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, triggerFileName))
+        baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
+        addObjectListenerConfig(baseObjectTrigger)
+    })
 
     let coreObject = util.loadFile(path.join(standardObjectsDir, "core.object.yml"))
     coreObject.name = SQL_BASE_OBJECT;
-    addObjectConfig(coreObject, SYSTEM_DATASOURCE);
+    await addObjectConfig(coreObject, SYSTEM_DATASOURCE, serviceName);
     let coreObjectTrigger = util.loadFile(path.join(standardObjectsDir, "core.objectwebhooks.trigger.js"))
     coreObjectTrigger.listenTo = SQL_BASE_OBJECT
     addObjectListenerConfig(coreObjectTrigger)
 
-    addAllConfigFiles(path.join(standardObjectsDir, "**"), 'default');
+    // addAllConfigFiles(path.join(standardObjectsDir, "**"), 'default');
 }
 
 export const addRouterConfig = (prefix: string, router: any) => {

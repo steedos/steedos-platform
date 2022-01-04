@@ -3,6 +3,7 @@ icon: knowledge
 label: Knowledge
 enable_files: true
 enable_chatter: true
+version: 2
 sidebar:
   template_name: creator_grid_sidebar_sites
 fields:

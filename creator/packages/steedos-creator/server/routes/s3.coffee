@@ -1,3 +1,4 @@
+steedosAuth = require("@steedos/auth")
 JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 
 	JsonRoutes.parseFiles req, res, ()->
@@ -31,6 +32,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 					space = body['space']
 					record_id = body['record_id']
 					object_name = body['object_name']
+					description = body['description']
 					parent = body['parent']
 					metadata = {owner:owner, owner_name:owner_name, space:space, record_id:record_id, object_name: object_name}
 					if parent
@@ -48,6 +50,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 				if parent
 					fileCollection.update({_id:parent},{
 						$set:
+							name: filename
 							extention: extention
 							size: size
 							modified: (new Date())
@@ -60,7 +63,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 				else
 					newFileObjId = fileCollection.direct.insert {
 						name: filename
-						description: ''
+						description: description
 						extention: extention
 						size: size
 						versions: [fileObj._id]
@@ -74,11 +77,13 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 					}
 					fileObj.update({$set: {'metadata.parent' : newFileObjId}})
 
+			newFile.once 'stored', (storeName)->
+				size = newFile.original.size
+				if !size
+					size = 1024
 				resp =
-					version_id: fileObj._id,
+					version_id: newFile._id,
 					size: size
-
-				res.setHeader("x-amz-version-id",fileObj._id);
 				res.end(JSON.stringify(resp));
 				return
 		else
@@ -87,7 +92,12 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 
 JsonRoutes.add "post", "/s3/:collection",  (req, res, next) ->
 	try
-		userId = Steedos.getUserIdFromAuthToken(req, res)
+
+		userSession = Meteor.wrapAsync((req, res, cb)->
+			steedosAuth.auth(req, res).then (resolve, reject)->
+				cb(reject, resolve)
+		)(req, res)
+		userId = userSession.userId
 		if !userId
 			throw new Meteor.Error(500, "No permission")
 
@@ -114,11 +124,14 @@ JsonRoutes.add "post", "/s3/:collection",  (req, res, next) ->
 
 				collection.insert newFile
 
-				resultData = collection.files.findOne(newFile._id)
-				JsonRoutes.sendResult res,
-					code: 200
-					data: resultData
-				return
+				newFile.once 'stored', (storeName)->
+					resultData = collection.files.findOne(newFile._id)
+					JsonRoutes.sendResult res,
+						code: 200
+						data: resultData
+					return
+
+				
 			else
 				throw new Meteor.Error(500, "No File")
 

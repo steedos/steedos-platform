@@ -1,0 +1,19 @@
+<template name="steedos_object_listview">
+	<div>
+		{{> React component=component 
+			objectApiName=objectApiName 
+			name=name 
+			columnFields=columnFields 
+			listName=listName
+			sort=sort
+			filters=filters 
+			treeRootFilters=treeRootFilters 
+			onModelUpdated=onModelUpdated 
+			sideBar=sideBar 
+			pageSize=pageSize 
+			onUpdated=onUpdated 
+			checkboxSelection=checkboxSelection 
+			autoFixHeight=autoFixHeight 
+			autoHideForEmptyData=autoHideForEmptyData}}
+	</div>
+</template>

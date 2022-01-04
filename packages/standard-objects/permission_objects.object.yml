@@ -3,13 +3,16 @@ label: Permission
 icon: omni_supervisor
 hidden: true
 fields:
-  # name:
-  #   label: Name
-  #   type: text
-  #   searchable: true
-  #   index: true
-  #   required: true
-  #   name: name
+  name:
+    label: Name
+    type: formula
+    is_wide: true
+    data_type: text
+    formula: object_name.label + '.' + permission_set_id.label
+    searchable: true
+    index: true
+    required: false
+    name: name
   permission_set_id:
     label: Permission Set
     type: master_detail
@@ -22,6 +25,7 @@ fields:
     label: Object
     type: lookup
     reference_to: objects
+    write_requires_master_read: true
     reference_to_field: name
     index: true
     required: true
@@ -78,6 +82,40 @@ fields:
     type: boolean
     label: Modify Division's Records
     name: modifyCompanyRecords
+  viewAssignCompanysRecords:
+    type: lookup
+    reference_to: company
+    label: 查看指定分部
+    multiple: true
+  modifyAssignCompanysRecords:
+    type: lookup
+    reference_to: company
+    label: 修改指定分部
+    multiple: true
+  allowReadFiles:
+    type: boolean
+    label: Allow Read Files
+    group: Files permissions
+  allowCreateFiles:
+    label: Allow Create Files
+    type: boolean
+    group: Files permissions
+  allowEditFiles:
+    label: Allow Edit Files
+    type: boolean
+    group: Files permissions
+  allowDeleteFiles:
+    label: Allow Delete Files
+    type: boolean
+    group: Files permissions
+  viewAllFiles:
+    type: boolean
+    label: View All Files
+    group: Files permissions
+  modifyAllFiles:
+    type: boolean
+    label: Modify All Files
+    group: Files permissions
   disabled_list_views:
     type: lookup
     label: Disabled ListViews
@@ -113,6 +151,8 @@ fields:
   disabled_actions:
     type: lookup
     label: Disabled Actions
+    hidden: true
+    omit: true
     multiple: true
     depend_on:
       - object_name
@@ -145,6 +185,8 @@ fields:
   unreadable_fields:
     type: lookup
     label: Unreadable Fields
+    hidden: true
+    omit: true
     multiple: true
     depend_on:
       - object_name
@@ -182,6 +224,8 @@ fields:
   uneditable_fields:
     type: lookup
     label: Uneditable Fields
+    hidden: true
+    omit: true
     multiple: true
     depend_on:
       - object_name
@@ -218,6 +262,8 @@ fields:
   unrelated_objects:
     type: lookup
     label: Unrelated Objects
+    hidden: true
+    omit: true
     multiple: true
     depend_on:
       - object_name
@@ -310,6 +356,16 @@ actions:
   customize:
     label: Customize
     on: record
+  resetFieldPermissions:
+    label: 重置字段权限
+    on: record
+relatedList:
+  - objectName: permission_fields
+    columns:
+      - field
+      - editable
+      - readable
+      - is_system
 permission_set:
   user:
     allowCreate: false
@@ -325,3 +381,14 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+form:
+  beforeView: !!js/function |
+    function(){
+      /*附件权限需要兼容之前没有附件权限配置功能时的设置，取好默认值显示即可*/
+      Creator.processPermissions(this.doc);
+    }
+  beforeEdit: !!js/function |
+    function(){
+      /*附件权限需要兼容之前没有附件权限配置功能时的设置，取好默认值显示即可*/
+      Creator.processPermissions(this.doc);
+    }

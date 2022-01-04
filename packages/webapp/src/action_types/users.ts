@@ -51,4 +51,5 @@ export default keyMirror({
     VERIFYMOBILE_REQUEST: null,
     VERIFYMOBILE_FAILURE: null,
     VERIFYMOBILE_RECEIVED: null,
+    TO_MOBILE_CODE_LOGIN: null,
 });

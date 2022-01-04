@@ -1,8 +1,9 @@
 name: permission_set
 label: Permission Set
 icon: groups
-hidden: true
+hidden: false
 enable_inline_edit: false
+version: 2
 fields:
   name:
     label: Name
@@ -116,6 +117,38 @@ fields:
       - label: '始终(必须由管理员重置)'
         value: '0'
     defaultValue: '15'
+  enable_MFA:
+    type: boolean
+    label: 多重身份验证(需要开启短信服务)
+    inlineHelpText: 密码登陆的基础上增加短信验证的两种组合的鉴别技术进行系统登陆.
+    sort_no: 1200
+    group: 登录策略
+  logout_other_clients: 
+    type: boolean
+    label: 单例登录
+    inlineHelpText: 注销以当前用户身份登录的其他客户端。
+    sort_no: 1100
+    group: 登录策略
+  login_expiration_in_days:
+    type: number
+    scale: 2
+    label: 登录到期时间(天)
+    sort_no: 1000
+    defaultValue: 90
+    group: 登录策略
+  phone_logout_other_clients: 
+    type: boolean
+    label: 手机App单例登录
+    inlineHelpText: 注销以当前用户身份登录的其他客户端。
+    sort_no: 1100
+    group: 登录策略
+  phone_login_expiration_in_days:
+    type: number
+    scale: 2
+    label: 手机App登录到期时间(天)
+    sort_no: 1000
+    defaultValue: 90
+    group: 登录策略
 list_views:
   all:
     label: All
@@ -172,7 +205,7 @@ permission_set:
     allowEdit: false
     allowRead: true
     modifyAllRecords: false
-    viewAllRecords: false
+    viewAllRecords: true
   admin:
     allowCreate: true
     allowDelete: true
@@ -186,7 +219,7 @@ permission_set:
     allowEdit: false
     allowRead: true
     modifyAllRecords: false
-    viewAllRecords: false
+    viewAllRecords: true
 form:
   initialValues: !!js/function |
     function(){

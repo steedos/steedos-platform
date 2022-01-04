@@ -1,0 +1,41 @@
+name: workflow_notifications
+label: Workflow Notifications
+description:
+fields:
+  name:
+    label: API Name
+    help: 
+    description: 
+  label:
+    label: 
+    help: 
+    description: 
+  object_name:
+    label: Object Name
+    help:
+    description:
+  title:
+    label: Title Formula
+    help:
+    description:
+  body:
+    label: Body Formula
+    help:
+    description:
+  assigned_users:
+    label:
+    help:
+    description:
+  assigned_user_field:
+    label:
+    help:
+    description:
+groups:
+  select_assigned_user: Select Assigned User
+listviews:
+  all:
+    label: All
+CustomLabels:
+  workflow_notifications_field__error_process_node_process_definition_required: Please select "Approval Process" for this Approval Step and then create "Workflow Notification"!
+  workflow_notifications_field__error_process_definition_object_required: Please select "Object" for this Approval Process and then create "Workflow Notification"!
+  workflow_notifications_field__error_workflow_rule_object_required: Please select "Object" for this Workflow Rule and then create "Workflow Notification"!

@@ -1,0 +1,13 @@
+metadataName: Role
+isAddressable: true
+isSourceTracked: true
+ext: role
+tableName: roles
+hasContent: false
+defaultDirectory: roles
+nameForMsgs: Role
+nameForMsgsPlural: Roles
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

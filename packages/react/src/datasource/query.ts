@@ -26,8 +26,13 @@ function getExpand(columns) {
 }
 
 function convertSortToString(sort: Array<[]>){
-    return sort.map(function(n){
-        return n.join(" ");
+    return sort.map(function(n: any){
+        if(_.isArray(n)){
+            return n.join(" ");
+        }
+        else{
+            return `${n.field_name} ${n.order}`;
+        }
     }).join(",");
 }
 

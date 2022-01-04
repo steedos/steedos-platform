@@ -119,113 +119,117 @@
 								<div class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-details__item">
 									<div id="creator-quick-form" class="{{#if form_horizontal}} slds-form_horizontal{{else}}  slds-form_stacked{{/if}} slds-form" role="tabpanel">
 										<div class="">
-										{{#if detail_info_visible}}
-											{{#if showForm}}
-												{{#autoForm collection=collection type="disabled" id="viewRecordForm" schema=schema doc=record}}
-													{{#if schemaFields.grouplessFields}}
-														{{#each schemaFields.grouplessFields}}
-															{{#each this}}
-																{{#if isObjectField this}}
-																	<!--{{> afQuickField name=this}}-->
-																	{{#with objectField this}}
+											{{#if detail_info_visible}}
+												{{#if showReactForm}}
+													{{> steedos_form mode='read' name=cmFormId objectApiName=object_name recordId=recordId afterUpdate=afterUpdate}}
+												{{else}}
+													{{#if showForm}}
+														{{#autoForm collection=collection type="disabled" id="viewRecordForm" schema=schema doc=record}}
+															{{#if schemaFields.grouplessFields}}
+																{{#each schemaFields.grouplessFields}}
+																	{{#each this}}
+																		{{#if isObjectField this}}
+																			<!--{{> afQuickField name=this}}-->
+																			{{#with objectField this}}
+																				<div class="slds-section group-section">
+																					<h3 class="slds-section__title group-section-control">
+																						{{> steedos_button className="slds-section__title-action" iconClassName="slds-section__title-action-icon slds-button__icon_left"
+																								iconCategory="utility" iconName="switch" variant="icon" label=this.name}}
+																					</h3>
+																					<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+																						{{#each this.fields}}
+																							<div class="slds-form__row">
+																								{{#each this}}
+																									{{#if this}}
+																										<div class="slds-form__item slds-has-flexi-truncate {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
+																											{{#if hasInlineHelpText this}}
+																												<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
+																											{{/if}}
+																											<div class="slds-form-element slds-form-element_readonly {{#if form_horizontal}}slds-form-element_horizontal{{else}}slds-form-element_stacked{{/if}} {{#if is_wide this}} slds-form-element_1-col {{/if}} ">
+
+																												<span class="slds-form-element__label">{{{label this}}}</span>
+																												<div class="slds-form-element__control">
+																										<span class="test-id__field-value slds-form-element__static slds-grow">
+																											{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
+																										</span>
+																												</div>
+
+																											</div>
+																										</div>
+																									{{/if}}
+																								{{/each}}
+																							</div>
+																						{{/each}}
+																					</div>
+																				</div>
+																			{{/with}}
+																		{{/if}}
+																	{{/each}}
+																	{{#if hasUnObjectField this}}
+																		<div class="slds-form__row">
+																			{{#each this}}
+																				{{#unless isObjectField this}}
+																					<div class="slds-form__item slds-has-flexi-truncate {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
+																						{{#if this}}
+																							{{#if hasInlineHelpText this}}
+																								<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
+																							{{/if}}
+																							<div class="slds-form-element {{#if form_horizontal}}slds-form-element_horizontal{{else}}slds-form-element_stacked{{/if}} {{#if is_wide this}} slds-form-element_1-col {{/if}} slds-form-element_readonly slds-hint-parent">
+																								<span class="test-id__field-label slds-form-element__label">{{{label this}}}</span>
+																								<div class="slds-form-element__control">
+																						<span class="test-id__field-value slds-form-element__static slds-grow">
+																							{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' full_screen=(full_screen this) is_detail_view=true}}
+																						</span>
+																								</div>
+																							</div>
+																						{{/if}}
+																					</div>
+																				{{/unless}}
+																			{{/each}}
+																		</div>
+																	{{/if}}
+																{{/each}}
+															{{/if}}
+
+															{{#if schemaFields.groupFields}}
+																{{#each schemaFields.groupFields}}
+																	{{#if this.fields}}
 																		<div class="slds-section group-section">
 																			<h3 class="slds-section__title group-section-control">
-																				{{> steedos_button className="slds-section__title-action" iconClassName="slds-section__title-action-icon slds-button__icon_left" 
-																					iconCategory="utility" iconName="switch" variant="icon" label=this.name}}
+																				{{> steedos_button className="slds-section__title-action" iconClassName="slds-section__title-action-icon slds-button__icon_left"
+																						iconCategory="utility" iconName="switch" variant="icon" label=this.name}}
 																			</h3>
 																			<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
 																				{{#each this.fields}}
-																					<div class="slds-form__row">
+																					<div class="slds-grid view-page-section-row">
 																						{{#each this}}
-																							{{#if this}}
-																								<div class="slds-form__item slds-has-flexi-truncate {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
-																									{{#if hasInlineHelpText this}}
-																										<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
-																									{{/if}}
-																									<div class="slds-form-element slds-form-element_readonly {{#if form_horizontal}}slds-form-element_horizontal{{else}}slds-form-element_stacked{{/if}} {{#if is_wide this}} slds-form-element_1-col {{/if}} ">
-			
-																											<span class="slds-form-element__label">{{{label this}}}</span>
-																											<div class="slds-form-element__control">
-																									<span class="test-id__field-value slds-form-element__static slds-grow">
-																										{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
-																									</span>
-																											</div>
-			
+																							<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+																								{{#if this}}
+																									<div class="slds-form-element slds-form-element_readonly slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput ">
+																										<div class="test-id__field-label-container">
+																											<span class="test-id__field-label slds-form-element__label">{{{label this}}}</span>
+																										</div>
+																										<div class="slds-form-element__control itemBody">
+																										<span class="test-id__field-value slds-form-element__static slds-grow ">
+																											{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' is_detail_view=true}}
+																										</span>
+																										</div>
 																									</div>
-																								</div>
-																							{{/if}}
+																								{{/if}}
+																							</div>
 																						{{/each}}
 																					</div>
 																				{{/each}}
 																			</div>
 																		</div>
-																	{{/with}}
-																{{/if}}
-															{{/each}}
-															{{#if hasUnObjectField this}}
-															<div class="slds-form__row">
-																{{#each this}}
-																	{{#unless isObjectField this}}
-																		<div class="slds-form__item slds-has-flexi-truncate {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
-																			{{#if this}}
-																				{{#if hasInlineHelpText this}}
-																					<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
-																				{{/if}}
-																				<div class="slds-form-element {{#if form_horizontal}}slds-form-element_horizontal{{else}}slds-form-element_stacked{{/if}} {{#if is_wide this}} slds-form-element_1-col {{/if}} slds-form-element_readonly slds-hint-parent">
-																					<span class="test-id__field-label slds-form-element__label">{{{label this}}}</span>
-																					<div class="slds-form-element__control">
-																					<span class="test-id__field-value slds-form-element__static slds-grow">
-																						{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' full_screen=(full_screen this) is_detail_view=true}}
-																					</span>
-																				</div>
-																			</div>
-																			{{/if}}
-																		</div>
-																	{{/unless}}
+																	{{/if}}
 																{{/each}}
-															</div>
 															{{/if}}
-														{{/each}}
+
+														{{/autoForm}}
 													{{/if}}
-			
-													{{#if schemaFields.groupFields}}
-														{{#each schemaFields.groupFields}}
-															{{#if this.fields}}
-																<div class="slds-section group-section">
-																	<h3 class="slds-section__title group-section-control">
-																		{{> steedos_button className="slds-section__title-action" iconClassName="slds-section__title-action-icon slds-button__icon_left" 
-																			iconCategory="utility" iconName="switch" variant="icon" label=this.name}}
-																	</h3>
-																	<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
-																		{{#each this.fields}}
-																			<div class="slds-grid view-page-section-row">
-																				{{#each this}}
-																					<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-																						{{#if this}}
-																						<div class="slds-form-element slds-form-element_readonly slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput ">
-																								<div class="test-id__field-label-container">
-																									<span class="test-id__field-label slds-form-element__label">{{{label this}}}</span>
-																								</div>
-																								<div class="slds-form-element__control itemBody">
-																									<span class="test-id__field-value slds-form-element__static slds-grow ">
-																										{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' is_detail_view=true}}
-																									</span>
-																								</div>
-																						</div>
-																						{{/if}}
-																					</div>
-																				{{/each}}
-																			</div>
-																		{{/each}}
-																	</div>
-																</div>
-															{{/if}}
-														{{/each}}
-													{{/if}}
-			
-												{{/autoForm}}
+												{{/if}}
 											{{/if}}
-										{{/if}}
 										</div>
 									</div>
 									{{#if related_list}}
@@ -249,16 +253,14 @@
 														<div class="slds-no-flex">
 															{{#if allowCreate}}
 																{{#if this.is_file}}
-																	{{#if isUnlocked}}
-																	{{#if hasPermission 'allowEdit' }}
+																	{{#if recordPerminssion "allowCreateFiles"}}
 																	<button class="slds-button slds-button_neutral btn-upload-file">
 																		{{_ "creator_actions_upload_file"}}
-																		<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files">
+																		<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files" data-target-related-field-name="{{related_field_name}}">
 																	</button>
 																	{{/if}}
-																	{{/if}}
 																{{else}}
-																	<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{this.object_name}}">{{_ "New"}}</button>
+																	<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{this.object_name}}" data-target-related-field-name="{{related_field_name}}">{{_ "New"}}</button>
 																{{/if}}
 															{{/if}}
 															{{#if relatedActions}}
@@ -278,7 +280,7 @@
 															{{#if isMobile}}
 																{{> list options=(list_data this)}}
 															{{else}}
-																{{> Template.dynamic template="creator_grid" data=(list_data this)}}
+																{{> Template.dynamic template="detail_realted_object_list" data=(list_data this)}}
 															{{/if}}
 													{{/if}}
 												</div>

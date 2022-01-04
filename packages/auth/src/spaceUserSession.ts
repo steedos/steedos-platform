@@ -28,7 +28,7 @@ async function getUserRoles(userId: string, spaceId: string) {
     }
 
     let filters = `(space eq '${spaceId}') and (users eq '${userId}')`;
-    let permission_sets = await getSteedosSchema().getObject('permission_set').find({ filters: filters, fields: ['name'] });
+    let permission_sets = await getSteedosSchema().getObject('permission_set').directFind({ filters: filters, fields: ['name'] });
     permission_sets.forEach(p => {
         if (!_.include(internalProfiles, p.name)) {
             roles.push(p.name);
@@ -107,7 +107,8 @@ export async function getSpaceUserSession(spaceId, userId) {
             let userSpaceId = su.space;
             let userSpaceIds = _.pluck(spaceUsers, 'space');
             let roles = await getUserRoles(userId, userSpaceId);
-            spaceSession = { roles: roles, expiredAt: expiredAt };
+            let profile = await getSpaceUserProfile(userId, userSpaceId);
+            spaceSession = { roles: roles, profile: profile,expiredAt: expiredAt };
             spaceSession.spaceId = userSpaceId;
             spaceSession.space = (await getObjectDataByIds('spaces', [userSpaceId], ['name', 'admins']))[0];
             spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name']);

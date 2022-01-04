@@ -51,11 +51,11 @@
             <ul class="slds-grid slds-grid_pull-padded slds-wrap">
 						{{#each apps}}
               <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
-                <a href="{{app_url}}" target="{{app_target}}" draggable="true" class="app-launcher-link slds-app-launcher__tile slds-text-link_reset slds-is-draggable" data-appid="{{_id}}">
+                <a href="{{app_url}}" target="{{app_target}}" draggable="true" class="app-launcher-link slds-app-launcher__tile slds-text-link_reset slds-is-draggable" data-appid="{{id}}">
                   <div class="slds-app-launcher__tile-figure">
                     <span class="slds-avatar slds-avatar_large">
                       <span class="slds-icon_container" title="">
-												{{> steedos_icon class="slds-icon slds-icon_large" source="standard-sprite" name=this.icon_slds}}
+												{{> steedos_icon class="slds-icon slds-icon_large" source="standard-sprite" name=this.icon}}
 											</span>
                     </span>
                     <div class="slds-m-top_xxx-small">
@@ -66,13 +66,13 @@
                     </div>
                   </div>
                   <div class="slds-app-launcher__tile-body">
-                    <a class="appTileTitle">
+                    <span class="appTileTitle text-blue-600 cursor-pointer">
 											{{#if label}}
 												{{_ label}}
 											{{else}}
 												{{_ name}}
 											{{/if}}
-										</a>
+										</span>
                     <p>{{description}}
                     </p>
                     <div class="slds-popover slds-popover_tooltip slds-nubbin_top slds-hide" role="tooltip" id="help-0" style="position:absolute;top:100px;left:165px">
@@ -97,8 +97,8 @@
 							<ul class="slds-grid slds-wrap">
 								{{#each all_objects}}
 								<li class="slds-col--padded slds-p-vertical_xx-small slds-size_1-of-5 slds-grow-none oneAppLauncherItem">
-									<a data-object-name="{{name}}" href="{{object_url}}" class="app-launcher-link slds-text-link--reset slds-app-launcher__tile--small slds-truncate creator-object-nav-{{name}}">
-										<span class="slds-truncate slds-text-link">{{label}}</span>
+									<a data-object-name="{{id}}" href="{{object_url}}" class="app-launcher-link slds-text-link--reset slds-app-launcher__tile--small slds-truncate creator-object-nav-{{id}}">
+										<span class="slds-truncate slds-text-link">{{name}}</span>
 									</a>
 								</li>
 								{{/each}}

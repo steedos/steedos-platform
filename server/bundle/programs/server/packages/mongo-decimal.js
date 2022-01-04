@@ -7,13 +7,12 @@ var meteorEnv = Package.meteor.meteorEnv;
 var ECMAScript = Package.ecmascript.ECMAScript;
 var EJSON = Package.ejson.EJSON;
 var meteorInstall = Package.modules.meteorInstall;
-var meteorBabelHelpers = Package['babel-runtime'].meteorBabelHelpers;
 var Promise = Package.promise.Promise;
 
 /* Package-scope variables */
 var Decimal;
 
-var require = meteorInstall({"node_modules":{"meteor":{"mongo-decimal":{"decimal.js":function(require,exports,module){
+var require = meteorInstall({"node_modules":{"meteor":{"mongo-decimal":{"decimal.js":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////
 //                                                                   //
@@ -56,7 +55,7 @@ EJSON.addType('Decimal', function (str) {
 });
 ///////////////////////////////////////////////////////////////////////
 
-},"node_modules":{"decimal.js":{"package.json":function(require,exports,module){
+},"node_modules":{"decimal.js":{"package.json":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////
 //                                                                   //
@@ -66,13 +65,13 @@ EJSON.addType('Decimal', function (str) {
                                                                      //
 module.exports = {
   "name": "decimal.js",
-  "version": "9.0.1",
-  "main": "./decimal"
+  "version": "10.0.2",
+  "main": "decimal"
 };
 
 ///////////////////////////////////////////////////////////////////////
 
-},"decimal.js":function(require,exports,module){
+},"decimal.js":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////
 //                                                                   //
@@ -100,4 +99,4 @@ Package._define("mongo-decimal", exports, {
 })();
 
 //# sourceURL=meteor://💻app/packages/mongo-decimal.js
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1ldGVvcjovL/CfkrthcHAvcGFja2FnZXMvbW9uZ28tZGVjaW1hbC9kZWNpbWFsLmpzIl0sIm5hbWVzIjpbIm1vZHVsZSIsImV4cG9ydCIsIkRlY2ltYWwiLCJFSlNPTiIsImxpbmsiLCJ2IiwicHJvdG90eXBlIiwidHlwZU5hbWUiLCJ0b0pTT05WYWx1ZSIsInRvSlNPTiIsImNsb25lIiwidG9TdHJpbmciLCJhZGRUeXBlIiwic3RyIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBQSxNQUFNLENBQUNDLE1BQVAsQ0FBYztBQUFDQyxTQUFPLEVBQUMsTUFBSUE7QUFBYixDQUFkO0FBQXFDLElBQUlDLEtBQUo7QUFBVUgsTUFBTSxDQUFDSSxJQUFQLENBQVksY0FBWixFQUEyQjtBQUFDRCxPQUFLLENBQUNFLENBQUQsRUFBRztBQUFDRixTQUFLLEdBQUNFLENBQU47QUFBUTs7QUFBbEIsQ0FBM0IsRUFBK0MsQ0FBL0M7QUFBa0QsSUFBSUgsT0FBSjtBQUFZRixNQUFNLENBQUNJLElBQVAsQ0FBWSxZQUFaLEVBQXlCO0FBQUNGLFNBQU8sQ0FBQ0csQ0FBRCxFQUFHO0FBQUNILFdBQU8sR0FBQ0csQ0FBUjtBQUFVOztBQUF0QixDQUF6QixFQUFpRCxDQUFqRDs7QUFHN0dILE9BQU8sQ0FBQ0ksU0FBUixDQUFrQkMsUUFBbEIsR0FBNkIsWUFBVztBQUN0QyxTQUFPLFNBQVA7QUFDRCxDQUZEOztBQUlBTCxPQUFPLENBQUNJLFNBQVIsQ0FBa0JFLFdBQWxCLEdBQWdDLFlBQVk7QUFDMUMsU0FBTyxLQUFLQyxNQUFMLEVBQVA7QUFDRCxDQUZEOztBQUlBUCxPQUFPLENBQUNJLFNBQVIsQ0FBa0JJLEtBQWxCLEdBQTBCLFlBQVk7QUFDcEMsU0FBT1IsT0FBTyxDQUFDLEtBQUtTLFFBQUwsRUFBRCxDQUFkO0FBQ0QsQ0FGRDs7QUFJQVIsS0FBSyxDQUFDUyxPQUFOLENBQWMsU0FBZCxFQUF5QixVQUFVQyxHQUFWLEVBQWU7QUFDdEMsU0FBT1gsT0FBTyxDQUFDVyxHQUFELENBQWQ7QUFDRCxDQUZELEUiLCJmaWxlIjoiL3BhY2thZ2VzL21vbmdvLWRlY2ltYWwuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBFSlNPTiB9IGZyb20gJ21ldGVvci9lanNvbic7XG5pbXBvcnQgeyBEZWNpbWFsIH0gZnJvbSAnZGVjaW1hbC5qcyc7XG5cbkRlY2ltYWwucHJvdG90eXBlLnR5cGVOYW1lID0gZnVuY3Rpb24oKSB7XG4gIHJldHVybiAnRGVjaW1hbCc7XG59O1xuXG5EZWNpbWFsLnByb3RvdHlwZS50b0pTT05WYWx1ZSA9IGZ1bmN0aW9uICgpIHtcbiAgcmV0dXJuIHRoaXMudG9KU09OKCk7XG59O1xuXG5EZWNpbWFsLnByb3RvdHlwZS5jbG9uZSA9IGZ1bmN0aW9uICgpIHtcbiAgcmV0dXJuIERlY2ltYWwodGhpcy50b1N0cmluZygpKTtcbn07XG5cbkVKU09OLmFkZFR5cGUoJ0RlY2ltYWwnLCBmdW5jdGlvbiAoc3RyKSB7XG4gIHJldHVybiBEZWNpbWFsKHN0cik7XG59KTtcblxuZXhwb3J0IHsgRGVjaW1hbCB9O1xuIl19
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1ldGVvcjovL/CfkrthcHAvcGFja2FnZXMvbW9uZ28tZGVjaW1hbC9kZWNpbWFsLmpzIl0sIm5hbWVzIjpbIm1vZHVsZSIsImV4cG9ydCIsIkRlY2ltYWwiLCJFSlNPTiIsImxpbmsiLCJ2IiwicHJvdG90eXBlIiwidHlwZU5hbWUiLCJ0b0pTT05WYWx1ZSIsInRvSlNPTiIsImNsb25lIiwidG9TdHJpbmciLCJhZGRUeXBlIiwic3RyIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUFBLE1BQU0sQ0FBQ0MsTUFBUCxDQUFjO0FBQUNDLFNBQU8sRUFBQyxNQUFJQTtBQUFiLENBQWQ7QUFBcUMsSUFBSUMsS0FBSjtBQUFVSCxNQUFNLENBQUNJLElBQVAsQ0FBWSxjQUFaLEVBQTJCO0FBQUNELE9BQUssQ0FBQ0UsQ0FBRCxFQUFHO0FBQUNGLFNBQUssR0FBQ0UsQ0FBTjtBQUFROztBQUFsQixDQUEzQixFQUErQyxDQUEvQztBQUFrRCxJQUFJSCxPQUFKO0FBQVlGLE1BQU0sQ0FBQ0ksSUFBUCxDQUFZLFlBQVosRUFBeUI7QUFBQ0YsU0FBTyxDQUFDRyxDQUFELEVBQUc7QUFBQ0gsV0FBTyxHQUFDRyxDQUFSO0FBQVU7O0FBQXRCLENBQXpCLEVBQWlELENBQWpEOztBQUc3R0gsT0FBTyxDQUFDSSxTQUFSLENBQWtCQyxRQUFsQixHQUE2QixZQUFXO0FBQ3RDLFNBQU8sU0FBUDtBQUNELENBRkQ7O0FBSUFMLE9BQU8sQ0FBQ0ksU0FBUixDQUFrQkUsV0FBbEIsR0FBZ0MsWUFBWTtBQUMxQyxTQUFPLEtBQUtDLE1BQUwsRUFBUDtBQUNELENBRkQ7O0FBSUFQLE9BQU8sQ0FBQ0ksU0FBUixDQUFrQkksS0FBbEIsR0FBMEIsWUFBWTtBQUNwQyxTQUFPUixPQUFPLENBQUMsS0FBS1MsUUFBTCxFQUFELENBQWQ7QUFDRCxDQUZEOztBQUlBUixLQUFLLENBQUNTLE9BQU4sQ0FBYyxTQUFkLEVBQXlCLFVBQVVDLEdBQVYsRUFBZTtBQUN0QyxTQUFPWCxPQUFPLENBQUNXLEdBQUQsQ0FBZDtBQUNELENBRkQsRSIsImZpbGUiOiIvcGFja2FnZXMvbW9uZ28tZGVjaW1hbC5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEVKU09OIH0gZnJvbSAnbWV0ZW9yL2Vqc29uJztcbmltcG9ydCB7IERlY2ltYWwgfSBmcm9tICdkZWNpbWFsLmpzJztcblxuRGVjaW1hbC5wcm90b3R5cGUudHlwZU5hbWUgPSBmdW5jdGlvbigpIHtcbiAgcmV0dXJuICdEZWNpbWFsJztcbn07XG5cbkRlY2ltYWwucHJvdG90eXBlLnRvSlNPTlZhbHVlID0gZnVuY3Rpb24gKCkge1xuICByZXR1cm4gdGhpcy50b0pTT04oKTtcbn07XG5cbkRlY2ltYWwucHJvdG90eXBlLmNsb25lID0gZnVuY3Rpb24gKCkge1xuICByZXR1cm4gRGVjaW1hbCh0aGlzLnRvU3RyaW5nKCkpO1xufTtcblxuRUpTT04uYWRkVHlwZSgnRGVjaW1hbCcsIGZ1bmN0aW9uIChzdHIpIHtcbiAgcmV0dXJuIERlY2ltYWwoc3RyKTtcbn0pO1xuXG5leHBvcnQgeyBEZWNpbWFsIH07XG4iXX0=

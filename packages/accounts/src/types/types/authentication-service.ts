@@ -9,4 +9,5 @@ export interface AuthenticationService {
   serviceName: string;
   setStore(store: DatabaseInterface): void;
   authenticate(params: any): Promise<User | null>;
+  getUserProfile(userId: string): Promise<any | null>;
 }

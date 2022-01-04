@@ -1,0 +1,14 @@
+name: node_id
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 节点ID
+omit: false
+readonly: false
+required: true
+searchable: true
+sort_no: 110
+sortable: true
+type: text

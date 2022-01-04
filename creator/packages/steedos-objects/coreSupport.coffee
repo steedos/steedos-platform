@@ -85,7 +85,7 @@ Creator.getCollection = (object_name, spaceId)->
 	if !object_name
 		object_name = Session.get("object_name")
 	if object_name
-		return Creator.Collections[Creator.getObject(object_name, spaceId)?._collection_name]
+		return Creator.Collections[Creator.getObject(object_name, spaceId)?._collection_name || object_name]
 
 Creator.removeCollection = (object_name)->
 	delete Creator.Collections[object_name]
@@ -204,7 +204,9 @@ Creator.getObjectRelateds = (object_name)->
 		_.each Creator.Objects, (related_object, related_object_name)->
 			_.each related_object.fields, (related_field, related_field_name)->
 				if (related_field.type == "master_detail" || related_field.type == "lookup") and related_field.reference_to and related_field.reference_to == object_name and relatedListMap[related_object_name]
-					relatedListMap[related_object_name] = { object_name: related_object_name, foreign_key: related_field_name, sharing: related_field.sharing }
+					# 当related_object.fields中有两个或以上的字段指向object_name表示的对象时，优先取第一个作为外键关系字段，但是related_field为主子表时强行覆盖之前的relatedListMap[related_object_name]值
+					if _.isEmpty relatedListMap[related_object_name] || related_field.type == "master_detail"
+						relatedListMap[related_object_name] = { object_name: related_object_name, foreign_key: related_field_name, write_requires_master_read: related_field.write_requires_master_read }
 		if relatedListMap['cms_files']
 			relatedListMap['cms_files'] = { object_name: "cms_files", foreign_key: "parent" }
 		if relatedListMap['instances']
@@ -224,13 +226,17 @@ Creator.getObjectRelateds = (object_name)->
 		related_objects.push {object_name:"cms_files", foreign_key: "parent"}
 
 	_.each Creator.Objects, (related_object, related_object_name)->
+		if related_object_name == "cfs.files.filerecord"
+			# cfs.files.filerecord对象在第二次点击的时候related_object返回的是app-builder中的"metadata.parent"字段被删除了，记到metadata字段的sub_fields中了，所以要单独处理。
+			sfsFilesObject = Creator.getObject("cfs.files.filerecord")
+			sfsFilesObject && related_object = sfsFilesObject
 		_.each related_object.fields, (related_field, related_field_name)->
 			if (related_field.type == "master_detail" || (related_field.type == "lookup" && related_field.relatedList)) and related_field.reference_to and related_field.reference_to == object_name
 				if related_object_name == "object_fields"
 					#TODO 待相关列表支持排序后，删除此判断
 					related_objects.splice(0, 0, {object_name:related_object_name, foreign_key: related_field_name})
 				else
-					related_objects.push {object_name:related_object_name, foreign_key: related_field_name, sharing: related_field.sharing}
+					related_objects.push {object_name:related_object_name, foreign_key: related_field_name, write_requires_master_read: related_field.write_requires_master_read}
 
 	if _object.enable_tasks
 		related_objects.push {object_name:"tasks", foreign_key: "related_to"}
@@ -354,6 +360,33 @@ Creator.processPermissions = (po)->
 		po.allowEdit = true
 		po.allowDelete = true
 		po.viewCompanyRecords = true
+		
+	# 如果附件相关权限配置为空，则兼容之前没有附件权限配置时的规则
+	if po.allowRead
+		typeof po.allowReadFiles != "boolean" && po.allowReadFiles = true
+		typeof po.viewAllFiles != "boolean" && po.viewAllFiles = true
+	if po.allowEdit
+		typeof po.allowCreateFiles != "boolean" && po.allowCreateFiles = true
+		typeof po.allowEditFiles != "boolean" && po.allowEditFiles = true
+		typeof po.allowDeleteFiles != "boolean" && po.allowDeleteFiles = true
+	if po.modifyAllRecords
+		typeof po.modifyAllFiles != "boolean" && po.modifyAllFiles = true
+
+	if po.allowCreateFiles
+		po.allowReadFiles = true
+	if po.allowEditFiles
+		po.allowReadFiles = true
+	if po.allowDeleteFiles
+		po.allowEditFiles = true
+		po.allowReadFiles = true
+	if po.viewAllFiles
+		po.allowReadFiles = true
+	if po.modifyAllFiles
+		po.allowReadFiles = true
+		po.allowEditFiles = true
+		po.allowDeleteFiles = true
+		po.viewAllFiles = true
+
 	return po
 
 Creator.getTemplateSpaceId = ()->
@@ -373,8 +406,5 @@ Creator.isCloudAdminSpace = (spaceId)->
 	return false
 
 if Meteor.isServer
-	if process.env.STEEDOS_STORAGE_DIR
-		Creator.steedosStorageDir = process.env.STEEDOS_STORAGE_DIR
-	else
-		path = require('path')
-		Creator.steedosStorageDir = path.resolve(path.join(__meteor_bootstrap__.serverDir, '../../../cfs'))
+	Creator.steedosStorageDir = process.env.STEEDOS_STORAGE_DIR
+	

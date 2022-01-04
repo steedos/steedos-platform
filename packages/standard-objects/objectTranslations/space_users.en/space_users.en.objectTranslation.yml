@@ -1,0 +1,154 @@
+name: space_users
+label: User
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  username:
+    label: Username
+    help: 
+    description: 
+  email:
+    label: Email
+    help: 
+    description: 
+  email_verified:
+    label: Email Verified
+    help: 
+    description: 
+  mobile:
+    label: Mobile
+    help: 
+    description: 
+  mobile_verified:
+    label: Mobile Verified
+    help: 
+    description: 
+  organizations:
+    label: Departments
+    help: 
+    description: 
+  organizations_parents:
+    label: Department Parent Tree
+    help: 
+    description: 
+  organization:
+    label: Primary Department
+    help: 
+    description: 
+  company_ids:
+    label: Divisions
+    help: 
+    description: 
+  company_id:
+    label: Primary Division
+    help: 
+    description: 
+  position:
+    label: Title
+    help: 
+    description: 
+  manager:
+    label: Superior
+    help: 
+    description: 
+  profile:
+    label: Profile
+    help: 
+    description: 
+  contact_id:
+    label: Contact
+    help: 
+    description: 
+  is_supplier:
+    label: Is Supplier
+    help: 
+    description: 
+  is_customer:
+    label: Is Customer
+    help: 
+    description: 
+  work_phone:
+    label: Work Phone Number
+    help: 
+    description: 
+  locale:
+    label: Language
+    help: 
+    options:
+      - label: 简体中文
+        value: zh-cn
+      - label: English
+        value: en-us
+    description: 
+  sort_no:
+    label: Sort Number
+    help: 
+    description: 
+  email_notification:
+    label: Recieve Email Notifications
+    help: 
+    description: 
+  sms_notification:
+    label: Recieve SMS Notifications
+    help: 
+    description: 
+  user_accepted:
+    label: Valid
+    help: 
+    description: 
+  invite_state:
+    label: Invitation Status
+    help: 
+    description: 
+  user:
+    label: User
+    help: 
+    description: 
+  avatar:
+    label: Avatar
+    help: 
+    description: 
+  hr:
+    label: HR
+    help: 
+    description: 
+  last_logon:
+    label: Last Logon Date
+    help: 
+    description: 
+  password_expired:
+    label: Password expired
+    help: 
+    description: 
+groups:
+  '-': '-'
+listviews:
+  all:
+    label: All Valid Users
+  disabled:
+    label: Invalid Users
+  supplier:
+    label: Supplier Users
+  customer:
+    label: Customer Users
+actions:
+  invite_space_users:
+    label: Invite Users
+  setPassword:
+    label: Change Password
+  disable:
+    label: Disable
+  enable:
+    label: Enable
+  lockout:
+    label: Lockout
+  unlock:
+    label: Unlock
+CustomLabels:
+  space_users_field_profile_def_options_admin: 
+  space_users_field_profile_def_options_user: 
+  space_users_field_profile_def_options_supplier: 
+  space_users_field_profile_def_options_customer: 

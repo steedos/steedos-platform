@@ -1,0 +1,57 @@
+{
+  "name": "@steedos/formula",
+  "version": "2.1.65",
+  "description": "Salesforce Formula Parser",
+  "main": "lib/formulon.js",
+  "files": [
+    "lib"
+  ],
+  "engines": {
+    "node": ">=11.0.0"
+  },
+  "scripts": {
+    "build": "yarn compile:parser && yarn rollup -c",
+    "compile:parser": "node .scripts/make-pegjs",
+    "test": "mocha --require @babel/register --recursive --grep @integration --invert",
+    "test:integration": "mocha --require @babel/register --recursive --grep @integration",
+    "lint": "eslint --ignore-path .gitignore .",
+    "commitlint": "commitlint",
+    "semantic-release": "semantic-release",
+    "compile": "yarn build",
+    "prepare": "yarn build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leifg/formulon.git"
+  },
+  "keywords": [
+    "parser",
+    "salesforce",
+    "formula"
+  ],
+  "author": "Leif Gensert",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/register": "^7.8.3",
+    "@commitlint/config-conventional": "^11.0.0",
+    "babel-eslint": "^10.1.0",
+    "chai": "^4.2.0",
+    "commitlint": "^11.0.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "glob": "^7.1.6",
+    "mocha": "^8.0.1",
+    "pegjs": "^0.10.0",
+    "rollup": "^2.26.5",
+    "rollup-plugin-terser": "^7.0.0",
+    "semantic-release": "^17.0.4"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -4,11 +4,12 @@ const chalk = require('chalk');
 const commander = require('commander');
 const fs = require('fs-extra');
 const path = require("path");
+const cpy = require("cpy");
 
 const packageJson = require('./package.json');
 
-const projectConfigName = 'package.template.json'
-const templateProject = "@steedos/project-template-empty";
+const projectConfigName = 'package.json'
+const defaultTemplate = "default";
 
 
 let projectName;
@@ -37,14 +38,15 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
-
+/**
+ * TODO 支持参数：useNpm, example, examplePath, typescript
+ */
 function createProject(name) {
   const root = path.resolve(name);
   const projectName = path.basename(root);
 
-  const infoName = name === projectName?  projectName : name
-  let templateProjectDir = path.dirname(require.resolve(templateProject))
-
+  const infoName = name === projectName ? projectName : name
+  let template = defaultTemplate;
   let projectDir = root || path.join(process.cwd(), projectName)
 
   if (fs.existsSync(projectDir)) {
@@ -59,30 +61,60 @@ function createProject(name) {
     return true;
   }
 
-  if (templateProjectDir) {
+  if (template) {
     spinner.start(`Create project ${projectName}`);
-    fs.copy(templateProjectDir, projectDir, { overwrite: true, filter: filterFunction, errorOnExist: true }).then(() => {
+    cpy([
+      '**',
+      '.steedos/**',
+      '!.steedos/node_modules/**',
+      '.vscode/**',
+    ], projectDir, {
+      parents: true,
+      flat: false,
+      cwd: path.join(__dirname, 'templates', template),
+      rename: (name) => {
+        switch (name) {
+          case 'env':
+            return '.env'
+          case 'gitignore': {
+            return '.gitignore'
+          }
+          case '_package.json': {
+            return 'package.json'
+          }
+          default: {
+            return name
+          }
+        }
+      }
+    }).then((result) => {
       const projectConfig = fs.readJsonSync(path.join(projectDir, projectConfigName))
       projectConfig.name = projectName
+      projectConfig.version = `1.0.0`;
       fs.outputJsonSync(path.join(projectDir, 'package.json'), projectConfig, { spaces: 4, EOL: '\r\n' })
-      fs.removeSync(path.join(projectDir, projectConfigName))
-      const gitignorePath = path.join(projectDir, '.gitignore')
-      if (fs.existsSync(gitignorePath)) {
-        // let data = fs.readFileSync(gitignorePath, 'utf8')
-        // data = data + '\r\n' + 'steedos-config.yml'
-        // fs.outputFileSync(gitignorePath, data)
-      } else {
-        fs.outputFileSync(gitignorePath, 'node_modules')
+
+      try {
+        const appConfig = fs.readJsonSync(path.join(projectDir, 'steedos-app', 'package.json'))
+        appConfig.version = `1.0.0`;
+        fs.outputJsonSync(path.join(projectDir, 'steedos-app', 'package.json'), appConfig, { spaces: 4, EOL: '\r\n' })
+      } catch (error) {
+        // console.log(`app package.json error`, error);
+      }
+
+      try {
+        const env = fs.readFileSync(path.join(projectDir, '.env'))
+        fs.outputFileSync(path.join(projectDir, '.env.local'), env)
+      } catch (error) {
+        // console.log(`env error`, error);
       }
       spinner.succeed()
       console.info('We suggest that you begin by typing:')
       console.info(`    ${chalk.cyan('cd')} ${infoName}`)
       console.info(`    ${chalk.cyan('yarn')}`)
       console.info(`    ${chalk.cyan('yarn start')}`)
+    }).catch((err) => {
+      spinner.fail(err);
     })
-      .catch(err => {
-        spinner.fail(err);
-      })
   }
 }
 createProject(projectName);

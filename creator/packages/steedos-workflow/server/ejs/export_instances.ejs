@@ -110,7 +110,7 @@
 							<% if (!ins["values"] || !ins["values"][field.code]) { %>
 								<Cell><Data ss:Type="String"><%= "" %></Data></Cell>
 							<% } else { %>
-								<% if (['user','group'].includes(field.type) && field.is_multiselect == false) { %>
+								<% if (['user','group'].includes(field.type) && field.is_multiselect != true) { %>
 									<Cell><Data ss:Type="String"><%= field.type=="user" ? ins["values"][field.code]["name"] : ins["values"][field.code]["fullname"]%></Data></Cell>
 								<% } else if (['user','group'].includes(field.type) && field.is_multiselect == true) {
 									var tem_ary = new Array;
@@ -183,7 +183,7 @@
 								<% if (!ins["values"] || !ins["values"][sec.code]) { %>
 									<Cell><Data ss:Type="String"><%= "" %></Data></Cell>
 								<% } else { %>
-									<% if (['user','group'].includes(sec.type) && sec.is_multiselect == false) { %>
+									<% if (['user','group'].includes(sec.type) && sec.is_multiselect != true) { %>
 										<Cell><Data ss:Type="String"><%= sec.type=="user" ? ins["values"][sec.code]["name"] : ins["values"][sec.code]["fullname"]%></Data></Cell>
 									<% } else if (['user','group'].includes(sec.type) && sec.is_multiselect == true) {
 										var tem_ary = new Array;
@@ -346,7 +346,7 @@
 									<% if (!f_obj[field.code]) { %>
 										<Cell><Data ss:Type="String"><%= "" %></Data></Cell>
 									<% } else { %>
-										<% if (['user','group'].includes(field.type) && field.is_multiselect == false) { %>
+										<% if (['user','group'].includes(field.type) && field.is_multiselect != true) { %>
 											<Cell><Data ss:Type="String"><%= field.type=="user" ? f_obj[field.code]["name"] : f_obj[field.code]["fullname"]%></Data></Cell>
 										<% } else if (['user','group'].includes(field.type) && field.is_multiselect == true) {
 											var tem_ary = new Array;

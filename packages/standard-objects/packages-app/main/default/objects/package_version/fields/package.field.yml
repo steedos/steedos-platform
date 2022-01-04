@@ -1,0 +1,16 @@
+name: package
+filterable: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 软件包名称
+multiple: false
+omit: false
+readonly: true
+reference_to: package
+required: false
+searchable: false
+sort_no: 120
+sortable: false
+type: master_detail

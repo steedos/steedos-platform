@@ -44,7 +44,7 @@ export type SteedosFormulaVarPathTypeConfig = {
  */
 export type SteedosFormulaParamTypeConfig = {
     key: string,
-    path: any,
+    path?: any,
     value: any
 }
 
@@ -62,8 +62,9 @@ export type SteedosFormulaParamTypeConfig = {
  */
 export type SteedosFormulaVarTypeConfig = {
     key: string,
-    paths: Array<SteedosFormulaVarPathTypeConfig>,
-    is_user_var?: boolean
+    paths?: Array<SteedosFormulaVarPathTypeConfig>,
+    is_user_var?: boolean,
+    is_simple_var?: boolean //当不传入objectApiName时变量上设置该属性表示一个普通的变量，此时paths为空
 }
 
 export type SteedosFieldFormulaTypeConfig = {

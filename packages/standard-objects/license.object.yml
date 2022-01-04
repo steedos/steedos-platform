@@ -72,13 +72,17 @@ actions:
   apply:
     label: Apply
     on: list
-    visible: true
+    visible: false
   changeSpaceLicense:
     label: 更新许可证
     on: list
-    visible: true
+    visible: false
   copySpaceId:
     label: Copy space id
+    on: list
+    visible: false
+  manualSyncSpaceLicense:
+    label: 同步许可证
     on: list
     visible: true
 list_views:

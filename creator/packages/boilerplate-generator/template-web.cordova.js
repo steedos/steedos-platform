@@ -48,6 +48,13 @@ export const headTemplate = ({
     '        __meteor_runtime_config__.DDP_DEFAULT_CONNECTION_URL = (__meteor_runtime_config__.DDP_DEFAULT_CONNECTION_URL || \'\').replace(/localhost/i, \'10.0.2.2\');',
     '      }',
     '    }',
+    'if(!document.body){\n' +
+    '    var tempBody = document.createElement("body");\n' +
+    '    document.body = tempBody;\n' +
+    '    document.addEventListener(\'DOMContentLoaded\', (event) => {\n' +
+    '        tempBody.remove()\n' +
+    '    });\n' +
+    '}',
     '  </script>',
     '',
     '  <script type="text/javascript" src="/cordova.js"></script>',

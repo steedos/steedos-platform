@@ -44,11 +44,11 @@
 				{{#with computed_objects hasAppDashboard}}
 					{{#each this.visiables}}
 						<li class="slds-context-bar__item {{object_class_name this}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
-							<a data-object-name="{{this.name}}" href="{{object_url}}" title="{{this.label}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
+							<a data-object-name="{{object_name}}" target="{{#if this.target}}_blank{{/if}}" href="{{object_url}}" title="{{object_label}}" class="slds-context-bar__label-action creator-object-nav-{{this.id}}">
 								{{#if this.is_temp}}
 									<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="{{_ 'creator_navigation_nav_not_saved'}}" aria-label="{{_ 'creator_navigation_nav_not_saved'}}">*</abbr>
 								{{/if}}
-								<span class="slds-truncate">{{this.label}}</span>
+								<span class="slds-truncate">{{object_label}}</span>
 								{{#with getObjectBadge this app_id}}
 									<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>
 								{{/with}}
@@ -56,7 +56,7 @@
 									<div class="slds-context-bar__icon-action slds-p-right_none btn-close-nav">
 										{{> steedos_button className="slds-button_icon-current-color" 
 											iconClassName="slds-icon-text-default slds-icon--xx-small"
-											iconCategory="utility" iconName="close" variant="icon" title=(btnCloseTempNavTitle this.label)}}
+											iconCategory="utility" iconName="close" variant="icon" title=(btnCloseTempNavTitle object_label)}}
 									</div>
 								{{/if}}
 							</a>
@@ -79,12 +79,12 @@
 								<ul class="slds-dropdown__list slds-show">
 									{{#each this.hiddens}}
 										<li class="slds-dropdown__item slds-context-bar__item {{object_class_name this}} {{#if this.is_temp}}slds-is-unsaved{{/if}}">
-											<a role="option" tabindex="-1" data-object-name="{{this.name}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this.name}}">
+											<a role="option" tabindex="-1" data-object-name="{{object_name}}" target="{{#if this.target}}_blank{{/if}}" href="{{object_url}}" title="{{object_label}}" class="slds-context-bar__label-action creator-object-nav-{{this.id}}">
 												<span class="slds-truncate">
 													{{#if this.is_temp}}
 														<abbr class="slds-indicator_unsaved slds-p-right_xx-small" title="{{_ 'creator_navigation_nav_not_saved'}}" aria-label="{{_ 'creator_navigation_nav_not_saved'}}">*</abbr>
 													{{/if}}
-													<span class="slds-truncate">{{this.label}}</span>
+													<span class="slds-truncate">{{object_label}}</span>
 												</span>
 												{{#with getObjectBadge this app_id}}
 													<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>

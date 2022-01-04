@@ -11,12 +11,18 @@ else if Meteor.settings.public.cfs?.store == "S3"
         fs_store = new FS.Store.S3(store_name)
     else if Meteor.isServer
         fs_store = new FS.Store.S3 store_name, Meteor.settings.cfs.aws
+
+else if Meteor.settings.public.cfs?.store == "STEEDOSCLOUD"
+    if Meteor.isClient
+        fs_store = new FS.Store.STEEDOSCLOUD(store_name)
+    else if Meteor.isServer
+        fs_store = new FS.Store.STEEDOSCLOUD store_name, Meteor.settings.cfs.steedosCloud
 else
     if Meteor.isClient
         fs_store = new FS.Store.FileSystem(store_name)
     else if Meteor.isServer
         fs_store = new FS.Store.FileSystem(store_name, {
-                path: require('path').join(Creator.steedosStorageDir, "files/#{store_name}"),
+                path: require('path').join(process.env.STEEDOS_STORAGE_DIR, "files/#{store_name}"),
                 fileKeyMaker: (fileObj)->
                     # Lookup the copy
                     store = fileObj and fileObj._getInfo(store_name)
@@ -43,7 +49,7 @@ else
 
                     path = require('path')
                     mkdirp = require('mkdirp')
-                    pathname = path.join(Creator.steedosStorageDir, "files/#{store_name}/" + year + '/' + month + '/' + ins_id)
+                    pathname = path.join(process.env.STEEDOS_STORAGE_DIR, "files/#{store_name}/" + year + '/' + month + '/' + ins_id)
                     # Set absolute path
                     absolutePath = path.resolve(pathname)
                     # Ensure the path exists

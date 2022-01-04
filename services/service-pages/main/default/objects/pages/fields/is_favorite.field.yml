@@ -1,0 +1,5 @@
+name: is_favorite
+label: is_favorite
+sort_no: 150
+type: toggle
+hidden: true

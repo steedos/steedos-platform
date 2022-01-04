@@ -1,7 +1,9 @@
+const { getObject, getObjectConfig } = require('@steedos/objectql');
 var objectql = require('@steedos/objectql');
 var yaml = require('js-yaml');
 const _ = require('underscore');
 var objectCore = require('./objects.core.js');
+var objectTree = require('./objects.tree.js');
 const internalBaseObjects = ['base', 'core'];
 const relationalDatabases = ['sqlserver','postgres','oracle','mysql','sqlite'];
 function isCodeObjects(name){
@@ -39,16 +41,16 @@ function isRepeatedName(doc) {
     return false;
 };
 
-function checkName(name){
-    if(name.endsWith('__c')){
-        name = name.replace("__c", '')
+function checkName(name,spaceId){
+    if(objectql.hasObjectSuffix(name, spaceId, true)){
+        name = name.replace(objectql.getObjectSuffix(spaceId, true), '')
     }
     var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
     if(!reg.test(name)){
         throw new Error("API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
     }
-    if(name.length > 20){
-        throw new Error("名称长度不能大于20个字符");
+    if(name.length > 50){
+        throw new Error("名称长度不能大于50个字符");
     }
     return true
 }
@@ -86,15 +88,14 @@ function initObjectPermission(userId, doc){
     }));
 }
 
-function getObjectName(datasource, objectName){
-    console.log('getObjectName', datasource, objectName);
+function getObjectName(datasource, objectName, spaceId, oldObjectName){
     if(datasource && datasource != 'default'){
         return objectName;
       }else{
-          if(objectName.endsWith('__c')){
+          if(objectql.hasObjectSuffix(objectName, spaceId)){
             return objectName;
           }else{
-            return `${objectName}__c`;
+            return objectql._makeNewObjectName(objectName, spaceId, oldObjectName);
           }
       }
 }
@@ -227,7 +228,41 @@ function onChangeObjectName(oldName, newDoc){
     });
 }
 
-Creator.Objects.objects.triggers = {
+function beforeRemoveObject(doc){
+    const objectName = doc.name;
+    const obj = getObject(objectName);
+    if(obj && obj.details && obj.details.length){
+        throw new Meteor.Error(500, `不能删除该对象，因为在已知的主表子表关系中它是以下对象的主对象：${obj.details}`);
+    }
+}
+
+function beforeRestoreObject(doc){
+    let fields = Creator.getCollection("object_fields").find({
+        object: doc.name,
+        space: doc.space,
+        type: "master_detail"
+    }, {
+        fields: {
+            reference_to: 1
+        }
+    }).fetch();
+    _.each(fields, (field)=>{
+        if(field.reference_to && _.isString(field.reference_to)){
+            let exist = false;
+            try{
+                exist = !!getObject(field.reference_to);
+            }
+            catch(ex){
+                exist = false;
+            }
+            if(!exist){
+                throw new Meteor.Error(500, `不能还原该对象，因为在已知的主表子表关系中以下主对象未还原：${field.reference_to}`);
+            }
+        }
+    });
+}
+
+let objectTriggers = {
     "before.insert.server.objects": {
         on: "server",
         when: "before.insert",
@@ -235,8 +270,8 @@ Creator.Objects.objects.triggers = {
             if(!allowChangeObject()){
                 throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
             }
-            checkName(doc.name);
-            doc.name = getObjectName(doc.datasource, doc.name);
+            checkName(doc.name, doc.space);
+            doc.name = getObjectName(doc.datasource, doc.name, doc.space);
             if (isRepeatedName(doc)) {
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
@@ -264,20 +299,20 @@ Creator.Objects.objects.triggers = {
                 index: true,
                 searchable: true
             });
-            Creator.getCollection("object_fields").insert({
-                object: doc.name,
-                owner: userId,
-                _name: "owner",
-                label: "所有者",
-                space: doc.space,
-                type: "lookup",
-                reference_to: "users",
-                sortable: true,
-                index: true,
-                defaultValue: "{userId}",
-                omit: true,
-                hidden: true
-            });
+            // Creator.getCollection("object_fields").insert({
+            //     object: doc.name,
+            //     owner: userId,
+            //     _name: "owner",
+            //     label: "所有者",
+            //     space: doc.space,
+            //     type: "lookup",
+            //     reference_to: "users",
+            //     sortable: true,
+            //     index: true,
+            //     defaultValue: "{userId}",
+            //     omit: true,
+            //     hidden: true
+            // });
             Creator.getCollection("object_listviews").insert({
                 name: "all",
                 label: "所有",
@@ -311,15 +346,29 @@ Creator.Objects.objects.triggers = {
             }
             modifier.$set = modifier.$set || {}
 
+            if(!doc.is_deleted && modifier.$set.is_deleted){
+                beforeRemoveObject(doc);
+            }
+            else if(doc.is_deleted && !modifier.$set.is_deleted){
+                beforeRestoreObject(doc);
+            }
+            // 零代码配置 enable_tree: true 时，检查是否有parent、children两个字段， 若无则添加。
+            if(modifier.$set.enable_tree !== doc.enable_tree && modifier.$set.enable_tree === true){
+                objectTree.insertParentAndChildrenFieldForTreeObject(Object.assign({}, doc, modifier.$set))
+            }
             if(modifier.$set.is_enable){
-                if(!canEnable({fields: doc.fields, datasource: modifier.$set.datasource || doc.datasource})){
+                let fields = doc.fields;
+                if (!fields) {
+                    fields = Creator.getCollection("object_fields").find({space: doc.space, object: doc.name}).fetch();
+                }
+                if(!canEnable({fields: fields, datasource: modifier.$set.datasource || doc.datasource})){
                     throw new Meteor.Error(500, "不能启用对象，请先配置主键字段");
                 }
             }
 
             if ((modifier.$set.name && doc.name !== modifier.$set.name) || modifier.$set.datasource && doc.datasource !== modifier.$set.datasource) {
                 checkName(modifier.$set.name || doc.name);
-                modifier.$set.name = getObjectName(modifier.$set.datasource || doc.datasource, modifier.$set.name || doc.name);
+                modifier.$set.name = getObjectName(modifier.$set.datasource || doc.datasource, modifier.$set.name || doc.name, doc.space, doc.name);
                 if (isRepeatedName({_id: doc._id, name: modifier.$set.name || doc.name, datasource: modifier.$set.datasource || doc.datasource})) {
                     throw new Meteor.Error(500, "对象名称不能重复");
                 }
@@ -349,6 +398,7 @@ Creator.Objects.objects.triggers = {
             if(!allowChangeObject()){
                 throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
             }
+            beforeRemoveObject(doc);
             // var documents, object_collections;
             // if (doc.app_unique_id && doc.app_version) {
             //     return;
@@ -369,7 +419,7 @@ Creator.Objects.objects.triggers = {
         when: "after.remove",
         todo: function (userId, doc) {
 
-            if(!doc.name.endsWith("__c") && !doc.datasource){
+            if(!objectql.hasObjectSuffix(doc.name, doc.space) && !doc.datasource){
                 console.warn('warn: Not remove. Invalid custom object -> ', doc.name);
                 return;
             }        
@@ -417,6 +467,13 @@ Creator.Objects.objects.triggers = {
     // }
 
 }
+_.each(Creator.Objects.objects.triggers, function(v, k){
+    if(k.endsWith('_afterInsert')){
+        objectTriggers[k] = v
+    }
+})
+
+Creator.Objects.objects.triggers = objectTriggers
 
 // Creator.Objects['objects'].methods = {
 //     export_yml: async function (req, res) {

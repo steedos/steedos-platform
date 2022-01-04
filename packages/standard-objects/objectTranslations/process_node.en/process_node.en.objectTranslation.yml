@@ -1,0 +1,120 @@
+name: process_node
+label: Approval Steps
+description: 
+fields:
+  name:
+    label: 
+    help: 
+    description: 
+  label:
+    label: 
+    help: 
+    description: 
+  order:
+    label: 
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  process_definition:
+    label: 
+    help: 
+    description: 
+  filtrad:
+    label: All records should enter this step
+    help: 
+    description: 
+  entry_criteria:
+    label: Entry criteria
+    help: 
+    description: 
+  if_criteria_not_met:
+    label: 
+    help: 
+    options:
+      - label: approve
+        value: approve
+      - label: reject
+        value: reject
+      - label: skip
+        value: skip
+    description: 
+  approver:
+    label: Select Approver
+    help: 
+    options:
+      - label: Let the submitter choose the approver manually
+        value: submitter_choose
+      - label: Automatically assign to approver(s)
+        value: auto_assign
+    description: 
+  assigned_approver_users:
+    label: 
+    help: 
+    description: 
+  assigned_approver_roles:
+    label: 
+    help: 
+    description: 
+  assigned_approver_flow_roles:
+    label: 
+    help: 
+    description: 
+  assigned_approver_user_field:
+    label: 
+    help: 
+    description: 
+  when_multiple_approvers:
+    label: When multiple approvers are selected
+    help: 
+    options:
+      - label: Approve or reject based on the FIRST response.
+        value: first_response
+      - label: Require UNANIMOUS approval from all selected approvers.
+        value: unanimous
+    description: 
+  reject_behavior:
+    label: Reject Behavior
+    help: What should happen if the approver rejects this request?
+    options:
+      - label: >-
+          Perform all rejection actions for this step AND all final rejection
+          actions. (Final Rejection)
+        value: reject_request
+      - label: >-
+          Perform ONLY the rejection actions for this step and send the approval
+          request back to the most recent approver. (Go Back 1 Step)
+        value: back_to_previous
+    description: 
+  approval_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  approval_workflow_notifications_actions:
+    label: Workflow Notification
+    help: 
+    description: 
+  rejection_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  rejection_workflow_notifications_actions:
+    label: Workflow Notification
+    help: 
+    description: 
+groups:
+  specify_step_criteria: Specify Step Criteria
+  select_assigned_approver: Select Assigned Approver
+  approval_actions: Approval Actions
+  rejection_actions: Rejection Actions
+listviews:
+  all:
+    label: All
+CustomLabels:
+  process_node_field_approver_options_auto_queue: 
+  process_node_field_approver_options_role: 
+  process_node_field_auto_approver: 
+  process_node_field_auto_approver_$_type: 
+  process_node_field_auto_approver_$_value: 

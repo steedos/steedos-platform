@@ -8,8 +8,18 @@ Template.creatorHeader.helpers
 		return Steedos.absoluteUrl("/api/files/avatars/#{avatar}")
 
 	defaultLogoUrl: ()->
-		logo_url = "/packages/steedos_creator/assets/logo-square.png"
-		return Steedos.absoluteUrl(logo_url)
+		# 公司logo可以通过配置文件配置
+		settings = Session.get("tenant_settings");
+		
+		if settings
+			avatar_url = settings?.logo_square_url;
+		
+		if !avatar_url || !settings
+			avatar_url = "/packages/steedos_creator/assets/logo-square.png"
+			if(Meteor.user()?.locale != 'zh-cn')
+				avatar_url = "/packages/steedos_creator/assets/logo-square.en-us.png"
+		
+		return Steedos.absoluteUrl(avatar_url)
 	
 	currentUserUser: ()->
 		url = "app/admin/users/view/#{Steedos.userId()}"

@@ -2,13 +2,16 @@ name: object_actions
 label: Object Action
 icon: actions_and_buttons
 hidden: true
+version: 2
 fields:
   object:
     type: master_detail
     reference_to: objects
     reference_to_field: name
+    write_requires_master_read: true
     required: true
     label: Object
+    create: false
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -79,13 +82,27 @@ fields:
                 icon: "action.more"
               }];
             }
+  type: 
+    type: select
+    options:
+      - label: Custom JavaScript
+        value: script
+      # - label: 打印模板(word)
+      #   value: word-print
+    defaultValue: script
+  # word_template:
+  #   type: lookup
+  #   reference_to: word_templates
+  #   visible_on: "{{formData.type === 'word-print' ? true: false}}"
+  #   create: false
   todo:
     label: Execute Script
-    type: textarea
-    required: false
-    omit: true
-    hidden: true
+    type: code
+    required: true
+    # omit: true
+    # hidden: true
     is_wide: true
+    visible_on: "{{formData.type != 'word-print' ? true: false}}"
 paging:
   enabled: false
 list_views:

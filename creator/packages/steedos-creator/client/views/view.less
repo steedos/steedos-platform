@@ -219,6 +219,17 @@ form.two-columns-form{
 			}
 		}
 	}
+
+	@media (max-width: 767px) {
+		.object-form{
+			.ant-drawer-bottom{
+				height: 48px !important;
+				.ant-drawer-body{
+					padding-top: 9px !important;
+				}
+			}
+		}
+	}
 }
 
 
@@ -233,4 +244,25 @@ form.two-columns-form{
 	z-index: 100;
 	cursor: pointer;
 	overflow: hidden;
+}
+
+.object-form{
+	.ant-drawer{
+		.ant-drawer-content-wrapper{
+			.ant-drawer-body{
+				.ant-space{
+					.ant-btn{
+						margin-right: 8px;
+					}
+				}
+			}
+		}
+	}
+}
+
+.related-object-tabular {
+	.ag-theme-balham .ag-root-wrapper {
+		border: none;
+		border-top: #bdc3c7 solid 1px;
+	}
 }

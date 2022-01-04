@@ -4,6 +4,7 @@ icon: drafts
 enable_search: true
 enable_api: true
 hidden: false
+version: 2
 fields:
   name:
     label: Name
@@ -73,7 +74,7 @@ permission_set:
     allowDelete: true
     allowEdit: true
     allowRead: true
-    modifyAllRecords: false
+    modifyAllRecords: true
     viewAllRecords: true
 
 actions:
@@ -88,6 +89,9 @@ actions:
     sort: 110
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions, record) {
+              if(!record){
+                return false;
+              }
               if (Meteor.isCordova){
                 return false;
               }
@@ -102,65 +106,51 @@ actions:
     label: Edit
     sort: 0
     visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions) {
-                var fileRecord, object_fields_keys, perms, record, ref, select;
-              perms = {};
-              if (object_name === Session.get('object_name')) {
-                  fileRecord = Creator.getObjectRecord();
-                if (!fileRecord) {
-                    return false;
-                }
-                object_name = fileRecord.parent['reference_to._o'];
-                record_id = fileRecord.parent._id;
-              } else {
-                  object_name = Session.get('object_name');
-                record_id = Session.get("record_id");
-              }
-              object_fields_keys = _.keys(((ref = Creator.getObject(object_name, Session.get("spaceId"))) != null ? ref.fields : void 0) || {}) || [];
-              select = _.intersection(object_fields_keys, ['owner', 'company_id', 'locked']) || [];
-              if (select.length > 0) {
-                  record = Creator.getObjectRecord(object_name, record_id, select.join(','));
-              } else {
-                  record = {};
-              }
-              record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-              if (record_permissions) {
-                  perms = record_permissions;
-              }
-              return perms["allowEdit"];
+      function (object_name, record_id, record_permissions, record) {
+        if(record_permissions){
+          return record_permissions["allowEdit"];
+        }
+        else{
+          var object_fields_keys, ref, select;
+          if(!record){
+            object_fields_keys = _.keys(((ref = Creator.getObject(object_name, Session.get("spaceId"))) != null ? ref.fields : void 0) || {}) || [];
+            select = _.intersection(object_fields_keys, ['owner', 'company_id', 'locked']) || [];
+            if (select.length > 0) {
+                record = Creator.getObjectRecord(object_name, record_id, select.join(','));
+            } else {
+                record = {};
             }
+            record = Creator.getObjectRecord(object_name, record_id, select.join(','));
+          }
+          record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
+          return record_permissions && record_permissions["allowEdit"];
+        }
+      }
     'on': record
     todo: standard_edit
   standard_delete:
     label: Delete
     visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions) {
-                var fileRecord, object_fields_keys, perms, record, ref, select;
-              perms = {};
-              if (object_name === Session.get('object_name')) {
-                  fileRecord = Creator.getObjectRecord();
-                if (!fileRecord) {
-                    return false;
-                }
-                object_name = fileRecord.parent['reference_to._o'];
-                record_id = fileRecord.parent._id;
-              } else {
-                  object_name = Session.get('object_name');
-                record_id = Session.get("record_id");
-              }
-              object_fields_keys = _.keys(((ref = Creator.getObject(object_name, Session.get("spaceId"))) != null ? ref.fields : void 0) || {}) || [];
-              select = _.intersection(object_fields_keys, ['owner', 'company_id', 'locked']) || [];
-              if (select.length > 0) {
-                  record = Creator.getObjectRecord(object_name, record_id, select.join(','));
-              } else {
-                  record = {};
-              }
-              record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-              if (record_permissions) {
-                  perms = record_permissions;
-              }
-              return perms["allowEdit"];
+      function (object_name, record_id, record_permissions, record) {
+        if(record_permissions){
+          return record_permissions["allowDelete"];
+        }
+        else{
+          var object_fields_keys, ref, select;
+          if(!record){
+            object_fields_keys = _.keys(((ref = Creator.getObject(object_name, Session.get("spaceId"))) != null ? ref.fields : void 0) || {}) || [];
+            select = _.intersection(object_fields_keys, ['owner', 'company_id', 'locked']) || [];
+            if (select.length > 0) {
+                record = Creator.getObjectRecord(object_name, record_id, select.join(','));
+            } else {
+                record = {};
             }
+            record = Creator.getObjectRecord(object_name, record_id, select.join(','));
+          }
+          record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
+          return record_permissions && record_permissions["allowDelete"];
+        }
+      }
     'on': record_more
     todo: standard_delete
   download:
@@ -169,33 +159,26 @@ actions:
   new_version:
     label: Upgrade
     visible: !<tag:yaml.org,2002:js/function> |- 
-      function (object_name, record_id, record_permissions) {
-                var fileRecord, object_fields_keys, perms, record, ref, select;
-              perms = {};
-              if (object_name === Session.get('object_name')) {
-                  fileRecord = Creator.getObjectRecord();
-                if (!fileRecord) {
-                    return false;
-                }
-                object_name = fileRecord.parent['reference_to._o'];
-                record_id = fileRecord.parent._id;
-              } else {
-                  object_name = Session.get('object_name');
-                record_id = Session.get("record_id");
-              }
-              object_fields_keys = _.keys(((ref = Creator.getObject(object_name, Session.get("spaceId"))) != null ? ref.fields : void 0) || {}) || [];
-              select = _.intersection(object_fields_keys, ['owner', 'company_id', 'locked']) || [];
-              if (select.length > 0) {
-                  record = Creator.getObjectRecord(object_name, record_id, select.join(','));
-              } else {
-                  record = {};
-              }
-              record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-              if (record_permissions) {
-                  perms = record_permissions;
-              }
-              return perms["allowEdit"];
+      function (object_name, record_id, record_permissions, record) {
+        if(record_permissions){
+          return record_permissions["allowEdit"];
+        }
+        else{
+          var object_fields_keys, ref, select;
+          if(!record){
+            object_fields_keys = _.keys(((ref = Creator.getObject(object_name, Session.get("spaceId"))) != null ? ref.fields : void 0) || {}) || [];
+            select = _.intersection(object_fields_keys, ['owner', 'company_id', 'locked']) || [];
+            if (select.length > 0) {
+                record = Creator.getObjectRecord(object_name, record_id, select.join(','));
+            } else {
+                record = {};
             }
+            record = Creator.getObjectRecord(object_name, record_id, select.join(','));
+          }
+          record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
+          return record_permissions && record_permissions["allowEdit"];
+        }
+      }
     is_file: true
     'on': record_only
     todo: !<tag:yaml.org,2002:js/function> |- 

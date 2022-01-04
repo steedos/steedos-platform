@@ -1,0 +1,15 @@
+name: space_user_signs
+label: User Sign
+description: 
+fields:
+  user:
+    label: User
+    help: 
+    description: 
+  sign:
+    label: Sign
+    help: 
+    description: 
+listviews:
+  all:
+    label: All User Signs

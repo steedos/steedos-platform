@@ -1,0 +1,43 @@
+{
+  "httpPort": 5488,
+  "store": {
+    "provider": "fs"
+  },
+  "blobStorage": {
+    "provider": "fs"
+  },
+  "logger": {
+    "console": {
+      "transport": "console",
+      "level": "debug"
+    },
+    "file": {
+      "transport": "file",
+      "level": "info",
+      "filename": "logs/reporter.log"
+    },
+    "error": {
+      "transport": "file",
+      "level": "error",
+      "filename": "logs/error.log"
+    }
+  },
+  "allowLocalFilesAccess": true,
+  "reportTimeout": 60000,
+  "workers": {
+    "numberOfWorkers": 2
+  },
+  "extensions": {
+    "authentication": {
+      "cookieSession": {},
+      "admin": {
+        "username": "admin",
+        "password": "password"
+      },
+      "enabled": false
+    },
+    "sample-template": {
+      "createSamples": true
+    }
+  }
+}

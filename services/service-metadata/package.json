@@ -1,0 +1,43 @@
+{
+  "name": "@steedos/service-metadata",
+  "version": "2.1.65",
+  "description": "",
+  "main": "lib/metadata.service.js",
+  "scripts": {
+    "start": "yarn compile && moleculer-runner lib/*.service.js",
+    "dev": "yarn compile && moleculer-runner --repl --hot lib/*.service.js",
+    "cli": "moleculer connect redis://127.0.0.1:6379",
+    "ci": "jest --watch",
+    "test": "jest --coverage",
+    "lint": "eslint services",
+    "dc:up": "docker-compose up --build -d",
+    "dc:logs": "docker-compose logs -f",
+    "dc:down": "docker-compose down",
+    "compile": "tsc",
+    "prepare": "tsc"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv-flow": "^3.1.0",
+    "ioredis": "^4.22.0",
+    "lodash": "^4.17.21",
+    "moleculer": "^0.14.12",
+    "moleculer-cli": "^0.7.1",
+    "moleculer-web": "^0.9.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "7.1.0",
+    "@types/mocha": "^5.2.6",
+    "jslint": "^0.12.1",
+    "moleculer-repl": "^0.6.4",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.3",
+    "typescript": "3.5.3"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}

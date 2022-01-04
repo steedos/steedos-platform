@@ -50,6 +50,7 @@ fields:
     label: Enable User Registration
     type: boolean
     group: Register account
+    defaultValue: true
   default_profile:
     label: Default profile
     type: lookup
@@ -59,10 +60,12 @@ fields:
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
         var result = [];
         profiles.forEach(function (item) {
-          result.push({
-            label: item.label,
-            value: item.name
-          });
+          if(item.name != 'admin'){
+            result.push({
+              label: item.label,
+              value: item.name
+            });
+          }
         });
         return result;
       }
@@ -157,6 +160,10 @@ fields:
     hidden: true
     omit: true
     readonly: true
+  api_key:
+    type: 'text'
+    label: API Key
+    group: Developer
 list_views:
   all:
     label: All Companies

@@ -1,0 +1,144 @@
+{
+  "name": "Sample Data Categorization Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_data.htm",
+  "examples": [
+    {
+      "name": "Deal Size Large and Small",
+      "formula": "IF(Sales_Price__c > 1000000,\n\"Large Deal\",\n\"Small Deal\")",
+      "suites": [
+        {
+          "context": "1000000",
+          "identifiers": {
+            "Sales_Price__c": {
+              "dataType": "number",
+              "value": 1000000
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Small Deal"
+          }
+        },
+        {
+          "context": "1000001",
+          "identifiers": {
+            "Sales_Price__c": {
+              "dataType": "number",
+              "value": 1000001
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Large Deal"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Deal Size Small",
+      "formula": "IF(AND(Price<1,Quantity<1),\"Small\", null)",
+      "suites": [
+        {
+          "context": "Price and Quantity smaller 1",
+          "identifiers": {
+            "Price": {
+              "dataType": "number",
+              "value": 0.5
+            },
+            "Quantity": {
+              "dataType": "number",
+              "value": 0.5
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Small"
+          }
+        },
+        {
+          "context": "Price smaller 1",
+          "identifiers": {
+            "Price": {
+              "dataType": "number",
+              "value": 0.5
+            },
+            "Quantity": {
+              "dataType": "number",
+              "value": 1
+            }
+          },
+          "expectedResult": {
+            "dataType": "null",
+            "value": null
+          }
+        },
+        {
+          "context": "Quantity smaller 1",
+          "identifiers": {
+            "Price": {
+              "dataType": "number",
+              "value": 1
+            },
+            "Quantity": {
+              "dataType": "number",
+              "value": 0.5
+            }
+          },
+          "expectedResult": {
+            "dataType": "null",
+            "value": null
+          }
+        },
+        {
+          "context": "Quantity and Price 1",
+          "identifiers": {
+            "Price": {
+              "dataType": "number",
+              "value": 1
+            },
+            "Quantity": {
+              "dataType": "number",
+              "value": 1
+            }
+          },
+          "expectedResult": {
+            "dataType": "null",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Categorization",
+      "formula": "IF(CONTAINS(Product_Type__c, \"part\"), \"Parts\", \"Service\")",
+      "suites": [
+        {
+          "context": "Part",
+          "identifiers": {
+            "Product_Type__c": {
+              "dataType": "text",
+              "value": "Good part"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Parts"
+          }
+        },
+        {
+          "context": "Service",
+          "identifiers": {
+            "Product_Type__c": {
+              "dataType": "text",
+              "value": "Consulting"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Service"
+          }
+        }
+      ]
+    }
+  ]
+}

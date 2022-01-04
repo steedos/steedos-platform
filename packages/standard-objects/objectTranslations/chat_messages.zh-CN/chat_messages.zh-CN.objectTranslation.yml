@@ -1,0 +1,30 @@
+name: chat_messages
+label: 消息
+description: 
+fields:
+  related_to:
+    label: 相关
+    help: 
+    description: 
+  name:
+    label: 内容
+    help: 
+    description: 
+  type:
+    label: 消息类型
+    help: 
+    options:
+      - label: text
+        value: text
+      - label: image
+        value: image
+      - label: video
+        value: video
+      - label: href
+        value: href
+      - label: system
+        value: system
+    description: 
+listviews:
+  all:
+    label: 所有

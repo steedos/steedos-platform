@@ -1,0 +1,13 @@
+name: member
+label: 组件
+is_wide: true
+reference_to: !<tag:yaml.org,2002:js/function> |- 
+  function(){
+    return ['objects', 'object_actions', 'apps', 'object_fields', 'object_listviews', 'permission_objects', 'object_validation_rules', 'permission_set', 'reports']
+  }
+filtersFunction: !!js/function |
+  function(){
+    return "(is_system ne true)"
+  }
+sort_no: 140
+type: lookup

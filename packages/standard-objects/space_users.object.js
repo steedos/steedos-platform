@@ -3,6 +3,8 @@ const core = require('@steedos/core');
 const validator = require("validator");
 const objectql = require('@steedos/objectql');
 
+const password = require('./util/password')
+
 db.space_users = core.newCollection('space_users');
 
 db.space_users._simpleSchema = new SimpleSchema;
@@ -185,7 +187,6 @@ Meteor.startup(function () {
             }else{
                 doc.profile = 'user'
             }
-
             if(doc.user){
                 doc.owner = doc.user
                 let userDoc = db.users.findOne({_id: doc.user});
@@ -258,6 +259,12 @@ Meteor.startup(function () {
                         if (doc.username) {
                             options.username = doc.username;
                         }
+                        
+                        if(doc.password){
+                            password.parsePassword(doc.password, options);  
+                            delete doc.password;                         
+                        }
+
                         doc.user = db.users.insert(options);
                     }
                 }
@@ -474,6 +481,13 @@ Meteor.startup(function () {
             newEmail = modifier.$set.email;
             if (newEmail && newEmail !== doc.email) {
                 modifier.$set.email_verified = false;
+            }
+
+            if(doc.password){
+                let updateObj = {}
+                password.parsePassword(doc.password, updateObj);  
+                delete doc.password;                         
+                db.users.update({_id: doc.user}, {$set:updateObj});
             }
         });
         db.space_users.after.update(function (userId, doc, fieldNames, modifier, options) {
@@ -880,25 +894,51 @@ let actions = {
         label: "Change Password",
         on: "record",
         visible: function (object_name, record_id, record_permissions) {
+            var organization = Session.get("organization");
+            var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+            if(!allowEdit){
+                // permissions配置没有权限则不给权限
+                return false
+            }
             if(Session.get("app_id") === 'admin'){
                 var space_userId = db.space_users.findOne({user: Steedos.userId(), space: Steedos.spaceId()})._id
                 if(space_userId === record_id){
                     return true
                 }
             }
-            return Creator.isSpaceAdmin();
+
+            // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+            if(Steedos.isSpaceAdmin()){
+                return true;
+            }
+            else{
+                return SpaceUsersCore.isCompanyAdmin(record_id, organization);
+            }
         },
         todo: function (object_name, record_id, fields) {
+            var organization = Session.get("organization");
+            var isAdmin = Creator.isSpaceAdmin();
+            if(!isAdmin){
+                isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
+            }
 
-            if(!Creator.isSpaceAdmin()){
-                // Modal.show("reset_password_modal");
-                Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
-                return;
+            var userSession = Creator.USER_CONTEXT;
+
+            if(!isAdmin){
+                var isPasswordEmpty = false;
+                var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_password_empty", {type: 'get', async: false});
+                if(!result.error){
+                    isPasswordEmpty = result.empty;
+                }
+                if(!isPasswordEmpty){
+                    // Modal.show("reset_password_modal");
+                    Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
+                    return;
+                }
             }
 
             var doUpdate = function (inputValue) {
                 $("body").addClass("loading");
-                var userSession = Creator.USER_CONTEXT;
                 try {
                     Meteor.call("setSpaceUserPassword", record_id, userSession.spaceId, inputValue, function (error, result) {
                         $("body").removeClass("loading");
@@ -980,22 +1020,7 @@ let actions = {
                 return true;
             }
             else{
-                var userId = Steedos.userId();
-                if(organization){
-                    //当前选中组织所属分部的管理员才有权限
-                    if(organization.company_id && organization.company_id.admins){
-                        return organization.company_id.admins.indexOf(userId) > -1;
-                    }
-                }
-                else{
-                    // 用户详细界面拿不到当前选中组织时，只能从记录本身所属分部的管理员中判断，只要当前用户是任何一个所属分部的管理员则有权限
-                    var record = Creator.getObjectRecord(object_name, record_id);
-                    if(record && record.company_ids && record.company_ids.length){
-                        return _.any(record.company_ids,function(item){
-                            return item.admins && item.admins.indexOf(userId) > -1
-                        });
-                    }
-                }
+                return SpaceUsersCore.isCompanyAdmin(record_id, organization);
             }
         }
     },
@@ -1081,17 +1106,33 @@ let methods = {
         try {
             const params = req.params;
             const user = req.user;
-            if (!user.is_space_admin) {
+
+            const steedosSchema = objectql.getSteedosSchema();
+            const spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+
+            const companyIds = spaceUser.company_ids;
+            
+            let isAdmin = user.is_space_admin;
+            if(!isAdmin && companyIds && companyIds.length){
+                const query = {
+                    fields: ['admins'],
+                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+                }
+                const companys = await objectql.getObject("company").find(query);
+                isAdmin = _.any(companys, (item)=>{
+                    return item.admins && item.admins.indexOf(user.userId) > -1
+                })
+            }
+
+            if (!isAdmin) {
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "space_users_method_disable_enable_error_only_space_admin"
+                        reason: "space_users_method_disable_enable_error_only_admin"
                     }
                 });
                 return;
             }
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile"]});
             if (spaceUser.user === user.userId){
                 res.status(400).send({
                     success: false,
@@ -1138,17 +1179,33 @@ let methods = {
         try {
             const params = req.params;
             const user = req.user;
-            if (!user.is_space_admin){
+
+            const steedosSchema = objectql.getSteedosSchema();
+            const spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+
+            const companyIds = spaceUser.company_ids;
+            
+            let isAdmin = user.is_space_admin;
+            if(!isAdmin && companyIds && companyIds.length){
+                const query = {
+                    fields: ['admins'],
+                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+                }
+                const companys = await objectql.getObject("company").find(query);
+                isAdmin = _.any(companys, (item)=>{
+                    return item.admins && item.admins.indexOf(user.userId) > -1
+                })
+            }
+
+            if(!isAdmin){
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "space_users_method_disable_enable_error_only_space_admin"
+                        reason: "space_users_method_disable_enable_error_only_admin"
                     }
                 });
                 return;
             }
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile"] });
             if (spaceUser.user === user.userId) {
                 res.status(400).send({
                     success: false,
@@ -1224,17 +1281,33 @@ let methods = {
         try {
             const params = req.params;
             const user = req.user;
-            if (!user.is_space_admin){
+
+            const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+
+            const companyIds = spaceUser.company_ids;
+            
+            let isAdmin = user.is_space_admin;
+            if(!isAdmin && companyIds && companyIds.length){
+                const query = {
+                    fields: ['admins'],
+                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+                }
+                const companys = await objectql.getObject("company").find(query);
+                isAdmin = _.any(companys, (item)=>{
+                    return item.admins && item.admins.indexOf(user.userId) > -1
+                })
+            }
+
+            if(!isAdmin){
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "space_users_method_unlock_lockout_error_only_space_admin"
+                        reason: "space_users_method_unlock_lockout_error_only_admin"
                     }
                 });
                 return;
             }
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
             if (spaceUser.user === user.userId) {
                 res.status(400).send({
                     success: false,
@@ -1272,17 +1345,33 @@ let methods = {
         try {
             const params = req.params;
             const user = req.user;
-            if (!user.is_space_admin){
+
+            const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+
+            const companyIds = spaceUser.company_ids;
+            
+            let isAdmin = user.is_space_admin;
+            if(!isAdmin && companyIds && companyIds.length){
+                const query = {
+                    fields: ['admins'],
+                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+                }
+                const companys = await objectql.getObject("company").find(query);
+                isAdmin = _.any(companys, (item)=>{
+                    return item.admins && item.admins.indexOf(user.userId) > -1
+                })
+            }
+
+            if(!isAdmin){
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "space_users_method_unlock_lockout_error_only_space_admin"
+                        reason: "space_users_method_unlock_lockout_error_only_admin"
                     }
                 });
                 return;
             }
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
             let result = await steedosSchema.getObject('users').updateOne(spaceUser.user, {lockout: false, login_failed_number: 0, login_failed_lockout_time: undefined});
             if(result){
                 res.status(200).send({ success: true });
@@ -1306,7 +1395,36 @@ let methods = {
                 }
             });
         }
-    }
+    },
+    is_password_empty: async function (req, res) {
+        try {
+            const params = req.params;
+            const steedosSchema = objectql.getSteedosSchema();
+            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user"] });
+            const result = await steedosSchema.getObject('users').findOne(spaceUser.user, { fields:["services.password"] });
+            if(result){
+                res.status(200).send({ empty: !!!(result.services && result.services.password && (result.services.password.bcrypt || result.services.password.bcrypts)) });
+            }
+            else{
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "未找到用户"
+                    }
+                });
+            }
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                error: {
+                    reason: error.reason,
+                    message: error.message,
+                    details: error.details,
+                    stack: error.stack
+                }
+            });
+        }
+    },
 };
 
 Creator.Objects.space_users.methods = Object.assign({}, Creator.Objects.space_users.methods, methods);

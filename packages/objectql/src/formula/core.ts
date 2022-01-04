@@ -1,6 +1,6 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaParamTypeConfig, SteedosFormulaVarPathTypeConfig, 
-    FormulaUserKey, SteedosFormulaBlankValue, SteedosFormulaOptions, SteedosQuotedByFieldFormulasTypeConfig } from './type';
+    FormulaUserKey, SteedosFormulaOptions, SteedosQuotedByFieldFormulasTypeConfig } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
 import { runQuotedByObjectFieldSummaries, getObjectQuotedByFieldSummaryConfigs } from '../summary';
 import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndFields } from './util';
@@ -9,8 +9,9 @@ import { JsonMap } from "@salesforce/ts-types";
 import { SteedosQueryFilters } from '../types';
 import _ = require('lodash')
 // import _eval = require('eval')
-import { extract, parse } from 'formulon'
-import { getFieldSubstitution } from './params'
+import { extract, parse } from '@steedos/formula';
+import { getFieldSubstitution, FormulonDataType } from './params'
+import { getSimpleParamSubstitution } from './simple_params'
 
 /**
  * 根据公式内容，取出其中{}中的变量
@@ -63,7 +64,7 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
     let params: Array<SteedosFormulaParamTypeConfig> = [];
     const spaceId = doc.space;
     if (vars && vars.length) {
-        for (let { key, paths, is_user_var: isUserVar } of vars) {
+        for (let { key, paths, is_user_var: isUserVar, is_simple_var: isSimpleVar } of vars) {
             key = key.trim();
             // 如果变量key以$user开头,则解析为userSession,此时paths为空
             let tempValue: any;
@@ -82,6 +83,16 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
                 // tepmFormula = `return ${tepmFormula}`
                 // tempFormulaParams[FormulaUserKey] = currentUserId;
                 // tempValue = evalFieldFormula(tepmFormula, tempFormulaParams);
+            }
+            if(isSimpleVar){
+                // 普通变量，取参数值时直接取值，而不用走变量上的paths属性。
+                // 注意未传入objectName时，公式中的user var的isSimpleVar为false，还是走下面的paths取值逻辑。
+                tempValue = <any>doc[key];
+                params.push({
+                    key: key,
+                    value: tempValue
+                });
+                continue;
             }
             tempValue = _.reduce(paths, (reslut, next, index) => {
                 if (index === 0) {
@@ -140,7 +151,7 @@ export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig:
     return runFormula(formula, params, {
         returnType: data_type,
         blankValue: formula_blank_value
-    });
+    }, fieldFormulaConfig);
 }
 
 export const evalFieldFormula = function (formula: string, formulaParams: object) {
@@ -161,9 +172,10 @@ export const evalFieldFormula = function (formula: string, formulaParams: object
  * 运行公式
  * @param formula 公式脚本内容
  * @param params 参数
- * @param formulaType 公式返回类型，如果空则不判断类型
+ * @param options 公式返回类型，及空值配置
+ * @param messageTag 用于显示错误日志的标识信息，可以是一个json对象
  */
-export const runFormula = function (formula: string, params: Array<SteedosFormulaParamTypeConfig>, options?: SteedosFormulaOptions) {
+export const runFormula = function (formula: string, params: Array<SteedosFormulaParamTypeConfig>, options?: SteedosFormulaOptions, messageTag?: any) {
     if (!options) {
         options = {};
     }
@@ -175,24 +187,34 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
         // formulaParams[key] = value;
         // 把{}括起来的变量替换为计算得到的变量值
         // formula = formula.replace(`{${key}}`, `__params["${key}"]`);
-        formulaParams[key] = getFieldSubstitution(path.reference_from, path.field_name, value, blankValue);
+        if(path){
+            formulaParams[key] = getFieldSubstitution(path.reference_from, path.field_name, value, blankValue);
+        }
+        else{
+            // 变量中没有path属性说明是普通变量
+            formulaParams[key] = getSimpleParamSubstitution(value, blankValue);
+        }
     });
     
+    // console.log("===runFormula===formula====", formula);
+    // console.log("===runFormula===formulaParams====", formulaParams);
     let result = evalFieldFormula(formula, formulaParams);
     // console.log("===runFormula===result====", result);
     let formulaValue = result.value;
     let formulaValueType = result.dataType;
     if(result.type === 'error'){
-        if(blankValue === SteedosFormulaBlankValue.blanks && result.errorType === "ArgumentError"){
-            // 配置了空参数视为空值时会直接返回空值类型，这里就会报错，直接返回空值，而不是抛错
-            // TODO:result.errorType === "ArgumentError"不够细化，下一版本应该视错误情况优化返回空值的条件
-            formulaValue = null;
-        }
-        else{
-            throw new Error(result.message);
-        }
+        console.error(formula, formulaParams)
+        throw new Error(`runFormula:Catch an error "${result.message}" while eval formula "${formula}" with params: "${JSON.stringify(formulaParams)}" for "${JSON.stringify(messageTag)}"`);
+        // if(blankValue === SteedosFormulaBlankValue.blanks && result.errorType === "ArgumentError"){
+        //     // 配置了空参数视为空值时会直接返回空值类型，这里就会报错，直接返回空值，而不是抛错
+        //     // TODO:result.errorType === "ArgumentError"不够细化，下一版本应该视错误情况优化返回空值的条件
+        //     formulaValue = null;
+        // }yar
+        // else{
+        //     throw new Error(result.message);
+        // }
     }
-    if (formulaValueType === "number" && _.isNaN(formulaValue)){
+    if (formulaValueType === FormulonDataType.Number && _.isNaN(formulaValue)){
         // 数值类型计算结果为NaN时，保存为空值
         formulaValue = null;
     }
@@ -200,33 +222,38 @@ export const runFormula = function (formula: string, params: Array<SteedosFormul
     if (returnType && formulaValueType && formulaValueType != "null") {
         switch (returnType) {
             case "boolean":
-                if (formulaValueType !== "checkbox") {
+                if (formulaValueType !== FormulonDataType.Checkbox) {
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a boolean type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "number":
-                if (formulaValueType !== "number") {
+                if (formulaValueType !== FormulonDataType.Number) {
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "currency":
-                if (formulaValueType !== "number") {
+                if (formulaValueType !== FormulonDataType.Number) {
+                    throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${formulaValueType} type value '${formulaValue}'.`);
+                }
+                break;
+            case "percent":
+                if (formulaValueType !== FormulonDataType.Number) {
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a number type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "text":
-                if (formulaValueType !== "text") {
+                if (formulaValueType !== FormulonDataType.Text) {
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a string type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "date":
-                if (formulaValueType !== "date") {
+                if (formulaValueType !== FormulonDataType.Date) {
                     // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
                 break;
             case "datetime":
-                if (formulaValueType !== "datetime") {
+                if (formulaValueType !== FormulonDataType.Datetime) {
                     // 这里不可以直接用result.constructor == Date或result instanceof Date，因为eval后的同一个基础类型的构造函数指向的不是同一个
                     throw new Error(`runFormula:The field formula "${formula}" with params "${JSON.stringify(formulaParams)}" should return a date type result but got a ${formulaValueType} type value '${formulaValue}'.`);
                 }
@@ -268,7 +295,7 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
     let currentUserId = userSession ? userSession.userId : undefined;
     let { fieldNames, escapeConfigs, quotedByConfigs } = options;
     if (!quotedByConfigs) {
-        quotedByConfigs = getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs);
+        quotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs);
         // console.log("runQuotedByObjectFieldFormulas===objectName, fieldNames, escapeConfigs===", objectName, fieldNames, escapeConfigs);
         // console.log("runQuotedByObjectFieldFormulas===quotedByConfigs===", quotedByConfigs);
     }
@@ -295,7 +322,7 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
  */
 export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, currentUserId: string, needRefetchDoc?: boolean, configs?: Array<SteedosFieldFormulaTypeConfig>) {
     if (!configs) {
-        configs = getObjectFieldFormulaConfigs(objectName);
+        configs = await getObjectFieldFormulaConfigs(objectName);
     }
     if (!configs.length) {
         return;
@@ -303,7 +330,8 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
     if (!currentUserId) {
         checkCurrentUserIdNotRequiredForFieldFormulas(configs);
     }
-    if (needRefetchDoc) {
+    // needRefetchDoc默认值为true
+    if (needRefetchDoc !== false) {
         const formulaVarFields = pickFieldFormulaVarFields(configs);
         doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
     }
@@ -322,7 +350,7 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
  * @param currentUserId 
  */
 export const runManyCurrentObjectFieldFormulas = async function (objectName: string, filters: SteedosQueryFilters, currentUserId: string) {
-    const configs = getObjectFieldFormulaConfigs(objectName);
+    const configs = await getObjectFieldFormulaConfigs(objectName);
     if (!configs.length) {
         return;
     }
@@ -424,8 +452,8 @@ export const updateQuotedByDocsForFormulaType = async (docs: any, fieldFormulaCo
         docs = [docs];
     }
     const fieldNames = [fieldFormulaConfig.field_name];
-    const formulaQuotedByConfigs = getObjectQuotedByFieldFormulaConfigs(fieldFormulaObjectName, fieldNames, escapeConfigs);
-    const summaryQuotedByConfigs = getObjectQuotedByFieldSummaryConfigs(fieldFormulaObjectName, fieldNames);
+    const formulaQuotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(fieldFormulaObjectName, fieldNames, escapeConfigs);
+    const summaryQuotedByConfigs = await getObjectQuotedByFieldSummaryConfigs(fieldFormulaObjectName, fieldNames);
     for (let doc of docs) {
         // 公式字段修改后，需要找到引用了该公式字段的其他公式字段并更新其值
         await runQuotedByObjectFieldFormulas(fieldFormulaObjectName, doc._id, userSession, {
@@ -448,8 +476,8 @@ export const updateQuotedByDocsForFormulaType = async (docs: any, fieldFormulaCo
  * @param object_name 是否引用了该对象
  * @param field_name 是否引用了该字段
  */
-export const isFormulaFieldQuotingObjectAndFields = (formulaObjectName: string, formulaFieldName: string, objectName: string, fieldNames?: Array<string>): boolean => {
-    const configs: Array<SteedosFieldFormulaTypeConfig> = getObjectFieldFormulaConfigs(formulaObjectName, formulaFieldName);
+export const isFormulaFieldQuotingObjectAndFields = async (formulaObjectName: string, formulaFieldName: string, objectName: string, fieldNames?: Array<string>): Promise<boolean> => {
+    const configs: Array<SteedosFieldFormulaTypeConfig> = await getObjectFieldFormulaConfigs(formulaObjectName, formulaFieldName);
     if (configs && configs.length) {
         return isFieldFormulaConfigQuotingObjectAndFields(configs[0], objectName, fieldNames);
     }

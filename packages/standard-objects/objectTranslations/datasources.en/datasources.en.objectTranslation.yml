@@ -1,0 +1,122 @@
+name: datasources
+label: External Data Source
+description: 
+fields:
+  driver:
+    label: Driver
+    help: 
+    options:
+      - label: MongoDB
+        value: mongo
+      - label: SQL Server
+        value: sqlserver
+      - label: PostgreSQL
+        value: postgres
+      - label: Oracle
+        value: oracle
+      - label: MySQL
+        value: mysql
+      - label: Sqlite
+        value: sqlite
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  name:
+    label: Name
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
+    description: 
+  url:
+    label: Url
+    help: 
+    description: 
+  host:
+    label: Database host
+    help: 
+    description: 
+  port:
+    label: Database host port
+    help: 
+    description: 
+  database:
+    label: Database name
+    help: 
+    description: 
+  username:
+    label: Database username
+    help: 
+    description: 
+  password:
+    label: Database password
+    help: 
+    description: 
+  mssql_options:
+    label: Mssql connection options
+    help: 
+    description: 
+  connectString:
+    label: connectString
+    help: 
+    description: 
+  timezone:
+    label: Timezone
+    help: 
+    description: 
+  options:
+    label: Options
+    help: 
+    description: 
+  enable_space:
+    label: Enable Space
+    help: 
+    description: 
+  locale:
+    label: Locale
+    help: 
+    description: 
+  logging:
+    label: Debug
+    help: 
+    description: 
+  is_enable:
+    label: Enable
+    help: 
+    description: 
+groups:
+  other_connection_options: >-
+    Other connection options (Please note that other connection options will
+    override parameters set from url.)
+  mssql: Mssql
+  oracle: Oracle
+listviews:
+  all:
+    label: All
+actions:
+  testConnection:
+    label: Test connection
+CustomLabels:
+  datasources__error_name_invalid_format: >-
+    Can only contain lowercase letters and numbers, must start with a letter,
+    cannot end with an underscore character or contain two consecutive
+    underscore characters
+  _datasources_testConnection_ok: Test OK
+  _datasources_driver_error_notFind_mssql: >-
+    Mssql driver not found, please install (`yarn add mssql`) in the project and
+    restart the service
+  _datasources_driver_error_notFind_pg: >-
+    Postgres driver not found, please install (`yarn add pg`) in the project and
+    restart the service
+  _datasources_driver_error_notFind_oracledb: >-
+    Oracle driver not found, please install (`yarn add oracledb`) in the project
+    and restart the service
+  _datasources_driver_error_notFind_mysql: >-
+    Mysql driver not found, please install (`yarn add mysql`) in the project and
+    restart the service
+  _datasources_driver_error_notFind_sqlite3: >-
+    Sqlite driver not found, please install (`yarn add sqlite3`) in the project
+    and restart the service
+  datasources_field_driver_options_meteor-mongo: 

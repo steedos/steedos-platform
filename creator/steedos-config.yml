@@ -9,13 +9,14 @@ public:
       folder: "./storage"
   templateSpaceId: template
 plugins:
-  - "@steedos/app-crm"
   - "@steedos/steedos-plugin-workflow"
+  - "@steedos/plugin-enterprise"
 enable_holidays: true
+STEEDOS_STORAGE_DIR: "./storage"
 tenant:
   _id: ${ENV_TENANT_ID}
   saas: false
   enable_mobile: false
-  enable_register: false
+  enable_register: true
   enable_forget_password: false
   enable_password_login: true

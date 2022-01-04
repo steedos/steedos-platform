@@ -3,6 +3,8 @@ label: User
 icon: user
 enable_search: true
 enable_inline_edit: false
+enable_enhanced_lookup: true
+version: 2
 sidebar:
   template_name: creator_grid_sidebar_organizations
   hidden: true
@@ -138,15 +140,20 @@ fields:
     showIcon: false
     required: true
     create: false
+    reference_to: permission_set
+    reference_to_field: name
     optionsFunction: !!js/function |
       function () {
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
         var result = [];
+        var is_space_admin = Creator.USER_CONTEXT.user.is_space_admin;
         profiles.forEach(function (item) {
-          result.push({
-            label: item.label,
-            value: item.name
-          });
+            if(!(item.name === 'admin' && !is_space_admin)){
+              result.push({
+                label: item.label,
+                value: item.name
+              });
+            }
         });
         return result;
       }
@@ -154,15 +161,18 @@ fields:
     type: lookup
     label: Contact
     reference_to: contacts
+    omit: true
     readonly: true
   is_supplier:
     type: boolean
     label: Supplier
+    omit: true
     readonly: true
     # hidden: true
   is_customer:
     type: boolean
     label: Customer
+    omit: true
     readonly: true
     # hidden: true
   work_phone:
@@ -217,6 +227,12 @@ fields:
     omit: true
     hidden: true
     name: invite_state
+  password:
+    label: Password
+    type: text
+    omit: true
+    hidden: true
+    name: password
   user:
     type: master_detail
     reference_to: users
@@ -226,6 +242,11 @@ fields:
     name: user
     label: User
     filterable: true
+  password_expired:
+    label: Password expired
+    type: boolean
+    omit: false
+    hidden: false
   avatar:
     label: Avatar
     type: avatar
@@ -242,11 +263,6 @@ fields:
     hidden: true
     name: last_logon 
     label: Last Logon Date
-  password_expired:
-    label: Password expired
-    type: boolean
-    omit: false
-    hidden: false
 list_views:
   all:
     label: All Valid Users
@@ -340,6 +356,16 @@ actions:
   unlock:
     label: Unlock
     on: record_only
+  standard_delete:
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        return false;
+      }
+  standard_delete_many:
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        return false;
+      }
 permission_set:
   user:
     allowCreate: false
@@ -347,7 +373,8 @@ permission_set:
     allowEdit: true
     allowRead: true
     modifyAllRecords: false
-    viewAllRecords: true
+    # viewAllRecords: true
+    viewCompanyRecords: true
     uneditable_fields:
       - profile
       - password_expired
@@ -366,9 +393,22 @@ permission_set:
     allowRead: true
     modifyCompanyRecords: true
     viewAllRecords: true
+  customer:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
     uneditable_fields:
       - profile
-  customer:
+      - password_expired
+      - organizations
+      - manager
+      - contact_id
+      - position
+      - sort_no
+  supplier:
     allowCreate: false
     allowDelete: false
     allowEdit: true

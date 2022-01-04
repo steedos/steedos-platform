@@ -49,7 +49,34 @@ Template.creatorLayout.helpers
 			return !reg.test(currentPath)
 		else
 			return false
-
+	object_name: ()->
+		return Session.get("object_name");
+	recordId: ()->
+		return Session.get("recordId");
+	title: ()->
+		return "编辑";
+	triggerLabel: ()->
+		return "编辑";
+	onAddFinish: ()->
+		return (values)->
+			result = values[0];
+			app_id = Session.get("app_id")
+			object_name = Session.get("object_name");
+			record_id = result._id
+			url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
+			FlowRouter.go url
+			return true;
+#			app_id = Session.get("app_id")
+#			object_name = Session.get("object_name")
+#			list_view_id = result._id
+#			url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
+#			FlowRouter.go url
+	onEditFinish: ()->
+		return ()->
+			setTimeout(()->
+				FlowRouter.reload()
+			, 1);
+			return true;
 Template.creatorLayout.events
 	'click .sidebar-show': (e, t)->
 		$("#sidebar-left").removeClass('hidden')
@@ -100,4 +127,15 @@ AutoForm.hooks creatorCellEditForm:
 			recordName = Creator.getObjectRecordName(this.updateDoc.$set, result.object_name)
 			# recordName为空时不会更新TempNavLabel
 			Creator.updateTempNavLabel(result.object_name, recordUrl, recordName)
+,false
+
+onSuccess = (formType,result)->
+	if FlowRouter.current().route.path.endsWith("/:record_id")
+		FlowRouter.reload();
+	else
+		window.refreshGrid();
+
+
+AutoForm.hooks creatorAddRelatedForm:
+	onSuccess: onSuccess
 ,false

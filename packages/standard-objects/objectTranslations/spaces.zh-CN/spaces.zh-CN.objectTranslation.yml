@@ -1,0 +1,99 @@
+name: spaces
+label: 公司
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  avatar:
+    label: Logo
+    help: 
+    description: 
+  avatar_square:
+    label: 正方形Logo
+    help: 
+    description: 
+  avatar_dark:
+    label: 深色Logo
+    help: 
+    description: 
+  owner:
+    label: 所有者
+    help: 
+    description: 
+  admins:
+    label: 管理员
+    help: 
+    description: 
+  account_logo:
+    label: Logo
+    help: 
+    description: 
+  background:
+    label: 登录页背景图
+    help: 
+    description: 
+  enable_register:
+    label: 启用自助注册
+    help: 
+    description: 
+  default_profile:
+    label: 默认简档
+    help: 
+    description: 
+  default_organization:
+    label: 默认部门
+    help: 
+    description: 
+  balance:
+    label: 账户余额
+    help: 
+    description: 
+  services:
+    label: Services
+    help: 
+    description: 
+  billing.remaining_months:
+    label: 剩余月数
+    help: 
+    description: 
+  company_id:
+    label: 分部
+    help: 
+    description: 
+  company_ids:
+    label: 所属分部
+    help: 
+    description: 
+  features:
+    label: 
+    help: 
+    description: 
+  api_key:
+    label: API Key
+    help: 
+    description: 
+groups:
+  logon: 登录界面
+  register_account: 用户自助注册
+  developer: 华炎云
+listviews:
+  all:
+    label: 所有
+actions:
+  standard_new:
+    label: 新建
+  invite_space_users:
+    label: 邀请注册
+CustomLabels:
+  spaces_action_pay_records: 订单
+  spaces_action_upgrade: 升级
+  spaces_field_end_date: 付费截止时间
+  spaces_field_hostname: 绑定域名
+  spaces_field_is_paid: 已付费
+  spaces_field_modules: 已付费应用
+  spaces_field_start_date: 付费开始时间
+  spaces_field_user_limit: 已购买用户数
+  spaces_group_payment: 账务
+  space_apikey_notfind: 请设置您公司的 API Key

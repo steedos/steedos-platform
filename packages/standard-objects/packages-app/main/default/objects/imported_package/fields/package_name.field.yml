@@ -1,0 +1,14 @@
+name: package_name
+filterable: false
+hidden: true
+index: false
+is_name: false
+is_wide: false
+label: 软件包API 名称
+omit: true
+readonly: false
+required: false
+searchable: false
+sort_no: 120
+sortable: false
+type: text

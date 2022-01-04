@@ -20,3 +20,6 @@ yarn start
 
 ### 了解更多
 - [开发文档](https://www.steedos.com/developer/)
+
+## 功能说明
+- 企业版插件，定义企业版开放的内核字段

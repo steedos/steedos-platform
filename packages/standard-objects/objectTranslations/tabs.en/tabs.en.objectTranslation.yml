@@ -1,0 +1,63 @@
+name: tabs
+label: Custom Tabs
+description: 
+fields:
+  label:
+    label: 显示名称
+    help: This is the label of the tab, for web tabs only.
+  name:
+    label: Api Name
+  icon:
+    label: Icon
+  parent:
+    label: Parent Tab
+  mobile:
+    label: Display on the Mobile
+  desktop:
+    label: Display on the Desktop
+  frame_height:
+    label: Frame Height
+    help: The height, in pixels of the tab frame. Required for frame and page tabs.
+    description: 
+  has_sidebar:
+    label: Sidebar
+    help: Indicates if the tab displays the sidebar panel.
+    description: 
+  type:
+    label: Type
+    options:
+      - label: Object
+        value: object
+      - label: Url
+        value: url
+      - label: Page
+        value: page
+  object:
+    label: Object
+    help: 
+    description: 
+  url:
+    label: Url
+    help: 
+    description: 
+  page:
+    label: Page
+    help: 
+    description: 
+  action_overrides:
+    label: Action Overrides
+    help: A list of the action overrides that are assigned to the tab. Only one override is allowed per formFactor for a given tab.
+    description:  
+  is_system:
+    label: System
+    help: 
+    description: 
+  description: 
+    label: Description
+  is_new_window:
+    label: Open in New Window
+    help: 
+    description:
+listviews:
+  all:
+    label: All

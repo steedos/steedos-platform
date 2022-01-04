@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+  steedos:
+    image: steedos/steedos-project-template:latest
+    restart: always
+    # command: ['sh', '-c', "echo $(date +%T) start && /app/init_home.sh"]
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./storage:/app/storage"
+      - "./.steedos:/app/.steedos"
+    environment:
+      - ROOT_URL=http://localhost:5000
+      - MONGO_URL=mongodb://mongo:27018/steedos
+      - STEEDOS_CFS_STORE=local
+      - STEEDOS_STORAGE_DIR=/app/storage
+      - TRANSPORTER=redis://redis:6389
+      - CACHER=redis://redis:6389/2
+    depends_on:
+      - redis
+      - mongo
+    
+  redis:
+    image: redis:6.2.4
+    restart: always
+    volumes:
+      - "./docker-volumes/redis/data:/data"
+    command: ["/bin/sh","-c", "redis-server --save \"\" --appendonly no"]
+    ports:
+      - "6389:6379"
+
+  mongo:
+    image: mongo:4.2
+    restart: always
+    volumes:
+      - "./docker-volumes/mongo/data/db:/data/db"
+    command: mongod --oplogSize 128 --profile=1 --slowms=500 --replSet rs0 --bind_ip_all
+    ports:
+      - "27018:27017"
+
+  # this container's job is just run the command to initialize the replica set.
+  # it will run the command and remove himself (it will not stay running)
+  mongo-init-replica:
+    image: mongo:4.2
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          mongo mongo/steedos --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              version: 1,
+              members: [ { _id: 0, host: 'mongo:27017' } ]})\" &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    depends_on:
+      - mongo

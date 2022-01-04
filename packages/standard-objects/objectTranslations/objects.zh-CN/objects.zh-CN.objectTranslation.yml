@@ -1,0 +1,217 @@
+name: objects
+label: 对象
+description: 
+fields:
+  datasource:
+    label: 数据源
+    help: 
+    description: 
+  label:
+    label: 显示名
+    help: 
+    description: 
+  name:
+    label: API 名称
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+    description: 
+  table_name:
+    label: 数据库表名称
+    help: 默认数据源不支持此属性
+    description: 
+  icon:
+    label: 图标
+    help: 
+    description: 
+  is_enable:
+    label: 启用
+    help: 
+    description: 
+  in_development:
+    label: 开发状态
+    help: 
+    options:
+      - label: 开发中(仅管理员才可以访问对象)
+        value: '1'
+      - label: 已部署
+        value: '0'
+    description: 
+  enable_search:
+    label: 允许搜索
+    help: 
+    description: 
+  enable_files:
+    label: 允许上传附件
+    help: 
+    description: 
+  enable_tasks:
+    label: 允许添加任务
+    help: 
+    description: 
+  enable_notes:
+    label: 允许添加备注
+    help: 
+    description: 
+  enable_events:
+    label: 允许添加事件
+    help: 
+    description: 
+  enable_api:
+    label: 允许 API 访问
+    help: 
+    description: 
+  enable_share:
+    label: 允许共享记录
+    help: 
+    description: 
+  enable_workflow:
+    label: 允许配置对象流程
+    help: 
+    description: 
+  enable_instances:
+    label: 允许查看申请单
+    help: 
+    description: 
+  enable_chatter:
+    label: 允许添加留言
+    help: 
+    description: 
+  enable_audit:
+    label: 记录字段历史
+    help: 
+    description: 
+  enable_inline_edit:
+    label: 允许编辑单个字段
+    help: 
+    description: 
+  enable_tree:
+    label: 启用树状结构显示记录
+    help: 当启用时，与此对象关联的查找字段将以树状结构的形式显示其选项。
+    description: 
+  enable_enhanced_lookup:
+    label: 启用弹出窗口查找模式
+    help: 当启用时，与此对象关联的查找字段将以弹出窗口的形式显示其选项。
+    description: 
+  description:
+    label: 备注
+    help: 
+    description: 
+  version:
+    label: 版本
+  sidebar:
+    label: 左侧列表
+    help: 
+    description: 
+  fields:
+    label: 字段
+    help: 
+    description: 
+  list_views:
+    label: 列表视图
+    help: 
+    description: 
+  actions:
+    label: 操作按钮
+    help: 
+    description: 
+  relatedList:
+    label: Related List
+    help: 
+    description: 
+  permission_set:
+    label: 权限设置
+    help: 
+    description: 
+  triggers:
+    label: 触发器
+    help: 
+    description: 
+  custom:
+    label: 自定义
+    help: 
+    description: 
+  owner:
+    label: 拥有者
+    help: 
+    description: 
+  app_unique_id:
+    label: App Unique ID
+    help: 
+    description: 
+  app_version:
+    label: App Version
+    help: 
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+  fields_serial_number:
+    label: 
+    help: 
+    description: 
+  is_deleted:
+    label: 已删除
+    help: 
+    description: 
+  reload_time:
+    label: 
+    help: 
+    description: 
+  form:
+    label: 表单事件
+  form.initialValues:
+    label: 初始化数据
+  form.validate:
+    label: 验证数据
+  form.beforeInsert:
+    label: 新增数据之前
+  form.onValuesChange:
+    label: 数据变化时
+  form.beforeUpdate:
+    label: 修改数据之前
+  form.beforeDelete:
+    label: 删除数据之前
+  form.afterInsert:
+    label: 新增数据之后
+  form.afterUpdate:
+    label: 修改数据之后
+  form.afterDelete:
+    label: 删除数据之后
+  form.errorInsert:
+    label: 新增数据报错之后
+  form.errorUpdate:
+    label: 修改数据报错之后
+  form.errorDelete:
+    label: 删除数据报错之后
+  form.beforeView:
+    label: 记录显示之前
+  form.afterView:
+    label: 记录显示之后
+  form.beforeEdit:
+    label: 编辑页面显示之前
+  form.afterEdit:
+    label: 编辑页面显示之后
+groups:
+  external_data_source: 外部数据源
+  switch: 功能开关
+  script: 脚本
+listviews:
+  all:
+    label: 全部
+  customize:
+    label: 自定义
+  system:
+    label: 系统
+  deleted:
+    label: 已删除
+actions:
+  show_object:
+    label: 预览
+  copy_odata:
+    label: 复制OData网址
+CustomLabels:
+  objects_field_datasource_defaultValue: 默认数据源
+  objects_field_enable_approvals: 显示申请单历史步骤
+  objects_field_enable_space_global: 跨工作区访问数据
+  objects_field_enable_web_forms: 允许在线表单
+  object_object__error_name_invalid_format: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符

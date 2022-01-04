@@ -77,6 +77,7 @@ export interface SteedosDriver {
     updateMany?(tableName: string, queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userId?: SteedosIDType): any;
     delete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType): any;
     directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType): any;
+    directFind(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     directInsert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType): any;
     directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType): any;
     directAggregate?(tableName: string, query: SteedosQueryOptions, externalPipeline: any, userId?: SteedosIDType): any;
@@ -87,5 +88,6 @@ export interface SteedosDriver {
     dropTables?(): any;
     createTables?(objects: Dictionary<SteedosObjectType>): any;
     init(objects: Dictionary<SteedosObjectType>): any;
+    _makeNewID?(tableName?: string): any
 }
 

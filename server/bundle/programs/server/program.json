@@ -51,7 +51,6 @@
       "path": "packages/ecmascript.js"
     },
     {
-      "node_modules": "npm/node_modules/meteor/babel-runtime/node_modules",
       "path": "packages/babel-runtime.js"
     },
     {
@@ -103,6 +102,9 @@
     {
       "node_modules": "npm/node_modules/meteor/email/node_modules",
       "path": "packages/email.js"
+    },
+    {
+      "path": "packages/underscore.js"
     },
     {
       "path": "packages/url.js"
@@ -168,9 +170,6 @@
       "node_modules": "npm/node_modules/meteor/ddp-client/node_modules",
       "sourceMap": "packages/ddp-client.js.map",
       "path": "packages/ddp-client.js"
-    },
-    {
-      "path": "packages/underscore.js"
     },
     {
       "sourceMap": "packages/routepolicy.js.map",
@@ -251,6 +250,7 @@
       "path": "packages/htmljs.js"
     },
     {
+      "sourceMap": "packages/blaze.js.map",
       "path": "packages/blaze.js"
     },
     {
@@ -311,7 +311,6 @@
       "path": "packages/cfs_http-methods.js"
     },
     {
-      "sourceMap": "packages/tap_i18n.js.map",
       "path": "packages/tap_i18n.js"
     },
     {
@@ -543,8 +542,13 @@
       "path": "packages/steedos_logger.js"
     },
     {
+      "node_modules": "npm/node_modules/meteor/steedos_objects/node_modules",
       "sourceMap": "packages/steedos_objects.js.map",
       "path": "packages/steedos_objects.js"
+    },
+    {
+      "sourceMap": "packages/steedos_cfs-steedos-cloud.js.map",
+      "path": "packages/steedos_cfs-steedos-cloud.js"
     },
     {
       "sourceMap": "packages/steedos_cfs-tempstore.js.map",
@@ -628,12 +632,6 @@
       "path": "packages/peppelg_bootstrap-3-modal.js"
     },
     {
-      "path": "packages/meteorhacks_meteorx.js"
-    },
-    {
-      "path": "packages/meteorhacks_unblock.js"
-    },
-    {
       "path": "packages/steedos_lightning-design-system.js"
     },
     {
@@ -651,6 +649,12 @@
     {
       "sourceMap": "packages/steedos_webhookqueue.js.map",
       "path": "packages/steedos_webhookqueue.js"
+    },
+    {
+      "path": "packages/lamhieu_meteorx.js"
+    },
+    {
+      "path": "packages/lamhieu_unblock.js"
     },
     {
       "sourceMap": "packages/steedos_huaweipush.js.map",

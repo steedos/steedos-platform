@@ -1,29 +1,43 @@
 const objectql = require('@steedos/objectql');
-import { Util } from '@steedos/core';
+import { getUserLocale } from '@steedos/objectql';
 const Fiber = require('fibers');
 declare var Creator;
 declare var TAPi18n;
 
-export const sendNotifications = async (instanceHistory, from, to)=>{
+export const sendNotifications = async (from: string, to: string, {instanceHistory = null, instance = null, status})=>{
     if(!to){
         return;
     }
-    var instance = await objectql.getObject("process_instance").findOne(instanceHistory.process_instance);
-    var fromUser =  await objectql.getObject("users").findOne(to);
-    var relatedDoc = await objectql.getObject(instance.target_object.o).findOne(instance.target_object.ids[0]);
+    if(!instance){
+        instance = await objectql.getObject("process_instance").findOne(instanceHistory.process_instance);
+    }
+    var fromUser =  await objectql.getObject("users").findOne(from);
+    const targetObjectName = instance.target_object.o;
+    const targetObject = objectql.getObject(targetObjectName);
+    var relatedDoc = await targetObject.findOne(instance.target_object.ids[0]);
     let relatedDocName = relatedDoc.name; //TODO
-    const lng = Util.getUserLocale(fromUser);
-    var notificationTitle = TAPi18n.__('process_notification_submit_title', {submitter: fromUser.name, recordName: relatedDocName}, lng);
+    const lng = getUserLocale(fromUser);
+    var notificationTitle = TAPi18n.__(`process_notification_${status}_title`, {submitter: fromUser.name, recordName: relatedDocName}, lng);
+    var notificationBody = targetObject.label;
+    let linkToObjectName, linkToId;
+    if(["approved", "rejected"].indexOf(status) > -1){
+        linkToObjectName = targetObjectName;
+        linkToId = relatedDoc._id;
+    }
+    else{
+        linkToObjectName = "process_instance_history";
+        linkToId = instanceHistory._id
+    }
     var notificationDoc = {
         name: notificationTitle,
-        body: relatedDocName,
+        body: notificationBody,
         related_to: {
-            o: "process_instance_history",
-            ids: [instanceHistory._id]
+            o: linkToObjectName,
+            ids: [linkToId]
         },
         related_name: relatedDocName,
-        from: null,
-        space: instanceHistory.space
+        from: `Process ${status}`,
+        space: instance.space
     };
 
     Fiber(function () {

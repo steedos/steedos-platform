@@ -110,7 +110,19 @@
         },
         "enable_tree": {
             "type": "boolean",
-            "description": "树状显示"
+            "description": "启用树状结构显示记录"
+        },
+        "enable_enhanced_lookup": {
+            "type": "boolean",
+            "description": "启用增强lookup模式，当开启时，指向该对象的lookup字段会弹出窗口显示可选项！"
+        },
+        "parent_field": {
+            "type": "string",
+            "description": "树状结构父字段，默认为parent"
+        },
+        "children_field": {
+            "type": "string",
+            "description": "树状结构子节点字段，默认为children"
         },
         "enable_approvals": {
             "type": "boolean",
@@ -259,6 +271,10 @@
                 "validate": {
                     "type": "string",
                     "description": "表单字段修改时执行, 传入表单中的字段值，如果成功返回undefined，如果失败返回错误数组"
+                },
+                "onValuesChange": {
+                    "type": "string",
+                    "description": "表单字段修改时执行"
                 }
             }
         },
@@ -266,9 +282,9 @@
             "type": "array",
             "description": "主表想在详细页显示的相关子表"
         },
-        "picklist": {
-            "type": "string",
-            "description": "指定字段的选项列表值集"
+        "version":{
+            "type": "number",
+            "description": "对象版本, 默认1.0"
         }
     },
     "definitions": {
@@ -371,7 +387,10 @@
                     "description": "支持多选"
                 },
                 "required": {
-                    "type": "boolean",
+                    "type": [
+                        "boolean",
+                        "string"
+                    ],
                     "description": "是否必填"
                 },
                 "is_wide": {
@@ -421,6 +440,22 @@
                     "type": "string",
                     "description": "引用的对象的字段，按照此字段去查找相关记录"
                 },
+                "modal_mode": {
+                    "type": "string",
+                    "description": "lookup字段弹出框模式: 'dialog' | 'drawer' ",
+                    "enum": [
+                        "dialog",
+                        "drawer"
+                    ]
+                },
+                "show_as_qr": {
+                    "type": "boolean",
+                    "description": "显示为二维码"
+                },
+                "table_schema": {
+                    "type": ["string", "object"],
+                    "description": "lookup字段弹出框表格定义，可以定义为列表视图名称或列表属性"
+                },
                 "rows": {
                     "type": "integer",
                     "description": "多行文本默认行数"
@@ -441,23 +476,36 @@
                         {
                             "items": {
                                 "type": "object",
-                                "required": ["label", "value"],
+                                "required": [
+                                    "label",
+                                    "value"
+                                ],
                                 "additionalProperties": false,
                                 "properties": {
-                                    "label" : {
+                                    "label": {
                                         "type": "string",
                                         "title": "Options display name"
                                     },
-                                    "value" : {
-                                        "type": "string",
+                                    "value": {
+                                        "type": ["string", "number", "boolean"],
                                         "title": "Options value saved as"
                                     },
-                                    "color" : {
+                                    "color": {
                                         "title": "Options color showed as background",
-                                        "anyOf": [{
-                                            "type": "string",
-                                            "pattern": "^[0-9a-fA-F]{6}$"
-                                        }]
+                                        "anyOf": [
+                                            {
+                                                "type": "string",
+                                                "pattern": "^[0-9a-fA-F]{6}$"
+                                            }
+                                        ]
+                                    },
+                                    "description" : {
+                                        "type": "string",
+                                        "title": "Options description "
+                                    },
+                                    "icon": {
+                                        "type": "string",
+                                        "title": "Options icon name"
                                     }
                                 }
                             },
@@ -492,11 +540,17 @@
                     "description": "字段选项函数名称"
                 },
                 "min": {
-                    "type": ["integer", "string"],
+                    "type": [
+                        "integer",
+                        "string"
+                    ],
                     "description": "最小长度。支持字符串，数字，金额，日期类型字段"
                 },
                 "max": {
-                    "type": ["integer", "string"],
+                    "type": [
+                        "integer",
+                        "string"
+                    ],
                     "description": "最大长度。支持字符串，数字，金额，日期类型字段"
                 },
                 "blackbox": {
@@ -520,7 +574,10 @@
                     "description": "本公司"
                 },
                 "is_company_limited": {
-                    "type": ["boolean", "string"],
+                    "type": [
+                        "boolean",
+                        "string"
+                    ],
                     "description": "本公司"
                 },
                 "system": {
@@ -597,7 +654,8 @@
                                 "count",
                                 "sum",
                                 "min",
-                                "max"
+                                "max",
+                                "avg"
                             ]
                         }
                     ]
@@ -636,17 +694,23 @@
                     "type": "string",
                     "description": "过滤条件函数名称"
                 },
-                "sharing": {
-                    "type": "string",
-                    "description": "配置当用户对主表记录有何种权限时对本表记录可以增删改",
-                    "enum": [
-                        "masterRead",
-                        "masterWrite"
-                    ]
-                },
                 "relatedList": {
                     "type": "boolean",
                     "description": "用于表示是否在相关表的详细页面中作为子表显示"
+                },
+                "write_requires_master_read": {
+                    "type": "boolean",
+                    "description": "设置主记录上创建、编辑或删除子记录所需的最低访问级别。此字段仅适用于master_detail字段类型。true--允许具有'读取'访问权限的用户创建、编辑或删除子记录。false = 允许具有'读取/写入'访问权限的用户创建、编辑或删除子记录的权限。此设置比 true 更严格，并且是默认值。"
+                },
+                "picklist": {
+                    "type": "string",
+                    "description": "指定字段的选项列表值集"
+                },
+                "modal_mode": {
+                    "type": "string"
+                },
+                "visible_on": {
+                    "type": "string"
                 }
             }
         },
@@ -802,6 +866,30 @@
                 "modifyCompanyRecords": {
                     "type": "boolean",
                     "description": "修改本分部"
+                },
+                "allowReadFiles": {
+                    "type": "boolean",
+                    "description": "允许查看附件"
+                },
+                "allowCreateFiles": {
+                    "type": "boolean",
+                    "description": "允许创建附件"
+                },
+                "allowEditFiles": {
+                    "type": "boolean",
+                    "description": "允许修改附件"
+                },
+                "allowDeleteFiles": {
+                    "type": "boolean",
+                    "description": "允许删除附件"
+                },
+                "viewAllFiles": {
+                    "type": "boolean",
+                    "description": "查看所有附件"
+                },
+                "modifyAllFiles": {
+                    "type": "boolean",
+                    "description": "修改所有附件"
                 },
                 "disabled_list_views": {
                     "type": "array",

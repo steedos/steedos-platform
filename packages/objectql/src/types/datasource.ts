@@ -1,6 +1,6 @@
 import { Dictionary } from '@salesforce/ts-types';
-import { initObjectFieldsFormulas } from '../formula';
-import { initObjectFieldsSummarys } from '../summary';
+// import { initObjectFieldsSummarys } from '../summary';
+import { getObjectServiceName } from '../services/index';
 import {
     SteedosDriver,
     SteedosMongoDriver,
@@ -23,15 +23,16 @@ import {
     SteedosObjectPermissionType,
     getAppConfigs,
     getDashboardConfigs,
-    getSteedosSchema
+    getSteedosSchema,
+    getObjectConfig,
+    addAllConfigFiles
 } from '.';
 import { SteedosDriverConfig } from '../driver';
-import { buildGraphQLSchema } from '../graphql';
-import { GraphQLSchema } from 'graphql';
-import { getObjectConfigs, addObjectConfig, addAllConfigFiles } from '.';
+import { createObjectService } from '../metadata-register/objectServiceManager';
+import { getObjectDispatcher } from '../services/index';
+import path = require('path');
 let Fiber = require('fibers');
-var path = require('path')
-
+declare var Creator: any;
 export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
     MeteorMongo = 'meteor-mongo',
@@ -91,7 +92,6 @@ export class SteedosDataSourceType implements Dictionary {
     private _objectsSpaceRolesPermission: Dictionary<Dictionary<Dictionary<SteedosObjectPermissionType>>> = {};
     private _driver: SteedosDatabaseDriverType | string | SteedosDriver;
     private _logging: boolean | Array<any>;
-    private _graphQLSchema: GraphQLSchema;
     private _config: SteedosDataSourceTypeConfig;
     private _enable_space: boolean;
     public get enable_space(): boolean {
@@ -109,28 +109,55 @@ export class SteedosDataSourceType implements Dictionary {
         return this._driver;
     }
 
-    getObjects() {
+    async getObjects() {
+        if(!this.schema.metadataRegister){
+            return this._objects
+        }
+        return await this.schema.metadataRegister.getObjectsConfig(this.name);
+    }
+
+    getLocalObjects() {
         return this._objects
     }
 
-    getObject(name: string) {
-        return this._objects[name]
+    setLocalObject(objectApiName, object){
+        this._objects[objectApiName] = object;
+    }
+
+    getObject(objectApiName: string){
+        const localObject = this.getLocalObject(objectApiName);
+        if(localObject){
+            return localObject;
+        }
+        return getObjectDispatcher(objectApiName)
+    }
+
+    getLocalObject(objectApiName: string) {
+        return this._objects[objectApiName]
     }
 
     getObjectsConfig() {
         return this._objectsConfig;
     }
 
-    setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
-        let object = new SteedosObjectType(object_name, this, objectConfig)
-        this._objectsConfig[object_name] = objectConfig;
-        this._objects[object_name] = object;
+    getObjectConfig(objectName) {
+        return this._objectsConfig[objectName];
+    }
+
+    async setObject(objectApiName: string, objectConfig: SteedosObjectTypeConfig) {
+        const serviceName = getObjectServiceName(objectApiName)
+        let object = new SteedosObjectType(objectApiName, this, objectConfig)
+        this._objectsConfig[objectApiName] = objectConfig;
+        this._objects[objectApiName] = object;
+        await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
+        return object;
     }
 
     removeObject(object_name: string){
         delete this._objectsConfig[object_name];
         delete this._objects[object_name];
         this.schema.removeObjectMap(object_name);
+        this.schema.metadataRegister.removeObject(object_name)
     }
 
     initDriver() {
@@ -179,12 +206,63 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
-    initObjects(){
+    async initObjects(){
         // 从缓存中加载所有本数据源对象到datasource中
-        let objects: Array<SteedosObjectTypeConfig> = getObjectConfigs(this._name);
-        _.each(objects, (object) => {
-            this.setObject(object.name, object);
-        });
+        let objects: Array<any> = await this.getObjects();
+        let self = this;
+        for await (const object of _.values(objects)) {
+            const objectConfig = object.metadata;
+            //从本地对象配置中读取触发器配置
+            const localObjectConfig = getObjectConfig(objectConfig.name);
+            if(localObjectConfig){
+                objectConfig.listeners = localObjectConfig.listeners; 
+                objectConfig.methods = localObjectConfig.methods; 
+            }
+            // if(self._schema.metadataBroker){
+            //     const res = await self._schema.metadataRegister.object(object)
+            //     if(res){
+            //         self.setObject(object.name, object);
+            //     }
+            // }else{
+            //     self.setObject(object.name, object);
+            // }
+            await self.setObject(objectConfig.name, objectConfig);
+
+            if(this.name === "default"){
+                try {
+                    const _db = Creator.createCollection(objectConfig)
+	                Creator.Collections[_db._name] = _db
+                } catch (error) {
+                    // console.log(`error`, error) //此处无需打印日志，@steedos/core 在init Creator 时，会兼容此部分的异常逻辑。
+                }
+            }
+        }
+
+        // _.each(objects, (object) => {
+        //     const obj = this.getObject(object.name);
+        //     if(obj){
+        //         // 加try catch是因为有错误时不应该影响下一个对象加载
+        //         try{
+        //             obj.initMasterDetails();
+        //         }
+        //         catch(ex){
+        //             console.error(ex);
+        //         }
+        //     }
+        // });
+
+        // _.each(objects, (object) => {
+        //     const obj = this.getObject(object.name);
+        //     if(obj){
+        //         // 加try catch是因为有错误时不应该影响下一个对象加载
+        //         try{
+        //             obj.checkMasterDetails();
+        //         }
+        //         catch(ex){
+        //             console.error(ex);
+        //         }
+        //     }
+        // });
 
         _.each(this.config.objectsRolesPermission, (objectRolesPermission, object_name) => {
             _.each(objectRolesPermission, (objectRolePermission, role_name) => {
@@ -192,6 +270,8 @@ export class SteedosDataSourceType implements Dictionary {
                 this.setObjectPermission(object_name, objectRolePermission)
             })
         })
+
+        return true;
     }
 
     constructor(datasource_name: string, config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
@@ -210,7 +290,6 @@ export class SteedosDataSourceType implements Dictionary {
         this._driver = config.driver
         this._logging = config.logging
         this._locale = config.locale
-
         if(_.has(config, 'enable_space')){
             this._enable_space = config.enable_space
         }else{
@@ -229,20 +308,20 @@ export class SteedosDataSourceType implements Dictionary {
         this._getRoles = config.getRoles
     }
 
-    loadFiles(){
+    async loadFiles(){
+        // 不再支持从steedos-config中配置对象定义。
+        // _.each(this.config.objects, (object, object_name) => {
+        //     object.name = object_name
+        //     addObjectConfig(object, this._name);
+        // })
         // 添加对象到缓存
-        _.each(this.config.objects, (object, object_name) => {
-            object.name = object_name
-            addObjectConfig(object, this._name);
-        })
-        // 添加对象到缓存
-        _.each(this.config.objectFiles, (objectPath) => {
+        for (const objectPath of this.config.objectFiles) {
             let filePath = objectPath;
             if(!path.isAbsolute(objectPath)){
                 filePath = path.join(process.cwd(), objectPath)
             }
-            addAllConfigFiles(filePath, this._name)
-        })
+            await addAllConfigFiles(filePath, this._name, null)
+        }
     }
 
     setObjectPermission(object_name: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {
@@ -325,6 +404,10 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.count(tableName, query, userId)
     }
 
+    async directFind(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType) {
+        return await this._adapter.find(tableName, query, userId)
+    }
+
     async directInsert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType) {
         return await this._adapter.directInsert(tableName, doc, userId)
     }
@@ -345,20 +428,20 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.directAggregatePrefixalPipeline(tableName, query, prefixalPipeline, userId)
     }
 
+    async _makeNewID(tableName: string){
+        return await this._adapter._makeNewID(tableName)
+    }
+
     public get schema(): SteedosSchema {
         return this._schema;
     }
 
     buildGraphQLSchema() {
-        this._graphQLSchema = buildGraphQLSchema(this._schema, this);
-        return this._graphQLSchema;
+        return this._schema.buildGraphQLSchema();
     }
 
     getGraphQLSchema() {
-        if (this._graphQLSchema) {
-            return this._graphQLSchema;
-        }
-        return buildGraphQLSchema(this._schema, this);
+        return this._schema.getGraphQLSchema();
     }
 
     async dropEntities() {
@@ -385,20 +468,26 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
-    init() {
-        this.initObjects();
-        this.initTypeORM();
-        initObjectFieldsFormulas(this.name);
-        initObjectFieldsSummarys(this.name);
+    async init() {
+        await this.initObjects();
+        await this.initTypeORM();
+        // initObjectFieldsSummarys(this.name);
         // this.schema.transformReferenceOfObject(this);
     }
 
-    initTypeORM() {
+    async initTypeORM() {
+        const _objects = {};
+        _.map(await this.getObjects(), (item)=>{
+            if(item && item.metadata){
+                _objects[item.metadata.name] = item.metadata
+            }
+        })
+        
         if (this._adapter.init) {
             let self = this;
             Fiber(function(){
                 let fiber = Fiber.current;
-                self._adapter.init(self._objects).then(result => {
+                self._adapter.init(_objects).then(result => {
                     fiber.run();
                 }).catch(result => {
                     console.error(result)
@@ -419,7 +508,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async connect() {
-        this.initObjects();
+        // this.initObjects();
         // init typeorm
         if (this._adapter.connect) 
             await this._adapter.connect()

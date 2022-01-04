@@ -1,8 +1,14 @@
 name: object_layouts
 label: Object Layouts
 icon: dashboard_ea
-hidden: true
+hidden: false
+version: 2
 fields:
+  name:
+    type: text
+    required: true
+    label: Api Name
+    is_wide: true
   label:
     type: text
     required: true
@@ -15,6 +21,7 @@ fields:
     required: true
     reference_to: objects
     reference_to_field: name
+    write_requires_master_read: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options = [];
@@ -27,6 +34,16 @@ fields:
               });
               return _options;
             }
+  type:
+    type: select
+    options:
+      - label: Record
+        value: record
+      - label: Page
+        value: page
+    defaultValue: record
+    hidden: true
+    required: true
   profiles:
     type: lookup
     label: Profile
@@ -34,7 +51,7 @@ fields:
     multiple: true
     required: true
     create: false
-    optionsFunction: !!js/function |
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
         var result = [];
@@ -46,91 +63,241 @@ fields:
         });
         return result;
       }
-  actions:
-    label: Actions
-    type: lookup
+  buttons:
+    type: grid
+    blackbox: true
     is_wide: true
-    multiple: true
     depend_on:
       - object_name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-              var _options = [];
-              _.each(Creator.getObject(values.object_name).actions, function(v, k){
-                _options.push({label: v.label || v.name, value: k});
-              })
-              return _options;
-            }
-  relatedList:
-    label: Related list
+  buttons.$.button_name:
     type: lookup
-    is_wide: true
-    multiple: true
-    depend_on:
-      - object_name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-              var _options = [];
-              _.each(Creator.getRelatedList(values.object_name), function(item){
-                let _object = Creator.getObject(item.object_name) || {}
-                _options.push({label: _object.label || _object.name, value: item.object_name});
-              })
-
-              if(!_.find(_options, function(option){
-                return option.value === 'process_instance_history'
-              })){
-                let _object = Creator.getObject("process_instance_history") || {}
-                _options.push({label: _object.label || _object.name, value: "process_instance_history"});
-              }
-              return _options;
-            }
+        if (!(values != null ? values.object_name : void 0)) {
+          values.object_name = Session.get("object_name");
+        }
+        if(values.object_name && !_.isString(values.object_name)){
+          values.object_name = values.object_name.name
+        }
+        const options = [];
+        if(values){
+          var actions = Creator.getObject(values.object_name).actions;
+          _.each(actions, function(action){
+            options.push({label: action.label, value: action.name})
+          })
+        }
+        return options;
+      }
+  buttons.$.visible_on:
+    label: Visible on
+    type: textarea
+    rows: 1
   fields:
     type: grid
     is_wide: true
     required: true
+    depend_on:
+      - object_name
   fields.$:
     label: Field
     blackbox: true
     type: object
-  fields.$.field:
+  fields.$.field_name:
     label: Field
     type: lookup
     multiple: false
     is_wide: false
     required: true
+    reference_to: object_fields
+    reference_to_field: name
     depend_on:
       - object_name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        if(values && values.object_name){
+          if(values._grid_row_id){
+            var selected = _.find(values.fields, function(item){return item._id==values._grid_row_id});
+            var selectedAll = _.pluck(values.fields, 'field_name');
+            if(selected){
+              selectedAll = _.difference(selectedAll, [selected.field_name]);
             }
-  fields.$.readonly:
+            if(selectedAll && selectedAll.length > 0){
+              return [['object', '=', values.object_name], ['name', '!=', selectedAll]]
+            }
+          }
+          return ['object', '=', values.object_name]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
+  fields.$.is_readonly:
     label: Readonly
     type: boolean
-  fields.$.required:
+  fields.$.is_required:
     label: Required
     type: boolean
   fields.$.group:
     label: Group
     type: text
+  fields.$.visible_on:
+    label: Visible on
+    type: textarea 
+    rows: 1
+  related_lists:
+    type: grid
+    blackbox: true
+    is_wide: true
+    depend_on:
+      - object_name
+  related_lists.$.related_field_fullname:
+    type: lookup
+    optionsFunction: !!js/function |
+      function(values) {
+        if (!(values != null ? values.object_name : void 0)) {
+          values.object_name = Session.get("object_name");
+        }
+        if(values.object_name && !_.isString(values.object_name)){
+          values.object_name = values.object_name.name
+        }
+        const options = [];
+        const object = Creator.getObject(values.object_name);
+
+        let relatedLists = []
+        if(object.enable_files){
+            relatedLists.push("cms_files.parent")
+        }
+        relatedLists = relatedLists.concat(_.union(object.details, object.lookup_details));
+
+        if(object.enable_tasks){
+            relatedLists.push("tasks.related_to")
+        }
+        if(object.enable_notes){
+            relatedLists.push("notes.related_to")
+        }
+        if(object.enable_events){
+            relatedLists.push("events.related_to")
+        }
+        if(object.enable_instances){
+            relatedLists.push("instances.record_ids")
+        }
+        if(object.enable_approvals){
+            relatedLists.push("approvals.related_to")
+        }
+        if(object.enable_process){
+            relatedLists.push("process_instance_history.target_object")
+        }
+
+        _.each(relatedLists, function(related){
+          let foo = related.split('.');
+          let rObjectName = foo[0];
+          let rFieldName = foo[1];
+          let rObjectLable = Creator.getObject(rObjectName).label;
+          let rObjectFieldLable = (_.find(Creator.getObject(rObjectName).fields, function(field){return field.name === rFieldName}) || {}).label;
+          options.push({label: `${rObjectLable}.${rObjectFieldLable}`, value: related})
+        })
+        return options;
+      }
+  related_lists.$.label:
+    label: Label
+    type: text
+    inlineHelpText: default is the object name
+  related_lists.$.field_names:
+    type: lookup
+    create: false
+    multiple: true
+    reference_to: object_fields
+    reference_to_field: name
+    depend_on:
+      - object_name
+      - related_lists
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        let relatedFieldFullname = null;
+        const rowValue = _.find(values.related_lists, function(item){
+          return item._id === values._grid_row_id
+        })
+        if(rowValue){
+          relatedFieldFullname = rowValue.related_field_fullname
+        }
+        if(relatedFieldFullname){
+          const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
+          return ['object', '=', objectName]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
+  related_lists.$.sort_field_name:
+    label: Sort field
+    type: lookup
+    create: false
+    multiple: true
+    reference_to: object_fields
+    reference_to_field: name
+    depend_on:
+      - object_name
+      - related_lists
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        let relatedFieldFullname = null;
+        const rowValue = _.find(values.related_lists, function(item){
+          return item._id === values._grid_row_id
+        })
+        if(rowValue){
+          relatedFieldFullname = rowValue.related_field_fullname
+        }
+        if(relatedFieldFullname){
+          const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
+          return ['object', '=', objectName]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
+  related_lists.$.sort_order:
+    label: Sort Order
+    type: select
+    defaultValue: asc
+    options:
+      - label: ASC
+        value: asc
+      - label: DESC
+        value: desc
+  # related_lists.$.buttons:
+  #   label: Buttons
+  #   type: lookup
+  #   is_wide: true
+  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  #     function (values) {
+  #       let relatedFieldFullname = null;
+  #       const rowValue = _.find(values.related_lists, function(item){
+  #         return item._id === values._grid_row_id
+  #       })
+  #       if(rowValue){
+  #         relatedFieldFullname = rowValue.related_field_fullname
+  #       }
+  #       const options = [];
+  #       if(relatedFieldFullname){
+  #         const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
+  #         var actions = Creator.getObject(objectName).actions;
+  #         _.each(actions, function(action){
+  #           options.push({label: action.label, value: action.name})
+  #         })
+  #       }
+  #       return options
+  #     }
+  related_lists.$.filters:
+    label: Filters
+    type: textarea
+    rows: 1
+    is_wide: true
+  related_lists.$.visible_on:
+    label: Visible on
+    type: textarea
+    rows: 1
+  related_lists.$.page_size:
+    label: Page Size
+    type: number
+    scale: 0
+    defaultValue: 5
 list_views:
   all:
     columns:
@@ -139,6 +306,14 @@ list_views:
       - profiles
     label: All
     filter_scope: space
+actions:
+  createDefaulRecordView:
+    on: list
+    label: 创建默认页面布局
+    visible: false
+  customize:
+    label: Customize
+    on: record_only
 permission_set:
   user:
     allowCreate: false
@@ -148,9 +323,16 @@ permission_set:
     modifyAllRecords: false
     viewAllRecords: false
   admin:
-    allowCreate: false
-    allowDelete: false
-    allowEdit: false
-    allowRead: false
-    modifyAllRecords: false
-    viewAllRecords: false
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+form:
+  initialValues: !<tag:yaml.org,2002:js/function> |-
+    function () {
+      const objectApiName = this.doc.object_name;
+      const res = Steedos.authRequest(`/service/api/@${objectApiName}/uiSchemaTemplate`, { type: 'get', async: false});
+      return res || {}
+    }

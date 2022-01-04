@@ -5,11 +5,11 @@ import { translationObject } from '@steedos/i18n';
 import Util from '../util';
 const clone = require("clone");
 
-const addNotifications:any = function (object:any, doc:any, members:any, lng: string) {
+const addNotifications:any = async function (object:any, doc:any, members:any, lng: string) {
     if (!members || !members.length) {
         return;
     }
-    const nameKey = object.NAME_FIELD_KEY;
+    const nameKey = await object.getNameFieldKey();
     let _object = clone(object.toConfig());
     translationObject(lng, object.name, _object);
     const notificationTitle = _object.label;
@@ -88,7 +88,7 @@ export const postObjectWebForm = async (req: express.Request, res: express.Respo
             try{
                 const owner = await getSteedosSchema().getObject("users").findOne(formDoc.owner, { fields: ["locale"]});
                 const lng = Util.getUserLocale(owner);
-                addNotifications(object, entityDoc, formDoc.notification_users, lng);
+                await addNotifications(object, entityDoc, formDoc.notification_users, lng);
                 return callback(res, returnUrl);
             }
             catch (error) {

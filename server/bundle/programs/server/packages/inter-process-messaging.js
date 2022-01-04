@@ -7,7 +7,7 @@ var meteorEnv = Package.meteor.meteorEnv;
 var meteorInstall = Package.modules.meteorInstall;
 var Promise = Package.promise.Promise;
 
-var require = meteorInstall({"node_modules":{"meteor":{"inter-process-messaging":{"inter-process-messaging.js":function(require,exports){
+var require = meteorInstall({"node_modules":{"meteor":{"inter-process-messaging":{"inter-process-messaging.js":function module(require,exports){
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -249,7 +249,7 @@ if (typeof process.send === "function") {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-},"types.js":function(require,exports){
+},"types.js":function module(require,exports){
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -264,7 +264,7 @@ exports.PONG = "METEOR_IPC_PONG";
 
 ///////////////////////////////////////////////////////////////////////////////
 
-},"node_modules":{"uuid":{"package.json":function(require,exports,module){
+},"node_modules":{"uuid":{"package.json":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -279,7 +279,7 @@ module.exports = {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-},"index.js":function(require,exports,module){
+},"index.js":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -290,7 +290,7 @@ module.exports = {
 module.useNode();
 ///////////////////////////////////////////////////////////////////////////////
 
-}},"arson":{"package.json":function(require,exports,module){
+}},"arson":{"package.json":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -306,7 +306,7 @@ module.exports = {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-},"index.js":function(require,exports,module){
+},"index.js":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //

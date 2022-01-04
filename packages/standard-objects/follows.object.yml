@@ -1,6 +1,6 @@
 name: follows
 label: Following
-icon: action.following
+icon: marketing_actions
 hidden: true
 fields:
   object_name:

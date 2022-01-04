@@ -1,0 +1,16 @@
+parent: CustomObject
+metadataName: CustomField
+defaultDirectory: fields
+tableName: object_fields
+ext: field
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Field
+nameForMsgsPlural: Custom Fields
+deleteSupported: true
+functionFields:
+  - filtersFunction
+  - optionsFunction

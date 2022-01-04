@@ -1,0 +1,186 @@
+name: apps
+label: 应用程序
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  code:
+    label: API 名称
+    help: 
+    description: 
+  icon_slds:
+    label: 图标
+    help: 
+    description: 
+  tabs: 
+    label: 选项卡
+  visible:
+    label: 启用
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  objects:
+    label: 桌面主菜单
+    help: 
+    description: 
+  mobile_objects:
+    label: 手机主菜单
+    help: 
+    description: 
+  icon:
+    label: 旧版图标
+    help: 
+    description: 
+  sort:
+    label: 排序
+    help: 
+    description: 
+  is_creator:
+    label: 显示在桌面菜单中
+    help: 
+    description: 
+  mobile:
+    label: 显示在手机菜单中
+    help: 
+    description: 
+  members:
+    label: 授权对象
+    help: 
+    description: 
+  members.users:
+    label: 授权人员
+    help: 
+    description: 
+  members.organizations:
+    label: 授权部门
+    help: 
+    description: 
+  url:
+    label: 外部链接
+    help: 
+    description: 
+  is_use_ie:
+    label: 使用IE打开(需使用Steedos桌面客户端)
+    help: 
+    description: 
+  is_use_iframe:
+    label: 使用iframe打开
+    help: 
+    description: 
+  is_new_window:
+    label: 在新窗口打开
+    help: 
+    description: 
+  on_click:
+    label: 链接脚本
+    help: 
+    description: 
+  auth_name:
+    label: 验证域名
+    help: 
+    description: 
+  secret:
+    label: API 密钥
+    help: 
+    description: 
+  oauth2_enabled:
+    label: 启用 OAuth2
+    help: 
+    description: 
+  oauth2_callback_url:
+    label: 回调 URL
+    help: 
+    description: 
+  oauth2_home_url:
+    label: 应用首页
+  oauth2_logo:
+    label: 应用 Logo
+  oauth2_client_secret:
+    label: 应用密钥
+    help: 请妥善保管
+  oauth2_scopes:
+    label: 范围
+    help: 
+    options:
+      - label: 允许访问您的唯一标志符 (openid)
+        value: openid
+      - label: '访问基本信息 (id, email, address, phone, locale)'
+        value: profile
+      - label: 完全访问权限 (full)
+        value: full
+    description: 
+  oauth2_logout_enabled:
+    label: 启用单点注销
+    help: 
+    description: 
+  oauth2_logout_url:
+    label: 单点注销 URL
+    help: 
+    description: 
+  saml_enabled:
+    label: 启用 SAML
+    help: 
+    description: 
+  saml_entity_id:
+    label: Entity Id
+    help: 
+    description: 
+  saml_issuer:
+    label: Issuer
+    help: 
+    description: 
+  saml_idp_cert:
+    label: IDP Cert
+    help: 
+    description: 
+  saml_acs_url:
+    label: ACS Url
+    help: 
+    description: 
+  saml_name_id_format:
+    label: 名称
+    help: 
+    description: 
+  saml_logout_enabled:
+    label: 启用单点注销
+    help: 
+    description: 
+  saml_logout_url:
+    label: 单点注销 URL
+    help: 
+    description: 
+  saml_logout_block:
+    label: 单点注销绑定
+    help: 
+    options:
+      - label: HTTP Redirect
+        value: redirect
+      - label: HTTP Post
+        value: post
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+  from_code_id:
+    label: 
+    help: 
+    description: 
+groups:
+  business_object: 业务对象
+  external_application: 外接应用
+  oauth2: OAuth2
+  saml: SAML
+listviews:
+  all:
+    label: 所有
+actions:
+  customize:
+    label: 自定义
+  reset:
+    label: 重置

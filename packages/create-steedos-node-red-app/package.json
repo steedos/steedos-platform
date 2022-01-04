@@ -1,0 +1,38 @@
+{
+  "name": "create-steedos-node-red-app",
+  "version": "2.1.65",
+  "keywords": [
+    "steedos",
+    "node-red"
+  ],
+  "description": "Create steedos apps with no build configuration.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/steedos/steedos-platform.git",
+    "directory": "packages/create-steedos-node-red-app"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=12"
+  },
+  "bugs": {
+    "url": "https://github.com/steedos/steedos-platform/issues"
+  },
+  "files": [
+    "index.js",
+    "createSteedosNodeRedApp.js"
+  ],
+  "scripts": {
+    "pub_next": "npm publish --tag next --registry https://registry.npmjs.org"
+  },
+  "bin": {
+    "create-steedos-node-red-app": "./index.js"
+  },
+  "dependencies": {
+    "@geek/spinner": "^1.0.0",
+    "@steedos/node-red-app-template": "2.1.65",
+    "chalk": "3.0.0",
+    "commander": "4.1.0",
+    "fs-extra": "8.1.0"
+  }
+}

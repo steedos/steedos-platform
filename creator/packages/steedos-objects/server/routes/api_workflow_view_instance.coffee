@@ -60,7 +60,8 @@ JsonRoutes.add 'post', '/api/workflow/view/:instanceId', (req, res, next) ->
 				collection.update(record_id, {
 					$unset: {
 						"instances": 1,
-						"instance_state": 1
+						"instance_state": 1,
+						"locked": 1
 					}
 				})
 

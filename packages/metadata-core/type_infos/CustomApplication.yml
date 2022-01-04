@@ -1,0 +1,12 @@
+metadataName: CustomApplication
+defaultDirectory: applications
+tableName: apps
+ext: app
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Application
+nameForMsgsPlural: Custom Applications
+deleteSupported: true

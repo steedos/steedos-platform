@@ -1,0 +1,8 @@
+name: name
+index: true
+label: API Name
+required: false
+searchable: true
+hidden: true
+sort_no: 100
+type: text

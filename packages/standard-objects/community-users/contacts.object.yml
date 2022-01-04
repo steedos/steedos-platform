@@ -7,6 +7,7 @@ enable_events: true
 enable_tasks: true
 enable_api: true
 enable_audit: true
+version: 2
 fields:
   name:
     type: text
@@ -31,7 +32,7 @@ fields:
     type: lookup
     label: 直属上司
     reference_to: contacts
-    create: false
+    create: true
     inlineHelpText: 联系人管理员的姓名。输入联系人名称，或从列表中选择联系人。
   salutation:
     type: select

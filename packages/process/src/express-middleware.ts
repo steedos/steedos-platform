@@ -1,4 +1,4 @@
-import { requireAuthentication } from '@steedos/core';
+import { requireAuthentication } from '@steedos/auth';
 
 import { submit } from './submit';
 import { approve } from './approve';

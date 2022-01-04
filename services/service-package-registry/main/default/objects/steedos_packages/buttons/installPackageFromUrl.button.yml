@@ -1,0 +1,4 @@
+name: installPackageFromUrl
+is_enable: true
+label: 手动安装软件包
+'on': list

@@ -1,0 +1,24 @@
+name: status
+filterable: false
+hidden: false
+index: true
+is_name: false
+is_wide: false
+label: 状态
+omit: false
+readonly: false
+required: true
+searchable: true
+sort_no: 160
+sortable: true
+type: select
+options:
+  - label: 已启用
+    value: enable
+    color: 3df53d
+  - label: 启动中
+    value: starting
+    color: ffff00
+  - label: 已停用
+    value: disable
+    color: dcd0d0

@@ -1,0 +1,13 @@
+name: all
+columns:
+  - field: version
+  - field: name
+  - field: status
+  - field: created
+filter_scope: space
+sort: [["created", "desc"]]
+filters: []
+label: 所有
+scrolling_mode: standard
+shared: true
+type: grid

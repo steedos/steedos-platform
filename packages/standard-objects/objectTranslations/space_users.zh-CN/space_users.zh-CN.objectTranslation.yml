@@ -1,0 +1,154 @@
+name: space_users
+label: 人员
+description: 
+fields:
+  name:
+    label: 姓名
+    help: 
+    description: 
+  username:
+    label: 用户名
+    help: 
+    description: 
+  email:
+    label: 邮件
+    help: 
+    description: 
+  email_verified:
+    label: 邮件已验证
+    help: 
+    description: 
+  mobile:
+    label: 手机
+    help: 
+    description: 
+  mobile_verified:
+    label: 手机已验证
+    help: 
+    description: 
+  organizations:
+    label: 部门(多选)
+    help: 
+    description: 
+  organizations_parents:
+    label: 部门(含上级)
+    help: 
+    description: 
+  organization:
+    label: 主部门
+    help: 
+    description: 
+  company_ids:
+    label: 分部(多选)
+    help: 
+    description: 
+  company_id:
+    label: 主分部
+    help: 
+    description: 
+  position:
+    label: 职务
+    help: 
+    description: 
+  manager:
+    label: 上级主管
+    help: 
+    description: 
+  profile:
+    label: 简档
+    help: 
+    description: 
+  contact_id:
+    label: 联系人
+    help: 
+    description: 
+  is_supplier:
+    label: 是供应商
+    help: 
+    description: 
+  is_customer:
+    label: 是客户
+    help: 
+    description: 
+  work_phone:
+    label: 工作电话
+    help: 
+    description: 
+  locale:
+    label: 语言
+    help: 
+    options:
+      - label: 简体中文
+        value: zh-cn
+      - label: English
+        value: en-us
+    description: 
+  sort_no:
+    label: 排序号
+    help: 
+    description: 
+  email_notification:
+    label: 接收邮件通知
+    help: 
+    description: 
+  sms_notification:
+    label: 接收短信提醒
+    help: 
+    description: 
+  user_accepted:
+    label: 有效
+    help: 
+    description: 
+  invite_state:
+    label: 邀请状态
+    help: 
+    description: 
+  user:
+    label: 用户
+    help: 
+    description: 
+  avatar:
+    label: 头像
+    help: 
+    description: 
+  hr:
+    label: HR
+    help: 
+    description: 
+  last_logon:
+    label: 最近登陆
+    help: 
+    description: 
+  password_expired:
+    label: 密码已过期
+    help: 
+    description: 
+groups:
+  '-': '-'
+listviews:
+  all:
+    label: 有效人员
+  disabled:
+    label: 离职停用人员
+  supplier:
+    label: 供应商人员
+  customer:
+    label: 客户人员
+actions:
+  invite_space_users:
+    label: 邀请注册
+  setPassword:
+    label: 修改密码
+  disable:
+    label: 停用
+  enable:
+    label: 启用
+  lockout:
+    label: 锁定
+  unlock:
+    label: 解除锁定
+CustomLabels:
+  space_users_field_profile_def_options_admin: 管理员
+  space_users_field_profile_def_options_user: 员工
+  space_users_field_profile_def_options_supplier: 供应商
+  space_users_field_profile_def_options_customer: 客户

@@ -1,0 +1,69 @@
+name: action_field_updates
+label: Field Updates
+description: 
+fields:
+  name:
+    label: 
+    help: 
+    description: 
+  label:
+    label: 
+    help: 
+    description: 
+  object_name:
+    label: Object Name
+    help: 
+    description: 
+  target_object:
+    label: Object to Update
+    help: 
+    description: 
+  field_name:
+    label: Field to Update
+    help: 
+    description: 
+  operation:
+    label: 
+    help: 
+    description: 
+  formula:
+    label: 
+    help: 
+    description: 
+  literal_value:
+    label: Literal value
+    help: 
+    description: 
+  notify_assignee:
+    label: 通知被分配人(仅修改拥有者时由此选项)
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  reevaluate_on_change:
+    label: Re-evaluate Workflow Rules after Field Change
+    help: If this field update changes the field's value, all workflow rules on the associated object are re-evaluated. Any workflow rules whose criteria are met as a result of the field update will be triggered.
+    description: This check box only identifies whether or not the workflow rules for the object with which the field update is associated are reevaluated. For field updates across objects, these workflow rules are never reevaluated, and all workflow rules for the object to which they are to be updated are always reevaluated.
+listviews:
+  all:
+    label: All
+CustomLabels:
+  action_field_updates_field_operation_options_null: A blank value (null)
+  action_field_updates_field_operation_options_formula: Use a formula to set the new value
+  action_field_updates_field_operation_options_literal: A specific value
+  action_field_updates_field_field_new_value: 
+  action_field_updates_field_process_definition: 
+  action_field_updates_field_process_node: 
+  action_field_updates_field_when: 
+  action_field_updates_field_when_options_final_approval: 
+  action_field_updates_field_when_options_final_rejection: 
+  action_field_updates_field_when_options_recall: 
+  action_field_updates_field_when_options_rejection: 
+  action_field_updates_field_when_options_approval: 
+  action_field_updates_field_when_options_initial_submission: 
+  action_field_updates_field__error_reevaluate_parent: Re-evaluate Workflow Rules after Field Change cannot be specified for a parent field update.
+  action_field_updates_field__error_process_node_process_definition_required: Please select "Approval Process" for this Approval Step and then create "Field Update"!
+  action_field_updates_field__error_process_definition_object_required: Please select "Object" for this Approval Process and then create "Field Update"!
+  action_field_updates_field__error_workflow_rule_object_required: Please select "Object" for this Workflow Rule and then create "Field Update"!

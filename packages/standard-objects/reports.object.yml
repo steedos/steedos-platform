@@ -2,6 +2,7 @@ name: reports
 label: Report
 icon: report
 enable_space_global: true
+version: 2
 fields:
   name:
     label: Name
@@ -175,6 +176,8 @@ fields:
     type: grid
     is_wide: true
     name: filter_fields
+    depend_on:
+      - object_name
   filter_fields.$:
     label: Filter Field
     blackbox: true
@@ -183,8 +186,6 @@ fields:
   filter_fields.$.field:
     label: Field
     type: lookup
-    depend_on:
-      - object_name
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function (values) {
                 return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);

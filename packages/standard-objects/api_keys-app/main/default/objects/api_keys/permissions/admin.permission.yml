@@ -1,0 +1,13 @@
+name: API Key.管理员
+allowCreate: true
+allowDelete: true
+allowEdit: true
+allowRead: true
+modifyAllRecords: true
+permission_set_id: admin
+uneditable_fields:
+  - name
+  - last_use_time
+  - api_key
+  - owner
+viewAllRecords: true

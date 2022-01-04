@@ -1,4 +1,18 @@
 _eval = require('eval')
+objectql = require('@steedos/objectql');
+
+getObjectConfig = (objectApiName) ->
+	return objectql.getObject(objectApiName).toConfig()
+
+getObjectNameFieldKey = (objectApiName) ->
+	return objectql.getObject(objectApiName).NAME_FIELD_KEY
+
+getRelateds = (objectApiName) ->
+	return Meteor.wrapAsync((objectApiName, cb) ->
+		objectql.getObject(objectApiName).getRelateds().then (resolve, reject) ->
+			cb(reject, resolve)
+		)(objectApiName)
+
 uuflowManagerForInitApproval = {}
 
 uuflowManagerForInitApproval.check_authorization = (req) ->
@@ -193,7 +207,7 @@ uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info)
 
 	uuflowManagerForInitApproval.initiateRecordInstanceInfo(ins_obj.record_ids[0], new_ins_id, space_id)
 
-	uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo(relatedTablesInfo, new_ins_id, space_id)
+	# uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo(relatedTablesInfo, new_ins_id, space_id)
 
 	uuflowManagerForInitApproval.initiateAttach(ins_obj.record_ids[0], space_id, ins_obj._id, appr_obj._id)
 
@@ -210,7 +224,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 	values = {}
 	objectName = recordIds.o
-	object = Creator.getObject(objectName, spaceId)
+	object = getObjectConfig(objectName)
 	recordId = recordIds.ids[0]
 	ow = Creator.Collections.object_workflows.findOne({
 		object_name: objectName,
@@ -221,7 +235,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 	if ow and record
 		form = Creator.getCollection("forms").findOne(flow.form)
 		formFields = form.current.fields || []
-		relatedObjects = Creator.getRelatedObjects(objectName, spaceId)
+		relatedObjects = getRelateds(objectName)
 		relatedObjectsKeys = _.pluck(relatedObjects, 'object_name')
 		formTableFields = _.filter formFields, (formField) ->
 			return formField.type == 'table'
@@ -240,8 +254,17 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				return f.code == key
 
 		getFormField = (key) ->
-			return _.find formFields,  (f) ->
-				return f.code == key
+			ff = null
+			_.forEach formFields, (f) ->
+				if ff
+					return
+				if f.type == 'section'
+					ff = _.find f.fields,  (sf) ->
+						return sf.code == key
+				else if f.code == key
+					ff = f
+
+			return ff
 
 		getFormTableSubField = (tableField, subFieldCode) ->
 			return _.find tableField.fields,  (f) ->
@@ -249,17 +272,18 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 		getFieldOdataValue = (objName, id) ->
 			obj = Creator.getCollection(objName)
+			nameKey = getObjectNameFieldKey(objName)
 			if !obj
 				return
 			if _.isString id
 				_record = obj.findOne(id)
 				if _record
-					_record['@label'] = _record.name
+					_record['@label'] = _record[nameKey]
 					return _record
 			else if _.isArray id
 				_records = []
 				obj.find({ _id: { $in: id } }).forEach (_record) ->
-					_record['@label'] = _record.name
+					_record['@label'] = _record[nameKey]
 					_records.push _record
 
 				if !_.isEmpty _records
@@ -301,6 +325,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 		ow.field_map?.forEach (fm) ->
 			object_field = fm.object_field
 			workflow_field = fm.workflow_field
+			if !object_field || !workflow_field
+				throw new Meteor.Error(400, '未找到字段，请检查对象流程映射字段配置')
 			relatedObjectFieldCode = getRelatedObjectFieldCode(object_field)
 			formTableFieldCode = getFormTableFieldCode(workflow_field)
 			objField = object.fields[object_field]
@@ -320,8 +346,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 				tableToRelatedMap[tableToRelatedMapKey][oTableFieldCode] = workflow_field
 			# 判断是否是表格字段
-			else if workflow_field.indexOf('.$.') > 0 and object_field.indexOf('.$.') > 0
-				wTableCode = workflow_field.split('.$.')[0]
+			else if workflow_field.indexOf('.') > 0 and object_field.indexOf('.$.') > 0
+				wTableCode = workflow_field.split('.')[0]
 				oTableCode = object_field.split('.$.')[0]
 				if record.hasOwnProperty(oTableCode) and _.isArray(record[oTableCode])
 					tableFieldCodes.push(JSON.stringify({
@@ -329,6 +355,23 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						object_table_field_code: oTableCode
 					}))
 					tableFieldMap.push(fm)
+				else if oTableCode.indexOf('.') > 0 # 说明是关联表的grid字段
+					oTableCodeReferenceFieldCode = oTableCode.split('.')[0];
+					gridCode = oTableCode.split('.')[1];
+					oTableCodeReferenceField = object.fields[oTableCodeReferenceFieldCode];
+					if oTableCodeReferenceField && ['lookup', 'master_detail'].includes(oTableCodeReferenceField.type) && _.isString(oTableCodeReferenceField.reference_to)
+						if record[oTableCode]
+							return;
+						referenceToObjectName = oTableCodeReferenceField.reference_to;
+						referenceToFieldValue = record[oTableCodeReferenceField.name];
+						referenceToDoc = getFieldOdataValue(referenceToObjectName, referenceToFieldValue);
+						if referenceToDoc[gridCode]
+							record[oTableCode] = referenceToDoc[gridCode];
+							tableFieldCodes.push(JSON.stringify({
+								workflow_table_field_code: wTableCode,
+								object_table_field_code: oTableCode
+							}));
+							return tableFieldMap.push(fm);
 
 			# 处理lookup、master_detail类型字段
 			else if object_field.indexOf('.') > 0 and object_field.indexOf('.$.') == -1
@@ -341,7 +384,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						fieldsObj[lookupFieldName] = 1
 						lookupObjectRecord = Creator.getCollection(objectField.reference_to, spaceId).findOne(record[objectFieldName], { fields: fieldsObj })
 						objectFieldObjectName = objectField.reference_to
-						lookupFieldObj = Creator.getObject(objectFieldObjectName, spaceId)
+						lookupFieldObj = getObjectConfig(objectFieldObjectName)
 						objectLookupField = lookupFieldObj.fields[lookupFieldName]
 						referenceToFieldValue = lookupObjectRecord[lookupFieldName]
 						if objectLookupField && formField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objectLookupField.type) && _.isString(objectLookupField.reference_to)
@@ -352,6 +395,21 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							else if !objectField.multiple && !formField.is_multiselect
 								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
 							values[workflow_field] = odataFieldValue
+						else if objectLookupField && formField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objectLookupField.type) && ['users', 'organizations'].includes(objectLookupField.reference_to)
+							if !_.isEmpty(referenceToFieldValue)
+								lookupSelectFieldValue
+								if formField.type == 'user'
+									if objectLookupField.multiple && formField.is_multiselect
+										lookupSelectFieldValue = getSelectUserValues(referenceToFieldValue, spaceId)
+									else if !objectLookupField.multiple && !formField.is_multiselect
+										lookupSelectFieldValue = getSelectUserValue(referenceToFieldValue, spaceId)
+								else if formField.type == 'group'
+									if objectLookupField.multiple && formField.is_multiselect
+										lookupSelectFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
+									else if !objectLookupField.multiple && !formField.is_multiselect
+										lookupSelectFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
+								if lookupSelectFieldValue
+									values[workflow_field] = lookupSelectFieldValue
 						else
 							values[workflow_field] = lookupObjectRecord[lookupFieldName]
 
@@ -393,7 +451,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				_.each tr, (v, k) ->
 					tableFieldMap.forEach (tfm) ->
 						if tfm.object_field is (c.object_table_field_code + '.$.' + k)
-							wTdCode = tfm.workflow_field.split('.$.')[1]
+							wTdCode = tfm.workflow_field.split('.')[1]
 							newTr[wTdCode] = v
 				if not _.isEmpty(newTr)
 					values[c.workflow_table_field_code].push(newTr)
@@ -408,7 +466,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				relatedObjectName = key
 				tableValues = []
 				relatedTableItems = []
-				relatedObject = Creator.getObject(relatedObjectName, spaceId)
+				relatedObject = getObjectConfig(relatedObjectName)
 				relatedField = _.find relatedObject.fields, (f) ->
 					return ['lookup', 'master_detail'].includes(f.type) && f.reference_to == objectName
 
@@ -549,7 +607,7 @@ uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo = (relatedTablesI
 	_.each relatedTablesInfo, (tableItems, relatedObjectName) ->
 		relatedCollection = Creator.getCollection(relatedObjectName, spaceId)
 		_.each tableItems, (item) ->
-			relatedCollection.update(item._table._id, {
+			relatedCollection.direct.update(item._table._id, {
 				$set: {
 					instances: [{
 						_id: insId,

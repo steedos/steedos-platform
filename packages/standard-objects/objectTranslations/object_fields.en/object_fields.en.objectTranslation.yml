@@ -1,0 +1,327 @@
+name: object_fields
+label: Object Fields
+description: 
+fields:
+  object:
+    label: Object
+    help: 
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  _name:
+    label: Field Name
+    help: 
+    description: 
+  name:
+    label: API Name
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
+    description: 
+  type:
+    label: Type
+    help: 
+    options:
+      - label: Text
+        value: text
+      - label: Textarea
+        value: textarea
+      - label: Html
+        value: html
+      - label: Select
+        value: select
+      - label: Checkbox
+        value: boolean
+      - label: Toggle
+        value: toggle
+      - label: Date
+        value: date
+      - label: Datetime
+        value: datetime
+      - label: Number
+        value: number
+      - label: Currency
+        value: currency
+      - label: Percent
+        value: percent
+      - label: Password
+        value: password
+      - label: Lookup
+        value: lookup
+      - label: Master Detail
+        value: master_detail
+      - label: Autonumber
+        value: autonumber
+      - label: Url
+        value: url
+      - label: Email
+        value: email
+      - label: Image
+        value: image
+      - label: File
+        value: file
+      - label: Formula
+        value: formula
+      - label: Roll-Up Summary
+        value: summary
+    description: 
+  defaultValue:
+    label: Default Value
+    help: 
+    description: 
+  group:
+    label: Group
+    help: 
+    description: 
+  reference_to:
+    label: Reference to
+    help: 
+    description: 
+  filtersFunction:
+    label: filters Function
+    help: 
+    description: 
+  optionsFunction:
+    label: options Function
+    help: 
+    description: 
+  precision:
+    label: Precision
+    help: 
+    description: 
+  scale:
+    label: Scale
+    help: >-
+      If the field type is a Percent, this indicates the number of decimal
+      places the field will display, for example, two decimal places will
+      display as 10.20%.
+    description: 
+  rows:
+    label: Rows
+    help: 
+    description: 
+  multiple:
+    label: Multiple
+    help: 
+    description: 
+  options:
+    label: Options
+    help: >-
+      The label and value of each option cannot be empty. Set the background
+      color to FFFFFF in hexadecimal format.
+    description: 
+  options.$:
+    label: Options
+    help: 
+    description: 
+  options.$.label:
+    label: Label
+    help: 
+    description: 
+  options.$.value:
+    label: Value
+    help: 
+    description: 
+  options.$.color:
+    label: Color
+    help: 
+    description: 
+  options.$.description:
+    label: Description
+    help: 
+    description: 
+  formula:
+    label: Formula
+    help: This field must be filled when the field type is 'Autonumber' or 'Formula'
+    description: 
+  data_type:
+    label: Data Type
+    help: This field must be filled when the field type is 'Formula'
+    options:
+      - label: Checkbox
+        value: boolean
+      - label: Number
+        value: number
+      - label: Currency
+        value: currency
+      - label: Percent
+        value: percent
+      - label: Text
+        value: text
+      - label: Date
+        value: date
+      - label: Datetime
+        value: datetime
+    description: 
+  formula_blank_value:
+    label: Blank Field Handling
+    help: >-
+      If your formula references any number or currency fields, specify what
+      happens to the formula output when their values are blank.
+    options:
+      - label: Treat blank fields as zeroes
+        value: zeroes
+      - label: Treat blank fields as blanks
+        value: blanks
+    description: 
+  summary_object:
+    label: Object to Summarize
+    help: This field must be filled in when the field type is 'Roll-Up Summary'.
+    description: 
+  summary_type:
+    label: Roll-Up Type
+    help: This field must be filled in when the field type is 'Roll-Up Summary'.
+    options:
+      - label: COUNT
+        value: count
+      - label: SUM
+        value: sum
+      - label: MIN
+        value: min
+      - label: MAX
+        value: max
+      - label: AVG
+        value: avg
+    description: 
+  summary_field:
+    label: Field to Aggregate
+    help: >-
+      If the field type is a 'Roll-Up Summary' and the 'Roll-Up Type' is not
+      COUNT, this field must be filled in, Only fields that aggregate number,
+      currency, date, and datetime types are supported.
+    description: 
+  summary_filters:
+    label: Filter Criteria
+    help: >-
+      Only records meeting certain criteria should be included in the
+      calculation, all records should be included in the calculation while the
+      criteria is empty.
+    description: 
+  summary_filters.$:
+    label: Filter Criteria
+    help: 
+    description: 
+  summary_filters.$.field:
+    label: Field
+    help: 
+    description: 
+  summary_filters.$.operation:
+    label: Operator
+    help: 
+    description: 
+  summary_filters.$.value:
+    label: Value
+    help: 
+    description: 
+  column_name:
+    label: Database column name
+    help: Only supports relational databases.
+    description: 
+  primary:
+    label: Primary Key
+    help: 
+    description: 
+  generated:
+    label: Generated
+    help: 
+    description: 
+  sort_no:
+    label: Sort Number
+    help: 
+    description: 
+  is_name:
+    label: Is Name
+    help: 
+    description: 
+  required:
+    label: Required
+    help: 
+    description: 
+  is_wide:
+    label: Is Wide
+    help: 
+    description: 
+  readonly:
+    label: Readonly
+    help: 
+    description: 
+  hidden:
+    label: Hidden
+    help: 
+    description: 
+  omit:
+    label: Omit
+    help: 
+    description: 
+  index:
+    label: Is Index Field
+    help: 
+    description: 
+  sortable:
+    label: Sortable
+    help: 
+    description: 
+  searchable:
+    label: Searchable
+    help: 
+    description: 
+  filterable:
+    label: Filterable
+    help: 
+    description: 
+  show_as_qr:
+    label: Show as QR
+    help: 
+    description: 
+  visible_on:
+    label: Visible On
+    help: 
+    description: 
+  inlineHelpText:
+    label: Prompt text
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  write_requires_master_read:
+    label: Write requires master read
+    help: >-
+      Sets the minimum sharing access level required on the master record to
+      create, edit, or delete child records. This field applies only to
+      master-detail or junction object custom field types. true—Allows users
+      with “Read” access to the master record permission to create, edit, or
+      delete child records. This setting makes sharing less restrictive.
+      false—Allows users with “Read/Write” access to the master record
+      permission to create, edit, or delete child records. This setting is more
+      restrictive than true, and is the default value.
+    description: 
+groups:
+  external_data_source: External data source
+  advanced: Advanced
+listviews:
+  all:
+    label: All
+actions:
+  recomputeFormulaValues:
+    label: Recompute Formula Values
+  recomputeSummaryValues:
+    label: Batch Recompute Summary Values
+CustomLabels:
+  object_fields_field_allowedValues: 
+  object_fields_field_filters: 
+  object_fields_field_filters.$: 
+  object_fields_field_filters_$_field: 
+  object_fields_field_filters_$_operation: 
+  object_fields_field_filters_$_value: 
+  object_fields_field_summary_filters.$: 
+  object_fields_group_reference: 
+  object_fields_group_number: 
+  object_fields_group_formula: 
+  object_fields_group_summary: 
+  object_fields__error_name_invalid_format: 
+  object_fields__error_name_max_length: 

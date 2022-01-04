@@ -2,6 +2,7 @@ name: object_listviews
 label: List View
 icon: forecasts
 hidden: true
+version: 2
 fields:
   label:
     label: Label
@@ -18,6 +19,7 @@ fields:
   object_name:
     label: Object
     type: master_detail
+    write_requires_master_read: true
     required: true
     reference_to: objects
     reference_to_field: name
@@ -120,9 +122,10 @@ fields:
   columns.$.width:
     label: Width
     type: text
-  columns.$.wrap:
-    label: Wrap
-    type: boolean
+  # ag-grid配置rowModelType为infinite的话，列的warp属性功能异常，即不会换行显示且显示效果异常 #258
+  # columns.$.wrap:
+  #   label: Wrap
+  #   type: boolean
   filter_fields:
     label: Default Filter Fields
     type: lookup
@@ -144,6 +147,8 @@ fields:
     label: Default Sort Order
     type: grid
     is_wide: true
+    depend_on:
+      - object_name
   sort.$:
     label: Order
     blackbox: true
@@ -151,8 +156,6 @@ fields:
   sort.$.field_name:
     label: Field Name
     type: lookup
-    depend_on:
-      - object_name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               var _object, _options, fields, icon;
@@ -194,16 +197,15 @@ fields:
     is_wide: true
     hidden: true
     omit: true
+    depend_on:
+      - object_name
   filters.$:
     label: Filter
     blackbox: true
-    type: object
   filters.$.field:
     label: Field
     type: lookup
     showIcon: false
-    depend_on:
-      - object_name
     optionsFunction: !!js/function |
       function(values){
         if(values.object_name){
@@ -251,6 +253,8 @@ fields:
     label: Mobile Columns
     type: grid
     is_wide: true
+    depend_on:
+      - object_name
   mobile_columns.$:
     label: Column
     blackbox: true
@@ -260,8 +264,6 @@ fields:
     type: lookup
     multiple: false
     is_wide: false
-    depend_on:
-      - object_name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               if (!(values != null ? values.object_name : void 0)) {
@@ -274,6 +276,11 @@ fields:
 
               return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
             }
+  sort_no:
+    label: Sort no
+    type: number
+    scale: 0
+    defaultValue: 100
 paging:
   enabled: false
 list_views:
@@ -282,9 +289,14 @@ list_views:
       - label
       - name
       - shared
+      - owner
       - modified
     label: All List View
     filter_scope: space
+actions:
+  customize:
+    label: Customize
+    on: record_only
 permission_set:
   user:
     allowCreate: true
@@ -298,5 +310,5 @@ permission_set:
     allowDelete: true
     allowEdit: true
     allowRead: false
-    modifyAllRecords: false
-    viewAllRecords: false
+    modifyAllRecords: true
+    viewAllRecords: true

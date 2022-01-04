@@ -1,5 +1,5 @@
 const core = require('@steedos/core');
-db.apps = core.newCollection('apps');
+db.apps = Creator.Collections.apps ? Creator.Collections.apps : core.newCollection('apps')
 
 db.apps.isInternalApp = function (url) {
     var app_url, i, len, ref;
@@ -78,17 +78,17 @@ var getUserApps = function (userId, spaceId) {
     return db.apps.find(selector, {sort: {sort: 1}}).fetch();
 };
 
-Creator.Objects['apps'].methods = {
-    safe_apps: function (req, res) {
-        return Fiber(function () {
-            var userSession = req.user
-            var userId = userSession.userId
-            var spaceId = userSession.spaceId
-            var apps = getUserApps(userId, spaceId);
-            return res.send({
-                "@odata.count": apps.length,
-                value: apps
-            });
-        }).run();
-    }
-}
+// Creator.Objects['apps'].methods = {
+//     safe_apps: function (req, res) {
+//         return Fiber(function () {
+//             var userSession = req.user
+//             var userId = userSession.userId
+//             var spaceId = userSession.spaceId
+//             var apps = getUserApps(userId, spaceId);
+//             return res.send({
+//                 "@odata.count": apps.length,
+//                 value: apps
+//             });
+//         }).run();
+//     }
+// }

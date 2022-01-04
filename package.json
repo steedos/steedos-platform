@@ -2,26 +2,35 @@
   "name": "steedos-platform",
   "private": true,
   "workspaces": [
-    "packages/*",
-    "apps/*",
-    "server"
+    "packages/**",
+    "steedos-packages/**",
+    "services/**",
+    "server",
+    "steedos-projects/**"
   ],
   "scripts": {
-    "initSubmodules": "git submodule init && git submodule update",
-    "submodules": "git submodule foreach git checkout master && git pull ",
-    "bootstrap": "yarn submodules && lerna clean --yes && lerna bootstrap --force-local && lerna clean --yes",
-    "link": "lerna link --force-local",
-    "ver": "lerna version --skip-git --force-publish",
-    "pub": "lerna publish from-package --registry https://registry.npmjs.org",
-    "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
+    "start": "yarn start-project-template",
+    "start-project-template": "cd steedos-projects && cd project-template && yarn start",
+    "bootstrap": "lerna clean --yes && lerna bootstrap --force-local",
+    "lerna-link": "lerna clean --yes && lerna link --force-local",
+    "buildPackages": "lerna run buildPackage",
+    "ver": "lerna version --no-git-tag-version --force-publish --exact && yarn git_version && yarn upgrade-template",
+    "upgrade-template": "node .scripts/copy_template.js && node .scripts/.git_push_upgrade_template.js",
+    "pub": "lerna publish from-package --registry https://registry.npmjs.org && yarn git_tag",
+    "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next && yarn git_tag",
+    "git_version": "node .scripts/.git_push_version.js",
+    "git_tag": "node .scripts/git_tag.js",
     "compile": "lerna run compile",
-    "prepare": "lerna run prepare",
+    "build": "lerna run prepare",
     "clean": "lerna clean",
     "changed": "lerna changed",
     "git": "git config core.autocrlf true && git config core.filemode false",
     "update-yarn": "curl --compressed -o- -L https://yarnpkg.com/install.sh | bash",
-    "syncToTaoBaoWin": "start https://npm.taobao.org/sync/@steedos/webapp && start https://npm.taobao.org/sync/@steedos/app-admin && start https://npm.taobao.org/sync/@steedos/app-crm && start https://npm.taobao.org/sync/@steedos/app-contracts && start https://npm.taobao.org/sync/@steedos/auth && start https://npm.taobao.org/sync/steedos-cli && start https://npm.taobao.org/sync/@steedos/core && start https://npm.taobao.org/sync/@steedos/filters && start https://npm.taobao.org/sync/@steedos/i18n && start https://npm.taobao.org/sync/@steedos/meteor-bundle-dependencies && start https://npm.taobao.org/sync/@steedos/meteor-bundle-runner && start https://npm.taobao.org/sync/@steedos/migrate && start https://npm.taobao.org/sync/@steedos/objectql && start https://npm.taobao.org/sync/@steedos/project-template-empty && start https://npm.taobao.org/sync/@steedos/schemas && start https://npm.taobao.org/sync/@steedos/standard-objects && start https://npm.taobao.org/sync/steedos-server && start https://npm.taobao.org/sync/create-steedos-app && start https://npm.taobao.org/sync/@steedos/plugin-enterprise && start https://npm.taobao.org/sync/@steedos/accounts",
-    "syncToTaoBaoMac": "open https://npm.taobao.org/sync/@steedos/webapp && open https://npm.taobao.org/sync/@steedos/app-admin && open https://npm.taobao.org/sync/@steedos/app-crm && open https://npm.taobao.org/sync/@steedos/app-contracts && open https://npm.taobao.org/sync/@steedos/auth && open https://npm.taobao.org/sync/steedos-cli && open https://npm.taobao.org/sync/@steedos/core && open https://npm.taobao.org/sync/@steedos/filters && open https://npm.taobao.org/sync/@steedos/i18n && open https://npm.taobao.org/sync/@steedos/meteor-bundle-dependencies && open https://npm.taobao.org/sync/@steedos/meteor-bundle-runner && open https://npm.taobao.org/sync/@steedos/migrate && open https://npm.taobao.org/sync/@steedos/objectql && open https://npm.taobao.org/sync/@steedos/project-template-empty && open https://npm.taobao.org/sync/@steedos/schemas && open https://npm.taobao.org/sync/@steedos/standard-objects && open https://npm.taobao.org/sync/steedos-server && open https://npm.taobao.org/sync/create-steedos-app && open https://npm.taobao.org/sync/@steedos/plugin-enterprise && open https://npm.taobao.org/sync/@steedos/accounts"
+    "sync-to-taobao": "node .scripts/sync_to_taobao.js",
+    "build_image": "node .scripts/build_image.js",
+    "build_creator": "cd creator && yarn run build",
+    "create_dev_project": "node .scripts/create_dev_project.js",
+    "start-dev": "yarn create_dev_project && cd steedos-projects && cd project-dev && yarn start"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
@@ -30,9 +39,18 @@
     "**/hoek": "^5.0.3",
     "**/cryptiles": "^4.1.2",
     "**/typescript": "3.9.7",
-    "**/odata-v4-parser": "^0.1.29"
+    "**/odata-v4-parser": "^0.1.29",
+    "**/cookies": "0.6.2",
+    "**/cross-env": "5.2.1",
+    "**/globby": "9.2.0"
   },
   "devDependencies": {
-    "lerna": "^3.22.1"
-  }
+    "cpy": "7.3.0",
+    "lerna": "4.0.0",
+    "mkdirp": "1.0.4"
+  },
+  "peerDependencies": {
+    "steedos-server": "2.x"
+  },
+  "dependencies": {}
 }

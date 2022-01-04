@@ -1,6 +1,8 @@
+import { bootStrapExpress, exportExcelExpress } from '../routes';
+import { processExpress } from "@steedos/process";
+const Future = require('fibers/future');
 const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
-const steedosProcess = require("@steedos/process");
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
@@ -11,7 +13,7 @@ var path = require('path');
 import fs = require('fs')
 
 import { Publish } from '../publish'
-import { getSteedosSchema } from '@steedos/objectql';
+import { getSteedosSchema, extend } from '@steedos/objectql';
 import { coreExpress } from '../express-middleware'
 
 import { createHash } from "crypto";
@@ -34,66 +36,115 @@ const extendSimpleSchema = () => {
     });
 }
 
-export const initCreator = () => {
-    extendSimpleSchema();
-    Creator.baseObject = objectql.getObjectConfig(objectql.MONGO_BASE_OBJECT)
-    Creator.steedosSchema = getSteedosSchema()
-    // 不需要加载 Creator 中定义的objects
-    // _.each(Creator.Objects, function (obj, object_name) {
-    //     obj.name = object_name
-    //     objectql.addObjectConfig(obj, 'default')
-    // });
-    objectql.addAppConfigFiles(path.join(process.cwd(), "src/**"))
-    
-    let allObjects = objectql.getObjectConfigs('default');
-    _.each(allObjects, function (obj) {
-        Creator.Objects[obj.name] = obj;
-    });
-
-    let allApps = objectql.getAppConfigs();
-    _.each(allApps, function (app) {
-        if (!app._id)
-            app._id = app.name
-        Creator.Apps[app._id] = app
-    });
-
-    let allDashboards = objectql.getDashboardConfigs();
-    if(!Creator.Dashboards){
-        // Creator新版本发包前Creator.Dashboards全局变量不存在
-        Creator.Dashboards = {}
-    }
-    _.each(allDashboards, function (dashboard) {
-        if (!dashboard._id)
-            dashboard._id = dashboard.name
-        Creator.Dashboards[dashboard._id] = dashboard
-    });
-
-    let allServerScripts = objectql.getServerScripts();
-    _.each(allServerScripts, function (scriptFile) {
-        require(scriptFile)
-    });
-
-    let clientCodes = getClientBaseObject();
-
-    let clientScripts = objectql.getClientScripts();
-    _.each(clientScripts, function (scriptFile) {
+export const loadClientScripts = ()=>{
+    try {
+        let clientCodes = getClientBaseObject();
+        let clientScripts = objectql.getClientScripts();
+        _.each(clientScripts, function (scriptFile) {
+            let code = fs.readFileSync(scriptFile, 'utf8');
+            clientCodes = clientCodes + '\r\n;' + code + '\r\n;'
+        });
+        WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
+    } catch (error) {
         
-        let code = fs.readFileSync(scriptFile, 'utf8');
+    }
+}
 
-        clientCodes = clientCodes + '\r\n' + code
-    });
-    WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
+export const initCreator = async () => {
+    let allObjects = await objectql.getDataSource('meteor').getObjects();
+    let allDefautObjects = await objectql.getDataSource('default').getObjects();
+    await Future.task(() => {
+        try {
+            extendSimpleSchema();
+            Creator.baseObject = objectql.getObjectConfig(objectql.MONGO_BASE_OBJECT);
+            Creator.steedosSchema = getSteedosSchema()
+            // 不需要加载 Creator 中定义的objects
+            // _.each(Creator.Objects, function (obj, object_name) {
+            //     obj.name = object_name
+            //     objectql.addObjectConfig(obj, 'default')
+            // });
+            objectql.addAppConfigFiles(path.join(process.cwd(), "src/**")) //TODO await
+            // let allObjects = objectql.getObjectConfigs('meteor');
+            _.each(allObjects, function (obj) {
+                const objectConfig = obj.metadata;
+                const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+                if(localObjectConfig){
+                    objectConfig.listeners = localObjectConfig.listeners;
+                    objectConfig.methods = localObjectConfig.methods;
+                    objectConfig.triggers = localObjectConfig.triggers;
+                    extend(objectConfig, {triggers: localObjectConfig._baseTriggers})
+                }
+                Creator.Objects[objectConfig.name] = objectConfig;
+            });
 
-    _.each(allObjects, function (obj) {
-        if (obj.name != 'users')
-            Creator.loadObjects(obj, obj.name);
-    });
+            // let allApps = objectql.getAppConfigs();
+            // _.each(allApps, function (app) {
+            //     if (!app._id)
+            //         app._id = app.name
+            //     Creator.Apps[app._id] = app
+            // });
+
+            let allDashboards = objectql.getDashboardConfigs();
+            if(!Creator.Dashboards){
+                // Creator新版本发包前Creator.Dashboards全局变量不存在
+                Creator.Dashboards = {}
+            }
+            _.each(allDashboards, function (dashboard) {
+                if (!dashboard._id)
+                    dashboard._id = dashboard.name
+                Creator.Dashboards[dashboard._id] = dashboard
+            });
+
+            let allServerScripts = objectql.getServerScripts();
+            _.each(allServerScripts, function (scriptFile) {
+                require(scriptFile)
+            });
+
+            _.each(allObjects, function (obj) {
+                const objectConfig = obj.metadata;
+                const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+                if(localObjectConfig){
+                    if(Creator.Objects[objectConfig.name]){
+                        extend(localObjectConfig, {methods: Creator.Objects[objectConfig.name].methods})
+                    }
+                }
+            });
+
+            loadClientScripts()
+
+            _.each(allObjects, function (obj) {
+                const objectConfig = obj.metadata;
+                const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+                if (localObjectConfig)
+                    extend(objectConfig, {triggers: localObjectConfig._baseTriggers})
+                if (objectConfig.name != 'users')
+                    Creator.loadObjects(objectConfig, objectConfig.name);
+            });
+
+            _.each(allDefautObjects, function (obj) {
+                try {
+                    const objectConfig = obj.metadata;
+                    const _db = Creator.createCollection({name: objectConfig.name}); 
+                    Creator.Collections[_db._name] = _db;
+                } catch (error) {
+                    console.error(error)
+                }
+            })
+
+        } catch (error) {
+            console.error(error)
+        }
+    }).promise();
+
 }
 
 const getClientBaseObject = () => {
     let baseObject = JSON.stringify(Creator.baseObject, function (key, val) {
         if (typeof val === 'function') {
             return "$FS$" + val.toString().replace(/\"/g, "'")+"$FE$";
+        }
+        if(key === 'listeners'){
+            return 'null';
         }
         return val;
     });
@@ -155,11 +206,13 @@ export class Core {
             }
         });
 
-        router.use("/", graphqlHTTP({
-            schema: objectql.buildGraphQLSchema(objectql.getSteedosSchema()),
-            graphiql: true
-        }));
-        app.use('/graphql', router);
+        router.use('/', graphqlHTTP(async (request, response, graphQLParams) => ({
+              schema: objectql.getSteedosSchema().getGraphQLSchema(),
+              graphiql: true,
+            })),
+        );
+
+        app.use('/graphql/v1', router);
         return WebApp.connectHandlers.use(app);
     }
 
@@ -170,9 +223,11 @@ export class Core {
     private static initCoreRoutes() {
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
-        app.use(steedosProcess.processExpress)
+        app.use(bootStrapExpress);
+        app.use(exportExcelExpress);
+        app.use(processExpress)
         app.use(coreExpress);
-        
+
         let routers = objectql.getRouterConfigs()
         _.each(routers, (item)=>{
             app.use(item.prefix, item.router)
@@ -184,10 +239,40 @@ export class Core {
     private static initRouters(){
         let routers = objectql.getRouters()
         _.each(routers, (router)=>{
-            routersApp.use('', router.default)
+            routersApp.use('', router.router.default)
         })
         WebApp.connectHandlers.use(routersApp);
     }
+}
+
+export const loadRouters = (routers)=>{
+    _.each(routers, (router)=>{
+        routersApp.use('', router.router.default)
+    })
+    try {
+        WebApp.connectHandlers.use(routersApp);
+    } catch (error) {
+        
+    }
+}
+
+export const removeRouter = (path, methods)=>{
+    routersApp._router?.stack.forEach(function(route,i,routes) {
+        if (route.route && route.route.path === path) {
+            if(JSON.stringify(route.route.methods) === JSON.stringify(methods)){
+                routes.splice(i,1);
+            }
+        }
+        if(route.handle.stack){
+            route.handle.stack.forEach(function(_route,i,routes) {
+                if (_route.route && _route.route.path === path) {
+                    if(JSON.stringify(_route.route.methods) === JSON.stringify(methods)){
+                        routes.splice(i,1);
+                    }
+                }
+            });
+        }
+    });
 }
 
 export const initPublic = () => {

@@ -1,0 +1,29 @@
+name: object_triggers
+label: 对象触发器
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  object:
+    label: 所属对象
+    help: 
+    description: 
+  when:
+    label: 运行时
+    help: 
+    description: 
+  is_enable:
+    label: 已启用
+    help: 
+    description: 
+  todo:
+    label: >-
+      执行的脚本 <a target="_blank"
+      href="https://developer.steedos.com/developer/object_trigger">查看帮助</a>
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有

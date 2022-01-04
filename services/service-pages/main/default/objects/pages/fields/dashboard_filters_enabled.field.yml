@@ -1,0 +1,5 @@
+name: dashboard_filters_enabled
+label: Use Dashboard Level Filters
+sort_no: 120
+type: toggle
+hidden: true

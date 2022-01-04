@@ -1,10 +1,13 @@
 import { SteedosUserSession, isTemplateSpace, wrapAsync } from '@steedos/objectql';
 import { Response } from "express";
-import { getUserIdByToken } from './tokenMap'
+import { getUserIdByToken, removeUserTokens } from './tokenMap'
 import { getUserSession } from './userSession'
 import { getSpaceUserSession } from './spaceUserSession'
 
 import * as core from "express-serve-static-core";
+import { isAPIKey, verifyAPIKey } from './apikey';
+
+import isMobile from "ismobilejs";
 interface Request extends core.Request {
   user?: any;
 }
@@ -21,10 +24,13 @@ function reviseSession(session) {
     delete session.expiredAt;
     delete session._id;
   }
-  return session
+  return session;
 }
 
-export async function getSessionByUserId(userId, spaceId?): Promise<SteedosUserSession> {
+export async function getSessionByUserId(
+  userId,
+  spaceId?
+): Promise<SteedosUserSession> {
   if (!userId) {
     return;
   }
@@ -34,7 +40,7 @@ export async function getSessionByUserId(userId, spaceId?): Promise<SteedosUserS
     return;
   }
 
-  let spaceUserSession = {}
+  let spaceUserSession = {};
   if (spaceId) {
     spaceUserSession = await getSpaceUserSession(spaceId, userId);
   }
@@ -43,23 +49,33 @@ export async function getSessionByUserId(userId, spaceId?): Promise<SteedosUserS
 }
 
 export function getSessionByUserIdSync(userId, spaceId?): any {
-  let getSessionFn = function () {
+  let getSessionFn = function() {
     return getSessionByUserId(userId, spaceId);
-  }
+  };
   return wrapAsync(getSessionFn, {});
 }
 
-
-export async function getSession(token: string, spaceId?: string): Promise<SteedosUserSession> {
+export async function getSession(
+  token: string,
+  spaceId?: string,
+  clientInfos?: any
+): Promise<SteedosUserSession> {
   if (!token) {
-    return
+    return;
   }
-
-  let userId = await getUserIdByToken(token);
+  let userId = null;
+  if (isAPIKey(token)) {
+    const apiKeyInfo = await verifyAPIKey(token);
+    if (apiKeyInfo) {
+      userId = apiKeyInfo.userId;
+      spaceId = apiKeyInfo.spaceId;
+    }
+  } else {
+    userId = await getUserIdByToken(token, clientInfos);
+  }
   if (!userId) {
-    return
+    return;
   }
-
   let userSession = await getUserSession(userId);
   if (!userSession) {
     return;
@@ -69,46 +85,88 @@ export async function getSession(token: string, spaceId?: string): Promise<Steed
   return assignSession(spaceId, userSession, spaceUserSession);
 }
 
+export function getUserAgent(req: any) {
+  let userAgent: string = (req.headers["user-agent"] as string) || "";
+  if (req.headers["x-ucbrowser-ua"]) {
+    // special case of UC Browser
+    userAgent = req.headers["x-ucbrowser-ua"] as string;
+  }
+  return userAgent;
+}
+
+export function getLoginDevice(userAgent) {
+  let is_phone = false;
+  let is_tablet = false;
+  if (userAgent) {
+    try {
+      const { phone, tablet } = isMobile(userAgent);
+      is_phone = phone;
+      is_tablet = tablet;
+    } catch (Exception) {
+      console.log(`Exception`, Exception);
+    }
+  }
+  return { is_phone, is_tablet };
+}
+
 // 解析Request对象，返回SteedosUserSession类型
 export async function auth(request: Request, response: Response): Promise<any> {
   let cookies = new Cookies(request, response);
-  let authToken: string = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
+  let authToken: string =
+    request.headers["x-auth-token"] || cookies.get("X-Auth-Token");
   let spaceToken = cookies.get("X-Space-Token");
   let authorization = request.headers.authorization;
-  let spaceId = (request.params ? request.params.spaceId : null)
-    || (request.query ? request.query.space_id : null)
-    || request.headers['x-space-id'];
-  if (authorization && authorization.split(' ')[0] == 'Bearer') {
-    let spaceAuthToken = authorization.split(' ')[1];
-    if (!spaceId) {
-      spaceId = spaceAuthToken.split(',')[0];
+  let spaceId =
+    (request.params ? request.params.spaceId : null) ||
+    (request.query ? request.query.space_id : null) ||
+    request.headers["x-space-id"];
+  if (authorization && authorization.split(" ")[0] == "Bearer") {
+    let spaceAuthToken = authorization.split(" ")[1];
+    if (isAPIKey(spaceAuthToken)) {
+      authToken = spaceAuthToken;
+    } else {
+      if (!spaceId) {
+        spaceId = spaceAuthToken.split(",")[0];
+      }
+      authToken = spaceAuthToken.split(",")[1];
     }
-    authToken = spaceAuthToken.split(',')[1];
   }
 
   if (spaceToken) {
     if (!spaceId) {
-      spaceId = spaceToken.split(',')[0];
+      spaceId = spaceToken.split(",")[0];
     }
     if (!authToken) {
-      authToken = spaceToken.split(',')[1];
+      authToken = spaceToken.split(",")[1];
     }
   }
 
-  let user = await getSession(authToken, spaceId as string);
-  if (isTemplateSpace(spaceId)) {
-    return Object.assign({ authToken: authToken }, user, { spaceId: spaceId });
-  } else {
-    return Object.assign({ authToken: authToken }, user);
-  }
+  let userAgent = getUserAgent(request) || "";
+  const loginDevice = getLoginDevice(userAgent);
 
+  let user = await getSession(authToken, spaceId as string, loginDevice);
+  if (isTemplateSpace(spaceId)) {
+    return Object.assign({ authToken: authToken }, user, loginDevice, {
+      spaceId: spaceId,
+    });
+  } else {
+    return Object.assign({ authToken: authToken }, user, loginDevice);
+  }
 }
 
 // 给Request对象添加user属性，值为SteedosUserSession类型
-export async function setRequestUser(request: Request, response: Response, next: () => void) {
+export async function setRequestUser(
+  request: Request,
+  response: Response,
+  next: () => void
+) {
   let user = await auth(request, response);
   if (user.userId) {
     request.user = user;
   }
   next();
+}
+
+export function removeUserSessionsCacheByUserId(userId, is_phone) {
+  return removeUserTokens(userId, is_phone);
 }

@@ -1,9 +1,0 @@
-process_delegation_rules__object: 流程委托
-process_delegation_rules_field_enabled: 启用
-process_delegation_rules_field_end_time: 委托结束
-process_delegation_rules_field_from: 委托人
-process_delegation_rules_field_from_name: 委托人姓名
-process_delegation_rules_field_start_time: 委托开始
-process_delegation_rules_field_to: 被委托人
-process_delegation_rules_field_to_name: 被委托人姓名
-process_delegation_rules_listview_all: 所有

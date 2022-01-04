@@ -1,0 +1,5 @@
+name: standard_edit
+is_enable: true
+label: standard_edit
+'on': record_only
+visible: false

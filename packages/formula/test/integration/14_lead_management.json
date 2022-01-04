@@ -1,0 +1,190 @@
+{
+  "name": "Sample Lead Management Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_lead_mgmt.htm",
+  "examples": [
+    {
+      "name": "Lead Aging (for open leads)",
+      "formula": "IF(ISPICKVAL(Status,\n\"Open\"), ROUND(DATETIMEVALUE( '2020-04-26 18:10:23' )-CreatedDate, 0), null)",
+      "suites": [
+        {
+          "context": "Open Lead",
+          "identifiers": {
+            "Status": {
+              "dataType": "picklist",
+              "value": "Open",
+              "options": {
+                "values": ["Open", "Closed"]
+              }
+            },
+            "CreatedDate": {
+              "dataType": "datetime",
+              "value": "2020-04-18T22:34:00Z"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 8
+          }
+        },
+        {
+          "context": "Closed Lead",
+          "identifiers": {
+            "Status": {
+              "dataType": "picklist",
+              "value": "Closed",
+              "options": {
+                "values": ["Open", "Closed"]
+              }
+            },
+            "CreatedDate": {
+              "dataType": "datetime",
+              "value": "2020-04-18T22:34:00Z"
+            }
+          },
+          "expectedResult": {
+            "dataType": "null",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lead Data Completeness",
+      "formula": "(IF(Phone = \"\", 0, 1) + IF(Email = \"\", 0, 1) ) * 50",
+      "suites": [
+        {
+          "context": "Phone and Email Filled",
+          "identifiers": {
+            "Phone": {
+              "dataType": "text",
+              "value": "(202) 555-0110"
+            },
+            "Email": {
+              "dataType": "text",
+              "value": "hillct@verizon.net"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 100
+          }
+        },
+        {
+          "context": "Only Email Filled",
+          "identifiers": {
+            "Phone": {
+              "dataType": "text",
+              "value": ""
+            },
+            "Email": {
+              "dataType": "text",
+              "value": "hillct@verizon.net"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 50
+          }
+        },
+        {
+          "context": "Only Phone Filled",
+          "identifiers": {
+            "Phone": {
+              "dataType": "text",
+              "value": "(202) 555-0110"
+            },
+            "Email": {
+              "dataType": "text",
+              "value": ""
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 50
+          }
+        },
+        {
+          "context": "Neither Email nor Phone Filled",
+          "identifiers": {
+            "Phone": {
+              "dataType": "text",
+              "value": ""
+            },
+            "Email": {
+              "dataType": "text",
+              "value": ""
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lead Numbering",
+      "formula": "VALUE(Lead_Number__c)",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Lead_Number__c": {
+              "dataType": "text",
+              "value": "462"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 462
+          }
+        }
+      ]
+    },
+    {
+      "name": "Round-Robin Assignment of Cases or Leads",
+      "formula": "MOD(VALUE(Lead_Number__c),\n3)",
+      "suites": [
+        {
+          "context": "0",
+          "identifiers": {
+            "Lead_Number__c": {
+              "dataType": "text",
+              "value": "462"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0
+          }
+        },
+        {
+          "context": "1",
+          "identifiers": {
+            "Lead_Number__c": {
+              "dataType": "text",
+              "value": "463"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1
+          }
+        },
+        {
+          "context": "2",
+          "identifiers": {
+            "Lead_Number__c": {
+              "dataType": "text",
+              "value": "464"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 2
+          }
+        }
+      ]
+    }
+  ]
+}

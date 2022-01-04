@@ -102,10 +102,23 @@ Template.filter_option.helpers
 						delete schema.value.autoform.create
 
 					_field = object_fields[schema_key]
+					if _field.reference_limit
+						schema.value.autoform.optionsLimit = _field.reference_limit
+					if _field.reference_to_field
+						schema.value.autoform.referenceToField = _field.reference_to_field
 
 					if _field.type == "select"
 						schema.value.autoform.type = "steedosLookups"
 						schema.value.autoform.showIcon = false
+						if _field.data_type and _field.data_type != "text"
+							if ["number", "currency", "percent"].indexOf(_field.data_type) > -1
+								fsType = Number
+							else if _field.data_type == "boolean"
+								fsType = Boolean
+							else
+								fsType = String
+							schema.value.type = [fsType]
+							schema.value.autoform.options = Creator.getSelectOptions(_field)
 
 					if _field.type == 'lookup' || _field.type == 'master_detail'
 						_reference_to = _field.reference_to

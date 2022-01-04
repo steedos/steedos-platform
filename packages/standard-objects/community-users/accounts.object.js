@@ -1,4 +1,4 @@
-Creator.Objects['accounts'].triggers = {
+Creator.Objects['accounts'].triggers = Object.assign({},{
     "before.update.server.disableSpaceUsers": {
         on: "server",
         when: "before.update",
@@ -41,4 +41,4 @@ Creator.Objects['accounts'].triggers = {
             }
         }
     }
-}
+}, Creator.Objects['accounts'].triggers);

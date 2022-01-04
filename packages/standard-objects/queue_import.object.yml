@@ -1,8 +1,9 @@
 name: queue_import
 label: Data Import Queue
 icon: product_consumed
-enable_files: true
+enable_files: false
 hidden: true
+version: 2
 fields:
   description:
     label: Description
@@ -15,19 +16,12 @@ fields:
   object_name:
     label: Object
     type: lookup
+    required: true
+    is_wide: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function () {
-                var _options;
-              _options = [];
-              _.forEach(Creator.Objects, function (o, k) {
-                  return _options.push({
-                    label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
-              });
-              return _options;
-            }
+        return Steedos.getObjectsOptions();
+      }
     name: object_name
     filterable: true
   encoding:
@@ -63,34 +57,86 @@ fields:
       - label: ','
         value: ','
     omit: true
+    defaultValue: ','
     name: value_separator
     filterable: true
-  field_mapping:
+  
+  operation:
+    type: select
+    label: operation
+    options:
+      - label: insert
+        value: insert
+      - label: update
+        value: update
+      - label: upsert
+        value: upsert
+    required: true
+  fire_workflows:
+    name: fire_workflows
+    label: Fire Workflows
+    type: boolean
+    hidden: true
+
+  field_mappings:
     label: Field Mappings
-    type: lookup
-    multiple: true
-    depend_on:
-      - object_name
+    type: grid
+    is_wide: true
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
-              if(values && values.object_name){
-                var _object = Creator.getObject(values.object_name);
-                if(_object){
-                  var icon = _object.icon;
-                  return [{label: "Primary Key ( _id )", value: "_id", icon: "account"}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
-                }
-              }else{
-                return []
-              }
-            }
+        if(values && values.object_name){
+          var _object = Creator.getObject(values.object_name);
+          if(_object){
+            var icon = _object.icon;
+            return [{label: "Primary Key ( _id )", value: "_id", icon: "account"}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
+          }
+        }else{
+          return []
+        }
+      }
     required: true
-    name: field_mapping
+    name: field_mappings
     filterable: true
+  field_mappings.$:
+    label: Column
+    blackbox: true
+    type: object
+  field_mappings.$.header:
+    label: Header
+    type: text
+  field_mappings.$.api_name:
+    label: ApiName
+    type: lookup
+    multiple: false
+    is_wide: false
+    required: false
+    depend_on:
+      - object_name
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+
+        if(values.object_name && !_.isString(values.object_name)){
+          values.object_name = values.object_name.name
+        }
+
+        let objectFieldOption = Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
+        return objectFieldOption;
+      }
+  
+  field_mappings.$.matched_by:
+    label: Matched By
+    type: text
+  field_mappings.$.save_key_while_fail:
+    label: Save key while fail to map a record
+    type: boolean
+    defaultValue: false
+
   external_id_name:
     label: External_id (Based on this when executing again)
     type: lookup
-    multiple: false
+    multiple: true
+    is_wide: true
     depend_on:
       - object_name
     defaultIcon: service_contract
@@ -106,63 +152,33 @@ fields:
                 return []
               }
             }
-    required: false
+    required: "{{formData.operation != 'insert' ? true : false}}"
     name: external_id_name
     filterable: true
-  success_count:
-    label: Number of Successful Records
-    type: number
+  template_url:
+    label: 导入模板
+    type: html
+    hidden: false
     omit: true
-    name: success_count
-  failure_count:
-    label: Number of Failed Records
-    type: number
-    omit: true
-    name: failure_count
-  total_count:
-    label: Total Number
-    type: number
-    omit: true
-    name: total_count
-  start_time:
-    label: Start Time
-    type: datetime
-    omit: true
-    name: start_time
-  end_time:
-    label: End Time
-    type: datetime
-    omit: true
-    name: end_time
-  state:
-    label: State
-    type: select
-    omit: true
-    name: state
-    filterable: true
-  error:
-    label: Error Message
-    type: '[text]'
-    omit: true
-    name: error
+    readonly: true
+    disabled: true
 list_views:
   all:
     label: All Queues
     columns:
-      - object_name
-      - encoding
-      - field_mapping
       - description
-      - state
+      - object_name
+      - template_url
+      - encoding
     filter_scope: space
 permission_set:
   user:
     allowCreate: false
     allowDelete: false
     allowEdit: false
-    allowRead: false
+    allowRead: true
     modifyAllRecords: false
-    viewAllRecords: false
+    viewAllRecords: true
   admin:
     allowCreate: true
     allowDelete: true
@@ -170,15 +186,5 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-
-actions:
-  import:
-    label: 'Perform Import'
-    visible: true
-    'on': record
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, fields) {
-                var space;
-              space = Session.get("spaceId");
-              return Meteor.call('startImportJobs', record_id, space);
-            }
+relatedList:
+  - queue_import_history

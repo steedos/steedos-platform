@@ -13,21 +13,23 @@
 						<div id="sidebarChannelContainer" class="flex-1 px-2 space-y-1">
 							{{#each getApps}}
 								<h3 class="pt-5 px-3 text-sm leading-4 font-semibold text-gray-500 uppercase tracking-wider" id="teams-headline">
-									{{app_name _id}}
+									<!-- {{app_name _id}} -->
+									{{name}}
 								</h3>
-								{{#unless hideObjects _id}}
+
+								<!-- {{#unless hideObjects _id}}
 									{{#each app_objects _id}}
 										<a href="{{object_url ../_id}}" class="{{#if isActive this ../_id}} bg-gray-100 text-gray-900 {{else}} hover:text-gray-900 hover:bg-gray-50 text-gray-600 {{/if}} flex justify-between no-underline group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150">
 											<div class="flex h-6">
-												{{> steedos_icon size="small" source="standard-sprite" name=object_i.icon}}
-												<span class="ml-3">{{_ object_i.label}}</span>
+												{{> steedos_icon size="small" source="standard-sprite" name=this.icon}}
+												<span class="ml-3">{{_ this.name}}</span>
 											</div>
-											{{#with getObjectBadge object_i ../_id}}
+											{{#with getObjectBadge this ../_id}}
 												<div class="flex">
 													<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-red-100 text-red-800">{{this}}</span>
 												</div>
 											{{/with}}
-										</a>
+										</a> -->
 
 										<!-- <li class="{{#if isActive this ../_id}}active{{/if}}">
 											<a id="sidebarItem_town-square" data-object-name="{{this}}" class="sidebar-item creator-object-nav-{{this}}"
@@ -38,8 +40,21 @@
 												</span>
 											</a>
 										</li> -->
-									{{/each}}
-								{{/unless}}
+									<!-- {{/each}} -->
+								<!-- {{/unless}} -->
+								{{#each children}}
+									<a href="{{object_url ../id}}" data-app-id="{{../id}}" data-menu-id="{{id}}" class="sidebar-menu-item {{#if isActive this ../id}} bg-gray-100 text-gray-900 {{else}} hover:text-gray-900 hover:bg-gray-50 text-gray-600 {{/if}} flex justify-between no-underline group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150">
+										<div class="flex h-6">
+											{{> steedos_icon size="small" source="standard-sprite" name=this.icon}}
+											<span class="ml-3">{{_ this.name}}</span>
+										</div>
+										{{#with getObjectBadge this ../id}}
+											<div class="flex">
+												<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-red-100 text-red-800">{{this}}</span>
+											</div>
+										{{/with}}
+									</a>
+								{{/each}}
 							{{/each}}
 
 							<a href="{{settings_url}}" class="hover:text-gray-900 hover:bg-gray-50 text-gray-600 no-underline group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150">

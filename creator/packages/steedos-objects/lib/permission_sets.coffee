@@ -1,5 +1,10 @@
 clone = require('clone')
 
+baseBooleanPermissionPropNames = ["allowCreate", "allowDelete", "allowEdit", "allowRead", "modifyAllRecords", "viewAllRecords", "modifyCompanyRecords", "viewCompanyRecords", 
+	"allowReadFiles", "allowEditFiles", "allowCreateFiles", "allowDeleteFiles", "viewAllFiles", "modifyAllFiles"] 
+otherPermissionPropNames = ["disabled_list_views", "disabled_actions", "unreadable_fields", "uneditable_fields", "unrelated_objects", "uneditable_related_list"]
+permissionPropNames = _.union baseBooleanPermissionPropNames, otherPermissionPropNames
+
 Creator.getPermissions = (object_name, spaceId, userId)->
 	if Meteor.isClient
 		if !object_name
@@ -18,22 +23,23 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 	if !spaceId and Meteor.isClient
 		spaceId = Session.get("spaceId")
 	
-	if record and object_name == "cms_files" and Meteor.isClient
-		# 如果是cms_files附件，则权限取其父记录权限
-		if object_name == Session.get('object_name')
-			# 当前处于cms_files附件详细界面
-			object_name = record.parent['reference_to._o'];
-			record_id = record.parent._id;
-		else 
-			# 当前处于cms_files附件的父记录界面
-			object_name = Session.get('object_name');
-			record_id = Session.get("record_id");
-		object_fields_keys = _.keys(Creator.getObject(object_name, spaceId)?.fields or {}) || [];
-		select = _.intersection(object_fields_keys, ['owner', 'company_id', 'company_ids', 'locked']) || [];
-		if select.length > 0
-			record = Creator.getObjectRecord(object_name, record_id, select.join(','));
-		else
-			record = null;
+	# 附件权限不再与其父记录编辑配置关联
+	# if record and object_name == "cms_files" and Meteor.isClient
+	# 	# 如果是cms_files附件，则权限取其父记录权限
+	# 	if object_name == Session.get('object_name')
+	# 		# 当前处于cms_files附件详细界面
+	# 		object_name = record.parent['reference_to._o'];
+	# 		record_id = record.parent._id;
+	# 	else 
+	# 		# 当前处于cms_files附件的父记录界面
+	# 		object_name = Session.get('object_name');
+	# 		record_id = Session.get("record_id");
+	# 	object_fields_keys = _.keys(Creator.getObject(object_name, spaceId)?.fields or {}) || [];
+	# 	select = _.intersection(object_fields_keys, ['owner', 'company_id', 'company_ids', 'locked']) || [];
+	# 	if select.length > 0
+	# 		record = Creator.getObjectRecord(object_name, record_id, select.join(','));
+	# 	else
+	# 		record = null;
 
 	permissions = _.clone(Creator.getPermissions(object_name, spaceId, userId))
 
@@ -42,50 +48,66 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 			return record.record_permissions
 
 		isOwner = record.owner == userId || record.owner?._id == userId
-		if Meteor.isClient
-			user_company_ids = Steedos.getUserCompanyIds()
+
+		if object_name == "cms_files"
+			# 附件的查看所有修改所有权限与附件对象的viewAllRecords、modifyAllRecords无关，只与其主表记录的viewAllFiles和modifyAllFiles有关
+			# 如果是cms_files附件，则权限需要额外考虑其父对象上关于附件的权限配置
+			masterObjectName = record.parent['reference_to._o'];
+			masterRecordPerm = Creator.getPermissions(masterObjectName, spaceId, userId)
+			permissions.allowCreate = permissions.allowCreate && masterRecordPerm.allowCreateFiles
+			permissions.allowEdit = permissions.allowEdit && masterRecordPerm.allowEditFiles
+			permissions.allowDelete = permissions.allowDelete && masterRecordPerm.allowDeleteFiles
+			if !masterRecordPerm.modifyAllFiles and !isOwner
+				permissions.allowEdit = false
+				permissions.allowDelete = false
+			permissions.allowRead = permissions.allowRead && masterRecordPerm.allowReadFiles
+			if !masterRecordPerm.viewAllFiles and !isOwner
+				permissions.allowRead = false
 		else
-			user_company_ids = Creator.getUserCompanyIds(userId, spaceId)
-		record_company_id = record?.company_id
-		if record_company_id and _.isObject(record_company_id) and record_company_id._id
-			# 因record_company_id是lookup类型，有可能dx控件会把它映射转为对应的object，所以这里取出其_id值
-			record_company_id = record_company_id._id
-		record_company_ids = record?.company_ids
-		if record_company_ids and record_company_ids.length and _.isObject(record_company_ids[0])
-			# 因record_company_ids是lookup类型，有可能dx控件会把它映射转为对应的[object]，所以这里取出其_id值
-			record_company_ids = record_company_ids.map((n)-> n._id)
-		record_company_ids = _.union(record_company_ids, [record_company_id])
-		if !permissions.modifyAllRecords and !isOwner and !permissions.modifyCompanyRecords
-			permissions.allowEdit = false
-			permissions.allowDelete = false
-		else if !permissions.modifyAllRecords and permissions.modifyCompanyRecords
-			if record_company_ids and record_company_ids.length
-				if user_company_ids and user_company_ids.length
-					if !_.intersection(user_company_ids, record_company_ids).length
-						# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权修改
+			if Meteor.isClient
+				user_company_ids = Steedos.getUserCompanyIds()
+			else
+				user_company_ids = Creator.getUserCompanyIds(userId, spaceId)
+			record_company_id = record?.company_id
+			if record_company_id and _.isObject(record_company_id) and record_company_id._id
+				# 因record_company_id是lookup类型，有可能dx控件会把它映射转为对应的object，所以这里取出其_id值
+				record_company_id = record_company_id._id
+			record_company_ids = record?.company_ids
+			if record_company_ids and record_company_ids.length and _.isObject(record_company_ids[0])
+				# 因record_company_ids是lookup类型，有可能dx控件会把它映射转为对应的[object]，所以这里取出其_id值
+				record_company_ids = record_company_ids.map((n)-> n._id)
+			record_company_ids = _.union(record_company_ids, [record_company_id])
+			if !permissions.modifyAllRecords and !isOwner and !permissions.modifyCompanyRecords
+				permissions.allowEdit = false
+				permissions.allowDelete = false
+			else if !permissions.modifyAllRecords and permissions.modifyCompanyRecords
+				if record_company_ids and record_company_ids.length
+					if user_company_ids and user_company_ids.length
+						if !_.intersection(user_company_ids, record_company_ids).length
+							# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权修改
+							permissions.allowEdit = false
+							permissions.allowDelete = false
+					else
+						# 记录有company_id/company_ids属性，但是当前用户user_company_ids为空时，认为无权修改
 						permissions.allowEdit = false
 						permissions.allowDelete = false
-				else
-					# 记录有company_id/company_ids属性，但是当前用户user_company_ids为空时，认为无权修改
-					permissions.allowEdit = false
-					permissions.allowDelete = false
-		
-		if record.locked and !permissions.modifyAllRecords
-			permissions.allowEdit = false
-			permissions.allowDelete = false
+			
+			if record.locked and !permissions.modifyAllRecords
+				permissions.allowEdit = false
+				permissions.allowDelete = false
 
-		if !permissions.viewAllRecords and !isOwner and !permissions.viewCompanyRecords
-			permissions.allowRead = false
-		else if !permissions.viewAllRecords and permissions.viewCompanyRecords
-			if record_company_ids and record_company_ids.length
-				if user_company_ids and user_company_ids.length
-					if !_.intersection(user_company_ids, record_company_ids).length
-						# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权查看
+			if !permissions.viewAllRecords and !isOwner and !permissions.viewCompanyRecords
+				permissions.allowRead = false
+			else if !permissions.viewAllRecords and permissions.viewCompanyRecords
+				if record_company_ids and record_company_ids.length
+					if user_company_ids and user_company_ids.length
+						if !_.intersection(user_company_ids, record_company_ids).length
+							# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权查看
+							permissions.allowRead = false
+					else
+						# 记录有company_id属性，但是当前用户user_company_ids为空时，认为无权查看
 						permissions.allowRead = false
-				else
-					# 记录有company_id属性，但是当前用户user_company_ids为空时，认为无权查看
-					permissions.allowRead = false
-
+	
 	return permissions
 
 
@@ -110,21 +132,26 @@ if Meteor.isClient
 		if !spaceId and Meteor.isClient
 			spaceId = Session.get("spaceId")
 
-		sharing = relatedListItem.sharing || 'masterWrite'
-		masterAllow = false
 		masterRecordPerm = Creator.getRecordPermissions(currentObjectName, currentRecord, userId, spaceId)
-		if sharing == 'masterRead'
-			masterAllow = masterRecordPerm.allowRead
-		else if sharing == 'masterWrite'
-			masterAllow = masterRecordPerm.allowEdit
-
-		uneditable_related_list = Creator.getRecordSafeRelatedList(currentRecord, currentObjectName)
 		relatedObjectPermissions = Creator.getPermissions(relatedListItem.object_name)
-		isRelateObjectUneditable = uneditable_related_list.indexOf(relatedListItem.object_name) > -1
-
 		result = _.clone relatedObjectPermissions
-		result.allowCreate = masterAllow && relatedObjectPermissions.allowCreate && !isRelateObjectUneditable
-		result.allowEdit = masterAllow && relatedObjectPermissions.allowEdit && !isRelateObjectUneditable
+
+		if relatedListItem.is_file
+			result.allowCreate = relatedObjectPermissions.allowCreate && masterRecordPerm.allowCreateFiles
+			result.allowEdit = relatedObjectPermissions.allowEdit && masterRecordPerm.allowEditFiles
+		else
+			write_requires_master_read = relatedListItem.write_requires_master_read || false
+			masterAllow = false
+			if write_requires_master_read == true
+				masterAllow = masterRecordPerm.allowRead
+			else if write_requires_master_read == false
+				masterAllow = masterRecordPerm.allowEdit
+
+			uneditable_related_list = Creator.getRecordSafeRelatedList(currentRecord, currentObjectName)
+			isRelateObjectUneditable = uneditable_related_list.indexOf(relatedListItem.object_name) > -1
+
+			result.allowCreate = masterAllow && relatedObjectPermissions.allowCreate && !isRelateObjectUneditable
+			result.allowEdit = masterAllow && relatedObjectPermissions.allowEdit && !isRelateObjectUneditable
 		return result
 
 if Meteor.isServer
@@ -184,7 +211,6 @@ if Meteor.isServer
 			set_ids = _.pluck psetsCurrent, "_id"
 			psetsCurrent_pos = Creator.getCollection("permission_objects").find({permission_set_id: {$in: set_ids}}).fetch()
 			psetsCurrentNames = _.pluck psetsCurrent, "name"
-
 		psets = {
 			psetsAdmin, 
 			psetsUser, 
@@ -233,6 +259,52 @@ if Meteor.isServer
 			other = []
 		return _.intersection(array, other)
 
+	extendPermissionProps = (target, props) ->
+		propNames = permissionPropNames
+		filesProNames = 
+		if props
+			_.each propNames, (propName) ->
+				target[propName] = props[propName]
+
+			# target.allowCreate = props.allowCreate
+			# target.allowDelete = props.allowDelete
+			# target.allowEdit = props.allowEdit
+			# target.allowRead = props.allowRead
+			# target.modifyAllRecords = props.modifyAllRecords
+			# target.viewAllRecords = props.viewAllRecords
+			# target.modifyCompanyRecords = props.modifyCompanyRecords
+			# target.viewCompanyRecords = props.viewCompanyRecords
+			# target.disabled_list_views = props.disabled_list_views
+			# target.disabled_actions = props.disabled_actions
+			# target.unreadable_fields = props.unreadable_fields
+			# target.uneditable_fields = props.uneditable_fields
+			# target.unrelated_objects = props.unrelated_objects
+			# target.uneditable_related_list = props.uneditable_related_list
+
+	overlayBaseBooleanPermissionProps = (target, props) ->
+		propNames = baseBooleanPermissionPropNames
+		_.each propNames, (propName) ->
+			if props[propName]
+				target[propName] = true
+		
+		# if po.allowRead
+		# 	permissions.allowRead = true
+		# if po.allowCreate
+		# 	permissions.allowCreate = true
+		# if po.allowEdit
+		# 	permissions.allowEdit = true
+		# if po.allowDelete
+		# 	permissions.allowDelete = true
+		# if po.modifyAllRecords
+		# 	permissions.modifyAllRecords = true
+		# if po.viewAllRecords
+		# 	permissions.viewAllRecords = true
+		# if po.modifyCompanyRecords
+		# 	permissions.modifyCompanyRecords = true
+		# if po.viewCompanyRecords
+		# 	permissions.viewCompanyRecords = true
+
+
 	Creator.getAssignedApps = (spaceId, userId)->
 		psetsAdmin = this.psetsAdmin || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'}, {fields:{_id:1, assigned_apps:1}})
 		psetsUser = this.psetsUser || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'}, {fields:{_id:1, assigned_apps:1}})
@@ -240,7 +312,13 @@ if Meteor.isServer
 		psetsCustomer = this.psetsGuest || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'customer'}, {fields:{_id:1, assigned_apps:1}})
 		# psetsMember = this.psetsMember || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'member'}, {fields:{_id:1, assigned_apps:1}})
 		# psetsGuest = this.psetsGuest || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'guest'}, {fields:{_id:1, assigned_apps:1}})
-		psets =  this.psetsCurrent || Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1, name:1}}).fetch()
+		spaceUser = null;
+		if userId
+			spaceUser = Creator.getCollection("space_users").findOne({ space: spaceId, user: userId }, { fields: { profile: 1 } })
+		if spaceUser && spaceUser.profile
+			psets = Creator.getCollection("permission_set").find({space: spaceId, $or: [{users: userId}, {name: spaceUser.profile}]}, {fields:{_id:1, assigned_apps:1, name:1}}).fetch()
+		else
+			psets = Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1, name:1}}).fetch()
 		isSpaceAdmin = if _.isBoolean(this.isSpaceAdmin) then this.isSpaceAdmin else Creator.isSpaceAdmin(spaceId, userId)
 		apps = []
 		if isSpaceAdmin
@@ -360,7 +438,15 @@ if Meteor.isServer
 
 		psetsSupplier = if _.isNull(this.psetsSupplier) or this.psetsSupplier then this.psetsSupplier else Creator.getCollection("permission_set").findOne({space: spaceId, name: 'supplier'}, {fields:{_id:1}})
 		psetsCustomer = if _.isNull(this.psetsCustomer) or this.psetsCustomer then this.psetsCustomer else Creator.getCollection("permission_set").findOne({space: spaceId, name: 'customer'}, {fields:{_id:1}})
-		psets = this.psetsCurrent || Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1, name:1}}).fetch()
+		psets = this.psetsCurrent;
+		if !psets
+			spaceUser = null;
+			if userId
+				spaceUser = Creator.getCollection("space_users").findOne({ space: spaceId, user: userId }, { fields: { profile: 1 } })
+			if spaceUser && spaceUser.profile
+				psets = Creator.getCollection("permission_set").find({space: spaceId, $or: [{users: userId}, {name: spaceUser.profile}]}, {fields:{_id:1, assigned_apps:1, name:1}}).fetch()
+			else
+				psets = Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1, name:1}}).fetch()
 		isSpaceAdmin = if _.isBoolean(this.isSpaceAdmin) then this.isSpaceAdmin else Creator.isSpaceAdmin(spaceId, userId)
 
 		psetsAdmin_pos = this.psetsAdmin_pos
@@ -393,106 +479,22 @@ if Meteor.isServer
 		# 数据库中如果配置了默认的admin/user权限集设置，应该覆盖代码中admin/user的权限集设置
 		if psetsAdmin
 			posAdmin = findOne_permission_object(psetsAdmin_pos, object_name, psetsAdmin._id)
-			if posAdmin
-				opsetAdmin.allowCreate = posAdmin.allowCreate
-				opsetAdmin.allowDelete = posAdmin.allowDelete
-				opsetAdmin.allowEdit = posAdmin.allowEdit
-				opsetAdmin.allowRead = posAdmin.allowRead
-				opsetAdmin.modifyAllRecords = posAdmin.modifyAllRecords
-				opsetAdmin.viewAllRecords = posAdmin.viewAllRecords
-				opsetAdmin.modifyCompanyRecords = posAdmin.modifyCompanyRecords
-				opsetAdmin.viewCompanyRecords = posAdmin.viewCompanyRecords
-				opsetAdmin.disabled_list_views = posAdmin.disabled_list_views
-				opsetAdmin.disabled_actions = posAdmin.disabled_actions
-				opsetAdmin.unreadable_fields = posAdmin.unreadable_fields
-				opsetAdmin.uneditable_fields = posAdmin.uneditable_fields
-				opsetAdmin.unrelated_objects = posAdmin.unrelated_objects
-				opsetAdmin.uneditable_related_list = posAdmin.uneditable_related_list
+			extendPermissionProps opsetAdmin, posAdmin
 		if psetsUser
 			posUser = findOne_permission_object(psetsUser_pos, object_name, psetsUser._id)
-			if posUser
-				opsetUser.allowCreate = posUser.allowCreate
-				opsetUser.allowDelete = posUser.allowDelete
-				opsetUser.allowEdit = posUser.allowEdit
-				opsetUser.allowRead = posUser.allowRead
-				opsetUser.modifyAllRecords = posUser.modifyAllRecords
-				opsetUser.viewAllRecords = posUser.viewAllRecords
-				opsetUser.modifyCompanyRecords = posUser.modifyCompanyRecords
-				opsetUser.viewCompanyRecords = posUser.viewCompanyRecords
-				opsetUser.disabled_list_views = posUser.disabled_list_views
-				opsetUser.disabled_actions = posUser.disabled_actions
-				opsetUser.unreadable_fields = posUser.unreadable_fields
-				opsetUser.uneditable_fields = posUser.uneditable_fields
-				opsetUser.unrelated_objects = posUser.unrelated_objects
-				opsetUser.uneditable_related_list = posUser.uneditable_related_list
+			extendPermissionProps opsetUser, posUser
 		if psetsMember
 			posMember = findOne_permission_object(psetsMember_pos, object_name, psetsMember._id)
-			if posMember
-				opsetMember.allowCreate = posMember.allowCreate
-				opsetMember.allowDelete = posMember.allowDelete
-				opsetMember.allowEdit = posMember.allowEdit
-				opsetMember.allowRead = posMember.allowRead
-				opsetMember.modifyAllRecords = posMember.modifyAllRecords
-				opsetMember.viewAllRecords = posMember.viewAllRecords
-				opsetMember.modifyCompanyRecords = posMember.modifyCompanyRecords
-				opsetMember.viewCompanyRecords = posMember.viewCompanyRecords
-				opsetMember.disabled_list_views = posMember.disabled_list_views
-				opsetMember.disabled_actions = posMember.disabled_actions
-				opsetMember.unreadable_fields = posMember.unreadable_fields
-				opsetMember.uneditable_fields = posMember.uneditable_fields
-				opsetMember.unrelated_objects = posMember.unrelated_objects
-				opsetMember.uneditable_related_list = posMember.uneditable_related_list
+			extendPermissionProps opsetMember, posMember
 		if psetsGuest
 			posGuest = findOne_permission_object(psetsGuest_pos, object_name, psetsGuest._id)
-			if posGuest
-				opsetGuest.allowCreate = posGuest.allowCreate
-				opsetGuest.allowDelete = posGuest.allowDelete
-				opsetGuest.allowEdit = posGuest.allowEdit
-				opsetGuest.allowRead = posGuest.allowRead
-				opsetGuest.modifyAllRecords = posGuest.modifyAllRecords
-				opsetGuest.viewAllRecords = posGuest.viewAllRecords
-				opsetGuest.modifyCompanyRecords = posGuest.modifyCompanyRecords
-				opsetGuest.viewCompanyRecords = posGuest.viewCompanyRecords
-				opsetGuest.disabled_list_views = posGuest.disabled_list_views
-				opsetGuest.disabled_actions = posGuest.disabled_actions
-				opsetGuest.unreadable_fields = posGuest.unreadable_fields
-				opsetGuest.uneditable_fields = posGuest.uneditable_fields
-				opsetGuest.unrelated_objects = posGuest.unrelated_objects
-				opsetGuest.uneditable_related_list = posGuest.uneditable_related_list
+			extendPermissionProps opsetGuest, posGuest
 		if psetsSupplier
 			posSupplier = findOne_permission_object(psetsSupplier_pos, object_name, psetsSupplier._id);
-			if posSupplier
-				opsetSupplier.allowCreate = posSupplier.allowCreate
-				opsetSupplier.allowDelete = posSupplier.allowDelete
-				opsetSupplier.allowEdit = posSupplier.allowEdit
-				opsetSupplier.allowRead = posSupplier.allowRead
-				opsetSupplier.modifyAllRecords = posSupplier.modifyAllRecords
-				opsetSupplier.viewAllRecords = posSupplier.viewAllRecords
-				opsetSupplier.modifyCompanyRecords = posSupplier.modifyCompanyRecords
-				opsetSupplier.viewCompanyRecords = posSupplier.viewCompanyRecords
-				opsetSupplier.disabled_list_views = posSupplier.disabled_list_views
-				opsetSupplier.disabled_actions = posSupplier.disabled_actions
-				opsetSupplier.unreadable_fields = posSupplier.unreadable_fields
-				opsetSupplier.uneditable_fields = posSupplier.uneditable_fields
-				opsetSupplier.unrelated_objects = posSupplier.unrelated_objects
-				opsetSupplier.uneditable_related_list = posSupplier.uneditable_related_list
+			extendPermissionProps opsetSupplier, posSupplier
 		if psetsCustomer
 			posCustomer = findOne_permission_object(psetsCustomer_pos, object_name, psetsCustomer._id);
-			if posCustomer
-				opsetCustomer.allowCreate = posCustomer.allowCreate
-				opsetCustomer.allowDelete = posCustomer.allowDelete
-				opsetCustomer.allowEdit = posCustomer.allowEdit
-				opsetCustomer.allowRead = posCustomer.allowRead
-				opsetCustomer.modifyAllRecords = posCustomer.modifyAllRecords
-				opsetCustomer.viewAllRecords = posCustomer.viewAllRecords
-				opsetCustomer.modifyCompanyRecords = posCustomer.modifyCompanyRecords
-				opsetCustomer.viewCompanyRecords = posCustomer.viewCompanyRecords
-				opsetCustomer.disabled_list_views = posCustomer.disabled_list_views
-				opsetCustomer.disabled_actions = posCustomer.disabled_actions
-				opsetCustomer.unreadable_fields = posCustomer.unreadable_fields
-				opsetCustomer.uneditable_fields = posCustomer.uneditable_fields
-				opsetCustomer.unrelated_objects = posCustomer.unrelated_objects
-				opsetCustomer.uneditable_related_list = posCustomer.uneditable_related_list
+			extendPermissionProps opsetCustomer, posCustomer
 
 		if !userId
 			permissions = opsetAdmin
@@ -536,22 +538,7 @@ if Meteor.isServer
 					return
 				if _.isEmpty(permissions)
 					permissions = po
-				if po.allowRead
-					permissions.allowRead = true
-				if po.allowCreate
-					permissions.allowCreate = true
-				if po.allowEdit
-					permissions.allowEdit = true
-				if po.allowDelete
-					permissions.allowDelete = true
-				if po.modifyAllRecords
-					permissions.modifyAllRecords = true
-				if po.viewAllRecords
-					permissions.viewAllRecords = true
-				if po.modifyCompanyRecords
-					permissions.modifyCompanyRecords = true
-				if po.viewCompanyRecords
-					permissions.viewCompanyRecords = true
+				overlayBaseBooleanPermissionProps permissions, po
 
 				permissions.disabled_list_views = intersectionPlus(permissions.disabled_list_views, po.disabled_list_views)
 				permissions.disabled_actions = intersectionPlus(permissions.disabled_actions, po.disabled_actions)

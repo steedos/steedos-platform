@@ -1,0 +1,11 @@
+metadataName: Flow
+isAddressable: true
+isSourceTracked: true
+ext: flow
+tableName: flows
+hasContent: false
+defaultDirectory: flows
+nameForMsgs: Flow
+nameForMsgsPlural: Flow
+contentIsBinary: false
+deleteSupported: true

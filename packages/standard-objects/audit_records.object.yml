@@ -42,6 +42,9 @@ list_views:
     filter_scope: "space"
     columns: ["related_to", "field_name", "created", "created_by", "previous_value", "new_value"]
     filter_fields: ["related_to"]
+    sort:
+      - - created
+        - desc
   recent:
     label: "Recently Viewed Audit Records"
     filter_scope: "space"

@@ -104,8 +104,32 @@ if Meteor.isClient
 			return
 		relatedListObjects = {}
 		relatedListNames = []
-		_object = Creator.Objects[object_name]
+		objectLayoutRelatedListObjects = [];
+		_object = Creator.getObject(object_name)
 		if _object
+			layoutRelatedList = _object.related_lists;
+			# layoutRelatedList 是数组就表示配置过页面布局，就启用页面布局的相关子表。
+			if _.isArray layoutRelatedList
+				_.each layoutRelatedList, (item)->
+					reObjectName = item.related_field_fullname.split('.')[0]
+					reFieldName = item.related_field_fullname.split('.')[1]
+					write_requires_master_read = Creator.getObject(reObjectName)?.fields[reFieldName]?.write_requires_master_read
+					related =
+						object_name: reObjectName
+						columns: item.field_names
+						mobile_columns: item.field_names
+						is_file: reObjectName == "cms_files"
+						filtersFunction: item.filters
+						sort: item.sort
+						related_field_name: reFieldName
+						customRelatedListObject: true
+						write_requires_master_read: write_requires_master_read
+						label: item.label
+						actions: item.buttons
+						visible_on: item.visible_on
+						page_size: item.page_size
+					objectLayoutRelatedListObjects.push(related)
+				return objectLayoutRelatedListObjects;
 			relatedList = _object.relatedList
 			if !_.isEmpty relatedList
 				_.each relatedList, (objOrName)->
@@ -121,6 +145,7 @@ if Meteor.isClient
 							customRelatedListObject: true
 							label: objOrName.label
 							actions: objOrName.actions
+							page_size: objOrName.page_size
 						relatedListObjects[objOrName.objectName] = related
 						relatedListNames.push objOrName.objectName
 					else if _.isString objOrName
@@ -133,13 +158,13 @@ if Meteor.isClient
 				return
 			related_object_name = related_object_item.object_name
 			related_field_name = related_object_item.foreign_key
-			sharing = related_object_item.sharing
+			write_requires_master_read = related_object_item.write_requires_master_read
 			related_object = Creator.getObject(related_object_name)
 			unless related_object
 				return
-			columns = Creator.getObjectDefaultColumns(related_object_name) || ["name"]
+			columns = Creator.getObjectFirstListViewColumns(related_object_name) || ["name"]
 			columns = _.without(columns, related_field_name)
-			mobile_columns = Creator.getObjectDefaultColumns(related_object_name, true) || ["name"]
+			mobile_columns = Creator.getObjectFirstListViewColumns(related_object_name, true) || ["name"]
 			mobile_columns = _.without(mobile_columns, related_field_name)
 
 			order = Creator.getObjectDefaultSort(related_object_name)
@@ -154,7 +179,7 @@ if Meteor.isClient
 				mobile_columns: mobile_columns
 				related_field_name: related_field_name
 				is_file: related_object_name == "cms_files"
-				sharing: sharing
+				write_requires_master_read: write_requires_master_read
 
 			relatedObject = relatedListObjects[related_object_name]
 			if relatedObject
@@ -170,6 +195,8 @@ if Meteor.isClient
 					related.customRelatedListObject = relatedObject.customRelatedListObject
 				if relatedObject.label
 					related.label = relatedObject.label
+				if relatedObject.page_size
+					related.page_size = relatedObject.page_size
 				delete relatedListObjects[related_object_name]
 
 			mapList[related.object_name] = related
@@ -220,7 +247,7 @@ Creator.getListView = (object_name, list_view_id, exac)->
 	listViews = Creator.getListViews(object_name)
 	unless listViews?.length
 		return
-	list_view = _.findWhere(listViews,{"_id":list_view_id})
+	list_view = _.find(listViews, (item)-> return item._id == list_view_id || item.name == list_view_id)
 	unless list_view
 		# 如果不需要强制按list_view_id精确查找，则默认返回第一个视图，反之返回空
 		if exac
@@ -314,6 +341,19 @@ Creator.getObjectDefaultView = (object_name)->
 ###
 Creator.getObjectDefaultColumns = (object_name, use_mobile_columns)->
 	defaultView = Creator.getObjectDefaultView(object_name)
+	columns = defaultView?.columns
+	if use_mobile_columns
+		if defaultView?.mobile_columns
+			columns = defaultView.mobile_columns
+		else if columns
+			columns = Creator.pickObjectMobileColumns(object_name, columns)
+	return columns
+
+###
+    获取对象的列表第一个视图显示的字段
+###
+Creator.getObjectFirstListViewColumns = (object_name, use_mobile_columns)->
+	defaultView = Creator.getObjectFirstListView(object_name)
 	columns = defaultView?.columns
 	if use_mobile_columns
 		if defaultView?.mobile_columns

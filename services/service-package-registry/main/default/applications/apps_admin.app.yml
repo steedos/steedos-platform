@@ -1,0 +1,26 @@
+_id: apps_admin_package_registry
+name: Apps
+admin_menus:
+  - _id: apps
+    name: Apps
+    expanded: false
+    sort: 200
+    # parent: process_automation
+  - _id: app_manager
+    name: App Manager
+    object_name: apps
+    parent: apps
+    sort: 100
+  - _id: steedos_packages
+    name: steedos_packages
+    label: 软件包
+    parent: apps
+    object_name: steedos_packages
+    sort: 400
+  - _id: tabs
+    name: Tabs
+    object_name: tabs
+    parent: apps
+    sort: 500
+    permission_sets:
+      - admin

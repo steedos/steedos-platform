@@ -1,0 +1,11 @@
+{
+    "name": "steedos-project-packages",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "dependencies": {
+        "@steedos-labs/master": "2.1.17",
+        "@steedos-labs/workflow": "2.1.45",
+        "@steedos-labs/oa": "2.1.20"
+    }
+}

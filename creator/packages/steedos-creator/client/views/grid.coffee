@@ -346,7 +346,7 @@ Template.creator_grid.onRendered ->
 			return
 		related_object_name = self.data.related_object_name
 		if is_related
-			list_view_id = Creator.getListView(related_object_name, "all")._id
+			list_view_id = Creator.getListView(related_object_name, "all")?._id
 		else
 			list_view_id = Session.get("list_view_id")
 		unless list_view_id

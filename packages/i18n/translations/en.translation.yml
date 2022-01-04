@@ -1,0 +1,1951 @@
+CustomLabels:
+  process_notification_pending_title: "{$submitter} is requesting approval for '{$recordName}'."
+  process_notification_approved_title: "Your application for '{$recordName}' has been approved."
+  process_notification_rejected_title: "Your application for '{$recordName}' has been rejected."
+  process_approval_comment: Comments
+  process_approval_title_reassign: Reassign Approval Request
+  process_approval_approver_label_reassign: Reassign To
+  process_approval_confirmBtnText_reassign: Reassign
+  process_approval_title_recall: Reject
+  process_approval_confirmBtnText_recall: Recall
+  process_approval_title_submit: Submit for Approval
+  process_approval_confirmBtnText_submit: Submit
+  process_approval_confirmBtnText_approve: Approve
+  process_approval_approver_label: Choose Next Approver
+  process_approval_confirmBtnText_reject: Reject
+  process_approval_empty_node_title: Approval Request Submitted
+  process_approval_error_notFindProcessDefinition: No applicable approval process was found.
+  process_approval_error_NoApproval: Another user recalled or responded to this request.
+  process_approval_error_processInstancePending: >-
+    This record is currently in an approval process. A record can be in only one
+    approval process at a time.
+  instance_select: '-None-'
+  meteor_autoform_remove: Remove
+  meteor_autoform_choose_file: Choose file
+  coreform_select: 'Please select '
+  coreform_select_user_title: Please select user
+  coreform_select_org_title: Please select organization
+  accounts-sign-in: Sign In
+  accounts-sign-out: Sign Out
+  accounts-sign-up: Sign Up
+  dataTables:
+    emptyTable: '&nbsp;'
+    info: Showing _START_ to _END_ of _TOTAL_ entries
+    infoEmpty: Showing 0 to 0 of 0 entries
+    infoFiltered: (filtered from _MAX_ total entries)
+    infoPostFix: 
+    infoThousands: ','
+    lengthMenu: Show _MENU_ entries
+    loadingRecords: Loading...
+    processing: Loading...
+    search: 'Search:'
+    zeroRecords: No matching records found
+    zero: 'None '
+    paginate:
+      first: First
+      last: Last
+      next: Next
+      previous: Previous
+    aria:
+      sortAscending: ': activate to sort column ascending'
+      sortDescending: ': activate to sort column descending'
+    select:
+      rows: '%d row(s) selected'
+  tabbar_workflow: Workflow
+  tabbar_cms: Messages
+  tabbar_apps: Apps
+  tabbar_admin: Me
+  password_invalid: 'The password must contain letters and numbers, and no less than 8 digits'
+  Steedos: Steedos
+  Apps: Apps
+  Steedos Workflow: Workflow
+  Steedos Chat: Chat
+  Steedos Drive: Drive
+  Steedos Mail: Mail
+  Steedos Calendar: Calendar
+  Steedos Contacts: Contacts
+  Steedos Admin: Admin
+  Flow Designer: Flow Designer
+  Steedos CMS: Blogs
+  Steedos Boards: Boards
+  Steedos OldCalendar: Calendar(Old)
+  Forgot Password: Forgot Password
+  Forgot Password Description: >-
+    Enter your email address below and we will send you password reset
+    instructions.
+  Email: Email
+  Reset Password: Reset Password
+  Log in: Log in
+  Forgot your password?: Forgot your password?
+  Confirm Password: Confirm Password
+  Sign up: Sign up
+  Sign out: Sign out
+  Profile Information: Profile Information
+  Name: Name
+  Gender: Gender
+  Male: Male
+  Female: Female
+  Location: Location
+  Website: Website
+  Gravatar: Gravatar
+  Update Profile: Update Profile
+  Change Password: Change Password
+  New Password: New Password
+  Delete Account: Delete Account
+  'You can delete your account, but keep in mind this action is irreversible.': 'You can delete your account, but keep in mind this action is irreversible.'
+  Delete my account: Delete my account
+  Linked Accounts: Linked Accounts
+  Link your Google account: Link your Google account
+  Link your Facebook account: Link your Facebook account
+  Link your Twitter account: Link your Twitter account
+  Link your GitHub account: Link your GitHub account
+  Link your LinkedIn account: Link your LinkedIn account
+  Link your Instagram account: Link your Instagram account
+  Chat with us: Chat with us
+  Support Request: Support Request
+  Online Help: Online Help
+  My Account: My Account
+  Logout: Log Out
+  Contact Form: Contact Form
+  Full Name: Full Name
+  Body: Body
+  Send: Send
+  Terms: Terms
+  Privacy: Privacy
+  Avatar: Avatar
+  Change Avatar: Change Avatar
+  Submit: Submit
+  Search: Search
+  Online: Online
+  Developer: Developer
+  Home: Home
+  Profile: Profile
+  Help: Help
+  New: New
+  Account Settings: Account Settings
+  Account: Account
+  Settings: Settings
+  Select Space: Select Space
+  Add space: Add space
+  Switch Company: Switch Company
+  bqq: Business QQ
+  dingtalk: Dingtalk
+  google: Google
+  facebook: Facebook
+  OK: OK
+  Cancel: Cancel
+  About: About Steedos
+  Password: Password
+  Accountzoom: Font size
+  Backgroundimage: Background image
+  binding_mailbox: Binding mailbox
+  Reset: Reset
+  primary_email_needed: Setup your primary email
+  primary_email_needed_description: >-
+    Please enter your primary email address here. You can use this email address
+    to signin steedos, or reset your password.
+  primary_email_updated: Primary email updated.
+  steedos_previous_version: Click to access previous version of Steedos
+  steedos_only_paid: Only paid spaces can do this operation.
+  steedos_customize_apps: Customize Apps
+  steedos_about_us: About Us
+  steedos_quick_guide: Quick Guide
+  steedos_help: Help
+  steedos_home: Home
+  steedos_apps: Steedos Platform
+  steedos_about: About
+  steedos_info: >-
+    Steedos Platform is an open source low code development platform. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
+  steedos_version: Version
+  steedos_commit_date: Commit Date
+  steedos_build_date: Build Date
+  steedos_company: Company
+  steedos_hotlong_software: HotLong Software
+  steedos_phone: Phone
+  steedos_email: Email
+  steedos_copyright: © HotLong Software. All rights reserverd.
+  Profile_saved_successfully: Profile saved successfully
+  Old_and_new_password_required: Old and new password required
+  Incorrect_Password: Incorrect Password
+  Password_changed_successfully: Password changed successfully
+  Confirm_Password_Not_Match: Confirm password not match
+  saved_successfully: Saved successfully
+  Language_changed_reloading: Language changed reloading
+  email: Emails
+  email_setting: Setting Emails
+  email_login_required: Login Required
+  email_required: Email Required
+  email_format_error: Email format error
+  mobile_format_error: Mobile format error
+  email_exists: Email exists
+  email_at_least_one: At least one email address
+  email_verify_sent: Verification email sent.
+  email_vrified: Verified
+  email_unvrified: Unverified
+  email_send_verify: Resend
+  email_set_primary: set primary email
+  email_is_primary: Primary
+  email_set_primary_success: set primary email success
+  email_remove_success: Deleted
+  mail_inbox: Inbox
+  mail_sent: Sent
+  mail_drafts: Drafts
+  mail_junk: Junk
+  mail_trash: Trash
+  mail_archive: Archive
+  mail_accounts: Acounts
+  mail_accounts_email: AccountsEmail
+  mail_accounts_password: AccountsPassword
+  mail_domains: MailDomains
+  mail_domains_domain: Domain
+  mail_domains_smtp_server: SmtpServer
+  mail_domains_smtp_ssl: SMTPSll
+  mail_domains_smtp_port: SmtpPort
+  mail_domains_imap_server: ImapServer
+  mail_domains_imap_ssl: IMAPSll
+  mail_domains_imap_port: ImapPort
+  mail_domains_sensitive_keywords_alert: AlertKeywords
+  mail_domains_sensitive_keywords_forbidden: ForbiddenKeywords
+  mail_domains_before_send: VerifyBeforeSend
+  mail_domains_before_save: VerifyBeforeSave
+  mail_folders: Folders
+  upload_empty_file_error: Do not upload empty attachments
+  url_invalid: Invalid link
+  Steedos Cloud: Steedos Cloud
+  Save: Save
+  Add: Add
+  Edit: Edit
+  Delete: Delete
+  Spaces_isPaid: Is Paid
+  users_error:
+    steedos_id_required: Steedos ID is required
+  personalization: Personalization
+  bg_body: Backgrounds
+  bg_body_setting: Background Setting
+  remove: Remove
+  profile_save_bg_setting: Save Background
+  profile_upload_image: Upload Image
+  profile_save_bg_suc: Background Saved Successful
+  space_user_signs: Image Signs
+  space_user_signs_user: User
+  space_user_signs_sign: Sign Image
+  space_user_signs_signImage(): Sign Image
+  space_user_signs_userName(): User
+  spaceUserSigns_error_user_sign_exists: Sign exists
+  skin: Skins
+  skin_setting: Skin Setting
+  profile_save_skin_setting: Save Skin
+  profile_save_skin_suc: Skin Saved Successful
+  zoom: Font Zoom
+  zoom_setting: Font Zoom Setting
+  zoom_title_normal: Normal
+  zoom_title_large: Large
+  zoom_title_extra_large: Extra Large
+  profile_save_zoom_setting: Save Font Zoom
+  profile_save_zoom_suc: Font Zoom Saved Successful
+  space_balance_insufficient: >-
+    The lease is about to expire, please recharge the value in time so as not to
+    affect the normal use
+  close: Close
+  billings_billing_date: Date
+  billings_transaction: Transaction Details
+  billings_user_count: User Count
+  billings_debits: Debits
+  billings_credits: Credits
+  billings_balance: Balance
+  billings: Billing
+  billings_transaction_i18n(): Transaction Details
+  billing_tranDetail:
+    starting: Starting balance
+    payment: Payment
+    workflow: Workflow Professional
+    chat: Chat Professional
+    adjustment: Service adjustment
+  spaces_edit: Edit Space
+  spaces_edit_help: 'Edit the name,owner and admins of space.'
+  spaces_new: Create Space
+  spaces_new_help: >-
+    A space is a work area, you can invite colleagues, work partners to join the
+    work area, and then work together.
+  spaces_new_swal_title: Please enter the space name
+  spaces_new_swal_help: >-
+    A space is a work area, you can invite colleagues, work partners to join the
+    work area, and then work together.
+  spaces_new_swal_success: Space created successfully.
+  space_info: Space Info
+  Change username: Change username
+  Change username successfully: Change username successfully
+  username-invalid: >-
+    Not a valid username, use only chinese, letters, numbers, dots, hyphens and
+    underscores
+  username-unavailable: This username is already in use
+  username-minrequiredlength: The username minimum length can not be less than 6 digits
+  afModal_insert: Save
+  afModal_update: Save
+  afModal_save_insert: Save & New
+  afModal_multiple_update: Update %d selected records
+  afModal_remove: Delete
+  afModal_remove_confirm: Are you sure you want to delete this data?
+  afModal_remove_suc: Successfully deleted
+  afModal_update_suc: Successfully updated
+  afModal_cancel: Cancel
+  creator_record_remove_swal_title: Delete %s
+  creator_record_remove_swal_text: Are you sure you want to delete this %s ?
+  creator_record_remove_many_swal_title: Batch Delete %s
+  creator_record_remove_many_swal_text: Are you sure you want to delete these selected %s ?
+  creator_record_remove_many_no_selection: Please check which records to delete first!
+  creator_record_remove_swal_suc: Successfully deleted
+  creator_record_remove_swal_title_suc: '%s Successfully deleted'
+  creator_record_tab_detail: Detail
+  creator_record_tab_chatter: Comment
+  creator_record_chat: Comment
+  creator_record_chat_write: Write a comment
+  creator_record_chat_send: Send
+  creator_record_chat_upload: upload
+  change_phone: Bind Phone Number
+  set_password_by_phone: Reset password
+  account_phone_invalid: Your phone is not valid
+  back_admin_home: Back
+  none_space_selected_title: Please select a space
+  account_phone_verified_text: Verified
+  account_phone_unverified_text: Unverified
+  account_phone_unbind_text: >-
+    Your account has not yet bound phone number, binding phone number, you can
+    use SMS to log in, retrieve the password and receive SMS notification.
+  space_users_user_accepted_yes: 'YES'
+  space_users_user_accepted_no: 'NO'
+  space_users_empty_phone: Empty
+  'YES': 'YES'
+  'NO': 'NO'
+  username_unset_text: >-
+    Your account has not yet set a user name, set the user name, you can use the
+    user name to log on to the system.
+  space_paid_info_title: Standard Edition does not support
+  space_paid_info_text: You can upgrade to the professional version
+  login_title: Steedos Apps
+  Steedos Home: Home
+  description: Description
+  warning_description: Please enter a description
+  delete_confirm: Are you sure?
+  get_secret_successfully: New success
+  Secret: API Token
+  meteor_status_connected: Connected
+  meteor_status_connecting: Connecting...
+  meteor_status_failed: The server connection failed
+  meteor_status_waiting: 'Waiting for server connection,'
+  meteor_status_offline: Offline mode.
+  meteor_status_reconnect_in: trying again in one second...
+  meteor_status_reconnect_in_plural: "trying again in {$count} seconds..."
+  meteor_status_try_now_waiting: Try now
+  meteor_status_try_now_offline: Connect again
+  btn_back_title: Back
+  space_users_remove_mail_subject: Your account has been deleted from the workspace by the administrator
+  space_users_remove_mail_content: "Hello, <br/><br/>Your account \"{$steedos_id}\" has been removed from the workspace \"{$space_name}\" by the administrator. <br/><br/>Thank you!"
+  steedos_i18n_404_not_found: The page you requested could not be found.
+  Steedos Records: Full Text Search
+  Client download: Download client
+  steedos_desktop_zone_info: >-
+    Does the current service for the US zone, whether to jump to the Chinese
+    zone?
+  steedos_desktop_confirm: Confirm
+  steedos_desktop_cancel: Cancel
+  steedos_desktop_update_info: >-
+    The current client version is too old, please download and install the
+    latest client!
+  steedos_desktop_edit_office_info: >-
+    You are editing office document, please close and then open the other
+    instance!
+  steedos_desktop_edit_warning: >-
+    The current document has been unlocked by the administrator, please edit and
+    upload again!
+  billing:
+    upgrade: Upgrade
+    total_user_count: Tolal user count
+    accepted_user_count: Accepted user count
+    paid_user_count: Paid user count
+    paid_modules: Paid modules
+    expire_date: Expiration date
+    buy_modules: Modules
+    buy_user_count: User count
+    buy_additional_user_count: The number of users to purchase additional (not required)
+    buy_date: Expiration date
+    amount: Amount ￥
+    had_paid: Finished
+    not_paid: Not finished
+    price: Price
+  billing_pay_records: Orders
+  billing_pay_records_order_created(): Created time
+  billing_pay_records_modules: Modules
+  billing_pay_records_user_count: Places
+  billing_pay_records_end_date: Expiration date
+  billing_pay_records_order_total_fee(): Amount ￥
+  billing_pay_records_order_paid(): Status
+  loading_reload_button_title: Reload
+  apps_members: Authorized object
+  apps_members_users: Authorized personnel
+  apps_members_organizations: Authorized department
+  nw_menu_cut: Cut
+  nw_menu_copy: Copy
+  nw_menu_paste: Paste
+  nw_menu_selectall: SelectAll
+  nw_menu_reload: Reload
+  space_viewing_limits: Limit viewing outside door
+  space_viewing_limits_tips: 'Limited organizations, only to see the organization''s contacts'
+  space_viewing_limits_froms_label: Limited organizations
+  space_viewing_limits_tos_label: >-
+    Only allowed to view the organization's contacts, and the following
+    additional organizations
+  space_viewing_limits_froms_required: Limited organizations is required
+  pay_records: Pay Records
+  workflow_designer_use_pc: Please user this function on pc
+  customize_apps: Apps
+  space_users_error_roles_used: "User has been used by roles：{$names}"
+  space_users_error_flows_used: "User has been used by flows：{$names}"
+  space_users_error_can_not_remove: Cannot delete user.
+  contact_need_phone_or_email: You should fill in phone-number or email-address
+  organizations_error_is_company_false_in_root: IsCompany property can't be false in the root organization
+  organizations_error_parent_is_company_false_for_current_company: >-
+    The parent organization of the company-level organization must also be a
+    company-level organization.
+  organizations_error_children_is_company_true_for_current_company: >-
+    There is a company-level department in the sub-department of the department,
+    and the department cannot be directly set to non-company level.
+  organizations_error_parent_is_not_found: Parent organization not found
+  organizations_error_root_parent_can_not_set: Cannot modify the parent organization attribute of the root organization
+  organizations_error_space_admins_only_for_is_company: >-
+    Only the administrator of the workspace can set the company-level attributes
+    of the department
+  creator_odata_api_not_found: >-
+    Sorry, the resource you are trying to access does not exist or you do not
+    have permission to access it!
+  creator_odata_unexpected_character: Unexpected character
+  creator_odata_authentication: Authentication is required and has not been provided
+  creator_odata_user_privileges: User does not have privileges to access the entity
+  creator_list_no_actions_tip: no operation
+  creator_list_view_permissions_lost: You do not have permission to access this view
+  creator_report_drill_down_label: ' Drill Down Data'
+  creator_report_drill_down_total_label: ' Total'
+  creator_report_dropdown_menu_options: Options
+  creator_report_dropdown_menu_options_show: Show
+  creator_report_dropdown_menu_options_grouping: Grouping
+  creator_report_dropdown_menu_options_totaling: Totaling
+  creator_report_dropdown_menu_options_counting: Counting
+  creator_report_dropdown_menu_export_excel: Export To EXCEL
+  creator_report_dropdown_menu_export_pdf: Export To PDF
+  creator_report_switch_chart_open: Switch To Open Or Close Chart
+  creator_report_design_mode: Design Mode
+  creator_report_filter_empty: Please set the report filters on the right.
+  creator_report_caption_sum: Sum
+  creator_report_caption_count: Count
+  creator_report_format_sum_count: Sum (%s records)
+  creator_report_error_object_not_found: >-
+    Object '%s' was not found. Make sure the object name specified in this
+    report is correct.
+  creator_report_error_object_field_not_found: "Field '{$field_name}' for object '{$object_name}' was not found, please confirm that the field name specified in this report is correct."
+  creator_report_error_max: "The statistics are up to {$count} records and have exceeded the limit. The following statistics are based on the previous {$max} records."
+  creator_report_error_tabular_miss_fields: A 'Rabular' type report requires at least a 'Columns' entry
+  creator_report_error_summary_miss_fields: A 'Aummary' type report requires at least a 'Columns' entry
+  creator_report_error_matrix_miss_fields: A 'Matrix' type report requires at least a 'Rows' or 'Columns' entry
+  creator_report_error_stimulsoft_report_miss_fields: A 'StimulsoftReport' type report requires at least a 'Fields' entry
+  creator_report_error_jsreport_miss_fields: A 'JsReport' type report requires at least a 'Fields' entry
+  creator_listview_update: list view updated
+  creator_request_oversized: Request Entity Too Large
+  creator_permission_share_miss: >-
+    Please fill in at least one value in the authorized organization or
+    authorized user
+  no_force_phone: Not mandatory to bind phone number of users
+  no_force_phone_tips: >-
+    In addition to not mandatory binding phone number of users, require binding
+    phone number before entering the system
+  creator_odata_post_fail: the record added fail
+  creator_odata_record_query_fail: the record does not exist for the given query
+  creator_odata_collection_query_fail: Collection not found for the segment
+  creator_odata_authentication_required: Authentication is required and has not been provided
+  creator_odata_user_access_fail: User does not have privileges to access the entity
+  creator_odata_user_create_fail: User does not have privileges to create the entity
+  creator_odata_user_update_fail: User does not have privileges to update the entity
+  creator_odata_user_remove_fail: User does not have privileges to remove the entity
+  Steedos Sogo: Hot Mail
+  sogo_mail_account: Hot mail account
+  downloading: Downloading
+  download_progress: Download progress
+  'True': 'YES'
+  'False': 'NO'
+  sms:
+    remind:
+      code: SMS_67200967
+      template: 催办通知：{$instance_name}，办结时限：{$deadline}。申请单：{$open_app_url}
+    notify_wenshu:
+      code: SMS_61725087
+      template: 您好，用户{$handler}在申请单{$instance}中填写的批阅意见为：{$description}。
+    chnage_mobile:
+      code: SMS_67660108
+      template: 通讯录中您的手机号已被修改为{$number}。
+    mobile_verification_code:
+      code: SMS_63370455
+      template: 您的验证码为：{$code}。如非本人操作，请忽略本短信。
+    change_password:
+      code: SMS_67200967
+      template: 系统通知：您的登录密码已被修改
+  standard_query: Search
+  standard_query_more: More
+  app_admin_name: Setup
+  nw_top_button_history_back: Click to back
+  nw_top_button_history_forward: Click to forward
+  nw_top_button_refresh: Reload this page
+  menu_account: My Account
+  menu_account_background: Background
+  notifications__object: Notifications
+  favorites__object: My Favorite
+  duplicate_unique_key: 'Duplicate unique key: %s'
+  copy_success: Copied to clipboard
+  copy_failed: copy failed
+  System Settings: System Settings
+  Language: Language
+  Timezone: Timezone
+  Company: Company
+  Mobile: Mobile
+  Old Password: Old Password
+  Workflow: Workflow
+  refresh: refresh
+  creator_odata_creator_odata_authentication_required: creator_odata_creator_odata_authentication_required
+  cms_home: Home
+  cms_label_dashboard: Dashboard
+  cms_button_new: Compose
+  cms_button_edit: Edit Post
+  cms_button_admin: Settings
+  cms_button_back: Back
+  cms_button_remove: Remove Post
+  cms_sites_preview: Preview
+  cms_sites_edit: Edit Site
+  cms_sites_remove: Remove Site
+  cms_sites_back: Back
+  cms_post_error_remove_reads_fail: Remove post read history failed
+  cms_posts_error_no_object: 'Can''t find this object : '
+  cms_posts_none: No posts found.
+  cms_posts_new: New post
+  cms_categories_menu: Desplayed in the menu
+  cms_categories_error_has_children: Can't remove because it has children
+  cms_categories_error_has_posts: Can't remove because it has posts
+  cms_categories_new: New Category
+  cms_categories_error_no_object: 'Can''t find this object : '
+  cms_sites_error_login_required: Login required
+  cms_sites_error_site_owner_only: Site owner only
+  cms_sites_error_has_categories: Can't remove because it has categories
+  cms_sites_error_has_posts: Can't remove because it has posts
+  cms_sites_visibility: Visibility
+  cms_sites_visibility_private: Private(Only the site's collaborators and owner can see.)
+  cms_sites_visibility_team: Team(All users in the space can see.)
+  cms_sites_visibility_public: Public(Will publish to the internet and everyone can see.)
+  cms_welcome_title: Welcome to Steedos Blog
+  cms_welcome_body: >-
+    You can read and share posts with your colleagues, Space admins can manage
+    categories.<br/>Currently you do not have any sites, you can click <a href =
+    "javasxript:void(0)" class = "btn-new-site">here</a> to create a new site.
+  cms_categories_edit: Edit Category
+  cms_categories_remove: Delete Category
+  cms_categories_error_deny_set_self: Can't set the Parent property to current categorie.
+  cms_post_error_remove_unreads_fail: Remove post unread record failed
+  cms_posts_visibility: Visibility
+  cms_posts_visibility_private: >-
+    Private(Only the post's author and published members can see and only the
+    site's collaborators can edit it.)
+  cms_posts_visibility_space: >-
+    Space(All users in the space can see, but only the site's collaborators can
+    edit it)
+  cms_error_login_required: Login required
+  cms_new_site: New Site
+  CMS_attachment_download: Download
+  CMS_attachment_view: Preview
+  cms_site_empty_help: No articles available
+  cms_home_mobile_top_title: Please select a site
+  cms_sites_action_new_category_of_site: New Category
+  cms_categories_action_new_sub_category_of_category: New Sub Category
+  cms_error_required_members_value: cms_error_required_members_value
+  cms_sites_is_needto_limit_unit: cms_sites_is_needto_limit_unit
+  mail_check_all: Check All
+  mail_delete: Delete
+  mail_refresh: Refresh
+  mail_page_forward: Forward
+  mail_page_back: Back
+  mail_back: Back
+  mail_alert_disposition_notification_checklabel: Receipt needed
+  mail_alert_disposition_notification_title: >-
+    Read receipt was requested by zhe sender of this message, Do you confirm to
+    send?
+  mail_alert_disposition_notification_yes: Send
+  mail_alert_disposition_notification_no: Deny
+  mail_alert_disposition_notification_subject: Read：%s
+  mail_alert_disposition_notification_body: >-
+    The message you sent at %s sent to %s &lt;%s&gt; has been read, the subject
+    of the message was %s
+  steedos_emailjs_serach: Search
+  steedos_emailjs_add_to_contacts: Add to contacts
+  steedos_emailjs_compose: Compose email
+  steedos_contacts_copy: Copy
+  steedos_contacts_close: Close
+  steedos_contacts_name: Name
+  steedos_contacts_email: Email
+  steedos_contacts_position: Position
+  steedos_contacts_mobile: Mobile
+  steedos_contacts_work_phone: Work Phone
+  steedos_contacts_organizations: Organizations
+  steedos_contacts_copy_successfully: Copy successfully!
+  steedos_contacts_copy_failed: Copy failed!
+  address_groups: Address Groups
+  address_groups_name: Group Name
+  address_books: Address Books
+  address_books_name: Name
+  address_books_email: Email
+  address_books_group: Group
+  address_books_group_name(): Group Name
+  address_groups_error_address_group_has_address_books: This group has contacts!
+  mail_removeto_success: Mail is removed to %s successfully
+  contacts_organizations: Organizations
+  contacts_personal_contacts: Personal Contacts
+  steedos_contacts_invite_users: Invite Users
+  steedos_contacts_add_users_btn: Add Users
+  steedos_contacts_invite_users_success: Invitation has been sent.
+  steedos_contacts_invite_users_rule: >-
+    Please enter the email address, Use separate lines to separate multiple
+    email addresses.
+  steedos_contacts_invite_users_input: Please enter the email address.
+  steedos_contacts_import_success: Import successfully
+  steedos_contacts_users: Users
+  steedos_contacts_import: Import
+  steedos_contacts_import_contacts: Import contacts from space users
+  contacts_add: Add
+  contacts_edit: Edit
+  contacts_delete: Delete
+  steedos_contacts_move_suc: Move successfully
+  steedos_contacts_error_equal_move_reject: Can't move to the current user's organization
+  steedos_contacts_error_space_user_not_found: Space user is not found
+  steedos_contacts_error_space_user_not_found_dragging: Dragging Space user data not found
+  steedos_contacts_error_contact_exists: Contact already exists
+  steedos_contacts_export: Export
+  address_books_mobile: Mobile
+  address_books_company: Company
+  steedos_contacts__books_export_error: Please select export users.
+  steedos_contact_books_exprot_vcf_title: Export vCard...
+  mail_subject_empty: '[No Subject]'
+  contacts_organization_permission_alert: >-
+    Your account is automatically synchronized with a third-party system and can
+    not maintain the organizational structure in Steedos
+  emailjs_mail_refresh: 'Mail Server Interrupted, Please Refresh!'
+  mail_server_interrupte: Mail Server Interrupted
+  emailjs_mail_cancel: Cancel
+  invite_users_help: 'https://www.steedos.com/us/help/workflow/admin_space_users.html'
+  steedos_contacts_import_users: Import users
+  steedos_contacts_import_users_note: Note
+  steedos_contacts_import_users_note_detail: >-
+    <p> The data file must be Excel </ p> <p> 1, the department must be full
+    path. If the department does not exist, then automatically create </ p> <p>
+    2, import the user if it does not exist, then automatically created; only
+    the new user support set password </ p> <p> 3, if the user exists, Join the
+    current space to modify the user information. If the imported attribute is
+    empty, do not modify this attribute value </ p>
+  steedos_contacts_import_users_data_file_title: Data file(Excel)
+  steedos_contacts_import_users_download_simple_data_file: Download the import template
+  steedos_contacts_import_users_match_user_base_username: Match users based on username
+  steedos_contacts_import_users_match_user_base_email: Match users based on email
+  steedos_contacts_import_users_match_user_base_mobile: Match users based on mobile
+  steedos_contacts_import_users_preview: Preview
+  steedos_contacts_import_users_title: Import
+  steedos_contacts_import_users_check: Check
+  steedos_contacts_import_users_organization: Organization
+  steedos_contacts_import_users_username: Username
+  steedos_contacts_import_users_email: Email
+  steedos_contacts_import_users_name: Name
+  steedos_contacts_import_users_position: Position
+  steedos_contacts_import_users_work_phone: Office Phone
+  steedos_contacts_import_users_phone: Phone
+  steedos_contacts_import_users_user_accepted: Accepted
+  steedos_contacts_import_users_sort_no: Sort number
+  steedos_contacts_import_users_password: Password
+  steedos_contacts_import_users_file_error: The file type must be excel
+  steedos_contacts_import_users_select_file: Please select the file you want to import
+  steedos_contacts_import_users_import_success: Import success
+  steedos_contacts_import_users_check_success: Check success
+  btn_set_primary_title: Set as the primary organization
+  steedos_contacts_settings: Contacts permissions
+  steedos_contacts_settings_hidden_users: Hidden users
+  steedos_contacts_settings_hidden_users_tips: Hidden users will not be displayed in Contacts
+  steedos_contacts_settings_hidden_users_edit: Edit the user to hide
+  steedos_contacts_mobile_edit_power: Need to modify the phone number by the user self
+  users_organizations: Organizations
+  contact_space_user_needed: Only space admins can change username
+  contact_invite_state: Invited state
+  contact_invite_pending: Pending
+  contact_invite_refused: Refused
+  contact_needs_name: Please fill in the name
+  contact_needs_email: Please fill in the email
+  contact_needs_organizations: Please fill in the organizations
+  contact_invitation_sends: Invitation notification has been sent. Please wait for user feedback
+  contact_invite_success: The user has been invited successfully
+  contact_space_user_exist: The user is already in the workspace
+  cantact_add_space_user: Add members
+  contact_save_user: Save
+  contact_invite_info: __inviter__invite you to join__space__
+  contact_mail_not_match_phine: Mail and phone number doesn't match
+  contact_reinvite_user: This user has been invited again
+  search_contact: Contacts search
+  add_sub_department: Add sub department
+  edit_department: Edit
+  delete_department: Delete
+  edit_current_department: Edit current department
+  contacts_tableau_modify_username: Change username
+  contacts_tableau_modify_password: Change password
+  Change password successfully: Change password successfully
+  Steedos Creator: Creator
+  Refresh: Refresh
+  Confirm: Confirm
+  list_view_recent: Recent
+  list_view_all: All
+  list_view_mine: Mine
+  list_view_no_records: No items to display.
+  please_select: 'Please select '
+  list_view: List View
+  creator_list_item_counts: '%s items'
+  creator_list_new_list_view: New
+  creator_list_delete_list_view: Delete
+  creator_list_select_fields: Select Fields to Display
+  creator_available_fields: Available Fields
+  creator_visible_fields: Visible Fields
+  creator_list_filter: Filter
+  creator_list_filter_cancel: Cancel
+  creator_list_filter_save_as: Save as
+  creator_list_filter_save: Save
+  creator_list_filter_apply: Apply
+  creator_list_new_filter: New Filter
+  creator_list_add_filter: Add Filter
+  creator_list_remove_all_filters: Remove All
+  creator_list_matching_all_filters: Matching all these filters
+  creator_list_view_controls: LIST VIEW CONTROLS
+  creator_list_export_list_view: Export List View
+  creator_list_copy_list_view: Copy List View
+  reset_column_width: Reset Column Width
+  creator_list_edit: Edit List View
+  creator_filter_option_field: field
+  creator_filter_option_operation: operation
+  creator_filter_option_value: value
+  creator_filter_option_start_value: start value
+  creator_filter_option_end_value: end value
+  creator_filter_option_start_end_error: The starting value cannot be greater than the ending value
+  creator_filter_option_done: Done
+  creator_filter_operation_required_error: operation is required
+  creator_filter_operation_equal: equal
+  creator_filter_operation_unequal: not equal
+  creator_filter_operation_less_than: less than
+  creator_filter_operation_greater_than: greater than
+  creator_filter_operation_less_or_equal: less or equal
+  creator_filter_operation_greater_or_equal: greater or equal
+  creator_filter_operation_contains: contains
+  creator_filter_operation_does_not_contain: not contain
+  creator_filter_operation_starts_with: starts with
+  creator_app_launcher: App Launcher
+  creator_app_launcher_all_apps: All Apps
+  creator_app_launcher_all_items: All Items
+  creator_filter_operation_between: Range
+  creator_filter_operation_between_last_year: Last Year
+  creator_filter_operation_between_this_year: This Year
+  creator_filter_operation_between_next_year: Next Year
+  creator_filter_operation_between_today: Today
+  creator_filter_operation_between_yestday: Yestday
+  creator_filter_operation_between_last_quarter: Last Quarter
+  creator_filter_operation_between_this_quarter: This Quarter
+  creator_filter_operation_between_next_quarter: Next Quarter
+  creator_filter_operation_between_tomorrow: Tomorrow
+  creator_filter_operation_between_this_week: This Week
+  creator_filter_operation_between_last_week: Last Week
+  creator_filter_operation_between_next_week: Next Week
+  creator_filter_operation_between_this_month: This Month
+  creator_filter_operation_between_last_month: Last Month
+  creator_filter_operation_between_next_month: Next Month
+  creator_filter_operation_between_last_7_days: Last 7 Days
+  creator_filter_operation_between_last_30_days: Last 30 Days
+  creator_filter_operation_between_last_60_days: Last 60 Days
+  creator_filter_operation_between_last_90_days: Last 90 Days
+  creator_filter_operation_between_last_120_days: Last 120 Days
+  creator_filter_operation_between_next_7_days: Next 7 Days
+  creator_filter_operation_between_next_30_days: Next 30 Days
+  creator_filter_operation_between_next_60_days: Next 60 Days
+  creator_filter_operation_between_next_90_days: Next 90 Days
+  creator_filter_operation_between_next_120_days: Next 120 Days
+  creator_filter_close_filter_panel: Close Filter Panel
+  creator_header_search: Search in %s and more...
+  creator_header_search_recent_items: Recent Items
+  creator_view_related_objects: RELATED
+  creator_view_details: DETAILS
+  creator_actions_upload_file: Upload
+  creator_home_apps: Steedos Office
+  creator_detail_info: DETAILS
+  creator_detail_related: RELATED
+  creator_new: New
+  creator_change_view: Change view
+  creator_edit_list: Edit List
+  creator_refresh: Refresh
+  creator_charts: Charts
+  creator_filters: Filters
+  'true': 'YES'
+  'false': 'NO'
+  dashboard: Dashboard
+  follow: Follow
+  unfollow: Unfollow
+  following: Following
+  pending_space_invite_info: "{$inviter} invite you to join {$space}"
+  creator_list_show_as: Show As
+  creator_list_show_as_one_column: List
+  creator_list_show_as_two_columns: List ｜ Record
+  creator_list_show_as_three_columns: Menu ｜ List ｜ Record
+  creator_files_download_error_not_found: No attachment found. It may have been deleted.
+  creator_navigation_nav_not_saved: Not added to navigation bar
+  creator_navigation_nav_more: More
+  creator_not_found_heading: There seems to be a problem.
+  creator_not_found_message_body: >-
+    We were unable to find the record you tried to access. This record may have
+    been deleted by another user, or you do not have access to it, or a system
+    error may have occurred. Please ask your administrator for help.
+  creator_office_online_web_url_required: Please configure the Office Online Web service address.
+  accounts: Company
+  license_trial_day_left: license_trial_day_left
+  license_trial_subscribeNow: license_trial_subscribeNow
+  license_trial_feedback: license_trial_feedback
+  license_trial_guide: license_trial_guide
+  license_trial_header_swal_title: license_trial_header_swal_title
+  license_trial_header_swal_cancelButtonText: license_trial_header_swal_cancelButtonText
+  license_trial_header_swal_confirmButtonText: license_trial_header_swal_confirmButtonText
+  authorize: Authorize
+  get_user_info: Get your account information
+  get_follow_permission: will get the follow permission
+  users: Users
+  users_steedos_id: Steedos ID
+  users_name: Name
+  users_username: Username
+  users_email: Email
+  users_company: Company
+  users_position: Position
+  users_work_phone: Work Phone
+  users_mobile: Mobile
+  users_locale: Language
+  users_timezone: Timezone
+  users_emails: Emails
+  users_createdAt: Created At
+  users_email_notification: Email Notification
+  apps: Apps
+  apps_space: Space
+  apps_name: Name
+  apps_description: Description
+  apps_auth_name: Auth Name
+  apps_url: URL
+  apps_on_click: URL Script
+  apps_is_use_ie: Use IE(Use the Steedos desktop client)
+  apps_is_use_iframe: Use iframe
+  apps_is_new_window: New window opens
+  apps_iconURL: IconURL
+  apps_icon: Icon
+  apps_space_sort: Sort Index
+  apps_mobile: Show on mobile apps
+  apps_desktop: Show on desktop
+  apps_menu: Show on left menu
+  apps_sort_no: Sort No.
+  apps_secret: API Key
+  apps_internal: Internal
+  apps_sort: Sort
+  apps_id: ID
+  space: Space
+  spaces: Spaces
+  spaces_id: ID
+  spaces_name: Name
+  spaces_admins: Admins
+  spaces_owner: Owner
+  spaces_balance: Balance
+  spaces_is_paid: Is Paid
+  spaces_owner_name(): Owner
+  spaces_admins_name(): Admins
+  spaces_enable_register: Whether to allow registration
+  spaces_apps_enabled: Apps Enabled
+  spaces_max_user_count: Maximum number of users
+  spaces_is_deleted: Is Deleted
+  spaces_created: Created
+  spaces_created_by: Created By
+  spaces_modified: Modified
+  spaces_modified_by: Modified By
+  spaces_modules: Modules
+  spaces_prefs: Preference
+  spaces_avatar: Logo(260*50px)
+  organizations: Organizations
+  organizations_id: ID
+  organizations_children: Children
+  organizations_fullname: Fullname
+  organizations_users: Users
+  organizations_name: Name
+  organizations_parent: Parent
+  organizations_space_name(): Space
+  organizations_users_count(): Users Count
+  organizations_created: Created
+  organizations_created_by: Created By
+  organizations_is_company: Is Company
+  organizations_modified: Modified
+  organizations_modified_by: Modified By
+  organizations_parents: All Parents
+  organizations_space: Space ID
+  organizations_sort_no: Sort No.
+  organizations_hidden: Hidden
+  organizations_admins: Admins
+  space_users: Space Users
+  space_users_id: ID
+  space_users_user: User ID
+  space_users_space_name(): Space Name
+  space_users_name: Name
+  space_users_email: Email
+  space_users_organization: Primary Organization
+  space_users_organizations: Organizations
+  space_users_user_accepted: Is Valid
+  space_users_manager: Manager
+  space_users_organization_name(): Organization
+  space_users_space: Space
+  space_users_created: Created
+  space_users_modified: Modified
+  space_users_created_by: Created By
+  space_users_modified_by: Modified By
+  space_users_mobile: Mobile
+  space_users_work_phone: Work Phone
+  space_users_company: Company
+  space_users_position: Position
+  space_users_managers: All Managers
+  space_users_apps: Apps
+  space_users_sort_no: Sort No.
+  users_changelogs_id: ID
+  users_changelogs_change_data: Change Data
+  users_changelogs_operator: Operator
+  users_changelogs_space: Space
+  users_changelogs_operation: Operation
+  users_changelogs_user_count: User Count
+  users_changelogs_created: Created
+  users_changelogs_user: User
+  users_changelogs_created_by: Created By
+  organizations_error_space_required: Space is required
+  organizations_error_space_not_found: Space can not be found
+  organizations_error_space_admins_only: You are not the space admin
+  organizations_error_users_readonly: Users can not be modified
+  organizations_error_organizations_name_exists: Organization name has existed
+  organizations_error_space_readonly: Space can not be modified
+  organizations_error_parents_readonly: Parents can not be modified
+  organizations_error_children_readonly: Children can not be modified
+  organizations_error_fullname_readonly: Fullname can not be modified
+  organizations_error_parent_is_self: The parent can not be itself
+  organizations_error_organization_has_children: The organization has children
+  organizations_error_can_not_remove_root_organization: The root organization can not be removed
+  organizations_error_organization_is_company: The root organization can not be modified
+  organizations_error_organization_name_required: Organization name is required
+  organizations_error_organizations_parent_required: Organization parent required
+  organizations_error_space_admins_only_for_org_admins: Only the space admin can deal organization admins
+  organizations_error_org_admins_only: 'Access denied,only organization admins can do this operation.'
+  organizations_error_organization_has_users: Department can not be deleted while has users.
+  space_users_error_space_required: Space required
+  space_users_error_space_not_found: Space can not be found
+  space_users_error_space_admins_only: You are not the space admin
+  space_users_error_user_required: User is required
+  space_users_error_user_not_found: User can not be found
+  space_users_error_name_required: Name is required
+  space_users_error_user_exists: 'The user has existed, please Invite Users'
+  space_users_error_space_user_exists: The user has been in the company
+  space_users_error_space_users_exists: The space user has existed
+  space_users_error_email_readonly: The e-mail can not be modified
+  space_users_error_space_readonly: Space can not be modified
+  space_users_error_user_readonly: User can not be modified
+  space_users_error_unaccepted_user_readonly: Unaccepted user can not be modified
+  space_users_error_email_required: Email is requred
+  space_users_error_email_already_existed: The Email is already used.
+  space_users_error_remove_space_owner: The space owner can not be removed
+  space_users_error_phone_already_existed: The phone number is already used.
+  space_users_error_not_change_contact_id: Can not change contact
+  space_users_aciton_invite_space_users_success: >-
+    The invitation link has copied to clipboard. Users can quickly join the
+    company by clicking this link.
+  space_users_aciton_invite_space_users_error: Failed to invite user
+  spaces_error_login_required: Login is required
+  spaces_error_space_owner_only: You are not the space owner
+  spaces_error_space_admins_required: Space admin is required
+  spaces_error_space_readonly: Space can not be modified
+  users_error_email_exists: The e-mail has existed
+  users_error_username_exists: The user name has existed
+  users_error_steedos_id_required: Steedos ID is required
+  users_error_steedos_id_readonly: Steedos ID can not be modified
+  users_error_cloud_admin_required: Cloud admin required
+  users_email_create_account: An account has been created for you on Steedos
+  users_email_start_service: 'To start using the service,simply click the link below.'
+  users_email_verify_account: 'To verify your account email,simply click the link below.'
+  users_email_verify_email: How to verify email address on Steedos
+  users_email_reset_password: How to reset your password on Steedos
+  users_email_reset_password_body: "Your token code is {$token_code}\r\nTo reset your password, input the token code above at the password reset page or simply click the link below."
+  users_email_hello: Hello
+  users_email_thanks: Thanks.
+  tasks_js_addNotifications_notificationTitle: ' assigned a task to you'
+  events_js_addNotifications_notificationTitle: ' assigned an event to you'
+  wweb_forms_error_object_name_not_found: Object not found
+  web_forms_aciton_copyHtmlCode_success: >-
+    The form HTML code has been copied to the clipboard and can be copied to the
+    web page to fill in the form online.
+  web_forms_aciton_copyHtmlCode_error: The form HTML code copy failed.
+  web_forms_default_notification_body: The Web form has a new record submission.
+  web_forms_select_option_none: '--none--'
+  object_fields_error_option_label_required: The 'Label' of each option in the selection attribute cannot be empty.
+  object_fields_error_option_value_required: The option 'Value' for each option in the option property cannot be empty.
+  object_fields_error_option_color_not_valid: >-
+    The incorrectly formatted option color value is defined in the field
+    'Options' attribute. Enter the correct hexadecimal color value, such as
+    FFFFFF.
+  picklist_options_error_color_not_valid: >-
+    Background color format incorrect, please enter the correct hexadecimal
+    color code, such as FFFFFF.
+  space_users_method_disable_success: The user was successfully deactivated.
+  space_users_method_disable_error: 'User deactivation failed, %s'
+  space_users_method_enable_success: The user was successfully enabled.
+  space_users_method_enable_error: 'Enable user failure, %s'
+  space_users_method_disable_enable_error_only_admin: Only the admins can enable / disable accounts.
+  space_users_method_disable_enable_error_can_not_own: Unable to enable / disable your own account.
+  space_users_method_disable_error_can_not_disable_disabled: Unable to disable a disabled account.
+  space_users_method_enable_error_can_not_enable_enabled: Unable to enable an enabled account.
+  reports_field_report_type_options_tabular: Tabular
+  reports_field_report_type_options_summary: Summary
+  reports_field_report_type_options_matrix: Matrix
+  reports_field_report_type_options_jsreport: JsReport
+  reports_field_report_type_options_stimulsoft-report: StimulsoftReport
+  object_fields_error_formula_required: 'When the field type is autonumber, the formula field must be filled in.'
+  holidays_error_date_repeated: This date already exists.
+  business_hours_error_is_default_repeated: >-
+    There can only be one default working time. For the current working time to
+    take effect, please first set other working hours as non-default working
+    hours.
+  business_hours_error_start_format: >-
+    Start time format error, please enter HH:MM this format of 24 hours time
+    character.
+  business_hours_error_end_format: >-
+    End time format error, please enter HH:MM this format of 24 hours time
+    character.
+  business_hours_error_start_lt_end: The end time value must be later than the start time.
+  business_hours_error_lunch_start_format: >-
+    Lunch start time format error, please enter HH:MM this format of 24 hours
+    time character.
+  business_hours_error_lunch_end_format: >-
+    Lunch end time format error, please enter HH:MM this format of 24 hours time
+    character.
+  business_hours_error_lunch_start_lt_lunch_end: The lunch end time value must be later than the lunch start time.
+  business_hours_error_lunch_start_end_overflow: Lunch breaks must be within working hours.
+  object_fields_function_recomputeFormulaValues_success: The formula field value was successfully recomputed.
+  object_fields_function_recomputeFormulaValues_error: 'Failed to recompute the formula field value, %s'
+  object_fields_function_recomputeSummaryValues_success: The summary field value was successfully recomputed.
+  object_fields_function_recomputeSummaryValues_error: 'Failed to recompute the summary field value, %s'
+  object_fields_error_summary_object_required: >-
+    When the field type is 'Roll-Up Summary', the 'Object to Summarize' must be
+    filled in.
+  object_fields_error_summary_data_type_not_found: The data type for this 'Roll-Up Summary' field was not found.
+  object_fields_error_filter_item_invalid_number: >-
+    The filter condition is set incorrectly. The value of the numeric type field
+    must be a valid value.
+  object_fields_error_filter_item_invalid_date: >-
+    The filter condition is set incorrectly. The date, date-time type field
+    value must be a valid date value. Enter a character in the format 2020-01-01
+    to represent a date, and a character in the format 2020-01-01 12:00 to
+    represent a date time.
+  object_fields_error_filter_item_invalid_boolean: >-
+    The filter condition is set incorrectly. The Boolean type field has an
+    invalid value, please enter '1/true/True/TRUE/真 'to indicate true or
+    '0/false/False/FALSE/假' to indicate false.
+  object_fields_error_filter_item_field_required: The filter condition is set incorrectly. 'Field' is required.
+  object_fields_error_filter_item_operation_required: The filter condition is set incorrectly. 'Operator' is required.
+  object_fields_error_filter_item_value_required: The filter condition is set incorrectly. 'Value' is required.
+  organizations_error_can_not_set_checkbox_true: organizations_error_can_not_set_checkbox_true
+  space_users_error_remove_space_admins: space_users_error_remove_space_admins
+  web_forms_error_object_name_not_found: web_forms_error_object_name_not_found
+  space_users_method_unlock_success: space_users_method_unlock_success
+  space_users_method_unlock_error: space_users_method_unlock_error
+  space_users_method_lockout_success: space_users_method_lockout_success
+  space_users_method_lockout_error: space_users_method_lockout_error
+  space_users_method_unlock_lockout_error_only_admin: space_users_method_unlock_lockout_error_only_admin
+  is_enable: 已启用
+  objects: 对象
+  objects_name: 对象名
+  objects_label: 显示名称
+  objects_icon: 图标
+  objects_is_view: 视图
+  objects_is_enable: 已启用
+  objects_enable_search: 允许搜索
+  objects_enable_files: 允许上传附件
+  objects_enable_tasks: 允许添加任务
+  objects_enable_notes: 允许添加备注
+  objects_enable_events: 允许添加事件
+  objects_enable_chatter: 允许添加留言
+  objects_enable_audit: 记录字段历史
+  objects_enable_api: 允许 API 访问
+  objects_enable_share: 允许共享记录
+  objects_enable_instances: 允许查看申请单
+  objects_description: 描述
+  object_fields: 字段
+  object_fields_name: 字段名
+  object_fields_label: 显示名称
+  object_fields_object: 所属对象
+  object_fields_type: 字段类型
+  object_fields_group: 字段分组
+  object_fields_defaultValue: 默认值
+  object_fields_allowedValues: 允许的值
+  object_fields_multiple: 多选
+  object_fields_required: 必填
+  object_fields_is_wide: 宽字段
+  object_fields_readonly: 只读
+  object_fields_disabled: 禁用
+  object_fields_omit: 忽略
+  object_fields_index: 创建索引
+  object_fields_sortable: 可排序
+  object_fields_reference_to: 引用对象
+  object_fields_rows: 多行文本行数
+  object_fields_precision: 精度(数字长度)
+  object_fields_scale: 小数位数
+  object_fields_options: 选择项
+  object_fields_description: 描述
+  object_fields_searchable: 可搜索
+  object_triggers: 触发器
+  object_triggers_name: 名称
+  object_triggers_label: 显示名称
+  object_triggers_object: 所属对象
+  object_triggers_on: 运行于
+  object_triggers_when: 运行时
+  object_triggers_is_enable: 已启用
+  object_triggers_todo: 执行的脚本
+  object_actions: 操作按钮
+  object_actions_name: 名称
+  object_actions_label: 显示名称
+  object_actions_object: 所属对象
+  object_actions_is_enable: 已启用
+  object_actions_visible: visible
+  object_actions_on: 显示位置
+  object_actions_todo: 执行的脚本
+  view_object: View object
+  object_validation_rules_wrong_formula: Wrong formula.
+  simpleschema:
+    messages:
+      required: '[label] is required'
+      minString: '[label] must be at least [min] characters'
+      maxString: '[label] cannot exceed [max] characters'
+      minNumber: '[label] must be at least [min]'
+      maxNumber: '[label] cannot exceed [max]'
+      minNumberExclusive: '[label] must be greater than [min]'
+      maxNumberExclusive: '[label] must be less than [max]'
+      minDate: '[label] must be on or after [min]'
+      maxDate: '[label] cannot be after [max]'
+      badDate: '[label] is not a valid date'
+      minCount: 'You must specify at least [minCount] values'
+      maxCount: 'You cannot specify more than [maxCount] values'
+      noDecimal: '[label] must be an integer'
+      notAllowed: '[value] is not an allowed value'
+      expectedString: '[label] must be a string'
+      expectedNumber: '[label] must be a number'
+      expectedBoolean: '[label] must be a boolean'
+      expectedArray: '[label] must be an array'
+      expectedObject: '[label] must be an object'
+      expectedConstructor: '[label] must be a [type]'
+      keyNotInSchema: '[key] is not allowed by the schema'
+      notUnique: '[label] must be unique'
+      regEx:
+        '0':
+          msg: '[label] failed regular expression validation'
+        '1':
+          exp: 'SimpleSchema.RegEx.Email'
+          msg: '[label] must be a valid e-mail address'
+        '2':
+          exp: 'SimpleSchema.RegEx.WeakEmail'
+          msg: '[label] must be a valid e-mail address'
+        '3':
+          exp: 'SimpleSchema.RegEx.Domain'
+          msg: '[label] must be a valid domain'
+        '4':
+          exp: 'SimpleSchema.RegEx.WeakDomain'
+          msg: '[label] must be a valid domain'
+        '5':
+          exp: 'SimpleSchema.RegEx.IP'
+          msg: '[label] must be a valid IPv4 or IPv6 address'
+        '6':
+          exp: 'SimpleSchema.RegEx.IPv4'
+          msg: '[label] must be a valid IPv4 address'
+        '7':
+          exp: 'SimpleSchema.RegEx.IPv6'
+          msg: '[label] must be a valid IPv6 address'
+        '8':
+          exp: 'SimpleSchema.RegEx.Url'
+          msg: '[label] must be a valid URL'
+        '9':
+          exp: 'SimpleSchema.RegEx.Id'
+          msg: '[label] must be a valid alphanumeric ID'
+  steedos_tableau: Tableau
+  steedos_tableau_workflow: Flow List
+  steedos_tableau_info: Steedos Tableau
+  steedos_tableau_url_copy_success: Tableau Web Data Connector has been copied.
+  steedos_tableau_introduction: Tableau Introduction
+  steedos_tableau_use: Tableau Use
+  steedos_tableau_url_copy: Tableau Web Data Connector
+  steedos_tableau_forward: Looking Forward To
+  steedos_tableau_select_workflow: Select Workflow
+  steedos_tableau_request_statistics: Request statistics
+  steedos_tableau_workflow_request_statistic: According to the workflow
+  steedos_tableau_copy_Link: 'Copy Link '
+  steedos_tableau_organization_statistics: According to the organization
+  steedos_tableau_efficiency_statistics: Approval efficiency statistics
+  steedos_tableau_function: 'This function is based '
+  steedos_tableau_statistics_analysis: >-
+    Through the use of Tableau client Web Data Connector, connect the workflow
+    data interface, statistics and analysis the workflow data
+  steedos_tableau_download: Download Tableau public client (free)
+  steedos_tableau_button_copy_link: 'Click the button below the Tableau Web Data Connector '
+  steedos_tableau_get_link: get the link
+  steedos_tableau_use_step: >-
+    Open the Tableau client, click the New -> Connect to Data -> Web Data
+    Connector, in the open window, the link will be copied to the address bar
+  steedos_tableau_web_connect: Web Data Connector
+  steedos_tableau_button_copy: Click on the bottom of the
+  steedos_tableau_instance_link: button，you can get the data link for the selected process
+  steedos_tableau_simple_introduction: >-
+    Statistical analysis is based on Tableau software developed by the new
+    features.You can choose a different process at any time，the contents of the
+    application form will be counted，the results of the statistics can be
+    obtained through the form of the chart，clearly and intuitively displayed in
+    front of you。
+  steedos_tableau_function_introduction: Steedos Tableau function introduction
+  webapp_notifications: Notifications
+  webapp_notifications_mark_all_as_read: Mark all as read
+  webapp_notifications_empty: You haven't received any notice.
+  webapp_notifications_new_after: ' new notices'
+  webapp_notifications_new_before: 'You have '
+  webapp_notifications_new_no: No new notification
+  webapp_favorites_edit: Edit favorites
+  webapp_favorites_more: Favorites list
+  webapp_favorites_action_not_support: This item does not support favorites
+  webapp_favorites_action_remove: Delete from favorites
+  webapp_favorites_action_add: Add to favorites
+  webapp_header_profile_settings: Settings
+  webapp_header_profile_logout: Log Out
+  webapp_dashboard_widgets_type_instances_pendings: Requests Inbox
+  webapp_dashboard_widgets_type_apps: Apps
+  webapp_dashboard_widgets_type_announcements_week: Announcements This Week
+  webapp_dashboard_widgets_type_tasks_today: Tasks Today
+  webapp_dashboard_widgets_type_events_today: Events today
+  webapp_dashboard_widgets_type_html: HTML
+  webapp_dashboard_widgets_position_center_top: Left Top
+  webapp_dashboard_widgets_position_center_bottom_left: Left Bottom Left
+  webapp_dashboard_widgets_position_center_bottom_right: Left Bottom Right
+  webapp_dashboard_widgets_position_center_right: Right
+  webapp_dashboard_widgets_apps_tiles_section_label: All Apps
+  webapp_dashboard_widgets_apps_links_section_label: All Items
+  webapp_dashboard_widgets_object_label: Widget Object
+  webapp_dashboard_widgets_object_all_link_label: View All
+  webapp_dashboard_widgets_object_illustration_message_body: There are no items to display.
+  webapp_dashboard_widgets_instances_pendings_label: Requests Inbox
+  webapp_dashboard_widgets_instances_pendings_illustration_message_body: You have no requests.
+  webapp_dashboard_widgets_announcements_week_label: Announcements This Week
+  webapp_dashboard_widgets_announcements_week_illustration_message_body: There were no new announcements this week.
+  webapp_dashboard_widgets_tasks_today_label: Tasks Today
+  webapp_dashboard_widgets_tasks_today_illustration_message_body: You don't have any tasks today.
+  webapp_dashboard_widgets_events_today_label: Events Today
+  webapp_dashboard_widgets_events_today_illustration_message_body: You don't have any events today.
+  inbox: Inbox
+  outbox: Outbox
+  draft: Draft
+  pending: In Progress
+  completed: Finished
+  monitor: Monitor
+  FlowName: Workflow Name
+  My Approval: My Approval
+  My Applications: My Applications
+  steedos_desktop: Steedos Desktop
+  menu_navigation: Navigation
+  instance__object: Request
+  form_new: New
+  instances: Request
+  instances_name: Title
+  instances_applicant_name: Applicant
+  instances_modified: Modified
+  instances_applicant_organization_name: Organization
+  instances_submit_date: Submit Date
+  instances_flow: Workflow
+  instances_step_current_name: Current step
+  instances_flow_name: Workflow
+  instances_current_step_name: Current step
+  instance_approve: Approve
+  instance_reject: Reject
+  instance_readed: Read
+  instance_next_step: Next Step
+  instance_next_step_users: Next Step User(s)
+  instance_next_step_user_countersign: Next Step User(s)
+  instance_initiator: Initiator
+  instance_approval_history: Approval History
+  instance_in_progress: In Progress
+  instance_submit: Submit
+  instance_save: Save
+  instance_delete: Delete
+  instance_attachment: Attachments
+  instance_cancel: Cancel Request
+  instance_reassign: Reassign
+  instance_relocate: Relocate
+  instance_print: Print
+  flow_roles: Workflow Positions
+  flow_roles_name: Position Name
+  flow_positions: Positions Users
+  flow_positions_role: Position
+  flow_positions_org: Organization
+  flow_positions_users: Users
+  flow_positions_role_name(): Position
+  flow_positions_org_name(): Organization
+  flow_positions_users_name(): Users
+  workflow_table_confirm: OK
+  workflow_table_delete: Delete
+  Attachment deleted successfully: Attachment deleted successfully!
+  Attachment was added successfully: Attachment was added successfully!
+  Saved successfully: Saved successfully!
+  Added successfully: Added successfully!
+  Deleted successfully: Deleted successfully!
+  Submitted successfully: Submitted successfully!
+  Canceled successfully: Canceled successfully!
+  Reassigned successfully: Reassigned successfully!
+  Relocated successfully: Relocated successfully!
+  Attachments: Attachments
+  Versions: Versions
+  Current Version: （Current Version）
+  workflow_attachment_free_size_limit: 'Sorry, Attachment larger than 10M is not accepted for free version.'
+  workflow_attachment_paid_size_limit: 'Failed to upload, because attachment size is over '
+  workflow_attachment_download: Download
+  workflow_attachment_view: View
+  workflow_attachment_isReadOnly: ReadOnly-
+  workflow_attachment_versions: Versions
+  workflow_attachment_versions_upload: Upload New Version
+  workflow_attachment_uploading: 'Uploading '
+  workflow_attachment_downloading: Downloading %s...
+  workflow_attachment_creating: 'Creating a new file: %s...'
+  workflow_attachment_officeOnline: Edit
+  workflow_attachment_save: Save
+  workflow_attachment_close: Close
+  workflow_attachment_delete: Delete
+  workflow_attachment_convert_to_pdf: Converting '%s' to pdf format...
+  workflow_attachment_wordToPdf: Convert To Pdf
+  workflow_attachment_wordToPdf_failed: Convert to PDF failed!
+  workflow_attachment_locked_tip: 'Unlock the file, then submit'
+  Instance State approved: Approved
+  Instance State rejected: Rejected
+  Instance State terminated: Cancelled
+  Instance State finished: Completed
+  Instance State pending: In Progress
+  Instance State reassigned: Reassigned
+  Instance State relocated: Relocated
+  Instance Relocate Hint: Enter your comments here.
+  Instance Relocate Title: Relocate
+  Instance Relocate Reason: Comments are required.
+  Instance Relocate NewInboxUsers: Please select a user.
+  Instance Relocate Ok: Relocated successfully.
+  Instance Relocate CurStep: 'Current Step: '
+  instance_reassign_title: Reassign
+  instance_reassign_curstep: 'Current Step: '
+  instance_reassign_reason: Enter your comments here.
+  instance_reassign_ok: Reassigned successfully.
+  instance_reassign_user: Select User(s)
+  instance_cancel_title: Cancel Request
+  instance_cancel_reason: Enter your comments here
+  instance_reassign_error_reason_required: Comments are required.
+  instance_reassign_error_users_required: Please select a user.
+  instance_cancel_error_reason_required: Comments are required.
+  instance_select_next_step: Please select next step
+  instance_multi_next_step_tips: >-
+    Multi next steps，please select next step，and send the request by click the
+    bottom Send button
+  instance_next_step_user: Please select next step user(s)
+  instance_reasons_reject: Reasons necessary when reject the application
+  instance_field: The field
+  instance_is_required: is required
+  instance_email_format_error: Format error of the email address
+  node_office_edit_online: Edit Online
+  node_office_message: 'You are editing document, please save and exit Office software when done.'
+  node_office_warning: 'The file has been modified, do you want to save it as a new version?'
+  node_office_upload: 'Upload '
+  node_office_confirm: Confirm
+  node_office_cancel: Cancel
+  node_office_uploaded: The attachment has been uploaded
+  node_office_filePath: 'File: '
+  node_office_exists_message: 'File already exists, replace it?'
+  node_office_workflow: Workflow
+  node_pdf_error: 'Pdf signature failed, please re-sign!'
+  node_pdf_sign_online: Sign Online
+  node_pdf_message: You are signing pdf file.
+  node_pdf_filePath: 'File: '
+  workflow_export_thismonth: Export requests this month
+  workflow_export_lastmonth: Export requests last month
+  workflow_export_thisyear: Export requests this year
+  workflow_export_all: Export all requests
+  workflow_export_filter: Filter By Workflow
+  workflow_export_search: Search for requests according to the workflow
+  workflow_export_data: Export to Excel
+  spaces_isarrearageSpace: your space is arrearage
+  cc_help: 'https://www.steedos.com/help/workflow/instance_carboncopy'
+  relocate_help: >-
+    https://www.steedos.com/help/workflow/instance_monitor#%E9%87%8D%E5%AE%9A%E4%BD%8D
+  reassign_help: >-
+    https://www.steedos.com/help/workflow/instance_monitor#%E8%BD%AC%E7%AD%BE%E6%A0%B8
+  forward_help: 'https://www.steedos.com/help/workflow/instance_forward'
+  export_filter_help: 'https://www.steedos.com/help/workflow/instance_search'
+  new_help: 'https://www.steedos.com/help/workflow/instance_add'
+  Inbox Suggestion NextSteps Label: 'Next step: '
+  Inbox Suggestion NextSteps Handler Label: 'Assignee: '
+  Workflow Designer: Workflow Designer
+  User Management: User Management
+  All flows: All Workflows
+  Select a flow: Select a workflow
+  Fill in form: New Request
+  Flow upgraded: >-
+    The workflow has been upgraded. Please make sure this request meet the
+    requirements of the new version.
+  Are you sure?: Are you sure?
+  Select placeholder: Please select
+  workflow_no_category: No Category
+  flow_roles_error_positions_exists: Users exised in the role
+  workflow_left_parenthesis: (
+  workflow_right_parenthesis: )
+  instance_cc_description: Carbon Description
+  instance_cc_from: Carbon Form
+  instance_cc_title: Carbon Copy
+  instance_cc_done: Carbon copied!
+  instance_curstep: 'Current Step: '
+  instance_cc_user: Carbon Copy To
+  instance_cc_error_users_required: Please select user.
+  workflow_form_edit: Workflow List
+  flows_template: Request Template
+  flows_name: Workflow Name
+  flows_print_template: Print Template
+  flows_instance_template: Form Template
+  flows_description: Flow Description
+  workflow_attach_unlock: Unlock
+  workflow_attach_locked_by: '%s is editing'
+  workflow_attach_confirm_delete: Are you sure?
+  workflow_attach_confirm_delete_messages: You will not be able to recover this imaginary file!
+  workflow_attach_confirm: Delete
+  workflow_attach_cancel: Cancel
+  workflow_attach_to_pdf: Convert to PDF
+  workflow_attach_to_pdf_message: Convert '%s' to pdf format?
+  workflow_attach_upload: Upload
+  workflow_attach_new: New
+  workflow_attachment_signature: Signature
+  workflow_select_an_app: Steedos Apps
+  workflow_suggestion_placeholder: Please fill in comments.
+  workflow_draft_suggestion_placeholder: Please fill in comments.
+  instance_opinion_title: Opinions
+  instance_opinion_btn: Opinions
+  instance_opinion_input: Add a opinion
+  instance_opinion_add_success: Add successfully!
+  instance_opinion_remove_success: Remove successfully!
+  instance_opinion_error: Error
+  instance_opinion_exists: Opinion exists
+  instance_opinion_add_tip: You have not set up common comments yet.
+  instance_forward_title: Request Forward
+  form_field_checkbox_yes: 'YES'
+  form_field_checkbox_no: 'NO'
+  flows_events: Events
+  flows_events_error: 'Workflow Script Error: '
+  instance_search_advanced_search: Advanced search
+  instance_search_flow: Workflow
+  instance_search_name: Request Title
+  instance_search_file: Request Title
+  instance_search_applicant_name: Applicant Name
+  instance_search_applicant_organization_name: Applicant Organization
+  instance_search_submit_date: Submit Date
+  instance_search_start: Start
+  instance_search_end: End
+  instance_search_result_tip: Filtered Result
+  instance_search_state: Request State
+  instance_search_state_options:
+    pending: Pending
+    completed: Completed
+  instance:
+    formatter:
+      date:
+        simple_date: bb DD, YYYY
+        simple_datetime: bb DD, YYYY HH:MM
+        export_date: YYYY-MM-DD
+        export_datetime: YYYY-MM-DD HH:MM
+      checkbox:
+        checked: 'YES'
+        unchecked: 'NO'
+    instance_view: "<br/><br/>Following are the contents of the request:<br/>Space :
+      {$space_name};<br/>Initiator : {$applicant_name};<br/>Submit Date : {$submit_date};"
+    push:
+      final_decision_approved: Approved
+      final_decision_rejected: Rejected
+      final_decision_nil: ''
+      title:
+        first_submit_applicant: "{$from_username}"
+        first_submit_inbox: "{$from_username}"
+        submit_pending_rejected_applicant_inbox: "{$from_username}"
+        submit_pending_rejected_applicant: "{$from_username}"
+        submit_pending_rejected_approve: "{$from_username}"
+        submit_pending_rejected_inbox: "{$from_username}"
+        submit_pending_inbox: "{$from_username}"
+        submit_terminate_applicant: "{$from_username}"
+        submit_terminate_approve: "{$from_username}"
+        monitor_delete_applicant: "{$applicant_name}"
+        submit_completed_applicant: "{$applicant_name}"
+        submit_completed_approve: "{$from_username}"
+        approved_completed_applicant: "{$applicant_name}"
+        approved_completed_approve: "{$from_username}"
+        rejected_completed_applicant: "{$applicant_name}"
+        rejected_completed_approve: "{$from_username}"
+        reassign_new_inbox_users: "{$from_username}"
+        trace_approve_cc: "{$from_username}"
+        trace_approve_cc_submit: "{$from_username}"
+        auto_submit_pending_inbox: "{$from_username}"
+        return_pending_inbox: "{$from_username}"
+      body:
+        input: input
+        approval: approval
+        first_submit_applicant: I have submitted a {$instance_name} request for you
+        first_submit_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_pending_rejected_applicant_inbox: Request for {$instance_name} has been
+          rejected
+        submit_pending_rejected_applicant: Request for {$instance_name} has been rejected
+          to {$nextApprove_usersname}
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_pending_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_terminate_applicant: Request for {$instance_name} has been cancelled
+        submit_terminate_approve: ''
+        monitor_delete_applicant: Request for {$instance_name} has been deleted
+        submit_completed_applicant: Request for {$instance_name} has been approved
+        submit_completed_approve: ''
+        approved_completed_applicant: Request for {$instance_name} has been approved
+        approved_completed_approve: ''
+        rejected_completed_applicant: Request for {$instance_name} has been rejected
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: My {$instance_name} request needs your {$approve_type}
+        trace_approve_cc: My {$instance_name} request needs your {$approve_type}
+        remind: Remind：{$instance_name}, Deadline：{$deadline}
+        trace_approve_cc_submit: I have submitted a cc {$instance_name}
+        distribute_remind: My {$instance_name} has been end
+        auto_submit_pending_inbox: Your {$instance_name} auto submitted to {$current_step_name}
+        return_pending_inbox: Request for {$instance_name} has been returned
+    email:
+      final_decision_approved: Approved
+      final_decision_rejected: Rejected
+      final_decision_nil: ''
+      inscribed: "<br/><br/>Sincerely,<br/>"
+      footnote: This is an automatically generated email, please do not reply to it.
+      title:
+        input: input
+        approval: approval
+        first_submit_applicant: I have submitted a {$instance_name} request for you
+        first_submit_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_pending_rejected_applicant_inbox: Request for {$instance_name} has been
+          rejected
+        submit_pending_rejected_applicant: Request for {$instance_name} has been rejected
+          to {$nextApprove_usersname}
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_pending_inbox: My {$instance_name} request needs your {$approve_type}
+        submit_terminate_applicant: Request for {$instance_name} has been cancelled
+        submit_terminate_approve: ''
+        monitor_delete_applicant: "{$instance_name} has been deleted"
+        submit_completed_applicant: I have approved your request for {$instance_name}
+        submit_completed_approve: ''
+        approved_completed_applicant: I have approved your request for {$instance_name}
+        approved_completed_approve: ''
+        rejected_completed_applicant: I have rejected your request for {$instance_name}
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: My {$instance_name} request needs your {$approve_type}
+        trace_approve_cc: My {$instance_name} request needs your {$approve_type}
+        auto_submit_pending_inbox: Your {$instance_name} has been submitted automatically
+        return_pending_inbox: I have returned your request for {$instance_name}
+      body:
+        url_input: input
+        url_approval: approval
+        input: input
+        approval: approval
+        judge_approved: approved
+        judge_submitted: provided his input for
+        email_description: 'Comments : {$description}.'
+        first_submit_applicant: Hi {$to_username},<br/><br/>I have submitted a {$instance_name}
+          request on behalf of you.<br/><a href = {$href}>Please click here to view
+          this request.</a>
+        first_submit_applicant_beApproveDescription: 'Hi {$to_username},<br/><br/>I
+          have submitted a {$instance_name} request on behalf of you, and attached the
+          following comments with the request.<br/>Comments : {$approves_description}<br/><a
+          href = {$href}>Please click here to view this request.</a>'
+        first_submit_inbox: Hi {$to_username},<br/><br/>{$applicant_name} has submitted
+          a {$instance_name} request, which needs your {$approve_type}.<br/><a href
+          = {$href}>Please click here to view this request.</a>
+        first_submit_inbox_beApproveDescription: 'Hi {$to_username},<br/><br/>{$applicant_name}
+          has submitted a {$instance_name} request, which needs your {$approve_type}.
+          He / she has attached the following comments with the request.<br/>Comments
+          : {$approves_description}<br/><a href = {$href}>Please click here to view
+          this request.</a>'
+        submit_pending_rejected_applicant_inbox: Hi {$to_username},<br/><br/>Your request
+          for {$instance_name} has been rejected by {$lastApprove_usersname} with the
+          following comments.<br/>{$description}<br/><a href = {$href}>Please click
+          here to view this request.</a>
+        submit_pending_rejected_applicant: Hi {$to_username},<br/><br/>Your request
+          for {$instance_name} has been rejected by {$lastApprove_usersname}.He / She
+          has attached the following comments with the request, and has sent it to {$nextApprove_usersname}<br/>{$description}<br/><a
+          href = {$href}>Please click here to view this request.</a>
+        submit_pending_rejected_approve: ''
+        submit_pending_rejected_inbox: Hi {$to_username},<br/><br/>{$applicant_name}'s
+          request for {$instance_name} needs your {$approve_type}, which has been rejected
+          by {$lastApprove_usersname} with the following comments.<br/>{$description}<br/><a
+          href = {$href}>Please click here to view this request.</a>
+        submit_pending_inbox: Hi {$to_username},<br/><br/>{$applicant_name} has submitted
+          a {$instance_name} request, which needs your {$approve_type}. {$lastApprove_usersname}
+          has {$last_approve_judge} this request.<br/><a href = {$href}>Please click
+          here to view this request.</a>
+        submit_pending_inbox_beApproveDescription: 'Hi {$to_username},<br/><br/>{$applicant_name}
+          has submitted a {$instance_name} request, which needs your {$approve_type}.
+          {$lastApprove_usersname} has {$last_approve_judge} this request with the following
+          comments.<br/>Comments : {$approves_description}<br/><a href = {$href}>Please
+          click here to view this request.</a>'
+        submit_pending_inbox_beApproveDescription_counterSign: 'Hi {$to_username},<br/><br/>{$applicant_name}
+          has submitted a {$instance_name} request, which needs your {$approve_type}.
+          {$lastApprove_usersname} has provided their input for this request with the
+          following comments.<br/>Comments : <br/>'
+        submit_terminate_applicant: 'Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been cancelled by {$current_username}.He / She has attached the following
+          comments with the request.<br/>Comments : {$description}.'
+        submit_terminate_approve: ''
+        monitor_delete_applicant: Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been deleted.
+        submit_completed_applicant: Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been completed by {$lastApprove_usersname}.<br/><a href = {$href}>Please
+          click here to view this request.</a>
+        submit_completed_applicant_beApproveDescription: 'Hi {$to_username},<br/><br/>Your
+          request for {$instance_name} has been completed by {$lastApprove_usersname}.
+          He / she has attached the following comments with the request. <br/>Comments
+          : {$approves_description}<br/><a href = {$href}>Please click here to view
+          this request.</a>'
+        submit_completed_applicant_beApproveDescription_counterSign: Hi {$to_username},<br/><br/>Your
+          request for {$instance_name} has been completed by {$lastApprove_usersname}.
+          They has attached the following comments with the request. <br/>Comments :<br/>
+        submit_completed_approve: ''
+        approved_completed_applicant: Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been final approved by {$lastApprove_usersname}.<br/><a href = {$href}>Please
+          click here to view this request.</a>
+        approved_completed_applicant_beApproveDescription: 'Hi {$to_username},<br/><br/>Your
+          request for {$instance_name} has been final approved by {$lastApprove_usersname}.
+          He / she has attached the following comments with the request. <br/>Comments
+          : {$approves_description}<br/><a href = {$href}>Please click here to view
+          this request.</a>'
+        approved_completed_approve: ''
+        rejected_completed_applicant: Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been final rejected by {$lastApprove_usersname}. He / She has attached
+          the following comments with the request.<br/>{$description}<br/><a href =
+          {$href}>Please click here to view this request.</a>
+        rejected_completed_approve: ''
+        reassign_new_inbox_users: 'Hi {$to_username},<br/><br/>{$current_user_name}
+          has transferred {$applicant_name}''s {$instance_name} to you with the following
+          comments. <br/>Comments : {$description}<br/><a href = {$href}>Please click
+          here to view this request.</a>。'
+        trace_approve_cc: Hi {$to_username},<br/><br/>{$applicant_name} has cc a {$instance_name}
+          request, which needs your {$approve_type}.<br/><a href = {$href}>Please click
+          here to view this request.</a>
+        auto_submit_pending_inbox: Hi {$to_username},<br/><br/>Your {$instance_name}
+          has been submitted to {$current_step_name} automatically.
+        return_pending_inbox: 'Hi {$to_username},<br/><br/>Your request for {$instance_name}
+          has been returned by {$current_username}.He / She has attached the following
+          comments with the request.<br/>Comments : {$description}.'
+    sms:
+      submit_pending_inbox: 您有新的待审核：{$instance_name}，提交人：{$applicant_name}
+    remindMessage:
+      update_failed: Requested action not taken, because this request has been updated.
+      has_deleted: This report has been deleted.
+    judge:
+      approved: approved
+      rejected: rejected
+  flow:
+    point_upgraded: >-
+      The workflow has been upgraded. Please make sure this request meet the
+      requirements of the new version.
+    print_select_template_alert: Please upgraded to Professional Version.
+    print_select_title: Select Template
+    print_default_print_title: Default
+    print_custom_print_title: Custom
+    print_button_title: Print
+    print_html_title: SteedOS
+    template_files: Template
+  help:
+    href: "<a href = {$href}>Please click here to view this request.</a>"
+    approves: Approval History
+    initiator: 'Initiator : '
+    attachment: Attachment
+  export:
+    code: Code
+    name: Name
+    initiator: Initiator
+    initiator_org: Initiator's Organization
+    submit_date: Submit Time
+    status: Status
+    current_step_name: Current Step Name
+    current_step_start_date: Current Step Start Time
+    state:
+      pending: In Progress
+      approved: Approved
+      rejected: Rejected
+      terminated: Cancelled
+      finished: Completed
+      reassigned: Reassigned
+      inhand: In Progress
+      relocated: Relocated
+  steedos: Steedos
+  cc: cc
+  saveInstanceToAttachment: Save request form as an attachment.
+  forwardFlowText: Forward description
+  instanceForwardNote: >-
+    Forward the currently selected request to a new workflow and proceed with
+    the approval process.
+  button_preview: Preview
+  remove_cc_approve: Deleted success
+  forward_instance_success: Forward success
+  isForwardAttachments: Is forward attachments.
+  instance_retrieve: Retrieve
+  instance_retrieve_reason: Remarks
+  instance_retrieve_rules_title: Retrieve failed
+  instance_retrieve_rules_content: >-
+    You can not retrive a request if user in next step has read the request, or
+    you are in a concurrent signed step.
+  Retrieved successfully: Retrieved successfully!
+  Instance State retrieved: Retrieved
+  instance_chrome_print_warning: Please use the Chrome browser to print.
+  instance_sign: Sign
+  instance_default_opinion: Already read
+  instance_submit_date: Submit date
+  instance_opinion_edit: Edit the opinion
+  instance_opinion_edit_success: Edit successfully!
+  instance_opinion_field: Sign field
+  instance_cc_error_opinion_field_required: Please select the sign field
+  instance_suggestion_toggle: Sign
+  instance_approve_read: Read
+  instance_approve_from_user_name_label: cc from
+  instance_approve_status_text_label: status
+  instance_approve_description_label: suggestion
+  instance_approve_start_date_label: start date
+  instance_approve_finish_date_label: finish date
+  instance_approve_read_yes: 'yes'
+  instance_approve_read_no: 'no'
+  instance_approve_cc_remove: cancel cc
+  instance_approve_close_modal: close
+  instance_approve_title_label: 'Handler:'
+  instance_forward_users: Forward To
+  instance_forward_error_users_required: Users required!
+  instance_approve_from_user_name_label_forward: Forward from
+  instance_approve_forward_remove: Cancel forward
+  instance_approve_forward_remove_success: Request cancelled successfully!
+  instance_forward_instance_look: Look the forwarded request
+  instance_forward_cannot_cancel: Can not cancel!
+  instance_forward_instance_state_changed: 'Request state has hanged, can not cancel.'
+  webhooks: Webhooks
+  webhooks_flow: Workflow
+  webhooks_payload_url: URL
+  webhooks_content_type: Content type
+  webhooks_active: Active
+  webhooks_flow_name(): Workflow
+  webhooks_description: Description
+  workflow_list: Workflow List
+  workflow_import_flow: Import Workflow
+  workflow_import_flow_success: Import success
+  workflow_import_flow_error: Import failed
+  workflow_import_flow_info: Please select the workflow you want to import
+  flows: Workflow
+  instance_readonly_view_url_copy: Copy Link
+  instance_readonly_view_url_copy_success: Tableau Web Data Connector copy successful
+  instance_related_instances: Related requests
+  instance_related_instances_title: Linked requests
+  instance_related_instances_placeholder: Please enter the file name to search for the associated file
+  workflow_install_desktop: Install Desktop
+  workflow_chart: Workflow Chart
+  instance_return: Return
+  instance_return_success: Return successfully
+  instance_return_confirm: "Return the request to {$step_name}({$handlers_name})?"
+  Instance State returned: Returned
+  instance_main_attachment: Main attach
+  flows_field_map: Field Map
+  Instance State readed: Read
+  instance_distribute_title: Distribute
+  instance_distribute_users: Users
+  instance_distribute_error_users_required: Users required!
+  instance_distribute_approve_from_user_name_label: Distribute from
+  instance_distribute_approve_remove: Cancel distribute
+  instance_distribute_instance_look: Look the distributed request
+  instance_distribute_note: >-
+    Distribute the currently selected request to a new workflow and proceed with
+    the approval process.
+  instance_distribute_attachments: Is distribute attachments.
+  instance_distribute_success: Distribute success
+  instance_no_add_permission: "{$actiontype} failed, users no create permission: {$usernames}"
+  instance_workflow_chart_ie_warning: >-
+    Do not support viewing the workflow chart in IE, please do this on client
+    software or chrome.
+  instance_remind_title: Remind
+  instance_remind_select_users: Users
+  instance_remind_count: Mode
+  instance_remind_deadline: Deadline
+  instance_remind_success: Remind successfully
+  instance_remind_need_remind_users: Need users
+  instance_remind_need_remind_count: Need mode
+  instance_remind_need_remind_deadline: Need deadline
+  instance_remind_count_options:
+    single: single
+    multi: multi
+  instance_opinion_title_select: Select opinions
+  categories: Workflow categories
+  categories_name: Name
+  categories_sort_no: Sort no
+  not_found_user: Not Found User
+  next_step_users_not_found:
+    aplicant_superior: The applicant's superior is not configured, please contact the
+      Administrator.
+    applicant_role: The <{$role_name}> you are looking for have not configured,Please
+      contact the administrator.
+    hr_role: The <{$role_name}> you are looking for have not configured,Please contact
+      the administrator.
+    field_value_empty: Please enter the value of the <{$field_name}>field
+    org_no_members: The next step need <{$org_name}> processing,Please contact the administrator.
+  instanc_admin_role_text: <a href='%s' target='_blank'> configuration in position</a>
+  instanc_user_role_text: ' configuration in position'
+  instanc_set_applicant_role_text: set positions users
+  instance_sign_read: Read
+  instance_sign_done: Done
+  instance_sign_agree: Agree
+  instance_sign_period: 。
+  instance_cc_alert: Please confirm whether it need to circulate
+  instance_cc_must_finished: "The cc users：{$not_finished_users_name} had not deal with this request, so you can not submitt this instance to next step"
+  instance_number_rules: Request number rules
+  instance_number_rules_name: Name
+  instance_number_rules_year: Year
+  instance_number_rules_first_number: Start sequence
+  instance_number_rules_number: Sequence
+  instance_number_rules_rules: Rules
+  instance_number_rules_number_builder_error_title: Builder number error
+  instance_number_rules_number_builder_error_not_exist: 'The number rule does not exist: '
+  ConfirmDeletion?: Are you sure?
+  instance_number_rules_name_only: The name can not be repeated
+  flows_btn_export_title: Export Flow
+  flows_btn_copylink_title: Copy Link
+  instance_distribute_related_instances_title: Automatically create associated requests
+  instance_next_step_users_placeholder: Please select the approver
+  instance_distribute_to_self: Also distributed to yourself
+  my_instances: My Requests
+  workflow_import_export_flows: Workflow import or export
+  workflow_history_approve_counts: Show %s history descriptions
+  workflow_history_approve_description: History description
+  instances_start_date: Receiving time
+  instances_is_archived: Archived
+  instances_archive: Archive
+  instances_archived: Archived
+  instances_not_archived: Not archived
+  workflow_more_inbox: More Inbox
+  instance_back: Back
+  steedos_tableau_statistical_analysis: Statistical analysis
+  steedos_tableau_copy_link: Copy link
+  tableau_introduction_modal_close: Close
+  ERROR: Error
+  steedos_table_add_item: Add item
+  approved_description: Approved
+  rejected_description: Rejected
+  copy: Copy and Create
+  from: From
+  admin_flow_roles_create: Create
+  flow_roles_delete_success: Delete successfully
+  add_positions: Add
+  save_role: Save
+  delete_role: Delete
+  flow_roles_update_success: Update successfully
+  flow_roles_necessary: Please fill in role's name
+  flow_positions_add_suceess: Add successfully
+  flow_positions_add_failed: Be failed to add
+  flow_positions_update_suceess: Update successfully
+  flow_positions_update_failed: Be failed to update
+  flow_positions_delete_suceess: Delete successfully
+  instance_role_set_is_complete: Flow Role set up?
+  instance_hr_role_set_is_complete: Role set up?
+  instance_set_is_complete: set up?
+  flow_roles_help: Help
+  set_org_members: Set department members
+  set_applicant_manager: Set the applicant supervisor
+  instance_permissions_error: You do not have permission to view this request
+  star_flows: Favorite Workflows
+  chart_traces: Chart Traces
+  cc_tag: (Carbon Copying)
+  workflow_batch_approval: Batch approval
+  workflow_batch_approval_btn: Batch<br/>approval
+  workflow_batch_approval_processing: Processing
+  workflow_batch_approval_message: This processing file %s
+  workflow_error_multiple_next_step_users: "'{$insname}' the next person can not handle more than one"
+  workflow_error_multiple_next_step: "'{$insname}' can not have more than one next step"
+  workflow_batch_instances_empty: There is no data for batch approval
+  workflow_sign_opinion_to_completed_instance: >-
+    This document is over and the signed opinion will not be displayed on the
+    application
+  workflow_copy_flow: Copy flow
+  workflow_copy_flow_text: Please fill in the new flow name
+  workflow_copy_flow_success: The copy flow is successful
+  workflow_copy_flow_error_reason_required: Comments are required.
+  workflow_enabled: Enabled
+  workflow_disabled: Disabled
+  flows_state: State
+  flows_current_modified: Modified
+  flows_modified_by_name(): Editor
+  flows_category_name(): Categories
+  flow_list_title_set_template: Set Template
+  flow_list_title_set_script: Set Script
+  flow_list_title_set_fieldsMap: Set Archive relationship
+  distribute_edit_flow_select_users: users options
+  distribute_edit_flow_select_flows: flows options
+  flow_list_title_set_distribute: Set Distribute
+  distribute_to_self: can distribute to self
+  distribute_end_notification: notificate user after distributed end
+  instance_deleted: Deleted
+  workflow_flow_state_disabled: "The state of flow({$name}) is disabled, Administrator can enable flow."
+  flow_roles_error_flows_used: "Role has been used by flows: {$names}"
+  instance_approve_not_yet_handled: Not yet handled
+  instance_approve_distribute_date_label: Distribute date
+  flows_auto_remind: Auto remind
+  flows_upload_after_being_distributed: Allow upload after being distributed
+  instances_my_finish_date: Modified
+  pager_input_hint: 'Click and input page number, then press Enter to jump to the specified page'
+  instance_hide_title: Hide
+  instance_hide_success: Hide Success
+  instance_reopen_title: Unhide
+  instance_reopen_success: Unhide Success
+  workflow_design_flow: Design flow
+  process_delegation_rules: Process Delegation
+  process_delegation_rules_from: From
+  process_delegation_rules_to: To
+  process_delegation_rules_enabled: Enabled
+  process_delegation_rules_start_time: Strat Time
+  process_delegation_rules_end_time: End Time
+  process_delegation_rules_from_name: From
+  process_delegation_rules_to_name: To
+  process_delegation_rules_start_must_lt_end: Strat time must less than end time
+  process_delegation_rules_description: "{$userName} delegated"
+  process_delegation_rules_cannot_deltegation_eachother: Only allow one-way delegation
+  instance_handler_name: Handler
+  instance_handler_organization_fullname: Organization
+  instance_approve_timeout_auto_submitted: Timeout auto submitted
+  categories_in_use: Category is in use and cannot be deleted
+  process_delegation_rules_only_one: You already set process delegation rule
+  instance_approve_modal_modificationsave: saved
+  instance_print_traces_simplify: Simplify
+  instance_print_a4_vertical: A4Vertical
+  instance_print_a4_horizontal: A4Horizontal
+  object_workflows_sync_history_instances_success: success
+  object_workflows_sync_history_instances_failed: deal with sync failed approvals
+  workflow_attachment_office_online_preview: Preview
+  Reasigned successfully: Reasigned successfully
+  instance_approve_modal_modification: instance_approve_modal_modification
+  instance_approve_modal_save: instance_approve_modal_save
+  instance_approve_moda_back: instance_approve_moda_back
+  edit: edit
+  flow_list: flow_list
+  import_flow: import_flow
+  import_flow_success: import_flow_success
+  import_flow_error: import_flow_error
+  import_flow_info: import_flow_info
+  base_error_start_end_date: The start time must be earlier than the end time
+

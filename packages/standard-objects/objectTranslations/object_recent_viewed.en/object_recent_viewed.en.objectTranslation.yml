@@ -1,0 +1,19 @@
+name: object_recent_viewed
+label: View Log
+description: 
+fields:
+  record:
+    label: Record
+    help: 
+    description: 
+  space:
+    label: 
+    help: 
+    description: 
+  count:
+    label: 
+    help: 
+    description: 
+listviews:
+  all:
+    label: 

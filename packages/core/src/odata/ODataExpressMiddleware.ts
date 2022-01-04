@@ -42,14 +42,16 @@ const getObjectList = async function (req: Request, res: Response) {
 
         if (userId) {
             let entities = [];
-            let filters = queryParams.$filter;
+            let filters = queryParams.$filter as string || '';
             let fields = [];
             // filters = `(${filters}) and (space eq \'${spaceId}\')`;
             if (queryParams.$select) {
                 fields = _.keys(createQuery.projection)
-            } else {
-                fields = _.keys(collection.toConfig().fields);
             }
+            if(collection.datasource && collection.datasource.name === "default"){
+                filters = getODataManager().excludeDeleted(filters);
+            }
+
             if (queryParams.$top !== '0') {
                 let query = { filters: filters, fields: fields, top: Number(queryParams.$top) };
                 if (queryParams.hasOwnProperty('$skip')) {
@@ -191,7 +193,9 @@ const createObjectData = async function (req: Request, res: Response) {
             res.status(401).send(setErrorMessage(404, collection, key));
         }
         if (userId) {
-            // bodyParams.space = spaceId;
+            if(collection.datasource && collection.datasource.name === "default"){
+                bodyParams.space = spaceId;
+            }
             if (spaceId == 'guest') {
                 delete bodyParams.space;
             }
@@ -240,7 +244,7 @@ const getObjectData = async function (req: Request, res: Response) {
         if (entity) {
             fieldValue = entity[fieldName];
         }
-        let field = collection.fields[fieldName];
+        let field = await collection.getField(fieldName);
         if (field && fieldValue && (field.type === 'lookup' || field.type === 'master_detail')) {
             let lookupCollection = getSteedosSchema().getObject(String(field.reference_to));
             if (field.multiple) {

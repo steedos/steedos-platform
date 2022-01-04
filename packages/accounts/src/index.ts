@@ -15,25 +15,34 @@ import { URL } from 'url';
 import * as bodyParser from 'body-parser';
 import { sendMail, sendSMS} from './core';
 
+import oauth2Consent from './oauth2/consent';
+import oauth2Login from './oauth2/login';
+import oauth2Logout from './oauth2/logout';
+export { hydraAdmin } from './oauth2/config';
+
 declare var WebApp;
 
 const config = getSteedosConfig();
 
-async function getAccountsServer (context){
-
-  let accountsConfig = config.accounts || {}
+function getAccountsServer() {
+  let accountsConfig = config.accounts || {};
+  let emailConfig = config.email || {};
   let tokenSecret = accountsConfig.tokenSecret || "secret";
   let accessTokenExpiresIn = accountsConfig.accessTokenExpiresIn || "90d";
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
-  
+  let mailSignname = emailConfig.signname || "华炎魔方";
+
+
   mongoose.connect(mongoUrl, { useNewUrlParser: true });
   const connection = mongoose.connection;
-  
-  const rootUrl = process.env.ROOT_URL?process.env.ROOT_URL:'http://127.0.0.1:4000';
+
+  const rootUrl = process.env.ROOT_URL
+    ? process.env.ROOT_URL
+    : "http://127.0.0.1:4000";
   const rootUrlInstance = new URL(rootUrl);
   const siteUrl = rootUrlInstance.origin;
   var emailFrom = "";
-  if(config.email && config.email.from){
+  if (config.email && config.email.from) {
     emailFrom = config.email.from;
   }
   const accountsServer = new AccountsServer(
@@ -44,11 +53,11 @@ async function getAccountsServer (context){
         convertSessionIdToMongoObjectId: false,
         idProvider: () => new mongodb.ObjectId().toString(),
         timestamps: {
-          createdAt: 'created',
-          updatedAt: 'modified',
+          createdAt: "created",
+          updatedAt: "modified",
         },
         dateProvider: (date?: Date) => {
-          return date ? date : new Date()
+          return date ? date : new Date();
         },
       }),
       sendMail: sendMail,
@@ -66,46 +75,50 @@ async function getAccountsServer (context){
       emailTemplates: {
         from: emailFrom,
         verificationCode: {
-          subject: (user, token) => `【华炎魔方】验证码：${token}`,
+          subject: (user, token) => `【${mailSignname}】验证码：${token}`,
           text: (user: any, url: string, token) =>
             `您的验证码是: ${token}，请不要泄露给他人。`,
-          html: (user: any, url: string, token:string) =>
+          html: (user: any, url: string, token: string) =>
             `您的验证码是: ${token}，请不要泄露给他人。`,
         },
         verifyEmail: {
-          subject: (user, params) => '验证您的帐户电子邮件',
+          subject: (user, params) => "验证您的帐户电子邮件",
           text: (user: any, url: string) =>
             `请点击此链接来验证您的帐户电子邮件: ${url}`,
           html: (user: any, url: string) =>
             `请点击<a href="${url}">此链接</a>来验证您的帐户电子邮件。`,
         },
         resetPassword: {
-          subject: () => '重置您的账户密码',
-          text: (user: any, url: string) => 
+          subject: () => "重置您的账户密码",
+          text: (user: any, url: string) =>
             `请点击此链接来重置您的账户密码: ${url}`,
           html: (user: any, url: string) =>
             `请点击<a href="${url}">此链接</a>来重置您的账户密码。`,
         },
         enrollAccount: {
-          subject: () => '设置您的账户密码',
-          text: (user: any, url: string) => 
+          subject: () => "设置您的账户密码",
+          text: (user: any, url: string) =>
             `请点击此链接来设置您的账户密码: ${url}`,
           html: (user: any, url: string) =>
             `请点击<a href="${url}">此链接</a>来设置您的账户密码。`,
         },
         passwordChanged: {
-          subject: () => '您的账户密码已被更改',
+          subject: () => "您的账户密码已被更改",
           text: () => `您的帐户密码已更改成功。`,
           html: () => `您的帐户密码已更改成功。`,
-        }
-      }
+        },
+      },
     },
     {
       password: new AccountsPassword({
         errors: errors,
-        passwordHashAlgorithm: 'sha256',
-        notifyUserAfterPasswordChanged: config.password ? config.password.notifyUserAfterPasswordChanged : true,
-        sendVerificationEmailAfterSignup: config.password ? config.password.sendVerificationEmailAfterSignup : false
+        passwordHashAlgorithm: "sha256",
+        notifyUserAfterPasswordChanged: config.password
+          ? config.password.notifyUserAfterPasswordChanged
+          : true,
+        sendVerificationEmailAfterSignup: config.password
+          ? config.password.sendVerificationEmailAfterSignup
+          : false,
       }),
     }
   );
@@ -113,14 +126,13 @@ async function getAccountsServer (context){
   return accountsServer;
 }
 
-export async function getAccountsRouter(context){
+export const accountsServer = getAccountsServer()
 
-  const accountsServer = await getAccountsServer(context)
+export async function getAccountsRouter(context){
 
   const router = accountsExpress(accountsServer, {
     path: '/',
   });
-  
 
   router.get('/', (req, res) => {
     res.redirect("a/");
@@ -146,6 +158,10 @@ export function init(context){
   }
   getAccountsRouter(context).then( (accountsRouter) => {
     context.app.use("/accounts", accountsRouter);
+
+    context.app.use("/oauth2/consent", userLoader(accountsServer), oauth2Consent);
+    context.app.use("/oauth2/login", userLoader(accountsServer), oauth2Login);
+    context.app.use("/oauth2/logout", oauth2Logout);
     // if (typeof WebApp !== 'undefined'){
     //   const app = express();
     //   app.use("/accounts", bodyParser.urlencoded({ extended: false }), bodyParser.json(), accountsRouter)

@@ -1,0 +1,72 @@
+name: action_field_updates
+label: 字段更新
+description: 
+fields:
+  name:
+    label: API 名称
+    help: 
+    description: 
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  target_object:
+    label: 要更新的对象
+    help: 
+    description: 如果要更新的是本对象，则这里保存的是对象名称；如果是跨对象的字段更新，零代码配置界面上这里给用户看到的选项会是要更新的对象的显示名称（label），但是实际保存的却是关联字段名，低代码配置时应该配置为关联字段名而不是要更新的对象名。
+  field_name:
+    label: 要更新的字段
+    help: 
+    description: 
+  operation:
+    label: 新字段值类型
+    help: 
+    description: 
+  formula:
+    label: 公式
+    help: 
+    description: 
+  literal_value:
+    label: 指定新字段值
+    help: 
+    description: 
+  notify_assignee:
+    label: 通知被分配人(仅修改拥有者时由此选项)
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  reevaluate_on_change:
+    label: 字段更改后重新评估工作流规则
+    help: 如果此字段更新改变字段的值，关联对象的所有工作流规则要重新评估。任何工作流规则条件得到满足将触发字段更新。
+    description: 该勾选框只标识是否重新评估字段更新所关联的对象的工作流规则，对于跨对象的字段更新，始终不会重新评估这些工作流规则，且始终会重新评估其要更新的对象的所有工作流规则。
+listviews:
+  all:
+    label: 所有
+CustomLabels:
+  action_field_updates_field_operation_options_null: 空值 (null)
+  action_field_updates_field_operation_options_formula: 使用公式设置新值
+  action_field_updates_field_operation_options_literal: 特定值
+  action_field_updates_field_field_new_value: 值
+  action_field_updates_field_process_definition: 批准过程
+  action_field_updates_field_process_node: 批准步骤
+  action_field_updates_field_when: 运行时
+  action_field_updates_field_when_options_final_approval: 最终批准操作
+  action_field_updates_field_when_options_final_rejection: 最终拒绝操作
+  action_field_updates_field_when_options_recall: 取消申请操作
+  action_field_updates_field_when_options_rejection: 拒绝操作
+  action_field_updates_field_when_options_approval: 批准操作
+  action_field_updates_field_when_options_initial_submission: 首次提交
+  action_field_updates_field__error_reevaluate_parent: 无法为父字段更新指定字段更改后重新评估工作流规则。
+  action_field_updates_field__error_process_node_process_definition_required: 请先选择该批准步骤的“批准过程”然后再新建字段更新！
+  action_field_updates_field__error_process_definition_object_required: 请先选择该批准过程的“对象”然后再新建字段更新！
+  action_field_updates_field__error_workflow_rule_object_required: 请先选择该工作流规则的“对象”然后再新建字段更新！
+actions:
+  customize:
+    label: 自定义

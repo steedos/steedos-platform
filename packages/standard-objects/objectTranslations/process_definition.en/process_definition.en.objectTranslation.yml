@@ -1,0 +1,150 @@
+name: process_definition
+label: Approval Processes
+description: 
+fields:
+  name:
+    label: 
+    help: 
+    description: 
+  label:
+    label: 
+    help: 
+    description: 
+  object_name:
+    label: 
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  order:
+    label: 
+    help: 
+    description: 
+  active:
+    label: Active
+    help: 
+    description: 
+  entry_criteria:
+    label: Specify Entry Criteria
+    help: >-
+      If only certain types of records should enter this approval process, enter
+      that criteria below. For example, only expense reports from employees at
+      headquarters should use this approval process.
+    description: 
+  record_editability:
+    label: Record Editability Properties
+    help: >-
+      When a record is submitted for approval, it’s locked to prevent users from
+      editing it during the approval process. Use the record editability
+      properties to determine who can edit records that are locked in this
+      approval process.
+    options:
+      - label: Administrators ONLY can edit records during the approval process
+        value: admin_only
+    description: 
+  allow_recall:
+    label: Allow submitters to recall approval requests
+    help: 
+    description: 
+  initial_submission_record_lock:
+    label: Record Lock
+    help: 
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    description: 
+  initial_submission_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  initial_submission_workflow_notifications_actions:
+    label: 
+    help: 
+    description: 
+  final_approval_record_lock:
+    label: Record Lock
+    help: 
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    description: 
+  final_approval_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  final_approval_workflow_notifications_actions:
+    label: 
+    help: 
+    description: 
+  final_rejection_record_lock:
+    label: Record Lock
+    help: 
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    description: 
+  final_rejection_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  final_rejection_workflow_notifications_actions:
+    label: 
+    help: 
+    description: 
+  recall_record_lock:
+    label: Record Lock
+    help: 
+    options:
+      - label: Lock the record from being edited
+        value: lock
+      - label: Unlock the record for editing
+        value: unlock
+    description: 
+  recall_updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  recall_workflow_notifications_actions:
+    label: 
+    help: 
+    description: 
+groups:
+  initial_submission_actions: Initial Submission Actions
+  final_approval_actions: Final Approval Actions
+  final_rejection_actions: Final Rejection Actions
+  recall_actions: Recall Actions
+listviews:
+  all:
+    label: All
+actions:
+  enable:
+    label: Enable
+  disable:
+    label: Disable
+  copy:
+    label: Copy
+CustomLabels:
+  process_definition_field_approval_page_fields: 
+  process_definition_field_approval_page_fields_inlineHelpText: 
+  process_definition_field_show_approval_history: 
+  process_definition_group_specify_entry_criteria: 
+  process_definition_field_record_editability_inlineHelpText-TODO: 
+  process_definition_field_record_editability_options_admin_or_current_approver: 
+  process_definition_field_user_hierarchy_field: 
+  process_definition_group_next_automated_approver: 
+  process_definition_field_user_hierarchy_field_inlineHelpText: 
+  process_definition_field_use_approver_field_of_record_owner: 
+  process_definition_field_allowed_submitters: 
+  process_definition_field_allowed_submitters_inlineHelpText: 
+  process_definition_group_approval_page_fields: 
+  process_definition_group_select_field_used_for_automated_approval_routing: 
+  process_definition_group_record_lock: 
+  menu_process_definition: 

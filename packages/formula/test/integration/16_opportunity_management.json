@@ -1,0 +1,609 @@
+{
+  "name": "Sample Opportunity Management Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_oppty_mgmt.htm",
+  "examples": [
+    {
+      "name": "Expected Product Revenue",
+      "formula": "ProductA_probability__c * ProductA_revenue__c + ProductB_probability__c * ProductB_revenue__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "ProductA_probability__c": {
+              "dataType": "number",
+              "value": 0.8
+            },
+            "ProductA_revenue__c": {
+              "dataType": "number",
+              "value": 100000
+            },
+            "ProductB_probability__c": {
+              "dataType": "number",
+              "value": 0.5
+            },
+            "ProductB_revenue__c": {
+              "dataType": "number",
+              "value": 500000
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 330000
+          }
+        }
+      ]
+    },
+    {
+      "name": "Maintenance Calculation",
+      "formula": "Amount * Maint_Years__c * 0.2",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 150000
+            },
+            "Maint_Years__c": {
+              "dataType": "number",
+              "value": 8
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 240000
+          }
+        }
+      ]
+    },
+    {
+      "name": "Monthly Subscription-Based Calculated Amounts",
+      "formula": "Monthly_Amount__c * Subscription_Months__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Monthly_Amount__c": {
+              "dataType": "number",
+              "value": 99
+            },
+            "Subscription_Months__c": {
+              "dataType": "number",
+              "value": 12
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1188
+          }
+        }
+      ]
+    },
+    {
+      "name": "Monthly Value",
+      "formula": "Total_value__c / 12",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Total_value__c": {
+              "dataType": "number",
+              "value": 1188
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 99
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Additional Costs",
+      "formula": "Amount + Maint_Amount__c + \nServices_Amount__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 150000
+            },
+            "Maint_Amount__c": {
+              "dataType": "number",
+              "value": 240000
+            },
+            "Services_Amount__c": {
+              "dataType": "number",
+              "value": 300000
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 690000
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Categorization",
+      "formula": "IF(Amount < 1500, \"Category 1\", IF(Amount > 10000, \"Category 3\", \"Category 2\"))",
+      "suites": [
+        {
+          "context": "Amount < 1500",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 1499
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Category 1"
+          }
+        },
+        {
+          "context": "Amount > 10000",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 10001
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Category 3"
+          }
+        },
+        {
+          "context": "In Between",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 1500
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Category 2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Data Completeness",
+      "formula": "(IF(ISBLANK(Maint_Amount__c), 0, 1) + ​\nIF(ISBLANK(Services_Amount__c), 0,1) + ​\nIF(ISBLANK(Discount_Percent__c), 0, 1) + ​\nIF(ISBLANK(Amount), 0, 1) +​\nIF(ISBLANK(Timeline__c), 0, 1)) / 5",
+      "suites": [
+        {
+          "context": "All Filled",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 1500
+            },
+            "Maint_Amount__c": {
+              "dataType": "number",
+              "value": 2400
+            },
+            "Services_Amount__c": {
+              "dataType": "number",
+              "value": 3000
+            },
+            "Discount_Percent__c": {
+              "dataType": "number",
+              "value": 3
+            },
+            "Timeline__c": {
+              "dataType": "date",
+              "value": "2020-04-23"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1
+          }
+        },
+        {
+          "context": "All Missing",
+          "identifiers": {
+            "Amount": {
+              "dataType": "null",
+              "value": null
+            },
+            "Maint_Amount__c": {
+              "dataType": "null",
+              "value": null
+            },
+            "Services_Amount__c": {
+              "dataType": "null",
+              "value": null
+            },
+            "Discount_Percent__c": {
+              "dataType": "null",
+              "value": null
+            },
+            "Timeline__c": {
+              "dataType": "null",
+              "value": null
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0
+          }
+        },
+        {
+          "context": "3 out of 5",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 1500
+            },
+            "Maint_Amount__c": {
+              "dataType": "null",
+              "value": null
+            },
+            "Services_Amount__c": {
+              "dataType": "null",
+              "value": null
+            },
+            "Discount_Percent__c": {
+              "dataType": "number",
+              "value": 3
+            },
+            "Timeline__c": {
+              "dataType": "date",
+              "value": "2020-04-23"
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0.6
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Expected License Revenue",
+      "formula": "Expected_rev_licenses__c * Probability",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Expected_rev_licenses__c": {
+              "dataType": "number",
+              "value": 500000
+            },
+            "Probability": {
+              "dataType": "number",
+              "value": 0.01
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 5000
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Revenue Text Display",
+      "formula": "TEXT(ExpectedRevenue)",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "ExpectedRevenue": {
+              "dataType": "number",
+              "value": 500000
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "500000"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Total Deal Size",
+      "formula": "Amount + Maint_Amount__c + Services_Amount__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Amount": {
+              "dataType": "number",
+              "value": 150000
+            },
+            "Maint_Amount__c": {
+              "dataType": "number",
+              "value": 240000
+            },
+            "Services_Amount__c": {
+              "dataType": "number",
+              "value": 300000
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 690000
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunity Total Price Based on Units",
+      "formula": "Unit_price__c * Volume__c * 20",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Unit_price__c": {
+              "dataType": "number",
+              "value": 25
+            },
+            "Volume__c": {
+              "dataType": "number",
+              "value": 2000
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1000000
+          }
+        }
+      ]
+    },
+    {
+      "name": "Professional Services Calculation",
+      "formula": "Consulting_Days__c * 1200",
+      "suites": [
+        {
+          "context": "1 month",
+          "identifiers": {
+            "Consulting_Days__c": {
+              "dataType": "number",
+              "value": 22
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 26400
+          }
+        },
+        {
+          "context": "1 year",
+          "identifiers": {
+            "Consulting_Days__c": {
+              "dataType": "number",
+              "value": 252
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 302400
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stage-Based Sales Document Selection",
+      "formula": "CASE(StageName,\n\"Prospecting\", \"Insert 1st Document ID\",\n\"Qualification\", \"Insert 2nd Document ID\",\n\"Needs Analysis\", \"Insert 3rd Document ID\",\n\"Value Proposition\", \"Insert 4th Document ID\", \n\"\"\n)",
+      "suites": [
+        {
+          "context": "Prospecting",
+          "identifiers": {
+            "StageName": {
+              "dataType": "picklist",
+              "value": "Prospecting",
+              "options": {
+                "values": ["Prospecting", "Qualification", "Needs Analysis", "Value Proposition", "Id. Decision Makers", "Perception Analysis", "Proposal/Price Quote", "Negotiation/Review", "Closed Won", "Closed Lost"]
+              }
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Insert 1st Document ID"
+          }
+        },
+        {
+          "context": "Qualification",
+          "identifiers": {
+            "StageName": {
+              "dataType": "picklist",
+              "value": "Qualification",
+              "options": {
+                "values": ["Prospecting", "Qualification", "Needs Analysis", "Value Proposition", "Id. Decision Makers", "Perception Analysis", "Proposal/Price Quote", "Negotiation/Review", "Closed Won", "Closed Lost"]
+              }
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Insert 2nd Document ID"
+          }
+        },
+        {
+          "context": "Needs Analysis",
+          "identifiers": {
+            "StageName": {
+              "dataType": "picklist",
+              "value": "Needs Analysis",
+              "options": {
+                "values": ["Prospecting", "Qualification", "Needs Analysis", "Value Proposition", "Id. Decision Makers", "Perception Analysis", "Proposal/Price Quote", "Negotiation/Review", "Closed Won", "Closed Lost"]
+              }
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Insert 3rd Document ID"
+          }
+        },
+        {
+          "context": "Value Proposition",
+          "identifiers": {
+            "StageName": {
+              "dataType": "picklist",
+              "value": "Value Proposition",
+              "options": {
+                "values": ["Prospecting", "Qualification", "Needs Analysis", "Value Proposition", "Id. Decision Makers", "Perception Analysis", "Proposal/Price Quote", "Negotiation/Review", "Closed Won", "Closed Lost"]
+              }
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "Insert 4th Document ID"
+          }
+        },
+        {
+          "context": "Id. Decision Makers",
+          "identifiers": {
+            "StageName": {
+              "dataType": "picklist",
+              "value": "Id. Decision Makers",
+              "options": {
+                "values": ["Prospecting", "Qualification", "Needs Analysis", "Value Proposition", "Id. Decision Makers", "Perception Analysis", "Proposal/Price Quote", "Negotiation/Review", "Closed Won", "Closed Lost"]
+              }
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sales Coach",
+      "formula": "HYPERLINK(\"/servlet/servlet.FileDownload?file=\" & Relevant_Document__c, \"View Document in New Window\")",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Relevant_Document__c": {
+              "dataType": "text",
+              "value": "00l30000000j7AO"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"/servlet/servlet.FileDownload?file=00l30000000j7AO\">View Document in New Window</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shipping Cost by Weight",
+      "formula": "package_weight__c * cost_lb__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "package_weight__c": {
+              "dataType": "number",
+              "value": 4
+            },
+            "cost_lb__c": {
+              "dataType": "number",
+              "value": 2.66
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 10.64
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shipping Cost Percentage",
+      "formula": "Ship_cost__c / total_amount__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "total_amount__c": {
+              "dataType": "number",
+              "value": 3000
+            },
+            "Ship_cost__c": {
+              "dataType": "number",
+              "value": 60
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0.02
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tiered Commission Rates",
+      "formula": "IF(Probability = 1, \nROUND(Amount * 0.02, 2),\n0)",
+      "suites": [
+        {
+          "context": "Probable",
+          "identifiers": {
+            "Probability": {
+              "dataType": "number",
+              "value": 1
+            },
+            "Amount": {
+              "dataType": "number",
+              "value": 45
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0.9
+          }
+        },
+        {
+          "context": "Not Probable",
+          "identifiers": {
+            "Probability": {
+              "dataType": "number",
+              "value": 0
+            },
+            "Amount": {
+              "dataType": "number",
+              "value": 45
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Total Contract Value from Recurring and Non-Recurring Revenue",
+      "formula": "Non_Recurring_Revenue__c + Contract_Length_Months__c * Recurring_Revenue__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Non_Recurring_Revenue__c": {
+              "dataType": "number",
+              "value": 150
+            },
+            "Contract_Length_Months__c": {
+              "dataType": "number",
+              "value": 12
+            },
+            "Recurring_Revenue__c": {
+              "dataType": "number",
+              "value": 99
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1338
+          }
+        }
+      ]
+    }
+  ]
+}

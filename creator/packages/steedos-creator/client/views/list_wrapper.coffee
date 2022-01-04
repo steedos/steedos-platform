@@ -1,4 +1,3 @@
-
 Template.creator_list_wrapper.onRendered ->
 	self = this
 	self.rendered = false
@@ -113,6 +112,7 @@ Template.creator_list_wrapper.helpers
 		return Template["creator_grid"]?.refresh
 
 	list_template: ()->
+		return "object_listview";
 		return "creator_grid"
 
 	recordsTotalCount: ()->
@@ -134,7 +134,7 @@ Template.creator_list_wrapper.helpers
 	
 	list_data: ()->
 		object_name = Session.get "object_name"
-		return {object_name: object_name, total: Template.instance().recordsTotal}
+		return {object_name: object_name, total: Template.instance().recordsTotal, sideBar: false}
 
 	list_views: ()->
 		Session.get("change_list_views")
@@ -315,7 +315,10 @@ Template.creator_list_wrapper.events
 		Creator.executeAction objectName, this
 
 	'click .export-data-grid': (event, template)->
-		template.$(".dx-datagrid-export-button").click()
+		list_view_id = Session.get("list_view_id")
+		object_name = Session.get("object_name")
+		GridExport.excel(object_name, list_view_id, false, null, null)
+#		template.$(".dx-datagrid-export-button").click()
 
 	'click .btn-filter-list': (event, template)->
 		$(event.currentTarget).toggleClass("slds-is-selected")
@@ -424,6 +427,10 @@ Template.creator_list_wrapper.events
 		$(".btn-delete-list-view").click()
 
 	'click .btn-refresh': (event, template)->
+
+		if true
+			return window.refreshGrid()
+
 		$(".slds-icon-standard-refresh", event.currentTarget).animateCss("rotate")
 		object = Creator.getObject()
 		gridContainer = $(event.currentTarget).closest(".filter-list-wraper").find(".gridContainer")

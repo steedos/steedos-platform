@@ -25,6 +25,12 @@ fields:
   valid:
     label: valid
     type: boolean
+  is_phone:
+    label: 手机
+    type: boolean
+  is_tablet:
+    label: 平板电脑
+    type: boolean
   client_id: 
     label: Client ID
     type: text
@@ -43,7 +49,8 @@ list_views:
       - userId
       - ip
       - userAgent
-      - connected_app_id
+      - is_phone
+      - is_tablet
       - modified
     sort: [["modified", "desc"]]
 permission_set:

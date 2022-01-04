@@ -1,9 +1,13 @@
-const i18next = require("i18next");
+let i18next = require("i18next");
 const sprintf  = require("i18next-sprintf-postprocessor");
 const _ = require("underscore");
 // const XHR = require('i18next-xhr-backend');
 
 const loadResources = {};
+
+if(!i18next.use){
+    i18next = i18next.default
+}
 
 i18next.use(sprintf).init({
     lng: 'en',
@@ -33,13 +37,22 @@ export const _t = function(key: any, options: StringMap){
 }
 
 export const t = function(key: any, parameters: any, locale: string){
+    if(!key){
+        return key;
+    }
     if (locale === "zh-cn") {
         locale = "zh-CN";
     }
+    let keys;
+    if(_.isArray(key)){
+        keys = key;
+    }else{
+        keys = [`CustomLabels.${key}`, key];
+    }
     if ((parameters != null) && !(_.isObject(parameters))) {
-        return _t(key, { lng: locale, postProcess: 'sprintf', sprintf: [parameters] });
+        return _t(keys, { lng: locale, postProcess: 'sprintf', sprintf: [parameters], keySeparator: false});
     } else {
-        return _t(key, Object.assign({lng: locale}, parameters));
+        return _t(keys, Object.assign({lng: locale}, {keySeparator: false}, parameters));
     }
 }
 
@@ -160,6 +173,8 @@ export const off = function(event: string, listener: (...args: any[]) => void){
     return i18next.off(event, listener)
 }
 
-export * from './translation'
+export * from './i18n/i18n'
 
-export * from './translation.app'
+export * from './i18n/i18n.app'
+
+export * from './translations'

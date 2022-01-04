@@ -2,6 +2,7 @@ name: object_validation_rules
 icon: textbox
 hidden: true
 label: Object Validation Rules
+version: 2
 fields:
   name:
     type: text
@@ -12,7 +13,7 @@ fields:
     type: master_detail
     label: Object
     reference_to: objects
-    sharing: masterRead
+    write_requires_master_read: true
     reference_to_field: name
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -92,3 +93,7 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+actions:
+  customize:
+    label: Customize
+    on: record

@@ -1,7 +1,7 @@
 {
   "name": "@steedos/filters",
   "private": false,
-  "version": "1.22.10",
+  "version": "2.1.65",
   "description": "filters lib for steedos",
   "main": "lib/index.js",
   "files": [
@@ -14,6 +14,7 @@
     "prepare": "yarn compile"
   },
   "dependencies": {
+    "@babel/runtime": "^7.5.4",
     "moment": "^2.24.0",
     "underscore": "^1.9.1"
   },
@@ -27,7 +28,6 @@
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
-    "@babel/runtime": "^7.5.4",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "jslint": "^0.12.1",

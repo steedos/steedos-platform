@@ -12,6 +12,7 @@ export type SteedosTriggerContextConfig = {
     previousDoc?: JsonMap,  //仅afterUpdate, afterDelete时存在此属性
     query?: SteedosQueryOptions,
     data?: JsonMap //仅afterFind，afterCount时存在此属性
+    objectName?: string
 }
 
 export type SteedosTriggerTypeConfig = {

@@ -1,0 +1,16 @@
+name: _object_reload_logs
+label: 
+description: 
+fields:
+  object_name:
+    label: 
+    help: 
+    description: 
+  change_date:
+    label: 
+    help: 
+    description: 
+  change_time:
+    label: 
+    help: 
+    description: 

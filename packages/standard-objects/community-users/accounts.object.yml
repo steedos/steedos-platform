@@ -1,5 +1,5 @@
 name: accounts
-label: 客户
+label: 业务伙伴
 icon: account
 enable_files: true
 enable_search: true
@@ -8,9 +8,11 @@ enable_tasks: true
 enable_api: true
 enable_share: true
 enable_audit: true
+enable_enhanced_lookup: true
+version: 2
 fields:
   name:
-    label: 客户名
+    label: 业务伙伴名称
     type: text
     searchable: true
     required: true
@@ -25,13 +27,13 @@ fields:
   is_supplier:
     type: boolean
     label: 供应商
-    hidden: true
-    omit: true
+    hidden: false
+    omit: false
   is_customer:
     type: boolean
     label: 客户
-    hidden: true
-    omit: true
+    hidden: false
+    omit: false
   type:
     label: 类型
     type: select
@@ -62,7 +64,7 @@ fields:
     type: lookup
     label: 母公司
     reference_to: accounts
-    inlineHelpText: 作为大公司或组织的子公司的母公司。父级客户必须是华炎魔方中的现有客户。您可输入客户名，或使用查找图标选择（或创建）客户。
+    inlineHelpText: 作为大公司或组织的子公司的母公司。父级业务伙伴必须是华炎魔方中的现有业务伙伴。您可输入业务伙伴名称，或使用查找图标选择（或创建）业务伙伴。
   credit_code:
     type: text
     label: 纳税人识别号（身份证/其他）
@@ -231,7 +233,7 @@ fields:
       - label: 台湾
         value: TW
     filterable: true
-    inlineHelpText: 客户被分配至的区域。
+    inlineHelpText: 业务伙伴被分配至的区域。
   # billing_city:
   #   type: text
   #   label: 开单地址-城市
@@ -260,7 +262,7 @@ fields:
   #   group: 地址信息
   account_number:
     type: text
-    label: 客户编号
+    label: 业务伙伴编号
     hidden: true
   rating:
     label: 分级
@@ -274,7 +276,7 @@ fields:
       - label: 普通
         value: Cold
     filterable: true
-    inlineHelpText: 您如何划分此客户等级的分类，例如，普通、重要。
+    inlineHelpText: 您如何划分此业务伙伴等级的分类，例如，普通、重要。
     #hidden: true
   invoice_address:
     label: 开票地址
@@ -298,13 +300,13 @@ fields:
     name: invoice_combinenum
   account_source:
     type: text
-    label: 客户来源
+    label: 业务伙伴来源
     hidden: true
   site:
     type: text
-    label: 客户地点
+    label: 业务伙伴地点
     hidden: true
-    inlineHelpText: 可用客户地点字段来指定同一公司的不同位置。例如，假设百度在北京和上海均设有办公室。创建两个名为百度的客户，但是客户地点的值分别为北京和上海。
+    inlineHelpText: 可用业务伙伴地点字段来指定同一公司的不同位置。例如，假设百度在北京和上海均设有办公室。创建两个名为百度的业务伙伴，但是业务伙伴地点的值分别为北京和上海。
   annual_revenue:
     label: 年收入
     type: currency
@@ -325,16 +327,16 @@ fields:
     inlineHelpText: 公司的所有权，例如，公有或私有。
     hidden: true
   # account_currency:
-  #   label: 客户币种
+  #   label: 业务伙伴币种
   #   type: lookup
   #   reference_to: currency
   #   hidden: true
   account_division:
-    label: 客户分部
+    label: 业务伙伴分部
     type: text
     hidden: true
   partner_account:
-    label: 合作伙伴客户
+    label: 合作伙伴
     type: boolean
     hidden: true
   assistant:
@@ -352,9 +354,11 @@ fields:
   department:
     label: 部门
     type: text
+    hidden: true
   email:
     label: 电子邮件
     type: email
+    hidden: true
   do_not_call:
     label: 请勿致电
     type: boolean
@@ -376,13 +380,13 @@ fields:
     hidden: true
   lead_source:
     type: select
-    label: 潜在客户来源
+    label: 潜在业务伙伴来源
     searchable: true
     sortable: true
     options:
       - label: 广告
         value: Advertisement
-      - label: 客户活动
+      - label: 业务伙伴活动
         value: Customer_Event
       - label: 员工推荐
         value: Employee_Referral
@@ -401,7 +405,7 @@ fields:
       - label: 网站
         value: Website
     filterable: true
-    inlineHelpText: 潜在客户来源，例如，广告、合作伙伴或 Web。
+    inlineHelpText: 潜在业务伙伴来源，例如，广告、合作伙伴或 Web。
     hidden: true
   mailing_city:
     type: text
@@ -436,9 +440,11 @@ fields:
   mobile:
     label: 手机
     type: text
+    hidden: true
   salutation:
     type: select
     label: 性别
+    hidden: true
     options:
       - label: 男
         value: Male
@@ -472,7 +478,7 @@ list_views:
       - rating
       - name
   all:
-    label: 所有客户
+    label: 所有业务伙伴
     columns:
       - field: name
         width: 300
@@ -493,35 +499,35 @@ list_views:
       - industry
       - rating
       - name
-  allCustomers:
-    label: 所有顾客
-    filters: !<tag:yaml.org,2002:js/function> |-
-      function () {
-          return [
-            ["type","=","Customer"]
-          ];
-      }
-    columns:
-      - field: name
-        width: 300
-        wrap: true
-      - field: type
-        width: 120
-      - field: rating
-        width: 120
-      - field: billing_address
-        width: 400
-      - field: shipping_address
-        width: 400
-      - field: owner
-        width: 120
-    filter_scope: space
-    filter_fields:
-      - type
-      - industry
-      - name
+  # allCustomers:
+  #   label: 所有顾客
+  #   filters: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #         return [
+  #           ["type","=","Customer"]
+  #         ];
+  #     }
+  #   columns:
+  #     - field: name
+  #       width: 300
+  #       wrap: true
+  #     - field: type
+  #       width: 120
+  #     - field: rating
+  #       width: 120
+  #     - field: billing_address
+  #       width: 400
+  #     - field: shipping_address
+  #       width: 400
+  #     - field: owner
+  #       width: 120
+  #   filter_scope: space
+  #   filter_fields:
+  #     - type
+  #     - industry
+  #     - name
   hotRating:
-    label: 非常重要的客户
+    label: 非常重要的业务伙伴
     filters: !<tag:yaml.org,2002:js/function> |-
       function () {
           return [
@@ -548,7 +554,7 @@ list_views:
       - industry
       - name
   mine:
-    label: 我的客户
+    label: 我的业务伙伴
     columns:
       - field: name
         width: 300
@@ -577,10 +583,10 @@ actions:
     label: 禁用供应商账户
     on: record_only_more
   enableCustomer:
-    label: 作为客户启用
+    label: 作为业务伙伴启用
     on: record_only_more
   disableCustomer:
-    label: 禁用客户账户
+    label: 禁用业务伙伴账户
     on: record_only_more
 permission_set:
   user:

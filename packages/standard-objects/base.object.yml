@@ -19,7 +19,7 @@ fields:
     defaultValue: "{spaceId}"
   created:
     type: datetime
-    label: Creation Time 
+    label: Creation Time
     readonly: true
     sortable: true
     omit: true
@@ -148,8 +148,18 @@ fields:
           /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择分部时可以能从所有分部中选择。*/
         }
         else{
-          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。*/
-          var company_ids = Creator.USER_CONTEXT.user.company_ids;
+          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。此规则只用于前端限制, 服务端有触发器给记录处理company_id*/
+          var company_ids =  [];
+
+          /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
+          if(true || perms.modifyCompanyRecords){
+            company_ids = Creator.USER_CONTEXT.user.company_ids
+          }
+
+          /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
+          var modifyAssignCompanysRecords = perms.modifyAssignCompanysRecords || [];
+          company_ids = window._.uniq(company_ids.concat(modifyAssignCompanysRecords));
+
           if(!company_ids.length){
             console.warn("当前用户不属于任何分部，无权修改该字段。");
             queryFilters = ["_id", "=", -1];
@@ -227,8 +237,18 @@ fields:
           /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择分部时可以能从所有分部中选择。*/
         }
         else{
-          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。*/
-          var company_ids = Creator.USER_CONTEXT.user.company_ids;
+          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。此规则只用于前端限制, 服务端有触发器给记录处理company_id*/
+          var company_ids =  [];
+
+          /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
+          if(true || perms.modifyCompanyRecords){
+            company_ids = Creator.USER_CONTEXT.user.company_ids
+          }
+
+          /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
+          var modifyAssignCompanysRecords = perms.modifyAssignCompanysRecords || [];
+          company_ids = window._.uniq(company_ids.concat(modifyAssignCompanysRecords));
+
           if(!company_ids.length){
             console.warn("当前用户不属于任何分部，无权修改该字段。");
             queryFilters = ["_id", "=", -1];
@@ -302,25 +322,93 @@ fields:
     label: Object Workflow Related Form Table Code
     omit: true
     hidden: true
-actions: 
+actions:
   standard_query:
     label: Search
-  standard_new: 
+  standard_new:
     label: New
-  standard_open_view: 
+  standard_open_view:
     label: Open
-  standard_edit: 
+  standard_edit:
     label: Edit
-  standard_delete: 
+  standard_delete:
     label: Delete
-  standard_approve: 
+  standard_delete_many:
+    label: Delete
+  standard_approve:
     label: Initiate Approval
-  standard_view_instance: 
+  standard_view_instance:
     label: View Instance
-  standard_follow: 
+  standard_follow:
     label: Follow
   standard_submit_for_approval:
     label: Submit for Approval
+  standard_import_data:
+    label: Import Data
+    on: list
+    todo: !!js/function |
+      function(object_name){
+        const clone = require('clone');
+        const objectName = "queue_import_history";
+        const object = Creator.getObject(objectName);
+        const initialValues = {object_name: object_name};
+        const objectSchema = {
+            fields: clone(object.fields)
+        };
+        objectSchema.fields.object_name.hidden = true;
+        SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+          name: `${objectName}_standard_new_form`,
+          objectApiName: objectName,
+          objectSchema: objectSchema,
+          title: '新建 ' + object.label,
+          initialValues: initialValues,
+          afterInsert: function(result){
+            if(result && result.length > 0){
+              const record_id = result[0]._id;
+              $("body").addClass("loading");
+              $.ajax({
+                url: Steedos.absoluteUrl("/api/data/initiateImport"),
+                type: "post",
+                data: {
+                  importObjectHistoryId: record_id
+                },
+                xhrFields: {
+                  withCredentials: true
+                },
+                success: function(res){
+                  $("body").removeClass("loading");
+                  SteedosUI.reloadRecord(objectName, record_id);
+                  FlowRouter.reload();
+                  toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
+                },
+                error: function(res){
+                  $("body").removeClass("loading");
+                  toastr.error(res.responseJSON.message);
+                }
+              });
+              FlowRouter.reload();
+              return true;
+            }
+            return false;
+            }
+        }, null, {iconPath: '/assets/icons'})
+      }
+    visible: !!js/function |
+      function(){
+        var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
+        var objectName = FlowRouter.current().params.object_name;
+        if(allowCreate){
+          var hasImportTemplates = Steedos.authRequest("/api/v4/queue_import", {type: 'get', async: false, data: {
+            $filter: `(object_name eq '${objectName}')`,
+            $count: true,
+            $select: '_id'
+          }, error: function(){}});
+          if(hasImportTemplates && hasImportTemplates.value && hasImportTemplates.value.length > 0){
+            return true;
+          }
+        }
+        return false;
+      }
 permission_set:
   none:
     allowCreate: false

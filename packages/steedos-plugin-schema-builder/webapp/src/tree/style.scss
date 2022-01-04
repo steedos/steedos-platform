@@ -1,0 +1,26 @@
+
+.navitree-warp {
+  .tree-node-title {
+    display: flex;
+    
+ }
+ .tree-node-title-title {
+  flex:1;
+  
+ }
+
+// .tree-node-title-options {
+//   // padding-right: 40px;
+//   display: none;
+// }
+div.tree-node-title-options:hover {
+  display: block;
+  color: red;
+}
+ 
+ .ant-tree-node-content-wrapper {
+     width: 100%;
+ }
+
+}
+

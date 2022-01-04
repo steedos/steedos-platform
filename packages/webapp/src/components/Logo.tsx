@@ -3,13 +3,14 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import { Client4 } from '../client';
+import { localizeMessage } from '../utils/utils';
 
 interface Props {
   logoUrl?: string;
 }
 
 const Logo = ({ tenant, location }: any) => {
-  let logoUrl = `${Client4.getUrl()}/images/logo_platform.png`;
+  let logoUrl = `${Client4.getUrl()}${localizeMessage('accounts.logoURL')}`;
   if (tenant.logo_url) {
     logoUrl = tenant.logo_url
   }

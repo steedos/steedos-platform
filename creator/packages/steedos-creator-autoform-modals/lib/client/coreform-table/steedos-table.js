@@ -161,10 +161,8 @@ if(Meteor.isClient){
         }
     });
 
-
 	Template.creatorTableTr.helpers({
 		fieldName: function(index, value){
-
 			var field = Template.instance().data.name;
 
 			var formId = Template.instance().data.formId || AutoForm.getFormId();
@@ -183,7 +181,7 @@ if(Meteor.isClient){
 				}
 				return _value
 			});
-			return keys
+			return keys;
 		},
 		isHiddenField: function(key) {
 			var formId = Template.instance().data.formId || AutoForm.getFormId();

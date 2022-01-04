@@ -1,0 +1,12 @@
+metadataName: Workflow
+isAddressable: true
+isSourceTracked: true
+ext: workflow
+hasContent: false
+defaultDirectory: workflows
+nameForMsgs: Workflow
+nameForMsgsPlural: Workflow
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

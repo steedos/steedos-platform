@@ -1,6 +1,9 @@
 const _ = require("underscore");
 
 const addNotifications = function (userId, doc, members) {
+    if(doc.created_by){
+        userId = doc.created_by;
+    }
     if (!members.length) {
         return;
     }

@@ -3,6 +3,37 @@ const SteedosFilter = require("./filter");
 const _ = require('underscore');
 const utils = require("./utils");
 const formula = require("./formula");
+// 正则包括encodeURIComponent函数编码的11个特殊符号;/?:@&=+$,#
+// 还包括convertSpecialCharacter函数中转义的特殊符号^$()*+?.\|[]{}
+// 注意encodeURIComponent("\\(")的结果是%5C(，需要特别处理
+// 注意encodeURIComponent("\\.")的结果是%5C.，需要特别处理
+// 注意encodeURIComponent("\\*")的结果是%5C*，因为不需要encodeURIComponent函数编码，所以不用加入REG_FOR_ENCORD变量
+const REG_FOR_ENCORD = /\;|\/|\?|\:|\@|\&|\=|\+|\$|\,|\#|\^|(\\\()|(\\\))|(\\\.)|\\|\||\[|\]|\{|\}/;
+
+/**
+    ^$()*+?.\|[]{}等特殊符号需要转义，否则有可能会报错且无法正确识别
+    encodeURIComponent函数并不能完全编码上述所有特殊符号
+    这里保持跟版本1.23一样的处理逻辑，只是额外判断了下避免重复转义或重复执行encodeURIComponent编码的可能
+ */
+const convertSpecialCharacter = (str) => {
+    // if(str.indexOf("\\") > -1){
+    //     // 如果有转义符号就按已经执行过转义处理，否则重复转义会有问题
+    //     return str;
+    // }
+    // encodeURIComponent("\\(")的结果是%5C(,进一步转义的话会变成%5C\(，里面包括了符号\，会通过上面的正则REG_FOR_ENCORD，
+    // 从而造成重复执行encodeURIComponent，所以这个不可以进一步转义，否则会搜索不到正确结果
+    // 类似的有符号.*
+    if(str.indexOf("%5C(") > -1 || str.indexOf("%5C)") > -1){
+        return str;
+    }
+    if(str.indexOf("%5C.") > -1){
+        return str;
+    }
+    if(str.indexOf("%5C*") > -1){
+        return str;
+    }
+	return str.replace(/([\^\$\(\)\*\+\?\.\\\|\[\]\{\}])/g, "\\$1");
+}
 
 let extendUserContext = (userContext, utcOffset) => {
     if (!userContext.now) {
@@ -17,10 +48,13 @@ let extendUserContext = (userContext, utcOffset) => {
 }
 
 let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, user: { utcOffset: 0 } }) => {
+    if(_.isNull(filters) || _.isUndefined(filters)){
+        return;
+    }
     let utcOffset = userContext.user ? userContext.user.utcOffset : 0;
     userContext = extendUserContext(userContext, utcOffset);
     // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
-    var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
+    var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}(\:\d{1,2}(\.\d{1,3})?)?(Z)?$/;
     var filtersLooper, selector;
     if (!_.isFunction(filters) && !filters.length) {
         return;
@@ -116,9 +150,17 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                     }
                     if (_.isArray(value)) {
                         value = value.map(function (item) {
-                            if (typeof item === "string" && regDate.test(item)) {
-                                // 如果value正好是regDate格式，则转换为Date类型
-                                item = new Date(item);
+                            if (typeof item === "string") {
+                                if(["contains", "startswith", "endswith", "notcontains", "notstartswith", "notendswith"].indexOf(option) > -1){
+                                    item = convertSpecialCharacter(item);
+                                }
+                                if(regDate.test(item)){
+                                    // 如果item正好是regDate格式，则转换为Date类型
+                                    item = new Date(item);
+                                }
+                                else if(REG_FOR_ENCORD.test(item)){
+                                    item = encodeURIComponent(item);
+                                }
                             }
                             return item;
                         });
@@ -140,14 +182,19 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                             _.each(value, function (v) {
                                 return sub_selector.push([field, option, v], "and");
                             });
-                        } else if (isBetweenOperation && (value.length = 2)) {
-                            if (value[0] !== null || value[1] !== null) {
-                                if (value[0] !== null) {
-                                    sub_selector.push([field, ">=", value[0]], "and");
+                        } else if (isBetweenOperation) {
+                            if(value.length > 0){
+                                if ([null, undefined, ''].indexOf(value[0]) < 0 || [null, undefined, ''].indexOf(value[1]) < 0) {
+                                    if ([null, undefined, ''].indexOf(value[0]) < 0) {
+                                        sub_selector.push([field, ">=", value[0]], "and");
+                                    }
+                                    if ([null, undefined, ''].indexOf(value[1]) < 0) {
+                                        sub_selector.push([field, "<=", value[1]], "and");
+                                    }
                                 }
-                                if (value[1] !== null) {
-                                    sub_selector.push([field, "<=", value[1]], "and");
-                                }
+                            }
+                            else{
+                                // 如果是between连的空数组，不加任何条件，即查找所有数据
                             }
                         } else {
                             // contains、startswith、endswith等，如果value为空数组，不加任何条件，即查找所有数据
@@ -176,9 +223,17 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                             // between操作符时，value必须是数组，不能是undefined等其他值
                         }
                         else {
-                            if (typeof value === "string" && regDate.test(value)) {
-                                // 如果value正好是regDate格式，则转换为Date类型
-                                value = new Date(value);
+                            if (typeof value === "string") {
+                                if(["contains", "startswith", "endswith", "notcontains", "notstartswith", "notendswith"].indexOf(option) > -1){
+                                    value = convertSpecialCharacter(value);
+                                }
+                                if(regDate.test(value)){
+                                    // 如果value正好是regDate格式，则转换为Date类型
+                                    value = new Date(value);
+                                }
+                                else if(REG_FOR_ENCORD.test(value)){
+                                    value = encodeURIComponent(value);
+                                }
                             }
                             tempFilters = [field, option, value];
                         }

@@ -214,6 +214,36 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
+    async directAggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[], userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let pipeline = [];
+        if(query.filters){
+            let mongoFilters = this.getMongoFilters(query.filters);
+            let aggregateOptions = this.getAggregateOptions(query);
+            pipeline.push({ $match: mongoFilters });
+            pipeline = pipeline.concat(aggregateOptions)
+        }
+        pipeline = pipeline.concat(externalPipeline);
+        let result = await collection.aggregate(pipeline).toArray();
+        return result;
+    }
+
+    async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let pipeline = [];
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let aggregateOptions = this.getAggregateOptions(query);
+
+        pipeline.push({ $match: mongoFilters });
+
+        // pipeline中的次序不能错，一定要先$lookup，再$match，再$project、$sort、$skip、$limit等，否则查询结果可能为空，比如公式字段中就用到了$lookup
+        pipeline = prefixalPipeline.concat(pipeline).concat(aggregateOptions);
+
+        let result = await collection.aggregate(pipeline).toArray();
+        return result;
+    }
+
     async count(tableName: string, query: SteedosQueryOptions) {
         await this.connect();
         let collection = this.collection(tableName);
@@ -225,12 +255,15 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
-    async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
+    async findOne(tableName: string, id: SteedosIDType | SteedosQueryOptions, query: SteedosQueryOptions) {
         await this.connect();
         let collection = this.collection(tableName);
         let mongoOptions = this.getMongoOptions(query);
         let mongoFilters = this.getMongoFilters(query.filters);
-        let selector = { _id: id };
+        let selector: any = { _id: id };
+        if (_.isObject(id)) {
+            selector = this.getMongoFilters(id['filters']);
+        }
         if (!_.isEmpty(mongoFilters)) {
             selector = Object.assign(mongoFilters, selector);
         }
@@ -239,10 +272,26 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
+    convertDataForOperate(data: any){
+        var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
+        const result = {};
+        const keys = _.keys(data);
+        _.each(keys, function(key){
+            const value = data[key];
+            if(_.isString(value) && regDate.test(value)){
+                result[key] = new Date(value);
+            }else{
+                result[key] = value;
+            }
+        })
+        return result;
+    }
+
     async insert(tableName: string, data: Dictionary<any>) {
         await this.connect();
         data._id = data._id || new ObjectId().toHexString();
         let collection = this.collection(tableName);
+        data = this.convertDataForOperate(data);
         let result = await collection.insertOne(data);
         return result.ops[0];
     }
@@ -259,7 +308,18 @@ export class SteedosMongoDriver implements SteedosDriver {
         } else {
             selector = { _id: id };
         }
-        let result = await collection.updateOne(selector, { $set: data });
+
+        const options = {$set: {}};
+        data = this.convertDataForOperate(data);
+        const keys = _.keys(data);
+        _.each(keys, function(key){
+            if(_.include(['$inc','$min','$max','$mul'], key)){
+                options[key] = data[key];
+            }else{
+                options.$set[key] = data[key];
+            }
+        })
+        let result = await collection.updateOne(selector, options);
         if (result.result.ok) {
             result = await collection.findOne(selector);
             return result;
@@ -278,6 +338,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         } else {
             selector = { _id: id };
         }
+        data = this.convertDataForOperate(data);
         let result = await collection.updateOne(selector, { $set: data });
         if (result.result.ok) {
             result = await collection.findOne(selector);
@@ -292,6 +353,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         await this.connect();
         let collection = this.collection(tableName);
         let mongoFilters = this.getMongoFilters(queryFilters);
+        data = this.convertDataForOperate(data);
         return await collection.update(mongoFilters, { $set: data }, { multi: true });
     }
 
@@ -304,7 +366,12 @@ export class SteedosMongoDriver implements SteedosDriver {
         } else {
             selector = { _id: id };
         }
-        await collection.deleteOne(selector);
+        const result = await collection.deleteOne(selector);
+        return result?.deletedCount;
+    }
+
+    async directFind(tableName: string, query: SteedosQueryOptions) {
+        return this.find(tableName, query)
     }
 
     async directInsert(tableName: string, data: Dictionary<any>) {
@@ -317,6 +384,10 @@ export class SteedosMongoDriver implements SteedosDriver {
 
     async directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions) {
         return this.delete(tableName, id)
+    }
+
+    _makeNewID(tableName?: string){
+        return new ObjectId().toHexString();
     }
 
 }

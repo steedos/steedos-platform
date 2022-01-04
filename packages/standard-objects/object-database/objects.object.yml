@@ -34,13 +34,6 @@ fields:
     index: true
     required: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
-  table_name:
-    type: text
-    label: Table Name
-    index: true
-    searchable: true
-    inlineHelpText: The default data source does not support this property
-    group: External data source
   icon:
     type: lookup
     label: Icon
@@ -126,6 +119,17 @@ fields:
     defaultValue: true
     label: Enable Single Field Edit
     group: Switch
+  enable_tree:
+    type: boolean
+    label: Enable Tree
+    inlineHelpText: Enable a tree structure to display records
+    group: Switch
+  enable_enhanced_lookup:
+    type: boolean
+    label: Enable Enhanced Lookup
+    inlineHelpText: When enabled, the lookup field associated with this object displays its options as a pop-up window.
+    group: Switch
+    defaultValue: true
   # enable_trash:
   #   type: boolean
   # enable_space_global:
@@ -144,6 +148,20 @@ fields:
   #   label: 隐藏
   #   type: boolean
   #   omit: true
+  table_name:
+    type: text
+    label: Table Name
+    index: true
+    searchable: true
+    inlineHelpText: The default data source does not support this property
+    group: External data source
+  version:
+    readonly: true
+    label: Version
+    type: number
+    scale: 0
+    defaultValue: 2
+    hidden: true
   description:
     label: Description
     type: textarea
@@ -220,9 +238,89 @@ fields:
     disabled: true
   is_deleted:
     hidden: false
-    omit: false
+    omit: true
     disabled: false
     readonly: false
+  reload_time:
+    type: datetime
+    hidden: true
+    omit: true
+    disabled: true
+    readonly: true
+  created_by:
+    label: Created by
+  modified_by:
+    label: Modified by
+  form:
+    type: object
+    label: Form Events
+    group: script
+    blackbox: true
+    is_wide: true
+  form.onValuesChange:
+    type: code
+    rows: 3
+    is_wide: true
+  form.initialValues:
+    type: code
+    rows: 3
+    is_wide: true
+  form.validate:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeInsert:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeUpdate:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeDelete:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterInsert:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterUpdate:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterDelete:
+    type: code
+    rows: 3
+    is_wide: true
+  form.errorInsert:
+    type: code
+    rows: 3
+    is_wide: true
+  form.errorUpdate:
+    type: code
+    rows: 3
+    is_wide: true
+  form.errorDelete:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeView:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterView:
+    type: code
+    rows: 3
+    is_wide: true
+  form.beforeEdit:
+    type: code
+    rows: 3
+    is_wide: true
+  form.afterEdit:
+    type: code
+    rows: 3
+    is_wide: true
 paging:
   enabled: false
 relatedList:
@@ -239,6 +337,7 @@ relatedList:
       - label
       - name
       - shared
+      - owner
   - objectName: object_actions
     columns:
       - label
@@ -251,11 +350,12 @@ relatedList:
       - label
       - object_name
       - profiles
-  - object_related_list
   - permission_objects
   - object_workflows
   - process_definition
   - object_validation_rules
+  - restriction_rules
+  - share_rules
 list_views:
   all:
     columns:
@@ -271,6 +371,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
   customize:
     columns:
       - label
@@ -287,6 +388,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
   system:
     columns:
       - label
@@ -303,6 +405,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
   deleted:
     columns:
       - label
@@ -320,6 +423,7 @@ list_views:
     extra_columns:
       - datasource
       - fields
+      - is_deleted
 actions: 
   show_object: 
     label: Preview
@@ -327,6 +431,9 @@ actions:
   copy_odata: 
     label: Copy OData URL
     on: record
+  createDefaulRecordView:
+      on: record_only_more
+      label: 创建默认页面布局
   # export:
   #   label: Export
   #   visible: true
@@ -336,9 +443,9 @@ permission_set:
     allowCreate: false
     allowDelete: false
     allowEdit: false
-    allowRead: false
+    allowRead: true
     modifyAllRecords: false
-    viewAllRecords: false
+    viewAllRecords: true
   admin:
     allowCreate: true
     allowDelete: true

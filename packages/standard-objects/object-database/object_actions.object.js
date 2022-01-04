@@ -1,32 +1,33 @@
 var objectql = require('@steedos/objectql');
-
-function _syncToObject(doc) {
-  var actions, object_actions;
-  object_actions = Creator.getCollection("object_actions").find({
-    object: doc.object,
-    space: doc.space,
-    is_enable: true
-  }, {
-    fields: {
-      created: 0,
-      modified: 0,
-      owner: 0,
-      created_by: 0,
-      modified_by: 0
-    }
-  }).fetch();
-  actions = {};
-  _.forEach(object_actions, function (f) {
-    return actions[f.name] = f;
-  });
-  return Creator.getCollection("objects").update({
-    space: doc.space,
-    name: doc.object
-  }, {
-    $set: {
-      actions: actions
-    }
-  });
+var objectCore = require('./objects.core.js');
+function _syncToObject(doc, event) {
+  objectCore.triggerReloadObject(doc.object, 'action', doc, event);
+  // var actions, object_actions;
+  // object_actions = Creator.getCollection("object_actions").find({
+  //   object: doc.object,
+  //   space: doc.space,
+  //   is_enable: true
+  // }, {
+  //   fields: {
+  //     created: 0,
+  //     modified: 0,
+  //     owner: 0,
+  //     created_by: 0,
+  //     modified_by: 0
+  //   }
+  // }).fetch();
+  // actions = {};
+  // _.forEach(object_actions, function (f) {
+  //   return actions[f.name] = f;
+  // });
+  // return Creator.getCollection("objects").update({
+  //   space: doc.space,
+  //   name: doc.object
+  // }, {
+  //   $set: {
+  //     actions: actions
+  //   }
+  // });
 };
 
 function isRepeatedName(doc, name) {
@@ -54,8 +55,8 @@ function checkName(name){
   if(!reg.test(name)){
       throw new Error("object_actions__error_name_invalid_format");
   }
-  if(name.length > 20){
-      throw new Error("API 名称长度不能大于20个字符");
+  if(name.length > 50){
+      throw new Error("API 名称长度不能大于50个字符");
   }
   return true
 }
@@ -70,27 +71,28 @@ function allowChangeObject(){
 }
 
 Creator.Objects.object_actions.triggers = {
-  "after.insert.server.object_actions": {
-    on: "server",
-    when: "after.insert",
-    todo: function (userId, doc) {
-      return _syncToObject(doc);
-    }
-  },
-  "after.update.server.object_actions": {
-    on: "server",
-    when: "after.update",
-    todo: function (userId, doc) {
-      return _syncToObject(doc);
-    }
-  },
-  "after.remove.server.object_actions": {
-    on: "server",
-    when: "after.remove",
-    todo: function (userId, doc) {
-      return _syncToObject(doc);
-    }
-  },
+  // "after.insert.server.object_actions": {
+  //   on: "server",
+  //   when: "after.insert",
+  //   todo: function (userId, doc) {
+  //     return _syncToObject(doc, 'insert');
+  //   }
+  // },
+  // "after.update.server.object_actions": {
+  //   on: "server",
+  //   when: "after.update",
+  //   todo: function (userId, doc) {
+  //     doc._previousName = this.previous.name
+  //     return _syncToObject(doc, 'update');
+  //   }
+  // },
+  // "after.remove.server.object_actions": {
+  //   on: "server",
+  //   when: "after.remove",
+  //   todo: function (userId, doc) {
+  //     return _syncToObject(doc, 'remove');
+  //   }
+  // },
   "before.update.server.object_actions": {
     on: "server",
     when: "before.update",

@@ -9,12 +9,13 @@ Template.creator_app_home.onRendered ()->
 			if dashboard and !Steedos.isMobile()
 				FlowRouter.go "/app/#{appId}/home"
 			else
-				first_app_obj = _.first(Creator.getAppObjectNames(appId))
-				if first_app_obj
+				menus = Creator.getAppMenus()
+				first_menu = _.first(menus)
+				if first_menu
 					objectHomeComponent = Session.get("object_home_component")
 					if objectHomeComponent
-						FlowRouter.go "/app/" + appId + "/" + first_app_obj
+						FlowRouter.go "/app/" + appId + "/" + first_menu.id
 					else
-						list_view = Creator.getListView(first_app_obj, null)
-						list_view_id = list_view?._id
-						FlowRouter.go Creator.getListViewRelativeUrl(first_app_obj, appId, list_view_id)
+						menu = Object.assign({}, first_menu, {target: false}) # 自动进入的应用强制不以新窗口打开
+						url = Creator.getAppMenuUrl menu
+						FlowRouter.go url

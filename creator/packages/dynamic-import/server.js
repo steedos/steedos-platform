@@ -97,7 +97,7 @@ function middleware(request, response) {
         });
 
         response.end(JSON.stringify(
-          Meteor.isDevelopment && e.message || "bad request"
+            process.env.CREATOR_NODE_ENV == 'development' && e.message || "bad request"
         ));
       }
     });

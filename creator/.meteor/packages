@@ -3,7 +3,6 @@
 #
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
-
 coffeescript@1.12.7_3
 
 blaze-html-templates
@@ -14,7 +13,7 @@ dynamic-import@0.3.0
 ecmascript@0.10.6
 ejson@1.1.0
 email@1.2.3
-
+underscore
 http@1.4.0
 jquery@1.11.10
 logging@1.1.19
@@ -43,7 +42,6 @@ accounts-password
 
 tmeasday:check-npm-versions
 fourseven:scss
-
 # fortawesome:fontawesome
 tap:i18n
 
@@ -79,7 +77,6 @@ steedos:toastr@2.1.3
 
 kadira:flow-router
 kadira:blaze-layout
-meteorhacks:subs-manager
 dburles:collection-helpers
 
 momentjs:moment
@@ -102,6 +99,7 @@ steedos:datatables-extensions
 
 matb33:collection-hooks
 
+steedos:cfs-steedos-cloud
 steedos:cfs-aliyun
 steedos:cfs-filesystem
 steedos:cfs-s3
@@ -121,7 +119,6 @@ peppelg:bootstrap-3-modal@1.0.4
 
 # steedos:ionicons@0.1.7
 
-meteorhacks:unblock@1.1.0
 
 steedos:lightning-design-system
 
@@ -205,3 +202,5 @@ steedos:webkit-notification
 steedos:huaweipush
 
 steedos:api-authenticate-user
+meteorhacks:subs-manager
+lamhieu:unblock

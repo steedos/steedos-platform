@@ -1,0 +1,45 @@
+name: metadata.$.type
+label: 类型
+type: select
+sort_no: 530
+options:
+  - label: 自定义按钮
+    value: CustomAction
+  - label: 自定义应用
+    value: CustomApplication
+  - label: 自定义字段
+    value: CustomField
+  - label: 列表视图
+    value: CustomListview
+  - label: 自定义对象
+    value: CustomObject
+  - label: 对象权限
+    value: CustomPermission
+  - label: 权限集
+    value: CustomPermissionset
+  - label: 简档
+    value: CustomProfile
+  - label: 报表
+    value: CustomReport
+  - label: 验证规则
+    value: CustomValidationRule
+  - label: 页面布局
+    value: Layout
+  - label: 工作流操作
+    value: Workflow
+  - label: 流程
+    value: Flow
+  - label: 批准过程
+    value: ApprovalProcess
+  - label: 角色
+    value: Role
+  - label: 岗位
+    value: FlowRole
+  - label: 查询
+    value: Query
+  - label: 图表
+    value: Chart
+  - label: 页面
+    value: Page
+  - label: 选项卡
+    value: Tab

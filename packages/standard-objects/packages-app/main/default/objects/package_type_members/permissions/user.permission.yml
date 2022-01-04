@@ -1,0 +1,6 @@
+allowCreate: false
+allowDelete: false
+allowEdit: false
+allowRead: false
+modifyAllRecords: false
+viewAllRecords: false

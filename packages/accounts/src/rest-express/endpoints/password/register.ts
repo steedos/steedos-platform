@@ -5,7 +5,7 @@ import { sendError } from '../../utils/send-error';
 import { errors } from '../../../password/errors';
 import { canRegister } from '../../../core';
 import { setAuthCookies } from '../../utils/steedos-auth';
-
+import { db } from '../../../db';
 declare var Creator;
 
 export const registerPassword = (accountsServer: AccountsServer) => async (
@@ -51,17 +51,33 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
       }
     }
 
+    const space = await db.findOne("spaces", req.body.spaceId, {fields: ["name"]});
+
     const userId = await password.createUser(req.body);
+    
     if(inviteInfo && inviteInfo.space){
       Creator.addSpaceUsers(inviteInfo.space, userId, true)
-    }else if(req.body.spaceId){
+    }else if(req.body.spaceId && space){
       Creator.addSpaceUsers(req.body.spaceId, userId, true)
     }
 
     const foundedUser = await password.findUserById(userId);
-    const result = await accountsServer.loginWithUser(foundedUser, {});
+    const result: any = await accountsServer.loginWithUser(foundedUser, {});
 
     setAuthCookies(req, res, result.user._id, result.token, result.tokens.accessToken);
+    let enable_MFA = false;
+    // 获取用户简档
+    const userProfile = await password.getUserProfile(result.user._id);
+    if(userProfile){
+      enable_MFA = userProfile.enable_MFA || false
+    }
+    //启用了多重验证
+    if(enable_MFA){
+      //不是验证码注册
+      if(!req.body.verifyCode){
+        result._next = 'TO_VERIFY_MOBILE';
+      }
+    }
 
     res.json(result)
 

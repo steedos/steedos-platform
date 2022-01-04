@@ -1,6 +1,6 @@
 {
   "name": "steedos-cli",
-  "version": "1.22.10",
+  "version": "2.1.65",
   "description": "Develop and run your enterprise apps in miniutes",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,9 @@
     "prepack": "oclif-dev manifest && oclif-dev readme",
     "test": "nyc mocha --forbid-only \"test/**/*.test.js\"",
     "version": "oclif-dev readme && git add README.md",
-    "prepare": "tsc"
+    "compile": "tsc",
+    "prepare": "tsc",
+    "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/steedos-cli"
   },
   "bin": {
     "steedos": "./bin/run"
@@ -28,7 +30,6 @@
     "/bin",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json",
-    "/src",
     "/dist"
   ],
   "dependencies": {
@@ -36,18 +37,25 @@
     "@oclif/command": "^1.5.10",
     "@oclif/config": "^1.12.8",
     "@oclif/plugin-help": "^2.1.6",
-    "@steedos/meteor-bundle-runner": "^1.22.10",
-    "@steedos/project-template-empty": "^1.22.10",
-    "@steedos/steedos-model-generator": "^1.20.0",
+    "@steedos/metadata-core": "2.1.65",
+    "archiver": "^5.0.2",
     "change-case": "^3.1.0",
     "colors": "^1.3.3",
+    "compressing": "^1.5.1",
+    "dotenv-flow": "^3.2.0",
+    "fibers": "^4.0.3",
     "fs-extra": "^7.0.1",
+    "glob": "^7.1.6",
     "inquirer": "^6.2.2",
     "js-yaml": "^3.13.1",
     "latest-version": "^5.1.0",
+    "readline-sync": "^1.4.10",
     "reflect-metadata": "^0.1.13",
+    "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "typescript": "^3.3.3333",
+    "underscore": "^1.11.0",
+    "validator": "^13.5.2",
     "yargs": "^13.2.1",
     "yn": "^2.0.0"
   },
@@ -64,6 +72,7 @@
     "@types/node": "^11.10.4",
     "@types/sinon": "^7.0.8",
     "@types/yargs": "^12.0.1",
+    "babel-preset-es2015": "^6.24.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chai-subset": "^1.6.0",
@@ -74,6 +83,8 @@
     "globby": "^8.0.2",
     "husky": "^1.3.1",
     "istanbul": "^0.4.5",
+    "javascript-obfuscator": "^2.9.1",
+    "jsfuck": "^0.4.0",
     "lint-staged": "^8.1.5",
     "mocha": "^6.0.2",
     "nyc": "^13.3.0",
@@ -83,7 +94,9 @@
     "sinon": "^7.2.6",
     "sinon-chai": "^3.3.0",
     "tslint": "^5.13.1",
-    "tslint-config-prettier": "^1.18.0"
+    "tslint-config-prettier": "^1.18.0",
+    "uglify-es": "^3.3.9",
+    "uglify-js": "^3.10.0"
   },
   "oclif": {
     "commands": "./dist/commands",

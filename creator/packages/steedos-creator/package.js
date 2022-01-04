@@ -31,7 +31,7 @@ Package.onUse(function (api) {
 	api.use('aldeed:schema-index@1.1.0');
 	api.use('aldeed:collection2@2.5.0');
 	api.use('aldeed:tabular@1.6.1');
-	api.use('meteorhacks:unblock@1.1.0');
+	api.use('lamhieu:unblock@1.0.0');
 	api.use('aldeed:autoform@5.8.0');
 	api.use('matb33:collection-hooks@0.8.1');
 
@@ -100,6 +100,7 @@ Package.onUse(function (api) {
 	api.addFiles('lib/object_recent.coffee', 'client');
 	api.addFiles('lib/filters_transform.coffee', 'client');
 	api.addFiles('lib/form_manager.coffee', 'client');
+	api.addFiles('lib/grid_export.coffee', 'client');
 
 	api.addFiles('server/methods/object_recent_viewed.coffee', 'server');
 	api.addFiles('server/methods/object_recent_record.coffee', 'server');
@@ -204,12 +205,18 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/calendarNew.html', 'client');
 	api.addFiles('client/views/calendarNew.coffee', 'client');
 
+	api.addFiles('client/views/empty_template.html', 'client');
+
+	api.addFiles('client/views/page_template.html', 'client');
+	api.addFiles('client/views/page_template.coffee', 'client');
+
 	api.addFiles('client/core.coffee', 'client');
 	api.addFiles('client/colors.coffee', 'client');
 	api.addFiles('client/temp_navs.coffee', 'client');
 	api.addFiles('client/favorites.coffee', 'client');
 	api.addFiles('client/router.coffee', 'client');
 	api.addFiles('client/subscribe.coffee', 'client');
+	api.addFiles('client/tenant.coffee', 'client');
 
 	api.addFiles('client/animate.css', 'client');
 	api.addFiles('client/animate.js', 'client');
@@ -229,6 +236,13 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/list_wrapper.less', 'client');
 	api.addFiles('client/views/grid.html', 'client');
 	api.addFiles('client/views/grid.coffee', 'client');
+
+	api.addFiles('client/views/react_grid.html', 'client');
+	api.addFiles('client/views/react_grid.coffee', 'client');
+
+	api.addFiles('client/views/object_listview.html', 'client');
+	api.addFiles('client/views/object_listview.coffee', 'client');
+
 	api.addFiles('client/views/grid.less', 'client');
 	api.addFiles('client/views/view.html', 'client');
 	api.addFiles('client/views/view.coffee', 'client');
@@ -238,6 +252,8 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/app_iframe.html', 'client');
 	api.addFiles('client/views/app_iframe.coffee', 'client');
 	api.addFiles('client/views/app_iframe.less', 'client');
+	api.addFiles('client/views/tab_iframe.html', 'client');
+	api.addFiles('client/views/tab_iframe.coffee', 'client');
 	api.addFiles('client/views/grid_sidebar_organizations.html', 'client');
 	api.addFiles('client/views/grid_sidebar_organizations.coffee', 'client');
 	api.addFiles('client/views/grid_sidebar_organizations.less', 'client');
@@ -362,6 +378,10 @@ Package.onUse(function (api) {
 
 	// api.addAssets('assets/logo.png', 'client');
 	api.addAssets('assets/logo-square.png', 'client');
+	api.addAssets('assets/logo-square.en-us.png', 'client');
+
+	api.addFiles('client/views/detail_realted_object_list.html', 'client');
+	api.addFiles('client/views/detail_realted_object_list.coffee', 'client');
 
 	api.export(['permissionManagerForInitApproval', 'uuflowManagerForInitApproval'], ['server']);
 

@@ -1,8 +1,0 @@
-permission_shares__object: 共享规则
-permission_shares_field_filters: 过滤条件
-permission_shares_field_name: 名称
-permission_shares_field_object_name: 对象
-permission_shares_field_organizations: 授权组织
-permission_shares_field_users: 授权用户
-permission_shares_field_filters_inlineHelpText: 格式为odata filters
-permission_shares_listview_all: 全部

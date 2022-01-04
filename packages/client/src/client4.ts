@@ -9,6 +9,7 @@ import { UserProfile } from './types/users';
 import { ServerError } from './types/errors';
 import { Space } from './types/spaces';
 import SObject from './sobject';
+import Graphql from './graphql';
 
 const HEADER_AUTH = 'Authorization';
 const HEADER_BEARER = 'Bearer';
@@ -56,6 +57,7 @@ export default class SteedosClient {
     userRoles?: string;
 
     sobjects = {};
+    graphql = new Graphql(this);
     
     getUrl() {
         if(!this.url){
@@ -465,6 +467,13 @@ export default class SteedosClient {
         var sobject = this.sobjects[objectName] = this.sobjects[objectName] || new SObject(this, objectName);
         return sobject;
     };
+
+    // graphql = function(){
+    //     if(!this._graphql){
+    //         this._graphql = new Graphql(this);
+    //     }
+    //     return this._graphql;
+    // }
 
     // _initLocalStorage(ROOT_URL_PATH_PREFIX){
     //     if (ROOT_URL_PATH_PREFIX) {

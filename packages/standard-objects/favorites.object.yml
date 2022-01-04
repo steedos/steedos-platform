@@ -1,6 +1,6 @@
 name: favorites
 label: My Favorite
-icon: custom.custom11
+icon: topic
 hidden: true
 fields:
   name: 

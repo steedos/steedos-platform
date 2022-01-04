@@ -1,31 +1,32 @@
 var _ = require("underscore");
 var objectql = require('@steedos/objectql');
-
-function _syncToObject(doc) {
-  var relatedList = Creator.getCollection("object_related_list").find({
-    space: doc.space,
-    object_name: doc.object_name
-  }, {
-    sort: {sort_no: -1},
-    fields: {
-      _id: 0,
-      space: 0,
-      object_name: 0,
-      created: 0,
-      modified: 0,
-      owner: 0,
-      created_by: 0,
-      modified_by: 0
-    }
-  }).fetch();
-  return Creator.getCollection("objects").update({
-    space: doc.space,
-    name: doc.object_name
-  }, {
-    $set: {
-      relatedList: relatedList
-    }
-  });
+var objectCore = require('./objects.core.js');
+function _syncToObject(doc, event) {
+  objectCore.triggerReloadObject(doc.object_name, 'related_list', doc, event);
+  // var relatedList = Creator.getCollection("object_related_list").find({
+  //   space: doc.space,
+  //   object_name: doc.object_name
+  // }, {
+  //   sort: {sort_no: -1},
+  //   fields: {
+  //     _id: 0,
+  //     space: 0,
+  //     object_name: 0,
+  //     created: 0,
+  //     modified: 0,
+  //     owner: 0,
+  //     created_by: 0,
+  //     modified_by: 0
+  //   }
+  // }).fetch();
+  // return Creator.getCollection("objects").update({
+  //   space: doc.space,
+  //   name: doc.object_name
+  // }, {
+  //   $set: {
+  //     relatedList: relatedList
+  //   }
+  // });
 };
 
 function check(object_name, objectName, _id){
@@ -89,21 +90,21 @@ Creator.Objects.object_related_list.triggers = {
     on: "server",
     when: "after.insert",
     todo: function (userId, doc) {
-      _syncToObject(doc);
+      _syncToObject(doc, 'insert');
     }
   },
   "after.update.server.object_related_list": {
     on: "server",
     when: "after.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
-      _syncToObject(doc);
+      _syncToObject(doc, 'update');
     }
   },
   "after.remove.server.object_related_list": {
     on: "server",
     when: "after.remove",
     todo: function (userId, doc) {
-      return _syncToObject(doc);
+      return _syncToObject(doc, 'remove');
     }
   }
 }

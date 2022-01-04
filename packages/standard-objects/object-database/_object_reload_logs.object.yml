@@ -1,0 +1,10 @@
+name: _object_reload_logs
+hidden: true
+fields:
+  object_name:
+    type: text
+  change_date:
+    type: object
+    blackbox: true
+  change_time:
+    type: datetime

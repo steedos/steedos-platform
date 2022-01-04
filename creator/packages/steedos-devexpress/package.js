@@ -30,4 +30,5 @@ Package.onUse(function (api) {
 	api.addFiles('client.js', 'client');
 	api.addFiles('client/js/dx.date.formatter.js', 'client');
 	api.addFiles('client/js/dx.date.locale.js', 'client');
+	api.addFiles('client/js/dx.calendar.locale.js', 'client');
 })

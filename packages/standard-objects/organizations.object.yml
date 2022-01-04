@@ -3,6 +3,8 @@ label: Department
 icon: team_member
 enable_search: true
 enable_tree: true
+enable_enhanced_lookup: true
+version: 2
 fields:
   name:
     label: Name
@@ -99,6 +101,7 @@ fields:
     label: Hidden
     type: boolean
     name: hidden
+    sort_no: 65
 list_views:
   all:
     columns:
@@ -110,8 +113,6 @@ list_views:
     sort:
       - field_name: sort_no
         order: desc
-      - field_name: name
-        order: asc
 actions:
   standard_query:
     label: Search
@@ -132,30 +133,28 @@ actions:
     'on': record
     todo: !!js/function |
       function (object_name, record_id) {
-              var record;
-
-              if (record_id) {
-                if (Steedos.isMobile()) {
-                  record = Creator.getObjectRecord(object_name, record_id);
-                  Session.set('cmDoc', {
-                    parent: record._id
-                  });
-                  Session.set('reload_dxlist', false);
-                  return Meteor.defer(function () {
-                    return $(".btn.creator-add").click();
-                  });
-                } else {
-                  if (this.record) {
-                    Session.set('cmDoc', {
-                      parent: this.record._id
-                    });
-                    return Meteor.defer(function () {
-                      return $(".btn.creator-add").click();
-                    });
+        if (record_id) {
+            const object = Creator.getObject(object_name);
+            let initialValues = { parent: this.record._id }
+            return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+                name: object_name+"_standard_new_form",
+                objectApiName: object_name,
+                title: '新建 ' + object.label,
+                initialValues: initialValues,
+                afterInsert: (result)=>{
+                  if(result.length > 0){
+                      const record = result[0];
+                      setTimeout(()=>{
+                          const app_id = Session.get("app_id")
+                          const url = "/app/"+app_id+"/"+object_name+"/view/"+record._id;
+                          FlowRouter.go(url)
+                      }, 1);
+                      return true;
                   }
                 }
-              }
-            }
+            }, null, { iconPath: '/assets/icons' })
+        }
+      }
 permission_set:
   user:
     allowCreate: false

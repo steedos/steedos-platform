@@ -19,14 +19,13 @@ function checkName(name){
   if(!reg.test(name)){
       throw new Error("object_listviews__error_name_invalid_format");
   }
-  if(name.length > 20){
-      throw new Error("API 名称长度不能大于20个字符");
+  if(name.length > 50){
+      throw new Error("API 名称长度不能大于50个字符");
   }
   return true
 }
 
-
-Creator.Objects['object_listviews'].triggers = {
+Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['object_listviews'].triggers || {}, {
   "before.insert.cilent.object_listviews": {
     on: "client",
     when: "before.insert",
@@ -88,4 +87,4 @@ Creator.Objects['object_listviews'].triggers = {
       }
     }
   }
-}
+})

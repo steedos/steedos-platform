@@ -1,0 +1,13 @@
+parent: CustomObject
+metadataName: CustomPermission
+defaultDirectory: permissions
+tableName: permission_objects
+ext: permission
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Permission
+nameForMsgsPlural: Custom Permissions
+deleteSupported: true

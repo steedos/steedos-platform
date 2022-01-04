@@ -98,12 +98,12 @@ Meteor.startup ->
 		production: true
 	}
 
-	if !_.isEmpty(Meteor.settings.push?.apn)
+	if !_.isEmpty(Meteor.settings.push?.apn) && !_.isEmpty(Meteor.settings.push?.apn.keyData) && !_.isEmpty(Meteor.settings.push?.apn.certData)
 		config.apn = {
 			keyData: Meteor.settings.push.apn.keyData
 			certData: Meteor.settings.push.apn.certData
 		}
-	if !_.isEmpty(Meteor.settings.push?.gcm)
+	if !_.isEmpty(Meteor.settings.push?.gcm) && !_.isEmpty(Meteor.settings.push?.gcm.projectNumber) && !_.isEmpty(Meteor.settings.push?.gcm.apiKey)
 		config.gcm = {
 			projectNumber: Meteor.settings.push.gcm.projectNumber
 			apiKey: Meteor.settings.push.gcm.apiKey
@@ -198,10 +198,13 @@ Meteor.startup ->
 
 		Push.old_sendAPN = Push.sendAPN
 		Push.sendAPN = (userToken, notification) ->
-			if notification.title and notification.text
-				noti = _.clone(notification)
-				noti.text = noti.title + " " + noti.text
-				noti.title = ""
-				Push.old_sendAPN(userToken, noti)
-			else
-				Push.old_sendAPN(userToken, notification)
+			try
+				if notification.title and notification.text
+					noti = _.clone(notification)
+					noti.text = noti.title + " " + noti.text
+					noti.title = ""
+					Push.old_sendAPN(userToken, noti)
+				else
+					Push.old_sendAPN(userToken, notification)
+			catch e
+				console.error(e)

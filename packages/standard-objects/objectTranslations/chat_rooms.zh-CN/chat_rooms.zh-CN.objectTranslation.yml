@@ -1,0 +1,30 @@
+name: chat_rooms
+label: 房间
+description: 
+fields:
+  name:
+    label: 内容
+    help: 
+    description: 
+  members:
+    label: 成员
+    help: 
+    description: 
+  owner:
+    label: 房主
+    help: 
+    description: 
+  type:
+    label: 类型
+    help: 
+    options:
+      - label: 私人
+        value: private
+      - label: 受限
+        value: ' protected'
+      - label: 公开
+        value: ' public'
+    description: 
+listviews:
+  all:
+    label: 所有

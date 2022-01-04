@@ -8,6 +8,7 @@ import { createFilter } from 'odata-v4-mongodb';
 import { createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 import { SteedosFieldDBType } from "./fieldDBType";
+import { ObjectId } from "mongodb";
 
 var Fiber = require('fibers');
 
@@ -333,6 +334,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         let collection = this.collection(tableName);
         let mongoFilters = this.getMongoFilters(query.filters);
         let mongoOptions = this.getMongoOptions(query);
+        let self = this;
         return await new Promise((resolve, reject) => {
             Fiber(function () {
                 try {
@@ -343,7 +345,10 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        let selector = { _id: id };
+                        let selector: any = { _id: id };
+                        if (_.isObject(id)) {
+                            selector = self.getMongoFilters(id['filters']);
+                        }
                         if (!_.isEmpty(mongoFilters)) {
                             selector = Object.assign(mongoFilters, selector);
                         }
@@ -400,8 +405,19 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         connection: null,
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
+
+                    const options = { $set: {} };
+                    const keys = _.keys(data);
+                    _.each(keys, function (key) {
+                        if (_.include(['$inc', '$min', '$max', '$mul'], key)) {
+                            options[key] = data[key];
+                        } else {
+                            options.$set[key] = data[key];
+                        }
+                    })
+
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.update(selector, { $set: data });
+                        collection.update(selector, options);
                         return collection.findOne(selector);
                     })
                     resolve(result);
@@ -492,6 +508,32 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
+    async directFind(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let mongoOptions = this.getMongoOptions(query);
+
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        return collection.direct.find(mongoFilters, mongoOptions).fetch();
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
+    }
+
     async directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         let selector;
@@ -509,8 +551,19 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         connection: null,
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
+
+                    const options = { $set: {} };
+                    const keys = _.keys(data);
+                    _.each(keys, function (key) {
+                        if (_.include(['$inc', '$min', '$max', '$mul'], key)) {
+                            options[key] = data[key];
+                        } else {
+                            options.$set[key] = data[key];
+                        }
+                    })
+
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.direct.update(selector, { $set: data });
+                        collection.direct.update(selector, options);
                         return collection.findOne(selector);
                     })
                     resolve(result);
@@ -573,5 +626,9 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                 }
             }).run()
         });
+    }
+
+    _makeNewID(tableName?: string) {
+        return new ObjectId().toHexString();
     }
 }

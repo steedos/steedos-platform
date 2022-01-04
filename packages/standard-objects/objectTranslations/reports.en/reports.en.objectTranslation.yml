@@ -1,0 +1,159 @@
+name: reports
+label: Report
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  report_type:
+    label: Report Type
+    help: 
+    options: []
+    description: 
+  data_source:
+    label: Data Source
+    help: 
+    options:
+      - label: OData
+        value: odata
+      - label: Graphql
+        value: graphql
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  filter_scope:
+    label: Filter Scope
+    help: 
+    options:
+      - label: All
+        value: space
+      - label: Mine
+        value: mine
+    description: 
+  filters:
+    label: Filters
+    help: 
+    description: 
+  filters.$:
+    label: Filter
+    help: 
+    description: 
+  filters.$.field:
+    label: Field
+    help: 
+    description: 
+  filters.$.operation:
+    label: Operator
+    help: 
+    options: []
+    description: 
+  filters.$.value:
+    label: Value
+    help: 
+    description: 
+  filter_logic:
+    label: Filter Logic
+    help: 
+    description: 
+  fields:
+    label: Fields
+    help: 
+    description: 
+  rows:
+    label: Rows
+    help: 
+    description: 
+  columns:
+    label: Columns
+    help: 
+    description: 
+  values:
+    label: Statistical Values
+    help: 
+    description: 
+  filter_fields:
+    label: Filter Fields
+    help: 
+    description: 
+  filter_fields.$:
+    label: Filter Field
+    help: 
+    description: 
+  filter_fields.$.field:
+    label: Field
+    help: 
+    description: 
+  filter_fields.$.required:
+    label: Required
+    help: 
+    description: 
+  options:
+    label: Options
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  charting:
+    label: Show Chart
+    help: 
+    description: 
+  grouping:
+    label: Show Group Subtotals
+    help: 
+    description: 
+  totaling:
+    label: Show Total
+    help: 
+    description: 
+  counting:
+    label: Show Record Count
+    help: 
+    description: 
+  graphql:
+    label: Graphql
+    help: 
+    description: 
+  html:
+    label: Html
+    help: 
+    description: 
+  helper:
+    label: Helper
+    help: 
+    description: 
+  script:
+    label: Script
+    help: 
+    description: 
+  mrt:
+    label: Mrt
+    help: 
+    description: 
+  is_system:
+    label: System
+    help: 
+    description: 
+groups:
+  jsreport: JsReport
+listviews:
+  default:
+    label: 
+  all:
+    label: All Reports
+  application:
+    label: Application Reports
+  mine:
+    label: My Reports
+  global:
+    label: Standard Reports
+actions:
+  standard_new_by_template:
+    label: Pull from Library
+CustomLabels:
+  reports_field_filter_fields.$: 
+  reports_field_filters.$: 

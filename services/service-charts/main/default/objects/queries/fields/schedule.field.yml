@@ -1,0 +1,5 @@
+name: schedule
+type: object
+hidden: true
+omit: true
+blackbox: true

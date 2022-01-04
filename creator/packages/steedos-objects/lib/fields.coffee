@@ -1,3 +1,24 @@
+Creator.getSelectOptions = (fieldSchema) ->
+	options = fieldSchema.options
+	unless options
+		return
+	data_type = fieldSchema.data_type
+	if !_.isFunction(options) and data_type and data_type != 'text'
+		# 零代码界面配置options选项值只支持字符串，所以当data_type为数值或boolean时，只能强行把选项值先转换为对应的类型
+		options.forEach (optionItem) ->
+			if typeof optionItem.value != 'string'
+				return
+			if [
+				'number'
+				'currency'
+				'percent'
+			].indexOf(data_type) > -1
+				optionItem.value = Number(optionItem.value)
+			else if data_type == 'boolean'
+				# 只有为true才为真
+				optionItem.value = optionItem.value == 'true'
+	return options
+
 Creator.getObjectSchema = (obj) ->
 	unless obj
 		return
@@ -181,6 +202,8 @@ Creator.getObjectSchema = (obj) ->
 
 					if field.reference_limit
 						fs.autoform.optionsLimit = field.reference_limit
+					if field.reference_to_field
+						fs.autoform.referenceToField = field.reference_to_field
 
 					if field.reference_to == "users"
 						fs.autoform.type = "selectuser"
@@ -312,6 +335,21 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.firstOption = field.firstOption
 				else
 					fs.autoform.firstOption = ""
+			# 因为列表视图右侧过滤器还是用的老表单的lookup和select控件，所以上面的代码始终保持原样需要执行
+			# 下面是配置了data_type时，额外处理的逻辑
+			if field.data_type and field.data_type != "text"
+				if ["number", "currency", "percent"].indexOf(field.data_type) > -1
+					fsType = Number
+					fs.decimal = true
+				else if field.data_type == "boolean"
+					fsType = Boolean
+				else
+					fsType = String
+				fs.type = fsType
+				if field.multiple
+					fs.type = [fsType]
+					
+				fs.autoform.options = Creator.getSelectOptions(field)
 		else if field.type == "currency"
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"
@@ -345,17 +383,18 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = [String]
 			fs.autoform.type = "select-checkbox"
 			fs.autoform.options = field.options
-		else if field.type == "file" and field.collection
+		else if field.type == "file"
+			collectionName = field.collection || "files" # collection 默认是 'files'
 			if field.multiple
 				fs.type = [String]
 				schema[field_name + ".$"] =
 					autoform:
 						type: 'fileUpload'
-						collection: field.collection
+						collection: collectionName
 			else
 				fs.type = String
 				fs.autoform.type = 'fileUpload'
-				fs.autoform.collection = field.collection
+				fs.autoform.collection = collectionName
 		else if field.type == "filesize"
 			fs.type = Number
 			fs.autoform.type = 'filesize'
@@ -442,6 +481,8 @@ Creator.getObjectSchema = (obj) ->
 			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
 		else if field.type == 'summary'
 			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
+		# else if field.type == 'select'
+		# 	fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
 		else if field.type == 'percent'
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"

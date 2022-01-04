@@ -1,0 +1,37 @@
+FROM node:12.16.3
+
+USER root
+WORKDIR /
+
+# RUN apt-get update
+
+RUN npm config set prefix "/root/.npm/npm_global"
+RUN npm config set cache "/root/.npm/npm_cache"
+RUN yarn config set global-folder  "/root/.yarn/yarn_global"
+RUN yarn config set prefix         "/root/.yarn/yarn_prefix"
+RUN yarn config set cache-folder   "/root/.yarn/yarn_cache"
+
+ADD .steedos /root/app/.steedos/
+ADD services /root/app/services/
+ADD steedos-app /root/app/steedos-app/
+ADD package.json /root/app/
+ADD moleculer.config.js /root/app/
+ADD steedos-config-k8s.yml /root/app/steedos-config.yml
+
+RUN mkdir -p /dev/disk/by-id/
+
+# RUN npm config set registry http://registry.npm.taobao.org/
+
+# RUN yarn config set registry http://registry.npm.taobao.org/
+WORKDIR /root/app
+
+RUN yarn
+
+RUN yarn global add code-server@3.10.2
+
+RUN npm install pm2 -g
+
+EXPOSE 8080
+
+# CMD ["yarn", "start"]
+CMD ["/bin/sh","-c","yarn pm2-start && code-server"]

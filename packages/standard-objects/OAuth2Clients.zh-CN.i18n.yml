@@ -1,8 +1,0 @@
-OAuth2Clients__object: OAuth2应用
-OAuth2Clients_field_active: 是否激活
-OAuth2Clients_field_clientId: 客户端ID
-OAuth2Clients_field_clientName: 名称
-OAuth2Clients_field_clientSecret: 密钥
-OAuth2Clients_field_expires: 有效期（小时）
-OAuth2Clients_field_redirectUri: 回调URL
-OAuth2Clients_listview_all: 全部

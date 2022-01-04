@@ -1,0 +1,44 @@
+name: workflow_notifications
+label: 工作流通知
+description:
+fields:
+  name:
+    label: API 名称
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+    description:
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help:
+    description:
+  title:
+    label: 标题公式
+    help:
+    description:
+  body:
+    label: 正文公式
+    help:
+    description:
+  assigned_users:
+    label: 指定具体人员
+    help:
+    description:
+  assigned_user_field:
+    label: 指定对象上的用户字段
+    help:
+    description:
+groups:
+  select_assigned_user: 选择分配的用户
+listviews:
+  all:
+    label: 所有
+CustomLabels:
+  workflow_notifications_field__error_process_node_process_definition_required: 请先选择该批准步骤的“批准过程”然后再新建工作流通知！
+  workflow_notifications_field__error_process_definition_object_required: 请先选择该批准过程的“对象”然后再新建工作流通知！
+  workflow_notifications_field__error_workflow_rule_object_required: 请先选择该工作流规则的“对象”然后再新建工作流通知！
+actions:
+  customize:
+    label: 自定义

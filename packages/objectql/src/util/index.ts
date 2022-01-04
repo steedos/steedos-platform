@@ -6,7 +6,8 @@
  */
 
 import { isJsonMap, JsonMap } from '@salesforce/ts-types';
-import { Validators } from '../validators';
+import { Validators, loadCoreValidators } from '../validators';
+const odataMongodb = require("odata-v4-mongodb");
 const Future  = require('fibers/future');
 const crypto = require('crypto')
 const yaml = require('js-yaml');
@@ -19,9 +20,14 @@ import { has, getJsonMap } from '@salesforce/ts-types';
 let STEEDOSCONFIG:any = {};
 const configName = 'steedos-config.yml'
 const licenseName = '.license'
-
+import { getObjectConfig } from '../types'
+export const StandardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 export * from './transform'
 export * from './permission_shares'
+export * from './suffix'
+export * from './locale'
+export * from './field'
+export * from './function_expression'
 
 exports.loadJSONFile = (filePath: string)=>{
     return JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
@@ -60,131 +66,466 @@ function validateObject(json){
 }
 
 export const loadObjects = (filePath: string) => {
-    let results = []
-    const filePatten = [
-        path.join(filePath, "*.object.yml"),
-        path.join(filePath, "*.object.json")
-    ]
-    const matchedPaths:[string] = globby.sync(filePatten);
-    _.each(matchedPaths, (matchedPath:string)=>{
-        let json = loadFile(matchedPath);
-        try {
-            if(json){
-                json.__filename = matchedPath
-            }
-        } catch (error) {
-            console.error('loadObjects error', matchedPath, error);
-        }
-        if (validateObject(json)){
-            results.push(json)
-        }
-    })
-    return results
-}
-
-function getI18nLng(filePath){
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.object.yml"),
+    path.join(filePath, "*.object.json"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    let json = loadFile(matchedPath);
     try {
-        let pathJson = path.parse(filePath);
-        let filename = pathJson.base;
-        if(filename){
-            let f = filename.split('.');
-            if(f.length >= 3){
-                return f[f.length-3]
-            }
-        }
-        console.log(`getI18nLng warn: Invalid file: ${filePath}`);
+      if (json) {
+        json.__filename = matchedPath;
+      }
     } catch (error) {
-        console.error(`getI18nLng error: ${filePath}`, error)
+      console.error("loadObjects error", matchedPath, error);
     }
+    if (validateObject(json)) {
+      results.push(json);
+    }
+  });
+  return results;
+};
+
+function getI18nLng(filePath) {
+  try {
+    let pathJson = path.parse(filePath);
+    let filename = pathJson.base;
+    if (filename) {
+      let f = filename.split(".");
+      if (f.length >= 3) {
+        return f[f.length - 3];
+      }
+    }
+    console.log(`getI18nLng warn: Invalid file: ${filePath}`);
+  } catch (error) {
+    console.error(`getI18nLng error: ${filePath}`, error);
+  }
 }
 
-export const loadI18n = (filePath: string)=>{
+function getObjectApiName(filePath) {
+  try {
+    let pathJson = path.parse(filePath);
+    let filename = pathJson.base;
+    if (filename) {
+      let f = filename.split(".");
+      if (f.length >= 3) {
+        return f[0];
+      }
+    }
+    console.log(`getObjectApiName warn: Invalid file: ${filePath}`);
+  } catch (error) {
+    console.error(`getObjectApiName error: ${filePath}`, error);
+  }
+}
+
+export const loadI18n = (filePath: string) => {
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.i18n.yml"),
+    path.join(filePath, "*.i18n.json"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    let json = loadFile(matchedPath);
+    let lng = getI18nLng(matchedPath);
+    if (lng) {
+      results.push({ lng: lng, __filename: matchedPath, data: json });
+    }
+  });
+  return results;
+};
+
+export const loadObjectTranslations = (filePath: string) => {
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.objectTranslation.yml"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    let json = loadFile(matchedPath);
+    let lng = getI18nLng(matchedPath);
+    let objectApiName = getObjectApiName(matchedPath);
+    if (lng) {
+      results.push({
+        lng: lng,
+        objectApiName,
+        __filename: matchedPath,
+        data: json,
+      });
+    }
+  });
+  return results;
+};
+
+export const loadTranslations = (filePath: string) => {
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.translation.yml"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    let json = loadFile(matchedPath);
+    let lng = getI18nLng(matchedPath);
+    if (lng) {
+      results.push({ lng: lng, __filename: matchedPath, data: json });
+    }
+  });
+  return results;
+};
+
+const getRouterInfoList = (router, md5) => {
+  const infoList = [];
+  if (
+    router &&
+    router.default &&
+    router.default.stack &&
+    router.default.stack.length > 0
+  ) {
+    _.each(router.default.stack, (_route) => {
+      const info = {
+        path: "",
+        methods: "",
+        md5: md5,
+      };
+      if (_route.route) {
+        info.path = _route.route.path;
+        info.methods = _route.route.methods;
+        infoList.push(info);
+      }
+    });
+  }
+  return infoList;
+};
+
+const getFileMD5 = (filePath) => {
+  const buffer = fs.readFileSync(filePath);
+  return getMD5(buffer);
+};
+
+export const loadRouters = (filePath: string) => {
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.router.js"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    delete require.cache[require.resolve(matchedPath)];
+    let router = loadFile(matchedPath);
+    let md5 = getFileMD5(matchedPath);
+    let infoList = getRouterInfoList(router, md5);
+    results.push({ router: router, infoList: infoList });
+  });
+  return results;
+};
+
+export const loadTriggers = (filePath: string) => {
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.trigger.js"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    delete require.cache[require.resolve(matchedPath)];
+    let json = loadFile(matchedPath);
+    if (!_.has(json, "listenTo")) {
+      json.listenTo = path.basename(matchedPath).split(".")[0];
+    }
+    results.push(json);
+  });
+  return results;
+};
+
+export const loadActions = (filePath: string) => {
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.action.js"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    delete require.cache[require.resolve(matchedPath)];
+    let json = loadFile(matchedPath);
+    if (!_.has(json, "listenTo")) {
+      json.listenTo = path.basename(matchedPath).split(".")[0];
+    }
+    results.push(json);
+  });
+  return results;
+};
+
+export const loadMethods = (filePath: string) => {
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.function.js"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    delete require.cache[require.resolve(matchedPath)];
+    let json = loadFile(matchedPath);
+    if (!_.has(json, "listenTo")) {
+      json.listenTo = path.basename(matchedPath).split(".")[0];
+    }
+    results.push(json);
+  });
+  return results;
+};
+
+export const loadFields = (filePath: string) => {
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.field.yml"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    let json = loadFile(matchedPath);
+    if (!json.name) {
+      json.name = path.basename(matchedPath).split(".")[0];
+    }
+    if (!json.object_name) {
+      json.object_name = path.parse(
+        path.dirname(path.dirname(matchedPath))
+      ).name;
+    }
+    results.push(json);
+  });
+  return results;
+};
+
+export const loadLayouts = (filePath: string) => {
+  let results = [];
+  const filePatten = [
+    path.join(filePath, "*.layout.yml"),
+    "!" + path.join(filePath, "node_modules"),
+  ];
+  const matchedPaths: [string] = globby.sync(filePatten);
+  _.each(matchedPaths, (matchedPath: string) => {
+    let json = loadFile(matchedPath);
+    let names = path.basename(matchedPath).split(".");
+
+    if (!json.name) {
+      json.name = names[1];
+    }
+    if (!json.object_name) {
+      json.object_name = names[0];
+    }
+    results.push(json);
+  });
+  return results;
+};
+
+export const loadValidationRules = (filePath: string)=>{
     let results = []
     const filePatten = [
-        path.join(filePath, "*.i18n.yml"),
-        path.join(filePath, "*.i18n.json")
+        path.join(filePath, "*.validationRule.yml"),
+        "!" + path.join(filePath, "node_modules"),
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
-        let lng = getI18nLng(matchedPath);
-        if(lng){
-            results.push({lng: lng, data: json})
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[1]
         }
-    })
-    return results
-}
-
-export const loadRouters = (filePath: string)=>{
-    let results = []
-    const filePatten = [
-        path.join(filePath, "*.router.js")
-    ]
-    const matchedPaths:[string] = globby.sync(filePatten);
-    _.each(matchedPaths, (matchedPath:string)=>{
-        let router = loadFile(matchedPath);
-        results.push(router);
-    })
-    return results
-}
-
-export const loadTriggers = (filePath: string)=>{
-    let results = []
-    const filePatten = [
-        path.join(filePath, "*.trigger.js")
-    ]
-    const matchedPaths:[string] = globby.sync(filePatten);
-    _.each(matchedPaths, (matchedPath:string)=>{
-        let json = loadFile(matchedPath);
-        if(!_.has(json, 'listenTo')){
-            json.listenTo = path.basename(matchedPath).split('.')[0]
+        if(!json.object_name){
+            json.object_name =  path.parse(path.dirname(path.dirname(matchedPath))).name
         }
         results.push(json)
     })
     return results
 }
 
-export const loadActions = (filePath: string)=>{
+export const loadRoles = (filePath: string)=>{
     let results = []
     const filePatten = [
-        path.join(filePath, "*.action.js")
+        path.join(filePath, "*.role.yml"),
+        "!" + path.join(filePath, "node_modules"),
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
-        if(!_.has(json, 'listenTo')){
-            json.listenTo = path.basename(matchedPath).split('.')[0]
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[1]
         }
         results.push(json)
     })
     return results
 }
 
-export const loadMethods = (filePath: string)=>{
+export const loadFlowRoles = (filePath: string)=>{
     let results = []
     const filePatten = [
-        path.join(filePath, "*.function.js")
+        path.join(filePath, "*.flowRole.yml"),
+        "!" + path.join(filePath, "node_modules"),
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
-        if(!_.has(json, 'listenTo')){
-            json.listenTo = path.basename(matchedPath).split('.')[0]
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[1]
         }
         results.push(json)
     })
     return results
 }
 
-export const loadFields = (filePath: string)=>{
+export const loadApprovalProcesses = (filePath: string)=>{
     let results = []
     const filePatten = [
-        path.join(filePath, "*.field.yml"),
-        path.join(filePath, "*.field.js")
+        path.join(filePath, "*.approvalProcess.yml"),
+        "!" + path.join(filePath, "node_modules"),
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[1]
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadWorkflows = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.workflow.yml"),
+        "!" + path.join(filePath, "node_modules"),
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let names = path.basename(matchedPath).split('.');
+
+        if(!json.name){
+            json.name = names[0]
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadListViews = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.listview.yml"),
+        "!" + path.join(filePath, "node_modules"),
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!json.name){
+            json.name = path.basename(matchedPath).split('.')[0]
+        }
+        if(!json.object_name){
+            json.object_name =  path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadButtons = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.button.yml"),
+        "!" + path.join(filePath, "node_modules"),
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!json.name){
+            json.name = path.basename(matchedPath).split('.')[0]
+        }
+        if(!json.object_name){
+            json.object_name =  path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadButtonScripts = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.button.js"),
+        "!" + path.join(filePath, "node_modules"),
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        delete require.cache[require.resolve(matchedPath)]
+        let json = loadFile(matchedPath);
+        if(!_.has(json, 'listenTo')){
+            json.listenTo = path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadPermissions = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.permission.yml"),
+        "!" + path.join(filePath, "node_modules"),
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!_.has(json, 'object_name')){
+            json.object_name = path.parse(path.dirname(path.dirname(matchedPath))).name
+        }
+        json.name = path.basename(matchedPath).split('.')[0]
+        results.push(json)
+    })
+    return results
+}
+
+export const loadProfiles = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.profile.yml"),
+        "!" + path.join(filePath, "node_modules"),
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        json.name = path.basename(matchedPath).split('.')[0];
+        json._id = json.name;
+        json.type = 'profile';
+        results.push(json)
+    })
+    return results
+}
+
+export const loadPermissionsets = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.permissionset.yml"),
+        "!" + path.join(filePath, "node_modules"),
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        json.name = path.basename(matchedPath).split('.')[0];
+        json._id = json.name;
+        json.type = 'permission_set';
         results.push(json)
     })
     return results
@@ -195,6 +536,9 @@ export const loadJsonFiles = (filePatten: Array<string>)=>{
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
+        if(json){
+            json.__filename = matchedPath
+        }
         results.push({file: matchedPath, data: json})
     })
     return results
@@ -207,7 +551,8 @@ export const loadApps = (filePath: string)=>{
     }else{
         const filePatten = [
             path.join(filePath, "*.app.yml"),
-            path.join(filePath, "*.app.js")
+            path.join(filePath, "*.app.js"),
+            "!" + path.join(filePath, "node_modules"),
         ]
         const matchedPaths:[string] = globby.sync(filePatten);
         _.each(matchedPaths, (matchedPath:string)=>{
@@ -273,7 +618,8 @@ export function loadAppFiles(filePath: string) {
 export function loadObjectDataFiles(filePath: string){
     let results = []
     const filePatten = [
-        path.join(filePath, "*.data.json")
+        path.join(filePath, "*.data.json"),
+        "!" + path.join(filePath, "node_modules"),
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
@@ -457,9 +803,16 @@ export function JSONStringify(data) {
     })
 }
 
-export function isSystemObject(object_name: string) {
-    // 以c结尾的都是零代码上定义的对象
-    return !object_name.endsWith("__c")
+//此函数判断不准确
+// export function isSystemObject(object_name: string) {
+//     // 以c结尾的都是零代码上定义的对象
+//     return !object_name.endsWith("__c")
+// }
+export function isCodeObject(objectName: string){
+    let objectConfig = getObjectConfig(objectName);
+    if(objectConfig && objectConfig.__filename){
+        return true;
+    }
 }
 
 /**
@@ -555,6 +908,224 @@ export function processFilters(filters: [], objectFields: any) {
     }
 }
 
+export function absoluteUrl (path, options?) {
+    // path is optional
+    if (!options && typeof path === 'object') {
+      options = path;
+      path = undefined;
+    }
+    const rootUrl = process.env.ROOT_URL
+    // merge options with defaults
+    options = Object.assign({}, {rootUrl: rootUrl}, options || {});
+  
+    var url = options.rootUrl;
+    if (!url)
+      throw new Error("Must pass options.rootUrl or set ROOT_URL in the server environment");
+  
+    if (!/^http[s]?:\/\//i.test(url)) // url starts with 'http://' or 'https://'
+      url = 'http://' + url; // we will later fix to https if options.secure is set
+  
+    if (! url.endsWith("/")) {
+      url += "/";
+    }
+  
+    if (path) {
+      // join url and path with a / separator
+      while (path.startsWith("/")) {
+        path = path.slice(1);
+      }
+      url += path;
+    }
+  
+    // turn http to https if secure option is set, and we're not talking
+    // to localhost.
+    if (options.secure &&
+        /^http:/.test(url) && // url starts with 'http:'
+        !/http:\/\/localhost[:\/]/.test(url) && // doesn't match localhost
+        !/http:\/\/127\.0\.0\.1[:\/]/.test(url)) // or 127.0.0.1
+      url = url.replace(/^http:/, 'https:');
+  
+    if (options.replaceLocalhost)
+      url = url.replace(/^http:\/\/localhost([:\/].*)/, 'http://127.0.0.1$1');
+  
+    return url;
+}
+
+/**
+* 对objectConfig中的function属性做toString()处理
+* This method mutates objectConfig.
+* @param objectConfig 
+* @returns objectConfig
+*/
+export function objectToJson(objectConfig){
+   _.forEach(objectConfig.actions, (action, key)=>{
+       const _todo = action?.todo
+       if(_todo && _.isFunction(_todo)){
+           action.todo = _todo.toString()
+       }
+       const _visible = action?.visible
+       if(_visible && _.isFunction(_visible)){
+           action._visible = _visible.toString()
+       }
+   })
+
+   _.forEach(objectConfig.fields, (field, key)=>{
+
+       const options = field.options
+       if(options && _.isFunction(options)){
+           field._options = field.options.toString()
+       }
+
+       if(field.regEx){
+           field._regEx = field.regEx.toString();
+       }
+       if(_.isFunction(field.min)){
+           field._min = field.min.toString();
+       }
+       if(_.isFunction(field.max)){
+           field._max = field.max.toString();
+       }
+       if(field.autoform){
+           const _type = field.autoform.type;
+           if(_type && _.isFunction(_type) && _type != Object && _type != String && _type != Number && _type != Boolean && !_.isArray(_type)){
+               field.autoform._type = _type.toString();
+           }
+       }
+       const optionsFunction = field.optionsFunction;
+       const reference_to = field.reference_to;
+       const createFunction = field.createFunction;
+       const beforeOpenFunction = field.beforeOpenFunction;
+       const filtersFunction = field.filtersFunction;
+       if(optionsFunction && _.isFunction(optionsFunction)){
+           field._optionsFunction = optionsFunction.toString()
+       }
+       if(reference_to && _.isFunction(reference_to)){
+           field._reference_to = reference_to.toString()
+       }
+       if(createFunction && _.isFunction(createFunction)){
+           field._createFunction = createFunction.toString()
+       }
+       if(beforeOpenFunction && _.isFunction(beforeOpenFunction)){
+           field._beforeOpenFunction = beforeOpenFunction.toString()
+       }
+       if(filtersFunction && _.isFunction(filtersFunction)){
+           field._filtersFunction = filtersFunction.toString()
+       }
+
+
+       const defaultValue = field.defaultValue
+       if(defaultValue && _.isFunction(defaultValue)){
+           field._defaultValue = field.defaultValue.toString()
+       }
+
+       const is_company_limited = field.is_company_limited;
+       if(is_company_limited && _.isFunction(is_company_limited)){
+           field._is_company_limited = field.is_company_limited.toString()
+       }
+   })
+
+   _.forEach(objectConfig.list_views, (list_view, key)=>{
+       if(_.isFunction(list_view.filters)){
+           list_view._filters = list_view.filters.toString()
+       }else if(_.isArray(list_view.filters)){
+           _.forEach(list_view.filters, (filter, _index)=>{
+               if(_.isArray(filter)){
+                   if(filter.length == 3 && _.isFunction(filter[2])){
+                       filter[2] = filter[2].toString()
+                       filter[3] = "FUNCTION"
+                   }else if(filter.length == 3 && _.isDate(filter[2])){
+                       filter[3] = "DATE"
+                   }
+               }else if(_.isObject(filter)){
+                   if(_.isFunction(filter?.value)){
+                       filter._value = filter.value.toString()
+                   }else if(_.isDate(filter?.value)){
+                       filter._is_date = true
+                   }
+               }
+           })
+       }
+   })
+
+   if(objectConfig.form && !_.isString(objectConfig.form)){
+       objectConfig.form = JSON.stringify(objectConfig.form, (key, val)=>{
+           if(_.isFunction(val))
+               return val + '';
+           else
+               return val;
+       })
+   }
+
+   _.forEach(objectConfig.relatedList, (relatedObjInfo)=>{
+       if(_.isObject(relatedObjInfo)){
+           _.forEach(relatedObjInfo, (val, key)=>{
+               if(key == 'filters' && _.isFunction(val)){
+                   relatedObjInfo[key] = val.toString();
+               }
+           })
+       }
+   })
+
+   return objectConfig;
+}
+
 export function validateFilters(filters: [], objectFields: any) {
     processFilters(clone(filters), objectFields);
 }
+
+
+export function parserFilters(filters){
+    if(_.isString(filters)){
+        filters = odataMongodb.createFilter(filters)
+    }
+    let query: any = {};
+    if(_.isArray(filters) && filters.length > 0 && _.isArray(filters[0])){
+        _.each(filters,function(filter){
+            Object.assign(query, parserFilters(filter))
+        })
+    }else if(_.isArray(filters) && filters.length > 0){
+        if(filters[1] && filters[1] == '='){
+            let key = filters[0]
+            let value = filters[2]
+            Object.assign(query, {[key]: value})
+        }else if(filters[1] && (filters[1] == '!=' || filters[1] == '<>')){
+            let key = filters[0]
+            let value = filters[2]
+            Object.assign(query, {[key]: {$ne: value}})
+        }else if(filters[1] && filters[1] == 'in'){
+            let key = filters[0]
+            let value = filters[2]
+            Object.assign(query, {[key]: {$in: value}})
+        }else{
+            _.each(filters,function(filter){
+                let parsedFilters = parserFilters(filter);
+                if(query._id && query._id.$ne && parsedFilters._id && parsedFilters._id.$ne){
+                    parsedFilters._id.$ne = [parsedFilters._id.$ne]
+                    parsedFilters._id.$ne = parsedFilters._id.$ne.concat(query._id.$ne);
+                    delete query._id;
+                }
+                Object.assign(query, parsedFilters)
+            })
+        }
+    }else{
+        _.each(filters, function (v, k) {
+            if(_.isArray(v) && v.length > 0){
+                Object.assign(query, parserFilters(v))
+            }else{
+                if (k === '$and') {
+                    Object.assign(query, parserFilters(v))
+                } else {
+                    if(_.isArray(filters) && _.isObject(v)){
+                        Object.assign(query, v)
+                    }else{
+                        Object.assign(query, {[k]: v})
+                    }
+                }
+            }
+            
+        })
+    }
+    return query;
+}
+
+loadCoreValidators();

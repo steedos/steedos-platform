@@ -1,0 +1,31 @@
+name: webhooks
+label: 流程触发器
+description: 
+fields:
+  name:
+    label: 名称
+    help: 
+    description: 
+  flow:
+    label: 流程
+    help: 如果未选择流程则应用范围为此工作区全部流程
+    description: 
+  payload_url:
+    label: URL
+    help: 
+    description: 
+  content_type:
+    label: 请求数据格式
+    help: 
+    description: 
+  active:
+    label: 激活
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有

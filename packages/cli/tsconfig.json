@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es6",
+        "target": "ES2017",
         "noImplicitAny": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -11,7 +11,6 @@
         "noImplicitReturns": true,
         "stripInternal": true,
         "strictNullChecks": true,
-        "moduleResolution": "node",
         "resolveJsonModule": true,
         "outDir": "./dist",
         "newLine": "LF",

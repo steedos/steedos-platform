@@ -26,6 +26,7 @@ Package.onUse(function(api) {
 	api.use('steedos:cfs-standard-packages@0.5.10');
 	api.use('steedos:cfs-s3@0.1.4');
 	api.use('steedos:cfs-aliyun@0.1.0');
+	api.use('steedos:cfs-steedos-cloud@0.0.4');
 	api.use('momentjs:moment@2.14.1');
 	api.use('tap:i18n@1.8.2');
 	api.use('universe:i18n@1.13.0');

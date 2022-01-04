@@ -1,0 +1,108 @@
+name: permission_objects
+label: Permission
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  permission_set_id:
+    label: Permission Set
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  allowRead:
+    label: Allow Read
+    help: 
+    description: 
+  allowCreate:
+    label: Allow Create
+    help: 
+    description: 
+  allowEdit:
+    label: Allow Edit
+    help: 
+    description: 
+  allowDelete:
+    label: Allow Delete
+    help: 
+    description: 
+  viewAllRecords:
+    label: View All Records
+    help: 
+    description: 
+  modifyAllRecords:
+    label: Modify All Records
+    help: 
+    description: 
+  viewCompanyRecords:
+    label: View Division's Records
+    help: 
+    description: 
+  modifyCompanyRecords:
+    label: Modify Division's Records
+    help: 
+    description: 
+  allowReadFiles:
+    label: Allow Read Files
+    help: 
+    description: 
+  allowCreateFiles:
+    label: Allow Create Files
+    help: 
+    description: 
+  allowEditFiles:
+    label: Allow Edit Files
+    help: 
+    description: 
+  allowDeleteFiles:
+    label: Allow Delete Files
+    help: 
+    description: 
+  viewAllFiles:
+    label: View All Files
+    help: 
+    description: 
+  modifyAllFiles:
+    label: Modify All Files
+    help: 
+    description: 
+  disabled_list_views:
+    label: Disabled ListViews
+    help: 
+    description: 
+  disabled_actions:
+    label: Disabled Actions
+    help: 
+    description: 
+  unreadable_fields:
+    label: Unreadable Fields
+    help: 
+    description: 
+  uneditable_fields:
+    label: Uneditable Fields
+    help: 
+    description: 
+  unrelated_objects:
+    label: Unrelated Objects
+    help: 
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+groups:
+  files_permissions: Files permissions
+listviews:
+  customize:
+    label: Customize
+  system:
+    label: System
+  all:
+    label: All
+actions:
+  customize:
+    label: Customize

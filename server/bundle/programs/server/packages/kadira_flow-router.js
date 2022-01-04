@@ -15,7 +15,7 @@ var meteorInstall = Package.modules.meteorInstall;
 /* Package-scope variables */
 var Router, Group, Route, FlowRouter, FastRender;
 
-var require = meteorInstall({"node_modules":{"meteor":{"kadira:flow-router":{"server":{"router.js":function(require){
+var require = meteorInstall({"node_modules":{"meteor":{"kadira:flow-router":{"server":{"router.js":function module(require){
 
 //////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  //
@@ -172,7 +172,7 @@ Router.prototype.wait = function() {
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-},"group.js":function(){
+},"group.js":function module(){
 
 //////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  //
@@ -201,7 +201,7 @@ Group.prototype.group = function(options) {
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-},"route.js":function(){
+},"route.js":function module(){
 
 //////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  //
@@ -240,7 +240,7 @@ Route.prototype.middleware = function(middleware) {
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-},"_init.js":function(){
+},"_init.js":function module(){
 
 //////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  //
@@ -255,7 +255,7 @@ FlowRouter.Route = Route;
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-},"plugins":{"fast_render.js":function(){
+},"plugins":{"fast_render.js":function module(){
 
 //////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  //
@@ -306,7 +306,7 @@ function setupFastRender () {
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-}}},"lib":{"router.js":function(){
+}}},"lib":{"router.js":function module(){
 
 //////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  //

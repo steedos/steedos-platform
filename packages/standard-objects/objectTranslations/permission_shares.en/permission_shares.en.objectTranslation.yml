@@ -1,0 +1,27 @@
+name: permission_shares
+label: Permission Share
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help: 
+    description: 
+  filters:
+    label: Filters
+    help: Format of OData Filters Required.
+    description: 
+  organizations:
+    label: Departments
+    help: 
+    description: 
+  users:
+    label: Users
+    help: 
+    description: 
+listviews:
+  all:
+    label: All

@@ -20,9 +20,11 @@ Tabular.Table = function (options) {
   }
   self.name = options.name;
 
-  if (!(options.collection instanceof Mongo.Collection)) {
-    throw new Error('Tabular.Table options must specify collection');
-  }
+  // 使用DocumentDB时，Mongo驱动无法识别，先注释这段抛错
+  // if (!(options.collection instanceof Mongo.Collection)) {
+  //   throw new Error('Tabular.Table options must specify collection');
+  // }
+
   self.collection = options.collection;
 
   self.pub = options.pub || 'tabular_genericPub';

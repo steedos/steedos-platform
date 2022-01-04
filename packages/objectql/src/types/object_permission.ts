@@ -11,11 +11,20 @@ abstract class SteedosObjectPermissionTypeProperties {
     modifyAllRecords?: boolean
     viewCompanyRecords?: boolean
     modifyCompanyRecords?: boolean
+    allowReadFiles?: boolean
+    allowEditFiles?: boolean
+    allowCreateFiles?: boolean
+    allowDeleteFiles?: boolean
+    viewAllFiles?: boolean
+    modifyAllFiles?: boolean
     disabled_list_views?: []
     disabled_actions?: []
     unreadable_fields?: string[]
     uneditable_fields?: string[]
     unrelated_objects?: string[]
+    field_permissions?: any
+    viewAssignCompanysRecords?: string[]
+    modifyAssignCompanysRecords?: string[]
 }
 
 export interface SteedosObjectPermissionTypeConfig extends SteedosObjectPermissionTypeProperties { }
@@ -65,6 +74,46 @@ export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProp
             this.allowRead = true;
         }
 
+        if (!_.isEmpty(this.viewAssignCompanysRecords)) {
+            this.allowRead = true;
+        }
+
+        if (!_.isEmpty(this.modifyAssignCompanysRecords)) {
+            this.allowRead = true;
+            this.allowEdit = true;
+        }
+
+        if (this.allowRead) {
+            typeof this.allowReadFiles !== "boolean" && (this.allowReadFiles = true);
+            typeof this.viewAllFiles !== "boolean" && (this.viewAllFiles = true);
+        }
+        if (this.allowEdit) {
+            typeof this.allowCreateFiles !== "boolean" && (this.allowCreateFiles = true);
+            typeof this.allowEditFiles !== "boolean" && (this.allowEditFiles = true);
+            typeof this.allowDeleteFiles !== "boolean" && (this.allowDeleteFiles = true);
+        }
+        if (this.modifyAllRecords) {
+            typeof this.modifyAllFiles !== "boolean" && (this.modifyAllFiles = true);
+        }
+        if (this.allowCreateFiles) {
+            this.allowReadFiles = true;
+        }
+        if (this.allowEditFiles) {
+            this.allowReadFiles = true;
+        }
+        if (this.allowDeleteFiles) {
+            this.allowEditFiles = true;
+            this.allowReadFiles = true;
+        }
+        if (this.viewAllFiles) {
+            this.allowReadFiles = true;
+        }
+        if (this.modifyAllFiles) {
+            this.allowReadFiles = true;
+            this.allowEditFiles = true;
+            this.allowDeleteFiles = true;
+            this.viewAllFiles = true;
+        }
         this.object_name = object_name
     }
 

@@ -232,8 +232,8 @@ handleBootstrapData = (result, callback)->
 		_.each _object_listviews, (_object_listview)->
 			if _.isString(_object_listview.options)
 				_object_listview.options = JSON.parse(_object_listview.options)
-			if _object_listview.api_name
-				_key = _object_listview.api_name
+			if _object_listview.name
+				_key = _object_listview.name
 			else
 				_key = _object_listview._id
 			if !object.list_views

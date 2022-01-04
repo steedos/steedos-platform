@@ -5,13 +5,13 @@ _listViewColumns = (object_name, listView, use_mobile_columns)->
 		if listView?.mobile_columns
 			columns = listView.mobile_columns
 		else
-			defaultView = Creator.getObjectDefaultView(object_name)
+			defaultView = Creator.getObjectFirstListView(object_name)
 			if defaultView?.mobile_columns
 				columns = defaultView.mobile_columns
 			else if columns
 				columns = Creator.pickObjectMobileColumns(object_name, columns)
 	unless columns
-		defaultColumns = Creator.getObjectDefaultColumns(object_name, use_mobile_columns)
+		defaultColumns = Creator.getObjectFirstListViewColumns(object_name, use_mobile_columns)
 		if defaultColumns
 			columns = defaultColumns
 	return columns
@@ -106,11 +106,13 @@ Creator.unionSelectColumnsWithExtraAndDepandOn = (selectColumns, curObject, obje
 	selectColumns = _.union(selectColumns, _depandOnFields(curObjectName, selectColumns))
 	return selectColumns
 
-Creator.getListViewFilters = (object_name, list_view_id, is_related, related_object_name, record_id)->
+Creator.getListViewFilters = (object_name, list_view_id, is_related, related_object_name, record_id, related_list)->
+	if !object_name
+		return null
 	creator_obj = Creator.getObject(object_name)
 	if is_related
 		# 因为有权限判断需求，所以最近查看也需要调用过虑条件逻辑，而不应该设置为undefined
-		filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id, list_view_id)
+		filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id, list_view_id, related_list)
 	else
 		filter_logic = Session.get("filter_logic")
 		filter_scope = Session.get("filter_scope")

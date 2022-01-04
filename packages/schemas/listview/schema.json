@@ -1,0 +1,111 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "name": "steedos-schema_object_listview",
+    "type": "object",
+    "additionalProperties": false,
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "library"
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "columns"
+            ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "not": {
+                        "enum": [
+                            "library"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "API 名称"
+        },
+        "label": {
+            "type": "string",
+            "description": "视图显示名称"
+        },
+        "type": {
+            "type": "string",
+            "description": "列表显示类型，默认为grid",
+            "enum": [
+                "grid",
+                "calendar"
+            ]
+        },
+        "filter_scope": {
+            "type": "string",
+            "description": "范围",
+            "enum": [
+                "space",
+                "mine",
+                "all"
+            ]
+        },
+        "columns": {
+            "type": "array",
+            "description": "列表显示的字段"
+        },
+        "mobile_columns": {
+            "type": "array",
+            "description": "手机模式下列表显示的字段"
+        },
+        "extra_columns": {
+            "type": "array",
+            "description": "额外在列表显示的字段"
+        },
+        "sort": {
+            "type": "array",
+            "description": "排序"
+        },
+        "filters": {
+            "type": [
+                "array",
+                "string"
+            ],
+            "description": "过滤条件"
+        },
+        "filter_fields": {
+            "type": "array",
+            "description": "过滤的字段"
+        },
+        "sort_no": {
+            "type": "number",
+            "description": "显示顺序，从小到大"
+        },
+        "options": {
+            "type": "object",
+            "description": "额外选项"
+        },
+        "show_count": {
+            "type": "boolean",
+            "description": "显示条目数"
+        },
+        "shared":{
+            "type": "boolean",
+            "description": "是否共享"
+        },
+        "scrolling_mode":{
+            "type":"string",
+            "description": "滚动条样式",
+            "enum": [
+                "standard",
+                "virtual",
+                "infinite"
+            ]
+        }
+    }
+}

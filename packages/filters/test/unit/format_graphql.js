@@ -5,7 +5,7 @@ describe('format filter and fields to graphql query', () => {
     it('fields is a array', async () => {
         let filters = [["create_date","between","this_year"]];
         let fields = ["a","a.b.a","x.y","c"];
-        let result = formatFiltersToGraphqlQuery(filters, fields);
+        let result = formatFiltersToGraphqlQuery("contracts", filters, fields);
         console.log("graphql filters query result:", result);
         expect(result).to.be.include(`((create_date ge 2020-01-01T00:00:00Z) and (create_date le 2020-12-31T23:59:59Z))`);
         expect(result).to.be.include("    a {");
@@ -16,7 +16,7 @@ describe('format filter and fields to graphql query', () => {
     it('fields is a string', async () => {
         let filters = [["create_date","between","this_year"]];
         let fields = "a,a.b.a,x.y,c";
-        let result = formatFiltersToGraphqlQuery(filters, fields);
+        let result = formatFiltersToGraphqlQuery("contracts", filters, fields);
         console.log("graphql filters query result:", result);
         expect(result).to.be.include(`((create_date ge 2020-01-01T00:00:00Z) and (create_date le 2020-12-31T23:59:59Z))`);
         expect(result).to.be.include("    a {");

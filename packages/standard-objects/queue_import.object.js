@@ -52,7 +52,7 @@ converterSelect = function (objectName, field_name, dataCell, jsonObj) {
   var allowedValues, fields, ref, select_error;
   select_error = "";
   fields = Creator.getObject(objectName).fields;
-  allowedValues = ((ref = fields[field_name]) != null ? ref.allowedValues : void 0) || [];
+  allowedValues = _.pluck(fields[field_name].options, 'value');
   if (allowedValues.indexOf(dataCell) >= 0) {
     jsonObj[field_name] = dataCell;
   } else {
@@ -100,7 +100,7 @@ insertRow = function (dataRow, objectName, field_mapping, space, external_id_nam
   // 对象的fields
   objFields = typeof Creator !== "undefined" && Creator !== null ? (ref = Creator.getObject(objectName)) != null ? ref.fields : void 0 : void 0;
 
-  objFields = Object.assign({_id: {name: "_id", type: "text"}}, objFields);
+  objFields = Object.assign({ _id: { name: "_id", type: "text" } }, objFields);
 
   dataRow.forEach(function (dataCell, i) {
     var error, field_mapping_name, noField;
@@ -117,21 +117,41 @@ insertRow = function (dataRow, objectName, field_mapping, space, external_id_nam
         switch (field != null ? field.type : void 0) {
           case "date":
           case "datetime":
-            return error = converterDate(field_name, dataCell, jsonObj);
+            error = converterDate(field_name, dataCell, jsonObj);
+            break;
           case "number":
-            return error = converteNum(field_name, dataCell, jsonObj);
+            error = converteNum(field_name, dataCell, jsonObj);
+            break;
           case "boolean":
-            return error = converterBool(field_name, dataCell, jsonObj);
+            error = converterBool(field_name, dataCell, jsonObj);
+            break;
           case "select":
-            return error = converterSelect(objectName, field_name, dataCell, jsonObj);
+            error = converterSelect(objectName, field_name, dataCell, jsonObj);
+            break;
           case "lookup":
-            return error = converterLookup(objectName, field_name, dataCell, jsonObj);
+            error = converterLookup(objectName, field_name, dataCell, jsonObj);
+            break;
           case "text":
-            return error = converterString(field_name, dataCell, jsonObj);
+            error = converterString(field_name, dataCell, jsonObj);
+            break;
           case "textarea":
-            return error = converterString(field_name, dataCell, jsonObj);
+            error = converterString(field_name, dataCell, jsonObj);
+            break;
           case "master_detail":
-            return error = converterLookup(objectName, field_name, dataCell, jsonObj);
+            error = converterLookup(objectName, field_name, dataCell, jsonObj);
+            break;
+          case "email":
+            error = converterString(field_name, dataCell, jsonObj);
+            break;
+          case "toggle":
+            error = converterBool(field_name, dataCell, jsonObj);
+            break;
+          case "url":
+            error = converterString(field_name, dataCell, jsonObj);
+            break;
+          case "currency":
+            error = converteNum(field_name, dataCell, jsonObj);
+            break;
         }
       }
     });

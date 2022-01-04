@@ -1,0 +1,15 @@
+extend: space_users
+fields:
+  dingtalk_id:
+    label: 钉钉账号
+    type: text
+    hidden: false
+    sort_no: 410
+    group: 高级
+  dingtalk_space:
+    label: 钉钉工作区
+    type: text
+    hidden: true
+  job_number:
+    label: 工号
+    type: text

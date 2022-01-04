@@ -34,6 +34,9 @@ export function login(loginId: string, password: string, mfaToken = ''): ActionF
 
       try {
           data = await Client4.login(loginId, password, mfaToken, deviceId);
+          if(data._next){
+            return {error: data._next};
+          }
       } catch (error) {
           dispatch(batchActions([
               {
@@ -94,7 +97,7 @@ function completeLogin(data: any): ActionFunc {
       }))
     }
 
-    return {data: true};
+    return {data: true, _next: data._next};
   };
 }
 

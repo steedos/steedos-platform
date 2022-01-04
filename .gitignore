@@ -1,6 +1,7 @@
 **/.DS_Store
 **/.idea
 
+/services/**/node_modules
 /packages/**/node_modules
 /apps/**/node_modules
 /apps/contracts
@@ -14,9 +15,10 @@
 **/lerna-debug.log
 
 /packages/**/lib
+/services/**/lib
 
 **/.vscode/launch.*
-
+!packages/project-template-empty/.vscode/launch.*
 settings.yml
 
 
@@ -44,3 +46,24 @@ packages/project-template-empty/.env.local
 apps/contracts/src/_test/**
 packages/accounts/webapp/build/**
 packages/react/.env.local
+services/service-metadata-objects/.env.local
+services/service-metadata-triggers/.env.local
+services/service-metadata-translations/.env.local
+services/service-metadata-apps/.env.local
+services/service-metadata-permissionsets/.env.local
+services/service-metadata/.env.local
+steedos-projects/project-template/logs/**
+steedos-projects/project-template/storage/**
+steedos-projects/project-template/.env.local
+services/service-metadata-layouts/.env.local
+steedos-packages/**/node_modules/**
+steedos-projects/**/node_modules/**
+packages/cli/dist/**
+
+docker-volumes
+packages/node-red-app-template/yarn.lock
+
+steedos-projects/project-dev/**
+
+.npmrc
+.yarnrc

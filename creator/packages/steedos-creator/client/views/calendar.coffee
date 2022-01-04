@@ -19,8 +19,12 @@ _insertData = () ->
 	Session.set("action_collection", "Creator.Collections.#{object_name}")
 	Session.set("action_collection_name", action_collection_name)
 	Session.set("action_save_and_insert", false)
-	Meteor.defer ->
-		$(".creator-add").click();
+	dxSchedulerInstance.hideAppointmentTooltip()
+	actions = Creator.getActions()
+	action = _.find actions, (item)->
+		return item.name == 'standard_new'
+	if action
+		Creator.executeAction object_name, action
 
 _deleteData = (data) ->
 	action = {
@@ -31,7 +35,7 @@ _deleteData = (data) ->
 	record_id = data._id
 	object_name = Session.get("object_name")
 	dxSchedulerInstance.hideAppointmentTooltip()
-	Creator.executeAction object_name, action, record_id, action_record_title, 'calendar', ()->
+	Creator.executeAction object_name, action, record_id, action_record_title, 'calendar',null, ()->
 		dxSchedulerInstance.option("dataSource", _dataSource())
 
 _dataSource = () ->
@@ -145,7 +149,7 @@ Template.creator_calendar.onRendered ->
 					type:"week",
 					maxAppointmentsPerCell:"unlimited"
 				}, "month", "agenda"]
-				currentView: "day"
+				currentView: "week"
 				currentDate: new Date()
 				firstDayOfWeek: 1
 				startDayHour: 8

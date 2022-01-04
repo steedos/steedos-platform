@@ -21,7 +21,7 @@ const runCurrentFieldFormulas = async function (fieldFormulaConfig: SteedosField
 }
 
 const runQuotedFieldFormulas = async function (recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any) {
-    const formulaQuotedBys = getQuotedByFieldFormulaConfigs(fieldFormulaConfig);
+    const formulaQuotedBys = await getQuotedByFieldFormulaConfigs(fieldFormulaConfig);
     for (const config of formulaQuotedBys.allConfigs) {
         await updateQuotedByObjectFieldFormulaValue(fieldFormulaConfig.object_name, recordId, config, userSession);
     }
@@ -33,7 +33,7 @@ const runQuotedFieldFormulas = async function (recordId: string, fieldFormulaCon
  * @param userSession 
  */
 const runQuotedFieldSummaries = async function (fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any) {
-    const summaryQuotedBys = getQuotedByFieldSummaryConfigs(fieldFormulaConfig);
+    const summaryQuotedBys = await getQuotedByFieldSummaryConfigs(fieldFormulaConfig);
     for (const config of summaryQuotedBys) {
         await recomputeFieldSummaryValues(config, userSession);
     }
@@ -41,14 +41,14 @@ const runQuotedFieldSummaries = async function (fieldFormulaConfig: SteedosField
 
 /**
  * 重算指定公式字段Id对应的公式值
- * @param fieldId 
+ * @param fieldId : ${objectApiName}.${fieldApiName}
  */
-export const recomputeFormulaValues = async (fieldId: string, currentUserId: string) => {
-    let config = getFieldFormulaConfig(fieldId);
+export const recomputeFormulaValues = async (fieldId: string, userSession: any) => {
+    let config = await getFieldFormulaConfig(fieldId);
     if (!config) {
         throw new Error(`recomputeFormulaValues:${fieldId} not found in field_formula configs.`);
     }
-    return await recomputeFieldFormulaValues(config, currentUserId);
+    return await recomputeFieldFormulaValues(config, userSession);
 }
 
 /**

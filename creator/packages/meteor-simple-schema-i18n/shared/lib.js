@@ -1,10 +1,11 @@
 Meteor.startup(function(){
 	I18n = require('@steedos/i18n');
+	clone = require('clone');
 	if (Meteor.isClient) {
 		I18n.on('languageChanged', function(){
 			var lang = TAPi18n.getLanguage();
-			var localMessages = TAPi18n.__("simpleschema.messages", {returnObjects: true});
-			if(_.isString(localMessages)){return;}
+			var localMessages = clone(TAPi18n.__("CustomLabels.simpleschema", {returnObjects: true}).messages);
+			if(!localMessages || _.isString(localMessages)){return;}
 			localMessages.regEx = _.map(localMessages.regEx, function (item) {
 				if (item.exp) {
 					var obj = window;

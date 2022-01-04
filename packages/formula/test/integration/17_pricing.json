@@ -1,0 +1,52 @@
+{
+  "name": "Sample Pricing Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_pricing.htm",
+  "examples": [
+    {
+      "name": "Total Amount",
+      "formula": "Unit_price__c * Total_units__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Unit_price__c": {
+              "dataType": "number",
+              "value": 25
+            },
+            "Total_units__c": {
+              "dataType": "number",
+              "value": 50
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 1250
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Pricing",
+      "formula": "Total_license_rev__c / Number_user_licenses__c",
+      "suites": [
+        {
+          "context": "Filled",
+          "identifiers": {
+            "Total_license_rev__c": {
+              "dataType": "number",
+              "value": 10000
+            },
+            "Number_user_licenses__c": {
+              "dataType": "number",
+              "value": 50
+            }
+          },
+          "expectedResult": {
+            "dataType": "number",
+            "value": 200
+          }
+        }
+      ]
+    }
+  ]
+}

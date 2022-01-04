@@ -1,0 +1,109 @@
+name: process_instance_history
+label: 批准历史
+description: 
+fields:
+  name:
+    label: 步骤名称
+    help: 
+    description: 
+  created_by:
+    label: 提交人
+    help: 
+    description: 
+  process_instance:
+    label: 
+    help: 
+    description: 
+  process_instance_node:
+    label: 
+    help: 
+    description: 
+  step_status:
+    label: 状态
+    help: 
+    options:
+      - label: 已批准
+        value: approved
+      - label: Fault
+        value: fault
+      - label: Held
+        value: held
+      - label: 无响应
+        value: no_response
+      - label: 待处理
+        value: pending
+      - label: 已转签核
+        value: reassigned
+      - label: 已拒绝
+        value: rejected
+      - label: 已取消申请
+        value: removed
+      - label: 已提交
+        value: started
+    description: 
+  original_actor:
+    label: 被分配人
+    help: 
+    description: 
+  actor:
+    label: 实际审批人
+    help: 
+    description: 
+  target_object:
+    label: 审批细节
+    help: 
+    description: 
+  comments:
+    label: 备注
+    help: 
+    description: 
+  step_node:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_days:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_hours:
+    label: 
+    help: 
+    description: 
+  elapsed_time_in_minutes:
+    label: 
+    help: 
+    description: 
+  modified:
+    label: 修改时间
+    help: 
+    description: 
+  modified_by:
+    label: 修改人
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+actions:
+  approve:
+    label: 批准
+  reject:
+    label: 拒绝
+  reassign:
+    label: 转签核
+  recall:
+    label: 取消申请
+CustomLabels:
+  process_instance_history_action_approve: 批准
+  process_instance_history_action_reassign: 转签核
+  process_instance_history_action_reject: 拒绝
+  process_instance_history_action_recall: 取消申请
+  process_instance_history_field_step_status_options_started: 已提交
+  process_instance_history_field_step_status_options_pending: 待处理
+  process_instance_history_field_step_status_options_no_response: 无响应
+  process_instance_history_field_step_status_options_approved: 已批准
+  process_instance_history_field_step_status_options_rejected: 已拒绝
+  process_instance_history_field_step_status_options_reassigned: 已转签核
+  process_instance_history_field_step_status_options_removed: 已取消申请
+  process_instance_history_field_step_status_options_fault: Fault
+  process_instance_history_field_step_status_options_held: Held

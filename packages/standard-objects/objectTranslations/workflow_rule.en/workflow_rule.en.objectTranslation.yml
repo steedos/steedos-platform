@@ -1,0 +1,53 @@
+name: workflow_rule
+label: Workflow Rule
+description: 
+fields:
+  object_name:
+    label: Object Name
+    help: 
+    description: 
+  name:
+    label: 
+    help: 
+    description: 
+  label:
+    label: 
+    help: 
+    description: 
+  active:
+    label: 
+    help: 
+    description: 
+  trigger_type:
+    label: 
+    help: 
+    options:
+      - label: onCreateOnly
+        value: onCreateOnly
+      - label: onAllChanges
+        value: onAllChanges
+      - label: onCreateOrTriggeringUpdate
+        value: onCreateOrTriggeringUpdate
+    description: 
+  formula:
+    label: 
+    help: 
+    description: 
+  updates_field_actions:
+    label: Field Update
+    help: 
+    description: 
+  description:
+    label: 
+    help: 
+    description: 
+groups:
+  rule_criteria: Rule Criteria
+  immediate_actions: Immediate Actions
+listviews:
+  all:
+    label: All
+CustomLabels:
+  workflow_rule_field_trigger_type_options_onAllChanges: 
+  workflow_rule_field_trigger_type_options_onCreateOnly: 
+  workflow_rule_field_trigger_type_options_onCreateOrTriggeringUpdate: 

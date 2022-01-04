@@ -22,7 +22,7 @@ module.exports = {
             }
         }
         Creator.odata.insert(object_name, Object.assign(newDoc, {permission_set_id: permissionSetId}), function(result, error){
-            if(result){
+            if (result) {
                 if(Session.get("object_name") === 'permission_objects'){
                     FlowRouter.go(`/app/-/${object_name}/view/${result._id}`)
                 }else{
@@ -37,5 +37,21 @@ module.exports = {
             record = {}
         }
         return Creator.baseObject.actions.standard_new.visible() && record.is_system;
+    },
+    resetFieldPermissions: function (object_name, record_id) {
+        var doc = Creator.odata.get(object_name, record_id);
+        var result = Steedos.authRequest(`/api/v4/${object_name}/${record_id}/resetFieldPermissions`, { type: 'get', async: false });
+        if (result.error) {
+            toastr.error(TAPi18n.__(result.error));
+        } else {
+            toastr.success('初始化成功', '字段权限');
+            FlowRouter.reload();
+        }
+    },
+    resetFieldPermissionsVisible: function (object_name, record_id, record_permissions, record) {
+        if (!record) {
+            record = {}
+        }
+        return !(Creator.baseObject.actions.standard_new.visible() && record.is_system);
     }
 }

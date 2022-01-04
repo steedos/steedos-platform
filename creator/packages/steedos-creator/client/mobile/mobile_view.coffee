@@ -241,7 +241,7 @@ Template.mobileView.events
 		template.action_collection_name.set(object.label)
 		if this.name == "standard_delete"
 			Session.set "reload_dxlist", false
-			Creator.executeAction object_name, this, record_id, null, ()->
+			Creator.executeAction object_name, this, record_id, null, null, null, ()->
 				Session.set "reload_dxlist", true
 				template.$(".mobile-view-back").click()
 		else

@@ -1,0 +1,41 @@
+name: events
+label: 日程
+description: 
+fields:
+  name:
+    label: 主题
+    help: 
+    description: 
+  start:
+    label: 开始时间
+    help: 
+    description: 
+  end:
+    label: 结束时间
+    help: 
+    description: 
+  assignees:
+    label: 分派给
+    help: 
+    description: 
+  related_to:
+    label: 相关项
+    help: 
+    description: 
+  is_all_day:
+    label: 全天事件
+    help: 
+    description: 
+  location:
+    label: 地址
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+listviews:
+  calendar_view:
+    label: 日历视图
+  all:
+    label: 全部

@@ -9,7 +9,7 @@ fields:
     type: text
     required: true
   code:
-    label: Code ( API Name )
+    label: API Name
     type: text
     required: true
   # contact_email: 

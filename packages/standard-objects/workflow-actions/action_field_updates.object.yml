@@ -3,6 +3,8 @@ label: Field Updates
 icon: record
 hidden: true
 enable_inline_edit: false
+# version: 2
+enable_enhanced_lookup: true
 fields:
   name:
     type: text
@@ -29,11 +31,14 @@ fields:
         if(object){
           var _options = [{label: object.label, value: object.name}];
           _.forEach(object.fields, function (field, fname) {
-            if(field && field.type === 'master_detail' && _.isString(field.reference_to) && field.label){
-              _options.push({
-                label: field.label,
-                value: field.name,
-              });
+            if(field && field.type === 'master_detail' && _.isString(field.reference_to)){
+              var referenceToObject = Creator.objectsByName[field.reference_to];
+              if(referenceToObject){
+                _options.push({
+                  label: referenceToObject.label,
+                  value: field.name,
+                });
+              }
             }
           });
           return _options;
@@ -51,7 +56,7 @@ fields:
       function (doc) {
         var mainObjectName = null;
         if(doc.target_object && doc.target_object != doc.object_name){
-          var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
+          mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
         }else{
           mainObjectName = doc.object_name;
         }
@@ -59,10 +64,13 @@ fields:
         if(object){
           var _options = [];
           _.forEach(object.fields, function (field, fname) {
-            _options.push({
+            if(["formula", "summary", "autonumber"].indexOf(field.type) < 0){
+              /*公式、累计汇总、自动编号三种字段类型是只读的，不允许字段更新来变更其值*/
+              _options.push({
                 label: field.label,
                 value: field.name,
               });
+            }
           });
           return _options;
         }
@@ -73,11 +81,13 @@ fields:
     showIcon: false
     depend_on:
       - field_name
+      - target_object
+      - object_name
     optionsFunction: !!js/function |
       function (doc) {
         var mainObjectName = null;
         if(doc.target_object && doc.target_object != doc.object_name){
-          var mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
+          mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;
         }else{
           mainObjectName = doc.object_name;
         }
@@ -130,6 +140,12 @@ fields:
     label: Description
     type: textarea
     is_wide: true
+  reevaluate_on_change:
+    type: boolean
+    label: Re-evaluate Workflow Rules after Field Change
+  undirect:
+    type: boolean
+    label: 触发对象触发器、工作流规则、字段验证规则
   # todo:
 form:
   beforeEdit: !!js/function |
@@ -174,3 +190,7 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+actions:
+  customize:
+    label: Customize
+    on: record

@@ -107,6 +107,20 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 		userId = Meteor.userId()
 		loginToken = Accounts._storedLoginToken()
 		needToRefreshTree = self.needToRefreshTree.get()
+
+		is_admin = Steedos.isSpaceAdmin()
+		orgIds = Steedos.getUserCompanyOrganizationIds()
+		orgDocs = db.organizations.find({$or:[{_id:{$in:orgIds}},{parents:{$in:orgIds}}]}).fetch()
+		if !is_admin 
+			if !orgIds || !orgIds.length
+				return null
+			# 等待orgDocs订阅完成再显示组织树
+			if !orgDocs || !orgDocs.length
+				return null
+			# 权限筛选，只显示当前有权限的组织本身及其所有子组织和孙组织（包括任意深度的子孙组织）
+			filters = [["_id", "=", orgIds], "or", ["parents", "=", orgIds]]
+			steedosFilters = require("@steedos/filters")
+			filters = steedosFilters.formatFiltersToDev(filters)
 		if spaceId and userId
 			url = "/api/odata/v4/#{spaceId}/#{object_name}"
 			dxOptions = 
@@ -154,6 +168,7 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 						fieldTypes: {
 							'_id': 'String'
 						}
+					filter: filters
 					sort: [ {
 						selector: 'sort_no'
 						desc: true
@@ -214,7 +229,15 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 			dxOptions.parentIdExpr = "parent"
 			dxOptions.displayExpr = "name"
 			dxOptions.hasItemsExpr = "hasItems"
-			dxOptions.rootValue = null
+			if is_admin
+				dxOptions.rootValue = null
+			else
+				# 这里不可以直接把dxOptions.rootValue设置为orgIds[0]，因为这样的话，不会显示orgIds[0]本身而只会显示其子组织
+				# 所以这里取orgIds[0]对应的组织的父组织ID值为根组织
+				dxOptions.rootValue = orgDocs[0].parent
+				unless dxOptions.rootValue
+					# 如果第一个组织parent不存在说明当前用户主部门为根组织
+					dxOptions.rootValue = null
 			dxOptions.dataStructure = "plain"
 			dxOptions.virtualModeEnabled = true 
 
@@ -269,4 +292,5 @@ Template.creator_grid_sidebar_organizations.onCreated ->
 				self.needToRefreshTree.set(new Date())
 
 Template.creator_grid_sidebar_organizations.onDestroyed ->
+	Session.set "organization", null
 	Session.set "grid_sidebar_filters", null

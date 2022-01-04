@@ -334,7 +334,21 @@ Template.creator_view.helpers
 		return Session.get "object_name"
 
 	related_list: ()->
-		return Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		record = Template.instance().__record?.get();
+		globalData = Object.assign({}, Creator.USER_CONTEXT, {now: new Date()});
+		return _.filter(relatedList, (item)->
+			if !_.has(item, 'visible_on') || item.visible_on == undefined
+				return true;
+			else
+				try
+					if _.isString(item.visible_on) && Steedos.isExpression(item.visible_on.trim())
+						return Steedos.parseSingleExpression(item.visible_on, record, "#", globalData);
+					return item.visible_on;
+				catch e
+					console.error(e)
+					return false
+		)
 
 	related_object_label: (relatedListObjLabel, relatedObjLabel) ->
 		return relatedListObjLabel || relatedObjLabel
@@ -342,9 +356,13 @@ Template.creator_view.helpers
 	related_list_count: (obj)->
 		if obj
 			object_name = obj.object_name
+			related_field_name = obj.related_field_name
 			recordsTotal = Template.instance().recordsTotal.get()
 			if !_.isEmpty(recordsTotal) and object_name
-				return recordsTotal[object_name]
+				if related_field_name
+					return recordsTotal[object_name + '/' + related_field_name]
+				else
+					return recordsTotal[object_name]
 
 	related_selector: ()->
 		object_name = this.object_name
@@ -452,7 +470,7 @@ Template.creator_view.helpers
 		record_id = Session.get "record_id"
 		app_id = Session.get "app_id"
 		related_object_name = this.object_name
-		return Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name)
+		return Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name, this.related_field_name)
 
 	cell_data: (key)->
 		record = Creator.getObjectRecord()
@@ -511,7 +529,15 @@ Template.creator_view.helpers
 		# return true
 		# 先不显示返回按钮 【相关记录的链接，不要弹出新窗口 #461】
 		return false
-
+	recordId: ()->
+		return Session.get("record_id")
+	isEdit: ()->
+		return this.name == 'standard_edit'
+	showReactForm: ()->
+		return Creator.getObject(Session.get("object_name"))?.version >= 2
+	afterUpdate: ()->
+		return ()->
+			FlowRouter.reload();
 Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->
@@ -585,10 +611,44 @@ Template.creator_view.events
 		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 
 	'click .add-related-object-record': (event, template) ->
-		object_name = event.currentTarget.dataset.objectName
-		collection_name = Creator.getObject(object_name).label
-		collection = "Creator.Collections.#{Creator.getObject(object_name)._collection_name}"
+		related_object_name = event.currentTarget.dataset.objectName
+		relateObject = Creator.getObject(related_object_name)
+
+		collection_name = relateObject.label
+		collection = "Creator.Collections.#{Creator.getObject(related_object_name)._collection_name}"
 		current_object_name = Session.get("object_name")
+		current_record_id = Session.get("record_id")
+		ids = Creator.TabularSelectedIds[related_object_name]
+		initialValues = {};
+		if ids?.length
+			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
+			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
+			record_id = ids[0]
+			doc = Creator.odata.get(related_object_name, record_id)
+			initialValues = doc
+			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
+			Session.set 'cmShowAgainDuplicated', true
+		else
+			defaultDoc = FormManager.getRelatedInitialValues(current_object_name, current_record_id, related_object_name);
+			if !_.isEmpty(defaultDoc)
+				initialValues = defaultDoc
+		if relateObject?.version >= 2
+			return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+				name: "#{related_object_name}_standard_new_form",
+				objectApiName: related_object_name,
+				title: '新建 ' + relateObject.label,
+				initialValues: initialValues,
+				afterInsert: (result)->
+					setTimeout(()->
+						# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
+						if Creator.getObject(current_object_name).version > 1
+							SteedosUI.reloadRecord(current_object_name, current_record_id)
+						FlowRouter.reload();
+					, 1);
+					return true;
+			}, null, {iconPath: '/assets/icons'})
+
+
 
 #		relatedKey = ""
 #		relatedValue = Session.get("record_id")
@@ -596,19 +656,16 @@ Template.creator_view.events
 #			if object_name == related_obj.object_name
 #				relatedKey = related_obj.related_field_name
 		
-		ids = Creator.TabularSelectedIds[object_name]
+
 		if ids?.length
 			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
 			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
-			record_id = ids[0]
-			doc = Creator.odata.get(object_name, record_id)
-			Session.set 'cmDoc', doc
+			Session.set 'cmDoc', initialValues
 			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 			Session.set 'cmShowAgainDuplicated', true
 		else
-			defaultDoc = FormManager.getRelatedInitialValues(current_object_name, Session.get("record_id"), object_name);
-			if !_.isEmpty(defaultDoc)
-				Session.set 'cmDoc', defaultDoc
+			if !_.isEmpty(initialValues)
+				Session.set 'cmDoc', initialValues
 
 #		else if current_object_name == "objects"
 #			recordObjectName = Creator.getObjectRecord().name
@@ -702,17 +759,21 @@ Template.creator_view.events
 				$(".btn.creator-edit").click()
 
 	'change .input-file-upload': (event, template)->
+		mainObjectApiName = Session.get "object_name";
 		Creator.relatedObjectFileUploadHandler event, ()->
 			dataset = event.currentTarget.dataset
 			parent = dataset?.parent
 			targetObjectName = dataset?.targetObjectName
+			related_field_name = dataset?.targetRelatedFieldName
 			console.log("relatedObjectFileUploadHandler==targetObjectName==", targetObjectName);
 			if Steedos.isMobile()
 				Template.list.refresh getRelatedListTemplateId(targetObjectName)
 			else
-				gridContainerWrap = $(".related-object-tabular")
-				dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
-				Template.creator_grid.refresh dxDataGridInstance
+				FlowRouter.reload();
+				# window.refreshGrid("related_listview_#{mainObjectApiName}_#{targetObjectName}"+ '_' + related_field_name);
+#				gridContainerWrap = $(".related-object-tabular")
+#				dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
+#				Template.creator_grid.refresh dxDataGridInstance
 
 	
 	'click .slds-tabs_card .slds-tabs_default__item': (event) ->

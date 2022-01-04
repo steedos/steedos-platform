@@ -1,0 +1,13 @@
+metadataName: Tab
+isAddressable: true
+isSourceTracked: true
+tableName: tabs
+ext: tab
+hasContent: false
+defaultDirectory: tabs
+nameForMsgs: Tab
+nameForMsgsPlural: Tabs
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

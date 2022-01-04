@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "name": "steedos-schema_permissionset",
+    "type": "object",
+    "additionalProperties": false,
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "library"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "not": {
+                        "enum": [
+                            "library"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "API 名称"
+        },
+        "label": {
+            "type": "string",
+            "description": "显示名称"
+        },
+        "license": {
+            "type": "boolean",
+            "description": "许可证"
+        },
+        "assigned_apps": {
+            "type": "array",
+            "description": "授权应用"
+        }
+    }
+}

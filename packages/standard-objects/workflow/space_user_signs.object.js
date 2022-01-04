@@ -1,6 +1,6 @@
 if (!db.space_user_signs) {
   const core = require('@steedos/core');
-  db.space_user_signs = core.newCollection('space_user_signs');
+  db.space_user_signs = Creator.getCollection('space_user_signs') || core.newCollection('space_user_signs');
 }
 
 if (Meteor.isServer) {

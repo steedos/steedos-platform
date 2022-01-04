@@ -24,6 +24,7 @@ export const validate = async (req: express.Request, res: express.Response) => {
             clearAuthCookies(req, res)
         }
     }
+    clearAuthCookies(req, res);
     return res.status(401).send({
         "error": "Validate Request -- Missing X-Auth-Token",
         "instance": "1329598861",

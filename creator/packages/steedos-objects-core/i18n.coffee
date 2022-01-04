@@ -1,4 +1,4 @@
-import i18n from 'meteor/universe:i18n';
+i18n = require('meteor/universe:i18n').i18n;
 I18n = require('@steedos/i18n');
 @i18n = i18n;
 

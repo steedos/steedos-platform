@@ -1,0 +1,104 @@
+name: datasources
+label: 外部数据源
+description: 
+fields:
+  driver:
+    label: 数据库类型
+    help: 
+    options:
+      - label: MongoDB
+        value: mongo
+      - label: SQL Server
+        value: sqlserver
+      - label: PostgreSQL
+        value: postgres
+      - label: Oracle
+        value: oracle
+      - label: MySQL
+        value: mysql
+      - label: Sqlite
+        value: sqlite
+    description: 
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  name:
+    label: API 名称
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+    description: 
+  url:
+    label: 连接数据库的URL
+    help: 
+    description: 
+  host:
+    label: 服务器地址
+    help: 
+    description: 
+  port:
+    label: 端口
+    help: 
+    description: 
+  database:
+    label: 数据库
+    help: 
+    description: 
+  username:
+    label: 用户名
+    help: 
+    description: 
+  password:
+    label: 密码
+    help: 
+    description: 
+  mssql_options:
+    label: 连接选项
+    help: 
+    description: 
+  connectString:
+    label: connectString
+    help: 
+    description: 
+  timezone:
+    label: 时区
+    help: 
+    description: 
+  options:
+    label: Options
+    help: 
+    description: 
+  enable_space:
+    label: 启用工作区
+    help: 
+    description: 
+  locale:
+    label: 语言
+    help: 
+    description: 
+  logging:
+    label: Debug
+    help: 
+    description: 
+  is_enable:
+    label: 启用
+    help: 
+    description: 
+groups:
+  other_connection_options: 其他连接选项 (请注意，其他连接选项将覆盖从URL设置的参数)
+  mssql: Mssql
+  oracle: Oracle
+listviews:
+  all:
+    label: 所有
+actions:
+  testConnection:
+    label: 测试连接
+CustomLabels:
+  datasources__error_name_invalid_format: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+  _datasources_testConnection_ok: 连接成功
+  _datasources_driver_error_notFind_mssql: 未找到Mssql驱动，请在项目中安装(`yarn add mssql`)并重启服务
+  _datasources_driver_error_notFind_pg: 未找到Postgres驱动，请在项目中安装(`yarn add pg`)并重启服务
+  _datasources_driver_error_notFind_oracledb: 未找到Oracle驱动，请在项目中安装(`yarn add oracledb`)并重启服务
+  _datasources_driver_error_notFind_mysql: 未找到Mysql驱动，请在项目中安装(`yarn add mysql`)并重启服务
+  _datasources_driver_error_notFind_sqlite3: 未找到Sqlite驱动，请在项目中安装(`yarn add sqlite3`)并重启服务
+  datasources_field_driver_options_meteor-mongo: Meteor Mongo

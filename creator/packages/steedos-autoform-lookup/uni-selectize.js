@@ -38,6 +38,7 @@ UniSelectize = function (options, template, filtersFunction, optionsFunction, cr
 	this.dataSourceType = options.dataSourceType
 
 	this.optionsLimit = options.optionsLimit
+	this.referenceToField = options.referenceToField
 
 	this.initialized = new ReactiveVar(0);
 
@@ -123,7 +124,8 @@ UniSelectize.prototype.setItems = function (items, value) {
 	var values = value && (_.isArray(value) ? value : [value]);
 
 	items = _.filter(items, function (item) {
-		if (!item || !item.value || !item.label) {
+		// item.value要支持boolean和number类型值
+		if (!item || _.isNull(item.value) || _.isUndefined(item.value) || item.value === "" || !item.label) {
 			console.info('invalid option', item);
 			return false;
 		}
@@ -527,6 +529,7 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 	var params = this.optionsMethodParams.get();
 	var optionsFunction = this.optionsFunction;
 	var optionsLimit = this.optionsLimit;
+	var referenceToField = this.referenceToField;
 
 	if (optionsFunction) {
 		return false;
@@ -560,7 +563,8 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 		params: params || null,
 		selected: _.pluck(seleted, 'value'),
 		filterQuery: filterQuery,
-		options_limit: optionsLimit
+		options_limit: optionsLimit,
+		reference_to_field: referenceToField
 	};
 
 	if(this.optionsSort){

@@ -9,7 +9,7 @@ var meteorInstall = Package.modules.meteorInstall;
 /* Package-scope variables */
 var URL;
 
-var require = meteorInstall({"node_modules":{"meteor":{"url":{"url_server.js":function(require,exports){
+var require = meteorInstall({"node_modules":{"meteor":{"url":{"url_server.js":function module(require,exports){
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                                                             //
@@ -33,7 +33,7 @@ URL._constructUrl = function (url, query, params) {
 
 /////////////////////////////////////////////////////////////////////////////////
 
-},"url_common.js":function(require,exports){
+},"url_common.js":function module(require,exports){
 
 /////////////////////////////////////////////////////////////////////////////////
 //                                                                             //

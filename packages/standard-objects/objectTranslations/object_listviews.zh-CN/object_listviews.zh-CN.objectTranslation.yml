@@ -1,0 +1,141 @@
+name: object_listviews
+label: 列表视图
+description: 
+fields:
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  name:
+    label: API 名称
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  filter_scope:
+    label: 过滤范围
+    help: 
+    description: 
+  shared:
+    label: 共享视图到工作区
+    help: 
+    description: 
+  show_count:
+    label: 显示条目数
+    help: 
+    description: 
+  type:
+    label: 视图类型
+    help: 
+    options:
+      - label: 列表
+        value: grid
+      - label: ' 日历视图'
+        value: calendar
+    description: 
+  scrolling_mode:
+    label: 滚动条样式
+    help: 定义数据列表的滚动条显示样式
+    options:
+      - label: 按照传统的分页显示，点击页码加载对应页面的数据
+        value: standard
+      - label: ' 通过滚动条切换页面，当滚动到对应页面时，会远程加载数据'
+        value: virtual
+      - label: ' 滚动刷新，初始只加载第一页，一边滚动一边加载下一页'
+        value: infinite
+    description: 
+  columns:
+    label: 显示的列
+    help: 
+    description: 
+  columns.$:
+    label: 显示的列
+    help: 
+    description: 
+  columns.$.field:
+    label: 字段
+    help: 
+    description: 
+  columns.$.width:
+    label: 宽度
+    help: 
+    description: 
+  columns.$.wrap:
+    label: 是否换行
+    help: 
+    description: 
+  filter_fields:
+    label: 默认过滤字段
+    help: 
+    description: 
+  sort:
+    label: 默认排序规则
+    help: 
+    description: 
+  sort.$:
+    label: Order
+    help: 
+    description: 
+  sort.$.field_name:
+    label: 排序字段
+    help: 
+    description: 
+  sort.$.order:
+    label: 排序方式
+    help: 
+    options:
+      - label: 正序
+        value: asc
+      - label: 倒序
+        value: desc
+    description: 
+  filters:
+    label: 过滤器
+    help: 
+    description: 
+  filters.$:
+    label: Filter
+    help: 
+    description: 
+  filters.$.field:
+    label: 字段
+    help: 
+    description: 
+  filters.$.operation:
+    label: 运算符
+    help: 
+    description: 
+  filters.$.value:
+    label: 值
+    help: 
+    description: 
+  filter_logic:
+    label: 过滤逻辑
+    help: 
+    description: 
+  mobile_columns:
+    label: 手机端显示的列
+    help: 
+    description: 
+  mobile_columns.$:
+    label: 手机端显示的列
+    help: 
+    description: 
+  mobile_columns.$.field:
+    label: 字段
+    help: 
+    description: 
+  sort_no:
+    label: 排序号
+listviews:
+  all:
+    label: 全部
+actions:
+  customize:
+    label: 自定义
+CustomLabels:
+  object_listviews_field_filters.$: 
+  object_listviews_field_sort.$: 
+  object_listviews__error_name_invalid_format: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符

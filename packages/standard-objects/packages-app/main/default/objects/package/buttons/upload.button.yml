@@ -1,0 +1,5 @@
+name: upload
+is_enable: true
+label: 上载
+'on': record_only
+visible: true

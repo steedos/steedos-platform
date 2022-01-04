@@ -1,0 +1,12 @@
+metadataName: CustomPermissionset
+defaultDirectory: permissionsets
+tableName: permission_set
+ext: permissionset
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Permissionset
+nameForMsgsPlural: Custom Permissionsets
+deleteSupported: true

@@ -17,3 +17,6 @@ yarn start
 ```
 
 Open a browser and navigate to [http://localhost:3000](http://localhost:3000).
+
+## 功能说明
+- 登录及注册页面前台

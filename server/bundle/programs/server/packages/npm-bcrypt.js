@@ -9,7 +9,7 @@ var meteorInstall = Package.modules.meteorInstall;
 /* Package-scope variables */
 var NpmModuleBcrypt;
 
-var require = meteorInstall({"node_modules":{"meteor":{"npm-bcrypt":{"wrapper.js":function(require,exports){
+var require = meteorInstall({"node_modules":{"meteor":{"npm-bcrypt":{"wrapper.js":function module(require,exports){
 
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
@@ -58,7 +58,7 @@ Object.keys(methods).forEach(function (key) {
 
 /////////////////////////////////////////////////////////////////////////////
 
-},"node_modules":{"bcryptjs":{"package.json":function(require,exports,module){
+},"node_modules":{"bcryptjs":{"package.json":function module(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
@@ -74,7 +74,7 @@ module.exports = {
 
 /////////////////////////////////////////////////////////////////////////////
 
-},"index.js":function(require,exports,module){
+},"index.js":function module(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //

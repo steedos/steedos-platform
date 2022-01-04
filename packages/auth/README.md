@@ -40,3 +40,6 @@ export declare type SteedosIDType = number | string;
   let app = express();
   app.use('/', setRequestUser);
 ```
+
+## 功能说明
+- 此包用于解析接口用户认证信息、缓存用户基本信息

@@ -1,0 +1,11 @@
+name: all
+columns:
+  - field: member
+  - field: parent
+  - field: type
+filter_scope: space
+filters: []
+label: 所有
+scrolling_mode: standard
+shared: true
+type: grid

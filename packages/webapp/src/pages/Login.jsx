@@ -89,8 +89,8 @@ class Login extends React.Component {
         loginWithPassword: this.props.tenant.enable_password_login,
 
         serverError: '',
-        loading: false
-
+        loading: false,
+        MFA: false,
         // brandImageError: false,
     };
 
@@ -147,6 +147,16 @@ class Login extends React.Component {
 
   handleLoginIdChange = (e) => {
     const loginId = e.target.value;
+    if(this.state.MFA){
+      this.setState({
+        loginId,
+        mobile: e.target.value,
+        username: null,
+        email: null,
+        loginBy: 'mobile'
+      });
+      return;
+    }
     if (loginId.indexOf('@') > 0) {
       this.setState({
         loginId,
@@ -213,7 +223,7 @@ class Login extends React.Component {
       });
       return
     }
-    if(this.state.loginBy === 'mobile' && !this.state.mobile.trim()){
+    if(this.state.loginBy === 'mobile' && (!this.state.mobile || !this.state.mobile.trim() || !new RegExp('^[0-9]{11}$').test(this.state.mobile))){
       this.setState({
           serverError: (
               <FormattedMessage
@@ -278,7 +288,23 @@ class Login extends React.Component {
       username: (this.state.loginWith === 'password' && this.state.loginBy === 'username')?this.state.username.trim():'',
       spaceId: this.state.spaceId,
     }
-    this.props.actions.login(user, this.state.password?this.state.password.trim():this.state.password, this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode).then(async ({error}) => {
+    this.props.actions.login(user, this.state.password?this.state.password.trim():this.state.password, this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode).then(async (args) => {
+      const {error} = args;
+      if(error === 'TO_MOBILE_CODE_LOGIN'){
+        return this.setState({
+          loginByEmail: false,
+          loginByMobile: true,
+          loginBy: "mobile",
+          loginWith: 'code',
+          MFA: true,
+          loginId: '',
+          email: null,
+          username: null
+        });
+      }else if(error === 'TO_VERIFY_MOBILE'){
+        const location = this.props.location;
+        GlobalAction.redirectUserToVerifyMobile(location)
+      }
       if (error) {
         this.setState({
             serverError: (
@@ -326,10 +352,15 @@ class Login extends React.Component {
     <Card>
         <Logo/>
         <h2 className="mt-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
-          <FormattedMessage
+          {this.state.MFA && <FormattedMessage
+              id='accounts.signin-MFA'
+              defaultMessage='Multi-Factor Authentication'
+            />}
+          {!this.state.MFA && <FormattedMessage
               id='accounts.signin'
               defaultMessage='Login'
-            />
+            />}
+          
         </h2>
 
         <form onSubmit={this.onSubmit} className="mt-4" autoCapitalize="none">
@@ -341,7 +372,7 @@ class Login extends React.Component {
                 ref={this.loginIdInput}
                 value={this.state.loginId}
                 className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                placeholder={{id: 'accounts.email_mobile', defaultMessage: 'Email or mobile'}}
+                placeholder={this.state.MFA ? {id: 'accounts.mobile', defaultMessage: 'Mobile'} : {id: 'accounts.email_mobile', defaultMessage: 'Email or mobile'}}
                 onChange={this.handleLoginIdChange}
               />
             </div>
@@ -380,7 +411,7 @@ class Login extends React.Component {
           {this.state.serverError && <FormError error={this.state.serverError} />}
 
 
-          {this.state.loginWithPassword && this.state.loginWith === 'code' && (
+          {!this.state.MFA && this.state.loginWithPassword && this.state.loginWith === 'code' && (
             <div className="text-sm leading-5 my-4">
               <button type="button" onClick={this.switchLoginWithPassword}
                 className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
@@ -404,7 +435,7 @@ class Login extends React.Component {
             </div>
           )}
 
-          {this.props.tenant.enable_register &&
+          {!this.state.MFA && this.props.tenant.enable_register &&
           <div className="text-sm leading-5 my-4">
             <FormattedMessage
                   id='accounts.no_account'

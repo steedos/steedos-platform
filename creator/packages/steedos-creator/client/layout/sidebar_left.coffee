@@ -12,14 +12,8 @@ Template.creatorSidebarLeft.helpers
 		return Creator.getObject(this)
 
 	app_objects: (_id)->
-		app = Creator.getApp(_id)
-		objects = []
-		if app
-			_.each app.mobile_objects, (v)->
-				obj = Creator.getObject(v)
-				if obj?.permissions.get().allowRead
-					objects.push v
-		return objects
+		menus = Creator.getAppMenus(_id)
+		return menus
 
 	isActive: (obj, appId)->
 		if (obj == Session.get("object_name") && appId == Session.get("app_id"))
@@ -35,7 +29,11 @@ Template.creatorSidebarLeft.helpers
 	object_url: (_id)->
 		unless _id
 			_id = "-"
-		return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
+		# return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
+		if this.type == "object" or !this.type
+			return Creator.getRelativeUrl("/app/#{_id}/#{String(this.id)}")
+		else
+			return Creator.getAppMenuUrl this
 
 	settings_url: ()->
 		return Creator.getRelativeUrl('/user_settings')
@@ -48,16 +46,28 @@ Template.creatorSidebarLeft.helpers
 		return t("none_space_selected_title")
 
 	getApps: ->
-		return _.filter Creator.getVisibleApps(true), (item)->
-			return item._id !='admin' && !_.isEmpty(item.mobile_objects)
+		return Session.get("app_menus")
+		# return _.filter Creator.getVisibleApps(true), (item)->
+		# 	return item._id !='admin' && !_.isEmpty(item.mobile_objects)
+		# 	return item._id !='admin' && (!_.isEmpty(item.mobile_objects) || !_.isEmpty(item.tabs))
 
 	logoUrl: ()->
+		# 公司logo可以通过配置文件配置
+		settings = Session.get("tenant_settings");
+		if settings
+			avatar_url = settings?.logo_square_url;
+		
 		avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar
 		if avatar
 			return Steedos.absoluteUrl("/api/files/avatars/#{avatar}")
+		else if settings && avatar_url
+			return Steedos.absoluteUrl(avatar_url)
 		else
 			logo_url = "/packages/steedos_creator/assets/logo-square.png"
+			if(Meteor.user()?.locale != 'zh-cn')
+				logo_url = "/packages/steedos_creator/assets/logo-square.en-us.png"
 			return Creator.getRelativeUrl(logo_url)
+		
 
 Template.creatorSidebarLeft.events
 	"click #sidebarSwitcherButton": (e, t)->
@@ -70,4 +80,15 @@ Template.creatorSidebarLeft.events
 	'click #sidebar-left': (e, t)->
 		$("#sidebar-left").addClass('hidden')
 		$(".steedos").removeClass('move--right')
+	'click #sidebar-left .sidebar-menu-item': (e, t)->
+		dataset = e.currentTarget.dataset
+		appId = dataset.appId
+		menuId = dataset.menuId
+		menu = Creator.getAppMenu(appId, menuId)
+		if menu.target
+			# 手机上新窗口中打开需要调用Steedos.openWindow因为手机APP不支持a标签的target="_blank"
+			menuUrl = Creator.getAppMenuUrl(menu)
+			Steedos.openWindow(menuUrl)
+			return false
+		
 		

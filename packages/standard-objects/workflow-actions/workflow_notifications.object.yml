@@ -1,0 +1,107 @@
+name: workflow_notifications
+label: Workflow Notification
+icon: quick_text
+hidden: true
+enable_inline_edit: false
+version: 2
+fields:
+  name:
+    type: text
+    searchable: true
+    index: true
+    required: true
+    inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
+  label:
+    type: text
+    required: true
+    is_name: true
+  object_name:
+    label: Object Name
+    type: lookup
+    required: true
+    is_wide: true
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions();
+      }
+  title:
+    label: Title
+    type: textarea
+    is_wide: true
+    required: true
+  body:
+    label: Body
+    type: textarea
+    is_wide: true
+    required: true
+  assigned_users:
+    type: lookup
+    reference_to: users
+    multiple: true
+    is_wide: true
+    group: Select Assigned User
+  assigned_user_field:
+    type: lookup
+    multiple: true
+    is_wide: true
+    group: Select Assigned User
+    showIcon: false
+    depend_on:
+      - object_name
+    optionsFunction: !!js/function |
+      function (doc){
+        var object = Creator.objectsByName[doc.object_name];
+        var options = [];
+        if(object){
+          var userFields = _.filter(object.fields, function(field){
+            return (field.type === 'lookup' || field.type === 'master_detail') && field.omit != true && field.reference_to === 'users'
+          });
+          _.each(userFields, function(field){
+            options.push({label:field.label, value:field.name});
+          })
+        }
+        return options;
+      }
+form:
+  beforeEdit: !!js/function |
+    function(){
+      Steedos.WorkflowNotificationsManager.changeSchema(this.doc, this.schema);
+    }
+  afterEdit: !!js/function |
+    function(){
+      Steedos.WorkflowNotificationsManager.changeSchema(this.doc, this.schema);
+    }
+  beforeView: !!js/function |
+    function(){
+      Steedos.WorkflowNotificationsManager.changeSchema(this.doc, this.schema);
+    }
+list_views:
+  all:
+    label: All Notifications
+    filter_scope: space
+    columns:
+      - object_name
+      - name
+      - title
+      - body
+      - assigned_users
+      - assigned_user_field
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+actions:
+  customize:
+    label: Customize
+    on: record

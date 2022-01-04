@@ -32,7 +32,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   if (config.tenant && config.tenant._id) {
     let spaceDoc = await db.findOne("spaces", config.tenant._id, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "account_logo"]})
     let steedosService = getSteedosService();
-    if (steedosService) {
+    if (steedosService && spaceDoc) {
         _.assignIn(tenant, spaceDoc);
       if (spaceDoc.account_logo) {
         tenant.logo_url = steedosService + "api/files/avatars/" + spaceDoc.account_logo

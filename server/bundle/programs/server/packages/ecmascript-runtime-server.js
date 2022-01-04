@@ -6,7 +6,7 @@ var global = Package.meteor.global;
 var meteorEnv = Package.meteor.meteorEnv;
 var meteorInstall = Package.modules.meteorInstall;
 
-var require = meteorInstall({"node_modules":{"meteor":{"ecmascript-runtime-server":{"runtime.js":function(require){
+var require = meteorInstall({"node_modules":{"meteor":{"ecmascript-runtime-server":{"runtime.js":function module(require){
 
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
@@ -37,23 +37,11 @@ var require = meteorInstall({"node_modules":{"meteor":{"ecmascript-runtime-serve
 // Note that the es6.reflect.* and es6.typed.* modules have been commented
 // out for bundle size reasons.
 
-require("core-js/modules/es7.string.pad-start");
-require("core-js/modules/es7.string.pad-end");
+require("core-js/modules/es.symbol.async-iterator");
 
 /////////////////////////////////////////////////////////////////////////////
 
-},"node_modules":{"core-js":{"modules":{"es7.string.pad-start.js":function(require,exports,module){
-
-/////////////////////////////////////////////////////////////////////////////
-//                                                                         //
-// node_modules/meteor/ecmascript-runtime-server/node_modules/core-js/modu //
-//                                                                         //
-/////////////////////////////////////////////////////////////////////////////
-                                                                           //
-module.useNode();
-/////////////////////////////////////////////////////////////////////////////
-
-},"es7.string.pad-end.js":function(require,exports,module){
+},"node_modules":{"core-js":{"modules":{"es.symbol.async-iterator.js":function module(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //

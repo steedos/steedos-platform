@@ -1,6 +1,0 @@
-OAuth2AccessTokens__object: OAuth2 Token
-OAuth2AccessTokens_field_accessToken: Token
-OAuth2AccessTokens_field_clientId: Client ID
-OAuth2AccessTokens_field_expires: 有效期限
-OAuth2AccessTokens_field_userId: 用户
-OAuth2AccessTokens_listview_all: 全部

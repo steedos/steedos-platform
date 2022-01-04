@@ -1,0 +1,5 @@
+name: standard_delete
+is_enable: true
+label: standard_delete
+'on': record_only
+visible: false

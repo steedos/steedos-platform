@@ -1,0 +1,14 @@
+name: namespace
+filterable: false
+index: false
+hidden: true
+is_name: false
+is_wide: false
+label: 命名空间
+omit: false
+readonly: false
+required: false
+searchable: false
+sort_no: 120
+sortable: false
+type: text

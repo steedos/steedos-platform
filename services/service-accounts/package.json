@@ -1,0 +1,13 @@
+{
+  "name": "@steedos/service-accounts",
+  "version": "2.1.65",
+  "main": "package.service.js",
+  "license": "MIT",
+  "dependencies": {
+    "node-schedule": "^2.0.0"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}

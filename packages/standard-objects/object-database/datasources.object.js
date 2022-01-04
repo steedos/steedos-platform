@@ -3,6 +3,7 @@ var objectql = require('@steedos/objectql');
 var schema = objectql.getSteedosSchema();
 const datasourceCore = require('./datasources.core');
 const defaultDatasourceName = 'default';
+const defaultDatasourcesName = ['default','meteor'];
 
 Meteor.publish("datasources", function (spaceId) {
     var userId = this.userId
@@ -52,8 +53,8 @@ function checkName(name){
     if(!reg.test(name)){
         throw new Error("datasources__error_name_invalid_format");
     }
-    if(name.length > 20){
-        throw new Error("API 名称长度不能大于20个字符");
+    if(name.length > 50){
+        throw new Error("API 名称长度不能大于50个字符");
     }
     return true
 }
@@ -65,6 +66,10 @@ function getConfigDatasources(){
 
 function isRepeatedName(id, name) {
     if(name === defaultDatasourceName){
+        return true;
+    }
+
+    if(_.include(defaultDatasourcesName, name)){
         return true;
     }
 

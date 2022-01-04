@@ -1,0 +1,112 @@
+name: object_layouts
+label: 页面布局
+description: 
+fields:
+  label:
+    label: 页面布局名
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  profiles:
+    label: 简档
+    help: 
+    description: 
+  buttons:
+    label: 操作
+    help: 
+    description: 
+  buttons.$.button_name:
+    label: 名称
+    help: 
+    description: 
+  buttons.$.visible_on:
+    label: 显示条件
+    help: 
+    description: 
+  fields:
+    label: 字段
+    help: 
+    description: 
+  fields.$:
+    label: Field
+    help: 
+    description: 
+  fields.$.field_name:
+    label: 字段
+    help: 
+    description: 
+  fields.$.is_readonly:
+    label: 只读
+    help: 
+    description: 
+  fields.$.is_required:
+    label: 必填
+    help: 
+    description:
+  fields.$.visible_on:
+    label: 显示条件
+    help: 
+    description:
+  fields.$.group:
+    label: 分组
+    help: 
+    description: 
+  related_lists:
+    label: 相关子表
+    help: 
+    description: 
+  related_lists.$.label:
+    label: 显示标题
+    help: 默认为对象名称
+    description:
+  related_lists.$.related_field_fullname:
+    label: 子表名称
+    help: 
+    description:
+  related_lists.$.field_names:
+    label: 显示的字段
+    help: 
+    description:
+  related_lists.$.sort_field_name:
+    label: 排序字段
+    help: 
+    description:
+  related_lists.$.buttons:
+    label: 操作按钮
+    help: 
+    description:
+  related_lists.$.sort_order:
+    label: 排序方式
+    help: 
+    description:
+    options:
+      - label: 正序
+        value: asc
+      - label: 倒序
+        value: desc
+  related_lists.$.filters:
+    label: 过滤规则
+    help: 
+    description:
+  related_lists.$.visible_on:
+    label: 显示条件
+    help: 
+    description:
+  related_lists.$.page_size:
+    label: 每页显示数量
+    help: 
+    description:
+listviews:
+  all:
+    label: 所有
+actions:
+  customize:
+    label: 自定义
+CustomLabels:
+  object_layouts_group_field_info: 字段信息
+  object_layouts__object: 页面布局
+  object_layouts_group_appendToLayouts: 选择应包含该字段的页面布局（如果不选择布局，该字段在任何页面上都不会显示）
+  object_layouts_title_appendField: 将字段添加到页面布局

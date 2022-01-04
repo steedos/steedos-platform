@@ -1,0 +1,149 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "name": "steedos-schema_object_permission",
+    "type": "object",
+    "additionalProperties": false,
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "library"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "not": {
+                        "enum": [
+                            "library"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "properties": {
+        "name":{
+            "type": "string"
+        },
+        "permission_set_id":{
+            "type": "string"
+        },
+        "allowRead": {
+            "type": "boolean",
+            "description": "允许查看"
+        },
+        "allowCreate": {
+            "type": "boolean",
+            "description": "允许创建"
+        },
+        "allowEdit": {
+            "type": "boolean",
+            "description": "允许修改"
+        },
+        "allowDelete": {
+            "type": "boolean",
+            "description": "允许删除"
+        },
+        "viewAllRecords": {
+            "type": "boolean",
+            "description": "查看所有记录"
+        },
+        "modifyAllRecords": {
+            "type": "boolean",
+            "description": "修改所有记录"
+        },
+        "viewCompanyRecords": {
+            "type": "boolean",
+            "description": "查看本分部"
+        },
+        "modifyCompanyRecords": {
+            "type": "boolean",
+            "description": "修改本分部"
+        },
+        "allowReadFiles": {
+            "type": "boolean",
+            "description": "允许查看附件"
+        },
+        "allowCreateFiles": {
+            "type": "boolean",
+            "description": "允许创建附件"
+        },
+        "allowEditFiles": {
+            "type": "boolean",
+            "description": "允许修改附件"
+        },
+        "allowDeleteFiles": {
+            "type": "boolean",
+            "description": "允许删除附件"
+        },
+        "viewAllFiles": {
+            "type": "boolean",
+            "description": "查看所有附件"
+        },
+        "modifyAllFiles": {
+            "type": "boolean",
+            "description": "修改所有附件"
+        },
+        "disabled_list_views": {
+            "type": "array",
+            "description": "禁用对象列表视图"
+        },
+        "disabled_actions": {
+            "type": "array",
+            "description": "禁用操作按钮"
+        },
+        "unreadable_fields": {
+            "type": "array",
+            "description": "不可见字段"
+        },
+        "uneditable_fields": {
+            "type": "array",
+            "description": "不可编辑字段"
+        },
+        "unrelated_objects": {
+            "type": "array",
+            "description": "禁用关联对象"
+        },
+        "uneditable_related_list": {
+            "type": "array",
+            "description": "关联对象只读"
+        },
+        "field_permissions": {
+            "anyOf": [
+                {
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "field"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                            "field": {
+                                "type": "string",
+                                "title": "字段 Api 名称"
+                            },
+                            "readable": {
+                                "type": "boolean",
+                                "title": "允许查看"
+                            },
+                            "editable": {
+                                "type": "boolean",
+                                "title": "允许编辑"
+                            }
+                        }
+                    },
+                    "type": "array",
+                    "title": "字段权限"
+                }
+            ],
+            "description": "字段权限"
+        }
+    }
+}

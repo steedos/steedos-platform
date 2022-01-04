@@ -5,62 +5,49 @@ var Meteor = Package.meteor.Meteor;
 var global = Package.meteor.global;
 var meteorEnv = Package.meteor.meteorEnv;
 var ECMAScript = Package.ecmascript.ECMAScript;
-var SimpleSchema = Package['aldeed:simple-schema'].SimpleSchema;
-var MongoObject = Package['aldeed:simple-schema'].MongoObject;
+var check = Package.check.check;
+var Match = Package.check.Match;
 var meteorInstall = Package.modules.meteorInstall;
-var meteorBabelHelpers = Package['babel-runtime'].meteorBabelHelpers;
 var Promise = Package.promise.Promise;
 
 /* Package-scope variables */
 var ValidationError;
 
-var require = meteorInstall({"node_modules":{"meteor":{"mdg:validation-error":{"validation-error.js":function(){
+var require = meteorInstall({"node_modules":{"meteor":{"mdg:validation-error":{"validation-error.js":function module(){
 
-/////////////////////////////////////////////////////////////////////////
-//                                                                     //
-// packages/mdg_validation-error/validation-error.js                   //
-//                                                                     //
-/////////////////////////////////////////////////////////////////////////
-                                                                       //
-/* global ValidationError:true */
-
-/* global SimpleSchema */
-// This is exactly what comes out of SS.
-const errorSchema = new SimpleSchema({
-  name: {
-    type: String
-  },
-  type: {
-    type: String
-  },
-  details: {
-    type: Object,
-    blackbox: true,
-    optional: true
-  }
-});
-const errorsSchema = new SimpleSchema({
-  errors: {
-    type: Array
-  },
-  'errors.$': {
-    type: errorSchema
-  }
-});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// packages/mdg_validation-error/validation-error.js                                                                   //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+// The "details" property of the ValidationError must be an array of objects
+// containing at least two properties. The "name" and "type" properties are
+// required.
+const errorsPattern = [Match.ObjectIncluding({
+  name: String,
+  type: String
+})];
 ValidationError = class extends Meteor.Error {
-  constructor(errors, message = 'Validation Failed') {
-    errorsSchema.validate({
-      errors
-    });
-    super(ValidationError.ERROR_CODE, message, errors);
-    this.errors = errors;
+  constructor(errors) {
+    let message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ValidationError.DEFAULT_MESSAGE;
+    check(errors, errorsPattern);
+    check(message, String);
+    return super(ValidationError.ERROR_CODE, message, errors);
+  } // Static method checking if a given Meteor.Error is an instance of
+  // ValidationError.
+
+
+  static is(err) {
+    return err instanceof Meteor.Error && err.error === ValidationError.ERROR_CODE;
   }
 
-}; // If people use this to check for the error code, we can change it
-// in future versions
+}; // Universal validation error code to be use in applications and packages.
 
-ValidationError.ERROR_CODE = 'validation-error';
-/////////////////////////////////////////////////////////////////////////
+ValidationError.ERROR_CODE = 'validation-error'; // Default validation error message that can be changed globally.
+
+ValidationError.DEFAULT_MESSAGE = 'Validation failed';
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }}}}},{
   "extensions": [
@@ -79,4 +66,4 @@ Package._define("mdg:validation-error", {
 })();
 
 //# sourceURL=meteor://💻app/packages/mdg_validation-error.js
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1ldGVvcjovL/CfkrthcHAvcGFja2FnZXMvbWRnOnZhbGlkYXRpb24tZXJyb3IvdmFsaWRhdGlvbi1lcnJvci5qcyJdLCJuYW1lcyI6WyJlcnJvclNjaGVtYSIsIlNpbXBsZVNjaGVtYSIsIm5hbWUiLCJ0eXBlIiwiU3RyaW5nIiwiZGV0YWlscyIsIk9iamVjdCIsImJsYWNrYm94Iiwib3B0aW9uYWwiLCJlcnJvcnNTY2hlbWEiLCJlcnJvcnMiLCJBcnJheSIsIlZhbGlkYXRpb25FcnJvciIsIk1ldGVvciIsIkVycm9yIiwiY29uc3RydWN0b3IiLCJtZXNzYWdlIiwidmFsaWRhdGUiLCJFUlJPUl9DT0RFIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTtBQUVBO0FBQ0EsTUFBTUEsV0FBVyxHQUFHLElBQUlDLFlBQUosQ0FBaUI7QUFDbkNDLE1BQUksRUFBRTtBQUFDQyxRQUFJLEVBQUVDO0FBQVAsR0FENkI7QUFFbkNELE1BQUksRUFBRTtBQUFDQSxRQUFJLEVBQUVDO0FBQVAsR0FGNkI7QUFHbkNDLFNBQU8sRUFBRTtBQUFDRixRQUFJLEVBQUVHLE1BQVA7QUFBZUMsWUFBUSxFQUFFLElBQXpCO0FBQStCQyxZQUFRLEVBQUU7QUFBekM7QUFIMEIsQ0FBakIsQ0FBcEI7QUFNQSxNQUFNQyxZQUFZLEdBQUcsSUFBSVIsWUFBSixDQUFpQjtBQUNwQ1MsUUFBTSxFQUFFO0FBQUNQLFFBQUksRUFBRVE7QUFBUCxHQUQ0QjtBQUVwQyxjQUFZO0FBQUNSLFFBQUksRUFBRUg7QUFBUDtBQUZ3QixDQUFqQixDQUFyQjtBQUtBWSxlQUFlLEdBQUcsY0FBY0MsTUFBTSxDQUFDQyxLQUFyQixDQUEyQjtBQUMzQ0MsYUFBVyxDQUFDTCxNQUFELEVBQVNNLE9BQU8sR0FBRyxtQkFBbkIsRUFBd0M7QUFDakRQLGdCQUFZLENBQUNRLFFBQWIsQ0FBc0I7QUFBQ1A7QUFBRCxLQUF0QjtBQUVBLFVBQU1FLGVBQWUsQ0FBQ00sVUFBdEIsRUFBa0NGLE9BQWxDLEVBQTJDTixNQUEzQztBQUVBLFNBQUtBLE1BQUwsR0FBY0EsTUFBZDtBQUNEOztBQVAwQyxDQUE3QyxDLENBVUE7QUFDQTs7QUFDQUUsZUFBZSxDQUFDTSxVQUFoQixHQUE2QixrQkFBN0IsQyIsImZpbGUiOiIvcGFja2FnZXMvbWRnX3ZhbGlkYXRpb24tZXJyb3IuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBnbG9iYWwgVmFsaWRhdGlvbkVycm9yOnRydWUgKi9cbi8qIGdsb2JhbCBTaW1wbGVTY2hlbWEgKi9cblxuLy8gVGhpcyBpcyBleGFjdGx5IHdoYXQgY29tZXMgb3V0IG9mIFNTLlxuY29uc3QgZXJyb3JTY2hlbWEgPSBuZXcgU2ltcGxlU2NoZW1hKHtcbiAgbmFtZToge3R5cGU6IFN0cmluZ30sXG4gIHR5cGU6IHt0eXBlOiBTdHJpbmd9LFxuICBkZXRhaWxzOiB7dHlwZTogT2JqZWN0LCBibGFja2JveDogdHJ1ZSwgb3B0aW9uYWw6IHRydWV9XG59KTtcblxuY29uc3QgZXJyb3JzU2NoZW1hID0gbmV3IFNpbXBsZVNjaGVtYSh7XG4gIGVycm9yczoge3R5cGU6IEFycmF5fSxcbiAgJ2Vycm9ycy4kJzoge3R5cGU6IGVycm9yU2NoZW1hfVxufSk7XG5cblZhbGlkYXRpb25FcnJvciA9IGNsYXNzIGV4dGVuZHMgTWV0ZW9yLkVycm9yIHtcbiAgY29uc3RydWN0b3IoZXJyb3JzLCBtZXNzYWdlID0gJ1ZhbGlkYXRpb24gRmFpbGVkJykge1xuICAgIGVycm9yc1NjaGVtYS52YWxpZGF0ZSh7ZXJyb3JzfSk7XG5cbiAgICBzdXBlcihWYWxpZGF0aW9uRXJyb3IuRVJST1JfQ09ERSwgbWVzc2FnZSwgZXJyb3JzKTtcblxuICAgIHRoaXMuZXJyb3JzID0gZXJyb3JzO1xuICB9XG59O1xuXG4vLyBJZiBwZW9wbGUgdXNlIHRoaXMgdG8gY2hlY2sgZm9yIHRoZSBlcnJvciBjb2RlLCB3ZSBjYW4gY2hhbmdlIGl0XG4vLyBpbiBmdXR1cmUgdmVyc2lvbnNcblZhbGlkYXRpb25FcnJvci5FUlJPUl9DT0RFID0gJ3ZhbGlkYXRpb24tZXJyb3InO1xuIl19
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1ldGVvcjovL/CfkrthcHAvcGFja2FnZXMvbWRnOnZhbGlkYXRpb24tZXJyb3IvdmFsaWRhdGlvbi1lcnJvci5qcyJdLCJuYW1lcyI6WyJlcnJvcnNQYXR0ZXJuIiwiTWF0Y2giLCJPYmplY3RJbmNsdWRpbmciLCJuYW1lIiwiU3RyaW5nIiwidHlwZSIsIlZhbGlkYXRpb25FcnJvciIsIk1ldGVvciIsIkVycm9yIiwiY29uc3RydWN0b3IiLCJlcnJvcnMiLCJtZXNzYWdlIiwiREVGQVVMVF9NRVNTQUdFIiwiY2hlY2siLCJFUlJPUl9DT0RFIiwiaXMiLCJlcnIiLCJlcnJvciJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTtBQUNBO0FBQ0E7QUFDQSxNQUFNQSxhQUFhLEdBQUcsQ0FBQ0MsS0FBSyxDQUFDQyxlQUFOLENBQXNCO0FBQzNDQyxNQUFJLEVBQUVDLE1BRHFDO0FBRTNDQyxNQUFJLEVBQUVEO0FBRnFDLENBQXRCLENBQUQsQ0FBdEI7QUFLQUUsZUFBZSxHQUFHLGNBQWNDLE1BQU0sQ0FBQ0MsS0FBckIsQ0FBMkI7QUFDM0NDLGFBQVcsQ0FBQ0MsTUFBRCxFQUFvRDtBQUFBLFFBQTNDQyxPQUEyQyx1RUFBakNMLGVBQWUsQ0FBQ00sZUFBaUI7QUFDN0RDLFNBQUssQ0FBQ0gsTUFBRCxFQUFTVixhQUFULENBQUw7QUFDQWEsU0FBSyxDQUFDRixPQUFELEVBQVVQLE1BQVYsQ0FBTDtBQUVBLFdBQU8sTUFBTUUsZUFBZSxDQUFDUSxVQUF0QixFQUFrQ0gsT0FBbEMsRUFBMkNELE1BQTNDLENBQVA7QUFDRCxHQU4wQyxDQVEzQztBQUNBOzs7QUFDQSxTQUFPSyxFQUFQLENBQVVDLEdBQVYsRUFBZTtBQUNiLFdBQU9BLEdBQUcsWUFBWVQsTUFBTSxDQUFDQyxLQUF0QixJQUErQlEsR0FBRyxDQUFDQyxLQUFKLEtBQWNYLGVBQWUsQ0FBQ1EsVUFBcEU7QUFDRDs7QUFaMEMsQ0FBN0MsQyxDQWVBOztBQUNBUixlQUFlLENBQUNRLFVBQWhCLEdBQTZCLGtCQUE3QixDLENBQ0E7O0FBQ0FSLGVBQWUsQ0FBQ00sZUFBaEIsR0FBa0MsbUJBQWxDLEMiLCJmaWxlIjoiL3BhY2thZ2VzL21kZ192YWxpZGF0aW9uLWVycm9yLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gVGhlIFwiZGV0YWlsc1wiIHByb3BlcnR5IG9mIHRoZSBWYWxpZGF0aW9uRXJyb3IgbXVzdCBiZSBhbiBhcnJheSBvZiBvYmplY3RzXG4vLyBjb250YWluaW5nIGF0IGxlYXN0IHR3byBwcm9wZXJ0aWVzLiBUaGUgXCJuYW1lXCIgYW5kIFwidHlwZVwiIHByb3BlcnRpZXMgYXJlXG4vLyByZXF1aXJlZC5cbmNvbnN0IGVycm9yc1BhdHRlcm4gPSBbTWF0Y2guT2JqZWN0SW5jbHVkaW5nKHtcbiAgbmFtZTogU3RyaW5nLFxuICB0eXBlOiBTdHJpbmdcbn0pXTtcblxuVmFsaWRhdGlvbkVycm9yID0gY2xhc3MgZXh0ZW5kcyBNZXRlb3IuRXJyb3Ige1xuICBjb25zdHJ1Y3RvcihlcnJvcnMsIG1lc3NhZ2UgPSBWYWxpZGF0aW9uRXJyb3IuREVGQVVMVF9NRVNTQUdFKSB7XG4gICAgY2hlY2soZXJyb3JzLCBlcnJvcnNQYXR0ZXJuKTtcbiAgICBjaGVjayhtZXNzYWdlLCBTdHJpbmcpO1xuXG4gICAgcmV0dXJuIHN1cGVyKFZhbGlkYXRpb25FcnJvci5FUlJPUl9DT0RFLCBtZXNzYWdlLCBlcnJvcnMpO1xuICB9XG5cbiAgLy8gU3RhdGljIG1ldGhvZCBjaGVja2luZyBpZiBhIGdpdmVuIE1ldGVvci5FcnJvciBpcyBhbiBpbnN0YW5jZSBvZlxuICAvLyBWYWxpZGF0aW9uRXJyb3IuXG4gIHN0YXRpYyBpcyhlcnIpIHtcbiAgICByZXR1cm4gZXJyIGluc3RhbmNlb2YgTWV0ZW9yLkVycm9yICYmIGVyci5lcnJvciA9PT0gVmFsaWRhdGlvbkVycm9yLkVSUk9SX0NPREU7XG4gIH07XG59O1xuXG4vLyBVbml2ZXJzYWwgdmFsaWRhdGlvbiBlcnJvciBjb2RlIHRvIGJlIHVzZSBpbiBhcHBsaWNhdGlvbnMgYW5kIHBhY2thZ2VzLlxuVmFsaWRhdGlvbkVycm9yLkVSUk9SX0NPREUgPSAndmFsaWRhdGlvbi1lcnJvcic7XG4vLyBEZWZhdWx0IHZhbGlkYXRpb24gZXJyb3IgbWVzc2FnZSB0aGF0IGNhbiBiZSBjaGFuZ2VkIGdsb2JhbGx5LlxuVmFsaWRhdGlvbkVycm9yLkRFRkFVTFRfTUVTU0FHRSA9ICdWYWxpZGF0aW9uIGZhaWxlZCc7XG4iXX0=

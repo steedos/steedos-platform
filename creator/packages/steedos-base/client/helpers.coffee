@@ -1,5 +1,4 @@
-import {moment} from 'meteor/momentjs:moment';
-
+moment = require('meteor/momentjs:moment').moment;
 Steedos.Helpers =
 
 	isPad: ()->

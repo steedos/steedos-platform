@@ -1,0 +1,12 @@
+parent: CustomObject
+metadataName: CustomActionScript
+defaultDirectory: buttons
+ext: button
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Action Script
+nameForMsgsPlural: Custom Action Script
+deleteSupported: true

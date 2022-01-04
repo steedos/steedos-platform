@@ -1,0 +1,7 @@
+name: version
+label: version
+precision: 18
+scale: 0
+sort_no: 170
+type: number
+hidden: true

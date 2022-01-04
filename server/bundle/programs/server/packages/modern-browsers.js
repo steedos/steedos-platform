@@ -6,7 +6,7 @@ var global = Package.meteor.global;
 var meteorEnv = Package.meteor.meteorEnv;
 var meteorInstall = Package.modules.meteorInstall;
 
-var require = meteorInstall({"node_modules":{"meteor":{"modern-browsers":{"modern.js":function(require,exports,module){
+var require = meteorInstall({"node_modules":{"meteor":{"modern-browsers":{"modern.js":function module(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                                                               //

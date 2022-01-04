@@ -17,10 +17,10 @@ db.users.helpers({
         sus = db.space_users.find({
             user: this._id
         }, {
-                fields: {
-                    space: 1
-                }
-            });
+            fields: {
+                space: 1
+            }
+        });
         sus.forEach(function (su) {
             return spaces.push(su.space);
         });
@@ -53,10 +53,10 @@ if (Meteor.isServer) {
             return db.users.update({
                 _id: userId
             }, {
-                    $push: {
-                        secrets: secretToken
-                    }
-                });
+                $push: {
+                    secrets: secretToken
+                }
+            });
         }
     };
     db.users.checkEmailValid = function (email) {
@@ -203,10 +203,10 @@ if (Meteor.isServer) {
                 space: space_registered,
                 parent: null
             }, {
-                    fields: {
-                        _id: 1
-                    }
-                });
+                fields: {
+                    _id: 1
+                }
+            });
             db.space_users.insert({
                 email: user_email,
                 user: doc._id,
@@ -273,13 +273,13 @@ if (Meteor.isServer) {
     });
     db.users.before.update(function (userId, doc, fieldNames, modifier, options) {
         let setKeys = _.keys(modifier.$set || {});
-        if(!_.isEmpty(setKeys) && _.find(setKeys, function(key){
-            return _.include(['name', 'username', 'email', 'email_verified', 'mobile', 
-            'mobile_verified', 'locale', 'avatar', 'email_notification', 'sms_notification'], key)
-        })){
+        if (!_.isEmpty(setKeys) && _.find(setKeys, function (key) {
+            return _.include(['name', 'username', 'email', 'email_verified', 'mobile',
+                'mobile_verified', 'locale', 'avatar', 'email_notification', 'sms_notification'], key)
+        })) {
             throw new Meteor.Error(500, '禁止修改');
         }
-        
+
 
         // var newNumber;
         // db.users.validatePhone(userId, doc, modifier);
@@ -307,8 +307,8 @@ if (Meteor.isServer) {
     });
     db.users.after.update(function (userId, doc, fieldNames, modifier, options) {
         modifier.$set = modifier.$set || {}
-        if(modifier.$set.last_logon){
-            db.space_users.direct.update({user: doc._id}, {$set: {last_logon: modifier.$set.last_logon}}, {
+        if (modifier.$set.last_logon) {
+            db.space_users.direct.update({ user: doc._id }, { $set: { last_logon: modifier.$set.last_logon } }, {
                 multi: true
             });
         }
@@ -343,32 +343,32 @@ if (Meteor.isServer) {
     db.users._ensureIndex({
         "is_deleted": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "email": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "is_deleted": 1,
         "email": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "_id": 1,
         "created": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "_id": 1,
         "created": 1,
         "modified": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "primary_email_verified": 1,
         "locale": 1,
@@ -376,8 +376,9 @@ if (Meteor.isServer) {
         "_id": 1,
         "mobile": 1
     }, {
-            background: true
-        });
+        background: true
+    });
+    // console.log("getSteedosToken: ",Steedos.getSteedosToken);
     db.users._ensureIndex({
         "primary_email_verified": 1,
         "locale": 1,
@@ -385,9 +386,7 @@ if (Meteor.isServer) {
         "_id": 1,
         "mobile": 1,
         "created": 1
-    }, {
-            background: true
-        });
+    }, Steedos.formatIndex(["primary_email_verified","locale","name","_id","mobile","created"]));
     db.users._ensureIndex({
         "primary_email_verified": 1,
         "locale": 1,
@@ -396,106 +395,102 @@ if (Meteor.isServer) {
         "mobile": 1,
         "created": 1,
         "last_logon": 1
-    }, {
-            background: true
-        });
+    }, Steedos.formatIndex(["primary_email_verified","locale","name","_id","mobile","created","last_logon"]));
     db.users._ensureIndex({
         "imo_uid": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "qq_open_id": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "created": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "last_logon": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "created": 1,
         "modified": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "name": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "lastLogin": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "status": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "active": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "type": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "steedos_id": 1
     }, {
-            background: true
-        });
+        background: true
+    });
     db.users._ensureIndex({
         "services.weixin.openid.appid": 1,
         "services.weixin.openid._id": 1
-    }, {
-            background: true
-        });
+    }, Steedos.formatIndex(["services.weixin.openid.appid","services.weixin.openid._id"]));
 }
 
-Steedos.setEmailVerified = function (userId, email, value){
-    let user = db.users.findOne({_id: userId, email: email}, {fields: {email_verified: 1}});
+Steedos.setEmailVerified = function (userId, email, value) {
+    let user = db.users.findOne({ _id: userId, email: email }, { fields: { email_verified: 1 } });
     let now = new Date();
-    if(user && _.isBoolean(value) && user.email_verified != value){
-        db.space_users.direct.update({user: userId}, {$set: {email_verified: value, modified: now, modified_by: userId}}, {
+    if (user && _.isBoolean(value) && user.email_verified != value) {
+        db.space_users.direct.update({ user: userId }, { $set: { email_verified: value, modified: now, modified_by: userId } }, {
             multi: true
         });
-        db.users.direct.update({_id: userId}, {$set: {email_verified: value, modified: now, modified_by: userId}})
+        db.users.direct.update({ _id: userId }, { $set: { email_verified: value, modified: now, modified_by: userId } })
     }
 }
 
-Steedos.setMobileVerified = function (userId, mobile, value){
-    let user = db.users.findOne({_id: userId, mobile: mobile}, {fields: {mobile_verified: 1}});
+Steedos.setMobileVerified = function (userId, mobile, value) {
+    let user = db.users.findOne({ _id: userId, mobile: mobile }, { fields: { mobile_verified: 1 } });
     let now = new Date();
-    if(user && _.isBoolean(value) && user.mobile_verified != value){
-        db.space_users.direct.update({user: userId}, {$set: {mobile_verified: value, modified: now, modified_by: userId}}, {
+    if (user && _.isBoolean(value) && user.mobile_verified != value) {
+        db.space_users.direct.update({ user: userId }, { $set: { mobile_verified: value, modified: now, modified_by: userId } }, {
             multi: true
         });
-        db.users.direct.update({_id: userId}, {$set: {mobile_verified: value, modified: now, modified_by: userId}})
+        db.users.direct.update({ _id: userId }, { $set: { mobile_verified: value, modified: now, modified_by: userId } })
     }
 }
 
-Steedos.setMobile = function(userId, newMobile){
-    let user = db.users.findOne({_id: userId}, {fields: {mobile: 1}});
-    let existed = db.users.find({_id: {$ne: userId}, mobile: newMobile}).count();
+Steedos.setMobile = function (userId, newMobile) {
+    let user = db.users.findOne({ _id: userId }, { fields: { mobile: 1 } });
+    let existed = db.users.find({ _id: { $ne: userId }, mobile: newMobile }).count();
     let now = new Date();
-    if(existed > 0){
+    if (existed > 0) {
         throw new Error("该手机号已被其他用户注册");
     }
-    if(user && user.mobile != newMobile){
-        db.space_users.direct.update({user: userId}, {$set: {mobile: newMobile, modified: now, modified_by: userId}}, {
+    if (user && user.mobile != newMobile) {
+        db.space_users.direct.update({ user: userId }, { $set: { mobile: newMobile, modified: now, modified_by: userId } }, {
             multi: true
         });
-        db.users.direct.update({_id: userId}, {$set: {mobile: newMobile, modified: now, modified_by: userId}})
+        db.users.direct.update({ _id: userId }, { $set: { mobile: newMobile, modified: now, modified_by: userId } })
     }
 }

@@ -1,0 +1,13 @@
+metadataName: Page
+isAddressable: true
+isSourceTracked: true
+tableName: pages
+ext: page
+hasContent: false
+defaultDirectory: pages
+nameForMsgs: Page
+nameForMsgsPlural: Pages
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

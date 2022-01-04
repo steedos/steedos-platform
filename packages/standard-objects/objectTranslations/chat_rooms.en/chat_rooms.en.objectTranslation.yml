@@ -1,0 +1,30 @@
+name: chat_rooms
+label: Chat Room
+description: 
+fields:
+  name:
+    label: Name
+    help: 
+    description: 
+  members:
+    label: Members
+    help: 
+    description: 
+  owner:
+    label: Owner
+    help: 
+    description: 
+  type:
+    label: Type
+    help: 
+    options:
+      - label: private
+        value: private
+      - label: ' protected'
+        value: ' protected'
+      - label: ' public'
+        value: ' public'
+    description: 
+listviews:
+  all:
+    label: All Chat Rooms

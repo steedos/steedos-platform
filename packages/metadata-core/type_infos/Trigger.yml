@@ -1,0 +1,11 @@
+metadataName: Trigger
+defaultDirectory: trigger
+ext: trigger
+hasStandardMembers: true
+hasContent: false
+contentIsBinary: false
+isAddressable: true
+isSourceTracked: true
+nameForMsgs: Custom Trigger
+nameForMsgsPlural: Custom Triggers
+deleteSupported: true

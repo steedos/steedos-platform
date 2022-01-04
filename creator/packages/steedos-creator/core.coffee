@@ -38,7 +38,10 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 			if Creator.getObjectHomeComponent(object_name)
 				return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name)
 			else
-				return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+				if list_view_id
+					return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+				else
+					return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name)
 
 Creator.getObjectAbsoluteUrl = (object_name, record_id, app_id) ->
 	if !app_id
@@ -90,8 +93,11 @@ Creator.getSwitchListUrl = (object_name, app_id, list_view_id) ->
 	else
 		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/list/switch")
 
-Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_name) ->
-	return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
+Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_name, related_field_name) ->
+	if related_field_name
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid?related_field_name=" + related_field_name)
+	else
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
 
 Creator.getObjectLookupFieldOptions = (object_name, is_deep, is_skip_hide, is_related)->
 	_options = []
@@ -154,7 +160,7 @@ Creator.getObjectFieldOptions = (object_name)->
 	permission_fields = Creator.getFields(object_name)
 	icon = _object?.icon
 	_.forEach fields, (f, k)->
-		if !_.include(["grid","object", "[Object]", "[object]", "Object", "avatar", "image", "markdown", "html"], f.type)
+		if !_.include(["grid","object", "[Object]", "[object]", "Object", "markdown", "html"], f.type)
 			if !/\w+\./.test(k) and _.indexOf(permission_fields, k) > -1
 				_options.push {label: f.label || k, value: k, icon: icon}
 	return _options
@@ -260,6 +266,62 @@ Creator.getAppObjectNames = (app_id)->
 			if obj?.permissions.get().allowRead
 				objects.push v
 	return objects
+
+Creator.getAppMenu = (app_id, menu_id)->
+	menus = Creator.getAppMenus(app_id)
+	return menus && menus.find (menu)-> return menu.id == menu_id
+
+Creator.getAppMenuUrlForInternet = (menu)->
+	# 当tabs类型为url时，按外部链接处理，支持配置表达式并加上统一的url参数
+	params = {};
+	params["X-Space-Id"] = Steedos.spaceId()
+	params["X-User-Id"] = Steedos.userId();
+	params["X-Company-Ids"] = Steedos.getUserCompanyIds();
+	# params["X-Auth-Token"] = Accounts._storedLoginToken();
+	sdk = require("@steedos-ui/builder-community/dist/builder-community.react.js")
+	url = menu.path
+	if sdk and sdk.Utils and sdk.Utils.isExpression(url)
+		url = sdk.Utils.parseSingleExpression(url, menu, "#", Creator.USER_CONTEXT)
+	hasQuerySymbol = /(\#.+\?)|(\?[^#]*$)/g.test(url)
+	# 如果没有#号时去判断是否有？号，有末尾加&，无末尾加？；    有#号时判断#号后面是否有？号，有末尾加&，无末尾加？
+	linkStr = if hasQuerySymbol then "&" else "?"
+	return "#{url}#{linkStr}#{$.param(params)}"
+
+Creator.getAppMenuUrl = (menu)->
+	url = menu.path
+	if menu.type == "url"
+		if menu.target
+			return Creator.getAppMenuUrlForInternet(menu)
+		else
+			# 在iframe中显示url界面
+			return "/app/-/tab_iframe/#{menu.id}"
+	else
+		return menu.path
+
+Creator.getAppMenus = (app_id)->
+	app = Creator.getApp(app_id)
+	if !app
+		return []
+	appMenus = Session.get("app_menus");
+	unless appMenus
+		return []
+	curentAppMenus = appMenus.find (menuItem) ->
+		return menuItem.id == app._id
+	if curentAppMenus
+		return curentAppMenus.children
+
+Creator.loadAppsMenus = ()->
+	isMobile = Steedos.isMobile()
+	data = { }
+	if isMobile
+		data.mobile = isMobile
+	options = { 
+		type: 'get', 
+		data: data, 
+		success: (data)->
+			Session.set("app_menus", data);
+	 }
+	Steedos.authRequest "/service/api/apps/menus", options
 
 Creator.getVisibleApps = (includeAdmin)->
 	changeApp = Creator._subApp.get();
@@ -486,7 +548,10 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 	return _.filter related_objects, (related_object)->
 		related_object_name = related_object.object_name
 		isActive = related_object_names.indexOf(related_object_name) > -1
+		# related_object_name = if related_object_name == "cfs_files_filerecord" then "cfs.files.filerecord" else related_object_name
 		allowRead = Creator.getPermissions(related_object_name, spaceId, userId)?.allowRead
+		if related_object_name == "cms_files"
+			allowRead = allowRead && permissions.allowReadFiles
 		return isActive and allowRead
 
 Creator.getRelatedObjectNames = (object_name, spaceId, userId)->
@@ -511,9 +576,12 @@ Creator.getActions = (object_name, spaceId, userId)->
 	disabled_actions = permissions.disabled_actions
 	actions = _.sortBy(_.values(obj.actions) , 'sort');
 
-	if _.has(obj, 'allow_actions')
+	if _.has(obj, 'allow_customActions')
 		actions = _.filter actions, (action)->
-			return _.include(obj.allow_actions, action.name)
+			return _.include(obj.allow_customActions, action.name) || _.include(_.keys(Creator.getObject('base').actions) || {}, action.name)
+	if _.has(obj, 'exclude_actions')
+		actions = _.filter actions, (action)->
+			return !_.include(obj.exclude_actions, action.name)
 
 	_.each actions, (action)->
 		# 手机上只显示编辑按钮，其他的放到折叠下拉菜单中
@@ -561,13 +629,18 @@ Creator.getListViews = (object_name, spaceId, userId)->
 	isMobile = Steedos.isMobile()
 
 	_.each object.list_views, (item, item_name)->
+		item.name = item_name
+
+	listViews = _.sortBy(_.values(object.list_views) , 'sort_no');
+
+	_.each listViews, (item)->
 		if isMobile and item.type == "calendar"
 			# 手机上先不显示日历视图
 			return
-		if item_name != "default"
-			if _.indexOf(disabled_list_views, item_name) < 0 || item.owner == userId
+		if item.name  != "default"
+			isDisabled = _.indexOf(disabled_list_views, item.name) > -1 || (item._id && _.indexOf(disabled_list_views, item._id) > -1)
+			if !isDisabled || item.owner == userId
 				list_views.push item
-
 	return list_views
 
 # 前台理论上不应该调用该函数，因为字段的权限都在Creator.getObject(object_name).fields的相关属性中有标识了
@@ -720,6 +793,8 @@ Creator.getFieldDataType = (objectFields, key)->
 		result = objectFields[key]?.type
 		if ["formula", "summary"].indexOf(result) > -1
 			result = objectFields[key].data_type
+		# else if result == "select" and objectFields[key]?.data_type and objectFields[key].data_type != "text"
+		# 	result = objectFields[key].data_type
 		return result
 	else
 		return "text"
@@ -738,3 +813,19 @@ if Meteor.isServer
 			related_object_names.push "cms_files"
 
 		return related_object_names
+
+if Meteor.isServer
+	Steedos.formatIndex = (array) ->
+		object = {
+        	background: true
+    	};
+		isdocumentDB = Meteor.settings?.datasources?.default?.documentDB || false;
+		if isdocumentDB
+			if array.length > 0
+				indexName = array.join(".");
+				object.name = indexName;
+				
+				if (indexName.length > 52)
+					object.name = indexName.substring(0,52);
+
+		return object;

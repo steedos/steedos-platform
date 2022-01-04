@@ -1,0 +1,158 @@
+{
+  "name": "Sample Account Media Service Formulas",
+  "link": "https://help.salesforce.com/articleView?id=useful_advanced_formulas_acct_media_svc.htm",
+  "examples": [
+    {
+      "name": "BBC™ News Search",
+      "formula": "HYPERLINK(\n\"http://www.bbc.co.uk/search/news/?q=\"&Name,\n\"BBC News\")",
+      "suites": [
+        {
+          "context": "COVID-19 related news",
+          "identifiers": {
+            "Name": {
+              "dataType": "text",
+              "value": "COVID-19"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://www.bbc.co.uk/search/news/?q=COVID-19\">BBC News</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bloomberg™ News Search",
+      "formula": "HYPERLINK(\n\"http://www.bloomberg.com/markets/symbolsearch?query=\"&TickerSymbol,\n\"Bloomberg News\")",
+      "suites": [
+        {
+          "context": "Salesforce",
+          "identifiers": {
+            "TickerSymbol": {
+              "dataType": "text",
+              "value": "CRM"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://www.bloomberg.com/markets/symbolsearch?query=CRM\">Bloomberg News</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "CNN™ News Search",
+      "formula": "HYPERLINK(\n\"http://www.cnn.com/search/?query=\"&Name,\n\"CNN News\")",
+      "suites": [
+        {
+          "context": "Impeachment",
+          "identifiers": {
+            "Name": {
+              "dataType": "text",
+              "value": "Impeachment"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://www.cnn.com/search/?query=Impeachment\">CNN News</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "MarketWatch™ Search",
+      "formula": "HYPERLINK(\n\"http://www.marketwatch.com/investing/stock/\"&TickerSymbol,\n\"Marketwatch\")",
+      "suites": [
+        {
+          "context": "Tesla",
+          "identifiers": {
+            "TickerSymbol": {
+              "dataType": "text",
+              "value": "TSLA"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://www.marketwatch.com/investing/stock/TSLA\">Marketwatch</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Google™ Search",
+      "formula": "HYPERLINK(\n\"http://www.google.com/#q=\"&Name,\n\"Google\")",
+      "suites": [
+        {
+          "context": "Tiger King",
+          "identifiers": {
+            "Name": {
+              "dataType": "text",
+              "value": "Tiger King"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://www.google.com/#q=Tiger King\">Google</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Google News Search",
+      "formula": "HYPERLINK(\n\"http://news.google.com/news/search?en&q=\"&Name,\n\"Google News\")",
+      "suites": [
+        {
+          "context": "Zoom",
+          "identifiers": {
+            "Name": {
+              "dataType": "text",
+              "value": "Zoom"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://news.google.com/news/search?en&q=Zoom\">Google News</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Yahoo!™ Search",
+      "formula": "HYPERLINK(\n\"http://search.yahoo.com/search?p=\"&Name,\n\"Yahoo Search\")",
+      "suites": [
+        {
+          "context": "OPEC",
+          "identifiers": {
+            "Name": {
+              "dataType": "text",
+              "value": "OPEC"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://search.yahoo.com/search?p=OPEC\">Yahoo Search</a>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Yahoo! News Search",
+      "formula": "HYPERLINK(\n\"http://news.search.yahoo.com/search/news?p=\"&Name,\n\"Yahoo News\")",
+      "suites": [
+        {
+          "context": "iPhone",
+          "identifiers": {
+            "Name": {
+              "dataType": "text",
+              "value": "iPhone"
+            }
+          },
+          "expectedResult": {
+            "dataType": "text",
+            "value": "<a href=\"http://news.search.yahoo.com/search/news?p=iPhone\">Yahoo News</a>"
+          }
+        }
+      ]
+    }
+  ]
+}

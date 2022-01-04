@@ -5,7 +5,7 @@ import _ = require('lodash');
 export type Connection = SteedosDataSourceType;
 export type ConnectionOptions = SteedosDataSourceTypeConfig;
 
-export function getConnection(datasourceName: string = "default") {
+export function getConnection(datasourceName: string = "meteor") {
     return getSteedosSchema().getDataSource(datasourceName);
 }
 
@@ -70,7 +70,7 @@ export async function createConnections(optionsArray: ConnectionOptions[]): Prom
     return connections;
 }
 
-export const getConnectionOptions = async (connectionName: string = "default"): Promise<ConnectionOptions> => {
+export const getConnectionOptions = async (connectionName: string = "meteor"): Promise<ConnectionOptions> => {
     let config:any = getSteedosConfig();
     if (config && config.datasources && config.datasources[connectionName] )
         return config.datasources[connectionName]
