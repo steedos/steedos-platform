@@ -127,11 +127,13 @@ npx create-steedos-app my-app
 
 ## 源码目录索引
 
-- [Steedos Server](/creator)：华炎魔方最终打包运行的是一个Meteor项目，其源码都在该文件夹内。
-- [Steedos Server Build](/server)：Creator项目源码最终打包编译生成的文件都在该文件夹内，最终会发布为 NPM 包在华炎魔方项目中引用即可。
-- [NPM Packages](/packages)：华炎魔方各种内核功能包，其内每个子文件夹都是一个标准的NPM包。
-- [Moleculer Services](/services)：华炎魔方采用的是Moleculer微服务架构，这里存放的是各种微服务功能包，其内每个子文件夹都是一个标准的NPM包。
-- [项目模板](/steedos-projects/project-template)：这是华炎魔方模板项目，通过`steedos cli`命令行创建魔方项目时会自动生成的就是这个模板项目，另外Git仓库中有一个用于演示的 [模板项目](https://github.com/steedos/steedos-project-template) 也是从这个项目中同步过去的。
+- [Steedos Server](./creator)：华炎魔方最终打包运行的是一个Meteor项目，其源码都在该文件夹内。
+  - [Meteor功能包](./creator/packages) ：这里每个文件夹都是华炎魔方Meteor项目依赖的各种功能包。
+- [Steedos Server Build](./server)：Creator项目源码最终打包编译生成的文件都在该文件夹内，最终会发布为 NPM 包在华炎魔方项目中引用即可。
+- [NPM Packages](./packages)：华炎魔方各种内核功能包，其内每个子文件夹都是一个标准的NPM包。
+  - [Standard Objects](./packages/standard-objects): 内核标准对象的定义文件。
+- [Moleculer Services](./services)：华炎魔方采用的是Moleculer微服务架构，这里存放的是各种微服务功能包，其内每个子文件夹都是一个标准的NPM包。
+- [项目模板](./steedos-projects/project-template)：这是华炎魔方模板项目，通过`steedos cli`命令行创建魔方项目时会自动生成的就是这个模板项目，另外Git仓库中有一个用于演示的 [模板项目](https://github.com/steedos/steedos-project-template) 也是从这个项目中同步过去的。
 
 ## 学习华炎魔方
 
