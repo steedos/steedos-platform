@@ -23,7 +23,7 @@
 - [mongodb-bi-connector](/packages/mongodb-bi-connector)：将系统对象转换为mongodb bi schema ，允许用户使用SQL创建查询，并使用Tableau， MicroStrategy和 Qlik等现有的关系商业智能工具可视化，图形化和报告其MongoDB数据。[MongoDB BI Connector](https://www.mongodb.com/zh-cn/products/bi-connector)
 - [node-red-app-template](/packages/node-red-app-template)：该包是运行`npx create-steedos-node-red-app`命令时创建的Node-Red项目的模板。
 - [objectql](/packages/objectql)：该包是华炎魔方实现对象模型相关功能的内核包，包括对象数据的增删改查、各种元数据注册及动态加载、公式运算、工作流规则、GraphQL接口、连接MongoDB、My SQL等各种数据库驱动等功能都是在该包中实现的，使用说明请参考文档 [ObjectQL服务端语法说明](https://www.steedos.cn/docs/developer/objectql)。
-- [plugin-enterprise](/packages/plugin-enterprise)：企业版华炎魔方才能使用的插件包，内含放开分部级权限相关功能的配置文件，现在已经作为所有魔方项目都默认加载的免费插件了。
+- [plugin-enterprise](/packages/plugin-enterprise)：企业版华炎魔方才能使用的插件包。
 - [process](/packages/process)：该包实现了批准过程相关功能，使用说明请参考文档 [批准过程](https://www.steedos.cn/docs/admin/auto_process#%E6%89%B9%E5%87%86%E8%BF%87%E7%A8%8B)。
 - [react](/packages/react)：该包是华炎魔方上一代前端React组件库。
 - [schemas](/packages/schemas)：使用低代码模式在yml文件中定义元数据时，需要有相关规范和编写时的帮助提示，所有的元数据的规范和提示都是在这个包中定义的。需要在魔方项目的`.vscode/settings.json`文件中的`yaml.schemas`小节引用该包中的相关`schemas.json`文件才能生效，华炎魔方模板项目中已经默认正确配置过了，您不需要手动配置它们。
