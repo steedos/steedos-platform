@@ -30,11 +30,15 @@
 
 元数据是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
 
-元数据可以在可视化界面中进行修改，也可以使用VS Code插件同步到代码，实现版本管理，并进一步编写代码、调试、测试、打包、部署。
-
-![Steedos Packages Overview](./docs/diagrams/Steedos%20Packages.drawio.svg)
+![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
 
 [点击了解华炎魔方元数据类型](https://www.steedos.cn/docs/developer/meta-types)
+
+## 软件包
+
+元数据可以在可视化界面中进行修改，也可以使用Steeods VS Code插件同步为软件包，实现版本管理，并进一步编写代码、调试、测试、打包、部署。
+
+![Steedos Packages Overview](./docs/diagrams/Steedos%20Packages.drawio.svg)
 
 ## 快速向导
 
