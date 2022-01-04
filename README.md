@@ -127,7 +127,7 @@ npx create-steedos-app my-app
 
 ## 源码目录索引
 
-- [Doccs/Diagrams](./docs/diagrams): 华炎魔方设计文档。
+- [Docs/Diagrams](./docs/diagrams): 华炎魔方设计文档。
 - [Steedos Server](./creator): 华炎魔方最终打包运行的是一个Meteor项目，其源码都在该文件夹内。
   - [Meteor功能包](./creator/packages): 这里每个文件夹都是华炎魔方Meteor项目依赖的各种功能包。
 - [Steedos Server Build](./server): Creator项目源码最终打包编译生成的文件都在该文件夹内，最终会发布为 NPM 包在华炎魔方项目中引用即可。
