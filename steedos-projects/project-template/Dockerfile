@@ -1,5 +1,7 @@
 FROM node:12.22.7
 
+RUN mkdir -p /dev/disk/by-id/
+
 WORKDIR /app
 
 ADD .steedos ./.steedos/
