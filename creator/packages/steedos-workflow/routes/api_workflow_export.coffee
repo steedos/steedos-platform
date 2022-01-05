@@ -69,7 +69,10 @@ Meteor.startup ->
 
 			# 检测是否有语法错误
 			ejsLint = require('ejs-lint')
-			error_obj = ejsLint.lint(str, {})
+			if ejsLint.lint
+				error_obj = ejsLint.lint(str, {})
+			else
+				error_obj = ejsLint(str, {})
 			if error_obj
 				console.error "===/api/workflow/export:"
 				console.error error_obj
