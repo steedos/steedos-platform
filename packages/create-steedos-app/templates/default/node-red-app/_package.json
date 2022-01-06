@@ -1,6 +1,6 @@
 {
     "name": "node-red-app",
-    "version": "2.1.65",
+    "version": "2.1.60",
     "description": "",
     "main": "index.js",
     "scripts": {

@@ -22,7 +22,7 @@ cpy([
 ], '../../steedos-projects/project-dev', {
     parents: true,
     flat: false,
-    cwd: path.join(process.cwd(), 'steedos-projects', 'project-template'),
+    cwd: path.join(process.cwd(), 'steedos-projects', 'project-community'),
     rename: (name) => {
         switch (name) {
             // case '.env':

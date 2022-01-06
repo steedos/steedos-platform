@@ -1,0 +1,34 @@
+// {
+//     "presets": [
+//       "./mypreset.js"
+//     ]
+// }
+
+// {
+//     // 此项指明，转码的规则
+//     "presets": [
+//         "@babel/preset-env", "@babel/preset-stage-2"
+//     ],
+//     "plugins": ["@babel/plugin-transform-runtime"]
+// }
+
+
+// {
+//     "plugins": [ "babel-plugin-transform-runtime" ],
+//     "presets": [ "es2015", "stage-2" ]
+//   }
+{
+    "plugins": [ "babel-plugin-transform-runtime" ],
+    "presets": [
+        [
+            // 第一个元素依然是名字
+            "env",
+            // 第二个元素是对象，列出配置项
+            {
+              "modules": "umd" //  将ES6模块语法转换为另一种模块类型,"amd" | "umd" | "systemjs" | "commonjs" | false
+            }
+
+        ]
+        
+        ,"stage-2" ]
+}

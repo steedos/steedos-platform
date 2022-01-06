@@ -29,5 +29,3 @@ logs
 
 .npmrc
 .yarnrc
-
-jsreport-app/data/**

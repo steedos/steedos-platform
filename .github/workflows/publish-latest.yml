@@ -94,6 +94,13 @@ jobs:
           release_name: v${{ env.CURRENT_VERSION }}
           draft: false
           prerelease: false
+      - name: Create project template release
+        id: create_project_template_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
+        run: |
+          yarn create-project-template-release
       - name: Sync to taobao 
         run: |
           yarn sync-to-taobao
