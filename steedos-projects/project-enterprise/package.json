@@ -27,7 +27,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-enterprise": "2.1.65"
+    "@steedos/service-enterprise": "2.1.66"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
