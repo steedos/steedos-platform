@@ -5233,15 +5233,15 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
-"@steedos/license@2.1.8":
-  version "2.1.8"
-  resolved "https://registry.nlark.com/@steedos/license/download/@steedos/license-2.1.8.tgz#67cdd6d5507acca2482b8226c32bee2f29767c20"
-  integrity sha1-Z83W1VB6zKJIK4ImwyvuLyl2fCA=
+"@steedos/license@2.1.9":
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.1.9.tgz#bac2247f9c747bb520fcc73f339ab0f3a5e34d2b"
+  integrity sha512-kMHR30ssZuYzNVF5CX75MK2ZBK4wSC8Gn34JMhE7djf3MqbRbyPLwRD62/4Lov6rnt5mG2cc6ly4rAwoPuhDqg==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
     node-fetch "^2.6.0"
-    systeminformation "^4.34.5"
+    systeminformation "5.9.17"
 
 "@steedos/mongodb-memory-server-core@^7.0.0-beta.14":
   version "7.0.0-beta.14"
@@ -10852,9 +10852,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30000989, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001043, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001135, caniuse-lite@^1.0.30001181:
-  version "1.0.30001294"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001294.tgz"
-  integrity sha512-LiMlrs1nSKZ8qkNhpUf5KD0Al1KCBE3zaT7OLOwEkagXMEDij98SiOovn9wxVGQpklk9vVC/pUSqgYmkmKOS8g==
+  version "1.0.30001296"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001296.tgz"
+  integrity sha512-WfrtPEoNSoeATDlf4y3QvkwiELl9GyPLISV5GejTbbQRtQx4LhsXmc9IQ6XCL2d7UxCyEzToEZNMeqR79OUw8Q==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -32512,10 +32512,10 @@ syntax-error@^1.1.1, syntax-error@^1.1.6:
   dependencies:
     acorn-node "^1.2.0"
 
-systeminformation@^4.34.5:
-  version "4.34.7"
-  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.34.7.tgz#8b4a00c44781349905881c95dded8bafe7aae47f"
-  integrity sha512-cS3FiSZasFgVNjO9CP3aZmTO2VHwXKG+JN6Z85nWRyOzxRMNbZe7Xzwrewp42hj+OPMC3hk7MrAFyu/qLM65Mw==
+systeminformation@5.9.17:
+  version "5.9.17"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.9.17.tgz#9b0c405346fcd9ad37a95df4990eefa3d164d7a3"
+  integrity sha512-hbJtPsG63PCst4PLXFq8hycbkeR5oGDquRowfLK0gNX7nJ1qx3tCbsWu83OL4GP1dkcLMKsVooLUn5x2K1Epgg==
 
 table@^5.2.3, table@^5.4.6:
   version "5.4.6"

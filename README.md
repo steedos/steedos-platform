@@ -30,11 +30,21 @@
 
 元数据是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
 
-元数据可以在可视化界面中进行修改，也可以使用VS Code插件同步到代码，实现版本管理，并进一步编写代码、调试、测试、打包、部署。
-
-![Steedos Packages Overview](./docs/diagrams/Steedos%20Packages.drawio.svg)
+![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
 
 [点击了解华炎魔方元数据类型](https://www.steedos.cn/docs/developer/meta-types)
+
+## 企业级权限控制
+
+华炎魔方定义了基于角色（简档/权限集）的权限控制体系，通过多种配置和编程入口，满足企业级软件对权限控制的各种需求。
+
+![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
+
+## 软件包
+
+元数据可以在可视化界面中进行修改，也可以使用Steeods VS Code插件同步为软件包，实现版本管理，并进一步编写代码、调试、测试、打包、部署。
+
+![Steedos Packages Overview](./docs/diagrams/Steedos%20Packages.drawio.svg)
 
 ## 快速向导
 
@@ -96,7 +106,7 @@ npx create-steedos-app my-app
 
 华炎魔方（企业版）实现可更多企业级安全控制功能，并与相关第三方开源项目集成，满足企业客户的高级需求。了解更多请[联系我们](https://www.steedos.cn/company/contact-us)。
 
-- 高级权限控制: 配置共享规则和限制规则实现权限在特定条件下的共享和的收缩，并可通过编写 beforeFind 触发器的方式，根据业务需求叠加任意想要的权限控制。
+- 高级权限控制: 配置共享规则和限制规则实现权限在特定条件下的共享和的收缩；分部级权限；通过编写 beforeFind 触发器控制权限。
 - 审计日志：为对象启用审计日志，每一条记录的增删改均会自动记录日志；系统登录日志；系统操作日志。
 - [Node Red](https://www.steedos.cn/docs/developer/node-red): 基于 Node Red，可视化开发华炎魔方与第三方业务系统的集成接口。
 - [App Smith](https://github.com/getredash/redash): 使用 App Smith，开发华炎魔方前端自定义页面。
@@ -122,8 +132,11 @@ npx create-steedos-app my-app
 华炎魔方前端使用 React 开发表单、列表视图控件，并基于 Meteor 实现完整界面。
 
 - [Ant Design ProForm](https://procomponents.ant.design/components/form): 基于 ProForm 开发表单控件，根据自定义对象动态创建表单、操作业务数据。
+- [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/): Salesforce 开源的企业软件设计标准和样式库。[React 控件库](https://react.lightningdesignsystem.com/)
+- [Tailwind CSS](https://tailwindcss.com/): 直接用class表述样式，而无需编写和维护css文件。
 - [AG Grid](https://www.ag-grid.com/): 因为ProTable功能太弱，我们选择 AG Grid 构建列表视图控件。
 - [Redash](https://github.com/getredash/redash): 引入Redash部分前端源码，开发查询设计器、图表设计器、仪表盘设计器。
+- [Mobx React Lite](https://github.com/mobxjs/mobx-react-lite)：基于Mobx React Lite实现华炎魔方的React Store。
 
 ## 源码目录索引
 
