@@ -205,7 +205,7 @@ export async function getSpaceBootStrap(req, res) {
             const datasourceObjects = await datasource.getObjects();
             for (const object of datasourceObjects) {
                 const objectConfig  = object.metadata;
-                if(!result.objects[objectConfig.name]){
+                if (!result.objects[objectConfig.name] || objectConfig.name.endsWith("__c")) {
                     try {
                         const userObjectConfig = await getObject(objectConfig.name).getRecordView(userSession);
                         let _objectConfig = null;
