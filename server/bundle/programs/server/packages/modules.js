@@ -256,9 +256,7 @@ install("steedos:autoform");
 install("steedos:creator");
 install("steedos:instance-record-queue");
 install("steedos:app-chat");
-install("steedos:application-package");
 install("steedos:users-import");
-install("steedos:audit");
 install("steedos:formbuilder");
 install("steedos:app-workflow");
 install("steedos:object-webhooks-queue");
@@ -1019,7 +1017,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.1.65",
+  "version": "2.1.66",
   "main": "lib/index.js"
 };
 
@@ -1046,7 +1044,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.1.65",
+  "version": "2.1.66",
   "main": "lib/index.js"
 };
 
@@ -1073,7 +1071,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.1.65",
+  "version": "2.1.66",
   "main": "index.js"
 };
 
@@ -1100,7 +1098,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.1.65",
+  "version": "2.1.66",
   "main": "index.js"
 };
 
@@ -1127,7 +1125,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.1.65",
+  "version": "2.1.66",
   "main": "index.js"
 };
 
@@ -1154,7 +1152,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "2.1.65",
+  "version": "2.1.66",
   "main": "lib/index.js"
 };
 
@@ -1181,7 +1179,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.1.65",
+  "version": "2.1.66",
   "main": "lib/index.js"
 };
 
@@ -1208,7 +1206,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.1.65",
+  "version": "2.1.66",
   "main": "lib/index.js"
 };
 
