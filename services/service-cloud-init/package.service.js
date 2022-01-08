@@ -5,14 +5,43 @@ const bcrypt = require('bcryptjs');
 const createHash = require('crypto').createHash;
 const steedosLicense = require("@steedos/license");
 const objectql = require('@steedos/objectql');
+const fs = require('fs')
+const path = require('path')
+const ini = require('ini')
 // const randomstring = require("randomstring");
 const project = require('./package.json');
 const packageName = project.name;
+
+let initing = false;
+
+function saveLocalEnv(localEnv) {
+	var localEnvPath = getLocalEnvPath()
+	fs.writeFileSync(localEnvPath, ini.stringify(localEnv));
+}
+function getLocalEnv() {
+	var localEnvPath = getLocalEnvPath()
+	var localEnv = {}
+	try {
+		var fileBuffer = fs.readFileSync(localEnvPath, 'utf-8');
+		localEnv = ini.parse(fileBuffer);
+	} catch (err) {
+
+	}
+	return localEnv;
+}
+
+const PROFILE_FILENAME = '.env.local'
+function getLocalEnvPath() {
+	var projectPath = process.cwd();
+	var profileFilepath = path.join(projectPath, PROFILE_FILENAME);
+	return profileFilepath
+}
 
 module.exports = {
 	name: packageName,
 	namespace: "steedos",
 	settings: {
+		STEEDOS_HELP_URL: process.env.STEEDOS_HELP_URL ? process.env.STEEDOS_HELP_URL : 'https://www.steedos.com',
 		STEEDOS_CLOUD_URL: process.env.STEEDOS_CLOUD_URL ? process.env.STEEDOS_CLOUD_URL : 'https://console.steedos.cn',
 		STEEDOS_CLOUD_SPACE_ID: process.env.STEEDOS_CLOUD_SPACE_ID,
 		STEEDOS_CLOUD_API_KEY: process.env.STEEDOS_CLOUD_API_KEY
@@ -75,26 +104,25 @@ module.exports = {
 			}
 			return result.data.info;
 		},
-
-	},
-	events: {
-		'steedos-server.started': async function (ctx) {
-			// console.log(chalk.blue('steedos-server.started'));
-			const settings = this.settings;
-			const spaceObj = objectql.getObject('spaces');
+		allowInit: async function () {
 			// 查询库中工作区记录，如果有工作区记录则不初始化
+			const spaceObj = objectql.getObject('spaces');
 			let spacesCount = await spaceObj.count({});
 			if (spacesCount > 0) {
-				return;
+				return false;
 			}
+			return true;
+		},
+		initProject: async function (ctx) {
+
+			const settings = this.settings;
 
 			console.log(chalk.blue('开始初始化工作区'));
 
 			// 配置主控地址
 			const consoleUrl = settings.STEEDOS_CLOUD_URL;
 			if (!consoleUrl) {
-				console.log(chalk.red('请配置主控地址'));
-				return;
+				throw new Error('请配置主控地址');
 			}
 
 			// 初始化工作区数据
@@ -103,16 +131,24 @@ module.exports = {
 			const apiKey = settings.STEEDOS_CLOUD_API_KEY;
 
 			if (!spaceId || !apiKey) {
-				console.log(chalk.red('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。'));
-				return;
+				throw new Error('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。');
+			}
+			const spaceObj = objectql.getObject('spaces');
+			// 调用接口获取初始化信息
+			let spaceName, adminName, adminPhone, adminPassword;
+
+			try {
+				const info = await this.getInitInfo(spaceId, apiKey, consoleUrl);
+				spaceName = info.spaceName;
+				adminName = info.adminName;
+				adminPhone = info.adminPhone;
+				adminPassword = info.adminPassword;
+			} catch (error) {
+				throw new Error('初始化参数错误，请重新配置');
 			}
 
-			// 调用接口获取初始化信息
-			const { spaceName, adminName, adminPhone, adminPassword } = await this.getInitInfo(spaceId, apiKey, consoleUrl);
-
 			if (!spaceName || !adminName || !adminPhone) {
-				console.log(chalk.red('缺少初始化工作区信息 工作区名称、管理员姓名、管理员手机号，请检查'));
-				return;
+				throw new Error('缺少初始化工作区信息 工作区名称、管理员姓名、管理员手机号，请检查');
 			}
 
 			// 新建数据
@@ -190,8 +226,6 @@ module.exports = {
 				console.log(chalk.blue('工作区初始化完毕'));
 
 			} catch (error) {
-				console.log(chalk.red('工作区初始化失败：'));
-				console.log(error);
 				let users = await userObj.find({ filters: [['mobile', '=', adminPhone]] });
 				for (const doc of users) {
 					await userObj.directDelete(doc._id);
@@ -214,6 +248,27 @@ module.exports = {
 				for (const doc of apiKeyDocs) {
 					await apiKeysObj.directDelete(doc._id);
 				}
+
+				throw new Error(`工作区初始化失败：${error.message}`);
+			}
+		}
+	},
+	events: {
+		'steedos-server.started': async function (ctx) {
+			// console.log(chalk.blue('steedos-server.started'));
+
+			const allowInit = await this.allowInit();
+			if (!allowInit) {
+				initing = false;
+				return;
+			}
+			initing = true;
+			try {
+				await this.initProject(ctx);
+			} catch (error) {
+				console.log(chalk.red(error.message));
+			}finally{
+				initing = false;
 			}
 
 		}
@@ -293,6 +348,64 @@ module.exports = {
 						throw new Error(license_decrypt.verify_error);
 					}
 					await steedosLicense.save({ license: licenseInfo[0], is_local: license_decrypt.is_local, key: licenseInfo[1], verify_status: license_decrypt.verify_status, verify_error: license_decrypt.verify_erro, license_last_verify: new Date(), _id: license_decrypt._id, product: license_decrypt.product }, spaceId);
+				}
+			}
+		},
+		serverInitInfo: {
+			handler: async function (ctx) {
+				try {
+					const settings = this.settings;
+					const allowInit = await this.allowInit();
+					return {
+						allow_init: allowInit && !initing,
+						cloud_url: settings.STEEDOS_CLOUD_URL,
+						help_url: `${settings.STEEDOS_HELP_URL}/docs/deploy/deploy-activate`
+					};
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
+			}
+		},
+		initServer: {
+			rest: {
+				method: "POST",
+				path: "/initServer"
+			},
+			handler: async function (ctx) {
+				try {
+					/**
+					 * 1 写入环境变量
+					 * 2 调用初始化action
+					*/
+					const allowInit = await this.allowInit();
+					if (!allowInit || initing) {
+						return { success: true };
+					}
+
+					const settings = this.settings;
+
+					initing = true;
+
+					//consoleUrl
+					const { spaceId, apiKey } = ctx.params;
+
+					var localEnv = getLocalEnv();
+					if (!localEnv['steedos-cloud']) {
+						localEnv['steedos-cloud'] = {}
+					}
+					localEnv['steedos-cloud']['STEEDOS_CLOUD_SPACE_ID'] = spaceId
+					localEnv['steedos-cloud']['STEEDOS_CLOUD_API_KEY'] = apiKey
+					settings.STEEDOS_CLOUD_SPACE_ID = spaceId
+					settings.STEEDOS_CLOUD_API_KEY = apiKey
+					process.env.STEEDOS_CLOUD_SPACE_ID = spaceId
+					process.env.STEEDOS_CLOUD_API_KEY = apiKey
+					saveLocalEnv(localEnv);
+					await this.initProject(ctx);
+					initing = false;
+					return { success: true };
+				} catch (error) {
+					initing = false;
+					return { success: false, error: error.message };
 				}
 			}
 		}

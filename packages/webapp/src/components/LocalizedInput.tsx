@@ -32,6 +32,11 @@ const LocalizedInput = React.forwardRef((props: Props, ref?: React.Ref<HTMLInput
                         ref={ref}
                         placeholder={localizedPlaceholder as string}
                     />
+                ) : otherProps.type === "textarea" ? (
+                    <textarea
+                        {...otherProps}
+                        placeholder={localizedPlaceholder as string}
+                    />
                 ) : (
                     <input
                         {...otherProps}

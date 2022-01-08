@@ -3,16 +3,18 @@ import {bindActionCreators} from 'redux';
 
 import { Switch, HashRouter, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getTenant } from './selectors';
+import { getTenant, getSettings } from './selectors';
 import { getCurrentUser } from './selectors/entities/users'
 import * as GlobalActions from './actions/global_actions';
 import {loadMeAndConfig} from './actions/root';
 
+import Initialized from './components/Initialized';
 import LoggedIn from './components/LoggedIn';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import Home from './pages/Home';
+import Init from './pages/Init';
 import UpdatePassword from './pages/updatePassword';
 import CreateTenant from './pages/CreateTenant';
 import SelectSpace from './pages/SelectSpace';
@@ -21,6 +23,21 @@ import Loading from './components/Loading';
 import VerifyEmail from './pages/VerifyEmail';
 import VerifyMobile from './pages/VerifyMobile';
 
+const InitializedRouter = ({ component: Component, ...rest }) => {
+
+  if (!Component) return null;
+  return (
+    <Route
+      {...rest}
+      render={(props) => (
+        <Initialized {...props}>
+          <Component {...props} />
+        </Initialized>
+      )}
+    />
+  )
+}
+  ;
 
 const LoggedInRoute = ({component: Component, ...rest}) => {
 
@@ -78,38 +95,39 @@ class Root extends React.PureComponent {
     
     return (
       <HashRouter basename="">
-          <div className="absolute w-full h-full">
-            <Loading></Loading>
-            {/* <GlobalMessage></GlobalMessage> */}
-                  {/* <Route path="/" component={GoBack}/> */}
-                  {/* <Route path="/" component={Title}/> */}
-                <Switch>
-                  <Route path="/browsers.html" exact />
-                  <Route path="/logout" component={Logout} />
-                  <LoggedInRoute exact path="/" component={Home}/>
+        <div className="absolute w-full h-full">
+          <Loading></Loading>
+          {/* <GlobalMessage></GlobalMessage> */}
+          {/* <Route path="/" component={GoBack}/> */}
+          {/* <Route path="/" component={Title}/> */}
+          <Switch>
+            <Route path="/browsers.html" exact />
+            <Route path="/logout" component={Logout} />
+            <LoggedInRoute exact path="/" component={Home} />
 
-                  <Route path="/signup" component={Signup} />
+            <Route path="/init" component={Init} />
+            <InitializedRouter path="/signup" component={Signup} />
 
-                  <Route path="/login" component={Login} />
-                  
-                  <LoggedInRoute path="/create-space" component={CreateTenant} />
-                  <LoggedInRoute path="/select-space" component={SelectSpace} />
-                  <LoggedInRoute exact path="/update-password" component={UpdatePassword} />
-                  <LoggedInRoute path="/verify/email" component={VerifyEmail} />
-                  <LoggedInRoute path="/verify/mobile" component={VerifyMobile} />
-                  {/* <Route path="/login-code" component={LoginCode} /> */}
-                  <LoggedInRoute path="/preference" component={Preference} />
-                  {/* <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} /> */}
-                  <LoggedInRoute path="/home" component={Home}/>
-                  <LoggedInRoute path="/home/:spaceId" component={Home}/>
-                  <Redirect
-                      to={{
-                          ...this.props.location,
-                          pathname: '/login',
-                      }}
-                  />
-              </Switch>
-            </div>
+            <InitializedRouter path="/login" component={Login} />
+
+            <LoggedInRoute path="/create-space" component={CreateTenant} />
+            <LoggedInRoute path="/select-space" component={SelectSpace} />
+            <LoggedInRoute exact path="/update-password" component={UpdatePassword} />
+            <LoggedInRoute path="/verify/email" component={VerifyEmail} />
+            <LoggedInRoute path="/verify/mobile" component={VerifyMobile} />
+            {/* <Route path="/login-code" component={LoginCode} /> */}
+            <LoggedInRoute path="/preference" component={Preference} />
+            {/* <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} /> */}
+            <LoggedInRoute path="/home" component={Home} />
+            <LoggedInRoute path="/home/:spaceId" component={Home} />
+            <Redirect
+              to={{
+                ...this.props.location,
+                pathname: '/login',
+              }}
+            />
+          </Switch>
+        </div>
       </HashRouter>
     );
   };

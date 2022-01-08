@@ -26,3 +26,25 @@ export function loadMeAndConfig() {
       return resolvedPromises;
   };
 }
+
+export function initServer(spaceId, apiKey) {
+  return async (dispatch) => {
+    const promises = [
+      dispatch(async () => {
+        return await Client4.doFetch(`${Client4.getBaseRoute()}/initServer`, {
+          method: 'POST', body: JSON.stringify({
+            spaceId,
+            apiKey
+          })
+        });
+      }),
+    ];
+    const resolvedPromises = await Promise.all(promises);
+    const result = resolvedPromises[0];
+    if (result && result.success != true) {
+      return { error: result.error };
+    }
+    resolvedPromises.push(await dispatch(loadSettings()));
+    return resolvedPromises;
+  };
+}
