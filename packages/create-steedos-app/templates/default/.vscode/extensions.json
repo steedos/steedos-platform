@@ -1,5 +1,5 @@
 {
     "recommendations": [
-        "redhat.vscode-yaml", "steedos.steedosdx-vscode", "mongodb.mongodb-vscode"
+        "redhat.vscode-yaml", "steedos.steedosdx-vscode"
     ]
 }
