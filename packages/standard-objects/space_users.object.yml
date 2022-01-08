@@ -80,7 +80,7 @@ fields:
     omit: true
     name: organizations_parents
     filterable: true
-    hidden: true
+    hidden: false
   organization:
     label: Main Department
     type: lookup
