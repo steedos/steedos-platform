@@ -97,7 +97,7 @@ jobs:
       - name: Create project template release
         id: create_project_template_release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PROJECT_TEMPLATE_GITHUB_TOKEN }}
           CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
         run: |
           yarn create-project-template-release
