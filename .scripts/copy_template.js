@@ -27,6 +27,8 @@ const copyTemplateFile = (cwd, callback) => {
         '.gitignore',
         '!init_home.sh',
         '.env',
+        '.gitpod.Dockerfile',
+        '.gitpod.yml',
     ], '../../packages/create-steedos-app/templates/default', {
         parents: true,
         flat: false,
@@ -37,6 +39,12 @@ const copyTemplateFile = (cwd, callback) => {
                     return 'env'
                 case '.gitignore': {
                     return 'gitignore'
+                }
+                case '.gitpod.yml': {
+                    return 'gitpod.yml'
+                }
+                case '.gitpod.Dockerfile': {
+                    return 'gitpod.Dockerfile'
                 }
                 case 'package.json': {
                     return '_package.json'
