@@ -5233,6 +5233,147 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
+"@steedos/accounts@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-2.1.65.tgz#d6f76f464712c722a3a1d4ea40ba37713835164a"
+  integrity sha512-9MykX1UiRpiLJfhxS8LiiM57IpuJgbiPSSEZZWxCUztZu9BzniOcfx9y6Phi0wkcQvqP4/l9C6sxGNyS02ZevA==
+  dependencies:
+    "@accounts/mongo" "^0.19.0"
+    "@accounts/rest-express" "^0.19.0"
+    "@accounts/server" "^0.19.0"
+    "@accounts/two-factor" "^0.20.1"
+    "@babel/runtime" "^7.6.0"
+    "@oryd/hydra-client" "^1.9.0-alpha.3"
+    app-root-path "^2.2.1"
+    bcryptjs "^2.4.3"
+    body-parser "1.19.0"
+    chalk "^2.4.2"
+    cookies "^0.8.0"
+    cors "2.8.5"
+    crypto "^1.0.1"
+    csurf "^1.11.0"
+    express "4.17.1"
+    ismobilejs "^1.1.1"
+    js-yaml "^3.13.1"
+    mem "^5.1.1"
+    mongoose "5.6.6"
+    nodemailer "^6.3.0"
+    oauth2-server "^2.4.1"
+    pug "^3.0.2"
+    redux-thunk "^2.3.0"
+    saml-idp "^1.1.0"
+    tslib "1.10.0"
+    url-join "^4.0.1"
+    validator "^13.6.0"
+
+"@steedos/auth@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-2.1.65.tgz#14c9c5499e302556d91d6173ec6b273998cc4656"
+  integrity sha512-8gLs4Vy2aYIvQmsAkuqAzx99+cL0gKolG0tPCk/MJPfmfhH9bof5m6Y+/uSRN8bLvH/fK9vc/UkKYYPoGPcMkg==
+  dependencies:
+    "@steedos/objectql" "2.1.65"
+    cookies "^0.7.3"
+    express "^4.16.4"
+    express-jwt "^5.3.1"
+    jsonwebtoken "^8.5.1"
+    sha256 "^0.2.0"
+    underscore "^1.9.1"
+
+"@steedos/client@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/client/-/client-2.1.65.tgz#cecc63268affed2fd68f1ed274c1169fffa223c7"
+  integrity sha512-5InZeu6y2hyT5Yf/095VmkjqanSuGHfmUvUYJoC04xFRUbc6gtRWCuNZJ8+Fam6uYTcznITd+ElxjSivU0ZykA==
+  dependencies:
+    "@steedos/filters" "2.1.65"
+    node-fetch "^2.6.1"
+
+"@steedos/core@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/core/-/core-2.1.65.tgz#79aaba3922cb94d43cbc1dfe3a573aad77fa5907"
+  integrity sha512-bTIT4Zp02tmJ5QjfwC8FAfPGIx2KmrCZc+0sL/HmUqv2kRUZ2Qv4kUiKfGjLM3XwcMIqbtqCNmaRC9HvSUXavQ==
+  dependencies:
+    "@salesforce/dev-config" "^1.4.4"
+    "@salesforce/kit" "^1.0.4"
+    "@salesforce/ts-types" "^1.1.1"
+    "@steedos/auth" "2.1.65"
+    "@steedos/i18n" "2.1.65"
+    "@steedos/license" "2.1.8"
+    "@steedos/metadata-core" "2.1.65"
+    "@steedos/migrate" "2.1.65"
+    "@steedos/objectql" "2.1.65"
+    "@steedos/process" "2.1.65"
+    "@steedos/standard-objects" "2.1.65"
+    "@steedos/steedos-plugin-schema-builder" "2.1.65"
+    "@types/express" "^4.16.1"
+    "@types/mongodb" "^3.1.22"
+    "@types/node" "^11.10.4"
+    "@types/underscore" "^1.8.13"
+    body-parser "^1.18.1"
+    bunyan-sfdx-no-dtrace "^1.8.2"
+    chai "^4.2.0"
+    clone "^2.1.2"
+    cookies "^0.6.1"
+    express "^4.15.4"
+    express-graphql "^0.7.1"
+    fibers "^4.0.3"
+    globby "^9.1.0"
+    graphql "^14.1.1"
+    graphql-type-json "^0.2.2"
+    js-yaml ">=3.13.1"
+    jsen "^0.6.6"
+    json2xls "^0.1.2"
+    mongodb "^3.0.8"
+    odata-v4-mongodb "^0.1.12"
+    pg "^7.8.2"
+    reflect-metadata "^0.1.10"
+    routing-controllers "^0.7.7"
+    simpl-schema "^1.5.5"
+    uglify-js "^3.6.0"
+    underscore "1.5.2"
+
+"@steedos/data-import@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/data-import/-/data-import-2.1.65.tgz#6d0348c87f9dd56f654fc4461a549293bd24e683"
+  integrity sha512-vIzNwAr/qZyedWoZLJZIeaGMLLOAb/2FHnUcMHC8y/aMCyeBQdPkfgCGZ9JNzfFpB+p+wnaqwHkWaXGQ8B52UA==
+  dependencies:
+    "@steedos/core" "2.1.65"
+    "@steedos/objectql" "2.1.65"
+    dotenv-flow "^3.1.0"
+    node-xlsx "^0.16.1"
+
+"@steedos/filters@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.1.65.tgz#9ea73f8e47427d3715f2032905d3a6a056cdb747"
+  integrity sha512-c6LAC5Zdn08FlolAyetgxqYhjP1wJ28bagFgV/BrfXaQYExIbjBVJAmNvHFz5SZwK2AAzBGAo+lUjCdAfSL31Q==
+  dependencies:
+    "@babel/runtime" "^7.5.4"
+    moment "^2.24.0"
+    underscore "^1.9.1"
+
+"@steedos/formula@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/formula/-/formula-2.1.65.tgz#f47845f055fdf24ebe7718029ea3c36c68070754"
+  integrity sha512-53TY88KS0ry2evn/QqCfIRlfjSUymI1weGByiYQJyKHWdp18URUsZqkdZ+S/gly8j9eCA5qg8Nnwo9cAdAr6uQ==
+
+"@steedos/i18n@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/i18n/-/i18n-2.1.65.tgz#b76b495aa1069825ac5eb6cc8db55e4b25d263b8"
+  integrity sha512-7PvlrhCeWDoXzDD87YVKuznN+UNqzYZxEZ+Ydpq2OVGQoUgVgcIpt1LJti7k+53ZQBTl44M88TQTNJEBv7gSuw==
+  dependencies:
+    i18next "^19.3.4"
+    i18next-sprintf-postprocessor "^0.2.2"
+    i18next-xhr-backend "^3.2.2"
+
+"@steedos/license@2.1.8":
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.1.8.tgz#67cdd6d5507acca2482b8226c32bee2f29767c20"
+  integrity sha512-1LVT28r03MdfcCfWBnAaVgX9QbEy/bGfsgazWZ3aw1xY3X0iYtKQuAioe8Z+x0k+OppXQkxi/WDYsVwhn0haJA==
+  dependencies:
+    abort-controller "^3.0.0"
+    crypto "^1.0.1"
+    node-fetch "^2.6.0"
+    systeminformation "^4.34.5"
+
 "@steedos/license@2.1.9":
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.1.9.tgz#bac2247f9c747bb520fcc73f339ab0f3a5e34d2b"
@@ -5242,6 +5383,112 @@
     crypto "^1.0.1"
     node-fetch "^2.6.0"
     systeminformation "5.9.17"
+
+"@steedos/metadata-api@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/metadata-api/-/metadata-api-2.1.65.tgz#0f5b772ef9885e9ab78857062c21209fa3577ad0"
+  integrity sha512-MPhGJR7WiAslr/QAWKCf41bLixs72P8lcaPTL7KuxRVGnNau+jFAiqJ1Xi++FJJOLpjEapVrePCvZ/UJF1MXYw==
+  dependencies:
+    "@salesforce/dev-config" "^2.0.0"
+    "@steedos/core" "2.1.65"
+    "@steedos/metadata-core" "2.1.65"
+    chalk "^4.1.0"
+    compressing "^1.5.1"
+    dotenv-flow "^3.1.0"
+    form-data "^3.0.0"
+    js-yaml "^3.14.0"
+    mongodb "^3.6.10"
+    node-fetch "^2.6.1"
+    underscore "^1.11.0"
+
+"@steedos/metadata-core@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/metadata-core/-/metadata-core-2.1.65.tgz#a4679e81166b9747243b898f7c82cd8256701f98"
+  integrity sha512-oeeljAHxkGHYLAZcn7EDMf6e2crqX12nbyhbmoJWd5qY2eMdpS9/73MKBuRUJMlhZnZAidpCwX0b5JHRT0LqsA==
+  dependencies:
+    "@steedos/client" "2.1.65"
+    archiver "^5.1.0"
+    chalk "^4.1.0"
+    clone "^2.1.2"
+    compressing "^1.5.1"
+    dotenv-flow "^3.2.0"
+    eval "^0.1.4"
+    glob "^7.1.6"
+    ini "^2.0.0"
+    js-beautify "^1.13.1"
+    js-yaml "^3.14.0"
+    underscore "^1.11.0"
+
+"@steedos/meteor-bundle-dependencies@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/meteor-bundle-dependencies/-/meteor-bundle-dependencies-2.1.65.tgz#91e631311730d4843fb65148904ce70fea9332f1"
+  integrity sha512-Bz40VcSOFA5QEEDd4XkyGMjIr3yi0wwAHuinQReEEVcCEtpQ6w5fw+4lhE5z65PIBTuQdx2EQCdbCpVdKNSUfw==
+  dependencies:
+    apn "1.6.2"
+    arson "0.2.6"
+    basic-auth-connect "1.0.0"
+    bcryptjs "^2.4.3"
+    cli-color "0.2.3"
+    combined-stream2 "1.1.2"
+    compression "1.7.1"
+    connect "3.6.5"
+    cookie-parser "1.4.3"
+    cookies "0.6.1"
+    core-js "2.5.7"
+    decimal.js "^10.0.2"
+    errorhandler "1.5.0"
+    es5-shim "4.5.10"
+    faye-websocket "0.11.1"
+    install "0.12.2"
+    json5 "2.1.0"
+    lolex "2.3.1"
+    meteor-babel "7.2.0"
+    meteor-babel-helpers "0.0.3"
+    meteor-deque "2.1.0"
+    meteor-promise "0.8.7"
+    mongodb "3.1.6"
+    mongodb-uri "0.9.7"
+    node-fetch "2.1.2"
+    node-gcm "0.14.4"
+    node4mailer "4.0.3"
+    parseurl "1.3.2"
+    permessage-deflate "0.1.6"
+    phone "1.0.3"
+    promise "8.0.2"
+    qs-middleware "1.0.3"
+    reify "0.17.3"
+    request "2.83.0"
+    semver "5.4.1"
+    send "0.16.1"
+    sha256 "0.2.0"
+    sockjs "0.3.19"
+    stream-buffers "0.2.5"
+    stream-to-string "1.1.0"
+    uglify-js "3.4.9"
+    useragent "2.3.0"
+    uuid "3.3.2"
+    whatwg-fetch "2.0.4"
+
+"@steedos/meteor-bundle-runner@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/meteor-bundle-runner/-/meteor-bundle-runner-2.1.65.tgz#15adaa5f6a090f9b189d9bcbb66a1f0dcf36066d"
+  integrity sha512-+f6dQwpuaNiQqHkryY90BlF4HptqurjkMCUmg8zX7+NOhgBNw/6YY8aoyeu5oGT+2+SSQHMJ21RhmE56JeQBDQ==
+  dependencies:
+    fibers "4.0.3"
+    meteor-promise "0.8.5"
+    node-pre-gyp "0.6.34"
+    open "^7.3.0"
+    promise "8.0.1"
+    semver "5.3.0"
+    source-map-support "^0.5.10"
+    underscore "1.5.2"
+
+"@steedos/migrate@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/migrate/-/migrate-2.1.65.tgz#3c4f248c899723b450762f3dc8d849363962acf0"
+  integrity sha512-vOwQLL+uiRM4f8q6D7jMSyDwHpmS5Zioj+bzm/Z+LnYjNEx3x6T/iyvOzgvHxTmSxlGQ4OxpY2WrUI8ppgzWog==
+  dependencies:
+    migrate "^1.6.2"
 
 "@steedos/mongodb-memory-server-core@^7.0.0-beta.14":
   version "7.0.0-beta.14"
@@ -5269,6 +5516,51 @@
   optionalDependencies:
     rimraf "^3.0.2"
 
+"@steedos/objectql@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-2.1.65.tgz#f9bf5551f84ff6694eaeefb78bb866da562daf12"
+  integrity sha512-D6EOePdgVBtfAWJ9s3cRAUmx9Kcstz999UeKc8gy66PycnmOcw0df7lqEGu7YBQvuZ3orEFJhpeTsD5LqV9wtQ==
+  dependencies:
+    "@salesforce/dev-config" "^1.4.4"
+    "@salesforce/kit" "^1.0.4"
+    "@salesforce/ts-types" "^1.1.1"
+    "@steedos/filters" "2.1.65"
+    "@steedos/formula" "2.1.65"
+    "@steedos/metadata-core" "2.1.65"
+    "@steedos/odata-v4-typeorm" "^1.20.1"
+    "@steedos/schemas" "2.1.65"
+    "@steedos/standard-objects" "2.1.65"
+    "@types/express" "^4.16.1"
+    "@types/mongodb" "^3.1.22"
+    "@types/node" "^11.10.4"
+    "@types/underscore" "^1.8.13"
+    app-root-path "^2.2.1"
+    body-parser "^1.18.1"
+    bunyan-sfdx-no-dtrace "^1.8.2"
+    chai "^4.2.0"
+    clone "^2.1.2"
+    cookies "^0.6.1"
+    eval "^0.1.4"
+    express "^4.15.4"
+    express-graphql "^0.7.1"
+    fibers "^4.0.3"
+    globby "^9.1.0"
+    graphql "^14.1.1"
+    graphql-iso-date "^3.6.1"
+    graphql-type-json "^0.2.2"
+    jsen "^0.6.6"
+    lodash "^4.17.15"
+    mingo "^4.2.0"
+    moleculer-apollo-server "^0.3.3"
+    moment "^2.29.1"
+    mongodb "^3.0.8"
+    odata-v4-mongodb "^0.1.12"
+    odata-v4-sql "^0.1.2"
+    reflect-metadata "^0.1.10"
+    routing-controllers "^0.7.7"
+    typeorm "^0.2.16"
+    underscore "1.5.2"
+
 "@steedos/odata-v4-typeorm@^1.20.1":
   version "1.20.1"
   resolved "https://registry.npm.taobao.org/@steedos/odata-v4-typeorm/download/@steedos/odata-v4-typeorm-1.20.1.tgz#66405daa7359905a3255b13ef6e6c323d7a635b1"
@@ -5276,6 +5568,338 @@
   dependencies:
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
+
+"@steedos/plugin-dingtalk@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/plugin-dingtalk/-/plugin-dingtalk-2.1.65.tgz#cdbb33fc4ecb2819372572e688af41e578329587"
+  integrity sha512-ZSkdS1VMnZ0et1T5etY5VGQ4HObzdNVgUGzu94tNAZD/PNjDbjXUqldD5rohb0Fw7CDdZ+ByO7tskLX+hb7ktQ==
+  dependencies:
+    "@salesforce/dev-config" "^1.4.4"
+    "@steedos/service-meteor-package-loader" "2.1.65"
+    bcrypt "3.0.6"
+    bootstrap "^3.3.7"
+    cookies "^0.8.0"
+    dotenv-flow "^3.1.0"
+    express "^4.17.1"
+    jsdom "^16.2.2"
+    jshashes "^1.0.8"
+    node-fetch "2.6.1"
+    ts-node "^8.4.1"
+    wechat-crypto "^0.0.2"
+    wx-ding-aes "^0.0.10"
+
+"@steedos/plugin-enterprise@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/plugin-enterprise/-/plugin-enterprise-2.1.65.tgz#d46ca3d182179e20830e8f9ec46cc86fa4c6095f"
+  integrity sha512-M7oAdti62JvpX8p5NXuQ94a8NVD2vCCcPwHS1fhjggJr7/1nGqtf23VhYjPMHEwm8qSjmG987q3HjtCqbqcCsQ==
+
+"@steedos/plugin-qywx@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/plugin-qywx/-/plugin-qywx-2.1.65.tgz#0b8077117bc2212736b9770e6f5451a649f256f1"
+  integrity sha512-RJNWFkBnAChC2IZy5QXoiRu/aM6Icxbz5tpjXFlQkw+y0CoZ2sVgKNxNdqPxz97QDMsdWuM9T9aZVJ9UM7QoLw==
+  dependencies:
+    "@salesforce/dev-config" "^1.4.4"
+    "@steedos/service-meteor-package-loader" "2.1.65"
+    bcrypt "3.0.6"
+    bootstrap "^3.3.7"
+    cookies "^0.8.0"
+    dotenv-flow "^3.1.0"
+    express "^4.17.1"
+    express-xml-bodyparser "0.3.0"
+    jsdom "^16.2.2"
+    jshashes "^1.0.8"
+    ts-node "^8.4.1"
+    wechat-crypto "^0.0.2"
+    xml2js "0.4.23"
+
+"@steedos/process@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/process/-/process-2.1.65.tgz#c9380e78d636c38d866c0247652141af192685dd"
+  integrity sha512-Phg7Y0EZwJMO86UFyASJssUs/M7hoEMSc4PqwwMbxVXU1CpnIhv8NeQKao3JOLvZ8HNV0kFarYehWyLmA/4vBQ==
+  dependencies:
+    "@steedos/auth" "2.1.65"
+    "@steedos/objectql" "2.1.65"
+
+"@steedos/schemas@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-2.1.65.tgz#b67f8d1c5795a3a0cf953568a7bfa814d5492785"
+  integrity sha512-PQG9OucGxSkLvLQGZBwU2pi9F3O78pE6BKC5p/8ihUre3f2l1DbLaAAZen2ysNVdINJCsXq28Jt1ptnCDLY+dg==
+
+"@steedos/service-accounts@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-accounts/-/service-accounts-2.1.65.tgz#2d50723e0c59110d1cd60700176f059c9ea5c1a3"
+  integrity sha512-IXF1TkA2GtJMcfJx8hNNNExTJZCmcpQ2NIKFK1KYDSI9R6e8W4lbhZHTD2rD9a2R3YrHICNhFWLakayde5dajA==
+  dependencies:
+    node-schedule "^2.0.0"
+
+"@steedos/service-api@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-api/-/service-api-2.1.65.tgz#b8d45cffeb00df8bc528284cc69780ea64844ba3"
+  integrity sha512-aZy4Sq6g+7yjJ2MbIhZTLVJr/PEMnPYtSHd20gCkY4vVSHecT1qaNUsmoggSjbMBvq9MbOZBw1t5AcTjUFzWRA==
+  dependencies:
+    "@steedos/auth" "2.1.65"
+    graphql-type-json "^0.3.2"
+    moleculer-apollo-server "^0.3.3"
+    moleculer-web "^0.9.1"
+
+"@steedos/service-charts@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-charts/-/service-charts-2.1.65.tgz#a0a71bb3a724d226312dd946e3d84233b6a6a32b"
+  integrity sha512-dpfWxID2eZqrSkMIGU1fCffGLznlGT7nCca7u2akhxqwOjq+N58vj+zrnl+Uhp6PtXWEWdKeZO/wenHKeQykuw==
+  dependencies:
+    duration "^0.2.2"
+    json2csv "5.0.6"
+    json2xls "^0.1.2"
+    mustache "^4.2.0"
+    string-to-stream "3.0.1"
+
+"@steedos/service-cloud-init@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-cloud-init/-/service-cloud-init-2.1.65.tgz#4ae99062596a077b1717cc6ef651ab2cc46eeb58"
+  integrity sha512-iozssoxfWt7BuOtHO5dzVr5FPXWAoMt/vKyqdJMdfEtpa++5BonddrE5KOkMuP61+XIaaYQMo5KUMZepb2ETOQ==
+  dependencies:
+    "@steedos/objectql" "2.1.65"
+    axios "^0.21.4"
+    bcryptjs "^2.4.3"
+    chalk "^4.1.2"
+
+"@steedos/service-fields-indexs@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-fields-indexs/-/service-fields-indexs-2.1.65.tgz#903525207e430d52edeac07c10a221b56bef8305"
+  integrity sha512-3gdyd/YUA9XbyDduIKWNdo71/KF1ZLuNr2PKT/SiII7KZihsByOMOjpev1EhB8NoRm5d7s+X8QAaCvW8dJBcSg==
+  dependencies:
+    node-schedule "^2.0.0"
+
+"@steedos/service-metadata-apps@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-metadata-apps/-/service-metadata-apps-2.1.65.tgz#eeaef1fe30604b2b9158b24b3f7cc55b8b15c72c"
+  integrity sha512-DhpmIx2mWy5H0l00tHGTa2CX3r/uzmg/X8c2wINMGa8QJrxxKv7PSQOfXzX1R7jJ5/CkxqChgsDricqi8vvGmQ==
+  dependencies:
+    "@steedos/objectql" "2.1.65"
+    dotenv-flow "^3.1.0"
+    ioredis "^4.22.0"
+    lodash "^4.17.21"
+    moleculer "^0.14.12"
+    moleculer-cli "^0.7.1"
+    moleculer-web "^0.9.0"
+
+"@steedos/service-metadata-layouts@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-metadata-layouts/-/service-metadata-layouts-2.1.65.tgz#fd57668864ae3c5cd273ec6c49b4cd44b8cc848a"
+  integrity sha512-07gt6ifi5/kF8Shlifp1DFO5OLLMaI6+wChX1c949INhwc35NGUD0ARxTsqObvjAtkiouoVNw4QzFLPri9lINA==
+  dependencies:
+    dotenv-flow "^3.1.0"
+    ioredis "^4.22.0"
+    lodash "^4.17.21"
+    moleculer "^0.14.12"
+    moleculer-cli "^0.7.1"
+    moleculer-web "^0.9.0"
+
+"@steedos/service-metadata-objects@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-metadata-objects/-/service-metadata-objects-2.1.65.tgz#60d7d1774336a06236e1ec4082d32944dade0d00"
+  integrity sha512-aWQL89e8VwTokMe/YamL3wcJ4O/+CO/8HAC2K0M4FnNWVgeXhW37wN/T5SA2RACVMUBrt1/YnZSwg1YmweSymQ==
+  dependencies:
+    "@steedos/formula" "2.1.65"
+    dotenv-flow "^3.1.0"
+    ioredis "^4.22.0"
+    lodash "^4.17.21"
+    moleculer "^0.14.12"
+    moleculer-cli "^0.7.1"
+    moleculer-web "^0.9.0"
+
+"@steedos/service-metadata-permissionsets@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-metadata-permissionsets/-/service-metadata-permissionsets-2.1.65.tgz#f07ddbebaaf9ad2d92f6886bd697c2bdc27bf60c"
+  integrity sha512-CaoDMJD3eNbVcCOhbUeUBAXqtVgDuwY7FpYrqR8rAU8M5GEQXCIS1x57rtjWw7fyi+PLhcryHaivW0YqzJ+4Ag==
+  dependencies:
+    dotenv-flow "^3.1.0"
+    ioredis "^4.22.0"
+    lodash "^4.17.21"
+    moleculer "^0.14.12"
+    moleculer-cli "^0.7.1"
+    moleculer-web "^0.9.0"
+
+"@steedos/service-metadata-server@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-metadata-server/-/service-metadata-server-2.1.65.tgz#0d21767e54f9c729d494b9a9c7d472d3ccbdaed7"
+  integrity sha512-B/1W+RpZphLl2/gpDQgcbbm9voQfB/FlIHVS+drYIFnNjrxtgZmxcURlFDfSw5pUGTJUYtCqlVJxtS5qxVnX4g==
+  dependencies:
+    "@steedos/service-metadata" "2.1.65"
+    "@steedos/service-metadata-apps" "2.1.65"
+    "@steedos/service-metadata-layouts" "2.1.65"
+    "@steedos/service-metadata-objects" "2.1.65"
+    "@steedos/service-metadata-permissionsets" "2.1.65"
+    "@steedos/service-metadata-tabs" "2.1.65"
+    "@steedos/service-metadata-translations" "2.1.65"
+    "@steedos/service-metadata-triggers" "2.1.65"
+    "@steedos/service-packages" "2.1.65"
+
+"@steedos/service-metadata-tabs@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-metadata-tabs/-/service-metadata-tabs-2.1.65.tgz#826097c2d563170a1b484038fd3780cf42a7242e"
+  integrity sha512-xNBYzCCe/YficztXfNfXld42ThxSEpBm0zGfVCkQeTmv+kvjirgsTzVQTEMyAXzbdW32kPXaVuT3+XkatigsKQ==
+  dependencies:
+    dotenv-flow "^3.1.0"
+    ioredis "^4.22.0"
+    lodash "^4.17.21"
+    moleculer "^0.14.12"
+    moleculer-cli "^0.7.1"
+    moleculer-web "^0.9.0"
+
+"@steedos/service-metadata-translations@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-metadata-translations/-/service-metadata-translations-2.1.65.tgz#a671e40124f5de2c9fd2235d96a800174e961f10"
+  integrity sha512-6bYp6BRdBL5803LGg5+FlzsqbBmwYZmWosaTnqGi28WFz/dv0UvMxOwfS6VfviNpBII9ney6+s41AZdcuhWQWA==
+  dependencies:
+    crypto "~1.0.1"
+    dotenv-flow "^3.1.0"
+    ioredis "^4.22.0"
+    lodash "^4.17.21"
+    moleculer "^0.14.12"
+    moleculer-cli "^0.7.1"
+    moleculer-web "^0.9.0"
+
+"@steedos/service-metadata-triggers@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-metadata-triggers/-/service-metadata-triggers-2.1.65.tgz#4dc8317d939d5336dc738e7a8f0ebc93835206c0"
+  integrity sha512-fo+2Djq0PR79720PxKKr+bQ55sLgwQMyqObjSnu1GQC1ceeUccWhVxE2HASZugrvqQXk1i5lrAxfB1m8S1Er+g==
+  dependencies:
+    dotenv-flow "^3.1.0"
+    ioredis "^4.22.0"
+    lodash "^4.17.21"
+    moleculer "^0.14.12"
+    moleculer-cli "^0.7.1"
+    moleculer-web "^0.9.0"
+
+"@steedos/service-metadata@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-metadata/-/service-metadata-2.1.65.tgz#a776d7a5e548b293aa94a3965dec37b434737fea"
+  integrity sha512-HN+6yd/3p9hISguyiAG1Dt3Gv5ln3H+V++UKEGAyi7lnTLIbqJsJdGw4XgbjR5Q33x4U+S+ULVSrz9pdbFqYVg==
+  dependencies:
+    dotenv-flow "^3.1.0"
+    ioredis "^4.22.0"
+    lodash "^4.17.21"
+    moleculer "^0.14.12"
+    moleculer-cli "^0.7.1"
+    moleculer-web "^0.9.0"
+
+"@steedos/service-meteor-package-loader@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-meteor-package-loader/-/service-meteor-package-loader-2.1.65.tgz#83523959367993ce3f6882fb41f5a1b35e7a7b33"
+  integrity sha512-5g43XGH5hHwDgLBNNWbW0PIDCJOdHFRKDvt89qMIV/qVXbFO3vX5Ppu5irPCZxWjUi+cGRs9UKC5zouv3yykRw==
+  dependencies:
+    "@steedos/objectql" "2.1.65"
+    clone "^2.1.2"
+    globby "^11.0.2"
+    moleculer "^0.14.12"
+    underscore "^1.12.0"
+
+"@steedos/service-mongodb-server@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-mongodb-server/-/service-mongodb-server-2.1.65.tgz#def340eeb503c39a5dc92c4ec32800019a88a685"
+  integrity sha512-Ixd/ScxXODF9Avr8V0VReM6ueNmWqxOu8we/zlIKLnhb+AjIblGqNbCgeyyfibNbDEwwssVTeAfCeBvRlcJRkg==
+  dependencies:
+    "@steedos/mongodb-memory-server-core" "^7.0.0-beta.14"
+
+"@steedos/service-node-red@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-node-red/-/service-node-red-2.1.65.tgz#1828552da9d3f0b6471490b8ee956ea55b804e6c"
+  integrity sha512-ySJbjK+I1Oh2vQjb5Rs+NwcukwqB41G/rRp4ngiMVtxY336hfcEvvz7mE6SuzhngZZRagBgHxTVePOX0pUWW5g==
+  dependencies:
+    ioredis "^4.22.0"
+    node-red "^1.2.9"
+    node-red-contrib-redis "^1.3.9"
+    node-red-dashboard "~2.28.1"
+
+"@steedos/service-package-loader@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-package-loader/-/service-package-loader-2.1.65.tgz#b15c5a4ffd722d949a72516a10a69437ae73b1fe"
+  integrity sha512-U5xmFwodRc30r1KfRpfi/6ufstjokZfDSK3iWvt9RjrufkRhRydtxrTfyJSto7ZsbwhW+VvCUgJn0uptiRTTgg==
+  dependencies:
+    "@steedos/core" "2.1.65"
+    "@steedos/objectql" "2.1.65"
+    clone "^2.1.2"
+    globby "^11.0.2"
+    moleculer "^0.14.12"
+    underscore "^1.12.0"
+
+"@steedos/service-package-registry@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-package-registry/-/service-package-registry-2.1.65.tgz#7431882c44ed094c0e5e317aad014bdc2405f7e9"
+  integrity sha512-d1iA7tT0vP7ZyoBp0eAoieL36sicrnkyvnT1lbEYICKnb/WyM59LChYG2Srfsi/YyDpdwK227h0Tw4ScDr0jfA==
+  dependencies:
+    "@steedos/service-package-loader" "2.1.65"
+    fs-extra "8.1.0"
+    i18next "20.3.2"
+    json-stringify-safe "5.0.1"
+    jsonata "1.8.5"
+    lodash "~4.17.21"
+    lodash.clonedeep "^4.5.0"
+    moment-timezone "0.5.33"
+    npm-package-arg "~8.1.5"
+    npm-registry-client "8.6.0"
+    package-json "^7.0.0"
+    radwag-mass "~1.0.5"
+
+"@steedos/service-packages@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-packages/-/service-packages-2.1.65.tgz#a99f0415f2965f367f2eb6f2f8b6c4352f8c71e9"
+  integrity sha512-/FVfhK+DMekDgomjzyqvqU+nIfS7jv2oisRtB4cXwqjj/iDllq/ybjCUFh+WrOKr94saWRYrqBlqHfHVv5fixQ==
+
+"@steedos/service-pages@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-pages/-/service-pages-2.1.65.tgz#92b5864ed66d3d20ddde1aa1610caed3e2fef84f"
+  integrity sha512-vPpvVZ8fDK2jbcb1397qEsgg/ZIdGDz92XioGUORlyVtMWpg+osMXkbal3+0brOfQHb6CQrOgrqjPwGz0wZgog==
+
+"@steedos/service-steedos-server@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-steedos-server/-/service-steedos-server-2.1.65.tgz#1f0df6622eae7cb82a5cf7eccdc6016b1f89de8c"
+  integrity sha512-EWewC/RssFkOVJL+rWL0uCwe59gomqUx7lVNTlKN9gJmymkT/uOO9N4mlypV0GB81K1pKVlIaTZ4ln+/LB8pBQ==
+  dependencies:
+    "@steedos/accounts" "2.1.65"
+    "@steedos/core" "2.1.65"
+    "@steedos/data-import" "2.1.65"
+    "@steedos/metadata-api" "2.1.65"
+    "@steedos/plugin-dingtalk" "2.1.65"
+    "@steedos/plugin-enterprise" "2.1.65"
+    "@steedos/plugin-qywx" "2.1.65"
+    "@steedos/service-accounts" "2.1.65"
+    "@steedos/service-api" "2.1.65"
+    "@steedos/service-charts" "2.1.65"
+    "@steedos/service-cloud-init" "2.1.65"
+    "@steedos/service-fields-indexs" "2.1.65"
+    "@steedos/service-meteor-package-loader" "2.1.65"
+    "@steedos/service-node-red" "2.1.65"
+    "@steedos/service-pages" "2.1.65"
+    "@steedos/service-workflow" "2.1.65"
+    "@steedos/steedos-plugin-schema-builder" "2.1.65"
+    "@steedos/workflow" "2.1.65"
+    dotenv-flow "^3.2.0"
+    moleculer "^0.14.10"
+    moleculer-db "^0.8.4"
+    moleculer-db-adapter-mongo "^0.4.7"
+    moleculer-web "^0.9.0"
+    nats "^1.4.12"
+    node-red "^1.2.9"
+    steedos-server "2.1.65"
+
+"@steedos/service-workflow@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/service-workflow/-/service-workflow-2.1.65.tgz#0ad9bf26eb7af36b84b41eb1e0613dc3e57cda46"
+  integrity sha512-TdQyfNbCK42hB/V1HkfcUk4nUVGxOR9YBqoZy8ZtNFUlUGrJ6G4lDTFnrIuyqBjhvz7LfWISyD8cWqBcE3ipuQ==
+  dependencies:
+    node-schedule "^2.0.0"
+
+"@steedos/standard-objects@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-2.1.65.tgz#c322fc30ca248e00745c0d63598997e3e8caaa78"
+  integrity sha512-xP8Pisvjce9AGrFfHQ7FtmoY0wx03NxrtdkuG3kmplDxByMnnaV1hlVCJ2KbEL3bzbeLDhV6TJqFJjiiE/+0wA==
+
+"@steedos/steedos-plugin-schema-builder@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-schema-builder/-/steedos-plugin-schema-builder-2.1.65.tgz#73b6fc9611e3843529cc04dd03612655b4300721"
+  integrity sha512-LkndIaIIQYCdREjBfey9jb9+ea5Mt2r9YQrN0KMmJz/clrDvYj1hKDPwEo0tjta90WSDYrMsopzyus5HD6p1og==
 
 "@steedos/steedos-plugin-workflow@2.1.1", "@steedos/steedos-plugin-workflow@^2.0.4", "@steedos/steedos-plugin-workflow@^2.0.8", "@steedos/steedos-plugin-workflow@^2.1.1":
   version "2.1.1"
@@ -5291,6 +5915,35 @@
   resolved "https://registry.npm.taobao.org/@steedos/steedos-plugin-workflow/download/@steedos/steedos-plugin-workflow-1.10.3.tgz#aabdadf14429c401b53288c760b7e01d65ff9b07"
   integrity sha1-qr2t8UQpxAG1MojHYLfgHWX/mwc=
   dependencies:
+    body-parser "^1.19.0"
+    express "^4.17.1"
+    underscore "^1.9.1"
+
+"@steedos/webapp@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/webapp/-/webapp-2.1.65.tgz#2ba4b71fea8d1fa98307724d071d4b2adeccaba8"
+  integrity sha512-j0gEeos7OSdrys5kMr79MlzTWTWbwAb7/5H5yoxXESjmDtRXTlYkiVDuM1nIrDXKvWzpTjaZxfLgadz3eexvfg==
+  dependencies:
+    "@accounts/client" "^0.19.0"
+    "@accounts/client-password" "^0.19.0"
+    "@accounts/rest-client" "^0.19.0"
+    "@tailwindui/react" "^0.1.1"
+    qrcode.react "0.9.3"
+    react "^16.13.1"
+    react-app-polyfill "^1.0.4"
+    react-dom "^16.13.1"
+    react-intl "^3.1.13"
+    react-redux "^7.1.0"
+    react-router-dom "^5.2.0"
+    redux "^4.0.4"
+    redux-thunk "^2.3.0"
+
+"@steedos/workflow@2.1.65":
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/@steedos/workflow/-/workflow-2.1.65.tgz#e05bedd33f3ec4e632a7ece8a992f72c863da83f"
+  integrity sha512-vPh01ySG1CIT5hHCIrOAPKR9xv6AMLe8r7dLnrzI0H8FPMpwbV+qPSi9KdE19bPldSYRIETkf9+vR1Oa9tmrxQ==
+  dependencies:
+    "@steedos/steedos-plugin-workflow" "^2.1.1"
     body-parser "^1.19.0"
     express "^4.17.1"
     underscore "^1.9.1"
@@ -31822,6 +32475,83 @@ stealthy-require@^1.1.1:
   resolved "https://registry.npm.taobao.org/stealthy-require/download/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
 
+steedos-server@2.1.65:
+  version "2.1.65"
+  resolved "https://registry.yarnpkg.com/steedos-server/-/steedos-server-2.1.65.tgz#e6a78e14b2b757a2b2557d5bebd2878074cf0975"
+  integrity sha512-66ENBIYUwsO7RP6p8+CgXCzu9v5c2eVlIHo9uwvczEoxZMiprJo0mFboqWqkzLgQ+333WFRUNPkxewr0v28Kvw==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    "@salesforce-ux/design-system" "^2.11.0"
+    "@steedos/accounts" "2.1.65"
+    "@steedos/auth" "2.1.65"
+    "@steedos/core" "2.1.65"
+    "@steedos/filters" "2.1.65"
+    "@steedos/i18n" "2.1.65"
+    "@steedos/license" "2.1.8"
+    "@steedos/meteor-bundle-dependencies" "2.1.65"
+    "@steedos/meteor-bundle-runner" "2.1.65"
+    "@steedos/objectql" "2.1.65"
+    "@steedos/process" "2.1.65"
+    "@steedos/standard-objects" "2.1.65"
+    "@steedos/webapp" "2.1.65"
+    basic-auth "^2.0.1"
+    bcrypt "3.0.6"
+    body-parser "^1.18.3"
+    buffer-stream-reader "^0.1.1"
+    busboy "^0.2.13"
+    chalk "^1.1.3"
+    clone "2.1.1"
+    combined-stream "0.0.4"
+    connect "^3.6.6"
+    connect-route "^0.1.5"
+    cookies "^0.6.2"
+    core-js "^2.5.3"
+    cors "^2.8.5"
+    csv "^5.1.3"
+    ejs "^2.5.5"
+    ejs-lint "^0.2.0"
+    eval "0.1.2"
+    express "^4.16.4"
+    fibers "^4.0.3"
+    gm "^1.17.0"
+    gridfs-stream "^1.1.1"
+    js-yaml "^3.13.1"
+    jszip "^3.1.5"
+    knockout "^3.4.2"
+    length-stream "^0.1.1"
+    lodash "^4.17.15"
+    md5 "^2.2.1"
+    meteor-node-stubs "^0.4.1"
+    mime "^2.0.2"
+    mkdirp "^0.3.5"
+    mongodb "^3.1.13"
+    negotiator "^0.6.1"
+    node-rsa "1.0.0"
+    node-schedule "^1.3.1"
+    node-xlsx "^0.12.0"
+    oauth2-server "2.4.1"
+    odata-v4-mongodb "^0.1.12"
+    odata-v4-parser "^0.1.29"
+    odata-v4-service-document "0.0.3"
+    odata-v4-service-metadata "^0.1.6"
+    phone "^1.0.12"
+    qs "^6.6.0"
+    querystring "^0.2.0"
+    request "2.81.0"
+    requestretry "1.12.2"
+    sha256 "^0.2.0"
+    socket.io "^2.3.0"
+    socket.io-client "^2.3.0"
+    stream-buffers "^0.2.5"
+    strip-json-comments "2.0.1"
+    superagent "^3.5.2"
+    temp "^0.7.0"
+    uglify-js "^3.4.9"
+    unpipe "1.0.0"
+    url-search-params-polyfill "^7.0.0"
+    weixin-pay "1.1.7"
+    xml2js "^0.4.19"
+
 store2@^2.7.1:
   version "2.12.0"
   resolved "https://registry.npm.taobao.org/store2/download/store2-2.12.0.tgz#e1f1b7e1a59b6083b2596a8d067f6ee88fd4d3cf"
@@ -32516,6 +33246,11 @@ systeminformation@5.9.17:
   version "5.9.17"
   resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.9.17.tgz#9b0c405346fcd9ad37a95df4990eefa3d164d7a3"
   integrity sha512-hbJtPsG63PCst4PLXFq8hycbkeR5oGDquRowfLK0gNX7nJ1qx3tCbsWu83OL4GP1dkcLMKsVooLUn5x2K1Epgg==
+
+systeminformation@^4.34.5:
+  version "4.34.23"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.34.23.tgz#54c54ced5adc49c27cda953b73c0819ed56edd45"
+  integrity sha512-33+lQwlLxXoxy0o9WLOgw8OjbXeS3Jv+pSl+nxKc2AOClBI28HsdRPpH0u9Xa9OVjHLT9vonnOMw1ug7YXI0dA==
 
 table@^5.2.3, table@^5.4.6:
   version "5.4.6"
