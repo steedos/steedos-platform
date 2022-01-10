@@ -109,7 +109,7 @@ npx create-steedos-app my-app
 - 高级权限控制: 配置共享规则和限制规则实现权限在特定条件下的共享和的收缩；分部级权限；通过编写 beforeFind 触发器控制权限。
 - 审计日志：为对象启用审计日志，每一条记录的增删改均会自动记录日志；系统登录日志；系统操作日志。
 - [Node Red](https://www.steedos.cn/docs/developer/node-red): 基于 Node Red，可视化开发华炎魔方与第三方业务系统的集成接口。
-- [App Smith](https://github.com/getredash/redash): 使用 App Smith，开发华炎魔方前端自定义页面。
+- [App Smith](https://www.appsmith.com/): 使用 App Smith，开发华炎魔方前端自定义页面。
 - [Stimulsoft Reports](https://www.steedos.cn/docs/developer/stimulsoft): 调用华炎魔方中的查询，可视化开发像素级打印报表与仪表盘。
 - [Gitpod](https://gitpod.io/): 点击鼠标就能远程创建华炎魔方开发环境，支持中国区域私有部署。
 - [Gitlab](https://about.gitlab.com/): 为华炎魔方软件包实现 Devops 开发生命周期管理，支持中国区域私有部署。
