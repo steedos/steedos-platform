@@ -1,40 +1,6 @@
-# 华炎魔方模板项目
+# 华炎魔方社区版项目模板
 
-该项目是通过`steedos cli`命令行创建魔方项目时会自动生成的模板项目，比如执行`npx create-steedos-app my-app`会自动创建一个名为`my-app`的项目。
-
-## 开发前准备
-
-- **开通华炎魔方云服务**：请按该 [教程](https://www.steedos.cn/docs/deploy/deploy-cloud) 开通华炎魔方云服务。
-
-- **激活华炎魔方**：请参考该 [文档](https://www.steedos.cn/docs/deploy/deploy-activate)，准备好后续运行项目时激活华炎魔方依赖的两个环境变量。
-
-- **注册GitPod账户**：我们推荐使用GitPod来在线开发华炎魔方项目，这样可以免去安装开发环境的繁琐过程。
-如果没有 [Github](https://github.com/) 账户和 [GitPod](https://gitpod.io/) 账户，请分别注册并使用浏览器登录它们。
-
-- **Fork项目**：请Fork本项目到本地，后续我们使用GitPod在线开发Fork后的项目的话就可以把开发后的代码提交到Git仓库。
-也可以执行以下命令来创建一个新项目，然后把该项目提交到Git仓库，而不是Fork本项目来创建自己的魔方项目。```npx create-steedos-app my-app```
-
-## 运行项目
-
-只要在浏览器中输入地址 `https://gitpod.io/#{之前Fork下来的Git仓库地址}`即可使用 Gitpod 启动远程开发环境，远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等。
-
-比如访问地址 <https://gitpod.io/#https://github.com/steedos/steedos-project-template> 即可在线运行该Git仓库项目，可以把`#`号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
-
-在浏览器中打开项目后，会自动执行`yarn`指令安装项目依赖项，并自动执行`yarn start`指令运行项目。
-
-第一次运行项目项目会在控制台看到提示“请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY”，但是我们也可以看到项目运行起来后自动打开了一个浏览器窗口访问运行好的华炎魔方，只是因为没有激活华炎魔方所以没有账户可以登录使用。
-
-请参考文档 [激活华炎魔方](https://www.steedos.cn/docs/deploy/deploy-activate#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F) 配置这两个环境变量，配置好后重启项目即可使用私有部署的华炎魔方初始账户登录使用。
-
-## 开发项目
-
-- **零代码开发**：可以参考文档 [如何创建自定义应用程序？](https://www.steedos.cn/docs/admin/create_object) 在界面上开发业务需求，开发完成后可以参考 [同步元数据](https://www.steedos.cn/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE) 把代码同步到 GitPod 本地，然后本地代码可以提交到 Git仓库中。
-
-- **低代码开发**：可以参考文档 [开发人员快速向导](https://www.steedos.cn/docs/developer/getting-started) 在GitPod中在线写代码来开发业务需求。
-
-## 软件包
-
-项目开发完成后，可以发布为软件包，发布后的软件包可以直接安装到测试环境或生产环境中直接使用，还可以在华炎魔方应用市场中定价售卖发布后的软件包，详细请参考教程 [软件包发布与安装](https://www.steedos.cn/docs/developer/package)。
+在平台源码根目录启动服务时，默认启动的就是这个华炎魔方项目，它用于在源码中运行社区版项目调式华炎魔方源码，通过`steedos cli`命令行创建魔方项目时自动生成的并不是这个模板项目，而是一个单独的 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)。
 
 ## 目录说明
 
