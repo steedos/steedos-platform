@@ -113,7 +113,7 @@ module.exports = {
 			}
 			return true;
 		},
-		initProject: async function (ctx) {
+		initProject: async function (ctx, spaceId, apiKey) {
 
 			const settings = this.settings;
 
@@ -126,9 +126,6 @@ module.exports = {
 			}
 
 			// 初始化工作区数据
-			// 获取环境变量中工作区信息
-			const spaceId = settings.STEEDOS_CLOUD_SPACE_ID;
-			const apiKey = settings.STEEDOS_CLOUD_API_KEY;
 
 			if (!spaceId || !apiKey) {
 				throw new Error('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。');
@@ -264,7 +261,11 @@ module.exports = {
 			}
 			initing = true;
 			try {
-				await this.initProject(ctx);
+				// 获取环境变量中工作区信息
+				const settings = this.settings;
+				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID;
+				const apiKey = settings.STEEDOS_CLOUD_API_KEY;
+				await this.initProject(ctx, spaceId, apiKey);
 			} catch (error) {
 				console.log(chalk.red(error.message));
 			}finally{
@@ -389,18 +390,32 @@ module.exports = {
 					//consoleUrl
 					const { spaceId, apiKey } = ctx.params;
 
-					var localEnv = getLocalEnv();
-					if (!localEnv['steedos-cloud']) {
-						localEnv['steedos-cloud'] = {}
-					}
-					localEnv['steedos-cloud']['STEEDOS_CLOUD_SPACE_ID'] = spaceId
-					localEnv['steedos-cloud']['STEEDOS_CLOUD_API_KEY'] = apiKey
 					settings.STEEDOS_CLOUD_SPACE_ID = spaceId
 					settings.STEEDOS_CLOUD_API_KEY = apiKey
 					process.env.STEEDOS_CLOUD_SPACE_ID = spaceId
 					process.env.STEEDOS_CLOUD_API_KEY = apiKey
-					saveLocalEnv(localEnv);
-					await this.initProject(ctx);
+
+					await this.initProject(ctx, spaceId, apiKey);
+
+					var localEnv = getLocalEnv();
+					if (!localEnv['steedos-cloud']) {
+						localEnv['steedos-cloud'] = {}
+					}
+					localEnv['steedos-cloud']['STEEDOS_CLOUD_SPACE_ID'] = spaceId;
+					localEnv['steedos-cloud']['STEEDOS_CLOUD_API_KEY'] = apiKey;
+
+					if (!localEnv['metadata']) {
+						localEnv['metadata'] = {}
+					}
+
+					localEnv['metadata']['METADATA_SERVER'] = localEnv['metadata']['METADATA_SERVER'] || process.env.ROOT_URL;
+					localEnv['metadata']['METADATA_APIKEY'] = localEnv['metadata']['METADATA_APIKEY'] || apiKey;
+
+					try {
+						saveLocalEnv(localEnv);
+					} catch (error) {
+						// console.error(error);
+					}
 					initing = false;
 					return { success: true };
 				} catch (error) {
