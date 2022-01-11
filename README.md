@@ -147,7 +147,8 @@ npx create-steedos-app my-app
 - [NPM Packages](./packages): 华炎魔方各种内核功能包，其内每个子文件夹都是一个标准的NPM包。
   - [Standard Objects](./packages/standard-objects): 内核标准对象的定义文件。
 - [Moleculer Services](./services): 华炎魔方采用的是Moleculer微服务架构，这里存放的是各种微服务功能包，其内每个子文件夹都是一个标准的NPM包。
-- [项目模板](./steedos-projects/project-template): 这是华炎魔方模板项目，通过`steedos cli`命令行创建魔方项目时会自动生成的就是这个模板项目，另外Git仓库中有一个用于演示的 [模板项目](https://github.com/steedos/steedos-project-template) 也是从这个项目中同步过去的。
+- [社区版项目模板](./steedos-projects/project-community): 用于在源码中运行社区版项目调式华炎魔方源码，通过`steedos cli`命令行创建魔方项目时自动生成的并不是这个模板项目，而是一个单独的 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)。
+- [企业版项目模板](./steedos-projects/project-enterprise): 用于在源码中运行企业版项目调式华炎魔方源码。
 
 ## 学习华炎魔方
 
