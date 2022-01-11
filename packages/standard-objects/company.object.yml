@@ -75,6 +75,7 @@ list_views:
 actions: 
   updateOrgs: 
     label: Update The Whole Company
+    on: record
 permission_set:
   user:
     allowCreate: false
