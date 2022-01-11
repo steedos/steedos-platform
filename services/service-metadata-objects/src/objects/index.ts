@@ -102,6 +102,26 @@ export async function getOriginalObject(ctx, objectApiName) {
     return objectConfig;
 }
 
+function listviewDefaultsDeep(object, ...sources) {
+    const objectProto = Object.prototype
+    /** Used to check objects for own properties. */
+    const hasOwnProperty = objectProto.hasOwnProperty
+    object = Object(object.list_views)
+    sources.forEach(({ list_views: source }) => {
+        if (source != null) {
+            source = Object(source)
+            for (const key in source) {
+                const value = object[key]
+                if (value === undefined ||
+                    (_.eq(value, objectProto[key]) && !hasOwnProperty.call(object, key))) {
+                    object[key] = source[key]
+                }
+            }
+        }
+    })
+    return object
+}
+
 export async function refreshObject(ctx, objectApiName) {
     let objectConfig: any = {};
 
@@ -181,6 +201,10 @@ export async function refreshObject(ctx, objectApiName) {
         baseObjectConfig,
         objectConfig
     );
+
+    objectConfig.list_views = listviewDefaultsDeep({ list_views: {} }, ..._.sortBy(objectConfigs, function (o) {
+        return o.isMain ? 1 : -1;
+    }))
 
     _.each(objectConfig.fields, function(field, field_name) {
         if (objectDatasource != "default" && objectDatasource != "meteor") {
