@@ -342,8 +342,10 @@ list_views:
 actions: 
   invite_space_users: 
     label: Invite Users
+    on: list
   setPassword: 
     label: Change Password
+    on: record
   disable: 
     label: Disable
     on: record_only
@@ -366,6 +368,9 @@ actions:
       function () {
         return false;
       }
+  import:
+    label: "导入"
+    on: list
 permission_set:
   user:
     allowCreate: false

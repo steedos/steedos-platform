@@ -833,7 +833,7 @@ Meteor.startup(function () {
         });
     }
 });
-
+/* 
 let actions = {
     import: {
         label: "导入",
@@ -1100,7 +1100,7 @@ let actions = {
 }
 
 Creator.Objects.space_users.actions = Object.assign({}, Creator.Objects.space_users.actions, actions);
-
+ */
 let methods = {
     disable: async function (req, res) {
         try {
