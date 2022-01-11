@@ -22,9 +22,21 @@
 
 在浏览器中打开项目后，会自动执行`yarn`指令安装项目依赖项，并自动执行`yarn start`指令运行项目。
 
-第一次运行项目项目会在控制台看到提示“请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY”，但是我们也可以看到项目运行起来后自动打开了一个浏览器窗口访问运行好的华炎魔方，只是因为没有激活华炎魔方所以没有账户可以登录使用。
+第一次运行项目时可以在控制台看到提示“请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY”，但是我们也可以看到项目运行起来后自动打开了一个浏览器窗口访问运行好的华炎魔方，只是因为没有激活华炎魔方没有账户可以登录使用所以显示了激活华炎魔方的初始化界面。
 
-请参考文档 [激活华炎魔方](https://www.steedos.cn/docs/deploy/deploy-activate#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F) 配置这两个环境变量，配置好后重启项目即可使用私有部署的华炎魔方初始账户登录使用。
+请在云平台”管理控制台”应用的“我的魔方”中找到对应的私有部署记录，并在该初始化界面中输入点击私有部署记录详细界面右上角“复制激活参数”按钮复制的内容，其中已经包含了激活华炎魔方需要的两个环境变量，提交后会自动把相关环境变量值保存到`.env.local`文件并且页面会自动跳转到登录界面，使用私有部署的华炎魔方初始账户登录即可进入系统主界面了。
+
+```
+[metadata]
+METADATA_SERVER=https://5000-rose-fowl-9ece4ams.ws-us25.gitpod.io
+METADATA_APIKEY=#会自动填充为初始界面中输入的环境变量值
+
+[steedos-cloud]
+STEEDOS_CLOUD_SPACE_ID=#会自动填充为初始界面中输入的环境变量值
+STEEDOS_CLOUD_API_KEY=#会自动填充为初始界面中输入的环境变量值
+```
+
+其中METADATA_SERVER 和 METADATA_APIKEY这两个环境变量是用于同步元数据，详细请参考文档 [同步元数据](https://beta.steedos.cn/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE)。
 
 ## 开发项目
 

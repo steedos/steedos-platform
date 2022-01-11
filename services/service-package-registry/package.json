@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-registry",
-  "version": "2.1.67",
+  "version": "2.1.68",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-package-loader": "2.1.67",
+    "@steedos/service-package-loader": "2.1.68",
     "fs-extra": "8.1.0",
     "i18next": "20.3.2",
     "json-stringify-safe": "5.0.1",
