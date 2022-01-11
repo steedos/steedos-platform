@@ -40,6 +40,7 @@
     "@steedos/metadata-core": "2.1.67",
     "archiver": "^5.0.2",
     "change-case": "^3.1.0",
+    "chalk": "2.4.2",
     "colors": "^1.3.3",
     "compressing": "^1.5.1",
     "dotenv-flow": "^3.2.0",
