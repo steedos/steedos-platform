@@ -319,6 +319,7 @@ list_views:
 actions:
   forceSync:
     label: sync history approvals
+    on: record
 permission_set:
   user:
     allowCreate: false

@@ -21,7 +21,7 @@ Creator.Objects.object_workflows.triggers = {
   },
 };
 
-Creator.Objects.object_workflows.actions = {
+/* Creator.Objects.object_workflows.actions = {
   forceSync: {
     label: 'sync history approvals',
     visible: function (object_name, record_id, record_permissions) {
@@ -65,7 +65,7 @@ Creator.Objects.object_workflows.actions = {
       })
     }
   }
-}
+} */
 
 if (Meteor.isServer) {
   Meteor.methods({
