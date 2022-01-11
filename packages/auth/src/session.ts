@@ -113,8 +113,8 @@ export function getLoginDevice(userAgent) {
 export async function auth(request: Request, response: Response): Promise<any> {
   let cookies = new Cookies(request, response);
   let authToken: string =
-    request.headers["x-auth-token"] || cookies.get("X-Auth-Token");
-  let spaceToken = cookies.get("X-Space-Token");
+    request.headers["x-auth-token"] || (cookies.get("X-Auth-Token") || "").replace(/"/g, "");
+    let spaceToken = cookies.get("X-Space-Token").replace(/"/g, "");
   let authorization = request.headers.authorization;
   let spaceId =
     (request.params ? request.params.spaceId : null) ||
