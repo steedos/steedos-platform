@@ -6,16 +6,22 @@ steedos-app-default:
   path: steedos-app
 '@steedos-labs/oa':
   enable: true
-  version: 2.1.20
+  version: 2.1.46
   description: ''
   local: false
   path: .steedos/node_modules/@steedos-labs/oa
 '@steedos-labs/master':
   enable: true
-  version: 2.1.17
+  version: 2.1.46
   description: ''
   local: false
   path: .steedos/node_modules/@steedos-labs/master
+'@steedos-labs/workflow':
+  enable: true
+  version: 2.1.46
+  description: ''
+  local: false
+  path: .steedos/node_modules/@steedos-labs/workflow
 my-package:
   enable: true
   version: 1.0.0
