@@ -150,13 +150,13 @@ admin_menus:
       - supplier
       - none
     sort: 10000
-  - _id: permission_shares
-    name: Permission Share
-    permission_sets:
-      - admin
-    object_name: permission_shares
-    parent: advanced
-    sort: 25
+  # - _id: permission_shares
+  #   name: Permission Share
+  #   permission_sets:
+  #     - admin
+  #   object_name: permission_shares
+  #   parent: advanced
+  #   sort: 25
   - _id: audit_records
     name: Audit Records
     permission_sets:
