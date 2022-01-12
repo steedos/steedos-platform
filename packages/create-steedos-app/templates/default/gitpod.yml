@@ -38,3 +38,4 @@ vscode:
     - redhat.vscode-yaml
     - steedos.steedosdx-vscode
     - steedos.steedosdx-vscode-core
+    - eamodio.gitlens
