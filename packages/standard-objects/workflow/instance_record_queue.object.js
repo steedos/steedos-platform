@@ -915,8 +915,9 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 if (ins.state === 'completed' && ins.final_decision) {
                     instance_state = ins.final_decision;
                 }
-                setObj['instances.$.state'] = setObj.instance_state = instance_state;
-                objectUpdateMany(objectName, [['_id', '=', record._id], ['instances._id', '=', insId]], setObj)
+                setObj['instances.0.state'] = setObj.instance_state = instance_state;
+                // objectUpdateMany(objectName, [['_id', '=', record._id], ['instances._id', '=', insId]], setObj)
+                objectUpdate(objectName, record._id, setObj);
                 // objectCollection.update({
                 //     _id: record._id,
                 //     'instances._id': insId
