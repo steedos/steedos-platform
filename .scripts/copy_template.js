@@ -14,6 +14,7 @@ const downloadFile = (url, filename, callback) => {
 const copyTemplateFile = (cwd, callback) => {
     cpy([
         '**',
+        '.scripts/**',
         '.steedos/**',
         '!.steedos/node_modules/**',
         '!.steedos/.npmrc',
