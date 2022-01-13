@@ -4,6 +4,7 @@ const _ = require("underscore");
 const objectql = require("@steedos/objectql");
 const Fiber = require("fibers");
 const xlsx = require("node-xlsx");
+const moment = require("moment");
 declare var Creator: any;
 
 type ImportOptions = {
@@ -19,11 +20,43 @@ type ImportOptions = {
 };
 
 function converterString(field_name, dataCell, jsonObj) {
-  jsonObj[field_name] = dataCell + "";
+  if (dataCell) {
+    jsonObj[field_name] = dataCell.toString();
+  } else {
+    jsonObj[field_name] = null;
+  }
   return "";
 }
 
-function converterDate(field_name, dataCell, jsonObj) {
+function converterDate(field_name, dataCell, jsonObj, utcOffset) {
+  var date, date_error;
+  date_error = "";
+  if (_.isEmpty(dataCell) && !_.isDate(dataCell)) {
+    return
+  }
+
+  if (_.isDate(dataCell)) {
+    try {
+      jsonObj[field_name] = moment(dataCell).add(utcOffset, 'h').hour(0).minute(0).second(0).millisecond(0).toDate();
+    } catch (error) {
+      return error.message
+    }
+    return "";
+  }
+
+  date = new Date(dataCell);
+  if (
+    date.getFullYear() &&
+    Object.prototype.toString.call(date) === "[object Date]"
+  ) {
+    jsonObj[field_name] = date;
+  } else {
+    date_error = `${dataCell}不是日期类型数据`;
+  }
+  return date_error;
+}
+
+function converterDateTime(field_name, dataCell, jsonObj) {
   var date, date_error;
   date_error = "";
   if (_.isEmpty(dataCell) && !_.isDate(dataCell)) {
@@ -36,7 +69,7 @@ function converterDate(field_name, dataCell, jsonObj) {
   ) {
     jsonObj[field_name] = date;
   } else {
-    date_error = `${dataCell}不是日期类型数据`;
+    date_error = `${dataCell}不是日期时间类型数据`;
   }
   return date_error;
 }
@@ -285,6 +318,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
 
   let mappings = options.mappings;
   let space = options.userSession.spaceId;
+  let utcOffset = options.userSession.utcOffset;
 
   // 对象的fields
   ref = await objectql.getObject(objectName).toConfig();
@@ -316,8 +350,10 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
           try {
             switch (field != null ? field.type : void 0) {
               case "date":
+                error = converterDate(field_name, dataCell, jsonObj, utcOffset);
+                break;
               case "datetime":
-                error = converterDate(field_name, dataCell, jsonObj);
+                error = converterDateTime(field_name, dataCell, jsonObj);
                 break;
               case "number":
                 error = converteNum(field, field_name, dataCell, jsonObj);
