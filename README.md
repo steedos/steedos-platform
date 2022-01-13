@@ -1,5 +1,4 @@
 
-
 <p align="center">
   <a href="https://www.steedos.cn/">
     <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
@@ -45,6 +44,12 @@
 元数据可以在可视化界面中进行修改，也可以使用Steeods VS Code插件同步为软件包，实现版本管理，并进一步编写代码、调试、测试、打包、部署。
 
 ![Steedos Packages Overview](./docs/diagrams/Steedos%20Packages.drawio.svg)
+
+## 云原生部署
+
+基于华炎魔方开发的软件包，可以集中部署在一个Nodejs服务中，也可以基于容器技术，分布式部署在Kunernetes集群中。两种部署方式均基于事件驱动架构，可实现基于微服务的事件的发布与订阅。
+
+![Kubernetes Deploy](./docs/diagrams/Kubernetes%20Deploy.drawio.svg)
 
 ## 快速向导
 
@@ -109,7 +114,7 @@ npx create-steedos-app my-app
 - 高级权限控制: 配置共享规则和限制规则实现权限在特定条件下的共享和的收缩；分部级权限；通过编写 beforeFind 触发器控制权限。
 - 审计日志：为对象启用审计日志，每一条记录的增删改均会自动记录日志；系统登录日志；系统操作日志。
 - [Node Red](https://www.steedos.cn/docs/developer/node-red): 基于 Node Red，可视化开发华炎魔方与第三方业务系统的集成接口。
-- [App Smith](https://github.com/getredash/redash): 使用 App Smith，开发华炎魔方前端自定义页面。
+- [App Smith](https://www.appsmith.com/): 使用 App Smith，开发华炎魔方前端自定义页面。
 - [Stimulsoft Reports](https://www.steedos.cn/docs/developer/stimulsoft): 调用华炎魔方中的查询，可视化开发像素级打印报表与仪表盘。
 - [Gitpod](https://gitpod.io/): 点击鼠标就能远程创建华炎魔方开发环境，支持中国区域私有部署。
 - [Gitlab](https://about.gitlab.com/): 为华炎魔方软件包实现 Devops 开发生命周期管理，支持中国区域私有部署。
@@ -147,7 +152,8 @@ npx create-steedos-app my-app
 - [NPM Packages](./packages): 华炎魔方各种内核功能包，其内每个子文件夹都是一个标准的NPM包。
   - [Standard Objects](./packages/standard-objects): 内核标准对象的定义文件。
 - [Moleculer Services](./services): 华炎魔方采用的是Moleculer微服务架构，这里存放的是各种微服务功能包，其内每个子文件夹都是一个标准的NPM包。
-- [项目模板](./steedos-projects/project-template): 这是华炎魔方模板项目，通过`steedos cli`命令行创建魔方项目时会自动生成的就是这个模板项目，另外Git仓库中有一个用于演示的 [模板项目](https://github.com/steedos/steedos-project-template) 也是从这个项目中同步过去的。
+- [社区版项目模板](./steedos-projects/project-community): 用于在源码中运行社区版项目调式华炎魔方源码，通过`steedos cli`命令行创建魔方项目时自动生成的并不是这个模板项目，而是一个单独的 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)。
+- [企业版项目模板](./steedos-projects/project-enterprise): 用于在源码中运行企业版项目调式华炎魔方源码。
 
 ## 学习华炎魔方
 

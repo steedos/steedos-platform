@@ -696,19 +696,11 @@
       "path": "packages/steedos_app-chat.js"
     },
     {
-      "sourceMap": "packages/steedos_application-package.js.map",
-      "path": "packages/steedos_application-package.js"
-    },
-    {
       "sourceMap": "packages/steedos_users-import.js.map",
       "path": "packages/steedos_users-import.js",
       "assets": {
         "server/ejs/export_space_users.ejs": "assets/packages/steedos_users-import/server/ejs/export_space_users.ejs"
       }
-    },
-    {
-      "sourceMap": "packages/steedos_audit.js.map",
-      "path": "packages/steedos_audit.js"
     },
     {
       "path": "packages/steedos_formbuilder.js"

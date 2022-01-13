@@ -8,8 +8,9 @@
     "steedos-projects/**"
   ],
   "scripts": {
-    "start": "yarn start-project-template",
-    "start-project-template": "cd steedos-projects && cd project-template && yarn start",
+    "start": "yarn start:community",
+    "start:community": "cd steedos-projects && cd project-community && yarn start",
+    "start:enterprise": "cd steedos-projects && cd project-enterprise && yarn start",
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local",
     "lerna-link": "lerna clean --yes && lerna link --force-local",
     "buildPackages": "lerna run buildPackage",
@@ -29,7 +30,8 @@
     "build_image": "node .scripts/build_image.js",
     "build_creator": "cd creator && yarn run build",
     "create_dev_project": "node .scripts/create_dev_project.js",
-    "start-dev": "yarn create_dev_project && cd steedos-projects && cd project-dev && yarn start"
+    "start-dev": "yarn create_dev_project && cd steedos-projects && cd project-dev && yarn start",
+    "create-project-template-release": "node .scripts/create_project_template_release.js"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
@@ -44,9 +46,11 @@
     "**/globby": "9.2.0"
   },
   "devDependencies": {
+    "@octokit/core": "^3.5.1",
     "cpy": "7.3.0",
     "lerna": "4.0.0",
-    "mkdirp": "1.0.4"
+    "mkdirp": "1.0.4",
+    "node-stream-zip": "1.15.0"
   },
   "peerDependencies": {
     "steedos-server": "2.x"

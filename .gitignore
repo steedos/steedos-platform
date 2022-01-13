@@ -1,6 +1,6 @@
 **/.DS_Store
 **/.idea
-
+.temp
 /services/**/node_modules
 /packages/**/node_modules
 /apps/**/node_modules

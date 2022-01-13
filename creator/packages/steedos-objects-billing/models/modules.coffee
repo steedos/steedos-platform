@@ -1,1 +1,0 @@
-db.modules = new Meteor.Collection('modules')

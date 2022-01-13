@@ -99,14 +99,11 @@ Package.onUse(function(api) {
 	api.addFiles('server/publications/weixin_pay_code_url.coffee', 'server');
 
 	// api.addFiles('server/routes/bootstrap.coffee', 'server');
-	api.addFiles('server/routes/api_billing_recharge_notify.coffee', 'server');
 
 	api.addFiles('server/methods/my_contacts_limit.coffee', 'server');
 
 	api.addFiles('server/methods/setKeyValue.js', 'server');
-	api.addFiles('server/methods/billing_settleup.coffee', 'server');
 	api.addFiles('server/methods/setUsername.coffee', 'server');
-	api.addFiles('server/methods/billing_recharge.coffee', 'server');
 	api.addFiles('server/methods/get_space_user_count.coffee', 'server');
 	api.addFiles('server/methods/user_secret.coffee', 'server');
 	api.addFiles('server/methods/object_workflows.coffee', 'server');
@@ -199,14 +196,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/steedos/views/404.less', 'client');
 	api.addFiles('client/steedos/views/404.html', 'client');
 	api.addFiles('client/steedos/views/404.coffee', 'client');
-
-	api.addFiles('client/steedos/views/billing/steedos_billing.html', 'client');
-	api.addFiles('client/steedos/views/billing/steedos_billing.coffee', 'client');
-	api.addFiles('client/steedos/views/billing/steedos_billing.less', 'client');
-	api.addFiles('client/steedos/views/billing/space_recharge_modal.html', 'client');
-	api.addFiles('client/steedos/views/billing/space_recharge_modal.coffee', 'client');
-	api.addFiles('client/steedos/views/billing/space_recharge_qrcode_modal.html', 'client');
-	api.addFiles('client/steedos/views/billing/space_recharge_qrcode_modal.coffee', 'client');
 
 	api.addAssets('client/images/default-avatar.png', 'client');
 

@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as _ from 'lodash';
 import { AccountsServer } from '../../../server';
-import { getSteedosConfig } from '@steedos/objectql'
+import { getSteedosConfig, getSteedosSchema } from '@steedos/objectql'
 import { db } from '../../../db';
 import { canSendEmail, canSendSMS, getSteedosService } from '../../../core';
 
@@ -11,7 +11,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     req: express.Request,
     res: express.Response
   ) => {
-  let tenant = {
+  let tenant: any = {
     name: "Steedos",
     logo_url: undefined,
     background_url: undefined,
@@ -29,8 +29,13 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     _.assignIn(tenant, config.tenant)
   }
 
-  if (config.tenant && config.tenant._id) {
-    let spaceDoc = await db.findOne("spaces", config.tenant._id, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "account_logo"]})
+  if(!tenant._id){
+    tenant._id = process.env.STEEDOS_CLOUD_SPACE_ID
+  }
+  
+
+  if (tenant._id) {
+    let spaceDoc = await db.findOne("spaces", tenant._id, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "account_logo"]})
     let steedosService = getSteedosService();
     if (steedosService && spaceDoc) {
         _.assignIn(tenant, spaceDoc);
@@ -50,11 +55,17 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   let already_mail_service = canSendEmail();
   let already_sms_service = true || canSendSMS();
 
+  //allowInit
+  const broker = getSteedosSchema().broker;
+  const serverInitInfo = await broker.call(`@steedos/service-cloud-init.serverInitInfo`, {});
+
+
   res.json({
     tenant: tenant,
     password: config.password?config.password:{},
     root_url: process.env.ROOT_URL,
     already_mail_service: already_mail_service,
-    already_sms_service: already_sms_service
+    already_sms_service: already_sms_service,
+    serverInitInfo: serverInitInfo
   })
 }

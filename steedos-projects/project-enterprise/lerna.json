@@ -1,0 +1,10 @@
+{
+  "packages": [
+    "packages/**",
+    "steedos-app",
+    "steedos-packages/**"
+  ],
+  "version": "2.1.9",
+  "useWorkspaces": true,
+  "npmClient": "yarn"
+}

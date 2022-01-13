@@ -1,0 +1,9 @@
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "description": "A Steedos Package",
+  "main": "package.service.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {}
+}

@@ -14,6 +14,9 @@ export async function getObjectFieldPermissions(dbManager, objectApiName, permis
 }
 
 export async function saveOrUpdateFieldPermissions(dbManager, permissionSetName, objectName, objectPermission) {
+    if (!objectPermission.field_permissions) {
+        return;
+    }
     for (const field_permission of objectPermission.field_permissions) {
         const filter = { permission_set_id: permissionSetName, object_name: objectName, field: field_permission.field };
         const dbField = await dbManager.findOne(collection_name, filter);

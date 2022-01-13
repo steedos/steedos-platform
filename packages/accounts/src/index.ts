@@ -10,7 +10,7 @@ import MongoDBInterface from './database-mongo';
 // import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
-import { getSteedosConfig, SteedosMongoDriver, getConnection } from '@steedos/objectql'
+import { getSteedosConfig, getSteedosSchema } from '@steedos/objectql'
 import { URL } from 'url';
 import * as bodyParser from 'body-parser';
 import { sendMail, sendSMS} from './core';
@@ -18,6 +18,7 @@ import { sendMail, sendSMS} from './core';
 import oauth2Consent from './oauth2/consent';
 import oauth2Login from './oauth2/login';
 import oauth2Logout from './oauth2/logout';
+import initServer from './rest-express/endpoints/initServer';
 export { hydraAdmin } from './oauth2/config';
 
 declare var WebApp;
@@ -158,6 +159,8 @@ export function init(context){
   }
   getAccountsRouter(context).then( (accountsRouter) => {
     context.app.use("/accounts", accountsRouter);
+
+    context.app.use("/initServer", initServer);
 
     context.app.use("/oauth2/consent", userLoader(accountsServer), oauth2Consent);
     context.app.use("/oauth2/login", userLoader(accountsServer), oauth2Login);

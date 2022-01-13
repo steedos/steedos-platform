@@ -122,6 +122,7 @@ async function addServiceMetadata(ctx) {
         nodeIds: [nodeID],
         metadataType,
         metadataApiName,
+        metadataServiceName,
         metadata: ctx.params.data,
     });
     // REPLACE:
@@ -135,15 +136,20 @@ async function addServiceMetadata(ctx) {
 
 // 这里需要更改
 async function query(ctx, queryKey) {
-    const keyPrefix = ctx.broker.cacher?.prefix || "";
-    const keys = await ctx.broker.cacher.client.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
-    // REPLACE: const keys = await mockCacherKeys(ctx, `${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
-    const values = [];
-    for (const key of keys) {
-        values.push(await ctx.broker.cacher.get(getKey(key, keyPrefix)));
-        // REPLACE: values.push(await mockCacherGet(ctx, getKey(key, keyPrefix)));
+    try {
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const keys = await ctx.broker.cacher.client.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
+        // REPLACE: const keys = await mockCacherKeys(ctx, `${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
+        const values = [];
+        for (const key of keys) {
+            values.push(await ctx.broker.cacher.get(getKey(key, keyPrefix)));
+            // REPLACE: values.push(await mockCacherGet(ctx, getKey(key, keyPrefix)));
+        }
+        return values;
+    } catch (error) {
+        // console.error(`error`, error)
     }
-    return values;
+    return []
 }
 
 function getPackageServiceCacherKey(nodeID, serviceName) {
@@ -301,7 +307,10 @@ export const ActionHandlers = {
     },
     async delete(ctx: any) {
         try {
-            await ctx.broker.cacher.del(ctx.params.key);
+
+            if (ctx.broker.cacher.client.connected) {
+                await ctx.broker.cacher.del(ctx.params.key);
+            }
             // REPLACE: await mockCacherDel(ctx, ctx.params.key);
         } catch (error) {
             ctx.broker.logger.info(error.message);

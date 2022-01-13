@@ -1,6 +1,6 @@
 **/.DS_Store
 **/.idea
-
+yarn.lock
 **/node_modules
 **/package-lock.json
 
@@ -29,3 +29,7 @@ logs
 
 .npmrc
 .yarnrc
+
+jsreport-app/data/**
+
+yarn.lock

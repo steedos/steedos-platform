@@ -59,29 +59,35 @@ function initObjectPermission(userId, doc){
     let lng = Steedos.locale(userId, true)
     let spaceId =  doc.space;
     let psetsAdminId = null;
+    let psetsAdminLabel = null;
     let psetsAdmin = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'});
     if(!psetsAdmin){
+        psetsAdminLabel = TAPi18n.__(`permission_set_admin`, {}, lng)
         psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin', type: 'profile', license: 'platform', label: TAPi18n.__(`permission_set_admin`, {}, lng)});
     }else{
+        psetsAdminLabel = psetsAdmin.label
         psetsAdminId = psetsAdmin._id
     }
     let psetsUserId = null;
+    let psetsUserLabel = null;
     let psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'});
     if(!psetsUser){
+        psetsUserLabel = TAPi18n.__(`permission_set_user`, {}, lng)
         psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user', type: 'profile', license: 'platform', label: TAPi18n.__(`permission_set_user`, {}, lng)});
     }else{
+        psetsUserLabel = psetsUser.label
         psetsUserId = psetsUser._id;
     }
 
     Creator.getCollection("permission_objects").insert(Object.assign({}, Creator.getObject("base").permission_set.user, {
-        name : "用户",
+        name: doc.label + '.' + psetsUserLabel,
         permission_set_id : psetsUserId,
         object_name : doc.name,
         space: doc.space
     }));
 
     Creator.getCollection("permission_objects").insert(Object.assign({}, Creator.getObject("base").permission_set.admin, {
-        name : "管理员",
+        name: doc.label + '.' + psetsAdminLabel,
         permission_set_id : psetsAdminId,
         object_name : doc.name,
         space: doc.space

@@ -349,8 +349,8 @@ module.exports = {
 		getCloudSaasPurchasedPackages:{
 			async handler() {
 				const settings = this.settings;
-				const apiKey = settings.STEEDOS_CLOUD_API_KEY
-				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID
+				const apiKey = settings.STEEDOS_CLOUD_API_KEY || process.env.STEEDOS_CLOUD_API_KEY
+				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID || process.env.STEEDOS_CLOUD_SPACE_ID
 				const url = settings.STEEDOS_CLOUD_URL
 
 				if(!apiKey || !spaceId || !url){
@@ -445,8 +445,8 @@ module.exports = {
 
 				const settings = this.settings;
 				if (url && url.startsWith(settings.STEEDOS_CLOUD_URL + '/api/pkg/download')) {
-					const apiKey = settings.STEEDOS_CLOUD_API_KEY
-					const spaceId = settings.STEEDOS_CLOUD_SPACE_ID
+					const apiKey = settings.STEEDOS_CLOUD_API_KEY || process.env.STEEDOS_CLOUD_API_KEY
+					const spaceId = settings.STEEDOS_CLOUD_SPACE_ID || process.env.STEEDOS_CLOUD_SPACE_ID
 					const cloudUrl = settings.STEEDOS_CLOUD_URL
 
 					if (!apiKey || !spaceId || !cloudUrl) {
@@ -525,8 +525,8 @@ module.exports = {
 
 				// 初始化工作区数据
 				// 获取环境变量中工作区信息
-				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID;
-				const apiKey = settings.STEEDOS_CLOUD_API_KEY;
+				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID || process.env.STEEDOS_CLOUD_SPACE_ID;
+				const apiKey = settings.STEEDOS_CLOUD_API_KEY || process.env.STEEDOS_CLOUD_API_KEY;
 
 				if (!spaceId || !apiKey) {
 					throw new Error('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。');

@@ -79,6 +79,12 @@ function createProject(name) {
           case 'gitignore': {
             return '.gitignore'
           }
+          case 'gitpod.Dockerfile': {
+            return '.gitpod.Dockerfile'
+          }
+          case 'gitpod.yml': {
+            return '.gitpod.yml'
+          }
           case '_package.json': {
             return 'package.json'
           }

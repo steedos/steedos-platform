@@ -393,7 +393,7 @@ FlowversionAPI =
 				else
 					error_msg = "当前申请单不存在或已被删除"
 				break
-
+		res.setHeader('Content-Type', 'text/html');
 		return @writeResponse res, 200, """
 			<!DOCTYPE html>
 			<html>

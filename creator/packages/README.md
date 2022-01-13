@@ -92,21 +92,9 @@ json router 的认证中间件
 
 消息模块
 
-## steedos-app-tableau
-
-已作废。
-
 ## steedos-app-workflow
 
 该包中实现了审批王应用中一些内核功能。
-
-## steedos-application-package
-
-已作废。软件包导入
-
-## steedos-audit
-
-已作废。
 
 ## steedos-autoform
 
@@ -196,14 +184,6 @@ json router 的认证中间件
 
 meteor mongo mongoOptions 初始化
 
-## steedos-mini-web
-
-已作废。
-
-## steedos-oauth2-messenger
-
-已作废。
-
 ## steedos-oauth2-server
 
 Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员通过配置第三方授权应用，可实现让第三方应用通过调用相关接口，申请授权登录。
@@ -220,10 +200,6 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 
 该包实现了上一代华炎魔方对象模型内核功能，新版相关功能已经迁移到 [模板项目](https://github.com/steedos/steedos-platform/tree/2.1/packages/standard-objects) 中了。
 
-## steedos-objects-billing
-
-作废。
-
 ## steedos-objects-core
 
 该包中包含上一代华炎魔方部分上传附件相关业务逻辑，新版相关功能已经迁移到 [模板项目](https://github.com/steedos/steedos-platform/tree/2.1/packages/standard-objects) 中了。
@@ -235,14 +211,6 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 ## steedos-odata
 
 上一代华炎魔方OData接口功能是在这个包中实现的。
-
-## steedos-pay
-
-已作废。
-
-## steedos-post
-
-已作废。
 
 ## steedos-qcloud-smsqueue
 
@@ -263,18 +231,6 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 ## steedos-webkit-notification
 
 该包实现了华炎魔方桌面客户端消息推送功能。
-
-## steedos-weixin
-
-已作废。
-
-## steedos-weixin-aes
-
-已作废。
-
-## steedos-weixin-template-message-queue
-
-已作废。
 
 ## steedos-workflow
 

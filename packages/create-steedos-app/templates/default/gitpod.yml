@@ -1,0 +1,41 @@
+image: steedos/gitpod-workspace-base:latest
+
+# List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 5000
+    onOpen: open-browser
+    visibility: public
+  - port: 6379
+    onOpen: ignore
+  - port: 27017
+    onOpen: ignore
+  - port: 5488 # jsreport-app
+    onOpen: open-browser
+    visibility: public
+  - port: 1880 # node-red-app
+    onOpen: open-browser
+    visibility: public
+# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - init: sh ./.scripts/setup.sh
+    command: |
+      mongod --replSet rs0 --dbpath /workspace/mongodb/data/db
+  - command: |
+      gp await-port 27017
+      mongo steedos --eval "rs.initiate()"
+  - command: |
+      redis-server --save "" --appendonly no --client-output-buffer-limit replica 0 0 0 --client-output-buffer-limit pubsub 0 0 0 --client-output-buffer-limit slave 0 0 0
+  - init: |
+      yarn install
+    command: |
+      gp await-port 27017
+      gp await-port 6379
+      yarn start
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - redhat.vscode-yaml
+    - steedos.steedosdx-vscode
+    - steedos.steedosdx-vscode-core
+    - eamodio.gitlens

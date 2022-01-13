@@ -260,5 +260,176 @@ module.exports = {
         return result.lockout
       }
     }
+  },
+
+  import: function (object_name, record_id) {
+    return Modal.show('import_users_modal');
+  },
+  importVisible: function (object_name, record_id, record_permissions, record) {
+    return false;
+  },
+  setPassword: function (object_name, record_id) {
+    var organization = Session.get("organization");
+    var isAdmin = Creator.isSpaceAdmin();
+    if (!isAdmin) {
+      isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
+    }
+
+    var userSession = Creator.USER_CONTEXT;
+
+    if (!isAdmin) {
+      var isPasswordEmpty = false;
+      var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_password_empty", { type: 'get', async: false });
+      if (!result.error) {
+        isPasswordEmpty = result.empty;
+      }
+      if (!isPasswordEmpty) {
+        // Modal.show("reset_password_modal");
+        Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
+        return;
+      }
+    }
+
+    var doUpdate = function (inputValue) {
+      $("body").addClass("loading");
+      try {
+        Meteor.call("setSpaceUserPassword", record_id, userSession.spaceId, inputValue, function (error, result) {
+          $("body").removeClass("loading");
+          if (error) {
+            return toastr.error(error.reason);
+          } else {
+            swal.close();
+            return toastr.success(t("Change password successfully"));
+          }
+        });
+      } catch (err) {
+        console.error(err);
+        toastr.error(err);
+        $("body").removeClass("loading");
+      }
+    }
+
+    swal({
+      title: t("Change Password"),
+      type: "input",
+      inputType: "password",
+      inputValue: "",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      confirmButtonText: t('OK'),
+      cancelButtonText: t('Cancel'),
+      showLoaderOnConfirm: false
+    }, function (inputValue) {
+      var result;
+      if (inputValue === false) {
+        return false;
+      }
+      result = Steedos.validatePassword(inputValue);
+      if (result.error) {
+        return toastr.error(result.error.reason);
+      }
+      doUpdate(inputValue);
+    });
+  },
+  setPasswordVisible: function (object_name, record_id, record_permissions) {
+    var organization = Session.get("organization");
+    var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+    if (!allowEdit) {
+      // permissions配置没有权限则不给权限
+      return false
+    }
+    if (Session.get("app_id") === 'admin') {
+      var space_userId = db.space_users.findOne({ user: Steedos.userId(), space: Steedos.spaceId() })._id
+      if (space_userId === record_id) {
+        return true
+      }
+    }
+
+    // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+    if (Steedos.isSpaceAdmin()) {
+      return true;
+    }
+    else {
+      return SpaceUsersCore.isCompanyAdmin(record_id, organization);
+    }
+  },
+  standard_newVisible: function (object_name, record_id, record_permissions, record) {
+    var organization = Session.get("organization");
+    var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
+    if (!allowCreate) {
+      // permissions配置没有权限则不给权限
+      return false
+    }
+    // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+    if (Steedos.isSpaceAdmin()) {
+      return true;
+    }
+    else {
+      var userId = Steedos.userId();
+      //当前选中组织所属分部的管理员才有权限
+      if (organization && organization.company_id && organization.company_id.admins) {
+        return organization.company_id.admins.indexOf(userId) > -1;
+      }
+    }
+  },
+  standard_editVisible: function (object_name, record_id, record_permissions, record) {
+    var organization = Session.get("organization");
+    var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+    if (!allowEdit) {
+      // permissions配置没有权限则不给权限
+      return false
+    }
+    if (Session.get("app_id") === 'admin') {
+      var space_userId = db.space_users.findOne({ user: Steedos.userId(), space: Steedos.spaceId() })._id
+      if (space_userId === record_id) {
+        return true
+      }
+    }
+
+    // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+    if (Steedos.isSpaceAdmin()) {
+      return true;
+    }
+    else {
+      return SpaceUsersCore.isCompanyAdmin(record_id, organization);
+    }
+  },
+  standard_deleteVisible: function (object_name, record_id, record_permissions, record) {
+    return false;
+  },
+  invite_space_users: function (object_name, record_id) {
+    // var address = window.location.origin + "/accounts/a/#/signup?redirect_uri=" + encodeURIComponent(window.location.origin + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX) + "&X-Space-Id=" + Steedos.getSpaceId();
+    var inviteToken = Steedos.getInviteToken();
+    let address = window.location.origin + "/accounts/a/#/signup?invite_token=" + inviteToken;
+    if(_.isFunction(Steedos.isCordova) && Steedos.isCordova()){
+        address = Meteor.absoluteUrl("accounts/a/#/signup?invite_token=" + inviteToken)
+    }
+    
+    var clipboard = new Clipboard('.list-action-custom-invite_space_users');
+
+    $(".list-action-custom-invite_space_users").attr("data-clipboard-text", address);
+
+    clipboard.on('success', function(e) {
+        toastr.success(t("space_users_aciton_invite_space_users_success"));
+        e.clearSelection();
+        clipboard.destroy();
+    });
+    
+    clipboard.on('error', function(e) {
+        toastr.error(t("space_users_aciton_invite_space_users_error"));
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        console.log('address', address);
+        console.log('clipboard error', e)
+        clipboard.destroy();
+    });
+  },
+  invite_space_usersVisible: function () {
+    if (Creator.isSpaceAdmin()) {
+      let space = Creator.odata.get("spaces", Session.get("spaceId"), "enable_register");
+      if (space && space.enable_register) {
+        return true;
+      }
+    }
   }
 }

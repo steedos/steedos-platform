@@ -32,6 +32,7 @@ fields:
         return Steedos.getLicenseOptions();
       }
     showIcon: false
+    required: "{{ 'profile' === formData.type }}"
   assigned_apps:
     label: Assigned Apps
     type: lookup
@@ -64,6 +65,7 @@ fields:
     depend_on:
       - type
     inlineHelpText: When the type is a profile, no user needs to be selected
+    visible_on: "{{'permission_set' === formData.type}}"
   is_system:
     type: boolean
     label: System
@@ -85,6 +87,7 @@ fields:
         return options;
       }
     defaultValue: '3'
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   max_login_attempts:
     type: select
     label: 最大无效登录尝试次数
@@ -101,6 +104,7 @@ fields:
       - label: '无限制'
         value: '0'
     defaultValue: '10'
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   lockout_interval:
     type: select
     group: profile password policy
@@ -117,18 +121,21 @@ fields:
       - label: '始终(必须由管理员重置)'
         value: '0'
     defaultValue: '15'
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   enable_MFA:
     type: boolean
     label: 多重身份验证(需要开启短信服务)
     inlineHelpText: 密码登陆的基础上增加短信验证的两种组合的鉴别技术进行系统登陆.
     sort_no: 1200
     group: 登录策略
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   logout_other_clients: 
     type: boolean
     label: 单例登录
     inlineHelpText: 注销以当前用户身份登录的其他客户端。
     sort_no: 1100
     group: 登录策略
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   login_expiration_in_days:
     type: number
     scale: 2
@@ -136,12 +143,14 @@ fields:
     sort_no: 1000
     defaultValue: 90
     group: 登录策略
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   phone_logout_other_clients: 
     type: boolean
     label: 手机App单例登录
     inlineHelpText: 注销以当前用户身份登录的其他客户端。
     sort_no: 1100
     group: 登录策略
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   phone_login_expiration_in_days:
     type: number
     scale: 2
@@ -149,6 +158,7 @@ fields:
     sort_no: 1000
     defaultValue: 90
     group: 登录策略
+    visible_on: "{{'profile' === formData.type ? true: false}}"
 list_views:
   all:
     label: All
