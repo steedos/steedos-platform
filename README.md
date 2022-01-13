@@ -45,6 +45,12 @@
 
 ![Steedos Packages Overview](./docs/diagrams/Steedos%20Packages.drawio.svg)
 
+## 云原生部署
+
+基于华炎魔方开发的软件包，可以集中部署在一个Nodejs服务中，也可以基于容器技术，分布式部署在Kunernetes集群中。两种部署方式均基于事件驱动架构，可实现基于微服务的事件的发布与订阅。
+
+![Kubernetes Deploy](./docs/diagrams/Kubernetes%20Deploy.drawio.svg)
+
 ## 快速向导
 
 ### 部署华炎魔方平台
