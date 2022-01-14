@@ -27,7 +27,7 @@ tasks:
   - name: Redis
     command: |
       redis-server --save "" --appendonly no --client-output-buffer-limit replica 0 0 0 --client-output-buffer-limit pubsub 0 0 0 --client-output-buffer-limit slave 0 0 0
-  - name: Nodejs
+  - name: Steedos
     init: |
       yarn
       yarn bootstrap
@@ -37,7 +37,12 @@ tasks:
       gp await-port 6379
       export ROOT_URL=$(gp url 5000)
       yarn start
-
+  - name: Creator
+    init: |
+      cd creator
+      yarn
+    command: |
+      cd creator
 vscode:
   extensions:
     - dbaeumer.vscode-eslint
