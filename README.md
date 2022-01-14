@@ -155,6 +155,21 @@ npx create-steedos-app my-app
 - [社区版项目模板](./steedos-projects/project-community): 用于在源码中运行社区版项目调式华炎魔方源码，通过`steedos cli`命令行创建魔方项目时自动生成的并不是这个模板项目，而是一个单独的 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)。
 - [企业版项目模板](./steedos-projects/project-enterprise): 用于在源码中运行企业版项目调式华炎魔方源码。
 
+## NPM Scripts说明
+
+本项目主要提供以下可执行的脚本命令：
+
+- start: 执行 `start:community` 启动位于目录 [steedos-projects/project-community](./steedos-projects/project-community) 的社区版华炎魔方模板项目。
+- start:community: 启动位于目录 [steedos-projects/project-community](./steedos-projects/project-community) 的社区版华炎魔方模板项目，调式位于目录 [packages](./packages) 和 [services](./services) 的华炎魔方源码。
+- start:enterprise: 启动位于 [steedos-projects/project-enterprise](./steedos-projects/project-enterprise) 的企业版华炎魔方模板项目，调式位于目录 [packages](./packages) 和 [services](./services) 的华炎魔方源码。
+- bootstrap: 执行 [lerna bootstrap](https://github.com/lerna/lerna/tree/main/commands/bootstrap#readme) 根据源码中各个NPM包中配置的依赖包建立它们之前的引用关系。
+- build: 执行 `lerna run prepare` 根据源码中各个NPM包之前的依赖关系依次执行各个NPM包内  `prepare` 指令打包所有需要打包的NPM包。
+- ver: 执行 [lerna version](https://github.com/lerna/lerna/tree/main/commands/version) 在发版本前把源码中所有需要发包的NPM包的版本号统一升级到下一个指定版本。
+- pub: 执行 [lerna publish](https://github.com/lerna/lerna/tree/main/commands/publish) 把源码中所有需要发包的NPM包发布正式版到 [NPM仓库](https://www.npmjs.com/) 中。
+- pub_next: 执行 [lerna publish](https://github.com/lerna/lerna/tree/main/commands/publish) 把源码中所有需要发包的NPM包发布测试版到 [NPM仓库](https://www.npmjs.com/) 中。
+
+脚本具体内容请查阅 [package.json](./package.json) 文件中的 scripts 属性。
+
 ## 学习华炎魔方
 
 您还可以根据华炎魔方快速构建应用程序的视频教程进行操作。
