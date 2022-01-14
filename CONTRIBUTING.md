@@ -20,6 +20,7 @@
 - Start the MongoDB service.
 
 ## Run Project
+
 - Run `yarn start` on the command line to start a template project
 
 - Use your browser to access `http://127.0.0.1:5000`.
@@ -69,22 +70,23 @@ The content of the `setting.json` may like this:
 - Then you can start the service just by run `yarn start`.
 - Use your browser to access `http://127.0.0.1:3100`.
 
-
-
 ### Build Creator
 
 You can run the shell bellow on command line to build all of the source code of '/creator' to the '/server' folder as a NPM package named 'steedos-server'.
 
 - Requirements
-    - Build app-builder
-        ```shell
-        cd app-builder
-        yarn build
-        ```
-    - Link builder-community: **You need to modify the path of the app-builder project in creator\\.scripts\npm-postinstall.js first**
-        ```
-        yarn postinstall
-        ```
+  - Build app-builder
+
+      ```shell
+      cd app-builder
+      yarn build
+      ```
+
+  - Link builder-community: **You need to modify the path of the app-builder project in creator\\.scripts\npm-postinstall.js first**
+
+      ```shell
+      yarn postinstall
+      ```
 
 ```shell
 cd creator/
