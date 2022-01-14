@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@steedos-labs/contract@2.1.22":
+  version "2.1.22"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/contract/-/contract-2.1.22.tgz#e9cf2110d83dc75b59598bf2092a1d4f81849afe"
+  integrity sha512-xLqZX5GL3SqinNVUA4FHdfnhaobaFOAR36WUoiWlW6NCOGzWgImdHd6/gDEIvnG3tTT45g2AnkJ+I4uo1mF/9w==
+
 "@steedos-labs/master@2.1.17":
   version "2.1.17"
   resolved "https://registry.yarnpkg.com/@steedos-labs/master/-/master-2.1.17.tgz#0dd693da48c46b0975c5bb9740d88c149390bcc2"
@@ -14,6 +19,11 @@
   dependencies:
     "@steedos/app-contracts" "2.0.51"
     "@steedos/app-crm" "2.0.51"
+
+"@steedos-labs/project@2.1.22":
+  version "2.1.22"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/project/-/project-2.1.22.tgz#736eaa5bcd21b850ec62add5fd1a8b3a099937fe"
+  integrity sha512-RV6Q4UCPMoWqbAzGNDF8jCygRt+/uSonPG5riij5SHnfL9unn2NBYHt/+pcukV0OTign1dsUMXT9Tr8C2qr4GA==
 
 "@steedos-labs/workflow@2.1.45":
   version "2.1.45"
