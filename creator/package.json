@@ -4,14 +4,10 @@
   "private": true,
   "scripts": {
     "start": "env-cmd -f ./.env.local meteor run --settings settings.json --port 3100",
-    "startv": "env-cmd -f ./.env.local meteor run --verbose --settings settings.json --port 3100",
+    "start-verbose": "env-cmd -f ./.env.local meteor run --verbose --settings settings.json --port 3100",
     "build": "yarn && rm -rf .dist/bundle && cross-env TOOL_NODE_FLAGS=--max-old-space-size=9800 meteor build --directory .dist --server-only && node .scripts/build-after.js",
-    "testbuild": "cp -rf .dist/* ../steedos-contracts-app/node_modules/steedos-server/",
-    "login": "npm login --registry https://registry.npmjs.org",
     "pub": "cd .dist && npm publish --registry https://registry.npmjs.org",
-    "prepare": "node .scripts/npm-postinstall.js",
-    "osw": "cd ../../steedos-webapp/ && yarn build-lib && cd ../object-server/creator/ && cp -r ../../steedos-webapp/lib/* node_modules/@steedos/react/lib/",
-    "sr": "cp -r ../../steedos-plugin-stimulsoft-report/lib/* node_modules/@steedos/plugin-stimulsoft-report/lib/ && rm -rf node_modules/@steedos/plugin-stimulsoft-report/node_modules/@steedos"
+    "prepare": "node .scripts/npm-postinstall.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",

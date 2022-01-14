@@ -4,23 +4,32 @@ image:
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
   - port: 5000
-    onOpen: open-preview
+    onOpen: open-browser
     visibility: public
+  - port: 6379
+    onOpen: ignore
+  - port: 27017
+    onOpen: ignore
   - port: 3100 # Creator
-    onOpen: open-preview
+    onOpen: open-browser
     visibility: public
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
 tasks:
-  - init: |
+  - init: sh ./.scripts/gitpod_setup.sh
+  - name: Mongo
+    init: |
       mkdir -p /workspace/mongodb/data/db
     command: |
       mongod --replSet rs0 --dbpath /workspace/mongodb/data/db
   - command: |
       gp await-port 27017
       mongo steedos --eval "rs.initiate()"
-  - command: |
+      exit
+  - name: Redis
+    command: |
       redis-server --save "" --appendonly no --client-output-buffer-limit replica 0 0 0 --client-output-buffer-limit pubsub 0 0 0 --client-output-buffer-limit slave 0 0 0
-  - init: |
+  - name: Steedos
+    init: |
       yarn
       yarn bootstrap
       yarn build
@@ -29,7 +38,6 @@ tasks:
       gp await-port 6379
       export ROOT_URL=$(gp url 5000)
       yarn start
-
 vscode:
   extensions:
     - dbaeumer.vscode-eslint
