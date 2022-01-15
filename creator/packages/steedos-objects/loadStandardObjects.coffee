@@ -24,8 +24,7 @@ try
 				"@steedos/service-charts",
 				"@steedos/service-pages",
 				"@steedos/service-cloud-init",
-				"@steedos/service-package-registry",
-				"@steedos/steedos-plugin-workflow"
+				"@steedos/service-package-registry"
 				],
 			plugins: config.plugins
 		}

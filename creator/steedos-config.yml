@@ -9,7 +9,6 @@ public:
       folder: "./storage"
   templateSpaceId: template
 plugins:
-  - "@steedos/steedos-plugin-workflow"
   - "@steedos/plugin-enterprise"
 enable_holidays: true
 STEEDOS_STORAGE_DIR: "./storage"
