@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-node-red-app",
-  "version": "2.1.73",
+  "version": "2.1.74",
   "keywords": [
     "steedos",
     "node-red"
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@geek/spinner": "^1.0.0",
-    "@steedos/node-red-app-template": "2.1.73",
+    "@steedos/node-red-app-template": "2.1.74",
     "chalk": "3.0.0",
     "commander": "4.1.0",
     "fs-extra": "8.1.0"
