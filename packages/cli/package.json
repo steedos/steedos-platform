@@ -33,7 +33,7 @@
     "/dist"
   ],
   "dependencies": {
-    "@geek/spinner": "^1.0.0",
+    "@geek/spinner": "1.0.0",
     "@oclif/command": "^1.5.10",
     "@oclif/config": "^1.12.8",
     "@oclif/plugin-help": "^2.1.6",
