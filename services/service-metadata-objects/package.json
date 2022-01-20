@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-objects",
-  "version": "2.1.75",
+  "version": "2.1.76",
   "description": "",
   "main": "lib/objects.service.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/formula": "2.1.75",
+    "@steedos/formula": "2.1.76",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
