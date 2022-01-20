@@ -3167,10 +3167,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@geek/spinner@^1.0.0":
+"@geek/spinner@1.0.0":
   version "1.0.0"
-  resolved "https://registry.npm.taobao.org/@geek/spinner/download/@geek/spinner-1.0.0.tgz#55243af270a915172be452dad9f923f7e5e0fa7a"
-  integrity sha1-VSQ68nCpFRcr5FLa2fkj9+Xg+no=
+  resolved "https://registry.yarnpkg.com/@geek/spinner/-/spinner-1.0.0.tgz#55243af270a915172be452dad9f923f7e5e0fa7a"
+  integrity sha512-tQ/09iBn/9AsNSAi1lwQF1MCl+FEhgfGkk/F+uvkt6nBJ5P9Eh2e3rDPfCxvfaLCl3w3EhqFzV5I2MkSACHB3w==
   dependencies:
     chalk "^2.3.1"
     cli-cursor "^2.1.0"
