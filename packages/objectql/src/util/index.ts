@@ -682,7 +682,7 @@ export function getSteedosConfig(){
     let config: any;
     let configPath = path.join(getBaseDirectory(), configName)
     if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
-        config = this.loadFile(configPath)
+        config = loadFile(configPath)
         if (config.env){
             _.each(config.env, function(item, key){
                 process.env[key] = calcString(item)

@@ -10,6 +10,8 @@
   "author": "Jack Zhuang",
   "license": "ISC",
   "dependencies": {
+    "meteor-babel": "7.2.0",
+    "meteor-babel-helpers": "0.0.3",
     "apn": "1.6.2",
     "arson": "0.2.6",
     "basic-auth-connect": "1.0.0",
@@ -54,8 +56,6 @@
     "whatwg-fetch": "2.0.4"
   },
   "devDependencies": {
-    "meteor-babel": "7.2.0",
-    "meteor-babel-helpers": "0.0.3"
   },
   "publishConfig": {
     "access": "public"
