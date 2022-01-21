@@ -609,7 +609,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return globalPermission
     }
 
-    async getUserObjectPermission(userSession: SteedosUserSession) {
+    async getUserObjectPermission(userSession: SteedosUserSession, rolesFieldsPermission?: any) {
 
         if (!userSession) {
             throw new Error('userSession is required')
@@ -649,7 +649,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('not find user permission');
         }
 
-        const rolesFieldsPermission = await FieldPermission.getObjectFieldsPermissionGroupRole(this.name);
+        if (!rolesFieldsPermission) {
+            rolesFieldsPermission = await FieldPermission.getObjectFieldsPermissionGroupRole(this.name);
+        }
 
         roles.forEach((role) => {
             let rolePermission = objectRolesPermission[role];
@@ -926,6 +928,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callMetadataObjectServiceAction(`getLookupDetailsInfo`, {objectApiName: this.name});
     }
 
+    /**
+     * 此函数返回getDetailsInfo、getMastersInfo、getLookupDetailsInfo 3个请求的结果，用于优化访问速度
+     */
+    async getRelationsInfo() {
+        return await this.callMetadataObjectServiceAction(`getRelationsInfo`, { objectApiName: this.name });
+    }
+
     async getRecordPermissions(record, userSession){
         const permissions = await this.getUserObjectPermission(userSession);
         const { userId, company_ids: user_company_ids } = userSession;
@@ -985,22 +994,39 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return permissions
     }
 
-    async getRecordView(userSession){
+    async getRecordView(userSession, context?: any) {
+        let objectConfig;
+        let layouts;
+        let spaceProcessDefinition;
+        let dbListViews;
+        let rolesFieldsPermission;
+
+        if (context) {
+            objectConfig = context.objectConfig;
+            layouts = context.layouts;
+            spaceProcessDefinition = context.spaceProcessDefinition;
+            dbListViews = context.dbListViews;
+            rolesFieldsPermission = context.rolesFieldsPermission;
+        }
+
         const lng = userSession.language;
-        const objectMetadataConfig: any = await this.callMetadataObjectServiceAction('get', {objectApiName: this.name});
-        let objectConfig = objectMetadataConfig.metadata;
+        if (!objectConfig) {
+            const objectMetadataConfig: any = await this.callMetadataObjectServiceAction('get', { objectApiName: this.name });
+            objectConfig = objectMetadataConfig.metadata;
+        }
         objectConfig.name = this.name
         objectConfig.datasource = this.datasource.name;
-        objectConfig.permissions = await this.getUserObjectPermission(userSession);
-        objectConfig.details = await this.getDetailsInfo();
-        objectConfig.masters = await this.getMastersInfo();
-        objectConfig.lookup_details = await this.getLookupDetailsInfo();
-
+        objectConfig.permissions = await this.getUserObjectPermission(userSession, rolesFieldsPermission);
+        const relationsInfo = await this.getRelationsInfo();
+        objectConfig.details = relationsInfo.details;
+        objectConfig.masters = relationsInfo.masters;
+        objectConfig.lookup_details = relationsInfo.lookup_details;
         delete objectConfig.db
 
         translationObject(lng, objectConfig.name, objectConfig, true);
-
-        const layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name);
+        if (!layouts) {
+            layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name);
+        }
         if(layouts && layouts.length > 0){
             const layout = layouts[0];
             let _fields = {};
@@ -1101,7 +1127,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         objectConfig.fields = userObjectFields
 
         // TODO object layout 是否需要控制审批记录显示？
-        let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] })
+        if (!spaceProcessDefinition) {
+            spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] })
+        }
         if (spaceProcessDefinition.length > 0) {
             objectConfig.enable_process = true
         }
@@ -1113,8 +1141,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 delete objectConfig.triggers[key];
             }
         })
-
-        const dbListViews = await getObject("object_listviews").find({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] })
+        if (!dbListViews) {
+            dbListViews = await getObject("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] })
+        }
         objectConfig.list_views = Object.assign({}, objectConfig.list_views)
         _.each(dbListViews, function(dbListView){
             delete dbListView.created;

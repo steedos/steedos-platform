@@ -148,8 +148,8 @@ function getObjectServiceMethodsSchema() {
             }
         },
         getRecordView: {
-            async handler(userSession) {
-                return await this.object.getRecordView(userSession);
+            async handler(userSession, context?) {
+                return await this.object.getRecordView(userSession, context);
             }
         },
         createDefaulRecordView: {
@@ -472,7 +472,8 @@ function getObjectServiceActionsSchema() {
             },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
-                return await this.getRecordView(userSession);
+                const { context } = ctx.params;
+                return await this.getRecordView(userSession, context);
             }
         },
         createDefaulRecordView: {

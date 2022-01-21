@@ -215,6 +215,9 @@ export class MasterDetailActionHandler{
         return _.uniq(mastersName);
     }
 
+    getMastersInfoKey(objectApiName: string) {
+        return this.getMasterKey(objectApiName, "*");
+    }
     async getMastersInfo(objectApiName: string){
         const mastersInfo = [];
         let records = (await this.broker.call('metadata.filter', { key: this.getMasterKey(objectApiName, "*") }, { meta: {} })) || {};
@@ -255,6 +258,10 @@ export class MasterDetailActionHandler{
             }
         })
         return _.uniq(detailsName);
+    }
+
+    getDetailsInfoKey(objectApiName: string) {
+        return this.getDetailKey(objectApiName, "*", "*");
     }
 
     async getDetailsInfo(objectApiName: string){

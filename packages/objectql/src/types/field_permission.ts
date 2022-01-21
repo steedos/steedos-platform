@@ -23,4 +23,20 @@ export class FieldPermission {
         })
         return result;
     }
+
+    static async getObjectsFieldsPermissionGroupRole() {
+        const permissions = await this.getObjectFieldsPermission('*', '*');
+        const result = {};
+        _.each(permissions, (permission) => {
+            if (!result[permission.object_name]) {
+                result[permission.object_name] = {};
+            }
+            const { permission_set_id, field, editable, readable } = permission.metadata;
+            if (!result[permission.object_name][permission_set_id]) {
+                result[permission.object_name][permission_set_id] = [];
+            }
+            result[permission.object_name][permission_set_id].push({ field: field, read: readable, edit: editable })
+        })
+        return result;
+    }
 }
