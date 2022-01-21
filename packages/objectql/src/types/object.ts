@@ -1111,7 +1111,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         _.each(objectConfig.permissions.field_permissions, (field_permission, field) => {
             const { read, edit } = field_permission;
             if (read) {
+                userObjectFields[field].hidden = false;
                 userObjectFields[field].omit = true;
+                userObjectFields[field].readonly = true;
+                userObjectFields[field].disabled = true;
             }
             if (edit) {
                 userObjectFields[field].omit = false;
