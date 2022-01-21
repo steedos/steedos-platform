@@ -16671,7 +16671,7 @@ typeorm@^0.2.16:
     yargs "^17.0.1"
     zen-observable-ts "^1.0.0"
 
-typescript@3.9.7, typescript@^3.3.3333, typescript@~3.7.4:
+typescript@3.9.7, typescript@~3.7.4:
   version "3.9.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
