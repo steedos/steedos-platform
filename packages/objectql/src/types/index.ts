@@ -7,6 +7,7 @@ export * from "./dashboard";
 export * from "./object";
 export * from "./connection";
 export * from "./object_layouts";
+export * from "./field_permission";
 export { SteedosFieldType, SteedosFieldTypeConfig } from "./field";
 export { SteedosListenerConfig } from './listeners'
 export { SteedosTriggerType } from './trigger'

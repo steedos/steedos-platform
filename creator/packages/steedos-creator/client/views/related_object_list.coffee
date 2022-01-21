@@ -50,6 +50,11 @@ Template.related_object_list.helpers
 			return false
 		related_list_item_props = getRelateObj()
 		return Creator.getRecordRelatedListPermissions(object_name, related_list_item_props)[key]
+	newAction: ()->
+		return this.name == 'standard_new'
+	actions: ()->
+		related_object_name = Session.get "related_object_name"
+		return Creator.getRelatedObjectListActions(related_object_name);
 
 	isUnlocked: ()->
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
@@ -132,8 +137,27 @@ Template.related_object_list.helpers
 		recordsTotal = Template.instance().recordsTotal
 		return (event)->
 			recordsTotal?.set(event.api.getDisplayedRowCount())
-
+isCalendarView = ()->
+	view = Creator.getListView(Session.get "related_object_name", Session.get("list_view_id"))
+	return view?.type == 'calendar'
 Template.related_object_list.events
+	'click .list-action-custom': (event) ->
+		objectName = Session.get("related_object_name")
+		object = Creator.getObject(objectName)
+		collection_name = object.label
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", "Creator.Collections.#{objectName}")
+		Session.set("action_collection_name", collection_name)
+		if isCalendarView()
+			Session.set("action_save_and_insert", false)
+		else
+			Session.set("action_save_and_insert", true)
+		# 底层 standard_delete_many 函数强依赖了session变量，此处只能变通处理。
+		if this.name == "standard_delete_many"
+			listViewName = getListviewName()
+			Creator.executeAction(objectName, {todo: 'standard_delete'}, null, null, listViewName)
+		else
+			Creator.executeAction objectName, this
 	"click .add-related-object-record": (event, template)->
 		related_object_name = Session.get "related_object_name"
 		relateObject = Creator.getObject(related_object_name)

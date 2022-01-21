@@ -159,6 +159,10 @@ class ObjectServiceDispatcher {
         return await this.callMetadataObjectServiceAction(`getLookupDetailsInfo`, {objectApiName: this.objectApiName});
     }
 
+    async getRelationsInfo() {
+        return await this.callMetadataObjectServiceAction(`getRelationsInfo`, { objectApiName: this.objectApiName });
+    }
+
     async getDetailPaths(){
         return await this.callMetadataObjectServiceAction(`getDetailPaths`, {objectApiName: this.objectApiName});
     }
@@ -179,8 +183,8 @@ class ObjectServiceDispatcher {
         return await this.callAction(`getRecordPermissions`, {record, userSession});
     }
 
-    async getRecordView(userSession){
-        return await this.callAction(`getRecordView`, {userSession});
+    async getRecordView(userSession, context?) {
+        return await this.callAction(`getRecordView`, { userSession, context });
     }
 
     async createDefaulRecordView(userSession){

@@ -386,7 +386,7 @@ var triggers = {
       // }
 
       if (doc.name === 'name' && _.has(modifier.$set, '_name') && doc.name !== modifier.$set._name) {
-        throw new Meteor.Error(500, "不能修改此纪录的name属性");
+        throw new Meteor.Error(500, "不能修改此记录的name属性");
       }
 
       if(_.has(modifier.$set, "_name")){

@@ -47,6 +47,16 @@ const getRelateds = function (objectApiName) {
     }, { objectApiName: objectApiName })
 }
 
+const objectFindOne = function (objectApiName, query) {
+    return objectql.wrapAsync(async function () {
+        const result = await objectql.getObject(this.objectApiName).find(this.query);
+        if (result && result.length > 0) {
+            return result[0];
+        }
+        return null;
+    }, { objectApiName: objectApiName, query })
+}
+
 var _eval = require('eval');
 var isConfigured = false;
 var sendWorker = function (task, interval) {
@@ -824,7 +834,9 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
                 tableMap[table_code] = []
             };
             tableMap[table_code].push(table_id);
-            var oldRelatedRecord = Creator.getCollection(relatedObject.object_name, spaceId).findOne({ [relatedObject.foreign_key]: mainRecordId, _table: relatedObjectValue._table }, { fields: { _id: 1 } })
+            var oldRelatedRecord = objectFindOne(relatedObject.object_name, {
+                filters: [[relatedObject.foreign_key, '=', mainRecordId], [['_id', '=', relatedObjectValue._table._id], 'or', [['_table._id', '=', relatedObjectValue._table._id], ['_table._code', '=', relatedObjectValue._table._code]]]]
+            })
             if (oldRelatedRecord) {
                 objectUpdate(relatedObject.object_name, oldRelatedRecord._id, relatedObjectValue)
                 // Creator.getCollection(relatedObject.object_name, spaceId).update({ _id: oldRelatedRecord._id }, { $set: relatedObjectValue })
@@ -915,8 +927,9 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 if (ins.state === 'completed' && ins.final_decision) {
                     instance_state = ins.final_decision;
                 }
-                setObj['instances.$.state'] = setObj.instance_state = instance_state;
-                objectUpdateMany(objectName, [['_id', '=', record._id], ['instances._id', '=', insId]], setObj)
+                setObj['instances.0.state'] = setObj.instance_state = instance_state;
+                // objectUpdateMany(objectName, [['_id', '=', record._id], ['instances._id', '=', insId]], setObj)
+                objectUpdate(objectName, record._id, setObj);
                 // objectCollection.update({
                 //     _id: record._id,
                 //     'instances._id': insId

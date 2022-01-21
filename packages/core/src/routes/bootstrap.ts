@@ -1,7 +1,7 @@
 import steedosI18n = require("@steedos/i18n");
 import { getPlugins } from '../';
 import { requireAuthentication } from './auth'
-import { getObject, getObjectLayouts, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps } from '@steedos/objectql'
+import { getObject, getObjectLayouts, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps, FieldPermission } from '@steedos/objectql'
 require("@steedos/license");
 const Fiber = require('fibers')
 const clone = require("clone");
@@ -166,10 +166,8 @@ export async function getSpaceBootStrap(req, res) {
         }
 
         let space = Creator.Collections["spaces"].findOne({ _id: spaceId }, { fields: { name: 1 } })
-
         //TODO 无需再从getAllPermissions中获取用户的对象权限
         let result = Creator.getAllPermissions(spaceId, userId);
-
         let lng = _getLocale(db.users.findOne(userId, { fields: { locale: 1 } }))
         steedosI18n.translationObjects(lng, result.objects);
         result.user = userSession
@@ -183,9 +181,7 @@ export async function getSpaceBootStrap(req, res) {
         // result.apps = clone(Creator.Apps)
         result.apps = await getAppConfigs(spaceId);
         result.assigned_apps = await getAssignedApps(userSession);
-
         let datasources = Creator.steedosSchema.getDataSources();
-        
         // for (const datasourceName in datasources) {
         //     if(datasourceName != 'default'){
         //         let datasource = datasources[datasourceName];
@@ -200,6 +196,15 @@ export async function getSpaceBootStrap(req, res) {
         //         }
         //     }
         // }
+        const spaceProcessDefinition = await getObject("process_definition").find({ filters: [['space', '=', spaceId], ['active', '=', true]] })
+        const spaceObjectsProcessDefinition = _.groupBy(spaceProcessDefinition, 'object_name');
+
+        const dbListViews = await getObject("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] })
+        const dbObjectsListViews = _.groupBy(dbListViews, 'object_name');
+
+        const layouts = await getObjectLayouts(userSession.profile, spaceId)
+        const objectsLayouts = _.groupBy(layouts, 'object_name');
+        const objectsFieldsPermissionGroupRole = await FieldPermission.getObjectsFieldsPermissionGroupRole();
         for (const datasourceName in datasources) {
             let datasource = datasources[datasourceName];
             const datasourceObjects = await datasource.getObjects();
@@ -207,7 +212,13 @@ export async function getSpaceBootStrap(req, res) {
                 const objectConfig  = object.metadata;
                 if (!result.objects[objectConfig.name] || objectConfig.name.endsWith("__c")) {
                     try {
-                        const userObjectConfig = await getObject(objectConfig.name).getRecordView(userSession);
+                        const userObjectConfig = await getObject(objectConfig.name).getRecordView(userSession, {
+                            objectConfig: objectConfig,
+                            layouts: objectsLayouts[objectConfig.name] || [],
+                            spaceProcessDefinition: spaceObjectsProcessDefinition[objectConfig.name] || [],
+                            dbListViews: dbObjectsListViews[objectConfig.name] || [],
+                            rolesFieldsPermission: objectsFieldsPermissionGroupRole[objectConfig.name] || []
+                        });
                         let _objectConfig = null;
                         if (userObjectConfig) {
                             _objectConfig = userObjectConfig
@@ -217,8 +228,12 @@ export async function getSpaceBootStrap(req, res) {
                         const _obj = Creator.convertObject(_objectConfig, spaceId)
                         _obj.name = objectConfig.name
                         _obj.database_name = datasourceName
-                        _obj.permissions = await getObject(objectConfig.name).getUserObjectPermission(userSession)
-                        steedosI18n.translationObject(lng, _obj.name, _obj);
+                        if (userObjectConfig) {
+                            _obj.permission = userObjectConfig.permissions
+                        } else {
+                            _obj.permissions = await getObject(objectConfig.name).getUserObjectPermission(userSession)
+                            steedosI18n.translationObject(lng, _obj.name, _obj);
+                        }
                         result.objects[_obj.name] = _obj
                     } catch (error) {
                         console.error(error.message)
@@ -279,25 +294,23 @@ export async function getSpaceBootStrap(req, res) {
         result.dashboards = _Dashboards
 
         result.plugins = getPlugins ? getPlugins() : null
-
         await getUserObjects(userId, spaceId, result.objects);
-        
         // TODO object layout 是否需要控制审批记录显示？
-        let spaceProcessDefinition = await getObject("process_definition").find({filters: [['space', '=', spaceId], ['active', '=', true]]})
+
         _.each(spaceProcessDefinition, function(item){
             if(result.objects[item.object_name]){
                 result.objects[item.object_name].enable_process = true
             }
         })
-
         for (const key in result.objects) {
             if (Object.prototype.hasOwnProperty.call(result.objects, key)) {
                 const objectConfig = result.objects[key];
                 try {
                     const object = getObject(key);
-                    objectConfig.details = await object.getDetailsInfo();
-                    objectConfig.masters = await object.getMastersInfo();
-                    objectConfig.lookup_details = await object.getLookupDetailsInfo();
+                    const relationsInfo = await object.getRelationsInfo();
+                    objectConfig.details = relationsInfo.details;
+                    objectConfig.masters = relationsInfo.masters;
+                    objectConfig.lookup_details = relationsInfo.lookup_details;
                     _.each(objectConfig.triggers, function(trigger, key){
                         if(trigger?.on != 'client'){
                             delete objectConfig.triggers[key];
@@ -311,8 +324,6 @@ export async function getSpaceBootStrap(req, res) {
                 }
             }
         }
-
-
         return res.status(200).send(result);
     }).run();
 }
@@ -332,9 +343,10 @@ async function getObjectConfig(objectName, spaceId, userSession) {
         objectConfig.name = objectName
         objectConfig.datasource = object.datasource.name;
         objectConfig.permissions = await object.getUserObjectPermission(userSession);
-        objectConfig.details = await object.getDetailsInfo();
-        objectConfig.masters = await object.getMastersInfo();
-        objectConfig.lookup_details = await object.getLookupDetailsInfo();
+        const relationsInfo = await object.getRelationsInfo();
+        objectConfig.details = relationsInfo.details;
+        objectConfig.masters = relationsInfo.masters;
+        objectConfig.lookup_details = relationsInfo.lookup_details;
         return objectConfig;
     } catch (error) {
         console.warn('not load object', objectName)
@@ -381,64 +393,77 @@ export async function getSpaceObjectBootStrap(req, res) {
         let userSession = req.user;
         let userId = userSession.userId;
         let urlParams = req.params;
-        const objectName = urlParams.objectName
         let spaceId = req.headers['x-space-id'] || urlParams.spaceId
         if (!userSession) {
             return res.status(500).send();
         }
-        let _object = Creator.getCollection('objects').findOne({ name: objectName }) || {}
-        let lng = _getLocale(db.users.findOne(userId, { fields: { locale: 1 } }))
-        let objectConfig: any = {}
-        if (_.isEmpty(_object)) {
-            objectConfig = Creator.getAllPermissions(spaceId, userId).objects[objectName];
-            if (_.isEmpty(objectConfig)) {
-                objectConfig = await getObjectConfig(objectName, spaceId, userSession);
-            }else{
-                const object = getObject(objectName);
-                objectConfig.details = await object.getDetailsInfo();
-                objectConfig.masters = await object.getMastersInfo();
-                objectConfig.lookup_details = await object.getLookupDetailsInfo();
-            }
-        } else {
-            if (userSession.is_space_admin || _object.in_development == '0' && _object.is_enable) {
-                if (_object.datasource == 'meteor') {
-                    objectConfig = Creator.getAllPermissions(spaceId, userId).objects[objectName]
-                    const object = getObject(objectName);
-                    objectConfig.details = await object.getDetailsInfo();
-                    objectConfig.masters = await object.getMastersInfo();
-                    objectConfig.lookup_details = await object.getLookupDetailsInfo();
+        const objectNames = urlParams.objectNames
+        const objects = {};
+        if (objectNames) {
+            const objectNamesArray = objectNames.split(',');
+            let dbObjects = Creator.getCollection('objects').find({ name: { $in: objectNamesArray } }).fetch() || []
+            let creatorObjects = Creator.getAllPermissions(spaceId, userId).objects;
+            let lng = _getLocale(db.users.findOne(userId, { fields: { locale: 1 } }))
+            for (const objectName of objectNamesArray) {
+                let _object = _.find(dbObjects, function (item) { return item.name === objectName }) || {}
+                let objectConfig: any = {}
+                if (_.isEmpty(_object)) {
+                    objectConfig = creatorObjects[objectName];
+                    if (_.isEmpty(objectConfig)) {
+                        objectConfig = await getObjectConfig(objectName, spaceId, userSession);
+                    } else {
+                        const object = getObject(objectName);
+                        const relationsInfo = await object.getRelationsInfo();
+                        objectConfig.details = relationsInfo.details;
+                        objectConfig.masters = relationsInfo.masters;
+                        objectConfig.lookup_details = relationsInfo.lookup_details;
+                    }
                 } else {
-                    objectConfig = await getObjectConfig(objectName, spaceId, userSession);
+                    if (userSession.is_space_admin || _object.in_development == '0' && _object.is_enable) {
+                        if (_object.datasource == 'meteor') {
+                            objectConfig = creatorObjects[objectName]
+                            const object = getObject(objectName);
+                            const relationsInfo = await object.getRelationsInfo();
+                            objectConfig.details = relationsInfo.details;
+                            objectConfig.masters = relationsInfo.masters;
+                            objectConfig.lookup_details = relationsInfo.lookup_details;
+                        } else {
+                            objectConfig = await getObjectConfig(objectName, spaceId, userSession);
+                        }
+                    }
+                }
+                if (objectConfig) {
+                    delete objectConfig.db
+                    // objectConfig.list_views = await getUserObjectListViews(userId, spaceId, objectName)
+                    steedosI18n.translationObject(lng, objectConfig.name, objectConfig)
+
+                    objectConfig = await getUserObject(userId, spaceId, objectConfig)
+
+                    // TODO object layout 是否需要控制审批记录显示？
+                    let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', spaceId], ['object_name', '=', objectName], ['active', '=', true]] })
+                    if (spaceProcessDefinition.length > 0) {
+                        objectConfig.enable_process = true
+                    }
+
+                    _.each(objectConfig.triggers, function (trigger, key) {
+                        if (trigger?.on != 'client') {
+                            delete objectConfig.triggers[key];
+                        }
+                    })
+
+                    delete objectConfig.listeners
+                    delete objectConfig.__filename
+                    delete objectConfig.extend
+                    objects[objectConfig.name] = objectConfig;
                 }
             }
         }
-        if (objectConfig) {
-            delete objectConfig.db
-            // objectConfig.list_views = await getUserObjectListViews(userId, spaceId, objectName)
-            steedosI18n.translationObject(lng, objectConfig.name, objectConfig)
-
-            objectConfig = await getUserObject(userId, spaceId, objectConfig)
-
-            // TODO object layout 是否需要控制审批记录显示？
-            let spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', spaceId], ['object_name', '=', objectName], ['active', '=', true]] })
-            if (spaceProcessDefinition.length > 0) {
-                objectConfig.enable_process = true
-            }
-
-            _.each(objectConfig.triggers, function(trigger, key){
-                if(trigger?.on != 'client'){
-                    delete objectConfig.triggers[key];
-                }
-            })
-
-            delete objectConfig.listeners
-            delete objectConfig.__filename
-            delete objectConfig.extend
-        }
-        return res.status(200).send(objectConfig || {});
+        return res.status(200).send({
+            objects: objects
+        });
     }).run();
 }
 
-bootStrapExpress.use('/api/bootstrap/:spaceId/:objectName', requireAuthentication, getSpaceObjectBootStrap)
+bootStrapExpress.use('/api/bootstrap/:spaceId/:objectNames', requireAuthentication, getSpaceObjectBootStrap)
 bootStrapExpress.use('/api/bootstrap/:spaceId/', requireAuthentication, getSpaceBootStrap)
 

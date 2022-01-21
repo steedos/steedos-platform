@@ -558,6 +558,22 @@ Creator.getRelatedObjectNames = (object_name, spaceId, userId)->
 	related_objects = Creator.getRelatedObjects(object_name, spaceId, userId)
 	return _.pluck(related_objects,"object_name")
 
+Creator.getRelatedObjectListActions = (relatedObjectName, spaceId, userId)->
+	actions = Creator.getActions(relatedObjectName, spaceId, userId)
+	actions = _.filter actions, (action)->
+		if action.name == "standard_follow"
+			return false
+		if action.name == "standard_query"
+			return false
+		if action.on == "list"
+			if typeof action.visible == "function"
+				return action.visible()
+			else
+				return action.visible
+		else
+			return false
+	return actions
+
 Creator.getActions = (object_name, spaceId, userId)->
 	if Meteor.isClient
 		if !object_name

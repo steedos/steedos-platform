@@ -48,6 +48,11 @@ module.exports = {
 				return await ActionHandlers.get(ctx);
 			}
 		},
+		mget: {
+			async handler(ctx) {
+				return await ActionHandlers.mget(ctx);
+			}
+		},
 		filter: {
 			async handler(ctx) {
 				return await ActionHandlers.filter(ctx);

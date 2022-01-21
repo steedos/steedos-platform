@@ -6,6 +6,33 @@ import * as _ from 'underscore';
 
 let savePackageServicesTimeoutID = null;
 
+const useScan = false;
+
+async function redisScanKeys(redisClient, match, count = 100): Promise<Array<string>> {
+    if (!useScan) {
+        return await redisClient.keys(match);
+    } else {
+        return await new Promise((resolve, reject) => {
+            var stream = redisClient.scanStream({
+                // only returns keys following the pattern of `user:*`
+                match: match,
+                // returns approximately 100 elements per call
+                count: count
+            });
+
+            var keys = [];
+            stream.on('data', function (resultKeys) {
+                for (var i = 0; i < resultKeys.length; i++) {
+                    keys.push(resultKeys[i]);
+                }
+            });
+            stream.on('end', function () {
+                resolve(keys)
+            });
+        })
+    }
+}
+
 //////////////// mock for redis cacher ////////////////
 // let mockCacherData: string[] = [];
 // let mock_prefix = "";
@@ -134,17 +161,33 @@ async function addServiceMetadata(ctx) {
     // });
 }
 
+async function mget(ctx, keys) {
+    if (!keys || keys.length == 0) {
+        return [];
+    }
+    const values = await ctx.broker.cacher.client.mget(...keys);
+    const results = [];
+    _.map(values, (item) => {
+        try {
+            if (item) {
+                results.push(JSON.parse(item));
+            } else {
+                results.push(item);
+            }
+        } catch (error) {
+            results.push(item);
+        }
+    })
+    return results;
+}
+
 // 这里需要更改
 async function query(ctx, queryKey) {
     try {
         const keyPrefix = ctx.broker.cacher?.prefix || "";
-        const keys = await ctx.broker.cacher.client.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
+        const keys = await redisScanKeys(ctx.broker.cacher.client, `${keyPrefix}${queryKey}`) //ctx.broker.cacher.client.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
         // REPLACE: const keys = await mockCacherKeys(ctx, `${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
-        const values = [];
-        for (const key of keys) {
-            values.push(await ctx.broker.cacher.get(getKey(key, keyPrefix)));
-            // REPLACE: values.push(await mockCacherGet(ctx, getKey(key, keyPrefix)));
-        }
+        const values = _.compact(await mget(ctx, keys));
         return values;
     } catch (error) {
         // console.error(`error`, error)
@@ -243,7 +286,7 @@ async function clearPackageServicesMetadatas(ctx, offlinePackageServices) {
 async function getMetadataServices(broker) {
     const queryKey = `${METADATA_SERVICES_PERFIX}.*`;
     const keyPrefix = broker.cacher?.prefix || "";
-    const keys = await broker.cacher.client.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
+    const keys = await redisScanKeys(broker.cacher.client, `${keyPrefix}${queryKey}`)  // broker.cacher.client.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
     // REPLACE: const keys = await mockCacherKeys({broker,}, `${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
     const values = [];
     for (const key of keys) {
@@ -280,6 +323,14 @@ export const ActionHandlers = {
         }
         // REPLACE: return await mockCacherGet(ctx, ctx.params.key)
     },
+    async mget(ctx: any): Promise<any> {
+        try {
+            return await mget(ctx, ctx.params.keys);
+        } catch (error) {
+
+        }
+        // REPLACE: return await mockCacherGet(ctx, ctx.params.key)
+    },
     async filter(ctx: any): Promise<Array<any>> {
         return await query(ctx, ctx.params.key);
         // const keyPrefix = ctx.broker.cacher.prefix
@@ -300,7 +351,7 @@ export const ActionHandlers = {
     async fuzzyDelete(ctx: any){
         const { key } = ctx.params
         const keyPrefix = ctx.broker.cacher?.prefix || "";
-        const keys = await ctx.broker.cacher.client.keys(`${keyPrefix}${key}`);
+        const keys = await redisScanKeys(ctx.broker.cacher.client, `${keyPrefix}${key}`) // await ctx.broker.cacher.client.keys(`${keyPrefix}${key}`);
         for (const _key of keys) {
             await ctx.broker.cacher.del(getKey(_key, keyPrefix));
         }

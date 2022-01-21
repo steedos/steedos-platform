@@ -28,24 +28,34 @@
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 							<div class="slds-button-group" role="group">
-							{{#if perms "allowCreate"}}
-								{{#if is_file}}
+							{{#if is_file}}
+								{{#if perms "allowCreate"}}
 									{{#if recordPerminssion "allowCreateFiles"}}
 											<button class="slds-button slds-button_neutral btn-upload-file" title="{{_ "creator_actions_upload_file"}}">
 												{{_ "creator_actions_upload_file"}}
 												<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files" data-target-related-field-name="{{relatedFieldName}}">
 											</button>
 									{{/if}}
-								{{else}}
-									<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{related_object_name}}" title="{{_ "New"}}">
-										{{_ "New"}}
+								{{/if}}
+								{{#if perms "allowDelete"}}
+									<button class="slds-button slds-button_neutral delete-related-object-record" data-object-name="{{related_object_name}}" title="{{_ "Delete"}}">
+										{{_ "Delete"}}
 									</button>
 								{{/if}}
-							{{/if}}
-							{{#if perms "allowDelete"}}
-								<button class="slds-button slds-button_neutral delete-related-object-record" data-object-name="{{related_object_name}}" title="{{_ "Delete"}}">
-									{{_ "Delete"}}
-								</button>
+							{{else}}
+								{{#each actions}}
+									{{#if newAction}}
+										<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{related_object_name}}" title="{{_ "New"}}">
+											{{_ "New"}}
+										</button>
+									{{else}}
+										<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-{{this.name}}">
+											<a href="javascript:void(0);" title="{{this.label}}" class="">
+												<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+											</a>
+										</li>
+									{{/if}}
+								{{/each}}
 							{{/if}}
 							</div>
 						</div>

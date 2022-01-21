@@ -24,6 +24,7 @@ const _routers: Array<any> = [];
 const _objectsData: Dictionary<any> = {};
 const delayLoadExtendObjectConfigQueue: Dictionary<any> = {};
 let standardObjectsLoaded: boolean = false;
+let dbMetadataLoaing: boolean = false;
 
 const addDelayLoadExtendObjectConfig = function (extend: string, config: SteedosObjectTypeConfig){
     if(!delayLoadExtendObjectConfigQueue[extend]){
@@ -323,10 +324,17 @@ export const removeObjectListenerConfig = (_id, listenTo, when)=>{
     }
 }
 
-export const loadStandardMetadata = async (serviceName: string, datasourceApiName: string) =>{
+export const loadStandardMetadata = async (serviceName: string, datasourceApiName: string) => {
     await loadStandardProfiles(serviceName);
     await loadStandardPermissionsets(serviceName);
     await loadStandardBaseObjects(serviceName);
+    if (dbMetadataLoaing != true) {
+        dbMetadataLoaing = true;
+        await loadDbMetadatas(datasourceApiName);
+    }
+}
+
+export const loadDbMetadatas = async (datasourceApiName: string) => {
     if(datasourceApiName === 'default' || datasourceApiName === 'meteor'){
         const datasource = getDataSource(datasourceApiName)
         if(datasource && datasourceApiName === 'default'){
