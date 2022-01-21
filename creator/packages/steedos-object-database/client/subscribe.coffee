@@ -1,7 +1,42 @@
 subs_objects = new SubsManager()
 Creator._subApp = new ReactiveVar({});
+
+lazyLoadAppsMenusId = null;
+lazyLoadAppsMenus = ()->
+	if lazyLoadAppsMenusId
+		clearTimeout(lazyLoadAppsMenusId)
+
+	lazyLoadAppsMenusId = setTimeout ()->
+		Creator.loadAppsMenus();
+		lazyLoadAppsMenusId = null;
+	, 5000
+
+lazyChangeClientObjectsId = null;
+lazyChangeClientObjectsApiNames = [];
+lazyChangeClientObjects = (objectApiName)->
+	if lazyChangeClientObjectsId
+		clearTimeout(lazyChangeClientObjectsId)
+	lazyChangeClientObjectsApiNames.push(objectApiName)
+	lazyChangeClientObjectsId = Meteor.setTimeout ()->
+		_getObjects lazyChangeClientObjectsApiNames, (result)->
+			if result && result.objects
+				_.each(result.objects, (objectSchema)->
+					if _.size(objectSchema.fields) > 0
+						delete Creator._recordSafeObjectCache[objectSchema.name]
+						try
+							oldObject = Creator.getObject(objectSchema.name);
+							if oldObject
+								objectSchema = _.extend objectSchema, { list_views: oldObject.list_views }
+						catch e
+							console.error(e);
+						Creator.Objects[objectSchema.name] = objectSchema
+						Creator.loadObjects objectSchema
+						Creator.deps.object.changed();
+				)
+	, 5000
+
 _changeClientApps = (document)->
-	Creator.loadAppsMenus();
+	lazyLoadAppsMenus();
 	Creator.Apps[document.code] = document
 	Creator._subApp.set(Object.assign(document ,{ _id: document.code}))
 	if Session.get("app_id") == document._id
@@ -15,40 +50,18 @@ _changeClientObjects = (document, oldDocument)->
 		return ;
 
 	SteedosUI.reloadObject document.name
-	Creator.loadAppsMenus();
+	lazyLoadAppsMenus();
 
 #	type = "added"
 #	if !_.isEmpty(_.findWhere(Creator.objectsByName, {_id: document._id}))
 #		type = "changed"
+	lazyChangeClientObjects(document.name)
 
-	_getObject document.name, (result)->
-		if _.size(result.fields) > 0
-			old_obj = Creator.Objects[result.name]
-#			if type != "added"
-#				result.permissions = old_obj?.permissions || {}
-			delete Creator._recordSafeObjectCache[result.name]
-			# 当变更对象后，result并没有返回这个对象列表视图相关数据，直接取原来内存中的列表视图数据加上，如果不加的话，会清除对象上的所有列表视图，造成子表上报找不到视图的bug
-			try
-				oldObject = Creator.getObject(result.name);
-				if oldObject
-					result = _.extend result, { list_views: oldObject.list_views }
-			catch e
-				console.error(e);
-			Creator.Objects[result.name] = result
-			Creator.loadObjects result
-#			if Session.get("object_name")
-			Creator.deps.object.changed();
 	try
 		if oldDocument && document && oldDocument.name != document.name
 			_removeClientObjects(oldDocument);
 	catch e
 		console.error(e);
-
-
-_delayChangeClientObjects = (document, oldDocument)->
-	Meteor.setTimeout ()->
-		_changeClientObjects document, oldDocument
-	, 5000
 
 _removeClientObjects = (document)->
 	_object = _.findWhere Creator.objectsByName, {_id: document._id}
@@ -97,6 +110,31 @@ _getObject = (objectId, callback)->
 			if _.isFunction(callback)
 				callback(result)
 
+_getObjects = (objectApiNames, callback)->
+	objectApiNames = _.compact(_.uniq(objectApiNames))
+	if !objectApiNames || !_.isArray(objectApiNames) || _.isEmpty(objectApiNames)
+		return
+	spaceId = Session.get("spaceId")
+	$.ajax
+		type: "get"
+		url: Steedos.absoluteUrl "/api/bootstrap/#{spaceId}/#{objectApiNames.join(',')}"
+		dataType: "json"
+		beforeSend: (request) ->
+			request.setRequestHeader('X-User-Id', Meteor.userId())
+			request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+		error: (jqXHR, textStatus, errorThrown) ->
+			error = jqXHR.responseJSON
+			console.error error
+			if error?.reason
+				toastr?.error?(TAPi18n.__(error.reason))
+			else if error?.message
+				toastr?.error?(TAPi18n.__(error.message))
+			else
+				toastr?.error?(error)
+		success: (result) ->
+			if _.isFunction(callback)
+				callback(result)
+
 Meteor.startup ()->
 	Tracker.autorun (c)->
 		spaceId = Session.get("spaceId")
@@ -118,7 +156,7 @@ Meteor.startup ()->
 						if !Steedos.isSpaceAdmin() && (newDocument.is_enable == false || newDocument.in_development != '0')
 							_removeClientObjects newDocument
 						else
-							_delayChangeClientObjects newDocument, oldDocument
+							_changeClientObjects newDocument, oldDocument
 #							Meteor.setTimeout ()->
 #								_changeClientObjects newDocument
 #							, 5000
@@ -146,7 +184,7 @@ Meteor.startup ()->
 			Creator.getCollection("_object_reload_logs").find({}).observe {
 				added: (newDocument)->
 					if reload_objects_observer_init
-						_delayChangeClientObjects({name: newDocument.object_name})
+						_changeClientObjects({name: newDocument.object_name})
 			}
 			reload_objects_observer_init = true
 
@@ -164,11 +202,11 @@ Meteor.startup ()->
 					if layouts_observer_init
 						_object = Creator.getObject(newDocument.object_name)
 						if _object
-							_delayChangeClientObjects _object
+							_changeClientObjects _object
 				removed: (oldDocument)->
 					if layouts_observer_init
 						_object = Creator.getObject(oldDocument.object_name)
 						if _object
-							_delayChangeClientObjects {_id: _object._id, name: oldDocument.object_name}
+							_changeClientObjects {_id: _object._id, name: oldDocument.object_name}
 			}
 			layouts_observer_init = true
