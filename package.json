@@ -34,7 +34,7 @@
     "create-project-template-release": "node .scripts/create_project_template_release.js"
   },
   "resolutions": {
-    "**/@babel/runtime": "7.12.0",
+    "@babel/runtime": "7.12.0",
     "**/js-yaml": "3.14.0",
     "**/lodash": "^4.17.15",
     "**/handlebars": "^4.3.0",
