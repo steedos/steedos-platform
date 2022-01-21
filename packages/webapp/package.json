@@ -31,6 +31,8 @@
     ]
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "@accounts/client": "^0.19.0",
     "@accounts/client-password": "^0.19.0",
     "@accounts/rest-client": "^0.19.0",
@@ -43,9 +45,7 @@
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
-  },
-  "devDependencies": {
+    "redux-thunk": "^2.3.0",
     "@babel/cli": "7.2.3",
     "@babel/core": "7.3.4",
     "@babel/plugin-proposal-class-properties": "7.3.4",
