@@ -3,7 +3,6 @@ FROM node:12.22.7
 WORKDIR /app
 
 ADD .steedos ./.steedos/
-ADD .scripts ./.scripts/
 ADD services ./services/
 ADD steedos-app ./steedos-app/
 # ADD steedos-packages ./steedos-packages/
