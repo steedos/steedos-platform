@@ -83,6 +83,12 @@ export class LookupActionHandler {
         })
         return _.uniq(detailName);
     }
+
+    getDetailsInfoKey(objectApiName: string) {
+        return this.getDetailKey(objectApiName, "*");
+    }
+
+
     async getDetailsInfo(objectApiName: string){
         const detailsInfo = [];
         let records = (await this.broker.call('metadata.filter', { key: this.getDetailKey(objectApiName, "*") }, { meta: {} })) || {};

@@ -12,6 +12,18 @@
 - [Meteor功能包](/creator/packages/README.md) ：这里每个文件夹都是华炎魔方Meteor项目依赖的各种功能包。
 - [静态资源文件](/creator/public/README.md) ：这里存放的是华炎魔方Meteor项目依赖的各种静态资源文件。
 
+## NPM Scripts说明
+
+本项目提供以下可执行的脚本命令：
+
+- start: 执行 `meteor run` 启动 [Meteor](https://www.meteor.com/) 应用。
+- start-verbose: 同 `start`，区别是以verbose日志模式启动应用。
+- build: 执行 `meteor build` 把 [Meteor](https://www.meteor.com/) 应用打包为一个 NPM 包，详情请参阅后续 [打包Creator项目](#打包creator项目) 小节。
+- pub: 执行 `npm publish` 打包后的 NPM 包。
+- prepare: 运行 yarn 命令时会预执行的脚本，其中包括集成注入依赖的前端React组件包 `@steedos-ui/builder-community` 的脚本。
+
+脚本具体内容请查阅 [package.json](./package.json) 文件中的 scripts 属性。
+
 ## 远程开发调式
 
 要运行该项目调式开发源码，需要先安装开发环境，我们推荐使用 [Gitpod](https://gitpod.io/) 来启动远程开发环境，以免去本地安装开发环境的繁琐过程。
@@ -82,7 +94,6 @@ STEEDOS_CLOUD_SPACE_ID=
 
 - 请先访问之前跑起来的模板项目，并输入华炎魔方初始账户和密码来确认之前已经成功激活和初始化好魔方项目。
 - 按`CTRL + C`来停止之前跑起来的模板项目。
-- 在`creator`文件夹根目录中看看有没有名为`.env.local`的文件，如果没有，请复制`.env`文件，并把复制出来的文件重命名为`.env.local`。
 - 命令行`cd`进入creator文件夹。
 - 执行`yarn`命令安装项目依赖包，并确保最后没有报错日志。
 - 执行`yarn start`命令来运行`creator`项目。

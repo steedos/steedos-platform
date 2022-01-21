@@ -168,6 +168,21 @@ module.exports = {
                 return await this.lookupActionHandler.getDetailsInfo(objectApiName);
             }
         },
+        getRelationsInfo: {
+            async handler(ctx) {
+                const { objectApiName } = ctx.params;
+                const detailsInfoKey = this.masterDetailActionHandler.getDetailsInfoKey(objectApiName);
+                const mastersInfo = this.masterDetailActionHandler.getMastersInfoKey(objectApiName);
+                const lookupDetailsInfo = this.lookupActionHandler.getDetailsInfoKey(objectApiName);
+
+                const results = await ctx.broker.call('metadata.mget', { keys: [detailsInfoKey, mastersInfo, lookupDetailsInfo] });
+                return {
+                    details: results[0],
+                    masters: results[1],
+                    lookup_details: results[2],
+                }
+            }
+        },
         getMasterPaths: {
             async handler(ctx) {
                 const { objectApiName } = ctx.params;

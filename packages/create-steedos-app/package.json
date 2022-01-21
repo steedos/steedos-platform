@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-app",
-  "version": "2.1.72",
+  "version": "2.1.74",
   "keywords": [
     "steedos"
   ],
@@ -26,10 +26,13 @@
     "create-steedos-app": "./index.js"
   },
   "dependencies": {
-    "@geek/spinner": "^1.0.0",
+    "@geek/spinner": "1.0.0",
     "chalk": "3.0.0",
     "commander": "4.1.0",
     "cpy": "7.3.0",
     "fs-extra": "8.1.0"
+  },
+  "resolutions": {
+    "**/chalk": "3.0.0"
   }
 }

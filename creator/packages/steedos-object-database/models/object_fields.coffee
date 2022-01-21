@@ -204,7 +204,7 @@ Creator.Objects.object_fields =
 			when: "before.update"
 			todo: (userId, doc, fieldNames, modifier, options)->
 				if doc.name == 'name' && modifier?.$set?.name && doc.name != modifier.$set.name
-					throw new Meteor.Error 500, "不能修改此纪录的name属性"
+					throw new Meteor.Error 500, "不能修改此记录的name属性"
 				if modifier?.$set?.name && isRepeatedName(doc, modifier.$set.name)
 					console.log("update fields对象名称不能重复#{doc.name}")
 					throw new Meteor.Error 500, "对象名称不能重复"

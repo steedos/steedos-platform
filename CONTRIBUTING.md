@@ -2,14 +2,14 @@
 
 ## Requirements
 
-- [Meteor](https://www.meteor.com/) Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
+- [Meteor](https://www.meteor.com/) version = 1.9.3. Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
 
 > Only when you run the source code  in '/creator' folder of our platform, you need to install Meteor. If you use Steedos as a development tool, you do not need to install Meteor.
 
-- [MongoDB](https://www.mongodb.com/try/download/) version >= 4.2. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
-- [Redis](https://redis.io/)
-- [Node.js](https://nodejs.org/en/download/) version >= 10.15.1 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
-- [Yarn](https://yarnpkg.com/en/) version >= 1.5 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
+- [MongoDB](https://www.mongodb.com/try/download/) version = 4.2.17. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
+- [Redis](https://redis.io/) version = 6.2.6.
+- [Node.js](https://nodejs.org/en/download/) version = 12.22.7 (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
+- [Yarn](https://yarnpkg.com/en/) version = 1.22.17 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
 
 ## Prepare For Development
 
@@ -17,9 +17,11 @@
 - Enter to the local folder of this repository by command line.
 - Run `yarn` on command line to install the dependent NPM packages.
 - Then run `yarn bootstrap` to auto clone git submodules for this repository and link them by [lerna](https://lerna.js.org/).
+- Then run `yarn build` to auto build all NPM packages in the folder "packages" and "services" of the source code.
 - Start the MongoDB service.
 
 ## Run Project
+
 - Run `yarn start` on the command line to start a template project
 
 - Use your browser to access `http://127.0.0.1:5000`.
@@ -69,22 +71,23 @@ The content of the `setting.json` may like this:
 - Then you can start the service just by run `yarn start`.
 - Use your browser to access `http://127.0.0.1:3100`.
 
-
-
 ### Build Creator
 
 You can run the shell bellow on command line to build all of the source code of '/creator' to the '/server' folder as a NPM package named 'steedos-server'.
 
 - Requirements
-    - Build app-builder
-        ```shell
-        cd app-builder
-        yarn build
-        ```
-    - Link builder-community: **You need to modify the path of the app-builder project in creator\\.scripts\npm-postinstall.js first**
-        ```
-        yarn postinstall
-        ```
+  - Build app-builder
+
+      ```shell
+      cd app-builder
+      yarn build
+      ```
+
+  - Link builder-community: **You need to modify the path of the app-builder project in creator\\.scripts\npm-postinstall.js first**
+
+      ```shell
+      yarn postinstall
+      ```
 
 ```shell
 cd creator/

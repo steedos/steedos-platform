@@ -1,6 +1,6 @@
 {
   "name": "steedos-cli",
-  "version": "2.1.72",
+  "version": "2.1.74",
   "description": "Develop and run your enterprise apps in miniutes",
   "main": "dist/index.js",
   "scripts": {
@@ -33,11 +33,11 @@
     "/dist"
   ],
   "dependencies": {
-    "@geek/spinner": "^1.0.0",
+    "@geek/spinner": "1.0.0",
     "@oclif/command": "^1.5.10",
     "@oclif/config": "^1.12.8",
     "@oclif/plugin-help": "^2.1.6",
-    "@steedos/metadata-core": "2.1.72",
+    "@steedos/metadata-core": "2.1.74",
     "archiver": "^5.0.2",
     "chalk": "2.4.2",
     "change-case": "^3.1.0",

@@ -22,7 +22,10 @@ try
 				"@steedos/service-fields-indexs",
 				"@steedos/service-accounts",
 				"@steedos/service-charts",
-				"@steedos/service-pages"],
+				"@steedos/service-pages",
+				"@steedos/service-cloud-init",
+				"@steedos/service-package-registry"
+				],
 			plugins: config.plugins
 		}
 		Meteor.startup ->
