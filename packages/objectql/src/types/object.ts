@@ -1110,20 +1110,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
         const userObjectFields = objectConfig.fields;
         _.each(objectConfig.permissions.field_permissions, (field_permission, field) => {
             const { read, edit } = field_permission;
-            if (read) {
-                userObjectFields[field].hidden = false;
-                userObjectFields[field].omit = true;
-                userObjectFields[field].readonly = true;
-                userObjectFields[field].disabled = true;
-            }
-            if (edit) {
-                userObjectFields[field].omit = false;
-                userObjectFields[field].hidden = false;
-                userObjectFields[field].readonly = false;
-                userObjectFields[field].disabled = false;
-            }
-            if (!read && !edit) {
-                delete userObjectFields[field]
+            if (userObjectFields[field]) {
+                if (read) {
+                    userObjectFields[field].hidden = false;
+                    userObjectFields[field].omit = true;
+                    userObjectFields[field].readonly = true;
+                    userObjectFields[field].disabled = true;
+                }
+                if (edit) {
+                    userObjectFields[field].omit = false;
+                    userObjectFields[field].hidden = false;
+                    userObjectFields[field].readonly = false;
+                    userObjectFields[field].disabled = false;
+                }
+                if (!read && !edit) {
+                    delete userObjectFields[field]
+                }
             }
         })
 
