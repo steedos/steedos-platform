@@ -15,9 +15,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@salesforce/dev-config": "^1.4.4",
-    "@salesforce/kit": "^1.0.4",
-    "@salesforce/ts-types": "^1.1.1",
     "@steedos/filters": "2.1.72",
     "@steedos/formula": "2.1.72",
     "@steedos/metadata-core": "2.1.72",
@@ -56,6 +53,9 @@
     "underscore": "1.5.2"
   },
   "devDependencies": {
+    "@salesforce/dev-config": "^1.4.4",
+    "@salesforce/kit": "^1.0.4",
+    "@salesforce/ts-types": "^1.1.1",
     "@salesforce/dev-scripts": "0.3.12",
     "@steedos/meteor-bundle-runner": "2.1.72",
     "@types/chai": "^4.1.7",
