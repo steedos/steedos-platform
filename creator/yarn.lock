@@ -335,10 +335,10 @@
   resolved "https://registry.nlark.com/@sindresorhus/is/download/@sindresorhus/is-0.7.0.tgz?cache=0&sync_timestamp=1619082778503&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sindresorhus%2Fis%2Fdownload%2F%40sindresorhus%2Fis-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha1-mgb08TfuhNffBGDB/bETX/psUP0=
 
-"@steedos-ui/builder-community@^1.0.20":
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.0.20.tgz#f8d64945f2eda93be94a18d5e503871ec2cc0313"
-  integrity sha512-TltxUWgQcP9OaTyJFoZ3owO0bevAyRIEJlEip5jGvnPW5083wOX5rmfYXKXCiU7weWqV4Yi2MFk+q3oV/cdWpw==
+"@steedos-ui/builder-community@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.0.21.tgz#e01ba7da3e5e7d5d6d745556ca735360662bacf2"
+  integrity sha512-57Gt/7shjp40PhCPVgmlsQKLuwGQBNuTxmL5abbhRoXqODzgw0x1IlU6HR9ww/LDYi3qQeSckDykKAVbmvmpvg==
 
 "@steedos/design-system-react@^2.0.9":
   version "2.0.32"
@@ -4549,9 +4549,9 @@ map-visit@^1.0.0:
     object-visit "^1.0.0"
 
 marked@*:
-  version "1.1.1"
-  resolved "https://registry.npm.taobao.org/marked/download/marked-1.1.1.tgz#e5d61b69842210d5df57b05856e0c91572703e6a"
-  integrity sha1-5dYbaYQiENXfV7BYVuDJFXJwPmo=
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.10.tgz#423e295385cc0c3a70fa495e0df68b007b879423"
+  integrity sha512-+QvuFj0nGgO970fySghXGmuw+Fd0gD2x3+MqCWLIPf5oxdv1Ka6b2q+z9RP01P/IaKPMEramy+7cNy/Lw8c3hw==
 
 md5.js@^1.3.4:
   version "1.3.5"
