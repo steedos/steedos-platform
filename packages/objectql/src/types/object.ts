@@ -107,7 +107,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     name?: string
     isMain?: boolean
     datasource?: string
-    fields: Dictionary<SteedosFieldTypeConfig>
+    fields?: Dictionary<SteedosFieldTypeConfig>
     actions?: Dictionary<SteedosActionTypeConfig>
     listeners?: Dictionary<SteedosListenerConfig>
     permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留

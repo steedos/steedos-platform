@@ -1,7 +1,7 @@
 import _ = require('underscore')
 
 abstract class SteedosObjectPermissionTypeProperties {
-    name?: string
+    abstract name?: string
     object_name?: string
     allowRead?: boolean
     allowCreate?: boolean

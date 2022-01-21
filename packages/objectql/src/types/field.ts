@@ -50,7 +50,7 @@ const FIELDTYPES = [
 abstract class SteedosFieldProperties{
     _id?: string
     object_name?: string
-    abstract name?: string
+    name?: string
     column_name?: string
     abstract type?: string
     primary?: boolean

@@ -2,7 +2,7 @@ import { SteedosObjectType } from ".";
 import _ = require('underscore')
 
 abstract class SteedosObjectListViewTypeProperties{
-    name?: string
+    abstract name?: string
     label?: string
     type?: string
     filter_scope?: string
