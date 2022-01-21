@@ -571,7 +571,7 @@ export function extend(destination: JsonMap, ...sources: JsonMap[]){
             }else if(isJsonMap(v)){
                 let _d = getJsonMap(destination, k);
                 if(isJsonMap(_d)){
-                    destination[k] = this.extend(clone(_d), v)
+                    destination[k] = extend(clone(_d), v)
                 }else{
                     destination[k] = v
                 }
