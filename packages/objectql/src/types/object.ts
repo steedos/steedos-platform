@@ -58,9 +58,9 @@ export const getRepeatObjectNameFromPaths = (paths: string[]) => {
 
 abstract class SteedosObjectProperties {
     _id?: string
-    name?: string
+    abstract name?: string
     extend?: string
-    table_name?: string
+    abstract table_name?: string
     label?: string
     icon?: string
     enable_search?: boolean
@@ -70,11 +70,11 @@ abstract class SteedosObjectProperties {
     enable_notes?: boolean
     enable_events?: boolean
     enable_api?: boolean  //TODO 未开放功能
-    enable_share?: boolean
-    enable_instances?: boolean
+    abstract enable_share?: boolean
+    abstract enable_instances?: boolean
     enable_chatter?: boolean
-    enable_audit?: boolean
-    enable_trash?: boolean
+    abstract enable_audit?: boolean
+    abstract enable_trash?: boolean
     enable_space_global?: boolean
     enable_tree?: boolean
     parent_field?: string
@@ -91,10 +91,10 @@ abstract class SteedosObjectProperties {
     // triggers?: object
     sidebar?: object //TODO
     calendar?: object //TODO
-    actions?: Dictionary<SteedosActionTypeConfig>
-    fields?: Dictionary<SteedosFieldTypeConfig>
-    listeners?: Dictionary<SteedosListenerConfig>
-    list_views?: Dictionary<SteedosObjectListViewTypeConfig>
+    abstract actions?: Dictionary<SteedosActionTypeConfig>
+    abstract fields?: Dictionary<SteedosFieldTypeConfig>
+    abstract listeners?: Dictionary<SteedosListenerConfig>
+    abstract list_views?: Dictionary<SteedosObjectListViewTypeConfig>
     permissions?: Dictionary<SteedosObjectPermissionTypeConfig>
     methods?: Dictionary<Function>
     fields_serial_number?: number

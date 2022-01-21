@@ -50,9 +50,9 @@ const FIELDTYPES = [
 abstract class SteedosFieldProperties{
     _id?: string
     object_name?: string
-    name?: string
+    abstract name?: string
     column_name?: string
-    type?: string
+    abstract type?: string
     primary?: boolean
     generated?: true
     label?: string
@@ -88,7 +88,7 @@ abstract class SteedosFieldProperties{
     reference_limit?: number
     is_company_limited?: boolean
     system?: string;
-    fieldDBType?: SteedosFieldDBType | string
+    abstract fieldDBType: SteedosFieldDBType | string
     formula?: string
     data_type?: string
     formula_blank_value?: string
