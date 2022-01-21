@@ -24,7 +24,6 @@
     "dotenv-flow": "^3.2.0",
     "ioredis": "^4.22.0",
     "moleculer": "^0.14.12",
-    "moleculer-cli": "^0.7.1"
   },
   "author": "",
   "license": "ISC",
