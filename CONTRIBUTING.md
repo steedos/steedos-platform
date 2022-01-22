@@ -16,19 +16,25 @@
 - Clone this repository to your local.
 - Enter to the local folder of this repository by command line.
 - Run `yarn` on command line to install the dependent NPM packages.
-- Then run `yarn bootstrap` to auto clone git submodules for this repository and link them by [lerna](https://lerna.js.org/).
+- Then run `yarn bootstrap` to auto link the npm packages that mentioned in the file `lerna.json` by [lerna](https://lerna.js.org/).
 - Then run `yarn build` to auto build all NPM packages in the folder "packages" and "services" of the source code.
 - Start the MongoDB service.
 
 ## Run Project
 
-- Run `yarn start` on the command line to start a template project
+- Run `yarn start` on the command line to start the template project in the folder `/steedos-projects/project-community`
 
-- Use your browser to access `http://127.0.0.1:5000`.
+- Use your browser to access `http://localhost:5000`.
 
-> You do not need to run `yarn` on command line to install the dependent NPM packages, because all of the dependence are linked to the souce code or the node_modules of the parent folder.
+You will see the initialization page for activating the steedos project after starting the project for the first time.
+
+> You do not need to run `yarn` on command line in the folder `/steedos-projects/project-community` to install the dependent NPM packages, because all of the dependence are linked to the souce code or the node_modules of the parent folder.
 
 > Here you are using our source code as the development tool, you do not need to install [Meteor](https://www.meteor.com/).
+
+## Activate Steedos
+
+Sign up for an account at [Steedos Customer Portal](https://console.steedos.cn/) and then refer to [this document](https://www.steedos.cn/docs/deploy/deploy-activate) to activate Steedos.
 
 ## Run The Source Code Of Meteor Bundle
 
@@ -36,7 +42,7 @@ The code in the folder '/creator' of this repository is the souce code of a Mete
 
 The code in '/packages' is our souce code of some core NPM packages on which the Meteor application above based on.
 
-If you only need to debug the source code in the '/packages', you shoud just [Run One App That Linked To Source Code](#run-one-app-that-linked-to-source-code).
+If you only need to debug the source code in the '/packages', you shoud just [Run Project](#run-project).
 
 You will need to read the tutorial bellow only when you need to debug the source code of Meteor application in the '/creator' folder.
 
@@ -59,8 +65,7 @@ The content of the `setting.json` may like this:
 {
     "email": {
         "from": "Steedos <noreply@message.steedos.com>"
-    },
-    "plugins": ["@steedos/plugin-enterprise"]
+    }
 }
 ```
 
@@ -75,20 +80,6 @@ The content of the `setting.json` may like this:
 
 You can run the shell bellow on command line to build all of the source code of '/creator' to the '/server' folder as a NPM package named 'steedos-server'.
 
-- Requirements
-  - Build app-builder
-
-      ```shell
-      cd app-builder
-      yarn build
-      ```
-
-  - Link builder-community: **You need to modify the path of the app-builder project in creator\\.scripts\npm-postinstall.js first**
-
-      ```shell
-      yarn postinstall
-      ```
-
 ```shell
 cd creator/
 export TOOL_NODE_FLAGS="--max-old-space-size=3800"
@@ -99,7 +90,7 @@ yarn run build
 
 After the command line shell execution of [Build Creator](#build-creator) above, the built code will be copied automatically to the [/server](https://github.com/steedos/steedos-platform/tree/develop/server) folder.
 
-You can simply [Run One App That Linked To Source Code](#run-one-app-that-linked-to-source-code) to test the code that has just been built from the source code in the '/creator' folder.
+You can simply [Run Project](#run-project) to test the code that has just been built from the source code in the '/creator' folder.
 
 ### Publish
 
