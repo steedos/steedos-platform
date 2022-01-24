@@ -7,7 +7,6 @@ import { getFromContainer } from 'typeorm';
 // import { loadCoreValidators } from '../validators';
 // import { loadStandardBaseObjects } from './object_dynamic_load';
 // import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
-import { buildGraphQLSchema } from '../graphql';
 import { MetadataRegister } from '../metadata-register';
 import { MetadataDriver } from '../driver/metadata';
 
@@ -22,7 +21,6 @@ export type SteedosSchemaConfig = {
 export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
     private _objectsMap: Dictionary<{ datasourceName: string, filePath?: string }> = {};
-    private graphQLSchema: any = null;
     private _broker: any = null;
     private _metadataBroker: any = null;
     metadataRegister: MetadataRegister = null;
@@ -228,17 +226,6 @@ export class SteedosSchema {
 
     getDataSources() {
         return this._datasources
-    }
-
-    buildGraphQLSchema() {
-        this.graphQLSchema = buildGraphQLSchema(this);
-    }
-
-    getGraphQLSchema() {
-        if (!this.graphQLSchema) {
-            this.buildGraphQLSchema();
-        }
-        return this.graphQLSchema;
     }
 
     async getAllObject() {

@@ -30,9 +30,6 @@ let steedosSchema = new SteedosSchema({
 })
 
 
-// 生成graphql schema
-let graphqlSchema = steedosSchema.buildGraphQLSchema()
-
 let express = require('express');
 let app = express();
 
@@ -42,8 +39,4 @@ app.use(function(req, res, next){
     next();
 })
 
-app.use('/graphql', graphqlHTTP({
-    schema: graphqlSchema,
-    graphiql: true
-}));
 app.listen(process.env.PORT || 3000)

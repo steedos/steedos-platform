@@ -436,14 +436,6 @@ export class SteedosDataSourceType implements Dictionary {
         return this._schema;
     }
 
-    buildGraphQLSchema() {
-        return this._schema.buildGraphQLSchema();
-    }
-
-    getGraphQLSchema() {
-        return this._schema.getGraphQLSchema();
-    }
-
     async dropEntities() {
         if (this._adapter.dropEntities) {
             return await this._adapter.dropEntities();

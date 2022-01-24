@@ -41,13 +41,6 @@ router.use('/:dataSourceName/:spaceId', async function (req, res, next) {
     }
 })
 
-_.each(steedosSchema.getDataSources(), function (datasource, name) {
-    router.use(`/${name}/:spaceId`, graphqlHTTP({
-        schema: datasource.buildGraphQLSchema(),
-        graphiql: true
-    }));
-})
-
 app.use('/graphql', router);
 
 
