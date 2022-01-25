@@ -66,47 +66,15 @@ fields:
   assigned_approver_roles: 
     type: lookup
     reference_to: roles
+    reference_to_field: api_name
     multiple: true
     group: Select Assigned Approver
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "api_name"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('roles', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.name,
-                value: item.api_name
-            });
-        });
-        return result;
-      }
   assigned_approver_flow_roles: 
     type: lookup
     reference_to: flow_roles
+    reference_to_field: api_name
     multiple: true
     group: Select Assigned Approver
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "api_name"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('flow_roles', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.name,
-                value: item.api_name
-            });
-        });
-        return result;
-      }
   assigned_approver_user_field: 
     type: lookup
     multiple: true
@@ -163,6 +131,7 @@ fields:
     multiple: true
     label: Field Update
     reference_to: action_field_updates
+    reference_to_field: name
     depend_on:
       - process_definition
     filtersFunction: !!js/function |
@@ -175,23 +144,6 @@ fields:
           var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
           return "object_name eq '" + object_name + "'";
         }
-      }
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "label"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('action_field_updates', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.label,
-                value: item.name
-            });
-        });
-        return result;
       }
     group: Approval Actions
   approval_workflow_notifications_actions:
@@ -199,6 +151,7 @@ fields:
     multiple: true
     label: Workflow Notification
     reference_to: workflow_notifications
+    reference_to_field: name
     depend_on:
       - process_definition
     filtersFunction: !!js/function |
@@ -211,23 +164,6 @@ fields:
           var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
           return "object_name eq '" + object_name + "'";
         }
-      }
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "label"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('workflow_notifications', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.label,
-                value: item.name
-            });
-        });
-        return result;
       }
     group: Approval Actions
   rejection_updates_field_actions:
@@ -235,6 +171,7 @@ fields:
     multiple: true
     label: Field Update
     reference_to: action_field_updates
+    reference_to_field: name
     depend_on:
       - process_definition
     filtersFunction: !!js/function |
@@ -247,23 +184,6 @@ fields:
           var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
           return "object_name eq '" + object_name + "'";
         }
-      }
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "label"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('action_field_updates', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.label,
-                value: item.name
-            });
-        });
-        return result;
       }
     group: Rejection Actions
   rejection_workflow_notifications_actions:
@@ -271,6 +191,7 @@ fields:
     multiple: true
     label: Workflow Notification
     reference_to: workflow_notifications
+    reference_to_field: name
     depend_on:
       - process_definition
     filtersFunction: !!js/function |
@@ -283,23 +204,6 @@ fields:
           var object_name = Creator.odata.get("process_definition", pid, "object_name").object_name;
           return "object_name eq '" + object_name + "'";
         }
-      }
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "label"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('workflow_notifications', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.label,
-                value: item.name
-            });
-        });
-        return result;
       }
     group: Rejection Actions
 form:
