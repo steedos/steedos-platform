@@ -207,6 +207,8 @@ fields:
     label: 申请人指定步骤、审批人
     help: '允许申请人提交申请单时指定流转步骤及步骤处理人, 需要通过流程设计器修改步骤上的属性'
     description: 
+  object_name:
+    label: 映射对象
 groups:
   template: 模板
   synchronization: 归档
@@ -251,6 +253,8 @@ actions:
     label: 设置分发
   removeFlow:
     label: 删除
+  addFormFieldFromObject:
+    label: 添加字段
 CustomLabels:
   import_flows_error_title: 导入失败
   import_flows_error_not_find_object: '未找到对象[ %s ]'

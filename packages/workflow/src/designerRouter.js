@@ -94,6 +94,7 @@ router.post('/am/forms', async function (req, res) {
         let insertedFlows = [];
         for (let i = 0; i < data['Forms'].length; i++) {
             let form = data['Forms'][i];
+            let objectName = form["object_name"];
             // 执行者的身份校验
             await designerManager.checkSpaceUserBeforeUpdate(form['space'], userId, req.user.roles)
 
@@ -166,6 +167,9 @@ router.post('/am/forms', async function (req, res) {
                         }
                         if (companyId) {
                             flow.company_id = companyId;
+                        }
+                        if (objectName) {
+                            flow.object_name = objectName;
                         }
                         let flowPerms = {
                             _id: flowCollection._makeNewID()
@@ -828,5 +832,7 @@ router.delete('/am/categories', async function (req, res) {
         res.status(500).send(error.message)
     }
 })
+
+
 
 exports.designerRouter = router;

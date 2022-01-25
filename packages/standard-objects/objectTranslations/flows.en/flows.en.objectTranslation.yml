@@ -210,6 +210,8 @@ fields:
       submitting the application form. You need to modify the properties on the
       step through the Workflow Designer.
     description: 
+  object_name:
+    label: Object
 groups:
   template: Template
   synchronization: Synchronization
@@ -254,6 +256,8 @@ actions:
     label: Set Distribution Options
   removeFlow:
     label: Delete
+  addFormFieldFromObject:
+    label: Add Field
 CustomLabels:
   import_flows_error_title: Import Error
   import_flows_error_not_find_object: 'Not find object [ %s ]'
