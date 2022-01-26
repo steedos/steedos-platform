@@ -342,7 +342,22 @@ fields:
     required: false
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
-        return Steedos.getObjectsOptions();
+        var _options;
+
+        _options = [];
+
+        _.forEach(Creator.objectsByName, function (o, k) {
+          if (o.enable_workflow) {
+            return _options.push({
+              label: o.label,
+              value: k,
+              icon: o.icon
+            });
+          }
+          
+        });
+
+        return _options;
       }
 list_views:
   all:
@@ -743,7 +758,7 @@ actions:
       function (object_name, record_id, fields) {
           var record = Creator.getObjectRecord(object_name, record_id, 'name,form,object_name');
           var formId = _.isObject(record.form) ? record.form._id : record.form;
-          let objectName = record.object_name;
+          let objectName = _.isObject(record.object_name) ? record.object_name.name : record.object_name;
           let objectInfo = Creator.getObject(objectName);
           let objectFields = objectInfo.fields;
           const rows = [];
@@ -796,9 +811,7 @@ actions:
               sort: [{ field_name: "sort_no", order: "asc" }]
           };
           SteedosUI.showModal(window.stores.ComponentRegistry.components.ObjectTable, props)
-
       }
-    
 relatedList:
   - cms_files
   - object_workflows

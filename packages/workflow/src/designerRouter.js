@@ -1,3 +1,5 @@
+"use strict";
+// @ts-check
 const express = require('express');
 const steedosAuth = require('@steedos/auth');
 const objectql = require("@steedos/objectql");
@@ -829,6 +831,71 @@ router.delete('/am/categories', async function (req, res) {
             }
         });
     } catch (error) {
+        res.status(500).send(error.message)
+    }
+})
+
+/**
+ * 从对象选择字段后，表单生成对应字段
+ * 根据字段名，有则更新无则新增
+ * 不包括表格字段
+ */
+router.post('/am/forms/addFieldFromObject', async function (req, res) {
+    try {
+        const { fields, formId } = req.body;
+        const formObj = objectql.getObject('forms');
+        const owObj = objectql.getObject('object_workflows');
+        const flowObj = objectql.getObject('flows');
+        const formFieldsMap = await designerManager.transformObjectFieldsToFormFields(fields);
+        const formDoc = await formObj.findOne(formId);
+        let updatedForms = [];
+        let updatedFlows = [];
+        let userId = req.user.userId;
+
+        // 遍历表单字段，根据字段名，有则更新无则新增
+        const oldFormFields = formDoc.current.fields || [];
+        const len = oldFormFields.length;
+        let oldFormFieldsMap = {};
+        for (let index = 0; index < len; index++) {
+            const f = oldFormFields[index];
+            oldFormFieldsMap[f.code] = f;
+        }
+        const newFormFieldsMap = {
+            ...oldFormFieldsMap,
+            ...formFieldsMap
+        }
+        formDoc.current.fields = Object.values(newFormFieldsMap);
+
+        // 更新表单
+        await designerManager.updateForm(formDoc._id, formDoc, updatedForms, updatedFlows, userId);
+
+        // 更新对象流程映射
+        const flowDoc = (await flowObj.find({ filters: [['form', '=', formId]]}))[0];
+        const objectName = flowDoc.object_name;
+        const flowId = flowDoc._id;
+        const owDoc = (await owObj.find({ filters: [['object_name', '=', objectName], ['flow_id', '=', flowId]] }))[0];
+        if (owDoc) {
+            let oldFieldCodes = Object.keys(oldFormFieldsMap);
+            let fieldCodes = Object.keys(formFieldsMap);
+            console.log('fieldCodes: ', fieldCodes);
+            console.log('oldFieldCodes: ', oldFieldCodes);
+            let newFieldCodes = _.difference(fieldCodes, oldFieldCodes);
+            let fieldMapBack = owDoc.field_map_back || [];
+            for (const code of newFieldCodes) {
+                fieldMapBack.push({
+                    object_field: code,
+                    workflow_field: code
+                });
+            }
+            await owObj.directUpdate(owDoc._id, {
+                field_map_back: fieldMapBack
+            });
+        }
+
+
+        res.status(200).send({ success: true, message: 'router is ok' });
+    } catch (error) {
+        console.log(error);
         res.status(500).send(error.message)
     }
 })

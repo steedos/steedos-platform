@@ -1,3 +1,5 @@
+"use strict";
+// @ts-check
 const _ = require('underscore');
 const objectql = require("@steedos/objectql");
 const steedosSchema = objectql.getSteedosSchema();
@@ -419,3 +421,147 @@ function _formatFieldsID(fields) {
 }
 
 exports.formatFieldsID = _formatFieldsID;
+
+exports.transformObjectFieldsToFormFields = async function (objFields) {
+    let formFieldsMap = {};
+    for (const f of objFields) {
+        const formField = await _transformObjectFieldToFormField(f);
+        if (formField) {
+            formFieldsMap[formField.code] = formField;
+        }
+    }
+    return formFieldsMap;
+}
+
+async function _transformObjectFieldToFormField(objField) {
+    const formObj = objectql.getObject('forms');
+    let formField = {
+        "name": objField.label,
+        "code": objField.name,
+        "is_wide": objField.is_wide || false,
+        "is_list_display": false,
+        "is_searchable": objField.sortable || false,
+        "is_required": objField.required || false,
+        "is_multiselect": objField.multiple || false,
+        "default_value": objField.defaultValue,
+        "_id": await formObj._makeNewID()
+    };
+    switch (objField.type) {
+        case 'text':
+            formField.type = "input";
+            break;
+        case 'textarea':
+            formField.type = "input";
+            formField.is_textarea = true;
+            break;
+        case 'html':
+            formField.type = "html";
+            break;
+        case 'select':
+            if (_.isArray(objField.options)) {
+                formField.type = objField.multiple ? "multiSelect" : "select";
+                formField.options = _.pluck(objField.options, 'value').join('\n')
+            }
+            break;
+        case 'boolean':
+            formField.type = "checkbox";
+            break;
+        case 'toggle':
+            formField.type = "checkbox";
+            break;
+        case 'date':
+            formField.type = "date";
+            break;
+        case 'datetime':
+            formField.type = "dateTime";
+            break;
+        case 'number':
+            formField.type = "number";
+            formField.digits = objField.scale;
+            break;
+        case 'currency':
+            formField.type = "number";
+            formField.digits = objField.scale;
+            break;
+        case 'percent':
+            formField.type = "number";
+            formField.digits = objField.scale;
+            break;
+        case 'password':
+            formField.type = "password";
+            break;
+        case 'lookup':
+            let lookupObjName = objField.reference_to;
+            if (_.isString(lookupObjName)) {
+                const refObj = objectql.getObject(lookupObjName);
+                const nameFieldKey = await refObj.getNameFieldKey();
+                formField.type = "odata";
+                formField.url = `/api/v4/${lookupObjName}?$top=20`;
+                formField.search_field = nameFieldKey;
+                formField.formula = `{${objField.name}.nameFieldKey}`;
+            }
+            break;
+        case 'master_detail':
+            let masterDetailObjName = objField.reference_to;
+            if (_.isString(masterDetailObjName)) {
+                const refObj = objectql.getObject(masterDetailObjName);
+                const nameFieldKey = await refObj.getNameFieldKey();
+                formField.type = "odata";
+                formField.url = `/api/v4/${masterDetailObjName}?$top=20`;
+                formField.search_field = nameFieldKey;
+                formField.formula = `{${objField.name}.nameFieldKey}`;
+            }
+            break;
+        case 'autonumber':
+            formField.type = "input";
+            break;
+        case 'url':
+            formField.type = "url";
+            break;
+        case 'email':
+            formField.type = "email";
+            break;
+        case 'image':
+            break;
+        case 'file':
+            break;
+        case 'formula':
+            switch (objField.data_type) {
+                case 'boolean':
+                    formField.type = "checkbox";
+                    break;
+                case 'number':
+                    formField.type = "number";
+                    formField.digits = objField.scale;
+                    break;
+                case 'currency':
+                    formField.type = "number";
+                    formField.digits = objField.scale;
+                    break;
+                case 'percent':
+                    formField.type = "number";
+                    formField.digits = objField.scale;
+                    break;
+                case 'text':
+                    formField.type = "input";
+                    break;
+                case 'date':
+                    formField.type = "date";
+                    break;
+                case 'datetime':
+                    formField.type = "dateTime";
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'summary':
+            // TODO
+            break;
+        default:
+            break;
+    }
+    if (formField.type) {
+        return formField;
+    }
+}
