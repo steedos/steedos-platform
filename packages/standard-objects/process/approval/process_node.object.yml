@@ -3,6 +3,7 @@ label: Approval Steps
 hidden: true
 enable_inline_edit: false
 icon: steps
+version: 2
 fields:
   name:
     type: text
@@ -35,11 +36,13 @@ fields:
     label: Entry criteria
     is_wide: true
     required: true
+    visible_on: "{{ formData.filtrad != true }}"
     group: Specify Step Criteria
   if_criteria_not_met: # https://help.salesforce.com/articleView?err=1&id=approvals_step_entrycriteria.htm&type=5
     type: select
     firstOption: false
     options: approve,reject,skip
+    visible_on: "{{ formData.filtrad != true }}"
     group: Specify Step Criteria
     is_wide: true #TODO 选项规则：第一个有(order=1)：拒绝记录；批准记录；如果有后续步骤，则会多一个 转到下一步的条件; 最后一个步骤且不是第一步时，不能设置不满足的情况; 只有第一步有拒绝记录
   approver:
@@ -63,23 +66,27 @@ fields:
     reference_to: users
     multiple: true
     group: Select Assigned Approver
+    visible_on: "{{ formData.approver != 'submitter_choose' }}"
   assigned_approver_roles: 
     type: lookup
     reference_to: roles
     reference_to_field: api_name
     multiple: true
     group: Select Assigned Approver
+    visible_on: "{{ formData.approver != 'submitter_choose' }}"
   assigned_approver_flow_roles: 
     type: lookup
     reference_to: flow_roles
     reference_to_field: api_name
     multiple: true
     group: Select Assigned Approver
+    visible_on: "{{ formData.approver != 'submitter_choose' }}"
   assigned_approver_user_field: 
     type: lookup
     multiple: true
     group: Select Assigned Approver
     showIcon: false
+    visible_on: "{{ formData.approver != 'submitter_choose' }}"
     depend_on:
       - process_definition
     optionsFunction: !!js/function |
@@ -111,6 +118,7 @@ fields:
         value: first_response
       - label: Require UNANIMOUS approval from all selected approvers.
         value: unanimous
+    visible_on: "{{ formData.approver != 'submitter_choose' }}"
   #TODO 批准代理也可以批准此请求
   reject_behavior:
     type: select
