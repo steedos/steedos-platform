@@ -2,6 +2,7 @@ const spaceUserCore = require('./space_users.core')
 const core = require('@steedos/core');
 const validator = require("validator");
 const objectql = require('@steedos/objectql');
+const Future = require('fibers/future');
 
 const password = require('./util/password')
 
@@ -1101,6 +1102,25 @@ let actions = {
 
 Creator.Objects.space_users.actions = Object.assign({}, Creator.Objects.space_users.actions, actions);
  */
+
+let doDisable = async function(spaceUser){
+    return Future.task(() => {
+        try {
+            let result = db.users.direct.update({_id: spaceUser.user}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1, emails: 1, steedos_id: 1}});
+            if(!result){
+                console.error("The users directUpdate return nothing.");
+                return false;
+            }
+            
+            result = db.space_users.direct.update({_id: spaceUser._id}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1}});
+            return result;
+        } catch (error) {
+            this.logger.error(error);
+            return false;
+        }
+    }).promise();
+}
+
 let methods = {
     disable: async function (req, res) {
         try {
@@ -1151,16 +1171,7 @@ let methods = {
                 });
                 return;
             }
-            let result = await steedosSchema.getObject('users').directUpdate(spaceUser.user, { user_accepted: false, profile: spaceUser.profile, username: null , mobile: null, mobile_verified: false, email: null, email_verified: false, emails: [], steedos_id: null});
-            if(!result){
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "The users directUpdate return nothing."
-                    }
-                });
-            }
-            result = await steedosSchema.getObject('space_users').directUpdate(params._id, { user_accepted: false, profile: spaceUser.profile, username: null , mobile: null, mobile_verified: false, email: null, email_verified: false });
+            let result = await doDisable(spaceUser);
             if(result){
                 res.status(200).send({ success: true });
             }
@@ -1168,7 +1179,7 @@ let methods = {
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "The space_users directUpdate return nothing."
+                        reason: "The space_users/users directUpdate return nothing."
                     }
                 });
             }
