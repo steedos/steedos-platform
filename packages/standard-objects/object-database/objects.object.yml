@@ -8,6 +8,7 @@ fields:
     type: master_detail
     label: Datasource
     reference_to: datasources
+    reference_to_field: name
     showIcon: false
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
