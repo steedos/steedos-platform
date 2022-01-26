@@ -1151,7 +1151,16 @@ let methods = {
                 });
                 return;
             }
-            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: false, profile: spaceUser.profile});
+            let result = await steedosSchema.getObject('users').directUpdate(spaceUser.user, { user_accepted: false, profile: spaceUser.profile, username: null , mobile: null, mobile_verified: false, email: null, email_verified: false, emails: [], steedos_id: null});
+            if(!result){
+                res.status(400).send({
+                    success: false,
+                    error: {
+                        reason: "The users directUpdate return nothing."
+                    }
+                });
+            }
+            result = await steedosSchema.getObject('space_users').directUpdate(params._id, { user_accepted: false, profile: spaceUser.profile, username: null , mobile: null, mobile_verified: false, email: null, email_verified: false });
             if(result){
                 res.status(200).send({ success: true });
             }
@@ -1159,7 +1168,7 @@ let methods = {
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "The object updateOne return nothing."
+                        reason: "The space_users directUpdate return nothing."
                     }
                 });
             }
