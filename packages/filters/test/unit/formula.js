@@ -14,6 +14,6 @@ describe("format formula filter to odata query", () => {
         let filters = [["email", "=", "{user.email}"]];
         let result = formatFiltersToODataQuery(filters, userContext);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("(email eq 'test1@steedos.cn')");
+        expect(result).to.be.eq(`(email eq '${encodeURIComponent("test1@steedos.cn")}')`);
     });
 });

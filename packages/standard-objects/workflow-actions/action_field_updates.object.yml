@@ -173,7 +173,8 @@ list_views:
       - field_name
       - operation
       - formula
-      - literal_value
+      # 该字段报错的值如果是 { o:xx, ids: xx} ,会导致点击相关表字段弹出这个窗口后立马报错、关闭弹窗， 所以暂时在列表上暂时隐藏该字段。
+      # - literal_value
       - description
 permission_set:
   user:
