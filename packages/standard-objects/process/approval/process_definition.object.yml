@@ -169,6 +169,7 @@ fields:
     multiple: true
     label: Workflow Notification
     reference_to: workflow_notifications
+    reference_to_field: name
     depend_on:
       - object_name
     filtersFunction: !!js/function |
@@ -176,23 +177,6 @@ fields:
         if(dependValues && dependValues.object_name){
           return "object_name eq '" + dependValues.object_name + "'";
         }
-      }
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "label"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('workflow_notifications', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.label,
-                value: item.name
-            });
-        });
-        return result;
       }
     group: Final Approval Actions
   final_rejection_record_lock:
@@ -227,6 +211,7 @@ fields:
     multiple: true
     label: Workflow Notification
     reference_to: workflow_notifications
+    reference_to_field: name
     depend_on:
       - object_name
     filtersFunction: !!js/function |
@@ -234,23 +219,6 @@ fields:
         if(dependValues && dependValues.object_name){
           return "object_name eq '" + dependValues.object_name + "'";
         }
-      }
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "label"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('workflow_notifications', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.label,
-                value: item.name
-            });
-        });
-        return result;
       }
     group: Final Rejection Actions
   recall_record_lock:
@@ -286,6 +254,7 @@ fields:
     multiple: true
     label: Workflow Notification
     reference_to: workflow_notifications
+    reference_to_field: name
     depend_on:
       - object_name
     filtersFunction: !!js/function |
@@ -293,23 +262,6 @@ fields:
         if(dependValues && dependValues.object_name){
           return "object_name eq '" + dependValues.object_name + "'";
         }
-      }
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "label"]
-        let options = {
-            $select: selects.toString()
-        };
-        let records = Creator.odata.query('workflow_notifications', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.label,
-                value: item.name
-            });
-        });
-        return result;
       }
     group: Recall Actions
     
