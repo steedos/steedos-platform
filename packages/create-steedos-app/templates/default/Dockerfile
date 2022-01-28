@@ -9,6 +9,7 @@ ADD steedos-app ./steedos-app/
 ADD package.json .
 ADD moleculer.config.js .
 ADD steedos-config.yml ./steedos-config.yml
+ADD .scripts ./.scripts/
 
 # RUN npm config set registry http://registry.npm.taobao.org/
 # RUN yarn config set registry http://registry.npm.taobao.org/
