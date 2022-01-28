@@ -1,6 +1,6 @@
 "use strict";
 module.exports = {
-    // 
+    // 添加字段
     addFormFieldFromObject: function (object_name, record_id, fields) {
         var record = Creator.getObjectRecord(object_name, record_id, 'name,form,object_name');
         var formId = _.isObject(record.form) ? record.form._id : record.form;
@@ -11,7 +11,7 @@ module.exports = {
         for (const key in objectFields) {
             if (Object.hasOwnProperty.call(objectFields, key)) {
                 const field = objectFields[key];
-                if (!['lookup', 'master_detail', 'grid', 'object'].includes(field.type) && !(field.name.indexOf('.') > -1 || field.name.indexOf('$') > -1)) {
+                if (!['grid', 'object'].includes(field.type) && !(field.name.indexOf('.') > -1 || field.name.indexOf('$') > -1)) {
                     rows.push(field);
                 }
             }
@@ -66,7 +66,7 @@ module.exports = {
         return false;
     },
 
-    // 
+    // 添加子表
     addFormTableFromObject: function (object_name, record_id, fields) {
         var record = Creator.getObjectRecord(object_name, record_id, 'name,form,object_name');
         var formId = _.isObject(record.form) ? record.form._id : record.form;
@@ -158,7 +158,7 @@ module.exports = {
                         for (const key in objectFields) {
                             if (Object.hasOwnProperty.call(objectFields, key)) {
                                 const field = objectFields[key];
-                                if (!['lookup', 'master_detail', 'grid', 'object'].includes(field.type) && !(field.name.indexOf('.') > -1 || field.name.indexOf('$') > -1)) {
+                                if (!['grid', 'object'].includes(field.type) && !(field.name.indexOf('.') > -1 || field.name.indexOf('$') > -1)) {
                                     rows.push(field);
                                 }
                             }

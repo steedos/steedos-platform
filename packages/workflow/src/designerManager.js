@@ -498,7 +498,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
                 formField.type = "odata";
                 formField.url = `/api/v4/${lookupObjName}?$top=20`;
                 formField.search_field = nameFieldKey;
-                formField.formula = `{${objField.name}.nameFieldKey}`;
+                formField.formula = `{${objField.name}.${nameFieldKey}}`;
             }
             break;
         case 'master_detail':
@@ -509,7 +509,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
                 formField.type = "odata";
                 formField.url = `/api/v4/${masterDetailObjName}?$top=20`;
                 formField.search_field = nameFieldKey;
-                formField.formula = `{${objField.name}.nameFieldKey}`;
+                formField.formula = `{${objField.name}.${nameFieldKey}}`;
             }
             break;
         case 'autonumber':
