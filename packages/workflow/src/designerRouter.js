@@ -936,7 +936,7 @@ router.post('/am/forms/addTableFromObject', async function (req, res) {
             const tName = table.name;
             const tLabel = table.label;
             let oldTableFieldExists = false;
-            const formFieldsMap = await designerManager.transformObjectFieldsToFormFields(table.fields);
+            const formFieldsMap = await designerManager.transformObjectFieldsToFormFields(table.fields, `${tName}_`);
             const formFields = Object.values(formFieldsMap);
             const len = oldFormFields.length;
             for (let idx = 0; idx < len; idx++) {
@@ -970,13 +970,19 @@ router.post('/am/forms/addTableFromObject', async function (req, res) {
                     "_id": await formObj._makeNewID()
                 });
                 for (const f of formFields) {
-                    newTableFieldCodes.push(`${tName}.${f.code}`); // 子表字段映射的字段名格式，记入对象流程映射
+                    newTableFieldCodes.push({
+                        objCode: `${tName}.${f.code.split(tName + '_')[1]}`,
+                        workflowCode: `${tName}.${f.code}`,
+                    }); // 子表字段映射的字段名格式，记入对象流程映射
                 }
             }
         }
 
         // 更新表单
-        await designerManager.updateForm(formDoc._id, formDoc, updatedForms, updatedFlows, userId);
+        if (!_.isEmpty(oldFormFields)){
+            formDoc.current.fields = oldFormFields;
+            await designerManager.updateForm(formDoc._id, formDoc, updatedForms, updatedFlows, userId);
+        }
 
         // 更新对象流程映射
         const flowDoc = (await flowObj.find({ filters: [['form', '=', formId]] }))[0];
@@ -988,8 +994,8 @@ router.post('/am/forms/addTableFromObject', async function (req, res) {
             console.log('newTableFieldCodes: ', newTableFieldCodes);
             for (const code of newTableFieldCodes) {
                 fieldMapBack.push({
-                    object_field: code,
-                    workflow_field: code
+                    object_field: code.objCode,
+                    workflow_field: code.workflowCode
                 });
             }
             await owObj.directUpdate(owDoc._id, {
@@ -1010,7 +1016,7 @@ router.post('/am/forms/addTableFromObject', async function (req, res) {
  *  objectName 对象名
  * }
  */
-router.post('/am/forms/getDetails', async function (req, res){
+router.post('/am/forms/getDetails', async function (req, res) {
     try {
         const { objectName } = req.body;
         if (!objectName) {

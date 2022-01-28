@@ -227,7 +227,7 @@ exports.updateForm = async function updateForm(formId, form, forms, flows, curre
 
                 current.modified = now;
                 current.modified_by = currentUserId;
-                current.form = form["id"];
+                current.form = formId;
                 current.fields = _formatFieldsID(form["current"]["fields"]);
                 current.form_script = form["current"]["form_script"];
                 current.name_forumla = form["current"]["name_forumla"];
@@ -422,10 +422,10 @@ function _formatFieldsID(fields) {
 
 exports.formatFieldsID = _formatFieldsID;
 
-exports.transformObjectFieldsToFormFields = async function (objFields) {
+exports.transformObjectFieldsToFormFields = async function (objFields, codePrefix) {
     let formFieldsMap = {};
     for (const f of objFields) {
-        const formField = await _transformObjectFieldToFormField(f);
+        const formField = await _transformObjectFieldToFormField(f, codePrefix);
         if (formField) {
             formFieldsMap[formField.code] = formField;
         }
@@ -433,11 +433,11 @@ exports.transformObjectFieldsToFormFields = async function (objFields) {
     return formFieldsMap;
 }
 
-async function _transformObjectFieldToFormField(objField) {
+async function _transformObjectFieldToFormField(objField, codePrefix = '') {
     const formObj = objectql.getObject('forms');
     let formField = {
         "name": objField.label,
-        "code": objField.name,
+        "code": `${codePrefix}${objField.name}`,
         "is_wide": objField.is_wide || false,
         "is_list_display": false,
         "is_searchable": objField.sortable || false,
