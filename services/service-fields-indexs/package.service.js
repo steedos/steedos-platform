@@ -37,7 +37,6 @@ module.exports = {
 					if(objectAPIName && !objectAPIName.startsWith('__')){
 						await objectql.getObject(objectAPIName).refreshIndexes()
 					}
-					
 				}
             }
 		}
