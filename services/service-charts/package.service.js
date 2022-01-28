@@ -35,7 +35,7 @@ module.exports = {
 	 */
 	settings: {
 		packageInfo: {
-			path: __dirname,
+			path: path.join(__dirname, 'main'),
 			name: packageName,
 			isPackage: false
 		},
