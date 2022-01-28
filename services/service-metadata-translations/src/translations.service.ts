@@ -52,6 +52,11 @@ module.exports = {
                 return await ActionHandlers.addObjectTranslation(ctx);
             }
         },
+        addObjectTranslations: {
+            async handler(ctx) {
+                return await ActionHandlers.addObjectTranslations(ctx);
+            }
+        },
         // change: {
         //     async handler(ctx) {
         //         return await ActionHandlers.change(ctx);
