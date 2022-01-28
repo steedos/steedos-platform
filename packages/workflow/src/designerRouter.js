@@ -881,8 +881,6 @@ router.post('/am/forms/addFieldFromObject', async function (req, res) {
         if (owDoc) {
             let oldFieldCodes = Object.keys(oldFormFieldsMap);
             let fieldCodes = Object.keys(formFieldsMap);
-            console.log('fieldCodes: ', fieldCodes);
-            console.log('oldFieldCodes: ', oldFieldCodes);
             let newFieldCodes = _.difference(fieldCodes, oldFieldCodes);
             let fieldMapBack = owDoc.field_map_back || [];
             for (const code of newFieldCodes) {
@@ -956,6 +954,17 @@ router.post('/am/forms/addTableFromObject', async function (req, res) {
                         ...formFieldsMap
                     }
                     f.fields = Object.values(newFormTableFieldsMap);
+                    // 找到新增的字段，记入对象流程映射
+                    let oldFieldCodes = Object.keys(oldTableFieldsMap);
+                    let fieldCodes = Object.keys(formFieldsMap);
+                    let newFieldCodes = _.difference(fieldCodes, oldFieldCodes);
+                    for (const code of newFieldCodes) {
+                        const f = formFieldsMap[code];
+                        newTableFieldCodes.push({
+                            objCode: `${tName}.${f.code.split(tName + '_')[1]}`,
+                            workflowCode: `${tName}.${f.code}`,
+                        }); // 子表字段映射的字段名格式，记入对象流程映射
+                    }
                 }
             }
             if (!oldTableFieldExists) {
