@@ -1,6 +1,8 @@
 import { getSteedosConfig, SteedosMongoDriver } from "@steedos/objectql";
-
+import { includes } from 'lodash'
 let mongodrivers = {};
+
+const mongodriversCollectionNames = {};
 
 export function newCollection(tableName: string, datasourceName?: string, options?: object) {
     if (!datasourceName) {
@@ -16,11 +18,17 @@ export function newCollection(tableName: string, datasourceName?: string, option
         mongodrivers[datasourceName] = driver;
     }
 
-    if (locale) {
+    if (locale && !includes(mongodriversCollectionNames[datasourceName], tableName)) {
         Meteor.wrapAsync(function (driver, tableName, locale, cb) {
             driver.connect().then(function () {
                 let collation = {};
                 let db = driver._client.db();
+                if (!mongodriversCollectionNames[datasourceName]) {
+                    mongodriversCollectionNames[datasourceName] = [];
+                    db.listCollections().forEach((results) => {
+                        mongodriversCollectionNames[datasourceName].push(results.name);
+                    });
+                }
                 // documentDB不支持collation
                 if (!documentDB) {
                     collation = {
@@ -34,6 +42,7 @@ export function newCollection(tableName: string, datasourceName?: string, option
                                 console.error(err);
                             }
                         }
+                        mongodriversCollectionNames[datasourceName].push(tableName)
                         cb();
                     }
                 );
