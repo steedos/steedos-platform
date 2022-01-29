@@ -1,4 +1,6 @@
 if (Meteor.isServer) {
+  const objectql = require("@steedos/objectql");
+  const config = objectql.getSteedosConfig();
   db.instances._ensureIndex({
     "space": 1
   }, {
