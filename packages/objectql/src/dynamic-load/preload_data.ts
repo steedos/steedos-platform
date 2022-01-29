@@ -98,5 +98,7 @@ export const preloadDBPermissionFields = async function (datasource: SteedosData
         Creator.Collections[tableName] = Creator.createCollection({ name: tableName });
     }
     let records: any = await datasource.find(tableName, {});
-    await registerPermissionFields.mregister(schema.broker, `~database-${tableName}`, records);
+    if (records && records.length > 0) {
+        await registerPermissionFields.mregister(schema.broker, `~database-${tableName}`, records);
+    }
 }

@@ -203,6 +203,9 @@ async function mget(ctx, keys) {
 }
 
 async function mset(ctx, data) {
+    if (_.isEmpty(data)) {
+        return;
+    }
     const keyPrefix = ctx.broker.cacher?.prefix || "";
     const mdata = {};
     _.map(data, (v, k) => {
