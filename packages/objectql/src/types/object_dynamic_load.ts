@@ -3,7 +3,7 @@ import path = require('path')
 import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig, getDataSource } from '.'
 // import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
-import { loadObjectMethods, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules, loadSourceRoles, loadSourceFlowRoles, loadSourceApprovalProcesses, loadSourceWorkflows, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts, preloadDBTabs, preloadDBShareRules, preloadDBRestrictionRules, preloadDBPermissionFields, loadPackageMetadatas } from '../dynamic-load'
+import { addObjectListenerConfig, loadObjectLayouts, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules, loadSourceRoles, loadSourceFlowRoles, loadSourceApprovalProcesses, loadSourceWorkflows, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts, preloadDBTabs, preloadDBShareRules, preloadDBRestrictionRules, preloadDBPermissionFields, loadPackageMetadatas } from '../dynamic-load'
 import { transformListenersToTriggers } from '..';
 import { getSteedosSchema } from './schema';
 
@@ -96,9 +96,6 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
 
     await loadPackageMetadatas(filePath, datasource, serviceName)
 
-    loadObjectTriggers(filePath);
-    // await loadObjectActions(filePath, serviceName);
-    loadObjectMethods(filePath);  //此功能不支持微服务模式
     await loadObjectLayouts(filePath, serviceName);
     await loadObjectPermissions(filePath, serviceName);
     await loadSourceProfiles(filePath, serviceName);

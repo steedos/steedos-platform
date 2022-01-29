@@ -2,6 +2,7 @@ import _ = require('lodash');
 import { getLazyLoadFields } from './field';
 import { getLazyLoadButtons } from './button';
 import { addObjectConfig } from '../types/object_dynamic_load';
+import { loadObjectMethods, loadObjectTriggers } from '../dynamic-load'
 import { getSteedosSchema } from '../types'
 import { objectToJson } from '../util/convert';
 var util = require('../util');
@@ -168,21 +169,6 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
                 packageObject = _.defaultsDeep(packageObject, { permission_set: { [permission.name]: permission } }, packageObject);
             }
         })
-        // if (datasource === "meteor" && packageObject && packageObject.name) {
-        //     try {
-        //         Fiber(() => {
-        //             try {
-        //                 const _db = Creator.createCollection(packageObject)
-        //                 Creator.Collections[_db._name] = _db
-        //             } catch (error) {
-        //                 // console.log(`error`, error) //此处无需打印日志，@steedos/core 在init Creator 时，会兼容此部分的异常逻辑。
-        //             }
-        //             Creator.Objects[packageObject.name] = packageObject;
-        //         }).run()
-        //     } catch (error) {
-        //         // console.log(`error`, error) //此处无需打印日志，@steedos/core 在init Creator 时，会兼容此部分的异常逻辑。
-        //     }
-        // }
         return packageObject;
     })
     for (const element of packageObjects) {
@@ -217,6 +203,11 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         }
         addObjectConfig(element, datasource, null);
     }
+
+    loadObjectTriggers(packagePath);
+    //此功能不支持微服务模式
+    loadObjectMethods(packagePath); 
+
     await addObjectConfigs(getSteedosSchema().metadataBroker, serviceName, packageObjects);
     if (serviceName) {
         for await (const packageField of packageFields) {

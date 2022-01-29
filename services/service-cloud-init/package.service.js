@@ -245,7 +245,7 @@ module.exports = {
 				for (const doc of apiKeyDocs) {
 					await apiKeysObj.directDelete(doc._id);
 				}
-
+				console.log(error);
 				throw new Error(`工作区初始化失败：${error.message}`);
 			}
 		}
