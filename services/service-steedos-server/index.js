@@ -168,15 +168,9 @@ module.exports = {
 			// const logger = this.logger;
 			await Future.task(() => {
 				try {
-					console.time(`startSteedos-loadServerBundles`)
 					this.meteor.loadServerBundles();
-					console.timeEnd(`startSteedos-loadServerBundles`)
-					console.time(`startSteedos-getSteedosSchema`)
 					const steedosSchema = require('@steedos/objectql').getSteedosSchema(this.broker);
-					console.timeEnd(`startSteedos-getSteedosSchema`)
-					console.time(`startSteedos-startStandardObjectsPackageLoader`)
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
-					console.timeEnd(`startSteedos-startStandardObjectsPackageLoader`)
 					// console.time(`startSteedos-dataSourceInIt`)
 					// const datasources = steedosSchema.getDataSources();
 					// for (let dataSource in datasources) {
@@ -184,20 +178,11 @@ module.exports = {
 					// 	Future.fromPromise(steedosSchema.getDataSource(dataSource).init()).wait();
 					// }
 					// console.timeEnd(`startSteedos-dataSourceInIt`)
-					console.time(`startSteedos-init`)
 					Future.fromPromise(this.steedos.init(this.settings)).wait();
-					console.timeEnd(`startSteedos-init`)
 					this.WebApp = WebApp;
-					console.time(`startSteedos-startNodeRedService`)
 					this.startNodeRedService();
-					console.timeEnd(`startSteedos-startNodeRedService`)
-					console.time(`startSteedos-callStartupHooks`)
 					this.meteor.callStartupHooks();
-					console.timeEnd(`startSteedos-callStartupHooks`)
-					console.time(`startSteedos-runMain`)
 					this.meteor.runMain();
-					console.timeEnd(`startSteedos-runMain`)
-
 				} catch (error) {
 					this.logger.error(error)
 				}
