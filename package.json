@@ -43,9 +43,7 @@
     "**/odata-v4-parser": "^0.1.29",
     "**/cookies": "0.6.2",
     "**/cross-env": "5.2.1",
-    "**/globby": "9.2.0",
-    "**/ioredis": "4.28.3",
-    "**/moleculer": "0.14.19"
+    "**/globby": "9.2.0"
   },
   "devDependencies": {
     "@octokit/core": "^3.5.1",
