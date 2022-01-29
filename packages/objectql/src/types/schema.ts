@@ -229,7 +229,17 @@ export class SteedosSchema {
     }
 
     async getAllObject() {
-        return await this.metadataBroker.call("objects.getAll");
+        let schemaObjects = [];
+        const datasources = this.getDataSources();
+        for (const name in datasources) {
+            const datasource = datasources[name]
+            const datasourceObjects = await datasource.getObjects();
+            if (datasourceObjects && datasourceObjects.length > 0) {
+                schemaObjects = schemaObjects.concat(datasourceObjects);
+            }
+        }
+        return schemaObjects;
+        // return await this.metadataBroker.call("objects.getAll");
     }
 }
 

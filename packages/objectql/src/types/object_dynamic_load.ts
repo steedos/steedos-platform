@@ -3,7 +3,7 @@ import path = require('path')
 import { SteedosObjectTypeConfig, SteedosObjectPermissionTypeConfig, SteedosActionTypeConfig, getDataSource } from '.'
 // import { isMeteor } from '../util'
 import { Dictionary } from '@salesforce/ts-types';
-import { loadObjectFields, loadObjectListViews, loadObjectButtons, loadObjectMethods, loadObjectActions, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, getLazyLoadFields, getLazyLoadButtons, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules, loadSourceRoles, loadSourceFlowRoles, loadSourceApprovalProcesses, loadSourceWorkflows, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts, preloadDBTabs, preloadDBShareRules, preloadDBRestrictionRules, preloadDBPermissionFields } from '../dynamic-load'
+import { loadObjectMethods, loadObjectTriggers, addObjectListenerConfig, loadObjectLayouts, loadObjectPermissions, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules, loadSourceRoles, loadSourceFlowRoles, loadSourceApprovalProcesses, loadSourceWorkflows, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts, preloadDBTabs, preloadDBShareRules, preloadDBRestrictionRules, preloadDBPermissionFields, loadPackageMetadatas } from '../dynamic-load'
 import { transformListenersToTriggers } from '..';
 import { getSteedosSchema } from './schema';
 
@@ -94,54 +94,15 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
     if (!datasource)
       datasource = 'meteor'
 
-    let objectJsons = util.loadObjects(filePath);
-    for await (const element of objectJsons) {
-        let startNo = 10;
-        _.each(element.fields, function(field){
-            if(!_.has(field, 'sort_no')){
-                field.sort_no = startNo;
-                startNo = startNo + 10;
-            }
-        })
-        if(!element.fields){
-            element.fields = {}
-        }
-        _.each(getLazyLoadFields(element.name), function(field){
-            util.extend(element.fields, {[field.name]: field})
-        })
-        if(!element.actions){
-            element.actions = {}
-        }
-        _.each(getLazyLoadButtons(element.name), function(action){
-            util.extend(element.actions, {[action.name]: action})
-        })
-        let _mf =  _.maxBy(_.values(element.fields), function (field) { return field.sort_no; });
-        if(_mf && element.name){
-            element.fields_serial_number = _mf.sort_no + 10;
-        }
-        await addObjectConfig(element, datasource, serviceName);
-    }
-
-    await loadObjectFields(filePath, serviceName);
-
-    await loadObjectListViews(filePath, serviceName);
-
-    await loadObjectButtons(filePath, serviceName);
+    await loadPackageMetadatas(filePath, datasource, serviceName)
 
     loadObjectTriggers(filePath);
-
-    await loadObjectActions(filePath, serviceName);
-
+    // await loadObjectActions(filePath, serviceName);
     loadObjectMethods(filePath);  //此功能不支持微服务模式
-
     await loadObjectLayouts(filePath, serviceName);
-
     await loadObjectPermissions(filePath, serviceName);
-
     await loadSourceProfiles(filePath, serviceName);
-
     await loadSourcePermissionset(filePath, serviceName);
-
     loadObjectValidationRules(filePath);
 
     loadSourceRoles(filePath);
@@ -325,11 +286,11 @@ export const removeObjectListenerConfig = (_id, listenTo, when)=>{
 }
 
 export const loadStandardMetadata = async (serviceName: string, datasourceApiName: string) => {
-    await loadStandardProfiles(serviceName);
-    await loadStandardPermissionsets(serviceName);
     await loadStandardBaseObjects(serviceName);
     if (dbMetadataLoaing != true) {
         dbMetadataLoaing = true;
+        await loadStandardProfiles(serviceName);
+        await loadStandardPermissionsets(serviceName);
         await loadDbMetadatas(datasourceApiName);
     }
 }

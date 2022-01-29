@@ -956,6 +956,9 @@ export function validateFilters(filters: [], objectFields: any) {
     processFilters(clone(filters), objectFields);
 }
 
+export async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 export function parserFilters(filters){
     if(_.isString(filters)){

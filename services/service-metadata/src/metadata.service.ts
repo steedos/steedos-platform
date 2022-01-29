@@ -71,9 +71,19 @@ module.exports = {
 				return await ActionHandlers.add(ctx);
 			}
 		},
+		madd: {
+			async handler(ctx) {
+				return await ActionHandlers.madd(ctx);
+			}
+		},
 		addServiceMetadata: {
 			async handler(ctx) {
 				return await ActionHandlers.addServiceMetadata(ctx);
+			}
+		},
+		maddServiceMetadata: {
+			async handler(ctx) {
+				return await ActionHandlers.maddServiceMetadata(ctx);
 			}
 		},
 		delete: {

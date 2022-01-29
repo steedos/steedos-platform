@@ -36,6 +36,12 @@ export const ActionHandlers = {
         const { objectApiName, data } = ctx.params;
         return await ctx.broker.call('metadata.add', {key: getObjectCacherKey(objectApiName, data), data: data}, {meta: ctx.meta})
     },
+    async addObjectTranslations(ctx: any): Promise<any> {
+        const { data } = ctx.params;
+        for (const item of data) {
+            await ctx.broker.call('metadata.add', { key: getObjectCacherKey(item.objectApiName, item), data: item }, { meta: ctx.meta })
+        }
+    },
     // async getTranslations(ctx: any): Promise<any> {
     //     return await ctx.broker.call('metadata.filter', {key: cacherKey("*")}, {meta: ctx.meta})
     // },

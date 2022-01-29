@@ -3,12 +3,13 @@ const PACKAGE_SERVICES_KEY = '$PACKAGE-SERVICES';
 const PACKAGE_SERVICE_PREFIX = '~packages-';
 const METADATA_SERVICES_PERFIX = '$METADATA-SERVICES';
 import * as _ from 'underscore';
+import { map } from 'lodash';
 
 let savePackageServicesTimeoutID = null;
 
-const useScan = false;
+const useScan = true;
 
-async function redisScanKeys(redisClient, match, count = 100): Promise<Array<string>> {
+async function redisScanKeys(redisClient, match, count = 10000): Promise<Array<string>> {
     if (!useScan) {
         return await redisClient.keys(match);
     } else {
@@ -111,6 +112,17 @@ function transformMetadata(ctx) {
     };
 }
 
+function transformMetadatas(ctx) {
+    const data = {};
+    map(ctx.params.data, (value, key) => {
+        data[key] = {
+            ...ctx.meta.caller,
+            metadata: value,
+        }
+    })
+    return data;
+}
+
 function getKey(key, keyPrefix) {
     return key.replace(keyPrefix, "");
 }
@@ -126,25 +138,11 @@ async function addServiceMetadata(ctx) {
     }
     
     const { metadataType, metadataApiName, metadataServiceName } = ctx.meta || { metadataType: undefined, metadataApiName: undefined, metadataServiceName: undefined };
-    // if(metadataType){
-    //     console.log('saveServiceMetadataMap', metadataType, metadataApiName, metadataServiceName )
-    // }
+
     if (!metadataServiceName) {
         return;
     }
     const key = getServiceMetadataCacherKey(nodeID, metadataServiceName, metadataType, metadataApiName);
-    if (false && metadataType === 'objects') {
-        console.log(`addServiceMetadata`, key);
-    }
-    // let data = await ctx.broker.cacher.get(key);// REPLACE: await mockCacherGet(ctx, key); 
-    // let nodeIds = [];
-    // if (data) {
-    //     if (data.nodeIds) {
-    //         nodeIds = data.nodeIds;
-    //     }
-    // }
-    // nodeIds.push(nodeID);
-
     await ctx.broker.cacher.set(key, {
         nodeIds: [nodeID],
         metadataType,
@@ -152,13 +150,36 @@ async function addServiceMetadata(ctx) {
         metadataServiceName,
         metadata: ctx.params.data,
     });
-    // REPLACE:
-    // await mockCacherSet(ctx, key, {
-    //     nodeIds: nodeIds,
-    //     metadataType,
-    //     metadataApiName,
-    //     metadata: ctx.params.data,
-    // });
+}
+
+async function maddServiceMetadata(ctx) {
+    const { nodeID } = ctx.meta.caller || { nodeID: undefined };
+    if (!nodeID) {
+        console.log(`addServiceMetadata ctx.meta`, ctx.meta);
+    }
+
+    const { metadataType, metadataServiceName } = ctx.meta || { metadataType: undefined, metadataServiceName: undefined };
+
+    //data: {k1:v1, k2:v2}
+    const { data } = ctx.params
+
+    if (!metadataServiceName || !data) {
+        return;
+    }
+
+    const mdata = {};
+
+    map(data, (value, metadataApiName) => {
+        mdata[getServiceMetadataCacherKey(nodeID, metadataServiceName, metadataType, metadataApiName)] = {
+            nodeIds: [nodeID],
+            metadataType,
+            metadataApiName,
+            metadataServiceName,
+            metadata: value,
+        }
+    })
+
+    await mset(ctx, mdata);
 }
 
 async function mget(ctx, keys) {
@@ -181,13 +202,31 @@ async function mget(ctx, keys) {
     return results;
 }
 
+async function mset(ctx, data) {
+    const keyPrefix = ctx.broker.cacher?.prefix || "";
+    const mdata = {};
+    _.map(data, (v, k) => {
+        mdata[`${keyPrefix}${k}`] = JSON.stringify(v)
+    })
+    return await ctx.broker.cacher.client.mset(mdata);
+}
+
 // 这里需要更改
 async function query(ctx, queryKey) {
     try {
+        // const s = new Date().getTime();
         const keyPrefix = ctx.broker.cacher?.prefix || "";
+        // const sk = new Date().getTime();
         const keys = await redisScanKeys(ctx.broker.cacher.client, `${keyPrefix}${queryKey}`) //ctx.broker.cacher.client.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
+        // const dk = new Date().getTime() - sk;
+        // const sv = new Date().getTime();
         // REPLACE: const keys = await mockCacherKeys(ctx, `${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
         const values = _.compact(await mget(ctx, keys));
+        // const dv = new Date().getTime() - sv;
+        // const d = new Date().getTime() - s;
+        // if (d > Number(process.env.STEEDOS_DURATION)) {
+            // console.log(`query`, d, dk, dv, `${keyPrefix}${queryKey}`);
+        // }
         return values;
     } catch (error) {
         // console.error(`error`, error)
@@ -345,8 +384,14 @@ export const ActionHandlers = {
         return await ctx.broker.cacher.set(ctx.params.key, transformMetadata(ctx));
         // REPLACE: return await mockCacherSet(ctx, ctx.params.key, transformMetadata(ctx));
     },
+    async madd(ctx) {
+        return await mset(ctx, transformMetadatas(ctx));
+    },
     async addServiceMetadata(ctx: any) {
         return await addServiceMetadata(ctx);
+    },
+    async maddServiceMetadata(ctx: any) {
+        return await maddServiceMetadata(ctx);
     },
     async fuzzyDelete(ctx: any){
         const { key } = ctx.params

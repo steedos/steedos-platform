@@ -31,6 +31,7 @@ import { SteedosDriverConfig } from '../driver';
 import { createObjectService } from '../metadata-register/objectServiceManager';
 import { getObjectDispatcher } from '../services/index';
 import path = require('path');
+import { jsonToObject } from '../util/convert';
 let Fiber = require('fibers');
 declare var Creator: any;
 export enum SteedosDatabaseDriverType {
@@ -87,6 +88,21 @@ export class SteedosDataSourceType implements Dictionary {
     private _locale?: string;
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
+    private _cacheObjects?: Array<SteedosObjectType> = [];
+    public get cacheObjects(): any {
+        return this._cacheObjects;
+    }
+    public set cacheObjects(value: any) {
+        this._cacheObjects = value;
+    }
+    private _service?: any;
+    public get service(): any {
+        return this._service;
+    }
+    public set service(value: any) {
+        this._service = value;
+    }
+
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
     private _objectsRolesPermission: Dictionary<Dictionary<SteedosObjectPermissionType>> = {};
     private _objectsSpaceRolesPermission: Dictionary<Dictionary<Dictionary<SteedosObjectPermissionType>>> = {};
@@ -110,10 +126,19 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async getObjects() {
-        if(!this.schema.metadataRegister){
-            return this._objects
-        }
-        return await this.schema.metadataRegister.getObjectsConfig(this.name);
+        // if(!this.schema.metadataRegister){
+        //     return this._objects
+        // }
+        // return await this.schema.metadataRegister.getObjectsConfig(this.name);
+        return this.getCacheObjects();
+    }
+
+    getCacheObjects() {
+        return this.cacheObjects;
+    }
+
+    async flushCacheObjects() {
+        this.cacheObjects = await this.schema.metadataRegister.getObjectsConfig(this.name);
     }
 
     getLocalObjects() {
@@ -147,7 +172,17 @@ export class SteedosDataSourceType implements Dictionary {
     async setObject(objectApiName: string, objectConfig: SteedosObjectTypeConfig) {
         const serviceName = getObjectServiceName(objectApiName)
         let object = new SteedosObjectType(objectApiName, this, objectConfig)
+
         this._objectsConfig[objectApiName] = objectConfig;
+
+        const findIndex = _.findIndex(this.cacheObjects, (item: any) => { return item?.name === objectApiName });
+
+        if (findIndex != -1) {
+            this.cacheObjects[findIndex] = Object.assign({ service: { name: serviceName } }, { metadata: objectConfig });
+        } else {
+            this.cacheObjects.push(Object.assign({ service: { name: serviceName } }, { metadata: objectConfig }));
+        }
+
         this._objects[objectApiName] = object;
         await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
         return object;
@@ -206,71 +241,32 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
-    async initObjects(){
+    async initObject(objectConfig) {
+        //从本地对象配置中读取触发器配置
+        const localObjectConfig = getObjectConfig(objectConfig.name);
+        if (localObjectConfig) {
+            objectConfig.listeners = localObjectConfig.listeners;
+            objectConfig.methods = localObjectConfig.methods;
+        }
+        if (this.name === "default") {
+            try {
+                const _db = Creator.createCollection(objectConfig)
+                Creator.Collections[_db._name] = _db
+            } catch (error) {
+                // console.log(`error`, error) //此处无需打印日志，@steedos/core 在init Creator 时，会兼容此部分的异常逻辑。
+            }
+        }
+        await this.setObject(objectConfig.name, objectConfig);
+    }
+
+    async initObjects() {
         // 从缓存中加载所有本数据源对象到datasource中
-        let objects: Array<any> = await this.getObjects();
+        let objects: Array<any> = this.cacheObjects;
         let self = this;
         for await (const object of _.values(objects)) {
             const objectConfig = object.metadata;
-            //从本地对象配置中读取触发器配置
-            const localObjectConfig = getObjectConfig(objectConfig.name);
-            if(localObjectConfig){
-                objectConfig.listeners = localObjectConfig.listeners; 
-                objectConfig.methods = localObjectConfig.methods; 
-            }
-            // if(self._schema.metadataBroker){
-            //     const res = await self._schema.metadataRegister.object(object)
-            //     if(res){
-            //         self.setObject(object.name, object);
-            //     }
-            // }else{
-            //     self.setObject(object.name, object);
-            // }
-            await self.setObject(objectConfig.name, objectConfig);
-
-            if(this.name === "default"){
-                try {
-                    const _db = Creator.createCollection(objectConfig)
-	                Creator.Collections[_db._name] = _db
-                } catch (error) {
-                    // console.log(`error`, error) //此处无需打印日志，@steedos/core 在init Creator 时，会兼容此部分的异常逻辑。
-                }
-            }
+            await self.initObject(objectConfig)
         }
-
-        // _.each(objects, (object) => {
-        //     const obj = this.getObject(object.name);
-        //     if(obj){
-        //         // 加try catch是因为有错误时不应该影响下一个对象加载
-        //         try{
-        //             obj.initMasterDetails();
-        //         }
-        //         catch(ex){
-        //             console.error(ex);
-        //         }
-        //     }
-        // });
-
-        // _.each(objects, (object) => {
-        //     const obj = this.getObject(object.name);
-        //     if(obj){
-        //         // 加try catch是因为有错误时不应该影响下一个对象加载
-        //         try{
-        //             obj.checkMasterDetails();
-        //         }
-        //         catch(ex){
-        //             console.error(ex);
-        //         }
-        //     }
-        // });
-
-        _.each(this.config.objectsRolesPermission, (objectRolesPermission, object_name) => {
-            _.each(objectRolesPermission, (objectRolePermission, role_name) => {
-                objectRolePermission.name = role_name
-                this.setObjectPermission(object_name, objectRolePermission)
-            })
-        })
-
         return true;
     }
 
@@ -461,15 +457,54 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async init() {
-        await this.initObjects();
-        await this.initTypeORM();
-        // initObjectFieldsSummarys(this.name);
-        // this.schema.transformReferenceOfObject(this);
+        // await this.flushCacheObjects();
+        // await this.initObjects();
+        this.initObjectPermissions();
+        await this.createDataSourceService();
     }
 
-    async initTypeORM() {
+    async createDataSourceService() {
+        if (!this.service) {
+            const self = this;
+            const broker = this._schema.metadataBroker
+            this.service = broker.createService({
+                name: `service-datasource-${this.name}`,
+                events: {
+                    [`${this.name}.*.metadata.objects.inserted`]: {
+                        handler(ctx) {
+                            let objectConfig = ctx.params.data;
+                            jsonToObject(objectConfig)
+                            self.initObject(objectConfig)
+                            /**
+                             * 每次都需要初始化，TypeORM不适用于微服务模式
+                             */
+                            self.initTypeORM();
+                        }
+                    },
+                }
+            })
+            if (!broker.started) { //如果broker未启动则手动启动service
+                await broker._restartService(this.service)
+            }
+            await broker.waitForServices(this.service.name, null, 10);
+        }
+    }
+
+    /**
+     * 初始化数据源上配置的对象权限。
+     */
+    initObjectPermissions() {
+        _.each(this.config.objectsRolesPermission, (objectRolesPermission, object_name) => {
+            _.each(objectRolesPermission, (objectRolePermission, role_name) => {
+                objectRolePermission.name = role_name
+                this.setObjectPermission(object_name, objectRolePermission)
+            })
+        })
+    }
+
+    initTypeORM() {
         const _objects = {};
-        _.map(await this.getObjects(), (item)=>{
+        _.map(this.cacheObjects, (item) => {
             if(item && item.metadata){
                 _objects[item.metadata.name] = item.metadata
             }

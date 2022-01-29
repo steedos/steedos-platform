@@ -70,6 +70,11 @@ module.exports = {
                 return await this.objetActionHandlers.addConfig(ctx);
             }
         },
+        addConfigs: {
+            async handler(ctx) {
+                return await this.objetActionHandlers.addConfigs(ctx);
+            }
+        }, 
         change: {
             async handler(ctx) {
                 return await this.objetActionHandlers.change(ctx);

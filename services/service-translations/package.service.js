@@ -38,9 +38,7 @@ module.exports = {
 	},
 
 	async started() {
-		console.time(`started-Translations`)
 		core.loadTranslations();
 		core.loadObjectTranslations();
-		console.timeEnd(`started-Translations`)
 	},
 };

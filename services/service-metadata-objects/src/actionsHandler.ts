@@ -1,6 +1,6 @@
 import _ = require("lodash");
 import { METADATA_TYPE } from ".";
-import { getObjectServiceName, getOriginalObject, refreshObject } from "./objects";
+import { getObjectServiceName, getOriginalObject, refreshObject, MONGO_BASE_OBJECT, SQL_BASE_OBJECT } from "./objects";
 export type SObject = {
     name: string,
     [x: string]: any
@@ -36,11 +36,13 @@ export class ActionHandlers {
     }
 
 	async registerObject(ctx, objectApiName, data, meta) {
-        if(this.onRegister && _.isFunction(this.onRegister)){
+        if (objectApiName != MONGO_BASE_OBJECT &&
+            objectApiName != SQL_BASE_OBJECT && this.onRegister && _.isFunction(this.onRegister)) {
             await this.onRegister(data)
         }
         await ctx.broker.call('metadata.add', {key: cacherKey(objectApiName), data: data}, {meta: meta});
-        if(this.onRegistered && _.isFunction(this.onRegistered)){
+        if (objectApiName != MONGO_BASE_OBJECT &&
+            objectApiName != SQL_BASE_OBJECT && this.onRegistered && _.isFunction(this.onRegistered)) {
             await this.onRegistered(data)
         }
 		// 为每个对象 setTimeout 延时执行
@@ -51,7 +53,7 @@ export class ActionHandlers {
 		}
 		timeoutId = setTimeout(function(){
 			ctx.broker.emit("metadata.objects.inserted", {objectApiName: objectApiName, isInsert: true});
-			ctx.broker.emit(`@${objectApiName}.metadata.objects.inserted`, {objectApiName: objectApiName, isInsert: true, data: data});
+            ctx.broker.broadcast(`${data.datasource}.@${objectApiName}.metadata.objects.inserted`, { objectApiName: objectApiName, isInsert: true, data: data });
 			registerObjectMemEntry.delete(objectApiName);
 		}, DELAY_MESSAGE_OF_OBJECT_CHANGED);
 		registerObjectMemEntry.set(objectApiName, timeoutId);
@@ -95,19 +97,24 @@ export class ActionHandlers {
                 metadataType: METADATA_TYPE,
                 metadataApiName: metadataApiName,
             }, {meta: ctx.meta});
-    
-            if(metadataConfig && metadataConfig.metadata){
+
+            if (metadataConfig && metadataConfig.metadata) {
                 config.list_views = _.defaultsDeep(metadataConfig.metadata.list_views || {}, config.list_views || {});
                 config = _.defaultsDeep(config, metadataConfig.metadata);
             }
         }
-        await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
+
+        await ctx.broker.call('metadata.addServiceMetadata', { key: cacherKey(metadataApiName), data: config }, { meta: Object.assign({}, ctx.meta, { metadataType: METADATA_TYPE, metadataApiName: metadataApiName }) })
+
         const objectConfig = await refreshObject(ctx, metadataApiName);
-        if(!objectConfig){
-            return ;
+
+        if (!objectConfig) {
+            return;
         }
+
         const objectServiceName = getObjectServiceName(metadataApiName);
-        return await this.registerObject(ctx, metadataApiName, objectConfig, {
+
+        const result = await this.registerObject(ctx, metadataApiName, objectConfig, {
             caller: {
                 // nodeID: broker.nodeID,
                 service: {
@@ -117,6 +124,44 @@ export class ActionHandlers {
                 }
             }
         });
+        return result;
+    }
+
+    async addConfigs(ctx: any): Promise<boolean> {
+        let configs = ctx.params.data;
+        for (let config of configs) {
+            if (config.extend) {
+                config.name = config.extend
+            }
+            const metadataApiName = config.name;
+            if (!config.isMain) {
+                const metadataConfig = await ctx.broker.call('metadata.getServiceMetadata', {
+                    serviceName: ctx.meta.metadataServiceName,
+                    metadataType: METADATA_TYPE,
+                    metadataApiName: metadataApiName,
+                }, { meta: ctx.meta });
+                if (metadataConfig && metadataConfig.metadata) {
+                    config.list_views = _.defaultsDeep(metadataConfig.metadata.list_views || {}, config.list_views || {});
+                    config = _.defaultsDeep(config, metadataConfig.metadata);
+                }
+            }
+            await ctx.broker.call('metadata.addServiceMetadata', { key: cacherKey(metadataApiName), data: config }, { meta: Object.assign({}, ctx.meta, { metadataType: METADATA_TYPE, metadataApiName: metadataApiName }) })
+            const objectConfig = await refreshObject(ctx, metadataApiName);
+            if (!objectConfig) {
+                return;
+            }
+            const objectServiceName = getObjectServiceName(metadataApiName);
+            await this.registerObject(ctx, metadataApiName, objectConfig, {
+                caller: {
+                    // nodeID: broker.nodeID,
+                    service: {
+                        name: objectServiceName,
+                        // version: broker.service.version, TODO
+                        // fullName: broker.service.fullName, TODO
+                    }
+                }
+            });
+        }
     }
 
     async change(ctx: any): Promise<boolean> {
