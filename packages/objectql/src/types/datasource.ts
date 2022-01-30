@@ -246,7 +246,7 @@ export class SteedosDataSourceType implements Dictionary {
             objectConfig.listeners = localObjectConfig.listeners;
             objectConfig.methods = localObjectConfig.methods;
         }
-        if (this.name === "default") {
+        if (this.name === "meteor") {
             try {
                 const _db = Creator.createCollection(objectConfig)
                 Creator.Collections[_db._name] = _db
