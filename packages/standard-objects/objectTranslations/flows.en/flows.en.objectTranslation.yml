@@ -211,13 +211,50 @@ fields:
       step through the Workflow Designer.
     description: 
   object_name:
-    label: Object
+    label: Bind Object
+  instance_fields:
+    label: Instance Fields
+    help: 
+    description: 
+  instance_fields.$:
+    label: Instance Field
+    help: 
+    description: 
+  instance_fields.$.field_name:
+    label: Instance Field Name
+    help: 
+    description: 
+  instance_fields.$.is_readonly:
+    label: Readonly
+    help: 
+    description: 
+  instance_fields.$.is_required:
+    label: Required
+    help: 
+    description:
+  instance_table_fields:
+    label: Related Lists
+    help: 
+    description: 
+  instance_table_fields.$.label:
+    label: Label
+    help:
+    description:
+  instance_table_fields.$.related_field_fullname:
+    label: Related Field FullName
+    help: 
+    description:
+  instance_table_fields.$.field_names:
+    label: Field Names
+    help: 
+    description:
 groups:
   template: Template
   synchronization: Synchronization
   script: Script
   distribution: Distribution
   others: Others
+  FlowBindObject: Flow Bind Object
 listviews:
   all:
     label: All Workflows
@@ -256,10 +293,8 @@ actions:
     label: Set Distribution Options
   removeFlow:
     label: Delete
-  addFormFieldFromObject:
-    label: Add Field
-  addFormTableFromObject:
-    label: Add Table
+  addFormFields:
+    label: Add Fields
 CustomLabels:
   import_flows_error_title: Import Error
   import_flows_error_not_find_object: 'Not find object [ %s ]'

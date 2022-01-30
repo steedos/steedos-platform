@@ -565,3 +565,44 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         return formField;
     }
 }
+
+/**
+ * @param fields
+ *      [{
+ *          field_name 字段名
+ *          is_readonly 是否只读
+ *          is_required 是否必填
+ *      }]
+ * @param objFieldsMap {} 对象字段
+ * @returns []
+ */
+exports.transformObjectFields = function (fields, objFieldsMap) {
+    let newFields = [];
+    for (const f of fields) {
+        if (objFieldsMap[f.field_name]) {
+            newFields.push({
+                ...f,
+                readonly: !!f.is_readonly,
+                required: !!f.is_required
+            })
+        }
+    }
+    return newFields;
+}
+
+/**
+ * @param fieldNames [''] 字段名数组
+ * @param objFieldsMap {} 对象字段
+ * @returns []
+ */
+ exports.getObjectFieldsByNames = function (fieldNames, objFieldsMap) {
+    let newFields = [];
+    for (const fName of fieldNames) {
+        if (objFieldsMap[fName]) {
+            newFields.push({
+                ...f
+            })
+        }
+    }
+    return newFields;
+}

@@ -988,7 +988,7 @@ router.post('/am/forms/addTableFromObject', async function (req, res) {
         }
 
         // 更新表单
-        if (!_.isEmpty(oldFormFields)){
+        if (!_.isEmpty(oldFormFields)) {
             formDoc.current.fields = oldFormFields;
             await designerManager.updateForm(formDoc._id, formDoc, updatedForms, updatedFlows, userId);
         }
@@ -1037,6 +1037,130 @@ router.post('/am/forms/getDetails', async function (req, res) {
     } catch (error) {
         console.log(error);
         res.status(500).send({ error: error.message })
+    }
+})
+
+/**
+ * 获取对象的子表信息
+ * body {
+ *  objectName 对象名
+ * }
+ */
+router.post('/am/forms/getDetailsInfo', async function (req, res) {
+    try {
+        const { objectName } = req.body;
+        if (!objectName) {
+            throw new Error('缺少参数: objectName。');
+        }
+        const obj = objectql.getObject(objectName);
+        const detailsInfo = await obj.getDetailsInfo();
+        res.status(200).send({ success: true, detailsInfo });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ error: error.message })
+    }
+})
+
+/**
+ * 从对象选择字段后，表单生成对应字段
+ * 根据字段名，有则更新无则新增
+ * 不包括表格字段
+ * body {
+ *  instance_fields 对象字段数组
+ *      [{
+ *          field_name 字段名
+ *          is_readonly 是否只读
+ *          is_required 是否必填
+ *      }]
+ *  instance_table_fields 对象子表数组
+ *      [{
+ *          detail_field_fullname 子表名称 格式： 子表名.子表中主子表字段名
+ *          label 显示标题
+ *          field_names 子表字段名数组
+ *      }]
+ *  object_name 对象名
+ *  formId 表单ID
+ * }
+ */
+router.post('/am/forms/addFieldsFromObject', async function (req, res) {
+    try {
+        const { instance_fields, instance_table_fields, object_name, formId } = req.body;
+        const formObj = objectql.getObject('forms');
+        const owObj = objectql.getObject('object_workflows');
+        const flowObj = objectql.getObject('flows');
+        const formDoc = await formObj.findOne(formId);
+        const obj = objectql.getObject(object_name);
+        const objConfig = await obj.toConfig();
+
+        let updatedForms = [];
+        let updatedFlows = [];
+        let userId = req.user.userId;
+
+        let fields = designerManager.transformObjectFields(instance_fields, objConfig.fields);
+        const formFieldsMap = await designerManager.transformObjectFieldsToFormFields(fields);
+        const fFields = Object.values(formFieldsMap);
+
+        const tables = [];
+        for (const tf of instance_table_fields) {
+            let detailFieldFullname = tf.detail_field_fullname;
+            let detailObjName = detailFieldFullname.split('.')[0];
+            const detailObj = objectql.getObject(detailObjName);
+            const detailObjConfig = await detailObj.toConfig();
+            let tLabel = tf.label || detailObjConfig.label;
+            let tableFields = designerManager.getObjectFieldsByNames(tf.field_names, detailObjConfig.fields, `${detailObjName}_`);
+            const tFieldsMap = await designerManager.transformObjectFieldsToFormFields(tableFields);
+            const tFields = Object.values(tFieldsMap);
+            tables.push({
+                "type": "table",
+                "name": tLabel,
+                "code": detailObjName,
+                "is_wide": true,
+                "is_required": false,
+                "fields": tFields,
+                "_id": await formObj._makeNewID()
+            });
+        }
+
+        formDoc.current.fields = fFields.concat(tables);
+        await designerManager.updateForm(formDoc._id, formDoc, updatedForms, updatedFlows, userId);
+
+        // 更新对象流程映射
+        const flowDoc = (await flowObj.find({ filters: [['form', '=', formId]] }))[0];
+        const objectName = flowDoc.object_name;
+        const flowId = flowDoc._id;
+        const owDoc = (await owObj.find({ filters: [['object_name', '=', objectName], ['flow_id', '=', flowId]] }))[0];
+        if (owDoc) {
+            let fieldMap = []
+            for (const code of fFields) {
+                fieldMap.push({
+                    object_field: code,
+                    workflow_field: code
+                });
+            }
+            for (const t of tables) {
+                for (const f of t.fields) {
+                    const ofCode = `${t.code}.${f.code}`;
+                    const wfCode = `${t.code}.${t.code}_${f.code}`;
+                    fieldMap.push({
+                        object_field: ofCode,
+                        workflow_field: wfCode
+                    });
+                }
+            }
+            await owObj.directUpdate(owDoc._id, {
+                field_map_back: fieldMap,
+                field_map: fieldMap
+            });
+            await flowObj.directUpdate(flowId, {
+                instance_fields, instance_table_fields
+            })
+        }
+
+
+        res.status(200).send({ success: true, message: 'router is ok' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message)
     }
 })
 
