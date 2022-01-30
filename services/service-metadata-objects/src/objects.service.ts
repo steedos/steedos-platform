@@ -5,6 +5,8 @@ import { FormulaActionHandler } from './formula/formulaActionHandler';
 import { SummaryActionHandler } from './summary/summaryActionHandler';
 import { LookupActionHandler } from './lookup/LookupActionHandler';
 import { METADATA_TYPE } from '.';
+import * as _ from 'lodash';
+
 module.exports = {
     name: "objects",
     /**
@@ -180,11 +182,11 @@ module.exports = {
                 const mastersInfo = this.masterDetailActionHandler.getMastersInfoKey(objectApiName);
                 const lookupDetailsInfo = this.lookupActionHandler.getDetailsInfoKey(objectApiName);
 
-                const results = await ctx.broker.call('metadata.mget', { keys: [detailsInfoKey, mastersInfo, lookupDetailsInfo] });
+                const results = await ctx.broker.call('metadata.mfilter', { keys: [detailsInfoKey, mastersInfo, lookupDetailsInfo] });
                 return {
-                    details: results[0],
-                    masters: results[1],
-                    lookup_details: results[2],
+                    details: _.compact(_.map(results[0], 'metadata')),
+                    masters: _.compact(_.map(results[1], 'metadata')),
+                    lookup_details: _.compact(_.map(results[2], 'metadata')),
                 }
             }
         },

@@ -186,7 +186,16 @@ async function mget(ctx, keys) {
     if (!keys || keys.length == 0) {
         return [];
     }
-    const values = await ctx.broker.cacher.client.mget(...keys);
+
+    const keyPrefix = ctx.broker.cacher?.prefix || "";
+
+    const values = await ctx.broker.cacher.client.mget(...map(keys, (key) => {
+        if (key && !key.startsWith(keyPrefix)) {
+            return `${keyPrefix}${key}`
+        } else {
+            return key
+        }
+    }));
     const results = [];
     _.map(values, (item) => {
         try {
@@ -382,6 +391,13 @@ export const ActionHandlers = {
         //     values.push(await ctx.broker.cacher.get(getKey(key, keyPrefix)))
         // }
         // return values;
+    },
+    async mfilter(ctx: any): Promise<Array<any>> {
+        const values = [];
+        for (const key of ctx.params.keys) {
+            values.push(await query(ctx, key))
+        }
+        return values
     },
     async add(ctx: any) {
         return await ctx.broker.cacher.set(ctx.params.key, transformMetadata(ctx));

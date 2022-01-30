@@ -66,6 +66,11 @@ module.exports = {
 				return await ActionHandlers.filter(ctx);
 			}
 		},
+		mfilter: {
+			async handler(ctx) {
+				return await ActionHandlers.mfilter(ctx);
+			}
+		},
 		add: {
 			async handler(ctx) {
 				return await ActionHandlers.add(ctx);
