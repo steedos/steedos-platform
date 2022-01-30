@@ -28,10 +28,8 @@ import {
     addAllConfigFiles
 } from '.';
 import { SteedosDriverConfig } from '../driver';
-import { createObjectService } from '../metadata-register/objectServiceManager';
-import { getObjectDispatcher } from '../services/index';
+import { getObjectDispatcher, createObjectService, createDataSourceService } from '../services/index';
 import path = require('path');
-import { jsonToObject } from '../util/convert';
 let Fiber = require('fibers');
 declare var Creator: any;
 export enum SteedosDatabaseDriverType {
@@ -460,33 +458,9 @@ export class SteedosDataSourceType implements Dictionary {
         // await this.flushCacheObjects();
         // await this.initObjects();
         this.initObjectPermissions();
-        await this.createDataSourceService();
-    }
-
-    async createDataSourceService() {
         if (!this.service) {
-            const self = this;
             const broker = this._schema.metadataBroker
-            this.service = broker.createService({
-                name: `service-datasource-${this.name}`,
-                events: {
-                    [`${this.name}.*.metadata.objects.inserted`]: {
-                        handler(ctx) {
-                            let objectConfig = ctx.params.data;
-                            jsonToObject(objectConfig)
-                            self.initObject(objectConfig)
-                            /**
-                             * 每次都需要初始化，TypeORM不适用于微服务模式
-                             */
-                            self.initTypeORM();
-                        }
-                    },
-                }
-            })
-            if (!broker.started) { //如果broker未启动则手动启动service
-                await broker._restartService(this.service)
-            }
-            await broker.waitForServices(this.service.name, null, 10);
+            this.service = await createDataSourceService(broker, this)
         }
     }
 

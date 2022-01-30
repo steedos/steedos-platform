@@ -1,17 +1,17 @@
 import * as _ from 'underscore';
-import { getObjectServiceName } from '../services/index';
+import { getObjectServiceName } from './index';
 const objectService = require('../services/objectService');
 
 const LocalObjectServices = {};
 
-function onDestroyObjectService(objectApiName){
+function onDestroyObjectService(objectApiName) {
     const serviceName = getObjectServiceName(objectApiName);
     delete LocalObjectServices[serviceName]
 }
 
 export async function createObjectService(broker, serviceName, objectConfig) {
-    if(LocalObjectServices[serviceName]){
-        return ;
+    if (LocalObjectServices[serviceName]) {
+        return;
     }
     let service = broker.createService({
         name: serviceName,
