@@ -2,9 +2,10 @@ import _ = require('lodash');
 import { getLazyLoadFields } from './field';
 import { getLazyLoadButtons } from './button';
 import { addObjectConfig } from '../types/object_dynamic_load';
-import { loadObjectMethods, loadObjectTriggers } from '../dynamic-load'
+import { addPermissionConfig, loadObjectMethods, loadObjectTriggers } from '../dynamic-load'
 import { getSteedosSchema } from '../types'
 import { objectToJson } from '../util/convert';
+import { registerPermissionFields } from '..';
 var util = require('../util');
 var clone = require('clone');
 // let Fiber = require('fibers');
@@ -94,6 +95,36 @@ const loadPackagePermissions = function (filePath: string) {
         delete permission.field_permissions;
         return permission;
     });
+}
+
+const registerPackageFieldPermissions = async function (filePath: string, broker, serviceName: string) {
+    let permissions = util.loadPermissions(filePath);
+    permissions.forEach(permission => {
+        addPermissionConfig(permission.object_name, permission);
+    });
+
+    const data = [];
+
+    for (const permission of permissions) {
+        const { field_permissions } = permission;
+        if (field_permissions && _.isArray(field_permissions) && field_permissions.length > 0) {
+            for (const field_permission of field_permissions) {
+                data.push({
+                    "name": `${permission.name}.${permission.object_name}.${field_permission.field}`,
+                    "permission_set_id": permission.name,
+                    "permission_object": `${permission.name}_${permission.object_name}`,
+                    "object_name": permission.object_name,
+                    "field": field_permission.field,
+                    "readable": field_permission.readable,
+                    "editable": field_permission.editable,
+                    "is_system": true,
+                })
+            }
+        }
+    }
+    if (data.length > 0) {
+        return await registerPermissionFields.mregister(broker, serviceName, data);
+    }
 }
 
 async function addObjectConfigs(broker, serviceName, objectConfigs) {
@@ -267,4 +298,6 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
             }
         }
     }
+
+    await registerPackageFieldPermissions(packagePath, getSteedosSchema().metadataBroker, packagePath)
 }
