@@ -110,7 +110,7 @@ npx create-steedos-app my-app
 ## 华炎魔方（企业版）功能
 
 华炎魔方（企业版）实现可更多企业级安全控制功能，并与相关第三方开源项目集成，满足企业客户的高级需求。了解更多请[联系我们](https://www.steedos.cn/company/contact-us)。
-![image](https://user-images.githubusercontent.com/50353452/152734357-ffc66d92-1a1a-4745-bb88-74aa6c69d420.png)
+![image](https://user-images.githubusercontent.com/50353452/152734523-7a7d1b0b-763b-4746-8894-0924718b4bef.png)
 
 - 高级权限控制: 配置共享规则和限制规则实现权限在特定条件下的共享和的收缩；分部级权限；通过编写 beforeFind 触发器控制权限。
 - 审计日志：为对象启用审计日志，每一条记录的增删改均会自动记录日志；系统登录日志；系统操作日志。
