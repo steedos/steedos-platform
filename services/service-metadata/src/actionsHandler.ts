@@ -422,11 +422,7 @@ export const ActionHandlers = {
     },
     async delete(ctx: any) {
         try {
-
-            if (ctx.broker.cacher.client.connected) {
-                await ctx.broker.cacher.del(ctx.params.key);
-            }
-            // REPLACE: await mockCacherDel(ctx, ctx.params.key);
+            await ctx.broker.cacher.del(ctx.params.key);
         } catch (error) {
             ctx.broker.logger.info(error.message);
         }
