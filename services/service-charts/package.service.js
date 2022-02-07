@@ -328,16 +328,22 @@ module.exports = {
 				if (this.settings.initBuilderRouter) {
 					return;
 				}
-				const router = express.Router();
-				let publicPath = require.resolve("@steedos/service-charts/package.json");
-				publicPath = publicPath.replace("package.json", 'webapp');
-				let routerPath = "";
-				if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
-					routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+				this.settings.initBuilderRouter = true;
+				try {
+					const router = express.Router();
+					let publicPath = require.resolve("@steedos/service-charts/package.json");
+					publicPath = publicPath.replace("package.json", 'webapp');
+					let routerPath = "";
+					if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
+						routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+					}
+					const cacheTime = 86400000 * 1; // one day
+					router.use(`${routerPath}/builder`, express.static(publicPath, { maxAge: cacheTime }));
+					WebApp.rawConnectHandlers.use(router);
+				} catch (error) {
+					console.error(error)
+					this.settings.initBuilderRouter = false;
 				}
-				const cacheTime = 86400000 * 1; // one day
-				router.use(`${routerPath}/builder`, express.static(publicPath, { maxAge: cacheTime }));
-				WebApp.rawConnectHandlers.use(router);
 			}
 		},
 		getDataSourceType: {
