@@ -640,13 +640,13 @@ module.exports = {
                       await datasource.init();
                     }
 
-                    if(datasource.name === 'meteor' && Creator.Objects[objectConfig.name]){
+                    if (datasource.name === 'meteor' && Creator.Objects[objectConfig.name]) {
                         jsonToObject(objectConfig);
                         const localTriggers = (localObjectConfig as any).triggers;
                         if(localTriggers){
                             objectConfig.triggers = localTriggers; 
                         }
-                        extend(objectConfig, {triggers: (localObjectConfig as any)._baseTriggers})
+                        extend(objectConfig, { triggers: Creator.Objects[objectConfig.name].triggers }, { triggers: (localObjectConfig as any)._baseTriggers })
                         Creator.Objects[objectConfig.name] = objectConfig;
                         
                         await Future.task(() => {
