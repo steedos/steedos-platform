@@ -27,7 +27,8 @@ async function createObjectWorkflow(doc) {
             object_name: objectName,
             flow_id: doc._id,
             sync_attachment: 'null',
-            sync_type: 'every_step'
+            sync_type: 'every_step',
+            sync_direction: 'both'
         })
     }
 }

@@ -4,6 +4,7 @@ module.exports = {
     addFormFields: function (object_name, record_id, fields) {
         const record = Creator.getObjectRecord();
         const objectName = _.isObject(record.object_name) ? record.object_name.name : record.object_name;
+        var formId = _.isObject(record.form) ? record.form._id : record.form;
         SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
             name: "pick_fields_from_object",
             title: '选择字段',
@@ -164,7 +165,7 @@ module.exports = {
                 let url = '/am/forms/addFieldsFromObject';
                 let options = {
                     type: 'post',
-                    async: true,
+                    async: false,
                     data: JSON.stringify({
                         formId: formId,
                         ...values

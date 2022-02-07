@@ -579,9 +579,10 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
 exports.transformObjectFields = function (fields, objFieldsMap) {
     let newFields = [];
     for (const f of fields) {
-        if (objFieldsMap[f.field_name]) {
+        let field = objFieldsMap[f.field_name];
+        if (field) {
             newFields.push({
-                ...f,
+                ...field,
                 readonly: !!f.is_readonly,
                 required: !!f.is_required
             })

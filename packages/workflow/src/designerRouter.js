@@ -1084,7 +1084,7 @@ router.post('/am/forms/getDetailsInfo', async function (req, res) {
  */
 router.post('/am/forms/addFieldsFromObject', async function (req, res) {
     try {
-        const { instance_fields, instance_table_fields, object_name, formId } = req.body;
+        const { instance_fields = [], instance_table_fields = [], object_name, formId } = req.body;
         const formObj = objectql.getObject('forms');
         const owObj = objectql.getObject('object_workflows');
         const flowObj = objectql.getObject('flows');
@@ -1095,10 +1095,10 @@ router.post('/am/forms/addFieldsFromObject', async function (req, res) {
         let updatedForms = [];
         let updatedFlows = [];
         let userId = req.user.userId;
-
         let fields = designerManager.transformObjectFields(instance_fields, objConfig.fields);
         const formFieldsMap = await designerManager.transformObjectFieldsToFormFields(fields);
         const fFields = Object.values(formFieldsMap);
+
 
         const tables = [];
         for (const tf of instance_table_fields) {
@@ -1131,10 +1131,10 @@ router.post('/am/forms/addFieldsFromObject', async function (req, res) {
         const owDoc = (await owObj.find({ filters: [['object_name', '=', objectName], ['flow_id', '=', flowId]] }))[0];
         if (owDoc) {
             let fieldMap = []
-            for (const code of fFields) {
+            for (const f of fFields) {
                 fieldMap.push({
-                    object_field: code,
-                    workflow_field: code
+                    object_field: f.code,
+                    workflow_field: f.code
                 });
             }
             for (const t of tables) {
