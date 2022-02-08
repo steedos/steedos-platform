@@ -10,6 +10,8 @@
   "author": "Jack Zhuang",
   "license": "ISC",
   "dependencies": {
+    "meteor-babel": "7.2.0",
+    "meteor-babel-helpers": "0.0.3",
     "apn": "1.6.2",
     "arson": "0.2.6",
     "basic-auth-connect": "1.0.0",
@@ -28,8 +30,6 @@
     "install": "0.12.2",
     "json5": "2.1.0",
     "lolex": "2.3.1",
-    "meteor-babel": "7.2.0",
-    "meteor-babel-helpers": "0.0.3",
     "meteor-deque": "2.1.0",
     "meteor-promise": "0.8.7",
     "mongodb": "3.1.6",
@@ -54,6 +54,8 @@
     "useragent": "2.3.0",
     "uuid": "3.3.2",
     "whatwg-fetch": "2.0.4"
+  },
+  "devDependencies": {
   },
   "publishConfig": {
     "access": "public"

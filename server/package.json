@@ -18,8 +18,7 @@
     "start": "node server"
   },
   "dependencies": {
-    "@babel/runtime": "^7.2.0",
-    "@salesforce-ux/design-system": "^2.11.0",
+    "@babel/runtime": "7.12.0",
     "@steedos/accounts": "2.1.78",
     "@steedos/auth": "2.1.78",
     "@steedos/core": "2.1.78",
@@ -90,6 +89,7 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "@salesforce-ux/design-system": "^2.11.0",
     "@steedos/steedos-plugin-workflow": "^1.9.1"
   },
   "resolutions": {

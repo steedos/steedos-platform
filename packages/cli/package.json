@@ -54,13 +54,13 @@
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
-    "typescript": "^3.3.3333",
     "underscore": "^1.11.0",
     "validator": "^13.5.2",
     "yargs": "^13.2.1",
     "yn": "^2.0.0"
   },
   "devDependencies": {
+    "typescript": "^3.3.3333",
     "@oclif/dev-cli": "^1.21.2",
     "@oclif/test": "^1.2.4",
     "@types/chai": "^4.1.7",

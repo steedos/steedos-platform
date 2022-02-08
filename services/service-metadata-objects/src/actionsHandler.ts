@@ -26,7 +26,7 @@ export class ActionHandlers {
     onRegister: any = null;
     onDestroy: any = null;
     onRegistered: any = null;
-	registerObjectMemEntry: Map<string, number>;
+	registerObjectMemEntry: Map<string, any>;
 
     constructor(onRegister, onDestroy, onRegistered){
         this.onRegister = onRegister;

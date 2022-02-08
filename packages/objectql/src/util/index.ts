@@ -572,7 +572,7 @@ export function extend(destination: JsonMap, ...sources: JsonMap[]){
             }else if(isJsonMap(v)){
                 let _d = getJsonMap(destination, k);
                 if(isJsonMap(_d)){
-                    destination[k] = this.extend(clone(_d), v)
+                    destination[k] = extend(clone(_d), v)
                 }else{
                     destination[k] = v
                 }
@@ -683,7 +683,7 @@ export function getSteedosConfig(){
     let config: any;
     let configPath = path.join(getBaseDirectory(), configName)
     if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
-        config = this.loadFile(configPath)
+        config = loadFile(configPath)
         if (config.env){
             _.each(config.env, function(item, key){
                 process.env[key] = calcString(item)
