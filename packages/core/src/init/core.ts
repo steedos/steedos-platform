@@ -63,7 +63,7 @@ export const initCreator = async () => {
             //     obj.name = object_name
             //     objectql.addObjectConfig(obj, 'default')
             // });
-            objectql.addAppConfigFiles(path.join(process.cwd(), "src/**")) //TODO await
+            objectql.addAppConfigFiles(path.join(process.cwd(), "src/**"))
             // let allObjects = objectql.getObjectConfigs('meteor');
             _.each(allObjects, function (obj) {
                 const objectConfig = obj.metadata;
