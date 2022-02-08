@@ -14,7 +14,7 @@ export function createUser(user: UserProfile, token: string, inviteId: string, r
 
         try {
             created = await Client4.createUser(user, token, inviteId, redirect);
-        } catch (error) {
+        } catch (error: any) {
             forceLogoutIfNecessary(error, dispatch, getState);
             dispatch(logError(error));
             return {error};
@@ -37,7 +37,7 @@ export function login(loginId: string, password: string, mfaToken = ''): ActionF
           if(data._next){
             return {error: data._next};
           }
-      } catch (error) {
+      } catch (error: any) {
           dispatch(batchActions([
               {
                   type: UserTypes.LOGIN_FAILURE,
@@ -74,7 +74,7 @@ function completeLogin(data: any): ActionFunc {
 
     try {
         await Promise.all(promises);
-    } catch (error) {
+    } catch (error: any) {
         dispatch(batchActions([
             {type: UserTypes.LOGIN_FAILURE, error},
             logError(error),
@@ -176,7 +176,7 @@ export function sendVerificationToken(loginId: string): ActionFunc {
   
         try {
             data = await Client4.sendVerificationToken(loginId);
-        } catch (error) {
+        } catch (error: any) {
             dispatch(batchActions([
                 {
                     type: UserTypes.VERIFICATION_TOKEN_RECIEVED,
@@ -203,7 +203,7 @@ export function changePassword(oldPassword: string, newPassword: string){
       });
       
       data = await getChangePasswordFunc(dispatch, getState);
-    } catch (error) {
+    } catch (error: any) {
         dispatch(batchActions([
             {
                 type: UserTypes.CHANGEPASSWORD_FAILURE,
@@ -230,7 +230,7 @@ export function verifyEmail(email: string, code: string){
       });
       
       data = await getVerifyEmailFunc(dispatch, getState);
-    } catch (error) {
+    } catch (error: any) {
         dispatch(batchActions([
             {
                 type: UserTypes.VERIFYEMAIL_FAILURE,
@@ -256,7 +256,7 @@ export function verifyMobile(mobile: string, code: string){
         params: [mobile, code]
       });
       data = await getVerifyMobileFunc(dispatch, getState);
-    } catch (error) {
+    } catch (error: any) {
         dispatch(batchActions([
             {
                 type: UserTypes.VERIFYMOBILE_FAILURE,

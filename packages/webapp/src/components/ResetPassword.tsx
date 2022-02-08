@@ -49,7 +49,7 @@ const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
       //   // Your password has been reset successfully
       //   setSnackbarMessage(localizeMessage('accounts.passwordResetSuccessfully'));
       // }
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message);
       setSnackbarMessage(null);
     }
