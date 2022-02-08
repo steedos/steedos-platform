@@ -14,15 +14,23 @@ module.exports = {
         XHR.setRequestHeader('Authorization', authorization);
       },
       success: function (data) {
-        $("body").removeClass("loading");
         if(data){
           if(data.error){
+            $("body").removeClass("loading");
             toastr.error(t("space_users_method_disable_error", t(data.error.reason)));
           }
           else{
-            Template.creator_view.currentInstance.onEditSuccess()
-            toastr.success(t("space_users_method_disable_success"));
+            // ObjectForm有缓存，修改需要刷新表单数据
+            SteedosUI.reloadRecord(Session.get("object_name"), Session.get("record_id"));
+            setTimeout(function(){
+              $("body").removeClass("loading");
+              FlowRouter.reload();
+              toastr.success(t("space_users_method_disable_success"));
+            },3000);
           }
+        }
+        else{
+          $("body").removeClass("loading");
         }
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
