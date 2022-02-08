@@ -48,7 +48,6 @@
     "oauth2-server": "^2.4.1",
     "pug": "^3.0.2",
     "redux-thunk": "^2.3.0",
-    "saml-idp": "^1.1.0",
     "tslib": "1.10.0",
     "url-join": "^4.0.1",
     "validator": "^13.6.0"
