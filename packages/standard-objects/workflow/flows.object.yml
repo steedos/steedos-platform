@@ -586,6 +586,10 @@ actions:
     label: Form Designer
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions) {
+              var record = Creator.getObjectRecord(object_name, record_id, 'object_name');
+              if (record && record.object_name){
+                return false;
+              };
               return true;
             }
     'on': record
