@@ -1107,8 +1107,8 @@ router.post('/am/forms/addFieldsFromObject', async function (req, res) {
             const detailObj = objectql.getObject(detailObjName);
             const detailObjConfig = await detailObj.toConfig();
             let tLabel = tf.label || detailObjConfig.label;
-            let tableFields = designerManager.getObjectFieldsByNames(tf.field_names, detailObjConfig.fields, `${detailObjName}_`);
-            const tFieldsMap = await designerManager.transformObjectFieldsToFormFields(tableFields);
+            let tableFields = designerManager.getObjectFieldsByNames(tf.field_names, detailObjConfig.fields);
+            const tFieldsMap = await designerManager.transformObjectFieldsToFormFields(tableFields, `${detailObjName}_`);
             const tFields = Object.values(tFieldsMap);
             tables.push({
                 "type": "table",
@@ -1139,8 +1139,8 @@ router.post('/am/forms/addFieldsFromObject', async function (req, res) {
             }
             for (const t of tables) {
                 for (const f of t.fields) {
-                    const ofCode = `${t.code}.${f.code}`;
-                    const wfCode = `${t.code}.${t.code}_${f.code}`;
+                    const ofCode = `${t.code}.${f.code.split(t.code + '_')[1]}`;
+                    const wfCode = `${t.code}.${f.code}`;
                     fieldMap.push({
                         object_field: ofCode,
                         workflow_field: wfCode

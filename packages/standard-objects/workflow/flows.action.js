@@ -9,7 +9,9 @@ module.exports = {
             name: "pick_fields_from_object",
             title: '选择字段',
             initialValues: {
-                "object_name": objectName
+                "object_name": objectName,
+                "instance_fields": record.instance_fields,
+                "instance_table_fields":  record.instance_table_fields
             },
             objectSchema: {
                 fields: {

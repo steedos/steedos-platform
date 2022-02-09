@@ -237,7 +237,7 @@ fields:
     label: 显示标题
     help: 默认为对象名称
     description:
-  instance_table_fields.$.related_field_fullname:
+  instance_table_fields.$.detail_field_fullname:
     label: 子表名称
     help: 
     description:

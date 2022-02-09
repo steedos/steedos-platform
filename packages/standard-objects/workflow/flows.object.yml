@@ -379,7 +379,7 @@ fields:
     type: lookup
     multiple: false
     is_wide: false
-    required: true
+    required: false
     reference_to: object_fields
     reference_to_field: name
     depend_on:
@@ -429,11 +429,15 @@ fields:
         const objectName = _.isObject(values.object_name) ? values.object_name.name : values.object_name;
 
         const options = [];
-        const object = Creator.getObject(objectName);
+        const { detailsInfo } = Steedos.authRequest('/am/forms/getDetailsInfo', {
+            type: 'post',
+            async: false,
+            data: JSON.stringify({
+                objectName
+            })
+        });
 
-        let relatedLists = object.details || [];
-
-        _.each(relatedLists, function(related){
+        _.each(detailsInfo, function(related){
           let foo = related.split('.');
           let rObjectName = foo[0];
           let rFieldName = foo[1];

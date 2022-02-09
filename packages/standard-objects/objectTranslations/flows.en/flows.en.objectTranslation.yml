@@ -240,7 +240,7 @@ fields:
     label: Label
     help:
     description:
-  instance_table_fields.$.related_field_fullname:
+  instance_table_fields.$.detail_field_fullname:
     label: Related Field FullName
     help: 
     description:

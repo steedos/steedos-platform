@@ -599,9 +599,10 @@ exports.transformObjectFields = function (fields, objFieldsMap) {
  exports.getObjectFieldsByNames = function (fieldNames, objFieldsMap) {
     let newFields = [];
     for (const fName of fieldNames) {
-        if (objFieldsMap[fName]) {
+        let field = objFieldsMap[fName];
+        if (field) {
             newFields.push({
-                ...f
+                ...field
             })
         }
     }
