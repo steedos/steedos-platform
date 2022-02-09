@@ -863,6 +863,9 @@ actions:
   addFormFields:
     label: AddFields
     on: record
+  updateFormFields:
+    label: UpdateFields
+    on: record
 relatedList:
   - cms_files
   - object_workflows
