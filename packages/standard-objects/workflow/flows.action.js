@@ -76,10 +76,6 @@ module.exports = {
                                     }
                                 }
                             },
-                            "is_readonly": {
-                                "label": "只读",
-                                "type": "boolean"
-                            },
                             "is_required": {
                                 "label": "必填",
                                 "type": "boolean"
@@ -194,7 +190,6 @@ module.exports = {
         }, null, { iconPath: '/assets/icons' })
     },
     addFormFieldsVisible: function (object_name, record_id, record_permissions, record) {
-        console.log('record: ', record);
         return record && record.object_name;
     },
 
@@ -233,7 +228,6 @@ module.exports = {
         Steedos.authRequest(url, options);
     },
     updateFormFieldsVisible: function (object_name, record_id, record_permissions, record) {
-        console.log('record: ', record);
         return record && record.object_name;
     },
 

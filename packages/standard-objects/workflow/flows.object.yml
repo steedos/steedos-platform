@@ -403,9 +403,6 @@ fields:
           return ['_id', '=', 'no']
         }
       }
-  instance_fields.$.is_readonly:
-    label: Readonly
-    type: boolean
   instance_fields.$.is_required:
     label: Required
     type: boolean

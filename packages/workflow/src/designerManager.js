@@ -570,7 +570,6 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
  * @param fields
  *      [{
  *          field_name 字段名
- *          is_readonly 是否只读
  *          is_required 是否必填
  *      }]
  * @param objFieldsMap {} 对象字段
@@ -583,7 +582,6 @@ exports.transformObjectFields = function (fields, objFieldsMap) {
         if (field) {
             newFields.push({
                 ...field,
-                readonly: !!f.is_readonly,
                 required: !!f.is_required
             })
         }

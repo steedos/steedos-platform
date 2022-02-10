@@ -1069,7 +1069,6 @@ router.post('/am/forms/getDetailsInfo', async function (req, res) {
  *  instance_fields 对象字段数组
  *      [{
  *          field_name 字段名
- *          is_readonly 是否只读
  *          is_required 是否必填
  *      }]
  *  instance_table_fields 对象子表数组
