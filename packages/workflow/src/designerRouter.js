@@ -275,7 +275,7 @@ router.delete('/am/forms', async function (req, res) {
                 Fiber(function () {
                     try {
 
-                        spaceId = f.space;
+                        let spaceId = f.space;
                         let companyId = f.company_id;
 
                         if (!db.deleted_flows) {
@@ -358,6 +358,7 @@ router.delete('/am/forms', async function (req, res) {
             }
         });
     } catch (error) {
+        console.error(error);
         res.status(500).send(error.message)
     }
 })
