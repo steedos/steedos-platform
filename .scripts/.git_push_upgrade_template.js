@@ -13,7 +13,8 @@ _.each(apps, function(item){
         try {
             execSync(`cd ${fPath} && git add . && git commit -m "upgrade template @${versionInfo.version}" && git push`);
         } catch (error) {
-            console.error(`=-`, error.stdout.toString())
+            console.error(error.stdout.toString())
+            throw error;
         }
     }
 })
