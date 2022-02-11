@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-accounts",
-  "version": "2.1.80",
+  "version": "2.1.81",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
