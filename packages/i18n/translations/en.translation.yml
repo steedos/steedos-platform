@@ -1389,7 +1389,7 @@ CustomLabels:
     https://www.steedos.com/help/workflow/instance_monitor#%E8%BD%AC%E7%AD%BE%E6%A0%B8
   forward_help: 'https://www.steedos.com/help/workflow/instance_forward'
   export_filter_help: 'https://www.steedos.com/help/workflow/instance_search'
-  new_help: 'https://www.steedos.com/help/workflow/instance_add'
+  new_help: 'https://www.steedos.com/docs/user/workflow#%E5%A6%82%E4%BD%95%E5%A1%AB%E5%8D%95'
   Inbox Suggestion NextSteps Label: 'Next step: '
   Inbox Suggestion NextSteps Handler Label: 'Assignee: '
   Workflow Designer: Workflow Designer
