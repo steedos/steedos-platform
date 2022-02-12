@@ -2,6 +2,9 @@
     "public": {
         "cfs": {
             "store": ""
+        },
+        "workflow": {
+            "instance_attach_can_convert_to_office": false
         }
     },
     "cron": {

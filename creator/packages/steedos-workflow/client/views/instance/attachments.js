@@ -753,7 +753,13 @@ Template.ins_attach_version_modal.helpers({
 		if (!attachment)
 			return;
 		return attachment.original.type == "text/html"
-	}
+	},
+
+	is_office_file: function(fileName) {
+		// 配置webservices.officeOnline.url并且是office类型文件或pdf类型文件，显示预览按钮
+		workflow = Meteor.settings?.public?.workflow;
+		return workflow?.instance_attach_can_convert_to_office && Steedos.isOfficeFile(fileName)
+	},
 })
 
 

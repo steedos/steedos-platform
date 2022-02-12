@@ -21,7 +21,8 @@
             "hideLastSignApproveDescription": true, //不需要默认上次意见
             "keepLastSignApproveDescription": false, // 不保留上次意见，默认保留
             "autoPickNextStepUsersAtCounterSignStep": true, //会签步骤中默认选中下一步骤处理人，默认值为true
-            "showBlankApproveDescription": true // 表示是否支持表单意见字段未填写意见时仍然显示签名
+            "showBlankApproveDescription": true, // 表示是否支持表单意见字段未填写意见时仍然显示签名
+            "instance_attach_can_convert_to_office": false // office文档显示转换PDF按钮，默认不显示，此功能依赖@steedos/steedos-service-libreoffice
         },
         "password": {
             "policy": "^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\\d+$)\\S{8,}$",  //密码格式校验规则，值为正则表达式，如果没有配置，则不校验密码格式
