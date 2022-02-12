@@ -83,7 +83,6 @@ module.exports = {
 	 */
 	events: {
 		'steedos-server.started': async function (ctx) {
-			console.log(`steedos-server.started ===> syncPackagesLicense`);
 			await this.actions.syncPackagesLicense({}, { parentCtx: ctx });
 		}
 	},
