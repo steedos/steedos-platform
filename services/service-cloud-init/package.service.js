@@ -300,6 +300,9 @@ module.exports = {
 					const userId = userSession.userId;
 					// 给工作区添加许可证，调用导入许可证接口
 					await this.actions.saveLicenses({ spaceId, apiKey, consoleUrl }, { parentCtx: ctx });
+					// 同步软件包许可证
+					await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
+
 					// 同步工作区信息（公司名称、华炎云中api_key字段、api_key不存在则创建）
 					const { spaceName, adminName, adminPhone, adminPassword } = await this.getInitInfo(spaceId, apiKey, consoleUrl);
 					const spaceObj = objectql.getObject('spaces');
