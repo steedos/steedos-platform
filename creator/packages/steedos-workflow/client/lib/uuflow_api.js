@@ -719,3 +719,33 @@ UUflow_api.post_forward = function (instance_id, space_id, flow_id, hasSaveInsta
 		}
 	})
 };
+
+UUflow_api.getPDFData = function (fileId, callback) {
+	$(document.body).addClass("loading");
+	var data = {
+		'attachmentId': fileId
+	};
+	data = JSON.stringify(data);
+	$.ajax({
+		url: Steedos.absoluteUrl('api/workflow/office_convert_to_pdf'),
+		type: 'POST',
+		async: true,
+		data: data,
+		dataType: 'json',
+		processData: false,
+		contentType: "application/json",
+		success: function (responseText, status) {
+			if (responseText.errors) {
+				toastr.error(responseText.errors);
+				return;
+			}
+			$(document.body).removeClass("loading");
+			callback(fileId, responseText.result.data);
+		},
+		error: function (xhr, msg, ex) {
+			$(document.body).removeClass("loading");
+			toastr.error(msg);
+		}
+	});
+	return;
+};

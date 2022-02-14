@@ -1836,3 +1836,15 @@ InstanceManager.getOpinionFieldsCode = function () {
 
 	return sign_field_code;
 }
+
+InstanceManager.generatePDF = function (fileId) {
+	UUflow_api.getPDFData(fileId, function(fileId, pdfData){
+		let fileDoc = cfs.instances.findOne(fileId);
+		let splitNameArr = fileDoc.name().split('.');
+		splitNameArr.pop();
+		let fileName = splitNameArr.join('.') + '.pdf';
+		Session.set('attach_parent_id', fileDoc.metadata.parent || fileDoc._id);
+		InstanceManager.uploadAttach([new File([Buffer.from(pdfData)], fileName, { type: 'application/pdf' })], true, true);
+		Session.set('attach_parent_id', '');
+	});
+}
