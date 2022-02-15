@@ -36,7 +36,13 @@ Moleculer 解决了 Action 在不同节点间的调用的负载均衡问题，�
 
 ## Events
 
-Action 在增删改查时，会自动 emit events，在服务中可以订阅 Events。Moleculer Events 是单向的，因此无法基于 Events 实现触发器。
+Action 在增删改查时，会自动 emit events，在服务中可以订阅 Events。
+
+Moleculer 解决了 Events 在节点间的负载均衡问题，同一个微服务的多个节点，只会接收一次 Event。
+
+![balanced-events](https://moleculer.services/docs/0.14/assets/balanced-events.gif)
+
+Moleculer Events 是单向的，因此无法基于 Events 实现触发器。
 
 ## Triggers
 
