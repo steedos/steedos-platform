@@ -196,35 +196,35 @@ list_views:
     label: 最近查看
     columns:
       - name
-      - account_id
+      - account
       - email
       - phone
     filter_fields:
       - name
-      - account_id
+      - account
       - email
   all:
     label: 所有联系人
     columns:
       - name
-      - account_id
+      - account
       - email
       - phone
     filter_fields:
       - name
-      - account_id
+      - account
       - email
   mine:
     label: 我的联系人
     columns:
       - name
-      - account_id
+      - account
       - email
       - phone
     filter_scope: mine
     filter_fields:
       - name
-      - account_id
+      - account
       - email
 actions:
   createSupplierSpaceUser:
