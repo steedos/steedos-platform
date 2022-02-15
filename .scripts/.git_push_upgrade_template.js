@@ -10,6 +10,10 @@ _.each(apps, function(item){
     let fPath = path.join(appsPath, item);
     let stat = fs.statSync(fPath);
     if(stat.isDirectory() === true) {
-        execSync(`cd ${fPath} && git add . && git commit -m "upgrade template @${versionInfo.version}" && git push`);
+        try {
+            execSync(`cd ${fPath} && git add . && git commit -m "upgrade template @${versionInfo.version}" && git push`);
+        } catch (error) {
+            console.error(error.stdout.toString())
+        }
     }
 })

@@ -3,6 +3,7 @@ icon: environment_hub
 label: Workflow
 hidden: true
 enable_files: true
+version: 2
 fields:
   name:
     type: text
