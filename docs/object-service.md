@@ -57,3 +57,7 @@ broker.waitForServices("posts", "users").then(rsp -> {
     // Called after the "posts" and "users" services are available
 });
 ```
+
+## 对象的热更新
+
+在可视化界面修改对象或是安装软件包，可能需要热更新（重新创建）内存中的对象服务。
