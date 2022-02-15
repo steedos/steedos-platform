@@ -47,3 +47,13 @@ Moleculer Events 是单向的，因此无法基于 Events 实现触发器。
 ## Triggers
 
 Trigger 是一种特殊类型的 Action，在增删改查函数中自动调用，并可根据Trigger返回值，控制增删改查 Action 的中断。
+
+## 对象服务依赖
+
+如果集群中，一个对象必须等待另一个对象加载完才能加载，可以使用以下命令：
+
+```
+broker.waitForServices("posts", "users").then(rsp -> {
+    // Called after the "posts" and "users" services are available
+});
+```
