@@ -48,6 +48,36 @@ Moleculer Events 是单向的，因此无法基于 Events 实现触发器。
 
 Trigger 是一种特殊类型的 Action，在增删改查函数中自动调用，并可根据Trigger返回值，控制增删改查 Action 的中断。
 
+## 对象服务的生命周期
+
+基于 Moleculer Service，可以自定义以下对象生命周期函数
+
+```
+// users.object.service.js
+module.exports = {
+    name: "users",
+    actions: {...},
+    events: {...},
+    methods: {...},
+
+    created() {
+        // Fired when the service instance created (with `broker.loadService` or `broker.createService`)
+    },
+
+    merged() {
+        // Fired after the service schemas merged and before the service instance created
+    },
+    
+    async started() {
+        // Fired when broker starts this service (in `broker.start()`)
+    }
+
+    async stopped() {
+        // Fired when broker stops this service (in `broker.stop()`)
+    }
+};
+```
+
 ## 对象服务依赖
 
 如果集群中，一个对象必须等待另一个对象加载完才能加载，可以使用以下命令：
