@@ -16,7 +16,7 @@
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是<a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a>的开源替代方案，华炎魔方将低代码技术与企业业务场景结合，助力企业在最短时间内开发数字化解决方案，包括数据建模、权限控制、流程审批、统计分析、应用集成，并可以编写“高代码”实现高级业务逻辑。
+  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，开发和管理低代码应用的整个生命周期，借助DevOps和远程开发工具，实现敏捷开发的新高度。
 </p>
 
 <h3 align="center">
