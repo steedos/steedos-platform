@@ -22,13 +22,13 @@
 
 Object Service 使用 Action 来定义方法，基本的方法包括增删改查，开发人员可以自定义Action。
 
-Action 可以使用以下语法直接调用 
+Action 是异步函数，可以使用以下语法直接调用 
 
 ```
 const res = await broker.call(actionName, params, opts);
 ```
 
-也可以 Moleculer API Gateway， Action 最终可以转换为 API，以 REST, GraphQL, gRPC 的形式访问。
+Action 也可以通过 Moleculer API Gateway， 转换为 API，以 REST, GraphQL, gRPC 的形式访问。
 
 Moleculer 解决了 Action 在不同节点间的调用的负载均衡问题，避免重复调用。
 
