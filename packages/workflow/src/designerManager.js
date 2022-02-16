@@ -1,3 +1,5 @@
+"use strict";
+// @ts-check
 const _ = require('underscore');
 const objectql = require("@steedos/objectql");
 const steedosSchema = objectql.getSteedosSchema();
@@ -225,7 +227,7 @@ exports.updateForm = async function updateForm(formId, form, forms, flows, curre
 
                 current.modified = now;
                 current.modified_by = currentUserId;
-                current.form = form["id"];
+                current.form = formId;
                 current.fields = _formatFieldsID(form["current"]["fields"]);
                 current.form_script = form["current"]["form_script"];
                 current.name_forumla = form["current"]["name_forumla"];
@@ -419,3 +421,188 @@ function _formatFieldsID(fields) {
 }
 
 exports.formatFieldsID = _formatFieldsID;
+
+exports.transformObjectFieldsToFormFields = async function (objFields, codePrefix) {
+    let formFieldsMap = {};
+    for (const f of objFields) {
+        const formField = await _transformObjectFieldToFormField(f, codePrefix);
+        if (formField) {
+            formFieldsMap[formField.code] = formField;
+        }
+    }
+    return formFieldsMap;
+}
+
+async function _transformObjectFieldToFormField(objField, codePrefix = '') {
+    const formObj = objectql.getObject('forms');
+    let formField = {
+        "name": objField.label,
+        "code": `${codePrefix}${objField.name}`,
+        "is_wide": objField.is_wide || false,
+        "is_list_display": false,
+        "is_searchable": objField.sortable || false,
+        "is_required": objField.required || false,
+        "is_multiselect": objField.multiple || false,
+        "default_value": objField.defaultValue,
+        "_id": await formObj._makeNewID()
+    };
+    switch (objField.type) {
+        case 'text':
+            formField.type = "input";
+            break;
+        case 'textarea':
+            formField.type = "input";
+            formField.is_textarea = true;
+            break;
+        case 'html':
+            formField.type = "html";
+            break;
+        case 'select':
+            if (_.isArray(objField.options)) {
+                formField.type = objField.multiple ? "multiSelect" : "select";
+                formField.options = _.pluck(objField.options, 'value').join('\n')
+            }
+            break;
+        case 'boolean':
+            formField.type = "checkbox";
+            break;
+        case 'toggle':
+            formField.type = "checkbox";
+            break;
+        case 'date':
+            formField.type = "date";
+            break;
+        case 'datetime':
+            formField.type = "dateTime";
+            break;
+        case 'number':
+            formField.type = "number";
+            formField.digits = objField.scale;
+            break;
+        case 'currency':
+            formField.type = "number";
+            formField.digits = objField.scale;
+            break;
+        case 'percent':
+            formField.type = "number";
+            formField.digits = objField.scale;
+            break;
+        case 'password':
+            formField.type = "password";
+            break;
+        case 'lookup':
+            let lookupObjName = objField.reference_to;
+            if (_.isString(lookupObjName)) {
+                const refObj = objectql.getObject(lookupObjName);
+                const nameFieldKey = await refObj.getNameFieldKey();
+                formField.type = "odata";
+                formField.url = `/api/v4/${lookupObjName}?$top=20`;
+                formField.search_field = nameFieldKey;
+                formField.formula = `{${objField.name}.${nameFieldKey}}`;
+            }
+            break;
+        case 'master_detail':
+            let masterDetailObjName = objField.reference_to;
+            if (_.isString(masterDetailObjName)) {
+                const refObj = objectql.getObject(masterDetailObjName);
+                const nameFieldKey = await refObj.getNameFieldKey();
+                formField.type = "odata";
+                formField.url = `/api/v4/${masterDetailObjName}?$top=20`;
+                formField.search_field = nameFieldKey;
+                formField.formula = `{${objField.name}.${nameFieldKey}}`;
+            }
+            break;
+        case 'autonumber':
+            formField.type = "input";
+            break;
+        case 'url':
+            formField.type = "url";
+            break;
+        case 'email':
+            formField.type = "email";
+            break;
+        case 'image':
+            break;
+        case 'file':
+            break;
+        case 'formula':
+            switch (objField.data_type) {
+                case 'boolean':
+                    formField.type = "checkbox";
+                    break;
+                case 'number':
+                    formField.type = "number";
+                    formField.digits = objField.scale;
+                    break;
+                case 'currency':
+                    formField.type = "number";
+                    formField.digits = objField.scale;
+                    break;
+                case 'percent':
+                    formField.type = "number";
+                    formField.digits = objField.scale;
+                    break;
+                case 'text':
+                    formField.type = "input";
+                    break;
+                case 'date':
+                    formField.type = "date";
+                    break;
+                case 'datetime':
+                    formField.type = "dateTime";
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'summary':
+            // TODO
+            break;
+        default:
+            break;
+    }
+    if (formField.type) {
+        return formField;
+    }
+}
+
+/**
+ * @param fields
+ *      [{
+ *          field_name 字段名
+ *          is_required 是否必填
+ *      }]
+ * @param objFieldsMap {} 对象字段
+ * @returns []
+ */
+exports.transformObjectFields = function (fields, objFieldsMap) {
+    let newFields = [];
+    for (const f of fields) {
+        let field = objFieldsMap[f.field_name];
+        if (field) {
+            newFields.push({
+                ...field,
+                required: !!f.is_required
+            })
+        }
+    }
+    return newFields;
+}
+
+/**
+ * @param fieldNames [''] 字段名数组
+ * @param objFieldsMap {} 对象字段
+ * @returns []
+ */
+ exports.getObjectFieldsByNames = function (fieldNames, objFieldsMap) {
+    let newFields = [];
+    for (const fName of fieldNames) {
+        let field = objFieldsMap[fName];
+        if (field) {
+            newFields.push({
+                ...field
+            })
+        }
+    }
+    return newFields;
+}
