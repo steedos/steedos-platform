@@ -206,7 +206,7 @@ async function _getFlowByForm(dbManager, form, flowId?, is_copy?, company_id?) {
     return flows;
 }
 
-export async function flowsToDb(dbManager, forms) {
+export async function flowsToDb(dbManager, forms, enabled = false) {
 
     for (const formName in forms) {
         var form = forms[formName];
@@ -234,7 +234,7 @@ export async function flowsToDb(dbManager, forms) {
             }
         }
 
-        let new_flowIds = await steedosImportWorkflow(dbManager, uid, spaceId, form, false, company_id, options);
+        let new_flowIds = await steedosImportWorkflow(dbManager, uid, spaceId, form, enabled, company_id, options);
 
     }
 }
