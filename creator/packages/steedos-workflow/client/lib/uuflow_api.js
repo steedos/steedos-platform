@@ -742,9 +742,9 @@ UUflow_api.getPDFData = function (fileId, callback) {
 			$(document.body).removeClass("loading");
 			callback(fileId, responseText.result.data);
 		},
-		error: function (xhr, msg, ex) {
+		error: function (XMLHttpRequest, textStatus, errorThrown) {
 			$(document.body).removeClass("loading");
-			toastr.error(msg);
+			toastr.error(XMLHttpRequest.responseJSON.error);
 		}
 	});
 	return;
