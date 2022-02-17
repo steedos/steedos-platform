@@ -5,7 +5,7 @@
   </a>
 </p>
 <h1 align="center">
-  华炎魔方
+  Steedos Low Code DevOps Platform
 </h1>
 
 <p align="center">
