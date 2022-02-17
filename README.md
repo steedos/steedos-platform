@@ -16,7 +16,7 @@
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方管理低代码应用开发的整个生命周期，是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，借助 <a href="https://www.steedos.cn/docs/deploy/devops">DevOps和远程开发工具</a> ，实现敏捷开发的新高度。
+  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，借助 <a href="https://www.steedos.cn/docs/deploy/devops">DevOps和远程开发工具</a> ，管理低代码应用开发的整个生命周期，实现敏捷开发的新高度。
 </p>
 
 <h3 align="center">
