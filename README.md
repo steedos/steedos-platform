@@ -16,7 +16,7 @@
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，<a href="https://www.steedos.cn/docs/deploy/devops">将低代码技术与 DevOps 工具结合</a> ，实现敏捷开发的新高度。
+  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，<a href="https://www.steedos.cn/docs/deploy/devops">将低代码技术与 DevOps 工具结合</a> ，实现低代码敏捷开发的新高度。
 </p>
 
 <h3 align="center">
