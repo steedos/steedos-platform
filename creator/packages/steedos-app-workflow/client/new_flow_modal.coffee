@@ -1,4 +1,4 @@
-fields = ['category', 'name', 'company_id']
+fields = ['category', 'name', 'company_id', 'object_name']
 Template.new_flow_modal.helpers
 	schema: ()->
 		schema = {}
@@ -44,6 +44,9 @@ Template.new_flow_modal.events
 		companyId = doc.company_id
 		if companyId
 			form.company_id = companyId
+
+		if doc.object_name
+			form.object_name = doc.object_name
 
 		data = {
 			"Forms": [form]

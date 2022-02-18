@@ -1,7 +1,7 @@
 {
   "name": "@steedos/objectql",
   "private": false,
-  "version": "2.1.78",
+  "version": "2.1.82",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -17,12 +17,12 @@
   "dependencies": {
     "@salesforce/ts-types": "^1.1.1",
     "@salesforce/kit": "^1.0.4",
-    "@steedos/filters": "2.1.78",
-    "@steedos/formula": "2.1.78",
-    "@steedos/metadata-core": "2.1.78",
+    "@steedos/filters": "2.1.82",
+    "@steedos/formula": "2.1.82",
+    "@steedos/metadata-core": "2.1.82",
     "@steedos/odata-v4-typeorm": "^1.20.1",
-    "@steedos/schemas": "2.1.78",
-    "@steedos/standard-objects": "2.1.78",
+    "@steedos/schemas": "2.1.82",
+    "@steedos/standard-objects": "2.1.82",
     "app-root-path": "^2.2.1",
     "body-parser": "^1.18.1",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
@@ -53,7 +53,7 @@
   "devDependencies": {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "2.1.78",
+    "@steedos/meteor-bundle-runner": "2.1.82",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
     "@types/mocha": "^5.2.6",

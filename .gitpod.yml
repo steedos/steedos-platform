@@ -34,6 +34,7 @@ tasks:
       yarn bootstrap
       yarn build
     command: |
+      sh ./.scripts/gitpod_env.sh
       gp await-port 27017
       gp await-port 6379
       export ROOT_URL=$(gp url 5000)

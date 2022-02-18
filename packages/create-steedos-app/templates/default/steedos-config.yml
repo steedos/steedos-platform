@@ -61,6 +61,8 @@ cron:
   mailqueue_interval: 10000
   # push_interval: 1000
   webhookqueue_interval: 1000
+instances_stat:
+  schedule: ${STEEDOS_INSTANCES_STAT_SCHEDULE}
 dingtalk:
   api_Key: ${APIKEY}
   log_path: ${DING_LOGPATH}

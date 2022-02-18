@@ -3,6 +3,7 @@ icon: environment_hub
 label: Workflow
 hidden: true
 enable_files: true
+version: 2
 fields:
   name:
     type: text
@@ -10,6 +11,7 @@ fields:
     required: true
     searchable: true
     readonly: true
+    omit: true
     name: name
   api_name:
     type: text
@@ -22,6 +24,7 @@ fields:
     type: lookup
     reference_to: forms
     readonly: true
+    omit: true
     name: form
     filterable: true
   category:
@@ -39,17 +42,20 @@ fields:
       - label: Disabled
         value: disabled
     readonly: true
+    omit: true
     name: state
     filterable: true
   is_valid:
     label: Valid
     type: boolean
     readonly: true
+    omit: true
     name: is_valid
   current_no:
     label: Current Number
     type: number
     readonly: true
+    omit: true
     name: current_no
   description:
     label: Description
@@ -334,6 +340,140 @@ fields:
     inlineHelpText: Allow the applicant to specify the flow steps and step handlers when submitting the application form. You need to modify the properties on the step through the Workflow Designer.
     type: boolean
     group: Others
+  object_name:
+    type: lookup
+    label: Object
+    reference_to: objects
+    reference_to_field: name
+    required: false
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        var _options = [];
+        _.forEach(Creator.objectsByName, function (o, k) {
+          if (o.enable_workflow) {
+            return _options.push({
+              label: o.label,
+              value: k,
+              icon: o.icon
+            });
+          }
+        });
+        return _options;
+      }
+    group: FlowBindObject
+  instance_fields:
+    type: grid
+    is_wide: true
+    required: false
+    depend_on:
+      - object_name
+    group: FlowBindObject
+    visible_on: "{{formData.object_name ? true : false}}"
+    omit: true
+    readonly: true
+  instance_fields.$:
+    label: Field
+    blackbox: true
+    type: object
+  instance_fields.$.field_name:
+    label: Field
+    type: lookup
+    multiple: false
+    is_wide: false
+    required: false
+    reference_to: object_fields
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        const objectName = _.isObject(values.object_name) ? values.object_name.name : values.object_name;
+        if(objectName){
+          if(values._grid_row_id){
+            var selected = _.find(values.fields, function(item){return item._id==values._grid_row_id});
+            var selectedAll = _.pluck(values.fields, 'field_name');
+            if(selected){
+              selectedAll = _.difference(selectedAll, [selected.field_name]);
+            }
+            if(selectedAll && selectedAll.length > 0){
+              return [['object', '=', objectName], ['name', '!=', selectedAll]]
+            }
+          }
+          return ['object', '=', objectName]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
+  instance_fields.$.is_required:
+    label: Required
+    type: boolean
+  instance_table_fields:
+    type: grid
+    blackbox: true
+    is_wide: true
+    depend_on:
+      - object_name
+    group: FlowBindObject
+    visible_on: "{{formData.object_name ? true : false}}"
+    omit: true
+    readonly: true
+  instance_table_fields.$.detail_field_fullname:
+    type: lookup
+    optionsFunction: !!js/function |
+      function(values) {
+        if (!(values != null ? values.object_name : void 0)) {
+          return [];
+        }
+        const objectName = _.isObject(values.object_name) ? values.object_name.name : values.object_name;
+
+        const options = [];
+        const { detailsInfo } = Steedos.authRequest('/am/forms/getDetailsInfo', {
+            type: 'post',
+            async: false,
+            data: JSON.stringify({
+                objectName
+            })
+        });
+
+        _.each(detailsInfo, function(related){
+          let foo = related.split('.');
+          let rObjectName = foo[0];
+          let rFieldName = foo[1];
+          let rObjectLable = Creator.getObject(rObjectName).label;
+          let rObjectFieldLable = (_.find(Creator.getObject(rObjectName).fields, function(field){return field.name === rFieldName}) || {}).label;
+          options.push({label: `${rObjectLable}.${rObjectFieldLable}`, value: related})
+        })
+        return options;
+      }
+  instance_table_fields.$.label:
+    label: Label
+    type: text
+    inlineHelpText: default is the object name
+  instance_table_fields.$.field_names:
+    type: lookup
+    create: false
+    multiple: true
+    reference_to: object_fields
+    reference_to_field: name
+    depend_on:
+      - object_name
+      - instance_table_fields
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        let relatedFieldFullname = null;
+        const rowValue = _.find(values.instance_table_fields, function(item){
+          return item._id === values._grid_row_id
+        })
+        if(rowValue){
+          relatedFieldFullname = rowValue.detail_field_fullname
+        }
+        if(relatedFieldFullname){
+          const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
+          return ['object', '=', objectName]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
 list_views:
   all:
     label: All Workflows
@@ -444,6 +584,10 @@ actions:
     label: Form Designer
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions) {
+              var record = Creator.getObjectRecord(object_name, record_id, 'object_name');
+              if (record && record.object_name){
+                return false;
+              };
               return true;
             }
     'on': record
@@ -718,6 +862,12 @@ actions:
           sweetAlert.close();
         })
       }
+  addFormFields:
+    label: AddFields
+    on: record
+  updateFormFields:
+    label: UpdateFields
+    on: record
 relatedList:
   - cms_files
   - object_workflows

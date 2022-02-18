@@ -273,5 +273,6 @@ actions:
               uobj["print_is_show_attachments"] = '1';
               uobj["X-User-Id"] = Meteor.userId();
               uobj["X-Auth-Token"] = Accounts._storedLoginToken();
-              return Steedos.openWindow(Steedos.absoluteUrl() + "workflow/space/" + Session.get("spaceId") + "/print/" + record_id + "?" + $.param(uobj), "", 'width=900,height=750,scrollbars=yes,EnableViewPortScale=yes,toolbarposition=top,transitionstyle=fliphorizontal,menubar=yes,closebuttoncaption=  x  ');
+              var uobjToString = window.$.param(uobj);
+              return Steedos.openWindow(Steedos.absoluteUrl() + "workflow/space/" + Session.get("spaceId") + "/print/" + record_id + "?" + uobjToString, "", 'width=900,height=750,scrollbars=yes,EnableViewPortScale=yes,toolbarposition=top,transitionstyle=fliphorizontal,menubar=yes,closebuttoncaption=  x  ');
             }

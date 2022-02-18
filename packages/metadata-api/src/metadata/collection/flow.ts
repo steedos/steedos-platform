@@ -853,7 +853,7 @@ async function steedosImportObjectWorkflow(dbManager, spaceId, flowId, objectNam
     if (oldDoc) {
         await dbManager.directUpdate(_object_workflows, { _id: oldDoc._id }, { $set: Object.assign({}, doc, { flow_id: flowId, object_name: objectName }) })
     } else {
-        await dbManager.insert(_object_workflows, Object.assign({}, doc, { flow_id: flowId, object_name: objectName }), false)
+        await dbManager.insert(_object_workflows, Object.assign({}, doc, { flow_id: flowId, object_name: objectName }), true)
     }
 }
 
