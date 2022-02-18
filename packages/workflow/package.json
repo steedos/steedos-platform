@@ -10,16 +10,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/auth": "2.1.80",
-    "@steedos/objectql": "2.1.80",
+    "@steedos/auth": "2.1.81",
+    "@steedos/objectql": "2.1.81",
     "@steedos/steedos-plugin-workflow": "^2.1.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "@steedos/core": "2.1.80",
-    "@steedos/meteor-bundle-runner": "2.1.80",
-    "steedos-server": "2.1.80"
+    "@steedos/core": "2.1.81",
+    "@steedos/meteor-bundle-runner": "2.1.81",
+    "steedos-server": "2.1.81"
   }
 }
