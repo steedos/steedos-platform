@@ -173,7 +173,7 @@ export class SteedosDataSourceType implements Dictionary {
 
         this._objectsConfig[objectApiName] = objectConfig;
 
-        const findIndex = _.findIndex(this.cacheObjects, (item: any) => { return item?.name === objectApiName });
+        const findIndex = _.findIndex(this.cacheObjects, (item: any) => { return item?.metadata?.name === objectApiName });
 
         if (findIndex != -1) {
             this.cacheObjects[findIndex] = Object.assign({ service: { name: serviceName } }, { metadata: objectConfig });

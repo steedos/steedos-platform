@@ -136,17 +136,25 @@ module.exports = {
 			async handler(ctx) {
 				const { module } = ctx.params
                 const packages = loader.loadPackagesConfig();
-				const spackage = _.find(packages, (_p, pname)=>{
+				const packageConfig = _.find(packages, (_p, pname) => {
 					return pname === module;
 				})
-				if(spackage){
-					if(spackage.enable){
-						if(spackage.local){
-							let packagePath = spackage.path;
+				if (packageConfig) {
+					if (packageConfig.enable) {
+						if (packageConfig.local) {
+							let packagePath = packageConfig.path;
 							if(!path.isAbsolute(packagePath)){
 								packagePath = path.resolve(process.cwd(), packagePath)
 							}
 							await loader.loadPackage(module, packagePath);
+							const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
+							await ctx.broker.call(`@steedos/service-packages.install`, {
+								serviceInfo: Object.assign({}, Object.assign({}, packageConfig, { name: module }), {
+									nodeID: ctx.broker.nodeID,
+									instanceID: ctx.broker.instanceID,
+									metadata: metadata
+								})
+							})
 						}else{
 							await loader.loadPackage(module);
 						}
