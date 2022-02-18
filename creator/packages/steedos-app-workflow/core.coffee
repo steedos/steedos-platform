@@ -9,7 +9,7 @@ if Meteor.isClient
 			url = url + "&companyId=#{companyId}"
 		
 		url = encodeURIComponent(Steedos.absoluteUrl(url))
-		title = "#{t("Workflow Designer")} | Steedos"
+		title = "#{t("Workflow Designer")}"
 		if flow
 			flowName = db.flows.findOne(flow)?.name
 			if flowName
