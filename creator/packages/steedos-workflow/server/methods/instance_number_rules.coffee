@@ -37,7 +37,14 @@ Meteor.methods
 		if context.YYYY != numberRules.year
 			_NUMBER = numberRules.first_number || 1
 
-		context.NUMBER = _.clone(_NUMBER)
+		padding = (num, length) ->
+			len = (num + '').length
+			diff = length - len
+			if diff > 0
+				return Array(diff + 1).join('0') + num
+			return num
+
+		context.NUMBER = padding(_.clone(_NUMBER), 5)
 
 		rules = numberRules.rules.replace("{YYYY}", "' + YYYY + '").replace("{MM}", "' + MM + '").replace("{NUMBER}", "' + NUMBER + '")
 
