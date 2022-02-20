@@ -1,6 +1,6 @@
 {
   "name": "@steedos/steedos-project-template",
-  "version": "2.1.83",
+  "version": "2.1.84",
   "private": false,
   "repository": "https://github.com/steedos/steedos-project-template.git",
   "description": "",
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-community": "2.1.83"
+    "@steedos/service-community": "2.1.84"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
@@ -49,7 +49,7 @@
     "**/bcrypt": "3.0.6",
     "**/samlp": "3.4.1",
     "**/xmldom": "0.2.1",
-    "**/tslib": "1.11.2",
+    "**/tslib": "2.3.1",
     "**/fibers": "^4.0.3",
     "**/cookies": "0.6.2",
     "**/@babel/runtime": "7.12.0"
