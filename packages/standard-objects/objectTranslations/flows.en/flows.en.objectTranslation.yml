@@ -295,8 +295,6 @@ actions:
     label: Delete
   addFormFields:
     label: Add Fields
-  updateFormFields:
-    label: Update Fields
 CustomLabels:
   import_flows_error_title: Import Error
   import_flows_error_not_find_object: 'Not find object [ %s ]'
