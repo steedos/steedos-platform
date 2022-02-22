@@ -269,14 +269,17 @@ fields:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
   form.beforeInsert:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
   form.beforeUpdate:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
   form.beforeDelete:
     type: code
     rows: 3
@@ -285,10 +288,12 @@ fields:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
   form.afterUpdate:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
   form.afterDelete:
     type: code
     rows: 3
@@ -297,14 +302,17 @@ fields:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
   form.errorUpdate:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
   form.errorDelete:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
   form.beforeView:
     type: code
     rows: 3
@@ -317,10 +325,12 @@ fields:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
   form.afterEdit:
     type: code
     rows: 3
     is_wide: true
+    hidden: true
 paging:
   enabled: false
 relatedList:
