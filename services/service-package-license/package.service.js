@@ -112,7 +112,7 @@ module.exports = {
 							}
 							await steedosLicense.save({ license: licenseInfo[0], is_local: license_decrypt.is_local, key: licenseInfo[1], verify_status: license_decrypt.verify_status, verify_error: license_decrypt.verify_erro, license_last_verify: new Date(), _id: license_decrypt._id, product: license_decrypt.product }, spaceId);
 						} catch (error) {
-							console.error(`sync packages license fail: `, error.message);
+							// console.error(`sync packages license fail: `, error.message);
 						}
 					}
 					console.info(`sync packages license success`);
