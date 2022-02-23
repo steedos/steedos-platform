@@ -220,6 +220,8 @@ module.exports = {
 					console.error(`工作区初始化失败：installPurchasedPackages error`, error)
 				}
 
+				this.broker.emit("service-cloud-init.succeeded");
+
 				console.log(chalk.blue('工作区初始化完毕'));
 
 			} catch (error) {
