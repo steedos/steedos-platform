@@ -3,7 +3,7 @@ const auth = require('@steedos/auth');
 const _ = require('underscore');
 async function getAll() {
     const schema = objectql.getSteedosSchema();
-    const configs = await objectql.registerPermissionFields.find(schema.broker)
+    const configs = await objectql.registerPermissionFields.getAll(schema.broker)
     const dataList = _.pluck(configs, 'metadata');
 
     _.each(dataList, function (item) {
