@@ -193,42 +193,4 @@ module.exports = {
         return record && record.object_name;
     },
 
-    // 更新字段
-    updateFormFields: function (object_name, record_id, fields) {
-        const record = Creator.getObjectRecord();
-        var formId = _.isObject(record.form) ? record.form._id : record.form;
-        const objectName = _.isObject(record.object_name) ? record.object_name.name : record.object_name;
-        $(document.body).addClass('loading');
-        let url = '/am/forms/addFieldsFromObject';
-        let options = {
-            type: 'post',
-            async: true,
-            data: JSON.stringify({
-                formId: formId,
-                object_name: objectName,
-                instance_fields: record.instance_fields,
-                instance_table_fields: record.instance_table_fields
-            }),
-            success: function (data) {
-                toastr.success('更新成功');
-                Modal.hide();
-                $(document.body).removeClass('loading');
-                if (Template.creator_view.currentInstance) {
-                    Template.creator_view.currentInstance.onEditSuccess();
-                } else {
-                    FlowRouter.reload();
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.error(XMLHttpRequest.responseJSON);
-                toastr.error(XMLHttpRequest.responseJSON.error.replace(/:/g, '：'))
-                $(document.body).removeClass('loading');
-            }
-        };
-        Steedos.authRequest(url, options);
-    },
-    updateFormFieldsVisible: function (object_name, record_id, record_permissions, record) {
-        return record && record.object_name;
-    },
-
 }

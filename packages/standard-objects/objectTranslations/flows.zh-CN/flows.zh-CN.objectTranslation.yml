@@ -292,8 +292,6 @@ actions:
     label: 删除
   addFormFields:
     label: 添加字段
-  updateFormFields:
-    label: 更新审批单
 CustomLabels:
   import_flows_error_title: 导入失败
   import_flows_error_not_find_object: '未找到对象[ %s ]'

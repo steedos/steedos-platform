@@ -260,86 +260,6 @@ fields:
     omit: true
     hidden: true
     name: historys
-  instance_template:
-    label: Instance Template
-    type: code
-    language: handlebars
-    is_wide: true
-    group: Template
-    name: instance_template
-  print_template:
-    label: Print Template
-    type: code
-    language: handlebars
-    is_wide: true
-    group: Template
-    name: print_template
-  field_map:
-    label: Mapping
-    type: textarea
-    is_wide: true
-    group: Synchronization
-    name: field_map
-  events:
-    label: Events
-    type: textarea
-    is_wide: true
-    group: Script
-    name: events
-  distribute_optional_users:
-    type: object
-    label: Users to be Distributed
-    reference_to: users
-    multiple: true
-    is_wide: true
-    group: Distribution
-    blackbox: true
-    omit: true
-    hidden: true
-    name: distribute_optional_users
-    filterable: true
-  distribute_to_self:
-    label: Distribute to myself
-    type: boolean
-    group: Distribution
-    omit: true
-    hidden: true
-    name: distribute_to_self
-  name_formula:
-    label: Formula of Title
-    type: text
-    group: Others
-    name: name_formula
-    omit: true
-    hidden: true
-  code_formula:
-    label: Formula of Code
-    type: text
-    group: Others
-    name: code_formula
-    omit: true
-    hidden: true
-  auto_remind:
-    label: Auto Remind
-    type: boolean
-    group: Others
-    name: auto_remind
-  sort_no:
-    type: number
-    label: Sort Number
-    group: Others
-    sortable: true
-    name: sort_no
-  timeout_auto_submit:
-    label: Auto Commit if Time Out
-    type: boolean
-    group: Others
-    name: timeout_auto_submit
-  allow_select_step:
-    label: Applicant can Select Steps and Handlers
-    inlineHelpText: Allow the applicant to specify the flow steps and step handlers when submitting the application form. You need to modify the properties on the step through the Workflow Designer.
-    type: boolean
-    group: Others
   object_name:
     type: lookup
     label: Object
@@ -474,6 +394,86 @@ fields:
           return ['_id', '=', 'no']
         }
       }
+  instance_template:
+    label: Instance Template
+    type: code
+    language: handlebars
+    is_wide: true
+    group: Template
+    name: instance_template
+  print_template:
+    label: Print Template
+    type: code
+    language: handlebars
+    is_wide: true
+    group: Template
+    name: print_template
+  field_map:
+    label: Mapping
+    type: textarea
+    is_wide: true
+    group: Synchronization
+    name: field_map
+  events:
+    label: Events
+    type: textarea
+    is_wide: true
+    group: Script
+    name: events
+  distribute_optional_users:
+    type: object
+    label: Users to be Distributed
+    reference_to: users
+    multiple: true
+    is_wide: true
+    group: Distribution
+    blackbox: true
+    omit: true
+    hidden: true
+    name: distribute_optional_users
+    filterable: true
+  distribute_to_self:
+    label: Distribute to myself
+    type: boolean
+    group: Distribution
+    omit: true
+    hidden: true
+    name: distribute_to_self
+  name_formula:
+    label: Formula of Title
+    type: text
+    group: Others
+    name: name_formula
+    omit: true
+    hidden: true
+  code_formula:
+    label: Formula of Code
+    type: text
+    group: Others
+    name: code_formula
+    omit: true
+    hidden: true
+  auto_remind:
+    label: Auto Remind
+    type: boolean
+    group: Others
+    name: auto_remind
+  sort_no:
+    type: number
+    label: Sort Number
+    group: Others
+    sortable: true
+    name: sort_no
+  timeout_auto_submit:
+    label: Auto Commit if Time Out
+    type: boolean
+    group: Others
+    name: timeout_auto_submit
+  allow_select_step:
+    label: Applicant can Select Steps and Handlers
+    inlineHelpText: Allow the applicant to specify the flow steps and step handlers when submitting the application form. You need to modify the properties on the step through the Workflow Designer.
+    type: boolean
+    group: Others
 list_views:
   all:
     label: All Workflows
@@ -864,9 +864,6 @@ actions:
       }
   addFormFields:
     label: AddFields
-    on: record
-  updateFormFields:
-    label: UpdateFields
     on: record
 relatedList:
   - cms_files
