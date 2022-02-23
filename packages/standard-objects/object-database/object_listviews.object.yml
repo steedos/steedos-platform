@@ -195,7 +195,7 @@ fields:
     label: Filters
     type: grid
     is_wide: true
-    hidden: true
+    hidden: false
     omit: true
     depend_on:
       - object_name
@@ -225,10 +225,12 @@ fields:
             Creator.pushBetweenBuiltinOptionals('date', options);
             return options;
           }
-          var index = Number(this.template.data.name.split('.')[1]);
-          var filters = values.filters
-          if(filters && filters.length > index){
-            var filter = filters[index];
+          
+          const filter = _.find(values.filters, function (item) {
+            return item._id === values._grid_row_id
+          })
+
+          if(filter){
             var field = filter.field;
             if(field){
               var object_fields = Creator.getObject(values.object_name).fields
