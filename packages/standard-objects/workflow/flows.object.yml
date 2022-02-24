@@ -256,6 +256,7 @@ fields:
     name: app
   historys:
     label: History Workflows
+    type: grid
     blackbox: true
     omit: true
     hidden: true
