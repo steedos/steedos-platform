@@ -196,7 +196,7 @@ router.post('/am/forms', async function (req, res) {
                         flow.perms = flowPerms;
                         let flow_current = {
                             _id: flowCollection._makeNewID(),
-                            steps: designerManager.makeSteps(userId),
+                            steps: designerManager.makeSteps(userId, newForm.current.fields),
                             _rev: 1,
                             flow: flow._id,
                             form_version: form["current"]["id"],

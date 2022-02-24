@@ -312,7 +312,7 @@ exports.isSpaceAdmin = async function isSpaceAdmin(spaceId, userId, roles) {
 
 }
 
-exports.makeSteps = function (userId) {
+exports.makeSteps = function (userId, fields = []) {
     let flowCollection = Creator.getCollection('flows');
     let user = Creator.getCollection('users').findOne(userId);
     let language = user.locale;
@@ -334,6 +334,9 @@ exports.makeSteps = function (userId) {
     start_step.posy = -1;
     let p = {};
     p["__form"] = "editable";
+    for (const f of fields) {
+        p[f.code] = 'editable'
+    }
     start_step.permissions = p;
     let lines = [];
     let line = {};
