@@ -38,16 +38,6 @@ module.exports = {
      * Events
      */
     events: {
-        "translations.change": {
-            handler() {
-                core.loadTranslations()
-            }
-        },
-        "translations.object.change": {
-            handler() {
-                core.loadObjectTranslations()
-            }
-        },
         "steedos-server.started": {
             handler() {
                 let packageInfo = this.settings.packageInfo;
@@ -76,10 +66,10 @@ module.exports = {
                 }
                 objectql.getSteedosSchema(this.broker);
                 packagePath = path.join(packagePath, '**');
-                await objectql.loadStandardMetadata(name, datasourceName);
-                await objectql.addAllConfigFiles(packagePath, datasourceName, name);
                 const datasource = objectql.getDataSource(datasourceName);
                 await datasource.init();
+                await objectql.loadStandardMetadata(name, datasourceName);
+                await objectql.addAllConfigFiles(packagePath, datasourceName, name);
                 await triggerLoader.load(this.broker, packagePath, name);
                 core.loadClientScripts();
                 let routersData = objectql.loadRouters(packagePath);
@@ -121,6 +111,7 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
+        console.time(`service ${this.name} started`)
         let packageInfo = this.settings.packageInfo;
         if (!packageInfo) {
             return;
@@ -138,14 +129,14 @@ module.exports = {
         await this.loadPackageMetadataFiles(_path, this.name, datasource);
         if(isPackage !== false){
             try {
-            
                 const _packageInfo = objectql.loadJSONFile(path.join(_path, 'package.json'));
                 await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
             } catch (error) {
                 
             }    
         }
-        console.log(`service ${this.name} started`);
+        console.timeEnd(`service ${this.name} started`)
+        // console.log(`service ${this.name} started`);
     },
 
     /**

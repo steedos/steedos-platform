@@ -6,6 +6,7 @@ const loader = require('./main/default/manager/loader');
 const packages = require('./main/default/manager/packages');
 const registry = require('./main/default/manager/registry');
 const metadata = require('@steedos/metadata-core')
+const packageLicense = require('@steedos/service-package-license');
 const axios = require('axios');
 const _ = require(`lodash`);
 const path = require(`path`);
@@ -65,7 +66,7 @@ module.exports = {
 	 */
 	settings: {
 		packageInfo: {
-			path: __dirname,
+			path: path.join(__dirname, 'main'),
 			name: this.name,
 			isPackage: false
 		},
@@ -78,7 +79,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['@steedos/service-package-license'],
 
 	/**
 	 * Actions
@@ -135,17 +136,25 @@ module.exports = {
 			async handler(ctx) {
 				const { module } = ctx.params
                 const packages = loader.loadPackagesConfig();
-				const spackage = _.find(packages, (_p, pname)=>{
+				const packageConfig = _.find(packages, (_p, pname) => {
 					return pname === module;
 				})
-				if(spackage){
-					if(spackage.enable){
-						if(spackage.local){
-							let packagePath = spackage.path;
+				if (packageConfig) {
+					if (packageConfig.enable) {
+						if (packageConfig.local) {
+							let packagePath = packageConfig.path;
 							if(!path.isAbsolute(packagePath)){
 								packagePath = path.resolve(process.cwd(), packagePath)
 							}
 							await loader.loadPackage(module, packagePath);
+							const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
+							await ctx.broker.call(`@steedos/service-packages.install`, {
+								serviceInfo: Object.assign({}, Object.assign({}, packageConfig, { name: module }), {
+									nodeID: ctx.broker.nodeID,
+									instanceID: ctx.broker.instanceID,
+									metadata: metadata
+								})
+							})
 						}else{
 							await loader.loadPackage(module);
 						}
@@ -227,6 +236,8 @@ module.exports = {
 						console.error(`login steedos registry fail: `, error.message);
 					}
 					const result = await this.getCloudSaasPurchasedPackages();
+					//同步软件包许可证
+					await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 					for (const _package of result.packages) {
 						try {
 							const { name, version, label, description } = _package
@@ -260,6 +271,8 @@ module.exports = {
 		upgradePackage: {
 			async handler(ctx) {
 				const { module, version } = ctx.params
+				//同步软件包许可证
+				await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 				return await this.upgradePackage(module, version);
             }
 		},
@@ -282,6 +295,8 @@ module.exports = {
 					}
 					let { module, version, url, auth, registry_url } = ctx.params
 					const enable = true;
+					//同步软件包许可证
+					await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker)
 				} catch (error) {
 					let errorInfo = error.message || '';
@@ -554,7 +569,7 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-
+		this.broker.createService(packageLicense);
 	},
 
 	/**
@@ -567,6 +582,9 @@ module.exports = {
 		} catch (error) {
 			console.error(`login steedos registry fail: `, error.message);
 		}
+
+		await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
+
 		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
 		if(PACKAGE_INSTALL_NODE){
 			await this.broker.call('metadata.add', {key: `#package_install_node.${this.broker.nodeID}`, data: {nodeID: PACKAGE_INSTALL_NODE}}, {meta: {}}) 

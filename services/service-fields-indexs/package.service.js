@@ -3,7 +3,9 @@ const project = require('./package.json');
 const serviceName = project.name;
 const objectql = require("@steedos/objectql");
 const schedule = require('node-schedule');
-
+const path = require('path');
+const globby = require('globby');
+const Fiber = require("fibers");
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -31,14 +33,34 @@ module.exports = {
 	actions: {
 		refreshIndexes: {
 			async handler(ctx) {
+				console.log(`refreshIndexes start`);
 				const objects = await ctx.call(`objects.getAll`, {});
 				for await(const object of objects) {
 					const objectAPIName = object.metadata.name;
 					if(objectAPIName && !objectAPIName.startsWith('__')){
 						await objectql.getObject(objectAPIName).refreshIndexes()
 					}
-					
 				}
+
+				const filePatten = [
+					path.join(__dirname, 'meteor-collection-indexs', "*.object.js")
+				];
+				const matchedPaths = globby.sync(filePatten);
+				_.each(matchedPaths, (matchedPath) => {
+					try {
+						Fiber(function () {
+							try {
+								require(matchedPath);
+							} catch (error) {
+								console.error(`refresh indexe error: ${matchedPath}`, error);
+							}
+						}).run();
+					} catch (error) {
+						console.error(`refresh indexe error: ${matchedPath}`, error);
+					}
+				});
+				console.log(`refreshIndexes end`);
+				return 'success'
             }
 		}
 	},

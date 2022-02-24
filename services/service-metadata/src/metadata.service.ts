@@ -4,6 +4,9 @@
 import { ActionHandlers, started, stopped } from './actionsHandler';
 import * as _ from 'underscore';
 const SERVICE_NAME = 'metadata';
+
+let RefreshServiceMetadatasSetTimeoutId = null;
+
 module.exports = {
 	name: SERVICE_NAME,
 	namespace: "steedos",
@@ -33,7 +36,12 @@ module.exports = {
 
 	events: {
 		"$services.changed"(ctx) {
-			this.refreshServiceMetadatas(ctx);
+			if (RefreshServiceMetadatasSetTimeoutId) {
+				clearTimeout(RefreshServiceMetadatasSetTimeoutId);
+			}
+			RefreshServiceMetadatasSetTimeoutId = setTimeout(() => {
+				this.refreshServiceMetadatas(ctx);
+			}, 1000 * 5)
 		},
 		"$metadata.clearPackageServices"(ctx) {
 			this.clearPackageServices(ctx);
@@ -58,14 +66,29 @@ module.exports = {
 				return await ActionHandlers.filter(ctx);
 			}
 		},
+		mfilter: {
+			async handler(ctx) {
+				return await ActionHandlers.mfilter(ctx);
+			}
+		},
 		add: {
 			async handler(ctx) {
 				return await ActionHandlers.add(ctx);
 			}
 		},
+		madd: {
+			async handler(ctx) {
+				return await ActionHandlers.madd(ctx);
+			}
+		},
 		addServiceMetadata: {
 			async handler(ctx) {
 				return await ActionHandlers.addServiceMetadata(ctx);
+			}
+		},
+		maddServiceMetadata: {
+			async handler(ctx) {
+				return await ActionHandlers.maddServiceMetadata(ctx);
 			}
 		},
 		delete: {

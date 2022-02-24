@@ -105,7 +105,7 @@ export function parseFieldType(objectName, record){
             if(objectField.type == 'date'){
                 record[fieldName] = new Date(record[fieldName]);
 
-            }else if(objectField == 'formula' || objectField == 'summary' ){
+            }else if(objectField.type == 'formula' || objectField.type == 'summary' ){
                 if(objectField.data_type == 'date'){
                     record[fieldName] = new Date(record[fieldName]);
                 }

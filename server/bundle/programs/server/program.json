@@ -344,7 +344,6 @@
       "path": "packages/aldeed_collection2-core.js"
     },
     {
-      "sourceMap": "packages/aldeed_schema-index.js.map",
       "path": "packages/aldeed_schema-index.js"
     },
     {

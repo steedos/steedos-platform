@@ -4,11 +4,6 @@ if (!db.webhooks) {
 }
 
 if (Meteor.isServer) {
-  db.webhooks._ensureIndex({
-    "flow": 1
-  }, {
-      background: true
-    });
   db.webhooks.allow({
     insert: function (userId, doc) {
       if (!Steedos.isSpaceAdmin(doc.space, userId)) {

@@ -367,7 +367,7 @@ export class FormulaActionHandler{
         const configs = [];
         const res = await this.broker.call('metadata.filter', {key: key}, {meta: {}})
         _.forEach(res, (item)=>{
-            configs.push(item.metadata)
+            configs.push(item?.metadata)
         })
         return configs;
     }

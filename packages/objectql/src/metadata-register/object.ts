@@ -1,7 +1,5 @@
-// import { createObjectService } from './objectServiceManager';
-// import { getObjectServiceName } from '../services/index';
 import * as _ from 'underscore';
-import { objectToJson } from '../util';
+import { objectToJson, jsonToObject } from '../util/convert';
 const clone = require('clone');
 
 export async function registerObject(broker, serviceName, objectConfig) {
@@ -67,21 +65,4 @@ export async function removeObject(broker, objectApiName) {
         }
     }});
     return res;
-}
-
-function funEval (funStr){
-	try{
-		return eval(funStr)
-	}catch (e){
-		console.error(e, funStr);
-	}
-};
-
-export function jsonToObject(objectMetadata){
-    _.forEach(objectMetadata.fields, (field, key)=>{
-        const _reference_to = field._reference_to;
-        if(_reference_to && _.isString(_reference_to)){
-            field.reference_to = funEval(`(${_reference_to})`);
-        }
-    })
 }

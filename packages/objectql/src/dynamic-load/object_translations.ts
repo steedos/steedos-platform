@@ -10,9 +10,15 @@ const brokeEmitEvents = async(filePath)=>{
     });
 }
 
-const addObjectsTranslation = async (objectApiName, data)=>{
-    return await getSteedosSchema().metadataBroker?.call('translations.addObjectTranslation', {
-        objectApiName, data
+// const addObjectsTranslation = async (objectApiName, data)=>{
+//     return await getSteedosSchema().metadataBroker?.call('translations.addObjectTranslation', {
+//         objectApiName, data
+//     })
+// }
+
+const addObjectTranslations = async (data) => {
+    return await getSteedosSchema().metadataBroker?.call('translations.addObjectTranslations', {
+        data
     })
 }
 
@@ -22,14 +28,17 @@ export const addObjectTranslationsFiles = async (filePath: string)=>{
     }
 
     let objectTranslations = util.loadObjectTranslations(filePath)
-    for (const element of objectTranslations) {
-        try {
-            await addObjectsTranslation(element.objectApiName, element)
-        } catch (error) {
-            console.error(`addObjectsTranslation error`, error.message)
-        }
+    // for (const element of objectTranslations) {
+    //     try {
+    //         await addObjectsTranslation(element.objectApiName, element)
+    //     } catch (error) {
+    //         console.error(`addObjectsTranslation error`, error.message)
+    //     }
+    // }
+    if (objectTranslations && objectTranslations.length > 0) {
+        await addObjectTranslations(objectTranslations)
+        await brokeEmitEvents(filePath)
     }
-    await brokeEmitEvents(filePath)
 }
 
 export const getObjectTranslations = async ()=>{

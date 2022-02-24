@@ -37,6 +37,7 @@ module.exports = {
 			enabled: true
 		},
 		built_in_plugins: [
+			"@steedos/service-translations",
 			"@steedos/workflow",
 			"@steedos/accounts",
 			"@steedos/steedos-plugin-schema-builder",
@@ -168,14 +169,20 @@ module.exports = {
 			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
-					require('@steedos/objectql').getSteedosSchema(this.broker);
+					const steedosSchema = require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
+					// console.time(`startSteedos-dataSourceInIt`)
+					// const datasources = steedosSchema.getDataSources();
+					// for (let dataSource in datasources) {
+					// 	console.log(`dataSource`, dataSource);
+					// 	Future.fromPromise(steedosSchema.getDataSource(dataSource).init()).wait();
+					// }
+					// console.timeEnd(`startSteedos-dataSourceInIt`)
 					Future.fromPromise(this.steedos.init(this.settings)).wait();
 					this.WebApp = WebApp;
 					this.startNodeRedService();
 					this.meteor.callStartupHooks();
 					this.meteor.runMain();
-
 				} catch (error) {
 					this.logger.error(error)
 				}
@@ -240,7 +247,7 @@ module.exports = {
 	 */
 	created() {
 		this.RED = RED;
-		this.MetadataService = this.broker.createService(MetadataService);
+		// this.MetadataService = this.broker.createService(MetadataService);
 	},
 
 	/**
@@ -248,7 +255,7 @@ module.exports = {
 	 */
 	async started() {
 		let time = new Date().getTime();
-		this.broker.waitForServices(this.name).then(async () => {
+		// this.broker.waitForServices(this.name).then(async () => {
 			process.env.PORT = this.settings.port;
 			process.env.ROOT_URL = this.settings.rootUrl;
 
@@ -257,7 +264,7 @@ module.exports = {
 			this.startAPIService();
 			console.log('耗时：', new Date().getTime() - time);
 			this.broker.emit("steedos-server.started"); //此处有异步函数，当前服务started后，实际上还未初始化完成。所以此服务初始化完成后，发出一个事件
-		});
+		// });
 
 	},
 

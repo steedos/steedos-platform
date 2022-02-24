@@ -1,6 +1,7 @@
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
+const clone = require('clone');
 async function getAll(){
     const schema = objectql.getSteedosSchema();
     const configs = await objectql.registerQuery.getAll(schema.broker)
@@ -26,18 +27,37 @@ module.exports = {
     afterFind: async function(){
         let spaceId = this.spaceId;
         let dataList = await getAll();
-        this.data.values = this.data.values.concat(dataList);
-        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+        const values = clone(this.data.values);
+        _.each(dataList, (item) => {
+            if (!_.find(this.data.values, (value) => {
+                return value._id === item._id || item.name === value.name
+            })) {
+                values.push(item)
+            }
+        })
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(values, this.query, spaceId);
 
     },
     afterAggregate: async function(){
         let spaceId = this.spaceId;
         let dataList = await getAll();
-        this.data.values = this.data.values.concat(dataList);
-        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+        const values = clone(this.data.values);
+        _.each(dataList, (item) => {
+            if (!_.find(this.data.values, (value) => {
+                return value._id === item._id || item.name === value.name
+            })) {
+                values.push(item)
+            }
+        })
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(values, this.query, spaceId);
 
     },
     afterCount: async function(){
+        try {
+            this.query.fields.push('name');
+        } catch (error) {
+
+        }
         let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length;
     },

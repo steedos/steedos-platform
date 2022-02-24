@@ -18,15 +18,6 @@ db.process_delegation_rules.helpers({
 });
 
 if (Meteor.isServer) {
-  db.process_delegation_rules._ensureIndex({
-    "enabled": 1,
-    "end_time": 1
-  }, {
-      background: true
-    });
-}
-
-if (Meteor.isServer) {
   db.process_delegation_rules.allow({
     insert: function (userId, doc) {
       return userId && db.space_users.find({

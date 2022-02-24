@@ -21,14 +21,16 @@ const InputPassword = React.forwardRef((props: any, ref?: React.Ref<HTMLInputEle
     const handlePasswordFocus = (e: any) => {
         const { onFocus } = props;
         clearPasswordValueAttribute();
-        onFocus?.(e);
+        if (onFocus)
+            onFocus(e)
 
     }
 
     const handlePasswordBlur = (e: any) => {
         const { onBlur } = props;
         clearPasswordValueAttribute();
-        onBlur?.(e);
+        if (onBlur)
+            onBlur(e)
 
     }
 

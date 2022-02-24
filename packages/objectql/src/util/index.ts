@@ -28,6 +28,7 @@ export * from './suffix'
 export * from './locale'
 export * from './field'
 export * from './function_expression'
+export * from './convert'
 
 exports.loadJSONFile = (filePath: string)=>{
     return JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
@@ -571,7 +572,7 @@ export function extend(destination: JsonMap, ...sources: JsonMap[]){
             }else if(isJsonMap(v)){
                 let _d = getJsonMap(destination, k);
                 if(isJsonMap(_d)){
-                    destination[k] = this.extend(clone(_d), v)
+                    destination[k] = extend(clone(_d), v)
                 }else{
                     destination[k] = v
                 }
@@ -682,7 +683,7 @@ export function getSteedosConfig(){
     let config: any;
     let configPath = path.join(getBaseDirectory(), configName)
     if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
-        config = this.loadFile(configPath)
+        config = loadFile(configPath)
         if (config.env){
             _.each(config.env, function(item, key){
                 process.env[key] = calcString(item)
@@ -951,128 +952,13 @@ export function absoluteUrl (path, options?) {
     return url;
 }
 
-/**
-* 对objectConfig中的function属性做toString()处理
-* This method mutates objectConfig.
-* @param objectConfig 
-* @returns objectConfig
-*/
-export function objectToJson(objectConfig){
-   _.forEach(objectConfig.actions, (action, key)=>{
-       const _todo = action?.todo
-       if(_todo && _.isFunction(_todo)){
-           action.todo = _todo.toString()
-       }
-       const _visible = action?.visible
-       if(_visible && _.isFunction(_visible)){
-           action._visible = _visible.toString()
-       }
-   })
-
-   _.forEach(objectConfig.fields, (field, key)=>{
-
-       const options = field.options
-       if(options && _.isFunction(options)){
-           field._options = field.options.toString()
-       }
-
-       if(field.regEx){
-           field._regEx = field.regEx.toString();
-       }
-       if(_.isFunction(field.min)){
-           field._min = field.min.toString();
-       }
-       if(_.isFunction(field.max)){
-           field._max = field.max.toString();
-       }
-       if(field.autoform){
-           const _type = field.autoform.type;
-           if(_type && _.isFunction(_type) && _type != Object && _type != String && _type != Number && _type != Boolean && !_.isArray(_type)){
-               field.autoform._type = _type.toString();
-           }
-       }
-       const optionsFunction = field.optionsFunction;
-       const reference_to = field.reference_to;
-       const createFunction = field.createFunction;
-       const beforeOpenFunction = field.beforeOpenFunction;
-       const filtersFunction = field.filtersFunction;
-       if(optionsFunction && _.isFunction(optionsFunction)){
-           field._optionsFunction = optionsFunction.toString()
-       }
-       if(reference_to && _.isFunction(reference_to)){
-           field._reference_to = reference_to.toString()
-       }
-       if(createFunction && _.isFunction(createFunction)){
-           field._createFunction = createFunction.toString()
-       }
-       if(beforeOpenFunction && _.isFunction(beforeOpenFunction)){
-           field._beforeOpenFunction = beforeOpenFunction.toString()
-       }
-       if(filtersFunction && _.isFunction(filtersFunction)){
-           field._filtersFunction = filtersFunction.toString()
-       }
-
-
-       const defaultValue = field.defaultValue
-       if(defaultValue && _.isFunction(defaultValue)){
-           field._defaultValue = field.defaultValue.toString()
-       }
-
-       const is_company_limited = field.is_company_limited;
-       if(is_company_limited && _.isFunction(is_company_limited)){
-           field._is_company_limited = field.is_company_limited.toString()
-       }
-   })
-
-   _.forEach(objectConfig.list_views, (list_view, key)=>{
-       if(_.isFunction(list_view.filters)){
-           list_view._filters = list_view.filters.toString()
-       }else if(_.isArray(list_view.filters)){
-           _.forEach(list_view.filters, (filter, _index)=>{
-               if(_.isArray(filter)){
-                   if(filter.length == 3 && _.isFunction(filter[2])){
-                       filter[2] = filter[2].toString()
-                       filter[3] = "FUNCTION"
-                   }else if(filter.length == 3 && _.isDate(filter[2])){
-                       filter[3] = "DATE"
-                   }
-               }else if(_.isObject(filter)){
-                   if(_.isFunction(filter?.value)){
-                       filter._value = filter.value.toString()
-                   }else if(_.isDate(filter?.value)){
-                       filter._is_date = true
-                   }
-               }
-           })
-       }
-   })
-
-   if(objectConfig.form && !_.isString(objectConfig.form)){
-       objectConfig.form = JSON.stringify(objectConfig.form, (key, val)=>{
-           if(_.isFunction(val))
-               return val + '';
-           else
-               return val;
-       })
-   }
-
-   _.forEach(objectConfig.relatedList, (relatedObjInfo)=>{
-       if(_.isObject(relatedObjInfo)){
-           _.forEach(relatedObjInfo, (val, key)=>{
-               if(key == 'filters' && _.isFunction(val)){
-                   relatedObjInfo[key] = val.toString();
-               }
-           })
-       }
-   })
-
-   return objectConfig;
-}
-
 export function validateFilters(filters: [], objectFields: any) {
     processFilters(clone(filters), objectFields);
 }
 
+export async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 export function parserFilters(filters){
     if(_.isString(filters)){

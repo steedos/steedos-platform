@@ -152,18 +152,6 @@ InstanceRecordQueue.Configure = function (options) {
 
     if (options.sendInterval !== null) {
 
-        // This will require index since we sort docs by createdAt
-        InstanceRecordQueue.collection._ensureIndex({
-            createdAt: 1
-        });
-        InstanceRecordQueue.collection._ensureIndex({
-            sent: 1
-        });
-        InstanceRecordQueue.collection._ensureIndex({
-            sending: 1
-        });
-
-
         var sendDoc = function (doc) {
             // Reserve doc
             var now = +new Date();

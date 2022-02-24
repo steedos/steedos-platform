@@ -83,7 +83,7 @@ export function bindClientFunc({
         let data: any = null;
         try {
             data = await clientFunc(...params);
-        } catch (error) {
+        } catch (error: any) {
             forceLogoutIfNecessary(error, dispatch, getState);
             const actions: Action[] = [logError(error)];
             if (onFailure) {
