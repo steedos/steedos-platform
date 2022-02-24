@@ -578,11 +578,11 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
 exports.transformObjectFields = function (fields, objFieldsMap) {
     let newFields = [];
     for (const f of fields) {
-        let field = objFieldsMap[f.field_name];
+        let field = objFieldsMap[f.name];
         if (field) {
             newFields.push({
                 ...field,
-                required: !!f.is_required
+                required: !!f.required
             })
         }
     }
@@ -594,7 +594,7 @@ exports.transformObjectFields = function (fields, objFieldsMap) {
  * @param objFieldsMap {} 对象字段
  * @returns []
  */
- exports.getObjectFieldsByNames = function (fieldNames, objFieldsMap) {
+exports.getObjectFieldsByNames = function (fieldNames, objFieldsMap) {
     let newFields = [];
     for (const fName of fieldNames) {
         let field = objFieldsMap[fName];
@@ -605,4 +605,27 @@ exports.transformObjectFields = function (fields, objFieldsMap) {
         }
     }
     return newFields;
+}
+
+/**
+ * 剔除掉系统字段，base对象的字段？
+ * @param {*} objectName 
+ */
+exports.getBusinessFields = async function (objectName) {
+    if (!objectName) {
+        return []
+    }
+    let instanceFields = [];
+    let objFields = await objectql.getObject(objectName).getFields();
+    let baseFields = await objectql.getObject('base').getFields();
+    for (const key in objFields) {
+        if (Object.hasOwnProperty.call(objFields, key)) {
+            let f = objFields[key]
+            if (f && !baseFields[key] && f.type != 'lookup' && f.type != 'master_detail') {
+                instanceFields.push(f)
+            }
+        }
+    }
+
+    return instanceFields
 }

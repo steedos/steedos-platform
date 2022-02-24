@@ -217,15 +217,15 @@ fields:
     label: 字段
     help: 
     description: 
-  instance_fields.$.field_name:
+  instance_fields.$.name:
     label: 字段
     help: 
     description: 
-  instance_fields.$.is_readonly:
+  instance_fields.$.readonly:
     label: 只读
     help: 
     description: 
-  instance_fields.$.is_required:
+  instance_fields.$.required:
     label: 必填
     help: 
     description:

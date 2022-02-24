@@ -46,7 +46,7 @@ module.exports = {
                         ],
                         "visible_on": "{{formData.object_name ? true : false}}",
                         "sub_fields": {
-                            "field_name": {
+                            "name": {
                                 "label": "字段",
                                 "type": "lookup",
                                 "multiple": false,
@@ -62,9 +62,9 @@ module.exports = {
                                     if (objectName) {
                                         if (values._grid_row_id) {
                                             var selected = _.find(values.instance_fields, function (item) { return item._id == values._grid_row_id });
-                                            var selectedAll = _.pluck(values.instance_fields, 'field_name');
+                                            var selectedAll = _.pluck(values.instance_fields, 'name');
                                             if (selected) {
-                                                selectedAll = _.difference(selectedAll, [selected.field_name]);
+                                                selectedAll = _.difference(selectedAll, [selected.name]);
                                             }
                                             if (selectedAll && selectedAll.length > 0) {
                                                 return [['object', '=', objectName], ['name', '!=', selectedAll]]
@@ -76,7 +76,7 @@ module.exports = {
                                     }
                                 }
                             },
-                            "is_required": {
+                            "required": {
                                 "label": "必填",
                                 "type": "boolean"
                             },
