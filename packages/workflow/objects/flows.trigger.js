@@ -48,7 +48,6 @@ module.exports = {
         }
     },
     afterInsert: async function(){
-        console.log('flow afterInsert');
         const { doc } = this;
         if (doc.object_name) {
             await createObjectWorkflow(doc);

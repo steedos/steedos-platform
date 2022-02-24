@@ -60,6 +60,7 @@ module.exports = {
                                 "filtersFunction": function (filters, values) {
                                     const objectName = _.isObject(values.object_name) ? values.object_name.name : values.object_name;
                                     if (objectName) {
+                                        const baseFieldKeys = Object.keys(Creator.getObject('base').fields)
                                         if (values._grid_row_id) {
                                             var selected = _.find(values.instance_fields, function (item) { return item._id == values._grid_row_id });
                                             var selectedAll = _.pluck(values.instance_fields, 'name');
@@ -67,10 +68,10 @@ module.exports = {
                                                 selectedAll = _.difference(selectedAll, [selected.name]);
                                             }
                                             if (selectedAll && selectedAll.length > 0) {
-                                                return [['object', '=', objectName], ['name', '!=', selectedAll]]
+                                                return [['object', '=', objectName], ['name', '!=', selectedAll.concat(baseFieldKeys)]]
                                             }
                                         }
-                                        return ['object', '=', objectName]
+                                        return [['object', '=', objectName],['name', '!=', baseFieldKeys]]
                                     } else {
                                         return ['_id', '=', 'no']
                                     }
