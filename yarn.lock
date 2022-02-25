@@ -8122,7 +8122,7 @@ abort-controller@^3.0.0:
   dependencies:
     event-target-shim "^5.0.0"
 
-accepts@^1.3.5, accepts@~1.3.3, accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
+accepts@~1.3.3, accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
   resolved "https://registry.npm.taobao.org/accepts/download/accepts-1.3.7.tgz#531bc726517a3b2b41f850021c6cc15eaab507cd"
   integrity sha1-UxvHJlF6OytB+FACHGzBXqq1B80=
@@ -16030,16 +16030,6 @@ expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-express-graphql@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.npm.taobao.org/express-graphql/download/express-graphql-0.7.1.tgz#6c7712ee966c3aba1930e064ea4c8181e56fd3ef"
-  integrity sha1-bHcS7pZsOroZMOBk6kyBgeVv0+8=
-  dependencies:
-    accepts "^1.3.5"
-    content-type "^1.0.4"
-    http-errors "^1.7.1"
-    raw-body "^2.3.3"
-
 express-jwt@^5.3.1:
   version "5.3.3"
   resolved "https://registry.npm.taobao.org/express-jwt/download/express-jwt-5.3.3.tgz#e557b4a63dd34c5ddd6ad81452738386314cc243"
@@ -17625,11 +17615,6 @@ graphql-extensions@^0.12.4:
     apollo-server-env "^3.0.0"
     apollo-server-types "^0.6.3"
 
-graphql-iso-date@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.npm.taobao.org/graphql-iso-date/download/graphql-iso-date-3.6.1.tgz#bd2d0dc886e0f954cbbbc496bbf1d480b57ffa96"
-  integrity sha1-vS0NyIbg+VTLu8SWu/HUgLV/+pY=
-
 graphql-subscriptions@^1.1.0:
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/graphql-subscriptions/download/graphql-subscriptions-1.2.1.tgz?cache=0&sync_timestamp=1614992228168&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fgraphql-subscriptions%2Fdownload%2Fgraphql-subscriptions-1.2.1.tgz#2142b2d729661ddf967b7388f7cf1dd4cf2e061d"
@@ -17652,11 +17637,6 @@ graphql-tools@^4.0.0, graphql-tools@^4.0.7:
     deprecated-decorator "^0.1.6"
     iterall "^1.1.3"
     uuid "^3.1.0"
-
-graphql-type-json@^0.2.2:
-  version "0.2.4"
-  resolved "https://registry.npm.taobao.org/graphql-type-json/download/graphql-type-json-0.2.4.tgz#545af27903e40c061edd30840a272ea0a49992f9"
-  integrity sha1-VFryeQPkDAYe3TCECicuoKSZkvk=
 
 graphql-type-json@^0.3.2:
   version "0.3.2"
@@ -17683,13 +17663,6 @@ graphql-upload@^8.0.2:
     fs-capacitor "^2.0.4"
     http-errors "^1.7.3"
     object-path "^0.11.4"
-
-graphql@^14.1.1:
-  version "14.7.0"
-  resolved "https://registry.npm.taobao.org/graphql/download/graphql-14.7.0.tgz#7fa79a80a69be4a31c27dda824dc04dac2035a72"
-  integrity sha1-f6eagKab5KMcJ92oJNwE2sIDWnI=
-  dependencies:
-    iterall "^1.2.2"
 
 graphql@^15.3.0:
   version "15.5.0"
@@ -18271,7 +18244,7 @@ http-errors@1.7.3, http-errors@~1.7.2, http-errors@~1.7.3:
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
 
-http-errors@^1.7.1, http-errors@^1.7.3:
+http-errors@^1.7.3:
   version "1.8.0"
   resolved "https://registry.npm.taobao.org/http-errors/download/http-errors-1.8.0.tgz#75d1bbe497e1044f51e4ee9e704a62f28d336507"
   integrity sha1-ddG75JfhBE9R5O6ecEpi8o0zZQc=
@@ -19868,7 +19841,7 @@ istanbul@0.4.5, istanbul@^0.4.5:
     which "^1.1.1"
     wordwrap "^1.0.0"
 
-iterall@^1.1.3, iterall@^1.2.1, iterall@^1.2.2, iterall@^1.3.0:
+iterall@^1.1.3, iterall@^1.2.1, iterall@^1.3.0:
   version "1.3.0"
   resolved "https://registry.npm.taobao.org/iterall/download/iterall-1.3.0.tgz#afcb08492e2915cbd8a0884eb93a8c94d0d72fea"
   integrity sha1-r8sISS4pFcvYoIhOuTqMlNDXL+o=
@@ -28061,7 +28034,7 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-raw-body@2.4.1, raw-body@^2.3.3:
+raw-body@2.4.1:
   version "2.4.1"
   resolved "https://registry.npm.taobao.org/raw-body/download/raw-body-2.4.1.tgz#30ac82f98bb5ae8c152e67149dac8d55153b168c"
   integrity sha1-MKyC+Yu1rowVLmcUnayNVRU7Fow=
