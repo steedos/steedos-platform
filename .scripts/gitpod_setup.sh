@@ -1,6 +1,9 @@
+### project-community ###
+
+# create .env.local
+cp steedos-projects/project-community/.env steedos-projects/project-community/.env.local
+
+### creator ###
+
 # create .env.local
 cp creator/.env creator/.env.local
-
-# replace ROOT_URL
-root_replacement="ROOT_URL=$(gp url 3100)"
-sed -i "/^ROOT_URL=*/c$root_replacement" creator/.env.local

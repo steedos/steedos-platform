@@ -210,12 +210,51 @@ fields:
       submitting the application form. You need to modify the properties on the
       step through the Workflow Designer.
     description: 
+  object_name:
+    label: Bind Object
+  instance_fields:
+    label: Instance Fields
+    help: 
+    description: 
+  instance_fields.$:
+    label: Instance Field
+    help: 
+    description: 
+  instance_fields.$.name:
+    label: Instance Field Name
+    help: 
+    description: 
+  instance_fields.$.readonly:
+    label: Readonly
+    help: 
+    description: 
+  instance_fields.$.required:
+    label: Required
+    help: 
+    description:
+  instance_table_fields:
+    label: Related Lists
+    help: 
+    description: 
+  instance_table_fields.$.label:
+    label: Label
+    help:
+    description:
+  instance_table_fields.$.detail_field_fullname:
+    label: Related Field FullName
+    help: 
+    description:
+  instance_table_fields.$.field_names:
+    label: Field Names
+    help: 
+    description:
 groups:
   template: Template
   synchronization: Synchronization
   script: Script
   distribution: Distribution
   others: Others
+  FlowBindObject: Flow Bind Object
 listviews:
   all:
     label: All Workflows
@@ -254,6 +293,8 @@ actions:
     label: Set Distribution Options
   removeFlow:
     label: Delete
+  addFormFields:
+    label: Add Fields
 CustomLabels:
   import_flows_error_title: Import Error
   import_flows_error_not_find_object: 'Not find object [ %s ]'

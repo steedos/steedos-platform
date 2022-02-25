@@ -68,6 +68,7 @@ function createProject(name) {
       '.steedos/**',
       '!.steedos/node_modules/**',
       '.vscode/**',
+      '.scripts/**'
     ], projectDir, {
       parents: true,
       flat: false,

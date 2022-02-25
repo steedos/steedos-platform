@@ -307,6 +307,18 @@ fields:
         value: "final_step"
     defaultValue: every_step
     required: true
+  sync_direction:
+    label: Synchronization Direction
+    type: select
+    options:
+      - label: Both
+        value: "both"
+      - label: Instance To Object
+        value: "ins_to_obj"
+      - label: Object To Instance
+        value: "obj_to_ins"
+    defaultValue: both
+    required: true
 list_views:
   default:
     columns:

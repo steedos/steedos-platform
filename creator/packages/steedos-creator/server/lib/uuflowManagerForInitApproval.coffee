@@ -77,11 +77,27 @@ uuflowManagerForInitApproval.getForm = (form_id) ->
 uuflowManagerForInitApproval.getCategory = (category_id) ->
 	return Creator.Collections.categories.findOne(category_id)
 
+uuflowManagerForInitApproval.checkSyncDirection = (object_name, flow_id) ->
+	ow = Creator.Collections.object_workflows.findOne({
+		object_name: object_name,
+		flow_id: flow_id
+	})
+	if !ow
+		throw new Meteor.Error('error!', '未找到对象流程映射记录。')
+	syncDirection = ow.sync_direction || 'both'
+	if !['both', 'obj_to_ins'].includes(syncDirection)
+		throw new Meteor.Error('error!', '不支持的同步方向。')
+
+	return 
+
 uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info) ->
 	check instance_from_client["applicant"], String
 	check instance_from_client["space"], String
 	check instance_from_client["flow"], String
 	check instance_from_client["record_ids"], [{o: String, ids: [String]}]
+
+	# 校验同步方向
+	uuflowManagerForInitApproval.checkSyncDirection(instance_from_client["record_ids"][0].o, instance_from_client["flow"])
 
 	# 校验是否record已经发起的申请还在审批中
 	uuflowManagerForInitApproval.checkIsInApproval(instance_from_client["record_ids"][0], instance_from_client["space"])

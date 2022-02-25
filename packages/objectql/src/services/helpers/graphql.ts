@@ -260,9 +260,11 @@ export async function dealWithRelatedFields(
   let steedosSchema = getSteedosSchema();
   let objectName = objectConfig.name;
   let obj = steedosSchema.getObject(objectName);
-  // 拆开 使用单独的promise处理
-  let detailsInfo = await obj.getDetailsInfo();
-  let lookupsInfo = await obj.getLookupDetailsInfo();
+
+  const relationsInfo = await obj.getRelationsInfo();
+  let detailsInfo = relationsInfo.details || [];
+  let lookupsInfo = relationsInfo.lookup_details || [];
+
   let relatedInfos = detailsInfo.concat(lookupsInfo);
   for (const info of relatedInfos) {
     if (!info.startsWith("__")) {

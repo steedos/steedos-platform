@@ -149,7 +149,11 @@ async function saveOrUpdateObject(dbManager, object) {
         if(dbObject){
             throw new Error(`object api_name already exists: ${object.name}`); 
         }
-    
+
+        if (!_.has(object, 'in_development')) {
+            object.in_development = '1';
+        }
+
         return await dbManager.insert(collection_name, object);
     }else{
         return await dbManager.update(collection_name, filter, object);

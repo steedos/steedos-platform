@@ -52,7 +52,7 @@ fields:
     help: 
     description: 
   current:
-    label: 步骤
+    label: 当前版本
     help: 
     description: 
   current.modified:
@@ -207,12 +207,51 @@ fields:
     label: 申请人指定步骤、审批人
     help: '允许申请人提交申请单时指定流转步骤及步骤处理人, 需要通过流程设计器修改步骤上的属性'
     description: 
+  object_name:
+    label: 绑定对象
+  instance_fields:
+    label: 审批单字段
+    help: 
+    description: 
+  instance_fields.$:
+    label: 字段
+    help: 
+    description: 
+  instance_fields.$.name:
+    label: 字段
+    help: 
+    description: 
+  instance_fields.$.readonly:
+    label: 只读
+    help: 
+    description: 
+  instance_fields.$.required:
+    label: 必填
+    help: 
+    description:
+  instance_table_fields:
+    label: 审批单子表
+    help: 
+    description: 
+  instance_table_fields.$.label:
+    label: 显示标题
+    help: 默认为对象名称
+    description:
+  instance_table_fields.$.detail_field_fullname:
+    label: 子表名称
+    help: 
+    description:
+  instance_table_fields.$.field_names:
+    label: 显示的字段
+    help: 
+    description:
 groups:
   template: 模板
   synchronization: 归档
   script: 脚本
   distribution: 分发
   others: 高级
+  FlowBindObject: 流程绑定对象
 listviews:
   all:
     label: 所有
@@ -251,6 +290,8 @@ actions:
     label: 设置分发
   removeFlow:
     label: 删除
+  addFormFields:
+    label: 添加字段
 CustomLabels:
   import_flows_error_title: 导入失败
   import_flows_error_not_find_object: '未找到对象[ %s ]'

@@ -26,6 +26,29 @@ export class RegisterBase{
         return res;
     }
 
+    async mregister(broker, packageServiceName, configs) {
+        const metadatas = clone(configs);
+
+        const mdata = {};
+
+        _.map(metadatas, (metadata) => {
+            mdata[this.getApiName(metadata)] = metadata
+        })
+
+        const res = await broker.call(`${this.serviceName}.madd`, { data: mdata }, {
+            meta: {
+                metadataServiceName: packageServiceName,
+                caller: {
+                    nodeID: broker.nodeID,
+                    service: {
+                        name: packageServiceName,
+                    }
+                }
+            }
+        });
+        return res;
+    }
+
     async remove(broker, packageServiceName, metadataApiNameOrConfig: string | JsonMap) {
         let metadataApiName = metadataApiNameOrConfig;
         if (_.isObject(metadataApiName)) {

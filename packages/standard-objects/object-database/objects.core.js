@@ -4,22 +4,8 @@ const defaultDatasourceName = 'default';
 const defaultDatasourcesName = ['default','meteor'];
 var triggerCore = require('./object_triggers.core.js');
 var permissionCore = require('./permission_objects.core.js');
-var buildGraphQLSchemaSetTimeOutId = null;
 
 const DB_OBJECT_SERVICE_NAME = '~database-objects';
-
-function buildGraphQLSchema(){
-    if(buildGraphQLSchemaSetTimeOutId != null){
-        clearTimeout(buildGraphQLSchemaSetTimeOutId);
-        buildGraphQLSchemaSetTimeOutId = null;
-    }
-    if(buildGraphQLSchemaSetTimeOutId == null){
-        buildGraphQLSchemaSetTimeOutId = setTimeout(function(){
-            objectql.getSteedosSchema().buildGraphQLSchema();
-        }, 2 * 1000);
-    }
-}
-
 
 function canLoadObject(name, datasource) {
     // if(!datasource || datasource === defaultDatasourceName){
@@ -246,7 +232,6 @@ function loadObject(doc, oldDoc) {
                         Creator.Objects[doc.name] = _doc;
                         Creator.loadObjects(_doc, _doc.name);
                     }
-                    buildGraphQLSchema();
                 } catch (error) {
                     console.log('error', error);
                 }
@@ -360,9 +345,6 @@ function reloadObject(changeLog){
                     if(!objectDataSourceName || objectDataSourceName == defaultDatasourceName){
                         Creator.Objects[object.name] = object;
                         Creator.loadObjects(object, object.name);
-                    }
-                    if(data.type == 'field' || data.type == 'object'){
-                        buildGraphQLSchema();
                     }
                 } catch (error) {
                     console.log('error', error);

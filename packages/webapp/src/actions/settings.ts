@@ -12,7 +12,7 @@ export function loadSettings(): ActionFunc {
         let data;
         try {
             data = await Client4.getSettings();
-        } catch (error) {
+        } catch (error: any) {
             forceLogoutIfNecessary(error, dispatch, getState);
             return {error};
         }

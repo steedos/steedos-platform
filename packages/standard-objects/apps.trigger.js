@@ -76,6 +76,12 @@ module.exports = {
                 }
             })
         }
+        // 获取的apps根据保存的值进行过滤
+        const allData = this.data.values;
+        const firstFilterKey = _.keys(query)[0];
+        this.data.values = _.filter(allData, (item)=>{
+            return item[firstFilterKey] === query[firstFilterKey];
+        })
     },
     afterCount: async function () {
         let result = await objectql.getObject('apps').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))

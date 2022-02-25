@@ -327,7 +327,7 @@ export default class Client4 {
         return data;
     };
 
-    doFetchWithResponse = async <T>(url: string, options: Options): Promise<ClientResponse<T>> => {
+    doFetchWithResponse = async <T>(url: any, options: Options): Promise<ClientResponse<T>> => {
         const response = await fetch(url, this.getOptions(options));
         const headers = parseAndMergeNestedHeaders(response.headers);
 

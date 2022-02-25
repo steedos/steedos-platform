@@ -56,7 +56,7 @@ function converterDate(field_name, dataCell, jsonObj, utcOffset) {
   return date_error;
 }
 
-function converterDateTime(field_name, dataCell, jsonObj) {
+function converterDateTime(field_name, dataCell, jsonObj, utcOffset) {
   var date, date_error;
   date_error = "";
   if (_.isEmpty(dataCell) && !_.isDate(dataCell)) {
@@ -67,7 +67,7 @@ function converterDateTime(field_name, dataCell, jsonObj) {
     date.getFullYear() &&
     Object.prototype.toString.call(date) === "[object Date]"
   ) {
-    jsonObj[field_name] = date;
+    jsonObj[field_name] = moment(dataCell).add(moment().utcOffset() - utcOffset * 60, 'm').toDate();
   } else {
     date_error = `${dataCell}不是日期时间类型数据`;
   }
@@ -353,7 +353,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                 error = converterDate(field_name, dataCell, jsonObj, utcOffset);
                 break;
               case "datetime":
-                error = converterDateTime(field_name, dataCell, jsonObj);
+                error = converterDateTime(field_name, dataCell, jsonObj, utcOffset);
                 break;
               case "number":
                 error = converteNum(field, field_name, dataCell, jsonObj);

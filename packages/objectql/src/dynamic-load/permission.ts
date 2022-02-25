@@ -49,11 +49,7 @@ export const loadObjectPermissions = async function (filePath: string, serviceNa
     if(serviceName)
         for await (const permission of permissions) {
             const { field_permissions } = permission;
-            delete permission.field_permissions;
-            await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({extend: permission.object_name}, {permission_set: {
-                [permission.name]: permission
-            }}));
-            if (field_permissions) {
+            if (field_permissions && _.isArray(field_permissions) && field_permissions.length > 0) {
                 for await (const field_permission of field_permissions) {
                     await registerPermissionFields.register(getSteedosSchema().broker, serviceName, {
                         "name": `${permission.name}.${permission.object_name}.${field_permission.field}`,

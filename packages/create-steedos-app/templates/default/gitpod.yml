@@ -1,4 +1,4 @@
-image: ecr.aws.steedos.cn/dockerhub/steedos/gitpod-workspace-base:latest
+image: ecr.aws.steedos.cn/dockerhub/steedos/gitpod-workspace-base:2.1
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
@@ -32,6 +32,7 @@ tasks:
     init: |
       yarn install
     command: |
+      sh ./.scripts/env.sh
       gp await-port 27017
       gp await-port 6379
       yarn start
@@ -43,3 +44,4 @@ vscode:
     - steedos.steedosdx-vscode
     - steedos.steedosdx-vscode-core
     - ms-ceintl.vscode-language-pack-zh-hans
+    - mongodb.mongodb-vscode

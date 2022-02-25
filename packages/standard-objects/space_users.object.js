@@ -2,6 +2,7 @@ const spaceUserCore = require('./space_users.core')
 const core = require('@steedos/core');
 const validator = require("validator");
 const objectql = require('@steedos/objectql');
+const Future = require('fibers/future');
 
 const password = require('./util/password')
 
@@ -704,64 +705,7 @@ Meteor.startup(function () {
             });
         });
     }
-    //创建数据库索引
-    if (Meteor.isServer) {
-        db.space_users._ensureIndex({
-            "user_accepted": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "user": 1,
-            "user_accepted": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "user": 1,
-            "space": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "space": 1,
-            "user_accepted": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "space": 1,
-            "user": 1,
-            "user_accepted": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "space": 1,
-            "manager": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "manager": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "space": 1,
-            "created": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "space": 1,
-            "created": 1,
-            "modified": 1
-        }, {
-                background: true
-            });
-        return;
-    }
+
 });
 
 // steedos-workflow包中相关脚本迁移过来
@@ -1101,6 +1045,25 @@ let actions = {
 
 Creator.Objects.space_users.actions = Object.assign({}, Creator.Objects.space_users.actions, actions);
  */
+
+let doDisable = async function(spaceUser){
+    return Future.task(() => {
+        try {
+            let result = db.users.direct.update({_id: spaceUser.user}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1, emails: 1, steedos_id: 1}});
+            if(!result){
+                console.error("The users directUpdate return nothing.");
+                return false;
+            }
+            
+            result = db.space_users.direct.update({_id: spaceUser._id}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1}});
+            return result;
+        } catch (error) {
+            this.logger.error(error);
+            return false;
+        }
+    }).promise();
+}
+
 let methods = {
     disable: async function (req, res) {
         try {
@@ -1151,7 +1114,7 @@ let methods = {
                 });
                 return;
             }
-            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: false, profile: spaceUser.profile});
+            let result = await doDisable(spaceUser);
             if(result){
                 res.status(200).send({ success: true });
             }
@@ -1159,7 +1122,7 @@ let methods = {
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "The object updateOne return nothing."
+                        reason: "The space_users/users directUpdate return nothing."
                     }
                 });
             }

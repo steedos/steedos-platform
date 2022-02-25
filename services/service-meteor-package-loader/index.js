@@ -1,7 +1,6 @@
 "use strict";
 
 const objectql = require('@steedos/objectql');
-const core = require('@steedos/core');
 const triggerLoader = require('./lib').triggerLoader;
 const path = require('path');
 const Future = require('fibers/future');
@@ -36,16 +35,7 @@ module.exports = {
      * Events
      */
     events: {
-        "translations.change": {
-            handler() {
-                core.loadTranslations()
-            }
-        },
-        "translations.object.change": {
-            handler() {
-                core.loadObjectTranslations()
-            }
-        }
+
     },
 
 	/**
@@ -58,10 +48,10 @@ module.exports = {
 				steedosSchema.addMeteorDatasource();
                 const datasourceName = 'meteor';
 				packagePath = path.join(packagePath, '**');
+                const datasource = objectql.getDataSource(datasourceName);
+                await datasource.init();
 				await objectql.loadStandardMetadata(name, datasourceName);
-				await objectql.addAllConfigFiles(packagePath, datasourceName, name);
-				const datasource = objectql.getDataSource(datasourceName);
-				await datasource.init();
+                await objectql.addAllConfigFiles(packagePath, datasourceName, name);
 				await triggerLoader.load(this.broker, packagePath, name);
 				return;
 			}).promise();
@@ -83,6 +73,7 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
+        console.time(`service ${this.name} started`)
         let packageInfo = this.settings.packageInfo;
         if (!packageInfo) {
             return;
@@ -94,7 +85,8 @@ module.exports = {
             return;
         }
         await this.loadPackageMetadataFiles(path, this.name);
-        console.log(`service ${this.name} started`);
+        console.timeEnd(`service ${this.name} started`)
+        // console.log(`service ${this.name} started`);
     },
 
     /**

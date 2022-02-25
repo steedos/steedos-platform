@@ -26,7 +26,7 @@ module.exports = {
             }
         },
         getServicesConfigs:{
-            async handler(apiName, meta) {
+            async handler(apiName, meta, pluck = true) {
                 const serviceName = '*';
                 const metadataType = this.settings.metadataType;
                 const configs = await this.broker.call(`metadata.getServiceMetadatas`, {
@@ -34,12 +34,33 @@ module.exports = {
                     metadataType,
                     metadataApiName: apiName
                 }, {meta: meta})
-                return _.map(configs, 'metadata');
+                if (pluck) {
+                    return _.map(configs, 'metadata');
+                } else {
+                    return configs;
+                }
             }
         },
         register: {
             async handler(apiName, data, meta) {
-                return await this.broker.call('metadata.add', {key: this.getMatadataCacherKey(apiName), data: data}, {meta: meta});
+                return await this.broker.call('metadata.add', { key: this.getMatadataCacherKey(apiName), data: data }, { meta: meta });
+            }
+        },
+        mregister: {
+            /**
+             * data: {apiName1: value1, apiName2: value2}
+             */
+            async handler(data, meta) {
+                const mdata = {};
+                if (!data || _.isEmpty(data)) {
+                    return;
+                }
+                _.map(data, (value, key) => {
+                    mdata[this.getMatadataCacherKey(key)] = value
+                })
+                return await this.broker.call('metadata.madd', {
+                    data: mdata
+                }, { meta: meta });
             }
         },
         refresh: {
@@ -53,6 +74,24 @@ module.exports = {
                     return o && o._id ? -1 : 1;
                 }), config)
                 return config;
+            }
+        },
+        mrefresh: {
+            async handler(meta) {
+                const configs = await this.getServicesConfigs("*", meta, false);
+                if (configs.length == 0) {
+                    return null
+                }
+                let mconfig: any = {};
+                _.map(_.groupBy(configs, 'metadataApiName'), (_configs, metadataApiName) => {
+                    let config: any = {};
+                    const __configs = _.map(_configs, 'metadata');
+                    config = _.defaultsDeep({}, ..._.sortBy(__configs, function (o) {
+                        return o && o._id ? -1 : 1;
+                    }), config)
+                    mconfig[metadataApiName] = config
+                })
+                return mconfig;
             }
         },
         removeServiceMetadata: {
@@ -102,7 +141,20 @@ module.exports = {
                 }
                 await ctx.broker.call('metadata.addServiceMetadata', {key: this.getMatadataCacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: this.settings.metadataType, metadataApiName: metadataApiName})})
                 const newConfig = await this.refresh(metadataApiName, ctx.meta);
-                return await this.register(metadataApiName, newConfig, ctx.meta)
+                if (newConfig) {
+                    return await this.register(metadataApiName, newConfig, ctx.meta)
+                }
+            }
+        },
+        madd: {
+            async handler(ctx) {
+                // data : {k1:v1, k2:v2}
+                let data = ctx.params.data;
+                await ctx.broker.call('metadata.maddServiceMetadata', { data: data }, { meta: Object.assign({}, ctx.meta, { metadataType: this.settings.metadataType }) })
+                const newmConfig = await this.mrefresh(ctx.meta);
+                if (newmConfig) {
+                    return await this.mregister(newmConfig, ctx.meta)
+                }
             }
         },
         delete: {

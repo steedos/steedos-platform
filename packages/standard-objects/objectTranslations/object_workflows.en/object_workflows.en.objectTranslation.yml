@@ -66,6 +66,17 @@ fields:
       - label: Final Step
         value: "final_step"
     description: 
+  sync_direction:
+    label: Synchronization Direction
+    help: 
+    options:
+      - label: Both
+        value: "both"
+      - label: Instance To Object
+        value: "ins_to_obj"
+      - label: Object To Instance
+        value: "obj_to_ins"
+    description:
 groups:
   script: Script
 listviews:

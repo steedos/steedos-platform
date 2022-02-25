@@ -4,7 +4,7 @@ import { getObjectConfig } from '../types/object_dynamic_load';
 import _ = require('underscore');
 import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver, dealWithRelatedFields } from './helpers';
 import { getObjectServiceName } from '.';
-import { jsonToObject } from '../metadata-register/object';
+import { jsonToObject } from '../util/convert';
 import { extend } from '../util';
 const Future = require('fibers/future');
 // import { parse } from '@steedos/formula';
@@ -617,9 +617,10 @@ module.exports = {
                 resolvers[objectApiName][relatedFieldName] = getRelatedResolver(objectApiName, detailObjectApiName, detailFieldName, detailFieldReferenceToFieldName);
             }
         };
-        schema.events[`${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`] = {
+        schema.events[`${objectConfig.datasource}.${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`] = {
             handler: async function (ctx) {
                 let objectConfig = ctx.params.data;
+               // console.log(`${objectConfig.datasource}.${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`);
                 // 对象发生变化时，重新创建Steedos Object 对象
                 const datasource = getDataSource(objectConfig.datasource);
                 if (datasource) {
@@ -639,13 +640,13 @@ module.exports = {
                       await datasource.init();
                     }
 
-                    if(datasource.name === 'meteor' && Creator.Objects[objectConfig.name]){
+                    if (datasource.name === 'meteor' && Creator.Objects[objectConfig.name]) {
                         jsonToObject(objectConfig);
                         const localTriggers = (localObjectConfig as any).triggers;
                         if(localTriggers){
                             objectConfig.triggers = localTriggers; 
                         }
-                        extend(objectConfig, {triggers: (localObjectConfig as any)._baseTriggers})
+                        extend(objectConfig, { triggers: Creator.Objects[objectConfig.name].triggers }, { triggers: (localObjectConfig as any)._baseTriggers })
                         Creator.Objects[objectConfig.name] = objectConfig;
                         
                         await Future.task(() => {

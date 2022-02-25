@@ -1,6 +1,6 @@
 {
   "name": "@steedos/steedos-project-template",
-  "version": "2.1.74",
+  "version": "2.1.85",
   "private": false,
   "repository": "https://github.com/steedos/steedos-project-template.git",
   "description": "",
@@ -8,7 +8,8 @@
     "node": ">=12"
   },
   "scripts": {
-    "start": "moleculer-runner services",
+    "start": "yarn flushCacherDB && moleculer-runner services",
+    "flushCacherDB": "node .scripts/flush_cacher_db.js",
     "start:steedos": "cross-env NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",
     "start:app": "cross-env NODEID=STEEDOS-APP moleculer-runner --repl services/steedos-app",
     "console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
@@ -27,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-community": "2.1.74"
+    "@steedos/service-community": "2.1.85"
   },
   "devDependencies": {
     "eslint": "^7.7.0",

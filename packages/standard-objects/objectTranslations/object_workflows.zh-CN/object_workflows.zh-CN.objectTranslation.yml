@@ -66,6 +66,17 @@ fields:
       - label: 结束节点同步
         value: "final_step"
     description: 
+  sync_direction:
+    label: 同步方向
+    help: 
+    options:
+      - label: 双向同步
+        value: "both"
+      - label: 审批单至对象
+        value: "ins_to_obj"
+      - label: 对象至审批单
+        value: "obj_to_ins"
+    description:
 groups:
   script: 脚本
 listviews:

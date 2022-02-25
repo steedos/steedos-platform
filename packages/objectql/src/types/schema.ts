@@ -7,7 +7,6 @@ import { getFromContainer } from 'typeorm';
 // import { loadCoreValidators } from '../validators';
 // import { loadStandardBaseObjects } from './object_dynamic_load';
 // import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
-import { buildGraphQLSchema } from '../graphql';
 import { MetadataRegister } from '../metadata-register';
 import { MetadataDriver } from '../driver/metadata';
 
@@ -22,7 +21,6 @@ export type SteedosSchemaConfig = {
 export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
     private _objectsMap: Dictionary<{ datasourceName: string, filePath?: string }> = {};
-    private graphQLSchema: any = null;
     private _broker: any = null;
     private _metadataBroker: any = null;
     metadataRegister: MetadataRegister = null;
@@ -230,19 +228,18 @@ export class SteedosSchema {
         return this._datasources
     }
 
-    buildGraphQLSchema() {
-        this.graphQLSchema = buildGraphQLSchema(this);
-    }
-
-    getGraphQLSchema() {
-        if (!this.graphQLSchema) {
-            this.buildGraphQLSchema();
-        }
-        return this.graphQLSchema;
-    }
-
     async getAllObject() {
-        return await this.metadataBroker.call("objects.getAll");
+        let schemaObjects = [];
+        const datasources = this.getDataSources();
+        for (const name in datasources) {
+            const datasource = datasources[name]
+            const datasourceObjects = await datasource.getObjects();
+            if (datasourceObjects && datasourceObjects.length > 0) {
+                schemaObjects = schemaObjects.concat(datasourceObjects);
+            }
+        }
+        return schemaObjects;
+        // return await this.metadataBroker.call("objects.getAll");
     }
 }
 

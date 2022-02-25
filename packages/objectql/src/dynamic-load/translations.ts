@@ -43,7 +43,9 @@ export const addTranslationsFiles = async (filePath: string)=>{
             console.error(`addTranslation error`, error.message)
         }
     }
-    await brokeEmitEvents(filePath)
+    if (translations && translations.length > 0) {
+        await brokeEmitEvents(filePath)
+    }
 }
 
 export const getTranslations = async ()=>{

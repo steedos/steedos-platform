@@ -53,7 +53,7 @@ export function createSpace(name: string): ActionFunc {
 
       try {
         space = await Client4.createSpace(name);
-      } catch (error) {
+      } catch (error: any) {
           forceLogoutIfNecessary(error, dispatch, getState);
           dispatch(logError(error));
           return {error};

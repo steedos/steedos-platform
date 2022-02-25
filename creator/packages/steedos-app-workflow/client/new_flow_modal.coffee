@@ -1,4 +1,4 @@
-fields = ['category', 'name', 'company_id']
+fields = ['category', 'name', 'company_id', 'object_name']
 Template.new_flow_modal.helpers
 	schema: ()->
 		schema = {}
@@ -45,6 +45,9 @@ Template.new_flow_modal.events
 		if companyId
 			form.company_id = companyId
 
+		if doc.object_name
+			form.object_name = doc.object_name
+
 		data = {
 			"Forms": [form]
 		}
@@ -69,7 +72,8 @@ Template.new_flow_modal.events
 
 				newFlow = _.find flows, (f)->
 							return f.form == newFormId
-				WorkflowCore.openFlowDesign(Steedos.locale(), newFlow.space, newFlow._id, Creator.getUserCompanyId())
+				if (!newFlow.object_name)
+					WorkflowCore.openFlowDesign(Steedos.locale(), newFlow.space, newFlow._id, Creator.getUserCompanyId())
 				FlowRouter.go("/app/admin/flows/view/#{newFlow._id}")
 				Modal.hide(template)
 

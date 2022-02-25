@@ -1,0 +1,13 @@
+{
+  "name": "@steedos/service-translations",
+  "version": "2.1.85",
+  "main": "package.service.js",
+  "license": "MIT",
+  "dependencies": {
+    "node-schedule": "^2.0.0"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}

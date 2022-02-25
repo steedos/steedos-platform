@@ -4,7 +4,7 @@
 const data = {};
 const etags = {};
 
-export default (url = null, options = {headers: {}}) => {
+export default (url = null, options = { headers: {} }) => {
     url = url || options.url; // eslint-disable-line no-param-reassign
 
     if (options.method === 'GET' || !options.method) {

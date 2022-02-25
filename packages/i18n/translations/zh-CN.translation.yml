@@ -1287,14 +1287,14 @@ CustomLabels:
   workflow_export_search: 按流程查看申请单
   workflow_export_data: 导出申请单
   spaces_isarrearageSpace: 您的工作区已欠费
-  cc_help: 'https://www.steedos.com/help/workflow/instance_carboncopy'
+  cc_help: 'https://www.steedos.cn/docs/user/workflow#%E5%A6%82%E4%BD%95%E4%BC%A0%E9%98%85'
   relocate_help: >-
-    https://www.steedos.com/help/workflow/instance_monitor#%E9%87%8D%E5%AE%9A%E4%BD%8D
+    https://www.steedos.cn/docs/user/workflow#%E6%B5%81%E7%A8%8B%E5%B9%B2%E9%A2%84
   reassign_help: >-
-    https://www.steedos.com/help/workflow/instance_monitor#%E8%BD%AC%E7%AD%BE%E6%A0%B8
-  forward_help: 'https://www.steedos.com/help/workflow/instance_forward'
-  export_filter_help: 'https://www.steedos.com/help/workflow/instance_search'
-  new_help: 'https://www.steedos.com/help/workflow/instance_add'
+    https://www.steedos.cn/docs/user/workflow#%E6%B5%81%E7%A8%8B%E5%B9%B2%E9%A2%84
+  forward_help: 'https://www.steedos.cn/docs/user/workflow#%E5%A6%82%E4%BD%95%E8%BD%AC%E5%8F%91'
+  export_filter_help: 'https://www.steedos.cn/docs/user/workflow#%E5%A6%82%E4%BD%95%E6%9F%A5%E8%AF%A2'
+  new_help: 'https://www.steedos.cn/docs/user/workflow#%E5%A6%82%E4%BD%95%E5%A1%AB%E5%8D%95'
   Inbox Suggestion NextSteps Label: '下一步骤: '
   Inbox Suggestion NextSteps Handler Label: '处理人: '
   Workflow Designer: 流程设计器

@@ -99,7 +99,7 @@ fields:
     description: 
   multiple:
     label: 多选
-    help: 
+    help: 单选<==>多选 相互切换，请自行重新提交已有记录或在数据库中统一修改此字段的保存格式。
     description: 
   options:
     label: 选择项

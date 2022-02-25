@@ -188,6 +188,7 @@ fields:
         }
 
         _.each(relatedLists, function(related){
+          if (!related) return;
           let foo = related.split('.');
           let rObjectName = foo[0];
           let rFieldName = foo[1];

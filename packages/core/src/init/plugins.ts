@@ -9,7 +9,6 @@ const app = express();
 import { getSteedosSchema } from '@steedos/objectql';
 import * as initConfig from './init-config.json'
 const PACKAGE_SERVICE_FILE_NAME = 'package.service.js';
-const Future = require('fibers/future');
 export class Plugins {
     static async init(coreInitConfig: any = {}) {
         let builtInPluginsName = coreInitConfig.built_in_plugins || [];
@@ -27,22 +26,19 @@ export class Plugins {
                 const pluginDir = this.getPluginDir(name);
                 let packageServiceFilePath = path.join(pluginDir, PACKAGE_SERVICE_FILE_NAME);
                 if (fs.existsSync(packageServiceFilePath)) {
-                    await Future.task(async () => {
-                        try {
-                            let service = broker.loadService(packageServiceFilePath);
-                            if(!broker.started){
-                                broker._restartService(service)
-                            }
-                            await broker.waitForServices(service.name)
-                            if (_.isFunction(service.init)) {
-                                service.init(pluginContext);
-                                WebApp.connectHandlers.use(pluginContext.app);
-                            }
-                        } catch (error) {
-                            console.error(error);
+                    try {
+                        let service = broker.loadService(packageServiceFilePath);
+                        if (!broker.started) {
+                            broker._restartService(service)
                         }
-                    }).promise();
-
+                        await broker.waitForServices(service.name, null, 20)
+                        if (_.isFunction(service.init)) {
+                            service.init(pluginContext);
+                            WebApp.connectHandlers.use(pluginContext.app);
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    }
                 } else {
                     console.error(`Please add ${PACKAGE_SERVICE_FILE_NAME} in Plugin ${name}.`);
                 }
