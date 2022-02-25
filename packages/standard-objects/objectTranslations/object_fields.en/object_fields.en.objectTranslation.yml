@@ -105,7 +105,7 @@ fields:
     description: 
   multiple:
     label: Multiple
-    help: 
+    help: Single choice and multiple choice switch to each other. Please resubmit the existing records or modify the saving format of this field in the database.
     description: 
   options:
     label: Options
