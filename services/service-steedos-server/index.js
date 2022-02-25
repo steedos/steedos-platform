@@ -236,7 +236,6 @@ module.exports = {
 						this.broker._restartService(this.standardObjectsPackageLoaderService)
 					}
 				})
-				// await this.broker.waitForServices(this.standardObjectsPackageLoaderService.name);
 			}
 
 		}

@@ -347,6 +347,10 @@ async function getMetadataServices(broker) {
     return values;
 }
 
+async function lrange(ctx, key, start = 0, end = -1) {
+    return await ctx.broker.cacher.client.lrange(key, start, end);
+}
+
 export async function started(broker) {
     // mock_prefix = broker.cacher?.prefix || "";
     await broker.cacher.set(`${METADATA_SERVICES_PERFIX}.${broker.nodeID}`, {});
@@ -502,4 +506,63 @@ export const ActionHandlers = {
         }
         
     },
+
+    async lpush(ctx: any) {
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const key = ctx.params.key;
+        const data = ctx.params.data;
+        if (!_.isArray(data)) {
+            throw new Error('data must be an array.');
+        }
+        const _data = [];
+        _.each(data, (item) => {
+            _data.push(JSON.stringify(item))
+        })
+        return await ctx.broker.cacher.client.lpush(`${keyPrefix}${key}`, ..._data);
+    },
+
+    async rpush(ctx: any) {
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const key = ctx.params.key;
+        const data = ctx.params.data;
+        if (!_.isArray(data)) {
+            throw new Error('data must be an array.');
+        }
+        const _data = [];
+        _.each(data, (item) => {
+            _data.push(JSON.stringify(item))
+        })
+        return await ctx.broker.cacher.client.rpush(`${keyPrefix}${key}`, ..._data);
+    },
+
+    async lrange(ctx: any) {
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const { key, start = 0, end = -1 } = ctx.params.key;
+        return await lrange(ctx, `${keyPrefix}${key}`, start, end);
+    },
+
+    async filterList(ctx: any) {
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const { key } = ctx.params;
+        const keys = await redisScanKeys(ctx.broker.cacher.client, `${keyPrefix}${key}`);
+        if (!keys || keys.length == 0) {
+            return [];
+        }
+        const results = [];
+        for (const itemKey of keys) {
+            try {
+                if (itemKey) {
+                    const itemList = await lrange(ctx, itemKey);
+                    if(itemList && _.isArray(itemList)){
+                        _.each(itemList, (item)=>{
+                            results.push(JSON.parse(item));
+                        })
+                    }
+                }
+            } catch (error) {
+                console.error(`error`, error);
+            }
+        }
+        return results;
+    }
 };

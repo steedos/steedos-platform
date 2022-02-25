@@ -81,6 +81,26 @@ module.exports = {
 				return await ActionHandlers.madd(ctx);
 			}
 		},
+		lpush: {
+			async handler(ctx) {
+				return await ActionHandlers.lpush(ctx);
+			}
+		},
+		rpush: {
+			async handler(ctx) {
+				return await ActionHandlers.rpush(ctx);
+			}
+		},
+		lrange: {
+			async handler(ctx) {
+				return await ActionHandlers.lrange(ctx);
+			}
+		},
+		filterList: {
+			async handler(ctx) {
+				return await ActionHandlers.filterList(ctx);
+			}
+		},
 		addServiceMetadata: {
 			async handler(ctx) {
 				return await ActionHandlers.addServiceMetadata(ctx);
