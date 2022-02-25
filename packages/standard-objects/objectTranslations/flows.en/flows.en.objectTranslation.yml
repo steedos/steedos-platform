@@ -220,15 +220,15 @@ fields:
     label: Instance Field
     help: 
     description: 
-  instance_fields.$.field_name:
+  instance_fields.$.name:
     label: Instance Field Name
     help: 
     description: 
-  instance_fields.$.is_readonly:
+  instance_fields.$.readonly:
     label: Readonly
     help: 
     description: 
-  instance_fields.$.is_required:
+  instance_fields.$.required:
     label: Required
     help: 
     description:

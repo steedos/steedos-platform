@@ -24,7 +24,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['steedos-server'],
 
 	/**
 	 * Actions

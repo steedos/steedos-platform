@@ -256,6 +256,7 @@ fields:
     name: app
   historys:
     label: History Workflows
+    type: grid
     blackbox: true
     omit: true
     hidden: true
@@ -295,7 +296,7 @@ fields:
     label: Field
     blackbox: true
     type: object
-  instance_fields.$.field_name:
+  instance_fields.$.name:
     label: Field
     type: lookup
     multiple: false
@@ -310,10 +311,10 @@ fields:
         const objectName = _.isObject(values.object_name) ? values.object_name.name : values.object_name;
         if(objectName){
           if(values._grid_row_id){
-            var selected = _.find(values.fields, function(item){return item._id==values._grid_row_id});
-            var selectedAll = _.pluck(values.fields, 'field_name');
+            var selected = _.find(values.instance_fields, function(item){return item._id==values._grid_row_id});
+            var selectedAll = _.pluck(values.instance_fields, 'name');
             if(selected){
-              selectedAll = _.difference(selectedAll, [selected.field_name]);
+              selectedAll = _.difference(selectedAll, [selected.name]);
             }
             if(selectedAll && selectedAll.length > 0){
               return [['object', '=', objectName], ['name', '!=', selectedAll]]
@@ -324,7 +325,7 @@ fields:
           return ['_id', '=', 'no']
         }
       }
-  instance_fields.$.is_required:
+  instance_fields.$.required:
     label: Required
     type: boolean
   instance_table_fields:

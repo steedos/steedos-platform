@@ -4,11 +4,9 @@ const Future = require('fibers/future');
 const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
 const express = require('express');
-const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
 const app = express();
 const routersApp = express();
-const router = express.Router();
 var path = require('path');
 import fs = require('fs')
 
@@ -157,7 +155,6 @@ const getClientBaseObject = () => {
 export class Core {
 
     static run() {
-        this.initGraphqlAPI();
         this.initPublishAPI()
         this.initCoreRoutes();
         this.initRouters();
@@ -188,32 +185,6 @@ export class Core {
                 break;
         }
         return when
-    }
-
-    private static initGraphqlAPI() {
-        router.use("/", steedosAuth.setRequestUser);
-        router.use("/", function (req, res, next) {
-            if (req.user) {
-                return next();
-            } else {
-                return res.status(401).send({
-                    errors: [
-                        {
-                            'message': 'You must be logged in to do this.'
-                        }
-                    ]
-                });
-            }
-        });
-
-        router.use('/', graphqlHTTP(async (request, response, graphQLParams) => ({
-              schema: objectql.getSteedosSchema().getGraphQLSchema(),
-              graphiql: true,
-            })),
-        );
-
-        app.use('/graphql/v1', router);
-        return WebApp.connectHandlers.use(app);
     }
 
     private static initPublishAPI() {

@@ -21,6 +21,7 @@ export function objectToJson(objectConfig) {
     _.forEach(objectConfig.actions, (action, key) => {
         const _todo = action?.todo
         if (_todo && _.isFunction(_todo)) {
+            action.todo = _todo.toString()
             action._todo = _todo.toString()
         }
         const _visible = action?.visible

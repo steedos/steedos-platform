@@ -97,6 +97,8 @@ router.post('/am/forms', async function (req, res) {
         for (let i = 0; i < data['Forms'].length; i++) {
             let form = data['Forms'][i];
             let objectName = form["object_name"];
+            const instanceFields = await designerManager.getBusinessFields(objectName)
+            const formFields = await designerManager.transformObjectFieldsToFormFields(instanceFields);
             // 执行者的身份校验
             await designerManager.checkSpaceUserBeforeUpdate(form['space'], userId, req.user.roles)
 
@@ -140,6 +142,9 @@ router.post('/am/forms', async function (req, res) {
                             modified_by: userId,
                             fields: form["current"]["fields"]
                         };
+                        if (objectName) {
+                            current.fields = Object.values(formFields);
+                        }
                         newForm.current = current;
                         newForm.historys = [];
                         formCollection.insert(newForm);
@@ -172,6 +177,7 @@ router.post('/am/forms', async function (req, res) {
                         }
                         if (objectName) {
                             flow.object_name = objectName;
+                            flow.instance_fields = instanceFields
                         }
                         let flowPerms = {
                             _id: flowCollection._makeNewID()
@@ -190,7 +196,7 @@ router.post('/am/forms', async function (req, res) {
                         flow.perms = flowPerms;
                         let flow_current = {
                             _id: flowCollection._makeNewID(),
-                            steps: designerManager.makeSteps(userId),
+                            steps: designerManager.makeSteps(userId, newForm.current.fields),
                             _rev: 1,
                             flow: flow._id,
                             form_version: form["current"]["id"],
