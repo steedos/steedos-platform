@@ -2035,7 +2035,6 @@ uuflowManager.submit_instance = (instance_from_client, user_info) ->
 		# applicant和原instance的applicant相等
 		# 判断流程是否已升级，instance["flow_version"] == flow["current"]["_id"]表示流程未升级
 		if instance.flow_version is flow.current._id
-			instance_traces[0]["approves"][0].values = values
 			instance_traces[0]["approves"][0].judge = "submitted"
 			# 判断next_steps是否为空,不为空则写入到当前approve的next_steps中
 			if next_steps
@@ -2054,7 +2053,6 @@ uuflowManager.submit_instance = (instance_from_client, user_info) ->
 			# 清空原来的值， 存入当前最新版flow中开始节点的step_id
 			instance_traces[0].step = start_step._id
 			instance_traces[0].name = start_step.name
-			instance_traces[0]["approves"][0].values = values
 			instance_traces[0]["approves"][0].judge = "submitted"
 
 	else
@@ -2076,7 +2074,6 @@ uuflowManager.submit_instance = (instance_from_client, user_info) ->
 
 		# 判断流程是否已升级，instance["flow_version"] == flow["current"]["_id"]表示流程未升级
 		if instance.flow_version is flow.current._id
-			instance_traces[0]["approves"][0].values = values
 			# 判断next_steps是否为空,不为空则写入到当前approve的next_steps中
 			if next_steps
 				instance_traces[0]["approves"][0].next_steps = next_steps
@@ -2093,10 +2090,9 @@ uuflowManager.submit_instance = (instance_from_client, user_info) ->
 			# 清空原来的值， 存入当前最新版flow中开始节点的step_id
 			instance_traces[0].step = start_step._id
 			instance_traces[0].name = start_step.name
-			instance_traces[0]["approves"][0].values = values
 
 	# 调整approves 的values 删除values中在当前步骤中没有编辑权限的字段值
-	# instance_traces[0]["approves"][0].values = uuflowManager.getApproveValues(values, step.permissions, instance.form, instance.form_version) # 非odata字段从台帐将值传到审批单（开始节点此字段无编辑权限），审批单提交后，值丢失 #891
+	instance_traces[0]["approves"][0].values = uuflowManager.getApproveValues(values, step.permissions, instance.form, instance.form_version) # 非odata字段从台帐将值传到审批单（开始节点此字段无编辑权限），审批单提交后，值丢失 #891
 
 	setObj.traces = instance_traces
 	db.instances.update({ _id: instance_id }, { $set: setObj })
