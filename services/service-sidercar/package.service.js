@@ -10,13 +10,12 @@ const _ = require("lodash");
 const kleur = require("kleur");
 const fetch = require("node-fetch");
 const { MoleculerError, MoleculerClientError } = require("moleculer").Errors;
-const ApiGateway = require("moleculer-web");
 const pkg = require("./package.json");
 
 module.exports = {
-	name: '$sidecar',
+	name: pkg.name,
 
-	mixins: [ApiGateway],
+	mixins: [],
 
 	metadata: {
 		$category: "gateway",
@@ -30,38 +29,7 @@ module.exports = {
 	},
 
 	settings: {
-		port: process.env.SIDECAR_PORT != null ? process.env.SIDECAR_PORT : 5103,
-		path: "/v1",
 
-		routes: [
-			{
-				path: "/",
-
-				mappingPolicy: "restrict",
-
-				bodyParsers: {
-					json: true
-				},
-
-				aliases: {
-					// Registry-access endpoints
-					"GET /registry/nodes": "$node.list",
-					"GET /registry/services": "$node.services",
-					"GET /registry/actions": "$node.actions",
-					"GET /registry/events": "$node.events",
-
-					"POST /registry/services": "$sidecar.registerService",
-					"DELETE /registry/services/:serviceName": "$sidecar.unregisterService",
-
-					// Calling action
-					"POST /call/:action": "$sidecar.callAction",
-
-					// Emitting event
-					"POST /emit/:event": "$sidecar.emitEvent",
-					"POST /broadcast/:event": "$sidecar.broadcastEvent"
-				}
-			}
-		]
 	},
 
 	created() {
@@ -76,6 +44,10 @@ module.exports = {
 		 * Register an external service
 		 */
 		registerService: {
+			rest: {
+				method: "POST",
+				path: "/registerService"
+			},
 			params: {
 				name: "string|no-empty"
 			},
@@ -148,6 +120,10 @@ module.exports = {
 		 * Unregister a loaded external service
 		 */
 		unregisterService: {
+			rest: {
+				method: "DELETE",
+				path: "/unregisterService"
+			},
 			params: {
 				serviceName: "string|no-empty|trim"
 			},
@@ -176,6 +152,10 @@ module.exports = {
 		 * Call an action
 		 */
 		callAction: {
+			rest: {
+				method: "POST",
+				path: "/callAction"
+			},
 			params: {
 				action: "string|no-empty|trim",
 				params: "any|optional",
@@ -222,6 +202,10 @@ module.exports = {
 		 * Emit an event
 		 */
 		emitEvent: {
+			rest: {
+				method: "POST",
+				path: "/emitEvent"
+			},
 			params: {
 				event: "string|no-empty|trim",
 				params: "any|optional",
@@ -245,6 +229,10 @@ module.exports = {
 		 * Broadcast an event
 		 */
 		broadcastEvent: {
+			rest: {
+				method: "POST",
+				path: "/broadcastEvent"
+			},
 			params: {
 				event: "string|no-empty|trim",
 				params: "any|optional",
@@ -363,7 +351,6 @@ module.exports = {
 	},
 
 	started() {
-		this.listenAddress = this.server.address();
 	},
 
 	stopped() {
