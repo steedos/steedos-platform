@@ -27,7 +27,7 @@
     "moleculer": "^0.14.10",
     "moleculer-db": "^0.8.4",
     "moleculer-db-adapter-mongo": "^0.4.7",
-    "moleculer-web": "^0.9.0",
+    "moleculer-web": "^0.10.4",
     "nats": "^1.4.12",
     "node-red": "^1.2.9",
     "steedos-server": "2.1.85"

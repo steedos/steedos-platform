@@ -104,7 +104,7 @@
     "ioredis": "^4.22.0",
     "jquery": "^2.2.4",
     "jquery-ui-sortable": "^1.0.0",
-    "moleculer": "0.14.12",
+    "moleculer": "^0.14.12",
     "push.js": "^1.0.12",
     "simplemde": "1.11.2",
     "summernote": "^0.8.11",
