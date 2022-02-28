@@ -2,6 +2,7 @@ name: categories
 icon: hierarchy
 label: Workflow Category
 hidden: true
+version: 2
 fields:
   name:
     type: text
