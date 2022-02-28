@@ -263,5 +263,6 @@ module.exports = {
 	// Called after broker stopped.
 	async stopped(broker) {
 
-	}
+	},
+	skipProcessEventRegistration: true
 };
