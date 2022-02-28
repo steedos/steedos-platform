@@ -1,15 +1,25 @@
 # CONTRIBUTING GUIDE
 
+## Development Environment
+
+We recommend using Gitpod for online development, which eliminates the tedious process of setting up a development environment.
+
+If you need to deploy the development environment locally, you can refer to the following Gitpod configuration files, which describe the specific process:
+
+- [.gitpod.Dockerfile](.gitpod.Dockerfile)
+- [.gitpod.yml](.gitpod.yml)
+
+> `gitpod-workspace-base:2.1` is the docker of steedos template project, see it's [.gitpod.Dockerfile](https://github.com/steedos/steedos-project-template/blob/master/.gitpod.Dockerfile) for more.
+
 ## Requirements
-
-- [Meteor](https://www.meteor.com/) version = 1.9.3. Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
-
-> Only when you run the source code  in '/creator' folder of our platform, you need to install Meteor. If you use Steedos as a development tool, you do not need to install Meteor.
 
 - [MongoDB](https://www.mongodb.com/try/download/) version = 4.2.17. MongoDB is a general purpose, document-based, distributed database built for modern application developers.
 - [Redis](https://redis.io/) version = 6.2.6.
 - [Node.js](https://nodejs.org/en/download/) version = 12.22.7 (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
 - [Yarn](https://yarnpkg.com/en/) version = 1.22.17 (which can be checked by running `yarn version`). Yarn is a performant package manager for JavaScript and replaces the `npm` client. It is not strictly necessary but highly encouraged.
+- [Meteor](https://www.meteor.com/) version = 1.9.3. Meteor is an open source platform for web, mobile, and desktop used by over half a million developers around the globe to make shipping javascript applications simple, efficient, and scalable.
+
+> Only when you run the source code  in '/creator' folder of our platform, you need to install Meteor. If you use Steedos as a development tool, you do not need to install Meteor.
 
 ## Prepare For Development
 
