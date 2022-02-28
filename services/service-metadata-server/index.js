@@ -41,6 +41,6 @@ module.exports = {
   },
 
   async started() {
-    await this.broker.waitForServices(['metadata','apps','objects','permissionsets','translations','triggers']);
+    await this.broker.waitForServices(['metadata', 'apps', 'objects', 'permissionsets', 'translations', 'triggers'], null, 10);
   }
 }

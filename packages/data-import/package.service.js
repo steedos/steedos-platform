@@ -17,7 +17,8 @@ module.exports = {
     settings: {
         packageInfo: {
 			path: path.join(__dirname, 'lib'),
-			name: packageName
+            name: packageName,
+            isPackage: false
 		}
     },
 

@@ -28,7 +28,7 @@ const Preference = ({ currentUser, match, settings, history, location, tenant }:
             //     credentials: 'include'
             // });
 
-        } catch (err) {
+        } catch (err: any) {
             setError(err.message);
         }
     };

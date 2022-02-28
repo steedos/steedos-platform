@@ -107,7 +107,7 @@ export class CreatorManager {
 
     _.each(entities, function (entity, idx) {
       let entity_OdataProperties = {};
-      let id = entities[idx]["_id"];
+      let id = entities[idx] ? entities[idx]["_id"] : null;
       entity_OdataProperties['@odata.id'] = that.getODataNextLinkPath(space, key) + '(\'' + ("" + id) + '\')';
       entity_OdataProperties['@odata.etag'] = "W/\"08D589720BBB3DB1\"";
       entity_OdataProperties['@odata.editLink'] = entity_OdataProperties['@odata.id'];

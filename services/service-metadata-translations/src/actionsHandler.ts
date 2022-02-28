@@ -5,12 +5,12 @@ function getMD5(data){
     return md5.update(data).digest('hex');
 }
 
-function getObjectCacherKey(objectApiName: string, data?): string{
-    let suffix = "*";
-    if(data){
-        suffix = getMD5(JSON.stringify(data));    
-    }
-    return `$steedos.#translations-object.${objectApiName}.${suffix}`
+function getObjectCacherKey(objectApiName: string): string {
+    // let suffix = "*";
+    // if(data){
+    //     suffix = getMD5(JSON.stringify(data));    
+    // }
+    return `$steedos.#translations-object.${objectApiName}`
 }
 
 function getCacherKey(key: string, data?): string{
@@ -30,11 +30,17 @@ export const ActionHandlers = {
         return await ctx.broker.call('metadata.add', {key: getCacherKey(key, data), data: data}, {meta: ctx.meta})
     },
     async getObjectTranslations(ctx: any): Promise<any> {
-        return await ctx.broker.call('metadata.filter', {key: getObjectCacherKey("*")}, {meta: ctx.meta})
+        return await ctx.broker.call('metadata.filterList', { key: getObjectCacherKey("*") }, { meta: ctx.meta })
     },
     async addObjectTranslation(ctx: any): Promise<boolean>{
         const { objectApiName, data } = ctx.params;
-        return await ctx.broker.call('metadata.add', {key: getObjectCacherKey(objectApiName, data), data: data}, {meta: ctx.meta})
+        return await ctx.broker.call('metadata.rpush', { key: getObjectCacherKey(objectApiName), data: [data] }, { meta: ctx.meta })
+    },
+    async addObjectTranslations(ctx: any): Promise<any> {
+        const { data } = ctx.params;
+        for (const item of data) {
+            await ctx.broker.call('metadata.rpush', { key: getObjectCacherKey(item.objectApiName), data: [item] }, { meta: ctx.meta })
+        }
     },
     // async getTranslations(ctx: any): Promise<any> {
     //     return await ctx.broker.call('metadata.filter', {key: cacherKey("*")}, {meta: ctx.meta})

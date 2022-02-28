@@ -1,7 +1,7 @@
 {
   "name": "@steedos/accounts",
   "private": false,
-  "version": "2.1.80",
+  "version": "2.1.85",
   "main": "lib/index.js",
   "files": [
     "/package.json",
@@ -48,15 +48,14 @@
     "oauth2-server": "^2.4.1",
     "pug": "^3.0.2",
     "redux-thunk": "^2.3.0",
-    "saml-idp": "^1.1.0",
     "tslib": "1.10.0",
     "url-join": "^4.0.1",
     "validator": "^13.6.0"
   },
   "devDependencies": {
-    "@steedos/auth": "2.1.80",
-    "@steedos/meteor-bundle-runner": "2.1.80",
-    "@steedos/objectql": "2.1.80",
+    "@steedos/auth": "2.1.85",
+    "@steedos/meteor-bundle-runner": "2.1.85",
+    "@steedos/objectql": "2.1.85",
     "@steedos/steedos-plugin-workflow": "^2.0.4",
     "@types/dotenv-flow": "^3.0.0",
     "@types/node": "12.6.8",
@@ -64,7 +63,7 @@
     "dotenv": "^8.2.0",
     "dotenv-flow": "^3.1.0",
     "nodemon": "1.19.1",
-    "steedos-server": "2.1.80",
+    "steedos-server": "2.1.85",
     "ts-node": "8.3.0",
     "typescript": "3.5.3"
   },

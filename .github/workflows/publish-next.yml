@@ -1,0 +1,164 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Publish Next Steedos Platform
+
+on:
+  push:
+     branches:
+       - publish-next
+  # push:
+  #   tags:
+  #     - 'v**'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # - name: Checkout branche
+      #   run: |
+      #     git checkout next
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - uses: meteorengineer/setup-meteor@v1
+        with:
+          meteor-release: '1.9.3'
+      - run: yarn --frozen-lockfile
+      - name: Bootstrap platform
+        run: |
+          yarn bootstrap
+      - name: Build platform
+        env:
+          CI: false
+        run: |
+          npx browserslist@latest --update-db
+          npm install -g mkdirp
+          yarn build
+      - name: Build creator
+        run: |
+          yarn build_creator
+      - name: Push creator build
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add . 
+          git commit -m 'creator build'
+          git push
+      - name: Lerna version
+        run: |
+          lerna version patch --no-git-tag-version --force-publish --exact --yes
+      - name: Set current version
+        run: |
+          CURRENT_VERSION=$(node -p 'require("./lerna.json").version')
+          echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
+      - name: Create commits & Push
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add . 
+          git commit -m v${{ env.CURRENT_VERSION }}
+          git push
+      # - name: Upgrade template
+      #   run: |
+      #     git config user.name github-actions
+      #     git config user.email github-actions@github.com
+      #     yarn upgrade-template
+      - name: Lerna publish
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          lerna publish from-package --yes --dist-tag next
+        env:
+          CI: false
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - name: Create tag
+        run: |
+          git tag -a v${{ env.CURRENT_VERSION }} -m 'published v${{ env.CURRENT_VERSION }}' 
+          git push origin --tags
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v${{ env.CURRENT_VERSION }}
+          release_name: v${{ env.CURRENT_VERSION }}
+          draft: false
+          prerelease: false
+      - name: Create project template release
+        id: create_project_template_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_TEMPLATE_GITHUB_TOKEN }}
+          CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
+        run: |
+          yarn create-project-template-release
+      - name: Sync to taobao 
+        run: |
+          yarn sync-to-taobao
+      - name: Sync to cnpm
+        run: |
+          npm install cnpm -g
+          cnpm sync @steedos/accounts
+          cnpm sync @steedos/auth
+          cnpm sync steedos-cli
+          cnpm sync @steedos/client
+          cnpm sync @steedos/core
+          cnpm sync create-steedos-app
+          cnpm sync create-steedos-node-red-app
+          cnpm sync @steedos/data-import
+          cnpm sync @steedos/design-system-react
+          cnpm sync @steedos/filters
+          cnpm sync @steedos/formula
+          cnpm sync @steedos/i18n
+          cnpm sync @steedos/metadata-api
+          cnpm sync @steedos/metadata-core
+          cnpm sync @steedos/meteor-bundle-dependencies
+          cnpm sync @steedos/meteor-bundle-runner
+          cnpm sync @steedos/migrate
+          cnpm sync @steedos/mongodb-bi-connector
+          cnpm sync @steedos/node-red-app-template
+          cnpm sync @steedos/objectql
+          cnpm sync @steedos/plugin-enterprise
+          cnpm sync @steedos/process
+          cnpm sync @steedos/react
+          cnpm sync @steedos/schemas
+          cnpm sync @steedos/standard-objects
+          cnpm sync @steedos/plugin-dingtalk
+          cnpm sync @steedos/plugin-qywx
+          cnpm sync @steedos/steedos-plugin-schema-builder
+          cnpm sync @steedos/tailwind
+          cnpm sync @steedos/webapp
+          cnpm sync @steedos/workflow
+          cnpm sync steedos-server
+          cnpm sync @steedos/service-accounts
+          cnpm sync @steedos/service-api
+          cnpm sync @steedos/service-charts
+          cnpm sync @steedos/service-cloud-init
+          cnpm sync @steedos/service-fields-indexs
+          cnpm sync @steedos/service-metadata-apps
+          cnpm sync @steedos/service-metadata-layouts
+          cnpm sync @steedos/service-metadata-objects
+          cnpm sync @steedos/service-metadata-permissionsets
+          cnpm sync @steedos/service-metadata-server
+          cnpm sync @steedos/service-metadata-tabs
+          cnpm sync @steedos/service-metadata-translations
+          cnpm sync @steedos/service-metadata-triggers
+          cnpm sync @steedos/service-metadata
+          cnpm sync @steedos/service-meteor-package-loader
+          cnpm sync @steedos/service-mongodb-server
+          cnpm sync @steedos/service-node-red
+          cnpm sync @steedos/service-package-loader
+          cnpm sync @steedos/service-package-registry
+          cnpm sync @steedos/service-packages
+          cnpm sync @steedos/service-pages
+          cnpm sync @steedos/service-steedos-server
+          cnpm sync @steedos/steedos-project-template

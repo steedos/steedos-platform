@@ -6,12 +6,18 @@ const loadPageFile = new LoadPageFile();
 export const registerPackagePages = async (packagePath: string, packageServiceName: string)=>{
     const pages = loadPageFile.load(packagePath);
     const schema = getSteedosSchema();
+    const data = [];
     for (const apiName in pages) {
         const page = pages[apiName];
-        await registerPage.register(schema.broker, packageServiceName, Object.assign(page, {is_system:true, record_permissions: {
+        data.push(Object.assign(page, {
+            is_system: true, record_permissions: {
             allowEdit: false,
             allowDelete: false,
             allowRead: true,
         }}))
+
+    }
+    if (data.length > 0) {
+        await registerPage.mregister(schema.broker, packageServiceName, data)
     }
 }

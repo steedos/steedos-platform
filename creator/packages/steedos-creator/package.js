@@ -28,7 +28,6 @@ Package.onUse(function (api) {
 	api.use('simple:json-routes@2.1.0');
 	api.use('nimble:restivus@0.8.7');
 	api.use('aldeed:simple-schema@1.3.3');
-	api.use('aldeed:schema-index@1.1.0');
 	api.use('aldeed:collection2@2.5.0');
 	api.use('aldeed:tabular@1.6.1');
 	api.use('lamhieu:unblock@1.0.0');

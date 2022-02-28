@@ -1,12 +1,12 @@
 {
   "name": "@steedos/webapp",
-  "version": "2.1.80",
+  "version": "2.1.85",
   "private": false,
   "license": "MIT",
   "main": "lib/exports.js",
   "scripts": {
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/ react-scripts start",
-    "build": "cross-env NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=../../ react-scripts build && yarn build-after",
+    "build": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=../../ react-scripts build && yarn build-after",
     "build-after": "mkdirp build/accounts && mkdirp build/accounts/a && mv build/index.html build/accounts/a/",
     "copy-to-public": "rm -rf build/assets && mkdirp public/accounts && mv build ./public/accounts/a",
     "build-lib": "rm -rf lib && tsc --build tsconfig.lib.json",
@@ -30,22 +30,10 @@
       "last 1 safari version"
     ]
   },
-  "dependencies": {
+  "devDependencies": {
     "@accounts/client": "^0.19.0",
     "@accounts/client-password": "^0.19.0",
     "@accounts/rest-client": "^0.19.0",
-    "@tailwindui/react": "^0.1.1",
-    "qrcode.react": "0.9.3",
-    "react": "^16.13.1",
-    "react-app-polyfill": "^1.0.4",
-    "react-dom": "^16.13.1",
-    "react-intl": "^3.1.13",
-    "react-redux": "^7.1.0",
-    "react-router-dom": "^5.2.0",
-    "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
-  },
-  "devDependencies": {
     "@babel/cli": "7.2.3",
     "@babel/core": "7.3.4",
     "@babel/plugin-proposal-class-properties": "7.3.4",
@@ -57,6 +45,7 @@
     "@material-ui/core": "^4.4.1",
     "@material-ui/icons": "^4.4.1",
     "@material-ui/styles": "^4.4.1",
+    "@tailwindui/react": "^0.1.1",
     "@types/node": "12.6.8",
     "@types/qrcode.react": "0.8.2",
     "@types/react": "^16.9.49",
@@ -67,14 +56,24 @@
     "@types/serialize-error": "^4.0.1",
     "add": "^2.0.6",
     "babel-jest": "^26.3.0",
+    "babel-preset-react-app": "^10.0.1",
     "core-js": "^3.2.1",
     "cross-env": "^5.2.0",
     "mkdirp": "^1.0.4",
-    "react-scripts": "^3.4.3",
+    "qrcode.react": "0.9.3",
+    "react": "^16.13.1",
+    "react-app-polyfill": "^1.0.4",
+    "react-dom": "^16.13.1",
+    "react-intl": "^3.1.13",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "serialize-error": "^7.0.1",
     "tslib": "1.10.0",
-    "typescript": "^4.0.2",
+    "typescript": "4.5.5",
     "yarn": "^1.22.5"
   },
   "publishConfig": {

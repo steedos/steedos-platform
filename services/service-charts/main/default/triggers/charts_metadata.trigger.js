@@ -77,6 +77,11 @@ module.exports = {
         }
     },
     afterCount: async function(){
+        try {
+            this.query.fields.push('name');
+        } catch (error) {
+
+        }
         let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length;
     },

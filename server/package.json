@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "2.1.80",
+  "version": "2.1.85",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -18,20 +18,19 @@
     "start": "node server"
   },
   "dependencies": {
-    "@babel/runtime": "^7.2.0",
-    "@salesforce-ux/design-system": "^2.11.0",
-    "@steedos/accounts": "2.1.80",
-    "@steedos/auth": "2.1.80",
-    "@steedos/core": "2.1.80",
-    "@steedos/filters": "2.1.80",
-    "@steedos/i18n": "2.1.80",
-    "@steedos/license": "2.1.9",
-    "@steedos/meteor-bundle-dependencies": "2.1.80",
-    "@steedos/meteor-bundle-runner": "2.1.80",
-    "@steedos/objectql": "2.1.80",
-    "@steedos/process": "2.1.80",
-    "@steedos/standard-objects": "2.1.80",
-    "@steedos/webapp": "2.1.80",
+    "@babel/runtime": "7.12.0",
+    "@steedos/accounts": "2.1.85",
+    "@steedos/auth": "2.1.85",
+    "@steedos/core": "2.1.85",
+    "@steedos/filters": "2.1.85",
+    "@steedos/i18n": "2.1.85",
+    "@steedos/license": "2.1.10",
+    "@steedos/meteor-bundle-dependencies": "2.1.85",
+    "@steedos/meteor-bundle-runner": "2.1.85",
+    "@steedos/objectql": "2.1.85",
+    "@steedos/process": "2.1.85",
+    "@steedos/standard-objects": "2.1.85",
+    "@steedos/webapp": "2.1.85",
     "basic-auth": "^2.0.1",
     "bcrypt": "3.0.6",
     "body-parser": "^1.18.3",
@@ -90,6 +89,7 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "@salesforce-ux/design-system": "^2.11.0",
     "@steedos/steedos-plugin-workflow": "^1.9.1"
   },
   "resolutions": {

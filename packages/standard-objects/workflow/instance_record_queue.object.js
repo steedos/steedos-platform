@@ -152,18 +152,6 @@ InstanceRecordQueue.Configure = function (options) {
 
     if (options.sendInterval !== null) {
 
-        // This will require index since we sort docs by createdAt
-        InstanceRecordQueue.collection._ensureIndex({
-            createdAt: 1
-        });
-        InstanceRecordQueue.collection._ensureIndex({
-            sent: 1
-        });
-        InstanceRecordQueue.collection._ensureIndex({
-            sending: 1
-        });
-
-
         var sendDoc = function (doc) {
             // Reserve doc
             var now = +new Date();
@@ -913,6 +901,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
         var
             objectCollection = Creator.getCollection(objectName, spaceId),
             sync_attachment = ow.sync_attachment;
+            syncDirection = ow.sync_direction || 'both';
         var objectInfo = getObjectConfig(objectName);
         objectCollection.find({
             _id: {
@@ -920,6 +909,9 @@ InstanceRecordQueue.sendDoc = function (doc) {
             }
         }).forEach(function (record) {
             try {
+                if (!['both', 'ins_to_obj'].includes(syncDirection)) {
+                    return;
+                }
                 var syncValues = InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record)
                 var setObj = syncValues.mainObjectValue;
 
@@ -1001,7 +993,12 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     objectCollection = Creator.getCollection(ow.object_name, spaceId),
                     sync_attachment = ow.sync_attachment,
                     newRecordId = objectCollection._makeNewID(),
-                    objectName = ow.object_name;
+                    objectName = ow.object_name,
+                    syncDirection = ow.sync_direction || 'both';
+                
+                if (!['both', 'ins_to_obj'].includes(syncDirection)) {
+                    return;
+                }
 
                 var objectInfo = getObjectConfig(ow.object_name);
                 var syncValues = InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script);

@@ -11,6 +11,19 @@ export function getObjectServiceName(objectApiName: string) {
     return `@${objectApiName}`;
 }
 
+function isExpried(expiredAt: number) {
+    return expiredAt <= new Date().getTime();
+}
+
+const BASE_OBJECT_CACHE = {
+    [MONGO_BASE_OBJECT]: {
+        data: null,
+    },
+    [SQL_BASE_OBJECT]: {
+        data: null,
+    }
+};
+
 async function getBaseObjectConfig(ctx, datasourceName) {
     const serviceName = "*";
     const metadataType = METADATA_TYPE;
@@ -18,12 +31,25 @@ async function getBaseObjectConfig(ctx, datasourceName) {
     if (datasourceName === "default" || datasourceName === "meteor") {
         metadataApiName = MONGO_BASE_OBJECT;
     }
+
+    const cacheData = BASE_OBJECT_CACHE[metadataApiName];
+    if (cacheData && cacheData.data && isExpried(cacheData.expiredAt)) {
+        return cacheData.data;
+    }
+
     const configs = await ctx.broker.call(`metadata.getServiceMetadatas`, {
         serviceName,
         metadataType,
         metadataApiName: metadataApiName,
     }, {meta: ctx.meta});
-    return configs && configs.length > 0 ? configs[0]?.metadata : null;
+
+    const config = configs && configs.length > 0 ? configs[0]?.metadata : null;
+    BASE_OBJECT_CACHE[metadataApiName] = {
+        data: config,
+        expiredAt: new Date().getTime() + 10 * 1000
+    }
+
+    return config;
 }
 
 async function getObjectConfigs(ctx, objectApiName) {

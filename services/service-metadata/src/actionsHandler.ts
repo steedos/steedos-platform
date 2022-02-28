@@ -3,12 +3,13 @@ const PACKAGE_SERVICES_KEY = '$PACKAGE-SERVICES';
 const PACKAGE_SERVICE_PREFIX = '~packages-';
 const METADATA_SERVICES_PERFIX = '$METADATA-SERVICES';
 import * as _ from 'underscore';
+import { map } from 'lodash';
 
 let savePackageServicesTimeoutID = null;
 
-const useScan = false;
+const useScan = true;
 
-async function redisScanKeys(redisClient, match, count = 100): Promise<Array<string>> {
+async function redisScanKeys(redisClient, match, count = 10000): Promise<Array<string>> {
     if (!useScan) {
         return await redisClient.keys(match);
     } else {
@@ -111,6 +112,17 @@ function transformMetadata(ctx) {
     };
 }
 
+function transformMetadatas(ctx) {
+    const data = {};
+    map(ctx.params.data, (value, key) => {
+        data[key] = {
+            ...ctx.meta.caller,
+            metadata: value,
+        }
+    })
+    return data;
+}
+
 function getKey(key, keyPrefix) {
     return key.replace(keyPrefix, "");
 }
@@ -126,25 +138,11 @@ async function addServiceMetadata(ctx) {
     }
     
     const { metadataType, metadataApiName, metadataServiceName } = ctx.meta || { metadataType: undefined, metadataApiName: undefined, metadataServiceName: undefined };
-    // if(metadataType){
-    //     console.log('saveServiceMetadataMap', metadataType, metadataApiName, metadataServiceName )
-    // }
+
     if (!metadataServiceName) {
         return;
     }
     const key = getServiceMetadataCacherKey(nodeID, metadataServiceName, metadataType, metadataApiName);
-    if (false && metadataType === 'objects') {
-        console.log(`addServiceMetadata`, key);
-    }
-    // let data = await ctx.broker.cacher.get(key);// REPLACE: await mockCacherGet(ctx, key); 
-    // let nodeIds = [];
-    // if (data) {
-    //     if (data.nodeIds) {
-    //         nodeIds = data.nodeIds;
-    //     }
-    // }
-    // nodeIds.push(nodeID);
-
     await ctx.broker.cacher.set(key, {
         nodeIds: [nodeID],
         metadataType,
@@ -152,20 +150,52 @@ async function addServiceMetadata(ctx) {
         metadataServiceName,
         metadata: ctx.params.data,
     });
-    // REPLACE:
-    // await mockCacherSet(ctx, key, {
-    //     nodeIds: nodeIds,
-    //     metadataType,
-    //     metadataApiName,
-    //     metadata: ctx.params.data,
-    // });
+}
+
+async function maddServiceMetadata(ctx) {
+    const { nodeID } = ctx.meta.caller || { nodeID: undefined };
+    if (!nodeID) {
+        console.log(`addServiceMetadata ctx.meta`, ctx.meta);
+    }
+
+    const { metadataType, metadataServiceName } = ctx.meta || { metadataType: undefined, metadataServiceName: undefined };
+
+    //data: {k1:v1, k2:v2}
+    const { data } = ctx.params
+
+    if (!metadataServiceName || !data) {
+        return;
+    }
+
+    const mdata = {};
+
+    map(data, (value, metadataApiName) => {
+        mdata[getServiceMetadataCacherKey(nodeID, metadataServiceName, metadataType, metadataApiName)] = {
+            nodeIds: [nodeID],
+            metadataType,
+            metadataApiName,
+            metadataServiceName,
+            metadata: value,
+        }
+    })
+
+    await mset(ctx, mdata);
 }
 
 async function mget(ctx, keys) {
     if (!keys || keys.length == 0) {
         return [];
     }
-    const values = await ctx.broker.cacher.client.mget(...keys);
+
+    const keyPrefix = ctx.broker.cacher?.prefix || "";
+
+    const values = await ctx.broker.cacher.client.mget(...map(keys, (key) => {
+        if (key && !key.startsWith(keyPrefix)) {
+            return `${keyPrefix}${key}`
+        } else {
+            return key
+        }
+    }));
     const results = [];
     _.map(values, (item) => {
         try {
@@ -181,13 +211,34 @@ async function mget(ctx, keys) {
     return results;
 }
 
+async function mset(ctx, data) {
+    if (_.isEmpty(data)) {
+        return;
+    }
+    const keyPrefix = ctx.broker.cacher?.prefix || "";
+    const mdata = {};
+    _.map(data, (v, k) => {
+        mdata[`${keyPrefix}${k}`] = JSON.stringify(v)
+    })
+    return await ctx.broker.cacher.client.mset(mdata);
+}
+
 // 这里需要更改
 async function query(ctx, queryKey) {
     try {
+        // const s = new Date().getTime();
         const keyPrefix = ctx.broker.cacher?.prefix || "";
+        // const sk = new Date().getTime();
         const keys = await redisScanKeys(ctx.broker.cacher.client, `${keyPrefix}${queryKey}`) //ctx.broker.cacher.client.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
+        // const dk = new Date().getTime() - sk;
+        // const sv = new Date().getTime();
         // REPLACE: const keys = await mockCacherKeys(ctx, `${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
         const values = _.compact(await mget(ctx, keys));
+        // const dv = new Date().getTime() - sv;
+        // const d = new Date().getTime() - s;
+        // if (d > Number(process.env.STEEDOS_DURATION)) {
+            // console.log(`query`, d, dk, dv, `${keyPrefix}${queryKey}`);
+        // }
         return values;
     } catch (error) {
         // console.error(`error`, error)
@@ -296,6 +347,10 @@ async function getMetadataServices(broker) {
     return values;
 }
 
+async function lrange(ctx, key, start = 0, end = -1) {
+    return await ctx.broker.cacher.client.lrange(key, start, end);
+}
+
 export async function started(broker) {
     // mock_prefix = broker.cacher?.prefix || "";
     await broker.cacher.set(`${METADATA_SERVICES_PERFIX}.${broker.nodeID}`, {});
@@ -341,12 +396,25 @@ export const ActionHandlers = {
         // }
         // return values;
     },
+    async mfilter(ctx: any): Promise<Array<any>> {
+        const values = [];
+        for (const key of ctx.params.keys) {
+            values.push(await query(ctx, key))
+        }
+        return values
+    },
     async add(ctx: any) {
         return await ctx.broker.cacher.set(ctx.params.key, transformMetadata(ctx));
         // REPLACE: return await mockCacherSet(ctx, ctx.params.key, transformMetadata(ctx));
     },
+    async madd(ctx) {
+        return await mset(ctx, transformMetadatas(ctx));
+    },
     async addServiceMetadata(ctx: any) {
         return await addServiceMetadata(ctx);
+    },
+    async maddServiceMetadata(ctx: any) {
+        return await maddServiceMetadata(ctx);
     },
     async fuzzyDelete(ctx: any){
         const { key } = ctx.params
@@ -358,11 +426,7 @@ export const ActionHandlers = {
     },
     async delete(ctx: any) {
         try {
-
-            if (ctx.broker.cacher.client.connected) {
-                await ctx.broker.cacher.del(ctx.params.key);
-            }
-            // REPLACE: await mockCacherDel(ctx, ctx.params.key);
+            await ctx.broker.cacher.del(ctx.params.key);
         } catch (error) {
             ctx.broker.logger.info(error.message);
         }
@@ -442,4 +506,63 @@ export const ActionHandlers = {
         }
         
     },
+
+    async lpush(ctx: any) {
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const key = ctx.params.key;
+        const data = ctx.params.data;
+        if (!_.isArray(data)) {
+            throw new Error('data must be an array.');
+        }
+        const _data = [];
+        _.each(data, (item) => {
+            _data.push(JSON.stringify(item))
+        })
+        return await ctx.broker.cacher.client.lpush(`${keyPrefix}${key}`, ..._data);
+    },
+
+    async rpush(ctx: any) {
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const key = ctx.params.key;
+        const data = ctx.params.data;
+        if (!_.isArray(data)) {
+            throw new Error('data must be an array.');
+        }
+        const _data = [];
+        _.each(data, (item) => {
+            _data.push(JSON.stringify(item))
+        })
+        return await ctx.broker.cacher.client.rpush(`${keyPrefix}${key}`, ..._data);
+    },
+
+    async lrange(ctx: any) {
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const { key, start = 0, end = -1 } = ctx.params.key;
+        return await lrange(ctx, `${keyPrefix}${key}`, start, end);
+    },
+
+    async filterList(ctx: any) {
+        const keyPrefix = ctx.broker.cacher?.prefix || "";
+        const { key } = ctx.params;
+        const keys = await redisScanKeys(ctx.broker.cacher.client, `${keyPrefix}${key}`);
+        if (!keys || keys.length == 0) {
+            return [];
+        }
+        const results = [];
+        for (const itemKey of keys) {
+            try {
+                if (itemKey) {
+                    const itemList = await lrange(ctx, itemKey);
+                    if(itemList && _.isArray(itemList)){
+                        _.each(itemList, (item)=>{
+                            results.push(JSON.parse(item));
+                        })
+                    }
+                }
+            } catch (error) {
+                console.error(`error`, error);
+            }
+        }
+        return results;
+    }
 };

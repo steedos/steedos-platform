@@ -68,6 +68,17 @@
         "sort": {
             "type": "number",
             "description": "显示顺序"
+        },
+        "type": {
+            "type": "string",
+            "description": "按钮类型",
+            "anyOf": [
+                {
+                    "enum": [
+                        "script"
+                    ]
+                }
+            ]
         }
     }
 }

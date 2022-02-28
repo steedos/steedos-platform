@@ -163,14 +163,14 @@ exports.loadFile = (filePath: string)=>{
     return json;
 };
 
-exports.extend = (destination: JsonMap, sources: JsonMap)=>{
+const extend = (destination: JsonMap, sources: JsonMap)=>{
     _.each(sources, (v:never, k: string)=>{
         if(!has(destination, k)){
             destination[k] = v
         }else if(isJsonMap(v)){
             let _d = getJsonMap(destination, k);
             if(isJsonMap(_d)){
-                this.extend(_d, v)
+                extend(_d, v)
             }else{
                 destination[k] = v
             }
@@ -179,6 +179,8 @@ exports.extend = (destination: JsonMap, sources: JsonMap)=>{
         }
     })
 }
+
+exports.extend = extend;
 
 exports.isObjectFile = (filePath: string)=>{
   return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.object.yml') || filePath.endsWith('.object.js'))

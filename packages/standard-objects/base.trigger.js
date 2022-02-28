@@ -44,7 +44,7 @@ const checkCompany = async (object_name, userId, doc) => {
     }
 
     if (_.has(doc, "company_ids")) {
-        if (!_.difference(doc.company_ids, allowCompanyIds)) {
+        if (_.difference(doc.company_ids, allowCompanyIds).length > 0) {
             throw new Error(`未获得分部授权`);
         }
     }
