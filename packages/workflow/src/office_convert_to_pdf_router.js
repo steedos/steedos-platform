@@ -45,18 +45,24 @@ router.post('/api/workflow/office_convert_to_pdf', core.requireAuthentication, a
                     return avatarChunks.push(chunk);
                 });
                 avatarStream.on('end', Meteor.bindEnvironment(async function () {
-                    const broker = objectql.getSteedosSchema().broker;
-                    const result = await broker.call('@steedos/steedos-service-libreoffice.convert_to_pdf', {
-                        file: Buffer.concat(chunks), watermark: {
-                            type: 'image',
-                            imageContent: Buffer.concat(avatarChunks)
+                    try {
+                        const broker = objectql.getSteedosSchema().broker;
+                        const result = await broker.call('@steedos/steedos-service-libreoffice.convert_to_pdf', {
+                            file: Buffer.concat(chunks), watermark: {
+                                type: 'image',
+                                imageContent: Buffer.concat(avatarChunks)
+                            }
+                        });
+                        if (result.error) {
+                            res.status(500).send({ error: result.error });
+                            return;
                         }
-                    });
-                    if (result.error) {
-                        res.status(500).send({ error: result.error });
-                        return;
+                        res.status(200).send({ message: 'router ok', result });
+                    } catch (error) {
+                        console.error(error);
+                        res.status(500).send({ error: error.message });
                     }
-                    res.status(200).send({ message: 'router ok', result });
+
                 }));
             }));
         }).run();
