@@ -41,6 +41,63 @@ module.exports = {
 		removeRoute: false,
 
 		/**
+		 * $node.list
+		 */
+		nodes: {
+			rest: {
+				method: "GET",
+				path: "/nodes"
+			},
+			params: {
+			},
+			async handler(ctx) {
+				return await ctx.call('$node.list');
+			}
+		},
+		/**
+		 * $node.services
+		 */
+		services: {
+			rest: {
+				method: "GET",
+				path: "/services"
+			},
+			params: {
+			},
+			async handler(ctx) {
+				return await ctx.call('$node.services');
+			}
+		},
+		/**
+		 * $node.actions
+		 */
+		actions: {
+			rest: {
+				method: "GET",
+				path: "/actions"
+			},
+			params: {
+			},
+			async handler(ctx) {
+				return await ctx.call('$node.actions');
+			}
+		},
+		/**
+		 * $node.events
+		 */
+		events: {
+			rest: {
+				method: "GET",
+				path: "/events"
+			},
+			params: {
+			},
+			async handler(ctx) {
+				return await ctx.call('$node.events');
+			}
+		},
+
+		/**
 		 * Register an external service
 		 */
 		registerService: {
@@ -160,7 +217,7 @@ module.exports = {
 				action: "string|no-empty|trim",
 				params: "any|optional",
 				meta: "object|optional",
-				options: "object|optional"
+				options: "object|optional|default:{}"
 			},
 			async handler(ctx) {
 				const payload = ctx.params;
@@ -170,8 +227,8 @@ module.exports = {
 						payload.params != null ? payload.params : {},
 						{
 							meta: payload.meta,
-							timeout: payload.timeout,
-							retries: payload.retries
+							timeout: payload.options.timeout,
+							retries: payload.options.retries
 						}
 					);
 
@@ -210,14 +267,14 @@ module.exports = {
 				event: "string|no-empty|trim",
 				params: "any|optional",
 				meta: "object|optional",
-				options: "object|optional"
+				options: "object|optional|default:{}"
 			},
 			async handler(ctx) {
 				const payload = ctx.params;
 				try {
 					await ctx.emit(payload.event, payload.params != null ? payload.params : {}, {
 						meta: payload.meta,
-						groups: payload.groups
+						groups: payload.options.groups
 					});
 				} catch (err) {
 					this.logger.error("Unable to emit event", err);
@@ -237,14 +294,14 @@ module.exports = {
 				event: "string|no-empty|trim",
 				params: "any|optional",
 				meta: "object|optional",
-				options: "object|optional"
+				options: "object|optional|default:{}"
 			},
 			async handler(ctx) {
 				const payload = ctx.params;
 				try {
 					await ctx.broadcast(payload.event, payload.params, {
 						meta: payload.meta,
-						groups: payload.groups
+						groups: payload.options.groups
 					});
 				} catch (err) {
 					this.logger.error("Unable to broadcast event", err);
