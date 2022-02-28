@@ -86,6 +86,9 @@
 									<span>{{_ "workflow_attachment_versions_upload"}}</span>
 								</div>
 							</a>
+							{{#if is_office_file this.name}}
+								<a class="mouse-hover ins-attach-convert-to-pdf" id="{{this._id}}">{{_ "workflow_attachment_wordToPdf"}}</a>
+							{{/if}}
 						{{/if}}
 					{{/if}}
 					{{#if this.metadata.locked_by}}

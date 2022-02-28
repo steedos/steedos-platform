@@ -159,7 +159,6 @@ uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info)
 	ins_obj.created_by = user_id
 	ins_obj.modified = now
 	ins_obj.modified_by = user_id
-	ins_obj.values = new Object
 
 	ins_obj.record_ids = instance_from_client["record_ids"]
 
@@ -203,6 +202,8 @@ uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info)
 
 	trace_obj.approves = [appr_obj]
 	ins_obj.traces = [trace_obj]
+
+	ins_obj.values = appr_obj.values
 
 	ins_obj.inbox_users = instance_from_client.inbox_users || []
 
