@@ -46,7 +46,7 @@ module.exports = {
 		nodes: {
 			rest: {
 				method: "GET",
-				path: "/nodes"
+				path: "/registry/nodes"
 			},
 			params: {
 			},
@@ -60,7 +60,7 @@ module.exports = {
 		services: {
 			rest: {
 				method: "GET",
-				path: "/services"
+				path: "/registry/services"
 			},
 			params: {
 			},
@@ -74,7 +74,7 @@ module.exports = {
 		actions: {
 			rest: {
 				method: "GET",
-				path: "/actions"
+				path: "/registry/actions"
 			},
 			params: {
 			},
@@ -88,7 +88,7 @@ module.exports = {
 		events: {
 			rest: {
 				method: "GET",
-				path: "/events"
+				path: "/registry/events"
 			},
 			params: {
 			},
@@ -103,7 +103,7 @@ module.exports = {
 		registerService: {
 			rest: {
 				method: "POST",
-				path: "/registerService"
+				path: "/registry/services"
 			},
 			params: {
 				name: "string|no-empty"
@@ -179,7 +179,7 @@ module.exports = {
 		unregisterService: {
 			rest: {
 				method: "DELETE",
-				path: "/unregisterService"
+				path: "/registry/services/:serviceName"
 			},
 			params: {
 				serviceName: "string|no-empty|trim"
@@ -211,7 +211,7 @@ module.exports = {
 		callAction: {
 			rest: {
 				method: "POST",
-				path: "/callAction"
+				path: "/call/:action"
 			},
 			params: {
 				action: "string|no-empty|trim",
@@ -261,7 +261,7 @@ module.exports = {
 		emitEvent: {
 			rest: {
 				method: "POST",
-				path: "/emitEvent"
+				path: "/emit/:event"
 			},
 			params: {
 				event: "string|no-empty|trim",
@@ -288,7 +288,7 @@ module.exports = {
 		broadcastEvent: {
 			rest: {
 				method: "POST",
-				path: "/broadcastEvent"
+				path: "/broadcast/:event"
 			},
 			params: {
 				event: "string|no-empty|trim",
