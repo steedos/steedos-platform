@@ -1,10 +1,10 @@
 {
   "name": "@steedos/service-api",
-  "version": "2.1.88",
+  "version": "2.1.89",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "2.1.88",
+    "@steedos/auth": "2.1.89",
     "graphql-type-json": "^0.3.2",
     "moleculer-apollo-server": "^0.3.3",
     "moleculer-web": "^0.10.4"
