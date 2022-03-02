@@ -16,15 +16,11 @@ const validator = require('validator');
  * @param callback 
  */
 export function getFromServer(reqYml, callback){
-    authRequest('/api/metadata/retrieve', {
+    authRequest(`/api/metadata/retrieve?yml=${reqYml}&t=${new Date().getTime()}`, {
         method: "GET",//请求方式，默认为get
         headers: {//设置请求头
             "Content-Type": "multipart/form-data"        
-        },
-        form: {
-            yml: reqYml,
         }
-        
     }, function(error, response, body) {
         if(error){
             console.error('Error: ', error.message);
