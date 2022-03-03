@@ -10,18 +10,20 @@
 
 <p align="center">
 <a href="./README_en.md">English</a>
-<a href="https://www.steedos.cn/docs/"> · 文档</a>
-<a href="https://github.com/steedos/steedos-platform/issues/"> · 报告错误</a>
+<a href="https://low-code-protocol.com"> · 低代码协议</a>
+<a href="https://www.steedos.cn/docs/"> · Steedos 文档</a>
+<a href="https://www.steedos.cn/docs/deploy/devops"> · DevOps</a>
 <a href="https://community.steedos.cn"> · 社区</a>
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，<a href="https://www.steedos.cn/docs/deploy/devops">将低代码技术与 DevOps 工具结合</a> ，实现低代码敏捷开发的新高度。
+  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，遵循<a href="https://low-code-protocol.com">低代码协议</a>，将低代码技术与 <a href="https://www.steedos.cn/docs/deploy/devops"> DevOps 工具</a> 结合，实现敏捷开发的新高度。
 </p>
 
 <h3 align="center">
  🤖 🎨 🚀
 </h3>
+
 
 ![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/project_object.jpg)
 
