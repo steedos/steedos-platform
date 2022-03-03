@@ -12,7 +12,7 @@
 <a href="./README_en.md">English</a>
 <a href="https://low-code-protocol.com"> · 低代码协议</a>
 <a href="https://www.steedos.cn/docs/"> · Steedos 文档</a>
-<a href="https://www.steedos.cn/docs/deploy/devops"> · DevOps</a>
+<a href="https://www.steedos.cn/docs/deploy/devops"> · 快速开始</a>
 <a href="https://community.steedos.cn"> · 社区</a>
 </p>
 
