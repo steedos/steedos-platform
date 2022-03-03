@@ -8,7 +8,8 @@
     "node": ">=12"
   },
   "scripts": {
-    "start": "yarn flushCacherDB && moleculer-runner services",
+    "start": "yarn flushCacherDB && moleculer-runner services !services/sidecar-server.service.js",
+    "start:all": "yarn flushCacherDB && moleculer-runner services",
     "flushCacherDB": "node .scripts/flush_cacher_db.js",
     "start:steedos": "cross-env NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",
     "start:app": "cross-env NODEID=STEEDOS-APP moleculer-runner --repl services/steedos-app",
