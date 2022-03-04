@@ -632,3 +632,30 @@ exports.getBusinessFields = async function (objectName) {
 
     return instanceFields
 }
+
+/**
+ * 更新流程的开始节点字段编辑权限为可编辑
+ * @param {Object} flowDoc 流程
+ * @param {Array} formFields 表单字段
+ */
+exports.updateStartStepPermission = async function (flowDoc, formFields = []) {
+    if (!flowDoc) {
+        return;
+    }
+    const flowObj = objectql.getObject('flows');
+    for (const s of flowDoc.current.steps) {
+        if (s.step_type == 'start') {
+            let perms = {};
+            for (const f of formFields) {
+                perms[f.code] = 'editable';
+                if (f.type == 'table') {
+                    for (const tf of (f.fields || [])) {
+                        perms[tf.code] = 'editable';
+                    }
+                }
+            }
+            s.permissions = perms;
+            await flowObj.directUpdate(flowDoc._id, { 'current.steps': flowDoc.current.steps })
+        }
+    }
+}

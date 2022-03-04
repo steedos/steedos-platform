@@ -1129,6 +1129,8 @@ router.post('/am/forms/addFieldsFromObject', async function (req, res) {
 
         formDoc.current.fields = fFields.concat(tables);
         await designerManager.updateForm(formDoc._id, formDoc, updatedForms, updatedFlows, userId);
+        // 重新设置流程开始节点的字段编辑权限为可编辑
+        await designerManager.updateStartStepPermission(updatedFlows[0],updatedForms[0].current.fields);
 
         // 更新对象流程映射
         const flowDoc = (await flowObj.find({ filters: [['form', '=', formId]] }))[0];
