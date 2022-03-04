@@ -624,7 +624,7 @@ exports.getBusinessFields = async function (objectName) {
     for (const key in objFields) {
         if (Object.hasOwnProperty.call(objFields, key)) {
             let f = objFields[key]
-            if (f && !baseFields[key] && f.type != 'lookup' && f.type != 'master_detail') {
+            if (f && !baseFields[key]) {
                 instanceFields.push(f)
             }
         }
