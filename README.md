@@ -1,27 +1,28 @@
-
 <p align="center">
   <a href="https://www.steedos.cn/">
     <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
   </a>
 </p>
 <h1 align="center">
-  华炎魔方
+  Steedos Low Code DevOps Platform
 </h1>
 
 <p align="center">
 <a href="./README_en.md">English</a>
-<a href="https://www.steedos.cn/docs/"> · 文档</a>
-<a href="https://github.com/steedos/steedos-platform/issues/"> · 报告错误</a>
+<a href="https://low-code-protocol.com"> · 低代码协议</a>
+<a href="https://www.steedos.cn/docs/"> · Steedos 文档</a>
+<a href="https://www.steedos.cn/docs/deploy/devops"> · 快速开始</a>
 <a href="https://community.steedos.cn"> · 社区</a>
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是Salesforce低代码平台的开源替代方案，华炎魔方将低代码技术与企业业务场景结合，助力企业在最短时间内开发数字化解决方案，包括数据建模、权限控制、流程审批、统计分析、应用集成，并可以编写“高代码”实现高级业务逻辑。
+  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，遵循<a href="https://low-code-protocol.com">低代码协议</a>，将低代码技术与 <a href="https://www.steedos.cn/docs/deploy/devops"> DevOps 工具</a> 结合，实现敏捷开发的新高度。
 </p>
 
 <h3 align="center">
  🤖 🎨 🚀
 </h3>
+
 
 ![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/project_object.jpg)
 
@@ -185,6 +186,10 @@ npx create-steedos-app my-app
 ## 为华炎魔方做贡献
 
 从上报BUG到提出改善建议，每一个贡献都非常欢迎。如果您打算动手修改代码来修正BUG或实现某个新功能，请先创建一个 [ISSUE](https://github.com/steedos/steedos-platform/issues)。
+
+## 平台源码修改
+
+本项目源码在 https://gitlab.steedos.cn/steedos/steedos-platform 中开发，定期同步到Github。
 
 ## 保持联系
 
