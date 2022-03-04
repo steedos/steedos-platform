@@ -1,4 +1,3 @@
-
 <p align="center">
   <a href="https://www.steedos.cn/">
     <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
@@ -187,6 +186,10 @@ npx create-steedos-app my-app
 ## 为华炎魔方做贡献
 
 从上报BUG到提出改善建议，每一个贡献都非常欢迎。如果您打算动手修改代码来修正BUG或实现某个新功能，请先创建一个 [ISSUE](https://github.com/steedos/steedos-platform/issues)。
+
+## 平台源码修改
+
+本项目源码在 https://gitlab.steedos.cn/steedos/steedos-platform 中开发，定期同步到Github。
 
 ## 保持联系
 
