@@ -597,7 +597,7 @@ exports.transformObjectFields = function (fields, objFieldsMap) {
  * @param objFieldsMap {} 对象字段
  * @returns []
  */
-exports.getObjectFieldsByNames = function (fieldNames, objFieldsMap) {
+exports.getObjectFieldsByNames = function (fieldNames = [], objFieldsMap = {}) {
     let newFields = [];
     for (const fName of fieldNames) {
         let field = objFieldsMap[fName];
