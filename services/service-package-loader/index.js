@@ -7,6 +7,7 @@ const sendPackageFlowToDb = require('./lib/loadPackageFlow').sendPackageFlowToDb
 const path = require('path');
 const Future = require('fibers/future');
 const _ = require('lodash');
+const globby = require("globby");
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -93,6 +94,24 @@ module.exports = {
                 await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo})
                 return;
             }).promise();
+        },
+        loadPackageMetadataServices: async function (packagePath) {
+            const filePatten = [
+                path.join(packagePath, 'main', 'default', 'services', `*.service.js`),
+                "!" + path.join(packagePath, "**", "node_modules"),
+            ];
+            const matchedPaths = globby.sync(filePatten);
+            for await (const serviceFilePath of matchedPaths) {
+                try {
+                    const service = this.broker.loadService(serviceFilePath);
+                    this.packageServices.push(service);
+                    if (!this.broker.started) {
+                        this.broker._restartService(service)
+                    }
+                } catch (error) {
+                    this.logger.error(error)
+                }
+            }
         }
     },
 
@@ -100,6 +119,7 @@ module.exports = {
      * Service created lifecycle event handler
      */
     created() {
+        this.packageServices = [];  //此属性不能放到settings下，否则会导致mo clone settings 时 内存溢出。
         this.logger.debug('service package loader created!!!');
     },
 
@@ -135,6 +155,9 @@ module.exports = {
                 
             }    
         }
+
+        await this.loadPackageMetadataServices(_path);
+
         console.timeEnd(`service ${this.name} started`)
         // console.log(`service ${this.name} started`);
     },
@@ -143,6 +166,13 @@ module.exports = {
      * Service stopped lifecycle event handler
      */
     async stopped() {
+        for await (const packageService of this.packageServices) {
+            try {
+                await this.broker.destroyService(packageService);
+            } catch (error) {
+                this.logger.errorr(error);
+            }
+        }
         this.broker.call(`@steedos/service-packages.offline`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
         await this.broker.call(`metadata.refreshServiceMetadatas`, { offlinePackageServices: [`${this.broker.nodeID}.${this.name}`] });
         console.log(`service ${this.name} stopped`);
