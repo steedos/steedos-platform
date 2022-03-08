@@ -4,6 +4,12 @@ var objectCore = require('./objects.lib.js');
 function loadObjectPermission(doc){
     var dbObject = objectCore.getObjectFromDB(doc.object_name);
     var objectDataSourceName = objectCore.getDataSourceName(dbObject);
+    try {
+        doc.name = Creator.getCollection("permission_set").findOne(doc.permission_set_id)?.name;
+        objectql.addPermissionConfig(doc.object_name, doc);
+    } catch (error) {
+        console.error(error)
+    }
 
     if(!dbObject){
         try {

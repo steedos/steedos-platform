@@ -2,7 +2,7 @@ import _ = require('lodash');
 import { getLazyLoadFields } from './field';
 import { getLazyLoadButtons } from './button';
 import { addObjectConfig } from '../types/object_dynamic_load';
-import { addPermissionConfig, loadObjectMethods, loadObjectTriggers } from '../dynamic-load'
+import { addPermissionConfig, getLazyLoadPermissions, loadObjectMethods, loadObjectTriggers } from '../dynamic-load'
 import { getSteedosSchema } from '../types'
 import { objectToJson } from '../util/convert';
 import { registerPermissionFields } from '..';
@@ -232,6 +232,14 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         if (_mf && element.name) {
             element.fields_serial_number = _mf.sort_no + 10;
         }
+
+        if (!element.permission_set) {
+            element.permission_set = {}
+        }
+        _.each(getLazyLoadPermissions(element.name), function (permission) {
+            util.extend(element.permission_set, {[permission.name]: permission})
+        })
+
         addObjectConfig(element, datasource, null);
     }
 

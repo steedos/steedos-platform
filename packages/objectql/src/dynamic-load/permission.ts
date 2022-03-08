@@ -18,6 +18,10 @@ const getLazyLoads = function(objectName: string){
     return _lazyLoads[objectName]
 }
 
+export const getLazyLoadPermissions  = function(objectName: string){
+    return getLazyLoads(objectName);
+}
+
 export const lazyloadPermissions = function(objectName: string){
     let permissions = getLazyLoads(objectName);
     _.each(permissions, function(permission){
