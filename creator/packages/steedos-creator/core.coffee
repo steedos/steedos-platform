@@ -216,10 +216,15 @@ Creator.getObjectRecord = (object_name, record_id, select_fields, expand)->
 		else
 			return Creator.odata.get(object_name, record_id, select_fields, expand)
 
-	collection = Creator.getCollection(object_name)
-	if collection
-		record = collection.findOne(record_id)
-		return record
+	obj = Creator.getObject(object_name)
+
+	if obj.database_name == "meteor" || !obj.database_name
+		collection = Creator.getCollection(object_name)
+		if collection
+			record = collection.findOne(record_id)
+			return record
+	else
+		return Creator.odata.get(object_name, record_id, select_fields, expand)
 
 Creator.getObjectRecordName = (record, object_name)->
 	unless record
