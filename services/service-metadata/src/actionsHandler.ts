@@ -14,22 +14,56 @@ async function redisScanKeys(redisClient, match, count = 10000): Promise<Array<s
         return await redisClient.keys(match);
     } else {
         return await new Promise((resolve, reject) => {
-            var stream = redisClient.scanStream({
-                // only returns keys following the pattern of `user:*`
-                match: match,
-                // returns approximately 100 elements per call
-                count: count
-            });
+            if (_.isFunction(redisClient.scanStream)) {
+                var stream = redisClient.scanStream({
+                    // only returns keys following the pattern of `user:*`
+                    match: match,
+                    // returns approximately 100 elements per call
+                    count: count
+                });
 
-            var keys = [];
-            stream.on('data', function (resultKeys) {
-                for (var i = 0; i < resultKeys.length; i++) {
-                    keys.push(resultKeys[i]);
+                var keys = [];
+                stream.on('data', function (resultKeys) {
+                    for (var i = 0; i < resultKeys.length; i++) {
+                        keys.push(resultKeys[i]);
+                    }
+                });
+                stream.on('end', function () {
+                    resolve(keys)
+                });
+            } else {
+
+                let nodes = redisClient.nodes('master');
+                let allPromises = [];
+                for (let index = 0; index < nodes.length; index++) {
+                    const node = nodes[index];
+                    allPromises.push(new Promise((res, reject) => {
+                        var keys = [];
+                        node.scanStream({
+                            // only returns keys following the pattern of `user:*`
+                            match: match,
+                            // returns approximately 100 elements per call
+                            count: count
+                        }).on('data', resultKeys => {
+                            for (var i = 0; i < resultKeys.length; i++) {
+                                keys.push(resultKeys[i]);
+                            }
+                        }).on('end', () => {
+                            // console.info("scan end, node %s:%d", node.options.host, node.options.port);
+                            res(keys)
+                        });
+                    }));
+
                 }
-            });
-            stream.on('end', function () {
-                resolve(keys)
-            });
+                Promise.all(allPromises).then((values) => {
+                    let joinedKeys = [];
+                    for (const keys of values) {
+                        joinedKeys = joinedKeys.concat(keys);
+                    }
+                    resolve(joinedKeys)
+                })
+
+            }
         })
     }
 }
@@ -133,10 +167,10 @@ function getServiceMetadataCacherKey(nodeID: string, serviceName: string, metada
 
 async function addServiceMetadata(ctx) {
     const { nodeID } = ctx.meta.caller || { nodeID: undefined };
-    if(!nodeID){
+    if (!nodeID) {
         console.log(`addServiceMetadata ctx.meta`, ctx.meta);
     }
-    
+
     const { metadataType, metadataApiName, metadataServiceName } = ctx.meta || { metadataType: undefined, metadataApiName: undefined, metadataServiceName: undefined };
 
     if (!metadataServiceName) {
@@ -237,7 +271,7 @@ async function query(ctx, queryKey) {
         // const dv = new Date().getTime() - sv;
         // const d = new Date().getTime() - s;
         // if (d > Number(process.env.STEEDOS_DURATION)) {
-            // console.log(`query`, d, dk, dv, `${keyPrefix}${queryKey}`);
+        // console.log(`query`, d, dk, dv, `${keyPrefix}${queryKey}`);
         // }
         return values;
     } catch (error) {
@@ -261,11 +295,11 @@ async function clearPackageServices(ctx, packageServices) {
     for await (const packageService of packageServices) {
         let nodeID = null;
         let name = null;
-        if(_.isString(packageService)){
+        if (_.isString(packageService)) {
             let foo = packageService.split('.');
             nodeID = foo[0];
             name = foo[1];
-        }else if(_.isObject(packageService)){
+        } else if (_.isObject(packageService)) {
             nodeID = packageService.nodeID;
             name = packageService.nodeID;
         }
@@ -289,11 +323,11 @@ async function getLastPackageServices(ctx) {
 async function getPackageServices(ctx) {
     const packageServices = [];
     const services = ctx.broker.registry.getServiceList({ withActions: true });
-    _.each(services, (serviceItem)=>{
+    _.each(services, (serviceItem) => {
         const { name, nodeID } = serviceItem; //, version, fullName, settings, local, available, nodeID
-        if(name.startsWith(PACKAGE_SERVICE_PREFIX)){
+        if (name.startsWith(PACKAGE_SERVICE_PREFIX)) {
             // console.log(`serviceItem`, serviceItem)
-            packageServices.push(Object.assign({}, serviceItem, {apiName: `${nodeID}.${name}`}))
+            packageServices.push(Object.assign({}, serviceItem, { apiName: `${nodeID}.${name}` }))
         }
     })
     return packageServices;
@@ -318,18 +352,18 @@ async function clearPackageServicesMetadatas(ctx, offlinePackageServices) {
     for await (const packageService of offlinePackageServices) {
         let nodeID = null;
         let name = null;
-        if(_.isString(packageService)){
+        if (_.isString(packageService)) {
             let foo = packageService.split('.');
             nodeID = foo[0];
             name = foo[1];
-        }else if(_.isObject(packageService)){
+        } else if (_.isObject(packageService)) {
             nodeID = packageService.nodeID;
             name = packageService.nodeID;
         }
         const clearPackageMetadatas = await clearPackageServiceMetadatas(ctx, nodeID, name);
         clearMetadatas = clearMetadatas.concat(clearPackageMetadatas);
     }
-    _.each(_.groupBy(clearMetadatas, "metadataType"), function(data: any, metadataType) {
+    _.each(_.groupBy(clearMetadatas, "metadataType"), function (data: any, metadataType) {
         ctx.broker.emit(`${SERVICE_METADATA_PREFIX}.${metadataType}.clear`, { metadataType, metadataApiNames: _.pluck(data, "metadataApiName"), isClear: true });
     });
 }
@@ -374,7 +408,7 @@ export const ActionHandlers = {
         try {
             return await ctx.broker.cacher.get(ctx.params.key);
         } catch (error) {
-            
+
         }
         // REPLACE: return await mockCacherGet(ctx, ctx.params.key)
     },
@@ -416,7 +450,7 @@ export const ActionHandlers = {
     async maddServiceMetadata(ctx: any) {
         return await maddServiceMetadata(ctx);
     },
-    async fuzzyDelete(ctx: any){
+    async fuzzyDelete(ctx: any) {
         const { key } = ctx.params
         const keyPrefix = ctx.broker.cacher?.prefix || "";
         const keys = await redisScanKeys(ctx.broker.cacher.client, `${keyPrefix}${key}`) // await ctx.broker.cacher.client.keys(`${keyPrefix}${key}`);
@@ -452,7 +486,7 @@ export const ActionHandlers = {
     async getServiceMetadata(ctx: any) {
         let { serviceName, metadataType, metadataApiName } = ctx.params;
         const { nodeID } = ctx.meta.caller || { nodeID: undefined };
-        if(!nodeID){
+        if (!nodeID) {
             console.log(`getServiceMetadata ctx.meta`, ctx.meta);
         }
         const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
@@ -482,7 +516,7 @@ export const ActionHandlers = {
         if (_offlinePackageServices && _offlinePackageServices.length > 0) {
             offlinePackageServicesName = offlinePackageServicesName.concat(_offlinePackageServices);
             const onlinePackageServicesName = _.difference(lastPackageServices, _offlinePackageServices);
-            packageServices = _.filter(packageServices, (ps)=>{
+            packageServices = _.filter(packageServices, (ps) => {
                 return ps && _.include(onlinePackageServicesName, ps.apiName)
             })
         }
@@ -495,16 +529,16 @@ export const ActionHandlers = {
 
         //使用延时方式存储软件包记录， 防止多服务之间服务发现延时导致数据清理异常。延时来自moleculer内部的服务发现机制(broker.registry.getServiceList)
         //清理数据无需做到实时，延时30秒
-        if(savePackageServicesTimeoutID){
+        if (savePackageServicesTimeoutID) {
             clearTimeout(savePackageServicesTimeoutID);
             savePackageServicesTimeoutID = null;
         }
-        if(!savePackageServicesTimeoutID){
-            savePackageServicesTimeoutID = setTimeout(()=>{
+        if (!savePackageServicesTimeoutID) {
+            savePackageServicesTimeoutID = setTimeout(() => {
                 setPackageServices(ctx, packageServices);
             }, 30 * 1000)
         }
-        
+
     },
 
     async lpush(ctx: any) {
@@ -553,8 +587,8 @@ export const ActionHandlers = {
             try {
                 if (itemKey) {
                     const itemList = await lrange(ctx, itemKey);
-                    if(itemList && _.isArray(itemList)){
-                        _.each(itemList, (item)=>{
+                    if (itemList && _.isArray(itemList)) {
+                        _.each(itemList, (item) => {
                             results.push(JSON.parse(item));
                         })
                     }
