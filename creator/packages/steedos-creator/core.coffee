@@ -223,7 +223,7 @@ Creator.getObjectRecord = (object_name, record_id, select_fields, expand)->
 		if collection
 			record = collection.findOne(record_id)
 			return record
-	else
+	else if object_name && record_id
 		return Creator.odata.get(object_name, record_id, select_fields, expand)
 
 Creator.getObjectRecordName = (record, object_name)->
