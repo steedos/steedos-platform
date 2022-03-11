@@ -1,0 +1,5 @@
+name: type
+label: 类型
+type: select
+options: app,record,list,form
+sort_no: 130

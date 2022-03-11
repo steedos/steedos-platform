@@ -1,0 +1,29 @@
+@import 'https://unpkg.com/amis@1.7.0/sdk/sdk.css';
+
+
+/* .amis-routes-wrapper{
+    width: 100%;
+} */
+
+.amis-scope{
+    background: none;
+}
+
+.amis-scope svg {
+    display: inline !important;
+    vertical-align: initial !important;
+}
+
+/* .row-main{
+    border-radius: 0.25rem
+} */
+
+.amis-scope .a-Form-item--horizontal.col-span-2 .a-Form-itemColumn--2 {
+    flex: 0 0 calc(8.33333333335% - 2px);
+    max-width: calc(8.33333333335% - 2px);
+}
+
+.a-Table svg {
+    display: inline !important;
+    vertical-align: initial !important;
+}

@@ -1,6 +1,6 @@
 steedos-community-default-package:
   enable: true
-  version: 2.1.88
+  version: 2.1.89
   description: A Steedos App
   local: true
   path: steedos-app
@@ -36,3 +36,9 @@ steedos-community-default-package:
   description: 华炎项目管理解决方案帮助您跟踪和管理项目，里程碑，任务，已阻止的任务，逾期任务，时间，费用预算，并具有详细的报表功能。
   local: false
   path: .steedos/node_modules/@steedos-labs/project
+steedos-plugins-amis:
+  enable: true
+  version: 2.1.89
+  description: A Steedos App
+  local: true
+  path: steedos-packages/plugin-amis

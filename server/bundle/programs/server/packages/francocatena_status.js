@@ -1,8 +1,5 @@
 (function () {
 
-/* Package-scope variables */
-var Status;
-
 
 
 /* Exports */
