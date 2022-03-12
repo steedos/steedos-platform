@@ -1,9 +1,0 @@
-{
-  "name": "steedos-plugins-amis",
-  "version": "2.1.89",
-  "description": "A Steedos App",
-  "main": "package.service.js",
-  "license": "MIT",
-  "private": true,
-  "scripts": {}
-}
