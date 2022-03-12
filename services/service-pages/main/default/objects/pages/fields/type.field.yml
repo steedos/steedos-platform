@@ -1,5 +1,16 @@
 name: type
 label: 类型
 type: select
-options: app,record,list,form
+defaultValue: app
+required: true
+options:
+  - label: 自定义页面 
+    value: app
+  - label: 记录详细
+    value: record
+  - label: 自定义列表
+    value: list
+  - label: 新建、编辑页面
+    value: form
 sort_no: 130
+visible_on: "{{'redash' != formData.render_engine ? true: false}}"

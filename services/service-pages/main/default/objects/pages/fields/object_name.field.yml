@@ -1,0 +1,13 @@
+name: object_name
+label: 对象
+type: lookup
+sort_no: 135
+reference_to: objects
+reference_to_field: name
+optionsFunction: !!js/function |
+  function () {
+    return Steedos.getObjectsOptions()
+  }
+filterable: true
+required: "{{'record' == formData.type && 'list' == formData.type && 'form' == formData.type ? true: false}}"
+visible_on: "{{'record' == formData.type && 'list' == formData.type && 'form' == formData.type ? true: false}}"

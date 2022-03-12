@@ -33,7 +33,7 @@ Steedos.Pages.Render = function (pageName) {
                          "component":{
                             "name": upperFirst(page.render_engine), //_.upperFirst
                             "options":{
-                               "schema": JSON.parse(page.schema)
+                               "schema": typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema
                             }
                          },
                       }

@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <script src="https://amis.builder.steedos.com/axios/axios.min.js"></script>
+    <script src="https://amis.builder.steedos.com/builder-fiddle/dist/builder-fiddle.umd.js"></script>
+</head>
+
+<body>
+
+    <builder-fiddle host="https://amis.builder.steedos.com"></builder-fiddle>
+
+    <script>
+        let comp = document.querySelector('builder-fiddle')
+        var params = new URLSearchParams(location.search);
+        var pageId = params.get("pageId");
+        axios.get("/api/v4/pages/" + params.get("pageId")).then(function (response) {
+            let schema = response.data.schema;
+            if (typeof schema === "string") {
+                schema = JSON.parse(schema)
+            }
+            const data = {
+                AmisSchema: schema || {}
+            };
+            console.log("record data", data)
+            comp.data = data;
+        }).catch(function (error) {
+            // handle error
+            console.log(error);
+        }).then(function () {
+            // always executed
+        });
+
+        const onWindowMessage = function (event) {
+            const { data } = event;
+            if (data) {
+                if (data.type === 'builder.saveContent') {
+                    axios.put("/api/v4/pages/" + params.get("pageId"), {
+                        schema: JSON.stringify(data.data.AmisSchema) //直接存储json格式会导致react form异常。
+                    }).then(function (response) {
+                        window.postMessage(
+                        {
+                            type: 'builder.contentSaved',
+                        },
+                        '*'
+                        );
+                    }).catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    }).then(function () {
+                        // always executed
+                    })
+                }
+            }
+        }
+
+        window.addEventListener('message', onWindowMessage);
+
+
+
+    </script>
+</body>
+
+</html>

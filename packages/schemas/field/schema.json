@@ -124,7 +124,10 @@
             "description": "支持多选"
         },
         "required": {
-            "type": "boolean",
+            "type": [
+                "boolean",
+                "string"
+            ],
             "description": "是否必填"
         },
         "is_wide": {
