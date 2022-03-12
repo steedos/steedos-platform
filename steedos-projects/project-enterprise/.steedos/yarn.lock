@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@steedos-labs/contract@2.1.22":
+  version "2.1.22"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/contract/-/contract-2.1.22.tgz#e9cf2110d83dc75b59598bf2092a1d4f81849afe"
+  integrity sha512-xLqZX5GL3SqinNVUA4FHdfnhaobaFOAR36WUoiWlW6NCOGzWgImdHd6/gDEIvnG3tTT45g2AnkJ+I4uo1mF/9w==
+
 "@steedos-labs/master@2.1.17":
   version "2.1.17"
   resolved "https://registry.yarnpkg.com/@steedos-labs/master/-/master-2.1.17.tgz#0dd693da48c46b0975c5bb9740d88c149390bcc2"
