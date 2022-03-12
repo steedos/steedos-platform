@@ -30,7 +30,7 @@ const LokiTransport = require("winston-loki");
  */
 module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.
-	namespace: "steedos-project-template",
+	namespace: "{steedos-project-template}",
 	// Unique node identifier. Must be unique in a namespace.
 	nodeID: process.env.NODEID,
 	// Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
@@ -81,7 +81,7 @@ module.exports = {
 			winston: {
 				// More settings: https://github.com/winstonjs/winston#creating-your-own-logger
 				transports: [
-					new LokiTransport({ 
+					new LokiTransport({
 						host: process.env.LOKI_URL,
 						labels: { project: 'pcmes' }
 					})
@@ -99,10 +99,23 @@ module.exports = {
 	// More info: https://moleculer.services/docs/0.14/networking.html
 	// Note: During the development, you don't need to define it because all services will be loaded locally.
 	// In production you can set it via `TRANSPORTER=nats://localhost:4222` environment variable.
-	transporter: process.env.TRANSPORTER, //process.env.STEEDOS_TRANSPORTER,
+	transporter: function () {
+		try {
+			return JSON.parse(process.env.STEEDOS_TRANSPORTER);
+		} catch (error) {
+			return process.env.STEEDOS_TRANSPORTER;
+		}
+	}(), //process.env.STEEDOS_TRANSPORTER,
 
 	// Define a cacher.
 	// More info: https://moleculer.services/docs/0.14/caching.html
+	cacher: function () {
+		try {
+			return JSON.parse(process.env.STEEDOS_CACHER);
+		} catch (error) {
+			return process.env.STEEDOS_CACHER;
+		}
+	}(),
 
 	// Define a serializer.
 	// Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".
