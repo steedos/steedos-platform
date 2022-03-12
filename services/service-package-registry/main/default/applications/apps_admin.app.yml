@@ -17,10 +17,3 @@ admin_menus:
     parent: apps
     object_name: steedos_packages
     sort: 400
-  - _id: tabs
-    name: Tabs
-    object_name: tabs
-    parent: apps
-    sort: 500
-    permission_sets:
-      - admin

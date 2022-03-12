@@ -6,11 +6,23 @@ admin_menus:
   #   sort: 450
   #   permission_sets:
   #     - admin
+  - _id: user_interface
+    name: 用户页面
+    sort: 350
+    permission_sets:
+      - admin
   - _id: pages
     name: 页面
     object_name: pages
-    parent: analysis
+    parent: user_interface
     sort: 300
+    permission_sets:
+      - admin
+  - _id: tabs
+    name: Tabs
+    object_name: tabs
+    parent: user_interface
+    sort: 500
     permission_sets:
       - admin
   # - _id: word_templates
