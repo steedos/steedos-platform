@@ -48,7 +48,7 @@
 
 ## 云原生部署
 
-基于华炎魔方开发的软件包，可以集中部署在一个Nodejs服务中，也可以基于容器技术，分布式部署在Kunernetes集群中。两种部署方式均基于事件驱动架构，可实现基于微服务的事件的发布与订阅。
+基于华炎魔方开发的软件包，可以集中部署在一个Nodejs服务中，也可以基于容器技术，分布式部署在Kubernetes集群中。两种部署方式均基于事件驱动架构，可实现基于微服务的事件的发布与订阅。
 
 ![Kubernetes Deploy](./docs/diagrams/Kubernetes%20Deploy.drawio.svg)
 
@@ -72,7 +72,7 @@
 
 ### 运行模板项目
 
-访问网址 <https://gitpod.io/#https://github.com/steedos/steedos-project-template> 即可在线开发调式 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)，可以把#号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
+访问网址 <https://gitpod.io/#https://github.com/steedos/steedos-project-template> 即可在线开发调试 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)，可以把#号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
 
 ### 创建新项目
 
@@ -86,7 +86,7 @@ npx create-steedos-app my-app
 
 ### 修改平台源码
 
-访问网址 <https://gitpod.io/#https://github.com/steedos/steedos-platform> 即可在线开发调式 [华炎魔方平台源码](https://github.com/steedos/steedos-platform)。
+访问网址 <https://gitpod.io/#https://github.com/steedos/steedos-platform> 即可在线开发调试 [华炎魔方平台源码](https://github.com/steedos/steedos-platform)。
 
 如果需要提交代码到Git仓库，请先Fork [华炎魔方平台源码](https://github.com/steedos/steedos-platform)，然后用 Fork 后的Git仓库地址替换掉上面网址`#`号后的Git仓库地址即可。
 
@@ -154,16 +154,16 @@ npx create-steedos-app my-app
 - [NPM Packages](./packages): 华炎魔方各种内核功能包，其内每个子文件夹都是一个标准的NPM包。
   - [Standard Objects](./packages/standard-objects): 内核标准对象的定义文件。
 - [Moleculer Services](./services): 华炎魔方采用的是Moleculer微服务架构，这里存放的是各种微服务功能包，其内每个子文件夹都是一个标准的NPM包。
-- [社区版项目模板](./steedos-projects/project-community): 用于在源码中运行社区版项目调式华炎魔方源码，通过`steedos cli`命令行创建魔方项目时自动生成的并不是这个模板项目，而是一个单独的 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)。
-- [企业版项目模板](./steedos-projects/project-enterprise): 用于在源码中运行企业版项目调式华炎魔方源码。
+- [社区版项目模板](./steedos-projects/project-community): 用于在源码中运行社区版项目调试华炎魔方源码，通过`steedos cli`命令行创建魔方项目时自动生成的并不是这个模板项目，而是一个单独的 [华炎魔方模板项目](https://github.com/steedos/steedos-project-template)。
+- [企业版项目模板](./steedos-projects/project-enterprise): 用于在源码中运行企业版项目调试华炎魔方源码。
 
 ## NPM Scripts说明
 
 本项目主要提供以下可执行的脚本命令：
 
 - start: 执行 `start:community` 启动位于目录 [steedos-projects/project-community](./steedos-projects/project-community) 的社区版华炎魔方模板项目。
-- start:community: 启动位于目录 [steedos-projects/project-community](./steedos-projects/project-community) 的社区版华炎魔方模板项目，调式位于目录 [packages](./packages) 和 [services](./services) 的华炎魔方源码。
-- start:enterprise: 启动位于 [steedos-projects/project-enterprise](./steedos-projects/project-enterprise) 的企业版华炎魔方模板项目，调式位于目录 [packages](./packages) 和 [services](./services) 的华炎魔方源码。
+- start:community: 启动位于目录 [steedos-projects/project-community](./steedos-projects/project-community) 的社区版华炎魔方模板项目，调试位于目录 [packages](./packages) 和 [services](./services) 的华炎魔方源码。
+- start:enterprise: 启动位于 [steedos-projects/project-enterprise](./steedos-projects/project-enterprise) 的企业版华炎魔方模板项目，调试位于目录 [packages](./packages) 和 [services](./services) 的华炎魔方源码。
 - bootstrap: 执行 [lerna bootstrap](https://github.com/lerna/lerna/tree/main/commands/bootstrap#readme) 根据源码中各个NPM包中配置的依赖包建立它们之前的引用关系。
 - build: 执行 `lerna run prepare` 根据源码中各个NPM包之前的依赖关系依次执行各个NPM包内  `prepare` 指令打包所有需要打包的NPM包。
 - ver: 执行 [lerna version](https://github.com/lerna/lerna/tree/main/commands/version) 在发版本前把源码中所有需要发包的NPM包的版本号统一升级到下一个指定版本。
