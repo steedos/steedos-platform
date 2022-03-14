@@ -262,7 +262,7 @@
         },
         "unique": {
             "type": "boolean",
-            "description": "重复"
+            "description": "唯一"
         },
         "optionsFunction": {
             "type": "string",
@@ -304,13 +304,16 @@
             "type": "string"
         },
         "depend_on": {
-            "type": "array"
+            "type": "array",
+            "description": "依赖的字段"
         },
         "defaultIcon": {
-            "type": "string"
+            "type": "string",
+            "description": "默认的图标"
         },
         "showIcon": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "是否显示图标"
         },
         "primary": {
             "type": "boolean",
@@ -426,11 +429,9 @@
             "type": "string",
             "description": "指定字段的选项列表值集"
         },
-        "modal_mode": {
-            "type": "string"
-        },
         "visible_on": {
-            "type": "string"
+            "type": "string",
+            "description": "函数表达式，控制是否显示此字段"
         }
     }
 }
