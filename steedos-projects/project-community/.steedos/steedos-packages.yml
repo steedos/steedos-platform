@@ -22,6 +22,8 @@ steedos-community-default-package:
   description: ''
   local: false
   path: .steedos/node_modules/@steedos-labs/workflow
+  label: '@steedos-labs/workflow'
+  url: null
 '@steedos-labs/contract':
   enable: true
   label: 合同管理 - 轻松实现合同协作、提升合规性

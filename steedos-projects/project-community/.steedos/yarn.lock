@@ -25,10 +25,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-labs/project/-/project-2.1.22.tgz#736eaa5bcd21b850ec62add5fd1a8b3a099937fe"
   integrity sha512-RV6Q4UCPMoWqbAzGNDF8jCygRt+/uSonPG5riij5SHnfL9unn2NBYHt/+pcukV0OTign1dsUMXT9Tr8C2qr4GA==
 
-"@steedos-labs/workflow@2.1.45":
-  version "2.1.45"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/workflow/-/workflow-2.1.45.tgz#8b518191abe3631e0299cfe2667c6e5d20942be3"
-  integrity sha512-tcW6Uc/eO6TZy2db4bHvjakV/Qz6iESLT24YR2vKqxiwS6OOl2k7ofjY6lWVThPXYP7/ctJgphyvHoP4lu9NLg==
+"@steedos-labs/workflow@2.1.61":
+  version "2.1.61"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/workflow/-/workflow-2.1.61.tgz#3e60950253ed96d5542f48cf7384300a6984a850"
+  integrity sha512-CNqIn7Ssq82j6PDyd39nGrebHKE9HEenxscLvgO/cZqPW6EitZ0DTZrKSZkEblw1iwww97LzXpQFFSiL+v5Nrg==
 
 "@steedos/app-contracts@2.0.51":
   version "2.0.51"
