@@ -6,6 +6,8 @@ const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 const _ = require('lodash');
 const Fiber = require("fibers");
+const { funEval } = require('../utils/convert');
+const { v4: uuidv4 } = require('uuid');
 /**
  * 审批中提交申请单
  * body {
@@ -18,20 +20,67 @@ const Fiber = require("fibers");
  */
 router.post('/api/workflow/engine', core.requireAuthentication, async function (req, res) {
     try {
-        // const userSession = req.user;
-        // const spaceId = userSession.spaceId;
-        // const userId = userSession.userId;
+        let userSession = req.user;
+        const spaceId = userSession.spaceId;
+        const userId = userSession.userId;
+        userSession._id = userId;
         // const isSpaceAdmin = userSession.is_space_admin;
-        Fiber(function () {
+        const broker = objectql.getSteedosSchema().broker;
+
+        var hashData = req.body;
+        const approve_from_client = hashData['Approvals'][0];
+
+        // beforeStepSubmit
+        let insId = approve_from_client.instance;
+        let instanceDoc = await objectql.getObject('instances').findOne(insId);
+        let flow = (await objectql.getObject('flows').find({ filters: ['_id', '=', instanceDoc['flow']], fields: ['api_name'] }))[0];
+        let flowApiName = flow.api_name;
+        if (flowApiName) {
+            let triggers = await objectql.registerWorkflowTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.beforeStepSubmit.*` });
+            let event = {
+                data: {
+                    id: insId,
+                    userId: userId,
+                    spaceId: spaceId,
+                    flowName: flowApiName,
+                    instance: instanceDoc,
+                    broker: broker
+                }
+            }
+            let context = {
+                id: uuidv4()
+            }
+            for (const t of triggers) {
+                await funEval(t.metadata.handler)(event, context)
+            }
+        }
+
+        Fiber(async function () {
             try {
-                var current_user, current_user_info, hashData;
-                current_user_info = uuflowManager.check_authorization(req);
-                current_user = current_user_info._id;
-                hashData = req.body;
-                _.each(hashData['Approvals'], function (approve_from_client) {
-                    return uuflowManager.workflow_engine(approve_from_client, current_user_info, current_user);
-                });
-                res.status(200).send({ });
+                uuflowManager.workflow_engine(approve_from_client, userSession, userId);
+                // afterStepSubmit
+                let insId = approve_from_client.instance;
+                let instanceDoc = await objectql.getObject('instances').findOne(insId);
+                if (flowApiName) {
+                    let triggers = await objectql.registerWorkflowTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.afterStepSubmit.*` });
+                    let event = {
+                        data: {
+                            id: insId,
+                            userId: userId,
+                            spaceId: spaceId,
+                            flowName: flowApiName,
+                            instance: instanceDoc,
+                            broker: broker
+                        }
+                    }
+                    let context = {
+                        id: uuidv4()
+                    }
+                    for (const t of triggers) {
+                        await funEval(t.metadata.handler)(event, context)
+                    }
+                }
+                res.status(200).send({});
             } catch (e) {
                 res.status(200).send({
                     errors: [{ errorMessage: e.message }]
