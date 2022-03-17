@@ -19,7 +19,8 @@ module.exports = {
     actions: {
         getDefaultSchema: {
             async handler(ctx) {
-                // ctx
+                // const userSession = ctx.meta.user;
+                // const { type, app, objectApiName, recordId } = ctx.params;
                 return this.getDefaultSchema();
             }
         }

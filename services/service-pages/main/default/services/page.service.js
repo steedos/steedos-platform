@@ -49,7 +49,11 @@ module.exports = {
         getDefaultSchema: {
             async handler(type, app, objectApiName, recordId, userSession) {
                 if (process.env.DEFAULT_PAGE_RENDER) {
-                    return await this.broker.call(`${process.env.DEFAULT_PAGE_RENDER}.getDefaultSchema`, type, app, objectApiName, recordId, { user: userSession })
+                    return await this.broker.call(`${process.env.DEFAULT_PAGE_RENDER}.getDefaultSchema`, {type, app, objectApiName, recordId}, {
+                        meta: {
+                          user: userSession
+                        }
+                      })
                 }
                 return;
             }

@@ -14,7 +14,7 @@ function upperFirst(str) {
 };
 
 Steedos.Page.getPage = function(type, appId, objectApiName, recordId){
-    const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}`, {async:false});
+    const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}`, {async:false});
     if(page && page.schema){
         return page;
     }
