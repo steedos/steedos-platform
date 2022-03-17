@@ -1,0 +1,11 @@
+name: render_engine
+type: select
+label: 渲染器
+defaultValue: amis
+options:
+  - label: Amis
+    value: amis
+  - label: Redash
+    value: redash
+required: true
+sort_no: 125

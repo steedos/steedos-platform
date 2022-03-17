@@ -17,13 +17,9 @@ module.exports = {
      * Actions
      */
     actions: {
-        getMeSchema: {
-            async handler(ctx) {
-                return this.getMeSchema();
-            }
-        },
         getDefaultSchema: {
             async handler(ctx) {
+                // ctx
                 return this.getDefaultSchema();
             }
         }

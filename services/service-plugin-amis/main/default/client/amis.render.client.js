@@ -8,7 +8,7 @@
     } catch (error) {
         console.error(error)
     }
-    import('/amis/sdk/sdk.js').then(() => {
+    import('/amis/sdk/sdk.noreact.js').then(() => {
         //处理mobx多个实例问题
         try {
             let mobx = amisRequire('mobx');
@@ -17,23 +17,20 @@
 
         }
 
-        var __importDefault = (this && this.__importDefault) || function (mod) {
-            return (mod && mod.__esModule) ? mod : { "default": mod };
-        };
-        var react_1 = __importDefault(require("react"));
+        let React = window.React || amisRequire("react");
+
         // Register amis render 
         var Amis = function (props) {
             var schema = props.schema, data = props.data;
-            return react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement("div", { id: "amis-root" }),
-                // amisRequire('amis').render(schema, data),
+            return React.createElement(React.Fragment, null,
+                React.createElement("div", { id: "amis-root" }),
+                // amisRequire('amis').render(schema, data, {theme: 'cxd'}))
                 function () {
                     setTimeout(function () {
                         amisRequire('amis/embed').embed('#amis-root', schema, data)
                     }, 100)
                 }()
             );
-
         };
 
         BuilderReact.Builder.registerComponent(Amis, {
