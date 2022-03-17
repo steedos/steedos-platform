@@ -3,12 +3,9 @@
 const express = require("express");
 const router = express.Router();
 const core = require('@steedos/core');
-const objectql = require('@steedos/objectql');
 const _ = require('lodash');
 const Fiber = require("fibers");
-const { funEval } = require('../utils/convert');
-const { v4: uuidv4 } = require('uuid');
-const PROCESS_TRIGGER = 'processTrigger';
+const { excuteTriggers } = require('../utils/trigger');
 /**
  * 草稿箱提交申请单
  * body {
@@ -31,32 +28,8 @@ router.post('/api/workflow/submit', core.requireAuthentication, async function (
         var result = [];
         const instance_from_client = hashData['Instances'][0];
         // beforeDraftSubmit
-        const flow = (await objectql.getObject('flows').find({ filters: ['_id', '=', instance_from_client['flow']], fields: ['api_name'] }))[0];
-        const flowApiName = flow.api_name;
-        const broker = objectql.getSteedosSchema().broker;
         const insId = instance_from_client._id;
-        if (flowApiName) {
-            const triggers = await objectql.registerProcessTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.beforeDraftSubmit.*` });
-            const instanceDoc = await objectql.getObject('instances').findOne(insId);
-            const event = {
-                data: {
-                    id: insId,
-                    userId: userId,
-                    spaceId: spaceId,
-                    flowName: flowApiName,
-                    instance: instanceDoc,
-                    broker: broker
-                }
-            }
-            const context = {
-                id: uuidv4()
-            }
-            for (const t of triggers) {
-                await funEval(t.metadata.handler)(event, context)
-            }
-        }
-        // 发送事件
-        broker.emit(`${PROCESS_TRIGGER}.beforeDraftSubmit`, { id: insId, userId: userId });
+        await excuteTriggers('beforeDraftSubmit', userSession, instance_from_client['flow'], insId);
 
         Fiber(function () {
             try {

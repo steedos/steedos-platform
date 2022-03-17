@@ -5,6 +5,7 @@ import { Trigger } from "./types";
 
 const ENUM_WHEN = ['beforeDraftInsert', 'afterDraftInsert', 'beforeDraftSubmit', 'afterDraftSubmit', 'beforeStepSubmit', 'afterStepSubmit', 'cacluateNextStepUsers',
     'beforeCancel', 'afterCancel', 'beforeTerminate', 'afterTerminate', 'beforeEnd', 'afterEnd'];
+const LISTENTO_ALL_FLOWS = 'LISTENTO_ALL_FLOWS';
 
 export async function load(broker: any, packagePath: string, packageServiceName: string) {
     let filePath = path.join(packagePath, "**");
@@ -23,7 +24,7 @@ export async function load(broker: any, packagePath: string, packageServiceName:
                 let name = wt.name || getMD5(JSONStringify(wt));
                 let config: Trigger = {
                     name: name,
-                    "listenTo": wt.listenTo,
+                    "listenTo": wt.listenTo == '*' ? LISTENTO_ALL_FLOWS : wt.listenTo,
                     "when": when,
                     "handler": handler.toString()
                 }
