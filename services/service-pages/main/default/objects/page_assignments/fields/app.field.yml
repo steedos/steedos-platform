@@ -1,0 +1,4 @@
+name: app
+type: lookup
+reference_to: apps
+reference_to_field: code

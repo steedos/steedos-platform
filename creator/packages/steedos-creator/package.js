@@ -246,6 +246,16 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/view.html', 'client');
 	api.addFiles('client/views/view.coffee', 'client');
 	api.addFiles('client/views/view.less', 'client');
+
+	api.addFiles('client/views/page_record_view.html', 'client');
+	api.addFiles('client/views/page_record_view.coffee', 'client');
+
+	api.addFiles('client/views/page_list_view.html', 'client');
+	api.addFiles('client/views/page_list_view.coffee', 'client');
+
+	api.addFiles('client/views/page_related_list_view.html', 'client');
+	api.addFiles('client/views/page_related_list_view.coffee', 'client');
+
 	api.addFiles('client/views/app_home.html', 'client');
 	api.addFiles('client/views/app_home.coffee', 'client');
 	api.addFiles('client/views/app_iframe.html', 'client');

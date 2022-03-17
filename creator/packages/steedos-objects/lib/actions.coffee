@@ -70,7 +70,6 @@ if Meteor.isClient
 			Modal.show("standard_query_modal")
 
 		"standard_new": (object_name, record_id, fields)->
-			#TODO 使用对象版本判断
 			object = Creator.getObject(object_name);
 			initialValues={}
 			selectedRows = window.gridRef?.current?.api?.getSelectedRows()	
@@ -83,22 +82,7 @@ if Meteor.isClient
 				initialValues = FormManager.getInitialValues(object_name)
 
 			if object?.version >= 2
-				return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-					name: "#{object_name}_standard_new_form",
-					objectApiName: object_name,
-					title: '新建 ' + object.label,
-					initialValues: initialValues,
-					afterInsert: (result)->
-						if(result.length > 0)
-							record = result[0];
-							setTimeout(()->
-								app_id = Session.get("app_id")
-								url = "/app/#{app_id}/#{object_name}/view/#{record._id}"
-								FlowRouter.go url
-							, 1);
-							return true;
-
-				}, null, {iconPath: '/assets/icons'})
+				return Steedos.Page.Form.StandardNew.render(Session.get("app_id"), object_name, '新建 ' + object.label, initialValues);
 			Session.set 'action_object_name', object_name
 			if selectedRows?.length
 				# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
@@ -121,23 +105,7 @@ if Meteor.isClient
 			if record_id
 				object = Creator.getObject(object_name);
 				if object?.version >= 2
-					return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-						name: "#{object_name}_standard_edit_form",
-						objectApiName: object_name,
-						recordId: record_id,
-						title: '编辑 ' + object.label,
-						afterUpdate: ()->
-							setTimeout(()->
-								if FlowRouter.current().route.path.endsWith("/:record_id")
-									FlowRouter.reload()
-									# ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新表单数据
-									SteedosUI.reloadRecord(Session.get("object_name"), Session.get("record_id"))
-								else
-									window.refreshDxSchedulerInstance()
-									window.refreshGrid();
-							, 1);
-							return true;
-					}, null, {iconPath: '/assets/icons'})
+					return Steedos.Page.Form.StandardEdit.render(Session.get("app_id"), object_name, '编辑 ' + object.label, record_id)
 				if Steedos.isMobile() && false
 #					record = Creator.getObjectRecord(object_name, record_id)
 #					Session.set 'cmDoc', record

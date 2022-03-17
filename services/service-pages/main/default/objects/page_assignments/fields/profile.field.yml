@@ -1,0 +1,5 @@
+name: profile
+type: lookup
+reference_to: permission_set
+filters:
+  - ["type","=","profile"]

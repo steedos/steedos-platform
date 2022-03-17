@@ -2,4 +2,4 @@ name: is_default
 type: toggle
 label: 默认
 sort_no: 200
-hidden: true
+hidden: false

@@ -4,13 +4,13 @@ type: select
 defaultValue: app
 required: true
 options:
-  - label: 自定义页面 
+  - label: 自定义应用 
     value: app
-  - label: 记录详细
+  - label: 详细页面
     value: record
-  - label: 自定义列表
+  - label: 列表页面
     value: list
-  - label: 新建、编辑页面
+  - label: 表单
     value: form
 sort_no: 130
 visible_on: "{{'redash' != formData.render_engine ? true: false}}"

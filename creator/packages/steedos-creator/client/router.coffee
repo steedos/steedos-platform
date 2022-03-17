@@ -354,9 +354,17 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 		Session.set 'related_object_name', related_object_name
 		BlazeLayout.render Creator.getLayout(),
 			main: 'recordLoading'
+		
+		main = "related_object_list"
+		page = Steedos.Page.getPage('list', app_id, related_object_name);
+		if page
+			main = "page_related_list_view"
+			regions = {page: page};
+
 		Meteor.setTimeout ()->
 			BlazeLayout.render Creator.getLayout(),
-				main: "related_object_list"
+				main: main,
+				regions: regions
 		, 10
 
 objectRoutes.route '/view/:record_id',
@@ -378,11 +386,17 @@ objectRoutes.route '/view/:record_id',
 			main = "user"
 		else
 			main = "creator_view"
+			page = Steedos.Page.getPage('record', Session.get("app_id"), object_name, record_id);
+			if page
+				main = "page_record_view"
+				regions = {page: page};
+				
 		BlazeLayout.render Creator.getLayout(),
 			main: 'recordLoading'
 		Meteor.setTimeout ()->
 			BlazeLayout.render Creator.getLayout(),
 				main: main
+				regions: regions
 		, 10
 
 objectRoutes.route '/grid/:list_view_id',
@@ -404,15 +418,24 @@ objectRoutes.route '/grid/:list_view_id',
 		app_id = FlowRouter.getParam("app_id")
 		if (app_id != "-")
 			Session.set("app_id", app_id)
-		Session.set("object_name", FlowRouter.getParam("object_name"))
+		objectName = FlowRouter.getParam("object_name")
+		Session.set("object_name", objectName)
 		Session.set("list_view_id", FlowRouter.getParam("list_view_id"))
 		Session.set("list_view_visible", false)
 
 		Tracker.afterFlush ()->
 			Session.set("list_view_visible", true)
+
+		
+		main = "creator_list_wrapper";
+		page = Steedos.Page.getPage('list',Session.get("app_id"), objectName);
+		if page
+			main = "page_list_view"
+			regions = {page: page};
 		
 		BlazeLayout.render Creator.getLayout(),
-			main: "creator_list_wrapper"
+			main: "creator_list_wrapper",
+			regions: regions
 
 objectRoutes.route '/calendar/',
 	action: (params, queryParams)->

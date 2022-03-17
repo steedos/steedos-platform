@@ -5,7 +5,7 @@
 ## 新增对象
 - 新增对象Pages，用于保存 amis schema
   - 详细页面添加按钮：设计器，点击后打开Amis设计器
-- 新增对象Pages assignment, 用于记录page分配。 
+- 新增对象Page assignments, 用于记录page分配。 
 
 
 ## 调整页面渲染引擎

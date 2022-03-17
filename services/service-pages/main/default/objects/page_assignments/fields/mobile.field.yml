@@ -1,0 +1,4 @@
+name: mobile
+type: master_detail
+reference_to: pages
+reference_to_field: name

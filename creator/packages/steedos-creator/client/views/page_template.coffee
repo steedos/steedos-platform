@@ -1,3 +1,3 @@
 Template.page_template.onRendered ->
 	this.autorun ()->
-		Steedos.Pages.Render(Session.get("pageApiName"))
+		Steedos.Page.App.render(Session.get("pageApiName"))
