@@ -15,6 +15,7 @@ const pagesService = require('./lib/pagesService');
 const shareRulesService = require('./lib/shareRulesService');
 const restrictionRulesService = require('./lib/restrictionRulesService');
 const permissionFieldsService = require('./lib/permissionFieldsService');
+const processTriggerService = require('./lib/processTriggerService');
 
 module.exports = {
 	name: "metadata-server",
@@ -38,6 +39,7 @@ module.exports = {
     this.broker.createService(shareRulesService);
     this.broker.createService(restrictionRulesService);
     this.broker.createService(permissionFieldsService);
+    this.broker.createService(processTriggerService);
   },
 
   async started() {

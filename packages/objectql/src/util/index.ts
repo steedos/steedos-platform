@@ -244,6 +244,24 @@ export const loadTriggers = (filePath: string) => {
   return results;
 };
 
+export const loadProcessTriggers = (filePath: string) => {
+    let results = [];
+    const filePatten = [
+        path.join(filePath, "*.processTrigger.js"),
+        "!" + path.join(filePath, "node_modules"),
+    ];
+    const matchedPaths: [string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath: string) => {
+        delete require.cache[require.resolve(matchedPath)];
+        let json = loadFile(matchedPath);
+        if (!_.has(json, "listenTo")) {
+            json.listenTo = path.basename(matchedPath).split(".")[0];
+        }
+        results.push(json);
+    });
+    return results;
+};
+
 export const loadActions = (filePath: string) => {
   let results = [];
   const filePatten = [

@@ -366,10 +366,10 @@ Package.onUse(function(api) {
 	api.addFiles('routes/getNameForUser.coffee', 'server');
 
 	api.addFiles('routes/api_designer_startup.coffee', 'server');
-	api.addFiles('routes/api_workflow_engine.coffee', 'server');
+	// api.addFiles('routes/api_workflow_engine.coffee', 'server');
 	api.addFiles('routes/api_workflow_drafts.coffee', 'server');
 	api.addFiles('routes/api_workflow_remove.coffee', 'server');
-	api.addFiles('routes/api_workflow_submit.coffee', 'server');
+	// api.addFiles('routes/api_workflow_submit.coffee', 'server');
 	api.addFiles('routes/api_workflow_terminate.coffee', 'server');
 	api.addFiles('routes/api_workflow_reassign.coffee', 'server');
 	api.addFiles('routes/api_workflow_relocate.coffee', 'server');

@@ -4,7 +4,9 @@
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
-    "node-schedule": "^2.0.0"
+    "@steedos/service-package-loader": "2.1.89",
+    "node-schedule": "^2.0.0",
+    "uuid": "^8.3.2"
   },
   "private": false,
   "publishConfig": {
