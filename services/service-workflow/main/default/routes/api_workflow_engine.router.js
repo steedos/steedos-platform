@@ -8,6 +8,7 @@ const _ = require('lodash');
 const Fiber = require("fibers");
 const { funEval } = require('../utils/convert');
 const { v4: uuidv4 } = require('uuid');
+const PROCESS_TRIGGER = 'processTrigger';
 /**
  * 审批中提交申请单
  * body {
@@ -55,6 +56,9 @@ router.post('/api/workflow/engine', core.requireAuthentication, async function (
             }
         }
 
+        // 发送事件
+        broker.emit(`${PROCESS_TRIGGER}.beforeStepSubmit`, { id: insId, userId: userId });
+
         Fiber(async function () {
             try {
                 uuflowManager.workflow_engine(approve_from_client, userSession, userId);
@@ -80,6 +84,9 @@ router.post('/api/workflow/engine', core.requireAuthentication, async function (
                         await funEval(t.metadata.handler)(event, context)
                     }
                 }
+
+                // 发送事件
+                broker.emit(`${PROCESS_TRIGGER}.afterStepSubmit`, { id: insId, userId: userId });
                 res.status(200).send({});
             } catch (e) {
                 res.status(200).send({

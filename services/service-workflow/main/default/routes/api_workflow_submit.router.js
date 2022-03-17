@@ -8,6 +8,7 @@ const _ = require('lodash');
 const Fiber = require("fibers");
 const { funEval } = require('../utils/convert');
 const { v4: uuidv4 } = require('uuid');
+const PROCESS_TRIGGER = 'processTrigger';
 /**
  * 草稿箱提交申请单
  * body {
@@ -32,10 +33,10 @@ router.post('/api/workflow/submit', core.requireAuthentication, async function (
         // beforeDraftSubmit
         const flow = (await objectql.getObject('flows').find({ filters: ['_id', '=', instance_from_client['flow']], fields: ['api_name'] }))[0];
         const flowApiName = flow.api_name;
+        const broker = objectql.getSteedosSchema().broker;
+        const insId = instance_from_client._id;
         if (flowApiName) {
-            const broker = objectql.getSteedosSchema().broker;
             const triggers = await objectql.registerProcessTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.beforeDraftSubmit.*` });
-            const insId = instance_from_client._id;
             const instanceDoc = await objectql.getObject('instances').findOne(insId);
             const event = {
                 data: {
@@ -54,6 +55,9 @@ router.post('/api/workflow/submit', core.requireAuthentication, async function (
                 await funEval(t.metadata.handler)(event, context)
             }
         }
+        // 发送事件
+        broker.emit(`${PROCESS_TRIGGER}.beforeDraftSubmit`, { id: insId, userId: userId });
+
         Fiber(function () {
             try {
                 var r = uuflowManager.submit_instance(instance_from_client, userSession);
