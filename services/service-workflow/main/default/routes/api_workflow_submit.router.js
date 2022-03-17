@@ -34,7 +34,7 @@ router.post('/api/workflow/submit', core.requireAuthentication, async function (
         const flowApiName = flow.api_name;
         if (flowApiName) {
             const broker = objectql.getSteedosSchema().broker;
-            const triggers = await objectql.registerWorkflowTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.beforeDraftSubmit.*` });
+            const triggers = await objectql.registerProcessTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.beforeDraftSubmit.*` });
             const insId = instance_from_client._id;
             const instanceDoc = await objectql.getObject('instances').findOne(insId);
             const event = {

@@ -36,7 +36,7 @@ router.post('/api/workflow/engine', core.requireAuthentication, async function (
         let flow = (await objectql.getObject('flows').find({ filters: ['_id', '=', instanceDoc['flow']], fields: ['api_name'] }))[0];
         let flowApiName = flow.api_name;
         if (flowApiName) {
-            let triggers = await objectql.registerWorkflowTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.beforeStepSubmit.*` });
+            let triggers = await objectql.registerProcessTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.beforeStepSubmit.*` });
             let event = {
                 data: {
                     id: insId,
@@ -62,7 +62,7 @@ router.post('/api/workflow/engine', core.requireAuthentication, async function (
                 let insId = approve_from_client.instance;
                 let instanceDoc = await objectql.getObject('instances').findOne(insId);
                 if (flowApiName) {
-                    let triggers = await objectql.registerWorkflowTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.afterStepSubmit.*` });
+                    let triggers = await objectql.registerProcessTrigger.find(objectql.getSteedosSchema().broker, { pattern: `${flowApiName}.afterStepSubmit.*` });
                     let event = {
                         data: {
                             id: insId,

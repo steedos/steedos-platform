@@ -1,2 +1,2 @@
 export * as triggerLoader from "./triggerLoader"
-export * as workflowTriggerLoader from "./workflowTriggerLoader"
+export * as processTriggerLoader from "./processTriggerLoader"

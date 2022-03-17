@@ -1,6 +1,6 @@
 import * as _ from "underscore";
 import * as path from "path";
-import { getMD5, JSONStringify, loadWorkflowTriggers, registerWorkflowTrigger } from "@steedos/objectql";
+import { getMD5, JSONStringify, loadProcessTriggers, registerProcessTrigger } from "@steedos/objectql";
 import { Trigger } from "./types";
 
 const ENUM_WHEN = ['beforeDraftInsert', 'afterDraftInsert', 'beforeDraftSubmit', 'afterDraftSubmit', 'beforeStepSubmit', 'afterStepSubmit', 'cacluateNextStepUsers',
@@ -8,7 +8,7 @@ const ENUM_WHEN = ['beforeDraftInsert', 'afterDraftInsert', 'beforeDraftSubmit',
 
 export async function load(broker: any, packagePath: string, packageServiceName: string) {
     let filePath = path.join(packagePath, "**");
-    let wTriggers = loadWorkflowTriggers(filePath);
+    let wTriggers = loadProcessTriggers(filePath);
     if (_.isEmpty(wTriggers)) {
         return;
     }
@@ -27,8 +27,8 @@ export async function load(broker: any, packagePath: string, packageServiceName:
                     "when": when,
                     "handler": handler.toString()
                 }
-                await registerWorkflowTrigger.register(broker, packageServiceName, config);
-                console.log(await registerWorkflowTrigger.find(broker, { pattern: `${wt.listenTo}.${when}.*` }))
+                await registerProcessTrigger.register(broker, packageServiceName, config);
+                console.log(await registerProcessTrigger.find(broker, { pattern: `${wt.listenTo}.${when}.*` }))
             }
 
         }

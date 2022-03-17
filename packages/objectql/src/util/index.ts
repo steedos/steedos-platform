@@ -244,10 +244,10 @@ export const loadTriggers = (filePath: string) => {
   return results;
 };
 
-export const loadWorkflowTriggers = (filePath: string) => {
+export const loadProcessTriggers = (filePath: string) => {
     let results = [];
     const filePatten = [
-        path.join(filePath, "*.workflowTrigger.js"),
+        path.join(filePath, "*.processTrigger.js"),
         "!" + path.join(filePath, "node_modules"),
     ];
     const matchedPaths: [string] = globby.sync(filePatten);

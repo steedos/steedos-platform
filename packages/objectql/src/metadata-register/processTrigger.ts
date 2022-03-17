@@ -1,6 +1,6 @@
 import { RegisterBase } from "./_base";
-const SERVICE_NAME = 'workflowTrigger';
-class RegisterWorkflowTrigger extends RegisterBase {
+const SERVICE_NAME = 'processTrigger';
+class RegisterProcessTrigger extends RegisterBase {
     constructor() {
         super(SERVICE_NAME);
     }
@@ -21,4 +21,4 @@ class RegisterWorkflowTrigger extends RegisterBase {
     }
 }
 
-export const registerWorkflowTrigger = new RegisterWorkflowTrigger();
+export const registerProcessTrigger = new RegisterProcessTrigger();
