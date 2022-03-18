@@ -14,7 +14,8 @@ function upperFirst(str) {
 };
 
 Steedos.Page.getPage = function(type, appId, objectApiName, recordId){
-    const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}`, {async:false});
+    const formFactor = Steedos.isMobile() ? "SMALL" : "LARGE";
+    const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}&formFactor=${formFactor}`, {async:false});
     if(page && page.schema){
         return page;
     }
@@ -22,7 +23,7 @@ Steedos.Page.getPage = function(type, appId, objectApiName, recordId){
 
 Steedos.Page.render = function (root, page, data) {
     if (page.render_engine && page.render_engine != 'redash') {
-        return SteedosUI.render(BuilderReact.BuilderComponent, {
+        return SteedosUI.render(BuilderComponent, {
             model: "page", content: {
                 "data": {
                     "blocks": [

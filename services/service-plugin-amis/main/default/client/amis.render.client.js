@@ -32,12 +32,13 @@
                 }()
             );
         };
-
-        BuilderReact.Builder.registerComponent(Amis, {
+        
+        Builder.register('PageRender', {
             name: 'Amis',
+            component: Amis,
             inputs: [
-                { name: 'schema', type: 'object' },
-                { name: 'data', type: 'object' }
+              { name: 'schema', type: 'object' },
+              { name: 'data', type: 'object' },
             ]
         })
     });

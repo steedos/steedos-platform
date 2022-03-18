@@ -24,8 +24,8 @@ module.exports = {
         getMeSchema: {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
-                const { type, app, objectApiName, recordId } = ctx.params;
-                return await this.getMeSchema(type, app, objectApiName, recordId, userSession);
+                const { type, app, objectApiName, recordId, formFactor } = ctx.params;
+                return await this.getMeSchema(type, app, objectApiName, recordId, formFactor, userSession);
             }
         },
         // getDefaultSchema: {
@@ -47,9 +47,9 @@ module.exports = {
      */
     methods: {
         getDefaultSchema: {
-            async handler(type, app, objectApiName, recordId, userSession) {
+            async handler(type, app, objectApiName, formFactor, recordId, userSession) {
                 if (process.env.DEFAULT_PAGE_RENDER) {
-                    return await this.broker.call(`${process.env.DEFAULT_PAGE_RENDER}.getDefaultSchema`, {type, app, objectApiName, recordId}, {
+                    return await this.broker.call(`${process.env.DEFAULT_PAGE_RENDER}.getDefaultSchema`, {type, app, objectApiName, recordId, formFactor}, {
                         meta: {
                           user: userSession
                         }
@@ -72,7 +72,7 @@ module.exports = {
                 return await objectql.getObject("page_assignments").find({ filters: ['app', '=', app] }, userSession);
             }
         },
-        getLevel1Assignment: {
+        getAppProfileAssignment: {
             async handler(app, assignments, userSession) {
                 return _.filter(assignments, (assignment) => {
                     //TODO Record Type
@@ -80,17 +80,17 @@ module.exports = {
                 });
             }
         },
-        getLevel2Assignment: {
+        getAppDefaultAssignment: {
             async handler(app, assignments) {
                 return _.filter(assignments, (assignment) => {
                     return assignment.app === app;
                 });
             }
         },
-        getOrgDefaultPage: {
-            async handler(typePages) {
-                return _.find(typePages, (typePage) => {
-                    return typePage.is_default
+        getOrgDefaultAssignment: {
+            async handler(assignments) {
+                return _.find(assignments, (assignment) => {
+                    return !assignment.app && !assignment.profile
                 })
             }
         },
@@ -113,7 +113,7 @@ module.exports = {
              * 2 如果已指定，则应用程序默认设置 页面分配会覆盖组织默认设置。
              * 3 应用程序、记录类型和简档, 分配会覆盖组织和应用程序默认设置。
              * 
-             * TODO form factors
+             * TODO form factors "LARGE","SMALL"
              * TODO 页面分配有多条时的优先级处理（始终是最新的分配生效）。
              */
             async handler(type, app, objectApiName, userSession) {
@@ -122,17 +122,17 @@ module.exports = {
                     const typePages = await this.getTypePages(type, objectApiName, userSession);
                     const assignments = await this.getAssignments(app, userSession);
 
-                    const assignment1 = await this.getLevel1Assignment(app, assignments, userSession);
+                    const assignment1 = await this.getAppProfileAssignment(app, assignments, userSession);
                     if (assignment1 && assignment1.length > 0) {
                         return await this.getAssignmentPage(assignment1[0], typePages)
                     }
 
-                    const assignment2 = await this.getLevel2Assignment(app, assignments);
+                    const assignment2 = await this.getAppDefaultAssignment(app, assignments);
                     if (assignment2 && assignment2.length > 0) {
                         return await this.getAssignmentPage(assignment2[0], typePages)
                     }
 
-                    const orgDefaultPage = await this.getOrgDefaultPage(typePages);
+                    const orgDefaultPage = await this.getOrgDefaultAssignment(typePages);
                     if (orgDefaultPage) {
                         return orgDefaultPage;
                     }
@@ -143,13 +143,13 @@ module.exports = {
             }
         },
         getMeSchema: {
-            async handler(type, app, objectApiName, recordId, userSession) {
+            async handler(type, app, objectApiName, recordId, formFactor, userSession) {
                 // 计算出 userSchema
                 const userSchema = await this.getUserPage(type, app, objectApiName, userSession);
                 if (userSchema) {
                     return userSchema;
                 }
-                return await this.getDefaultSchema(type, app, objectApiName, recordId, userSession);
+                return await this.getDefaultSchema(type, app, objectApiName, recordId, formFactor, userSession);
             }
         }
     },
