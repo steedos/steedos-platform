@@ -1,2 +1,4 @@
 name: record_type
 type: text
+label: 记录类型
+hidden: true

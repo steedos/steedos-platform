@@ -1,5 +1,7 @@
 name: profile
 type: lookup
+label: 简档
 reference_to: permission_set
 filters:
   - ["type","=","profile"]
+visible_on: "{{formData.app ? true: false}}"

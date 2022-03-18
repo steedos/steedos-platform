@@ -1,0 +1,4 @@
+name: is_archived
+label: 启用
+sort_no: 130
+type: toggle
