@@ -29,7 +29,6 @@ export async function load(broker: any, packagePath: string, packageServiceName:
                     "handler": handler.toString()
                 }
                 await registerProcessTrigger.register(broker, packageServiceName, config);
-                // console.log(await registerProcessTrigger.find(broker, { pattern: `${wt.listenTo}.${when}.*` }))
             }
 
         }

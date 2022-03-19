@@ -10,11 +10,38 @@ const { excuteTriggers } = require('../utils/trigger');
 /**
  * 审批中提交申请单
  * body {
- *  Approvals: [
- *   {
- *     
- *   }
- * ]
+    "Approvals": [
+        {
+            "_id": "3c9636c152d52b056ef9ccec",
+            "instance": "siDye2BhC3XMGHmrK",
+            "trace": "848556e079844c1c94305a63",
+            "is_finished": false,
+            "user": "61d425a7e9aa4c36e87ba8d1",
+            "user_name": "孙浩林",
+            "handler": "61d425a7e9aa4c36e87ba8d1",
+            "handler_name": "孙浩林",
+            "handler_organization_fullname": "s",
+            "start_date": "2022-03-18T06:19:13.811Z",
+            "due_date": "2022-03-25T06:19:13.765Z",
+            "is_read": true,
+            "values": {
+                "文本": "",
+                "文本1": ""
+            },
+            "read_date": "2022-03-18T11:40:54.469Z",
+            "id": "3c9636c152d52b056ef9ccec",
+            "description": "",
+            "judge": "approved",
+            "next_steps": [
+                {
+                    "step": "8c240799-753d-437e-8928-7683494688e4",
+                    "users": [
+                        "61d425a7e9aa4c36e87ba8d1"
+                    ]
+                }
+            ]
+        }
+    ]
  * }
  */
 router.post('/api/workflow/engine', core.requireAuthentication, async function (req, res) {
@@ -40,6 +67,7 @@ router.post('/api/workflow/engine', core.requireAuthentication, async function (
                 await excuteTriggers('afterStepSubmit', userSession, instanceDoc['flow'], insId);
                 res.status(200).send({});
             } catch (e) {
+                console.error(e);
                 res.status(200).send({
                     errors: [{ errorMessage: e.message }]
                 });
