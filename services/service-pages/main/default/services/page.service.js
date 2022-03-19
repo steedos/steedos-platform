@@ -192,7 +192,7 @@ module.exports = {
                 // 计算 userSchema
                 const userPage = await this.getUserPage(type, app, objectApiName, recordId, formFactor, userSession);
                 if (userPage) {
-                    const pageVersion = await this.getLatestPageVersion(userPage._id);
+                    const pageVersion = await this.getLatestPageVersion(userPage._id, true);
                     if(pageVersion && pageVersion.schema){
                         return Object.assign({}, userPage, {schema: pageVersion.schema});
                     }

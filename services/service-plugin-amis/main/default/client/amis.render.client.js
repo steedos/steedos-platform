@@ -27,7 +27,9 @@
                 // amisRequire('amis').render(schema, data, {theme: 'cxd'}))
                 function () {
                     setTimeout(function () {
-                        amisRequire('amis/embed').embed('#amis-root', schema, data)
+                        amisRequire('amis/embed').embed('#amis-root', schema, {
+                            data
+                        })
                     }, 100)
                 }()
             );

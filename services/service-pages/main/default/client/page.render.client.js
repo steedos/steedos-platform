@@ -22,6 +22,7 @@ Steedos.Page.getPage = function(type, appId, objectApiName, recordId){
 }
 
 Steedos.Page.render = function (root, page, data) {
+    console.log('render', data)
     if (page.render_engine && page.render_engine != 'redash') {
         return SteedosUI.render(BuilderComponent, {
             model: "page", content: {
@@ -34,17 +35,19 @@ Steedos.Page.render = function (root, page, data) {
                             "component": {
                                 "name": upperFirst(page.render_engine),
                                 "options": {
-                                    "schema": typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema
+                                    "schema": typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema,
+                                    "data": Object.assign({}, data,{
+                                            rootUrl: __meteor_runtime_config__.ROOT_URL,
+                                            userSession: Creator.USER_CONTEXT.user
+                                        })
                                 }
                             },
                         }
                     ],
                     "inputs": [
-
                     ]
                 }
-            },
-            data: data
+            }
         }, root);
     }
 };
@@ -67,7 +70,9 @@ Steedos.Page.App.render = function (template, pageName, app_id) {
     const page = Steedos.Page.getPage('app', app_id);
     if(page){
         if(page.render_engine && page.render_engine != 'redash'){
-            return Steedos.Page.render($("#" + rootId)[0], page, {});
+            return Steedos.Page.render($("#" + rootId)[0], page, {
+                appId: app_id
+            });
         }
     }
 
