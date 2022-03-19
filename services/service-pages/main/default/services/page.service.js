@@ -106,8 +106,11 @@ module.exports = {
             }
         },
         getAssignments: {
-            async handler(formFactor) {
-                const filters = [];
+            async handler(formFactor, typePages) {
+                if(!typePages || typePages.length < 1){
+                    return ;
+                }
+                const filters = [['page', 'in', _.map(typePages, '_id')]];
                 if(formFactor === 'SMALL'){
                     filters.push(['mobile','=', true])
                 }else{
@@ -165,7 +168,7 @@ module.exports = {
 
                 try {
                     const typePages = await this.getTypePages(type, objectApiName, userSession);
-                    const assignments = await this.getAssignments(formFactor);
+                    const assignments = await this.getAssignments(formFactor, typePages);
 
                     const appProfileassignment = await this.getAppProfileAssignment(app, assignments, userSession);
                     if (appProfileassignment && appProfileassignment.length > 0) {

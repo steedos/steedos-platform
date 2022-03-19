@@ -363,7 +363,13 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 		page = Steedos.Page.getPage('list', app_id, related_object_name);
 		if page
 			main = "page_related_list_view"
-			regions = {page: page};
+			regions = {
+				page: page,
+				appId: Session.get("app_id"),
+				objectName: object_name,
+				recordId: record_id,
+				relatedObjectName: related_object_name
+			};
 
 		Meteor.setTimeout ()->
 			BlazeLayout.render Creator.getLayout(),
@@ -393,7 +399,12 @@ objectRoutes.route '/view/:record_id',
 			page = Steedos.Page.getPage('record', Session.get("app_id"), object_name, record_id);
 			if page
 				main = "page_record_view"
-				regions = {page: page};
+				regions = {
+					page: page,
+					appId: Session.get("app_id"),
+					objectName: object_name,
+					recordId: record_id
+				};
 				
 		BlazeLayout.render Creator.getLayout(),
 			main: 'recordLoading'
@@ -435,10 +446,15 @@ objectRoutes.route '/grid/:list_view_id',
 		page = Steedos.Page.getPage('list',Session.get("app_id"), objectName);
 		if page
 			main = "page_list_view"
-			regions = {page: page};
+			regions = {
+				page: page,
+				appId: Session.get("app_id"),
+				objectName: objectName,
+				listViewId: Session.get("list_view_id")
+			};
 		
 		BlazeLayout.render Creator.getLayout(),
-			main: "creator_list_wrapper",
+			main: main,
 			regions: regions
 
 objectRoutes.route '/calendar/',

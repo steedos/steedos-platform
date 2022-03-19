@@ -14,6 +14,12 @@ function upperFirst(str) {
 };
 
 Steedos.Page.getPage = function(type, appId, objectApiName, recordId){
+    if(objectApiName){
+        const objectInfo = Creator.getObject(Session.get("object_name"));
+        if(objectInfo.version < 2){
+            return ;
+        }
+    }
     const formFactor = Steedos.isMobile() ? "SMALL" : "LARGE";
     const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}&formFactor=${formFactor}`, {async:false});
     if(page && page.schema){
@@ -22,7 +28,7 @@ Steedos.Page.getPage = function(type, appId, objectApiName, recordId){
 }
 
 Steedos.Page.render = function (root, page, data) {
-    console.log('render', data)
+    console.log(`render======>data`, data)
     if (page.render_engine && page.render_engine != 'redash') {
         return SteedosUI.render(BuilderComponent, {
             model: "page", content: {
@@ -100,7 +106,7 @@ Steedos.Page.Listview.render = function(template, objectApiName){
         }
 
         if(page.render_engine && page.render_engine != 'redash'){
-            return Steedos.Page.render($("#" + rootId)[0], page, {});
+            return Steedos.Page.render($("#" + rootId)[0], page, template.data.regions());
         }
     } catch (error) {
         
@@ -127,7 +133,7 @@ Steedos.Page.Record.render = function(template, objectApiName, recordId){
         }
 
         if(page.render_engine && page.render_engine != 'redash'){
-            return Steedos.Page.render($("#" + rootId)[0], page, {});
+            return Steedos.Page.render($("#" + rootId)[0], page, template.data.regions());
         }
     } catch (error) {
         
@@ -153,7 +159,7 @@ Steedos.Page.RelatedListview.render = function(template, objectApiName){
         }
 
         if(page.render_engine && page.render_engine != 'redash'){
-            return Steedos.Page.render($("#" + rootId)[0], page, {});
+            return Steedos.Page.render($("#" + rootId)[0], page, template.data.regions());
         }
     } catch (error) {
         
