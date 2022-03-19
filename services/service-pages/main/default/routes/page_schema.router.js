@@ -8,14 +8,15 @@ router.get('/api/pageSchema/:type', core.requireAuthentication, async function (
 
         const userSession = req.user;
 
-        const { app, objectApiName, recordId } = req.query;
+        const { app, objectApiName, recordId, formFactor} = req.query;
         const { type } = req.params;
 
         const pageSchema = await objectql.getSteedosSchema().broker.call(`page.getMeSchema`, {
             type,
             app,
             objectApiName,
-            recordId
+            recordId,
+            formFactor
         }, {
             meta: {
                 user: userSession

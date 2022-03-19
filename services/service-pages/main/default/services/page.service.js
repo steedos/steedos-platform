@@ -102,12 +102,18 @@ module.exports = {
                 if (type === 'list' || type === 'record' || type === 'form') {
                     filters.push(['object_name', '=', objectApiName]);
                 }
-                return await objectql.getObject('pages').find({ filters: filters }, userSession);
+                return await objectql.getObject('pages').find({ filters: filters });
             }
         },
         getAssignments: {
-            async handler() {
-                return await objectql.getObject("page_assignments").find();
+            async handler(formFactor) {
+                const filters = [];
+                if(formFactor === 'SMALL'){
+                    filters.push(['mobile','=', true])
+                }else{
+                    filters.push(['desktop','=', true])
+                }
+                return await objectql.getObject("page_assignments").find({ filters: filters });
             }
         },
         getAppProfileAssignment: {
@@ -155,11 +161,11 @@ module.exports = {
              * TODO form factors "LARGE","SMALL"
              * TODO 页面分配有多条时的优先级处理（始终是最新的分配生效）。
              */
-            async handler(type, app, objectApiName, userSession) {
+            async handler(type, app, objectApiName, recordId, formFactor, userSession) {
 
                 try {
                     const typePages = await this.getTypePages(type, objectApiName, userSession);
-                    const assignments = await this.getAssignments();
+                    const assignments = await this.getAssignments(formFactor);
 
                     const appProfileassignment = await this.getAppProfileAssignment(app, assignments, userSession);
                     if (appProfileassignment && appProfileassignment.length > 0) {
@@ -184,7 +190,7 @@ module.exports = {
         getMeSchema: {
             async handler(type, app, objectApiName, recordId, formFactor, userSession) {
                 // 计算 userSchema
-                const userPage = await this.getUserPage(type, app, objectApiName, userSession);
+                const userPage = await this.getUserPage(type, app, objectApiName, recordId, formFactor, userSession);
                 if (userPage) {
                     const pageVersion = await this.getLatestPageVersion(userPage._id);
                     if(pageVersion && pageVersion.schema){

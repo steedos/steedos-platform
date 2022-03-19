@@ -2,3 +2,4 @@ name: mobile
 type: boolean
 label: 手机
 sort_no: 140
+defaultValue: true
