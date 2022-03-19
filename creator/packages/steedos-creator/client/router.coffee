@@ -163,6 +163,10 @@ FlowRouter.route '/app/:app_id/page/:page_id',
 #		, 50)
 		BlazeLayout.render Creator.getLayout(),
 			main: 'page_template'
+			regions: {
+				appId: app_id,
+				pageId: page_id
+			};
 	triggersExit: [(context, redirect) ->
 		Session.set("pageApiName", null)
 	]
