@@ -23,6 +23,12 @@ const getObjectConfig = function (objectApiName) {
     }, { objectApiName: objectApiName })
 }
 
+const makeNewID = function (objectApiName) {
+    return objectql.wrapAsync(async function () {
+        return await objectql.getObject(this.objectApiName)._makeNewID()
+    }, { objectApiName: objectApiName })
+}
+
 const objectInsert = function (objectApiName, data) {
     return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).insert(this.data)
@@ -39,6 +45,12 @@ const objectUpdateMany = function (objectApiName, filters, data) {
     return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).updateMany(this.filters, this.data)
     }, { objectApiName: objectApiName, filters: filters, data: data })
+}
+
+const objectRemove = function (objectApiName, id) {
+    return objectql.wrapAsync(async function () {
+        return await objectql.getObject(this.objectApiName).remove(this.id)
+    }, { objectApiName: objectApiName, id: id })
 }
 
 const getRelateds = function (objectApiName) {
@@ -901,7 +913,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
         var
             objectCollection = Creator.getCollection(objectName, spaceId),
             sync_attachment = ow.sync_attachment;
-            syncDirection = ow.sync_direction || 'both';
+        syncDirection = ow.sync_direction || 'both';
         var objectInfo = getObjectConfig(objectName);
         objectCollection.find({
             _id: {
@@ -990,12 +1002,12 @@ InstanceRecordQueue.sendDoc = function (doc) {
         }).forEach(function (ow) {
             try {
                 var
-                    objectCollection = Creator.getCollection(ow.object_name, spaceId),
+                    // objectCollection = Creator.getCollection(ow.object_name, spaceId),
                     sync_attachment = ow.sync_attachment,
-                    newRecordId = objectCollection._makeNewID(),
+                    newRecordId = makeNewID(ow.object_name),
                     objectName = ow.object_name,
                     syncDirection = ow.sync_direction || 'both';
-                
+
                 if (!['both', 'ins_to_obj'].includes(syncDirection)) {
                     return;
                 }
@@ -1039,7 +1051,8 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     var relatedObjectsValue = syncValues.relatedObjectsValue;
                     InstanceRecordQueue.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins);
                     // workflow里发起审批后，同步时也可以修改相关表的字段值 #1183
-                    var record = objectCollection.findOne(newRecordId);
+                    // var record = objectCollection.findOne(newRecordId);
+                    var record = objectFindOne(objectName, { filters: [['_id', '=', newRecordId]] });
                     InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record);
                 }
 
@@ -1051,10 +1064,12 @@ InstanceRecordQueue.sendDoc = function (doc) {
             } catch (error) {
                 console.error(error.stack);
 
-                objectCollection.remove({
-                    _id: newRecordId,
-                    space: spaceId
-                });
+                // objectCollection.remove({
+                //     _id: newRecordId,
+                //     space: spaceId
+                // });
+                objectRemove(ow.object_name, newRecordId);
+
                 Creator.getCollection('instances').update(ins._id, {
                     $pull: {
                         record_ids: {
