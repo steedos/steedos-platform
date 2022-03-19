@@ -2,4 +2,4 @@ name: is_archived
 label: 启用
 sort_no: 130
 type: toggle
-visible_on: "{{'record' == formData.type || 'list' == formData.type || 'form' == formData.type ? true: false}}"
+visible_on: "{{'redash' != formData.render_engine ? true: false}}"

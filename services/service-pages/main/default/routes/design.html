@@ -13,7 +13,9 @@
         let comp = document.querySelector('builder-fiddle')
         var params = new URLSearchParams(location.search);
         var pageId = params.get("pageId");
-        axios.get("/api/v4/pages/" + params.get("pageId")).then(function (response) {
+        // /pageVersion/:pageId/latest
+
+        axios.get(`/service/api/page/pageVersion/${params.get("pageId")}/latest/`).then(function (response) {
             let schema = response.data.schema;
             if (typeof schema === "string") {
                 schema = JSON.parse(schema)
@@ -34,7 +36,7 @@
             const { data } = event;
             if (data) {
                 if (data.type === 'builder.saveContent') {
-                    axios.put("/api/v4/pages/" + params.get("pageId"), {
+                    axios.put(`/service/api/page/pageVersion/${params.get("pageId")}`, {
                         schema: JSON.stringify(data.data.AmisSchema) //直接存储json格式会导致react form异常。
                     }).then(function (response) {
                         window.postMessage(
@@ -54,8 +56,6 @@
         }
 
         window.addEventListener('message', onWindowMessage);
-
-
 
     </script>
 </body>

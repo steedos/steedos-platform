@@ -28,11 +28,49 @@ module.exports = {
                 return await this.getMeSchema(type, app, objectApiName, recordId, formFactor, userSession);
             }
         },
-        // getDefaultSchema: {
+        // enablePageVersion:{
+        //     rest: {
+        //         method: "GET",
+        //         path: "/pageSchema/enable/:pageVersionId"
+        //     },
+        //     params: {
+        //         pageVersionId: { type: "any" }
+        //     },
         //     async handler(ctx) {
-        //         return await this.getDefaultSchema();
+        //         const userSession = ctx.meta.user;
+        //         const { pageVersionId } = ctx.params;
+        //         return await this.enablePageVersion(pageVersionId, userSession);
         //     }
-        // }
+        // },
+        getLatestPageVersion:{
+            rest: {
+                method: "GET",
+                path: "/pageVersion/:pageId/latest"
+            },
+            params: {
+                pageId: { type: "any" }
+            },
+            async handler(ctx){
+                const userSession = ctx.meta.user;
+                const { pageId } = ctx.params;
+                return await this.getLatestPageVersion(pageId, userSession);
+            }
+        },
+        changePageVersion:{
+            rest: {
+                method: "PUT",
+                path: "/pageVersion/:pageId"
+            },
+            params: {
+                pageId: { type: "any" },
+                schema: { type: "any" }
+            },
+            async handler(ctx){
+                const userSession = ctx.meta.user;
+                const { pageId, schema } = ctx.params;
+                return await this.changePageVersion(pageId, schema, userSession);
+            }
+        }
     },
 
     /**
@@ -151,7 +189,51 @@ module.exports = {
                 }
                 return await this.getDefaultSchema(type, app, objectApiName, recordId, formFactor, userSession);
             }
-        }
+        },
+        getLatestPageVersion:{
+            async handler(pageId) {
+                // 根据pageId 获取 pageversions
+                const records = await objectql.getObject('page_versions').find({filters: [['page', '=', pageId]], sort: 'version desc', top: 1});
+                if(records.length === 1){
+                    return records[0]
+                }
+            }
+        },
+        // enablePageVersion:{
+        //     async handler(pageVersionId, userSession) {
+        //         if(pageVersionId){
+        //             const record = await objectql.getObject('page_versions').findOne(pageVersionId);
+        //             if(record){
+        //                 await objectql.getObject('pages').update(record.page, {
+        //                     is_archived: true
+        //                 },userSession)
+        //                 return await objectql.getObject('page_versions').update(pageVersionId, {
+        //                     is_archived: true
+        //                 },userSession)
+        //             }
+        //         }
+        //     }
+        // },
+        changePageVersion: {
+            async handler(pageId, schema, userSession) {
+                // 根据pageId 获取 pageversions
+                const pageVersion = await this.getLatestPageVersion(pageId);
+                let version = pageVersion ? pageVersion.version :0;
+                if(pageVersion && !pageVersion.is_archived){
+                    return await objectql.getObject('page_versions').update(pageVersion._id, {
+                        schema: schema
+                    }, userSession);
+                }else{
+                    return await objectql.getObject('page_versions').insert({
+                        page: pageId,
+                        is_archived: false,
+                        schema: schema,
+                        version: ++version,
+                        space: userSession.spaceId
+                    }, userSession) 
+                }
+            }
+        },
     },
 
     /**

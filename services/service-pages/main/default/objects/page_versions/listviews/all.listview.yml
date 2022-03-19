@@ -13,3 +13,6 @@ scrolling_mode: standard
 shared: true
 sort_no: 100
 type: grid
+sort:
+  - field_name: 'version'
+    order: desc
