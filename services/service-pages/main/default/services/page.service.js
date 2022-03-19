@@ -98,7 +98,7 @@ module.exports = {
         },
         getTypePages: {
             async handler(type, objectApiName, userSession) {
-                const filters = [['type', '=', type]];
+                const filters = [['type', '=', type], ['is_archived', '=', true]];
                 if (type === 'list' || type === 'record' || type === 'form') {
                     filters.push(['object_name', '=', objectApiName]);
                 }
@@ -106,8 +106,8 @@ module.exports = {
             }
         },
         getAssignments: {
-            async handler(app, userSession) {
-                return await objectql.getObject("page_assignments").find({ filters: ['app', '=', app] }, userSession);
+            async handler() {
+                return await objectql.getObject("page_assignments").find();
             }
         },
         getAppProfileAssignment: {
@@ -127,7 +127,7 @@ module.exports = {
         },
         getOrgDefaultAssignment: {
             async handler(assignments) {
-                return _.find(assignments, (assignment) => {
+                return _.filter(assignments, (assignment) => {
                     return !assignment.app && !assignment.profile
                 })
             }
@@ -135,13 +135,14 @@ module.exports = {
         getAssignmentPage: {
             async handler(assignment, typePages) {
                 const page = _.find(typePages, (typePage) => {
-                    return typePage.name == assignment.desktop
+                    return typePage.name == assignment.page || typePage._id == assignment.page
                 })
                 if (page) {
                     return page;
-                } else {
-                    throw new Error(`not find assignment page ${assignment.desktop}`)
                 }
+                // else {
+                //     throw new Error(`not find assignment page ${assignment.desktop}`)
+                // }
             }
         },
         getUserPage: {
@@ -158,21 +159,21 @@ module.exports = {
 
                 try {
                     const typePages = await this.getTypePages(type, objectApiName, userSession);
-                    const assignments = await this.getAssignments(app, userSession);
+                    const assignments = await this.getAssignments();
 
-                    const assignment1 = await this.getAppProfileAssignment(app, assignments, userSession);
-                    if (assignment1 && assignment1.length > 0) {
-                        return await this.getAssignmentPage(assignment1[0], typePages)
+                    const appProfileassignment = await this.getAppProfileAssignment(app, assignments, userSession);
+                    if (appProfileassignment && appProfileassignment.length > 0) {
+                        return await this.getAssignmentPage(appProfileassignment[0], typePages)
                     }
 
-                    const assignment2 = await this.getAppDefaultAssignment(app, assignments);
-                    if (assignment2 && assignment2.length > 0) {
-                        return await this.getAssignmentPage(assignment2[0], typePages)
+                    const appDefaultAssignment = await this.getAppDefaultAssignment(app, assignments);
+                    if (appDefaultAssignment && appDefaultAssignment.length > 0) {
+                        return await this.getAssignmentPage(appDefaultAssignment[0], typePages)
                     }
 
-                    const orgDefaultPage = await this.getOrgDefaultAssignment(typePages);
-                    if (orgDefaultPage) {
-                        return orgDefaultPage;
+                    const orgDefaultAssignment = await this.getOrgDefaultAssignment(assignments);
+                    if (orgDefaultAssignment && orgDefaultAssignment.length > 0) {
+                        return await this.getAssignmentPage(orgDefaultAssignment[0], typePages)
                     }
                 } catch (error) {
                     console.error(`error`, error);
@@ -182,38 +183,33 @@ module.exports = {
         },
         getMeSchema: {
             async handler(type, app, objectApiName, recordId, formFactor, userSession) {
-                // 计算出 userSchema
-                const userSchema = await this.getUserPage(type, app, objectApiName, userSession);
-                if (userSchema) {
-                    return userSchema;
+                // 计算 userSchema
+                const userPage = await this.getUserPage(type, app, objectApiName, userSession);
+                if (userPage) {
+                    const pageVersion = await this.getLatestPageVersion(userPage._id);
+                    if(pageVersion && pageVersion.schema){
+                        return Object.assign({}, userPage, {schema: pageVersion.schema});
+                    }
                 }
-                return await this.getDefaultSchema(type, app, objectApiName, recordId, formFactor, userSession);
+                const defaultSchema = await this.getDefaultSchema(type, app, objectApiName, recordId, formFactor, userSession);
+                if(defaultSchema){
+                    return {schema: defaultSchema}
+                }
             }
         },
         getLatestPageVersion:{
-            async handler(pageId) {
-                // 根据pageId 获取 pageversions
-                const records = await objectql.getObject('page_versions').find({filters: [['page', '=', pageId]], sort: 'version desc', top: 1});
-                if(records.length === 1){
-                    return records[0]
+            async handler(pageId, isArchived) {
+                const filters = [['page', '=', pageId]];
+                if(isArchived){
+                    filters.push(['is_archived','=',true])
+                }
+                // 根据pageId 获取 page version
+                const pageVersions = await objectql.getObject('page_versions').find({filters: filters, sort: 'version desc', top: 1});
+                if(pageVersions.length === 1){
+                    return pageVersions[0]
                 }
             }
         },
-        // enablePageVersion:{
-        //     async handler(pageVersionId, userSession) {
-        //         if(pageVersionId){
-        //             const record = await objectql.getObject('page_versions').findOne(pageVersionId);
-        //             if(record){
-        //                 await objectql.getObject('pages').update(record.page, {
-        //                     is_archived: true
-        //                 },userSession)
-        //                 return await objectql.getObject('page_versions').update(pageVersionId, {
-        //                     is_archived: true
-        //                 },userSession)
-        //             }
-        //         }
-        //     }
-        // },
         changePageVersion: {
             async handler(pageId, schema, userSession) {
                 // 根据pageId 获取 pageversions

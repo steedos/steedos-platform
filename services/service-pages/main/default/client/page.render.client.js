@@ -49,7 +49,7 @@ Steedos.Page.render = function (root, page, data) {
     }
 };
 
-Steedos.Page.App.render = function (pageName) {
+Steedos.Page.App.render = function (template, pageName, app_id) {
     if(!pageName){
         return ;
     }
@@ -64,9 +64,8 @@ Steedos.Page.App.render = function (pageName) {
         $(".page-template-root")[0].appendChild(modalRoot);
     }
 
-    const pages = Creator.odata.query("pages", {$filter:`(name eq '${pageName}')`}, true);
-    if(pages.length > 0){
-        const page = pages[0];
+    const page = Steedos.Page.getPage('app', app_id);
+    if(page){
         if(page.render_engine && page.render_engine != 'redash'){
             return Steedos.Page.render($("#" + rootId)[0], page, {});
         }

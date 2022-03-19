@@ -42,7 +42,11 @@ module.exports = {
     },
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
-            this.data.values = await getAll(this.id, this.userId);
+            const all = await getAll();
+            const id = this.id;
+            this.data.values = _.find(all, function(item){
+                return item._id === id
+            });
         }
     }
 }

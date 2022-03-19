@@ -21,6 +21,7 @@ version: 2
 form:
  afterView: !!js/function |
       function(){
+        console.log(`afterView`, this.doc)
         if(this.doc.name && (this.doc.render_engine === 'redash' || !this.doc.render_engine)){
           SteedosUI.render(stores.ComponentRegistry.components.Page, { pageId: this.doc.name }, $(".slds-template__container")[0])
         }
