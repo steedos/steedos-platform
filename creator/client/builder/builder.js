@@ -1,4 +1,4 @@
-import { Builder, BuilderComponent, builder} from '@builder.io/react';
+import { Builder, BuilderComponent, builder} from '@steedos-builder/react';
 window.Builder = Builder;
 window.BuilderComponent = BuilderComponent;
 builder.init('steedos-builder');
@@ -9,4 +9,4 @@ Builder.registryChange.subscribe(function(registry){
             Builder.registerComponent(component, options)
         })
     })
-})
+});

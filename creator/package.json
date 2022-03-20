@@ -109,7 +109,7 @@
     "simplemde": "1.11.2",
     "summernote": "^0.8.11",
     "xlsx": "0.10.6",
-    "@builder.io/react": "^1.1.50"
+    "@steedos-builder/react": "^0.0.2"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
