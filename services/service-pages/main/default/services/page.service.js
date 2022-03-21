@@ -202,7 +202,7 @@ module.exports = {
                 }
                 const defaultSchema = await this.getDefaultSchema(type, app, objectApiName, recordId, formFactor, userSession);
                 if(defaultSchema){
-                    return {schema: defaultSchema}
+                    return { render_engine: process.env.DEFAULT_PAGE_RENDER , schema: defaultSchema}
                 }
             }
         },
