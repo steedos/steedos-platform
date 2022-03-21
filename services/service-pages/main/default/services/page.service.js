@@ -102,7 +102,7 @@ module.exports = {
                 if (type === 'list' || type === 'record' || type === 'form') {
                     filters.push(['object_name', '=', objectApiName]);
                 }
-                return await objectql.getObject('pages').find({ filters: filters });
+                return await objectql.getObject('pages').find({ filters: filters, sort: 'modified desc' });
             }
         },
         getAssignments: {
@@ -116,7 +116,7 @@ module.exports = {
                 }else{
                     filters.push(['desktop','=', true])
                 }
-                return await objectql.getObject("page_assignments").find({ filters: filters });
+                return await objectql.getObject("page_assignments").find({ filters: filters, sort: 'modified desc' });
             }
         },
         getAppProfileAssignment: {
