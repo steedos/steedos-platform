@@ -161,8 +161,6 @@ module.exports = {
              * 2 如果已指定，则应用程序默认设置 页面分配会覆盖组织默认设置。
              * 3 应用程序、记录类型和简档, 分配会覆盖组织和应用程序默认设置。
              * 
-             * TODO form factors "LARGE","SMALL"
-             * TODO 页面分配有多条时的优先级处理（始终是最新的分配生效）。
              */
             async handler(type, app, objectApiName, recordId, formFactor, userSession) {
 
