@@ -85,7 +85,7 @@ module.exports = {
      */
     methods: {
         getDefaultSchema: {
-            async handler(type, app, objectApiName, formFactor, recordId, userSession) {
+            async handler(type, app, objectApiName, recordId, formFactor, userSession) {
                 if (process.env.DEFAULT_PAGE_RENDER) {
                     return await this.broker.call(`${process.env.DEFAULT_PAGE_RENDER}.getDefaultSchema`, {type, app, objectApiName, recordId, formFactor}, {
                         meta: {
