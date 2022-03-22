@@ -44,7 +44,10 @@ Steedos.Page.render = function (root, page, data) {
                                     "schema": typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema,
                                     "data": Object.assign({}, data,{
                                             rootUrl: __meteor_runtime_config__.ROOT_URL,
-                                            userSession: Creator.USER_CONTEXT.user
+                                            tenantId: Creator.USER_CONTEXT.spaceId,
+                                            userId: Creator.USER_CONTEXT.userId,
+                                            authToken: Creator.USER_CONTEXT.user.authToken,
+                                            user: Creator.USER_CONTEXT.user
                                         })
                                 }
                             },
