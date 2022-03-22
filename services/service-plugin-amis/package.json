@@ -1,13 +1,11 @@
 {
   "name": "@steedos/service-plugin-amis",
-  "version": "2.1.89",
+  "version": "2.2.5",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
   "private": false,
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
   }
 }
