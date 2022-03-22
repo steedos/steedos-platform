@@ -167,6 +167,23 @@ Steedos.Page.RelatedListview.render = function(template, objectApiName){
 };
 
 Steedos.Page.Form.StandardNew.render = function(appId, objectApiName, tilte, initialValues){
+
+    const page = Steedos.Page.getPage('form', appId, objectApiName);
+    if(page && page.schema){
+        const elementId = `list-action-custom-${objectApiName}-standard_new`;
+        if($(`#${elementId}`).length === 0){
+            const listActionsElements = $(".grid-info-actions");
+            listActionsElements.prepend(`<div id="${elementId}"></div>`)
+        }
+        return Steedos.Page.render($(`#${elementId}`)[0], page, {
+            appId: appId,
+            objectName: objectApiName,
+            tilte: tilte,
+            initialValues: initialValues,
+            page: page
+        });
+    }
+
     SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
         name: `${objectApiName}_standard_new_form`,
         objectApiName: objectApiName,
@@ -187,6 +204,23 @@ Steedos.Page.Form.StandardNew.render = function(appId, objectApiName, tilte, ini
 };
 
 Steedos.Page.Form.StandardEdit.render = function(appId, objectApiName, tilte, recordId){
+
+    const page = Steedos.Page.getPage('form', appId, objectApiName, recordId);
+    if(page && page.schema){
+        const elementId = `list-action-custom-${objectApiName}-standard_edit`;
+        if($(`#${elementId}`).length === 0){
+            const listActionsElements = $(".grid-info-actions");
+            listActionsElements.prepend(`<div id="${elementId}"></div>`)
+        }
+        return Steedos.Page.render($(`#${elementId}`)[0], page, {
+            appId: appId,
+            objectName: objectApiName,
+            tilte: tilte,
+            recordId: recordId,
+            page: page
+        });
+    }
+
     return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
         name: `${objectApiName}_standard_edit_form`,
         objectApiName: objectApiName,
