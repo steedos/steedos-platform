@@ -14,7 +14,7 @@ function upperFirst(str) {
 };
 
 Steedos.Page.getPage = function(type, appId, objectApiName, recordId){
-    if(objectApiName){
+    if(type != 'list' && objectApiName){
         const objectInfo = Creator.getObject(Session.get("object_name"));
         if(objectInfo.version < 2){
             return ;
