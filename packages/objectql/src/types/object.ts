@@ -1027,6 +1027,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (!layouts) {
             layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name);
         }
+
+        let layoutHiddenFields = [];
+
         if(layouts && layouts.length > 0){
             const layout = layouts[0];
             let _fields = {};
@@ -1065,13 +1068,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
             const layoutFieldKeys = _.keys(_fields);
             const objectFieldKeys = _.keys(objectConfig.fields);
 
-            const difference = _.difference(objectFieldKeys, layoutFieldKeys);
+            layoutHiddenFields = _.difference(objectFieldKeys, layoutFieldKeys);
 
             _.each(layoutFieldKeys, function(fieldApiName){
                 objectConfig.fields[fieldApiName] = _fields[fieldApiName];
             })
             
-            _.each(difference, function(fieldApiName){
+            _.each(layoutHiddenFields, function(fieldApiName){
                 objectConfig.fields[fieldApiName].hidden = true;
                 objectConfig.fields[fieldApiName].sort_no = 99999;
             })
@@ -1105,12 +1108,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
+        /**
+         * What Determines Field Access?
+         * 1 Page layouts—Set whether fields are visible, required, editable, or read only for a particular record type.
+         * 2 Field-level security—Further restrict users’ access to fields by setting whether those fields are visible, editable, or read only. These settings override field properties set in the page layout if the field-level security setting is more restrictive.
+         */
         // 使用字段级安全性作为限制用户对字段的访问权限的手段；然后使用页面布局主要在选项卡中组织详细信息和编辑页面。这可以减少需要维护的页面布局数量。
         // 例如，如果字段在页面布局中是必需的，并且在字段级安全性设置中是只读的，则字段级安全性将覆盖页面布局，并且该字段将对用户是只读的。
         const userObjectFields = objectConfig.fields;
         _.each(objectConfig.permissions.field_permissions, (field_permission, field) => {
             const { read, edit } = field_permission;
-            if (userObjectFields[field]) {
+            if (userObjectFields[field] && !_.include(layoutHiddenFields, field)) {
                 if (read) {
                     userObjectFields[field].hidden = false;
                     userObjectFields[field].omit = true;
