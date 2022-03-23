@@ -3,3 +3,4 @@ type: number
 label: 版本号
 scale: 0
 omit: true
+readonly: true
