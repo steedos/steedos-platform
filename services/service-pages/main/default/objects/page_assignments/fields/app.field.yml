@@ -3,4 +3,6 @@ label: 应用
 type: lookup
 reference_to: apps
 reference_to_field: code
+filters:
+  - ['code','!=','admin']
 sort_no: 120
