@@ -1,5 +1,5 @@
 name: mobile
 type: boolean
-label: 手机
+label: 移动端
 sort_no: 140
 defaultValue: true

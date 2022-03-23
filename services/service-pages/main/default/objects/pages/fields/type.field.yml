@@ -4,7 +4,7 @@ type: select
 defaultValue: app
 required: true
 options:
-  - label: 自定义应用 
+  - label: 应用程序页面
     value: app
   - label: 详细页面
     value: record

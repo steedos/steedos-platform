@@ -1,5 +1,5 @@
 name: desktop
 type: boolean
-label: 台式机
+label: 桌面端
 sort_no: 130
 defaultValue: true

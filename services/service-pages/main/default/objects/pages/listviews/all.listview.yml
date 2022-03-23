@@ -2,6 +2,7 @@ name: all
 columns:
   - field: name
   - field: label
+  - field: render_engine
   - field: type
   - field: is_system
     wrap: false

@@ -3,6 +3,7 @@ columns:
   - field: name
   - field: label
   - field: type
+  - field: render_engine
   - field: is_system
     wrap: false
 filter_scope: space
