@@ -45,6 +45,15 @@
                         },
                         '*'
                         );
+
+                        try {
+                            //保存时, 刷新父页面
+                            if(window.opener){
+                                window.opener.location.reload()
+                            }
+                        } catch (error) {
+                            console.error(error)
+                        }
                     }).catch(function (error) {
                         // handle error
                         console.log(error);
