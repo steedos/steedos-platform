@@ -6,7 +6,7 @@ required: true
 options:
   - label: 应用程序页面
     value: app
-  - label: 详细页面
+  - label: 记录页面
     value: record
   - label: 列表页面
     value: list
