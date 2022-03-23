@@ -24,6 +24,7 @@ const getLng = async function(userId){
 
 module.exports = {
     afterFind: async function () {
+        const { spaceId } = this;
         let query = InternalData.parserFilters(this.query.filters);
         let isSystem = query.is_system;
         if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
@@ -48,9 +49,12 @@ module.exports = {
                     self.data.values.push(Object.assign({code: app._id}, clone(app), baseRecord));
                 }
             })
+            // console.log(`find this.query`, self.query, objectql.getSteedosSchema().metadataDriver.find(self.data.values, this.query, spaceId))
+            self.data.values = objectql.getSteedosSchema().metadataDriver.find(self.data.values, self.query, spaceId);
         }
     },
     afterAggregate: async function () {
+        const { spaceId } = this;
         let query = InternalData.parserFilters(this.query.filters);
         let isSystem = query.is_system;
         if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
@@ -77,13 +81,21 @@ module.exports = {
             })
         }
         // 获取的apps根据保存的值进行过滤
-        const allData = this.data.values;
-        const firstFilterKey = _.keys(query)[0];
-        this.data.values = _.filter(allData, (item)=>{
-            return item[firstFilterKey] === query[firstFilterKey];
-        })
+        // const allData = this.data.values;
+        // const firstFilterKey = _.keys(query)[0];
+        // this.data.values = _.filter(allData, (item)=>{
+        //     return item[firstFilterKey] === query[firstFilterKey];
+        // })
+        // console.log(`afterAggregate this.query`, this.query, objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId))
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
     },
     afterCount: async function () {
+        try {
+            this.query.fields.push('name');
+            this.query.fields.push('code');
+        } catch (error) {
+
+        }
         let result = await objectql.getObject('apps').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length
     },
