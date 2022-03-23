@@ -51,9 +51,9 @@ module.exports = {
                 pageId: { type: "any" }
             },
             async handler(ctx){
-                const userSession = ctx.meta.user;
+                // const userSession = ctx.meta.user;
                 const { pageId } = ctx.params;
-                return await this.getLatestPageVersion(pageId, userSession);
+                return await this.getLatestPageVersion(pageId);
             }
         },
         changePageVersion:{
