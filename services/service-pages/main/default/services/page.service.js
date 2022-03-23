@@ -166,6 +166,12 @@ module.exports = {
 
                 try {
                     const typePages = await this.getTypePages(type, objectApiName, userSession);
+                    
+                    //如果是app 类型,则直接返回最新的.
+                    if(type === 'app'){
+                        return typePages.length > 0 ? typePages[0] : null; 
+                    }
+
                     const assignments = await this.getAssignments(formFactor, typePages);
 
                     const appProfileassignment = await this.getAppProfileAssignment(app, assignments, userSession);
