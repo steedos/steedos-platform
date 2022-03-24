@@ -32,9 +32,6 @@ window.postMessage(Object.assign({type: "record.created"}, data, {record: record
 ```
 window.postMessage(Object.assign({type: "record.edited"}, data, {record: record}), "*")
 ```
-
-**autoRoute 默认为 true**
-
 ### Platform 消费record.created、record.edited 消息
 
 - record.created: 新建的对象名称等于当前对象名称, 则进入详细页面, 否则更新当前route
