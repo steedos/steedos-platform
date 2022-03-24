@@ -1,6 +1,6 @@
 name: 管理员
 allowCreate: true
-allowDelete: true
+allowDelete: false
 allowEdit: true
 allowRead: true
 modifyAllRecords: true
