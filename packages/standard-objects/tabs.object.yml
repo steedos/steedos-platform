@@ -40,7 +40,6 @@ fields:
     hidden: true
   type: 
     type: select
-    inlineHelpText: 作为上级选项卡时，无需设置类型
     options:
     - label: Object
       value: object
