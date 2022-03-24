@@ -25,12 +25,12 @@ data: {
 
 - 新增记录事件
 ```
-window.postMessage("record.created", Object.assign(data, {record: record}))
+window.postMessage(Object.assign({type: "record.created"}, data, {record: record}))
 ```
 
 - 编辑记录事件
 ```
-window.postMessage("record.edited", Object.assign(data, {record: record}))
+window.postMessage(Object.assign({type: "record.edited"}, data, {record: record}))
 ```
 
 **autoRoute 默认为 true**
