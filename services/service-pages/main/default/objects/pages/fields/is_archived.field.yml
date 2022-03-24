@@ -1,5 +1,5 @@
 name: is_archived
-label: 启用
+label: 已归档
 sort_no: 130
 type: toggle
-visible_on: "{{'redash' != formData.render_engine ? true: false}}"
+hidden: true

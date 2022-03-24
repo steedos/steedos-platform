@@ -98,7 +98,7 @@ module.exports = {
         },
         getTypePages: {
             async handler(type, objectApiName, userSession) {
-                const filters = [['type', '=', type], ['is_archived', '=', true]];
+                const filters = [['type', '=', type], ['is_active', '=', true]];
                 if (type === 'list' || type === 'record' || type === 'form') {
                     filters.push(['object_name', '=', objectApiName]);
                 }
@@ -214,7 +214,7 @@ module.exports = {
             async handler(pageId, isArchived) {
                 const filters = [['page', '=', pageId]];
                 if(isArchived){
-                    filters.push(['is_archived','=',true])
+                    filters.push(['is_active','=',true])
                 }
                 // 根据pageId 获取 page version
                 const pageVersions = await objectql.getObject('page_versions').find({filters: filters, sort: 'version desc', top: 1});
@@ -228,14 +228,14 @@ module.exports = {
                 // 根据pageId 获取 pageversions
                 const pageVersion = await this.getLatestPageVersion(pageId);
                 let version = pageVersion ? pageVersion.version :0;
-                if(pageVersion && !pageVersion.is_archived){
+                if(pageVersion && !pageVersion.is_active){
                     return await objectql.getObject('page_versions').update(pageVersion._id, {
                         schema: schema
                     }, userSession);
                 }else{
                     return await objectql.getObject('page_versions').insert({
                         page: pageId,
-                        is_archived: false,
+                        is_active: false,
                         schema: schema,
                         version: ++version,
                         space: userSession.spaceId

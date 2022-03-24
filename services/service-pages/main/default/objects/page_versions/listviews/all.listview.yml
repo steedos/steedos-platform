@@ -2,7 +2,7 @@ name: all
 columns:
   - field: page
   - field: version
-  - field: is_archived
+  - field: is_active
   - field: created
   - field: modified
   - field: is_system
