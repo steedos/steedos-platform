@@ -49,7 +49,7 @@
                         try {
                             //保存时, 刷新父页面
                             if(window.opener){
-                                window.opener.location.reload()
+                                window.opener.postMessage(Object.assign({type: "record.edited"}, {objectName: 'pages'}, {record: {}}), "*")
                             }
                         } catch (error) {
                             console.error(error)

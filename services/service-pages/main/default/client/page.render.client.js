@@ -1,36 +1,52 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-22 19:13:57
+ * @Description: 提供自定义page渲染能力, 供内部使用, 内容会迭代调整, 不对用户开放. 
+ */
+
 Steedos.Page = {
     App: {},
     Record: {},
     Listview: {},
     RelatedListview: {},
-    Form:{
+    Form: {
         StandardNew: {},
         StandardEdit: {}
     }
 };
 
 function upperFirst(str) {
-	return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
+    return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
 };
 
-Steedos.Page.getPage = function(type, appId, objectApiName, recordId){
-    if(type != 'list' && objectApiName){
+function getModalElement(name){
+    let modalRoot = document.getElementById(`steedos-page-modal-root-${name}`);
+    if (!modalRoot) {
+      modalRoot = document.createElement('div');
+      modalRoot.setAttribute('id', `steedos-page-modal-root-${name}`);
+      document.body.appendChild(modalRoot)
+    }
+    return modalRoot;
+}
+
+
+Steedos.Page.getPage = function (type, appId, objectApiName, recordId) {
+    if (type != 'list' && objectApiName) {
         const objectInfo = Creator.getObject(Session.get("object_name"));
-        if(objectInfo.version < 2){
-            return ;
+        if (objectInfo.version < 2) {
+            return;
         }
     }
     const formFactor = Steedos.isMobile() ? "SMALL" : "LARGE";
-    const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}&formFactor=${formFactor}`, {async:false});
-    if(page && page.schema){
+    const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}&formFactor=${formFactor}`, { async: false });
+    if (page && page.schema) {
         return page;
     }
 }
 
 Steedos.Page.render = function (root, page, data) {
-    console.log(`render======>data`, data)
     if (page.render_engine && page.render_engine != 'redash') {
-        return SteedosUI.render(BuilderComponent, {
+        const options = {
             model: "page", content: {
                 "data": {
                     "blocks": [
@@ -42,13 +58,14 @@ Steedos.Page.render = function (root, page, data) {
                                 "name": upperFirst(page.render_engine),
                                 "options": {
                                     "schema": typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema,
-                                    "data": Object.assign({}, data,{
+                                    "data": Object.assign({}, data, {
+                                        context: {
                                             rootUrl: __meteor_runtime_config__.ROOT_URL,
                                             tenantId: Creator.USER_CONTEXT.spaceId,
                                             userId: Creator.USER_CONTEXT.userId,
-                                            authToken: Creator.USER_CONTEXT.user.authToken,
-                                            user: Creator.USER_CONTEXT.user
-                                        })
+                                            authToken: Creator.USER_CONTEXT.user.authToken
+                                        }
+                                    })
                                 }
                             },
                         }
@@ -57,13 +74,15 @@ Steedos.Page.render = function (root, page, data) {
                     ]
                 }
             }
-        }, root);
+        };
+        console.debug('render data', options)
+        return SteedosUI.render(BuilderComponent, options, root);
     }
 };
 
 Steedos.Page.App.render = function (template, pageName, app_id) {
-    if(!pageName){
-        return ;
+    if (!pageName) {
+        return;
     }
     var rootId = "steedosPageRoot";
     var modalRoot = document.getElementById(rootId);
@@ -77,8 +96,8 @@ Steedos.Page.App.render = function (template, pageName, app_id) {
     }
 
     const page = Steedos.Page.getPage('app', app_id);
-    if(page){
-        if(page.render_engine && page.render_engine != 'redash'){
+    if (page) {
+        if (page.render_engine && page.render_engine != 'redash') {
             return Steedos.Page.render($("#" + rootId)[0], page, {
                 appId: app_id
             });
@@ -90,12 +109,12 @@ Steedos.Page.App.render = function (template, pageName, app_id) {
     }, $("#" + rootId)[0]);
 };
 
-Steedos.Page.Listview.render = function(template, objectApiName){
+Steedos.Page.Listview.render = function (template, objectApiName) {
     try {
-        if(!template.data.regions || !objectApiName){
-            return ;
+        if (!template.data.regions || !objectApiName) {
+            return;
         }
-        const page = template.data.regions().page;
+        const { page, ...data } = template.data.regions();
 
         var rootId = "steedosPageRecordRoot";
         var modalRoot = document.getElementById(rootId);
@@ -108,22 +127,20 @@ Steedos.Page.Listview.render = function(template, objectApiName){
             $(".page-list-view-root")[0].appendChild(modalRoot);
         }
 
-        if(page.render_engine && page.render_engine != 'redash'){
-            return Steedos.Page.render($("#" + rootId)[0], page, template.data.regions());
+        if (page.render_engine && page.render_engine != 'redash') {
+            return Steedos.Page.render($("#" + rootId)[0], page, data);
         }
     } catch (error) {
-        
+
     }
 };
 
-Steedos.Page.Record.render = function(template, objectApiName, recordId){
+Steedos.Page.Record.render = function (template, objectApiName, recordId) {
     try {
-        if(!template.data.regions || !objectApiName || !recordId){
-            return ;
+        if (!template.data.regions || !objectApiName || !recordId) {
+            return;
         }
-        console.log(`Steedos.Page.Record.render...`, template.data.regions(), objectApiName, recordId);
-        const page = template.data.regions().page;
-
+        const { page, ...data } = template.data.regions();
         var rootId = "steedosPageRecordRoot";
         var modalRoot = document.getElementById(rootId);
         // if(modalRoot){
@@ -135,20 +152,20 @@ Steedos.Page.Record.render = function(template, objectApiName, recordId){
             $(".page-record-view-root")[0].appendChild(modalRoot);
         }
 
-        if(page.render_engine && page.render_engine != 'redash'){
-            return Steedos.Page.render($("#" + rootId)[0], page, template.data.regions());
+        if (page.render_engine && page.render_engine != 'redash') {
+            return Steedos.Page.render($("#" + rootId)[0], page, data);
         }
     } catch (error) {
-        
+
     }
 };
 
-Steedos.Page.RelatedListview.render = function(template, objectApiName){
+Steedos.Page.RelatedListview.render = function (template, objectApiName) {
     try {
-        if(!template.data.regions || !objectApiName){
-            return ;
+        if (!template.data.regions || !objectApiName) {
+            return;
         }
-        const page = template.data.regions().page;
+        const { page, ...data } = template.data.regions();
 
         var rootId = "steedosPageRecordRoot";
         var modalRoot = document.getElementById(rootId);
@@ -161,66 +178,55 @@ Steedos.Page.RelatedListview.render = function(template, objectApiName){
             $(".page-related-list-view-root")[0].appendChild(modalRoot);
         }
 
-        if(page.render_engine && page.render_engine != 'redash'){
-            return Steedos.Page.render($("#" + rootId)[0], page, template.data.regions());
+        if (page.render_engine && page.render_engine != 'redash') {
+            return Steedos.Page.render($("#" + rootId)[0], page, data);
         }
     } catch (error) {
-        
+
     }
 };
 
-Steedos.Page.Form.StandardNew.render = function(appId, objectApiName, tilte, initialValues){
-
+Steedos.Page.Form.StandardNew.render = function (appId, objectApiName, title, initialValues) {
     const page = Steedos.Page.getPage('form', appId, objectApiName);
-    if(page && page.schema){
-        const elementId = `list-action-custom-${objectApiName}-standard_new`;
-        if($(`#${elementId}`).length === 0){
-            const listActionsElements = $(".grid-info-actions");
-            listActionsElements.prepend(`<div id="${elementId}"></div>`)
-        }
-        return Steedos.Page.render($(`#${elementId}`)[0], page, {
+    if (page && page.schema) {
+        const elementId = getModalElement(`${objectApiName}-standard_new`);
+        return Steedos.Page.render(elementId, page, {
             appId: appId,
             objectName: objectApiName,
-            tilte: tilte,
-            initialValues: initialValues,
-            page: page
+            title: title,
+            initialValues: initialValues
         });
     }
 
     SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
         name: `${objectApiName}_standard_new_form`,
         objectApiName: objectApiName,
-        title: tilte,
+        title: title,
         initialValues: initialValues,
-        afterInsert: function(result){
-            if(result.length > 0){
+        afterInsert: function (result) {
+            if (result.length > 0) {
                 var record = result[0];
-                setTimeout(function(){
+                setTimeout(function () {
                     var url = `/app/${appId}/${objectApiName}/view/${record._id}`
                     FlowRouter.go(url)
                 }
-                , 1);
+                    , 1);
                 return true;
             }
         }
-    }, null, {iconPath: '/assets/icons'});
+    }, null, { iconPath: '/assets/icons' });
 };
 
-Steedos.Page.Form.StandardEdit.render = function(appId, objectApiName, tilte, recordId){
+Steedos.Page.Form.StandardEdit.render = function (appId, objectApiName, title, recordId) {
 
     const page = Steedos.Page.getPage('form', appId, objectApiName, recordId);
-    if(page && page.schema){
-        const elementId = `list-action-custom-${objectApiName}-standard_edit`;
-        if($(`#${elementId}`).length === 0){
-            const listActionsElements = $(".grid-info-actions");
-            listActionsElements.prepend(`<div id="${elementId}"></div>`)
-        }
-        return Steedos.Page.render($(`#${elementId}`)[0], page, {
+    if (page && page.schema) {
+        const elementId = getModalElement(`${objectApiName}-standard_edit`);
+        return Steedos.Page.render(elementId, page, {
             appId: appId,
             objectName: objectApiName,
-            tilte: tilte,
-            recordId: recordId,
-            page: page
+            title: title,
+            recordId: recordId
         });
     }
 
@@ -228,21 +234,21 @@ Steedos.Page.Form.StandardEdit.render = function(appId, objectApiName, tilte, re
         name: `${objectApiName}_standard_edit_form`,
         objectApiName: objectApiName,
         recordId: recordId,
-        title: tilte,
-        afterUpdate: function(){
-            setTimeout(function(){
-                if(FlowRouter.current().route.path.endsWith("/:record_id")){
+        title: title,
+        afterUpdate: function () {
+            setTimeout(function () {
+                if (FlowRouter.current().route.path.endsWith("/:record_id")) {
                     FlowRouter.reload()
                     // ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新表单数据
                     SteedosUI.reloadRecord(objectApiName, recordId)
-                }else{
+                } else {
                     window.refreshDxSchedulerInstance()
                     window.refreshGrid();
                 }
-                }, 1);
+            }, 1);
             return true;
         }
-    }, null, {iconPath: '/assets/icons'})
+    }, null, { iconPath: '/assets/icons' })
 };
 
 // Steedos.Page.Form.StandardDelete.render = function(){
