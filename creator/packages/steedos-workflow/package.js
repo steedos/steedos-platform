@@ -359,7 +359,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/routes/instance_draft_view.coffee', 'server');
 
 	// routes
-	api.addFiles('routes/nextStepUsers.js', 'server');
+	// api.addFiles('routes/nextStepUsers.js', 'server');
 	api.addFiles('routes/getSpaceUsers.js', 'server');
 	api.addFiles('routes/getFormulaUserObjects.js', 'server');
 	api.addFiles('routes/init_formula_values.js', 'server');

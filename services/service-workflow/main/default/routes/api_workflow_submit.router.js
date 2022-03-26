@@ -1,3 +1,9 @@
+/*
+ * @Author: sunhaolin@hotoa.com 
+ * @Date: 2022-03-26 10:49:51 
+ * @Last Modified by: sunhaolin@hotoa.com
+ * @Last Modified time: 2022-03-26 10:53:33
+ */
 'use strict';
 // @ts-check
 const express = require("express");
@@ -29,7 +35,7 @@ router.post('/api/workflow/submit', core.requireAuthentication, async function (
         const instance_from_client = hashData['Instances'][0];
         // beforeDraftSubmit
         const insId = instance_from_client._id;
-        await excuteTriggers('beforeDraftSubmit', userSession, instance_from_client['flow'], insId);
+        await excuteTriggers({ when: 'beforeDraftSubmit', userId: userId, flowId: instance_from_client['flow'], insId: insId });
 
         Fiber(function () {
             try {

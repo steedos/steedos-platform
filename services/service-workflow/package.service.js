@@ -3,6 +3,7 @@ const Fiber = require("fibers");
 const project = require('./package.json');
 const serviceName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
+const { excuteTriggers } = require('./main/default/utils/trigger');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -19,7 +20,8 @@ module.exports = {
 			path: __dirname,
 			name: serviceName,
 			isPackage: false
-		}
+		},
+		excuteTriggers: excuteTriggers
 	},
 
 	/**

@@ -421,6 +421,8 @@ UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body) {
 	var q = {};
 	q.deal_type = deal_type;
 	q.spaceId = spaceId;
+	q.insId = Session.get("instanceId");
+	q.nextStepId = Session.get("next_step_id");
 
 	var nextStepUsers = [];
 	var data = JSON.stringify(body);
@@ -453,6 +455,8 @@ UUflow_api.caculateNextstepUsers = function (deal_type, spaceId, body) {
 	var q = {};
 	q.deal_type = deal_type;
 	q.spaceId = spaceId;
+	q.insId = Session.get("instanceId");
+	q.nextStepId = Session.get("next_step_id");
 
 	var nextStepUsers = [],
 		error = "";

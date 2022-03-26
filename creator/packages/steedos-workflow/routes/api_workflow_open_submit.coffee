@@ -86,7 +86,7 @@ JsonRoutes.add 'put', '/api/workflow/open/submit/:ins_id', (req, res, next) ->
 		next_step_id = nextSteps[0]
 
 		# 计算下一步处理人选项
-		next_user_ids = getHandlersManager.getHandlers(ins_id, next_step_id) || []
+		next_user_ids = getHandlersManager.getHandlers(ins_id, next_step_id, current_user) || []
 
 		if next_user_ids.length > 1
 			throw new Meteor.Error('error', 'next step handler not uniq')

@@ -1,3 +1,9 @@
+/*
+ * @Author: sunhaolin@hotoa.com 
+ * @Date: 2022-03-26 10:49:56 
+ * @Last Modified by: sunhaolin@hotoa.com
+ * @Last Modified time: 2022-03-26 10:53:34
+ */
 'use strict';
 // @ts-check
 const express = require("express");
@@ -58,13 +64,13 @@ router.post('/api/workflow/engine', core.requireAuthentication, async function (
         // beforeStepSubmit
         let insId = approve_from_client.instance;
         let instanceDoc = (await objectql.getObject('instances').find({ filters: [['_id', '=', insId]], fields: ['flow'] }))[0];
-        await excuteTriggers('beforeStepSubmit', userSession, instanceDoc['flow'], insId);
+        await excuteTriggers({ when: 'beforeStepSubmit', userSession: userSession, flowId: instanceDoc['flow'], insId: insId });
 
         Fiber(async function () {
             try {
                 uuflowManager.workflow_engine(approve_from_client, userSession, userId);
                 // afterStepSubmit
-                await excuteTriggers('afterStepSubmit', userSession, instanceDoc['flow'], insId);
+                await excuteTriggers({ when: 'afterStepSubmit', userId: userId, flowId: instanceDoc['flow'], insId: insId });
                 res.status(200).send({});
             } catch (e) {
                 console.error(e);

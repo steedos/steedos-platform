@@ -929,7 +929,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 				throw new Meteor.Error('error!', "不能指定多个处理人")
 			else
 				# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
-				next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
+				next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id, current_user)
 				if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_step)
 					throw new Meteor.Error('error!', "指定的下一步处理人有误")
 				else
@@ -1139,7 +1139,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 						throw new Meteor.Error('error!', "不能指定多个处理人")
 					else
 						# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
-						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
+						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id, current_user)
 						if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_step)
 							throw new Meteor.Error('error!', "指定的下一步处理人有误")
 						else
@@ -1344,7 +1344,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 							throw new Meteor.Error('error!', "不能指定多个处理人")
 						else
 							# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
-							next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
+							next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id, current_user)
 							if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_step)
 								throw new Meteor.Error('error!', "指定的下一步处理人有误")
 							else
@@ -1563,7 +1563,7 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 						throw new Meteor.Error('error!', "不能指定多个处理人")
 					else
 						# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
-						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
+						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id, current_user)
 						if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_steps)
 							throw new Meteor.Error('error!', "指定的下一步处理人有误")
 						else
@@ -2175,7 +2175,7 @@ uuflowManager.submit_instance = (instance_from_client, user_info) ->
 				throw new Meteor.Error('error!', "不能指定多个处理人")
 			else
 				# 验证下一步处理人next_user是否合法
-				checkUsers = getHandlersManager.getHandlers(instance_id, approve["next_steps"][0]["step"])
+				checkUsers = getHandlersManager.getHandlers(instance_id, approve["next_steps"][0]["step"], current_user)
 				if !uuflowManager.checkNestStepUsersIsValid(next_step_users, checkUsers, next_step)
 					throw new Meteor.Error('error!', "指定的下一步处理人有误")
 				else
