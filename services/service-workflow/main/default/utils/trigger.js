@@ -14,9 +14,9 @@ const PROCESS_TRIGGER = 'processTrigger';
 const LISTENTO_ALL_FLOWS = 'LISTENTO_ALL_FLOWS';
 module.exports = {
     excuteTriggers: async function ({ when, userId, flowId, insId, nextStep, nextUserIds }) {
-        const flow = (await objectql.getObject('flows').find({ filters: ['_id', '=', flowId], fields: ['api_name'] }))[0];
+        const flow = (await objectql.getObject('flows').find({ filters: ['_id', '=', flowId], fields: ['api_name', 'space'] }))[0];
         const flowApiName = flow.api_name;
-        const spaceId = flow.spaceId;
+        const spaceId = flow.space;
         const instanceDoc = await objectql.getObject('instances').findOne(insId);
         const broker = objectql.getSteedosSchema().broker;
         let triggers = await objectql.registerProcessTrigger.find(broker, { pattern: `${flowApiName}.${when}.*` });
