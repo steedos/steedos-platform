@@ -1,0 +1,15 @@
+{
+  "name": "@steedos/standard-process",
+  "version": "2.1.89",
+  "main": "package.service.js",
+  "scripts": {},
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@steedos/objectql": "2.1.89",
+    "lodash": "^4.17.21"
+  }
+}

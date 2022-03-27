@@ -155,7 +155,7 @@ export function transformListenersToTriggers(object: SteedosObjectTypeConfig, js
 }
 
 export function generateActionParams(when: string, context: SteedosTriggerContextConfig): TriggerActionParams {
-    let params: TriggerActionParams = { objectName: context.objectName, isExecuting: true };
+    let params: TriggerActionParams = { objectName: context.objectName, isExecuting: true, userId: context.userId, spaceId: context.spaceId };
     switch (when) {
         case 'before.find':
             params.isBefore = true;

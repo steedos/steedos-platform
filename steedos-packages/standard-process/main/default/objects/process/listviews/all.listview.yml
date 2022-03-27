@@ -1,0 +1,15 @@
+name: all
+columns:
+  - field: name
+  - field: api_name
+  - field: created_by
+  - field: version
+  - field: deploy_time
+  - field: is_active
+filter_scope: space
+filters: []
+label: 所有
+scrolling_mode: standard
+shared: true
+sort_no: 100
+type: grid
