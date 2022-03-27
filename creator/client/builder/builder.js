@@ -1,12 +1,8 @@
-import { Builder, BuilderComponent, builder} from '@steedos-builder/react';
-window.Builder = Builder;
-window.BuilderComponent = BuilderComponent;
+window.BuilderReact = require('@steedos-builder/react');
+window.BuilderSDK=require('@steedos-builder/sdk');
+
+window.Builder = BuilderReact.Builder;
+window.BuilderComponent = BuilderReact.BuilderComponent;
+window.builder = BuilderReact.builder;
+
 builder.init('steedos-builder');
-Builder.registryChange.subscribe(function(registry){
-    _.each(registry, function(value, key){
-        _.each(value, function(item){
-            const {component, ...options} = item
-            Builder.registerComponent(component, options)
-        })
-    })
-});
