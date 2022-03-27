@@ -35,7 +35,12 @@ module.exports = {
                     this.data.values.push(doc);
                 }
             })
-            this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if(records.length > 0){
+                this.data.values = records;
+            }else{
+                this.data.values.length = 0;
+            }
         }
     },
     afterAggregate: async function(){
@@ -50,7 +55,12 @@ module.exports = {
                     this.data.values.push(doc);
                 };
             })
-            this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if(records.length > 0){
+                this.data.values = records;
+            }else{
+                this.data.values.length = 0;
+            }
         }
     },
     afterCount: async function(){
