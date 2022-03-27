@@ -1,0 +1,9 @@
+name: when
+label: 何时执行入口公式
+type: select
+options: 
+  - label: 对象记录新增后
+    value: afterInsert
+  - label: 对象记录更新后
+    value: afterUpdate
+sort_no: 50

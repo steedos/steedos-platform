@@ -1,0 +1,13 @@
+name: all
+columns:
+  - field: version
+  - field: is_active
+  - field: created
+  - field: modified
+filter_scope: space
+filters: []
+label: 所有
+scrolling_mode: standard
+shared: true
+sort_no: 100
+type: grid
