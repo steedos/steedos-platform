@@ -24,8 +24,8 @@ module.exports = {
         getMeSchema: {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
-                const { type, app, objectApiName, recordId, formFactor } = ctx.params;
-                return await this.getMeSchema(type, app, objectApiName, recordId, formFactor, userSession);
+                const { type, app, objectApiName, recordId, pageId, formFactor } = ctx.params;
+                return await this.getMeSchema(type, app, objectApiName, recordId, pageId, formFactor, userSession);
             }
         },
         // enablePageVersion:{
@@ -195,7 +195,20 @@ module.exports = {
             }
         },
         getMeSchema: {
-            async handler(type, app, objectApiName, recordId, formFactor, userSession) {
+            async handler(type, app, objectApiName, recordId, pageId, formFactor, userSession) {
+                if(pageId){
+                    const records = await objectql.getObject('pages').find({filters: [['name', '=', pageId]]});
+                    let pageInfo = {};
+                    if(records.length > 0){
+                        pageInfo = records[0];
+                        const pageVersion = await this.getLatestPageVersion(pageInfo._id, true);
+                        if(pageVersion && pageVersion.schema){
+                            return Object.assign({}, pageInfo, {schema: pageVersion.schema});
+                        } 
+                    }
+                    return ;
+                    
+                }
                 // 计算 userSchema
                 const userPage = await this.getUserPage(type, app, objectApiName, recordId, formFactor, userSession);
                 if (userPage) {

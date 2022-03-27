@@ -1,5 +1,5 @@
 /*
- * @Author: baozhoutao@steedos.com
+ * @Author: steedos
  * @Date: 2022-03-22 19:13:57
  * @Description: 提供自定义page渲染能力, 供内部使用, 内容会迭代调整, 不对用户开放. 
  */
@@ -30,15 +30,15 @@ function getModalElement(name){
 }
 
 
-Steedos.Page.getPage = function (type, appId, objectApiName, recordId) {
+Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
     if (type != 'list' && objectApiName) {
-        const objectInfo = Creator.getObject(Session.get("object_name"));
-        if (objectInfo.version < 2) {
+        const objectInfo = Creator.getObject(objectApiName);
+        if (objectInfo && objectInfo.version < 2) {
             return;
         }
     }
     const formFactor = Steedos.isMobile() ? "SMALL" : "LARGE";
-    const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}&formFactor=${formFactor}`, { async: false });
+    const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}&pageId=${pageId}&formFactor=${formFactor}`, { async: false });
     if (page && page.schema) {
         return page;
     }
@@ -95,7 +95,7 @@ Steedos.Page.App.render = function (template, pageName, app_id) {
         $(".page-template-root")[0].appendChild(modalRoot);
     }
 
-    const page = Steedos.Page.getPage('app', app_id);
+    const page = Steedos.Page.getPage('app', app_id, null, null, pageName);
     if (page) {
         if (page.render_engine && page.render_engine != 'redash') {
             return Steedos.Page.render($("#" + rootId)[0], page, {

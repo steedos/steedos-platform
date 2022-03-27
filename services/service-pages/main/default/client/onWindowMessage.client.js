@@ -1,12 +1,12 @@
 /*
- * @Author: baozhoutao@steedos.com
+ * @Author: steedos
  * @Date: 2022-03-24 14:39:44
  * @Description: 监听window message , 主要处理新增、编辑记录后的路由处理.
  */
 
 const listenerMessageType = ['record.created', 'record.edited'];
 
-const onWindowMessage = function (event) {
+window.addEventListener('message', function (event) {
     const { data } = event;
     if (data && listenerMessageType.includes(data.type)) {
         const {objectName, record} = data;
@@ -36,6 +36,4 @@ const onWindowMessage = function (event) {
         }
             
     }
-}
-
-window.addEventListener('message', onWindowMessage);
+});
