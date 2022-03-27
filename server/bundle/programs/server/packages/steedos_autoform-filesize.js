@@ -1,5 +1,8 @@
 (function () {
 
+/* Package-scope variables */
+var __coffeescriptShare;
+
 
 
 /* Exports */

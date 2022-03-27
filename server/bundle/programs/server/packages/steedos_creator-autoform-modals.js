@@ -7,16 +7,16 @@ var meteorEnv = Package.meteor.meteorEnv;
 var Promise = Package.promise.Promise;
 
 /* Package-scope variables */
-var __coffeescriptShare;
+var __coffeescriptShare, SteedosTable, CreatorTable, trs, label, thead, fieldValues, str, keyLength, addItemTr, defaultValue;
 
 (function(){
 
-///////////////////////////////////////////////////////////////////////////////
-//                                                                           //
-// packages/steedos_creator-autoform-modals/lib/server/core.coffee           //
-//                                                                           //
-///////////////////////////////////////////////////////////////////////////////
-                                                                             //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                  //
+// packages/steedos_creator-autoform-modals/lib/server/core.coffee                                                  //
+//                                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                    //
 __coffeescriptShare = typeof __coffeescriptShare === 'object' ? __coffeescriptShare : {}; var share = __coffeescriptShare;
 Meteor.methods({
   "af_multiple_update": function (options) {
@@ -86,7 +86,7 @@ Meteor.methods({
     return collection.findOne(_id);
   }
 });
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
