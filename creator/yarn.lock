@@ -425,15 +425,15 @@
     warning "^4.0.3"
     webpack-cli "^3.x"
 
-"@steedos-builder/react@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.0.2.tgz#216d0613f33ff99626b3dc57caafe0ae14438a16"
-  integrity sha512-OjiHzUm7iJz8tX0sZtN64zkifJ2i7VHu6AcWZ/Jm4XHdjQEJjRryQwK6fYD7kUPxJGatdswmr8HLyuw5VvuDlA==
+"@steedos-builder/react@^0.2.10":
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.10.tgz#7d4de117066364a960c22673ac1be038899db487"
+  integrity sha512-Eejij6tyztFzzndlpX8mA4KZWSAP5MApfdomcITvR2f3XqyCn/lEfifHQv0XsBAk+ycyXNPGvWspH607cdZxMw==
   dependencies:
     "@builder.io/react" "^1.1.50"
     "@builder.io/sdk" "^1.1.26"
     "@emotion/core" "^10.0.17"
-    "@steedos-builder/sdk" "^0.0.1"
+    "@steedos-builder/sdk" "^0.1.10"
     hash-sum "^2.0.0"
     preact "^10.1.0"
     react ">=14"
@@ -445,20 +445,22 @@
     node-fetch "^2.3.0"
     prop-types "^15.7.2"
 
-"@steedos-builder/sdk@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.0.1.tgz#fa267abbd96e267b51d9f21e26cf8ba4e3b5e815"
-  integrity sha512-9qCwbpi0KQibYYfTHlk07+UPGNqAJYCwEyf+I/i+2kkcyXghye7iTnaiM5bY8qSW5x4VsxuU5zewT8qy/TRgpg==
+"@steedos-builder/sdk@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.1.10.tgz#58d3549323dc06f291081be60b14230bb60a506a"
+  integrity sha512-2AwBEIcZJA1enmvQ11HsjwIA9Tsl0SQbAL6suY1ZP1BI8x6Fe0Qh88r6YC0RdgpDSU9ekM2zf0hrUCx2Jx6bJQ==
   dependencies:
     "@builder.io/sdk" "^1.1.26"
+    "@types/systemjs" "^6.1.1"
     hash-sum "^2.0.0"
     node-fetch "^2.2.0"
+    systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/builder-community@^1.0.24":
-  version "1.0.24"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.0.24.tgz#b819c60b242906f5d012c137d23376961023a0c5"
-  integrity sha512-tG3OCtD0dZT7OomGQxtZGLnncfCSEKkiBiYHPweRkniiasPPI3B/CW4Q8r/JUiW8OcTmWJ1vLaUFVoROwju+ew==
+"@steedos-ui/builder-community@^1.1.23":
+  version "1.1.23"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.23.tgz#a24307681170894faa636fa31d983f3a61f1f3d7"
+  integrity sha512-SYYd+MabXXmZ0dKZKuIWTvcGEi3XB95zKzoDaxHqTV79dvzqUDwmlKgkTa6HhmJ2olcPfciL9QKO/Gg2e5JQ3g==
 
 "@steedos/design-system-react@^2.0.9":
   version "2.0.32"
@@ -554,6 +556,11 @@
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
   integrity sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==
+
+"@types/systemjs@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@types/systemjs/-/systemjs-6.1.1.tgz#eae17f2a080e867d01a2dd614f524ab227cf5a41"
+  integrity sha512-d1M6eDKBGWx7RbYy295VEFoOF9YDJkPI959QYnmzcmeaV+SP4D0xV7dEh3sN5XF3GvO3PhGzm+17Z598nvHQuQ==
 
 abab@^2.0.0:
   version "2.0.5"
@@ -1389,8 +1396,8 @@ commander@:
 
 commander@^2.19.0:
   version "2.20.3"
-  resolved "https://registry.npm.taobao.org/commander/download/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
-  integrity sha1-/UhehMA+tIgcIHIrpIA16FMa6zM=
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
 commander@^4.0.0:
   version "4.1.1"
@@ -2170,8 +2177,8 @@ escape-string-regexp@^1.0.5:
 
 escodegen@^1.9.1:
   version "1.14.3"
-  resolved "https://registry.npm.taobao.org/escodegen/download/escodegen-1.14.3.tgz?cache=0&sync_timestamp=1596667960701&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fescodegen%2Fdownload%2Fescodegen-1.14.3.tgz#4e7b81fba61581dc97582ed78cab7f0e8d63f503"
-  integrity sha1-TnuB+6YVgdyXWC7XjKt/Do1j9QM=
+  resolved "https://registry.yarnpkg.com/escodegen/-/escodegen-1.14.3.tgz#4e7b81fba61581dc97582ed78cab7f0e8d63f503"
+  integrity sha512-qFcX0XJkdg+PB3xjZZG/wKSuT1PnQWx57+TVSjIMmILd2yC/6ByYElPwJnslDsuWuSAp4AwJGumarAAmJch5Kw==
   dependencies:
     esprima "^4.0.1"
     estraverse "^4.2.0"
@@ -2347,8 +2354,8 @@ fast-deep-equal@^2.0.1:
 
 fast-deep-equal@^3.1.1:
   version "3.1.3"
-  resolved "https://registry.npm.taobao.org/fast-deep-equal/download/fast-deep-equal-3.1.3.tgz?cache=0&sync_timestamp=1591599651635&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffast-deep-equal%2Fdownload%2Ffast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
-  integrity sha1-On1WtVnWy8PrUSMlJE5hmmXGxSU=
+  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
+  integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
 fast-diff@1.1.2:
   version "1.1.2"
@@ -4047,8 +4054,8 @@ object-is@^1.0.1:
 
 object-keys@^1.0.12, object-keys@^1.1.1:
   version "1.1.1"
-  resolved "https://registry.npm.taobao.org/object-keys/download/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
-  integrity sha1-HEfyct8nfzsdrwYWd9nILiMixg4=
+  resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
+  integrity sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
 
 object-visit@^1.0.0:
   version "1.0.1"
@@ -4824,7 +4831,7 @@ read-pkg@^1.0.0:
 
 readable-stream@1.1.x:
   version "1.1.14"
-  resolved "https://registry.npm.taobao.org/readable-stream/download/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
   integrity sha1-fPTFTvZI44EwhMY23SB54WbAgdk=
   dependencies:
     core-util-is "~1.0.0"
@@ -5740,6 +5747,11 @@ syntax-error@^1.1.6:
   integrity sha1-LZ1P9cBkrLcRWUo+O5UFStUdkHw=
   dependencies:
     acorn-node "^1.2.0"
+
+systemjs@^6.12.1:
+  version "6.12.1"
+  resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-6.12.1.tgz#47cdd23a6ec9f1b01cf5b5f70562c8550da229d3"
+  integrity sha512-hqTN6kW+pN6/qro6G9OZ7ceDQOcYno020zBQKpZQLsJhYTDMCMNfXi/Y8duF5iW+4WWZr42ry0MMkcRGpbwG2A==
 
 tapable@^1.0.0:
   version "1.1.3"

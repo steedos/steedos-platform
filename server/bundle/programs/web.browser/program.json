@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "d787cb6e7d346bee8635bcaa6353bbba9f573ddf.js",
+      "path": "9ddb0b0a27a2d0f0f16b0689303669dce9d77d4e.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/d787cb6e7d346bee8635bcaa6353bbba9f573ddf.js?meteor_js_resource=true",
-      "size": 22083423,
-      "hash": "d787cb6e7d346bee8635bcaa6353bbba9f573ddf",
-      "sri": "CRn08+PorzxQpYuag6NnxVjkI0AIvBzdaRWIQIapWCxz+x5CYSeaAT1uw9RA0LoQMD6Lt624283Q3PmV98d+dg=="
+      "url": "/9ddb0b0a27a2d0f0f16b0689303669dce9d77d4e.js?meteor_js_resource=true",
+      "size": 23767246,
+      "hash": "9ddb0b0a27a2d0f0f16b0689303669dce9d77d4e",
+      "sri": "9nWWXOSggT+4BM4XiVXMeeKfBGK4vNA4jRU5F1Th1tM/07MLxtJtTf3UL+PA1QEvdRzxNCdWd5FHaM80ZfV9jw=="
     },
     {
-      "path": "d787cb6e7d346bee8635bcaa6353bbba9f573ddf.stats.json",
+      "path": "9ddb0b0a27a2d0f0f16b0689303669dce9d77d4e.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/d787cb6e7d346bee8635bcaa6353bbba9f573ddf.stats.json?meteor_js_resource=true",
-      "size": 149318,
-      "hash": "e8ccb6e2729c3ed011a2810b4f7f85d9a0d6b8f1",
-      "sri": "vq6DJ7Zan4dFw4mnCld/RaUUr3xHcj3DF+AcE1JMM4flQWHdG5+zzrsoG5V9RjttRyYy1sI96BB+77lFtSDXag=="
+      "url": "/9ddb0b0a27a2d0f0f16b0689303669dce9d77d4e.stats.json?meteor_js_resource=true",
+      "size": 149111,
+      "hash": "0fd0d8c51b756d57e8fc8e982d8f740188f83bf8",
+      "sri": "aTGDE99KYDOXSwHIw5UuuvpBk+GgOdR3i8rEOuoeqwMH1Vvn1VJ0+Csec1SZL4oc9d0oNrQth5PDnr4dk++LWw=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4137,8 +4137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/builder-community.react.css",
-      "size": 1649920,
-      "hash": "74783f41607525478b752862692003331811448a",
+      "size": 1697240,
+      "hash": "331638a9b241b0891e2914c6437c7a2463ffab9f",
       "sri": null
     },
     {
@@ -4732,6 +4732,66 @@
       "sri": null
     },
     {
+      "path": "app/requirejs/builder-react.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/requirejs/builder-react.js",
+      "size": 80,
+      "hash": "a491d67eef9add9d60705cd176be506c26f9b79c",
+      "sri": null
+    },
+    {
+      "path": "app/requirejs/builder-sdk.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/requirejs/builder-sdk.js",
+      "size": 44,
+      "hash": "5947eae3622f9f49a46bfb6752f87e4f6c9712e6",
+      "sri": null
+    },
+    {
+      "path": "app/requirejs/lodash.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/requirejs/lodash.js",
+      "size": 40,
+      "hash": "b00409a0ea5f578ea29be9e5e4aed12dc0b43b37",
+      "sri": null
+    },
+    {
+      "path": "app/requirejs/react-dom.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/requirejs/react-dom.js",
+      "size": 42,
+      "hash": "c83c4100239341f1819c905d3a0f2e1a79b0fe12",
+      "sri": null
+    },
+    {
+      "path": "app/requirejs/react.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/requirejs/react.js",
+      "size": 39,
+      "hash": "37a7dfc8ee3082875807caf8ee4ea62e40d76451",
+      "sri": null
+    },
+    {
+      "path": "app/requirejs/require.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/requirejs/require.js",
+      "size": 86538,
+      "hash": "ccded2424549174642e225550f0157b10c858b1d",
+      "sri": null
+    },
+    {
       "path": "app/sound/notification.mp3",
       "where": "client",
       "type": "asset",
@@ -4929,6 +4989,26 @@
       "url": "/plugins/toastr/toastr.min.js",
       "size": 4321,
       "hash": "1f62e8c66718116fe4a36d59630e08f6ec1fc5ff",
+      "sri": null
+    },
+    {
+      "path": "app/requirejs/@steedos-builder/react.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/requirejs/@steedos-builder/react.js",
+      "size": 121,
+      "hash": "d532dd625a79ca424be80e3f07a34c7aaecfe2cf",
+      "sri": null
+    },
+    {
+      "path": "app/requirejs/@steedos-builder/sdk.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/requirejs/@steedos-builder/sdk.js",
+      "size": 119,
+      "hash": "c7e55697eec8cf853bb359cf00ee493969a609bc",
       "sri": null
     },
     {
