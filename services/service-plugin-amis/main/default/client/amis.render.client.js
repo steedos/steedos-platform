@@ -1,3 +1,16 @@
+window['React'] = require('react'); 
+window['ReactDOM'] = require('react-dom'); 
+window['lodash'] = require('lodash'); 
+
+Builder.registerImportMap({
+    "lodash": '/requirejs/lodash',
+    "react": '/requirejs/react',
+    "react-dom": '/requirejs/react-dom',
+    "@steedos-builder/sdk": '/requirejs/builder-sdk',
+    "@steedos-builder/react": '/requirejs/builder-react',
+})
+Builder.require(['lodash',"react", "react-dom"])
+
 ; (function () {
     try {
         let amisStyle = document.createElement("link");
@@ -34,14 +47,35 @@
                 }()
             );
         };
+
+        window['requirejs'].config(
+            { 
+              waitSeconds: 60,
+              baseUrl: Meteor.absoluteUrl('/requirejs'),
+              paths: { 
+                'vs': 'https://unpkg.com/monaco-editor/min/vs',
+              } 
+            }
+          );
+
+        React.Builder = Builder;
         
-        Builder.register('PageRender', {
+        
+        Builder.registerComponent(Amis, {
             name: 'Amis',
-            component: Amis,
             inputs: [
               { name: 'schema', type: 'object' },
               { name: 'data', type: 'object' },
             ]
-        })
+        });
+
+        const defaultAssetsUrls = [
+            'https://unpkg.com/@steedos-ui/builder-widgets/dist/assets.js'
+        ]
+
+        defaultAssetsUrls.forEach( (url, index) => {
+            Builder.registerRemoteAssets(url)
+        });
+
     });
 })();
