@@ -16,7 +16,7 @@
     "@steedos/design-system-react": "^2.0.9",
     "@steedos/i18n": "^2.0.32",
     "@steedos/webapp": "^2.0.9",
-    "@steedos-ui/builder-community": "^1.0.24",
+    "@steedos-ui/builder-community": "^1.1.22",
     "aliyun-sdk": "^1.12.3",
     "aws-sdk": "2.0.23",
     "basic-auth": "^2.0.1",
@@ -109,7 +109,7 @@
     "simplemde": "1.11.2",
     "summernote": "^0.8.11",
     "xlsx": "0.10.6",
-    "@steedos-builder/react": "^0.0.2"
+    "@steedos-builder/react": "^0.2.10"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
