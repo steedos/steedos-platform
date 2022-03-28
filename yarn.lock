@@ -6185,6 +6185,28 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
+"@steedos/client@2.1.89":
+  version "2.1.89"
+  resolved "https://registry.yarnpkg.com/@steedos/client/-/client-2.1.89.tgz#d5171c7471a284e69d6ea71373ba9d5962674692"
+  integrity sha512-D6wddAAaNzFhMEfqDraqm4tWFflVWV8AqiKDM6dIAhOjcWT377FxagsiIwzM5T/Cbs1HXq7Vb+fNmAPnyBc/yw==
+  dependencies:
+    "@steedos/filters" "2.1.89"
+    node-fetch "^2.6.1"
+
+"@steedos/filters@2.1.89":
+  version "2.1.89"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.1.89.tgz#a323b689c317b5fd24e79e88d7daf6dafb24a966"
+  integrity sha512-nSuX4tHj2hvyN3ba4nCsCPLmBs1OEyXcwthjxCLkFQlFykLSL6x+BjSMsEgJbkoXZ6cyhX4nmNa2KGVJ10na5A==
+  dependencies:
+    "@babel/runtime" "^7.5.4"
+    moment "^2.24.0"
+    underscore "^1.9.1"
+
+"@steedos/formula@2.1.89":
+  version "2.1.89"
+  resolved "https://registry.yarnpkg.com/@steedos/formula/-/formula-2.1.89.tgz#9e47774db501ec258eba5f35ea5fadc20b47b553"
+  integrity sha512-LAQtSOqpbFLBSLFj7sqbQ5oukfdlLXJKgtDMS0FMiNspg+7SWT06aV75ZQ00w8JbLAXWfmdctIUhchvcR7xIww==
+
 "@steedos/license@2.1.10":
   version "2.1.10"
   resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.1.10.tgz#092c8fc613ad480837a48a27c9e3f8ffd899a77d"
@@ -6194,6 +6216,24 @@
     crypto "^1.0.1"
     node-fetch "^2.6.0"
     systeminformation "5.9.17"
+
+"@steedos/metadata-core@2.1.89":
+  version "2.1.89"
+  resolved "https://registry.yarnpkg.com/@steedos/metadata-core/-/metadata-core-2.1.89.tgz#0ba2701ab57af4c44d25d5fab97c2700f69be72a"
+  integrity sha512-s6XGCHWLOAY5oQ5DvII7cme4sbOGD1UIn/RfUfVIWc2QPf73eSJ/NGLmjpUFrDlz7Bc+/BTGDEY4uHIfN4TAqA==
+  dependencies:
+    "@steedos/client" "2.1.89"
+    archiver "^5.1.0"
+    chalk "^4.1.0"
+    clone "^2.1.2"
+    compressing "^1.5.1"
+    dotenv-flow "^3.2.0"
+    eval "^0.1.4"
+    glob "^7.1.6"
+    ini "^2.0.0"
+    js-beautify "^1.13.1"
+    js-yaml "^3.14.0"
+    underscore "^1.11.0"
 
 "@steedos/mongodb-memory-server-core@^7.0.0-beta.14":
   version "7.0.0-beta.14"
@@ -6221,6 +6261,42 @@
   optionalDependencies:
     rimraf "^3.0.2"
 
+"@steedos/objectql@2.1.89":
+  version "2.1.89"
+  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-2.1.89.tgz#025a4eeae50e4b4f4468e4cb9068e82bb0d68832"
+  integrity sha512-ZUkCWUYCn5ZV/ZR/H0I0XrJN6P6aAnJzcTa00RDBv69o6ZKGkasRguvYwlM4JbT2Hvy0sqkxeNhI4OBID7z2ug==
+  dependencies:
+    "@salesforce/kit" "^1.0.4"
+    "@salesforce/ts-types" "^1.1.1"
+    "@steedos/filters" "2.1.89"
+    "@steedos/formula" "2.1.89"
+    "@steedos/metadata-core" "2.1.89"
+    "@steedos/odata-v4-typeorm" "^1.20.1"
+    "@steedos/schemas" "2.1.89"
+    "@steedos/standard-objects" "2.1.89"
+    app-root-path "^2.2.1"
+    body-parser "^1.18.1"
+    bunyan-sfdx-no-dtrace "^1.8.2"
+    chai "^4.2.0"
+    clone "^2.1.2"
+    cookies "^0.6.1"
+    eval "^0.1.4"
+    express "^4.15.4"
+    fibers "^4.0.3"
+    globby "^9.1.0"
+    jsen "^0.6.6"
+    lodash "^4.17.15"
+    mingo "^4.2.0"
+    moleculer-apollo-server "^0.3.3"
+    moment "^2.29.1"
+    mongodb "^3.0.8"
+    odata-v4-mongodb "^0.1.12"
+    odata-v4-sql "^0.1.2"
+    reflect-metadata "^0.1.10"
+    routing-controllers "^0.7.7"
+    typeorm "^0.2.16"
+    underscore "1.5.2"
+
 "@steedos/odata-v4-typeorm@^1.20.1":
   version "1.20.1"
   resolved "https://registry.npm.taobao.org/@steedos/odata-v4-typeorm/download/@steedos/odata-v4-typeorm-1.20.1.tgz#66405daa7359905a3255b13ef6e6c323d7a635b1"
@@ -6228,6 +6304,16 @@
   dependencies:
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
+
+"@steedos/schemas@2.1.89":
+  version "2.1.89"
+  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-2.1.89.tgz#46e7db925dc8e445aa0ecce470e519d9f385035e"
+  integrity sha512-Lrt3cw9IJomKg/2u5UtR6ke1qPPV7zsfQ9lDMi6tNZlq436lmt6NKdOi16lmYFKWThMqXcxH35WAFy2ehh9wPg==
+
+"@steedos/standard-objects@2.1.89":
+  version "2.1.89"
+  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-2.1.89.tgz#03a4a3bb7eb954a0cc251c7e5e81fad91c6e1212"
+  integrity sha512-SeO/je4KUx/rKaMlnZq63YKoEwuAcXRdY8uYbLkLH4g750t8z3PmJr41/ngsMIzMkCesR0SB9S+C5EANyTk7PQ==
 
 "@steedos/steedos-plugin-workflow@2.1.1", "@steedos/steedos-plugin-workflow@^2.0.4", "@steedos/steedos-plugin-workflow@^2.0.8":
   version "2.1.1"
