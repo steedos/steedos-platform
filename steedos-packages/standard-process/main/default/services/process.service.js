@@ -132,7 +132,7 @@ module.exports = {
                 const { spaceId } = userSession;
                 const processObj = objectql.getObject('process');
                 const processVersionsObj = objectql.getObject('process_versions');
-                const processDoc = await processObj.findOne(_id);
+                let processDoc = await processObj.findOne(_id);
                 // 如果已经有版本，则查找最新流程版本，合并返回
                 const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', _id]], sort: 'version desc', top: 1 });
                 const lastVersion = versionDocs[0];
