@@ -8,6 +8,8 @@ const path = require('path');
 const Future = require('fibers/future');
 const _ = require('lodash');
 const globby = require("globby");
+const express = require('express');
+const fs = require("fs");
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -20,7 +22,8 @@ module.exports = {
      */
     settings: {
         path: '', // 扫描加载原数据的路径
-        name: '' // service name
+        name: '', // service name
+		loadedPackagePublicFiles: false
     },
 
     /**
@@ -46,6 +49,9 @@ module.exports = {
                     return;
                 }
                 const { path : _path } = packageInfo;
+
+                this.loadPackagePublicFiles(_path);
+
                 if(_path){
                     //此处延迟10秒加载流程文件，防止工作区初始化未完成
                     setTimeout(() => {
@@ -112,6 +118,32 @@ module.exports = {
                     this.logger.error(error)
                 }
             }
+        },
+        loadPackagePublicFiles: {
+            handler(packagePath) {
+                let publicPath = path.join(packagePath, 'public');
+				if (!fs.existsSync(publicPath) ||this.settings.loadedPackagePublicFiles || !WebApp) {
+					return;
+				}
+
+				this.settings.loadedPackagePublicFiles = true;
+				try {
+					const router = express.Router();
+					let routerPath = "";
+					if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
+						routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+					}
+					const cacheTime = 86400000 * 1; // one day
+					router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
+					WebApp.rawConnectHandlers.use(router);
+
+                    console.log(`loadPackagePublicFiles ===>`, publicPath)
+
+				} catch (error) {
+					console.error(error)
+					this.settings.loadedPackagePublicFiles = false;
+				}
+			}
         }
     },
 
@@ -157,6 +189,8 @@ module.exports = {
         }
 
         await this.loadPackageMetadataServices(_path);
+
+        await this.loadPackagePublicFiles(_path);
 
         console.timeEnd(`service ${this.name} started`)
         // console.log(`service ${this.name} started`);
