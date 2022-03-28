@@ -162,3 +162,4 @@ jobs:
           cnpm sync @steedos/service-pages
           cnpm sync @steedos/service-steedos-server
           cnpm sync @steedos/steedos-project-template
+          cnpm sync @steedos/standard-process
