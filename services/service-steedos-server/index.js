@@ -52,7 +52,8 @@ module.exports = {
 			"@steedos/service-charts",
 			"@steedos/service-pages",
 			"@steedos/service-cloud-init",
-			"@steedos/service-workflow"
+			"@steedos/service-workflow",
+			"@steedos/standard-process"
 		],
 		plugins: []
 	},

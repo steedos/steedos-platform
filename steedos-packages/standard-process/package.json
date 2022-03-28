@@ -9,7 +9,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/objectql": "2.1.89",
     "lodash": "^4.17.21"
   }
 }
