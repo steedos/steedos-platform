@@ -2,3 +2,5 @@ name: schema
 label: 流程定义Schema
 type: textarea
 sort_no: 70
+readonly: true
+omit: true

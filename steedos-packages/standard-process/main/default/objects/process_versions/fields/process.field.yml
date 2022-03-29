@@ -4,3 +4,5 @@ label: 所属流程
 reference_to: process
 required: true
 sort_no: 90
+readonly: true
+omit: true

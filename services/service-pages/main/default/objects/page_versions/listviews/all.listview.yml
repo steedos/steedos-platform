@@ -3,6 +3,7 @@ columns:
   - field: page
   - field: version
   - field: is_active
+  - field: description
   - field: created
   - field: modified
   - field: is_system
