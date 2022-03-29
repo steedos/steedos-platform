@@ -4,8 +4,11 @@ const _ = Object.assign(underscore, lodash)
 window['_'] = _; 
 window['lodash'] = lodash; 
 
-window.BuilderReact = require('@steedos-builder/react');
-window.BuilderSDK=require('@steedos-builder/sdk');
+const BuilderReact = require('@steedos-builder/react');
+const BuilderSDK = BuilderReact;
+
+window.BuilderReact = BuilderReact;
+window.BuilderSDK = BuilderSDK;
 
 window.Builder = BuilderReact.Builder;
 window.BuilderComponent = BuilderReact.BuilderComponent;
