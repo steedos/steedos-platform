@@ -1,0 +1,12 @@
+{
+    "name": "create-steedos-package",
+    "version": "1.0.0",
+    "keywords": [
+      "steedos"
+    ],
+    "description": "steedos package",
+    "repository": {},
+    "license": "MIT",
+    "dependencies": {}
+  }
+  
