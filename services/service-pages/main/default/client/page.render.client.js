@@ -37,6 +37,15 @@ Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
             return;
         }
     }
+    if(!objectApiName){
+        objectApiName = ''
+    }
+    if(!recordId){
+        recordId = ''
+    }
+    if(!pageId){
+        pageId = ''
+    }
     const formFactor = Steedos.isMobile() ? "SMALL" : "LARGE";
     const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}&pageId=${pageId}&formFactor=${formFactor}`, { async: false });
     if (page && page.schema) {

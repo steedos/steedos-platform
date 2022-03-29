@@ -21,6 +21,7 @@
     "@steedos/service-pages": "2.2.8",
     "@steedos/service-translations": "2.2.8",
     "@steedos/service-workflow": "2.2.8",
+    "@steedos/standard-process": "2.2.8",
     "@steedos/steedos-plugin-schema-builder": "2.2.8",
     "@steedos/workflow": "2.2.8",
     "dotenv-flow": "^3.2.0",

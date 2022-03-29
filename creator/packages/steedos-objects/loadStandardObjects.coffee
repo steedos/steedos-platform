@@ -6,6 +6,7 @@ try
 		packageLoader = require('@steedos/service-meteor-package-loader');
 		APIService = require('@steedos/service-api');
 		MetadataService = require('@steedos/service-metadata-server');
+		packageService = require("@steedos/service-package-registry");
 		path = require('path')
 
 		config = objectql.getSteedosConfig();
@@ -24,7 +25,9 @@ try
 				"@steedos/service-charts",
 				"@steedos/service-pages",
 				"@steedos/service-cloud-init",
-				"@steedos/service-package-registry"
+				"@steedos/service-package-registry",
+				"@steedos/standard-process",
+				"@steedos/webapp-accounts"
 				],
 			plugins: config.plugins
 		}
@@ -65,7 +68,6 @@ try
 					},
 					validator: true,
 					errorHandler: null,
-
 					tracing: {
 						enabled: false,
 						exporter: {
@@ -77,8 +79,16 @@ try
 								gaugeWidth: 40
 							}
 						}
-					}
-				})
+					},
+					skipProcessEventRegistration: true
+				});
+				
+				projectService = broker.createService({
+					name: "project-server",
+					namespace: "steedos",
+					mixins: [packageService],
+				});
+
 
 				metadataService = broker.createService({
 					name: 'metadata-server',

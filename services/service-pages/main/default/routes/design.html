@@ -15,8 +15,8 @@
         var pageId = params.get("pageId");
         // /pageVersion/:pageId/latest
 
-        axios.get(`/service/api/page/pageVersion/${params.get("pageId")}/latest/`).then(function (response) {
-            let schema = response.data.schema;
+        axios.get(`/service/api/page/pageVersion/${params.get("pageId")}/latest`).then(function (response) {
+            let schema = response.data?.schema;
             if (typeof schema === "string") {
                 schema = JSON.parse(schema)
             }

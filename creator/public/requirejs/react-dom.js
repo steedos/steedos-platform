@@ -1,3 +1,3 @@
-define(function () {
+define("react-dom", [], function () {
   return ReactDOM
 });

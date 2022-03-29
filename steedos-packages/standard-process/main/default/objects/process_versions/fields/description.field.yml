@@ -2,3 +2,5 @@ name: description
 label: 描述
 type: textarea
 sort_no: 80
+readonly: true
+omit: true

@@ -1,1 +1,1 @@
-window.lodash = require('lodash');
+// window.lodash = require('lodash');

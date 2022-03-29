@@ -86,7 +86,7 @@ fields:
     visible_on: "{{'url' === formData.type ? true: false}}"
   page:
     type: lookup
-    label: Page
+    label: 页面
     required: "{{'page' === formData.type ? true: false}}"
     visible_on: "{{'page' === formData.type ? true: false}}"
     reference_to: pages

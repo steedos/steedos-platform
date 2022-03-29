@@ -1,6 +1,6 @@
 steedos-enterprise-default-package:
   enable: true
-  version: 2.1.89
+  version: 2.2.8
   description: A Steedos App
   local: true
   path: steedos-app
@@ -35,3 +35,9 @@ steedos-enterprise-default-package:
   description: ''
   local: true
   path: ../../services/service-plugin-amis
+'@steedos/webapp-accounts':
+  enable: true
+  version: 2.1.45
+  description: ''
+  local: true
+  path: ../../steedos-packages/webapp-accounts
