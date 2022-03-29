@@ -4,6 +4,12 @@ steedos-app-default:
   description: A Steedos App
   local: true
   path: steedos-app
+'@steedos/webapp-accounts':
+  enable: true
+  version: 2.2.12
+  description: ''
+  local: false
+  path: .steedos/node_modules/@steedos/webapp-accounts
 '@steedos-labs/oa':
   enable: true
   version: 2.1.46

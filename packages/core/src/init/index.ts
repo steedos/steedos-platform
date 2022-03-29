@@ -1,5 +1,5 @@
 // import { Datasources } from './datasources'
-import { Core, initCreator, initDesignSystem, initPublic } from './core'
+import { Core, initCreator, initDesignSystem } from './core'
 import { Plugins } from './plugins';
 import { getSteedosSchema } from '@steedos/objectql';
 import * as migrate from '@steedos/migrate';
@@ -13,7 +13,6 @@ export async function init(settings: any = {}) {
     getSteedosSchema();
     WebAppInternals.setInlineScriptsAllowed(false);
     initPublicStaticRouter();
-    initPublic();
     initDesignSystem();
     await Plugins.init(settings);
     // Datasources.loadFiles();
