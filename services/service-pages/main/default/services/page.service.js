@@ -28,20 +28,54 @@ module.exports = {
                 return await this.getMeSchema(type, app, objectApiName, recordId, pageId, formFactor, userSession);
             }
         },
-        // enablePageVersion:{
-        //     rest: {
-        //         method: "GET",
-        //         path: "/pageSchema/enable/:pageVersionId"
-        //     },
-        //     params: {
-        //         pageVersionId: { type: "any" }
-        //     },
-        //     async handler(ctx) {
-        //         const userSession = ctx.meta.user;
-        //         const { pageVersionId } = ctx.params;
-        //         return await this.enablePageVersion(pageVersionId, userSession);
-        //     }
-        // },
+        //发布最新版
+        deploy: {
+            rest: {
+                method: "POST",
+                path: "/deploy"
+            },
+            params: {
+                pageId: { type: 'string' }
+            },
+            handler: async function (ctx) {
+                const { pageId } = ctx.params;
+                const userSession = ctx.meta.user;
+                const lastVersion = await this.getLatestPageVersion(pageId);
+                return await objectql.getObject('page_versions').update(lastVersion._id, { is_active: true }, userSession);
+            }
+        },
+
+        // 启用Page
+        enable: {
+            rest: {
+                method: "POST",
+                path: "/enable"
+            },
+            params: {
+                pageId: { type: 'string' }
+            },
+            handler: async function (ctx) {
+                const { pageId } = ctx.params;
+                const userSession = ctx.meta.user;
+                return await objectql.getObject('pages').update(pageId, { is_active: true }, userSession)
+            }
+        },
+
+        // 禁用Page
+        disable: {
+            rest: {
+                method: "POST",
+                path: "/disable"
+            },
+            params: {
+                pageId: { type: 'string' }
+            },
+            handler: async function (ctx) {
+                const { pageId } = ctx.params;
+                const userSession = ctx.meta.user;
+                return await objectql.getObject('pages').update(pageId, { is_active: false }, userSession)
+            }
+        },
         getLatestPageVersion:{
             rest: {
                 method: "GET",
@@ -233,6 +267,8 @@ module.exports = {
                 const pageVersions = await objectql.getObject('page_versions').find({filters: filters, sort: 'version desc', top: 1});
                 if(pageVersions.length === 1){
                     return pageVersions[0]
+                }else{
+                    return {}
                 }
             }
         },

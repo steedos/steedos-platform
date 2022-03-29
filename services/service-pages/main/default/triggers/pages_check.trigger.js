@@ -14,7 +14,7 @@ module.exports = {
             }
         }
         
-        if(_.has(doc, 'is_archived') && !doc.is_archived){
+        if(_.has(doc, 'is_active') && !doc.is_active){
             let type = null;
             if(_.has(doc, 'type')){
                 type = doc.type

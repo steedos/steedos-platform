@@ -1,3 +1,8 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:44:02
+ * @Description: 
+ */
 const objectql = require('@steedos/objectql');
 const _ = require('underscore');
 
@@ -14,8 +19,5 @@ module.exports = {
                 throw new Error('禁止修改非最新版');
             }
         }
-        // if(_.has(doc, 'is_archived') && !doc.is_archived){
-            
-        // }
     }
 }

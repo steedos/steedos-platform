@@ -1,4 +1,6 @@
 name: is_active
 label: 已发布
 sort_no: 130
-type: toggle
+readonly: true
+omit: true
+type: boolean
