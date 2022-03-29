@@ -1,3 +1,3 @@
-define(function () {
+define("@steedos-builder/sdk", [], function () {
   return BuilderSDK
 });

@@ -1,3 +1,3 @@
-define(function () {
+define("lodash", [], function () {
   return lodash
 });

@@ -1,3 +1,3 @@
-define(function () {
+define("react", [], function () {
   return React
 });
