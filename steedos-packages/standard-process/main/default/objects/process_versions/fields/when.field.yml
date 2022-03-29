@@ -7,3 +7,5 @@ options:
   - label: 对象记录更新后
     value: afterUpdate
 sort_no: 50
+readonly: true
+omit: true
