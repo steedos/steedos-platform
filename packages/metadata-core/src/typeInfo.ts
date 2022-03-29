@@ -36,6 +36,7 @@ export enum SteedosMetadataTypeInfoKeys {
     Query = "Query",
     Chart = "Chart",
     Page = "Page",
+    Process = "Process",
     Tab = "Tab",
     RestrictionRule = "RestrictionRule",
     ShareRule = "ShareRule"
