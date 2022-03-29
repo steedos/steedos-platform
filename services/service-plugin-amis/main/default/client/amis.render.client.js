@@ -1,9 +1,9 @@
 window['React'] = require('react'); 
 window['ReactDOM'] = require('react-dom'); 
-window['lodash'] = require('lodash'); 
+// window['lodash'] = require('lodash'); 
 
 Builder.registerImportMap({
-    "lodash": '/requirejs/lodash',
+    // "lodash": '/requirejs/lodash',
     "react": '/requirejs/react',
     "react-dom": '/requirejs/react-dom',
     "@steedos-builder/sdk": '/requirejs/builder-sdk',

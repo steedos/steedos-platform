@@ -1,0 +1,38 @@
+{
+  "name": "create-steedos-package",
+  "version": "2.2.8",
+  "keywords": [
+    "steedos"
+  ],
+  "description": "Create steedos package with no build configuration.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/steedos/steedos-platform.git",
+    "directory": "packages/create-steedos-package"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=12"
+  },
+  "bugs": {
+    "url": "https://github.com/steedos/steedos-platform/issues"
+  },
+  "files": [
+    "index.js",
+    "templates/**",
+    "createSteedosPackage.js"
+  ],
+  "bin": {
+    "create-steedos-package": "./index.js"
+  },
+  "dependencies": {
+    "@geek/spinner": "1.0.0",
+    "chalk": "3.0.0",
+    "commander": "4.1.0",
+    "cpy": "7.3.0",
+    "fs-extra": "8.1.0"
+  },
+  "resolutions": {
+    "**/chalk": "3.0.0"
+  }
+}

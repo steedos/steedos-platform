@@ -1,0 +1,15 @@
+{
+    "name": "@steedos/webapp-accounts",
+    "version": "2.2.8",
+    "main": "package.service.js",
+    "scripts": {},
+    "license": "MIT",
+    "private": false,
+    "publishConfig": {
+      "access": "public"
+    },
+    "dependencies": {
+      "lodash": "^4.17.21"
+    }
+  }
+  
