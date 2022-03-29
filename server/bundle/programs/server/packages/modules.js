@@ -1017,7 +1017,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.1.88",
+  "version": "2.1.89",
   "main": "lib/index.js"
 };
 
@@ -1044,7 +1044,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.1.88",
+  "version": "2.1.89",
   "main": "lib/index.js"
 };
 
@@ -1071,7 +1071,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.1.88",
+  "version": "2.1.89",
   "main": "index.js"
 };
 
@@ -1098,7 +1098,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.1.88",
+  "version": "2.1.89",
   "main": "index.js"
 };
 
@@ -1125,7 +1125,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.1.88",
+  "version": "2.1.89",
   "main": "index.js"
 };
 
@@ -1152,7 +1152,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "2.1.88",
+  "version": "2.1.89",
   "main": "lib/index.js"
 };
 
@@ -1179,7 +1179,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.1.88",
+  "version": "2.1.89",
   "main": "lib/index.js"
 };
 
@@ -1206,7 +1206,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.1.88",
+  "version": "2.1.89",
   "main": "lib/index.js"
 };
 
@@ -1223,7 +1223,34 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}}},"clone":{"package.json":function module(require,exports,module){
+}}},"service-workflow":{"package.json":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/@steedos/service-workflow/package.json                                                //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.exports = {
+  "name": "@steedos/service-workflow",
+  "version": "2.1.89",
+  "main": "package.service.js"
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"package.service.js":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/@steedos/service-workflow/package.service.js                                          //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.useNode();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}},"clone":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
