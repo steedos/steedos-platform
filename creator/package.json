@@ -6,6 +6,7 @@
     "start": "env-cmd -f ./.env.local meteor run --settings settings.json --port 3100",
     "start-verbose": "env-cmd -f ./.env.local meteor run --verbose --settings settings.json --port 3100",
     "build": "yarn && rm -rf .dist/bundle && cross-env TOOL_NODE_FLAGS=--max-old-space-size=9800 meteor build --directory .dist --server-only && node .scripts/build-after.js",
+    "build-debug": "yarn && rm -rf .dist/bundle && cross-env TOOL_NODE_FLAGS=--max-old-space-size=9800 meteor build --directory .dist --server-only --debug && node .scripts/build-after.js",
     "pub": "cd .dist && npm publish --registry https://registry.npmjs.org",
     "prepare": "node .scripts/npm-postinstall.js"
   },
@@ -16,7 +17,7 @@
     "@steedos/design-system-react": "^2.0.9",
     "@steedos/i18n": "^2.0.32",
     "@steedos/webapp": "^2.0.9",
-    "@steedos-ui/builder-community": "^1.1.23",
+    "@steedos-ui/builder-community": "^1.1.25",
     "aliyun-sdk": "^1.12.3",
     "aws-sdk": "2.0.23",
     "basic-auth": "^2.0.1",
@@ -109,7 +110,7 @@
     "simplemde": "1.11.2",
     "summernote": "^0.8.11",
     "xlsx": "0.10.6",
-    "@steedos-builder/react": "^0.2.10"
+    "@steedos-builder/react": "^0.2.11"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
