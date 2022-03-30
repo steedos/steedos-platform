@@ -425,15 +425,15 @@
     warning "^4.0.3"
     webpack-cli "^3.x"
 
-"@steedos-builder/react@^0.2.11":
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.11.tgz#3ee1abf70a80f5e10c490fd52fecafdbd9d15e51"
-  integrity sha512-uY8f0mx+zbK2RQCbI5nSAtZwarOjG0ZVgrmv1LgS0EMDnPsH9lkgwepyunlg1o/MaWEeCYb3E8ftot+5zse5Ag==
+"@steedos-builder/react@^0.2.12":
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.12.tgz#c21792f56e0707709885a85bad88bd42b8773ab4"
+  integrity sha512-G6JNsWv+kQn8XlOmdsNMoSVsMpa7V/KnAnawSvAmm0v49Y7PDgAUvJCs9jW2jZW7j64PkwUAx395V5Q5iu3xZA==
   dependencies:
     "@builder.io/react" "^1.1.50"
     "@builder.io/sdk" "^1.1.26"
     "@emotion/core" "^10.0.17"
-    "@steedos-builder/sdk" "^0.1.11"
+    "@steedos-builder/sdk" "^0.2.12"
     hash-sum "^2.0.0"
     preact "^10.1.0"
     react ">=14"
@@ -450,10 +450,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-builder/requirejs/-/requirejs-0.0.3.tgz#23f87bc29ce382f094a962e11d50f909124dfe79"
   integrity sha512-DgCDLmcXuiSLS02ZYgv7FltaQiGaM1SbJXe7YtwNQegHhWCZUHpCFzri4UVc8OKaqf6YB085Go/bCimP3LRPaA==
 
-"@steedos-builder/sdk@^0.1.11":
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.1.11.tgz#69a7276fd94825a7bf243f5c2e88d7771922c3be"
-  integrity sha512-j8015R7h9WmTe/OuHMvHy/2ahlSXYwVFmUg5AKMwKYcNXg9tf9WO/l6+l4DaYpG7dv6kF72CshhQk0bbwUbh6g==
+"@steedos-builder/sdk@^0.2.12":
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.2.12.tgz#62360abd38d46f60f5aa46463471f97821b53be0"
+  integrity sha512-p/B2LLU5EZehYil/b1LrTDtMYA2xXVgoMTYckwn3tMxpn7DOJ5ClOqZiRq7W1f6yLprjznqE7pfNqAmWUPHmjw==
   dependencies:
     "@builder.io/sdk" "^1.1.26"
     "@steedos-builder/requirejs" "^0.0.3"
@@ -465,15 +465,15 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/builder-community@^1.1.26":
-  version "1.1.26"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.26.tgz#2a23b03524241e2cc62dcf659881c818fe7b30ec"
-  integrity sha512-VZ88KHV+09TJE8YLOLM8lWuQnhVd29D0csyOePrwi4xTRy3bNV1otlims9FvazVID09ytpQ0dqjsa2JbtBBMaA==
+"@steedos-ui/builder-community@^1.1.27":
+  version "1.1.27"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.27.tgz#13768834d09b1247d31ebd2d16a188be4735c300"
+  integrity sha512-MJGnEX72X35vULqMIaXpJd29FPahfQosMKeUDJ4T1D9uSUsUPPVLTYZrNQ2o48dr+jU/PYJvj6oDRDeN842YkQ==
 
-"@steedos-widgets/design-system@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@steedos-widgets/design-system/-/design-system-0.2.1.tgz#337219ea48ef154f135f4855fdff89babfe9fb01"
-  integrity sha512-Uqsv5QDIiK4jlCz98p0DUe4ndz/uZ0L5uFN8jGKnxO3Py+zysVEeL6bjv6hu//YFN76S64/IiwskpymsoaRPSA==
+"@steedos-widgets/design-system@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@steedos-widgets/design-system/-/design-system-0.2.3.tgz#223ece7c010f06268b51d232377993729640cdca"
+  integrity sha512-Ao56Mg4WJt51wP9qkob0AucbiVYut1jaVVXW5TWdDwbta3g9R1f2fnJsQ3fV8bwc5b52stJnRdVbA0qbk1uN5g==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:

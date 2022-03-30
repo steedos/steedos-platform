@@ -14,8 +14,8 @@
     "@babel/runtime": "^7.2.0",
     "@salesforce-ux/design-system": "^2.11.0",
     "@salesforce/design-system-react": "^0.10.17",
-    "@steedos-ui/builder-community": "^1.1.26",
-    "@steedos-widgets/design-system": "^0.2.1",
+    "@steedos-ui/builder-community": "^1.1.27",
+    "@steedos-widgets/design-system": "^0.2.3",
     "@steedos/design-system-react": "^2.0.9",
     "@steedos/i18n": "^2.0.32",
     "@steedos/webapp": "^2.0.9",
@@ -95,7 +95,7 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "@steedos-builder/react": "^0.2.11",
+    "@steedos-builder/react": "^0.2.12",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
     "cross-env": "^6.0.0",
