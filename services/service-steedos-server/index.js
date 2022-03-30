@@ -53,7 +53,8 @@ module.exports = {
 			"@steedos/service-pages",
 			"@steedos/service-cloud-init",
 			"@steedos/service-workflow",
-			"@steedos/standard-process"
+			"@steedos/standard-process",
+			"@steedos/unpkg"
 		],
 		plugins: []
 	},
