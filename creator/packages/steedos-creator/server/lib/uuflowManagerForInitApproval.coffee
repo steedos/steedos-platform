@@ -400,6 +400,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						fieldsObj = {}
 						fieldsObj[lookupFieldName] = 1
 						lookupObjectRecord = Creator.getCollection(objectField.reference_to, spaceId).findOne(record[objectFieldName], { fields: fieldsObj })
+						if !lookupObjectRecord
+							return
 						objectFieldObjectName = objectField.reference_to
 						lookupFieldObj = getObjectConfig(objectFieldObjectName)
 						objectLookupField = lookupFieldObj.fields[lookupFieldName]

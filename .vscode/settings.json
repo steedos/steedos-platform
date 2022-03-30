@@ -1,8 +1,5 @@
 {
     "files.exclude": {
-        "**/.dist": true,
-        "**/.meteor/local": true,
-        "**/.npm": true
     },
     "yaml.completion": true,
     "yaml.customTags": [
