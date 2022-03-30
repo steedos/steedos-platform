@@ -387,9 +387,9 @@ const config4 = {
     position: "CENTER_TOP",
     type: "react",
     component: function (options) {
-      const Card = require('@steedos/design-system-react').Card;
-      const AppLauncherExpandableSection = require('@steedos/design-system-react').AppLauncherExpandableSection;
-      const AppLauncherTile = require('@steedos/design-system-react').AppLauncherTile;
+      const Card = require('@steedos-widgets/design-system').Card;
+      const AppLauncherExpandableSection = require('@steedos-widgets/design-system').AppLauncherExpandableSection;
+      const AppLauncherTile = require('@steedos-widgets/design-system').AppLauncherTile;
       const styled = require('styled-components').default;
       let AppLauncherDesktopInternal = styled.div`
           padding: 0px 1rem;
@@ -429,9 +429,9 @@ const config4 = {
     position: "RIGHT",
     type: "react",
     component: function (options) {
-      const Card = require('@steedos/design-system-react').Card;
-      const DataTable = require('@steedos/design-system-react').DataTable;
-      const DataTableColumn = require('@steedos/design-system-react').DataTableColumn;
+      const Card = require('@steedos-widgets/design-system').Card;
+      const DataTable = require('@steedos-widgets/design-system').DataTable;
+      const DataTableColumn = require('@steedos-widgets/design-system').DataTableColumn;
       const styled = require('styled-components').default;
       let CustomStyledComponent = styled.div`
         color: green;

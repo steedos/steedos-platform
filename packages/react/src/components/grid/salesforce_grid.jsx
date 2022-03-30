@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'underscore';
-import { DataTable, DataTableColumn, DataTableCell, Illustration, Icon } from '@steedos/design-system-react';
+import { DataTable, DataTableColumn, DataTableCell, Illustration, Icon } from '@steedos-widgets/design-system';
 import Lookup from '../lookup'
 import GridFilters from '../grid_filters'
 import { createGridAction } from '../../actions'

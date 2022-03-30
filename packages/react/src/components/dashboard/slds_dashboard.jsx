@@ -6,7 +6,7 @@ import WidgetObject from '../widget_object';
 import WidgetApps from '../widget_apps';
 import WidgetRemote from '../widget_remote';
 import { WidgetInstancesPendings, WidgetAnnouncementsWeek, WidgetTasksToday, WidgetEventsToday } from '../widget_reducts';
-import { Tabs, TabsPanel } from '../tabs';
+// import { Tabs, TabsPanel } from '../tabs';
 
 let Container = styled.div`
     display: flex;
@@ -280,22 +280,22 @@ class Dashboard extends React.Component {
                 return <WidgetTasksToday key={key} {...value} />
             case "events_today":
                 return <WidgetEventsToday key={key} {...value} />
-            case "tabs":
-                return value.panels ? (<Tabs key={key} {...value}>
-                    {
-                        value.panels.map((panel, index) => {
-                            // panel.assistiveText一般为空，继承相关类型的assistiveText即可，不过panel本身定义的assistiveText优先
-                            panel.assistiveText = Object.assign({}, value.assistiveText && value.assistiveText[panel.type], panel.assistiveText);
-                            let panelLabel = panel.label;
-                            if(!panelLabel){
-                                panelLabel = panel.assistiveText.label;
-                            }
-                            return <TabsPanel key={`${key}_panel_${index}`} label={panelLabel}>
-                                {this.convertConfigItemToSection(panel, `${key}_panel_content_${index}`)}
-                            </TabsPanel>
-                        })
-                    }
-                </Tabs>) : null
+            // case "tabs":
+            //     return value.panels ? (<Tabs key={key} {...value}>
+            //         {
+            //             value.panels.map((panel, index) => {
+            //                 // panel.assistiveText一般为空，继承相关类型的assistiveText即可，不过panel本身定义的assistiveText优先
+            //                 panel.assistiveText = Object.assign({}, value.assistiveText && value.assistiveText[panel.type], panel.assistiveText);
+            //                 let panelLabel = panel.label;
+            //                 if(!panelLabel){
+            //                     panelLabel = panel.assistiveText.label;
+            //                 }
+            //                 return <TabsPanel key={`${key}_panel_${index}`} label={panelLabel}>
+            //                     {this.convertConfigItemToSection(panel, `${key}_panel_content_${index}`)}
+            //                 </TabsPanel>
+            //             })
+            //         }
+            //     </Tabs>) : null
         }
     }
 

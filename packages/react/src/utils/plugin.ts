@@ -3,7 +3,7 @@ import * as ReactDom from 'react-dom';
 import * as Redux from 'redux';
 import * as ReactRedux from 'react-redux';
 import PropTypes from 'prop-types';
-import * as ReactDesignSystem from '@steedos/design-system-react';
+import * as ReactDesignSystem from '@steedos-widgets/design-system';
 import styled from 'styled-components';
 import * as ReduxThunk from 'redux-thunk';
 import * as Immer from 'immer';

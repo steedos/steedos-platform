@@ -8,7 +8,7 @@ const packages = [
     "create-steedos-app",
     "create-steedos-node-red-app",
     "@steedos/data-import",
-    "@steedos/design-system-react",
+    // "@steedos/design-system-react",
     "@steedos/filters",
     "@steedos/formula",
     "@steedos/i18n",

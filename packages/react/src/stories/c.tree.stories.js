@@ -6,7 +6,7 @@ import Bootstrap from '../components/bootstrap'
 import { FlowsTree,Modal } from '../components';
 import { createModalAction } from '../actions'
 import _ from 'underscore'
-import { Icon } from '@steedos/design-system-react';
+import { Icon } from '@steedos-widgets/design-system';
 
 export default {
     title: 'Tree',
