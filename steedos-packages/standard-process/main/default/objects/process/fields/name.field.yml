@@ -1,5 +1,5 @@
 name: name
-label: 名称
+label: 流程标识
 type: text
 required: true
-sort_no: 10
+sort_no: 20

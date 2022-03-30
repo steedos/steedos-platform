@@ -1,5 +1,0 @@
-name: api_name
-label: 流程标识
-type: text
-required: true
-sort_no: 20

@@ -1,7 +1,7 @@
 name: recent
 columns:
-  - field: api_name
   - field: name
+  - field: label
   - field: created_by
   - field: version
   - field: deploy_time
