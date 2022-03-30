@@ -61,7 +61,7 @@ injectScript('/unpkg.com/@steedos-builder/react/dist/builder-react.unpkg.js')
         window.BuilderComponent = BuilderReact.BuilderComponent;
         window.builder = BuilderReact.builder;
 
-        Builder.set({rootUrl: __meteor_runtime_config__.ROOT_URL})
+        Builder.set({rootUrl: __meteor_runtime_config__.ROOT_URL, unpkg: Meteor.settings.public.unpkg || 'https://npm.elemecdn.com'})
         window['React'] = require('react'); 
         window['ReactDOM'] = require('react-dom'); 
         // window['lodash'] = require('lodash'); 
