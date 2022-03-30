@@ -10,12 +10,12 @@ window.addEventListener('message', function (event) {
     const { data } = event;
     if (data.type === 'builder.register') {
         if (data.data?.type === 'meta-components' && data.data?.info?.componentName && data.data?.info?.amis?.render) {
-            console.log(`data.data.info ===> `, data.data.info);
             const Component = Builder.components.find(item => item.name === data.data.info?.componentName);
           if (Component && !SAmisReners.includes(data.data.info.amis?.render.type)){
             try {
                 SAmisReners.push(data.data.info.amis?.render.type);
                 let amisLib = amisRequire('amis');
+                window.MonacoEnvironment = window.SteedosMonacoEnvironment;
                 amisLib.Renderer(
                     {
                         type: data.data.info.amis?.render.type,
