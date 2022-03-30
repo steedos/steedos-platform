@@ -3,6 +3,7 @@
 const objectql = require('@steedos/objectql');
 const core = require('@steedos/core');
 const triggerLoader = require('./lib').triggerLoader;
+const processLoader = require('./lib').processLoader;
 const sendPackageFlowToDb = require('./lib/loadPackageFlow').sendPackageFlowToDb;
 const path = require('path');
 const Future = require('fibers/future');
@@ -78,6 +79,7 @@ module.exports = {
                 await objectql.loadStandardMetadata(name, datasourceName);
                 await objectql.addAllConfigFiles(packagePath, datasourceName, name);
                 await triggerLoader.load(this.broker, packagePath, name);
+                await processLoader.load(this.broker, packagePath, name);
                 core.loadClientScripts();
                 let routersData = objectql.loadRouters(packagePath);
                 let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
