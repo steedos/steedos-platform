@@ -37,7 +37,7 @@
             if (data) {
                 if (data.type === 'builder.saveContent') {
                     axios.put(`/service/api/page/pageVersion/${params.get("pageId")}`, {
-                        schema: JSON.stringify(data.data.AmisSchema) //直接存储json格式会导致react form异常。
+                        schema: JSON.stringify(data.data.AmisSchema, null, 4) //直接存储json格式会导致react form异常。
                     }).then(function (response) {
                         window.postMessage(
                         {

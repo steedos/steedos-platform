@@ -1,7 +1,7 @@
 name: all
 columns:
   - field: name
-  - field: api_name
+  - field: label
   - field: created_by
   - field: version
   - field: deploy_time

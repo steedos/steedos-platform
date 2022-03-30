@@ -10,13 +10,14 @@
         console.error(error)
     }
     import('/amis/sdk/sdk.noreact.js').then(() => {
-        //处理mobx多个实例问题
-        try {
-            let mobx = amisRequire('mobx');
-            mobx.configure({ isolateGlobalState: true })
-        } catch (error) {
 
-        }
+        //处理mobx多个实例问题
+        // try {
+        //     let mobx = amisRequire('mobx');
+        //     mobx.configure({ isolateGlobalState: true })
+        // } catch (error) {
+
+        // }
 
         let React = window.React || amisRequire("react");
 
@@ -36,19 +37,6 @@
             );
         };
 
-        window['requirejs'].config(
-            { 
-              waitSeconds: 60,
-              baseUrl: Meteor.absoluteUrl('/requirejs'),
-              paths: { 
-                'vs': 'https://unpkg.com/monaco-editor/min/vs',
-              } 
-            }
-          );
-
-        React.Builder = Builder;
-        
-        
         Builder.registerComponent(Amis, {
             name: 'Amis',
             inputs: [

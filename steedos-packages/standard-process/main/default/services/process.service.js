@@ -50,7 +50,7 @@ module.exports = {
                     props: {
                         _id: { type: 'string' },
                         name: { type: 'string' },
-                        api_name: { type: 'string' },
+                        label: { type: 'string' },
                         entry_criteria: { type: 'string' },
                         schema: { type: 'string' },
                         when: { type: 'string' },
@@ -140,6 +140,9 @@ module.exports = {
                     processDoc = {
                         ...processDoc,
                         schema: lastVersion.schema,
+                        when: lastVersion.when,
+                        entry_criteria: lastVersion.entry_criteria,
+                        version: lastVersion.version,
                     }
                 }
                 return processDoc;
@@ -164,9 +167,15 @@ module.exports = {
                 const processObj = objectql.getObject('process');
                 const processVersionsObj = objectql.getObject('process_versions');
                 const processDoc = await processObj.findOne(_id);
-                await ctx.call(`${processDoc.engine}.deploy`, { process: processDoc, operator: userSession });
                 const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', _id]], sort: 'version desc', top: 1 });
                 const lastVersion = versionDocs[0];
+                const newProcessDoc = {
+                    ...processDoc,
+                    when: lastVersion.when,
+                    entry_criteria: lastVersion.entry_criteria,
+                    version: lastVersion.version,
+                }
+                await ctx.call(`${processDoc.engine}.deploy`, { process: newProcessDoc, operator: userSession });
                 await processVersionsObj.update(lastVersion._id, { is_active: true }, userSession);
                 return { sucess: true }
             }

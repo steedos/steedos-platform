@@ -3,16 +3,41 @@
  * @Date: 2022-03-28 09:44:02
  * @Description: 
  */
-// ;(function() {
-//     try {
-//         var hm = document.createElement("script");
-//         hm.src = "/requirejs/require.js";
-//         var s = document.getElementsByTagName("script")[0]; 
-//         s.parentNode.insertBefore(hm, s);
-//       } catch (error) {
-//         console.log(error);
-//       }
-// })();
+; (function () {
+    // window.SteedosMonacoEnvironment = window.MonacoEnvironment = {
+    //     getWorkerUrl: function (moduleId, label) {
+    //         console.log(`getWorkerUrl===`, moduleId, label)
+    //         const urlPath = '/unpkg.com/monaco-editor/min/vs';
+    //         let filePath = '/base/worker/workerMain.js';
+    //         if (label === 'json') {
+    //             file = '/language/json/jsonWorker.js';
+    //         }
+    //         if (label === 'css') {
+    //             file = '/language/css/cssWorker.js';
+    //         }
+    //         if (label === 'html') {
+    //             file = '/language/html/htmlWorker.js';
+    //         }
+    //         if (label === 'typescript' || label === 'javascript') {
+    //             file = '/language/typescript/tsWorker.js';
+    //         }
+    //         return `${urlPath}${filePath}`;
+    //     }
+    // }
+    window.SteedosMonacoEnvironment = window.MonacoEnvironment = {
+        getWorkerUrl: function(workerId, label) {
+          return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
+            self.MonacoEnvironment = {
+              baseUrl: '${window.location.origin}/unpkg.com/monaco-editor/min/'
+            };
+            importScripts('${window.location.origin}/unpkg.com/monaco-editor/min/vs/base/worker/workerMain.js');`
+          )}`;
+        }
+    };
+
+    
+
+})();
 
 function injectScript(src) {
     return new Promise((resolve, reject) => {
@@ -24,7 +49,7 @@ function injectScript(src) {
     });
 }
 
-injectScript('https://unpkg.com/@steedos-builder/react@0.2.11/dist/builder-react.unpkg.js')
+injectScript('/unpkg.com/@steedos-builder/react/dist/builder-react.unpkg.js')
     .then(() => {
         console.log('Builder loaded!');
         const BuilderSDK = BuilderReact;
@@ -42,13 +67,32 @@ injectScript('https://unpkg.com/@steedos-builder/react@0.2.11/dist/builder-react
         // window['lodash'] = require('lodash'); 
 
         Builder.registerImportMap({
-            "lodash": '/requirejs/lodash',
-            "react": '/requirejs/react',
-            "react-dom": '/requirejs/react-dom',
-            "@steedos-builder/sdk": '/requirejs/builder-sdk',
-            "@steedos-builder/react": '/requirejs/builder-react',
+            "lodash": '/js/requirejs/lodash',
+            "react": '/js/requirejs/react',
+            "react-dom": '/js/requirejs/react-dom',
+            "@steedos-builder/sdk": '/js/requirejs/builder-sdk',
+            "@steedos-builder/react": '/js/requirejs/builder-react',
         })
         Builder.require(['lodash',"react", "react-dom"])
+
+        Builder.requirejs.config(
+            { 
+              waitSeconds: 60,
+              baseUrl: '',
+              paths: { 
+                'vs': '/unpkg.com/monaco-editor/min/vs',
+                "vs/language/css/cssMode":"/unpkg.com/monaco-editor/min/vs/language/css/cssMode",
+                "vs/language/html/htmlMode":"/unpkg.com/monaco-editor/min/vs/language/html/htmlMode",
+                "vs/language/typescript/tsMode":"/unpkg.com/monaco-editor/min/vs/language/typescript/tsMode",
+                "vs/language/json/jsonMode":"/unpkg.com/monaco-editor/min/vs/language/json/jsonMode"
+              } 
+            }
+          );
+        Builder.requirejs(['vs/editor/editor.main'], () => {
+           return monaco = window['monaco'];
+        });
+
+        
 
     }).catch(error => {
         console.error(error);
