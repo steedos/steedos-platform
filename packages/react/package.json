@@ -86,7 +86,8 @@
     ]
   },
   "dependencies": {
-    "@steedos-widgets/design-system": "^0.2.2",
-    "classnames": "^2.3.1"
+    "@steedos-widgets/design-system": "^0.2.5",
+    "classnames": "^2.3.1",
+    "redux-thunk": "^2.4.1"
   }
 }

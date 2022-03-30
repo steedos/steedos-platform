@@ -364,10 +364,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.27.tgz#13768834d09b1247d31ebd2d16a188be4735c300"
   integrity sha512-MJGnEX72X35vULqMIaXpJd29FPahfQosMKeUDJ4T1D9uSUsUPPVLTYZrNQ2o48dr+jU/PYJvj6oDRDeN842YkQ==
 
-"@steedos-widgets/design-system@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@steedos-widgets/design-system/-/design-system-0.2.2.tgz#6b1b56705cf795447a3555b9f01388f6e0ee711f"
-  integrity sha512-MBikHGcrUF9YrWTpP+Wp+zBXu7UqOR/KZ5zI5x1hZ1c1nswYX+4S7ohgGqcfahhrCApUYDzGF2J0PRqvD025Ng==
+"@steedos-widgets/design-system@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@steedos-widgets/design-system/-/design-system-0.2.5.tgz#3e5be3e14bb614cfad05003bc370ad4443bb5566"
+  integrity sha512-b7vJ4OU4iNtRx47kt9sUvXd5DO8i/9MjGEcGrVkt8lvGV8sYVkNucAJuqoklYEZRHVcChzEfvYIkecee18uITA==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:

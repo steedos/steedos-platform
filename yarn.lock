@@ -6219,10 +6219,10 @@
   resolved "https://registry.npm.taobao.org/@sqltools/formatter/download/@sqltools/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha1-k5CoEnwNy6YevX/cx0hlXhkb3Wg=
 
-"@steedos-widgets/design-system@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@steedos-widgets/design-system/-/design-system-0.2.2.tgz#6b1b56705cf795447a3555b9f01388f6e0ee711f"
-  integrity sha512-MBikHGcrUF9YrWTpP+Wp+zBXu7UqOR/KZ5zI5x1hZ1c1nswYX+4S7ohgGqcfahhrCApUYDzGF2J0PRqvD025Ng==
+"@steedos-widgets/design-system@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@steedos-widgets/design-system/-/design-system-0.2.5.tgz#3e5be3e14bb614cfad05003bc370ad4443bb5566"
+  integrity sha512-b7vJ4OU4iNtRx47kt9sUvXd5DO8i/9MjGEcGrVkt8lvGV8sYVkNucAJuqoklYEZRHVcChzEfvYIkecee18uITA==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
@@ -29654,6 +29654,11 @@ redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npm.taobao.org/redux-thunk/download/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
   integrity sha1-UcLBmhhe1Rh6qpotCLZm0NZGdiI=
+
+redux-thunk@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.1.tgz#0dd8042cf47868f4b29699941de03c9301a75714"
+  integrity sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q==
 
 redux@^4.0.0, redux@^4.0.1, redux@^4.0.4:
   version "4.0.5"
