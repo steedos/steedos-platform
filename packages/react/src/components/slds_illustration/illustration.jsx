@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Illustration as SLDSIllustration } from '@steedos/design-system-react';
+import { Illustration as SLDSIllustration } from '@steedos-widgets/design-system';
 import classNames from 'classnames';
 // import { ReactComponent as WalkthroughNotAvailable } from './walkthrough-not-available.svg';
 

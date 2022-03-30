@@ -20,7 +20,7 @@
     "@material-ui/icons": "^4.2.1",
     "@salesforce-ux/design-system": "^2.11.0",
     "@salesforce-ux/icons": "^9.38.0",
-    "@steedos/design-system-react": "2.2.8",
+    "@salesforce/design-system-react": "^0.10.46",
     "@steedos/filters": "2.2.8",
     "@storybook/addon-actions": "^5.3.0-alpha.22",
     "@storybook/addon-cssresources": "^5.3.0-alpha.22",
@@ -84,5 +84,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "@steedos-widgets/design-system": "^0.2.5",
+    "classnames": "^2.3.1",
+    "redux-thunk": "^2.4.1"
   }
 }

@@ -6,7 +6,7 @@ import Bootstrap from '../components/bootstrap'
 import { FlowsModal } from '../components';
 import { createFlowsModalAction } from '../actions'
 import _ from 'underscore'
-import { Icon,Button,ButtonIcon,ButtonStateful } from '@steedos/design-system-react';
+import { Icon,Button,ButtonIcon,ButtonStateful } from '@steedos-widgets/design-system';
 
 export default {
     title: 'FlowsModal',

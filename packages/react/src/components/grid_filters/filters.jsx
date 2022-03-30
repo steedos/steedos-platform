@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import _ from 'underscore';
 import Lookup from '../lookup'
-import { DropdownTrigger, Button, Dropdown } from '@steedos/design-system-react';
+import { DropdownTrigger, Button, Dropdown } from '@steedos-widgets/design-system';
 import { createGridAction } from '../../actions';
 const FiltersContainer = styled.div`
     // padding: 1rem;

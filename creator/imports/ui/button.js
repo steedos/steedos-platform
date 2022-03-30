@@ -1,5 +1,5 @@
 import './button.html';
-import { Button } from '@steedos/design-system-react';
+import { Button } from '@steedos-widgets/design-system';
 
 Template.steedos_button.helpers({
 	component: function () {
@@ -15,6 +15,7 @@ Template.steedos_button.helpers({
 		}
 		return Object.assign({}, {...this}, {
 			title: this.title || this.label,
+			className: this.className || this.class,
 			assistiveText
 		}, {component: Button})
 	}

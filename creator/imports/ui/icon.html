@@ -1,9 +1,7 @@
 <template name="steedos_icon">
 	{{#if component}}
 		<div class="steedos-icon-wrap {{this.wrapClassName}}">
-			{{> React component=component category=category name=name size=size title=title icon=icon
-				className=className containerClassName=containerClassName style=style containerStyle=containerStyle 
-				colorVariant=colorVariant assistiveText=assistiveText}}
+			{{> Template.dynamic template="React" data=data}}
 		</div>
 	{{/if}}
 </template>

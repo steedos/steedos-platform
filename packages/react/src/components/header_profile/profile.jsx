@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GlobalHeaderProfile, Popover, MediaObject, Icon, Avatar } from '@steedos/design-system-react';
+import { GlobalHeaderProfile, Popover, MediaObject, Icon, Avatar } from '@steedos-widgets/design-system';
 import PropTypes from 'prop-types';
 import _ from 'underscore';
 

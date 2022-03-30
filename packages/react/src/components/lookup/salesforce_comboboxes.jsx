@@ -1,6 +1,6 @@
 /* eslint-disable no-console, react/prop-types */
 import React from 'react';
-import { Combobox, Icon, comboboxFilterAndLimit} from '@steedos/design-system-react';
+import { Combobox, Icon, comboboxFilterAndLimit} from '@steedos-widgets/design-system';
 import _ from 'underscore'
 
 const accounts = [

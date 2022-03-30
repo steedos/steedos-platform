@@ -12,13 +12,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
-    "@salesforce-ux/design-system": "^2.11.0",
-    "@salesforce/design-system-react": "^0.10.17",
-    "@steedos-ui/builder-community": "^1.1.26",
-    "@steedos-widgets/design-system": "^0.2.1",
-    "@steedos/design-system-react": "^2.0.9",
+    "@steedos-builder/react": "^0.2.12",
+    "@steedos-ui/builder-community": "^1.1.27",
+    "@steedos-widgets/design-system": "^0.2.5",
     "@steedos/i18n": "^2.0.32",
-    "@steedos/webapp": "^2.0.9",
     "aliyun-sdk": "^1.12.3",
     "aws-sdk": "2.0.23",
     "basic-auth": "^2.0.1",
@@ -27,6 +24,7 @@
     "buffer-stream-reader": "^0.1.1",
     "busboy": "^0.2.13",
     "chalk": "2.4.2",
+    "classnames": "^2.3.1",
     "clone": "2.1.1",
     "combined-stream": "0.0.4",
     "connect": "^3.6.6",
@@ -95,7 +93,6 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "@steedos-builder/react": "^0.2.11",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
     "cross-env": "^6.0.0",

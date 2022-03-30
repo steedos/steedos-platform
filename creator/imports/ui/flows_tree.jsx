@@ -1,4 +1,4 @@
-import {Icon, Button} from '@steedos/design-system-react';
+import {Icon, Button} from '@steedos-widgets/design-system';
 import {createTreeAction, store, viewStateSelector, createModalAction} from '@steedos/react';
 
 var _ = require("underscore");
