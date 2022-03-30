@@ -15,6 +15,7 @@ Template.steedos_button.helpers({
 		}
 		return Object.assign({}, {...this}, {
 			title: this.title || this.label,
+			className: this.className || this.class,
 			assistiveText
 		}, {component: Button})
 	}

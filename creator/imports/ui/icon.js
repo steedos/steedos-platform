@@ -16,42 +16,60 @@ Template.steedos_icon.helpers({
 	component: function () {
 		return Icon;
 	},
-	category: function () {
-		return this.category || getSourceName(this.source, this.name);
-	},
-	name: function () {
-		return this.name;
-	},
-	size: function () {
-		return this.size;
-	},
-	title: function () {
-		return this.title;
-	},
-	icon: function () {
-		return this.icon;
-	},
-	colorVariant: function () {
-		return this.colorVariant;
-	},
-	className: function () {
-		return this.className || this.class;
-	},
-	containerClassName: function () {
-		return this.containerClassName;
-	},
-	style: function () {
-		return this.style;
-	},
-	containerStyle: function () {
-		return this.containerStyle;
-	},
-	assistiveText: function () {
+	data: function () {
+		let assistiveText;
 		if(this.assistiveText){
-			return this.assistiveText;
+			assistiveText = this.assistiveText;
 		}
 		else if(this.title){
-			return { label: this.title }
+			assistiveText = { label: this.title }
 		}
+		return Object.assign({}, {...this}, {
+			title: this.title || this.label,
+			category: this.category || getSourceName(this.source, this.name),
+			className: this.className || this.class,
+			assistiveText
+		}, {component: Icon})
 	}
+	// component: function () {
+	// 	return Icon;
+	// },
+	// category: function () {
+	// 	return this.category || getSourceName(this.source, this.name);
+	// },
+	// name: function () {
+	// 	return this.name;
+	// },
+	// size: function () {
+	// 	return this.size;
+	// },
+	// title: function () {
+	// 	return this.title;
+	// },
+	// // icon: function () {
+	// // 	return this.icon;
+	// // },
+	// colorVariant: function () {
+	// 	return this.colorVariant;
+	// },
+	// className: function () {
+	// 	return this.className || this.class;
+	// },
+	// containerClassName: function () {
+	// 	return this.containerClassName;
+	// },
+	// style: function () {
+	// 	return this.style;
+	// },
+	// containerStyle: function () {
+	// 	return this.containerStyle;
+	// },
+	// assistiveText: function () {
+	// 	if(this.assistiveText){
+	// 		return this.assistiveText;
+	// 	}
+	// 	else if(this.title){
+	// 		return { label: this.title }
+	// 	}
+	// }
 });
