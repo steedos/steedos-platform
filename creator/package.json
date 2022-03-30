@@ -13,10 +13,8 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@salesforce-ux/design-system": "^2.11.0",
-    "@salesforce/design-system-react": "^0.10.17",
     "@steedos-ui/builder-community": "^1.1.26",
     "@steedos-widgets/design-system": "^0.2.1",
-    "@steedos/design-system-react": "^2.0.9",
     "@steedos/i18n": "^2.0.32",
     "@steedos/webapp": "^2.0.9",
     "aliyun-sdk": "^1.12.3",

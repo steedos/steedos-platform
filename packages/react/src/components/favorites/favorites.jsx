@@ -1,5 +1,5 @@
 import React from 'react';
-import { GlobalHeaderFavorites, Popover, MediaObject, Icon} from '@steedos/design-system-react';
+import { GlobalHeaderFavorites, Popover, MediaObject, Icon} from '@steedos-widgets/design-system';
 import PropTypes from 'prop-types';
 import { getObject } from '../../selectors'
 import { store } from '../../stores'

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import _ from 'underscore';
-import { Tabs as SFTabs} from '@steedos/design-system-react';
+import { Tabs as SFTabs} from '@steedos-widgets/design-system';
 
 let Container = styled.div`
     .slds-vertical-tabs{

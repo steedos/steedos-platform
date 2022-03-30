@@ -2,9 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import _ from 'underscore';
-import { Card, AppLauncherExpandableSection, Icon} from '@steedos/design-system-react';
+import { Card, AppLauncherExpandableSection, Icon} from '@steedos-widgets/design-system';
 import { getCookie, getRelativeUrl } from '../../utils';
-import {AppLauncherTile} from '../slds_app_launcher';
+import {AppLauncherTile} from  '@steedos-widgets/design-system' //'../slds_app_launcher';
 import classNames from 'classnames';
 
 let AppLauncherDesktopInternal = styled.div`
