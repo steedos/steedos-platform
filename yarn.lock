@@ -6235,6 +6235,15 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
+"@steedos/filters@2.2.8":
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.2.8.tgz#bc75c98988eaa5c3c45a5d6d7b96519380fc60f6"
+  integrity sha512-3Ol++9aTQFWt07VNE86HCFLHRMhVMU/dxKqC7wFcAeLkk6uqigtaHJJ/guEE1DWE7VWnOE7plD5sq1mU3I5BTA==
+  dependencies:
+    "@babel/runtime" "^7.5.4"
+    moment "^2.24.0"
+    underscore "^1.9.1"
+
 "@steedos/license@2.1.10":
   version "2.1.10"
   resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.1.10.tgz#092c8fc613ad480837a48a27c9e3f8ffd899a77d"
