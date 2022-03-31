@@ -69,7 +69,17 @@ function createPackage(name) {
   if (template) {
     spinner.start(`Create steedos package ${projectName}`);
     cpy([
-      '**'
+      '**',
+      'main/default/applications/.gitkeep',
+      'main/default/client/.gitkeep',
+      'main/default/objects/.gitkeep',
+      'main/default/permissionsets/.gitkeep',
+      'main/default/profiles/.gitkeep',
+      'main/default/tabs/.gitkeep',
+      'main/default/triggers/.gitkeep',
+      'public/.md',
+      'src/.md',
+      'webapp/.md'
     ], projectDir, {
       parents: true,
       flat: false,
