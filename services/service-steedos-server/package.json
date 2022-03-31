@@ -23,6 +23,7 @@
     "@steedos/service-workflow": "2.2.12",
     "@steedos/standard-process": "2.2.12",
     "@steedos/steedos-plugin-schema-builder": "2.2.12",
+    "@steedos/unpkg": "2.2.12",
     "@steedos/workflow": "2.2.12",
     "dotenv-flow": "^3.2.0",
     "moleculer": "^0.14.10",
