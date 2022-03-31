@@ -84,6 +84,7 @@ fields:
   current.form_script:
     label: Form Script
     type: code
+    language: javascript
     readonly: true
     name: current.form_script
   current.name_forumla:
