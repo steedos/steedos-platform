@@ -1,4 +1,4 @@
-const SidecarService = require("@steedos/service-sidecar");
+const SidecarService = require("@steedos/service-sidecar/package.service");
 
 module.exports = {
   name: "$sidecar",

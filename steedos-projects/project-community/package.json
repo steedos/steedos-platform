@@ -8,17 +8,12 @@
     "node": ">=12"
   },
   "scripts": {
-    "start": "yarn flushCacherDB && moleculer-runner services !services/sidecar-server.service.js",
-    "start:all": "yarn flushCacherDB && moleculer-runner services",
+    "start": "yarn start:community",
+    "start:community": "yarn flushCacherDB && moleculer-runner services/community.service.js",
+    "start:enterprise": "yarn flushCacherDB && moleculer-runner services/enterprise.service.js",
+    "start:console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
     "flushCacherDB": "node .scripts/flush_cacher_db.js",
-    "start:steedos": "cross-env NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",
-    "start:app": "cross-env NODEID=STEEDOS-APP moleculer-runner --repl services/steedos-app",
-    "console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
-    "docker": "docker-compose up --build -d",
-    "dev": "moleculer-runner services services/dx.develop.js",
-    "postinstall": "cd .steedos && yarn",
-    "pm2-start": "pm2 start --interpreter bash --name steedos yarn -- start",
-    "restart": "pm2 delete steedos && yarn pm2-start"
+    "postinstall": "cd .steedos && yarn"
   },
   "keywords": [
     "steedos",
