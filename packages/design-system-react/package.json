@@ -1,6 +1,6 @@
 {
   "name": "@steedos/design-system-react",
-  "version": "2.2.11",
+  "version": "2.2.12",
   "description": "Steedos Lightning Design System for React",
   "license": "SEE LICENSE IN README.md",
   "engines": {
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "react-highlighter": "^0.4.3",
-    "lodash.memoize": "^4.1.2"
+    "lodash.memoize": "^4.1.2",
+    "react-highlighter": "^0.4.3"
   }
 }

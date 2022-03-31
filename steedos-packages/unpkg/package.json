@@ -1,15 +1,14 @@
 {
-    "name": "@steedos/unpkg",
-    "version": "2.2.8",
-    "main": "package.service.js",
-    "scripts": {},
-    "license": "MIT",
-    "private": false,
-    "publishConfig": {
-      "access": "public"
-    },
-    "dependencies": {
-      "lodash": "^4.17.21"
-    }
+  "name": "@steedos/unpkg",
+  "version": "2.2.12",
+  "main": "package.service.js",
+  "scripts": {},
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
-  
+}

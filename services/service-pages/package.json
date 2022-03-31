@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-pages",
-  "version": "2.2.11",
+  "version": "2.2.12",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
