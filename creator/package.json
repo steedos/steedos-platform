@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
+    "@steedos/react": "^2.2.8",
     "@steedos-builder/react": "^0.2.13",
     "@steedos-ui/builder-community": "^1.1.27",
     "@steedos-widgets/design-system": "^0.2.5",
@@ -108,7 +109,9 @@
     "push.js": "^1.0.12",
     "simplemde": "1.11.2",
     "summernote": "^0.8.11",
-    "xlsx": "0.10.6"
+    "xlsx": "0.10.6",
+    "react-highlighter": "^0.4.3",
+    "lodash.memoize": "^4.1.2"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
