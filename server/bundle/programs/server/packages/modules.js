@@ -1840,8 +1840,8 @@ module.useNode();
   "extensions": [
     ".js",
     ".json",
-    ".jsx",
     ".mjs",
+    ".jsx",
     ".coffee"
   ]
 });
