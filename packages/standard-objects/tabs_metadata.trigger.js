@@ -24,54 +24,52 @@ module.exports = {
     listenTo: 'tabs',
 
     afterFind: async function(){
-        let filters = objectql.parserFilters(this.query.filters)
-        let dataList = []
-        if(filters._id && !filters._id.$ne){
-            let id = filters._id
-            id = id.replace(/\\/g, '');
-            let data = await get(id);
-            if(data){
-                dataList = [data]
-            }
-        }else{
-            dataList = await getAll();
-            if(filters.name){
-                dataList = _.filter(dataList, (item)=>{
-                    return item.name == filters.name
-                })
-            }
-        }
-
+        const { spaceId } = this;
+        let dataList = await getAll();
+        const values = [];
         if(dataList){
-            const dbRecrodsName = _.pluck(this.data.values, 'name');
-            this.data.values = this.data.values.concat(_.filter(dataList, function(data){return data._id == data.name && !_.include(dbRecrodsName, data.name) }))
+            dataList.forEach((doc)=>{
+                if(!_.find(this.data.values, (value)=>{
+                    return value._id === doc._id
+                })){
+                    this.data.values.push(doc);
+                }
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if(records.length > 0){
+                this.data.values = records;
+            }else{
+                this.data.values.length = 0;
+            }
         }
     },
     afterAggregate: async function(){
-        let filters = objectql.parserFilters(this.query.filters)
-        let dataList = []
-        if(filters._id && !filters._id.$ne){
-            let id = filters._id
-            id = id.replace(/\\/g, '');
-            let data = await get(id);
-            if(data){
-                dataList = [data]
-            }
-        }else{
-            dataList = await getAll();
-            if(filters.name){
-                dataList = _.filter(dataList, (item)=>{
-                    return item.name == filters.name
-                })
-            }
-        }
-
+        const { spaceId } = this;
+        let dataList = await getAll();
+        const values = [];
         if(dataList){
-            const dbRecrodsName = _.pluck(this.data.values, 'name');
-            this.data.values = this.data.values.concat(_.filter(dataList, function(data){return data._id == data.name && !_.include(dbRecrodsName, data.name) }))
+            dataList.forEach((doc)=>{
+                if(!_.find(this.data.values, (value)=>{
+                    return value._id === doc._id
+                })){
+                    this.data.values.push(doc);
+                };
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if(records.length > 0){
+                this.data.values = records;
+            }else{
+                this.data.values.length = 0;
+            }
         }
     },
     afterCount: async function(){
+        try {
+            this.query.fields.push('name');
+            this.query.fields.push('code');
+        } catch (error) {
+
+        }
         let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length;
     },
