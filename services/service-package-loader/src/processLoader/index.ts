@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-30 11:49:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-03-30 21:34:47
+ * @LastEditTime: 2022-03-31 14:21:49
  * @Description: 
  */
 import * as _ from "underscore";
@@ -35,7 +35,15 @@ export async function load(broker: any, packagePath: string, packageServiceName:
             const engineFileContent = fs.readFileSync(engineFilePath);
             process.schema = engineFileContent.toString();
         }
-        data.push(process);
+        data.push(Object.assign(process, {
+            is_system: true,
+            record_permissions: {
+                allowEdit: false,
+                allowDelete: false,
+                allowRead: true,
+            }
+        }));
+
     }
     if (data.length > 0) {
         await registerProcess.mregister(broker, packageServiceName, data)

@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-03-28 15:21:51
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-03-31 19:00:57
+ * @Description: 
+ */
 module.exports = {
     disable: function (object_name, record_id) {
         $(document.body).addClass('loading');
@@ -20,6 +27,6 @@ module.exports = {
         Steedos.authRequest(url, options);
     },
     disableVisible: function (object_name, record_id, permission, record) {
-        return record && record.is_active
+        return record && record.is_active && !record.is_system;
     }
 }
