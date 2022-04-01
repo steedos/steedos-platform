@@ -15,7 +15,6 @@ window.addEventListener('message', function (event) {
             try {
                 SAmisReners.push(data.data.info.amis?.render.type);
                 let amisLib = amisRequire('amis');
-                window.MonacoEnvironment = window.SteedosMonacoEnvironment;
                 amisLib.Renderer(
                     {
                         type: data.data.info.amis?.render.type,
