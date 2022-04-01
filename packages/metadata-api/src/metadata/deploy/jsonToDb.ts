@@ -22,6 +22,7 @@ import { PageCollection } from '../collection/page';
 import { TabCollection } from '../collection/tab'
 import { ShareRuleCollection } from '../collection/shareRule'
 import { RestrictionRuleCollection } from '../collection/restrictionRule'
+import { processToDb } from '../collection/process'
 
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
@@ -65,6 +66,10 @@ async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, p
 
         case TypeInfoKeys.Profile:
             await permissionSetsToDb(dbManager, metatdataRecords, true);
+            break;
+
+        case TypeInfoKeys.Process: 
+            await processToDb(dbManager, metatdataRecords);
             break;
 
         case TypeInfoKeys.Application:

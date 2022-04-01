@@ -79,7 +79,7 @@ async function recordToFile(folderPath, record, recordName, metadataName){
         fs.writeFileSync(filePath, fileContent);
 
         // process schema
-        filePath = path.join(folderPath, `${fileName}.process.${record.engine}.${record.ext || 'bpmn'}`)
+        filePath = path.join(folderPath, `${fileName}.${record.engine}.${record.ext || 'bpmn'}`)
         fs.writeFileSync(filePath, JSON.stringify(schema));
 
         return ;

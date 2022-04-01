@@ -3,7 +3,8 @@ import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getFullName, getChilds, ge
 import {deleteCommonAttribute, sortAttribute} from '../../util/attributeUtil'
 
 import { dbToJson } from '../../metadata/retrieve/dbToJson'
-import { getProcessVersionByProcess } from "./processVersion"
+import { getProcessVersionByProcess, saveOrInsertProcessVersion } from "./processVersion"
+import { InsertOneWriteOpResult, WithId } from 'mongodb';
 
 const collection_name = "process";
 const collection_metadata_name = TypeInfoKeys.Process; 
@@ -67,4 +68,41 @@ async function getProcessByName(dbManager, name) {
   // removeAttributeForObject(object);
   sortAttribute(process);
   return process;
+}
+
+export async function processToDb(dbManager, processes) {
+  for(const metadataName in processes) {
+    const metadata = processes[metadataName]
+    const process = {
+      ...metadata
+    };
+
+    delete process.schema;
+    const _id = await saveOrInsertOne(dbManager, process);
+
+    const processVersion = {
+        process: _id,
+        description: metadata.description,
+        schema: metadata.schema,
+        entry_criteria: metadata.entry_criteria,
+        when: metadata.when,
+    };
+    await saveOrInsertProcessVersion(dbManager, processVersion);
+  }
+}
+
+async function saveOrInsertOne(dbManager, process){
+  var filter = {name: process.name};
+  var dbObject = await dbManager.findOne(collection_name, filter);
+  if(dbObject == null) {
+    dbObject = await dbManager.findOne(collection_name, filter, false)
+    if(dbObject) {
+      throw new Error(`process api_name already exists: ${process.name}`); 
+    }
+    const { insertedId } = await dbManager.insert(collection_name, process) as InsertOneWriteOpResult<WithId<any>>
+    return insertedId;
+  } else {
+    await dbManager.update(collection_name, filter, process);
+    return  dbObject._id.toString();
+  }
 }

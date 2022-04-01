@@ -42,7 +42,7 @@ const downloadMetadata = async function (req, res) {
         var steedosPackage = {}
         var dbJson = await getSteedosPackage(yml, steedosPackage, dbManager);
         await dbManager.close();
-        console.log('dbJson', dbJson);
+        // console.log('dbJson', dbJson);
         var tempDir = mkTempFolder('download-')
 
         const deployDir = path.join(tempDir, 'deploy');

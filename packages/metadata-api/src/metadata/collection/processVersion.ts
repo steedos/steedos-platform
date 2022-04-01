@@ -2,7 +2,7 @@ import { SteedosMetadataTypeInfoKeys as TypeInfoKeys} from '@steedos/metadata-co
 import {deleteCommonAttribute, sortAttribute} from '../../util/attributeUtil'
 
 const collection_name = "process_versions";
-const collection_metadata_name = TypeInfoKeys.ProcessVersion;
+const collection_metadata_name = "ProcessVersion";
 
 export async function processVersionFromDb(dbManager, processList, steedosPackage) {
 
@@ -41,4 +41,21 @@ function addProcessVersionToProcess(processVersion, process, processName) {
   process[processName][collection_metadata_name] = {
     processVersion: processVersion
   };
+}
+
+export async function saveOrInsertProcessVersion(dbManager, processVersion) {
+  const processId = processVersion.process
+  var [dbData]= await getProcessVersionByProcess(dbManager, processId);
+
+  const filter = {
+    process: processId
+  }
+
+  if (dbData && !dbData.is_active) {
+    dbManager.update(collection_name, filter, processVersion);
+  } else  {
+     processVersion.version = dbData ? dbData.version + 1 : 1;
+     processVersion.is_active = false
+     dbManager.insert(collection_name, processVersion)
+  }
 }
