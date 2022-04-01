@@ -259,75 +259,91 @@ fields:
     is_wide: true
   form.onValuesChange:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
   form.initialValues:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
   form.validate:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true
   form.beforeInsert:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true
   form.beforeUpdate:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true
   form.beforeDelete:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
   form.afterInsert:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true
   form.afterUpdate:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true
   form.afterDelete:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
   form.errorInsert:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true
   form.errorUpdate:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true
   form.errorDelete:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true
   form.beforeView:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
   form.afterView:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
   form.beforeEdit:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true
   form.afterEdit:
     type: code
+    language: javascript
     rows: 3
     is_wide: true
     hidden: true

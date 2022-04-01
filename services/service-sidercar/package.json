@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-sidecar",
-  "version": "2.2.8",
-  "main": "package.service.js",
+  "version": "2.2.15",
+  "main": "index.js",
   "license": "MIT",
   "dependencies": {
     "kleur": "^4.1.3",

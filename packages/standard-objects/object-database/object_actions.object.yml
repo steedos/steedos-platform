@@ -12,6 +12,7 @@ fields:
     required: true
     label: Object
     create: false
+    sort_no: 110
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -33,8 +34,10 @@ fields:
     label: Label
     required: true
     is_name: true
+    sort_no: 120
   name:
     type: text
+    sort_no: 130
     label: API Name
     searchable: true
     index: true
@@ -43,17 +46,20 @@ fields:
   is_enable:
     type: boolean
     label: Enable
+    sort_no: 140
   visible:
     type: boolean
     omit: true
     hidden: true
     label: Visible
+    sort_no: 150
   'on':
     type: lookup
     label: 'On'
     is_wide: true
     required: true
     showIcon: false
+    sort_no: 160
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               return [{
@@ -84,6 +90,7 @@ fields:
             }
   type: 
     type: select
+    sort_no: 170
     options:
       - label: Custom JavaScript
         value: script
@@ -97,7 +104,9 @@ fields:
   #   create: false
   todo:
     label: Execute Script
+    sort_no: 180
     type: code
+    language: javascript
     required: true
     # omit: true
     # hidden: true

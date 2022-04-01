@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-plugin-amis",
-  "version": "2.2.8",
+  "version": "2.2.15",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",

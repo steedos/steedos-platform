@@ -1,14 +1,14 @@
 {
   "name": "@steedos/tailwind",
   "private": false,
-  "version": "2.2.8",
+  "version": "2.2.15",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development node build.js",
     "build": "cross-env NODE_ENV=production node build.js",
     "copy-to-public": "cp dist/steedos-tailwind.min.css ../../steedos-packages/webapp-accounts/webapp/public/assets/styles && cp dist/steedos-tailwind.min.css ../../steedos-packages/webapp-accounts/webapp/build/assets/styles",
-    "prepare": "yarn build && yarn copy-to-public"
+    "build-tailwind": "yarn build && yarn copy-to-public"
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",

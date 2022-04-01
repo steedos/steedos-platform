@@ -124,9 +124,13 @@ module.exports = {
         loadPackagePublicFiles: {
             handler(packagePath) {
                 let publicPath = path.join(packagePath, 'public');
-				if (!fs.existsSync(publicPath) ||this.settings.loadedPackagePublicFiles || !WebApp) {
-					return;
-				}
+				try {
+                    if (!fs.existsSync(publicPath) ||this.settings.loadedPackagePublicFiles || typeof WebApp == 'undefined') {
+                        return;
+                    }
+                } catch (error) {
+                    return
+                }
 
 				this.settings.loadedPackagePublicFiles = true;
 				try {

@@ -171,6 +171,7 @@ module.exports = {
                 const lastVersion = versionDocs[0];
                 const newProcessDoc = {
                     ...processDoc,
+                    schema: lastVersion.schema,
                     when: lastVersion.when,
                     entry_criteria: lastVersion.entry_criteria,
                     version: lastVersion.version,

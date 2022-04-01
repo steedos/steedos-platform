@@ -35,7 +35,7 @@
         }
     };
 
-    
+    Object.defineProperty(window, 'MonacoEnvironment', {set: ()=>{}, get: ()=>window.SteedosMonacoEnvironment})
 
 })();
 
