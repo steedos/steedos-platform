@@ -48,7 +48,7 @@ export async function jsonToFile(targetPath, steedosPackage){
                     delete parentRecord[childMetadataName];
                 }
             }
-                   
+
             await recordToFile(metadataFileFolderPath, parentRecord, parentRecordName, propertyName); //accounts.object.yml
         }
 
@@ -68,7 +68,23 @@ async function recordToFile(folderPath, record, recordName, metadataName){
     if(metadataName == SteedosMetadataTypeInfoKeys.Flow){
         fileName += '.json';
         fileContent = JSON.stringify(record);
-    }else{
+    } 
+    else if(metadataName === SteedosMetadataTypeInfoKeys.Process) {
+        const schema = record.schema;
+        delete record.schema;
+        fileContent = yaml.dump(record);
+
+        // process.yml
+        var filePath = path.join(folderPath, fileName + '.yml');
+        fs.writeFileSync(filePath, fileContent);
+
+        // process schema
+        filePath = path.join(folderPath, `${fileName}.${record.engine}.${record.ext || 'bpmn'}`)
+        fs.writeFileSync(filePath, JSON.stringify(schema));
+
+        return ;
+    }
+    else{
         fileName += '.yml';
         fileContent = yaml.dump(record);
     }

@@ -85,6 +85,9 @@ export function getFileinfoByFilename(filename) {
         metadataName = TypeInfoKeys.Object;
         itemName = _.first(filename.split('.'));
 
+    }else if(filename.endsWith('.process.yml')){
+        metadataName = TypeInfoKeys.Process;
+        itemName = _.first(filename.split('.'));
     }else if(filename.endsWith('.field.yml')){
         metadataName = TypeInfoKeys.Field;
         itemName = filename.replace('.field.yml', "");

@@ -1,0 +1,11 @@
+metadataName: Process
+isAddressable: true
+isSourceTracked: true
+ext: process
+tableName: process
+hasContent: false
+defaultDirectory: process
+nameForMsgs: Process
+nameForMsgsPlural: Process
+contentIsBinary: false
+deleteSupported: true

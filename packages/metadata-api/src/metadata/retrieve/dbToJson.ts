@@ -27,6 +27,9 @@ import { TabCollection } from '../collection/tab';
 import { ShareRuleCollection } from '../collection/shareRule'
 import { RestrictionRuleCollection } from '../collection/restrictionRule'
 
+import { processFromDb } from '../collection/process';
+import { processVersionFromDb } from '../collection/processVersion';
+
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
 const pageCollection = new PageCollection();
@@ -86,6 +89,10 @@ export async function dbToJson(reqYml, steedosPackage, dbManager){
 
       case TypeInfoKeys.Permissionset:
         await permissionsetsFromDb(dbManager, reqYml[metadataName], container, false);
+        break;
+
+      case TypeInfoKeys.Process: 
+        await processFromDb(dbManager, reqYml[metadataName], container) ;
         break;
 
       case TypeInfoKeys.Profile:
