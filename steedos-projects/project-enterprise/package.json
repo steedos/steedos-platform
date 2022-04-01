@@ -24,7 +24,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-enterprise": "2.2.13"
+    "@steedos/service-enterprise": "2.2.13",
+    "@steedos/webapp-accounts": "^2.2.14",
+    "@steedos/service-plugin-amis": "^2.2.14"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
