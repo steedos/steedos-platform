@@ -30,6 +30,6 @@ export {default as GridModal} from './grid_modal';
 export {default as HeaderProfile} from './header_profile';
 export {default as FlowsTree} from './flows_tree';
 export {default as Modal} from './modal';
-export * from './slds_app_launcher';
+// export * from './slds_app_launcher';
 export * from './slds_illustration';
 export * from './tabs';

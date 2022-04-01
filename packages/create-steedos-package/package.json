@@ -34,5 +34,9 @@
   },
   "resolutions": {
     "**/chalk": "3.0.0"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }

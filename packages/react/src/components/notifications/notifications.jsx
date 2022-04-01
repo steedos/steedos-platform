@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import _ from 'underscore';
 import moment from 'moment';
-import { GlobalHeaderNotifications, Popover, Button, Icon } from '@steedos/design-system-react';
+import { GlobalHeaderNotifications, Popover, Button, Icon } from '@steedos-widgets/design-system';
 import { getAbsoluteUrl, getRelativeUrl, getUserId, getAuthToken, getSpaceId } from '../../utils';
 
 const Container = styled.div`

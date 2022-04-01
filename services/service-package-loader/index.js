@@ -138,9 +138,6 @@ module.exports = {
 					const cacheTime = 86400000 * 1; // one day
 					router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
 					WebApp.rawConnectHandlers.use(router);
-
-                    console.log(`loadPackagePublicFiles ===>`, publicPath)
-
 				} catch (error) {
 					console.error(error)
 					this.settings.loadedPackagePublicFiles = false;

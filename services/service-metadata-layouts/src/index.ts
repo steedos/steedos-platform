@@ -3,7 +3,7 @@ export const METADATA_TYPE = 'layouts';
 
 export async function getServiceConfig(ctx, serviceName, apiName) {
     const metadataType = METADATA_TYPE;
-    const metadataConfig = await ctx.broker.call(`metadata.getServiceMetadata`, {
+    const metadataConfig:any = await ctx.broker.call(`metadata.getServiceMetadata`, {
         serviceName,
         metadataType,
         metadataApiName: apiName

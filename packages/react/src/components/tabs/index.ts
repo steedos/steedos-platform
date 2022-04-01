@@ -1,2 +1,2 @@
 export { default as Tabs } from './tabs';
-export { TabsPanel } from '@steedos/design-system-react';
+// export { TabsPanel } from '@steedos-widgets/design-system';
