@@ -8,7 +8,7 @@
 
 ## 使用 Builder
 
-Builder是异步加载, 加载完成后会给window下写变量Builder, 如果支持在client中调用Builder可能会出现error:`Builder is not defined`. 请使用`waitForThing(window, 'Builder')` 等待Builder加载后,再调用Builder相关函数.
+Builder是异步加载, 加载完成后会给window下写变量Builder, 如果直接在client中调用Builder可能会出现error:`Builder is not defined`. 请使用`waitForThing(window, 'Builder')` 等待Builder加载后,再调用Builder相关函数.
 例如:
 ```
 waitForThing(window, 'Builder').then(()=>{
