@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-31 14:24:43
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-01 10:14:36
+ * @LastEditTime: 2022-04-02 15:03:17
  * @Description: 
  */
 
@@ -36,6 +36,14 @@ async function getAll() {
 
 module.exports = {
     listenTo: 'process_versions',
+
+    beforeFind: async function () {
+        delete this.query.fields;
+    },
+
+    beforeAggregate: async function () {
+        delete this.query.fields;
+    },
 
     afterFind: async function () {
         const { spaceId } = this;
