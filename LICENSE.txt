@@ -15,9 +15,9 @@ On request, licenses under different terms are available.
 Project templates can be found in the folders steedos-projects/
 
 Source code of enterprise features are files that
-* are in folders named "ee" or start with "ee-", or in subfolders of such folders.
-* contain the strings "ee-" in its filename name.
-The files can be found by running the command `find . -iname ee -or -iname "*-ee*" -or -iname "*ee-*"`
+* are in folders named "ee" or start with "ee_", or in subfolders of such folders.
+* contain the strings "ee_" in its filename name.
+The files can be found by running the command `find . -iname ee -or -iname "*_ee*" -or -iname "*ee_*"`
 
 STEEDOS TRADEMARK GUIDELINES
 
