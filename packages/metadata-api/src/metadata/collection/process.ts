@@ -116,6 +116,7 @@ export class ProcessCollection extends MetadataBaseCollection {
     }
   }
 
+  // TODO: order by version and limit 1
   async getProcessVersionByProcess(dbManager, processId) {
   
     var processVersions = await dbManager.find(process_versions_collection_name, {
