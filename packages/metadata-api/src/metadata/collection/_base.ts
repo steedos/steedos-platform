@@ -78,6 +78,10 @@ export class MetadataBaseCollection{
         var record = await dbManager.findOne(this.collectionName, filter);
     
         if(record == null){
+            record = await dbManager.findOne(this.collectionName, filter, false)
+            if(record) {
+                throw new Error(`process api_name already exists: ${data.name}`); 
+            }
             return await dbManager.insert(this.collectionName, data);
         }else{
             return await dbManager.update(this.collectionName, filter, data);

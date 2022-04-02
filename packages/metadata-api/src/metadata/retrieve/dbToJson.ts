@@ -26,9 +26,7 @@ import { PageCollection } from '../collection/page';
 import { TabCollection } from '../collection/tab';
 import { ShareRuleCollection } from '../collection/shareRule'
 import { RestrictionRuleCollection } from '../collection/restrictionRule'
-
-import { processFromDb } from '../collection/process';
-import { processVersionFromDb } from '../collection/processVersion';
+import { ProcessCollection } from '../collection/process';
 
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
@@ -36,6 +34,7 @@ const pageCollection = new PageCollection();
 const tabCollection = new TabCollection();
 const shareRuleCollection = new ShareRuleCollection();
 const restrictionRuleCollection = new RestrictionRuleCollection();
+const processCollection = new ProcessCollection();
 
 import { hasParent, getParentMetadataName, hasChild, getMetadataTypeInfo, getFunctionFields,
    SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
@@ -92,7 +91,7 @@ export async function dbToJson(reqYml, steedosPackage, dbManager){
         break;
 
       case TypeInfoKeys.Process: 
-        await processFromDb(dbManager, reqYml[metadataName], container) ;
+        await processCollection.retrieve(dbManager, reqYml[metadataName], container) ;
         break;
 
       case TypeInfoKeys.Profile:
