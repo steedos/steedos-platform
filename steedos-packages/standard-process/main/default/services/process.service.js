@@ -52,7 +52,7 @@ module.exports = {
                         name: { type: 'string' },
                         label: { type: 'string' },
                         entry_criteria: { type: 'string' },
-                        schema: { type: 'string' },
+                        schema: { type: 'string', optional: '' },
                         when: { type: 'string' },
                         description: { type: 'string', optional: '' }
                     }
@@ -111,7 +111,7 @@ module.exports = {
                     schema: schema,
                     when: when,
                 }
-                await ctx.call(`${processDoc.engine}.save`, { process: newProcess, operator: userSession });
+                await ctx.call(`${processDoc.engine}.save`, { process: newProcess }, { meta: { user: userSession } });
                 return { success: true }
             }
         },
@@ -176,7 +176,7 @@ module.exports = {
                     entry_criteria: lastVersion.entry_criteria,
                     version: lastVersion.version,
                 }
-                await ctx.call(`${processDoc.engine}.deploy`, { process: newProcessDoc, operator: userSession });
+                await ctx.call(`${processDoc.engine}.deploy`, { process: newProcessDoc }, { meta: { user: userSession } });
                 await processVersionsObj.update(lastVersion._id, { is_active: true }, userSession);
                 return { sucess: true }
             }
@@ -236,7 +236,7 @@ module.exports = {
                 const processObj = objectql.getObject('process');
                 const processDoc = await processObj.findOne(_id);
                 await processObj.delete(_id, userSession);
-                await ctx.call(`${process.engine}.delete`, { process: processDoc, operator: userSession });
+                await ctx.call(`${process.engine}.delete`, { process: processDoc }, { meta: { user: userSession } });
 
             }
         },
@@ -249,17 +249,17 @@ module.exports = {
             },
             params: {
                 process_id: { type: 'string' },
-                record_id: { type: 'string' },
-                user: { type: 'object' }
+                record_id: { type: 'string' }
             },
             handler: async function (ctx) {
                 // call process.engine.start
-                const { process_id, record_id, user } = ctx.params;
+                const { process_id, record_id } = ctx.params;
+                const userSession = ctx.meta.user;
                 const processObj = objectql.getObject('process');
                 const processDoc = await processObj.findOne(process_id);
                 const recordObj = await objectql.getObject(processDoc.object_name);
                 const record = await recordObj.findOne(record_id);
-                await ctx.call(`${processDoc.engine}.start`, { process: processDoc, record: record, operator: user });
+                await ctx.call(`${processDoc.engine}.start`, { process: processDoc, record: record }, { meta: { user: userSession }});
 
             }
         },

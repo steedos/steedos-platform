@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-30 15:52:08
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-03-30 17:46:06
+ * @LastEditTime: 2022-04-02 09:39:31
  * @Description: 
  */
 
@@ -21,7 +21,7 @@ module.exports = {
             const userSession = await auth.getSessionByUserId(userId, spaceId);
             const broker = objectql.getSteedosSchema().broker;
             // 最新文档告知引擎
-            await broker.call(`${doc.engine}.save`, { process: doc, operator: userSession });
+            await broker.call(`${doc.engine}.save`, { process: doc }, { meta: { user: userSession } });
         }
     },
 
@@ -44,7 +44,7 @@ module.exports = {
                 }
             }
             // 最新文档告知引擎
-            await broker.call(`${processDoc.engine}.save`, { process: processDoc, operator: userSession });
+            await broker.call(`${processDoc.engine}.save`, { process: processDoc }, { meta: { user: userSession } });
         }
     }
 }
