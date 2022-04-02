@@ -42,7 +42,9 @@
             );
         };
 
+        //等待Builder加载完成
         waitForThing(window, 'Builder').then(()=>{
+            //等待amis组件加载完成
             waitForThing(window, 'amisComponentsLoaded').then(()=>{
                 Builder.registerComponent(Amis, {
                     name: 'Amis',
