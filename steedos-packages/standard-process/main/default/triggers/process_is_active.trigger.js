@@ -28,10 +28,10 @@ module.exports = {
                 };
                 if (doc.is_active) {
                     // 启用流程
-                    await broker.call(`${newDoc.engine}.enable`, { process: newDoc, operator: userSession });
+                    await broker.call(`${newDoc.engine}.enable`, { process: newDoc }, { meta: { user: userSession } });
                 } else {
                     // 禁用流程
-                    await broker.call(`${newDoc.engine}.disable`, { process: newDoc, operator: userSession });
+                    await broker.call(`${newDoc.engine}.disable`, { process: newDoc }, { meta: { user: userSession } });
                 }
             }
         }

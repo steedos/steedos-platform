@@ -20,20 +20,23 @@ module.exports = {
         const params = ctx.params;
         const { objectName, operationType, userId, spaceId } = params;
         const processObj = objectql.getObject('process');
+        const processVersionsObj = objectql.getObject('process_versions');
         const newDoc = params['new'][0];
         const processDocs = await processObj.find({ filters: [['space', '=', spaceId], ['object_name', '=', objectName]] });
         for (const pDoc of processDocs) {
             const { when, entry_criteria } = pDoc;
-            if ('AFTER_INSERT' == operationType && 'afterInsert' == when || 'AFTER_UPDATE' == operationType && 'afterUpdate' == when) {
+            const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', pDoc._id], ['is_active', '=', true]], sort: 'version desc', top: 1 });
+            const lastVersion = versionDocs[0];
+            // 流程已启用，且有已发布的版本才执行发起
+            if (pDoc.is_active && lastVersion && ('AFTER_INSERT' == operationType && 'afterInsert' == when || 'AFTER_UPDATE' == operationType && 'afterUpdate' == when)) {
                 // 执行入口公式
                 const result = await objectql.computeSimpleFormula(entry_criteria, newDoc, userId, spaceId);
                 if (result) {
                     const userSession = await auth.getSessionByUserId(userId, spaceId);
                     await ctx.broker.call(`${packageName}.start`, {
                         process_id: pDoc._id,
-                        record_id: newDoc._id,
-                        user: userSession
-                    });
+                        record_id: newDoc._id
+                    }, { meta: { user: userSession } });
                 }
             }
         }
