@@ -1,3 +1,8 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-31 11:10:59
+ * @Description: 
+ */
 
 ; (function () {
     try {
@@ -37,21 +42,17 @@
             );
         };
 
-        Builder.registerComponent(Amis, {
-            name: 'Amis',
-            inputs: [
-              { name: 'schema', type: 'object' },
-              { name: 'data', type: 'object' },
-            ]
-        });
-
-        const defaultAssetsUrls = [
-            'https://unpkg.com/@steedos-ui/builder-widgets/dist/assets.js'
-        ]
-
-        defaultAssetsUrls.forEach( (url, index) => {
-            Builder.registerRemoteAssets(url)
-        });
-
+        waitForThing(window, 'Builder').then(()=>{
+            waitForThing(window, 'amisComponentsLoaded').then(()=>{
+                Builder.registerComponent(Amis, {
+                    name: 'Amis',
+                    inputs: [
+                      { name: 'schema', type: 'object' },
+                      { name: 'data', type: 'object' },
+                    ]
+                });
+            })
+        })
     });
+
 })();

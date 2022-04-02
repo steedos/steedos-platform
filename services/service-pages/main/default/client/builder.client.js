@@ -4,34 +4,47 @@
  * @Description: 
  */
 ; (function () {
-    // window.SteedosMonacoEnvironment = window.MonacoEnvironment = {
-    //     getWorkerUrl: function (moduleId, label) {
-    //         console.log(`getWorkerUrl===`, moduleId, label)
-    //         const urlPath = '/unpkg.com/monaco-editor/min/vs';
-    //         let filePath = '/base/worker/workerMain.js';
-    //         if (label === 'json') {
-    //             file = '/language/json/jsonWorker.js';
-    //         }
-    //         if (label === 'css') {
-    //             file = '/language/css/cssWorker.js';
-    //         }
-    //         if (label === 'html') {
-    //             file = '/language/html/htmlWorker.js';
-    //         }
-    //         if (label === 'typescript' || label === 'javascript') {
-    //             file = '/language/typescript/tsWorker.js';
-    //         }
-    //         return `${urlPath}${filePath}`;
-    //     }
-    // }
+    function _innerWaitForThing(obj, path, func){
+        const timeGap = 100;
+        return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let thing = null;
+            if(lodash.isFunction(func)){
+                thing = func(obj, path);
+            }else{
+                thing = lodash.get(obj, path);
+            }
+            if (thing) {
+                return resolve(thing);
+            }
+            reject();
+        }, timeGap);
+        }).catch(() => {
+            return _innerWaitForThing(obj, path, func);
+        });
+    }
+    
+    window.waitForThing=(obj, path, func)=>{
+        let thing = null;
+        if(lodash.isFunction(func)){
+            thing = func(obj, path);
+        }else{
+            thing = lodash.get(obj, path);
+        }
+        if (thing) {
+            return Promise.resolve(thing);
+        }
+        return _innerWaitForThing(obj, path, func);
+    };
+    
     window.SteedosMonacoEnvironment = window.MonacoEnvironment = {
         getWorkerUrl: function(workerId, label) {
-          return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
+            return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
             self.MonacoEnvironment = {
-              baseUrl: '${window.location.origin}/unpkg.com/monaco-editor/min/'
+                baseUrl: '${window.location.origin}/unpkg.com/monaco-editor/min/'
             };
             importScripts('${window.location.origin}/unpkg.com/monaco-editor/min/vs/base/worker/workerMain.js');`
-          )}`;
+            )}`;
         }
     };
 
@@ -92,37 +105,13 @@ injectScript('/unpkg.com/@steedos-builder/react/dist/builder-react.unpkg.js')
            return monaco = window['monaco'];
         });
 
-        
+        if(Meteor.settings.public.page && Meteor.settings.public.page.assetUrls){
+            const defaultAssetsUrls = Meteor.settings.public.page.assetUrls.split(',')
+            Builder.registerRemoteAssets(defaultAssetsUrls)
+        }  
+
+        window.postMessage({ type: "Builder.loaded" })
 
     }).catch(error => {
         console.error(error);
     });
-
-// import("https://unpkg.com/@steedos-builder/react@0.2.11/dist/builder-react.umd.js").then(function(BuilderReact) {
-
-//     console.log('Builder loaded!');
-//     const BuilderSDK = BuilderReact;
-    
-//     window.BuilderReact = BuilderReact;
-//     window.BuilderSDK = BuilderSDK;
-    
-//     window.Builder = BuilderReact.Builder;
-//     window.BuilderComponent = BuilderReact.BuilderComponent;
-//     window.builder = BuilderReact.builder;
-    
-//     Builder.set({rootUrl: __meteor_runtime_config__.ROOT_URL})
-//     window['React'] = require('react'); 
-//     window['ReactDOM'] = require('react-dom'); 
-//     // window['lodash'] = require('lodash'); 
-    
-//     Builder.registerImportMap({
-//         // "lodash": '/requirejs/lodash',
-//         "react": '/requirejs/react',
-//         "react-dom": '/requirejs/react-dom',
-//         "@steedos-builder/sdk": '/requirejs/builder-sdk',
-//         "@steedos-builder/react": '/requirejs/builder-react',
-//     })
-//     Builder.require(['lodash',"react", "react-dom"])
-    
-// });
-

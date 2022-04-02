@@ -54,38 +54,106 @@ Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
 }
 
 Steedos.Page.render = function (root, page, data) {
-    if (page.render_engine && page.render_engine != 'redash') {
-        const options = {
-            model: "page", content: {
-                "data": {
-                    "blocks": [
-                        {
-                            "@type": "@builder.io/sdk:Element",
-                            "@version": 2,
-                            "id": `builder-${page._id}`,
-                            "component": {
-                                "name": upperFirst(page.render_engine),
-                                "options": {
-                                    "schema": typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema,
-                                    "data": Object.assign({}, data, {
-                                        context: {
-                                            rootUrl: __meteor_runtime_config__.ROOT_URL,
-                                            tenantId: Creator.USER_CONTEXT.spaceId,
-                                            userId: Creator.USER_CONTEXT.userId,
-                                            authToken: Creator.USER_CONTEXT.user.authToken
-                                        }
-                                    })
-                                }
-                            },
+
+    const loadingContentData = {
+        "inputs": [],
+        "title": "loading",
+        "blocks": [
+            {
+                "@type": "@builder.io/sdk:Element",
+                "@version": 2,
+                "layerName": "Box",
+                "id": "builder-8070f86b1aed4e78a5878fa5c0d79e49",
+                "children": [
+                    {
+                        "@type": "@builder.io/sdk:Element",
+                        "@version": 2,
+                        "layerName": "Loading...\n...",
+                        "id": "builder-4b16375a68dc4e49b4844843091bf91d",
+                        "component": {
+                            "name": "Text",
+                            "options": {
+                                "text": "<p>Loading...</p>\n"
+                            }
+                        },
+                        "responsiveStyles": {
+                            "large": {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "position": "relative",
+                                "flexShrink": "0",
+                                "boxSizing": "border-box",
+                                "marginTop": "20px",
+                                "lineHeight": "normal",
+                                "height": "auto",
+                                "textAlign": "center"
+                            }
                         }
-                    ],
-                    "inputs": [
-                    ]
+                    }
+                ],
+                "responsiveStyles": {
+                    "large": {
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "position": "relative",
+                        "flexShrink": "0",
+                        "boxSizing": "border-box"
+                    }
                 }
             }
-        };
-        console.debug('render data', options)
-        return SteedosUI.render(BuilderComponent, options, root);
+        ]
+    };
+
+    if (page.render_engine && page.render_engine != 'redash') {
+
+        const pageContentData = {
+            "blocks": [
+                {
+                    "@type": "@builder.io/sdk:Element",
+                    "@version": 2,
+                    "id": `builder-${page._id}`,
+                    "component": {
+                        "name": upperFirst(page.render_engine),
+                        "options": {
+                            "schema": typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema,
+                            "data": Object.assign({}, data, {
+                                context: {
+                                    rootUrl: __meteor_runtime_config__.ROOT_URL,
+                                    tenantId: Creator.USER_CONTEXT.spaceId,
+                                    userId: Creator.USER_CONTEXT.userId,
+                                    authToken: Creator.USER_CONTEXT.user.authToken
+                                }
+                            })
+                        }
+                    },
+                }
+            ],
+            "inputs": [
+            ]
+        }
+
+        const findComponent = (obj, componentName)=>{
+            return lodash.find(obj, {name : componentName})
+        }
+
+        //渲染loading
+        SteedosUI.render(BuilderComponent, {
+            model: "page", content: {
+                "data": loadingContentData
+            }
+        }, root)
+
+        return Promise.all([
+            waitForThing(window, 'BuilderComponent'),
+            waitForThing(Builder.components, upperFirst(page.render_engine), findComponent)
+        ]).then(()=>{
+            //渲染page
+            SteedosUI.render(BuilderComponent, {
+                model: "page", content: {
+                    "data": pageContentData
+                }
+            }, root)
+        });
     }
 };
 
