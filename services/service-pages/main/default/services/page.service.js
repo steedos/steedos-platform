@@ -9,7 +9,7 @@ module.exports = {
      * Settings
      */
     settings: {
-
+        pageRender: process.env.STEEDOS_PAGE_RENDER || process.env.DEFAULT_PAGE_RENDER
     },
 
     /**
@@ -123,8 +123,9 @@ module.exports = {
     methods: {
         getDefaultSchema: {
             async handler(type, app, objectApiName, recordId, formFactor, userSession) {
-                if (process.env.DEFAULT_PAGE_RENDER) {
-                    return await this.broker.call(`${process.env.DEFAULT_PAGE_RENDER}.getDefaultSchema`, {type, app, objectApiName, recordId, formFactor}, {
+                const pageRender = this.settings.pageRender;
+                if (pageRender) {
+                    return await this.broker.call(`${pageRender}.getDefaultSchema`, {type, app, objectApiName, recordId, formFactor}, {
                         meta: {
                           user: userSession
                         }
@@ -256,7 +257,8 @@ module.exports = {
                 }
                 const defaultSchema = await this.getDefaultSchema(type, app, objectApiName, recordId, formFactor, userSession);
                 if(defaultSchema){
-                    return { render_engine: process.env.DEFAULT_PAGE_RENDER , schema: defaultSchema}
+                    const pageRender = this.settings.pageRender;
+                    return { render_engine: pageRender , schema: defaultSchema}
                 }
             }
         },
