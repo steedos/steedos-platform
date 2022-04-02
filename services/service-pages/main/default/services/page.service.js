@@ -41,7 +41,9 @@ module.exports = {
                 const { pageId } = ctx.params;
                 const userSession = ctx.meta.user;
                 const lastVersion = await this.getLatestPageVersion(pageId);
-                return await objectql.getObject('page_versions').update(lastVersion._id, { is_active: true }, userSession);
+                if(lastVersion){
+                    return await objectql.getObject('page_versions').update(lastVersion._id, { is_active: true }, userSession);
+                }
             }
         },
 
@@ -87,7 +89,8 @@ module.exports = {
             async handler(ctx){
                 // const userSession = ctx.meta.user;
                 const { pageId } = ctx.params;
-                return await this.getLatestPageVersion(pageId);
+                const pageVersion = await this.getLatestPageVersion(pageId);
+                return pageVersion || {}
             }
         },
         changePageVersion:{
@@ -267,8 +270,6 @@ module.exports = {
                 const pageVersions = await objectql.getObject('page_versions').find({filters: filters, sort: 'version desc', top: 1});
                 if(pageVersions.length === 1){
                     return pageVersions[0]
-                }else{
-                    return {}
                 }
             }
         },
