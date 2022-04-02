@@ -40,7 +40,7 @@
     "clone": "^2.1.2",
     "dotenv-flow": "^3.1.0",
     "immer": "^6.0.9",
-    "marked": "^0.8.0",
+    "marked": "^4.0.10",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
