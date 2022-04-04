@@ -98,10 +98,6 @@ Template.instance_list_wrapper.events
 		Session.set("flowId", undefined);
 
 	'click .list-action-custom-standard_new': (event) ->
-		#判断是否为欠费工作区
-		if !Steedos.hasFeature('workflow', Steedos.getSpaceId())
-			Steedos.spaceUpgradedModal();
-			return;
 
 		WorkflowManager.alertFlowListModel
 			title: t("Fill in form")

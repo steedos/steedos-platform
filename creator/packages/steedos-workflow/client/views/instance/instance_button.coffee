@@ -310,7 +310,7 @@ instanceButtonHelpers =
 			return false
 
 	enabled_distribute: ->
-		if !Steedos.hasFeature('file_distribution', Steedos.getSpaceId()) || !Meteor.settings.public?.workflow?.instance_allow_distribute
+		if !Meteor.settings.public?.workflow?.instance_allow_distribute
 			return false
 		ins = WorkflowManager.getInstance()
 		if !ins

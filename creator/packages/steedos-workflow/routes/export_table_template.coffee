@@ -44,11 +44,11 @@ Meteor.startup ->
 				return;
 
 			space = db.spaces.findOne(flow.space, { fields: { is_paid: 1 } })
-			if !space || !Steedos.hasFeature('paid', space._id)
+			if !space
 				JsonRoutes.sendResult res,
 					code: 404,
 					data:
-						"error": "Validate Request -- Non-paid space.",
+						"error": "Validate Request -- No permission",
 						"success": false
 				return;
 

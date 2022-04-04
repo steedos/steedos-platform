@@ -56,11 +56,11 @@ JsonRoutes.add "post", "/api/workflow/import/form", (req, res, next) ->
 
 	space = db.spaces.findOne(spaceId, { fields: { _id: 1 } })
 
-	if !space || !Steedos.hasFeature('paid', space._id)
+	if !space
 		JsonRoutes.sendResult res,
 			code: 404,
 			data:
-				"error": "Validate Request -- Non-paid space.",
+				"error": "Validate Request -- No permission",
 				"success": false
 		return;
 

@@ -100,10 +100,7 @@ Template.forward_select_flow_modal.events({
 		if (action_type == 'forward') {
 			selectedUsers = [Meteor.userId()];
 		} else if (action_type == 'distribute') {
-			if (!Steedos.hasFeature('file_distribution', Steedos.getSpaceId())) {
-				Steedos.spaceUpgradedModal()
-				return;
-			}
+			
 			var values = $("#forward_select_user")[0].dataset.values;
 			selectedUsers = values ? values.split(",") : [];
 			if ($("#instance_distribute_to_self")[0] && $("#instance_distribute_to_self")[0].checked) {

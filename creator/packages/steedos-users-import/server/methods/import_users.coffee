@@ -19,8 +19,8 @@ Meteor.methods
 		if !space || !space?.admins.includes(this.userId)
 			throw new Meteor.Error(401, "只有工作区管理员可以导入用户");
 
-		if !Steedos.hasFeature('paid', space?._id)
-			throw new Meteor.Error(401, "基础版不支持此功能");
+		# if !Steedos.hasFeature('paid', space?._id)
+		# 	throw new Meteor.Error(401, "基础版不支持此功能");
 
 		accepted_user_count = db.space_users.find({space: space._id, user_accepted: true}).count()
 		if (accepted_user_count + data.length) > space.user_limit

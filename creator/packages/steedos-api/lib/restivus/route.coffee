@@ -226,7 +226,7 @@ class share.Route
         if space_users_count
           space = db.spaces.findOne(auth.spaceId)
           # space must be paid, and user must be admins
-          if space && Steedos.hasFeature('paid', space._id) and _.indexOf(space.admins, auth.userId)>=0
+          if space and _.indexOf(space.admins, auth.userId)>=0
             endpointContext.spaceId = auth.spaceId
             return true
       endpointContext.spaceId = "bad"

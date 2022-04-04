@@ -65,7 +65,7 @@ getUserQuerySelector = (user) ->
   _.each space_users, (su)->
     space = db.spaces.findOne(su.space)
     # space must be paid, and user must be admins
-    if space && Steedos.hasFeature('paid', su.space) and _.indexOf(space.admins, su.user)>=0
+    if space && _.indexOf(space.admins, su.user)>=0
       spaces.push
         _id: space._id
         name: space.name

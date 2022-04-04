@@ -142,10 +142,6 @@ Template.workflowMenuByFlow.events
 	'click .instance_new': (event, template)->
 		event.stopPropagation()
 		event.preventDefault()
-		#判断是否为欠费工作区
-		if !Steedos.hasFeature('workflow', Steedos.getSpaceId())
-			Steedos.spaceUpgradedModal()
-			return;
 		
 		WorkflowManager.alertFlowListModel
 			title: t("Fill in form")

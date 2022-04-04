@@ -5,7 +5,7 @@ const customFieldNameSuffix = '__c';
 declare var Steedos: any;
 
 function standardObject(spaceId){
-    return validator.toBoolean(process.env.DEVELOPER_STANDARD_OBJECTS || 'false', true) && Steedos.hasFeature('standard_object', spaceId);
+    return validator.toBoolean(process.env.DEVELOPER_STANDARD_OBJECTS || 'false', true) && Steedos.hasFeature('platform_ee.standard_object', spaceId);
 }
 
 export const getObjectSuffix = (spaceId: string, internal?: boolean)=>{
