@@ -17,15 +17,23 @@ _getFlowByForm = (form, flowId, is_copy, company_id)->
 		if !is_copy || (!company_id && flow.company_id) || (company_id && !flow.company_id) || (company_id != flow.company_id)
 			flow.current.steps?.forEach (step) ->
 				roles_name = []
+				roles_api_name = []
 				if !_.isEmpty(step.approver_roles)
-					roles_name = db.flow_roles.find({_id: {$in: step.approver_roles}}, {fields: {name: 1}}).fetch().getProperty("name");
+					roles = db.flow_roles.find({_id: {$in: step.approver_roles}}, {fields: {name: 1, api_name: 1 }}).fetch();
+					roles_name = _.pluck(roles, 'name');
+					roles_api_name = _.pluck(roles, 'api_name');
 
 				step.approver_roles_name = roles_name
+				step.approver_roles_api_name = roles_api_name
 
 				hr_roles_name = []
+				hr_roles_api_name = []
 				if !_.isEmpty(step.approver_hr_roles)
-					hr_roles_name = db.roles.find({_id: {$in: step.approver_hr_roles}}, {fields: {name: 1}}).fetch().getProperty("name");
+					hrRoles = db.roles.find({_id: {$in: step.approver_hr_roles}}, {fields: {name: 1, api_name: 1}}).fetch();
+					hr_roles_name = _.pluck(hrRoles, 'name');
+					hr_roles_api_name = _.pluck(hrRoles, 'api_name');
 				step.approver_hr_roles_name = hr_roles_name
+				step.approver_hr_roles_api_name = hr_roles_api_name
 
 #				step.approver_users = []
 #
