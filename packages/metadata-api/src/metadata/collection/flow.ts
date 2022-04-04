@@ -182,23 +182,29 @@ async function _getFlowByForm(dbManager, form, flowId?, is_copy?, company_id?) {
 
                 for (let step of flow.current.steps) {
                     let roles_name = []
+                    let roles_api_name = []
                     if (!_.isEmpty(step.approver_roles)) {
                         let roles = await dbManager.findWithProjection(
                           _flow_roles,
                           { _id: { $in: step.approver_roles } },
-                          { name: 1 }
+                          { name: 1, api_name: 1 }
                         );
                         roles_name = _.pluck(roles, 'name');
+                        roles_api_name = _.pluck(roles, 'api_name');
                     }
 
                     step.approver_roles_name = roles_name
+                    step.approver_roles_api_name = roles_api_name
 
                     let hr_roles_name = []
+                    let hr_roles_api_name = []
                     if (!_.isEmpty(step.approver_hr_roles)) {
-                        let hr_roles = await dbManager.findWithProjection(_roles, { _id: { $in: step.approver_hr_roles } }, { name: 1 });
+                        let hr_roles = await dbManager.findWithProjection(_roles, { _id: { $in: step.approver_hr_roles } }, { name: 1, api_name: 1 });
                         hr_roles_name = _.pluck(hr_roles, 'name');
+                        hr_roles_api_name = _.pluck(hr_roles, 'api_name');
                     }
                     step.approver_hr_roles_name = hr_roles_name
+                    step.approver_hr_roles_api_name = hr_roles_api_name
                 }
             }
         }
@@ -547,18 +553,28 @@ async function steedosImportWorkflow(dbManager, uid, spaceId, form, enabled, com
                         }
                         if (!_.isEmpty(step.approver_hr_roles_name)) {
                             let approver_hr_roles = new Array()
+                            let _hr_index = 0;
                             for (let role_name of step.approver_hr_roles_name) {
                                 let role_query = { name: role_name }
                                 let role = await dbManager.findOneWithProjection(_roles, role_query, { _id: 1 })
                                 if (_.isEmpty(role)) {
                                     // let role_id = db.roles._makeNewID()
                                     let role_id = new ObjectId().toHexString();
+                                    let apiName = "";
+                                    try {
+                                        apiName = step.approver_hr_roles_api_name[_hr_index]
+                                    } catch (error) {
+                                        
+                                    }
                                     let role = {
                                         _id: role_id,
                                         name: role_name,
+                                        api_name: apiName,
                                         // space: spaceId,
                                         created: new Date(),
                                         created_by: uid,
+                                        modified: new Date(),
+                                        modified_by: uid,
                                         owner: uid,
                                     }
 
@@ -568,6 +584,7 @@ async function steedosImportWorkflow(dbManager, uid, spaceId, form, enabled, com
                                 } else {
                                     approver_hr_roles.push(role._id)
                                 }
+                                _hr_index ++ ;
                             }
 
                             step.approver_hr_roles = approver_hr_roles
@@ -581,7 +598,8 @@ async function steedosImportWorkflow(dbManager, uid, spaceId, form, enabled, com
                             approveRolesByIds = await dbManager.findWithProjection(_flow_roles, { _id: { $in: step.approver_roles } }, { _id: 1, name: 1, company_id: 1 })
                         }
                         for (let _index = 0; _index < step.approver_roles_name.length; _index++) {
-                            let role_name = step.approver_roles_name[_index]
+                            let role_name = step.approver_roles_name[_index];
+                            let roleApiName = step.approver_roles_api_name[_index];
                             let approveRoleById = _.find(approveRolesByIds, (_role) => {
                                 return _role._id == step.approver_roles[_index]
                             });
@@ -598,9 +616,12 @@ async function steedosImportWorkflow(dbManager, uid, spaceId, form, enabled, com
                                 let role: any = {
                                     _id: role_id,
                                     name: role_name,
+                                    api_name: roleApiName,
                                     // space: spaceId,
                                     created: new Date(),
                                     created_by: uid,
+                                    modified: new Date(),
+                                    modified_by: uid,
                                     owner: uid
                                 }
 
