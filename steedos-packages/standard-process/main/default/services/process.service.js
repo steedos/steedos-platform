@@ -52,9 +52,9 @@ module.exports = {
                         name: { type: 'string' },
                         label: { type: 'string' },
                         entry_criteria: { type: 'string' },
-                        schema: { type: 'string', optional: '' },
+                        schema: { type: 'string', optional: true },
                         when: { type: 'string' },
-                        description: { type: 'string', optional: '' }
+                        description: { type: 'string', optional: true }
                     }
                 }
             },
