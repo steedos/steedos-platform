@@ -63,11 +63,14 @@ module.exports = {
                 const { process } = ctx.params;
                 const { _id, description, entry_criteria, schema, when } = process;
                 const userSession = ctx.meta.user;
+                if (!userSession) {
+                    return;
+                }
                 const { spaceId, company_id } = userSession;
                 const processObj = objectql.getObject('process');
                 const processDoc = await processObj.findOne(_id);
                 const processVersionsObj = objectql.getObject('process_versions');
-                const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', _id]], sort: 'version desc', top: 1 });
+                const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', _id]], sort: 'version desc', top: 1 }, userSession);
                 const baseInfo = {
                     space: spaceId,
                     company_id: company_id
@@ -129,12 +132,15 @@ module.exports = {
                 // call process.engine.start
                 const { _id } = ctx.params;
                 const userSession = ctx.meta.user;
+                if (!userSession) {
+                    return;
+                }
                 const { spaceId } = userSession;
                 const processObj = objectql.getObject('process');
                 const processVersionsObj = objectql.getObject('process_versions');
                 let processDoc = await processObj.findOne(_id);
                 // 如果已经有版本，则查找最新流程版本，合并返回
-                const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', _id]], sort: 'version desc', top: 1 });
+                const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', _id]], sort: 'version desc', top: 1 }, userSession);
                 const lastVersion = versionDocs[0];
                 if (lastVersion) {
                     processDoc = {
@@ -163,12 +169,19 @@ module.exports = {
                 // call engine action
                 const { _id } = ctx.params;
                 const userSession = ctx.meta.user;
+                if (!userSession) {
+                    return;
+                }
                 const { spaceId } = userSession;
                 const processObj = objectql.getObject('process');
                 const processVersionsObj = objectql.getObject('process_versions');
                 const processDoc = await processObj.findOne(_id);
-                const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', _id]], sort: 'version desc', top: 1 });
+                const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', _id]], sort: 'version desc', top: 1 }, userSession);
                 const lastVersion = versionDocs[0];
+                // 如果没有版本，则报错
+                if (_.isEmpty(versionDocs)) {
+                    throw new Error('没有可发布的版本');
+                }
                 const newProcessDoc = {
                     ...processDoc,
                     schema: lastVersion.schema,
@@ -195,6 +208,9 @@ module.exports = {
                 // call engine action
                 const { _id } = ctx.params;
                 const userSession = ctx.meta.user;
+                if (!userSession) {
+                    return;
+                }
                 const processObj = objectql.getObject('process');
                 await processObj.update(_id, { is_active: true }, userSession);
                 // 调用引擎action的逻辑在触发器中，支持页面编辑状态字段
@@ -233,6 +249,9 @@ module.exports = {
                 // call engine action
                 const { _id } = ctx.params;
                 const userSession = ctx.meta.user;
+                if (!userSession) {
+                    return;
+                }
                 const processObj = objectql.getObject('process');
                 const processDoc = await processObj.findOne(_id);
                 await processObj.delete(_id, userSession);
@@ -255,11 +274,14 @@ module.exports = {
                 // call process.engine.start
                 const { process_id, record_id } = ctx.params;
                 const userSession = ctx.meta.user;
+                if (!userSession) {
+                    return;
+                }
                 const processObj = objectql.getObject('process');
                 const processDoc = await processObj.findOne(process_id);
                 const recordObj = await objectql.getObject(processDoc.object_name);
                 const record = await recordObj.findOne(record_id);
-                await ctx.call(`${processDoc.engine}.start`, { process: processDoc, record: record }, { meta: { user: userSession }});
+                await ctx.call(`${processDoc.engine}.start`, { process: processDoc, record: record }, { meta: { user: userSession } });
 
             }
         },
