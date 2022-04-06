@@ -64,7 +64,10 @@ function injectScript(src) {
 
 injectScript('/unpkg.com/@steedos-builder/react/dist/builder-react.unpkg.js')
     .then(() => {
-        console.log('Builder loaded!');
+        console.log('Builder React loaded!');
+        window.define.amd = undefined;
+        window.ReactDOM = ReactDom;
+
         const BuilderSDK = BuilderReact;
 
         window.BuilderReact = BuilderReact;
@@ -74,19 +77,11 @@ injectScript('/unpkg.com/@steedos-builder/react/dist/builder-react.unpkg.js')
         window.BuilderComponent = BuilderReact.BuilderComponent;
         window.builder = BuilderReact.builder;
 
-        Builder.set({rootUrl: __meteor_runtime_config__.ROOT_URL, unpkgUrl: Meteor.settings.public.unpkgUrl || 'https://npm.elemecdn.com'})
-        window['React'] = require('react'); 
-        window['ReactDOM'] = require('react-dom'); 
-        // window['lodash'] = require('lodash'); 
-
-        Builder.registerImportMap({
-            "lodash": '/js/requirejs/lodash',
-            "react": '/js/requirejs/react',
-            "react-dom": '/js/requirejs/react-dom',
-            "@steedos-builder/sdk": '/js/requirejs/builder-sdk',
-            "@steedos-builder/react": '/js/requirejs/builder-react',
+        Builder.set({
+            rootUrl: __meteor_runtime_config__.ROOT_URL, 
+            unpkgUrl: Meteor.settings.public.unpkgUrl || 'https://unpkg.com'
         })
-        Builder.require(['lodash',"react", "react-dom"])
+
 
         Builder.requirejs.config(
             { 
