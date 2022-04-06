@@ -17,7 +17,7 @@
   "dependencies": {
     "@steedos/auth": "2.2.15",
     "@steedos/i18n": "2.2.15",
-    "@steedos/license": "2.1.10",
+    "@steedos/license": "2.2.1",
     "@steedos/metadata-core": "2.2.15",
     "@steedos/migrate": "2.2.15",
     "@steedos/objectql": "2.2.15",

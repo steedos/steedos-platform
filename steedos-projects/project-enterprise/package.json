@@ -24,6 +24,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@steedos/ee_service-plugin-license": "^2.2.1",
     "@steedos/service-enterprise": "2.2.15",
     "@steedos/webapp-accounts": "^2.2.15",
     "@steedos/service-plugin-amis": "^2.2.15"

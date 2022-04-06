@@ -22,10 +22,10 @@ const DEFAULTRECORD = {
 }
 
 const STANDARD_PROFILES = {
-    admin: {_id: 'admin', name: 'admin',label: 'admin', license: 'platform', ...DEFAULTRECORD, ...BASERECORD},
-    user: {_id: 'user', name: 'user',label: 'user', license: 'platform', ...DEFAULTRECORD, ...BASERECORD},
-    supplier: {_id: 'supplier', name: 'supplier',label: 'supplier', license: 'community', ...DEFAULTRECORD, ...BASERECORD},
-    customer: {_id: 'customer', name: 'customer', label: 'customer', license: 'community', ...DEFAULTRECORD, ...BASERECORD}
+    admin: {_id: 'admin', name: 'admin',label: 'admin', ...DEFAULTRECORD, ...BASERECORD},
+    user: {_id: 'user', name: 'user',label: 'user', ...DEFAULTRECORD, ...BASERECORD},
+    supplier: {_id: 'supplier', name: 'supplier',label: 'supplier', ...DEFAULTRECORD, ...BASERECORD},
+    customer: {_id: 'customer', name: 'customer', label: 'customer', ...DEFAULTRECORD, ...BASERECORD}
 }
 
 // const PROFILES_KEY = 'STANDARD_PROFILES';

@@ -32,7 +32,7 @@ fields:
         return Steedos.getLicenseOptions();
       }
     showIcon: false
-    required: "{{ 'profile' === formData.type }}"
+    # required: "{{ 'profile' === formData.type }}"
   assigned_apps:
     label: Assigned Apps
     type: lookup

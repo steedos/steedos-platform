@@ -167,9 +167,9 @@ async function profilesToLocalFile(steedosPackage, targetPath){
             let pro = profiles[proName];
             let profile = {};
             if(proName === 'supplier' || proName === 'customer'){
-                profile = Object.assign({}, {'name': proName}, pro, {'license': 'community'});
+                profile = Object.assign({}, {'name': proName}, pro);
             }else{
-                profile = Object.assign({}, {'name': proName}, pro,  {'license': 'platform'});
+                profile = Object.assign({}, {'name': proName}, pro);
             }
             let targetPathObj = '';
             if(targetPath.indexOf('profiles') < 0){

@@ -206,7 +206,7 @@ module.exports = {
 				await apiKeysObj.insert(newApiKeyDoc);
 
 				// 给工作区添加许可证，调用导入许可证接口
-				await this.actions.saveLicenses({ spaceId, apiKey, consoleUrl }, { parentCtx: ctx });
+				// await this.actions.saveLicenses({ spaceId, apiKey, consoleUrl }, { parentCtx: ctx });
 
 				try {
 					await ctx.broker.call('~packages-project-server.installPurchasedPackages', {}, {
@@ -301,7 +301,7 @@ module.exports = {
 					const userSession = ctx.meta.user;
 					const userId = userSession.userId;
 					// 给工作区添加许可证，调用导入许可证接口
-					await this.actions.saveLicenses({ spaceId, apiKey, consoleUrl }, { parentCtx: ctx });
+					// await this.actions.saveLicenses({ spaceId, apiKey, consoleUrl }, { parentCtx: ctx });
 					// 同步软件包许可证
 					await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 

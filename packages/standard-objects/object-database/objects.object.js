@@ -63,7 +63,7 @@ function initObjectPermission(userId, doc){
     let psetsAdmin = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'});
     if(!psetsAdmin){
         psetsAdminLabel = TAPi18n.__(`permission_set_admin`, {}, lng)
-        psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin', type: 'profile', license: 'platform', label: TAPi18n.__(`permission_set_admin`, {}, lng)});
+        psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin', type: 'profile', label: TAPi18n.__(`permission_set_admin`, {}, lng)});
     }else{
         psetsAdminLabel = psetsAdmin.label
         psetsAdminId = psetsAdmin._id
@@ -73,7 +73,7 @@ function initObjectPermission(userId, doc){
     let psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'});
     if(!psetsUser){
         psetsUserLabel = TAPi18n.__(`permission_set_user`, {}, lng)
-        psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user', type: 'profile', license: 'platform', label: TAPi18n.__(`permission_set_user`, {}, lng)});
+        psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user', type: 'profile', label: TAPi18n.__(`permission_set_user`, {}, lng)});
     }else{
         psetsUserLabel = psetsUser.label
         psetsUserId = psetsUser._id;

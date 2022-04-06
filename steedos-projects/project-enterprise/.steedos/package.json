@@ -4,7 +4,7 @@
     "description": "",
     "author": "",
     "dependencies": {
-        "@steedos-labs/contract": "2.1.22",
+        "@steedos-labs/contract": "2.1.61",
         "@steedos-labs/master": "2.1.17",
         "@steedos-labs/oa": "2.1.20",
         "@steedos-labs/workflow": "2.1.45"

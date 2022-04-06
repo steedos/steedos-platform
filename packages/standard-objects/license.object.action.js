@@ -47,15 +47,5 @@ module.exports = {
       backdrop: 'static',
       keyboard: true
     })
-  },
-  manualSyncSpaceLicense: function () {
-    var data = { };
-    var result = Steedos.authRequest("service/api/@steedos/service-cloud-init/manualSyncSpaceLicense", { type: 'post', async: false, data: JSON.stringify(data) });
-    if (result.error) {
-      toastr.error(result.error);
-    } else {
-      window.location.reload();
-    }
-
   }
 }

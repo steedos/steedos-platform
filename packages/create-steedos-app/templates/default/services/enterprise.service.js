@@ -20,5 +20,7 @@ module.exports = {
         // this.broker.createService(require("@steedos/service-sidecar"));
         // 启动 amis服务: 给page提供amis渲染器
         this.broker.createService(require("@steedos/service-plugin-amis"));
+        // 许可证服务
+        this.broker.createService(require("@steedos/ee_service-plugin-license"));
     }
 }

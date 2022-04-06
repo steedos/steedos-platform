@@ -128,10 +128,10 @@ const baseRecord = {
 }
 
 const internalPermissionSet = [
-    {_id: 'admin', name: 'admin',label: 'admin', license: 'platform', ...baseRecord},
-    {_id: 'user', name: 'user',label: 'user', license: 'platform', ...baseRecord},
-    {_id: 'supplier', name: 'supplier',label: 'supplier', license: 'community', ...baseRecord},
-    {_id: 'customer', name: 'customer', label: 'customer', license: 'community',...baseRecord}
+    {_id: 'admin', name: 'admin',label: 'admin', ...baseRecord},
+    {_id: 'user', name: 'user',label: 'user', ...baseRecord},
+    {_id: 'supplier', name: 'supplier',label: 'supplier', ...baseRecord},
+    {_id: 'customer', name: 'customer', label: 'customer',...baseRecord}
 ];
 
 export function isSystemProfile(profileName){

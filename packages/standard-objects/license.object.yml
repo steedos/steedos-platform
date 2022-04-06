@@ -81,10 +81,6 @@ actions:
     label: Copy space id
     on: list
     visible: false
-  manualSyncSpaceLicense:
-    label: 同步许可证
-    on: list
-    visible: true
 list_views:
   all:
     label: Al
