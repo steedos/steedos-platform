@@ -6251,10 +6251,10 @@
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/license@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.2.1.tgz#081c139b544879e8612f6fe04911eb4fbd3be354"
-  integrity sha512-eU6xJfOksK9t/HDcgqej+kFrWPDdF9RJxIL4VBMw9UlRwsnTRnUiKqy/2cuz/lOvBqVhYmD1psFKnRkDy5TPgQ==
+"@steedos/license@2.1.10":
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.1.10.tgz#092c8fc613ad480837a48a27c9e3f8ffd899a77d"
+  integrity sha512-/XrR0xmsPLfsnjZ1wIzAJhLuOq1Y3LckiRx4alJDQiDhSMMrG+PgK1RLimsiX2EifKurrgj3JnbO2Pd1Dh7fRg==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
