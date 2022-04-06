@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-31 11:14:18
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-03-31 22:41:24
+ * @LastEditTime: 2022-04-06 10:32:01
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -29,7 +29,7 @@ module.exports = {
     afterFind: async function () {
         const { spaceId } = this;
         let dataList = await getAll();
-        if (dataList) {
+        if (!_.isEmpty(dataList)) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
                     return value._id === doc._id
@@ -49,7 +49,7 @@ module.exports = {
     afterAggregate: async function () {
         const { spaceId } = this;
         let dataList = await getAll();
-        if (dataList) {
+        if (!_.isEmpty(dataList)) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
                     return value._id === doc._id

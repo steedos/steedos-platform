@@ -2,6 +2,8 @@ name: all
 columns:
   - field: version
   - field: is_active
+  - field: when
+  - field: entry_criteria
   - field: created
   - field: modified
 filter_scope: space

@@ -228,7 +228,7 @@ module.exports = {
 			const user = ctx.meta.user;
 
 			if (!user) {
-				return res.status(401).send('NO_RIGHTS');
+				throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
 			}
 
 			// // It check the `auth` property in action schema.

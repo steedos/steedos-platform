@@ -6,6 +6,8 @@ options:
     value: afterInsert
   - label: 对象记录更新后
     value: afterUpdate
+  - label: 对象记录新增或更新后
+    value: afterInsertOrUpdate
 sort_no: 50
 readonly: true
 omit: true
