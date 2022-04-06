@@ -14,7 +14,7 @@
     "@babel/runtime": "^7.2.0",
     "@steedos/react": "^2.2.8",
     "@steedos-builder/react": "^0.2.13",
-    "@steedos-ui/builder-community": "^1.1.27",
+    "@steedos-ui/builder-community": "1.1.27",
     "@steedos-widgets/design-system": "^0.2.5",
     "@steedos/i18n": "^2.0.32",
     "aliyun-sdk": "^1.12.3",
