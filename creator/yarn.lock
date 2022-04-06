@@ -359,7 +359,7 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/builder-community@^1.1.27":
+"@steedos-ui/builder-community@1.1.27":
   version "1.1.27"
   resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.27.tgz#13768834d09b1247d31ebd2d16a188be4735c300"
   integrity sha512-MJGnEX72X35vULqMIaXpJd29FPahfQosMKeUDJ4T1D9uSUsUPPVLTYZrNQ2o48dr+jU/PYJvj6oDRDeN842YkQ==
