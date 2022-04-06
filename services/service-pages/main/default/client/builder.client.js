@@ -82,31 +82,14 @@ injectScript('/unpkg.com/@steedos-builder/react/dist/builder-react.unpkg.js')
             unpkgUrl: Meteor.settings.public.unpkgUrl || 'https://unpkg.com'
         })
 
-
-        Builder.requirejs.config(
-            { 
-              waitSeconds: 60,
-              baseUrl: '',
-              paths: { 
-                'vs': '/unpkg.com/monaco-editor/min/vs',
-                "vs/language/css/cssMode":"/unpkg.com/monaco-editor/min/vs/language/css/cssMode",
-                "vs/language/html/htmlMode":"/unpkg.com/monaco-editor/min/vs/language/html/htmlMode",
-                "vs/language/typescript/tsMode":"/unpkg.com/monaco-editor/min/vs/language/typescript/tsMode",
-                "vs/language/json/jsonMode":"/unpkg.com/monaco-editor/min/vs/language/json/jsonMode"
-              } 
-            }
-          );
-        Builder.requirejs(['vs/editor/editor.main'], () => {
-           return monaco = window['monaco'];
-        });
-
         if(Meteor.settings.public.page && Meteor.settings.public.page.assetUrls){
             const defaultAssetsUrls = Meteor.settings.public.page.assetUrls.split(',')
             Builder.registerRemoteAssets(defaultAssetsUrls)
         }  
-
+        
         window.postMessage({ type: "Builder.loaded" })
 
     }).catch(error => {
         console.error(error);
     });
+
