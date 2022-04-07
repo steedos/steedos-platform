@@ -57,7 +57,7 @@ Steedos.Page.render = function (root, page, data) {
 
     const loadingContentData = {
         "inputs": [],
-        "title": "loading",
+        // "title": "loading",
         "blocks": [
             {
                 "@type": "@builder.io/sdk:Element",
