@@ -2,12 +2,12 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-28 15:21:51
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-03-31 19:01:21
+ * @LastEditTime: 2022-04-07 21:55:30
  * @Description: 
  */
 module.exports = {
     deploy: function (object_name, record_id) {
-        $(document.body).addClass('loading');
+        window.$(document.body).addClass('loading');
         let url = `/service/api/@steedos/standard-process/deploy`;
         let options = {
             type: 'post',
@@ -17,11 +17,11 @@ module.exports = {
                 toastr.success('流程已发布。');
                 SteedosUI.reloadRecord(object_name, record_id);
                 FlowRouter.reload();
-                $(document.body).removeClass('loading');
+                window.$(document.body).removeClass('loading');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(t(XMLHttpRequest.responseJSON.error))
-                $(document.body).removeClass('loading');
+                window.$(document.body).removeClass('loading');
             }
         };
         Steedos.authRequest(url, options);

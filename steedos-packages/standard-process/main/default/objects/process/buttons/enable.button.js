@@ -7,7 +7,7 @@
  */
 module.exports = {
     enable: function (object_name, record_id) {
-        $(document.body).addClass('loading');
+        window.$(document.body).addClass('loading');
         let url = `/service/api/@steedos/standard-process/enable`;
         let options = {
             type: 'post',
@@ -17,11 +17,11 @@ module.exports = {
                 toastr.success('流程已启用。');
                 SteedosUI.reloadRecord(object_name, record_id);
                 FlowRouter.reload();
-                $(document.body).removeClass('loading');
+                window.$(document.body).removeClass('loading');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(t(XMLHttpRequest.responseJSON.error))
-                $(document.body).removeClass('loading');
+                window.$(document.body).removeClass('loading');
             }
         };
         Steedos.authRequest(url, options);
