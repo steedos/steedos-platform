@@ -382,6 +382,7 @@ relatedList:
   - object_validation_rules
   - restriction_rules
   - share_rules
+  - process
 list_views:
   all:
     columns:
