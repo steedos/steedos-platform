@@ -12,11 +12,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
-    "@steedos/react": "^2.2.8",
     "@steedos-builder/react": "^0.2.13",
     "@steedos-ui/builder-community": "^1.1.27",
     "@steedos-widgets/design-system": "^0.2.5",
+    "@steedos/filters": "^2.1.95",
     "@steedos/i18n": "^2.0.32",
+    "@steedos/react": "^2.2.8",
     "aliyun-sdk": "^1.12.3",
     "aws-sdk": "2.0.23",
     "basic-auth": "^2.0.1",
@@ -105,13 +106,13 @@
     "ioredis": "^4.22.0",
     "jquery": "^2.2.4",
     "jquery-ui-sortable": "^1.0.0",
+    "lodash.memoize": "^4.1.2",
     "moleculer": "^0.14.12",
     "push.js": "^1.0.12",
+    "react-highlighter": "^0.4.3",
     "simplemde": "1.11.2",
     "summernote": "^0.8.11",
-    "xlsx": "0.10.6",
-    "react-highlighter": "^0.4.3",
-    "lodash.memoize": "^4.1.2"
+    "xlsx": "0.10.6"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",
