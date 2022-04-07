@@ -37,3 +37,23 @@ window.addEventListener('message', function (event) {
             
     }
 });
+
+
+window.addEventListener('message', function (event) {
+    const { data } = event;
+    if (data.type === 'builder.assetsLoaded') {
+        waitForThing(window, 'Builder').then(()=>{
+            Builder.initMonaco({ 
+                waitSeconds: 60,
+                baseUrl: '',
+                paths: { 
+                  'vs': '/unpkg.com/monaco-editor/min/vs',
+                  "vs/language/css/cssMode":"/unpkg.com/monaco-editor/min/vs/language/css/cssMode",
+                  "vs/language/html/htmlMode":"/unpkg.com/monaco-editor/min/vs/language/html/htmlMode",
+                  "vs/language/typescript/tsMode":"/unpkg.com/monaco-editor/min/vs/language/typescript/tsMode",
+                  "vs/language/json/jsonMode":"/unpkg.com/monaco-editor/min/vs/language/json/jsonMode"
+                } 
+            })
+        })
+    }
+})
