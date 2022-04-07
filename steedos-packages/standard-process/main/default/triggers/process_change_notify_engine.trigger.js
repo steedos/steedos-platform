@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-30 15:52:08
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-06 15:40:38
+ * @LastEditTime: 2022-04-07 22:20:43
  * @Description: 
  */
 
@@ -33,18 +33,6 @@ module.exports = {
         if (userId) {
             const userSession = await auth.getSessionByUserId(userId, spaceId);
             const broker = objectql.getSteedosSchema().broker;
-            const processVersionsObj = objectql.getObject('process_versions');
-            const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', id]], sort: 'version desc', top: 1 }, userSession);
-            const lastVersion = versionDocs[0];
-            if (lastVersion) {
-                processDoc = {
-                    ...processDoc,
-                    schema: lastVersion.schema,
-                    when: lastVersion.when,
-                    entry_criteria: lastVersion.entry_criteria,
-                    version: lastVersion.version,
-                }
-            }
             // 最新文档告知引擎
             await broker.call(`${packageName}.save`, { process: processDoc }, { meta: { user: userSession } });
         }
