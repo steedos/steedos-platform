@@ -5,6 +5,7 @@
  */
 
 ; (function () {
+        
     try {
         let amisStyle = document.createElement("link");
         amisStyle.setAttribute("rel", "stylesheet");
@@ -16,45 +17,58 @@
     }
     import('/amis/sdk/sdk.noreact.js').then(() => {
 
-        //处理mobx多个实例问题
-        // try {
-        //     let mobx = amisRequire('mobx');
-        //     mobx.configure({ isolateGlobalState: true })
-        // } catch (error) {
 
-        // }
+        let React = window.React;
 
-        let React = window.React || amisRequire("react");
 
-        // Register amis render 
-        var Amis = function (props) {
-            var schema = props.schema, data = props.data;
-            return React.createElement(React.Fragment, null,
-                React.createElement("div", { id: "amis-root" }),
-                // amisRequire('amis').render(schema, data, {theme: 'cxd'}))
-                function () {
-                    setTimeout(function () {
-                        amisRequire('amis/embed').embed('#amis-root', schema, {
-                            data
-                        })
-                    }, 100)
-                }()
-            );
-        };
+        window.SAmisReners = [];
 
-        //等待Builder加载完成
-        waitForThing(window, 'Builder').then(()=>{
-            //等待amis组件加载完成
-            waitForThing(window, 'amisComponentsLoaded').then(()=>{
+        window.addEventListener('message', function (event) {
+            const { data } = event;
+            if (data.type === 'builder.assetsLoaded') {
+                const amisComps = lodash.filter(Builder.registry['meta-components'], function(item){ return item.componentName && item.amis?.render});
+                let amisLib = amisRequire('amis');
+                lodash.each(amisComps,(comp)=>{
+                    const Component = Builder.components.find(item => item.name === comp.componentName);
+                    if (Component && !SAmisReners.includes(comp.amis?.render.type)){
+                        try {
+                            SAmisReners.push(comp.amis?.render.type);
+                            amisLib.Renderer(
+                                {
+                                    type: comp.amis?.render.type,
+                                    weight: comp.amis?.render.weight
+                                }
+                            )(Component.class);
+                        } catch(e){console.log(e)}
+                    }
+                })
+                window.amisComponentsLoaded = true;
+
+                // Register amis render 
+                var Amis = function (props) {
+                    var schema = props.schema, data = props.data;
+                    return React.createElement(React.Fragment, null,
+                        React.createElement("div", { id: "amis-root" }),
+                        // amisRequire('amis').render(schema, data, {theme: 'cxd'}))
+                        function () {
+                            setTimeout(function () {
+                                amisRequire('amis/embed').embed('#amis-root', schema, {
+                                    data
+                                })
+                            }, 100)
+                        }()
+                    );
+                };
+
                 Builder.registerComponent(Amis, {
                     name: 'Amis',
                     inputs: [
-                      { name: 'schema', type: 'object' },
-                      { name: 'data', type: 'object' },
+                        { name: 'schema', type: 'object' },
+                        { name: 'data', type: 'object' },
                     ]
                 });
-            })
-        })
+            }
+        });
     });
 
 })();
