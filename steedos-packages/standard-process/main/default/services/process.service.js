@@ -190,7 +190,10 @@ module.exports = {
                     version: lastVersion.version,
                 }
                 await ctx.call(`${processDoc.engine}.deploy`, { process: newProcessDoc }, { meta: { user: userSession } });
+                // 设置版本已发布
                 await processVersionsObj.update(lastVersion._id, { is_active: true }, userSession);
+                // 更新发布时间
+                await processObj.directUpdate(_id, { deploy_time: new Date() });
                 return { sucess: true }
             }
         },
