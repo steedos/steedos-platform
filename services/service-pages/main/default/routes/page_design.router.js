@@ -21,9 +21,6 @@ router.get('/api/pageDesign', core.requireAuthentication, async function (req, r
 
         let data = fs.readFileSync(__dirname+'/design.html', 'utf8');
         res.send(data.replace('SteedosBuilderHost',steedosBuilderHost));
-
-
-        res.sendFile(__dirname+'/design.html') 
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
