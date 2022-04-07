@@ -1,8 +1,14 @@
 var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.core.js');
+var lodash = require('lodash');
 Meteor.startup(function () {
     var _change, _remove;
     _change = function (document) {
+        // 防止visible默认值丢失
+        if(!document.visible && !lodash.isBoolean(document.visible)){
+            document.visible = true;
+        }
+
         document._visible = document.visible;
         objectCore.triggerReloadObject(document.object, 'action', document, 'update');
     };
