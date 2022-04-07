@@ -6,12 +6,12 @@
   "main": "lib/exports.js",
   "scripts": {
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/ react-scripts start",
-    "build": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=../../ react-scripts build && yarn build-after",
+    "build": "yarn build:react && yarn build-lib && yarn build-tailwind && yarn build-copy-to-public",
+    "build:react": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=../../ react-scripts build && yarn build-after",
     "build-after": "mkdirp build/accounts && mkdirp build/accounts/a && mv build/index.html build/accounts/a/",
     "copy-to-public": "rm -rf build/assets && mkdirp public/accounts && mv build ./public/accounts/a",
     "build-lib": "rm -rf lib && tsc --build tsconfig.lib.json",
     "build-tailwind": "cd ../../../packages/tailwind && yarn build-tailwind",
-    "prepare": "yarn build && yarn build-lib && yarn build-tailwind && yarn build-copy-to-public",
     "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test",
     "build-copy-to-public": "rm -rf ../public && mv build ../public"
   },
