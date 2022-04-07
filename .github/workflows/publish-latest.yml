@@ -44,16 +44,16 @@ jobs:
           npx browserslist@latest --update-db
           npm install -g mkdirp
           yarn build
-      - name: Build creator
-        run: |
-          yarn build_creator
-      - name: Push creator build
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add . 
-          git commit -m 'creator build'
-          git push
+      # - name: Build creator
+      #   run: |
+      #     yarn build_creator
+      # - name: Push creator build
+      #   run: |
+      #     git config user.name github-actions
+      #     git config user.email github-actions@github.com
+      #     git add . 
+      #     git commit -m 'creator build'
+      #     git push
       - name: Lerna version
         run: |
           lerna version patch --no-git-tag-version --force-publish --exact --yes
