@@ -395,28 +395,32 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos/filters@^2.1.95":
-  version "2.1.95"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.1.95.tgz#50535d29111b18404e5cc96b95472da081e89d29"
-  integrity sha512-XTtZrO9dKmCD3dclrNiWrDbA+wc3FHsk7HHZtOiW4qgwei4gfknTIxeT5Vi9QaNbhCjgHAfQ6GHf1adB33+icA==
+"@steedos/filters@^2.2.18":
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.2.18.tgz#0ca2d532985969477771274aa2a1fdb25e785db6"
+  integrity sha512-59eyuGVcgKSfDgHuKQvIVLxxzAs37ZylajK342ZUhkbYjoSWcapDeGwsIYJ0Wt+kQ1Ik91zZEoNxlByzPVYg4g==
   dependencies:
     "@babel/runtime" "^7.5.4"
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/i18n@^2.0.32":
-  version "2.0.32"
-  resolved "https://registry.yarnpkg.com/@steedos/i18n/-/i18n-2.0.32.tgz#dc44eb055decd0ac145a3cc53cb4443c2064b02a"
-  integrity sha512-R1ejmmdOsICQuBE3sOvqdYV8NN3PukEjuBcE9+ub8Jl1FrZYmBqrHD0tefFWiK8rQWEZGV8SzpwBcfRuCqiUGg==
+"@steedos/i18n@^2.2.18":
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/@steedos/i18n/-/i18n-2.2.18.tgz#4175b121d1c9f235498caf10ffe5171d9c31b837"
+  integrity sha512-JyxSaplkjlPbTbke79TA4H5MAEtq1sKP5cmCE5EwqT75rQFKxlKagYx2GLQXWIM/gbJz5IljfLAj+WvoyiP4+g==
   dependencies:
     i18next "^19.3.4"
     i18next-sprintf-postprocessor "^0.2.2"
     i18next-xhr-backend "^3.2.2"
 
-"@steedos/react@^2.2.8":
-  version "2.2.11"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-2.2.11.tgz#748fcb5cbbe71b907308d37848178c54bad9ede2"
-  integrity sha512-u+BlbCJx/LTC9gcI+dN0LNxRFTmYyARVKl/oaYWOF7VNjDwBfBXgFOmSVotcI+OEAX153LnfTFMcvim0Th0N8w==
+"@steedos/react@^2.2.18":
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-2.2.18.tgz#5fe6a56c25ef5a257beee801130d243a44711767"
+  integrity sha512-V0PPZ5SBduDN3tPj2qBgAxaLIUP4kMyv+Nws8AuXkZVBfVrUIeHUI3QSK0x+9rPUaliE3hs0jt2ylhIU0ckUPA==
+  dependencies:
+    "@steedos-widgets/design-system" "^0.2.5"
+    classnames "^2.3.1"
+    redux-thunk "^2.4.1"
 
 "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"
