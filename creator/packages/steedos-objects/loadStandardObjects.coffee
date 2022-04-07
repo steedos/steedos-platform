@@ -28,6 +28,7 @@ try
 				"@steedos/service-package-registry",
 				"@steedos/standard-process",
 				"@steedos/webapp-accounts",
+				"@steedos/service-plugin-amis",
 				"@steedos/unpkg"
 				],
 			plugins: config.plugins

@@ -65,7 +65,8 @@ function injectScript(src) {
 injectScript('/unpkg.com/@steedos-builder/react/dist/builder-react.unpkg.js')
     .then(() => {
         console.log('Builder React loaded!');
-        window.define.amd = undefined;
+        if (window.define)
+            window.define.amd = undefined;
         window.ReactDOM = ReactDom;
 
         const BuilderSDK = BuilderReact;

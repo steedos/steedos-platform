@@ -266,6 +266,13 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@monaco-editor/loader@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@monaco-editor/loader/-/loader-1.3.0.tgz#659fbaf1d612ea67b2a0519a18612d1c4813e444"
+  integrity sha512-N3mGq1ktC3zh7WUx3NGO+PSDdNq9Vspk/41rEmRdrCqV9vNbBTRzAOplmUpNQsi+hmTs++ERMBobMERb8Kb+3g==
+  dependencies:
+    state-local "^1.0.6"
+
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/@protobufjs/aspromise/download/@protobufjs/aspromise-1.1.2.tgz#9b8b0cc663d669a7d8f6f5d0893a14d348f30fbf"
@@ -319,15 +326,15 @@
   resolved "https://registry.npm.taobao.org/@protobufjs/utf8/download/@protobufjs/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@steedos-builder/react@^0.2.13":
-  version "0.2.13"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.13.tgz#d8d18a1c3e6c08febd6499e33a488901e9ec270a"
-  integrity sha512-yqyAV4/wCnEPEcaGGIZ/6J6PvECSRcQ1bUtUxNYLG/gzU5iG60VeMQ9+Wf//Meyt2eU9IoUcrfScD/J6CWg9Vw==
+"@steedos-builder/react@^0.2.21":
+  version "0.2.21"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.21.tgz#564bd9e586ee3c68f57acdb2cf6b1b652730325b"
+  integrity sha512-QBV4U2ozIOUCYTdvQyxsdu/DG2kLs611hkV3/WMXckqWQ3j+6xps9ZB764vtiRtYy7LIuwG5uc+ih+o9itEKOg==
   dependencies:
     "@builder.io/react" "^1.1.50"
     "@builder.io/sdk" "^1.1.26"
     "@emotion/core" "^10.0.17"
-    "@steedos-builder/sdk" "^0.2.12"
+    "@steedos-builder/sdk" "^0.2.21"
     hash-sum "^2.0.0"
     preact "^10.1.0"
     react ">=14"
@@ -344,12 +351,13 @@
   resolved "https://registry.yarnpkg.com/@steedos-builder/requirejs/-/requirejs-0.0.3.tgz#23f87bc29ce382f094a962e11d50f909124dfe79"
   integrity sha512-DgCDLmcXuiSLS02ZYgv7FltaQiGaM1SbJXe7YtwNQegHhWCZUHpCFzri4UVc8OKaqf6YB085Go/bCimP3LRPaA==
 
-"@steedos-builder/sdk@^0.2.12":
-  version "0.2.12"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.2.12.tgz#62360abd38d46f60f5aa46463471f97821b53be0"
-  integrity sha512-p/B2LLU5EZehYil/b1LrTDtMYA2xXVgoMTYckwn3tMxpn7DOJ5ClOqZiRq7W1f6yLprjznqE7pfNqAmWUPHmjw==
+"@steedos-builder/sdk@^0.2.21":
+  version "0.2.21"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.2.21.tgz#f7bbc2bf5487f1707fa5d6889761f14b3fe72dc5"
+  integrity sha512-1hlN2XkySPR15Gcp+FDM53gQas+JROJ2xwUr53Nsr5o/RDzyzlOuDAxeQWpzaHwcDiUu8Acrt+V1IXwtC/4lEg==
   dependencies:
     "@builder.io/sdk" "^1.1.26"
+    "@monaco-editor/loader" "^1.3.0"
     "@steedos-builder/requirejs" "^0.0.3"
     "@types/requirejs" "^2.1.34"
     "@types/systemjs" "^6.1.1"
@@ -359,10 +367,10 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/builder-community@1.1.27":
-  version "1.1.27"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.27.tgz#13768834d09b1247d31ebd2d16a188be4735c300"
-  integrity sha512-MJGnEX72X35vULqMIaXpJd29FPahfQosMKeUDJ4T1D9uSUsUPPVLTYZrNQ2o48dr+jU/PYJvj6oDRDeN842YkQ==
+"@steedos-ui/builder-community@1.1.30":
+  version "1.1.30"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.30.tgz#e71e1830ebfe1293cf3c1b424e4ab525c9d2a99b"
+  integrity sha512-qixI3nIZCB7UH2mKpf5+nrkI1abwIWJifWszaoCfH+lVXveR/BFCx7Xm4ChS9CK4cytLbOs1nXR54LRWqzcblw==
 
 "@steedos-widgets/design-system@^0.2.5":
   version "0.2.5"
@@ -4087,6 +4095,11 @@ redux-devtools-extension@^2.13.9:
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.9.tgz#6b764e8028b507adcb75a1cae790f71e6be08ae7"
   integrity sha512-cNJ8Q/EtjhQaZ71c8I9+BPySIBVEKssbPpskBfsXqb8HJ002A3KRVHfeRzwRo6mGPqsm7XuHTqNSNeS1Khig0A==
 
+redux-thunk@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.1.tgz#0dd8042cf47868f4b29699941de03c9301a75714"
+  integrity sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q==
+
 redux@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.1.0.tgz#eb049679f2f523c379f1aff345c8612f294c88d4"
@@ -4589,6 +4602,11 @@ standard-as-callback@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/standard-as-callback/download/standard-as-callback-2.1.0.tgz#8953fc05359868a77b5b9739a665c5977bb7df45"
   integrity sha1-iVP8BTWYaKd7W5c5pmXFl3u330U=
+
+state-local@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/state-local/-/state-local-1.0.7.tgz#da50211d07f05748d53009bee46307a37db386d5"
+  integrity sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w==
 
 "statuses@>= 1.5.0 < 2", statuses@~1.5.0:
   version "1.5.0"
