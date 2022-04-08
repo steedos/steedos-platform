@@ -6,7 +6,7 @@ import 'moment/locale/zh-cn';
 
 const composeEnhancers = composeWithDevTools({ realtime: true});
 
-let steedosService = typeof process !== 'undefined' && process.env.REACT_APP_API_BASE_URL;
+let steedosService = typeof process !== 'undefined' && (process.env.REACT_APP_API_BASE_URL);
 if(window && window.Meteor){
     steedosService = window.Steedos.absoluteUrl('', true);
 }

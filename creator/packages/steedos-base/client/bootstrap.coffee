@@ -299,33 +299,34 @@ requestLicense = (spaceId)->
 		success: (result) ->
 			Creator.__l.set result
 
-requestBootstrapDataUseAjax = (spaceId, callback)->
-	unless spaceId and Meteor.userId()
-		return
-	userId = Meteor.userId()
-	authToken = Accounts._storedLoginToken()
-	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
-	headers = {}
-	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
-	headers['X-User-Id'] = userId
-	headers['X-Auth-Token'] = authToken
-	$.ajax
-		type: "get"
-		url: url
-		dataType: "json"
-		headers: headers
-		error: (jqXHR, textStatus, errorThrown) ->
-			FlowRouter.initialize();
-			error = jqXHR.responseJSON
-			console.error error
-			if error?.reason
-				toastr?.error?(TAPi18n.__(error.reason))
-			else if error?.message
-				toastr?.error?(TAPi18n.__(error.message))
-			else
-				toastr?.error?(error)
-		success: (result) ->
-			handleBootstrapData(result, callback);
+# requestBootstrapDataUseAjax = (spaceId, callback)->
+# 	unless spaceId and Meteor.userId()
+# 		return
+# 	userId = Meteor.userId()
+# 	authToken = Accounts._storedLoginToken()
+# 	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
+# 	debugger
+# 	headers = {}
+# 	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
+# 	headers['X-User-Id'] = userId
+# 	headers['X-Auth-Token'] = authToken
+# 	$.ajax
+# 		type: "get"
+# 		url: url
+# 		dataType: "json"
+# 		headers: headers
+# 		error: (jqXHR, textStatus, errorThrown) ->
+# 			FlowRouter.initialize();
+# 			error = jqXHR.responseJSON
+# 			console.error error
+# 			if error?.reason
+# 				toastr?.error?(TAPi18n.__(error.reason))
+# 			else if error?.message
+# 				toastr?.error?(TAPi18n.__(error.message))
+# 			else
+# 				toastr?.error?(error)
+# 		success: (result) ->
+# 			handleBootstrapData(result, callback);
 
 
 requestBootstrapDataUseAction = (spaceId)->
@@ -334,8 +335,8 @@ requestBootstrapDataUseAction = (spaceId)->
 requestBootstrapData = (spaceId, callback)->
 	if ReactSteedos.store
 		requestBootstrapDataUseAction(spaceId);
-	else
-		requestBootstrapDataUseAjax(spaceId, callback);
+	# else
+	# 	requestBootstrapDataUseAjax(spaceId, callback);
 
 Setup.bootstrap = (spaceId, callback)->
 	requestBootstrapData(spaceId, callback)

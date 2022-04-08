@@ -117,10 +117,14 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
         }
     }
 
-    function __spreadArray$1(to, from) {
-        for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-            to[j] = from[i];
-        return to;
+    function __spreadArray$1(to, from, pack) {
+        if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+            if (ar || !(i in from)) {
+                if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+                ar[i] = from[i];
+            }
+        }
+        return to.concat(ar || Array.prototype.slice.call(from));
     }
 
     function __makeTemplateObject(cooked, raw) {
@@ -129,10 +133,6 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     }
 
     var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-    function getDefaultExportFromCjs (x) {
-    	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-    }
 
     function getAugmentedNamespace(n) {
     	if (n.__esModule) return n;
@@ -462,24 +462,24 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
 
     var reactIs$2 = {exports: {}};
 
-    function _typeof$4(obj) {
+    function _typeof$2(obj) {
       "@babel/helpers - typeof";
 
       if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-        _typeof_1 = _typeof$4 = function _typeof(obj) {
+        _typeof_1 = _typeof$2 = function _typeof(obj) {
           return typeof obj;
         };
       } else {
-        _typeof_1 = _typeof$4 = function _typeof(obj) {
+        _typeof_1 = _typeof$2 = function _typeof(obj) {
           return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
         };
       }
 
-      return _typeof$4(obj);
+      return _typeof$2(obj);
     }
 
-    var _typeof_1 = _typeof$4;
-    var _typeof$5 = _typeof_1;
+    var _typeof_1 = _typeof$2;
+    var _typeof$3 = _typeof_1;
 
     var reactIs_production_min$1 = {};
 
@@ -504,7 +504,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
         y$2 = b$1 ? Symbol.for("react.scope") : 60119;
 
     function z$2(a) {
-      if ("object" === _typeof$5(a) && null !== a) {
+      if ("object" === _typeof$3(a) && null !== a) {
         var u = a.$$typeof;
 
         switch (u) {
@@ -572,7 +572,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     };
 
     reactIs_production_min$1.isElement = function (a) {
-      return "object" === _typeof$5(a) && null !== a && a.$$typeof === c$2;
+      return "object" === _typeof$3(a) && null !== a && a.$$typeof === c$2;
     };
 
     reactIs_production_min$1.isForwardRef = function (a) {
@@ -608,7 +608,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     };
 
     reactIs_production_min$1.isValidElementType = function (a) {
-      return "string" === typeof a || "function" === typeof a || a === e$1 || a === m$2 || a === g$2 || a === f$2 || a === p$2 || a === q$2 || "object" === _typeof$5(a) && null !== a && (a.$$typeof === t$2 || a.$$typeof === r$2 || a.$$typeof === h$2 || a.$$typeof === k$1 || a.$$typeof === n$2 || a.$$typeof === w$2 || a.$$typeof === x$2 || a.$$typeof === y$2 || a.$$typeof === v$3);
+      return "string" === typeof a || "function" === typeof a || a === e$1 || a === m$2 || a === g$2 || a === f$2 || a === p$2 || a === q$2 || "object" === _typeof$3(a) && null !== a && (a.$$typeof === t$2 || a.$$typeof === r$2 || a.$$typeof === h$2 || a.$$typeof === k$1 || a.$$typeof === n$2 || a.$$typeof === w$2 || a.$$typeof === x$2 || a.$$typeof === y$2 || a.$$typeof === v$3);
     };
 
     reactIs_production_min$1.typeOf = z$2;
@@ -722,24 +722,6 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
 
     var reactIs = {exports: {}};
 
-    var _typeof$3 = {exports: {}};
-
-    (function (module) {
-      function _typeof(obj) {
-        "@babel/helpers - typeof";
-
-        return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
-          return typeof obj;
-        } : function (obj) {
-          return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-        }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
-      }
-
-      module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
-    })(_typeof$3);
-
-    var _typeof$2 = /*@__PURE__*/getDefaultExportFromCjs(_typeof$3.exports);
-
     var reactIs_production_min = {};
 
     var b = 60103,
@@ -782,7 +764,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     }
 
     function y$1(a) {
-      if ("object" === _typeof$2(a) && null !== a) {
+      if ("object" === _typeof$3(a) && null !== a) {
         var t = a.$$typeof;
 
         switch (t) {
@@ -855,7 +837,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     };
 
     reactIs_production_min.isElement = function (a) {
-      return "object" === _typeof$2(a) && null !== a && a.$$typeof === b;
+      return "object" === _typeof$3(a) && null !== a && a.$$typeof === b;
     };
 
     reactIs_production_min.isForwardRef = function (a) {
@@ -891,7 +873,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     };
 
     reactIs_production_min.isValidElementType = function (a) {
-      return "string" === typeof a || "function" === typeof a || a === d$1 || a === f$1 || a === v$2 || a === e || a === l$1 || a === m$1 || a === w$1 || "object" === _typeof$2(a) && null !== a && (a.$$typeof === p$1 || a.$$typeof === n$1 || a.$$typeof === g$1 || a.$$typeof === h$1 || a.$$typeof === k || a.$$typeof === u$1 || a.$$typeof === q$1 || a[0] === r$1) ? !0 : !1;
+      return "string" === typeof a || "function" === typeof a || a === d$1 || a === f$1 || a === v$2 || a === e || a === l$1 || a === m$1 || a === w$1 || "object" === _typeof$3(a) && null !== a && (a.$$typeof === p$1 || a.$$typeof === n$1 || a.$$typeof === g$1 || a.$$typeof === h$1 || a.$$typeof === k || a.$$typeof === u$1 || a.$$typeof === q$1 || a[0] === r$1) ? !0 : !1;
     };
 
     reactIs_production_min.typeOf = y$1;
@@ -1249,7 +1231,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     function shallowEqual(objA, objB) {
       if (is(objA, objB)) return true;
 
-      if (_typeof$2(objA) !== 'object' || objA === null || _typeof$2(objB) !== 'object' || objB === null) {
+      if (_typeof$3(objA) !== 'object' || objA === null || _typeof$3(objB) !== 'object' || objB === null) {
         return false;
       }
 
@@ -1359,7 +1341,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
       }) : undefined;
     }
     function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
-      return mapDispatchToProps && _typeof$2(mapDispatchToProps) === 'object' ? wrapMapToPropsConstant(function (dispatch) {
+      return mapDispatchToProps && _typeof$3(mapDispatchToProps) === 'object' ? wrapMapToPropsConstant(function (dispatch) {
         return bindActionCreators$1(mapDispatchToProps, dispatch);
       }) : undefined;
     }
@@ -1517,7 +1499,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
       }
 
       return function (dispatch, options) {
-        throw new Error("Invalid value of type " + _typeof$2(arg) + " for " + name + " argument when connecting component " + options.wrappedComponentName + ".");
+        throw new Error("Invalid value of type " + _typeof$3(arg) + " for " + name + " argument when connecting component " + options.wrappedComponentName + ".");
       };
     }
 
@@ -1699,7 +1681,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     // on the server, or `this` in some virtual machines. We use `self`
     // instead of `window` for `WebWorker` support.
 
-    var root = (typeof self === "undefined" ? "undefined" : _typeof$5(self)) == 'object' && self.self === self && self || (typeof global === "undefined" ? "undefined" : _typeof$5(global)) == 'object' && global.global === global && global || Function('return this')() || {}; // Save bytes in the minified (but not gzipped) version:
+    var root = (typeof self === "undefined" ? "undefined" : _typeof$3(self)) == 'object' && self.self === self && self || (typeof global === "undefined" ? "undefined" : _typeof$3(global)) == 'object' && global.global === global && global || Function('return this')() || {}; // Save bytes in the minified (but not gzipped) version:
 
     var ArrayProto = Array.prototype,
         ObjProto = Object.prototype;
@@ -1769,7 +1751,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
 
     // Is a given variable an object?
     function isObject$1(obj) {
-      var type = _typeof$5(obj);
+      var type = _typeof$3(obj);
 
       return type === 'function' || type === 'object' && !!obj;
     }
@@ -1819,7 +1801,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
 
     var nodelist = root.document && root.document.childNodes;
 
-    if (typeof /./ != 'function' && (typeof Int8Array === "undefined" ? "undefined" : _typeof$5(Int8Array)) != 'object' && typeof nodelist != 'function') {
+    if (typeof /./ != 'function' && (typeof Int8Array === "undefined" ? "undefined" : _typeof$3(Int8Array)) != 'object' && typeof nodelist != 'function') {
       isFunction$2 = function isFunction(obj) {
         return typeof obj == 'function' || false;
       };
@@ -2036,9 +2018,9 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
 
       if (a !== a) return b !== b; // Exhaust primitive checks
 
-      var type = _typeof$5(a);
+      var type = _typeof$3(a);
 
-      if (type !== 'function' && type !== 'object' && _typeof$5(b) != 'object') return false;
+      if (type !== 'function' && type !== 'object' && _typeof$3(b) != 'object') return false;
       return deepEq(a, b, aStack, bStack);
     } // Internal recursive comparison function for `_.isEqual`.
 
@@ -2098,7 +2080,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
       }
 
       if (!areArrays) {
-        if (_typeof$5(a) != 'object' || _typeof$5(b) != 'object') return false; // Objects with different constructors are not equivalent, but `Object`s or `Array`s
+        if (_typeof$3(a) != 'object' || _typeof$3(b) != 'object') return false; // Objects with different constructors are not equivalent, but `Object`s or `Array`s
         // from different frames are.
 
         var aCtor = a.constructor,
@@ -3216,7 +3198,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
           value,
           computed;
 
-      if (iteratee == null || typeof iteratee == 'number' && _typeof$5(obj[0]) != 'object' && obj != null) {
+      if (iteratee == null || typeof iteratee == 'number' && _typeof$3(obj[0]) != 'object' && obj != null) {
         obj = isArrayLike(obj) ? obj : values(obj);
 
         for (var i = 0, length = obj.length; i < length; i++) {
@@ -3247,7 +3229,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
           value,
           computed;
 
-      if (iteratee == null || typeof iteratee == 'number' && _typeof$5(obj[0]) != 'object' && obj != null) {
+      if (iteratee == null || typeof iteratee == 'number' && _typeof$3(obj[0]) != 'object' && obj != null) {
         obj = isArrayLike(obj) ? obj : values(obj);
 
         for (var i = 0, length = obj.length; i < length; i++) {
@@ -4173,7 +4155,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
               var result = record.arg;
               var value = result.value;
 
-              if (value && _typeof$5(value) === "object" && hasOwn.call(value, "__await")) {
+              if (value && _typeof$3(value) === "object" && hasOwn.call(value, "__await")) {
                 return PromiseImpl.resolve(value.__await).then(function (value) {
                   invoke("next", value, resolve, reject);
                 }, function (err) {
@@ -4731,7 +4713,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
         // you've misconfigured your bundler to force strict mode and applied a
         // CSP to forbid Function, and you're not willing to fix either of those
         // problems, please detail your unique predicament in a GitHub issue.
-        if ((typeof globalThis === "undefined" ? "undefined" : _typeof$5(globalThis)) === "object") {
+        if ((typeof globalThis === "undefined" ? "undefined" : _typeof$3(globalThis)) === "object") {
           globalThis.regeneratorRuntime = runtime;
         } else {
           Function("r", "regeneratorRuntime = r")(runtime);
@@ -4831,7 +4813,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
      */
 
     function isPlainObject$2(obj) {
-      if (_typeof$5(obj) !== 'object' || obj === null) return false;
+      if (_typeof$3(obj) !== 'object' || obj === null) return false;
       var proto = obj;
 
       while (Object.getPrototypeOf(proto) !== null) {
@@ -5080,7 +5062,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
            * emission of values from the observable.
            */
           subscribe: function subscribe(observer) {
-            if (_typeof$5(observer) !== 'object' || observer === null) {
+            if (_typeof$3(observer) !== 'object' || observer === null) {
               throw new Error(formatProdErrorMessage(11) );
             }
 
@@ -5238,7 +5220,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
         return bindActionCreator(actionCreators, dispatch);
       }
 
-      if (_typeof$5(actionCreators) !== 'object' || actionCreators === null) {
+      if (_typeof$3(actionCreators) !== 'object' || actionCreators === null) {
         throw new Error(formatProdErrorMessage(16) );
       }
 
@@ -5461,7 +5443,15 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
         return state.settings ? state.settings : undefined;
     }
     function dataServicesSelector(state) {
-        return state.settings ? state.settings.services.steedos : undefined;
+        var steedosService = '/';
+        if (window && window.Meteor) {
+            steedosService = window.Steedos.absoluteUrl('', true);
+        }
+        if (steedosService) {
+            // 去掉url中的最后一个斜杠
+            steedosService = steedosService.replace(/\/$/, "");
+        }
+        return steedosService;
     }
 
     function entityStateSelector(state, entityName) {
@@ -5654,7 +5644,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
 
       Expression.literal = function (value, literalType) {
         if (literalType === void 0) {
-          literalType = _typeof$5(value);
+          literalType = _typeof$3(value);
         }
 
         return new TypedExpression("literal"
@@ -6270,7 +6260,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
             return value.toString();
         }
 
-        switch (_typeof$5(value)) {
+        switch (_typeof$3(value)) {
           case "string":
             return "'" + value + "'";
 
@@ -7936,7 +7926,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
               for (i = 0; i < argLen; i++) {
                 arg = '';
 
-                if (_typeof$5(arguments[i]) === 'object') {
+                if (_typeof$3(arguments[i]) === 'object') {
                   arg += '\n[' + i + '] ';
 
                   for (key in arguments[0]) {
@@ -8360,7 +8350,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
         }
 
         function stringSet(units, value) {
-          if (_typeof$5(units) === 'object') {
+          if (_typeof$3(units) === 'object') {
             units = normalizeObjectUnits(units);
             var prioritized = getPrioritizedUnits(units),
                 i,
@@ -10841,7 +10831,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
           } else if (duration == null) {
             // checks for null or undefined
             duration = {};
-          } else if (_typeof$5(duration) === 'object' && ('from' in duration || 'to' in duration)) {
+          } else if (_typeof$3(duration) === 'object' && ('from' in duration || 'to' in duration)) {
             diffRes = momentsDifference(createLocal(duration.from), createLocal(duration.to));
             duration = {};
             duration.ms = diffRes.milliseconds;
@@ -11587,7 +11577,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
               eras = this._eras || getLocale('en')._eras;
 
           for (i = 0, l = eras.length; i < l; ++i) {
-            switch (_typeof$5(eras[i].since)) {
+            switch (_typeof$3(eras[i].since)) {
               case 'string':
                 // truncate time
                 date = hooks(eras[i].since).startOf('day');
@@ -11595,7 +11585,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
                 break;
             }
 
-            switch (_typeof$5(eras[i].until)) {
+            switch (_typeof$3(eras[i].until)) {
               case 'undefined':
                 eras[i].until = +Infinity;
                 break;
@@ -12588,7 +12578,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
               locale,
               output;
 
-          if (_typeof$5(argWithSuffix) === 'object') {
+          if (_typeof$3(argWithSuffix) === 'object') {
             argThresholds = argWithSuffix;
             argWithSuffix = false;
           }
@@ -12597,7 +12587,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
             withSuffix = argWithSuffix;
           }
 
-          if (_typeof$5(argThresholds) === 'object') {
+          if (_typeof$3(argThresholds) === 'object') {
             th = Object.assign({}, thresholds, argThresholds);
 
             if (argThresholds.s != null && argThresholds.ss == null) {
@@ -14275,7 +14265,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
               }
             }
 
-            if (init && _typeof$5(init.headers) === 'object' && !(init.headers instanceof Headers)) {
+            if (init && _typeof$3(init.headers) === 'object' && !(init.headers instanceof Headers)) {
               Object.getOwnPropertyNames(init.headers).forEach(function (name) {
                 xhr.setRequestHeader(name, normalizeValue(init.headers[name]));
               });
@@ -14836,7 +14826,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
             var service = dataServicesSelector(getState());
             // options.count = true;
             options = __assign(__assign({}, options), { count: true, pageSize: 0 });
-            options.filters = __spreadArray$1([], options.filters);
+            options.filters = __spreadArray$1([], options.filters, true);
             // 只显示未读数量
             options.filters.push([['is_read', '=', null], 'or', ['is_read', '=', false]]);
             dispatch(createAction(NOTIFICATIONS_COUNT_CHANGE_ACTION, "countLoading", true, options));
@@ -14887,7 +14877,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
                 if (partialStateName === "executeApiSauce" && partialStateValue.success) {
                     if (options.methodName === "markReadAll") {
                         // 如果全部标记为已读成功，则自动设置store中所有通知记录为已读状态
-                        var records = __spreadArray$1([], entityState.rows);
+                        var records = __spreadArray$1([], entityState.rows, true);
                         records = records.map(function (item) {
                             var re = __assign({}, item);
                             re.is_read = true;
@@ -14949,7 +14939,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
 
     function r(n) {
       return !!n && (function (n) {
-        if (!n || "object" != _typeof$5(n)) return !1;
+        if (!n || "object" != _typeof$3(n)) return !1;
         var t = Object.getPrototypeOf(n);
         return !t || t === Object.prototype;
       }(n) || Array.isArray(n) || !!n[B] || !!n.constructor[B] || c(n) || s(n));
@@ -15019,7 +15009,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     }
 
     function h(n) {
-      return null == n || "object" != _typeof$5(n) || Object.isFrozen(n);
+      return null == n || "object" != _typeof$3(n) || Object.isFrozen(n);
     }
 
     function y(t) {
@@ -15157,7 +15147,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
 
     var J,
         K,
-        $ = "undefined" != typeof Symbol && "symbol" == _typeof$5(Symbol("x")),
+        $ = "undefined" != typeof Symbol && "symbol" == _typeof$3(Symbol("x")),
         U = "undefined" != typeof Map,
         W = "undefined" != typeof Set,
         X = "undefined" != typeof Proxy && void 0 !== Proxy.revocable && "undefined" != typeof Reflect,
@@ -15700,7 +15690,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     }
     function transformObjectHomeComponentState(oldState, newState) {
         var result = oldState.components ? oldState.components : {};
-        var resultName = result[newState.name] ? __spreadArray$1([], result[newState.name]) : [];
+        var resultName = result[newState.name] ? __spreadArray$1([], result[newState.name], true) : [];
         if (resultName.find(function (n) { return newState.data && n.id === newState.data.id; })) {
             console.warn("The same plugin component ".concat(newState.data.id, " is already exists,you need to check your repeated component id"));
         }
@@ -15802,7 +15792,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
     var compose = require$$0.compose;
     var composeWithDevTools = typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : function () {
       if (arguments.length === 0) return undefined;
-      if (_typeof$5(arguments[0]) === 'object') return compose;
+      if (_typeof$3(arguments[0]) === 'object') return compose;
       return compose.apply(null, arguments);
     };
 
@@ -16946,7 +16936,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
               break;
 
             default:
-              if ("function" == typeof a) $e[ye++] = a;else if ("object" == _typeof$5(a)) for (var r = 0, c = a.length; r < c; ++r) {
+              if ("function" == typeof a) $e[ye++] = a;else if ("object" == _typeof$3(a)) for (var r = 0, c = a.length; r < c; ++r) {
                 e(a[r]);
               } else qe = 0 | !!a;
           }
@@ -18275,7 +18265,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
       return isObject(re) && objectToString(re) === '[object RegExp]';
     }
     function isObject(arg) {
-      return _typeof$5(arg) === 'object' && arg !== null;
+      return _typeof$3(arg) === 'object' && arg !== null;
     }
     function isDate(d) {
       return isObject(d) && objectToString(d) === '[object Date]';
@@ -22387,10 +22377,10 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
       return result;
     };
 
-    var _typeof = typeof Symbol === "function" && _typeof$5(Symbol.iterator) === "symbol" ? function (obj) {
-      return _typeof$5(obj);
+    var _typeof = typeof Symbol === "function" && _typeof$3(Symbol.iterator) === "symbol" ? function (obj) {
+      return _typeof$3(obj);
     } : function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof$5(obj);
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof$3(obj);
     };
 
     var classCallCheck = function classCallCheck(instance, Constructor) {
@@ -22433,7 +22423,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
 
     var inherits = function inherits(subClass, superClass) {
       if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + _typeof$5(superClass));
+        throw new TypeError("Super expression must either be null or a function, not " + _typeof$3(superClass));
       }
 
       subClass.prototype = Object.create(superClass && superClass.prototype, {
@@ -22464,7 +22454,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
       }
 
-      return call && (_typeof$5(call) === "object" || typeof call === "function") ? call : self;
+      return call && (_typeof$3(call) === "object" || typeof call === "function") ? call : self;
     }; // 
 
 
@@ -26505,7 +26495,7 @@ var ReactSteedos = (function (exports, React, reactDom, _$5, designSystem) {
             var arg = arguments[i];
             if (!arg) continue;
 
-            var argType = _typeof$5(arg);
+            var argType = _typeof$3(arg);
 
             if (argType === 'string' || argType === 'number') {
               classes.push(arg);
