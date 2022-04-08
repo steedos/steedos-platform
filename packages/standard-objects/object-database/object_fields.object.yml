@@ -472,14 +472,14 @@ fields:
     type: boolean
     label: Is Wide
     group: Advanced
-  readonly:
-    type: boolean
-    label: Readonly
-    group: Advanced
-  hidden:
-    type: boolean
-    label: Hidden
-    group: Advanced
+  # readonly:
+  #   type: boolean
+  #   label: Readonly
+  #   group: Advanced
+  # hidden:
+  #   type: boolean
+  #   label: Hidden
+  #   group: Advanced
   # omit:
   #   type: boolean
   #   label: Omit

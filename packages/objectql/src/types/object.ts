@@ -994,6 +994,119 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return permissions
     }
 
+    /**
+     * 获取用户可访问字段
+     * 字段权限设计: https://github.com/steedos/steedos-platform/issues/2943
+     * 字段配置为必填字段:
+     * 1 字段级权限不能设置为只读。
+     * 2 页面布局中不能修改必填选项，始终必填。
+     * 3 页面布局中不能设置为只读。
+     * 4 字段如果不在页面布局中, 则显示在最后
+     * @param objectFields 
+     * @param objectLayout 
+     * @param objectPermission 
+     */
+    getAccessFields(objectFields, objectLayout, objectPermission){
+        const accessFields = {};
+        const universallyRequiredFields = _.filter(objectFields, (objectFile)=>{
+            return objectFile.required;
+        });
+
+        const universallyRequiredFieldsName = _.pluck(universallyRequiredFields, 'name');
+
+        _.each(objectFields, (field)=>{
+            if(field){
+                const fieldPermission = objectPermission.field_permissions[field.name];
+
+                let fieldLayout = objectLayout && objectLayout.fields ? _.find(objectLayout.fields, (item)=>{return item.field_name == field.name}) : null;
+
+                const isUniversallyRequiredField = _.contains(universallyRequiredFieldsName, field.name);
+
+                if(isUniversallyRequiredField){
+                    fieldLayout = Object.assign({}, fieldLayout, {
+                        field_name: field.name,
+                        is_required: true,
+                        is_readonly: false,
+                    })
+                }
+
+                // 如果配置了页面布局且没有授权字段时, 不显示此字段
+                if(objectLayout && !fieldLayout){
+                    return ;
+                }
+
+                let {read, edit} = fieldPermission || {read: !field.hidden, edit: !field.hidden && !field.readonly};
+
+                // 通用必填字段始终可见、可编辑
+                if(isUniversallyRequiredField){
+                    read = true;
+                    edit = true;
+                }
+
+                if(fieldLayout && fieldLayout.is_readonly){
+                    edit = false;
+                }
+
+                //不可查看: 配置了字段权限且不可查看; 没有配置字段权限，字段的hidden为true
+                if(read === false){
+                    return;
+                }
+
+                //可查看不可编辑: 配置了字段权限可查看不可编辑; 没有配置字段权限 字段的hidden 为false 且字段的readonly为true
+                if(read === true && edit === false){
+                    accessFields[field.name] = Object.assign({}, field, {
+                        hidden: false,
+                        required: false,
+                        readonly: true,
+                        disabled: true
+                    })
+                    return;
+                }
+                
+                //可查看可编辑: 配置了字段权限可查看可编辑; 没有配置字段权限 字段的hidden 为false 且字段的readonly为false
+                if(read === true && edit === true){
+                    accessFields[field.name] = Object.assign({}, field, {
+                        hidden: false,
+                        readonly: false,
+                        disabled: false,
+                        required: fieldLayout ? fieldLayout.is_required : false,
+                    })
+                    return;
+                }
+                console.error('字段权限处理异常', field, read, edit);
+            }
+        });
+
+        if(objectLayout){
+            let sort_no = 1;
+            _.each(objectLayout.fields, function(_item){
+                if(accessFields[_item.field_name]){
+                    if(_.has(_item, 'group')){
+                        accessFields[_item.field_name].group = _item.group
+                    }
+    
+                    if(_item.visible_on){
+                        accessFields[_item.field_name].visible_on = _item.visible_on
+                    }
+    
+                    accessFields[_item.field_name].sort_no = sort_no;
+                    sort_no++;
+                }
+            })
+
+            //处理通用必填字段默认显示顺序
+            _.each(universallyRequiredFieldsName, function(fieldName){
+                const fieldLayout = _.find(objectLayout.fields, (item)=>{return item.field_name == fieldName});
+                if(!fieldLayout){
+                    accessFields[fieldName].sort_no = sort_no;
+                    sort_no++;
+                }
+            })
+        }
+
+        return accessFields;
+    }
+
     async getRecordView(userSession, context?: any) {
         let objectConfig;
         let layouts;
@@ -1028,58 +1141,59 @@ export class SteedosObjectType extends SteedosObjectProperties {
             layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name);
         }
 
-        let layoutHiddenFields = [];
-
+        // let layoutHiddenFields = [];
+        let objectLayout = null
         if(layouts && layouts.length > 0){
-            const layout = layouts[0];
-            let _fields = {};
-            let sort_no = 1;
-            _.each(layout.fields, function(_item){
-                _fields[_item.field_name] = objectConfig.fields[_item.field_name]
-                if(_fields[_item.field_name]){
-                    if(_.has(_item, 'group')){
-                        _fields[_item.field_name].group = _item.group
-                    }
+            objectLayout = layouts[0];
+            // let _fields = {};
+            // let sort_no = 1;
+            // _.each(layout.fields, function(_item){
+            //     _fields[_item.field_name] = objectConfig.fields[_item.field_name]
+            //     if(_fields[_item.field_name]){
+            //         if(_.has(_item, 'group')){
+            //             _fields[_item.field_name].group = _item.group
+            //         }
                     
-                    if(_item.is_required){
-                        _fields[_item.field_name].readonly = false
-                        _fields[_item.field_name].disabled = false
-                        _fields[_item.field_name].required = true
-                    }else if(_item.is_readonly){
-                        _fields[_item.field_name].readonly = true
-                        _fields[_item.field_name].disabled = true
-                        _fields[_item.field_name].required = false
-                    }
+            //         if(_item.is_required){
+            //             _fields[_item.field_name].readonly = false
+            //             _fields[_item.field_name].disabled = false
+            //             _fields[_item.field_name].required = true
+            //         }else if(_item.is_readonly){
+            //             _fields[_item.field_name].readonly = true
+            //             _fields[_item.field_name].disabled = true
+            //             _fields[_item.field_name].required = false
+            //         }
 
-                    if(_item.visible_on){
-                        _fields[_item.field_name].visible_on = _item.visible_on
-                    }
+            //         if(_item.visible_on){
+            //             _fields[_item.field_name].visible_on = _item.visible_on
+            //         }
 
-                    if(['created','created_by','modified','modified_by'].indexOf(_item.field_name) < 0){
-                        _fields[_item.field_name].omit = false;
-                        _fields[_item.field_name].hidden = false;
-                    }
+            //         // TODO 按新字段权限规则, 调整此部分代码
+            //         if(['created','created_by','modified','modified_by'].indexOf(_item.field_name) < 0){
+            //             _fields[_item.field_name].omit = false;
+            //             _fields[_item.field_name].hidden = false;
+            //         }
 
-                    _fields[_item.field_name].sort_no = sort_no;
-                    sort_no++;
-                }
-            })
+            //         _fields[_item.field_name].sort_no = sort_no;
+            //         sort_no++;
+            //     }
+            // })
 
-            const layoutFieldKeys = _.keys(_fields);
-            const objectFieldKeys = _.keys(objectConfig.fields);
+            // const layoutFieldKeys = _.keys(_fields);
+            // const objectFieldKeys = _.keys(objectConfig.fields);
 
-            layoutHiddenFields = _.difference(objectFieldKeys, layoutFieldKeys);
+            // layoutHiddenFields = _.difference(objectFieldKeys, layoutFieldKeys);
 
-            _.each(layoutFieldKeys, function(fieldApiName){
-                objectConfig.fields[fieldApiName] = _fields[fieldApiName];
-            })
+            // _.each(layoutFieldKeys, function(fieldApiName){
+            //     objectConfig.fields[fieldApiName] = _fields[fieldApiName];
+            // })
             
-            _.each(layoutHiddenFields, function(fieldApiName){
-                objectConfig.fields[fieldApiName].hidden = true;
-                objectConfig.fields[fieldApiName].sort_no = 99999;
-            })
+            // _.each(layoutHiddenFields, function(fieldApiName){
+            //     objectConfig.fields[fieldApiName].hidden = true;
+            //     objectConfig.fields[fieldApiName].sort_no = 99999;
+            // })
 
-            _.each(layout.buttons, function(button){
+            _.each(objectLayout.buttons, function(button){
                 const action = objectConfig.actions[button.button_name];
                 if(action){
                     if(button.visible_on){
@@ -1088,7 +1202,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             })
     
-            const layoutButtonsName = _.pluck(layout.buttons,'button_name');
+            const layoutButtonsName = _.pluck(objectLayout.buttons,'button_name');
             _.each(objectConfig.actions, function(action){
                 if(!_.include(layoutButtonsName, action.name)){
                     action.visible = false
@@ -1097,7 +1211,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
             // _object.allow_customActions = userObjectLayout.custom_actions || []
             // _object.exclude_actions = userObjectLayout.exclude_actions || []
-            objectConfig.related_lists = layout.related_lists || []
+            objectConfig.related_lists = objectLayout.related_lists || []
             _.each(objectConfig.related_lists, (related_list)=>{
                 if(related_list.sort_field_name && _.isArray(related_list.sort_field_name) && related_list.sort_field_name.length > 0){
                     related_list.sort = [];
@@ -1108,36 +1222,60 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
-        /**
-         * What Determines Field Access?
-         * 1 Page layouts—Set whether fields are visible, required, editable, or read only for a particular record type.
-         * 2 Field-level security—Further restrict users’ access to fields by setting whether those fields are visible, editable, or read only. These settings override field properties set in the page layout if the field-level security setting is more restrictive.
-         */
-        // 使用字段级安全性作为限制用户对字段的访问权限的手段；然后使用页面布局主要在选项卡中组织详细信息和编辑页面。这可以减少需要维护的页面布局数量。
-        // 例如，如果字段在页面布局中是必需的，并且在字段级安全性设置中是只读的，则字段级安全性将覆盖页面布局，并且该字段将对用户是只读的。
-        const userObjectFields = objectConfig.fields;
-        _.each(objectConfig.permissions.field_permissions, (field_permission, field) => {
-            const { read, edit } = field_permission;
-            if (userObjectFields[field] && !_.include(layoutHiddenFields, field)) {
-                if (read) {
-                    userObjectFields[field].hidden = false;
-                    userObjectFields[field].omit = true;
-                    userObjectFields[field].readonly = true;
-                    userObjectFields[field].disabled = true;
-                }
-                if (edit) {
-                    userObjectFields[field].omit = false;
-                    userObjectFields[field].hidden = false;
-                    userObjectFields[field].readonly = false;
-                    userObjectFields[field].disabled = false;
-                }
-                if (!read && !edit) {
-                    delete userObjectFields[field]
-                }
-            }
-        })
+        
+        // _.each(objectConfig.fields, (field)=>{
+        //     if(field){
+        //         const fieldPermission = objectConfig.permissions.field_permissions[field.name];
+        //         const {read, edit} = fieldPermission || {read: !field.hidden, edit: !field.hidden && !field.readonly}
+        //         //不可查看: 配置了字段权限且不可查看; 没有配置字段权限，字段的hidden为true
+        //         if(read === false){
+        //             delete objectConfig.fields[field.name];
+        //             return;
+        //         }
 
-        objectConfig.fields = userObjectFields
+        //         //可查看不可编辑: 配置了字段权限可查看不可编辑; 没有配置字段权限 字段的hidden 为false 且字段的readonly为true
+        //         if(read === true && edit === false){
+        //             objectConfig.fields[field.name].hidden = false;
+        //             objectConfig.fields[field.name].readonly = true;
+        //             objectConfig.fields[field.name].disabled = true;
+        //             return;
+        //         }
+                
+        //         //可查看可编辑: 配置了字段权限可查看可编辑; 没有配置字段权限 字段的hidden 为false 且字段的readonly为false
+        //         if(read === true && edit === true){
+        //             objectConfig.fields[field.name].hidden = false;
+        //             objectConfig.fields[field.name].readonly = false;
+        //             objectConfig.fields[field.name].disabled = false;
+        //             return;
+        //         }
+        //         console.error('字段权限处理异常', field, read, edit);
+        //     }
+        // })
+
+        // _.each(objectConfig.permissions.field_permissions, (field_permission, field) => {
+        //     const { read, edit } = field_permission;
+        //     if (userObjectFields[field] && !_.include(layoutHiddenFields, field)) {
+        //         if (read) {
+        //             userObjectFields[field].hidden = false;
+        //             userObjectFields[field].omit = true;
+        //             userObjectFields[field].readonly = true;
+        //             userObjectFields[field].disabled = true;
+        //         }
+        //         if (edit) {
+        //             userObjectFields[field].omit = false;
+        //             userObjectFields[field].hidden = false;
+        //             userObjectFields[field].readonly = false;
+        //             userObjectFields[field].disabled = false;
+        //         }
+        //         if (!read && !edit) {
+        //             delete userObjectFields[field]
+        //         }
+        //     }
+        // })
+
+        // objectConfig.fields = userObjectFields
+
+        objectConfig.fields = this.getAccessFields(objectConfig.fields, objectLayout, objectConfig.permissions)
 
         // TODO object layout 是否需要控制审批记录显示？
         if (!spaceProcessDefinition) {
