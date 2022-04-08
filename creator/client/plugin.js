@@ -2,7 +2,7 @@
 // import * as ReactDom from 'react-dom';
 import * as Redux from 'redux';
 import * as ReactRedux from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import * as ReactDesignSystem from '@steedos-widgets/design-system';
 // import styled from 'styled-components';
 // import * as ReduxThunk from 'redux-thunk';
@@ -15,7 +15,7 @@ const { registerPlugin } = ReactSteedos
 
 export const registerWindowLibraries = () => {
   // window["React"] = React;
-  window["PropTypes"] = PropTypes;
+  // window["PropTypes"] = PropTypes;
   window["ReactDom"] = ReactDOM;
   window["Redux"] = Redux;
   window["ReactRedux"] = ReactRedux;
