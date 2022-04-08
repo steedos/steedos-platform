@@ -3,7 +3,7 @@
 import * as Redux from 'redux';
 import * as ReactRedux from 'react-redux';
 import PropTypes from 'prop-types';
-import * as ReactDesignSystem from '@steedos-widgets/design-system';
+// import * as ReactDesignSystem from '@steedos-widgets/design-system';
 // import styled from 'styled-components';
 // import * as ReduxThunk from 'redux-thunk';
 // import * as Immer from 'immer';
@@ -19,7 +19,7 @@ export const registerWindowLibraries = () => {
   window["ReactDom"] = ReactDOM;
   window["Redux"] = Redux;
   window["ReactRedux"] = ReactRedux;
-  window["ReactDesignSystem"] = ReactDesignSystem;
+  // window["ReactDesignSystem"] = ReactDesignSystem;
   // window["StyledComponents"] = styled;
   // window["ReduxThunk"] = ReduxThunk;
   // window["Immer"] = Immer;

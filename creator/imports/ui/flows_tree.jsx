@@ -1,4 +1,4 @@
-import {Icon, Button} from '@steedos-widgets/design-system';
+const {Icon, Button} = DesignSystem;
 const {createTreeAction, store, viewStateSelector, createModalAction} = ReactSteedos
 
 var _ = require("underscore");

@@ -1,5 +1,5 @@
 import './icon.html';
-import { Icon } from '@steedos-widgets/design-system';
+const { Icon } = DesignSystem;
 
 const getSourceName = (source, name) => {
 	var foo;

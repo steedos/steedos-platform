@@ -17,7 +17,7 @@ Package.onUse((api) => {
     'templating',
     'underscore',
     'ecmascript',
-    'tmeasday:check-npm-versions@1.0.2',
+    'tmeasday:check-npm-versions@0.3.2',
   ]);
 
   api.addFiles(['react-template-helper.js'], 'client');

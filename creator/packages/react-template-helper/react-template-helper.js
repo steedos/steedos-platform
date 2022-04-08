@@ -4,8 +4,8 @@ checkNpmVersions({
   'react-dom': '15.3 - 17'
 }, 'react-template-helper');
 
-const React = require('react');
-const ReactDOM = require('react-dom');
+// const React = require('react');
+// const ReactDOM = require('react-dom');
 
 // Empty template; logic in `onRendered` below
 Template.React = new Template("Template.React", function () { return []; });
