@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import moment from 'moment'
 import { getRelativeUrl } from '../../utils';
 import Pager from '../../components/pager';
-const marked = require('marked/lib/marked.js');
+// const marked = require('marked/lib/marked.js');
 
 let Counter = styled.div`
 	height: 100%;
@@ -87,7 +87,7 @@ const CustomDataTableCell = ({ children, ...props }) => {
 				children = formatFileSize(children)
 				break;
 			case 'markdown':
-				children = (<div dangerouslySetInnerHTML={{__html: marked(children)}} />)
+				// children = (<div dangerouslySetInnerHTML={{__html: marked(children)}} />)
 				break;
 			default:
 				break;

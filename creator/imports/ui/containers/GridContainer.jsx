@@ -1,5 +1,5 @@
 // import React from 'react';
-import { Grid, store } from '@steedos/react';
+const { Grid, store } = ReactSteedos
 
 var iconPath = `/assets/icons`;
 var gridObjectName = 'space_users';

@@ -67,3 +67,5 @@ steedos-projects/project-dev/**
 
 .npmrc
 .yarnrc
+
+.rpt2_cache

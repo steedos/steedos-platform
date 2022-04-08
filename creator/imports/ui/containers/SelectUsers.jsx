@@ -1,5 +1,5 @@
 // import React from 'react';
-import { SelectUsers, Bootstrap, store } from '@steedos/react';
+const { SelectUsers, Bootstrap, store } = ReactSteedos
 
 function SelectUsersContainer(prop){
 	const Provider = ReactRedux.Provider;

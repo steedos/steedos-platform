@@ -1,5 +1,5 @@
 // import React from 'react';
-import { GridModal, Bootstrap, store } from '@steedos/react';
+const { GridModal, Bootstrap, store } = ReactSteedos
 
 function GridModalContainer(prop){
 	const Provider = ReactRedux.Provider;

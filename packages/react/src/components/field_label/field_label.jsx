@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'underscore';
 import moment from 'moment';
 import { getRelativeUrl } from '../../utils';
-const marked = require('marked/lib/marked.js');
+// const marked = require('marked/lib/marked.js');
 
 const formatFileSize = function (filesize) {
 	var rev, unit;
@@ -193,7 +193,7 @@ const FieldLabel = ({ children, ...props }) => {
 					// html字段显示为空字符
 					children = ""
 				case 'markdown':
-					children = (<div dangerouslySetInnerHTML={{__html: marked(children)}} />)
+					// children = (<div dangerouslySetInnerHTML={{__html: marked(children)}} />)
 					break;
 				default:
 					break;

@@ -1,5 +1,5 @@
 import './404.html';
-import { Illustration } from '@steedos/react';
+const { Illustration } = ReactSteedos
 
 Template.notFound.helpers({
 	object: function() {

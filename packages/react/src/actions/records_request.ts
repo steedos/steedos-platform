@@ -1,6 +1,6 @@
 import { query } from '../datasource'
 import { createAction } from './base'
-const _ = require('underscore')
+import _ from 'lodash';
 
 export function loadEntitiesDataRequest(dispatch: any, actionType: string, dataService: string, options: any) {
     return loadData(dataService, options).then(

@@ -10,7 +10,7 @@ import("./main.html");
 import { registerWindowLibraries } from './plugin';
 registerWindowLibraries();
 
-import { registerDefaultPlugins } from '@steedos/react';
+const { registerDefaultPlugins } = ReactSteedos
 registerDefaultPlugins();
 
 // 把组件导入才能在creator中正常使用

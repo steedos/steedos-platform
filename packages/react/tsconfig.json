@@ -1,32 +1,29 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
-    "module": "esnext",
-    "target": "es5",
-    "outDir": "./lib",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "jsx": "react",
-    "rootDir": "src",
     "moduleResolution": "node",
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": false,
-    "strictNullChecks": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "noEmit": true,
-    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "jsx": "react",
+    "target": "es5",
+    "module": "esnext",
+    "lib": ["dom", "es5", "es2015.promise"],
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "checkJs": false,
+    "allowJs": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist",
+    "typeRoots": ["node_modules/@types"],
+    "paths": {
+      "lib": ["./lib"]
+    }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

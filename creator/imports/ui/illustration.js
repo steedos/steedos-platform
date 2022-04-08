@@ -1,5 +1,5 @@
 import './illustration.html';
-import { Illustration } from '@steedos/react';
+const { Illustration } = ReactSteedos
 
 Template.illustration.helpers({
 	illustration: function () {

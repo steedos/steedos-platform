@@ -1,5 +1,5 @@
 import './grid_modal.html';
-import { store, viewStateSelector, createGridModalAction } from '@steedos/react';
+const { store, viewStateSelector, createGridModalAction } = ReactSteedos
 import GridModalContainer from './containers/GridModal'
 var _ = require("underscore");
 

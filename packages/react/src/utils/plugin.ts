@@ -11,11 +11,12 @@ import * as TSODataClient from 'ts-odata-client';
 import * as NodeFetch from 'node-fetch';
 import * as SteedosFilters from '@steedos/filters';
 
-import * as ReactSteedos from '../export';
+import * as ReactSteedos from '../steedos-react';
 import store from "../stores/configureStore";
 import { receivePluginInstance, receivePluginComponent } from '../actions';
 import { ObjectHomeIFrame, generateIFrame } from "../components/object_home_iframe";
-const _ = require('underscore')
+
+import _ from 'lodash';
 
 /**
 * Register a plugin to window
@@ -30,19 +31,19 @@ export const registerPlugin = ( pluginName, pluginInstance ) => {
 
 
 export const registerWindowLibraries = () => {
-    window["React"] = React;
-    window["PropTypes"] = PropTypes;
-    window["ReactDom"] = ReactDom;
-    window["Redux"] = Redux;
-    window["ReactRedux"] = ReactRedux;
-    window["ReactDesignSystem"] = ReactDesignSystem;
-    window["ReactSteedos"] = ReactSteedos;
-    window["StyledComponents"] = styled;
-    window["ReduxThunk"] = ReduxThunk;
-    window["Immer"] = Immer;
-    window["TSODataClient"] = TSODataClient;
-    window["NodeFetch"] = NodeFetch;
-    window["SteedosFilters"] = SteedosFilters;
+    // window["React"] = React;
+    // window["PropTypes"] = PropTypes;
+    // window["ReactDom"] = ReactDom;
+    // window["Redux"] = Redux;
+    // window["ReactRedux"] = ReactRedux;
+    // window["ReactDesignSystem"] = ReactDesignSystem;
+    // window["ReactSteedos"] = ReactSteedos;
+    // window["StyledComponents"] = styled;
+    // window["ReduxThunk"] = ReduxThunk;
+    // window["Immer"] = Immer;
+    // window["TSODataClient"] = TSODataClient;
+    // window["NodeFetch"] = NodeFetch;
+    // window["SteedosFilters"] = SteedosFilters;
     
     window["registerPlugin"] = registerPlugin;
 }

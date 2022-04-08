@@ -329,12 +329,10 @@ requestBootstrapDataUseAjax = (spaceId, callback)->
 
 
 requestBootstrapDataUseAction = (spaceId)->
-	SteedosReact = require('@steedos/react');
-	SteedosReact.store.dispatch(SteedosReact.loadBootstrapEntitiesData({spaceId: spaceId}))
+	ReactSteedos.store.dispatch(ReactSteedos.loadBootstrapEntitiesData({spaceId: spaceId}))
 
 requestBootstrapData = (spaceId, callback)->
-	SteedosReact = require('@steedos/react');
-	if SteedosReact.store
+	if ReactSteedos.store
 		requestBootstrapDataUseAction(spaceId);
 	else
 		requestBootstrapDataUseAjax(spaceId, callback);
@@ -345,14 +343,13 @@ Setup.bootstrap = (spaceId, callback)->
 
 
 Meteor.startup ()->
-	SteedosReact = require('@steedos/react');
-	RequestStatusOption = SteedosReact.RequestStatusOption
+	RequestStatusOption = ReactSteedos.RequestStatusOption
 	lastBootStrapRequestStatus = '';
-	SteedosReact.store?.subscribe ()->
-		state = SteedosReact.store.getState();
+	ReactSteedos.store?.subscribe ()->
+		state = ReactSteedos.store.getState();
 		if lastBootStrapRequestStatus == RequestStatusOption.STARTED
-			lastBootStrapRequestStatus = SteedosReact.getRequestStatus(state); # 由于handleBootstrapData函数执行比较慢，因此在handleBootstrapData执行前，给lastBootStrapRequestStatus更新值
-			if SteedosReact.isRequestSuccess(state)
-				handleBootstrapData(clone(SteedosReact.getBootstrapData(state)));
+			lastBootStrapRequestStatus = ReactSteedos.getRequestStatus(state); # 由于handleBootstrapData函数执行比较慢，因此在handleBootstrapData执行前，给lastBootStrapRequestStatus更新值
+			if ReactSteedos.isRequestSuccess(state)
+				handleBootstrapData(clone(ReactSteedos.getBootstrapData(state)));
 		else
-			lastBootStrapRequestStatus = SteedosReact.getRequestStatus(state);
+			lastBootStrapRequestStatus = ReactSteedos.getRequestStatus(state);

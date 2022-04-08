@@ -28,11 +28,9 @@ getAssistiveText = (actionDisabled, actionSelected)->
 	return assistiveText
 
 Favorites.changeRecords = ()->
-	SteedosReact = require('@steedos/react');
-	SteedosReact.store.dispatch(SteedosReact.changeRecords(Creator.getCollection("favorites").find({space: Session.get("spaceId"), owner: Meteor.userId()}, {sort: {sort_no: -1, modified: -1}}).fetch(), 'steedos-header-favorites'))
+	ReactSteedos.store.dispatch(ReactSteedos.changeRecords(Creator.getCollection("favorites").find({space: Session.get("spaceId"), owner: Meteor.userId()}, {sort: {sort_no: -1, modified: -1}}).fetch(), 'steedos-header-favorites'))
 
 Favorites.changeState = ()->
-	SteedosReact = require('@steedos/react');
 	currentRouter = FlowRouter.current();
 	params = currentRouter?.params
 
@@ -44,13 +42,13 @@ Favorites.changeState = ()->
 	if object_name
 		actionDisabled = getActionDisabled(params);
 		actionSelected = getActionSelected(params, object_name);
-		SteedosReact.store.dispatch(SteedosReact.changeActionSelected(actionSelected, 'steedos-header-favorites'))
-		SteedosReact.store.dispatch(SteedosReact.changeActionDisabled(actionDisabled, 'steedos-header-favorites'))
-		SteedosReact.store.dispatch(SteedosReact.changeAssistiveText(getAssistiveText(actionDisabled, actionSelected), 'steedos-header-favorites'))
+		ReactSteedos.store.dispatch(ReactSteedos.changeActionSelected(actionSelected, 'steedos-header-favorites'))
+		ReactSteedos.store.dispatch(ReactSteedos.changeActionDisabled(actionDisabled, 'steedos-header-favorites'))
+		ReactSteedos.store.dispatch(ReactSteedos.changeAssistiveText(getAssistiveText(actionDisabled, actionSelected), 'steedos-header-favorites'))
 	else
 		actionDisabled = getActionDisabled(params);
-		SteedosReact.store.dispatch(SteedosReact.changeActionDisabled(actionDisabled, 'steedos-header-favorites'))
-		SteedosReact.store.dispatch(SteedosReact.changeAssistiveText(getAssistiveText(actionDisabled, actionSelected), 'steedos-header-favorites'))
+		ReactSteedos.store.dispatch(ReactSteedos.changeActionDisabled(actionDisabled, 'steedos-header-favorites'))
+		ReactSteedos.store.dispatch(ReactSteedos.changeAssistiveText(getAssistiveText(actionDisabled, actionSelected), 'steedos-header-favorites'))
 
 Favorites.getActionSelected = getActionSelected
 
