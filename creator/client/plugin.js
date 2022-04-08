@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
+// import * as React from 'react';
+// import * as ReactDom from 'react-dom';
 import * as Redux from 'redux';
 import * as ReactRedux from 'react-redux';
 import PropTypes from 'prop-types';
@@ -15,9 +15,9 @@ import { registerPlugin } from '@steedos/react';
 
 
 export const registerWindowLibraries = () => {
-  window["React"] = React;
+  // window["React"] = React;
   window["PropTypes"] = PropTypes;
-  window["ReactDom"] = ReactDom;
+  window["ReactDom"] = ReactDOM;
   window["Redux"] = Redux;
   window["ReactRedux"] = ReactRedux;
   window["ReactDesignSystem"] = ReactDesignSystem;

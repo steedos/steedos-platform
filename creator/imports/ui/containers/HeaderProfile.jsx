@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { HeaderProfile, Bootstrap, store } from '@steedos/react';
 
 function HeaderProfileContainer(prop){

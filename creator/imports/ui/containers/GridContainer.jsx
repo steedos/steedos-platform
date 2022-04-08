@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { Grid, store } from '@steedos/react';
 
 var iconPath = `/assets/icons`;

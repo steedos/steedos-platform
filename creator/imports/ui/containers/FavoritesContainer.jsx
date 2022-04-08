@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { Favorites, Bootstrap, store } from '@steedos/react';
 
 function FavoritesContainer(prop){

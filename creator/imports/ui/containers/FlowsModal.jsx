@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { FlowsModal, Bootstrap, store } from '@steedos/react';
 
 function FlowsModalContainer(prop){

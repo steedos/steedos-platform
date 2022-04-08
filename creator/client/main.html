@@ -13,6 +13,21 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<meta name="apple-mobile-web-app-title">
+	<!-- React，可替换为 production 包 -->
+	<script src="https://g.alicdn.com/code/lib/react/16.13.1/umd/react.development.js"></script>
+	<!-- React DOM，可替换为 production 包 -->
+	<script src="https://g.alicdn.com/code/lib/react-dom/16.13.1/umd/react-dom.production.min.js"></script>
+	<!-- React 向下兼容，预防物料层的依赖 -->
+	<script src="https://g.alicdn.com/code/lib/prop-types/15.7.2/prop-types.js"></script>
+	<script src="https://g.alicdn.com/platform/c/react15-polyfill/0.0.1/dist/index.js"></script>
+	<!-- lodash，低代码编辑器的依赖 -->
+	<script src="https://g.alicdn.com/platform/c/lodash/4.6.1/lodash.min.js"></script>
+	<!-- 日期处理包，Fusion Next 的依赖 -->
+	<script src="https://g.alicdn.com/mylib/moment/2.24.0/min/moment.min.js"></script>
+	<script src="/unpkg.com/@steedos-builder/react/dist/builder-react.unpkg.js"></script>
+	<script src="/unpkg.com/@steedos-widgets/design-system/dist/builder-widgets.umd.js"></script>
+	<script src="/unpkg.com/@steedos-ui/builder-community/dist/builder-community.umd.js"></script>
+	<link rel="stylesheet" type="text/css" href="/unpkg.com/@steedos-ui/builder-community/dist/builder-community.umd.css">
 	<meteor-bundled-css />
 </head>
 
@@ -44,6 +59,5 @@
 	<link rel="shortcut icon" href="{{absoluteUrl '/favicons/favicon.ico'}}">
 	<link rel="stylesheet" type="text/css" href="{{absoluteUrl '/assets/styles/salesforce-lightning-design-system.min.css'}}">
 	<link rel="stylesheet" type="text/css" href="{{absoluteUrl '/assets/styles/steedos-tailwind.min.css'}}">
-	<link rel="stylesheet" type="text/css" href="{{absoluteUrl '/builder-community.react.css'}}">
 	<link rel="stylesheet" type="text/css" href="{{absoluteUrl '/customize.css'}}">
 </template>

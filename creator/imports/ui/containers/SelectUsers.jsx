@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { SelectUsers, Bootstrap, store } from '@steedos/react';
 
 function SelectUsersContainer(prop){

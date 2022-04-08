@@ -1,5 +1,5 @@
-import React from 'react';
-import { API, ObjectForm, SteedosProvider, SteedosRouter as Router, Forms } from '@steedos-ui/builder-community/dist/builder-community.react.js';
+// import React from 'react';
+const { API, ObjectForm, SteedosProvider, SteedosRouter: Router, Forms } = SteedosUICommunity;
 
 window.SteedosReactForms = Forms;
 window.SteedosReactAPI = API;

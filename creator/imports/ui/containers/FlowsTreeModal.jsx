@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { Modal, Bootstrap, store, FlowsTree } from '@steedos/react';
 
 // modalProp： heading={prop.heading} id={prop.modalId} appElement="body" onConfirm={prop.onConfirm} align={prop.align} footer={prop.footer}
