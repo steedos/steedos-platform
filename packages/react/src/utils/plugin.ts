@@ -33,9 +33,8 @@ export const registerPlugin = ( pluginName, pluginInstance ) => {
 export const registerWindowLibraries = () => {
     // window["React"] = React;
     // window["PropTypes"] = PropTypes;
-    // window["ReactDom"] = ReactDom;
-    // window["Redux"] = Redux;
-    // window["ReactRedux"] = ReactRedux;
+    window["Redux"] = Redux;
+    window["ReactRedux"] = ReactRedux;
     // window["ReactDesignSystem"] = ReactDesignSystem;
     // window["ReactSteedos"] = ReactSteedos;
     // window["StyledComponents"] = styled;
