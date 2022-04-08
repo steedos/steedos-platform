@@ -34,3 +34,6 @@ if (process.platform == "win32") {
 }else{
     execSync('ln -s ' + path.join(process.cwd(), '../node_modules/@steedos') + ' ' + process.cwd() + '/node_modules/@steedos' );
 }
+
+
+execSync('rm -rf node_modules/resolve/test');

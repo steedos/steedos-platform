@@ -1,7 +1,7 @@
 {
     "files.exclude": {
-        "**/.dist": true,
-        "**/.meteor/local": true,
+        "**/.dist": false,
+        "**/.meteor/local": false,
         "**/.npm": true
     },
     "yaml.completion": true,
