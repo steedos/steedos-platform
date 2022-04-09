@@ -1,4 +1,4 @@
-var BuilderReact=function(exports){"use strict";var version="0.2.21",_a;"undefined"!=typeof window&&(null===(_a=window.parent)||void 0===_a||_a.postMessage({type:"builder.isReactSdk",data:{value:!0,supportsPatchUpdates:"v3",priorVersion:version}},"*"));
+var BuilderReact=function(exports){"use strict";var version="0.2.22",_a;"undefined"!=typeof window&&(null===(_a=window.parent)||void 0===_a||_a.postMessage({type:"builder.isReactSdk",data:{value:!0,supportsPatchUpdates:"v3",priorVersion:version}},"*"));
 /*! *****************************************************************************
   Copyright (c) Microsoft Corporation.
 
