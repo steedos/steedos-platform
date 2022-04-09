@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-core",
-  "version": "2.2.18",
+  "version": "2.2.19",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -14,7 +14,7 @@
     "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/metadata-core"
   },
   "dependencies": {
-    "@steedos/client": "2.2.18",
+    "@steedos/client": "2.2.19",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
