@@ -1,5 +1,5 @@
 import './illustration.html';
-const { Illustration } = ReactSteedos
+const { Illustration } = BuilderCreator
 
 Template.illustration.helpers({
 	illustration: function () {

@@ -241,7 +241,7 @@ handleBootstrapData = (result, callback)->
 			object.list_views[_key] = _object_listview
 		Creator.loadObjects object, object_name
 
-	Creator.Apps = ReactSteedos.creatorAppsSelector(ReactSteedos.store.getState())
+	Creator.Apps = BuilderCreator.creatorAppsSelector(BuilderCreator.store.getState())
 	Creator.Menus = result.assigned_menus
 	if Steedos.isMobile()
 		mobileApps = _.filter Creator.getVisibleApps(true), (item)->
@@ -330,10 +330,10 @@ requestLicense = (spaceId)->
 
 
 requestBootstrapDataUseAction = (spaceId)->
-	ReactSteedos.store.dispatch(ReactSteedos.loadBootstrapEntitiesData({spaceId: spaceId}))
+	BuilderCreator.store.dispatch(BuilderCreator.loadBootstrapEntitiesData({spaceId: spaceId}))
 
 requestBootstrapData = (spaceId, callback)->
-	if ReactSteedos.store
+	if BuilderCreator.store
 		requestBootstrapDataUseAction(spaceId);
 	# else
 	# 	requestBootstrapDataUseAjax(spaceId, callback);
@@ -344,13 +344,13 @@ Setup.bootstrap = (spaceId, callback)->
 
 
 Meteor.startup ()->
-	RequestStatusOption = ReactSteedos.RequestStatusOption
+	RequestStatusOption = BuilderCreator.RequestStatusOption
 	lastBootStrapRequestStatus = '';
-	ReactSteedos.store?.subscribe ()->
-		state = ReactSteedos.store.getState();
+	BuilderCreator.store?.subscribe ()->
+		state = BuilderCreator.store.getState();
 		if lastBootStrapRequestStatus == RequestStatusOption.STARTED
-			lastBootStrapRequestStatus = ReactSteedos.getRequestStatus(state); # 由于handleBootstrapData函数执行比较慢，因此在handleBootstrapData执行前，给lastBootStrapRequestStatus更新值
-			if ReactSteedos.isRequestSuccess(state)
-				handleBootstrapData(clone(ReactSteedos.getBootstrapData(state)));
+			lastBootStrapRequestStatus = BuilderCreator.getRequestStatus(state); # 由于handleBootstrapData函数执行比较慢，因此在handleBootstrapData执行前，给lastBootStrapRequestStatus更新值
+			if BuilderCreator.isRequestSuccess(state)
+				handleBootstrapData(clone(BuilderCreator.getBootstrapData(state)));
 		else
-			lastBootStrapRequestStatus = ReactSteedos.getRequestStatus(state);
+			lastBootStrapRequestStatus = BuilderCreator.getRequestStatus(state);

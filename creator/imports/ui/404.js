@@ -1,5 +1,5 @@
 import './404.html';
-const { Illustration } = ReactSteedos
+const { Illustration } = BuilderCreator
 
 Template.notFound.helpers({
 	object: function() {

@@ -1,5 +1,5 @@
 // import React from 'react';
-const { FlowsModal, Bootstrap, store } = ReactSteedos
+const { FlowsModal, Bootstrap, store } = BuilderCreator
 
 function FlowsModalContainer(prop){
 	const Provider = ReactRedux.Provider;

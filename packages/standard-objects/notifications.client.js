@@ -55,7 +55,7 @@ var handleMyNotifications = function(id, notification){
 }
 
 var fetchMyNotifications = function(){
-    ReactSteedos.store.dispatch(ReactSteedos.loadNotificationsData({id: "steedos-header-notifications"}))
+    BuilderCreator.store.dispatch(BuilderCreator.loadNotificationsData({id: "steedos-header-notifications"}))
 }
 
 Meteor.startup(function(c){

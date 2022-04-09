@@ -1,6 +1,6 @@
 import './dashboard.html';
 import DashboardContainer from './containers/DashboardContainer.jsx';
-const { getWidgetReductsConfig } = ReactSteedos
+const { getWidgetReductsConfig } = BuilderCreator
 
 const getWidgetObject = (widgetConfig) => {
 	if(widgetConfig.objectName){

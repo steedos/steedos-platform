@@ -1,5 +1,5 @@
 const {Icon, Button} = DesignSystem;
-const {createTreeAction, store, viewStateSelector, createModalAction} = ReactSteedos
+const {createTreeAction, store, viewStateSelector, createModalAction} = BuilderCreator
 
 var _ = require("underscore");
 var treeId = "chooseFlowTree";

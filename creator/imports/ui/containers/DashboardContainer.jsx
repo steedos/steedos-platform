@@ -1,4 +1,4 @@
-const { store, Bootstrap, Dashboard } = ReactSteedos
+const { store, Bootstrap, Dashboard } = BuilderCreator
 
 function DashboardContainer(prop){
 	const Provider = ReactRedux.Provider;

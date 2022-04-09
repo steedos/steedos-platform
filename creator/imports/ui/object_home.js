@@ -1,5 +1,5 @@
 import './object_home.html';
-const { pluginComponentSelector, store } = ReactSteedos
+const { pluginComponentSelector, store } = BuilderCreator
 
 Template.object_home.helpers({
 	Component: function(){

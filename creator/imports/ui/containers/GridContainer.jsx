@@ -1,5 +1,5 @@
 // import React from 'react';
-const { Grid, store } = ReactSteedos
+const { Grid, store } = BuilderCreator
 
 var iconPath = `/assets/icons`;
 var gridObjectName = 'space_users';

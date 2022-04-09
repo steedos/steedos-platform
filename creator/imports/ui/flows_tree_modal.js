@@ -1,5 +1,5 @@
 import './flows_tree_modal.html';
-const { store, viewStateSelector, createModalAction, createTreeAction } = ReactSteedos
+const { store, viewStateSelector, createModalAction, createTreeAction } = BuilderCreator
 import FlowsTreeModalContainer from './containers/FlowsTreeModal'
 import {
 	getNodeItemLabel,

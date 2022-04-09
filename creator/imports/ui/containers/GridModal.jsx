@@ -1,5 +1,5 @@
 // import React from 'react';
-const { GridModal, Bootstrap, store } = ReactSteedos
+const { GridModal, Bootstrap, store } = BuilderCreator
 
 function GridModalContainer(prop){
 	const Provider = ReactRedux.Provider;

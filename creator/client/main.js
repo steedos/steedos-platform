@@ -5,7 +5,7 @@ import("./main.html");
 
 // 全局变量导入
 
-const { registerWindowLibraries, registerDefaultPlugins } = ReactSteedos
+const { registerWindowLibraries, registerDefaultPlugins } = BuilderCreator
 registerWindowLibraries();
 window["ReactDom"] = ReactDOM;
 registerDefaultPlugins();

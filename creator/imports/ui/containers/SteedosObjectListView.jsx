@@ -1,5 +1,5 @@
 const { useRef } = React;
-const { ObjectListView, SteedosRouter : Router, SteedosProvider } = SteedosUICommunity
+const { ObjectListView, SteedosRouter : Router, SteedosProvider } = BuilderSteedos
 
 window.refreshGrid = (name)=>{
 	const grid = name ? window.gridRefs[name] : window.gridRef;

@@ -1,5 +1,5 @@
 // import React from 'react';
-const { Modal, Bootstrap, store, FlowsTree } = ReactSteedos
+const { Modal, Bootstrap, store, FlowsTree } = BuilderCreator
 
 // modalProp： heading={prop.heading} id={prop.modalId} appElement="body" onConfirm={prop.onConfirm} align={prop.align} footer={prop.footer}
 // treeProp: rootNodes={prop.rootNodes} nodes={prop.nodes} id={prop.treeId}
