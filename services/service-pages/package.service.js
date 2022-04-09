@@ -37,8 +37,7 @@ module.exports = {
 			path: __dirname,
 			name: this.name,
 			isPackage: false
-		},
-		initBuilderRouter: false
+		}
 	},
 
 	/**
@@ -147,37 +146,14 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-		'steedos-server.started': async function (ctx) {
-			this.initBuilderRouter();
-		}
+		
 	},
 
 	/**
 	 * Methods
 	 */
 	methods: {
-		initBuilderRouter: {
-			handler() {
-				// if (this.settings.initBuilderRouter) {
-				// 	return;
-				// }
-				// this.settings.initBuilderRouter = true;
-				// try {
-				// 	const router = express.Router();
-				// 	let publicPath = path.join(__dirname, 'public');
-				// 	let routerPath = "";
-				// 	if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
-				// 		routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
-				// 	}
-				// 	const cacheTime = 86400000 * 1; // one day
-				// 	router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
-				// 	WebApp.rawConnectHandlers.use(router);
-				// } catch (error) {
-				// 	console.error(error)
-				// 	this.settings.initBuilderRouter = false;
-				// }
-			}
-		},
+		
 	},
 
 	/**
@@ -191,7 +167,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		this.initBuilderRouter();
+		
 	},
 
 	/**
