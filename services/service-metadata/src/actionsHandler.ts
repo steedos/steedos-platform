@@ -297,11 +297,11 @@ async function clearPackageServices(ctx, packageServices) {
         let name = null;
         if (_.isString(packageService)) {
             let foo = packageService.split('.');
-            nodeID = foo[0];
-            name = foo[1];
+            nodeID = foo.splice(0, foo.length -1).join('.');
+            name = foo.join('.');
         } else if (_.isObject(packageService)) {
             nodeID = packageService.nodeID;
-            name = packageService.nodeID;
+            name = packageService.name;
         }
         // console.log(`clearPackageServices del ===== `, getPackageServiceCacherKey(nodeID, name))
         await ctx.broker.cacher.del(getPackageServiceCacherKey(nodeID, name));
@@ -354,11 +354,11 @@ async function clearPackageServicesMetadatas(ctx, offlinePackageServices) {
         let name = null;
         if (_.isString(packageService)) {
             let foo = packageService.split('.');
-            nodeID = foo[0];
-            name = foo[1];
+            nodeID = foo.splice(0, foo.length -1).join('.');
+            name = foo.join('.');
         } else if (_.isObject(packageService)) {
             nodeID = packageService.nodeID;
-            name = packageService.nodeID;
+            name = packageService.name;
         }
         const clearPackageMetadatas = await clearPackageServiceMetadatas(ctx, nodeID, name);
         clearMetadatas = clearMetadatas.concat(clearPackageMetadatas);
