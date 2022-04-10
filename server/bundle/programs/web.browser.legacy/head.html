@@ -12,4 +12,22 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<meta name="apple-mobile-web-app-title">
+	<!-- React，可替换为 production 包 -->
+	<script src="/unpkg.com/react@16.13.1/umd/react.production.min.js"></script>
+	<!-- React DOM，可替换为 production 包 -->
+	<script src="/unpkg.com/react-dom@16.13.1/umd/react-dom.production.min.js"></script>
+	<!-- React 向下兼容，预防物料层的依赖 -->
+	<script src="/unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+	<!-- <script src="https://g.alicdn.com/platform/c/react15-polyfill/0.0.1/dist/index.js"></script> -->
+	<!-- lodash，低代码编辑器的依赖 -->
+	<script src="/unpkg.com/lodash@4.6.1/lodash.min.js"></script>
+	<!-- 日期处理包，Fusion Next 的依赖 -->
+	<script src="/unpkg.com/moment@2.24.0/min/moment.min.js"></script>
+	<script src="/unpkg.com/d3@3.5.17/d3.min.js"></script>
+	
+	<script src="/unpkg.com/@steedos-builder/react@0.2/dist/builder-react.unpkg.js"></script>
+	<script src="/unpkg.com/@steedos-widgets/design-system@0.2/dist/builder-widgets.umd.js"></script>
+	<script src="/unpkg.com/@steedos-ui/builder-community@1.1/dist/builder-steedos.umd.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/unpkg.com/@steedos-ui/builder-community@1.1/dist/builder-steedos.umd.css">
+
 	<meteor-bundled-css />
