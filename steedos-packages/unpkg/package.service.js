@@ -104,8 +104,9 @@ module.exports = {
 				const router = express.Router();
 				const cacheTime = 86400000 * 1; // one day
 				this.settings.local_packages.forEach(packageName => {		
-					var packageDir = process.cwd() + packageName;
+					var packageDir = path.join(process.cwd(), 'node_modules', packageName);
 					if (!fs.existsSync(packageDir)) {
+						console.log(packageDir)
 						try {
 							packageDir = path.dirname(require.resolve(packageName + '/package.json')).replace('/package.json', '')
 						} catch (e) {}
