@@ -29,16 +29,19 @@ module.exports = {
 			name: packageName
 		},
 		unpkgUrl: process.env.STEEDOS_UNPKG_URL,
-		packages: [
+		local_packages: [
 			'd3',
 			'react',
 			'react-dom',
 			'prop-types',
 			'lodash',
 			'moment',
+			'monaco-editor',
+			'amis',
 			'@steedos-builder/react',
 			'@steedos-ui/builder-community',
 			'@steedos-widgets/design-system',
+			'@steedos-widgets/steedos-object',
 		],
 	},
 
@@ -97,31 +100,33 @@ module.exports = {
 		loadUnpkgRoutes: function() {
 			try {
 				const router = express.Router();
+				const cacheTime = 86400000 * 1; // one day
+				this.settings.local_packages.forEach(packageName => {		
+					var packageDir = process.cwd() + packageName;
+					if (!fs.existsSync(packageDir)) {
+						try {
+							packageDir = path.dirname(require.resolve(packageName + '/package.json')).replace('/package.json', '')
+						} catch (e) {}
+					} 
+					if (fs.existsSync(packageDir)) {
+						router.use(`/unpkg.com/${packageName}/`, express.static(packageDir, { maxAge: cacheTime }));
+						// 内置模块，统一跳转到无版本号URL，防止浏览器端重复加载。
+						router.get(`/unpkg.com/${packageName}@*`, (req, res) => {
+							const packageUrl = req.path.split('/unpkg.com')[1]
+							const parsed = this.parsePackagePathname(packageUrl)
+							res.redirect(`/unpkg.com/${parsed.packageName}${parsed.filename}`);
+							return
+						})
+					} else {
+						this.logger.warn(`Package not found: ${packageName}, you should add to you project.`)
+					}
+				});
 				if (this.settings.unpkgUrl) {
 					router.get('/unpkg.com/*', (req, res) => {
 						const packageUrl = req.path.split('/unpkg.com')[1]
 						res.redirect(this.settings.unpkgUrl + packageUrl);
 						return
 					})
-				} else {
-					const cacheTime = 86400000 * 1; // one day
-					this.settings.packages.forEach(packageName => {				
-						try {										
-							var packageDir = process.cwd() + packageName;
-							if (!fs.existsSync(packageDir)) {
-								packageDir = path.dirname(require.resolve(packageName + '/package.json')).replace('/package.json', '')
-							} 
-							if (!fs.existsSync(packageDir)) {
-								console.error(`Package not found: ${packageName}, you should add to you project.`)
-							} else {
-								router.use(`/unpkg.com/${packageName}/`, express.static(packageDir, { maxAge: cacheTime }));
-								router.use(`/unpkg.com/${packageName}@([^/]+)/`, express.static(packageDir, { maxAge: cacheTime }));
-							}
-							
-						}catch(error){
-							console.error(`Package not found: ${packageName}, you should add to you project.`)
-						}
-					});
 				}
 				
 				WebApp.connectHandlers.use(router);

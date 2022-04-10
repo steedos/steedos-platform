@@ -86,15 +86,7 @@
     "uglify-js": "^3.4.9",
     "unpipe": "1.0.0",
     "url-search-params-polyfill": "^7.0.0",
-    "xml2js": "^0.4.19",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "prop-types": "^15.7.2",
-    "moment": "^2.24.0",
-    "d3": "^3.5.17",
-    "@steedos-builder/react": "^0.2.22",
-    "@steedos-widgets/design-system": "^0.2.5",
-    "@steedos-ui/builder-community": "^1.1.31"
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "@salesforce-ux/design-system": "^2.11.0",

@@ -41,9 +41,9 @@
         getWorkerUrl: function(workerId, label) {
             return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
             self.MonacoEnvironment = {
-                baseUrl: '${window.location.origin}/unpkg.com/monaco-editor/min/'
+                baseUrl: '/unpkg.com/monaco-editor/min/'
             };
-            importScripts('${window.location.origin}/unpkg.com/monaco-editor/min/vs/base/worker/workerMain.js');`
+            importScripts('/unpkg.com/monaco-editor/min/vs/base/worker/workerMain.js');`
             )}`;
         }
     };
@@ -80,7 +80,7 @@ injectScript('/unpkg.com/@steedos-builder/react/dist/builder-react.unpkg.js')
 
         Builder.set({
             rootUrl: __meteor_runtime_config__.ROOT_URL, 
-            unpkgUrl: Meteor.settings.public.unpkgUrl || 'https://unpkg.com'
+            unpkgUrl: '/unpkg.com'
         })
 
         if(Meteor.settings.public.page && Meteor.settings.public.page.assetUrls){

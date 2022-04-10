@@ -9,6 +9,16 @@
     "access": "public"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "amis": "^1.8.0",
+    "d3": "^3.5.17",
+    "lodash": "^4.17.21",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "moment": "^2.24.0",
+    "monaco-editor": "^0.33.0",
+    "prop-types": "^15.7.2",
+    "@steedos-builder/react": "^0.2.22",
+    "@steedos-ui/builder-community": "^1.1.31",
+    "@steedos-widgets/design-system": "^0.2.5"
   }
 }
