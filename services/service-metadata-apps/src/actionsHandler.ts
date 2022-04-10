@@ -236,11 +236,14 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
     if(_.isArray(objects)){
         for await (const objectApiName of objects) {
             try {
+                const objectMetadata = await getObject(ctx, objectApiName);
+                if(!objectMetadata){
+                    throw new Error(`${objectApiName} is not found in the objects of app ${app.code} `)
+                }
                 const allowRead = await objectAllowRead(objectApiName, userSession);
                 if(!allowRead){
                     continue;
                 }
-                const objectMetadata = await getObject(ctx, objectApiName);
                 if(objectMetadata){
                     const objectConfig = objectMetadata.metadata;
                     translationObject(userSession.language, objectConfig.name, objectConfig)
@@ -254,7 +257,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession){
                     )
                 }
             } catch (error) {
-                ctx.broker.logger.info(error.message);
+                ctx.broker.logger.error(error);
             }
         }
     }
@@ -305,54 +308,6 @@ async function getAppsMenus(ctx) {
     })
 
     for await (const app of _.sortBy(userApps, ['sort'])) {
-        // if(!app.code){
-        //     continue;
-        // }
-
-        // if(!mobile && app.mobile){
-        //     continue;
-        // }
-
-        // translationApp(userSession.language, app.code, app);
-        // const appPath = `/app/${app.code}`
-        // const menu = {
-        //     path: appPath,
-        //     name: `${app.label || app.name}`,
-        //     icon: "",
-        //     children: []
-        // }
-
-        // const objects = mobile ? app.mobile_objects : app.objects
-
-        // if(_.isArray(objects)){
-        //     for await (const objectApiName of objects) {
-        //         try {
-        //             const objectMetadata = await getObject(ctx, objectApiName);
-        //             if(objectMetadata){
-        //                 const objectConfig = objectMetadata.metadata;
-        //                 translationObject(userSession.language, objectConfig.name, objectConfig)
-        //                 menu.children.push(
-        //                     {
-        //                         path: `${appPath}/${objectConfig.name}`,
-        //                         name: `${objectConfig.label}`
-        //                     }
-        //                 )
-        //             }
-        //         } catch (error) {
-        //             ctx.broker.logger.info(error.message);
-        //         }
-        //     }
-        // }
-
-        // if(_.isArray(app.tabs)){
-        //     for await (const tabApiName of app.tabs) {
-        //         try {
-        //             await tabMenus(ctx, appPath, tabApiName, menu, userSession)
-        //         } catch (error) {
-        //             ctx.broker.logger.info(error.message);
-        //         }
-        //     }
-        // }
         const menu = await transformAppToMenus(ctx, app, mobile, userSession);
         if(menu){
             menus.push(menu);
