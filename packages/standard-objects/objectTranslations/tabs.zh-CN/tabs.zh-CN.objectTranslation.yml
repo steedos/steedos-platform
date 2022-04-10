@@ -41,7 +41,7 @@ fields:
     help: 
     description: 
   page:
-    label: Page
+    label: 页面
     help: 
     description: 
   action_overrides:

@@ -70,7 +70,7 @@ fields:
     type: boolean
     label: System
     omit: true
-    hidden: true
+    readonly: true
     disabled: true
   password_history:
     type: lookup
@@ -138,7 +138,7 @@ fields:
     visible_on: "{{'profile' === formData.type ? true: false}}"
   login_expiration_in_days:
     type: number
-    scale: 2
+    scale: 4
     label: 登录到期时间(天)
     sort_no: 1000
     defaultValue: 90
@@ -153,7 +153,7 @@ fields:
     visible_on: "{{'profile' === formData.type ? true: false}}"
   phone_login_expiration_in_days:
     type: number
-    scale: 2
+    scale: 4
     label: 手机App登录到期时间(天)
     sort_no: 1000
     defaultValue: 90

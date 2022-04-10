@@ -28,7 +28,7 @@ fields:
     description: 
   in_development:
     label: 开发状态
-    help: 
+    help: 开发中(仅管理员才可以访问对象)
     options:
       - label: 开发中(仅管理员才可以访问对象)
         value: '1'
