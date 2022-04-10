@@ -32,11 +32,17 @@ function isRepeatedName(doc) {
         name: doc.name
     }, {
         fields: {
-            _id: 1
+            _id: 1,
+            is_deleted: 1
         }
     });
     if (other.count() > 0) {
-        return true;
+        const otherObjects = other.fetch();
+        if(_.find(otherObjects, function(item){
+            return item.is_deleted
+        })){
+            throw new Error('已存在同名对象,请在「已删除」视图中查看')
+        }
     }
     return false;
 };
