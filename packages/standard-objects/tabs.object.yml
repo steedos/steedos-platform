@@ -104,7 +104,7 @@ fields:
     type: boolean
     label: System
     omit: true
-    hidden: true
+    readonly: true
     disabled: true
 list_views:
   all:

@@ -70,7 +70,7 @@ fields:
     type: boolean
     label: System
     omit: true
-    hidden: true
+    readonly: true
     disabled: true
   password_history:
     type: lookup

@@ -60,6 +60,7 @@ fields:
   in_development:
     type: select
     label: Development State
+    inlineHelpText: Developing ( Only administrators can access. )
     options: 
       - label: Developing ( Only administrators can access. )
         value: "1"
@@ -228,7 +229,7 @@ fields:
     type: boolean
     label: System
     omit: true
-    hidden: true
+    readonly: true
     disabled: true
   fields_serial_number:
     type: number

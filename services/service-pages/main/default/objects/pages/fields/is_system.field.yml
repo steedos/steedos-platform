@@ -2,5 +2,5 @@ name: is_system
 type: boolean
 label: 系统
 omit: true
-hidden: true
+readonly: true
 disabled: true
