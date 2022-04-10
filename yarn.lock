@@ -6254,10 +6254,10 @@
     rollup-plugin-visualizer "^5.5.0"
     tslib "^2.3.1"
 
-"@steedos-ui/builder-ag-grid@1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-ag-grid/-/builder-ag-grid-1.1.32.tgz#026c8493f4594047ae54890b110ac814feef1594"
-  integrity sha512-+6HAFhbXgFhKaCym4UGbQXyK24JDPB6RoFMiNjjh4CtGgtfzmsFLOuoC0DEZFXINugeYGu2HmAtzGMxW5okaHw==
+"@steedos-ui/builder-ag-grid@1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-ag-grid/-/builder-ag-grid-1.1.33.tgz#47cedb5d615b5dd1d7775ef4a88608064ee0d1a8"
+  integrity sha512-J71gZeePbplPaUnMCH5UKmECv7sH26Wfm39y8DvEoc4/ivpxZfYPwSvkiNGpeUJpwE+oIk4hf5xTcDRyCv8/0g==
   dependencies:
     "@ag-grid-community/all-modules" "26.0.0"
     "@ag-grid-community/react" "26.0.0"
@@ -6276,10 +6276,10 @@
     "@emotion/styled" "^11.1.5"
     "@jsx-lite/core" "^0.0.17"
     "@rollup/plugin-alias" "^3.1.9"
-    "@steedos-ui/builder-form" "1.1.32"
-    "@steedos-ui/builder-locale" "1.1.32"
-    "@steedos-ui/builder-sdk" "1.1.32"
-    "@steedos-ui/builder-store" "1.1.32"
+    "@steedos-ui/builder-form" "1.1.33"
+    "@steedos-ui/builder-locale" "1.1.33"
+    "@steedos-ui/builder-sdk" "1.1.33"
+    "@steedos-ui/builder-store" "1.1.33"
     "@steedos/filters" "2.2.8"
     ag-grid-community "26.0.0"
     array-move "^3.0.1"
@@ -6306,10 +6306,10 @@
     rollup-plugin-visualizer "^5.6.0"
     tslib "^2.3.1"
 
-"@steedos-ui/builder-community@^1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.32.tgz#369c63a4fb19facc1040fe8f62ea10ab228ed66d"
-  integrity sha512-h0yFs+gvab8uIYpvUs4NPnDedEJIUmhc7eBwESmPhpUt2HytluAuXwRNVsl9mtKfQfkFVLu/n95gI/ZcTwvwcQ==
+"@steedos-ui/builder-community@^1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.33.tgz#e8f2fcf78ffa32d3d6c72cbcb2db3a01f182b725"
+  integrity sha512-/LaWu8TUUt0M+Zc+pnz8Y+4BKAmbHukkgLge7lJTz5qfPkGNPXivqsBc+mXTkFgjGE7jXbrDEuYohyBsnEhgTQ==
 
 "@steedos-ui/builder-form@1.1.30":
   version "1.1.30"
@@ -6365,18 +6365,19 @@
     tslib "^2.3.1"
     webcomponents-in-react "^1.0.1"
 
-"@steedos-ui/builder-form@1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-form/-/builder-form-1.1.32.tgz#aadd3b9351413cdafe4f34eb4a8b9880849e6f15"
-  integrity sha512-EQRuGFI7vmSH6EcA5MRcxx/dCHEhwq6f8XV34JKcJJj4hFUda71QsvSfAWmDxeX05yyloBHulOf3i8FRT4m+RA==
+"@steedos-ui/builder-form@1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-form/-/builder-form-1.1.33.tgz#0b41043c2c87c952198814ec2862d953e96510fd"
+  integrity sha512-QS0XPPED0N2zyFu69rgivg6La9Loe/prnN4bQvnAUfGH51dTexRW8Q/vKMj3fbie8gvwTzTH2RvYmvIcjPPf5g==
   dependencies:
     "@ant-design/pro-form" "^1.59.3"
     "@chakra-ui/react" "^1.4.2"
     "@emotion/core" ">=10"
     "@emotion/styled" "^11.1.5"
     "@jsx-lite/core" "^0.0.17"
-    "@steedos-ui/builder-locale" "1.1.32"
-    "@steedos-ui/builder-store" "1.1.32"
+    "@steedos-ui/builder-locale" "1.1.33"
+    "@steedos-ui/builder-store" "1.1.33"
+    "@steedos-ui/design-system" "1.1.33"
     classnames "^2.3.1"
     from "^0.1.7"
     fs-extra-promise "^1.0.1"
@@ -6392,14 +6393,14 @@
     tslib "^2.3.1"
     webcomponents-in-react "^1.0.1"
 
-"@steedos-ui/builder-lightning@1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-lightning/-/builder-lightning-1.1.32.tgz#244b7f4044bb350a96f96d4084b6d9a9afce2d5e"
-  integrity sha512-IqdDIAbpvOJWMd61uQqjJU3k/J1Dh8RM9sMFPO/prLGrymx2n4bA7NBMM0aRXHEDAupdas1onABtWwiF9DoJKQ==
+"@steedos-ui/builder-lightning@1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-lightning/-/builder-lightning-1.1.33.tgz#f8cee0b2baed76326307f8e5c22cf9169fb92d1f"
+  integrity sha512-gA+D6CNLQF2jeBm7Q5IBl4WbY7Y8ZQdsFWQMw9Tg3C3Z0RvclBN/+nvFIccJpducEqptqFJWNM5CJYrnhUiQVw==
   dependencies:
     "@babel/plugin-proposal-object-rest-spread" "^7.13.8"
     "@salesforce/design-system-react" "^0.10.46"
-    "@steedos-widgets/design-system" "^0.2.5"
+    "@steedos-ui/design-system" "1.1.33"
 
 "@steedos-ui/builder-lightning@^1.1.29":
   version "1.1.31"
@@ -6424,10 +6425,10 @@
   dependencies:
     typescript "^4.6.2"
 
-"@steedos-ui/builder-locale@1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-locale/-/builder-locale-1.1.32.tgz#3e093287e08c5c424619bd9d865fc15331d03603"
-  integrity sha512-HHGTEi9O+xftu1ZfTLmZaVjnhI3f6ew1QjchnEEupoztcFrYV6xjMUft3+3R1HtmzHDBWPGlKrzSycQj8Hq4Fg==
+"@steedos-ui/builder-locale@1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-locale/-/builder-locale-1.1.33.tgz#8fec88b5baa7444cbb8def1a9f8e91743f6a96e2"
+  integrity sha512-W9S9OOgiesxatSNFvD6ecsdYJKtMRzy31CAkmseC9/Ne+A5TPqw5EKKyomzlW05sBuBrFUx2QuEBLRrzOkrKVw==
   dependencies:
     typescript "^4.6.2"
 
@@ -6485,10 +6486,10 @@
     styled-components "^5.1.1"
     tslib "^2.1.0"
 
-"@steedos-ui/builder-object@1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-object/-/builder-object-1.1.32.tgz#e7a4879b22d17242702660977ee6535a5a72f867"
-  integrity sha512-50v6V9INlCIu2YIhFN/FzmIjAuH4JCgEYWqw+X+KLe7lTDOtBV3PN8zMmsmPCyxchmeDqYx9YHT+DcBGYHnkBA==
+"@steedos-ui/builder-object@1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-object/-/builder-object-1.1.33.tgz#fad894fb254e56db1838340e3f32d48faecea235"
+  integrity sha512-0ECRg6ZPX2Kq1KttF2vhJkJoTniEP2UZI7C4hChEi/Xc0gJZ4YOvkFChklLQ/byMtxnZfauzSumZGragdztkNg==
   dependencies:
     "@ant-design/icons" "^4.6.2"
     "@ant-design/pro-card" "^1.18.42"
@@ -6507,10 +6508,10 @@
     "@monaco-editor/react" "^4.3.1"
     "@rollup/plugin-alias" "^3.1.9"
     "@steedos-builder/react" "^0.2.21"
-    "@steedos-ui/builder-ag-grid" "1.1.32"
-    "@steedos-ui/builder-form" "1.1.32"
-    "@steedos-ui/builder-locale" "1.1.32"
-    "@steedos-ui/builder-store" "1.1.32"
+    "@steedos-ui/builder-ag-grid" "1.1.33"
+    "@steedos-ui/builder-form" "1.1.33"
+    "@steedos-ui/builder-locale" "1.1.33"
+    "@steedos-ui/builder-store" "1.1.33"
     "@steedos/filters" "2.2.8"
     array-move "^3.0.1"
     fs-extra-promise "^1.0.1"
@@ -6593,10 +6594,10 @@
     styled-components "^5.1.1"
     tslib "^2.3.1"
 
-"@steedos-ui/builder-page@1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-page/-/builder-page-1.1.32.tgz#33b9352a30b7d4b909155beb6597a444e5ce042e"
-  integrity sha512-yEgWEgAQphTw58+iOeHRg6qOuRHnlM9Frkc4t3pd00P+GIMRN+sdjuVwh7TuA//Upg8q7pOfEvI6hpELhap2zA==
+"@steedos-ui/builder-page@1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-page/-/builder-page-1.1.33.tgz#d7238f5d88c40f3f9485f0c5380ea45ca1ac65ca"
+  integrity sha512-QOqzM1xGMPHIrZx93l8UzL2WZnTigQNG/8WKrsQ67NX0r2VWa+/4xU/YT6wN4rPsEO5jAgtWlfxHr44U3F6NSg==
   dependencies:
     "@ant-design/icons" "^4.6.2"
     "@ant-design/pro-card" "^1.18.42"
@@ -6611,10 +6612,10 @@
     "@emotion/styled" "^11.1.5"
     "@jsx-lite/core" "^0.0.17"
     "@rollup/plugin-alias" "^3.1.9"
-    "@steedos-ui/builder-locale" "1.1.32"
-    "@steedos-ui/builder-object" "1.1.32"
-    "@steedos-ui/builder-store" "1.1.32"
-    "@steedos-ui/builder-viz-lib" "1.1.32"
+    "@steedos-ui/builder-locale" "1.1.33"
+    "@steedos-ui/builder-object" "1.1.33"
+    "@steedos-ui/builder-store" "1.1.33"
+    "@steedos-ui/builder-viz-lib" "1.1.33"
     "@steedos/filters" "2.2.8"
     array-move "^3.0.1"
     axios "^0.21.1"
@@ -6719,10 +6720,10 @@
     "@steedos/filters" "2.2.8"
     node-fetch "^2.6.1"
 
-"@steedos-ui/builder-sdk@1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-sdk/-/builder-sdk-1.1.32.tgz#8c2ba7acc212bda0a8a16089a5f82a9a80f7dace"
-  integrity sha512-O7UrSXyu4Vg/V37cPXAY9vYXMZL+yLc27KPnlYchIqL3EwuOXWKPer6riF5qxbIARXZ0qfC8aCGVvH6f08cDkQ==
+"@steedos-ui/builder-sdk@1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-sdk/-/builder-sdk-1.1.33.tgz#a6110537fb6f5a318791250417c3728c49becaa9"
+  integrity sha512-G776Ekwf4bE+bNuk4liSk4qOYpBp1GEyFQCuLzgQP95T9mpjgPfsdgNFQ9rsmocepDdHxBVjkhW4q31azbe5AA==
   dependencies:
     "@steedos/filters" "2.2.8"
     node-fetch "^2.6.1"
@@ -6749,13 +6750,13 @@
     mobx-react-lite "^3.2.0"
     mobx-state-tree "^5.0.1"
 
-"@steedos-ui/builder-store@1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-store/-/builder-store-1.1.32.tgz#37dd40fbc25d1315478d2ab066fa0d75bc6c541e"
-  integrity sha512-qiU/nzgDVsmRebk5l690rSF0xm6PBL1fdTBbRKgojnrmxizyZPaTd+gutDPOmi/JfVJXkJtqTDmSVWbKhp1Law==
+"@steedos-ui/builder-store@1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-store/-/builder-store-1.1.33.tgz#e23b320a8301fb72a5e0c47a485c328bcf2429e4"
+  integrity sha512-qOYn90R1zcbzyU0zc5O0QL/fSBHdGVs2I6EbwEbGKA2sDyRzxHg8YRxY6sOMGvj9ZGFKMVOpB5U+9HzROF/5DA==
   dependencies:
     "@steedos-builder/react" "^0.2.21"
-    "@steedos-ui/builder-sdk" "1.1.32"
+    "@steedos-ui/builder-sdk" "1.1.33"
     mobx "^6.1.8"
     mobx-react-lite "^3.2.0"
     mobx-state-tree "^5.0.1"
@@ -6788,10 +6789,10 @@
     use-debounce "^3.4.1"
     use-media "^1.4.0"
 
-"@steedos-ui/builder-viz-lib@1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-viz-lib/-/builder-viz-lib-1.1.32.tgz#0ee0dcc69b635d4881c42ba223b62492aa662055"
-  integrity sha512-1TW2W5K3BpwX7t6IfJzSpmPJZVCiL1hEWcObxnT+uSkUaUP/Jf8KSr+xzoATl14SuAfHsJCg30EeKls99HjZ3Q==
+"@steedos-ui/builder-viz-lib@1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-viz-lib/-/builder-viz-lib-1.1.33.tgz#aa1481dc219fb15436612360a95960b9cf380a1a"
+  integrity sha512-eUmK6PQ9yErkYUHL4xUoM1awPcxvhHqczgduTkgur3ZTd3AUFX+UW8w3y7dVZjN/DLjxgur72bo2+pwTUv5+Rw==
   dependencies:
     axios "^0.21.1"
     beautifymarker "^1.0.7"
@@ -6816,10 +6817,10 @@
     use-debounce "^3.4.1"
     use-media "^1.4.0"
 
-"@steedos-ui/builder-widgets@^1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-1.1.32.tgz#080f6fe3be61f9f64ceb6c2b7e6c4725f3b7d553"
-  integrity sha512-ugPVf2qsG1yI03WJBXCzpn2Gp/GSsK2QpzXTkAQn4GcO7Tb376yiDUx7PH9wZMrPVEcbMeZC2dLxW2m2yEAn4w==
+"@steedos-ui/builder-widgets@^1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-1.1.33.tgz#dd49e6764846b3f90c328dcf02d7df3b506d5ccb"
+  integrity sha512-2AvukBX6xodbE4hXaLQkZ6Rk/X7fRaKhKtkKZMSZOcYvmiJ8OIlAu4JW+3a7Ua0F4uEWiyDpLYwCp7/yJwm9Gg==
   dependencies:
     "@ant-design/pro-form" "^1.59.3"
     "@chakra-ui/icons" "^1.1.7"
@@ -6830,10 +6831,10 @@
     "@salesforce-ux/design-system" "^2.17.5"
     "@steedos-builder/react" "^0.2.21"
     "@steedos-builder/sdk" "^0.2.12"
-    "@steedos-ui/builder-ag-grid" "1.1.32"
-    "@steedos-ui/builder-lightning" "1.1.32"
-    "@steedos-ui/builder-object" "1.1.32"
-    "@steedos-ui/builder-page" "1.1.32"
+    "@steedos-ui/builder-ag-grid" "1.1.33"
+    "@steedos-ui/builder-lightning" "1.1.33"
+    "@steedos-ui/builder-object" "1.1.33"
+    "@steedos-ui/builder-page" "1.1.33"
     antd "^4.19.2"
     lodash-es "^4.17.10"
     next "^12.1.0"
@@ -6855,10 +6856,10 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/design-system@^1.1.32":
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-1.1.32.tgz#31e00047d1b7bf5e26ce071b682919f4f0565836"
-  integrity sha512-kdvBI+OGvKFcOZmyVdwNoQ7bnVN8OIPnwM9+ARM2dDt7UKOvxDwOr0eFLU2dHzzwOYdYWORPdesrxzne8LEtIg==
+"@steedos-ui/design-system@1.1.33", "@steedos-ui/design-system@^1.1.33":
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-1.1.33.tgz#08e547b7d41f442c07c8425e252c687571d9e1e0"
+  integrity sha512-i7+sXk8pEUoVvbEiF09MyHjsTEkwAGHd3gg/bJ41EJDCGUVY7AW+T3PoQVAy0wM2zeA20RyPoT7/mcoOS01wTw==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
@@ -6938,10 +6939,10 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos/ee_service-plugin-license@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@steedos/ee_service-plugin-license/-/ee_service-plugin-license-2.2.1.tgz#d9b7f9a7dfbfc9a09af8bd4c687a154aaeee67be"
-  integrity sha512-10kNFgWfZGP/C1TU8Ta7wOlrD5Dq+ezdBAiC8BE0jVxkpE4kaZXWiZGEV9twVg14d5xp6nhFYpnXtqxF9lsOoQ==
+"@steedos/ee_service-plugin-license@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@steedos/ee_service-plugin-license/-/ee_service-plugin-license-2.2.2.tgz#95262b76dffd6f302ebe41603d97ddd1322bc1ea"
+  integrity sha512-Z2jmUCUNWn5jTiqgLSa6gmmpXg9oLHLilrAOeEFsDaVgrxPBAEoyrbuI2st3IIA1m7hMBqhpEiSnAic9QZSfjQ==
   dependencies:
     axios "^0.21.4"
 
