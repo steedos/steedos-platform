@@ -15,13 +15,13 @@ function loadObjectPermission(doc){
         try {
             objectDataSourceName = objectql.getObject(doc.object_name).datasource.name;
         } catch (error) {
-            console.warn('warn: Not loaded. Invalid custom permission_objects -> ', doc.name, doc.object_name);
+            // console.warn('warn: Not loaded. Invalid custom permission_objects -> ', doc.name, doc.object_name);
             return;
         }
     }
 
     if(dbObject && !objectCore.canLoadObject(dbObject.name, objectDataSourceName)){
-        console.warn('warn: Not loaded. Invalid custom permission_objects -> ', doc.name, doc.object_name);
+        // console.warn('warn: Not loaded. Invalid custom permission_objects -> ', doc.name, doc.object_name);
         return;
     }
     const pset = Creator.getCollection("permission_set").findOne({_id: doc.permission_set_id, space: doc.space});
