@@ -28,10 +28,18 @@ module.exports = {
 			path: __dirname,
 			name: packageName
 		},
-		unpkgUrl: process.env.STEEDOS_UNPKG_URL? process.env.STEEDOS_UNPKG_URL : 'node_modules',
-		white_list: [],
-		black_list: [],
-		resolved_modules: [],
+		unpkgUrl: process.env.STEEDOS_UNPKG_URL,
+		packages: [
+			'd3',
+			'react',
+			'react-dom',
+			'prop-types',
+			'lodash',
+			'moment',
+			'@steedos-builder/react',
+			'@steedos-ui/builder-community',
+			'@steedos-widgets/design-system',
+		],
 	},
 
 	/**
@@ -89,28 +97,33 @@ module.exports = {
 		loadUnpkgRoutes: function() {
 			try {
 				const router = express.Router();
-				const unpkgUrl = this.settings.unpkgUrl
-				const resolved_modules = this.settings.resolved_modules;
-				router.get('/unpkg.com/*', (req, res) => {
-					const packageUrl = req.path.split('/unpkg.com')[1]
-					if (unpkgUrl !== 'node_modules') {
-						res.redirect(unpkgUrl + packageUrl);
+				if (this.settings.unpkgUrl) {
+					router.get('/unpkg.com/*', (req, res) => {
+						const packageUrl = req.path.split('/unpkg.com')[1]
+						res.redirect(this.settings.unpkgUrl + packageUrl);
 						return
-					}
-					const parsed = this.parsePackagePathname(packageUrl)
-					try {
-						if (parsed && resolved_modules.indexOf(parsed.packageName)<0) {
-							const packageDir =  path.dirname(require.resolve(parsed.packageName + '/package.json')).replace('/package.json', '')
-							if (fs.existsSync(packageDir)) {
-								const cacheTime = 86400000 * 1; // one day
-								router.use(`/unpkg.com/${parsed.packageName}`, express.static(packageDir, { maxAge: cacheTime }));
-								resolved_modules.push(parsed.packageName)
+					})
+				} else {
+					const cacheTime = 86400000 * 1; // one day
+					this.settings.packages.forEach(packageName => {				
+						try {										
+							var packageDir = process.cwd() + packageName;
+							if (!fs.existsSync(packageDir)) {
+								packageDir = path.dirname(require.resolve(packageName + '/package.json')).replace('/package.json', '')
+							} 
+							if (!fs.existsSync(packageDir)) {
+								console.error(`Package not found: ${packageName}, you should add to you project.`)
+							} else {
+								router.use(`/unpkg.com/${packageName}/`, express.static(packageDir, { maxAge: cacheTime }));
+								router.use(`/unpkg.com/${packageName}@([^/]+)/`, express.static(packageDir, { maxAge: cacheTime }));
 							}
+							
+						}catch(error){
+							console.error(`Package not found: ${packageName}, you should add to you project.`)
 						}
-					}catch(error){
-						console.log(`Package not found: ${parsed.packageSpec}, you should add to you project.`)
-					}
-				});
+					});
+				}
+				
 				WebApp.connectHandlers.use(router);
 			} catch (error) {
 				console.error(error)
