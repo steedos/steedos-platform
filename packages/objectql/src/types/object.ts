@@ -1009,7 +1009,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     getAccessFields(objectFields, objectLayout, objectPermission){
         const accessFields = {};
         const universallyRequiredFields = _.filter(objectFields, (objectFile)=>{
-            return objectFile.required;
+            return _.isBoolean(objectFile.required) && objectFile.required;
         });
 
         const universallyRequiredFieldsName = _.pluck(universallyRequiredFields, 'name');
