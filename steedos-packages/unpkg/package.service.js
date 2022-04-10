@@ -7,6 +7,8 @@
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
+const express = require('express');
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -22,7 +24,8 @@ module.exports = {
 		packageInfo: {
 			path: __dirname,
 			name: packageName
-		}
+		},
+		unpkgUrl: process.env.STEEDOS_PUBLIC_PAGE_UNPKGURL?process.env.STEEDOS_PUBLIC_PAGE_UNPKGURL: 'https://unpkg.com'
 	},
 
 	/**
@@ -49,6 +52,19 @@ module.exports = {
 	 */
 	methods: {
 
+		loadUnpkgRedirectRoutes: function() {
+			try {
+				const router = express.Router();
+				const unpkgUrl = this.settings.unpkgUrl
+				router.get('/unpkg.com/*', (req, res) => {
+					const packageUrl = req.path.split('/unpkg.com')[1]
+					res.redirect(unpkgUrl + packageUrl);
+				});
+				WebApp.connectHandlers.use(router);
+			} catch (error) {
+				console.error(error)
+			}
+		},
 	},
 
 	/**
@@ -62,7 +78,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-
+		this.loadUnpkgRedirectRoutes();
 	},
 
 	/**
