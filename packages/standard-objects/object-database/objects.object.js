@@ -42,6 +42,8 @@ function isRepeatedName(doc) {
             return item.is_deleted
         })){
             throw new Error('已存在同名对象,请在「已删除」视图中查看')
+        }else{
+            return true;
         }
     }
     return false;
