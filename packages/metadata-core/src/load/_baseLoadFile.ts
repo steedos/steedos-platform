@@ -1,8 +1,13 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @Description: 
+ */
 import { getMetadataTypeInfo } from '../typeInfo';
 import { loadFile } from '../loadFile'
 import _ from 'underscore';
 const path = require('path');
-const glob = require('glob');
+const globby = require('globby');
 
 import { checkNameEquals } from '../util/check_name_equals'
 
@@ -18,7 +23,12 @@ export class BaseLoadMetadataFile{
         this.metadataInfo = getMetadataTypeInfo(metadataName)
     }
     load(filePath){
-        let matchedPaths = glob.sync(path.join(filePath, this.metadataInfo.defaultDirectory, `*.${this.metadataInfo.ext}.${this.ext}`));
+        const filePatten = [
+            path.join(filePath, this.metadataInfo.defaultDirectory, `*.${this.metadataInfo.ext}.${this.ext}`),
+            "!" + path.join(filePath, "node_modules"),
+        ];
+        
+        let matchedPaths = globby.sync(filePatten);
         let metadatasJSON = {};
         for (let k=0; k<matchedPaths.length; k++) {
             let matchedPath = matchedPaths[k];
