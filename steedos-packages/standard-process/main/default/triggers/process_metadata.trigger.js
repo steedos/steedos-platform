@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-31 11:14:18
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-06 10:32:01
+ * @LastEditTime: 2022-04-11 15:26:04
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -26,13 +26,21 @@ async function getAll() {
 module.exports = {
     listenTo: 'process',
 
+    beforeFind: async function () {
+        delete this.query.fields;
+    },
+
+    beforeAggregate: async function () {
+        delete this.query.fields;
+    },
+
     afterFind: async function () {
         const { spaceId } = this;
         let dataList = await getAll();
         if (!_.isEmpty(dataList)) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
-                    return value._id === doc._id
+                    return value.name === doc.name
                 })) {
                     this.data.values.push(doc);
                 }
@@ -52,7 +60,7 @@ module.exports = {
         if (!_.isEmpty(dataList)) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
-                    return value._id === doc._id
+                    return value.name === doc.name
                 })) {
                     this.data.values.push(doc);
                 };
@@ -66,6 +74,7 @@ module.exports = {
         }
     },
     afterCount: async function () {
+        delete this.query.fields;
         let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length;
     },

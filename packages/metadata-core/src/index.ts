@@ -188,7 +188,21 @@ export function getFileinfoByFilename(filename) {
         metadataName = TypeInfoKeys.Page;
         itemName = _.first(filename.split('.'));
 
-    }else if(filename.endsWith('.chart.yml')){
+    }
+    // 使用正则表达式校验{yyy}.page.{xxx}.json
+    else if(filename.match(/^[a-zA-Z0-9_]+\.page\.[a-zA-Z0-9_]+\.json$/)){
+        metadataName = TypeInfoKeys.Page;
+        itemName = _.first(filename.split('.'));
+    }else if(filename.endsWith('.process.yml')){
+        metadataName = TypeInfoKeys.Process;
+        itemName = _.first(filename.split('.'));
+    }
+    // 使用正则表达式校验 {xxx}.process.{yyy}.{zzz}
+    else if(filename.match(/^[a-zA-Z0-9_]+\.process\.[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+$/)){
+        metadataName = TypeInfoKeys.Process;
+        itemName = _.first(filename.split('.'));
+    }
+    else if(filename.endsWith('.chart.yml')){
         metadataName = TypeInfoKeys.Chart;
         itemName = _.first(filename.split('.'));
     }else if(filename.endsWith('.tab.yml')){

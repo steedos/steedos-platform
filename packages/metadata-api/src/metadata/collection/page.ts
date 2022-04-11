@@ -1,9 +1,19 @@
+/*
+ * @Author: baozhoutao@hotoa.com
+ * @Date: 2021-08-30 12:06:41
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-04-11 15:34:46
+ * @Description: 
+ */
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
 import _ from 'underscore';
 import { MetadataBaseCollection } from './_base'
+import { deleteCommonAttribute, sortAttribute } from '../../util/attributeUtil'
 
 const metadataName = TypeInfoKeys.Page;
-const WIGETS_TABLE_NAME = "widgets"
+const WIGETS_TABLE_NAME = "widgets";
+const ASSIGNMENTS_TABLE_NAME = "page_assignments";
+const PAGE_VERSION_TABLE_NAME = "page_versions";
 export class PageCollection extends MetadataBaseCollection{
     constructor(){
         super(metadataName, [WIGETS_TABLE_NAME]);
@@ -13,6 +23,9 @@ export class PageCollection extends MetadataBaseCollection{
         const pages = await dbManager.find(this.collectionName, {});
         for (const page of pages) {
             page.widgets = await this.getPageWidgets(dbManager, page.name);
+            // 获取page_assignments和page_versions最新的一条记录的schema
+            page.pageAssignments = await this.getPageAssignments(dbManager, page._id);
+            page.schema = await this.getLatestPageVersionSchema(dbManager, page._id);
         }
         return pages;
     }
@@ -20,6 +33,9 @@ export class PageCollection extends MetadataBaseCollection{
     async findOne(dbManager, metadataApiName){
         const page = await dbManager.findOne(this.collectionName, {name: metadataApiName});
         page[WIGETS_TABLE_NAME] = await this.getPageWidgets(dbManager, page.name);
+        // 获取page_assignments和page_versions最新的一条记录的schema
+        page.pageAssignments = await this.getPageAssignments(dbManager, page._id);
+        page.schema = await this.getLatestPageVersionSchema(dbManager, page._id);
         return page;
     }
 
@@ -66,5 +82,25 @@ export class PageCollection extends MetadataBaseCollection{
             delete widget.id;
         })
         return widgets
+    }
+
+    // 获取page_assignments返回必要属性
+    private async getPageAssignments(dbManager, pageId){
+        const pageAssignments = await dbManager.find(ASSIGNMENTS_TABLE_NAME, {page: pageId});
+        if(pageAssignments && pageAssignments.length > 0){
+            for (const assignment of pageAssignments) {
+                deleteCommonAttribute(assignment);
+            }
+        }
+        return pageAssignments;
+    }
+
+    // 获取page_versions最新版的schema
+    private async getLatestPageVersionSchema(dbManager, pageId){
+        const pageVersions = await dbManager.find(PAGE_VERSION_TABLE_NAME, {page: pageId}, {sort: {version: -1}});
+        if(pageVersions && pageVersions.length > 0){
+            return pageVersions[0].schema;
+        }
+        return '';
     }
 }

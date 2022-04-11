@@ -1,8 +1,8 @@
 /*
- * @Author: baozhoutao@hotoa.com
- * @Date: 2022-03-28 17:09:20
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-04-10 14:27:24
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-11 15:23:26
+ * @LastEditTime: 2022-04-10 14:33:55
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -12,17 +12,25 @@ async function getAll(){
     const schema = objectql.getSteedosSchema();
     const configs = await objectql.registerPage.getAll(schema.broker)
     const dataList = _.pluck(configs, 'metadata');
-
+    let versions = [];
     _.each(dataList, function(item){
         if(!item._id){
             item._id = `${item.name}`
         }
+        versions.push({
+            _id: item._id,
+            description: item.description,
+            is_active: false,
+            page: item._id,
+            schema: item.schema,
+            version: 1,
+        });
     })
-    return dataList;
+    return versions;
 }
 
 module.exports = {
-    listenTo: 'pages',
+    listenTo: 'page_versions',
 
     beforeFind: async function () {
         delete this.query.fields;
@@ -35,10 +43,10 @@ module.exports = {
     afterFind: async function(){
         const { spaceId } = this;
         let dataList = await getAll();
-        if (!_.isEmpty(dataList)) {
+        if (dataList) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
-                    return value.name === doc.name
+                    return value._id === doc._id
                 })) {
                     this.data.values.push(doc);
                 }
@@ -55,10 +63,10 @@ module.exports = {
     afterAggregate: async function(){
         const { spaceId } = this;
         let dataList = await getAll();
-        if (!_.isEmpty(dataList)) {
+        if (dataList) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
-                    return value.name === doc.name
+                    return value._id === doc._id
                 })) {
                     this.data.values.push(doc);
                 }

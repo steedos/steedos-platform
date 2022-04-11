@@ -1,28 +1,42 @@
 /*
- * @Author: baozhoutao@hotoa.com
- * @Date: 2022-03-28 17:09:20
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-04-10 14:34:08
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-11 15:23:26
+ * @LastEditTime: 2022-04-10 15:24:17
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
-async function getAll(){
+async function getAll() {
     const schema = objectql.getSteedosSchema();
     const configs = await objectql.registerPage.getAll(schema.broker)
     const dataList = _.pluck(configs, 'metadata');
-
-    _.each(dataList, function(item){
-        if(!item._id){
+    let assignments = [];
+    _.each(dataList, function (item) {
+        if (!item._id) {
             item._id = `${item.name}`
         }
+        if (item.pageAssignments) {
+            for (const assignment of item.pageAssignments) {
+                assignments.push({
+                    _id: assignment._id,
+                    app: assignment.app,
+                    desktop: assignment.desktop,
+                    is_system: assignment.is_system || false,
+                    mobile: assignment.mobile,
+                    page: item._id,
+                    profile: assignment.profile,
+                    record_type: assignment.record_type,
+                });
+            }
+        }
     })
-    return dataList;
+    return assignments;
 }
 
 module.exports = {
-    listenTo: 'pages',
+    listenTo: 'page_assignments',
 
     beforeFind: async function () {
         delete this.query.fields;
@@ -32,13 +46,13 @@ module.exports = {
         delete this.query.fields;
     },
 
-    afterFind: async function(){
+    afterFind: async function () {
         const { spaceId } = this;
         let dataList = await getAll();
-        if (!_.isEmpty(dataList)) {
+        if (dataList) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
-                    return value.name === doc.name
+                    return value._id === doc._id
                 })) {
                     this.data.values.push(doc);
                 }
@@ -52,13 +66,13 @@ module.exports = {
         }
 
     },
-    afterAggregate: async function(){
+    afterAggregate: async function () {
         const { spaceId } = this;
         let dataList = await getAll();
-        if (!_.isEmpty(dataList)) {
+        if (dataList) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
-                    return value.name === doc.name
+                    return value._id === doc._id
                 })) {
                     this.data.values.push(doc);
                 }
@@ -71,16 +85,16 @@ module.exports = {
             }
         }
     },
-    afterCount: async function(){
+    afterCount: async function () {
         delete this.query.fields;
         let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length;
     },
-    afterFindOne: async function(){
-        if(_.isEmpty(this.data.values)){
+    afterFindOne: async function () {
+        if (_.isEmpty(this.data.values)) {
             const all = await getAll();
             const id = this.id;
-            this.data.values = _.find(all, function(item){
+            this.data.values = _.find(all, function (item) {
                 return item._id === id
             });
         }
