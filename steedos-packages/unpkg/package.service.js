@@ -104,7 +104,6 @@ module.exports = {
 				this.settings.local_packages.forEach(packageName => {		
 					var packageDir = path.join(process.cwd(), 'node_modules', packageName);
 					if (!fs.existsSync(packageDir)) {
-						console.log(packageDir)
 						try {
 							packageDir = path.dirname(require.resolve(packageName + '/package.json')).replace('/package.json', '')
 						} catch (e) {}
