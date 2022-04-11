@@ -1069,7 +1069,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         hidden: false,
                         readonly: false,
                         disabled: false,
-                        required: fieldLayout ? fieldLayout.is_required : false,
+                        required: _.isString(field.required) ? field.required : (fieldLayout ? fieldLayout.is_required : false),
                     })
                     return;
                 }
