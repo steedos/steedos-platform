@@ -78,6 +78,18 @@ Template.creator_table_cell.onRendered ->
 Template.creator_table_cell.helpers Creator.helpers
 
 Template.creator_table_cell.helpers
+	isForm: ()-> 
+		return this.field_name == "form"
+
+	stringify: (obj)->
+		if Object::toString.call(obj) == "[object Object]"
+			arr = []
+			for i of obj
+				arr.push '<div class="label-wrapper">' + AutoForm.getLabelForField("form."+i) + '</div><div class="text-wrapper">' + obj[i] + '</div>'				# console.log 'label'
+			arr.join('')
+		else
+			obj
+
 	openWindow: ()->
 		if Steedos.isMobile()
 			return false
@@ -141,7 +153,7 @@ Template.creator_table_cell.helpers
 		return true
 
 	showEditIcon: ()->
-		if this.hideIcon
+		if this.hideIcon or this.field_name == "form"
 			return false
 		return true
 

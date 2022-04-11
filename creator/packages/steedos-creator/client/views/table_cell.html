@@ -1,6 +1,6 @@
 <template name="creator_table_cell">
 	<span class="creator_table_cell slds-grid slds-grid_align-spread field-{{fieldDataType}}">
-		<div class="{{#unless is_detail_view}}slds-truncate {{/unless}}{{#unless isMarkdown field.type}}cell-container {{else}}editor-preview-side {{/unless}}">
+		<div class="{{#unless is_detail_view}}slds-truncate {{/unless}}{{#unless isMarkdown field.type}}cell-container {{else}}editor-preview-side {{/unless}}{{#if isForm}}form-wrapper {{/if}}">
 			{{#each cellData}}
 				{{#if isTable}}
 					<div class="cellGridContainer slds-table_edit slds-hint-parent"></div>
@@ -41,7 +41,7 @@
 							{{/if}}
 						{{/if}}
 					{{else}}
-						<span title="{{value}}">{{{value}}}&nbsp;</span>
+						<span title="{{value}}">{{{stringify value}}}&nbsp;</span>
 					{{/if}}
 				{{/if}}
 			{{/each}}
@@ -52,12 +52,12 @@
 			{{/if}}
 		</div>
 		{{#if showEditIcon}}
-			<span class="triggerContainer">
-				<div class="{{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="{{_ 'edit'}}">
-					{{> steedos_button className="slds-cell-edit__button slds-m-left_x-small" iconClassName=(eidtIconClassName editable)
-						iconCategory="utility" iconName=(eidtIconName editable) variant="icon" title=(_ 'edit')}}
-				</div>
-			</span>
+				<span class="triggerContainer">
+					<div class="{{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="{{_ 'edit'}}">
+						{{> steedos_button className="slds-cell-edit__button slds-m-left_x-small" iconClassName=(eidtIconClassName editable)
+							iconCategory="utility" iconName=(eidtIconName editable) variant="icon" title=(_ 'edit')}}
+					</div>
+				</span>  
 		{{/if}}
 	</span>
 </template>
