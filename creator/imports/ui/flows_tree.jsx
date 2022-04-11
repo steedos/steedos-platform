@@ -1,5 +1,5 @@
-import {Icon, Button} from '@steedos-widgets/design-system';
-import {createTreeAction, store, viewStateSelector, createModalAction} from '@steedos/react';
+const {Icon, Button} = DesignSystem;
+const {createTreeAction, store, viewStateSelector, createModalAction} = BuilderCreator
 
 var _ = require("underscore");
 var treeId = "chooseFlowTree";

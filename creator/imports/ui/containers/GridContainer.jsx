@@ -1,5 +1,5 @@
-import React from 'react';
-import { Grid, store } from '@steedos/react';
+// import React from 'react';
+const { Grid, store } = BuilderCreator
 
 var iconPath = `/assets/icons`;
 var gridObjectName = 'space_users';

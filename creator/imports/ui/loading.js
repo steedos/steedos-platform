@@ -1,5 +1,5 @@
 import './loading.html';
-import { Illustration } from '@steedos/react';
+const { Illustration } = BuilderCreator
 
 Template.recordLoading.helpers({
 	illustration: function() {

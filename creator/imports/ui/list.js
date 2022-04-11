@@ -1,7 +1,7 @@
 import './list.html';
 import ListContainer from './containers/ListContainer.jsx'
 import ListSelect from './containers/ListSelect.jsx'
-import { store, createGridAction } from '@steedos/react';
+const { store, createGridAction } = BuilderCreator
 
 let isListRendered = false;
 let listInstances = {};
@@ -172,7 +172,7 @@ Template.list.onCreated(function () {
 		}
 		this.unsubscribe = store.subscribe(()=>{
 			// 订阅store中列表数量值
-			let listState = ReactSteedos.viewStateSelector(store.getState(), listId);
+			let listState = BuilderCreator.viewStateSelector(store.getState(), listId);
 			if(listState && !listState.loading){
 				if(recordsTotal){
 					// 详细界面相关列表

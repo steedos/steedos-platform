@@ -1,4 +1,4 @@
-import { store, Bootstrap, Dashboard } from '@steedos/react';
+const { store, Bootstrap, Dashboard } = BuilderCreator
 
 function DashboardContainer(prop){
 	const Provider = ReactRedux.Provider;

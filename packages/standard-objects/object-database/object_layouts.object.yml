@@ -43,7 +43,7 @@ fields:
         value: page
     defaultValue: record
     hidden: true
-    required: true
+    # required: true
   profiles:
     type: lookup
     label: Profile

@@ -9,6 +9,19 @@
     "access": "public"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "@steedos-builder/react": "^0.2.23",
+    "@steedos-ui/builder-community": "^1.1.33",
+    "@steedos-ui/design-system": "^1.1.33",
+    "@steedos-ui/builder-widgets": "^1.1.33",
+    "@steedos-widgets/design-system": "^0.2.5",
+    "@steedos-widgets/steedos-object": "^0.0.9",
+    "amis": "^1.8.0",
+    "d3": "^3.5.17",
+    "lodash": "^4.17.21",
+    "moment": "^2.24.0",
+    "monaco-editor": "^0.33.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

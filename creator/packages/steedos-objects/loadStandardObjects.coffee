@@ -12,6 +12,7 @@ try
 		config = objectql.getSteedosConfig();
 		settings = {
 			built_in_plugins: [
+				"@steedos/unpkg",
 				"@steedos/workflow",
 				"@steedos/accounts",
 				"@steedos/steedos-plugin-schema-builder",
@@ -29,8 +30,7 @@ try
 				"@steedos/standard-process",
 				"@steedos/webapp-accounts",
 				"@steedos/service-plugin-amis",
-				"@steedos/unpkg"
-				],
+			],
 			plugins: config.plugins
 		}
 		Meteor.startup ->

@@ -38,7 +38,7 @@ set_sessions = (context, redirect)->
 		Template.creator_view.currentInstance?.record?.set(null)
 	Session.set("record_id", record_id)
 	Session.set("record_name", null)
-	objectHomeComponent = ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", object_name)
+	objectHomeComponent = BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "ObjectHome", object_name)
 	if objectHomeComponent
 		Session.set("object_home_component", object_name);
 	else

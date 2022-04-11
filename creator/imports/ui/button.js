@@ -1,5 +1,5 @@
 import './button.html';
-import { Button } from '@steedos-widgets/design-system';
+const { Button } = DesignSystem;
 
 Template.steedos_button.helpers({
 	component: function () {

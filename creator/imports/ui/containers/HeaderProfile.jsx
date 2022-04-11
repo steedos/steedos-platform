@@ -1,5 +1,5 @@
-import React from 'react';
-import { HeaderProfile, Bootstrap, store } from '@steedos/react';
+// import React from 'react';
+const { HeaderProfile, Bootstrap, store } = BuilderCreator
 
 function HeaderProfileContainer(prop){
 	const Provider = ReactRedux.Provider;

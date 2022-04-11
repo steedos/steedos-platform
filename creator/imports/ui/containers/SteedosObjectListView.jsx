@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { ObjectListView, SteedosRouter as Router, SteedosProvider } from '@steedos-ui/builder-community/dist/builder-community.react.js';
+const { useRef } = React;
+const { ObjectListView, SteedosRouter : Router, SteedosProvider } = BuilderSteedos
 
 window.refreshGrid = (name)=>{
 	const grid = name ? window.gridRefs[name] : window.gridRef;
@@ -21,11 +21,11 @@ window.refreshGrid = (name)=>{
 function SteedosGridContainer(prop){
 	const { objectApiName, name, listName, filters, treeRootFilters, onModelUpdated, sideBar, pageSize, onUpdated, checkboxSelection, columnFields, autoFixHeight, autoHideForEmptyData, sort } = prop;
 	const gridRef = useRef();
-	window.gridRef = gridRef;
-	if(!window.gridRefs){
-		window.gridRefs = {};
-	}
-	window.gridRefs[name] = gridRef;
+	// window.gridRef = gridRef;
+	// if(!window.gridRefs){
+	// 	window.gridRefs = {};
+	// }
+	// window.gridRefs[name] = gridRef;
 	if(!objectApiName){
 		return null;
 	}

@@ -5,7 +5,7 @@ export default [{
   /* NodeJS - CommonJS format */
   input: 'src/formulon.js',
   output: {
-    dir: 'lib',
+    file: 'lib/formulon.js',
     format: 'cjs',
   },
 },

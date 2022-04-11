@@ -42,7 +42,7 @@ if Meteor.isCordova || Meteor.isClient
 	if rootUrl.endsWith('/')
 		rootUrl = rootUrl.substr(0, rootUrl.length - 1)
 
-	window.stores?.API?.client?.setUrl = rootUrl
+	window.stores?.API?.client?.setUrl(rootUrl)
 	window.stores?.Settings?.setRootUrl(rootUrl)
 	window['steedos.setting'] = {
 		rootUrl: rootUrl
@@ -53,10 +53,10 @@ if !Meteor.isCordova && Meteor.isClient
 	Meteor.startup ()->
 		window.stores?.Settings?.setHrefPopup(Meteor.settings.public?.ui?.href_popup)
 
-if Meteor.isClient
-	Meteor.autorun ()->
-		window.stores?.Settings?.setUserId(Steedos.userId())
-		window.stores?.Settings?.setTenantId(Steedos.spaceId())
+# if Meteor.isClient
+	# Meteor.autorun ()->
+	# 	window.stores?.Settings?.setUserId(Steedos.userId())
+	# 	window.stores?.Settings?.setTenantId(Steedos.spaceId())
 
 Steedos.getHelpUrl = (locale)->
 	country = locale.substring(3)
