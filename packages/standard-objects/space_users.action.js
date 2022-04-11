@@ -299,10 +299,10 @@ module.exports = {
     }
 
     var doUpdate = function (inputValue) {
-      $("body").addClass("loading");
+      window.$("body").addClass("loading");
       try {
         Meteor.call("setSpaceUserPassword", record_id, userSession.spaceId, inputValue, function (error, result) {
-          $("body").removeClass("loading");
+          window.$("body").removeClass("loading");
           if (error) {
             return toastr.error(error.reason);
           } else {
@@ -313,7 +313,7 @@ module.exports = {
       } catch (err) {
         console.error(err);
         toastr.error(err);
-        $("body").removeClass("loading");
+        window.$("body").removeClass("loading");
       }
     }
 
