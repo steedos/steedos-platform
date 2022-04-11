@@ -30,18 +30,18 @@
     consola "^2.15.0"
     node-fetch "^2.6.1"
 
-"@steedos/client@^1.23.0-alpha.13":
-  version "1.23.0-alpha.14"
-  resolved "https://registry.npm.taobao.org/@steedos/client/download/@steedos/client-1.23.0-alpha.14.tgz#cec563e22f656fab7974096a13b0caa874c5efeb"
-  integrity sha1-zsVj4i9lb6t5dAlqE7DKqHTF7+s=
+"@steedos/client@2.2.19":
+  version "2.2.19"
+  resolved "https://registry.yarnpkg.com/@steedos/client/-/client-2.2.19.tgz#b6b36e1a7b316e749ff3749e6863df2286014c81"
+  integrity sha512-Qyj++yd1xBAnN/DqyGZVATX15U7XpeW1NpYZGkDT6RNEhHaX8skLcU6nbcPKjvl1N0T+MQDPI9HYtqu4AyaX+Q==
   dependencies:
-    "@steedos/filters" "^1.23.0-alpha.14"
+    "@steedos/filters" "2.2.19"
     node-fetch "^2.6.1"
 
-"@steedos/filters@^1.23.0-alpha.14":
-  version "1.23.0-alpha.14"
-  resolved "https://registry.npm.taobao.org/@steedos/filters/download/@steedos/filters-1.23.0-alpha.14.tgz#e6aa8355dabd1bc6dd1a9d3bd8e402bd6d34756b"
-  integrity sha1-5qqDVdq9G8bdGp072OQCvW00dWs=
+"@steedos/filters@2.2.19":
+  version "2.2.19"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.2.19.tgz#fc48b482e6d76dfade0dcafd30470617aa1dbad3"
+  integrity sha512-S8qVGsMY5982muMl1gtpUgmaS919dhPlV+fa/D2SkZo9hlFXVMGcb2py15lu9db6W+kWJ6zx4U+cdV7njPpOGw==
   dependencies:
     "@babel/runtime" "^7.5.4"
     moment "^2.24.0"
@@ -853,9 +853,9 @@ mkdirp@^0.5.1:
     minimist "^1.2.5"
 
 moment@^2.24.0:
-  version "2.29.1"
-  resolved "https://registry.npm.taobao.org/moment/download/moment-2.29.1.tgz?cache=0&sync_timestamp=1601983557585&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmoment%2Fdownload%2Fmoment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
-  integrity sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M=
+  version "2.29.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
+  integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
 
 multimatch@5.0.0:
   version "5.0.0"
