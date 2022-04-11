@@ -32,5 +32,5 @@ METADATA_SERVER=
 METADATA_APIKEY=
 
 STEEDOS_PAGE_RENDER=
-STEEDOS_PUBLIC_PAGE_ASSETURLS=https://unpkg.com/@steedos-widgets/steedos-object/dist/assets.json
-STEEDOS_PUBLIC_PAGE_UNPKGURL=
+STEEDOS_PUBLIC_PAGE_ASSETURLS=https://unpkg.com/@steedos-ui/builder-widgets/dist/assets.json
+STEEDOS_UNPKG_URL=https://npm.elemecdn.com
