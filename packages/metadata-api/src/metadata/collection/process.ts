@@ -86,12 +86,12 @@ export class ProcessCollection extends MetadataBaseCollection {
         label: process.label,
         object_name: process.object_name,
         engine: process.engine,
-        is_active: process.is_active,
-        ext: process.ext,
-        description: processSchema.description,
-        entry_criteria: processSchema.entry_criteria,
-        when: processSchema.when,
-        schema: processSchema.schema
+        is_active: process.is_active || false,
+        ext: process.ext || '',
+        description: processSchema.description || '',
+        entry_criteria: processSchema.entry_criteria || '',
+        when: processSchema.when || '',
+        schema: processSchema.schema || ''
       }
 
     } catch (error) {
