@@ -42,8 +42,6 @@ module.exports = {
 			'@steedos-ui/builder-community',
 			'@steedos-ui/design-system',
 			'@steedos-ui/builder-widgets',
-			'@steedos-widgets/design-system',
-			'@steedos-widgets/steedos-object',
 		],
 	},
 
