@@ -248,10 +248,6 @@ fields:
     omit: true
     disabled: true
     readonly: true
-  created_by:
-    label: Created by
-  modified_by:
-    label: Modified by
   form:
     type: object
     label: Form Events

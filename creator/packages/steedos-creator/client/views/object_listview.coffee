@@ -2,13 +2,13 @@ Template.object_listview.helpers
 	objectApiName: ()->
 		return Template.instance().data.object_name;
 	name: ()->
-		return "listview_" + Template.instance().data.object_name + '_' + Template.instance().list_view_id
+		return "listview_" + Template.instance().data.object_name + '_' + Template.instance().list_view_id.get();
 	listName: ()->
-		list_view_id = Template.instance().list_view_id
+		list_view_id = Template.instance().list_view_id.get();
 		return list_view_id;
 	filters: ()->
 		object_name = Template.instance().data.object_name;
-		list_view_id = Template.instance().list_view_id
+		list_view_id = Template.instance().list_view_id.get();
 		is_related = false
 		related_object_name = null
 		record_id = null
@@ -22,7 +22,7 @@ Template.object_listview.helpers
 
 Template.object_listview.onCreated ->
 	self = this
-	self.list_view_id = Session.get("list_view_id")
+	self.list_view_id = new ReactiveVar(Session.get("list_view_id"))
 	self.creatorAddFormOnSuccess = (formType,result)->
 		FlowRouter.reload();
 	self.creatorEditFormOnSuccess = (formType,result)->
@@ -43,6 +43,12 @@ Template.object_listview.onCreated ->
 	AutoForm.hooks creatorAddRelatedForm:
 		onSuccess: self.creatorAddRelatedFormOnSuccess
 	,false
+
+Template.object_listview.onRendered ->
+	self = this
+	self.autorun ->
+		if Session.get("list_view_id") && self.list_view_id.get() != Session.get("list_view_id")
+			self.list_view_id.set(Session.get("list_view_id"))
 
 Template.object_listview.onDestroyed ->
 	self = this
