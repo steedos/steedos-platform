@@ -84,6 +84,22 @@ async function recordToFile(folderPath, record, recordName, metadataName){
 
         return ;
     }
+    else if(metadataName === SteedosMetadataTypeInfoKeys.Page) {
+        const schema = record.schema;
+        delete record.schema;
+        fileContent = yaml.dump(record);
+
+        // .page.yml
+        let filePath = path.join(folderPath, fileName + '.yml');
+        fs.writeFileSync(filePath, fileContent);
+
+        // 若schema不为空则将schema写入.page.{render_engine}.json
+        if(schema){
+            let engineMetaFilePath = path.join(folderPath, `${fileName}.${record.render_engine}.json`);
+            fs.writeFileSync(engineMetaFilePath, schema);
+        }
+        return;
+    }
     else{
         fileName += '.yml';
         fileContent = yaml.dump(record);

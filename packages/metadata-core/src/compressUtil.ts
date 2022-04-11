@@ -129,6 +129,23 @@ function scanOrAdd(des:ZipDescription, filePath, is_recursion?:Boolean) {
                 throw new Error(`not find ${relatedFilePath}`);
             }
             des.addFile(filePath);
+        }else if(metadataName === TypeInfoKeys.Page){
+            // 判断basename是.yml结尾，还是.json结尾；如果是.yml结尾，则添加json文件，如果是.json结尾，则添加yml文件
+            if (basename.endsWith(".yml")) {
+                let buffer = fs.readFileSync(filePath, 'utf8');
+                let page = yaml.safeLoad(buffer);
+                const relatedFilePath = path.join(path.parse(filePath).dir, `${itemName}.page.${page.render_engine}.json`);
+                if(fs.existsSync(relatedFilePath)){
+                    des.addFile(relatedFilePath);
+                }
+            } else if (basename.endsWith(".json")){
+                const relatedFilePath = path.join(path.parse(filePath).dir, `${itemName}.page.yml`);
+                if(fs.existsSync(relatedFilePath)){
+                    des.addFile(relatedFilePath);
+                }
+            }
+            
+            des.addFile(filePath);
         }else{
             des.addFile(filePath);
         }
@@ -184,23 +201,33 @@ class ZipDescription{
         var inDeploy = this.inDeploy;
 
         var zipFileName = filePath.replace(rootPath, '');
+        if (this.isFileAdded(zipFileName)) {
+            return;
+        }
         const basename = path.basename(filePath);
-
         if(basename == '.DS_Store'){
             return;
         }
+        var fileinfo:any = getFileinfoByFilename(basename);
         // if(zipFileName == 'package.json'){
         //     archive.file(filePath, {name: zipFileName});
         //     return;
         // }
         if(!basename.endsWith("yml")&&!basename.endsWith(".flow.json")){
+            let skipCheck = false;
+            if (fileinfo.metadataName === TypeInfoKeys.Page && basename.endsWith('.json')) {
+                skipCheck = true;
+            }
+            if (fileinfo.metadataName === TypeInfoKeys.Process) {
+                skipCheck = true;
+            }
 
             //button.js 入压缩包，不入package.yml
             //if(!includeJs || !basename.endsWith("js") || !basename.endsWith(".button.js")){
 
             if(!basename.endsWith(".button.js")){
 
-                if(!includeJs){
+                if(!includeJs && !skipCheck){
                     return;
                 }
             }
@@ -213,7 +240,7 @@ class ZipDescription{
         // filePath: C:\steedos-app\main\default\objects\test_object\test_object.object.yml
         // fileName: main\default\objects\test_object\test_object.object.yml
         
-        var fileinfo:any = getFileinfoByFilename(basename);
+        
         
         
         var itemName = fileinfo.itemName
@@ -316,6 +343,14 @@ class ZipDescription{
     public getUnsupportedFiles(){
         return this.unsupportedFiles;
     }
+
+    public isFileAdded(zipFileName:string){
+        let filePath = path.join(getPackagePath(), zipFileName);
+        let fileInfo = _.find(this.filesInfo, function(f){
+            return f.path === filePath;
+        })
+        return !!fileInfo;
+    }
 }
 
 
@@ -415,6 +450,39 @@ export async function decompressAndDeploy(zipBuffer, projectDir){
 
                 var buffer = fs.readFileSync(path.join(sourceFile, fullFileName), 'utf8');
                 fs.writeFileSync(path.join(destFile, fullFileName), buffer);
+                
+                // 根据page的render_engine，生成对应的引擎文件
+                let pageRow: any = null;
+                if(metadata == TypeInfoKeys.Page){
+                    let buffer = fs.readFileSync(path.join(sourceFile, fullFileName), 'utf8');
+                    let page = yaml.safeLoad(buffer);
+                    let renderEngine = page.render_engine;
+                    if (renderEngine && renderEngine !== 'redash') {
+                        let _fullName = `${fileName}.${renderEngine}.json`;
+                        if (fs.existsSync(path.join(sourceFile, _fullName))) {
+                            let schemaBuffer = fs.readFileSync(path.join(sourceFile, _fullName), 'utf8');
+                            fs.writeFileSync(path.join(destFile, _fullName), schemaBuffer);
+
+                            let relativePath = path.join(getPackagePath(), _.last((path.join(destFile , _fullName)).split(getPackagePath())))
+                            pageRow = {name: `${fullnamePrefix}${_.first(fileName.split('.'))}`, type: metadata, path: relativePath};
+                        }
+                    }
+                }
+                // 根据process的engine，生成对应的引擎文件
+                let processRow: any = null;
+                if (metadata == TypeInfoKeys.Process){
+                    let buffer = fs.readFileSync(path.join(sourceFile, fullFileName), 'utf8');
+                    let process = yaml.safeLoad(buffer);
+                    let engine = process.engine;
+                    let _fullName = `${fileName}.${engine}.${process.ext}`;
+                    if (fs.existsSync(path.join(sourceFile, _fullName))) {
+                        let schemaBuffer = fs.readFileSync(path.join(sourceFile, _fullName), 'utf8');
+                        fs.writeFileSync(path.join(destFile, _fullName), schemaBuffer);
+
+                        let relativePath = path.join(getPackagePath(), _.last((path.join(destFile , _fullName)).split(getPackagePath())))
+                        processRow = {name: `${fullnamePrefix}${_.first(fileName.split('.'))}`, type: metadata, path: relativePath};
+                    }
+                }
 
                 if(metadata == TypeInfoKeys.Action){
                     var jsFileName = fileName + '.js';
@@ -427,6 +495,12 @@ export async function decompressAndDeploy(zipBuffer, projectDir){
                 //TODO 优化获取相对路径算法
                 var relativePath = path.join(getPackagePath(), _.last((path.join(destFile , fullFileName)).split(getPackagePath())))
                 rows.push({name: `${fullnamePrefix}${_.first(fileName.split('.'))}`, type: metadata, path: relativePath})
+                if (pageRow) {
+                    rows.push(pageRow);
+                }
+                if (processRow) {
+                    rows.push(processRow);
+                }
             }
 
         }

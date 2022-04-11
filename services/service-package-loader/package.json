@@ -15,7 +15,6 @@
     "@steedos/metadata-core": "2.2.19",
     "@steedos/objectql": "2.2.19",
     "clone": "^2.1.2",
-    "glob": "^7.1.6",
     "globby": "^9.1.0",
     "moleculer": "^0.14.12",
     "underscore": "^1.12.0"

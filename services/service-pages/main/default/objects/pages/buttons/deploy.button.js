@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutaon@hotoa.com
+ * @Date: 2022-03-29 20:33:44
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-04-10 14:20:32
+ * @Description: 
+ */
 module.exports = {
     deploy: function (object_name, record_id) {
         $(document.body).addClass('loading');
@@ -19,7 +26,7 @@ module.exports = {
         };
         Steedos.authRequest(url, options);
     },
-    deployVisible: function () {
-        return true
+    deployVisible: function (object_name, record_id, permission, record) {
+        return record && !record.is_system;
     }
 }
