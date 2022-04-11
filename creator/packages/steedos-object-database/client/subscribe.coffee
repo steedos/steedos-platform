@@ -135,36 +135,36 @@ _getObjects = (objectApiNames, callback)->
 			if _.isFunction(callback)
 				callback(result)
 
-Meteor.startup ()->
-	Tracker.autorun (c)->
-		spaceId = Session.get("spaceId")
-		if spaceId
-#			subs_objects.subscribe "creator_apps", spaceId
-			subs_objects.subscribe "creator_objects", spaceId
-			subs_objects.subscribe "creator_reload_object_logs", spaceId
+# Meteor.startup ()->
+# 	Tracker.autorun (c)->
+# 		spaceId = Session.get("spaceId")
+# 		if spaceId
+# #			subs_objects.subscribe "creator_apps", spaceId
+# 			subs_objects.subscribe "creator_objects", spaceId
+# 			subs_objects.subscribe "creator_reload_object_logs", spaceId
 
 
 	Tracker.autorun (c) ->
 		if Creator.bootstrapLoaded.get()
-			objects_observer_init = false
-			Creator.getCollection("objects").find({is_deleted: {$ne: true}}).observe {
-#				added: (newDocument)->
-#					if objects_observer_init
-#						_changeClientObjects newDocument
-				changed: (newDocument, oldDocument)->
-					if objects_observer_init
-						if !Steedos.isSpaceAdmin() && (newDocument.is_enable == false || newDocument.in_development != '0')
-							_removeClientObjects newDocument
-						else
-							_changeClientObjects newDocument, oldDocument
-#							Meteor.setTimeout ()->
-#								_changeClientObjects newDocument
-#							, 5000
-				removed: (oldDocument)->
-					if objects_observer_init
-						_removeClientObjects oldDocument
-			}
-			objects_observer_init = true
+# 			objects_observer_init = false
+# 			Creator.getCollection("objects").find({is_deleted: {$ne: true}}).observe {
+# #				added: (newDocument)->
+# #					if objects_observer_init
+# #						_changeClientObjects newDocument
+# 				changed: (newDocument, oldDocument)->
+# 					if objects_observer_init
+# 						if !Steedos.isSpaceAdmin() && (newDocument.is_enable == false || newDocument.in_development != '0')
+# 							_removeClientObjects newDocument
+# 						else
+# 							_changeClientObjects newDocument, oldDocument
+# #							Meteor.setTimeout ()->
+# #								_changeClientObjects newDocument
+# #							, 5000
+# 				removed: (oldDocument)->
+# 					if objects_observer_init
+# 						_removeClientObjects oldDocument
+# 			}
+# 			objects_observer_init = true
 
 			apps_observer_init = false
 			Creator.getCollection("apps").find({is_creator: true}).observe {
@@ -180,33 +180,33 @@ Meteor.startup ()->
 			}
 			apps_observer_init = true
 
-			reload_objects_observer_init = false
-			Creator.getCollection("_object_reload_logs").find({}).observe {
-				added: (newDocument)->
-					if reload_objects_observer_init
-						_changeClientObjects({name: newDocument.object_name})
-			}
-			reload_objects_observer_init = true
+			# reload_objects_observer_init = false
+			# Creator.getCollection("_object_reload_logs").find({}).observe {
+			# 	added: (newDocument)->
+			# 		if reload_objects_observer_init
+			# 			_changeClientObjects({name: newDocument.object_name})
+			# }
+			# reload_objects_observer_init = true
 
-Meteor.startup ()->
-	Tracker.autorun (c)->
-		spaceId = Session.get("spaceId")
-		if spaceId
-			subs_objects.subscribe "publish_object_layouts", spaceId
+# Meteor.startup ()->
+# 	Tracker.autorun (c)->
+# 		spaceId = Session.get("spaceId")
+# 		if spaceId
+# 			subs_objects.subscribe "publish_object_layouts", spaceId
 
-	Tracker.autorun (c) ->
-		if Creator.bootstrapLoaded.get()
-			layouts_observer_init = false
-			Creator.getCollection("object_layouts").find().observe {
-				changed: (newDocument, oldDocument)->
-					if layouts_observer_init
-						_object = Creator.getObject(newDocument.object_name)
-						if _object
-							_changeClientObjects _object
-				removed: (oldDocument)->
-					if layouts_observer_init
-						_object = Creator.getObject(oldDocument.object_name)
-						if _object
-							_changeClientObjects {_id: _object._id, name: oldDocument.object_name}
-			}
-			layouts_observer_init = true
+# 	Tracker.autorun (c) ->
+# 		if Creator.bootstrapLoaded.get()
+# 			layouts_observer_init = false
+# 			Creator.getCollection("object_layouts").find().observe {
+# 				changed: (newDocument, oldDocument)->
+# 					if layouts_observer_init
+# 						_object = Creator.getObject(newDocument.object_name)
+# 						if _object
+# 							_changeClientObjects _object
+# 				removed: (oldDocument)->
+# 					if layouts_observer_init
+# 						_object = Creator.getObject(oldDocument.object_name)
+# 						if _object
+# 							_changeClientObjects {_id: _object._id, name: oldDocument.object_name}
+# 			}
+# 			layouts_observer_init = true
