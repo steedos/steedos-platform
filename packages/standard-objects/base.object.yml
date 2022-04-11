@@ -21,6 +21,7 @@ fields:
     label: Creation Time
     readonly: true
     sortable: true
+    group: 系统信息
   created_by:
     label: Created by
     type: lookup
@@ -28,18 +29,21 @@ fields:
     reference_to: users
     disabled: true
     index: true
+    group: 系统信息
   modified:
     label: Modification Time
     type: datetime
     readonly: true
     sortable: true
     index: true
+    group: 系统信息
   modified_by:
     label: Modified by
     type: lookup
     readonly: true
     reference_to: users
     disabled: true
+    group: 系统信息
   is_deleted:
     type: boolean
     label: Deleted

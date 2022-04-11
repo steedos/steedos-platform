@@ -138,3 +138,5 @@ actions:
     label: Submit for Approval
   standard_import_data:
     label: Import Data
+groups:
+  systemInformation: System Information
