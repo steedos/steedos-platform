@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-08-30 12:06:41
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-10 15:23:21
+ * @LastEditTime: 2022-04-11 17:34:35
  * @Description: 
  */
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '../typeInfo';
@@ -10,7 +10,7 @@ import { BaseLoadMetadataFile } from "./_baseLoadFile";
 import path from 'path';
 import fs from 'fs';
 import * as glob from 'glob';
-import { getMD5, JSONStringify } from "@steedos/objectql";
+const crypto = require('crypto')
 
 export class LoadPageFile extends BaseLoadMetadataFile {
     constructor() {
@@ -48,4 +48,18 @@ export class LoadPageFile extends BaseLoadMetadataFile {
 
         return pages;
     }
+}
+
+export function getMD5(data){
+    let md5 = crypto.createHash('md5');
+    return md5.update(data).digest('hex');
+}
+
+export function JSONStringify(data) {
+    return JSON.stringify(data, function (key, val) {
+        if (typeof val === 'function') {
+            return val + '';
+        }
+        return val;
+    })
 }

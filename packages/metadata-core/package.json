@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@steedos/client": "2.2.19",
-    "@steedos/objectql": "2.2.19",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
