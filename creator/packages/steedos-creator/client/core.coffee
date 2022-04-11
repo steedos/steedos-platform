@@ -284,6 +284,8 @@ if Meteor.isClient
 
 			if related_field && related_field.reference_to_field
 				mainRecord = Creator.odata.get(object_name, record_id, related_field.reference_to_field);
+				if related_object_name == 'permission_fields' && object_name == 'object_fields'
+					addSelector(['object_name', "=", mainRecord.object])
 				if mainRecord && mainRecord[related_field.reference_to_field]
 					record_id = mainRecord[related_field.reference_to_field]
 
