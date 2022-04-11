@@ -37,18 +37,18 @@
         return _innerWaitForThing(obj, path, func);
     };
     
-    window.SteedosMonacoEnvironment = window.MonacoEnvironment = {
-        getWorkerUrl: function(workerId, label) {
-            return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
-            self.MonacoEnvironment = {
-                baseUrl: '/unpkg.com/monaco-editor/min/'
-            };
-            importScripts('/unpkg.com/monaco-editor/min/vs/base/worker/workerMain.js');`
-            )}`;
-        }
-    };
+    // window.SteedosMonacoEnvironment = window.MonacoEnvironment = {
+    //     getWorkerUrl: function(workerId, label) {
+    //         return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
+    //         self.MonacoEnvironment = {
+    //             baseUrl: '/unpkg.com/monaco-editor/min/'
+    //         };
+    //         importScripts('/unpkg.com/monaco-editor/min/vs/base/worker/workerMain.js');`
+    //         )}`;
+    //     }
+    // };
 
-    Object.defineProperty(window, 'MonacoEnvironment', {set: ()=>{}, get: ()=>window.SteedosMonacoEnvironment})
+    // Object.defineProperty(window, 'MonacoEnvironment', {set: ()=>{}, get: ()=>window.SteedosMonacoEnvironment})
 
 })();
 
