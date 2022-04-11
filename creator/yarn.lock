@@ -6018,10 +6018,10 @@ jszip@2.5.0:
   dependencies:
     pako "~0.2.5"
 
-"jszip@^2.0.0 || ^3.0.0", jszip@^3.1.5:
-  version "3.5.0"
-  resolved "https://registry.npm.taobao.org/jszip/download/jszip-3.5.0.tgz?cache=0&sync_timestamp=1592170956518&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjszip%2Fdownload%2Fjszip-3.5.0.tgz#b4fd1f368245346658e781fec9675802489e15f6"
-  integrity sha1-tP0fNoJFNGZY54H+yWdYAkieFfY=
+"jszip@^2.0.0 || ^3.0.0", jszip@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.7.0.tgz#9b8b995a4e7c9024653ce743e902076a82fdf4e6"
+  integrity sha512-Y2OlFIzrDOPWUnpU0LORIcDn2xN7rC9yKffFM/7pGhQuhO+SUhfm2trkJ/S5amjFvem0Y+1EALz/MEPkvHXVNw==
   dependencies:
     lie "~3.3.0"
     pako "~1.0.2"
