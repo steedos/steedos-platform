@@ -1,6 +1,6 @@
 {
   "name": "@steedos/unpkg",
-  "version": "2.2.20",
+  "version": "2.2.21",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
