@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@steedos-builder/react": "^0.2.23",
-    "@steedos-ui/builder-community": "^1.1.36",
-    "@steedos-ui/builder-widgets": "^1.1.36",
-    "@steedos-ui/design-system": "^1.1.36",
+    "@steedos-ui/builder-community": "^1.1.37",
+    "@steedos-ui/builder-widgets": "^1.1.37",
+    "@steedos-ui/design-system": "^1.1.37",
     "amis": "^1.8.0",
     "d3": "^3.5.17",
     "lodash": "^4.17.21",
