@@ -103,6 +103,25 @@ fields:
       - label: Terminated
         value: terminated
     description: 
+  process_state:
+    label: Instance State
+    type: select
+    options:
+      - label: Draft
+        value: draft
+      # - label: Pending
+      #   value: pending
+      # - label: Completed
+      #   value: completed
+      - label: Approved
+        value: approved
+      - label: Rejected
+        value: rejected
+      - label: Withdrawn
+        value: withdrawn
+      - label: Terminated
+        value: terminated
+    description: 
   _table:
     label: Object Workflow Related Form Table Item Info
     help: 

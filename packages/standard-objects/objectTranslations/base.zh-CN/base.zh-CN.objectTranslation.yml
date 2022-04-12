@@ -103,6 +103,25 @@ fields:
       - label: 已取消
         value: terminated
     description: 
+  process_state:
+    label: 审批状态
+    help: 
+    options:
+      - label: 草稿
+        value: draft
+      # - label: 进行中
+      #   value: pending
+      # - label: 已完成
+      #   value: completed
+      - label: 已通过
+        value: approved
+      - label: 已驳回
+        value: rejected
+      - label: 已撤回
+        value: withdrawn
+      - label: 已取消
+        value: terminated
+    description: 
   _table:
     label: 记录对象流程映射功能中表单中表格行信息
     help: 
