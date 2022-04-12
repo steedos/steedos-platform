@@ -146,6 +146,23 @@ function scanOrAdd(des:ZipDescription, filePath, is_recursion?:Boolean) {
             }
             
             des.addFile(filePath);
+        }else if(metadataName === TypeInfoKeys.Process){
+            // 如果是.yml结尾，则添加process.ext字段定义的后缀名文件，如果是{xxx}.process.{yyy}.{zzz}格式的文件，则添加yml文件
+            if (basename.endsWith(".yml")) {
+                let buffer = fs.readFileSync(filePath, 'utf8');
+                let process = yaml.safeLoad(buffer);
+                const relatedFilePath = path.join(path.parse(filePath).dir, `${itemName}.process.${process.engine}.${process.ext}`);
+                if(fs.existsSync(relatedFilePath)){
+                    des.addFile(relatedFilePath);
+                }
+            } else if (basename.match(/^[a-zA-Z0-9_-]+\.process\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$/)){
+                const relatedFilePath = path.join(path.parse(filePath).dir, `${itemName}.process.yml`);
+                if(fs.existsSync(relatedFilePath)){
+                    des.addFile(relatedFilePath);
+                }
+            }
+            
+            des.addFile(filePath);
         }else{
             des.addFile(filePath);
         }

@@ -139,7 +139,7 @@ export class ProcessCollection extends MetadataBaseCollection {
     var [dbData]= await this.getProcessVersionByProcess(dbManager, processId);
   
     const filter = {
-      process: processId
+      _id: dbData._id
     }
   
     if (dbData && !dbData.is_active) {
