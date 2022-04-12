@@ -25,7 +25,13 @@
                 schema = JSON.parse(schema)
             }
             if(!schema){
-                schema = {};
+                schema = {
+                    "type": "page",
+                    "body": [],
+                    "regions": [
+                        "body"
+                    ]
+                };
             }
 
             if(!schema.data){
