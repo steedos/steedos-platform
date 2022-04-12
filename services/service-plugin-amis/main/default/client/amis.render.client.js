@@ -39,7 +39,8 @@
                         amisLib.Renderer(
                             {
                                 type: comp.amis?.render.type,
-                                weight: comp.amis?.render.weight
+                                weight: comp.amis?.render.weight,
+                                autoVar: true,
                             }
                         )(Component.class);
                     } catch(e){console.log(e)}
