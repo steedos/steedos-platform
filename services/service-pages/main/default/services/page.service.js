@@ -90,7 +90,8 @@ module.exports = {
                 // const userSession = ctx.meta.user;
                 const { pageId } = ctx.params;
                 const pageVersion = await this.getLatestPageVersion(pageId);
-                return pageVersion || {}
+                const page = await objectql.getObject('pages').findOne(pageId)
+                return Object.assign(pageVersion || {}, {object_name: page.object_name, type: page.type})
             }
         },
         changePageVersion:{

@@ -17,10 +17,18 @@ router.get('/api/pageDesign', core.requireAuthentication, async function (req, r
             const assetUrls = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS.split(',');
             assetUrl = `assetUrl=${assetUrls.join("&assetUrl=")}&`;
         }
+
+        const dataContext = {
+            rootUrl: __meteor_runtime_config__.ROOT_URL,
+            tenantId: userSession.spaceId,
+            userId: userSession.userId,
+            authToken: userSession.authToken
+        }
+
         const steedosBuilderHost = `https://builder.steedos.com/amis?${assetUrl}rootUrl=${__meteor_runtime_config__.ROOT_URL}&authToken=${userSession.authToken}&userId=${userSession.userId}&tenantId=${userSession.spaceId}&__q=`;
 
         let data = fs.readFileSync(__dirname+'/design.html', 'utf8');
-        res.send(data.replace('SteedosBuilderHost',steedosBuilderHost));
+        res.send(data.replace('SteedosBuilderHost',steedosBuilderHost).replace('DataContext', JSON.stringify(dataContext)));
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
