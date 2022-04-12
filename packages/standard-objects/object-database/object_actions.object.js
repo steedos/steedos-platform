@@ -61,6 +61,12 @@ function checkName(name){
   return true
 }
 
+function checkScript(script){
+  if(!script.startsWith("function")){
+      throw new Error("执行的脚本必须是以function包裹的函数，比如：function(object_name, record_id){// 在这里补充按钮点击事件业务需求脚本。}");
+  }
+}
+
 function allowChangeObject(){
   var config = objectql.getSteedosConfig();
   if(config.tenant && config.tenant.saas){
@@ -109,7 +115,9 @@ Creator.Objects.object_actions.triggers = {
       // }
       if(_.has(modifier.$set, "name") && modifier.$set.name != doc.name){
         checkName(modifier.$set.name);
-    }
+      }
+      
+      checkScript(modifier.$set.todo);
 
       var ref;
       if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && isRepeatedName(doc, modifier.$set.name)) {
@@ -126,6 +134,7 @@ Creator.Objects.object_actions.triggers = {
       }
       doc.visible = true;
       checkName(doc.name);
+      checkScript(doc.todo);
       if (isRepeatedName(doc)) {
         throw new Meteor.Error(500, `名称不能重复${doc.name}`);
       }
