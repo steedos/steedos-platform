@@ -78,7 +78,6 @@ module.exports = {
   },
   delete_object: function (object_name, record_id, fields) {
     var record = Creator.getObjectRecord(object_name, record_id, 'name');
-    var objectName = record.name;
     SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
       name: "remove-object",
       title: '删除对象',
@@ -107,10 +106,10 @@ module.exports = {
       },
       onFinish: async (values = {}) => {
           return new Promise((resolve, reject) => {
-              $("body").addClass("loading");
+              window.$("body").addClass("loading");
               Creator.odata.delete(object_name, record_id, function() {
                   var info= t('creator_record_remove_swal_suc');
-                  toastr.success(info);
+                  window.toastr.success(info);
                   resolve(true)
                   if(FlowRouter.current().route.path.endsWith("/:record_id")){
                       var app_id = Session.get("app_id")
@@ -119,11 +118,11 @@ module.exports = {
                   }else{
                       FlowRouter.reload();
                   }
-                  $("body").removeClass("loading");
+                  window.$("body").removeClass("loading");
                   
               }, function(error) {
                   toastr.error(error.message);
-                  $("body").removeClass("loading");
+                  window.$("body").removeClass("loading");
                   reject(false);
               });
           })

@@ -438,7 +438,6 @@ let objectTriggers = {
                 return;
             }        
 
-            var e;
             //删除object 后，自动删除fields、actions、triggers、permission_objects
             Creator.getCollection("object_fields").direct.remove({
                 object: doc.name,
@@ -504,17 +503,6 @@ let objectTriggers = {
                 object: doc.name,
                 space: doc.space
             });
-
-            //drop collection
-            // console.log("drop collection", doc.name);
-            // try {
-            //     //					Creator.getCollection(doc.name)._collection.dropCollection()
-            //     return Creator.Collections[doc.name]._collection.dropCollection();
-            // } catch (error) {
-            //     e = error;
-            //     console.error(doc.name, `${e.stack}`);
-            //     throw new Meteor.Error(500, `对象(${doc.name})不存在或已被删除`);
-            // }
         }
     },
     // "after.update.server.dynamic_load": {
