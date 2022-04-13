@@ -107,7 +107,7 @@ Steedos.Page.render = function (root, page, data) {
     if (page.render_engine && page.render_engine != 'redash') {
 
         let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
-        const data = Object.assign({}, data, {
+        const defData = Object.assign({}, data, {
             context: {
                 rootUrl: __meteor_runtime_config__.ROOT_URL,
                 tenantId: Creator.USER_CONTEXT.spaceId,
@@ -116,7 +116,7 @@ Steedos.Page.render = function (root, page, data) {
             }
         })
 
-        schema = lodash.defaultsDeep(data , schema);
+        schema = lodash.defaultsDeep(defData , schema);
 
         const pageContentData = {
             "blocks": [
