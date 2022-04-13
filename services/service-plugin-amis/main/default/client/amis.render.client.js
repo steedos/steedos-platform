@@ -16,23 +16,23 @@
         console.error(error)
     };
     
-    import('/amis/sdk/sdk.noreact.js').then(() => {
+    import('/amis/sdk/amis-sdk.umd.min.js').then(() => {
 
         Promise.all([
             waitForThing(window, 'assetsLoaded'),
             waitForThing(window, 'AmisSDK'),
-            waitForThing(window, 'Builder'),
         ]).then(()=>{
 
-            window.SAmisReners = [];
+            const AmisRenderers = [];
 
             const amisComps = lodash.filter(Builder.registry['meta-components'], function(item){ return item.componentName && item.amis?.render});
             
+            console.debug('register amis components...')
             lodash.each(amisComps,(comp)=>{
                 const Component = Builder.components.find(item => item.name === comp.componentName);
-                if (Component && !SAmisReners.includes(comp.amis?.render.type)){
+                if (Component && !AmisRenderers.includes(comp.amis?.render.type)){
                     try {
-                        SAmisReners.push(comp.amis?.render.type);
+                        AmisRenderers.push(comp.amis?.render.type);
                         AmisSDK.amis.Renderer(
                             {
                                 type: comp.amis?.render.type,
@@ -40,15 +40,9 @@
                                 autoVar: true,
                             }
                         )(Component.class);
-                    } catch(e){console.log(e)}
+                    } catch(e){console.error(e)}
                 }
             })
-
-            // Register amis render 
-            // var AmisRender = function (props) {
-            //     var schema = props.schema, data = props.data;
-            //     return amis.render(schema, data, {theme: 'cxd'})
-            // };
 
             Builder.registerComponent(AmisSDK.AmisRender, {
                 name: 'Amis',
