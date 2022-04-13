@@ -76,7 +76,61 @@ module.exports = {
         return true;
     }
   },
-  standard_deleteVisible: function(object_name, record_id, record_permissions, record){
+  delete_object: function (object_name, record_id, fields) {
+    var record = Creator.getObjectRecord(object_name, record_id, 'name');
+    var objectName = record.name;
+    SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+      name: "remove-object",
+      title: '删除对象',
+      width: '540px',
+      layout: 'horizontal',
+      modalProps: {
+          width: "540px",
+              style: {
+                  width: "540px",
+                  maxWidth: "540px",
+                  minWidth: "480px"
+              }
+      },
+      initialValues:{
+          md: "删除一个自定义对象进行以下操作：\n\n* 删除对象的字段和按钮\n* 删除对象的选项卡和列表视图\n* 删除对象的页面布局\n* 删除对象的权限\n* 删除对象的验证规则\n* 删除对象的限制规则\n* 删除对象的共享规则\n* 删除使用该对象的流程映射\n* 删除使用该对象的开放流程\n* 删除使用该对象的页面。\n\n\\\n"
+      },
+      objectSchema: {
+          fields: {
+              md: {
+                  type: 'html',
+                  label: ' ',
+                  is_wide: true,
+                  readonly: true,
+              }
+          }
+      },
+      onFinish: async (values = {}) => {
+          return new Promise((resolve, reject) => {
+              $("body").addClass("loading");
+              Creator.odata.delete(object_name, record_id, function() {
+                  var info= t('creator_record_remove_swal_suc');
+                  toastr.success(info);
+                  resolve(true)
+                  if(FlowRouter.current().route.path.endsWith("/:record_id")){
+                      var app_id = Session.get("app_id")
+                      var object_name = Session.get("object_name")
+                      FlowRouter.go(Creator.getListViewUrl(object_name, app_id, 'all'));
+                  }else{
+                      FlowRouter.reload();
+                  }
+                  $("body").removeClass("loading");
+                  
+              }, function(error) {
+                  toastr.error(error.message);
+                  $("body").removeClass("loading");
+                  reject(false);
+              });
+          })
+      }
+  }, null, { iconPath: '/assets/icons' })
+  },
+  delete_objectVisible: function(object_name, record_id, record_permissions, record){
     if(!Creator.isSpaceAdmin()){
         return false
     }

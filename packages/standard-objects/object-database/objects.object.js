@@ -444,22 +444,67 @@ let objectTriggers = {
                 object: doc.name,
                 space: doc.space
             });
-            Creator.getCollection("object_actions").direct.remove({
-                object: doc.name,
-                space: doc.space
-            });
-            Creator.getCollection("object_triggers").direct.remove({
-                object: doc.name,
-                space: doc.space
-            });
-            Creator.getCollection("permission_objects").direct.remove({
-                object_name: doc.name,
-                space: doc.space
-            });
+
             Creator.getCollection("object_listviews").direct.remove({
                 object_name: doc.name,
                 space: doc.space
             });
+
+            Creator.getCollection("object_actions").direct.remove({
+                object: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("object_layouts").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("object_triggers").direct.remove({
+                object: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("permission_objects").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("object_workflows").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("object_validation_rules").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("restriction_rules").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("share_rules").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("process").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("pages").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("tabs").direct.remove({
+                object: doc.name,
+                space: doc.space
+            });
+
             //drop collection
             // console.log("drop collection", doc.name);
             // try {
