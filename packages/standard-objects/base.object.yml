@@ -21,6 +21,7 @@ fields:
     label: Creation Time
     readonly: true
     sortable: true
+    index: true
     group: 系统信息
     sort_no: 9999
   created_by:
@@ -46,6 +47,7 @@ fields:
     readonly: true
     reference_to: users
     disabled: true
+    index: true
     group: 系统信息
     sort_no: 9999
   is_deleted:
