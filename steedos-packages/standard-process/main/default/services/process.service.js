@@ -306,6 +306,8 @@ module.exports = {
                     await processVersionsObj.insert(newVersion);
                 }
 
+                delete processDoc.version;
+                delete processDoc.deploy_time;
                 const newProcessDoc = {
                     ...processDoc,
                     ...baseInfo,
