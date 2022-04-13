@@ -527,7 +527,7 @@ list_views:
     columns:
       - label
       - name
-      - column_name
+      - _name
       - type
       - object
       - sort_no
