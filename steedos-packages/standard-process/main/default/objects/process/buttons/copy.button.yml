@@ -1,5 +1,5 @@
-name: disable
+name: copy
 is_enable: true
-label: 禁用
+label: 复制
 'on': record
 visible: true

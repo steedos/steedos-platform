@@ -1,5 +1,5 @@
 name: deploy
 is_enable: true
 label: 发布
-'on': record_only
+'on': record
 visible: true
