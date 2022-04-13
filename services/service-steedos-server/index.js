@@ -182,7 +182,7 @@ module.exports = {
 					// console.timeEnd(`startSteedos-dataSourceInIt`)
 					Future.fromPromise(this.steedos.init(this.settings)).wait();
 					this.WebApp = WebApp;
-					this.startNodeRedService();
+					// this.startNodeRedService();
 					this.meteor.callStartupHooks();
 					this.meteor.runMain();
 				} catch (error) {
@@ -192,18 +192,18 @@ module.exports = {
 
 		},
 
-		async startNodeRedService() {
-			if (this.settings.nodeRedServer && this.settings.nodeRedServer.enabled) {
-				this.nodeRedService = await this.broker.createService({
-					name: "node-red-flows",
-					mixins: [NodeRedService],
-					settings: this.settings.nodeRedServer
-				});
-				if (!this.broker.started) {
-					await this.broker._restartService(this.nodeRedService)
-				}
-			}
-		},
+		// async startNodeRedService() {
+		// 	if (this.settings.nodeRedServer && this.settings.nodeRedServer.enabled) {
+		// 		this.nodeRedService = await this.broker.createService({
+		// 			name: "node-red-flows",
+		// 			mixins: [NodeRedService],
+		// 			settings: this.settings.nodeRedServer
+		// 		});
+		// 		if (!this.broker.started) {
+		// 			await this.broker._restartService(this.nodeRedService)
+		// 		}
+		// 	}
+		// },
 
 		async startAPIService() {
 			if (this.settings.apiServer && this.settings.apiServer.enabled) {
