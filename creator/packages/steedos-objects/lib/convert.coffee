@@ -98,6 +98,10 @@
 
 		_.forEach object.fields, (field, key)->
 
+			if field.omit
+				# omit字段完全隐藏不显示
+				field.hidden = true
+
 			systemBaseFields = Creator.getSystemBaseFields()
 			if systemBaseFields.indexOf(key) > -1
 				# 强制创建人创建时间等字段为只读
