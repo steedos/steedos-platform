@@ -104,9 +104,9 @@ module.exports = {
         },
         standard_new: {
             label: "New",
-            visible: function () {
+            visible: function (object_name) {
                 var permissions;
-                permissions = Creator.getPermissions();
+                permissions = Creator.getPermissions(object_name);
                 if (permissions) {
                     return permissions["allowCreate"];
                 }
@@ -282,9 +282,9 @@ module.exports = {
         },
         standard_follow: {
             label: "Follow",
-            visible: function () {
-                if (Creator.getObject()) {
-                    return Creator.getObject().enable_follow
+            visible: function (object_name, record_id, record_permissions) {
+                if (Creator.getObject(object_name)) {
+                    return Creator.getObject(object_name).enable_follow
                 }
                 return false;
             },
