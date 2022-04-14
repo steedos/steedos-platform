@@ -17,7 +17,7 @@
   resolved "https://registry.yarnpkg.com/@steedos-labs/oa/-/oa-2.1.61.tgz#eb8884518961005ab82ccbd230f41010edc3a959"
   integrity sha512-2BEUtmRs0qBLcfuQA9Ou0b8srcEquSo0CdpEMxfV/bLjyWJs+xS1bwcmNVGJeMRHgw9NHroMln7hAhBOQRiQvg==
 
-"@steedos-labs/workflow@2.1.45":
-  version "2.1.45"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/workflow/-/workflow-2.1.45.tgz#8b518191abe3631e0299cfe2667c6e5d20942be3"
-  integrity sha512-tcW6Uc/eO6TZy2db4bHvjakV/Qz6iESLT24YR2vKqxiwS6OOl2k7ofjY6lWVThPXYP7/ctJgphyvHoP4lu9NLg==
+"@steedos-labs/workflow@2.1.61":
+  version "2.1.61"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/workflow/-/workflow-2.1.61.tgz#3e60950253ed96d5542f48cf7384300a6984a850"
+  integrity sha512-CNqIn7Ssq82j6PDyd39nGrebHKE9HEenxscLvgO/cZqPW6EitZ0DTZrKSZkEblw1iwww97LzXpQFFSiL+v5Nrg==

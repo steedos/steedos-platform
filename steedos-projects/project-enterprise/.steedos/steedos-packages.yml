@@ -18,7 +18,7 @@ steedos-enterprise-default-package:
   path: .steedos/node_modules/@steedos-labs/master
 '@steedos-labs/workflow':
   enable: true
-  version: 2.1.45
+  version: 2.1.61
   description: ''
   local: false
   path: .steedos/node_modules/@steedos-labs/workflow
