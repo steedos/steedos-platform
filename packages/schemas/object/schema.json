@@ -136,6 +136,10 @@
             "type": "boolean",
             "description": "允许对象流程同步"
         },
+        "enable_open_workflow": {
+            "type": "boolean",
+            "description": "允许配置对象开放流程"
+        },
         "enable_web_forms": {
             "type": "boolean",
             "description": "允许在线表单"
@@ -167,6 +171,10 @@
         "owner": {
             "type": "string",
             "description": "对象拥有者"
+        },
+        "objects_group": {
+            "type":"string",
+            "description": "对象分组"
         },
         "methods": {
             "type": "object",
