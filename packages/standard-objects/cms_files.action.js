@@ -1,20 +1,17 @@
 module.exports = {
   download: function (object_name, record_id) {
-    var file, fileId, filename, length, ref, rev, url;
+    var file, fileId, ref;
     file = this.record;
     fileId = file != null ? (ref = file.versions) != null ? ref[0] : void 0 : void 0;
-    if (fileId) {
-      if (Meteor.isCordova) {
-        url = Steedos.absoluteUrl("/api/files/files/" + fileId);
-        filename = file.name;
-        rev = fileId;
-        length = file.size;
-        return Steedos.cordovaDownload(url, filename, rev, length);
-      } else {
-        url = Steedos.absoluteUrl("/api/files/files/" + fileId + "?download=true");
-        return window.location = url;
-      }
+    var downloadProps ={
+      download_url: Steedos.absoluteUrl("/api/files/files/" + fileId),
+      file_name: file.name,
+      file_size: file.size,
+      object_name,
+      record_id,
+      file_id: fileId,
     }
+    SteedosUI.downloadFile(downloadProps)
   },
 
   downloadVisible: function (object_name, record_id, record_permissions) {
