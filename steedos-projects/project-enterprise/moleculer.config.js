@@ -1,7 +1,6 @@
 "use strict";
 
 require('dotenv-flow').config(process.cwd());
-const LokiTransport = require("winston-loki");
 
 /**
  * Moleculer ServiceBroker configuration file
@@ -72,23 +71,6 @@ module.exports = {
 			interval: 1 * 1000
 		},
 	},
-	process.env.LOKI_URL && {
-		type: "Winston",
-		options: {
-			// Logging level
-			level: "info",
-			// Folder path to save files. You can use {nodeID} & {namespace} variables.
-			winston: {
-				// More settings: https://github.com/winstonjs/winston#creating-your-own-logger
-				transports: [
-					new LokiTransport({ 
-						host: process.env.LOKI_URL,
-						labels: { project: 'pcmes' }
-					})
-				]
-			}
-		},
-	}
 	],
 
 	// Default log level for built-in console logger. It can be overwritten in logger options above.
