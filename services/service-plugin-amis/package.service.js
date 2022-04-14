@@ -18,6 +18,7 @@ module.exports = {
 		packageInfo: {
 			path: __dirname,
 			name: this.name,
+			isPackage: false
 		}
 	},
 
