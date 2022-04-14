@@ -39,6 +39,7 @@ module.exports = {
 			'monaco-editor',
 			'amis',
 			'@steedos-builder/react',
+			'@steedos-ui/amis',
 			'@steedos-ui/builder-community',
 			'@steedos-ui/design-system',
 			'@steedos-ui/builder-widgets',
