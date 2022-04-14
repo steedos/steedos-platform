@@ -6,5 +6,5 @@ allowRead: true
 modifyAllRecords: false
 modifyCompanyRecords: false
 permission_set_id: user
-viewAllRecords: false
-viewCompanyRecords: false
+viewAllRecords: true
+viewCompanyRecords: true
