@@ -426,6 +426,11 @@ helpers =
 			if permission_fields
 				grouplessFields = _.intersection(permission_fields, grouplessFields)
 			grouplessFields = Creator.getFieldsWithoutOmit(schema, grouplessFields)
+
+			if Session.get("cmOperation") == "insert"
+				# 编辑时显示为只读，创建时不显示
+				grouplessFields = Creator.getFieldsWithoutSystemBase(grouplessFields)
+
 			grouplessFields = Creator.getFieldsForReorder(schema, grouplessFields, isSingle)
 
 			fieldGroupNames = Creator.getSortedFieldGroupNames(schema)
@@ -435,6 +440,11 @@ helpers =
 				if permission_fields
 					fieldsForGroup = _.intersection(permission_fields, fieldsForGroup)
 				fieldsForGroup = Creator.getFieldsWithoutOmit(schema, fieldsForGroup)
+
+				if Session.get("cmOperation") == "insert"
+					# 编辑时显示为只读，创建时不显示
+					fieldsForGroup = Creator.getFieldsWithoutSystemBase(fieldsForGroup)
+
 				fieldsForGroup = Creator.getFieldsForReorder(schema, fieldsForGroup, isSingle)
 				fieldGroups.push
 					name: fieldGroupName
@@ -657,6 +667,11 @@ Template.CreatorAfModal.events
 						_.each disabledFields, (disabledField)->
 							if schema[disabledField].type != Boolean
 								delete insertDoc[disabledField]
+
+					# 新建编辑记录时始终不提交创建人创建时间等字段
+					systemBaseFields = Creator.getSystemBaseFields()
+					_.each systemBaseFields, (baseField)->
+						delete insertDoc[baseField]
 
 					if Session.get("cmOperation") == "insert"
 						data = insertDoc

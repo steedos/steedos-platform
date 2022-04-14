@@ -98,6 +98,11 @@
 
 		_.forEach object.fields, (field, key)->
 
+			systemBaseFields = Creator.getSystemBaseFields()
+			if systemBaseFields.indexOf(key) > -1
+				# 强制创建人创建时间等字段为只读
+				field.readonly = true
+
 			field = convertField(object.name, key, field, spaceId);
 
 			if field.options && _.isString(field.options)

@@ -720,6 +720,12 @@ Creator.getFieldsForGroup = (schema, groupName) ->
   	fields = _.compact(fields)
   	return fields
 
+Creator.getSystemBaseFields = () ->
+	return ["created", "created_by", "modified", "modified_by"]
+
+Creator.getFieldsWithoutSystemBase = (keys) ->
+	return _.difference(keys, Creator.getSystemBaseFields());
+
 Creator.getFieldsWithoutOmit = (schema, keys) ->
 	keys = _.map(keys, (key) ->
 		field = _.pick(schema, key)
