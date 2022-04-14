@@ -226,6 +226,7 @@ export class ActionHandlers {
             await this.onDestroy(metadata)
         }
         ctx.broker.broadcast("metadata.objects.deleted", {objectApiName: objectApiName, isDelete: true, objectConfig: metadata});
+        ctx.broker.broadcast(`${metadata.datasource}.@${objectApiName}.metadata.objects.deleted`, { objectApiName: objectApiName, data: metadata });
         return true;
     }
 }
