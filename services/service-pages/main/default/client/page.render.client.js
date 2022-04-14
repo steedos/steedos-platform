@@ -148,7 +148,7 @@ Steedos.Page.render = function (root, page, data) {
             }
         }, root)
 
-        return Promise.all([
+        Promise.all([
             waitForThing(window, 'BuilderComponent'),
             waitForThing(Builder.components, upperFirst(page.render_engine), findComponent)
         ]).then(()=>{
@@ -160,6 +160,8 @@ Steedos.Page.render = function (root, page, data) {
             }, root)
         });
     }
+
+    return root;
 };
 
 Steedos.Page.App.render = function (template, pageName, app_id) {
@@ -177,10 +179,12 @@ Steedos.Page.App.render = function (template, pageName, app_id) {
         $(".page-template-root")[0].appendChild(modalRoot);
     }
 
+    const container = $("#" + rootId)[0];
+
     const page = Steedos.Page.getPage('app', app_id, null, null, pageName);
     if (page) {
         if (page.render_engine && page.render_engine != 'redash') {
-            return Steedos.Page.render($("#" + rootId)[0], page, {
+            return Steedos.Page.render(container, page, {
                 appId: app_id
             });
         }
@@ -188,7 +192,8 @@ Steedos.Page.App.render = function (template, pageName, app_id) {
 
     SteedosUI.render(stores.ComponentRegistry.components.PublicPage, {
         token: pageName
-    }, $("#" + rootId)[0]);
+    }, container);
+    return container
 };
 
 Steedos.Page.Listview.render = function (template, objectApiName) {
