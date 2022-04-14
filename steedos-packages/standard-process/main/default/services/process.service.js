@@ -263,6 +263,65 @@ module.exports = {
             }
         },
 
+        // 流程复制
+        copy: {
+            rest: {
+                method: "POST",
+                path: "/copy"
+            },
+            params: {
+                _id: { type: 'string' }
+            },
+            handler: async function (ctx) {
+                // call engine action
+                const { _id } = ctx.params;
+                const userSession = ctx.meta.user;
+                if (!userSession) {
+                    return;
+                }
+                const { spaceId, userId, company_id } = userSession;
+                const processObj = objectql.getObject('process');
+                const processVersionsObj = objectql.getObject('process_versions');
+                const processDoc = await processObj.findOne(_id, userSession);
+                const versionDocs = await processVersionsObj.find({ filters: [['space', '=', spaceId], ['process', '=', _id]], sort: 'version desc', top: 1 }, userSession);
+                const latestVersion = versionDocs[0];
+                const newProcessId = await processObj._makeNewID();
+                const baseInfo = {
+                    owner: userId,
+                    created: new Date(),
+                    created_by: userId,
+                    modified: new Date(),
+                    modified_by: userId,
+                    company_id: company_id
+                };
+                if (latestVersion) {
+                    const newVersion = {
+                        ...latestVersion,
+                        ...baseInfo,
+                        _id: await processVersionsObj._makeNewID(),
+                        process: newProcessId,
+                        is_active: false,
+                        version: 1
+                    }
+                    await processVersionsObj.insert(newVersion);
+                }
+
+                delete processDoc.version;
+                delete processDoc.deploy_time;
+                const newProcessDoc = {
+                    ...processDoc,
+                    ...baseInfo,
+                    _id: newProcessId,
+                    name: newProcessId,
+                    label: `${processDoc.label}-副本`,
+                    is_active: false,
+                }
+                await processObj.insert(newProcessDoc);
+
+                return { sucess: true }
+            }
+        },
+
         // 流程发起
         start: {
             rest: {

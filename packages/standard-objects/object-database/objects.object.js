@@ -438,38 +438,71 @@ let objectTriggers = {
                 return;
             }        
 
-            var e;
             //删除object 后，自动删除fields、actions、triggers、permission_objects
             Creator.getCollection("object_fields").direct.remove({
                 object: doc.name,
                 space: doc.space
             });
-            Creator.getCollection("object_actions").direct.remove({
-                object: doc.name,
-                space: doc.space
-            });
-            Creator.getCollection("object_triggers").direct.remove({
-                object: doc.name,
-                space: doc.space
-            });
-            Creator.getCollection("permission_objects").direct.remove({
-                object_name: doc.name,
-                space: doc.space
-            });
+
             Creator.getCollection("object_listviews").direct.remove({
                 object_name: doc.name,
                 space: doc.space
             });
-            //drop collection
-            // console.log("drop collection", doc.name);
-            // try {
-            //     //					Creator.getCollection(doc.name)._collection.dropCollection()
-            //     return Creator.Collections[doc.name]._collection.dropCollection();
-            // } catch (error) {
-            //     e = error;
-            //     console.error(doc.name, `${e.stack}`);
-            //     throw new Meteor.Error(500, `对象(${doc.name})不存在或已被删除`);
-            // }
+
+            Creator.getCollection("object_actions").direct.remove({
+                object: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("object_layouts").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("object_triggers").direct.remove({
+                object: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("permission_objects").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("object_workflows").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("object_validation_rules").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("restriction_rules").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("share_rules").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("process").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("pages").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
+            Creator.getCollection("tabs").direct.remove({
+                object: doc.name,
+                space: doc.space
+            });
         }
     },
     // "after.update.server.dynamic_load": {

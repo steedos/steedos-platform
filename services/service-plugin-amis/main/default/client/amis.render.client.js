@@ -16,54 +16,35 @@
         console.error(error)
     };
     
-    import('/amis/sdk/sdk.noreact.js').then(() => {
+    import('/amis/sdk/amis-sdk.umd.min.js').then(() => {
 
         Promise.all([
             waitForThing(window, 'assetsLoaded'),
-            waitForThing(window, 'React'),
-            waitForThing(window, 'Builder'),
-            waitForThing(window, 'amisRequire'),
+            waitForThing(window, 'AmisSDK'),
         ]).then(()=>{
 
-            window.SAmisReners = [];
+            const AmisRenderers = [];
 
             const amisComps = lodash.filter(Builder.registry['meta-components'], function(item){ return item.componentName && item.amis?.render});
             
-            let amisLib = amisRequire('amis');
-            
+            console.debug('register amis components...')
             lodash.each(amisComps,(comp)=>{
                 const Component = Builder.components.find(item => item.name === comp.componentName);
-                if (Component && !SAmisReners.includes(comp.amis?.render.type)){
+                if (Component && !AmisRenderers.includes(comp.amis?.render.type)){
                     try {
-                        SAmisReners.push(comp.amis?.render.type);
-                        amisLib.Renderer(
+                        AmisRenderers.push(comp.amis?.render.type);
+                        AmisSDK.amis.Renderer(
                             {
                                 type: comp.amis?.render.type,
                                 weight: comp.amis?.render.weight,
                                 autoVar: true,
                             }
                         )(Component.class);
-                    } catch(e){console.log(e)}
+                    } catch(e){console.error(e)}
                 }
             })
 
-            // Register amis render 
-            var Amis = function (props) {
-                var schema = props.schema, data = props.data;
-                return React.createElement(React.Fragment, null,
-                    React.createElement("div", { id: "amis-root" }),
-                    // amisRequire('amis').render(schema, data, {theme: 'cxd'}))
-                    function () {
-                        setTimeout(function () {
-                            amisRequire('amis/embed').embed('#amis-root', schema, {
-                                data
-                            })
-                        }, 100)
-                    }()
-                );
-            };
-
-            Builder.registerComponent(Amis, {
+            Builder.registerComponent(AmisSDK.AmisRender, {
                 name: 'Amis',
                 inputs: [
                     { name: 'schema', type: 'object' },

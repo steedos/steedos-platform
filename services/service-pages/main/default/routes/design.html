@@ -50,17 +50,17 @@
             schema.data.context.authToken = dataContext.authToken;
 
             if(objectName && pageType === 'record'){
-                axios.get(`/api/v4/${objectName}?$orderby=modified&$top=1`).then(function (response) {
+                axios.get(`/api/v4/${objectName}?$orderby=created desc&$top=1`).then(function (response) {
                     const value = response.data?.value;
                     if(value.length > 0){
                         schema.data.recordId = value[0]._id;
                     }
+                    const data = {
+                        AmisSchema: schema
+                    };
+                    console.log("record data", data)
+                    comp.data = data;
                 });
-                const data = {
-                    AmisSchema: schema
-                };
-                console.log("record data", data)
-                comp.data = data;
             }else{
                 const data = {
                     AmisSchema: schema

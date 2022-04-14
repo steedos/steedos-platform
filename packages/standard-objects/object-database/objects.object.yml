@@ -2,7 +2,6 @@ name: objects
 icon: orders
 label: Object
 hidden: true
-enable_trash: true
 fields:
   datasource:
     type: master_detail
@@ -456,8 +455,14 @@ actions:
     label: Copy OData URL
     on: record
   createDefaulRecordView:
-      on: record_only_more
-      label: 创建默认页面布局
+    on: record_only_more
+    label: 创建默认页面布局
+  standard_delete:
+    label: Delete
+    visible: false
+  delete_object:
+    on: record_more
+    label: 删除
   # export:
   #   label: Export
   #   visible: true

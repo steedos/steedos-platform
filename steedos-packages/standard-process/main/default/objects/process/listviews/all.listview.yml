@@ -15,3 +15,5 @@ scrolling_mode: standard
 shared: true
 sort_no: 100
 type: grid
+extra_columns:
+  - is_system

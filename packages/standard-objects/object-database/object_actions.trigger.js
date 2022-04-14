@@ -1,6 +1,14 @@
 const InternalData = require('../core/internalData');
 
 module.exports = {
+    beforeInsert: async function(){
+        const { doc } = this;
+        doc.visible;
+    },
+    beforeUpdate: async function(){
+        const { doc } = this;
+        doc.visible;
+    },
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
