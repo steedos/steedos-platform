@@ -14,6 +14,7 @@ const objectql = require('@steedos/objectql');
 const metadataApi = require('@steedos/metadata-api');
 const util = require('./main/default/manager/util');
 const fetch = require('node-fetch');
+const fs = require('fs');
 const { MoleculerError } = require("moleculer").Errors;
 
 const login = require('./main/default/manager/login');
@@ -592,8 +593,10 @@ module.exports = {
 		packages.maintainSystemFiles()
 		try {
 			const packagePath = path.join(process.cwd(), 'steedos-app');
-			const packageInfo = require(path.join(packagePath, 'package.json'));
-			loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
+			if(fs.existsSync(packagePath)){
+				const packageInfo = require(path.join(packagePath, 'package.json'));
+				loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
+			}
 		} catch (error) {
 			console.log(`started error`, error)
 		}

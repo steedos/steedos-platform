@@ -2,40 +2,27 @@
 # yarn lockfile v1
 
 
-"@steedos-labs/contract@2.1.22":
-  version "2.1.22"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/contract/-/contract-2.1.22.tgz#e9cf2110d83dc75b59598bf2092a1d4f81849afe"
-  integrity sha512-xLqZX5GL3SqinNVUA4FHdfnhaobaFOAR36WUoiWlW6NCOGzWgImdHd6/gDEIvnG3tTT45g2AnkJ+I4uo1mF/9w==
+"@steedos-labs/contract@2.1.61":
+  version "2.1.61"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/contract/-/contract-2.1.61.tgz#6534f8ed3857826fb9b019004dad97a03aefedb9"
+  integrity sha512-/6HGCTkNaWUhGmueYBwf0YK4i2f7OVIqpdTsEQwvhbNZhT3afgwP1xdItX+5NdqHitE/rRCFOqL1lDWVQk32Uw==
 
-"@steedos-labs/master@2.1.17":
-  version "2.1.17"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/master/-/master-2.1.17.tgz#0dd693da48c46b0975c5bb9740d88c149390bcc2"
-  integrity sha512-uFUxqq9FkSfq+8xc8rTT/FbyDB+C5/cwhFxO/G5OcTLZDuML2T7JpxecbymYISds8Sgg5a5gOe8x5Fv/+krEWQ==
+"@steedos-labs/master@2.1.61":
+  version "2.1.61"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/master/-/master-2.1.61.tgz#d81a1207a64a30e0f3b32c27e7d04d69fc5a76a4"
+  integrity sha512-HbDccgiQVjc2GN5U/KSQ3tuhvpUrPSjPX3IfpIb9/yaYiZb+CGDPgORKo7FWDwSO6IEL8KHZRRGTJqtb4MZnCw==
 
-"@steedos-labs/oa@2.1.20":
-  version "2.1.20"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/oa/-/oa-2.1.20.tgz#4942d2694246d0abfea31b623981c563bf086c5b"
-  integrity sha512-o0KaDuw8g4n4FcrrNlPJQyrGGiREm56RwA6scFhi4CTGkV/D6Tyz7EMuZgsvUaha8SUFFKWDFccWwWKdaOHvJg==
-  dependencies:
-    "@steedos/app-contracts" "2.0.51"
-    "@steedos/app-crm" "2.0.51"
+"@steedos-labs/oa@2.1.61":
+  version "2.1.61"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/oa/-/oa-2.1.61.tgz#eb8884518961005ab82ccbd230f41010edc3a959"
+  integrity sha512-2BEUtmRs0qBLcfuQA9Ou0b8srcEquSo0CdpEMxfV/bLjyWJs+xS1bwcmNVGJeMRHgw9NHroMln7hAhBOQRiQvg==
 
-"@steedos-labs/project@2.1.22":
-  version "2.1.22"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/project/-/project-2.1.22.tgz#736eaa5bcd21b850ec62add5fd1a8b3a099937fe"
-  integrity sha512-RV6Q4UCPMoWqbAzGNDF8jCygRt+/uSonPG5riij5SHnfL9unn2NBYHt/+pcukV0OTign1dsUMXT9Tr8C2qr4GA==
+"@steedos-labs/project@2.1.61":
+  version "2.1.61"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/project/-/project-2.1.61.tgz#7ae14ab7bfb1f3db8fff21be4ca2a304c661c48f"
+  integrity sha512-rCHeKgYvWsK1Qje3wDTjfGREnAd0m72i34c0xf5d4iT3L+hDBpyY1OVuWFZNYDM7MyZBosZlKPJ7j+qfZ0W87w==
 
 "@steedos-labs/workflow@2.1.61":
   version "2.1.61"
   resolved "https://registry.yarnpkg.com/@steedos-labs/workflow/-/workflow-2.1.61.tgz#3e60950253ed96d5542f48cf7384300a6984a850"
   integrity sha512-CNqIn7Ssq82j6PDyd39nGrebHKE9HEenxscLvgO/cZqPW6EitZ0DTZrKSZkEblw1iwww97LzXpQFFSiL+v5Nrg==
-
-"@steedos/app-contracts@2.0.51":
-  version "2.0.51"
-  resolved "https://registry.nlark.com/@steedos/app-contracts/download/@steedos/app-contracts-2.0.51.tgz#9867ca5c2efb28f17172edd4126382e1689069f0"
-  integrity sha1-mGfKXC77KPFxcu3UEmOC4WiQafA=
-
-"@steedos/app-crm@2.0.51":
-  version "2.0.51"
-  resolved "https://registry.nlark.com/@steedos/app-crm/download/@steedos/app-crm-2.0.51.tgz#2db47346be1afc38a5f05b37efe3b79d30c25eab"
-  integrity sha1-LbRzRr4a/Dil8Fs37+O3nTDCXqs=

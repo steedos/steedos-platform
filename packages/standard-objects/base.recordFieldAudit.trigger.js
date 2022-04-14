@@ -110,14 +110,14 @@ const transformFieldValue = async function(field, value, options) {
         return await getLookupFieldModifier(field, value, space_id);
       case 'master_detail':
         return await getLookupFieldModifier(field, value, space_id);
-      case 'textarea':
-        return '';
-      case 'code':
-        return '';
-      case 'html':
-        return '';
-      case 'markdown':
-        return '';
+      // case 'textarea':
+      //   return '';
+      // case 'code':
+      //   return '';
+      // case 'html':
+      //   return '';
+      // case 'markdown':
+      //   return '';
       case 'grid':
         return '';
       default:

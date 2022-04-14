@@ -50,8 +50,7 @@
     "randomcolor": "^0.6.2",
     "randomstring": "^1.2.1",
     "redlock": "^4.2.0",
-    "winston": "^3.3.3",
-    "winston-loki": "^6.0.1"
+    "winston": "^3.3.3"
   },
   "homepage": "https://www.steedos.com",
   "publishConfig": {
