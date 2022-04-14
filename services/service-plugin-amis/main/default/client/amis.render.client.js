@@ -16,7 +16,7 @@
         console.error(error)
     };
     
-    import('/amis/sdk/amis-sdk.umd.min.js').then(() => {
+    import('/unpkg.com/@steedos-ui/amis/dist/amis-sdk.umd.min.js').then(() => {
 
         Promise.all([
             waitForThing(window, 'assetsLoaded'),
