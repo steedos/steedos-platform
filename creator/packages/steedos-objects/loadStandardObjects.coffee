@@ -26,8 +26,8 @@ try
 				"@steedos/service-pages",
 				"@steedos/service-cloud-init",
 				"@steedos/service-package-registry",
-				"@steedos/standard-process",
-				"@steedos/webapp-accounts"
+				# "@steedos/standard-process",
+				# "@steedos/webapp-accounts"
 				],
 			plugins: config.plugins
 		}
