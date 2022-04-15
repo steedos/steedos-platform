@@ -1,6 +1,6 @@
 {
   "name": "@steedos/react",
-  "version": "2.1.95",
+  "version": "2.1.96",
   "private": false,
   "files": [
     "package.json",
@@ -20,8 +20,8 @@
     "@material-ui/icons": "^4.2.1",
     "@salesforce-ux/design-system": "^2.11.0",
     "@salesforce-ux/icons": "^9.38.0",
-    "@steedos/design-system-react": "2.1.95",
-    "@steedos/filters": "2.1.95",
+    "@steedos/design-system-react": "2.1.96",
+    "@steedos/filters": "2.1.96",
     "@storybook/addon-actions": "^5.3.0-alpha.22",
     "@storybook/addon-cssresources": "^5.3.0-alpha.22",
     "@storybook/addon-links": "^5.3.0-alpha.22",
