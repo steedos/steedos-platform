@@ -1017,7 +1017,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.1.94",
+  "version": "2.1.95",
   "main": "lib/index.js"
 };
 
@@ -1044,7 +1044,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.1.94",
+  "version": "2.1.95",
   "main": "lib/index.js"
 };
 
@@ -1071,7 +1071,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.1.94",
+  "version": "2.1.95",
   "main": "index.js"
 };
 
@@ -1098,7 +1098,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.1.94",
+  "version": "2.1.95",
   "main": "index.js"
 };
 
@@ -1125,7 +1125,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.1.94",
+  "version": "2.1.95",
   "main": "index.js"
 };
 
@@ -1142,6 +1142,33 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+}},"service-package-registry":{"package.json":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/@steedos/service-package-registry/package.json                                        //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.exports = {
+  "name": "@steedos/service-package-registry",
+  "version": "2.1.95",
+  "main": "package.service.js"
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"package.service.js":function module(require,exports,module){
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                    //
+// node_modules/@steedos/service-package-registry/package.service.js                                  //
+//                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                      //
+module.useNode();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }},"filters":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1152,7 +1179,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "2.1.94",
+  "version": "2.1.95",
   "main": "lib/index.js"
 };
 
@@ -1179,7 +1206,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.1.94",
+  "version": "2.1.95",
   "main": "lib/index.js"
 };
 
@@ -1206,7 +1233,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.1.94",
+  "version": "2.1.95",
   "main": "lib/index.js"
 };
 
@@ -1233,7 +1260,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-workflow",
-  "version": "2.1.94",
+  "version": "2.1.95",
   "main": "package.service.js"
 };
 
@@ -1663,18 +1690,7 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"@steedos-ui":{"builder-community":{"dist":{"builder-community.react.js":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/@steedos-ui/builder-community/dist/builder-community.react.js                         //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}}},"xml2js":{"package.json":function module(require,exports,module){
+}},"xml2js":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
