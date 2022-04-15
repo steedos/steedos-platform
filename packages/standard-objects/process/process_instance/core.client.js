@@ -86,15 +86,15 @@ Steedos.getFieldDataTypes = function (field) {
     if(field.type === "select"){
         return [
             {
-              "label": "Checkbox",
+              "label": window.t("CustomField.object_fields.data_type.options.boolean"),
               "value": "boolean"
             },
             {
-              "label": "Number",
+              "label": window.t("CustomField.object_fields.data_type.options.number"),
               "value": "number"
             },
             {
-              "label": "Text",
+              "label": window.t("CustomField.object_fields.data_type.options.text"),
               "value": "text"
             }
         ];
@@ -102,31 +102,31 @@ Steedos.getFieldDataTypes = function (field) {
     else{
         return [
             {
-              "label": "Checkbox",
+              "label": window.t("CustomField.object_fields.data_type.options.boolean"),
               "value": "boolean"
             },
             {
-              "label": "Number",
+              "label": window.t("CustomField.object_fields.data_type.options.number"),
               "value": "number"
             },
             {
-              "label": "Currency",
+              "label": window.t("CustomField.object_fields.data_type.options.currency"),
               "value": "currency"
             },
             {
-              "label": "Percent",
+              "label": window.t("CustomField.object_fields.data_type.options.percent"),
               "value": "percent"
             },
             {
-              "label": "Text",
+              "label": window.t("CustomField.object_fields.data_type.options.text"),
               "value": "text"
             },
             {
-              "label": "Date",
+              "label": window.t("CustomField.object_fields.data_type.options.date"),
               "value": "date"
             },
             {
-              "label": "Datetime",
+              "label": window.t("CustomField.object_fields.data_type.options.datetime"),
               "value": "datetime"
             }
         ];
