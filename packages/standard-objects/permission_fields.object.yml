@@ -2,6 +2,7 @@ name: permission_fields
 label: 字段权限
 icon: omni_supervisor
 version: 2
+enable_inline_edit: false
 hidden: true
 fields:
   name:
