@@ -4785,10 +4785,10 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/amis@^1.1.38":
-  version "1.1.38"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-1.1.38.tgz#a0273799baea1cf51bcf3a43333a9fe692fa982f"
-  integrity sha512-FltVnwh690Y0cTdw6XmT5RKHRhQ1WUxDDb9tGX6Bn39z2UN/K8LAPjm42/CJovXxKzvqHBSdzuHIUTQYkUSmiQ==
+"@steedos-ui/amis@^1.1.39":
+  version "1.1.39"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-1.1.39.tgz#73561dccd58a87232816db8f88fa61c5460c2c68"
+  integrity sha512-Y4hjKNcc5YpnBDCF63m1p9AdefhaKKhAEtL8ywNMAmbpfEBVUJLxmKFM1APUffkaq5kvB4on6otap7G/Z1uphg==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
@@ -4801,15 +4801,15 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/builder-community@^1.1.38":
-  version "1.1.38"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.38.tgz#4619d18b773ba38d030b27544684cfeaea51c5c1"
-  integrity sha512-mPFDqzR7IV6f6lklC4/q2PE+Id+mA1de967jSf/76aLJdIPwbJuBAibidnTtDh16f2Hu0Cntv98YH8umxspkPw==
+"@steedos-ui/builder-community@^1.1.39":
+  version "1.1.39"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.39.tgz#c85f6f46dc8b52bd16b4aa65a12017e388f93989"
+  integrity sha512-ZaqB7PgqLQ1GraVoPGLgrdRbCp/0tzB8TwM5wySBjZy1fhYGhTZLJtbAdbDutySX6GSWr880IWSsPfLgkNOpYg==
 
-"@steedos-ui/builder-widgets@^1.1.38":
-  version "1.1.38"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-1.1.38.tgz#a5526f79bb977ebe270117c463b73110deb0493f"
-  integrity sha512-uIc0XBLCc+W7x+4grneWhAIJdDjnZN5ePdIwMpx591BJpTdYquDV+vKqwe6vn5a8DFdIB69T/0bD9TINZYI0dA==
+"@steedos-ui/builder-widgets@^1.1.39":
+  version "1.1.39"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-1.1.39.tgz#5d51419395ee17b24c547642bf175ec3a76f53e5"
+  integrity sha512-nb+loMf7g5Rbl7qR6HfEgtuvHQhQ3jmMm10+2TwyjNEFOPy7HbO8y2e9KXxs3XGYASwmHUa93zjoQsZfuQa8aQ==
   optionalDependencies:
     create-inferno-context "^0.2.4"
     create-react-context "^0.2.3"
@@ -4820,10 +4820,10 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/design-system@^1.1.38":
-  version "1.1.38"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-1.1.38.tgz#39990f270bf57c8014763228843a365770f2a257"
-  integrity sha512-O9usAvaPEinW70X+yVm3a9ot7gj7wCrcoYuugsfxz5KZHJfMg5JE7UGwljjgkohYAk8ufrCzI2J1rvzzzoXosg==
+"@steedos-ui/design-system@^1.1.39":
+  version "1.1.39"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-1.1.39.tgz#d647855d00228d573c7e229893f92c52b2fbc812"
+  integrity sha512-3VWnxh4Two9mEvQwxnuX2z13InqxXrIx2efJBv9ZS+jLqVaSYR4sgGRpS+cJ8hvv8GD7b6qfeUraffrS3fHSqw==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
