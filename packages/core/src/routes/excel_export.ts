@@ -238,7 +238,7 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
         case "select":
             let options = fieldConfig.options;
 
-            if (fieldConfig.multiple) {
+            if (fieldConfig.multiple && _.isArray(fieldValue)) {
                 for (let i = 0; i < fieldValue.length; i++) {
                     let newValue = getOptionLabel(fieldValue[i], options);
                     fieldValue[i] = newValue
