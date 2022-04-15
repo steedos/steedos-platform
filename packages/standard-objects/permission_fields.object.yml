@@ -59,7 +59,7 @@ fields:
     name: object_name
     filterable: true
   field:
-    omit: true
+    readonly: true
     type: lookup
     label: 字段
     reference_to: object_fields
