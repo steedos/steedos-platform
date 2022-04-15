@@ -289,6 +289,33 @@ Template.creator_list_wrapper.helpers
 		if isFiltering
 			result += " filtering"
 		return result
+	
+	search_title: ()->
+		try
+			unSearchable = _.pluck(_.filter(Creator.getObject().fields, (field) ->
+				return !_.include([
+					'text'
+					'textarea'
+					'html'
+					'select'
+					'number'
+					'currency'
+					'autonumber'
+					'url'
+					'email'
+					'formula'
+					'summary'
+				], field.type) and !_.contains(field.name, '.')
+			), 'name')
+			listViewFields = _.pluck(Creator.getListView(Session.get('object_name'), Session.get('list_view_id')).columns, 'field')
+			lisgViewUnSearchableFields = _.intersection(unSearchable, listViewFields)
+			lisgViewUnSearchableFieldsLabel = _.pluck(_.filter(Creator.getObject().fields, (field) ->
+				return _.include lisgViewUnSearchableFields, field.name),
+			 'label')
+			if lisgViewUnSearchableFieldsLabel.length > 0
+				return "不可搜索字段: #{lisgViewUnSearchableFieldsLabel.join(',')}"
+		catch e
+			console.log(e)
 
 transformFilters = (filters)->
 	_filters = []
@@ -452,7 +479,8 @@ Template.creator_list_wrapper.events
 					obj_fields = obj.fields
 					query = {}
 					_.each obj_fields, (field,field_name)->
-						if (field.searchable || field_name == obj.NAME_FIELD_KEY) && field.type != 'number'
+						# 由于代码中可定义的字段类型比较复杂, 此处不使用排除法
+						if _.include(['text', 'textarea', 'html', 'select', 'number', 'currency', 'autonumber', 'url', 'email', 'formula', 'summary'], field.type) && !_.contains(field_name, '.')
 							query[field_name] = searchKey
 					standard_query = object_name: object_name, query: query, is_mini: true, search_text: searchKey
 					Session.set 'standard_query', standard_query

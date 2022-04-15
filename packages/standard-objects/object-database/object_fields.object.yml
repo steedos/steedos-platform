@@ -492,10 +492,10 @@ fields:
     type: boolean
     label: Sortable
     group: Advanced
-  searchable:
-    type: boolean
-    label: Searchable
-    group: Advanced
+  # searchable:
+  #   type: boolean
+  #   label: Searchable
+  #   group: Advanced
   filterable:
     type: boolean
     label: Filterable

@@ -501,19 +501,36 @@ if Meteor.isClient
 			query = standard_query.query
 			query_arr = []
 			if standard_query.is_mini
+				
 				_.each query, (val, key)->
 					if object_fields[key]
 						_fieldType = Creator.getFieldDataType(object_fields, key)
 						if ["currency", "number"].includes(_fieldType)
-							query_arr.push([key, "=", val])
-						else if ["text", "textarea", "html", "select"].includes(_fieldType)
+							if _.isString(val)
+								vals = val.trim().split(" ");
+								number_query_or = []
+								vals.forEach (val_item)->
+									try
+										numberValue = Number(val_item)
+										if _.isNumber(numberValue) && !_.isNaN(numberValue)
+											number_query_or.push([key, "=", numberValue])
+									catch e
+										console.error(e)
+								if number_query_or.length > 0
+									query_arr.push Creator.formatFiltersToDev(number_query_or, object_name, {is_logic_or: false})
+							else 
+								query_arr.push([key, "=", val])
+						else if ['text', 'textarea', 'html', 'select', 'autonumber', 'url', 'email'].includes(_fieldType)
 							if _.isString(val)
 								vals = val.trim().split(" ")
 								query_or = []
 								vals.forEach (val_item)->
 									# 特殊字符编码
 									val_item = encodeURIComponent(Creator.convertSpecialCharacter(val_item))
-									query_or.push([key, "contains", val_item])
+									if _fieldType == 'select' && object_fields[key].multiple
+										query_or.push([key, "=", val_item])
+									else
+										query_or.push([key, "contains", val_item])
 								if query_or.length > 0
 									query_arr.push Creator.formatFiltersToDev(query_or, object_name, {is_logic_or: false})
 							else if _.isArray(val)
