@@ -1,6 +1,8 @@
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
+const readonlyFields = ['created', 'created_by', 'modified', 'modified_by'];
+
 async function getAll() {
     const schema = objectql.getSteedosSchema();
     const configs = await objectql.registerPermissionFields.getAll(schema.broker)
@@ -24,15 +26,19 @@ module.exports = {
     listenTo: 'permission_fields',
     beforeInsert: async function(){
         const { doc } = this;
-        const { editable } = doc;
-        if(editable){
+        if(_.include(readonlyFields, doc.field)){
+            doc.editable = false;
+        }
+        if(doc.editable){
             doc.readable = true;
         }
     },
     beforeUpdate: async function(){
         const { doc } = this;
-        const { editable } = doc;
-        if(editable){
+        if(_.include(readonlyFields, doc.field)){
+            doc.editable = false;
+        }
+        if(doc.editable){
             doc.readable = true;
         }
     },

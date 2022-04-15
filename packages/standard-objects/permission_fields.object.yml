@@ -151,7 +151,13 @@ form:
   onValuesChange: !!js/function |
     function(props){
       const { changedValues, values, form } = props;
+      const readonlyFields = ['created', 'created_by', 'modified', 'modified_by'];
       if(changedValues.editable){
+        if(window._.include(readonlyFields, values.field)){
+          return setTimeout(function(){
+            form.setFieldsValue({editable: false})
+          }, 50)
+        }
         form.setFieldsValue({readable: true});
       }
       
