@@ -15,6 +15,7 @@ const FIELDTYPES = [
     "toggle",
     "date",
     "datetime",
+    "time",
     "number",
     "currency",
     "password",
@@ -237,6 +238,8 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
            case 'date':
                return SteedosFieldDBType.date
            case 'datetime':
+               return SteedosFieldDBType.dateTime
+           case 'time':
                return SteedosFieldDBType.dateTime
            case 'number':
                return SteedosFieldDBType.number

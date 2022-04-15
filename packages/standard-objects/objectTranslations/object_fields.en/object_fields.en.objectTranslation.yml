@@ -41,6 +41,8 @@ fields:
         value: date
       - label: Datetime
         value: datetime
+      - label: Time
+        value: time
       - label: Number
         value: number
       - label: Currency
