@@ -22,7 +22,20 @@ async function get(apiName) {
 
 module.exports = {
     listenTo: 'permission_fields',
-
+    beforeInsert: async function(){
+        const { doc } = this;
+        const { editable } = doc;
+        if(editable){
+            doc.readable = true;
+        }
+    },
+    beforeUpdate: async function(){
+        const { doc } = this;
+        const { editable } = doc;
+        if(editable){
+            doc.readable = true;
+        }
+    },
     afterFind: async function () {
         let spaceId = this.spaceId;
         let dataList = await getAll();

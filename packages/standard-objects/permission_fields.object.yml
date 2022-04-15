@@ -9,6 +9,7 @@ fields:
     label: Api 名称
     type: text
     omit: true
+    sort_no: 100
   permission_set_id:
     label: 权限集
     type: lookup
@@ -19,6 +20,7 @@ fields:
     filterable: true
     reference_to_field: name
     omit: true
+    sort_no: 110
   permission_object:
     label: 对象权限
     type: master_detail
@@ -29,6 +31,7 @@ fields:
     reference_to_field: name
     filterable: true
     hidden: true
+    sort_no: 120
   object_name:
     omit: true
     label: 对象
@@ -39,6 +42,7 @@ fields:
     index: true
     required: true
     create: false
+    sort_no: 130
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -65,6 +69,7 @@ fields:
     label: 字段
     reference_to: object_fields
     reference_to_field: name
+    sort_no: 140
     depend_on:
       - object_name
     defaultIcon: service_contract
@@ -89,15 +94,18 @@ fields:
   readable:
     type: boolean
     label: 允许查看
+    sort_no: 150
   editable:
     label: 允许编辑
     type: boolean
+    sort_no: 160
   is_system:
     type: boolean
     label: 系统
     omit: true
     readonly: true
     disabled: true
+    sort_no: 170
 paging:
   enabled: false
 actions:
@@ -143,13 +151,14 @@ form:
   onValuesChange: !!js/function |
     function(props){
       const { changedValues, values, form } = props;
-      
       if(changedValues.editable){
         form.setFieldsValue({readable: true});
       }
       
       if(_.has(changedValues, 'readable') && !changedValues.readable && values.editable){
-        form.setFieldsValue({readable: true});
+        setTimeout(function(){
+          form.setFieldsValue({readable: true})
+        }, 50)
       }
     }
 
