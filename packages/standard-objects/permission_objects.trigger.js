@@ -113,6 +113,38 @@ const find = async function(query){
     return permissionObjects;
 }
 
+const initPermissionSet = async function(doc, userId, spaceId){
+    const userSession = await auth.getSessionByUserId(userId, spaceId);
+    if(!doc.permission_set_id){
+        throw new Error('权限集不能为空')
+    }
+    
+    const permissionSet = await objectql.getObject('permission_set').findOne(doc.permission_set_id)
+    
+    if(!permissionSet){
+        throw new Error('无效的权限集')
+    }
+    
+    if(permissionSet._id === permissionSet.name){
+        const now = new Date();
+        const dbPermissionSet = await objectql.getObject('permission_set').insert({
+            name: permissionSet.name, 
+            label: permissionSet.label, 
+            type: permissionSet.type, 
+            license: permissionSet.license,
+            space: spaceId,
+            owner: userId,
+            created_by: userId,
+            created: now,
+            modified_by: userId,
+            modified: now,
+            company_id: userSession.company_id,
+            company_ids: userSession.company_ids
+        })
+        doc.permission_set_id = dbPermissionSet._id;
+    }
+} 
+
 module.exports = {
     afterFind: async function () {
         let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
@@ -231,12 +263,14 @@ module.exports = {
             Object.assign(this.data.values, await getPermissionById(id))
         }
     },
-    beforeInsert: function(){
+    beforeInsert: async function(){
         let doc = this.doc;
         let existedCount = Creator.getCollection("permission_objects").direct.find({permission_set_id: doc.permission_set_id, object_name: doc.object_name, space: doc.space}).count()
         if(existedCount > 0){
             throw new Error("此对象已有权限对象记录")
         }
+
+        await initPermissionSet(doc, this.userId, this.spaceId);
     },
     beforeUpdate: async function () {
         let oldDoc = Creator.getCollection("permission_objects").direct.findOne({_id: this.id})
@@ -248,5 +282,7 @@ module.exports = {
         if(existedCount > 0){
             throw new Error("此对象已有权限对象记录")
         }
+
+        await initPermissionSet(doc, this.userId, this.spaceId);
     }
 }

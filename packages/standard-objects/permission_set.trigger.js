@@ -133,13 +133,14 @@ module.exports = {
                         return this.data.values = this.data.values.concat(dbPerms[0])
                     }
                 }
+                let lng = null;
                 if(this.userId){
-                    let lng = await getLng(this.userId);
-                    const permSet = await getLngInternalPermissionSet(lng);
-                    return this.data.values = this.data.values.concat(_.find(permSet, (doc)=>{
-                        return doc._id === filters._id
-                    }))
+                    lng = await getLng(this.userId);
                 }
+                const permSet = await getLngInternalPermissionSet(lng);
+                return this.data.values = this.data.values.concat(_.find(permSet, (doc)=>{
+                    return doc._id === filters._id
+                }))
             }
             // TODO: 目前排查出 权限集、简档的all视图才需要同时出示 权限集和简档 的记录， 这里需要做调整。
             if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
@@ -175,13 +176,14 @@ module.exports = {
                     return ;
                 }
             }
+            let lng = null;
             if(this.userId){
-                let lng = await getLng(this.userId);
-                const permSet = await getLngInternalPermissionSet(lng);
-                Object.assign(this.data.values, _.find(permSet, (doc)=>{
-                    return doc._id === id
-                }))
+                lng = await getLng(this.userId);
             }
+            const permSet = await getLngInternalPermissionSet(lng);
+            Object.assign(this.data.values, _.find(permSet, (doc)=>{
+                return doc._id === id
+            }))
         }
     }
 }
