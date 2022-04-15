@@ -93,6 +93,12 @@ module.exports = {
      * Service stopped lifecycle event handler
      */
     async stopped() {
-        await this.broker.call(`metadata.refreshServiceMetadatas`, {offlinePackageServices: [this.name]});
+        await this.broker.call(`metadata.refreshServiceMetadatas`, {offlinePackageServices: [
+            {
+                name: this.name,
+                nodeID: this.broker.nodeID,
+                instanceID: this.broker.instanceID
+            }
+            ]}); //this.name
     }
 };

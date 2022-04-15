@@ -123,7 +123,7 @@ module.exports = {
 		},
 		refreshServiceMetadatas: {
 			params: {
-                offlinePackageServices: { type: "array", items: "string" },
+                offlinePackageServices: { type: "array", items: "object" },
             },
 			async handler(ctx) {
 				return await ActionHandlers.refreshServiceMetadatas(ctx);

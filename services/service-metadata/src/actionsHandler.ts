@@ -504,27 +504,52 @@ export const ActionHandlers = {
     },
     async refreshServiceMetadatas(ctx: any) {
         const { offlinePackageServices: _offlinePackageServices } = ctx.params || { offlinePackageServices: undefined };
+        const offlinePackageServicesListString=[];
         if (_offlinePackageServices && _offlinePackageServices.length > 0) {
-            // await clearPackageServices(ctx, _offlinePackageServices);
+            // 检查 offlinePackageServices 中的每一项必须包含nodeID、name
+            _.each(_offlinePackageServices, (item)=>{
+                if(!item){
+                    throw new Error('offlinePackageInof is null')
+                }
+                if(_.isString(item)){
+                    throw new Error('offlinePackageInfo cannot be string')
+                }
+                if(_.isObject(item)){
+                    const { nodeID, name } = item; //, instanceID
+                    if(!_.isString(nodeID)){
+                        throw new Error('offlinePackageInfo.nodeID must be string')
+                    }
+                    if(!_.isString(name)){
+                        throw new Error('offlinePackageInfo.name must be string')
+                    }
+                    offlinePackageServicesListString.push(`${nodeID}.${name}`)
+                }
+            })
+
             ctx.broker.broadcast(`$metadata.clearPackageServices`, { offlinePackageServicesName: _offlinePackageServices });
         }
+        
         let packageServices = await getPackageServices(ctx);
         const packageServicesName = _.pluck(packageServices, "apiName");
+
         const lastPackageServices = await getLastPackageServices(ctx);
         const lastPackageServicesNames = _.pluck(lastPackageServices, "apiName");
+
         let offlinePackageServicesName = _.difference(lastPackageServicesNames, packageServicesName);
+
+        let timeoutOfflinePackageServices = _.filter(lastPackageServices, (lastPackageService) => {
+            return lastPackageService && _.include(offlinePackageServicesName, lastPackageService.apiName)
+        })
+        
         if (_offlinePackageServices && _offlinePackageServices.length > 0) {
-            offlinePackageServicesName = offlinePackageServicesName.concat(_offlinePackageServices);
-            const onlinePackageServicesName = _.difference(lastPackageServices, _offlinePackageServices);
-            packageServices = _.filter(packageServices, (ps) => {
-                return ps && _.include(onlinePackageServicesName, ps.apiName)
+            timeoutOfflinePackageServices = timeoutOfflinePackageServices.concat(_offlinePackageServices);
+            const onlinePackageServicesName = _.difference(lastPackageServices, offlinePackageServicesListString);
+            packageServices = _.filter(packageServices, (packageService) => {
+                return packageService && _.include(onlinePackageServicesName, packageService.apiName)
             })
         }
-        if (offlinePackageServicesName.length > 0) {
-            // console.log(`lastPackageServicesNames`, lastPackageServicesNames)
-            // console.log(`packageServicesName`, packageServicesName)
-            // console.log(`offlinePackageServicesName`, offlinePackageServicesName);
-            ctx.broker.broadcast(`$metadata.clearPackageServices`, { offlinePackageServicesName });
+        if (timeoutOfflinePackageServices.length > 0) {
+            ctx.broker.broadcast(`$metadata.clearPackageServices`, { timeoutOfflinePackageServices });
         }
 
         //使用延时方式存储软件包记录， 防止多服务之间服务发现延时导致数据清理异常。延时来自moleculer内部的服务发现机制(broker.registry.getServiceList)

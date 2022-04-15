@@ -1,6 +1,7 @@
 import * as _ from 'underscore';
 import { getDataSourceServiceName } from './index';
 import { jsonToObject } from '../util/convert';
+import { getDataSource } from '../types/datasource';
 const LocalDataSourceServices = {};
 
 
@@ -25,7 +26,24 @@ export async function createDataSourceService(broker, dataSource) {
                      */
                     dataSource.initTypeORM();
                 }
-            }
+            },
+            [`${dataSourceName}.*.metadata.objects.deleted`]: {
+                handler(ctx) {
+                    if (this.timeoutId) {
+                        clearTimeout(this.timeoutId);
+                    }
+                    this.timeoutId = setTimeout(function(){
+                        try {
+                            const datasource = getDataSource(dataSourceName);
+                            if (datasource) {
+                                datasource.flushCacheObjects();
+                            }
+                        } catch (error) {
+                            console.error(error)
+                        }
+                    }, 1000 * 1);
+                }
+            },
         }
     })
     if (!broker.started) { //如果broker未启动则手动启动service
