@@ -56,6 +56,17 @@
 					trigger._todo = _todo.toString()
 
 		if Meteor.isClient
+			_.forEach object.fields, (field, key)->
+
+				if field.omit
+					# omit字段完全隐藏不显示
+					field.hidden = true
+
+				systemBaseFields = Creator.getSystemBaseFields()
+				if systemBaseFields.indexOf(key) > -1
+					# 强制创建人创建时间等字段为只读
+					field.readonly = true
+
 			_.forEach object.actions, (action, key)->
 				_todo_from_code = action?._todo
 				_todo_from_db = action?.todo
@@ -97,15 +108,6 @@
 					action._visible = _visible.toString()
 
 		_.forEach object.fields, (field, key)->
-
-			if field.omit
-				# omit字段完全隐藏不显示
-				field.hidden = true
-
-			systemBaseFields = Creator.getSystemBaseFields()
-			if systemBaseFields.indexOf(key) > -1
-				# 强制创建人创建时间等字段为只读
-				field.readonly = true
 
 			field = convertField(object.name, key, field, spaceId);
 
