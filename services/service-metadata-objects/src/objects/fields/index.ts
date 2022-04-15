@@ -37,6 +37,9 @@ export function getDBType(objectName, field) {
             return SteedosFieldDBType.date;
         case "datetime":
             return SteedosFieldDBType.dateTime;
+        case "time":
+            //时间字段按日期时间类型处理
+            return this.getDBType("datetime");
         case "number":
             return SteedosFieldDBType.number;
         case "currency":

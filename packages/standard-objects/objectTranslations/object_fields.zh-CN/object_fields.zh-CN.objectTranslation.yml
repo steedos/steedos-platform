@@ -38,6 +38,8 @@ fields:
         value: date
       - label: 日期时间
         value: datetime
+      - label: 时间
+        value: time
       - label: 数值
         value: number
       - label: 金额

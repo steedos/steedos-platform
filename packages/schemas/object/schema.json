@@ -335,6 +335,7 @@
                                 "toggle",
                                 "date",
                                 "datetime",
+                                "time",
                                 "number",
                                 "currency",
                                 "percent",
