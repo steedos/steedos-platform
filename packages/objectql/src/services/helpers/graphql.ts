@@ -101,6 +101,11 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
       _.isString(field.reference_to)
     ) {
       let refTo = field.reference_to;
+      // 判断能否根据refTo找到对象，如果找到则说明对象已加载，否则return
+      let objMetaData = getLocalService(refTo);
+      if (!objMetaData || objMetaData.settings.deleted) {
+        return;
+      }
       if (field.multiple) {
         type += `${name}: [String] `;
         type += `${name}${EXPAND_SUFFIX}: [${refTo}] `;
@@ -616,4 +621,10 @@ function _getDisplayType(typeName, fields) {
   });
   type += "}";
   return type;
+}
+
+// 获取object元数据
+export function getLocalService(objectApiName: string){
+  let steedosSchema = getSteedosSchema();
+  return steedosSchema.broker.getLocalService(getObjectServiceName(objectApiName));
 }
