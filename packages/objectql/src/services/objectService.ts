@@ -2,11 +2,12 @@ import { SteedosObjectType } from '../types/object';
 import { getDataSource } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
 import _ = require('underscore');
-import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver, dealWithRelatedFields } from './helpers';
+import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver, dealWithRelatedFields, getLocalService } from './helpers';
 import { getObjectServiceName } from '.';
 import { jsonToObject } from '../util/convert';
 import { extend } from '../util';
 const Future = require('fibers/future');
+import { getSteedosSchema } from '../';
 // import { parse } from '@steedos/formula';
 // mongodb pipeline: https://docs.mongodb.com/manual/core/aggregation-pipeline/
 declare var Creator: any;
@@ -556,6 +557,24 @@ module.exports = {
             this.objectApiName = objectConfig.name;
         }
     },
+    async started() {
+        const objectConfig: any = this.settings.objectConfig || getObjectConfig(this.settings.objectApiName);
+        const objectApiName = objectConfig.name;
+        // 通知以lookup或master_detail字段关联此对象的对象刷新graphql schema
+        let steedosSchema = getSteedosSchema();
+        let obj = steedosSchema.getObject(objectApiName);
+        const relationsInfo = await obj.getRelationsInfo();
+        let detailsInfo = relationsInfo.details || [];
+        let lookupsInfo = relationsInfo.lookup_details || [];
+        let relatedInfos = detailsInfo.concat(lookupsInfo);
+        for (const info of relatedInfos) {
+            if (!info.startsWith("__")) {
+                let infos = info.split(".");
+                let detailObjectApiName = infos[0];
+                this.broker.emit(`${getObjectServiceName(detailObjectApiName)}.refresh`, {});
+            }
+        }
+    },
     events: {
 		"metadata.objects.deleted": {
             async handler(ctx) {
@@ -568,9 +587,28 @@ module.exports = {
                         }
                     })
                     // console.log(`ctx.broker.destroyService`, this.object.name);
-                    ctx.broker.destroyService(this);
+                    await ctx.broker.destroyService(this);
                     if(onDestroyObjectService && _.isFunction(onDestroyObjectService)){
                         onDestroyObjectService(objectApiName);
+                    }
+                    // 给localservice的settings赋值deleted=true，用于标记服务已删除
+                    let localService = getLocalService(objectApiName);
+                    if(localService){
+                        localService.settings.deleted = true;
+                    }
+                    // 通知以lookup或master_detail字段关联此对象的对象刷新graphql schema
+                    let steedosSchema = getSteedosSchema();
+                    let obj = steedosSchema.getObject(objectApiName);
+                    const relationsInfo = await obj.getRelationsInfo();
+                    let detailsInfo = relationsInfo.details || [];
+                    let lookupsInfo = relationsInfo.lookup_details || [];
+                    let relatedInfos = detailsInfo.concat(lookupsInfo);
+                    for (const info of relatedInfos) {
+                        if (!info.startsWith("__")) {
+                            let infos = info.split(".");
+                            let detailObjectApiName = infos[0];
+                            ctx.broker.emit(`${getObjectServiceName(detailObjectApiName)}.refresh`, {});
+                        }
                     }
                     ctx.emit('$services.changed');
                 }
@@ -675,6 +713,7 @@ module.exports = {
                     let gobj = generateSettingsGraphql(_objectConfig);
                     this.settings.graphql = gobj;
                     dealWithRelatedFields(_objectConfig, this.settings.graphql);
+                    ctx.emit('$services.changed');
                 }
             }
         }
