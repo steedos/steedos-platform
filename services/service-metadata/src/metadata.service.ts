@@ -153,6 +153,11 @@ module.exports = {
 			async handler(ctx) {
 				return await ActionHandlers.removeServiceMetadata(ctx);
 			}
+		},
+		clearPackageServices: {
+			async handler(ctx) {
+				return await this.clearPackageServices(ctx);
+			}
 		}
 	},
 	/**

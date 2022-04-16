@@ -100,6 +100,18 @@ const getPackageInfo = (packageName, packagePath)=>{
     }
 }
 
+const destroyExistThePackageService = async (packageInfo)=>{
+    let schema = objectql.getSteedosSchema();
+    let broker = schema.broker;
+    let svc = broker.getLocalService({
+        name: `~packages-${packageInfo.name}`
+    });
+    if (svc) {
+        broker.logger.info(`Destroy previous '${schema.name}' service...`);
+        await broker.destroyService(svc);
+    }
+}
+
 const loadPackage = async (packageName, packagePath)=>{
     try {
         if(!packagePath){
@@ -108,6 +120,7 @@ const loadPackage = async (packageName, packagePath)=>{
             }))
         }
         const packageInfo = require(path.join(packagePath, 'package.json'));
+        await destroyExistThePackageService(packageInfo);
         await steedos.loadPackage(packagePath)
         return Object.assign({packagePath: packagePath}, packageInfo);
     } catch (error) {

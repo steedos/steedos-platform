@@ -509,7 +509,7 @@ export const ActionHandlers = {
             // 检查 offlinePackageServices 中的每一项必须包含nodeID、name
             _.each(_offlinePackageServices, (item)=>{
                 if(!item){
-                    throw new Error('offlinePackageInof is null')
+                    throw new Error('offlinePackageInfo is null')
                 }
                 if(_.isString(item)){
                     throw new Error('offlinePackageInfo cannot be string')
@@ -525,8 +525,8 @@ export const ActionHandlers = {
                     offlinePackageServicesListString.push(`${nodeID}.${name}`)
                 }
             })
-
-            ctx.broker.broadcast(`$metadata.clearPackageServices`, { offlinePackageServicesName: _offlinePackageServices });
+            await ctx.broker.call('metadata.clearPackageServices', { offlinePackageServicesName: _offlinePackageServices })
+            // ctx.broker.broadcast(`$metadata.clearPackageServices`, { offlinePackageServicesName: _offlinePackageServices });
         }
         
         let packageServices = await getPackageServices(ctx);
@@ -548,9 +548,10 @@ export const ActionHandlers = {
                 return packageService && _.include(onlinePackageServicesName, packageService.apiName)
             })
         }
-        if (timeoutOfflinePackageServices.length > 0) {
-            ctx.broker.broadcast(`$metadata.clearPackageServices`, { timeoutOfflinePackageServices });
-        }
+        
+        // if (timeoutOfflinePackageServices.length > 0) {
+        //     ctx.broker.broadcast(`$metadata.clearPackageServices`, { offlinePackageServicesName: timeoutOfflinePackageServices });
+        // }
 
         //使用延时方式存储软件包记录， 防止多服务之间服务发现延时导致数据清理异常。延时来自moleculer内部的服务发现机制(broker.registry.getServiceList)
         //清理数据无需做到实时，延时30秒
