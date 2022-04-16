@@ -1,6 +1,7 @@
 module.exports = {
     showDesign: function (object_name, record_id) {
-        Steedos.openWindow(Steedos.absoluteUrl(`/api/pageDesign?pageId=${record_id}`));
+        // Steedos.openWindow();
+        document.location = Steedos.absoluteUrl(`/api/pageDesign?pageId=${record_id}`);
     },
     showDesignVisible: function (object_name, record_id, record_permissions) {
         var perms, record;

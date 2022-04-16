@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <script src="https://npm.elemecdn.com/@steedos-builder/fiddle@0.0.5/dist/builder-fiddle.umd.js"></script>
+  </head>
+
+  <body>
+
+    <builder-fiddle host="<%=builderHost%>"></builder-fiddle>
+
+    <script>
+      let comp = document.querySelector( 'builder-fiddle' )
+      const data = {
+        AmisSchema: {
+        "type": "page",
+        "title": "Steedos Form Page",
+        "body": [
+          {
+            "type": "form",
+            "body": [
+              {
+                "type": "input-text",
+                "name": "a",
+                "label": "Name"
+              }
+            ]
+          }
+        ]
+      }
+    };
+    // comp.data = data;
+
+    const settings = {
+      assetUrls: '<%=assetUrls%>',
+      rootUrl: '<%=rootUrl%>',
+      userId: '<%=userId%>',
+      tenantId: '<%=tenantId%>',
+      authToken: '<%=authToken%>',
+      pageId: '<%=pageId%>',
+    }
+    console.log(settings)
+    comp.settings = settings
+    </script>
+  </body>
+</html>
