@@ -43,6 +43,7 @@ module.exports = {
 			'@steedos-ui/builder-community',
 			'@steedos-ui/design-system',
 			'@steedos-ui/builder-widgets',
+			'axios'
 		],
 	},
 
