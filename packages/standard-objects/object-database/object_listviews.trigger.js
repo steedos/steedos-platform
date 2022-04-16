@@ -33,6 +33,11 @@ module.exports = {
         if(_.has(this.doc, 'object_name')){
             object_name = this.doc.object_name
         }
+
+        if(oldDoc.name === 'all' && oldDoc.name != name){
+            throw new Error('禁止修改「all」视图的API Name')
+        }
+
         await util.checkAPIName(this.object_name, 'name', name, this.id, [['is_system','!=', true], ['object_name','=', object_name]]);
     },
     afterFind: async function(){
@@ -122,6 +127,13 @@ module.exports = {
                     }
                 }
             }
+        }
+    },
+    beforeDelete: async function(){
+        const { id } = this;
+        const record = await objectql.getObject(this.object_name).findOne(id);
+        if(record.name === 'all'){
+            throw new Error('禁止删除「all」视图')
         }
     }
 }
