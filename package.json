@@ -5,7 +5,8 @@
     "packages/**",
     "services/**",
     "server",
-    "steedos-projects/**"
+    "steedos-projects/**",
+    "steedos-packages/**"
   ],
   "scripts": {
     "start": "yarn start:community",
