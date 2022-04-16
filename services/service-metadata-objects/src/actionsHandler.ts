@@ -222,6 +222,16 @@ export class ActionHandlers {
     async handleDeleteObject(ctx, objectApiName): Promise<boolean>{
         const { metadata } = (await ctx.broker.call("metadata.get", { key: cacherKey(objectApiName) }, { meta: ctx.meta })) || {};
         await ctx.broker.call('metadata.delete', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
+        try {
+            await ctx.broker.call('metadata.deleteServiceMetadata', {
+                nodeID: ctx.broker.nodeID, 
+                serviceName: '~database-objects', 
+                metadataType: METADATA_TYPE, 
+                metadataApiName: objectApiName
+            }, {meta: ctx.meta})
+        } catch (error) {
+            console.log(error)
+        }
         if(this.onDestroy && _.isFunction(this.onDestroy)){
             await this.onDestroy(metadata)
         }

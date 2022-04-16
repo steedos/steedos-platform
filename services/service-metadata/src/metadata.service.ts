@@ -116,6 +116,11 @@ module.exports = {
 				return await ActionHandlers.delete(ctx);
 			}
 		},
+		deleteServiceMetadata: {
+			async handler(ctx) {
+				return await ActionHandlers.deleteServiceMetadata(ctx);
+			}
+		},
 		fuzzyDelete: {
 			async handler(ctx) {
 				return await ActionHandlers.fuzzyDelete(ctx);

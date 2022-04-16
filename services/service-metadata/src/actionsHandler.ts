@@ -466,6 +466,29 @@ export const ActionHandlers = {
         }
         return true;
     },
+    async deleteServiceMetadata(ctx: any) {
+        try {
+            let { nodeID, serviceName, metadataType, metadataApiName } = ctx.params;
+            if (!nodeID) {
+                throw new Error('nodeID is null');
+            }
+            if (!serviceName) {
+                throw new Error('serviceName is null');
+            }
+            if (!metadataType) {
+                throw new Error('metadataType is null');
+            }
+            if (!metadataApiName) {
+                throw new Error('metadataApiName is null');
+            }
+            const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
+            await ctx.broker.cacher.del(key);
+        } catch (error) {
+            ctx.broker.logger.info(error.message);
+        }
+        return true;
+    },
+
     async getServiceMetadatas(ctx: any) {
         let { nodeID, serviceName, metadataType, metadataApiName } = ctx.params;
         if (!nodeID) {
