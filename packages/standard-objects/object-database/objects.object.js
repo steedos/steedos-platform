@@ -469,6 +469,11 @@ let objectTriggers = {
                 space: doc.space
             });
 
+            Creator.getCollection("permission_fields").direct.remove({
+                object_name: doc.name,
+                space: doc.space
+            });
+
             Creator.getCollection("object_workflows").direct.remove({
                 object_name: doc.name,
                 space: doc.space
