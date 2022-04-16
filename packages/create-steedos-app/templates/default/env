@@ -1,5 +1,5 @@
 PORT=5000
-ROOT_URL=http://localhost:5000
+ROOT_URL=http://127.0.0.1:5000
 TRANSPORTER=redis://127.0.0.1:6379
 CACHER=redis://127.0.0.1:6379/1
 MONGO_URL=mongodb://127.0.0.1:27017/steedos
@@ -30,3 +30,10 @@ STEEDOS_CLOUD_SPACE_ID=
 [metadata]
 METADATA_SERVER=
 METADATA_APIKEY=
+
+
+STEEDOS_PAGE_RENDER=
+
+STEEDOS_PUBLIC_PAGE_ASSETURLS=https://unpkg.com/@steedos-ui/builder-widgets@1.1.37/dist/assets.json
+
+STEEDOS_UNPKG_URL=https://npm.elemecdn.com 

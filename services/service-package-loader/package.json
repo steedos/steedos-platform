@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-loader",
-  "version": "2.1.89",
+  "version": "2.1.96",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/core": "2.1.89",
-    "@steedos/objectql": "2.1.89",
+    "@steedos/core": "2.1.96",
+    "@steedos/objectql": "2.1.96",
     "clone": "^2.1.2",
     "globby": "^11.0.2",
     "moleculer": "^0.14.12",
