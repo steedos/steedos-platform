@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-05-24 12:32:57
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-04-17 12:03:58
+ * @Description: 
+ */
 
 import { computeFormula } from '../formula';
 import { SteedosTriggerContextConfig } from "./trigger";
@@ -14,7 +21,7 @@ export async function runValidationRules(method: string, context: SteedosTrigger
             try {
                 result = await computeFormula(vr.error_condition_formula, objectName, doc, userId, spaceId);
             } catch (error) {
-                throw new Error('object_validation_rules_wrong_formula');
+                throw new Error(`公式错误，请检查错误条件公式。${error.message.replace(/\:/g, '：')}`);
             }
             if (result) {
                 throw new Error(vr.error_message);
