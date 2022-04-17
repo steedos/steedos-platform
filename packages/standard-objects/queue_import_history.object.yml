@@ -20,32 +20,32 @@ fields:
   success_count:
     label: Number of Successful Records
     type: number
-    omit: true
+    readonly: true
     name: success_count
   failure_count:
     label: Number of Failed Records
     type: number
-    omit: true
+    readonly: true
     name: failure_count
   total_count:
     label: Total Number
     type: number
-    omit: true
+    readonly: true
     name: total_count
   start_time:
     label: Start Time
     type: datetime
-    omit: true
+    readonly: true
     name: start_time
   end_time:
     label: End Time
     type: datetime
-    omit: true
+    readonly: true
     name: end_time
   state:
     label: State
     type: select
-    omit: true
+    readonly: true
     name: state
     filterable: true
     options:
@@ -55,7 +55,7 @@ fields:
     label: Error Message
     type: html
     is_wide: true
-    omit: true
+    readonly: true
     name: error
   file:
     label: Excel File

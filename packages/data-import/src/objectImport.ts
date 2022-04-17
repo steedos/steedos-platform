@@ -74,6 +74,25 @@ function converterDateTime(field_name, dataCell, jsonObj, utcOffset) {
   return date_error;
 }
 
+// 从excel单元格中解析并转换时间字段为Date类型
+function converterTime(field_name, dataCell, jsonObj, utcOffset) {
+  var date, date_error;
+  date_error = "";
+  if (_.isEmpty(dataCell) && !_.isDate(dataCell)) {
+    return
+  }
+  date = new Date(`1970-01-01T${dataCell}Z`);
+  if (
+    date.getFullYear() &&
+    Object.prototype.toString.call(date) === "[object Date]"
+  ) {
+    jsonObj[field_name] = moment(`1970-01-01T${dataCell}Z`, 'YYYY-MM-DDThh:mmZ').toDate();
+  } else {
+    date_error = `${dataCell}不是时间类型数据`;
+  }
+  return date_error;
+}
+
 function converteNum(field, field_name, dataCell, jsonObj) {
   var number, number_error;
   number_error = "";
@@ -354,6 +373,9 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
                 break;
               case "datetime":
                 error = converterDateTime(field_name, dataCell, jsonObj, utcOffset);
+                break;
+              case "time":
+                error = converterTime(field_name, dataCell, jsonObj, utcOffset);
                 break;
               case "number":
                 error = converteNum(field, field_name, dataCell, jsonObj);
