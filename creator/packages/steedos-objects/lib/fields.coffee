@@ -93,7 +93,8 @@ Creator.getObjectSchema = (obj) ->
 						dxDateBoxOptions:
 							type: "date"
 							displayFormat: "yyyy-MM-dd"
-
+		else if field.type == "time"
+			fs.type = Date
 		else if field.type == "datetime"
 			fs.type = Date
 			if Meteor.isClient
