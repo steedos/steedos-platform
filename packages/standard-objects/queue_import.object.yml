@@ -159,7 +159,7 @@ fields:
     label: 导入模板
     type: html
     hidden: false
-    omit: true
+    omit: false
     readonly: true
     disabled: true
 list_views:
