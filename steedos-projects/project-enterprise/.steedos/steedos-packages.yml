@@ -29,3 +29,10 @@ steedos-enterprise-default-package:
   description: 借助华炎合同管理系统，你能够集中进行合同存储，提高合规性，自动化和加快整个合同生命周期，并获得更多其他业务优势。
   local: false
   path: .steedos/node_modules/@steedos-labs/contract
+'@steedos-labs/project':
+  enable: true
+  label: 项目管理 - 项目执行全过程电子化
+  version: null
+  description: 华炎项目管理解决方案帮助您跟踪和管理项目，里程碑，任务，已阻止的任务，逾期任务，时间，费用预算，并具有详细的报表功能。
+  local: false
+  path: .steedos/node_modules/@steedos-labs/project
