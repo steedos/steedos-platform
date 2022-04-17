@@ -285,10 +285,10 @@ export const removeObjectListenerConfig = (_id, listenTo, when)=>{
 export const loadStandardMetadata = async (serviceName: string, datasourceApiName: string) => {
     await loadStandardBaseObjects(serviceName);
     if (dbMetadataLoaing != true) {
-        dbMetadataLoaing = true;
         await loadStandardProfiles(serviceName);
         await loadStandardPermissionsets(serviceName);
         await loadDbMetadatas(datasourceApiName);
+        dbMetadataLoaing = true;
     }
 }
 
