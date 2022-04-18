@@ -22,7 +22,7 @@ steedos source:retrieve -y ./steedos-app/package.yml
 ```
 steedos source:retrieve -m CustomAction:organizations.btn1
 ```
-示例1: 同步部门所有自定义按钮
+示例2: 同步部门所有自定义按钮
 ```
 steedos source:retrieve -m CustomAction:organizations.*
 ```
