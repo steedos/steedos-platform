@@ -128,7 +128,8 @@ Steedos.Page.render = function (root, page, data) {
                         "name": upperFirst(page.render_engine),
                         "options": {
                             "schema": schema,
-                            "data": data
+                            "data": data,
+                            "name": page.name
                         }
                     },
                 }
