@@ -5,4 +5,3 @@ language: json
 is_wide: true
 sort_no: 70
 readonly: true
-omit: true
