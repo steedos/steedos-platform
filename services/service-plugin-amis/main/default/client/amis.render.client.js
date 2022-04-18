@@ -44,67 +44,26 @@
             });
 
             const AmisEnv = {
-                fetcher: ({url, method, data, config}) => {
-                    console.log('fetcher. url', url);
-                    if(url.startsWith("http") && url.indexOf("://") == -1){
-                        url = decodeURIComponent(url)
+                getModalContainer: ()=>{
+                    let div = document.querySelector("#amisModalContainer");
+                    if(!div){
+                        div = document.createElement('div');
+                        div.className="amis-scope";
+                        div.style.height='0px';
+                        div.id="amisModalContainer";
+                        document.body.appendChild(div)
                     }
-                    config = config || {};
-                    config.headers = config.headers || {};
-                    config.withCredentials = true;
-    
-                    if (method !== 'post' && method !== 'put' && method !== 'patch') {
-                        if (data) {
-                            config.params = data;
-                        }
-                        return (axios)[method](url, config);
-                    } else if (data && data instanceof FormData) {
-                        // config.headers = config.headers || {};
-                        // config.headers['Content-Type'] = 'multipart/form-data';
-                    } else if (
-                        data &&
-                        typeof data !== 'string' &&
-                        !(data instanceof Blob) &&
-                        !(data instanceof ArrayBuffer)
-                    ) {
-                        data = JSON.stringify(data);
-                        config.headers['Content-Type'] = 'application/json';
-                    }
-    
-                    return (axios)[method](url, data, config);
+                    return div;
                 },
-                isCancel: (e) => axios.isCancel(e),
-                updateLocation: ((location, replace) => {
-                    console.debug('updateLocation==>', location, replace);
-                    // const history = this.props.history;
-                    // if (location === 'goBack') {
-                    //     return history.goBack();
-                    // } else if (/^https?\:\/\//.test(location)) {
-                    //     return (window.location.href = location);
-                    // }
-                    // history[replace ? 'replace' : 'push'](normalizeLink(location, replace));
-                }),
-                notify: (type, msg) => {
-                    AmisSDK.amis.toast[type]
-                        ? AmisSDK.amis.toast[type](msg, type === 'error' ? '系统错误' : '系统消息')
-                        : console.warn('[Notify]', type, msg);
-                    console.log('[notify]', type, msg);
-                },
-                alert: AmisSDK.amis.alert,
-                confirm: AmisSDK.amis.confirm,
-                // copy: (contents, options = {}) => {
-                //     const ret = copy(contents, options);
-                //     ret && (!options || options.shutup !== true) && toast.info('内容已拷贝到剪切板');
-                //     return ret;
-                // },
-                theme: 'cxd',
+                theme: 'antd',
             };
 
             const AmisRender = function (props) {
                 const env = props.env;
                 const schema = props.schema;
                 const data = props.data;
-                return (React.createElement("div", { className: "amis-scope" }, AmisSDK.amis.render(schema, data, Object.assign({}, AmisEnv, env))));
+                const name = props.name;
+                return (React.createElement("div", { className: "amis-scope" }, AmisSDK.AmisRender(schema, {data, name}, Object.assign({}, AmisEnv, env))));
             };
 
             Builder.registerComponent(AmisRender, {
@@ -112,6 +71,7 @@
                 inputs: [
                     { name: 'schema', type: 'object' },
                     { name: 'data', type: 'object' },
+                    { name: 'name', type: 'string' }
                 ]
             });
         });

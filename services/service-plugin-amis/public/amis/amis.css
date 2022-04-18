@@ -1,4 +1,8 @@
-@import '/amis/sdk/sdk.css';
+/* @import '/amis/sdk/sdk.css'; */
+
+@import '/unpkg.com/amis@1.8.0/lib/themes/default.css';
+
+@import '/unpkg.com/amis@1.8.0/lib/themes/antd.css';
 
 
 /* .amis-routes-wrapper{
@@ -6,7 +10,7 @@
 } */
 
 .amis-scope{
-    background: none;
+    background: #ffffff;
 }
 
 .amis-scope svg {
