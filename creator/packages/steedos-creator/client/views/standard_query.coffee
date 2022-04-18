@@ -42,7 +42,7 @@ Template.standard_query_modal.helpers
 		clone = require('clone')
 		_.each object_fields, (field, key)->
 			_fieldType = Creator.getFieldDataType(object_fields, key)
-			if !field.hidden and !["grid", "image", "avatar"].includes(_fieldType)
+			if !field.hidden and !["grid", "image", "avatar"].includes(_fieldType) and key != "form"
 				canSearchFields.push(key)
 		schema = {}
 		canSearchFields = _.intersection(first_level_keys, canSearchFields)
