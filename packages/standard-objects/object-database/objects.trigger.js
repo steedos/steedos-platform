@@ -89,5 +89,34 @@ module.exports = {
         //     }],
         //     space: this.spaceId
         // })
+    },
+    beforeUpdate: async function () {
+        const { doc, id, object_name } = this;
+        // 如果用户修改了apiname，则校验 数据源必须一致为default数据源；且数据库中不能有新的apiname对应的表
+        if (_.has(doc, 'name')) {
+            const obj = this.getObject(object_name);
+            const latestDoc = await obj.findOne(id);
+            const newObjName = doc.name;
+            if (newObjName &&  (latestDoc.name != newObjName) && latestDoc.datasource === 'default') {
+                const datasource = objectql.getDataSource(latestDoc.datasource);
+                const isExitsRecords = await datasource.isCollectionExitsRecords(newObjName);
+                // 如果新表中存在记录则抛错，提示用户
+                if (isExitsRecords) {
+                    throw new Error(`${newObjName} 在库中已存在记录，不予进行。`);
+                }
+            }
+        }
+    },
+    afterUpdate: async function () {
+        const { doc, previousDoc, id, object_name } = this;
+        const obj = this.getObject(object_name);
+        const latestDoc = await obj.findOne(id);
+        // 对象的apiname修改后调整库中的表名
+        if (latestDoc.name && (latestDoc.name != previousDoc.name) && previousDoc.datasource === latestDoc.datasource && latestDoc.datasource === 'default'){
+            const newObjName = latestDoc.name;
+            const oldObjName = previousDoc.name;
+            const datasource = objectql.getDataSource(latestDoc.datasource);
+            await datasource.renameCollection(newObjName, oldObjName)
+        }
     }
 }

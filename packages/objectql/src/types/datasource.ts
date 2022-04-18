@@ -522,6 +522,33 @@ export class SteedosDataSourceType implements Dictionary {
         if (this._adapter.close) 
             this._adapter.close()
     }
+
+    // 重命名库中表名
+    async renameCollection(newObjectApiName: string, oldObjectApiName: string){
+        if(this.driver === SteedosDatabaseDriverType.Mongo){
+            const adapter = this.adapter;
+            await adapter.connect();
+            const collection = (adapter as any).collection(oldObjectApiName);
+            const newCollection = (adapter as any).collection(newObjectApiName);
+            let dropTarget = false;
+            let count = await newCollection.count({});
+            if (count == 0) {
+                dropTarget = true;
+            }
+            return await collection.rename(newObjectApiName, { dropTarget: dropTarget });
+        }
+    }
+
+    // 校验表在库中是否已存在记录
+    async isCollectionExitsRecords(objectApiName: string) {
+        if(this.driver === SteedosDatabaseDriverType.Mongo){
+            const adapter = this.adapter;
+            await adapter.connect();
+            const collection = (adapter as any).collection(objectApiName);
+            let count = await collection.count({});
+            return !!count;
+        }
+    }
 }
 
 export function getDataSource(datasourceName: string, schema?: SteedosSchema) {

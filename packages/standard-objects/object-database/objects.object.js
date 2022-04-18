@@ -240,6 +240,8 @@ function onChangeObjectName(oldName, newDoc){
     Creator.getCollection("object_fields").update({space: newDoc.space, reference_to: oldName}, {$set: {reference_to: newDoc.name}}, {
         multi: true
     });
+
+    // TODO 确认是否已处理所有相关子表
 }
 
 function beforeRemoveObject(doc){
@@ -525,7 +527,7 @@ _.each(Creator.Objects.objects.triggers, function(v, k){
     }
 })
 
-Creator.Objects.objects.triggers = objectTriggers
+Creator.Objects.objects.triggers = Object.assign(Creator.Objects.objects.triggers || {}, objectTriggers);
 
 // Creator.Objects['objects'].methods = {
 //     export_yml: async function (req, res) {
