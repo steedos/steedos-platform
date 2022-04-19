@@ -71,7 +71,11 @@ module.exports = {
 
                 const query = {
                     filters: [ ['hidden', '!=', true] , ['name', '<>', ExcludeObjectNames]],
-                    fields: "name, label, list_views"
+                    projection: {
+                        name: 1, 
+                        label: 1, 
+                        list_views: 1
+                    }
                 };
 
                 const objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
@@ -91,7 +95,11 @@ module.exports = {
                             })
                             
                             object.list_views = objectql.getSteedosSchema().metadataDriver.find(_.values(object.list_views), {
-                                fields: "_id, name, label"
+                                projection: {
+                                    _id: 1, 
+                                    name: 1, 
+                                    label: 1
+                                }
                             }, spaceId);
                             
                         }
