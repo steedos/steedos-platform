@@ -467,6 +467,15 @@ actions:
   #   label: Export
   #   visible: true
   #   on: record
+form:
+  afterInsert: !!js/function |
+    function(){
+      $("body").addClass('loading');
+      setTimeout(function(){
+        window.location.reload();
+      }, 2500);
+    }
+
 permission_set:
   user:
     allowCreate: false
