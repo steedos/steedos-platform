@@ -30,6 +30,7 @@ fields:
     reference_to_field: name
     filterable: true
     hidden: false
+    readonly: true
     sort_no: 120
   object_name:
     readonly: true

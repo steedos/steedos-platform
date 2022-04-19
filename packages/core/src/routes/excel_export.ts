@@ -271,6 +271,10 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
             } else {
                 filters[1] = "in";
                 filters[2] = fieldValue;
+                // 如果fieldValue不是数组，则返回fieldValue
+                if (!_.isArray(fieldValue)) {
+                    return fieldValue;
+                }
                 let ref_record = await ref_coll.find({ filters: filters, fields: [filters[0], "name"] });
 
                 for (let i = 0; i < fieldValue.length; i++) {

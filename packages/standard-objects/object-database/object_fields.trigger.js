@@ -334,13 +334,20 @@ module.exports = {
             })
         }
 
+        const obj = this.getObject(object_name);
+        const latestDoc = await obj.findOne(id);
         // !!!暂不允许修改name
         if (_.has(doc, '_name')) {
-            const obj = this.getObject(object_name);
-            const latestDoc = await obj.findOne(id);
             const newFieldName = doc._name;
             if (newFieldName &&  (latestDoc._name != newFieldName)) {
                 throw new Error('禁止修改字段名。');
+            }
+        }
+        // !!!暂不允许修改字段类型
+        if (_.has(doc, 'type')) {
+            const newFieldType = doc.type;
+            if (newFieldType &&  (latestDoc.type != newFieldType)) {
+                throw new Error('禁止修改字段类型。');
             }
         }
     },
