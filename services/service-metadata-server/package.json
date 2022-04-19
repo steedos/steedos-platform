@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-server",
-  "version": "2.2.21",
+  "version": "2.2.22",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -8,15 +8,15 @@
     "prepare": "tsc"
   },
   "dependencies": {
-    "@steedos/service-metadata": "2.2.21",
-    "@steedos/service-metadata-apps": "2.2.21",
-    "@steedos/service-metadata-layouts": "2.2.21",
-    "@steedos/service-metadata-objects": "2.2.21",
-    "@steedos/service-metadata-permissionsets": "2.2.21",
-    "@steedos/service-metadata-tabs": "2.2.21",
-    "@steedos/service-metadata-translations": "2.2.21",
-    "@steedos/service-metadata-triggers": "2.2.21",
-    "@steedos/service-packages": "2.2.21"
+    "@steedos/service-metadata": "2.2.22",
+    "@steedos/service-metadata-apps": "2.2.22",
+    "@steedos/service-metadata-layouts": "2.2.22",
+    "@steedos/service-metadata-objects": "2.2.22",
+    "@steedos/service-metadata-permissionsets": "2.2.22",
+    "@steedos/service-metadata-tabs": "2.2.22",
+    "@steedos/service-metadata-translations": "2.2.22",
+    "@steedos/service-metadata-triggers": "2.2.22",
+    "@steedos/service-packages": "2.2.22"
   },
   "devDependencies": {
     "typescript": "3.5.3"
