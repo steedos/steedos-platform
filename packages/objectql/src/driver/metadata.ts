@@ -57,7 +57,10 @@ export class MetadataDriver implements SteedosDriver {
         if (!(fields && fields.length)) {
             return {}
         }
-        let projection = {};
+        let projection = {
+            record_permissions: 1, 
+            is_system: 1, 
+        };
         (fields).forEach((field) => {
             if (field) {
                 projection[field] = 1;
@@ -131,8 +134,8 @@ export class MetadataDriver implements SteedosDriver {
         let mongoOptions = this.getMongoOptions(queryOptions);
         // console.log(`mongoFilters`, JSON.stringify(mongoFilters));
         // console.log(`mongoOptions`, mongoOptions);
-        let query = new mingo.Query(mongoFilters, mongoOptions.projectio)
-        let cursor = query.find(_collection);
+        let query = new mingo.Query(mongoFilters)
+        let cursor = query.find(_collection, mongoOptions.projection);
         if(mongoOptions.sort){
             cursor.sort(mongoOptions.sort)
         }
