@@ -62,7 +62,7 @@ function checkName(name){
 }
 
 function checkScript(script){
-  if(!script.startsWith("function")){
+  if(script && !script.startsWith("function")){
       throw new Error("执行的脚本必须是以function包裹的函数，比如：function(object_name, record_id){// 在这里补充按钮点击事件业务需求脚本。}");
   }
 }
