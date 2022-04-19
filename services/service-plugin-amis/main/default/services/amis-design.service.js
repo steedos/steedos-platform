@@ -100,36 +100,21 @@ module.exports = {
                             object.list_views = [];
                         }
 
-                        object.list_views = object.list_views.concat(objectql.getSteedosSchema().metadataDriver.find(dbListViews, {
+                        const objectListViews = objectql.getSteedosSchema().metadataDriver.find(dbListViews, {
                             filters: [['object_name', '=', object.name],  ['shared', '=', true] ],
                             fields: "_id, name, label"
-                        }, spaceId))
+                        }, spaceId);
 
+                        _.each(object.list_views, (listView)=>{
+                            if(!_.find(objectListViews, (dbListView)=>{ return dbListView.name === listView.name})){
+                                objectListViews.push(listView);
+                            }
+                        })
+                        object.list_views = objectListViews;
                     }
                 })
                 return objects;
             }
         }
-    },
-
-    /**
-     * Service created lifecycle event handler
-     */
-    async created() {
-
-    },
-
-    /**
-     * Service started lifecycle event handler
-     */
-    async started() {
-
-    },
-
-    /**
-     * Service stopped lifecycle event handler
-     */
-    async stopped() {
-
     }
 };
