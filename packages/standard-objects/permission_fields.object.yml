@@ -161,9 +161,7 @@ form:
       }
       
       if(_.has(changedValues, 'readable') && !changedValues.readable && values.editable){
-        setTimeout(function(){
-          form.setFieldsValue({readable: true})
-        }, 50)
+        form.setFieldsValue({editable: false})
       }
     }
 
