@@ -224,6 +224,18 @@ module.exports = {
                 })
             }
         }
+        /*  TODO: 把push的数据去掉或者为push的数据增加过滤条件就可以删除以下再过滤的代码。
+            permission_objects.trigger.js 和 permission_set.trigger.js 同理。
+            对象权限 字段拿数据库中保存的值再过滤一遍。
+            这里写死了，根据字段配置了 reference_to_field: name 。
+        */
+        const allData = this.data.values;
+        const firstFilterKey = _.keys(filters)[0];
+        if(firstFilterKey === 'name'){
+            this.data.values = _.filter(allData, (item)=>{
+                return item[firstFilterKey] === filters[firstFilterKey];
+            })
+        }
         
     },
     afterCount: async function () {

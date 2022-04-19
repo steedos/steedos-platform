@@ -23,13 +23,13 @@ fields:
   permission_object:
     label: 对象权限
     type: master_detail
-    # required: true
+    required: true
     reference_to: permission_objects
     index: true
     name: permission_object
     reference_to_field: name
     filterable: true
-    hidden: true
+    hidden: false
     sort_no: 120
   object_name:
     readonly: true
