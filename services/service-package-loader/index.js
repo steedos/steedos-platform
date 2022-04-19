@@ -24,7 +24,7 @@ module.exports = {
     settings: {
         path: '', // 扫描加载原数据的路径
         name: '', // service name
-		loadedPackagePublicFiles: false
+        loadedPackagePublicFiles: false
     },
 
     /**
@@ -57,6 +57,7 @@ module.exports = {
                     //此处延迟10秒加载流程文件，防止工作区初始化未完成
                     setTimeout(() => {
                         sendPackageFlowToDb(this.broker, _path)
+                        processLoader.sendPackageProcessToDb(_path);
                     }, 10 * 1000)
                 }
             }
@@ -79,7 +80,6 @@ module.exports = {
                 await objectql.loadStandardMetadata(name, datasourceName);
                 await objectql.addAllConfigFiles(packagePath, datasourceName, name);
                 await triggerLoader.load(this.broker, packagePath, name);
-                await processLoader.load(this.broker, packagePath, name);
                 core.loadClientScripts();
                 let routersData = objectql.loadRouters(packagePath);
                 let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
@@ -124,7 +124,7 @@ module.exports = {
         loadPackagePublicFiles: {
             handler(packagePath) {
                 let publicPath = path.join(packagePath, 'public');
-				try {
+                try {
                     if (!fs.existsSync(publicPath) ||this.settings.loadedPackagePublicFiles || typeof WebApp == 'undefined') {
                         return;
                     }
@@ -132,21 +132,21 @@ module.exports = {
                     return
                 }
 
-				this.settings.loadedPackagePublicFiles = true;
-				try {
-					const router = express.Router();
-					let routerPath = "";
-					if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
-						routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
-					}
-					const cacheTime = 86400000 * 1; // one day
-					router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
-					WebApp.connectHandlers.use(router);
-				} catch (error) {
-					console.error(error)
-					this.settings.loadedPackagePublicFiles = false;
-				}
-			}
+                this.settings.loadedPackagePublicFiles = true;
+                try {
+                    const router = express.Router();
+                    let routerPath = "";
+                    if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
+                        routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+                    }
+                    const cacheTime = 86400000 * 1; // one day
+                    router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
+                    WebApp.connectHandlers.use(router);
+                } catch (error) {
+                    console.error(error)
+                    this.settings.loadedPackagePublicFiles = false;
+                }
+            }
         }
     },
 
@@ -178,8 +178,9 @@ module.exports = {
             return;
         }
         this.broker.waitForServices("steedos-server").then(async () => {
-			sendPackageFlowToDb(this.broker, _path, this.name)
-		});
+            sendPackageFlowToDb(this.broker, _path, this.name)
+            processLoader.sendPackageProcessToDb(_path);
+        });
         
         await this.loadPackageMetadataFiles(_path, this.name, datasource);
         if(isPackage !== false){
