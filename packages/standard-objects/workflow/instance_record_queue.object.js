@@ -588,7 +588,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                         //         _id: 1
                         //     }
                         // });
-                        referData = objectFindOne(oField.reference_to, { filters: [['_id', '=', values[fm.workflow_field]]], fields: ['_id'] });
+                        var referData = objectFindOne(oField.reference_to, { filters: [['_id', '=', values[fm.workflow_field]]], fields: ['_id'] });
                         if (referData) {
                             obj[fm.object_field] = referData._id;
                         }
@@ -596,13 +596,14 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                         // 其次认为此值是referObject NAME_FIELD_KEY值
                         if (!referData) {
                             var nameFieldKey = referObjectNameFieldKey;
-                            var selector = {};
-                            selector[nameFieldKey] = values[fm.workflow_field];
-                            referData = oCollection.findOne(selector, {
-                                fields: {
-                                    _id: 1
-                                }
-                            });
+                            // var selector = {};
+                            // selector[nameFieldKey] = values[fm.workflow_field];
+                            // referData = oCollection.findOne(selector, {
+                            //     fields: {
+                            //         _id: 1
+                            //     }
+                            // });
+                            var referData = objectFindOne(oField.reference_to, { filters: [['space', '=', spaceId],[nameFieldKey, '=', values[fm.workflow_field]]], fields: ['_id'] });
                             if (referData) {
                                 obj[fm.object_field] = referData._id;
                             }
