@@ -550,7 +550,7 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 							if _.isEmpty(role)
 								apiName = "";
 								try 
-									apiName = step.approver_hr_roles_api_name[_hr_index]
+									apiName = step.approver_hr_roles_api_name?[_hr_index] || ""
 								catch error
 									console.log();		
 								role_id = db.roles._makeNewID()
@@ -581,7 +581,7 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 					if _.isArray(step.approver_roles) && !_.isEmpty(step.approver_roles)
 						approveRolesByIds = db.flow_roles.find({_id: {$in: step.approver_roles}, space: spaceId}, {fields: {_id: 1, name: 1, company_id: 1}}).fetch()
 					step.approver_roles_name.forEach (role_name, _index) ->
-						roleApiName = step.approver_roles_api_name[_index];
+						roleApiName = step.approver_roles_api_name?[_index] || ""
 						approveRoleById = _.find approveRolesByIds, (_role)->
 							return _role._id == step.approver_roles[_index]
 						flow_role_query = {space: spaceId, name: role_name}
