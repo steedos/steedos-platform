@@ -1,7 +1,8 @@
 import steedosI18n = require("@steedos/i18n");
 import { getPlugins } from '../';
 import { requireAuthentication } from './auth'
-import { getObject, getObjectLayouts, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps, FieldPermission } from '@steedos/objectql'
+import { getObject, getObjectLayouts, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps } from '@steedos/objectql' 
+//, FieldPermission
 require("@steedos/license");
 const Fiber = require('fibers')
 const clone = require("clone");
@@ -204,7 +205,8 @@ export async function getSpaceBootStrap(req, res) {
 
         const layouts = await getObjectLayouts(userSession.profile, spaceId)
         const objectsLayouts = _.groupBy(layouts, 'object_name');
-        const objectsFieldsPermissionGroupRole = await FieldPermission.getObjectsFieldsPermissionGroupRole();
+        // const objectsFieldsPermissionGroupRole = await FieldPermission.getObjectsFieldsPermissionGroupRole();
+        // console.log('objectsFieldsPermissionGroupRole', false && objectsFieldsPermissionGroupRole);
         for (const datasourceName in datasources) {
             let datasource = datasources[datasourceName];
             const datasourceObjects = await datasource.getObjects();
@@ -213,11 +215,11 @@ export async function getSpaceBootStrap(req, res) {
                 if (!result.objects[objectConfig.name] || objectConfig.name.endsWith("__c")) {
                     try {
                         const userObjectConfig = await getObject(objectConfig.name).getRecordView(userSession, {
-                            objectConfig: objectConfig,
+                            // objectConfig: objectConfig,
                             layouts: objectsLayouts[objectConfig.name] || [],
                             spaceProcessDefinition: spaceObjectsProcessDefinition[objectConfig.name] || [],
                             dbListViews: dbObjectsListViews[objectConfig.name] || [],
-                            rolesFieldsPermission: objectsFieldsPermissionGroupRole[objectConfig.name] || []
+                            // rolesFieldsPermission: objectsFieldsPermissionGroupRole[objectConfig.name] || []
                         });
                         let _objectConfig = null;
                         if (userObjectConfig) {
