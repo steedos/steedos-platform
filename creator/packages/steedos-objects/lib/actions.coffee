@@ -185,7 +185,7 @@ if Meteor.isClient
 									# ObjectForm有缓存，删除子表记录可能会有汇总字段，需要刷新表单数据
 									current_object_name = Session.get("object_name")
 									current_record_id = Session.get("record_id")
-									if Creator.getObject(current_object_name).version > 1
+									if current_object_name && Creator.getObject(current_object_name)?.version > 1
 										SteedosUI.reloadRecord(current_object_name, current_record_id)
 									if FlowRouter.current().route.path.endsWith("/:record_id")
 										if object_name != Session.get("object_name")
