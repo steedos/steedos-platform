@@ -4785,10 +4785,10 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/amis@^1.1.43":
-  version "1.1.43"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-1.1.43.tgz#ab69ef2f7c2dfded7da842208e47cb06a41d09ae"
-  integrity sha512-4NXL9FtXL/oXEMoWlaigqT2PS1ltl3CSf3oVccG3fHJVldq4tLB+IvpQSIgeyGdARq3FSjl8qZyNqIqNVqCPuQ==
+"@steedos-ui/amis@^1.1.44":
+  version "1.1.44"
+  resolved "https://registry.npmmirror.com/@steedos-ui/amis/-/amis-1.1.44.tgz#a2f0724ede122cbab918072acaa2981006ca4a2f"
+  integrity sha512-cubJfZMk/LZjNM6agFJa1YJh7juqKgbfWlzZ0LbpbfOTiyAUr1rEGd7n9WZYXkOauiIh+iyGcEUTaH4Ec0OALw==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
@@ -4801,15 +4801,15 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/builder-community@^1.1.43":
-  version "1.1.43"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.43.tgz#01eecc97eee71af67a14c81f6dcc3cbc4c577d8e"
-  integrity sha512-Q9sTncLxxVG+8T0MzXGijQ0b+k2ijoY8MPk1VtPOn6OLsKruCbU1P7+vlQ9RR2lKwCN8xU6sWFKVO2/uG0cAwA==
+"@steedos-ui/builder-community@^1.1.44":
+  version "1.1.44"
+  resolved "https://registry.npmmirror.com/@steedos-ui/builder-community/-/builder-community-1.1.44.tgz#e4abcc12a882d6d14f1f49c83bf77548a66d2c4e"
+  integrity sha512-d9c7owoHV6qWDSG1KrtLDNRcmVtBQzLTc8II3qJrOc8mvaA88i3xnkYyah4HouJkN/oYCSHOGjmK07qkLwW64A==
 
-"@steedos-ui/builder-widgets@^1.1.43":
-  version "1.1.43"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-1.1.43.tgz#eec893eb982e39f277a2044b3724c7cf50e52c87"
-  integrity sha512-rDZwmbpSnth7lJBe3wrBh5YtPcJ6b/ayEqVmxi7R35sBCcSlBooeibJCpRnX8GTlwwAyASzWwl+/dGRpp8H09w==
+"@steedos-ui/builder-widgets@^1.1.44":
+  version "1.1.44"
+  resolved "https://registry.npmmirror.com/@steedos-ui/builder-widgets/-/builder-widgets-1.1.44.tgz#a3a8c1acd2432745baef423bb93fceb6eb418309"
+  integrity sha512-S6U5gFWCFKOa6ZY+OQek47ZtrRrG4az/xc5yZmreaNybL1evIVfnpJrTc/0zFDhu0ekrpaYtBoa8TaG8mlFY/w==
   optionalDependencies:
     create-inferno-context "^0.2.4"
     create-react-context "^0.2.3"
@@ -4820,10 +4820,10 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/design-system@^1.1.43":
-  version "1.1.43"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-1.1.43.tgz#79e8bf1d88f2596ecf6dbfb837664bbd45cdd6f9"
-  integrity sha512-Pg3LNLUTYfRnVBwpZr+2S+YFEN6DlmPxNwgeAiHqeb7ny+tK3r6/vDPt48sCFZCwqkEVfFBM7+7N2tc2H+CQvw==
+"@steedos-ui/design-system@^1.1.44":
+  version "1.1.44"
+  resolved "https://registry.npmmirror.com/@steedos-ui/design-system/-/design-system-1.1.44.tgz#35a40a73172927615920cda8ed605d9ab2c6b16c"
+  integrity sha512-MtbvoGskn27rssRCCMedAqw+Kg8p4MJYPJv0uSpF40utL1rnUdEjXH7xXPf0a64YUjTnjCLWB20tWOioImArlw==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
