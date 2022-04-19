@@ -13,13 +13,12 @@ fields:
   permission_set_id:
     label: 权限集
     type: lookup
-    required: true
     reference_to: permission_set
     index: true
     name: permission_set_id
     filterable: true
     reference_to_field: name
-    omit: true
+    readonly: true
     sort_no: 110
   permission_object:
     label: 对象权限
