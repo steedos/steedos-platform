@@ -144,6 +144,7 @@ Template.creator_list_wrapper.helpers
 		return Creator.Collections.object_listviews.find({object_name: Session.get("object_name"), is_default: {$ne: true}})
 
 	list_view: ()->
+		document.getElementById("grid-search")?.value = ""
 		Session.get("change_list_views")
 		list_view = Creator.getListView(Session.get("object_name"), Session.get("list_view_id"))
 
