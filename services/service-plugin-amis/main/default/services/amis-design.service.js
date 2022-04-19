@@ -86,9 +86,8 @@ module.exports = {
                         if(object.list_views && !_.isEmpty(object.list_views)){
                             _.each(object.list_views, (list_view, name)=>{
                                 list_view.name = name;
-                                if(!_.has(list_view, '_id')){
-                                    list_view._id = list_view.name;
-                                }
+                                list_view._id = list_view._id || list_view.name;
+                                list_view.label = list_view.label || list_view.name;
                             })
                             
                             object.list_views = objectql.getSteedosSchema().metadataDriver.find(_.values(object.list_views), {
