@@ -97,6 +97,11 @@ module.exports = {
             const obj = this.getObject(object_name);
             const latestDoc = await obj.findOne(id);
             const newObjName = doc.name;
+            // !!!暂不允许修改name
+            if (newObjName &&  (latestDoc.name != newObjName)) {
+                throw new Error('禁止修改API 名称。');
+            }
+            /*
             if (newObjName &&  (latestDoc.name != newObjName) && latestDoc.datasource === 'default') {
                 const datasource = objectql.getDataSource(latestDoc.datasource);
                 const isExitsRecords = await datasource.isCollectionExitsRecords(newObjName);
@@ -105,9 +110,11 @@ module.exports = {
                     throw new Error(`${newObjName} 在库中已存在记录，不予进行。`);
                 }
             }
+            */
         }
     },
     afterUpdate: async function () {
+        /*
         const { doc, previousDoc, id, object_name } = this;
         const obj = this.getObject(object_name);
         const latestDoc = await obj.findOne(id);
@@ -118,5 +125,6 @@ module.exports = {
             const datasource = objectql.getDataSource(latestDoc.datasource);
             await datasource.renameCollection(newObjName, oldObjName)
         }
+        */
     }
 }

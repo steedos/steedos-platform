@@ -333,6 +333,16 @@ module.exports = {
                 }
             })
         }
+
+        // !!!暂不允许修改name
+        if (_.has(doc, '_name')) {
+            const obj = this.getObject(object_name);
+            const latestDoc = await obj.findOne(id);
+            const newFieldName = doc._name;
+            if (newFieldName &&  (latestDoc._name != newFieldName)) {
+                throw new Error('禁止修改字段名。');
+            }
+        }
     },
     beforeDelete: async function () {
         const field = await this.getObject(this.object_name).findOne(this.id,{fields:['name','object']});
