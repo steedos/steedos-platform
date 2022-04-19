@@ -135,7 +135,7 @@ export class MetadataDriver implements SteedosDriver {
         // console.log(`mongoFilters`, JSON.stringify(mongoFilters));
         // console.log(`mongoOptions`, mongoOptions);
         let query = new mingo.Query(mongoFilters)
-        let cursor = query.find(_collection, mongoOptions.projection);
+        let cursor = query.find(_collection); //, mongoOptions.projection
         if(mongoOptions.sort){
             cursor.sort(mongoOptions.sort)
         }
