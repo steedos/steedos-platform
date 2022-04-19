@@ -356,7 +356,25 @@ Template.creator_list_wrapper.events
 		$(".filter-list-container").addClass("slds-hide")
 	
 	'click .add-list-view': (event, template)->
-		$(".btn-add-list-view").click()
+		object_name = Session.get("object_name")
+		app_id = Session.get("app_id")
+		relatedObjectName = "object_listviews";
+		return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+				name: "object_listviews_standard_new_form",
+				objectApiName: relatedObjectName,
+				title: '新建 ' + "列表视图",
+				initialValues: {
+					object_name: object_name
+				},
+				afterInsert: (result)->
+					if(result.length > 0)
+						record = result[0];
+						list_view_id = record._id
+						url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
+						FlowRouter.go url
+						return true;
+
+			}, null, {iconPath: '/assets/icons'})
 
 	'click .copy-list-view': (event, template)->
 
@@ -371,9 +389,23 @@ Template.creator_list_wrapper.events
 		if current_list_view.filters
 			current_list_view.filters = transformFilters(current_list_view.filters)
 
-		Session.set "cmDoc", current_list_view
+		object_name = Session.get("object_name")
+		app_id = Session.get("app_id")
+		relatedObjectName = "object_listviews";
+		return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+				name: "object_listviews_standard_new_form",
+				objectApiName: relatedObjectName,
+				title: '复制 ' + "列表视图",
+				initialValues: current_list_view,
+				afterInsert: (result)->
+					if(result.length > 0)
+						record = result[0];
+						list_view_id = record._id
+						url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
+						FlowRouter.go url
+						return true;
 
-		$(".btn-add-list-view").click()
+			}, null, {iconPath: '/assets/icons'})
 
 	'click .reset-column-width': (event, template)->
 		list_view_id = Session.get("list_view_id")
@@ -397,7 +429,24 @@ Template.creator_list_wrapper.events
 				Session.set "list_view_visible", true
 
 	'click .edit-list-view': (event, template)->
-		$(".btn-edit-list-view").click()
+		list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"));
+		object_name = Session.get("object_name")
+		app_id = Session.get("app_id")
+		relatedObjectName = "object_listviews";
+		return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+				name: "object_listviews_standard_new_form",
+				objectApiName: relatedObjectName,
+				title: '编辑 ' + "列表视图",
+				recordId: list_view_obj?._id
+				afterInsert: (result)->
+					if(result.length > 0)
+						record = result[0];
+						list_view_id = record._id
+						url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
+						FlowRouter.go url
+						return true;
+
+			}, null, {iconPath: '/assets/icons'})
 
 	'click .cancel-change': (event, template)->
 		list_view_id = Session.get("list_view_id")
