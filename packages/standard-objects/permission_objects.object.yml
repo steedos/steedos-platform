@@ -297,7 +297,7 @@ fields:
   is_system:
     type: boolean
     label: 系统
-    omit: true
+    # omit: true
     readonly: true
     disabled: true
 paging:

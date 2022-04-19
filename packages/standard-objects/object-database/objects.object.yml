@@ -227,7 +227,7 @@ fields:
   is_system:
     type: boolean
     label: System
-    omit: true
+    # omit: true
     readonly: true
     disabled: true
   fields_serial_number:
