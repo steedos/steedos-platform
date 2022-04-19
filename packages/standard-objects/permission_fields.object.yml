@@ -8,7 +8,7 @@ fields:
   name:
     label: Api 名称
     type: text
-    omit: true
+    readonly: true
     sort_no: 100
   permission_set_id:
     label: 权限集
@@ -29,10 +29,10 @@ fields:
     name: permission_object
     reference_to_field: name
     filterable: true
-    hidden: true
+    readonly: true
     sort_no: 120
   object_name:
-    omit: true
+    readonly: true
     label: 对象
     type: lookup
     reference_to: objects
