@@ -78,17 +78,6 @@ module.exports = {
 
                 const dbListViews = await objectql.getObject('object_listviews').directFind({filters: [['shared', '!=', false]]})
 
-                // for(const object of objects){
-                //     if(object && object.name){
-                //         object.list_views = await objectql.getObject('object_listviews').find({
-                //             filters: [['object_name', '=', object.name], ['shared', '!=', false]],
-                //             fields: "_id, name, label"
-                //         }, userSession)
-
-                //         steedosI18n.translationI18nObject(lng, object.name, object)
-                //     }
-                // }
-
                 _.each(objects, (object)=>{
                     if(object && object.name){
 
