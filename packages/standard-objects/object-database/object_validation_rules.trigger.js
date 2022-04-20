@@ -22,63 +22,56 @@ const getInternalValidationRules = function(sourceValidationRules, filters){
 
 module.exports = {
     afterFind: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let validationRules = [];
-        if(filters.object_name){
-            validationRules = objectql.getObjectValidationRules(filters.object_name);
-            delete filters.object_name;
-        }else{
-            validationRules = objectql.getAllObjectValidationRules();
+        const { spaceId } = this;
+        let dataList = objectql.getAllObjectValidationRules();
+        if (!_.isEmpty(dataList)) {
+            dataList.forEach((doc) => {
+                if (!_.find(this.data.values, (value) => {
+                    return value.name === doc.name
+                })) {
+                    this.data.values.push(doc);
+                }
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if (records.length > 0) {
+                this.data.values = records;
+            } else {
+                this.data.values.length = 0;
+            }
         }
 
-        validationRules = getInternalValidationRules(validationRules, filters);
-
-        if(validationRules && validationRules.length>0){
-            this.data.values = this.data.values.concat(validationRules)
-        }
     },
     afterAggregate: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let validationRules = [];
-        if(filters.object_name){
-            validationRules = objectql.getObjectValidationRules(filters.object_name);
-            delete filters.object_name;
-        }else{
-            validationRules = objectql.getAllObjectValidationRules();
-        }
-        
-        validationRules = getInternalValidationRules(validationRules, filters);
-
-        if(validationRules && validationRules.length>0){
-            this.data.values = this.data.values.concat(validationRules)
+        const { spaceId } = this;
+        let dataList = objectql.getAllObjectValidationRules();
+        if (!_.isEmpty(dataList)) {
+            dataList.forEach((doc) => {
+                if (!_.find(this.data.values, (value) => {
+                    return value.name === doc.name
+                })) {
+                    this.data.values.push(doc);
+                }
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if (records.length > 0) {
+                this.data.values = records;
+            } else {
+                this.data.values.length = 0;
+            }
         }
     },
     afterCount: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let validationRules = [];
-        if(filters.object_name){
-            validationRules = objectql.getObjectValidationRules(filters.object_name);
-            delete filters.object_name;
-        }else{
-            validationRules = objectql.getAllObjectValidationRules();
-        }
-        
-        validationRules = getInternalValidationRules(validationRules, filters);
-
-        if(validationRules && validationRules.length>0){
-            this.data.values = this.data.values + validationRules.length
-        }
+        delete this.query.fields;
+        let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
+        this.data.values = result.length;
     },
     afterFindOne: async function(){
-        if(_.isEmpty(this.data.values)){
-            let id = this.id
-            let objectName = id.substr(0, id.indexOf("."));
-            if(objectName){
-                let validationRule = objectql.getObjectValidationRule(objectName, id.substr(id.indexOf(".")+1));
-                if(validationRule){
-                    this.data.values = validationRule;
-                }
-            }
+        if (_.isEmpty(this.data.values)) {
+            const all = objectql.getAllObjectValidationRules();
+            const id = this.id;
+            this.data.values = _.find(all, function (item) {
+                return item._id === id
+            });
         }
     },
     beforeInsert: async function () {

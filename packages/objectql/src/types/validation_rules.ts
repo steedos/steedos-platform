@@ -1,8 +1,6 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-05-24 12:32:57
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-17 12:03:58
  * @Description: 
  */
 
@@ -15,7 +13,7 @@ export async function runValidationRules(method: string, context: SteedosTrigger
         let spaceId = userSession.spaceId;
         let userId = userSession.userId + '';
         let doc = context.doc;
-        let validationRules = await getObject('object_validation_rules').find({ filters: [['space', '=', spaceId], ['object_name', '=', objectName], ['active', '=', true]] });
+        let validationRules = await getObject('object_validation_rules').find({ filters: [['object_name', '=', objectName], ['active', '=', true]] });
         for (const vr of validationRules) {
             let result;
             try {
