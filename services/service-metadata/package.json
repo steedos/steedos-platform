@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata",
-  "version": "2.1.96",
+  "version": "2.1.97",
   "description": "",
   "main": "lib/metadata.service.js",
   "scripts": {
