@@ -1,24 +1,6 @@
 const _ = require("underscore");
 const util = require('../util');
 const objectql = require("@steedos/objectql");
-const core = require("@steedos/core");
-const InternalData = require('../core/internalData');
-
-const getInternalValidationRules = function(sourceValidationRules, filters){
-    let dbValidationRules = Creator.getCollection("object_validation_rules").find(filters, {fields:{_id:1, name:1}}).fetch();
-    let validationRules = [];
-
-    if(!filters.is_system){
-        _.forEach(sourceValidationRules, function(doc){
-            if(!_.find(dbValidationRules, function(p){
-                return p.name === doc.name
-            })){
-                validationRules.push(doc);
-            }
-        })
-    }
-    return validationRules;
-}
 
 module.exports = {
     afterFind: async function(){
@@ -62,7 +44,7 @@ module.exports = {
     },
     afterCount: async function(){
         delete this.query.fields;
-        let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
+        let result = await objectql.getObject(this.object_name).find(this.query)
         this.data.values = result.length;
     },
     afterFindOne: async function(){
