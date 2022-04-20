@@ -176,6 +176,14 @@
             "type":"string",
             "description": "对象分组"
         },
+        "process_state": {
+            "type":"string",
+            "description": "审批状态"
+        },
+        "is_system": {
+            "type":"boolean",
+            "description": "是否系统对象"
+        },
         "methods": {
             "type": "object",
             "description": "对象可执行的方法，用于odata接口",
