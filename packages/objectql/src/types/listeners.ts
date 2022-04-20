@@ -14,4 +14,5 @@ export type SteedosListenerConfig = {
     afterDelete?: Function,
     beforeAggregate?: Function,
     afterAggregate?: Function,
+    metadataServiceName?: string,
 }

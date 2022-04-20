@@ -100,7 +100,8 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
     // await loadObjectPermissions(filePath, serviceName);
     await loadSourceProfiles(filePath, serviceName);
     await loadSourcePermissionset(filePath, serviceName);
-    loadObjectValidationRules(filePath);
+    
+    loadObjectValidationRules(filePath, serviceName);
 
     loadSourceRoles(filePath);
 

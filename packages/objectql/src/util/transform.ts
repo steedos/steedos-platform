@@ -44,7 +44,8 @@ function transformListenerToTrigger(object: SteedosObjectTypeConfig, when: strin
     let trigger: any = {
         on: 'server',
         when: getTriggerWhen(when),
-        todo: transformTrigger(object, when, todo)
+        todo: transformTrigger(object, when, todo),
+        metadataServiceName: json.metadataServiceName
     }
 
     if (json._id) {

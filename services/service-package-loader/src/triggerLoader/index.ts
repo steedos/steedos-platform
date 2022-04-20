@@ -11,7 +11,7 @@ export async function load(broker: any, packagePath: string, packageServiceName:
     let actions = {};
     let serviceName = `~triggers-${packageServiceName}`;
     let filePath = path.join(packagePath, "**");
-    let objTriggers = objectql.loadObjectTriggers(filePath);
+    let objTriggers = objectql.loadObjectTriggers(filePath, packageServiceName);
     if (_.isEmpty(objTriggers)) {
         return;
     }

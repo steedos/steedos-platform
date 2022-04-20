@@ -67,7 +67,7 @@ module.exports = {
 	 */
 	settings: {
 		packageInfo: {
-			path: path.join(__dirname, 'main'),
+			path: __dirname,
 			name: this.name,
 			isPackage: false
 		},

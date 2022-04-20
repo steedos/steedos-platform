@@ -299,6 +299,18 @@ export class SteedosObjectType extends SteedosObjectProperties {
         })
     }
 
+    removeListener(listener_name: string, config: SteedosListenerConfig) {
+        this.listeners[listener_name] = config
+        _TRIGGERKEYS.forEach((key) => {
+            try {
+                let event = config[key];
+                delete this._triggersQueue[key][`${listener_name}_${event.name}`]
+            } catch (error) {
+                
+            }
+        })
+    }
+
     private setTrigger(name: string, when: string, todo: Function, on = 'server') {
         let triggerConfig: SteedosTriggerTypeConfig = {
             name: name,

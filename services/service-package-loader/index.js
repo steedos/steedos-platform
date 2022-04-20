@@ -217,6 +217,9 @@ module.exports = {
             nodeID: this.broker.nodeID,
             instanceID: this.broker.instanceID
         }] }); //${this.broker.nodeID}.${this.name}
+        
+        this.broker.broadcastLocal("@steedos/service-packages.offline", {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
+
         console.log(`service ${this.name} stopped`);
     }
 };

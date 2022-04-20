@@ -1,5 +1,6 @@
 import { Dictionary } from '@salesforce/ts-types';
 const _ = require('underscore');
+const lodash = require('lodash');
 const clone = require('clone');
 var util = require('../util');
 
@@ -57,9 +58,15 @@ export const addObjectValidationRuleConfig = (objectName: string, json: any) => 
     addObjectValidationRule(objectName, json);
 }
 
-export const loadObjectValidationRules = function (filePath: string){
+export const removePackageValidationRules = (serviceName: string)=>{
+    _.each(_ValidationRules, (roles, objectName)=>{
+        _ValidationRules[objectName] = lodash.dropWhile(roles, function(role) { return role.metadataServiceName === serviceName; });
+    })
+}
+
+export const loadObjectValidationRules = function (filePath: string, serviceName: string){
     let validationRuleJsons = util.loadValidationRules(filePath);
     validationRuleJsons.forEach(element => {
-        addObjectValidationRuleConfig(element.object_name, element);
+        addObjectValidationRuleConfig(element.object_name, Object.assign(element, {metadataServiceName: serviceName}));
     });
 }

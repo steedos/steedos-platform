@@ -1,4 +1,4 @@
-import { SteedosListenerConfig } from '../types'
+import { getDataSource, SteedosListenerConfig } from '../types'
 import { Dictionary } from '@salesforce/ts-types';
 import { getObjectConfig } from '../types'
 import { getMD5, JSONStringify, transformListenersToTriggers } from '../util'
@@ -59,8 +59,18 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
             if(object.datasource === 'meteor'){
                 util.extend(object, {triggers: transformListenersToTriggers(object, license)})
             }
+
+            try {
+                const localObject = getDataSource(object.datasource).getLocalObject(object_name);
+                if(localObject){
+                    localObject.setListener(license.name, license);
+                }
+            } catch (error) {
+                // console.error(error)
+            }
+            
         }
-        addLazyLoadListeners(object_name, Object.assign({}, json, {listenTo: object_name}));
+        addLazyLoadListeners(object_name, Object.assign({}, json, {listenTo: object_name, name: json._id || getMD5(JSONStringify(json))}));
         return Object.assign({}, json, {listenTo: object_name}); 
     }else{
         if(_.isRegExp(json.listenTo)){
@@ -71,11 +81,52 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
     }
 }
 
-export const loadObjectTriggers = function (filePath: string){
+export const removePackageObjectTriggers = (serviceName: string)=>{
+    _.each(_lazyLoadListeners, (triggers, objectName)=>{
+        let objectConfig = getObjectConfig(objectName);
+        _lazyLoadListeners[objectName] = _.dropWhile(triggers, function(trigger: any) { 
+            const drop = trigger.metadataServiceName === serviceName; 
+            if(drop){
+                try {
+                    const object = getDataSource(objectConfig.datasource).getLocalObject(objectName);
+                    if(object){
+                        object.removeListener(trigger.name ,trigger)
+                    }
+                } catch (error) {
+                    
+                }
+            }
+            return drop;
+        });
+
+        // try {
+        //     let object = getObjectConfig(objectName);
+        //     if(object && object.datasource === 'meteor'){
+        //         (object as any).triggers = _.dropWhile(triggers, function(trigger: any) { 
+        //             return  trigger.metadataServiceName === serviceName; 
+        //         });
+
+        //         try {
+        //             Creator.Objects[object.name] = object;
+        //             Creator.loadObjects(object, object.name);
+        //         } catch (error) {
+        //             console.log(error)
+        //         }
+        //     }
+        // } catch (error) {
+        //     console.log(error)
+        // }
+    })
+}
+
+export const loadObjectTriggers = function (filePath: string, serviceName: string){
+    if(!serviceName){
+        throw new Error("serviceName is null");
+    }
     let triggerJsons = util.loadTriggers(filePath)
     let triggers = [];
     _.each(triggerJsons, (json: SteedosListenerConfig) => {
-        triggers.push(addObjectListenerConfig(json));
+        triggers.push(addObjectListenerConfig(Object.assign(json, {metadataServiceName: serviceName})));
     })
     return triggers;
 }
