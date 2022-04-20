@@ -165,7 +165,7 @@ Steedos.Page.render = function (root, page, data) {
     return root;
 };
 
-Steedos.Page.App.render = function (template, pageName, app_id) {
+Steedos.Page.App.render = function (template, pageName, app_id, options) {
     if (!pageName) {
         return;
     }
@@ -185,9 +185,9 @@ Steedos.Page.App.render = function (template, pageName, app_id) {
     const page = Steedos.Page.getPage('app', app_id, null, null, pageName);
     if (page) {
         if (page.render_engine && page.render_engine != 'redash') {
-            return Steedos.Page.render(container, page, {
+            return Steedos.Page.render(container, page, Object.assign({}, options, {
                 appId: app_id
-            });
+            }));
         }
     }
 
@@ -197,7 +197,7 @@ Steedos.Page.App.render = function (template, pageName, app_id) {
     return container
 };
 
-Steedos.Page.Listview.render = function (template, objectApiName) {
+Steedos.Page.Listview.render = function (template, objectApiName, options) {
     try {
         if (!template.data.regions || !objectApiName) {
             return;
@@ -216,14 +216,14 @@ Steedos.Page.Listview.render = function (template, objectApiName) {
         }
 
         if (page.render_engine && page.render_engine != 'redash') {
-            return Steedos.Page.render($("#" + rootId)[0], page, data);
+            return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, options, data));
         }
     } catch (error) {
 
     }
 };
 
-Steedos.Page.Record.render = function (template, objectApiName, recordId) {
+Steedos.Page.Record.render = function (template, objectApiName, recordId, options) {
     try {
         if (!template.data.regions || !objectApiName || !recordId) {
             return;
@@ -241,14 +241,14 @@ Steedos.Page.Record.render = function (template, objectApiName, recordId) {
         }
 
         if (page.render_engine && page.render_engine != 'redash') {
-            return Steedos.Page.render($("#" + rootId)[0], page, data);
+            return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, options, data));
         }
     } catch (error) {
 
     }
 };
 
-Steedos.Page.RelatedListview.render = function (template, objectApiName) {
+Steedos.Page.RelatedListview.render = function (template, objectApiName, options) {
     try {
         if (!template.data.regions || !objectApiName) {
             return;
@@ -267,23 +267,23 @@ Steedos.Page.RelatedListview.render = function (template, objectApiName) {
         }
 
         if (page.render_engine && page.render_engine != 'redash') {
-            return Steedos.Page.render($("#" + rootId)[0], page, data);
+            return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, options, data));
         }
     } catch (error) {
 
     }
 };
 
-Steedos.Page.Form.StandardNew.render = function (appId, objectApiName, title, initialValues) {
+Steedos.Page.Form.StandardNew.render = function (appId, objectApiName, title, initialValues, options) {
     const page = Steedos.Page.getPage('form', appId, objectApiName);
     if (page && page.schema) {
         const elementId = getModalElement(`${objectApiName}-standard_new`);
-        return Steedos.Page.render(elementId, page, {
+        return Steedos.Page.render(elementId, page, Object.assign({}, options, {
             appId: appId,
             objectName: objectApiName,
             title: title,
-            initialValues: initialValues
-        });
+            initialValues: initialValues,
+        }));
     }
 
     SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
@@ -305,17 +305,17 @@ Steedos.Page.Form.StandardNew.render = function (appId, objectApiName, title, in
     }, null, { iconPath: '/assets/icons' });
 };
 
-Steedos.Page.Form.StandardEdit.render = function (appId, objectApiName, title, recordId) {
+Steedos.Page.Form.StandardEdit.render = function (appId, objectApiName, title, recordId, options) {
 
     const page = Steedos.Page.getPage('form', appId, objectApiName, recordId);
     if (page && page.schema) {
         const elementId = getModalElement(`${objectApiName}-standard_edit`);
-        return Steedos.Page.render(elementId, page, {
+        return Steedos.Page.render(elementId, page, Object.assign({}, options, {
             appId: appId,
             objectName: objectApiName,
             title: title,
             recordId: recordId
-        });
+        }));
     }
 
     return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
