@@ -110,15 +110,19 @@ export class DbManager {
         return await this.client.db().collection(collectionName).updateOne(filter, {$unset: update}, {session: this.session});
     }
     
-    async find(collectionName:string, filter:object, setSpace=true, limit?) {
+    async find(collectionName:string, filter:object, setSpace=true, limit?, options = {}) {
         var space = this.userSession.spaceId;
         if(setSpace){
             filter['space'] = space
         }
+        let newOptions = {
+            ...options,
+            session: this.session
+        }
         if(limit){
-            return await this.client.db().collection(collectionName).find(filter, {session: this.session}).limit(limit).toArray();
+            return await this.client.db().collection(collectionName).find(filter, newOptions).limit(limit).toArray();
         }else{
-            return await this.client.db().collection(collectionName).find(filter, {session: this.session}).toArray();
+            return await this.client.db().collection(collectionName).find(filter, newOptions).toArray();
         }
     }
 
