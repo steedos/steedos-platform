@@ -82,21 +82,28 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
 }
 
 export const removePackageObjectTriggers = (serviceName: string)=>{
-    _.each(_lazyLoadListeners, (triggers, objectName)=>{
+    _.each(_lazyLoadListeners, (listeners, objectName)=>{
         let objectConfig = getObjectConfig(objectName);
-        _lazyLoadListeners[objectName] = _.dropWhile(triggers, function(trigger: any) { 
-            const drop = trigger.metadataServiceName === serviceName; 
+        _lazyLoadListeners[objectName] = _.filter(listeners, function(listener: any) { 
+            const drop = listener.metadataServiceName === serviceName; 
             if(drop){
+                try {
+                    if(objectConfig && objectConfig.listeners){
+                        delete objectConfig.listeners[listener.name]
+                    }
+                } catch (error) {
+                    
+                }
                 try {
                     const object = getDataSource(objectConfig.datasource).getLocalObject(objectName);
                     if(object){
-                        object.removeListener(trigger.name ,trigger)
+                        object.removeListener(listener.name ,listener)
                     }
                 } catch (error) {
                     
                 }
             }
-            return drop;
+            return drop != true;
         });
 
         // try {
