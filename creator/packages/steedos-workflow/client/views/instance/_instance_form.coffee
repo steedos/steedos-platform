@@ -618,9 +618,10 @@ InstanceformTemplate.onRendered = ()->
 		form_version = WorkflowManager.getInstanceFormVersion();
 
 		formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
-		Form_formula.run("", "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
+		insertDoc = AutoForm.getFormValues("instanceform", undefined, undefined, false)
+		Form_formula.run("", "", formula_fields, insertDoc, form_version.fields);
 		#在此处初始化session 中的 form_values 变量，用于触发下一步步骤计算
-		Session.set("instance_form_values", {instanceId: instance._id, values: AutoForm.getFormValues("instanceform").insertDoc});
+		Session.set("instance_form_values", {instanceId: instance._id, values: insertDoc});
 
 
 

@@ -5,12 +5,12 @@ InstanceManager.runFormula = function (fieldCode) {
 	var formula_fields = []
 	if (form_version)
 		formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
-
-	Form_formula.run(fieldCode, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, form_version.fields);
-
+	var insertDoc = AutoForm.getFormValues("instanceform", undefined, undefined, false);
+	Form_formula.run(fieldCode, "", formula_fields, insertDoc, form_version.fields);
+	
 	Session.set("instance_form_values", {
 		instanceId: Session.get("instanceId"),
-		values: AutoForm.getFormValues("instanceform").insertDoc
+		values: insertDoc
 	});
 }
 
@@ -42,7 +42,6 @@ InstanceManager.getFormField = function (fieldId) {
  * @returns {Array}
  */
 InstanceManager.getNextStepOptions = function () {
-
 	if (ApproveManager.isReadOnly())
 		return []
 
@@ -58,8 +57,9 @@ InstanceManager.getNextStepOptions = function () {
 	var form_version = WorkflowManager.getInstanceFormVersion();
 	// 待办：获取表单值
 	var autoFormDoc = {};
-	if (AutoForm.getFormValues("instanceform")) {
-		autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+	var insertDoc = AutoForm.getFormValues("instanceform", undefined, undefined, false);
+	if (insertDoc) {
+		autoFormDoc = insertDoc;
 	} else if (Session.get("instance_form_values")) {
 		autoFormDoc = Session.get("instance_form_values").values
 	}
@@ -615,9 +615,10 @@ InstanceManager.getInstanceValuesByAutoForm = function () {
 
 	var fields = WorkflowManager.getInstanceFields();
 
-	var instanceValue = InstanceManager.getCurrentValues();
+	// var instanceValue = InstanceManager.getCurrentValues();
 	// var autoFormValue = AutoForm.getFormValues("instanceform").insertDoc;
-	var autoFormValue = _.extend(AutoForm.getFormValues("instanceform").insertDoc, AutoForm.getFormValues("instanceform").updateDoc.$unset);
+	var instanceformValues = AutoForm.getFormValues("instanceform");
+	var autoFormValue = _.extend(instanceformValues.insertDoc, instanceformValues.updateDoc.$unset);
 
 	var values = {};
 
@@ -1758,8 +1759,9 @@ var getCalculateSteps = function (step, track) {
 	var judge = 'approved';
 	var form_version = WorkflowManager.getInstanceFormVersion();
 	var autoFormDoc = {};
-	if (AutoForm.getFormValues("instanceform")) {
-		autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
+	var insertDoc = AutoForm.getFormValues("instanceform", undefined, undefined, false);
+	if (insertDoc) {
+		autoFormDoc = insertDoc;
 	} else if (instance_form_values) {
 		autoFormDoc = instance_form_values.values
 	}

@@ -45,8 +45,8 @@ isFunctionStr = (funStr)->
 		return false
 
 getFilterStr = (filters, functionArgsName)->
-	instanceform = AutoForm.getFormValues("instanceform")
-	formValues = instanceform.insertDoc
+	# instanceform = AutoForm.getFormValues("instanceform")
+	formValues = AutoForm.getFormValues("instanceform", undefined, undefined, false)
 	functionArgs = _.map functionArgsName, (argName)->
 		return formValues[argName]
 	filterFun = null;
