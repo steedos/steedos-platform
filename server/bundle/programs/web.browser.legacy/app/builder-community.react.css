@@ -17356,6 +17356,15 @@ span.ant-radio + * {
 .builder-form .slds-section__title {
   font-weight: inherit;
 }
+.field.mode-read .field-flex-container {
+  width: 100%;
+  overflow: hidden;
+}
+.field.mode-read .field-flex-container .field-flex-box-content {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 /* stylelint-disable no-duplicate-selectors */
@@ -32295,6 +32304,17 @@ body .sc-gsTCUz {
   display: inline;
 }
 
+.type-file.mode-read .ant-form-item-control .ant-form-item-control-input .ant-form-item-control-input-content .field-flex-container .field-flex-box-content {
+  width: 100%;
+  overflow: hidden;
+}
+.type-file.mode-read .ant-form-item-control .ant-form-item-control-input .ant-form-item-control-input-content .field-flex-container .field-flex-box-content .read-file {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .type-file .ant-upload .ant-btn .anticon-upload svg {
   vertical-align: -0.125em;
 }
