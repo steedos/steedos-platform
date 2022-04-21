@@ -108,11 +108,13 @@ Steedos.Page.render = function (root, page, data) {
 
         let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
         const defData = Object.assign({}, data, {
-            context: {
-                rootUrl: __meteor_runtime_config__.ROOT_URL,
-                tenantId: Creator.USER_CONTEXT.spaceId,
-                userId: Creator.USER_CONTEXT.userId,
-                authToken: Creator.USER_CONTEXT.user.authToken
+            data: {
+                context: {
+                    rootUrl: __meteor_runtime_config__.ROOT_URL,
+                    tenantId: Creator.USER_CONTEXT.spaceId,
+                    userId: Creator.USER_CONTEXT.userId,
+                    authToken: Creator.USER_CONTEXT.user.authToken
+                }
             }
         })
 
