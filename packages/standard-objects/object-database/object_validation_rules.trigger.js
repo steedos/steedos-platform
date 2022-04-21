@@ -1,6 +1,7 @@
 const _ = require("underscore");
 const util = require('../util');
 const objectql = require("@steedos/objectql");
+const auth = require('@steedos/auth');
 
 module.exports = {
     afterFind: async function(){
@@ -44,7 +45,7 @@ module.exports = {
     },
     afterCount: async function(){
         delete this.query.fields;
-        let result = await objectql.getObject(this.object_name).find(this.query)
+        let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length;
     },
     afterFindOne: async function(){
