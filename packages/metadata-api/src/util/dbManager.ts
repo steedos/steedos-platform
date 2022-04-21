@@ -126,12 +126,16 @@ export class DbManager {
         }
     }
 
-    async findOne(collectionName:string, filter:object, setSpace=true) {
+    async findOne(collectionName:string, filter:object, setSpace=true, options = {}) {
         var space = this.userSession.spaceId;
         if(setSpace){
             filter['space'] = space
         }
-        return await this.client.db().collection(collectionName).findOne(filter, {session: this.session});
+        let newOptions = {
+            ...options,
+            session: this.session
+        }
+        return await this.client.db().collection(collectionName).findOne(filter, newOptions);
     }
 
     async findWithProjection(collectionName:string, filter:object, projection?:object, setSpace=true, limit?) {

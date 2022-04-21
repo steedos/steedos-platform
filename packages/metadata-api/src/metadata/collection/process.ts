@@ -77,9 +77,7 @@ export class ProcessCollection extends MetadataBaseCollection {
     try {
       processName = getFullName(collection_metadata_name, process)
 
-      const processVersion  = await this.getProcessVersionByProcess(dbManager, process._id.toString());
-
-      const processSchema = processVersion[0]
+      const processSchema  = await this.getProcessVersionByProcess(dbManager, process._id.toString()) || {};
 
       steedosPackage[processName] = {
         name: process.name,
@@ -116,27 +114,22 @@ export class ProcessCollection extends MetadataBaseCollection {
     }
   }
 
-  // TODO: order by version and limit 1
+  // order by version and limit 1
   async getProcessVersionByProcess(dbManager, processId) {
   
-    var processVersions = await dbManager.find(process_versions_collection_name, {
+    var processVersion = await dbManager.findOne(process_versions_collection_name, {
       process: processId
-    });
+    }, true, { sort: { version: -1} });
   
-    processVersions.forEach(processVersion => {
-      deleteCommonAttribute(processVersion);
-      sortAttribute(processVersion);
-    })
+    deleteCommonAttribute(processVersion);
+    sortAttribute(processVersion);
    
-    // order by version desc, eg: 3, 2, 1
-    return processVersions.sort((pre, next) => {
-      return next.version - pre.version;
-    });
+    return processVersion
   }
 
   async saveOrInsertProcessVersion(dbManager, processVersion) {
     const processId = processVersion.process
-    var [dbData]= await this.getProcessVersionByProcess(dbManager, processId);
+    var dbData= await this.getProcessVersionByProcess(dbManager, processId);
   
     if (dbData && !dbData.is_active) {
       const filter = {

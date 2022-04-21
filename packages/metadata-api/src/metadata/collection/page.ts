@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2021-08-30 12:06:41
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-21 15:59:14
+ * @LastEditTime: 2022-04-21 16:07:04
  * @Description: 
  */
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
@@ -103,7 +103,7 @@ export class PageCollection extends MetadataBaseCollection {
 
     // 获取page_versions最新版的schema
     private async getLatestPageVersionSchema(dbManager, pageId) {
-        const pageVersions = await dbManager.find(PAGE_VERSION_TABLE_NAME, { page: pageId }, true, false, { sort: { version: -1} });
+        const pageVersions = await dbManager.find(PAGE_VERSION_TABLE_NAME, { page: pageId }, true, 1, { sort: { version: -1} });
         if (pageVersions && pageVersions.length > 0) {
             return pageVersions[0].schema;
         }
