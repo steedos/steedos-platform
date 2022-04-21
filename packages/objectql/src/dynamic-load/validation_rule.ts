@@ -1,3 +1,8 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @Description: 
+ */
 import { Dictionary } from '@salesforce/ts-types';
 const _ = require('underscore');
 const lodash = require('lodash');
@@ -60,7 +65,7 @@ export const addObjectValidationRuleConfig = (objectName: string, json: any) => 
 
 export const removePackageValidationRules = (serviceName: string)=>{
     _.each(_ValidationRules, (roles, objectName)=>{
-        _ValidationRules[objectName] = lodash.dropWhile(roles, function(role) { return role.metadataServiceName === serviceName; });
+        _ValidationRules[objectName] = lodash.filter(roles, function(role) { return role.metadataServiceName != serviceName; });
     })
 }
 
