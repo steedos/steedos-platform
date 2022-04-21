@@ -1,9 +1,20 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @Description: 
+ */
 const _ = require("underscore");
 const util = require('../util');
 const objectql = require("@steedos/objectql");
 const auth = require('@steedos/auth');
 
 module.exports = {
+    beforeFind: async function(){
+        delete this.query.fields;
+    },
+    beforeAggregate: async function(){
+        delete this.query.fields;
+    },
     afterFind: async function(){
         const { spaceId } = this;
         let dataList = objectql.getAllObjectValidationRules();
