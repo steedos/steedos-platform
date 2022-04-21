@@ -53,17 +53,17 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
                 object.listeners = {}
             }
             delete json.listenTo
-            const license = clone(json);
-            license.name = json._id || getMD5(JSONStringify(json));
-            object.listeners[license.name] = license
+            const listener = clone(json);
+            listener.name = json._id || getMD5(JSONStringify(json));
+            object.listeners[listener.name] = listener
             if(object.datasource === 'meteor'){
-                util.extend(object, {triggers: transformListenersToTriggers(object, license)})
+                util.extend(object, {triggers: transformListenersToTriggers(object, listener)})
             }
 
             try {
                 const localObject = getDataSource(object.datasource).getLocalObject(object_name);
                 if(localObject){
-                    localObject.setListener(license.name, license);
+                    localObject.setListener(listener.name, listener);
                 }
             } catch (error) {
                 // console.error(error)
