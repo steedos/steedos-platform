@@ -6,7 +6,7 @@ const app = express();
 // const objectql = require('@steedos/objectql')
 // const util = require('../util/index')
 // const ConfigName = 'plugin.config.yml'
-import { getSteedosSchema } from '@steedos/objectql';
+import { getSteedosSchema, loadService } from '@steedos/objectql';
 import * as initConfig from './init-config.json'
 const PACKAGE_SERVICE_FILE_NAME = 'package.service.js';
 export class Plugins {
@@ -27,7 +27,7 @@ export class Plugins {
                 let packageServiceFilePath = path.join(pluginDir, PACKAGE_SERVICE_FILE_NAME);
                 if (fs.existsSync(packageServiceFilePath)) {
                     try {
-                        let service = broker.loadService(packageServiceFilePath);
+                        let service = loadService(broker, packageServiceFilePath);
                         if (!broker.started) {
                             broker._restartService(service)
                         }

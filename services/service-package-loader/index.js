@@ -111,7 +111,7 @@ module.exports = {
             const matchedPaths = globby.sync(filePatten);
             for await (const serviceFilePath of matchedPaths) {
                 try {
-                    const service = this.broker.loadService(serviceFilePath);
+                    const service = objectql.loadService(this.broker, serviceFilePath);
                     this.packageServices.push(service);
                     if (!this.broker.started) {
                         this.broker._restartService(service)

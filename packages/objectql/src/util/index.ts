@@ -1014,4 +1014,20 @@ export function parserFilters(filters){
     return query;
 }
 
+
+export function clearRequireCache(filename) {
+    /* istanbul ignore next */
+    Object.keys(require.cache).forEach(function (key) {
+        if (key == filename) {
+            delete require.cache[key];
+        }
+    });
+};
+
+export function loadService(broker, filename){
+    clearRequireCache(filename);
+    return broker.loadService(filename);
+}
+
+
 loadCoreValidators();
