@@ -69,6 +69,13 @@ AutoForm.addInputType("dx-date-box", {
     if (!dti)
       return null
     value = dti.option("value")
+    type = dti.option("type")
+    if(type === "time" && value){
+      // time类型始终输出为1970-01-01
+      value.setFullYear("1970");
+      value.setMonth("0");
+      value.setDate("1");
+    }
     var timezoneId = this.attr("data-timezone-id");
     // default is local, but if there's a timezoneId, we use that
     if (typeof timezoneId === "string" && value) {

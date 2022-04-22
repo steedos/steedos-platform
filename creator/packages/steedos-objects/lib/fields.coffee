@@ -95,6 +95,14 @@ Creator.getObjectSchema = (obj) ->
 							displayFormat: "yyyy-MM-dd"
 		else if field.type == "time"
 			fs.type = Date
+			if Meteor.isClient
+				# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+				fs.autoform.afFieldInput =
+					type: "dx-date-box"
+					timezoneId: "utc"
+					dxDateBoxOptions:
+						type: "time"
+						displayFormat: "HH:mm"
 		else if field.type == "datetime"
 			fs.type = Date
 			if Meteor.isClient
@@ -591,7 +599,7 @@ Creator.getFieldDisplayValue = (object_name, field_name, field_value)->
 	return html
 
 Creator.checkFieldTypeSupportBetweenQuery = (field_type)->
-	return ["date", "datetime", "currency", "number"].includes(field_type)
+	return ["date", "datetime", "time", "currency", "number"].includes(field_type)
 
 Creator.pushBetweenBuiltinOptionals = (field_type, operations)->
 	builtinValues = Creator.getBetweenBuiltinValues(field_type)

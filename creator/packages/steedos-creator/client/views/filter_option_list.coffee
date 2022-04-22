@@ -232,6 +232,8 @@ Template.filter_option_list.onCreated ->
 					formatFun = (value, type)->
 						if type == "datetime"
 							return moment(value).format('YYYY-MM-DD HH:mm')
+						else if type == "time"
+							return moment.utc(value).format('HH:mm')
 						else
 							return moment.utc(value).format('YYYY-MM-DD')
 					if filterValue
@@ -246,7 +248,7 @@ Template.filter_option_list.onCreated ->
 								if !Creator.isFilterValueEmpty(filterValue[0]) || !Creator.isFilterValueEmpty(filterValue[1])
 									startLabel = if _.isNumber(filterValue[0]) then filterValue[0] else filterValue[0] || ""
 									endLabel = if _.isNumber(filterValue[1]) then filterValue[1] else filterValue[1] || ""
-									if fieldType == 'datetime' or fieldType == 'date'
+									if fieldType == 'datetime' or fieldType == 'date' or fieldType == 'time'
 										startLabel = if filterValue[0] then formatFun(filterValue[0], fieldType) else ""
 										endLabel = if filterValue[1] then formatFun(filterValue[1], fieldType) else ""
 									if !Creator.isFilterValueEmpty(startLabel) and !Creator.isFilterValueEmpty(endLabel)
