@@ -19,7 +19,7 @@ window.refreshGrid = (name)=>{
 }
 
 function SteedosGridContainer(prop){
-	const { objectApiName, name, listName, filters, treeRootFilters, onModelUpdated, sideBar, pageSize, onUpdated, checkboxSelection, columnFields, autoFixHeight, autoHideForEmptyData, sort } = prop;
+	const { objectApiName, name, listName, filters, treeRootFilters, onModelUpdated, sideBar, pageSize, onUpdated, checkboxSelection, columnFields, extraColumnFields, autoFixHeight, autoHideForEmptyData, sort } = prop;
 	const gridRef = useRef();
 	window.gridRef = gridRef;
 	if(!window.gridRefs){
@@ -29,6 +29,7 @@ function SteedosGridContainer(prop){
 	if(!objectApiName){
 		return null;
 	}
+	console.log("==ObjectListView====extraColumnFields===", extraColumnFields);
 	return (
 		<SteedosProvider iconPath="/assets/icons">
 			<Router>
@@ -45,6 +46,7 @@ function SteedosGridContainer(prop){
 					pageSize={pageSize}
 					onUpdated={onUpdated}
 					columnFields={columnFields}
+					extraColumnFields={extraColumnFields}
 					checkboxSelection={checkboxSelection}
 					autoFixHeight={autoFixHeight}
 					autoHideForEmptyData={autoHideForEmptyData}

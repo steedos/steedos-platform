@@ -21,6 +21,11 @@ Template.detail_realted_object_list.helpers
 				columnFields.push({fieldName: fieldName})
 		)
 		return columnFields;
+	extraColumnFields: ()->
+		# 子表列表始终从接口抓取主子表关联字段
+		related_list = this.related_list_item_props
+		related_field_name = related_list.related_field_name
+		return [related_field_name]
 	treeRootFilters: ()->
 		object_name = this.object_name
 		related_object_name = this.related_object_name
