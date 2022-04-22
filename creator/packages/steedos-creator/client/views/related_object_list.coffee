@@ -111,6 +111,11 @@ Template.related_object_list.helpers
 				columnFields.push({fieldName: fieldName})
 		)
 		return columnFields;
+	extraColumnFields: ()->
+		# 子表列表始终从接口抓取主子表关联字段
+		related_list_item_props = getRelateObj()
+		related_field_name = related_list_item_props?.related_field_name
+		return [related_field_name]
 	filters: ()->
 		object_name = Session.get "object_name"
 		record_id = Session.get("record_id")
