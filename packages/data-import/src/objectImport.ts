@@ -238,6 +238,12 @@ async function converterLookup(
     if (!cellContent) {
       continue;
     }
+    
+    //修复导入单元格为数字式文本问题
+    if (lookupCollection.fields[selectfield]._type == 'varchar') {
+        cellContent = cellContent.toString();
+    }
+    
     let cellFilter = [selectfield, "=", cellContent];
     let spaceFilter = ["space", "=", options.userSession.spaceId];
     let filters = [cellFilter, spaceFilter, ['is_deleted', '!=', true]];
