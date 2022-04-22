@@ -539,7 +539,7 @@ if Meteor.isClient
 				_.each query, (val, key)->
 					if object_fields[key]
 						_fieldType = Creator.getFieldDataType(object_fields, key)
-						if ["date", "datetime", "currency", "number"].includes(_fieldType)
+						if ["date", "datetime", "time", "currency", "number"].includes(_fieldType)
 							query_arr.push([key, ">=", val])
 						else if ["text", "textarea", "html"].includes(_fieldType)
 							if _.isString(val)
@@ -583,7 +583,7 @@ if Meteor.isClient
 					else
 						key = key.replace(/(_endLine)$/, "")
 						_fieldType = Creator.getFieldDataType(object_fields, key)
-						if object_fields[key] and ["date", "datetime", "currency", "number"].includes(_fieldType)
+						if object_fields[key] and ["date", "datetime", "time", "currency", "number"].includes(_fieldType)
 							query_arr.push([key, "<=", val])
 
 			is_logic_or = if standard_query.is_mini then true else false

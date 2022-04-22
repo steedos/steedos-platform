@@ -1,7 +1,7 @@
 @FiltersTransform = {}
 
 getOperation = (type)->
-	if ["date", "datetime", "currency", "number"].includes(type)
+	if ["date", "datetime", "time", "currency", "number"].includes(type)
 		return "between"
 	else if ["text", "textarea", "html"].includes(type)
 		return "contains"
@@ -19,7 +19,7 @@ FiltersTransform.queryToFilters = (standard_query)->
 		if object_fields[k]
 			# type = object_fields[k].type
 			type = Creator.getFieldDataType(object_fields, k)
-			if ["date", "datetime", "currency", "number"].includes(type)
+			if ["date", "datetime", "time", "currency", "number"].includes(type)
 				filters.push({field: k, operation: getOperation(type), start_value: v, value: [v, null]})
 			else if ["text", "textarea", "html"].includes(type)
 				if _.isString(v)
@@ -34,7 +34,7 @@ FiltersTransform.queryToFilters = (standard_query)->
 			k = k.replace(/(_endLine)$/, "")
 			# type = object_fields[k].type
 			type = Creator.getFieldDataType(object_fields, k)
-			if object_fields[k] and ["date", "datetime", "currency", "number"].includes(type)
+			if object_fields[k] and ["date", "datetime", "time", "currency", "number"].includes(type)
 				filter = _.find(filters, (f)->
 					return f.field == k
 				)
