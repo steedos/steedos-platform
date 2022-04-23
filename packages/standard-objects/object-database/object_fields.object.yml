@@ -50,7 +50,7 @@ fields:
     index: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
-    omit: true
+    readonly: true
   type:
     type: select
     label: Type
