@@ -11,6 +11,7 @@ fields:
     required: true
     searchable: true
     readonly: true
+    omit: true
     name: name
   api_name:
     type: text
