@@ -22,6 +22,10 @@ fields:
     label: 日期范围截止日期
     help: 
     description: 
+  rule:
+    label: 编码规则
+    help: 
+    description: 
 listviews:
   all:
     label: 所有

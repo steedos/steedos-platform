@@ -2,7 +2,7 @@ const objectql = require('@steedos/objectql');
 const _ = require('underscore');
 const moment = require(`moment`);
 
-const caculateAutonumber = async function (objectName, fieldName, formula, spaceId) {
+const caculateAutonumber = async function (objectName, fieldName, rule, spaceId) {
     var padding = function (num, length) {
         var len = (num + "").length;
         var diff = length - len;
@@ -23,9 +23,9 @@ const caculateAutonumber = async function (objectName, fieldName, formula, space
         yy = m.format('YY'),
         mm = m.format('MM'),
         dd = m.format('DD');
-    var hasYear = formula.indexOf('{YYYY}') > -1;
-    var hasMonth = formula.indexOf('{MM}') > -1;
-    var hasDay = formula.indexOf('{DD}') > -1;
+    var hasYear = rule.indexOf('{YYYY}') > -1;
+    var hasMonth = rule.indexOf('{MM}') > -1;
+    var hasDay = rule.indexOf('{DD}') > -1;
     if (hasYear && hasMonth && hasDay) {
         date_from = m.startOf("day").toDate();
         date_to = m.endOf("day").toDate();
@@ -54,33 +54,57 @@ const caculateAutonumber = async function (objectName, fieldName, formula, space
     if (records && records.length > 0) {
         anData = records[0];
     }
+    /**
+     * autonunber增加编码规则字段（rule）存储 编号规则公式计算后的结果，作为联合查找autonumber记录的条件；
+     * 根据时间段先查autonumber记录，如查到rule为空的记录则更新rule；如未查到则按照新的包含rule的查询条件查询或新增。
+    */
     var anId;
-    if (anData) {
+    if (anData && !anData.rule) { // 查询到记录，但rule为空，则更新rule，目的是为了更新旧的自动编号记录
         anId = anData._id;
         await anColl.directUpdate(anId, {
             $inc: {
                 current_no: 1
-            }
+            },
+            rule: rule
         });
     } else {
-        anId = await anColl._makeNewID();
-        var insertObj = {
-            _id: anId,
-            object_name: objectName,
-            field_name: fieldName,
-            space: spaceId
-        };
-        if (date_from && date_to) {
-            insertObj.date_from = date_from;
-            insertObj.date_to = date_to;
+        // 按照新的包含rule的查询条件查询或新增
+        let anDoc = null;
+        filters.push(['rule', '=', encodeURIComponent(rule)]);
+        let anDocs = await anColl.find({ filters });
+        if (anDocs && anDocs.length > 0) {
+            anDoc = anDocs[0];
         }
-        await anColl.directInsert(insertObj);
+        if (anDoc) {
+            // 更新
+            anId = anDoc._id;
+            await anColl.directUpdate(anId, {
+                $inc: {
+                    current_no: 1
+                }
+            });
+        } else {
+            anId = await anColl._makeNewID();
+            var insertObj = {
+                _id: anId,
+                object_name: objectName,
+                field_name: fieldName,
+                space: spaceId,
+                rule: rule,
+            };
+            if (date_from && date_to) {
+                insertObj.date_from = date_from;
+                insertObj.date_to = date_to;
+            }
+            await anColl.directInsert(insertObj);
+        }
+
     }
-    var {current_no: currentNo} = await anColl.findOne(anId);
+    var { current_no: currentNo } = await anColl.findOne(anId);
     var numberFormatMethod = function ($1) {
         return padding(currentNo, $1.length - 2);
     };
-    var autonumber = formula.replace(/{YYYY}/g, yyyy).replace(/{YY}/g, yy).replace(/{MM}/g, mm).replace(/{DD}/g, dd).replace(/{[0]+}/g, numberFormatMethod);
+    var autonumber = rule.replace(/{YYYY}/g, yyyy).replace(/{YY}/g, yy).replace(/{MM}/g, mm).replace(/{DD}/g, dd).replace(/{[0]+}/g, numberFormatMethod);
     return autonumber;
 };
 
@@ -98,8 +122,17 @@ module.exports = {
 
         for (const k in fields) {
             const f = fields[k];
-            if (f.type == 'autonumber' && f.formula) {
-                setObj[k] = await caculateAutonumber(object_name, k, f.formula, spaceId);
+            let formula = f.formula;
+            let rule = formula;
+            if (f.type == 'autonumber' && formula) {
+                // 拿到编号字段中配置的公式判断是否存在单引号/双引号，如果存在则当成公式计算；如没有则继续走编码规则计算
+                if (formula.indexOf("'") > -1 || formula.indexOf('"') > -1) {
+                    const userId = null;
+                    // 先执行公式，返回编码规则
+                    rule = await objectql.computeFormula(formula, object_name, doc, userId, spaceId);
+                }
+                // 再执行编码规则
+                setObj[k] = await caculateAutonumber(object_name, k, rule, spaceId);
             }
         }
         if (!_.isEmpty(setObj)) {

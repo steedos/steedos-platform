@@ -62,6 +62,10 @@
 					# omit字段完全隐藏不显示
 					field.hidden = true
 
+				if field.required && field.readonly
+					# 通用必填字段 #2952，必填字段设置为非只读
+					field.readonly = false
+
 				systemBaseFields = Creator.getSystemBaseFields()
 				if systemBaseFields.indexOf(key) > -1
 					# 强制创建人创建时间等字段为只读
