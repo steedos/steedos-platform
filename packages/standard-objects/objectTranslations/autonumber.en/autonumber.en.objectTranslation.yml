@@ -22,6 +22,10 @@ fields:
     label: End Date
     help: 
     description: 
+  rule:
+    label: Rule
+    help: 
+    description: 
 listviews:
   all:
     label: All Auto Numbers

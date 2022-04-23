@@ -25,6 +25,10 @@ fields:
   date_to:
     label: End Date
     type: datetime
+  rule:
+    label: Rule
+    type: text
+    readonly: true
 list_views:
   all:
     label: All Auto Numbers
@@ -33,6 +37,7 @@ list_views:
       - object_name
       - field_name
       - current_no
+      - rule
 permission_set:
   user:
     allowCreate: false
