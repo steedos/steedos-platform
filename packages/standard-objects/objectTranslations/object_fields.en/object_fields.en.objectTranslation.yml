@@ -31,6 +31,8 @@ fields:
         value: textarea
       - label: Html
         value: html
+      - label: Code
+        value: code
       - label: Select
         value: select
       - label: Checkbox

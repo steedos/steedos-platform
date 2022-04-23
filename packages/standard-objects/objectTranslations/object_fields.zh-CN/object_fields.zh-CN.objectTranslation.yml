@@ -28,6 +28,8 @@ fields:
         value: textarea
       - label: Html文本
         value: html
+      - label: Code代码
+        value: code
       - label: 选择框
         value: select
       - label: 复选框
