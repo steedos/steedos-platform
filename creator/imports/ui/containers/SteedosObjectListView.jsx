@@ -29,7 +29,6 @@ function SteedosGridContainer(prop){
 	if(!objectApiName){
 		return null;
 	}
-	console.log("==ObjectListView====extraColumnFields===", extraColumnFields);
 	return (
 		<SteedosProvider iconPath="/assets/icons">
 			<Router>
