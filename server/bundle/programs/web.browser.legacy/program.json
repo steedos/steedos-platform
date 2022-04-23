@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "9140194dcb76dd8c4545338280861c41ab8998e7.js",
+      "path": "77a5b7d80ab2b9d35a5de1523d986ad8923bb124.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/9140194dcb76dd8c4545338280861c41ab8998e7.js?meteor_js_resource=true",
-      "size": 22078572,
-      "hash": "9140194dcb76dd8c4545338280861c41ab8998e7",
-      "sri": "ut/DtgaUWEcvUDy+9dhkwCT3NcFDAreFvRCIXnpDCAaEqqUaa9FlxjdVugLmtieaCkV1SclV6WsSc4SceyPZkA=="
+      "url": "/77a5b7d80ab2b9d35a5de1523d986ad8923bb124.js?meteor_js_resource=true",
+      "size": 22078352,
+      "hash": "77a5b7d80ab2b9d35a5de1523d986ad8923bb124",
+      "sri": "8E5pI9oR/1yeKxT/UscU1QJj7h7HbElgz2mgl9l7GFM0BodptYYMu56aEImfkcxawr8GrX1ackQdLRzb6No1vg=="
     },
     {
-      "path": "9140194dcb76dd8c4545338280861c41ab8998e7.stats.json",
+      "path": "77a5b7d80ab2b9d35a5de1523d986ad8923bb124.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/9140194dcb76dd8c4545338280861c41ab8998e7.stats.json?meteor_js_resource=true",
+      "url": "/77a5b7d80ab2b9d35a5de1523d986ad8923bb124.stats.json?meteor_js_resource=true",
       "size": 152992,
-      "hash": "ce5987eea5897fa3834bea916e660ceec036613d",
-      "sri": "lvu7Qwc8lCdmQujcltndOcVDPVProF3gUedPyKJMIiO85HT0R4fFHZhqYB5iQfjD3yWGP1CRjrmTAsyTdgxp2Q=="
+      "hash": "86da3958e40976fa3f392852e6db7ee875dcadc3",
+      "sri": "vRJWJJiYgGJsrp4sgTTr9Q5h0/BpYdHlN44OgPA2EqyRjMRonRkBg+DUoTnPaG60EGiuzVQAyjAH6sSdUdOjGg=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
