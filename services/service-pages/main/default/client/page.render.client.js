@@ -12,6 +12,9 @@ Steedos.Page = {
     Form: {
         StandardNew: {},
         StandardEdit: {}
+    },
+    reload: function(){
+        FlowRouter.reload();
     }
 };
 
@@ -199,6 +202,10 @@ Steedos.Page.App.render = function (template, pageName, app_id, options) {
     return container
 };
 
+Steedos.Page.Listview.getDefaultName = function (objectApiName, listViewName) {
+    return `listview_${objectApiName}_${listViewName}`;
+};
+
 Steedos.Page.Listview.render = function (template, objectApiName, options) {
     try {
         if (!template.data.regions || !objectApiName) {
@@ -308,7 +315,6 @@ Steedos.Page.Form.StandardNew.render = function (appId, objectApiName, title, in
 };
 
 Steedos.Page.Form.StandardEdit.render = function (appId, objectApiName, title, recordId, options) {
-
     const page = Steedos.Page.getPage('form', appId, objectApiName, recordId);
     if (page && page.schema) {
         const elementId = getModalElement(`${objectApiName}-standard_edit`);
@@ -333,7 +339,7 @@ Steedos.Page.Form.StandardEdit.render = function (appId, objectApiName, title, r
                     SteedosUI.reloadRecord(objectApiName, recordId)
                 } else {
                     window.refreshDxSchedulerInstance()
-                    window.refreshGrid();
+                    window.refreshGrid(options.gridName);
                 }
             }, 1);
             return true;

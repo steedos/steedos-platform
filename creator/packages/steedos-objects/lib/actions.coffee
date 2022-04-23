@@ -71,8 +71,13 @@ if Meteor.isClient
 
 		"standard_new": (object_name, record_id, fields)->
 			object = Creator.getObject(object_name);
+			gridName = this.action.gridName;
 			initialValues={}
-			selectedRows = window.gridRef?.current?.api?.getSelectedRows()	
+			if(gridName)
+				selectedRows = window.gridRefs?[gridName].current?.api?.getSelectedRows()
+			else
+				selectedRows = window.gridRef?.current?.api?.getSelectedRows()	
+			
 			if selectedRows?.length
 				record_id = selectedRows[0]._id;
 				if record_id
@@ -82,7 +87,7 @@ if Meteor.isClient
 				initialValues = FormManager.getInitialValues(object_name)
 
 			if object?.version >= 2
-				return Steedos.Page.Form.StandardNew.render(Session.get("app_id"), object_name, '新建 ' + object.label, initialValues);
+				return Steedos.Page.Form.StandardNew.render(Session.get("app_id"), object_name, '新建 ' + object.label, initialValues , {gridName: gridName});
 			Session.set 'action_object_name', object_name
 			if selectedRows?.length
 				# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
@@ -105,7 +110,9 @@ if Meteor.isClient
 			if record_id
 				object = Creator.getObject(object_name);
 				if object?.version >= 2
-					return Steedos.Page.Form.StandardEdit.render(Session.get("app_id"), object_name, '编辑 ' + object.label, record_id)
+					return Steedos.Page.Form.StandardEdit.render(Session.get("app_id"), object_name, '编辑 ' + object.label, record_id, {
+						gridName: this.action.gridName
+					})
 				if Steedos.isMobile() && false
 #					record = Creator.getObjectRecord(object_name, record_id)
 #					Session.set 'cmDoc', record
@@ -125,6 +132,7 @@ if Meteor.isClient
 							$(".btn.creator-edit").click()
 
 		"standard_delete": (object_name, record_id, record_title, list_view_id, record, call_back)->
+			gridName = this.action.gridName;
 			# console.log("===standard_delete===", object_name, record_id, record_title, list_view_id, record, call_back);
 			if record_id
 				beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
@@ -153,7 +161,7 @@ if Meteor.isClient
 
 				# 如果是批量删除，则传入的list_view_id为列表视图的name，用于获取列表选中项
 				# 主列表规则是"listview_#{object_name}_#{list_view_id}"，相关表规则是"related_listview_#{object_name}_#{related_object_name}_#{related_field_name}"
-				selectedRecords = SteedosUI.getTableSelectedRows(list_view_id)
+				selectedRecords = SteedosUI.getTableSelectedRows(gridName || list_view_id)
 				if !selectedRecords || !selectedRecords.length
 					toastr.warning(t("creator_record_remove_many_no_selection"))
 					return
@@ -191,7 +199,7 @@ if Meteor.isClient
 										if object_name != Session.get("object_name")
 											FlowRouter.reload();
 									else
-										window.refreshGrid();
+										window.refreshGrid(gridName);
 								catch _e
 									console.error(_e);
 								if gridContainer?.length
@@ -229,7 +237,7 @@ if Meteor.isClient
 									if deleteCounter >= selectedRecords.length
 										# console.log("deleteCounter, selectedRecords.length===", deleteCounter, selectedRecords.length);
 										$("body").removeClass("loading")
-										window.refreshGrid();
+										window.refreshGrid(gridName);
 								selectedRecords.forEach (record)->
 									record_id = record._id
 									beforeHook = FormManager.runHook(object_name, 'delete', 'before', {_id: record_id})
