@@ -43,6 +43,7 @@ fields:
     searchable: true
     index: true
     required: true
+    visible_on: "{{global.mode !='read' ? true : false}}"
   name:
     type: text
     label: API Name
@@ -51,6 +52,7 @@ fields:
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
     readonly: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
   type:
     type: select
     label: Type
