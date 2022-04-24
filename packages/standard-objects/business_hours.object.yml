@@ -70,7 +70,8 @@ fields:
   utc_offset:
     label: GMT Offset
     type: number
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     inlineHelpText: "The business hours is based on this GMT offset, and it's value is the user's own GMT offset."
 list_views:
   all:
