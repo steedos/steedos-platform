@@ -96,7 +96,8 @@ fields:
     hidden: true
     index: true
     name: is_company
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   hidden:
     label: Hidden
     type: boolean
