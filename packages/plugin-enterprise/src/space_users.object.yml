@@ -3,5 +3,6 @@ fields:
   company_id:
     hidden: false
   company_ids:
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     hidden: false

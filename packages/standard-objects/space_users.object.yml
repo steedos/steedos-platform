@@ -38,7 +38,7 @@ fields:
     type: boolean
     label: Email Verified
     readonly: true
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     hidden: false
   mobile:
     type: text
@@ -52,7 +52,7 @@ fields:
     type: boolean
     label: Mobile Verified
     readonly: true
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     hidden: false
   organizations:
     type: lookup
@@ -77,7 +77,8 @@ fields:
     type: lookup
     reference_to: organizations
     multiple: true
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     name: organizations_parents
     filterable: true
     hidden: false
@@ -85,7 +86,8 @@ fields:
     label: Main Department
     type: lookup
     reference_to: organizations
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     name: organization
     filterable: true
 
@@ -111,7 +113,7 @@ fields:
   company_id:
     label: Main Division
     type: lookup
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     readonly: true
     # hidden: false
     defaultValue: !!js/function |
@@ -161,18 +163,18 @@ fields:
     type: lookup
     label: Contact
     reference_to: contacts
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     readonly: true
   is_supplier:
     type: boolean
     label: Supplier
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     readonly: true
     # hidden: true
   is_customer:
     type: boolean
     label: Customer
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     readonly: true
     # hidden: true
   work_phone:
