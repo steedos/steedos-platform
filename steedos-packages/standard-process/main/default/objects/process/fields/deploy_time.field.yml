@@ -2,5 +2,4 @@ name: deploy_time
 label: 发布时间
 type: datetime
 readonly: true
-omit: true
 sort_no: 100
