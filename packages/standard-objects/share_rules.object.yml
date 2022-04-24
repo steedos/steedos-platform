@@ -48,6 +48,7 @@ fields:
     # omit: true
     readonly: true
     disabled: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
 actions:
   customize:
     label: 自定义
