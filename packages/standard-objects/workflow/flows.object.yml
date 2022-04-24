@@ -8,7 +8,7 @@ fields:
   name:
     type: text
     label: Name
-    required: true
+    required: false
     searchable: true
     readonly: true
     name: name
