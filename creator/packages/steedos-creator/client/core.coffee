@@ -799,7 +799,7 @@ if Meteor.isClient
 			val = val.join(",")
 			data.push({value: val, items: items, id: props._id, isSelects: true})
 		else
-			if (val && ["datetime", "date"].indexOf(_filedType) >= 0)
+			if (val && ["datetime", "date", "time"].indexOf(_filedType) >= 0)
 				if props.agreement == "odata"
 					# 老的datatable列表界面，现在没有在用了，都用DevExtreme的grid列表代替了
 					if _filedType == "datetime"
@@ -823,6 +823,8 @@ if Meteor.isClient
 						val = moment(props.val).format('YYYY-MM-DD H:mm')
 					else if _filedType == "date"
 						val = moment.utc(props.val).format('YYYY-MM-DD')
+					else if _filedType == "time"
+						val = moment.utc(props.val).format('HH:mm')
 			else if (props.val == null)
 				val = ""
 			# else if _filedType == "select"
