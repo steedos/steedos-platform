@@ -302,6 +302,7 @@ fields:
     label: 系统
     # omit: true
     readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     disabled: true
 paging:
   enabled: false

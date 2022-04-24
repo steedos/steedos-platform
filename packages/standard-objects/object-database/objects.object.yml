@@ -229,6 +229,7 @@ fields:
     label: System
     # omit: true
     readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     disabled: true
   fields_serial_number:
     type: number
