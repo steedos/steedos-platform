@@ -1,15 +1,15 @@
 name: last_use_time
-defaultValue: null
-description: null
+# defaultValue: null
+# description: null
 filterable: false
-group: null
+# group: null
 hidden: false
 index: false
-inlineHelpText: null
+# inlineHelpText: null
 is_name: false
 is_wide: false
 label: 最后使用时间
-omit: true
+visible_on: "{{global.mode ==='read' ? true : false}}"
 readonly: true
 required: false
 searchable: false
