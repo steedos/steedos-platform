@@ -1,7 +1,8 @@
 extend: organizations
 fields:
   company_id:
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     hidden: false
   company_ids:
     omit: true
