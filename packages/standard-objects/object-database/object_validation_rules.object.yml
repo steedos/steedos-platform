@@ -68,7 +68,8 @@ fields:
   #       }
   #       return [];
   #     }
-
+paging:
+  enabled: false
 list_views:
   all:
     columns:
