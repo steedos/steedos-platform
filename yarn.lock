@@ -4785,7 +4785,7 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/amis@^1.1.46":
+"@steedos-ui/amis@^1.1.47":
   version "1.1.47"
   resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-1.1.47.tgz#e5a99c76dd3c8fa2dc69f161981429b1f10a8ace"
   integrity sha512-Poo1ePNY/JbumsIM6O8Wg7xPoPQx92h+BmCT/y6QLNlmOpek5XRIhFbduJheHiOLzs7kQChABQXhq0pHooQmyA==
@@ -4801,12 +4801,12 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/builder-community@^1.1.46":
+"@steedos-ui/builder-community@^1.1.47":
   version "1.1.47"
   resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.47.tgz#a53ccf139cbb00fd22df186a4be0f0e40aa35fc5"
   integrity sha512-Ce7534VTIYavLVo/aPO6p/t53cdWUFAfls5Gtr/4CObzMC3+QCtviNopfDMfmZbOzeZtpEwYJ8NEpODl5d4NBQ==
 
-"@steedos-ui/builder-widgets@^1.1.46":
+"@steedos-ui/builder-widgets@^1.1.47":
   version "1.1.47"
   resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-1.1.47.tgz#9ae31eb08391dd5d5411a24f7b0e4aecad3aed89"
   integrity sha512-VK9rdsqJqtuB7w6sm7VaGPq02DuPJzfgzyFj0Y39g4/oE7aRvaselx36uzJ7OmQfhsj14Rk7zj7C+EkRoBdYmA==
@@ -4820,7 +4820,7 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/design-system@^1.1.46":
+"@steedos-ui/design-system@^1.1.47":
   version "1.1.47"
   resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-1.1.47.tgz#65be44764d8360b6a98520a4db60a5b68225e09b"
   integrity sha512-/tb12WRuxQ1XFFnw0nbvAWqeaUcRx4EtgGEVd1a5KglkkhX8ZM2ISIl+ESwqYlA9MA0FcPsDA4i4cLvtqTEzuw==
