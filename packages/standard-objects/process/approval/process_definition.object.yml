@@ -37,8 +37,10 @@ fields:
     type: boolean
     label: Active
     # hidden: true
-    omit: true
+    # omit: true
+    readonly: true
     defaultValue: false
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   entry_criteria:
     type: textarea
     label: Specify Entry Criteria
