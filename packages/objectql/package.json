@@ -35,7 +35,7 @@
     "globby": "^9.1.0",
     "jsen": "^0.6.6",
     "lodash": "^4.17.15",
-    "mingo": "^4.2.0",
+    "mingo": "^6.0.5",
     "moleculer-apollo-server": "^0.3.3",
     "moment": "^2.29.1",
     "mongodb": "^3.0.8",
