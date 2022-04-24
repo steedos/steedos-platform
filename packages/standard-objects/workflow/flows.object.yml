@@ -11,7 +11,6 @@ fields:
     required: true
     searchable: true
     readonly: true
-    omit: true
     name: name
   api_name:
     type: text
@@ -24,7 +23,7 @@ fields:
     type: lookup
     reference_to: forms
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: form
     filterable: true
   category:
@@ -42,20 +41,20 @@ fields:
       - label: Disabled
         value: disabled
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: state
     filterable: true
   is_valid:
     label: Valid
     type: boolean
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: is_valid
   current_no:
     label: Current Number
     type: number
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: current_no
   description:
     label: Description
@@ -78,13 +77,14 @@ fields:
     type: object
     is_wide: true
     blackbox: true
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    readonly: true
     name: current
   current.modified:
     label: Modification Time of Current
     type: datetime
     readonly: true
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     hidden: true
     name: current.modified
   current.modified_by:
@@ -92,7 +92,7 @@ fields:
     type: lookup
     reference_to: users
     readonly: true
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     hidden: true
     name: current.modified_by
     filterable: true
@@ -100,7 +100,7 @@ fields:
     label: Creation Time of Current
     type: datetime
     readonly: true
-    omit: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     hidden: true
     name: current.created
   current.created_by:
@@ -108,7 +108,7 @@ fields:
     type: lookup
     reference_to: users
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     hidden: true
     name: current.created_by
     filterable: true
@@ -116,51 +116,52 @@ fields:
     label: Current Steps
     type: grid
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     is_wide: true
     name: current.steps
   current.steps.$._id:
     type: text
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     readonly: true
     hidden: true
     name: current.steps.$._id
   current.steps.$.name:
     label: Name
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     type: text
     name: current.steps.$.name
   current.steps.$.disableCC:
     label: Disable CC
     type: boolean
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     readonly: true
     name: current.steps.$.disableCC
   current.steps.$.allowDistribute:
     label: Can Distribute Instance 
     type: boolean
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: current.steps.$.allowDistribute
   current.steps.$.can_edit_main_attach:
     label: Can Edit Main Attach
     type: boolean
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: current.steps.$.can_edit_main_attach
   current.steps.$.can_edit_normal_attach:
     label: Can Edit Normal Attach
     type: boolean
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: current.steps.$.can_edit_normal_attach
   current.steps.$.distribute_optional_flows:
     label: Workflows of Distribution
     type: lookup
     reference_to: flows
     multiple: true
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     hidden: true
     name: current.steps.$.distribute_optional_flows
     filterable: true
@@ -168,31 +169,31 @@ fields:
     label: Must Wait for CC finished
     type: boolean
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: current.steps.$.cc_must_finished
   current.steps.$.cc_alert:
     label: Pop up CC Alert
     type: boolean
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: current.steps.$.cc_alert
   current.steps.$.allowBatch:
     label: Batch Processing
     type: boolean
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: current.steps.$.allowBatch
   current.steps.$.oneClickApproval:
     label: One Click Approval
     type: boolean
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: current.steps.$.oneClickApproval
   current.steps.$.oneClickRejection:
     label: One Click Rejection
     type: boolean
     readonly: true
-    omit: true
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: current.steps.$.oneClickRejection
   perms:
     label: Permissions
@@ -289,8 +290,7 @@ fields:
     depend_on:
       - object_name
     group: FlowBindObject
-    visible_on: "{{formData.object_name ? true : false}}"
-    omit: true
+    visible_on: "{{ (formData.object_name && global.mode ==='read') ? true : false}}"
     readonly: true
   instance_fields.$:
     label: Field
@@ -335,8 +335,7 @@ fields:
     depend_on:
       - object_name
     group: FlowBindObject
-    visible_on: "{{formData.object_name ? true : false}}"
-    omit: true
+    visible_on: "{{(formData.object_name && global.mode ==='read') ? true : false}}"
     readonly: true
   instance_table_fields.$.detail_field_fullname:
     type: lookup
