@@ -10,6 +10,8 @@ Template.new_flow_modal.helpers
 			if schema[field].autoform
 				schema[field].autoform.readonly = false
 				schema[field].autoform.disabled = false
+			if field == 'name'
+				schema[field].optional = false
 		return new SimpleSchema(schema)
 
 	fields: ()->
