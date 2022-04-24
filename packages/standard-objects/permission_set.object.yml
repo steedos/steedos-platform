@@ -4,6 +4,8 @@ icon: groups
 hidden: false
 enable_inline_edit: false
 version: 2
+paging:
+  enabled: false
 fields:
   name:
     label: Name

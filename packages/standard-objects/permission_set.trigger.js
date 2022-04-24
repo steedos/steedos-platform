@@ -1,11 +1,7 @@
 const _ = require('underscore');
-const InternalData = require('./core/internalData');
 const objectql = require('@steedos/objectql');
 const auth = require("@steedos/auth");
-const getLng = async function(userId){
-    const userSession = await auth.getSessionByUserId(userId);
-    return userSession ? userSession.language : null;
-}
+
 
 const getSourcePermissionSets = async function(type){
     switch (type) {
@@ -89,101 +85,65 @@ const getInternalPermissionSet = async function(spaceId, lng, type){
 // }
 
 module.exports = {
-    afterFind: async function () {
-        if(_.isArray(this.data.values)){
-            let filters = InternalData.parserFilters(this.query.filters);
-            if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
-                let lng = await getLng(this.userId);
-                let records = await getInternalPermissionSet(this.spaceId, lng, filters.type);
-                if(_.has(filters, 'name')){
-                    records = _.filter(records, function(record){
-                        return record.name == filters.name
-                    })
-                }
+    beforeFind: async function () {
+        delete this.query.fields;
+    },
 
-                if(_.has(filters, 'license')){
-                    records = _.filter(records, function(record){
-                        return record.license == filters.license
-                    })
-                }
+    beforeAggregate: async function () {
+        delete this.query.fields;
+    },
 
-                this.data.values = this.data.values.concat(records)
+    afterFind: async function(){
+        const { spaceId } = this;
+        let dataList = await getSourcePermissionSets();
+        if (!_.isEmpty(dataList)) {
+            dataList.forEach((doc) => {
+                if (!_.find(this.data.values, (value) => {
+                    return value.name === doc.name
+                })) {
+                    this.data.values.push(doc);
+                }
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if (records.length > 0) {
+                this.data.values = records;
+            } else {
+                this.data.values.length = 0;
             }
-            
         }
+
     },
-    afterAggregate: async function () {
-        if(_.isArray(this.data.values)){
-            let spaceId = this.spaceId;
-            let filters = InternalData.parserFilters(this.query.filters);
-            let filterType = "";
-            try {
-                filterType = filters.type || filters["$and"][0].type;
-            } catch (error) {
-                
-            }
-            if(_.has(filters, '_id') && this.data.values.length > 0){
-                return this.data.values
-            }
-            if(_.has(filters, '_id') && this.data.values.length === 0){
-                const keys = await getSourcePermissionSetsKeys();
-                if(_.include(keys, filters._id) && spaceId){
-                    let dbPerms = await objectql.getObject("permission_set").directFind({filters: [['space', '=', spaceId], ['name', '=', filters._id]]});
-                    if(dbPerms && dbPerms.length > 0){
-                        return this.data.values = this.data.values.concat(dbPerms[0])
-                    }
+    afterAggregate: async function(){
+        const { spaceId } = this;
+        let dataList = await getSourcePermissionSets();
+        if (!_.isEmpty(dataList)) {
+            dataList.forEach((doc) => {
+                if (!_.find(this.data.values, (value) => {
+                    return value.name === doc.name
+                })) {
+                    this.data.values.push(doc);
                 }
-                let lng = null;
-                if(this.userId){
-                    lng = await getLng(this.userId);
-                }
-                const permSet = await getLngInternalPermissionSet(lng);
-                return this.data.values = this.data.values.concat(_.find(permSet, (doc)=>{
-                    return doc._id === filters._id
-                }))
-            }
-            // TODO: 目前排查出 权限集、简档的all视图才需要同时出示 权限集和简档 的记录， 这里需要做调整。
-            if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
-                let lng = await getLng(this.userId);
-                this.data.values = this.data.values.concat((await getInternalPermissionSet(this.spaceId, lng, filterType)))
-            }
-            // this.data.values （许可证： platform）有值 ，（许可证： community）没值。
-            // 人员对象 简档字段  还需要拿数据库保存的值 再过滤一遍。
-            const allData = this.data.values;
-            const firstFilterKey = _.keys(filters)[0];
-            if(firstFilterKey === 'name'){
-                this.data.values = _.filter(allData, (item)=>{
-                    return item[firstFilterKey] === filters[firstFilterKey];
-                })
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if (records.length > 0) {
+                this.data.values = records;
+            } else {
+                this.data.values.length = 0;
             }
         }
     },
-    afterCount: async function () {
-        let filters = InternalData.parserFilters(this.query.filters);
-        if(!_.has(filters, 'type') || (_.has(filters, 'type'))){
-            this.data.values = this.data.values + (await getInternalPermissionSet(this.spaceId, null, filters.type)).length
-        }
+    afterCount: async function(){
+        delete this.query.fields;
+        let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
+        this.data.values = result.length;
     },
-    afterFindOne: async function () {
-        let id = this.id;
-        let spaceId = this.spaceId;
-        if(id && _.isEmpty(this.data.values)){
-            const keys = await getSourcePermissionSetsKeys();
-            if(_.include(keys, id) && spaceId){
-                let dbPerms = await objectql.getObject("permission_set").directFind({filters: [['space', '=', spaceId], ['name', '=', id]]});
-                if(dbPerms && dbPerms.length > 0){
-                    this.data.values = dbPerms[0]
-                    return ;
-                }
-            }
-            let lng = null;
-            if(this.userId){
-                lng = await getLng(this.userId);
-            }
-            const permSet = await getLngInternalPermissionSet(lng);
-            Object.assign(this.data.values, _.find(permSet, (doc)=>{
-                return doc._id === id
-            }))
+    afterFindOne: async function(){
+        if(_.isEmpty(this.data.values)){
+            const all = await getSourcePermissionSets();
+            const id = this.id;
+            this.data.values = _.find(all, function(item){
+                return item._id === id
+            });
         }
     }
 }

@@ -21,6 +21,9 @@ fields:
     index: true
     name: permission_set_id
     filterable: true
+    reference_limit: 5000
+    reference_sort:
+      name: 1
   object_name:
     label: Object
     type: lookup
