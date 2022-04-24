@@ -94,7 +94,13 @@ module.exports = {
     },
 
     afterFind: async function(){
-        const { spaceId } = this;
+        let { spaceId } = this;
+        if(!spaceId){
+            const spaces = await objectql.getObject('spaces').find({});
+            if(spaces.length > 0 ){
+                spaceId = spaces[0]._id;
+            }
+        }
         let dataList = await getSourcePermissionSets();
         if (!_.isEmpty(dataList)) {
             dataList.forEach((doc) => {
