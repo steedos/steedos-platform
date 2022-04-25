@@ -6,5 +6,5 @@ reference_to_field: code
 filters:
   - ['code','!=','admin']
 sort_no: 120
-required: "{{formData.type != 'orgDefault' ? true : false}}"
-visible_on: "{{formData.type != 'orgDefault' ? true : false}}"
+required: "{{(formData.type == 'appDefault' || formData.type == 'appRecordProfile') ? true : false}}"
+visible_on: "{{(formData.type == 'appDefault' || formData.type == 'appRecordProfile') ? true : false}}"

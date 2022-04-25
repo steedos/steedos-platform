@@ -7,7 +7,7 @@ enable_chatter: false
 enable_enhanced_lookup: false
 enable_events: false
 enable_files: false
-enable_inline_edit: true
+enable_inline_edit: false
 enable_instances: false
 enable_notes: false
 enable_search: false

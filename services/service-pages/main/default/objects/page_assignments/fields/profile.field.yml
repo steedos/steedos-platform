@@ -4,6 +4,6 @@ label: 简档
 reference_to: permission_set
 filters:
   - ["type","=","profile"]
-visible_on: "{{formData.app ? true: false}}"
 sort_no: 125
-required: "{{formData.app ? true: false}}"
+required: "{{formData.type == 'appRecordProfile' ? true : false}}"
+visible_on: "{{formData.type == 'appRecordProfile' ? true : false}}"
