@@ -1,6 +1,6 @@
 steedos-community-default-package:
   enable: true
-  version: 2.1.96
+  version: 2.1.99
   description: A Steedos App
   local: true
   path: steedos-app
