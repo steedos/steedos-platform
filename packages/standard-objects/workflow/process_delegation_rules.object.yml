@@ -2,23 +2,24 @@ name: process_delegation_rules
 icon: metrics
 label: Delegation
 hidden: true
+version: 2.0
 fields:
   from:
     type: lookup
     label: Client
     reference_to: users
     index: true
-    omit: true
+    readonly: true
+    defaultValue: "{{ global.userId }}"
     name: from
     filterable: true
   from_name:
-    type: text
+    type: formula
+    data_type: text
     label: Client Name
     readonly: true
-    defaultValue: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              return Meteor.user().name;
-            }
+    formula: from.name
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     name: from_name
   to:
     type: lookup
@@ -31,7 +32,8 @@ fields:
   to_name:
     type: text
     label: Trustee Name
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     name: to_name
   start_time:
     type: datetime
