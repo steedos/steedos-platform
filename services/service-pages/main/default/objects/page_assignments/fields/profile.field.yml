@@ -6,3 +6,4 @@ filters:
   - ["type","=","profile"]
 visible_on: "{{formData.app ? true: false}}"
 sort_no: 125
+required: "{{formData.app ? true: false}}"

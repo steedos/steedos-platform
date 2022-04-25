@@ -1,0 +1,12 @@
+name: type
+label: 授权类型
+type: select
+required: true
+defaultValue: orgDefault
+options: 
+  - label: 组织默认设置
+    value: orgDefault
+  - label: 应用程序默认设置
+    value: appDefault
+  - label: 应用程序和简档
+    value: appRecordProfile

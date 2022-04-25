@@ -1,5 +1,6 @@
 name: recent
 columns:
+  - field: type
   - field: app
   - field: profile
   - field: record_type
