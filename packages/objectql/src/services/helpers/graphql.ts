@@ -538,6 +538,9 @@ async function translateToDisplay(objectName, doc, userSession: any) {
           let lookupLabel = "";
           let refTo = field.reference_to;
           let refValue = doc[name];
+          if (!refValue) {
+            continue;
+          }
           let refObj = steedosSchema.getObject(refTo);
           let nameFieldKey = await refObj.getNameFieldKey();
           if (field.multiple) {
@@ -562,6 +565,9 @@ async function translateToDisplay(objectName, doc, userSession: any) {
           let masterDetailLabel = "";
           let refTo = field.reference_to;
           let refValue = doc[name];
+          if (!refValue) {
+            continue;
+          }
           let refObj = steedosSchema.getObject(refTo);
           let nameFieldKey = await refObj.getNameFieldKey();
           if (field.multiple) {
