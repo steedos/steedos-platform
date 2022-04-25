@@ -98,7 +98,7 @@ fields:
     # group: 提交设置
   initial_submission_record_lock:
     type: select
-    required: true
+    # required: true
     firstOption: false
     options:
       - label: Lock the record from being edited
@@ -225,7 +225,7 @@ fields:
     group: Final Rejection Actions
   recall_record_lock:
     type: select
-    required: true
+    # required: true
     firstOption: false
     options:
       - label: Lock the record from being edited
