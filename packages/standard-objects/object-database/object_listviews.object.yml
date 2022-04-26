@@ -75,7 +75,6 @@ fields:
         value: calendar
     defaultValue: grid
     hidden: true
-    omit: true
   scrolling_mode:
     label: Scrolling Mode
     inlineHelpText: Define the scroll bar display style for the data list.
@@ -89,7 +88,6 @@ fields:
         value: infinite
     defaultValue: standard
     hidden: true
-    omit: true
   columns:
     label: Columns
     type: grid
@@ -196,7 +194,8 @@ fields:
     type: grid
     is_wide: true
     hidden: false
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     depend_on:
       - object_name
   filters.$:
@@ -250,7 +249,8 @@ fields:
   filter_logic:
     label: Logic
     type: text
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   mobile_columns:
     label: Mobile Columns
     type: grid
