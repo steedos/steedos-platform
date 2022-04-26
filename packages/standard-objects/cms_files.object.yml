@@ -33,13 +33,13 @@ fields:
     type: file
     collection: files
     multiple: true
-    omit: true
     hidden: true
     name: versions
   parent:
     label: Parent
     type: lookup
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     index: true
     reference_to: !<tag:yaml.org,2002:js/function> |- 
       function () {
