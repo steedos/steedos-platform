@@ -47,7 +47,8 @@ fields:
         value: KS C 5601
       - label: ISO-8859-1（ISO-LATIN-1）
         value: ISO
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     name: encoding
     filterable: true
   value_separator:
@@ -56,7 +57,8 @@ fields:
     options:
       - label: ','
         value: ','
-    omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     defaultValue: ','
     name: value_separator
     filterable: true
