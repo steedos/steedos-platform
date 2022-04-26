@@ -10,29 +10,30 @@ fields:
     label: Original
     type: object
     blackbox: true
-    omit: true
+    readonly: true
   "original.name":
     label: Name
     type: text
+    readonly: true
     # is_name: true
   "original.size":
     label: Size
     type: number
+    readonly: true
   metadata:
     label: Metadata
     type: object
     blackbox: true
-    omit: true
   "metadata.owner":
     label: Owner
     type: lookup
     reference_to: users
-    omit: true
     hidden: true #前端显示成id了，直接隐藏
   "metadata.owner_name":
     label: Owner Name
     type: text
-    omit: true
+    readonly: true
+    # visible_on: "{{global.mode ==='read' ? true : false}}"
   "metadata.parent":
     label: Parent 
     type: master_detail
