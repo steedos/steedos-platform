@@ -104,7 +104,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
       let refTo = field.reference_to;
       // 判断能否根据refTo找到对象，如果找到则说明对象已加载，否则return
       let objMetaData = getLocalService(refTo);
-      if (!objMetaData || objMetaData.settings.deleted) {
+      if (refTo != objectName && (!objMetaData || objMetaData.settings.deleted)) {
         return;
       }
       if (field.multiple) {
