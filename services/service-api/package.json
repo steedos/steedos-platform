@@ -7,7 +7,8 @@
     "@steedos/auth": "2.2.24",
     "graphql-type-json": "^0.3.2",
     "moleculer-apollo-server": "^0.3.3",
-    "moleculer-web": "^0.10.4"
+    "moleculer-web": "^0.10.4",
+    "graphql-iso-date": "^3.6.1"
   },
   "private": false,
   "publishConfig": {

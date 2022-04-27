@@ -4,6 +4,11 @@ const ApiGateway = require("moleculer-web");
 const steedosAuth = require('@steedos/auth');
 const { ApolloService } = require("moleculer-apollo-server");
 const GraphQLJSON = require('graphql-type-json');
+const {
+	// GraphQLDate,
+	// GraphQLTime,
+	GraphQLDateTime
+  } = require('graphql-iso-date'); 
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -18,11 +23,12 @@ module.exports = {
 		ApolloService({
 
 			// Global GraphQL typeDefs
-			typeDefs: `scalar JSON`,
+			typeDefs: ['scalar Date', `scalar JSON`],
 
 			// Global resolvers
 			resolvers: {
 				JSON: GraphQLJSON,
+				Date: GraphQLDateTime
 			},
 
 			// API Gateway route options

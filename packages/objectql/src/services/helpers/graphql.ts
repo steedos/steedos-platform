@@ -13,8 +13,9 @@ const BASIC_TYPE_MAPPING = {
     'select': 'String',
     'url': 'String',
     'email': 'String',
-    'date': 'String',
-    'datetime': 'String',
+    'date': 'Date',
+    'datetime': 'Date',
+    'time': 'Date',
     'number': 'Float',
     'currency': 'Float',
     'boolean': 'Boolean'
