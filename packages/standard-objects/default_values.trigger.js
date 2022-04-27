@@ -43,7 +43,30 @@ const getCompatibleDefaultValueExpression = (express) => {
         }
     }
     else if (regDouble.test(express)) {
-        // 不支持转换前端默认值语法{{}}包着的新语法，因为里面是js表达式，可能性太多，无法转为公式引擎语法
+        // 只支持有限的转换前端默认值语法{{}}包着的新语法，因为里面是js表达式，可能性太多，无法都支持转为公式引擎语法
+        // 只支持兼容以下最基本的格式
+        /*
+        {{global.userId}}
+        {{global.spaceId}}
+        {{global.user.xxx}}
+        {{global.now}}
+        */
+        if (express.indexOf("global.userId") > -1) {
+            result = "$user.user._id";
+        }
+        else if(express.indexOf("global.spaceId") > -1){
+            result = "$user.space._id";
+        }
+        else if(express.indexOf("global.user.") > -1){
+            result = express.replace("{{global.user.", "$user.").replace("}}", "");
+        }
+        else if(express.indexOf("global.now") > -1){
+            result = "NOW()";
+        }
+        else {
+            // 不支持的表达式直接跳过
+            result = null;
+        }
     }
     return result;
 }
