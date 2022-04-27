@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-sidecar",
-  "version": "2.1.99",
+  "version": "2.1.100",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
