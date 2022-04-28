@@ -10,7 +10,7 @@ fields:
     defaultValue: "{userId}"
     hidden: true
   space:
-    type: text
+    type: lookup
     label: Space
     reference_to: spaces
     index: true
