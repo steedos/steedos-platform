@@ -115,17 +115,13 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
 }
 
 module.exports = {
-    listenTo: '*',
-    when: ['before.insert'],
-    handler: async function (ctx) {
-        const params = ctx.params;
-        // console.log("===params=1==", params);
-        const { objectName, userId, spaceId } = params;
-        const docs = params.new;
+    listenTo: 'base',
+    beforeInsert: async function () {
+        const { doc, userId, spaceId, object_name} = this;
         if (!userId) {
             return;
         }
-        const object = objectql.getObject(objectName);
+        const object = objectql.getObject(object_name);
         if (!object) {
             return;
         }
@@ -136,10 +132,8 @@ module.exports = {
         });
         // console.log("===fields=2==", fields);
         if (!_.isEmpty(fields)) {
-            for (let doc of docs) {
-                await setDefaultValues(doc, fields, userId, spaceId);
-                // console.log("===before.insert=last==doc==", doc);
-            }
+            await setDefaultValues(doc, fields, userId, spaceId);
+            // console.log("===before.insert=last==doc==", doc);
         }
         // console.log("===before.insert=last==docs==", docs);
     }

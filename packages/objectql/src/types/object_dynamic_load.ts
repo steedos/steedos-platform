@@ -326,7 +326,7 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
     let baseObjectJs = util.loadFile(path.join(standardObjectsDir, "base.object.js"))
     baseObjectJs.extend = MONGO_BASE_OBJECT;
     await addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE, serviceName);
-    const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.objectwebhooks.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js','base.tree.trigger.js','base.calendar.trigger.js'];
+    const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.objectwebhooks.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js','base.tree.trigger.js','base.calendar.trigger.js','base.defaultValue.trigger.js'];
     _.forEach(baseTriggers, function(triggerFileName){
         let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, triggerFileName))
         baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
