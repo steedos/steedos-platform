@@ -550,8 +550,8 @@ Creator.getObjectSchema = (obj) ->
 					return Creator.Formular.run(field.defaultValue, {userId: Meteor.userId(), spaceId: Session.get("spaceId"), now: new Date()})
 			else
 				fs.autoform.defaultValue = field.defaultValue
-				if !_.isFunction(field.defaultValue)
-					fs.defaultValue = field.defaultValue
+			# 	if !_.isFunction(field.defaultValue)
+			# 		fs.defaultValue = field.defaultValue
 
 		if field.readonly
 			fs.autoform.readonly = true
