@@ -132,7 +132,7 @@ exports.beforeInsert = async function () {
     if (!userId) {
         return;
     }
-    console.log("===object_name==", object_name);
+    // console.log("===object_name==", object_name);
     const object = objectql.getObject(object_name);
     if (!object) {
         return;
