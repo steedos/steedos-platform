@@ -336,9 +336,13 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
     let coreObject = util.loadFile(path.join(standardObjectsDir, "core.object.yml"))
     coreObject.name = SQL_BASE_OBJECT;
     await addObjectConfig(coreObject, SYSTEM_DATASOURCE, serviceName);
-    let coreObjectTrigger = util.loadFile(path.join(standardObjectsDir, "core.objectwebhooks.trigger.js"))
-    coreObjectTrigger.listenTo = SQL_BASE_OBJECT
-    addObjectListenerConfig(coreObjectTrigger)
+
+    const coreTriggers = ['core.objectwebhooks.trigger.js','core.defaultValue.trigger.js'];
+    _.forEach(coreTriggers, function(triggerFileName){
+        let coreObjectTrigger = util.loadFile(path.join(standardObjectsDir, triggerFileName))
+        coreObjectTrigger.listenTo = SQL_BASE_OBJECT
+        addObjectListenerConfig(coreObjectTrigger)
+    })
 
     // addAllConfigFiles(path.join(standardObjectsDir, "**"), 'default');
 }

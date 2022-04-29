@@ -1,6 +1,6 @@
 const defaultValueTriggers = require('./defaultValueTriggers');
 
 module.exports = {
-    listenTo: 'base',
+    listenTo: 'core',
     beforeInsert: defaultValueTriggers.beforeInsert
 }
