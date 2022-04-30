@@ -417,12 +417,12 @@ UUflow_api.get_export = function (spaceId, flowId, type) {
 };
 
 // 计算下一步处理人
-UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body) {
+UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body, nextStepId) {
 	var q = {};
 	q.deal_type = deal_type;
 	q.spaceId = spaceId;
 	q.insId = Session.get("instanceId");
-	q.nextStepId = Session.get("next_step_id");
+	q.nextStepId = nextStepId;
 
 	var nextStepUsers = [];
 	var data = JSON.stringify(body);
@@ -451,12 +451,12 @@ UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body) {
 };
 
 // 计算下一步处理人
-UUflow_api.caculateNextstepUsers = function (deal_type, spaceId, body) {
+UUflow_api.caculateNextstepUsers = function (deal_type, spaceId, body, nextStepId) {
 	var q = {};
 	q.deal_type = deal_type;
 	q.spaceId = spaceId;
 	q.insId = Session.get("instanceId");
-	q.nextStepId = Session.get("next_step_id");
+	q.nextStepId = nextStepId;
 
 	var nextStepUsers = [],
 		error = "";

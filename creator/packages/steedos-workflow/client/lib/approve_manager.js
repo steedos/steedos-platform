@@ -207,7 +207,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 						var data = {
 							'specifyUserIds': specifyUserIds
 						};
-						nextStepUsers = UUflow_api.caculate_nextstep_users('specifyUser', Session.get('spaceId'), data);
+						nextStepUsers = UUflow_api.caculate_nextstep_users('specifyUser', Session.get('spaceId'), data, nextStepId);
 						break;
 					case 'applicantRole': //指定审批岗位
 						var approveRoleIds = nextStep.approver_roles;
@@ -215,7 +215,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 							'applicantId': applicantId,
 							'approveRoleIds': approveRoleIds
 						};
-						nextStepUsers = UUflow_api.caculate_nextstep_users('applicantRole', Session.get('spaceId'), data);
+						nextStepUsers = UUflow_api.caculate_nextstep_users('applicantRole', Session.get('spaceId'), data, nextStepId);
 						if (!nextStepUsers.length) {
 							console.error('not find step', nextStepId, nextStepUsers);
 						}
@@ -225,7 +225,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 						var data = {
 							'approveHrRoleIds': approveHrRoleIds
 						};
-						nextStepUsers = UUflow_api.caculate_nextstep_users('hrRole', Session.get('spaceId'), data);
+						nextStepUsers = UUflow_api.caculate_nextstep_users('hrRole', Session.get('spaceId'), data, nextStepId);
 						if (!nextStepUsers.length) {
 							console.error('not find step approve users', nextStepId, nextStepUsers);
 						}
@@ -234,7 +234,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 						var data = {
 							'applicantId': applicantId
 						};
-						nextStepUsers = UUflow_api.caculate_nextstep_users('applicantSuperior', Session.get('spaceId'), data);
+						nextStepUsers = UUflow_api.caculate_nextstep_users('applicantSuperior', Session.get('spaceId'), data, nextStepId);
 						if (!nextStepUsers || nextStepUsers.length == 0) {
 							console.error(TAPi18n.__('next_step_users_not_found.aplicant_superior'));
 						}
@@ -243,7 +243,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 						var data = {
 							'applicantId': applicantId
 						};
-						nextStepUsers = UUflow_api.caculate_nextstep_users('applicant', Session.get('spaceId'), data);
+						nextStepUsers = UUflow_api.caculate_nextstep_users('applicant', Session.get('spaceId'), data, nextStepId);
 						break;
 					case 'userField': //指定人员字段
 						var userFieldId = nextStep.approver_user_field;
@@ -256,7 +256,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 									'userField': userField,
 									'userFieldValue': userFieldValue
 								};
-								nextStepUsers = UUflow_api.caculate_nextstep_users('userField', Session.get('spaceId'), data);
+								nextStepUsers = UUflow_api.caculate_nextstep_users('userField', Session.get('spaceId'), data, nextStepId);
 							}
 						}
 						if (!nextStepUsers.length) {
@@ -285,7 +285,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 									'orgField': orgField,
 									'orgFieldValue': orgFieldValue
 								};
-								caculateNextstepUsers = UUflow_api.caculateNextstepUsers('orgField', Session.get('spaceId'), data)
+								caculateNextstepUsers = UUflow_api.caculateNextstepUsers('orgField', Session.get('spaceId'), data, nextStepId)
 
 								nextStepUsers = caculateNextstepUsers.nextStepUsers
                                 if(caculateNextstepUsers.error){
@@ -306,7 +306,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 						var data = {
 							'specifyOrgIds': specifyOrgIds
 						};
-						nextStepUsers = UUflow_api.caculate_nextstep_users('specifyOrg', Session.get('spaceId'), data);
+						nextStepUsers = UUflow_api.caculate_nextstep_users('specifyOrg', Session.get('spaceId'), data, nextStepId);
 
 						if (!nextStepUsers.length) {
 							var specifyOrgs = WorkflowManager.getOrganizations(specifyOrgIds);
@@ -339,7 +339,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 									'userFieldValue': userFieldValue,
 									'approverRoleIds': approverRoleIds
 								};
-								caculateNextstepUsers = UUflow_api.caculateNextstepUsers('userFieldRole', Session.get('spaceId'), data);
+								caculateNextstepUsers = UUflow_api.caculateNextstepUsers('userFieldRole', Session.get('spaceId'), data, nextStepId);
 
 								nextStepUsers = caculateNextstepUsers.nextStepUsers
 
@@ -381,7 +381,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 									'orgFieldValue': orgFieldValue,
 									'approverRoleIds': approverRoleIds
 								};
-								caculateNextstepUsers = UUflow_api.caculateNextstepUsers('orgFieldRole', Session.get('spaceId'), data);
+								caculateNextstepUsers = UUflow_api.caculateNextstepUsers('orgFieldRole', Session.get('spaceId'), data, nextStepId);
 
 								nextStepUsers = caculateNextstepUsers.nextStepUsers
                                 if(caculateNextstepUsers.error){
@@ -484,7 +484,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                         var data = {
                             'specifyUserIds': specifyUserIds
                         };
-                        nextStepUsers = UUflow_api.caculate_nextstep_users('specifyUser', Session.get('spaceId'), data);
+                        nextStepUsers = UUflow_api.caculate_nextstep_users('specifyUser', Session.get('spaceId'), data, nextStepId);
                         break;
                     case 'applicantRole': //指定审批岗位
                         var approveRoleIds = nextStep.approver_roles;
@@ -492,7 +492,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                             'applicantId': applicantId,
                             'approveRoleIds': approveRoleIds
                         };
-                        nextStepUsers = UUflow_api.caculate_nextstep_users('applicantRole', Session.get('spaceId'), data);
+                        nextStepUsers = UUflow_api.caculate_nextstep_users('applicantRole', Session.get('spaceId'), data, nextStepId);
                         if (!nextStepUsers.length) {
                             // error_obj.deal_type = nextStep.deal_type;
                             // error_obj.params = {
@@ -519,7 +519,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
 						var data = {
 							'approveHrRoleIds': approveHrRoleIds
 						};
-						nextStepUsers = UUflow_api.caculate_nextstep_users('hrRole', Session.get('spaceId'), data);
+						nextStepUsers = UUflow_api.caculate_nextstep_users('hrRole', Session.get('spaceId'), data, nextStepId);
 						if (!nextStepUsers.length) {
 							var roles = WorkflowManager.remoteHrRoles.find({
 								_id: {
@@ -541,7 +541,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                         var data = {
                             'applicantId': applicantId
                         };
-                        nextStepUsers = UUflow_api.caculate_nextstep_users('applicantSuperior', Session.get('spaceId'), data);
+                        nextStepUsers = UUflow_api.caculate_nextstep_users('applicantSuperior', Session.get('spaceId'), data, nextStepId);
                         if (!nextStepUsers || nextStepUsers.length == 0) {
                             ApproveManager.error.nextStepUsers = TAPi18n.__('next_step_users_not_found.aplicant_superior');
                         }
@@ -550,7 +550,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                         var data = {
                             'applicantId': applicantId
                         };
-                        nextStepUsers = UUflow_api.caculate_nextstep_users('applicant', Session.get('spaceId'), data);
+                        nextStepUsers = UUflow_api.caculate_nextstep_users('applicant', Session.get('spaceId'), data, nextStepId);
                         break;
                     case 'userField': //指定人员字段
                         var userFieldId = nextStep.approver_user_field;
@@ -565,7 +565,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                                     'userField': userField,
                                     'userFieldValue': userFieldValue
                                 };
-                                nextStepUsers = UUflow_api.caculate_nextstep_users('userField', Session.get('spaceId'), data);
+                                nextStepUsers = UUflow_api.caculate_nextstep_users('userField', Session.get('spaceId'), data, nextStepId);
                             }
                             // else {
                             // console.log("else ....")
@@ -623,7 +623,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                                     'orgField': orgField,
                                     'orgFieldValue': orgFieldValue
                                 };
-                                caculateNextstepUsers = UUflow_api.caculateNextstepUsers('orgField', Session.get('spaceId'), data)
+                                caculateNextstepUsers = UUflow_api.caculateNextstepUsers('orgField', Session.get('spaceId'), data, nextStepId)
 
                                 nextStepUsers = caculateNextstepUsers.nextStepUsers
 
@@ -643,7 +643,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                         var data = {
                             'specifyOrgIds': specifyOrgIds
                         };
-                        nextStepUsers = UUflow_api.caculate_nextstep_users('specifyOrg', Session.get('spaceId'), data);
+                        nextStepUsers = UUflow_api.caculate_nextstep_users('specifyOrg', Session.get('spaceId'), data, nextStepId);
 
                         if (!nextStepUsers.length) {
                             var specifyOrgs = WorkflowManager.getOrganizations(specifyOrgIds);
@@ -686,7 +686,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                                     'userFieldValue': userFieldValue,
                                     'approverRoleIds': approverRoleIds
                                 };
-                                caculateNextstepUsers = UUflow_api.caculateNextstepUsers('userFieldRole', Session.get('spaceId'), data);
+                                caculateNextstepUsers = UUflow_api.caculateNextstepUsers('userFieldRole', Session.get('spaceId'), data, nextStepId);
 
                                 nextStepUsers = caculateNextstepUsers.nextStepUsers
 
@@ -735,7 +735,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                                     'orgFieldValue': orgFieldValue,
                                     'approverRoleIds': approverRoleIds
                                 };
-                                caculateNextstepUsers = UUflow_api.caculateNextstepUsers('orgFieldRole', Session.get('spaceId'), data);
+                                caculateNextstepUsers = UUflow_api.caculateNextstepUsers('orgFieldRole', Session.get('spaceId'), data, nextStepId);
 
                                 nextStepUsers = caculateNextstepUsers.nextStepUsers
 
