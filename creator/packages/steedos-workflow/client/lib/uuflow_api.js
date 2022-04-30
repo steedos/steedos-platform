@@ -434,6 +434,9 @@ UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body, nextSte
 		dataType: 'json',
 		processData: false,
 		contentType: "application/json",
+		beforeSend: function(request) {
+			request.setRequestHeader('Authorization', 'Bearer ' + spaceId + ',' + Accounts._storedLoginToken())
+		},
 		success: function (responseText, status) {
 			if (responseText.errors) {
 				toastr.error(responseText.errors);
@@ -469,6 +472,9 @@ UUflow_api.caculateNextstepUsers = function (deal_type, spaceId, body, nextStepI
 		dataType: 'json',
 		processData: false,
 		contentType: "application/json",
+		beforeSend: function(request) {
+			request.setRequestHeader('Authorization', 'Bearer ' + spaceId + ',' + Accounts._storedLoginToken())
+		},
 		success: function (responseText, status) {
 			if (responseText.errors) {
 				toastr.error(responseText.errors);

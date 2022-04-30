@@ -26,6 +26,7 @@ try
 				"@steedos/service-pages",
 				"@steedos/service-cloud-init",
 				"@steedos/service-package-registry",
+				"@steedos/service-workflow"
 				# "@steedos/standard-process",
 				# "@steedos/webapp-accounts"
 				],

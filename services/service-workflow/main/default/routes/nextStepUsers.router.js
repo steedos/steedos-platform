@@ -208,7 +208,8 @@ router.post('/api/workflow/nextStepUsers', core.requireAuthentication, async fun
 
         }).run()
     
-    } catch (e) {
+    } catch (error) {
+        console.error(error);
         res.status(200).send({
             error: error.message
         });
