@@ -7821,10 +7821,10 @@ node4mailer@4.0.3:
   resolved "https://registry.npm.taobao.org/node4mailer/download/node4mailer-4.0.3.tgz#8f0c7a6737527a128530185a14c2e879989a8910"
   integrity sha1-jwx6ZzdSehKFMBhaFMLoeZiaiRA=
 
-nodemailer@^6.3.0:
-  version "6.4.5"
-  resolved "https://registry.npm.taobao.org/nodemailer/download/nodemailer-6.4.5.tgz#45614c6454d1a947242105eeddae03df87e29916"
-  integrity sha1-RWFMZFTRqUckIQXu3a4D34fimRY=
+nodemailer@^6.3.0, nodemailer@^6.6.1:
+  version "6.6.1"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.6.1.tgz#2a05fbf205b897d71bf43884167b5d4d3bd01b99"
+  integrity sha512-1xzFN3gqv+/qJ6YRyxBxfTYstLNt0FCtZaFRvf4Sg9wxNGWbwFmGXVpfSi6ThGK6aRxAo+KjHtYSW8NvCsNSAg==
 
 nodemon@1.19.1:
   version "1.19.1"
