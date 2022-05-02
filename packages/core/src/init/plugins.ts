@@ -79,8 +79,9 @@ export class Plugins {
 
     static getPluginNames() {
         const builtInPlugins = initConfig.built_in_plugins || [];
+        const initPlugins = initConfig.plugins || [];
         const settingsPlugins = Meteor.settings.plugins || [];
-        let plugins = _.union(builtInPlugins, settingsPlugins);
+        let plugins = _.union(builtInPlugins, initPlugins, settingsPlugins);
         return plugins || [];
     }
 

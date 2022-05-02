@@ -56,7 +56,9 @@ module.exports = {
 			"@steedos/standard-process",
 			"@steedos/unpkg"
 		],
-		plugins: []
+		plugins: [
+			"@steedos/webapp-accounts"
+		]
 	},
 
 	/**
