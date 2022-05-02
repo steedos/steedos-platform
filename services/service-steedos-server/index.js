@@ -40,12 +40,9 @@ module.exports = {
 			"@steedos/service-translations",
 			"@steedos/workflow",
 			"@steedos/accounts",
-			"@steedos/steedos-plugin-schema-builder",
 			"@steedos/plugin-enterprise",
 			// "@steedos/word-template",
-			"@steedos/plugin-qywx",
 			"@steedos/metadata-api",
-			"@steedos/plugin-dingtalk",
 			"@steedos/data-import",
 			"@steedos/service-fields-indexs",
 			"@steedos/service-accounts",
@@ -53,11 +50,15 @@ module.exports = {
 			"@steedos/service-pages",
 			"@steedos/service-cloud-init",
 			"@steedos/service-workflow",
-			"@steedos/standard-process",
 			"@steedos/unpkg"
 		],
 		plugins: [
-			"@steedos/webapp-accounts"
+			"@steedos/webapp-accounts",
+			"@steedos/service-plugin-amis",
+			"@steedos/standard-process",
+			"@steedos/plugin-dingtalk",
+			"@steedos/plugin-qywx",
+			"@steedos/steedos-plugin-schema-builder",
 		]
 	},
 

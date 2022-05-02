@@ -11,8 +11,6 @@ module.exports = {
     this.broker.createService(require("@steedos/service-metadata-server"));
     // 启动 加载软件包服务
     this.broker.createService(require("@steedos/service-package-registry"));
-    // 启动 登录页面服务
-    this.broker.createService(require("@steedos/webapp-accounts"));
     // 启动 meteor服务
     this.broker.createService(require("@steedos/service-steedos-server"));
   }
