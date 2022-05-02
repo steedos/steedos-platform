@@ -31,11 +31,9 @@
 请在云平台”管理控制台”应用的“我的魔方”中找到对应的私有部署记录，并在该初始化界面中输入点击私有部署记录详细界面右上角“复制激活参数”按钮复制的内容，其中已经包含了激活华炎魔方需要的两个环境变量，提交后会自动把相关环境变量值保存到`.env.local`文件并且页面会自动跳转到登录界面，使用私有部署的华炎魔方初始账户登录即可进入系统主界面了。
 
 ```
-[metadata]
 METADATA_SERVER=https://5000-rose-fowl-9ece4ams.ws-us25.gitpod.io
 METADATA_APIKEY=#会自动填充为初始界面中输入的环境变量值
 
-[steedos-cloud]
 STEEDOS_CLOUD_SPACE_ID=#会自动填充为初始界面中输入的环境变量值
 STEEDOS_CLOUD_API_KEY=#会自动填充为初始界面中输入的环境变量值
 ```
