@@ -50,15 +50,14 @@ module.exports = {
 			"@steedos/service-pages",
 			"@steedos/service-cloud-init",
 			"@steedos/service-workflow",
-			"@steedos/unpkg"
+			"@steedos/unpkg",
+			"@steedos/service-plugin-amis",
+			"@steedos/standard-process"
 		],
 		plugins: [
 			"@steedos/webapp-accounts",
-			"@steedos/service-plugin-amis",
-			"@steedos/standard-process",
 			"@steedos/plugin-dingtalk",
 			"@steedos/plugin-qywx",
-			"@steedos/steedos-plugin-schema-builder",
 		]
 	},
 
