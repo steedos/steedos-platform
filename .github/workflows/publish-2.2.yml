@@ -91,7 +91,7 @@ jobs:
       - name: Update dev branch
         run: |
           git checkout 2.2
-          git merge publish-2.2
+          git merge release/2.2
           git push origin 2.2
       - name: Create project template release
         id: create_project_template_release
