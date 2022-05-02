@@ -1,6 +1,6 @@
 steedos-enterprise-default-package:
   enable: true
-  version: 2.2.23
+  version: 2.2.24
   description: A Steedos App
   local: true
   path: steedos-app
