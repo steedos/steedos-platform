@@ -1,15 +1,12 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Publish Next Steedos Platform
+name: Publish Latest Steedos Platform
 
 on:
   push:
      branches:
-       - publish-next
-  # push:
-  #   tags:
-  #     - 'v**'
+       - release/2.1
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -22,9 +19,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      # - name: Checkout branche
-      #   run: |
-      #     git checkout next
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -68,15 +62,15 @@ jobs:
           git add . 
           git commit -m v${{ env.CURRENT_VERSION }}
           git push
-      # - name: Upgrade template
-      #   run: |
-      #     git config user.name github-actions
-      #     git config user.email github-actions@github.com
-      #     yarn upgrade-template
+      - name: Upgrade template
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          yarn upgrade-template
       - name: Lerna publish
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish from-package --yes --dist-tag next
+          lerna publish from-package --yes
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
@@ -94,6 +88,11 @@ jobs:
           release_name: v${{ env.CURRENT_VERSION }}
           draft: false
           prerelease: false
+      - name: Update dev branch
+        run: |
+          git checkout 2.1
+          git merge release/2.1
+          git push origin 2.1
       - name: Create project template release
         id: create_project_template_release
         env:
@@ -162,4 +161,3 @@ jobs:
           cnpm sync @steedos/service-pages
           cnpm sync @steedos/service-steedos-server
           cnpm sync @steedos/steedos-project-template
-          cnpm sync @steedos/standard-process
