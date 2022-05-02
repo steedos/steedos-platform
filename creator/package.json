@@ -13,7 +13,7 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@steedos-builder/react": "^0.2.21",
-    "@steedos-ui/builder-community": "1.1.30",
+    "@steedos-ui/builder-community": "^2.2.1",
     "@steedos/filters": "^2.2.18",
     "@steedos/i18n": "^2.2.18",
     "@steedos/react": "^2.2.18",
