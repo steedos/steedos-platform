@@ -21,7 +21,7 @@
     "license": "ISC",
     "dependencies": {
         "@steedos/service-meteor-package-loader": "2.2.25",
-        "bcrypt": "3.0.6",
+        "bcrypt": "5.0.0",
         "bootstrap": "^3.3.7",
         "cookies": "^0.8.0",
         "dotenv-flow": "^3.1.0",
