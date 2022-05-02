@@ -1315,10 +1315,10 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/builder-community@1.1.30":
-  version "1.1.30"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.1.30.tgz#e71e1830ebfe1293cf3c1b424e4ab525c9d2a99b"
-  integrity sha512-qixI3nIZCB7UH2mKpf5+nrkI1abwIWJifWszaoCfH+lVXveR/BFCx7Xm4ChS9CK4cytLbOs1nXR54LRWqzcblw==
+"@steedos-ui/builder-community@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.1.tgz#5832b605bed2e157247e4cbaf09b23d4cca60cca"
+  integrity sha512-4B8YNc8d0TT8xGiGi4jxFRst+uVHre1STGZUCHJX4cxsldQLMZz2b8iiS350Cqs0TDuvv7p6vAJ0lxqhzSFCiA==
 
 "@steedos-widgets/design-system@^0.2.5":
   version "0.2.5"

@@ -24,10 +24,9 @@ execSync('cp -r .scripts/iconv-lite/* node_modules/iconv-lite/');
 
 execSync('rm -rf node_modules/@steedos');
 execSync('rm -rf node_modules/steedos-server');
-execSync('rm -rf ../apps/*/node_modules/steedos-server');
 // 执行 platform 下的 bootstrap
 execSync('cd .. && yarn bootstrap', {stdio: 'inherit'});
-execSync(`cp -r node_modules/@steedos-ui/builder-community/dist/builder-community.react.css public/`);
+// execSync(`cp -r node_modules/@steedos-ui/builder-community/dist/builder-community.react.css public/`);
 
 if (process.platform == "win32") {
     execSync('mklink /J '+path.join(process.cwd(), '/node_modules/@steedos')+' '+ path.join(process.cwd(), '/../node_modules/@steedos'));
