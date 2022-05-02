@@ -5,7 +5,7 @@ npm i yarn -g
 
 ### 国内建议使用npm淘宝镜像
 ```
-npm config set registry http://registry.npm.taobao.org/
+npm config set registry https://registry.npmmirror.com/
 ```
 
 ### 使用yarn安装依赖包
