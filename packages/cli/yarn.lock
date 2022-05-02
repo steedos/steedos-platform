@@ -325,29 +325,29 @@
   resolved "https://registry.npm.taobao.org/@sinonjs/text-encoding/download/@sinonjs/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha1-jaXGUwkVZT86Hzj9XxAdjD+AecU=
 
-"@steedos/client@2.2.22":
-  version "2.2.22"
-  resolved "https://registry.yarnpkg.com/@steedos/client/-/client-2.2.22.tgz#122a161d9e413701923170d3dee2dfbc0e030958"
-  integrity sha512-hJCzlSjGfH3hlH23C5+XSIaCyKiaVtVBprHVALjihLJ0I1Nynca/3AFBl/MqsRYR1bfgm0lvaz4TVpVsJS19hQ==
+"@steedos/client@2.2.25":
+  version "2.2.25"
+  resolved "https://registry.yarnpkg.com/@steedos/client/-/client-2.2.25.tgz#429280232a64f2e088d0a0089d07a0d25c388f7a"
+  integrity sha512-Rt9pdLEXunnUNsRLE29mbpWpapeciSr0V4eANOXsjc+XmfK18sk0ED/5w9yov38WcQMD7ksrJ+kVbLoHoQy/wA==
   dependencies:
-    "@steedos/filters" "2.2.22"
+    "@steedos/filters" "2.2.25"
     node-fetch "^2.6.1"
 
-"@steedos/filters@2.2.22":
-  version "2.2.22"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.2.22.tgz#0c247f613a25d2e69d59ff236bf6cfc05866f7b9"
-  integrity sha512-rB7T3qkIJfQacJ57o8xG7H+aaK2it1gVURw7stsaLQwD7GMDQqesIMbVYWXN0jqJZr/dS/oEaahNpDDwFz98Tw==
+"@steedos/filters@2.2.25":
+  version "2.2.25"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.2.25.tgz#ae0158f92603b7797f697a65d1d3e9515fa34fe0"
+  integrity sha512-1JIwUveDj6E3g9HQNVIKgJb+Z0XxMAhfasCBXIbcvX4u1Y6d965OvMqKGhlzxqDbCDNiKpyTyhlM+IBfzJHFtw==
   dependencies:
     "@babel/runtime" "^7.5.4"
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/metadata-core@2.2.22":
-  version "2.2.22"
-  resolved "https://registry.yarnpkg.com/@steedos/metadata-core/-/metadata-core-2.2.22.tgz#27dd14bfb3abea353141ed425e43395b236d34ee"
-  integrity sha512-Sg8HAiggpIFhBs+QIb9ip3aPWkJ/M9ayI6icEEKu0zFhXZjsEE15Uf0PaFXQs91XItGfdzdF3SaOLXxKZwZiYQ==
+"@steedos/metadata-core@2.2.25":
+  version "2.2.25"
+  resolved "https://registry.yarnpkg.com/@steedos/metadata-core/-/metadata-core-2.2.25.tgz#db8c8e954f7980289132da74fc4f482cf05ea12c"
+  integrity sha512-9W6YaIcYrMkhAYOZDz88gMSgtLqbsuZ2e9xhVfRT4XnNdfSfG7nk+nNaGmy33JkXDRcl/WIlarLA5LZnfwD/dQ==
   dependencies:
-    "@steedos/client" "2.2.22"
+    "@steedos/client" "2.2.25"
     archiver "^5.1.0"
     chalk "^4.1.0"
     clone "^2.1.2"
@@ -4286,9 +4286,9 @@ lodash.zip@^4.2.0:
   integrity sha1-7GZi5IlkCO1KtsVCo5kLcswIACA=
 
 lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.4:
-  version "4.17.20"
-  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
-  integrity sha1-tEqbYpe8tpjxxRo1RaKzs2jVnFI=
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-symbols@2.2.0, log-symbols@^2.2.0:
   version "2.2.0"
