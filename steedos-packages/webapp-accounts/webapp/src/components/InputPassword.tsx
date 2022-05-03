@@ -1,4 +1,20 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react';
+
+// 监听到debug模式修改密码字段的type时自动清空密码框
+const mutationObserver = (() => {
+    try {
+        return new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'type') {
+                    (mutation.target as any).remove();
+                }
+            });
+        });
+    }
+    catch (ex) {
+        console.warn("MutationObserver Not Found:", ex);
+    }
+})();
 
 const InputPassword = React.forwardRef((props: any, ref?: React.Ref<HTMLInputElement>) => {
 
@@ -56,6 +72,16 @@ const InputPassword = React.forwardRef((props: any, ref?: React.Ref<HTMLInputEle
     }, [props.value, props.type]);
 
     clearPasswordValueAttribute();
+
+    useEffect(() => {
+        const input = (inputRef as any).current;
+        if (input) {
+            mutationObserver?.observe(input, { attributes: true });
+        }
+        return () => {
+            mutationObserver?.disconnect();
+        }
+      }, []);
 
     return (
         <input 
