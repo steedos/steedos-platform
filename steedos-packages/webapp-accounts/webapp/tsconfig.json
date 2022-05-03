@@ -19,7 +19,8 @@
     "isolatedModules": true,
     "downlevelIteration": true,
     "noImplicitThis": false,
-    "jsx": "preserve"
+    "jsx": "react-jsx",
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
