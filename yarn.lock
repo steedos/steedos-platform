@@ -4836,7 +4836,7 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos/ee_service-plugin-license@^2.2.2":
+"@steedos/ee_service-plugin-license@2.2.2", "@steedos/ee_service-plugin-license@^2.2.2":
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/@steedos/ee_service-plugin-license/-/ee_service-plugin-license-2.2.2.tgz#95262b76dffd6f302ebe41603d97ddd1322bc1ea"
   integrity sha512-Z2jmUCUNWn5jTiqgLSa6gmmpXg9oLHLilrAOeEFsDaVgrxPBAEoyrbuI2st3IIA1m7hMBqhpEiSnAic9QZSfjQ==
