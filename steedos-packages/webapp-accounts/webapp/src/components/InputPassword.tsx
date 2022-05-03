@@ -13,6 +13,7 @@ const mutationObserver = (() => {
     }
     catch (ex) {
         console.warn("MutationObserver Not Found:", ex);
+        return;
     }
 })();
 
@@ -56,6 +57,7 @@ const InputPassword = React.forwardRef((props: any, ref?: React.Ref<HTMLInputEle
             e.preventDefault();
             return false;
         }
+        return true;
     }
 
     const handlePasswordContextMenu = (e: any) => {
