@@ -90,6 +90,7 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
                 object_name: objectName,
                 field_name: fieldName,
                 space: spaceId,
+                current_no: 1,
                 rule: rule,
             };
             if (date_from && date_to) {
