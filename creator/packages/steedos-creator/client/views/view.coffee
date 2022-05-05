@@ -1,19 +1,27 @@
 loadRecordFromOdata = (template, object_name, record_id)->
+	template.isLoading.set(true);
 	template.record.set({});
 	object = Creator.getObject(object_name)
 	selectFields = Creator.objectOdataSelectFields(object)
 	expand = Creator.objectOdataExpandFields(object)
-	if object_name == "space_users"
-		# 用户详细界面额外请求company_ids对应的admins，以方便确认当前用户是否有权限编辑、删除该记录
-		expand = expand.replace(/\bcompany_ids\b/,"company_ids($select=name,admins)")
-	record = Creator.odata.get(object_name, record_id, selectFields, expand)
-	template.record.set(record)
+	# if object_name == "space_users"
+	# 	# 用户详细界面额外请求company_ids对应的admins，以方便确认当前用户是否有权限编辑、删除该记录
+	# 	expand = expand.replace(/\bcompany_ids\b/,"company_ids($select=name,admins)")
+	
+	Steedos.Page.Data.getRecord(object_name, record_id, selectFields, expand).then((record)->
+		template.record.set(record)
+		template.isLoading.set(false)
+	)
+
+	# record = Creator.odata.get(object_name, record_id, selectFields, expand)
+	# template.record.set(record)
 
 getRelatedListTemplateId = (related_object_name)->
 	return "steedos-list-related-#{related_object_name}"
 
 Template.creator_view.onCreated ->
 	Template.creator_view.currentInstance = this
+	this.isLoading = new ReactiveVar(true);
 	this.recordsTotal = new ReactiveVar({})
 	this.__record = new ReactiveVar({})
 	this.__schema = new ReactiveVar({})
@@ -158,6 +166,8 @@ Template.creator_view.onRendered ->
 Template.creator_view.helpers Creator.helpers
 
 Template.creator_view.helpers
+	isLoading: ()->
+		return Template.instance().isLoading.get();
 	form_horizontal: ()->
 		if Session.get("app_id") == "admin"
 			return window.innerWidth > (767 + 250)

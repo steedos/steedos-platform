@@ -1,0 +1,7 @@
+{
+    "sqlConfig": {
+        "user": "db",
+        "password": "***",
+        "database": "world"
+    }
+}

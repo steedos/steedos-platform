@@ -148,7 +148,7 @@ export class ActionHandlers {
             await ctx.broker.call('metadata.addServiceMetadata', { key: cacherKey(metadataApiName), data: config }, { meta: Object.assign({}, ctx.meta, { metadataType: METADATA_TYPE, metadataApiName: metadataApiName }) })
             const objectConfig = await refreshObject(ctx, metadataApiName);
             if (!objectConfig) {
-                console.error(`not find extend object ${metadataApiName}, Please check package.service.js for dependencies`);
+                console.error(`not find extend object ${metadataApiName}, Please check 「${ctx.meta.metadataServiceName}」 package.service.js for dependencies`);
                 break;
             }
             const objectServiceName = getObjectServiceName(metadataApiName);

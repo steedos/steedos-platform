@@ -287,5 +287,9 @@ export async function refreshObject(ctx, objectApiName) {
         console.log(`refreshObject error`, error)
     }
 
+    if(!objectConfig.table_name){
+        objectConfig.table_name = objectConfig.name;
+    }
+
     return objectConfig;
 }
