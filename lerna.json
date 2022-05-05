@@ -4,6 +4,7 @@
     "steedos-projects/**",
     "steedos-packages/**",
     "services/**",
+    "ee/**",
     "server"
   ],
   "useWorkspaces": true,
