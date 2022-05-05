@@ -4112,12 +4112,22 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/amis@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.3.tgz#69d81424913ad8bdb131637fe230b1d43b02ecf5"
-  integrity sha512-3bk8A9g6Gsuu02cxBPA01LQmdxZZK4eAg8nqRKNcWxa4lZ201LsUIpm3B0S09bc03GdnDlaoxXQ0fB/MZtdIqw==
+"@steedos-ui/amis@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.5.tgz#a979ddb163cc5a1abd5a5b1d53fbb85306c1e0a0"
+  integrity sha512-FXGaEbk83fxaN9XDIZEJLovFJUurcdbKTlPr+OcnB6tbTJ+uHvBLCue5gG1gBvhS6z0Q8MSR1tBgiiFZjeiRGw==
   dependencies:
-    react-required-if "^1.0.3"
+    "@types/path-to-regexp" "^1.7.0"
+
+"@steedos-ui/builder-community@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.5.tgz#d9551af5388a3c12048209d432b0256fd1d2c826"
+  integrity sha512-4y46rdbAFMgM4hrP8WrmYv7567NCqpaJllKL5UFTEmMjP2YczH1E+m4WgzckitawBuFaoZSIUoH/G8FVigXSiw==
+
+"@steedos-ui/builder-widgets@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.5.tgz#235c46e186405386beadfbfea24a3d52c18c52d8"
+  integrity sha512-rs/X94kH72w2d5cmatX8G2pRSpn6A2B1qejTlysP/p2HDU6/LuIy4a5ZiOfJ9U3ss7UMEBqWtn4nQkNizlo1og==
   optionalDependencies:
     create-inferno-context "^0.2.4"
     create-react-context "^0.2.3"
@@ -4128,29 +4138,10 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/builder-community@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.3.tgz#a339b2497167eb8e4f1fd6f3f782d8d41f98daac"
-  integrity sha512-f0dz6c9m9rtEkk20DSvmlY4NNXuznyeDzIM2BFG3z8DCJs19I+40c9DT+RyLELKkmOLEalnAsga7GLHWsmwdGw==
-
-"@steedos-ui/builder-widgets@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.3.tgz#6733a9a3d2608f2575b1395d3b3d6d41f6680a1f"
-  integrity sha512-KMN93sW6tHfJ7JrFi3YL6Fj06W6ClwJ+6ydfC7ofvDAiKky2VfM83ECOGn1LKMOg1OvWFkhrgdwirCa0a7M8Qg==
-  optionalDependencies:
-    create-inferno-context "^0.2.4"
-    create-react-context "^0.2.3"
-    inferno "^7.1.9"
-    inferno-compat "^7.1.9"
-    preact "^8.4.2"
-    preact-compat "^3.18.4"
-    preact-context "^1.1.3"
-    prop-types "^15.7.2"
-
-"@steedos-ui/design-system@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.3.tgz#40fe17ba0ecba0fec8201301ae89fe2a6b14808b"
-  integrity sha512-oKG//yJwhR8s6duh5tAjMIPBsZ4SNnirMA0ZoYURY1nWsxhsVXNc6RRAl2B+3Tn1FEornEShyqwXrSslvcIQ7w==
+"@steedos-ui/design-system@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.5.tgz#91d1a1bda5344321d65bd86841ba4796580da45f"
+  integrity sha512-YQhxV2VpkHgyi9RZ+Jt0amwKC3xvlpkBIYnigxb5S9fdNanynXTLrl3PCpkh0ZP+PTe2/ITyFvf6++nWGnytUw==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
@@ -4692,6 +4683,13 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
+
+"@types/path-to-regexp@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@types/path-to-regexp/-/path-to-regexp-1.7.0.tgz#f1af9d9c9db5f8ad80aa75ed424db665c48d6cd4"
+  integrity sha1-8a+dnJ21+K2AqnXtQk22ZcSNbNQ=
+  dependencies:
+    path-to-regexp "*"
 
 "@types/prettier@^2.0.0":
   version "2.4.4"
@@ -20854,6 +20852,11 @@ path-parse@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
   integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
+
+path-to-regexp@*:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.0.tgz#f7b3803336104c346889adece614669230645f38"
+  integrity sha512-f66KywYG6+43afgE/8j/GoiNyygk/bnoCbps++3ErRKsIYkGGupyv07R2Ok5m9i67Iqc+T2g1eAUGUPzWhYTyg==
 
 path-to-regexp@0.1.7:
   version "0.1.7"
