@@ -65,7 +65,10 @@ function generateAction(trigger: Trigger): Action {
     };
     if (_.has(trigger, 'handler')) {
         action.handler = async function (ctx: Context) {
-           return await trigger.handler.call(ctx.params, ctx);
+           await trigger.handler.call(ctx.params, ctx);
+           return {
+                returnParams: ctx.params
+           }
         }
     }
 

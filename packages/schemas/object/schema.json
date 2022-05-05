@@ -410,6 +410,12 @@
                     ],
                     "description": "是否必填"
                 },
+                "enable_encryption": {
+                    "type": [
+                        "boolean"
+                    ],
+                    "description": "是否加密"
+                },
                 "is_wide": {
                     "type": "boolean",
                     "description": "是否宽字段，如果为true，则在详细页面，一个字段占一行"

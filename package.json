@@ -4,6 +4,7 @@
   "workspaces": [
     "packages/*",
     "services/*",
+    "ee/*",
     "server",
     "steedos-projects/*",
     "steedos-packages/*"
