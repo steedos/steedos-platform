@@ -32,11 +32,13 @@ fields:
 
               return _options;
             }
+    sort_no: 110
   label:
     type: text
     required: true
     label: Label
     is_name: true
+    sort_no: 120
   _name:
     type: text
     label: Field Name
@@ -44,6 +46,7 @@ fields:
     index: true
     required: true
     visible_on: "{{global.mode !='read' ? true : false}}"
+    sort_no: 130
   name:
     type: text
     label: API Name
@@ -53,6 +56,7 @@ fields:
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
     readonly: true
     visible_on: "{{global.mode !='read' ? false : true}}"
+    sort_no: 140
   type:
     type: select
     label: Type
@@ -104,12 +108,15 @@ fields:
         value: formula
       - label: Roll-Up Summary
         value: summary
+    sort_no: 150
   defaultValue:
     type: text
     label: Default Value
+    sort_no: 160
   group:
     type: text
     label: Group
+    sort_no: 170
   reference_to:
     type: lookup
     label: Reference to
@@ -121,16 +128,19 @@ fields:
       }
     visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['master_detail'].indexOf(formData.type) > -1 ? true: false}}"
+    sort_no: 180
   multiple:
     type: boolean
     label: Multiple
     inlineHelpText: Single choice and multiple choice switch to each other. Please resubmit the existing records or modify the saving format of this field in the database.
     visible_on: "{{['select', 'lookup', 'image','file'].indexOf(formData.type) > -1 ? true: false}}"
+    sort_no: 190
   write_requires_master_read:
     label: Write requires master read
     type: boolean
     inlineHelpText: Sets the minimum sharing access level required on the master record to create, edit, or delete child records. This field applies only to master-detail or junction object custom field types. true—Allows users with “Read” access to the master record permission to create, edit, or delete child records. This setting makes sharing less restrictive. false—Allows users with “Read/Write” access to the master record permission to create, edit, or delete child records. This setting is more restrictive than true, and is the default value.
     visible_on: "{{formData.type === 'master_detail' ? true: false}}"
+    sort_no: 200
   formula:
     label: Formula
     type: textarea
@@ -138,6 +148,7 @@ fields:
     is_wide: true
     visible_on: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
+    sort_no: 210
   data_type:
     type: select
     label: Data Type
@@ -151,16 +162,19 @@ fields:
     # summary字段类型的data_type可以自动计算得到，所以不用在零代码界面设置
     visible_on: "{{['formula','select'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
+    sort_no: 220
   filtersFunction:
     label: filters Function
     type: textarea
     is_wide: true
     visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
+    sort_no: 230
   optionsFunction:
     label: options Function
     type: textarea
     is_wide: true
     visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
+    sort_no: 240
   precision:
     type: currency
     label: Precision
@@ -195,6 +209,7 @@ fields:
         }
       })()
       }}"
+    sort_no: 250
   scale:
     type: currency
     label: Scale
@@ -231,6 +246,7 @@ fields:
         }
       })()
       }}"
+    sort_no: 260
   rows:
     type: currency
     label: Rows
@@ -243,6 +259,7 @@ fields:
   #   multiple: true
   #   label: Allowed Values
   #   group: Advanced
+    sort_no: 270
   options:
     type: grid
     label: Options
@@ -250,6 +267,7 @@ fields:
     inlineHelpText: The label and value of each option cannot be empty. Set the background color to FFFFFF in hexadecimal format.
     visible_on: "{{formData.type === 'select' ? true: false}}"
     required: "{{formData.type === 'select' ? true: false}}"
+    sort_no: 280
   options.$:
     label: Options
     blackbox: true
@@ -282,6 +300,7 @@ fields:
     # defaultValue: zeroes
     visible_on: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
+    sort_no: 290
   summary_object:
     type: lookup
     label: Object to Summarize
@@ -317,6 +336,7 @@ fields:
       }
     visible_on: "{{formData.type === 'summary' ? true: false}}"
     required: "{{formData.type === 'summary' ? true: false}}"
+    sort_no: 300
   summary_type:
     type: select
     label: Roll-Up Type
@@ -334,6 +354,7 @@ fields:
         value: avg
     visible_on: "{{formData.type === 'summary' ? true: false}}"
     required: "{{formData.type === 'summary' ? true: false}}"
+    sort_no: 310
   summary_field:
     type: lookup
     label: Field to Aggregate
@@ -381,6 +402,7 @@ fields:
       }
     visible_on: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
     required: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
+    sort_no: 320
   summary_filters:
     label: Filter Criteria
     type: 'grid'
@@ -389,6 +411,7 @@ fields:
     depend_on:
       - summary_object
     visible_on: "{{formData.type === 'summary' ? true: false}}"
+    sort_no: 330
   summary_filters.$:
     label: Filter Criteria
     blackbox: true
@@ -448,16 +471,19 @@ fields:
     index: true
     group: External data source
     # visible_on: "{{true}}"
+    sort_no: 340
   primary:
     type: boolean
     label: Primary Key
     group: External data source
     # visible_on: "{{true}}"
+    sort_no: 350
   generated:
     type: boolean
     label: Generated
     group: External data source
     # visible_on: "{{formData.database_name || formData.datasource ? true: false}}"
+    sort_no: 360
   sort_no:
     label: Sort Number
     type: number
@@ -465,15 +491,18 @@ fields:
     scale: 0
     sortable: true
     group: Advanced
+    sort_no: 370
   is_name:
     type: boolean
     label: Is Name
     group: Advanced
+    sort_no: 380
   required:
     type: boolean
     label: Required
     group: Advanced
     visible_on: "{{['autonumber','summary','formula'].indexOf(formData.type) > -1 ? false: true}}"
+    sort_no: 390
   is_wide:
     type: boolean
     label: Is Wide
@@ -490,10 +519,12 @@ fields:
   #   type: boolean
   #   label: Omit
   #   group: Advanced
+    sort_no: 400
   index:
     type: boolean
     label: Is Index Field
     group: Advanced
+    sort_no: 410
   sortable:
     type: boolean
     label: Sortable
@@ -502,30 +533,36 @@ fields:
   #   type: boolean
   #   label: Searchable
   #   group: Advanced
+    sort_no: 420
   filterable:
     type: boolean
     label: Filterable
     group: Advanced
+    sort_no: 430
   show_as_qr:
     type: boolean
     label: Show_as_qr
     group: Advanced
     visible_on: "{{formData.type === 'url' ? true: false}}"
+    sort_no: 440
   visible_on:
     type: textarea
     label: Visible On
     is_wide: true
     group: Advanced
+    sort_no: 450
   inlineHelpText:
     label: Prompt text
     type: textarea
     is_wide: true
     group: Advanced
+    sort_no: 460
   description:
     label: Description
     type: textarea
     is_wide: true
     group: Advanced
+    sort_no: 470
 paging:
   enabled: false
 list_views:

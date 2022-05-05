@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 10:29:51
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-05 13:58:42
+ * @LastEditTime: 2022-05-05 17:26:58
  * @Description: 
  */
 "use strict";
@@ -31,7 +31,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['steedos-server'],
+    dependencies: ['~packages-standard-objects'],
 
     /**
      * Actions

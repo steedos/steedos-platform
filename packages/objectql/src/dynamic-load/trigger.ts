@@ -53,6 +53,7 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
                 object.listeners = {}
             }
             delete json.listenTo
+            delete json.name
             const listener = clone(json);
             listener.name = json._id || getMD5(JSONStringify(json));
             object.listeners[listener.name] = listener
