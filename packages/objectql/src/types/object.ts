@@ -381,7 +381,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         for (const trigger of triggers) {
             let params = generateActionParams(when, context); //参考sf
-            let result: any = await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
+            await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
                 //如果action trigger 下线，则只打印error
                 if(error && _.isObject(error) && error.type === 'SERVICE_NOT_AVAILABLE'){
                     console.error(`runTriggerActions error`, error)
@@ -389,10 +389,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     throw error
                 }
             })
-            const returnParams: any = result.returnParams;
-            if (returnParams && (['before.insert', 'before.update'].includes(when))) {
-                Object.assign(context.doc, returnParams.new[0]);
-            }
         }
 
     }
