@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "7fd5de61a86f67c1da2efbf3e29b4b6cdfb938a2.js",
+      "path": "9fddc1f28a69e6c07f32c832766fb080b56dbcb9.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/7fd5de61a86f67c1da2efbf3e29b4b6cdfb938a2.js?meteor_js_resource=true",
-      "size": 6419184,
-      "hash": "7fd5de61a86f67c1da2efbf3e29b4b6cdfb938a2",
-      "sri": "HUs7W+zM8SLwJEeECJhovDuJisBL8E28M6/1Tn9XQph7tB9+Hds5N3MSjReOR8PToVDwjr/SOZfFL0rdHI3HXQ=="
+      "url": "/9fddc1f28a69e6c07f32c832766fb080b56dbcb9.js?meteor_js_resource=true",
+      "size": 6432526,
+      "hash": "9fddc1f28a69e6c07f32c832766fb080b56dbcb9",
+      "sri": "6WvYD3RTfaZhYvMdL5SyvraxVkllO1amemfa2954+WTuKQLGbbtbCF/b5G2unyEVhr2q7ZdLbaJZer6+ljQePw=="
     },
     {
-      "path": "7fd5de61a86f67c1da2efbf3e29b4b6cdfb938a2.stats.json",
+      "path": "9fddc1f28a69e6c07f32c832766fb080b56dbcb9.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/7fd5de61a86f67c1da2efbf3e29b4b6cdfb938a2.stats.json?meteor_js_resource=true",
-      "size": 136904,
-      "hash": "caa0a821ba8b90c0edc369080b166adf40d46866",
-      "sri": "+HKkxW3/Np0kw6y13RwKraN0jjdxpdL9sJDzCQPAnQj9GevJGv4kjPRaWnkzoDPgYxoj4e02fOS1DG5ZlZcUCg=="
+      "url": "/9fddc1f28a69e6c07f32c832766fb080b56dbcb9.stats.json?meteor_js_resource=true",
+      "size": 136905,
+      "hash": "aed87a4cbe686529c378b044ec19489d34b35272",
+      "sri": "7BwgIS7FmNH3lUuhznZ6kBqSQ6fQ1fpb4r1xnhDe7/MLRkx/nsv9DJcNoerXLNvLWphtQjpNH/NBgk5vd45NsQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4139,16 +4139,6 @@
       "url": "/README.md",
       "size": 102,
       "hash": "b5ed4f93cb5e563ff2274a648b6e656d9c237a03",
-      "sri": null
-    },
-    {
-      "path": "app/builder-community.react.css",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/builder-community.react.css",
-      "size": 1697240,
-      "hash": "331638a9b241b0891e2914c6437c7a2463ffab9f",
       "sri": null
     },
     {
