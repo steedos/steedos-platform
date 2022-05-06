@@ -88,11 +88,16 @@ jobs:
           release_name: v${{ env.CURRENT_VERSION }}
           draft: false
           prerelease: false
-      - name: Update dev branch
+      - name: Update 2.2 branch
         run: |
           git checkout 2.2
           git merge release/2.2
           git push origin 2.2
+      - name: Update master branch
+        run: |
+          git checkout master
+          git merge release/2.2
+          git push origin master
       - name: Create project template release
         id: create_project_template_release
         env:
