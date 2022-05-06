@@ -23,7 +23,13 @@ async function get(apiName){
 
 module.exports = {
     listenTo: 'queries',
+    beforeFind: async function () {
+        delete this.query.fields;
+    },
 
+    beforeAggregate: async function () {
+        delete this.query.fields;
+    },
     afterFind: async function(){
         let spaceId = this.spaceId;
         let dataList = await getAll();

@@ -11,6 +11,9 @@ loadRecordFromOdata = (template, object_name, record_id)->
 	Steedos.Page.Data.getRecord(object_name, record_id, selectFields, expand).then((record)->
 		template.record.set(record)
 		template.isLoading.set(false)
+	).catch((error)->
+		toastr.error(error.message);
+		template.isLoading.set(false)
 	)
 
 	# record = Creator.odata.get(object_name, record_id, selectFields, expand)

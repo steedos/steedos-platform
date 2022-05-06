@@ -3,7 +3,7 @@ columns:
   - field: type
   - field: app
   - field: profile
-  - field: record_type
+  # - field: record_type
   - field: mobile
   - field: desktop
   - field: is_system

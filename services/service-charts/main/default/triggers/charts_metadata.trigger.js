@@ -23,75 +23,66 @@ async function get(apiName){
 module.exports = {
     listenTo: 'charts',
 
+    beforeFind: async function () {
+        delete this.query.fields;
+    },
+
+    beforeAggregate: async function () {
+        delete this.query.fields;
+    },
+
     afterFind: async function(){
-        let filters = objectql.parserFilters(this.query.filters)
-        let dataList = []
-        if(filters._id && !filters._id.$ne){
-            let id = filters._id
-            id = id.replace(/\\/g, '');
-            let data = await get(id);
-            if(data){
-                dataList = [data]
-            }
-        }else{
-            dataList = await getAll();
-            if(filters.name){
-                dataList = _.filter(dataList, (item)=>{
-                    return item.name == filters.name
-                })
-            }
-            if(filters.query){
-                dataList = _.filter(dataList, (item)=>{
-                    return item.query == filters.query
-                })
+        const { spaceId } = this;
+        let dataList = await getAll();
+        if (!_.isEmpty(dataList)) {
+            dataList.forEach((doc) => {
+                if (!_.find(this.data.values, (value) => {
+                    return value.name === doc.name
+                })) {
+                    this.data.values.push(doc);
+                }
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if (records.length > 0) {
+                this.data.values = records;
+            } else {
+                this.data.values.length = 0;
             }
         }
 
-        if(dataList){
-            const dbRecrodsName = _.pluck(this.data.values, 'name');
-            this.data.values = this.data.values.concat(_.filter(dataList, function(data){return data._id == data.name && !_.include(dbRecrodsName, data.name) }))
-        }
     },
     afterAggregate: async function(){
-        let filters = objectql.parserFilters(this.query.filters)
-        let dataList = []
-        if(filters._id && !filters._id.$ne){
-            let id = filters._id
-            id = id.replace(/\\/g, '');
-            let data = await get(id);
-            if(data){
-                dataList = [data]
+        const { spaceId } = this;
+        let dataList = await getAll();
+        if (!_.isEmpty(dataList)) {
+            dataList.forEach((doc) => {
+                if (!_.find(this.data.values, (value) => {
+                    return value.name === doc.name
+                })) {
+                    this.data.values.push(doc);
+                }
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if (records.length > 0) {
+                this.data.values = records;
+            } else {
+                this.data.values.length = 0;
             }
-        }else{
-            dataList = await getAll();
-            if(filters.name){
-                dataList = _.filter(dataList, (item)=>{
-                    return item.name == filters.name
-                })
-            }
-        }
-
-        if(dataList){
-            const dbRecrodsName = _.pluck(this.data.values, 'name');
-            this.data.values = this.data.values.concat(_.filter(dataList, function(data){return data._id == data.name && !_.include(dbRecrodsName, data.name) }))
         }
     },
     afterCount: async function(){
-        try {
-            this.query.fields.push('name');
-        } catch (error) {
-
-        }
+        delete this.query.fields;
         let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
         this.data.values = result.length;
     },
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
-            let id = this.id
-            let data = await get(id);
-            if(data){
-                this.data.values = data;
-            }
+            const all = await getAll();
+            const id = this.id;
+            this.data.values = _.find(all, function(item){
+                return item._id === id
+            });
         }
     }
+    
 }

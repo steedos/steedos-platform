@@ -356,7 +356,8 @@
     // creator odata 转 graphql 防腐层
 
     function getGraphqlFieldsQuery(objectApiName, selectFields, expandFields){
-        const objectFields = Creator.getObject(objectApiName).fields
+        const objectConfig = Creator.getObject(objectApiName)
+        const objectFields = objectConfig.fields
         if(_.isString(selectFields)){
             selectFields = selectFields.split(',');
         }
@@ -367,14 +368,15 @@
 
         const fieldsName = ['_id'];
 
+        if(objectConfig.database_name ==='default' || !objectConfig.database_name){
+            fieldsName.push('record_permissions')
+        }
+
         _.each(selectFields, function(fieldName){
             fieldsName.push(`${fieldName}`)
         });
 
         _.each(expandFields, function(fieldName){
-            if(!objectFields[fieldName]){
-                console.log("expandFields====", objectFields, fieldName)
-            }
             if(fieldName && _.isString(objectFields[fieldName].reference_to)){
                 let spaceUsersCompanyIdsExpand = '';
                 if(objectApiName === 'space_users' && fieldName === 'company_ids'){

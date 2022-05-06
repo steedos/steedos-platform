@@ -339,6 +339,9 @@ fields:
     label: Object Workflow Related Form Table Code
     omit: true
     hidden: true
+  record_permissions:
+    type: object
+    hidden: true
 actions:
   standard_query:
     label: Search
