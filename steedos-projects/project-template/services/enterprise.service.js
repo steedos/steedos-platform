@@ -31,6 +31,6 @@ module.exports = {
         // 启动 sidecar服务: steedos services 跨语言访问
         // this.broker.createService(require("@steedos/service-sidecar"));
         // 字段级加密服务
-        this.broker.createService(require("@steedos/ee_plugin-field-encryption"));
+        // this.broker.createService(require("@steedos/ee_plugin-field-encryption"));
     }
 }
