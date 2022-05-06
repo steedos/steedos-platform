@@ -26,7 +26,8 @@ module.exports = {
 	settings: {
 		packageInfo: {
 			path: __dirname,
-			name: packageName
+			name: packageName,
+			isPackage: false
 		},
 		unpkgUrl: process.env.STEEDOS_UNPKG_URL,
 		local_packages: [
