@@ -88,6 +88,13 @@ jobs:
           release_name: v${{ env.CURRENT_VERSION }}
           draft: false
           prerelease: false
+      - name: Create project template release
+        id: create_project_template_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_TEMPLATE_GITHUB_TOKEN }}
+          CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
+        run: |
+          yarn create-project-template-release
       - name: Update 2.2 branch
         run: |
           git checkout 2.2
@@ -98,13 +105,6 @@ jobs:
           git checkout master
           git merge release/2.2
           git push origin master
-      - name: Create project template release
-        id: create_project_template_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.PROJECT_TEMPLATE_GITHUB_TOKEN }}
-          CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
-        run: |
-          yarn create-project-template-release
       - name: Sync to taobao 
         run: |
           yarn sync-to-taobao
