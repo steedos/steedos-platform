@@ -98,7 +98,12 @@ module.exports = {
     actions: {
         standard_query: {
             label: "Search",
-            visible: true,
+            visible: function () {
+                if(Session.get('record_id')){
+                    return false;
+                }
+                return true;
+            },
             on: "list",
             todo: "standard_query"
         },
@@ -162,6 +167,9 @@ module.exports = {
         standard_delete_many: {
             label: "Delete",
             visible: function (object_name, record_id, record_permissions) {
+                if(Session.get('record_id')){
+                    return false;
+                }
                 var object = Creator.getObject(object_name);
                 var perms = object && object.permissions.get();
                 return perms && perms["allowDelete"];
