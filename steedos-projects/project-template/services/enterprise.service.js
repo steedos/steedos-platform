@@ -6,7 +6,7 @@
 const SteedosService = require("@steedos/service-steedos-server");
 
 module.exports = {
-    name: "community-server",
+    name: "enterprise-server",
     namespace: "steedos",
     async created() {
         // 启动 元数据服务
