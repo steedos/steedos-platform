@@ -16,7 +16,7 @@
 </p>
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，遵循<a href="https://low-code-protocol.com">低代码协议</a>，将低代码技术与 <a href="https://www.steedos.cn/docs/deploy/devops"> DevOps 工具</a> 结合，实现敏捷开发的新高度。
+  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，遵循<a href="https://low-code-protocol.com">低代码协议</a>，将低代码技术与 <a href="https://www.steedos.cn/docs/deploy/devops"> DevOps 工具</a> 结合，实现敏捷开发的新高度。 
 </p>
 
 <h3 align="center">
@@ -33,24 +33,6 @@
 ![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
 
 [点击了解华炎魔方元数据类型](https://www.steedos.cn/docs/developer/meta-types)
-
-## 企业级权限控制
-
-华炎魔方定义了基于角色（简档/权限集）的权限控制体系，通过多种配置和编程入口，满足企业级软件对权限控制的各种需求。
-
-![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
-
-## 软件包
-
-元数据可以在可视化界面中进行修改，也可以使用Steeods VS Code插件同步为软件包，实现版本管理，并进一步编写代码、调试、测试、打包、部署。
-
-![Steedos Packages Overview](./docs/diagrams/Steedos%20Packages.drawio.svg)
-
-## 云原生部署
-
-基于华炎魔方开发的软件包，可以集中部署在一个Nodejs服务中，也可以基于容器技术，分布式部署在Kunernetes集群中。两种部署方式均基于事件驱动架构，可实现基于微服务的事件的发布与订阅。
-
-![Kubernetes Deploy](./docs/diagrams/Kubernetes%20Deploy.drawio.svg)
 
 ## 快速向导
 
