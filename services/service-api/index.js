@@ -74,7 +74,7 @@ module.exports = {
 
 			// https://www.apollographql.com/docs/apollo-server/v2/api/apollo-server.html
 			serverOptions: {
-				tracing: true,
+				tracing: process.env.NODE_ENV !== 'production',
 
 				engine: {
 					apiKey: process.env.APOLLO_ENGINE_KEY
