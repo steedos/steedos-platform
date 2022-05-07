@@ -308,10 +308,10 @@
     warning "^4.0.3"
     webpack-cli "^3.x"
 
-"@steedos-ui/builder-community@1.0.29":
-  version "1.0.29"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.0.29.tgz#42c2788b98d25d8a8c8417115104bca9773bcc09"
-  integrity sha512-5191Gh+lzJlo7C+urK8xkIvjwkYlerCyCMQuNNMXQVACgdBdHend3BYtXwNnnFA6q9ysDsk0ar+QTn/zO5R+Ag==
+"@steedos-ui/builder-community@1.0.30":
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-1.0.30.tgz#e1dc0e59925f252803e1ecc32b4b966a121c525e"
+  integrity sha512-EVAVwv65txQ1PUZaDzW7MfJ9X3+zCrwGhiGgP4Aa8JHiJvk7j/Cnw3bkPhgWYrBDsFqFCGRVkHDx5UFhEngZBQ==
 
 "@steedos/design-system-react@^2.0.9":
   version "2.0.32"
