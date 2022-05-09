@@ -284,7 +284,46 @@ pushManager.get_badge = (send_from, user_id)->
 	user_spaces = db.space_users.find(
 		user: user_id
 		user_accepted: true, {fields: {space: 1}})
+
 	user_spaces.forEach (user_space) ->
+		spaceId = user_space.space
+
+		categories = db.categories.find({space: spaceId, app: {$ne: null}}).fetch();
+
+		if categories.length > 0
+
+			appCategories = _.groupBy(categories, 'app');
+
+			# 按应用计算待办数量
+			_.each appCategories, (categorys, appName)->
+				categorysIds = _.pluck(categorys, '_id')
+				if appName
+					categoryFormsIds = [];
+					categoryForms = db.forms.find({ category: {$in: categorysIds} }, { fields: { _id: 1 } }).fetch()
+					if categoryForms.length > 0
+						categoryFormsIds = categoryForms.getProperty('_id')
+					if categoryFormsIds.length > 0
+						categoryBadge = db.instances.find({ space: user_space.space, form: { $in: categoryFormsIds }, $or: [{ inbox_users: user_id },{ cc_users: user_id }] }, { fields: {_id: 1 } }).count()
+						appKeyValue = db.steedos_keyvalues.findOne(
+							user: user_id
+							space: user_space.space
+							key: 'badge', {fields: {_id: 1, value: 1}})
+						if appKeyValue
+							if appKeyValue.value?[appName] != categoryBadge
+								_set = {};
+								_set['value.' + appName] = categoryBadge;
+								db.steedos_keyvalues.update { _id: appKeyValue._id }, $set: _set
+						else
+							appKeyValueNew = {}
+							appKeyValueNew.user = user_id
+							appKeyValueNew.space = user_space.space
+							appKeyValueNew.key = 'badge'
+							appKeyValueNew.value = {}
+							appKeyValueNew.value[appName] = categoryBadge
+							db.steedos_keyvalues.insert appKeyValueNew
+		
+		
+		# workflow 记录所有待办数量
 		c = db.instances.find(
 			space: user_space.space
 			$or: [
