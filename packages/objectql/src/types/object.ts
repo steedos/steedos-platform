@@ -1896,7 +1896,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 sharesFilter = getUserObjectSharesFilters(this.name, userSession);
 
                 if (!_.isEmpty(companyFilter)) {
-                    permissionFilters.push(`(${companyFilter.join(' and ')})`);
+                    permissionFilters.push(`(${companyFilter.join(' or ')})`);
                 }
 
                 if (ownerFilter) {
