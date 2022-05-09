@@ -64,12 +64,71 @@ if Meteor.isClient
 				call_back_error()
 			FormManager.runHook(object_name, 'delete', 'error', {_id: record_id, error: error})
 
+	Creator.relatedObjectStandardNew = (related_object_name)->
+		relateObject = Creator.getObject(related_object_name)
+		collection_name = relateObject.label
+		collection = "Creator.Collections.#{Creator.getObject(related_object_name)._collection_name}"
+		current_object_name = Session.get("object_name")
+		current_record_id = Session.get("record_id")
+		ids = Creator.TabularSelectedIds[related_object_name]
+		initialValues = {};
+		if ids?.length
+			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
+			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
+			record_id = ids[0]
+			doc = Creator.odata.get(related_object_name, record_id)
+			initialValues = doc
+			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
+			Session.set 'cmShowAgainDuplicated', true
+		else
+			defaultDoc = FormManager.getRelatedInitialValues(current_object_name, current_record_id, related_object_name);
+			if !_.isEmpty(defaultDoc)
+				initialValues = defaultDoc
+		if relateObject?.version >= 2
+			return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+				name: "#{related_object_name}_standard_new_form",
+				objectApiName: related_object_name,
+				title: '新建 ' + relateObject.label,
+				initialValues: initialValues,
+				afterInsert: (result)->
+					setTimeout(()->
+						# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
+						if Creator.getObject(current_object_name).version > 1
+							SteedosUI.reloadRecord(current_object_name, current_record_id)
+						FlowRouter.reload();
+					, 1);
+					return true;
+			}, null, {iconPath: '/assets/icons'})
+
+
+		if ids?.length
+			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
+			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
+			Session.set 'cmDoc', initialValues
+			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
+			Session.set 'cmShowAgainDuplicated', true
+		else
+			if !_.isEmpty(initialValues)
+				Session.set 'cmDoc', initialValues
+
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", collection)
+		Session.set("action_collection_name", collection_name)
+		Session.set("action_save_and_insert", false)
+		Meteor.defer ()->
+			$(".creator-add-related").click()
+		return
+
 	Creator.actions 
 		# 在此定义全局 actions
 		"standard_query": ()->
 			Modal.show("standard_query_modal")
 
 		"standard_new": (object_name, record_id, fields)->
+			current_record_id = Session.get("record_id")
+			if current_record_id
+				# amis 相关子表右上角新建
+				Creator.relatedObjectStandardNew(object_name)
 			object = Creator.getObject(object_name);
 			gridName = this.action.gridName;
 			initialValues={}
