@@ -129,6 +129,7 @@ if Meteor.isClient
 			if current_record_id
 				# amis 相关子表右上角新建
 				Creator.relatedObjectStandardNew(object_name)
+				return 
 			object = Creator.getObject(object_name);
 			gridName = this.action.gridName;
 			initialValues={}
