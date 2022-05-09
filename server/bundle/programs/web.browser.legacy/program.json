@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "8d4ba60aefb7c55a2ee57c4a69fea5f1ad12e11a.js",
+      "path": "8f37833f9a9bef0b20bf8a6b2d673ad279a839f8.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/8d4ba60aefb7c55a2ee57c4a69fea5f1ad12e11a.js?meteor_js_resource=true",
-      "size": 22078904,
-      "hash": "8d4ba60aefb7c55a2ee57c4a69fea5f1ad12e11a",
-      "sri": "JbWNMX4npfXVWf2Fe7pIA0hK8rWVl+0FvHaNrEgrbdGXqhKg4Z76N6RfSNbeien3ncm/CVvzJt1Ir/fm8q9gVQ=="
+      "url": "/8f37833f9a9bef0b20bf8a6b2d673ad279a839f8.js?meteor_js_resource=true",
+      "size": 22078939,
+      "hash": "8f37833f9a9bef0b20bf8a6b2d673ad279a839f8",
+      "sri": "cnpWVuEZn8Sa1BhY07HTklJFFC9CayI4wEuudxadRMZv3JfbvWkXJRCPpErRddbiNUrDm4iQMit/BvEl/tsZUQ=="
     },
     {
-      "path": "8d4ba60aefb7c55a2ee57c4a69fea5f1ad12e11a.stats.json",
+      "path": "8f37833f9a9bef0b20bf8a6b2d673ad279a839f8.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/8d4ba60aefb7c55a2ee57c4a69fea5f1ad12e11a.stats.json?meteor_js_resource=true",
+      "url": "/8f37833f9a9bef0b20bf8a6b2d673ad279a839f8.stats.json?meteor_js_resource=true",
       "size": 152992,
-      "hash": "3562bf9a8191cc0d88a33f34733c2160eaa9adbc",
-      "sri": "aAx/0tZDQ0z6rNGIV8Kxuft4RSmxfOCqfqX877mJ13C3CtCW9nSUsmJAkioGGNCcDFkmwwN+VEWoLCbLErIjmg=="
+      "hash": "c4b3b404719b069e38e039f2cfa3e325f79afc8f",
+      "sri": "mj+3QWR843r2KQvGNBoUaUXZOQvlOIt/t1vB8S5QzXCKOdzPpOrYpvTej5h6j3H/V1Tk11KtHSRkkgdsOUB+uA=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -4018,8 +4018,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.png",
       "size": 11690,
-      "hash": "9afd1a12da882436af1e8b57d647dd6587bc9dad",
-      "sri": null
+      "hash": "64004a554239896538cb4b92a9272b4255086b4f",
+      "sri": "tBt0KSmXEPbOXAP8mPgdp+Zbsf1h8+DCkyTMFaN9AR9ohnpuddjGHCi/HmPr/DZMzL8SGt/CAoGkqBGeGNhp0w=="
     },
     {
       "path": "packages/steedos_creator/assets/logo-square.en-us.png",
@@ -4028,8 +4028,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.en-us.png",
       "size": 15294,
-      "hash": "e256fab7ec953bf744be35fed594fb44e60c51e7",
-      "sri": null
+      "hash": "563568609e446146f3ddc44368bcad43de10165f",
+      "sri": "FHY37rVUVS3d6DRq2ImEQQTJKTIpFNa8LObnx0Jvk9fDkMatx/6opYCIIT1Rm2FEQJroHeu2wQciQhRQGRha/Q=="
     },
     {
       "path": "packages/steedos_users-import/assets/excel/steedos_import_users_simple.xls",
@@ -4058,8 +4058,8 @@
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.css",
       "size": 4053,
-      "hash": "87de463c4b122dfad638a3193842d055a0d12b9d",
-      "sri": null
+      "hash": "b9547b69afeb56e55b1f00f02dfb855b1afad9c1",
+      "sri": "/YAQOWy5oTA+aQ1X+kOkOnsGZc9tdMQfImbS3owBKJGAYAhGMOuEjSw4cIA6xoOLUH4NP0A5deQ/pqMxSLp/kw=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.dark.css",
@@ -4068,8 +4068,8 @@
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.dark.css",
       "size": 4200,
-      "hash": "a82dd8a83c1d96eff8ba5084c4f0b7164f3a168e",
-      "sri": null
+      "hash": "d85e0ab8b459135855c4d729b624c8aea081581f",
+      "sri": "U8wC0Y6kY6cJHACXFjnHiZ88d4qX02hgF7bUi5UHo4WQpzaewESMM25Vb7wYZ4jlJ/q/1iEf9/7LNwcCfS94Ww=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.forest.css",
@@ -4078,8 +4078,8 @@
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.forest.css",
       "size": 5208,
-      "hash": "2892f3c59a787445d2be2a59660d4f3a1d004c96",
-      "sri": null
+      "hash": "dcd2ae3d517f69aa2b2228645c20931fc8994b33",
+      "sri": "YYawKhnW+Q41390oq6sBksa5fnO5eyQDLQNXJ1LBMI0whBWLc8h4iwRUtcB/HqDnxxH8IajG8A6t/1YlDIrM/Q=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.min.js",
@@ -4088,8 +4088,8 @@
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.min.js",
       "size": 1108921,
-      "hash": "e45cd49e8448efc5fadaa6e18b5a8c466132f994",
-      "sri": null
+      "hash": "9570edbd1fa9226da6991ea9b7d28d7025cfdba3",
+      "sri": "ImRiLKrrb4FLaTnXMn0V3zRZf2uHgNpGDDhoPbBjyMR86HstDVfMwgsmMfUDEAiY6El6luyaW+5thgWGh3czYw=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/index.html",
@@ -4098,8 +4098,8 @@
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/index.html",
       "size": 2915,
-      "hash": "2f04f408c4b0979f406b6e191614e39b34380eed",
-      "sri": null
+      "hash": "8fff1e68113bcad87b8a47bdfb28231cb7b1886a",
+      "sri": "yF17060pS0p7q9/b8j2m1ANuSTkIFpuD+ZUclUJiNIn6U74nfu16TarTc5os9try5tEfoj9lvUUdGVi4Mcr2Fw=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/index.js",
@@ -4108,8 +4108,8 @@
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/index.js",
       "size": 1239,
-      "hash": "3ac0a11651e3339c38caacbb454cfdc22529ea32",
-      "sri": null
+      "hash": "7646379e38e5d686479bf305a9591fa363a4306e",
+      "sri": "pI6AStkZ8n9F3tRTKHuig2pqfNLXPpZu9zIIE6iVtsuKpZRs8oG1oJjPwB/g76ULQ4DnIyiEX943CQbrO6eGhw=="
     },
     {
       "path": "packages/steedos_workflow-chart/assets/index.css",
@@ -4118,8 +4118,8 @@
       "cacheable": false,
       "url": "/packages/steedos_workflow-chart/assets/index.css",
       "size": 37,
-      "hash": "e781e9783dc62c679656e631823f01903affe59b",
-      "sri": null
+      "hash": "0dd1bdac71090a9aba8fea7364809a2a92fb0098",
+      "sri": "bx+VQh3nyLV4f3EZVKeuzIEjpL1GuOQIO03DwsNF1rehBvSfsnfYCUbggSqC82k2atIkavDYMrChnxma8qgPjw=="
     },
     {
       "path": "app/README.md",
