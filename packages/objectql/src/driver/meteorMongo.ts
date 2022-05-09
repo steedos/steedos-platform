@@ -376,7 +376,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        let recordId = collection.insert(data);
+                        let recordId = collection.insert(data, { validate: false });
                         return collection.findOne({ _id: recordId });
                     })
                     resolve(result);
@@ -417,7 +417,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                     })
 
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.update(selector, options);
+                        collection.update(selector, options, { validate: false });
                         return collection.findOne(selector);
                     })
                     resolve(result);

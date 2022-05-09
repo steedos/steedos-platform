@@ -5,14 +5,25 @@ import { getMD5, JSONStringify, transformListenersToTriggers } from '../util'
 import _ = require('lodash');
 var util = require('../util');
 var clone = require('clone');
+import { _TRIGGERKEYS } from '../types';
 
 const _lazyLoadListeners: Dictionary<any> = {};
+
+// 用于存放通配触发器，即listenTo的值是通配符
+const _patternListerners: Dictionary<any> = {}; 
 
 const addLazyLoadListeners = function(objectName: string, json: SteedosListenerConfig){
     if(!_lazyLoadListeners[objectName]){
         _lazyLoadListeners[objectName] = []
     }
     _lazyLoadListeners[objectName].push(json)
+
+    if (isPatternListener(json)) {
+        if(!_patternListerners[objectName]){
+            _patternListerners[objectName] = []
+        }
+        _patternListerners[objectName].push(json)
+    }
 }
 
 export const getLazyLoadListeners = function(objectName?: string){
@@ -125,6 +136,23 @@ export const removePackageObjectTriggers = (serviceName: string)=>{
         //     console.log(error)
         // }
     })
+
+    _.each(_patternListerners, (listeners, objectName)=>{
+        let objectConfig = getObjectConfig(objectName);
+        _patternListerners[objectName] = _.filter(listeners, function(listener: any) { 
+            const drop = listener.metadataServiceName === serviceName; 
+            if(drop){
+                try {
+                    if(objectConfig && objectConfig.listeners){
+                        delete objectConfig.listeners[listener.name]
+                    }
+                } catch (error) {
+                    
+                }
+            }
+            return drop != true;
+        });
+    })
 }
 
 export const loadObjectTriggers = function (filePath: string, serviceName: string){
@@ -137,4 +165,72 @@ export const loadObjectTriggers = function (filePath: string, serviceName: strin
         triggers.push(addObjectListenerConfig(Object.assign(json, {metadataServiceName: serviceName})));
     })
     return triggers;
+}
+
+/**
+ * 判断是否通配触发器
+ * @param data 
+ * @returns 
+ */
+function isPatternListener(data){
+    const {listenTo} = data;
+    if(listenTo === '*'){
+        return true;
+    }else if(_.isRegExp(listenTo)){
+        return true;
+    }else if(_.isString(listenTo) && listenTo.startsWith("/")){
+        try {
+            if(_.isRegExp(eval(listenTo))){
+                return true;
+            }
+        } catch (error) {
+            return false
+        }
+        return false;
+    }
+    return false;
+}
+
+/**
+ * 获取旧版触发器中写了通配符的触发器
+ * @param objectApiName 
+ * @returns 
+ */
+export function getPatternListeners(objectApiName: string) {
+    let patternListeners = {};
+
+    const pushTrigger = (listeners: [any]) => {
+        for (const listener of listeners) {
+            _TRIGGERKEYS.forEach((key) => {
+                let event = listener[key];
+                if (_.isFunction(event)) {
+                    patternListeners[listener.name] = listener;
+                }
+            })
+        }
+    }
+
+    _.each(_patternListerners, (listeners, objectName) => {
+        try {
+            if (objectName === '*') {
+                pushTrigger(listeners);
+            } 
+            else if (_.isRegExp(objectName) && objectName.test(objectApiName)) {
+                pushTrigger(listeners);
+            } 
+            else if (_.isString(objectName) && objectName.startsWith("/")) {
+                try {
+                    if (_.isRegExp(eval(objectName)) && eval(objectName).test(objectApiName)) {
+                        pushTrigger(listeners);
+                    }
+                } catch (error) {
+                    // DO NOTHING
+                }
+            }
+        } catch (error) {
+            console.log(`[getPatternListeners] `, error);
+        }
+    })
+
+    return patternListeners;
 }

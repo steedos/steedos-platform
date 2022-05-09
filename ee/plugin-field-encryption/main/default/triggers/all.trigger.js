@@ -2,13 +2,13 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 11:23:08
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-05 10:08:12
+ * @LastEditTime: 2022-05-07 16:15:47
  * @Description: 
  */
 const { encryptFieldValue, decryptFieldValue } = require('../helpers/triggerHelper.js');
 
 module.exports = {
-    listenTo: 'space_users',
+    listenTo: '*',
 
     beforeInsert: async function () {
         const { object_name, doc } = this;

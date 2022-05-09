@@ -18,6 +18,7 @@ import { sortBy, forEach } from 'lodash';
 import { ShareRules } from './shareRule';
 import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
+import { getPatternListeners } from '../dynamic-load';
 
 const clone = require('clone')
 
@@ -113,7 +114,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
 
-const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
+export const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
 
 const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'parent_field', 'children_field', 'enable_enhanced_lookup', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number', "is_enable", "in_development", "version"]
 
@@ -361,16 +362,35 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async runTriggers(when: string, context: SteedosTriggerContextConfig) {
         let triggers = this._triggersQueue[when]
-        if (!triggers) {
-            return;
+        if (triggers) {
+            let triggerKeys = _.keys(triggers)
+
+            for (let index = 0; index < triggerKeys.length; index++) {
+                let trigger = triggers[triggerKeys[index]];
+                await this.runTirgger(trigger, context)
+            }
         }
 
-        let triggerKeys = _.keys(triggers)
-
-        for (let index = 0; index < triggerKeys.length; index++) {
-            let trigger = triggers[triggerKeys[index]];
-            await this.runTirgger(trigger, context)
+        // 获取通配的trigger，如果有则生成SteedosTriggerType执行
+        let wildcardListeners = getPatternListeners(this.name);
+        if (wildcardListeners) {
+            for (const key in wildcardListeners) {
+                if (Object.prototype.hasOwnProperty.call(wildcardListeners, key)) {
+                    const listener = wildcardListeners[key];
+                    if (listener && listener[when]) {
+                        let triggerConfig: SteedosTriggerTypeConfig = {
+                            name: `${key}_${when}`,
+                            on: 'server',
+                            when: when,
+                            todo: listener[when],
+                        }
+                        let trigger = new SteedosTriggerType(triggerConfig)
+                        await this.runTirgger(trigger, context)
+                    }
+                }
+            }
         }
+        
     }
 
     async runTriggerActions(when: string, context: SteedosTriggerContextConfig) {
