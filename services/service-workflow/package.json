@@ -1,12 +1,12 @@
 {
   "name": "@steedos/service-workflow",
-  "version": "2.1.105",
+  "version": "2.1.106",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "2.1.105",
-    "@steedos/objectql": "2.1.105",
-    "@steedos/service-package-loader": "2.1.105",
+    "@steedos/auth": "2.1.106",
+    "@steedos/objectql": "2.1.106",
+    "@steedos/service-package-loader": "2.1.106",
     "node-schedule": "^2.0.0",
     "uuid": "^8.3.2"
   },
