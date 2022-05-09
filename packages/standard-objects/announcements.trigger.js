@@ -54,7 +54,6 @@ module.exports = {
                 }
             }
         }
-        console.log("query", query)
     },
     beforeAggregate: async function(){
         const { userId, spaceId, query } = this;
@@ -72,7 +71,6 @@ module.exports = {
                 }
             }
         }
-        console.log("query", query)
     },
     afterInsert: async function () {
         const doc = this.doc;
