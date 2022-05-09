@@ -1,4 +1,6 @@
 const _ = require("underscore");
+const auth = require('@steedos/auth');
+var steedosFilters = require("@steedos/filters");
 
 const addNotifications = function (userId, doc, members) {
     if(doc.created_by){
@@ -35,6 +37,43 @@ const removeNotifications = function(doc, members){
 
 module.exports = {
     listenTo: 'announcements',
+
+    beforeFind: async function(){
+        const { userId, spaceId, query } = this;
+        if(userId && spaceId){
+            const userSession = await auth.getSessionByUserId(userId, spaceId);
+            if(userSession.profile != 'admin'){
+                const permissionFilters = [['members','=', userId], 'or', ['owner','=', userId]];
+                const odataFilter = steedosFilters.formatFiltersToODataQuery(permissionFilters);
+                if(!_.isArray(query.filters)){
+                    if(!query.filters){
+                        query.filters = odataFilter;
+                    }else{
+                        query.filters = `(${query.filters}) and (${odataFilter})`
+                    }
+                }
+            }
+        }
+        console.log("query", query)
+    },
+    beforeAggregate: async function(){
+        const { userId, spaceId, query } = this;
+        if(userId && spaceId){
+            const userSession = await auth.getSessionByUserId(userId, spaceId);
+            if(userSession.profile != 'admin'){
+                const permissionFilters = [['members','=', userId], 'or', ['owner','=', userId]];
+                const odataFilter = steedosFilters.formatFiltersToODataQuery(permissionFilters);
+                if(!_.isArray(query.filters)){
+                    if(!query.filters){
+                        query.filters = odataFilter;
+                    }else{
+                        query.filters = `(${query.filters}) and (${odataFilter})`
+                    }
+                }
+            }
+        }
+        console.log("query", query)
+    },
     afterInsert: async function () {
         const doc = this.doc;
         const userId = this.userId;
