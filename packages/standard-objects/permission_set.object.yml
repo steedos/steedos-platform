@@ -216,9 +216,9 @@ permission_set:
     allowCreate: false
     allowDelete: false
     allowEdit: false
-    allowRead: true
+    allowRead: false
     modifyAllRecords: false
-    viewAllRecords: true
+    viewAllRecords: false
   admin:
     allowCreate: true
     allowDelete: true
