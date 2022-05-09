@@ -377,7 +377,10 @@
         });
 
         _.each(expandFields, function(fieldName){
-            if(fieldName && _.isString(objectFields[fieldName].reference_to)){
+            if(fieldName.indexOf("\\") > -1){
+                fieldName = fieldName.split('\\')[0];
+            }
+            if(fieldName && objectFields[fieldName] && _.isString(objectFields[fieldName].reference_to)){
                 let spaceUsersCompanyIdsExpand = '';
                 if(objectApiName === 'space_users' && fieldName === 'company_ids'){
                     spaceUsersCompanyIdsExpand = ',name,admins'
