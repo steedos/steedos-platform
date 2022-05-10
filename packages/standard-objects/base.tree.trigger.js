@@ -103,6 +103,6 @@ module.exports = {
         return await afterUpdateTree.apply(this, arguments)
     },
     afterDelete: async function () {
-        return await afterDeleteTree.apply(this.arguments)
+        return await afterDeleteTree.apply(this, arguments)
     }
 }
