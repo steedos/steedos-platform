@@ -2,6 +2,7 @@ name: space_user_signs
 icon: carousel
 label: User Sign
 hidden: true
+version: 2
 fields:
   user:
     type: lookup
