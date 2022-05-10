@@ -1,13 +1,11 @@
 {
   "name": "@steedos/ee_community-users",
-  "version": "2.2.26",
+  "version": "2.2.27",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
   "private": false,
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
   }
 }

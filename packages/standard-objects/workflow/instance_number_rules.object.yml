@@ -2,6 +2,7 @@ name: instance_number_rules
 icon: topic2
 label: Instance Number Rule
 hidden: true
+version: 2
 fields:
   name:
     type: text
@@ -13,12 +14,8 @@ fields:
     type: number
     label: Year
     readonly: true
-    defaultValue: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              if (Meteor.isClient) {
-                return new Date().getFullYear();
-              }
-            }
+    defaultValue: YEAR(TODAY() )
+    visible_on: "{{global.mode !='read' ? false : true}}"
     name: year
   first_number:
     type: number

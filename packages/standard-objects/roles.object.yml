@@ -2,6 +2,7 @@ name: roles
 label: Role
 icon: groups
 hidden: true
+version: 2
 fields:
   name:
     label: Name
