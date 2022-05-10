@@ -41,8 +41,6 @@ fields:
     type: number
     defaultValue: 100
     sortable: true
-    readonly: true
-    visible_on: "{{global.mode ==='read' ? true : false}}"
   company_id:
     defaultValue: !!js/function |
       function () {
