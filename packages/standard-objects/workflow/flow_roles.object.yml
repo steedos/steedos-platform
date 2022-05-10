@@ -2,6 +2,7 @@ name: flow_roles
 icon: queue
 label: Workflow Role
 hidden: true
+version: 2
 fields:
   name:
     type: text
