@@ -2,6 +2,7 @@ name: instance_number_rules
 icon: topic2
 label: Instance Number Rule
 hidden: true
+version: 2
 fields:
   name:
     type: text
