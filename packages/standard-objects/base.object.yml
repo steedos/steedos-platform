@@ -127,77 +127,11 @@ fields:
     index: true
     defaultValue: !!js/function |
       function(){
-        if(Meteor.isClient){
-          return Steedos.getUserCompanyId()
-        }
+        return Steedos.StandardObjects.Base.Fields.companyId.defaultValue.apply(this, arguments)
       }
     optionsFunction: !!js/function |
       function (values) {
-        var object = Creator.getObject(values._object_name);
-        if(!object){
-          console.error("未找到当前对象：" + values._object_name);
-          return [];
-        }
-        var perms = object.permissions.get();
-        var options, result, companys, queryFilters;
-        result = [];
-        options = {
-          $select: 'name'
-        };
-        
-        if(perms.modifyAllRecords){
-          /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择分部时可以能从所有分部中选择。*/
-        }
-        else{
-          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。此规则只用于前端限制, 服务端有触发器给记录处理company_id*/
-          var company_ids =  [];
-
-          /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
-          if(true || perms.modifyCompanyRecords){
-            company_ids = Creator.USER_CONTEXT.user.company_ids
-          }
-
-          /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
-          var modifyAssignCompanysRecords = perms.modifyAssignCompanysRecords || [];
-          company_ids = window._.uniq(company_ids.concat(modifyAssignCompanysRecords));
-
-          if(!company_ids.length){
-            console.warn("当前用户不属于任何分部，无权修改该字段。");
-            queryFilters = ["_id", "=", -1];
-          }else{
-            queryFilters = ["_id", "in", company_ids];
-          }
-        }
-        var customFilters = this.filters;
-        if(!_.isEmpty(customFilters)){
-          if(_.isEmpty(queryFilters)){
-            queryFilters = customFilters;
-          }
-          else{
-            queryFilters = [customFilters, 'and', queryFilters];
-          }
-        }
-        if(!_.isEmpty(queryFilters) && this.template && this.template.data && this.template.data._value && this.template.data._value.length){
-          var _value = this.template.data._value;
-          /* 
-            this.template.data._value为原来数据库中返回的选项值，需要始终能兼容返回 
-            values.company_id 及 this.template.data.value为当前用户选中的选项，能选中肯定是本来就在列表中的，所以不需要兼容返回
-          */
-          queryFilters = [queryFilters, 'or', ["_id", "=", _value]];
-        }
-        if(!_.isEmpty(queryFilters)){
-          var steedosFilters = require("@steedos/filters");
-          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
-          options.$filter = odataFilter;
-        }
-        companys = Creator.odata.query('company', options, true);
-        companys.forEach(function (item) {
-          result.push({
-            label: item.name,
-            value: item._id
-          });
-        });
-        return result;
+        return Steedos.StandardObjects.Base.Fields.companyId.optionsFunction.apply(this, arguments)
       }
     hidden: true
   company_ids:
@@ -209,83 +143,11 @@ fields:
     multiple: true
     defaultValue: !!js/function |
       function(){
-        if(Meteor.isClient){
-          var companyId = Steedos.getUserCompanyId();
-          if(companyId){
-            return [companyId]
-          }
-          else{
-            return []
-          }
-        }
+        return Steedos.StandardObjects.Base.Fields.companyIds.defaultValue.apply(this, arguments)
       }
     optionsFunction: !!js/function |
       function (values) {
-        var object = Creator.getObject(values._object_name);
-        if(!object){
-          console.error("未找到当前对象：" + values._object_name);
-          return [];
-        }
-        var perms = object.permissions.get();
-        var options, result, companys, queryFilters;
-        result = [];
-        options = {
-          $select: 'name'
-        };
-        
-        if(perms.modifyAllRecords){
-          /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择分部时可以能从所有分部中选择。*/
-        }
-        else{
-          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。此规则只用于前端限制, 服务端有触发器给记录处理company_id*/
-          var company_ids =  [];
-
-          /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
-          if(true || perms.modifyCompanyRecords){
-            company_ids = Creator.USER_CONTEXT.user.company_ids
-          }
-
-          /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
-          var modifyAssignCompanysRecords = perms.modifyAssignCompanysRecords || [];
-          company_ids = window._.uniq(company_ids.concat(modifyAssignCompanysRecords));
-
-          if(!company_ids.length){
-            console.warn("当前用户不属于任何分部，无权修改该字段。");
-            queryFilters = ["_id", "=", -1];
-          }else{
-            queryFilters = ["_id", "in", company_ids];
-          }
-        }
-        var customFilters = this.filters;
-        if(!_.isEmpty(customFilters)){
-          if(_.isEmpty(queryFilters)){
-            queryFilters = customFilters;
-          }
-          else{
-            queryFilters = [customFilters, 'and', queryFilters];
-          }
-        }
-        if(!_.isEmpty(queryFilters) && this.template && this.template.data && this.template.data._value && this.template.data._value.length){
-          var _value = this.template.data._value;
-          /* 
-            this.template.data._value为原来数据库中返回的选项值，需要始终能兼容返回 
-            values.company_ids 及 this.template.data.value为当前用户选中的选项，能选中肯定是本来就在列表中的，所以不需要兼容返回
-          */
-          queryFilters = [queryFilters, 'or', ["_id", "in", _value]];
-        }
-        if(!_.isEmpty(queryFilters)){
-          var steedosFilters = require("@steedos/filters");
-          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
-          options.$filter = odataFilter;
-        }
-        companys = Creator.odata.query('company', options, true);
-        companys.forEach(function (item) {
-          result.push({
-            label: item.name,
-            value: item._id
-          });
-        });
-        return result;
+        return Steedos.StandardObjects.Base.Fields.companyIds.optionsFunction.apply(this, arguments)
       }
     hidden: true
   instance_state:
@@ -367,67 +229,12 @@ actions:
     label: Import Data
     on: list
     todo: !!js/function |
-      function(object_name){
-        const clone = require('clone');
-        const objectName = "queue_import_history";
-        const object = Creator.getObject(objectName);
-        const initialValues = {object_name: object_name};
-        const objectSchema = {
-            fields: clone(object.fields)
-        };
-        objectSchema.fields.object_name.hidden = true;
-        SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-          name: `${objectName}_standard_new_form`,
-          objectApiName: objectName,
-          objectSchema: objectSchema,
-          title: '新建 ' + object.label,
-          initialValues: initialValues,
-          afterInsert: function(result){
-            if(result && result.length > 0){
-              const record_id = result[0]._id;
-              $("body").addClass("loading");
-              $.ajax({
-                url: Steedos.absoluteUrl("/api/data/initiateImport"),
-                type: "post",
-                data: {
-                  importObjectHistoryId: record_id
-                },
-                xhrFields: {
-                  withCredentials: true
-                },
-                success: function(res){
-                  $("body").removeClass("loading");
-                  SteedosUI.reloadRecord(objectName, record_id);
-                  FlowRouter.reload();
-                  toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
-                },
-                error: function(res){
-                  $("body").removeClass("loading");
-                  toastr.error(res.responseJSON.message);
-                }
-              });
-              FlowRouter.reload();
-              return true;
-            }
-            return false;
-            }
-        }, null, {iconPath: '/assets/icons'})
+      function(objectName){
+        return Steedos.StandardObjects.Base.Actions.standard_import_data.todo.apply(this, arguments)
       }
     visible: !!js/function |
       function(objectName){
-        var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
-        var objectName = objectName || this.objectName || FlowRouter.current().params.object_name;
-        if(allowCreate){
-          var hasImportTemplates = Steedos.authRequest("/api/v4/queue_import", {type: 'get', async: false, data: {
-            $filter: `(object_name eq '${objectName}')`,
-            $count: true,
-            $select: '_id'
-          }, error: function(){}});
-          if(hasImportTemplates && hasImportTemplates.value && hasImportTemplates.value.length > 0){
-            return true;
-          }
-        }
-        return false;
+        return Steedos.StandardObjects.Base.Actions.standard_import_data.visible.apply(this, arguments)
       }
 permission_set:
   none:

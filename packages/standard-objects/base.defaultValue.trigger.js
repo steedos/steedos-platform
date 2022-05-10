@@ -2,5 +2,7 @@ const defaultValueTriggers = require('./defaultValueTriggers');
 
 module.exports = {
     listenTo: 'base',
-    beforeInsert: defaultValueTriggers.beforeInsert
+    beforeInsert: async function(){
+        return await defaultValueTriggers.beforeInsert.apply(this, arguments)
+    }
 }
