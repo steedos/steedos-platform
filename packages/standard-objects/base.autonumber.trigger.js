@@ -108,35 +108,39 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
     return autonumber;
 };
 
+const afterInsertAutoNumber = async function(){
+    const { doc, object_name } = this;
+    const spaceId = doc.space;
+    if (!spaceId) {
+        return;
+    }
+    var obj, fields, setObj = {};
+    obj = objectql.getObject(object_name);
+    fields = await obj.getFields();
+
+    for (const k in fields) {
+        const f = fields[k];
+        let formula = f.formula;
+        let rule = formula;
+        if (f.type == 'autonumber' && formula) {
+            // 拿到编号字段中配置的公式判断是否存在单引号/双引号，如果存在则当成公式计算；如没有则继续走编码规则计算
+            if (formula.indexOf("'") > -1 || formula.indexOf('"') > -1) {
+                const userId = null;
+                // 先执行公式，返回编码规则
+                rule = await objectql.computeFormula(formula, object_name, doc, userId, spaceId);
+            }
+            // 再执行编码规则
+            setObj[k] = await caculateAutonumber(object_name, k, rule, spaceId);
+        }
+    }
+    if (!_.isEmpty(setObj)) {
+        await objectql.getObject(object_name).directUpdate(doc._id, setObj);
+    }
+}
+
 module.exports = {
     listenTo: 'base',
     afterInsert: async function () {
-        const { doc, object_name } = this;
-        const spaceId = doc.space;
-        if (!spaceId) {
-            return;
-        }
-        var obj, fields, setObj = {};
-        obj = objectql.getObject(object_name);
-        fields = await obj.getFields();
-
-        for (const k in fields) {
-            const f = fields[k];
-            let formula = f.formula;
-            let rule = formula;
-            if (f.type == 'autonumber' && formula) {
-                // 拿到编号字段中配置的公式判断是否存在单引号/双引号，如果存在则当成公式计算；如没有则继续走编码规则计算
-                if (formula.indexOf("'") > -1 || formula.indexOf('"') > -1) {
-                    const userId = null;
-                    // 先执行公式，返回编码规则
-                    rule = await objectql.computeFormula(formula, object_name, doc, userId, spaceId);
-                }
-                // 再执行编码规则
-                setObj[k] = await caculateAutonumber(object_name, k, rule, spaceId);
-            }
-        }
-        if (!_.isEmpty(setObj)) {
-            await objectql.getObject(object_name).directUpdate(doc._id, setObj);
-        }
+        return await afterInsertAutoNumber.apply(this, arguments)
     }
 }

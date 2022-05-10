@@ -82,23 +82,34 @@ const objectWebhooksPreSend = async function (userId, doc, object_name, action) 
     }
 };
 
+const afterInsertObjectWebHooks = async function () {
+    const { doc, userId, object_name } = this;
+    const obj = objectql.getObject(object_name);
+    const dbDoc = await obj.findOne(doc._id);
+    return await objectWebhooksPreSend(userId, dbDoc, object_name, 'create');
+}
+
+const afterUpdateObjectWebHooks = async function () {
+    const { userId, object_name, id } = this;
+    const obj = objectql.getObject(object_name);
+    const dbDoc = await obj.findOne(id);
+    return await objectWebhooksPreSend(userId, dbDoc, object_name, 'update');
+}
+
+const afterDeleteObjectWebHooks = async function () {
+    const { previousDoc, userId, object_name } = this;
+    return await objectWebhooksPreSend(userId, previousDoc, object_name, 'create');
+}
 
 module.exports = {
     listenTo: 'base',
     afterInsert: async function () {
-        const { doc, userId, object_name } = this;
-        const obj = objectql.getObject(object_name);
-        const dbDoc = await obj.findOne(doc._id);
-        return await objectWebhooksPreSend(userId, dbDoc, object_name, 'create');
+        return await afterInsertObjectWebHooks.apply(this, arguments)
     },
     afterUpdate: async function () {
-        const { userId, object_name, id } = this;
-        const obj = objectql.getObject(object_name);
-        const dbDoc = await obj.findOne(id);
-        return await objectWebhooksPreSend(userId, dbDoc, object_name, 'update');
+        return await afterUpdateObjectWebHooks.apply(this, arguments)
     },
     afterDelete: async function () {
-        const { previousDoc, userId, object_name } = this;
-        return await objectWebhooksPreSend(userId, previousDoc, object_name, 'create');
+        return await afterDeleteObjectWebHooks.apply(this, arguments)
     }
 }

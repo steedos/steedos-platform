@@ -39,14 +39,21 @@ const validateCalendarListviews = function (object_name, doc) {
     }
 }
 
+const beforeInsertCalendar = async function () {
+    const { doc, object_name} = this;
+    validateCalendarListviews(object_name, doc);
+}
+const beforeUpdateCalendar = async function () {
+    const { doc, object_name} = this;
+    validateCalendarListviews(object_name, doc);
+}
+
 module.exports = {
     listenTo: 'base',
     beforeInsert: async function () {
-        const { doc, object_name} = this;
-        validateCalendarListviews(object_name, doc);
+        return await beforeInsertCalendar.apply(this, arguments)
     },
     beforeUpdate: async function () {
-        const { doc, object_name} = this;
-        validateCalendarListviews(object_name, doc);
+        return await beforeUpdateCalendar.apply(this, arguments)
     }
 }

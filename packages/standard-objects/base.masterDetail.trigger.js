@@ -70,53 +70,66 @@ const setDetailOwner = async function (doc, object_name, userId) {
         doc.owner = masterRecordOwner;
     }
 }
+
+const beforeInsertMasterDetail = async function () {
+    const { doc, userId, object_name} = this;
+    /*子表 master_detail 字段类型新增属性 sharing #1461*/
+    await setDetailOwner(doc, object_name, userId);
+}
+
+const beforeUpdateMasterDetail = async function () {
+    const { doc, userId, object_name, id} = this;
+    const dbDoc = await objectql.getObject(object_name).findOne(id);
+    /*子表 master_detail 字段类型新增属性 sharing #1461*/
+    await setDetailOwner(_.extend({}, dbDoc, doc), object_name, userId);
+}
+
+const afterUpdateMasterDetail = async function () {
+    /* Master-Detail 规则确认 #189 */
+    const { object_name, id, previousDoc} = this;
+    const dbDoc = await objectql.getObject(object_name).findOne(id);
+    let docOwner = dbDoc.owner;
+    if (docOwner !== previousDoc.owner && DISABLE_RELEVANT_OWNER_VALUE_MASTERS.indexOf(object_name) < 0) {
+        let object_name = this.object_name;
+        let docId = dbDoc._id;
+        const obj = objectql.getObject(object_name);
+        const details = await obj.getDetails();
+        if(details && details.length){
+            /* 如果当前对象存在子表的话，调整所有子表记录的owner以保持一致 */
+            for (const detail of details) {
+               const objDetail = objectql.getObject(detail);
+               let needToSync = false;
+               if(objDetail){
+                   const detailMasters = await objDetail.getMasters();
+                   if(detailMasters.length > 1){
+                       /* 如果子表有多个主表子表关系，则只有当前主对象为该子表首要主对象（即第一个主对象）时才需要同步owner值。 */
+                       needToSync = detailMasters[0] === object_name;
+                   }
+                   else{
+                       needToSync = true;
+                   }
+               }
+               if(needToSync){
+                   const detialFields = objDetail.fields;
+                   const refField = _.find(detialFields,(n)=>{ return n.type === "master_detail" && n.reference_to === object_name;});
+                   if(refField && refField.name){
+                       await objectql.getObject(detail).updateMany([[refField.name, '=', docId], ['space', '=', dbDoc.space]], { owner: docOwner });
+                   }
+               }
+            }
+        }
+    }
+}
+
 module.exports = {
     listenTo: 'base',
     beforeInsert: async function () {
-        const { doc, userId, object_name} = this;
-        /*子表 master_detail 字段类型新增属性 sharing #1461*/
-        await setDetailOwner(doc, object_name, userId);
+        return await beforeInsertMasterDetail.apply(this, arguments)
     },
     beforeUpdate: async function () {
-        const { doc, userId, object_name, id} = this;
-        const dbDoc = await objectql.getObject(object_name).findOne(id);
-        /*子表 master_detail 字段类型新增属性 sharing #1461*/
-        await setDetailOwner(_.extend({}, dbDoc, doc), object_name, userId);
+        return await beforeUpdateMasterDetail.apply(this, arguments)
     },
-    afterUpdate:async function () {
-         /* Master-Detail 规则确认 #189 */
-         const { object_name, id, previousDoc} = this;
-         const dbDoc = await objectql.getObject(object_name).findOne(id);
-         let docOwner = dbDoc.owner;
-         if (docOwner !== previousDoc.owner && DISABLE_RELEVANT_OWNER_VALUE_MASTERS.indexOf(object_name) < 0) {
-             let object_name = this.object_name;
-             let docId = dbDoc._id;
-             const obj = objectql.getObject(object_name);
-             const details = await obj.getDetails();
-             if(details && details.length){
-                 /* 如果当前对象存在子表的话，调整所有子表记录的owner以保持一致 */
-                 for (const detail of details) {
-                    const objDetail = objectql.getObject(detail);
-                    let needToSync = false;
-                    if(objDetail){
-                        const detailMasters = await objDetail.getMasters();
-                        if(detailMasters.length > 1){
-                            /* 如果子表有多个主表子表关系，则只有当前主对象为该子表首要主对象（即第一个主对象）时才需要同步owner值。 */
-                            needToSync = detailMasters[0] === object_name;
-                        }
-                        else{
-                            needToSync = true;
-                        }
-                    }
-                    if(needToSync){
-                        const detialFields = objDetail.fields;
-                        const refField = _.find(detialFields,(n)=>{ return n.type === "master_detail" && n.reference_to === object_name;});
-                        if(refField && refField.name){
-                            await objectql.getObject(detail).updateMany([[refField.name, '=', docId], ['space', '=', dbDoc.space]], { owner: docOwner });
-                        }
-                    }
-                 }
-             }
-         }
+    afterUpdate: async function () {
+        return await afterUpdateMasterDetail.apply(this, arguments)
     }
 }

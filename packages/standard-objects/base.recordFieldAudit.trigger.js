@@ -380,33 +380,43 @@ const add = function(action, userId, object_name, new_doc, previous_doc, modifie
     }
   };
 
+const afterInsertFieldAudit = async function () {
+    const { object_name, doc, userId } = this;
+    const obj = objectql.getObject(object_name);
+    const isEnableAudit = await obj.isEnableAudit();
+    if (isEnableAudit) {
+       const dbDoc = await obj.findOne(doc._id);
+       await add('insert', userId, this.object_name, dbDoc) 
+    }
+}
 
+const afterUpdateFieldAudit = async function () {
+    const { doc, previousDoc, userId, object_name, id } = this;
+    const obj = objectql.getObject(object_name);
+    const isEnableAudit = await obj.isEnableAudit();
+    if (isEnableAudit) {
+        const dbDoc = await obj.findOne(id);
+        return add('update', userId, object_name, dbDoc, previousDoc, doc);
+    }
+}
+
+const afterDeleteFieldAudit = async function () {
+  const {previousDoc, userId, object_name, id } = this;
+  const obj = objectql.getObject(object_name);
+  const isEnableAudit = await obj.isEnableAudit();
+  if (isEnableAudit) {
+    return add('delete', userId, object_name, previousDoc, previousDoc, previousDoc);
+  }
+}
 module.exports = {
     listenTo: 'base',
     afterInsert: async function () {
-        const { object_name, doc, userId } = this;
-        const obj = objectql.getObject(object_name);
-        const isEnableAudit = await obj.isEnableAudit();
-        if (isEnableAudit) {
-           const dbDoc = await obj.findOne(doc._id);
-           await add('insert', userId, this.object_name, dbDoc) 
-        }
+        return await afterInsertFieldAudit.apply(this, arguments)
     },
     afterUpdate: async function () {
-        const { doc, previousDoc, userId, object_name, id } = this;
-        const obj = objectql.getObject(object_name);
-        const isEnableAudit = await obj.isEnableAudit();
-        if (isEnableAudit) {
-            const dbDoc = await obj.findOne(id);
-            return add('update', userId, object_name, dbDoc, previousDoc, doc);
-        }
+        return await afterUpdateFieldAudit.apply(this, arguments)
     },
     afterDelete: async function () {
-      const {previousDoc, userId, object_name, id } = this;
-      const obj = objectql.getObject(object_name);
-      const isEnableAudit = await obj.isEnableAudit();
-      if (isEnableAudit) {
-        return add('delete', userId, object_name, previousDoc, previousDoc, previousDoc);
-      }
+      return await afterDeleteFieldAudit.apply(this, arguments)
     }
 }
