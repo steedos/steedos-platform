@@ -1,5 +1,6 @@
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
+const clone = require('clone');
 const _ = require('underscore');
 const readonlyFields = ['created', 'created_by', 'modified', 'modified_by'];
 
@@ -42,18 +43,39 @@ module.exports = {
             doc.readable = true;
         }
     },
+    beforeFind: async function () {
+        delete this.query.fields;
+    },
+
+    beforeAggregate: async function () {
+        delete this.query.fields;
+    },
     afterFind: async function () {
         let spaceId = this.spaceId;
         let dataList = await getAll();
-        this.data.values = this.data.values.concat(dataList);
-        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+        const values = clone(this.data.values);
+        _.each(dataList, (item) => {
+            if (!_.find(this.data.values, (value) => {
+                return value._id === item._id || item.name === value.name
+            })) {
+                values.push(item)
+            }
+        })
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(values, this.query, spaceId);
 
     },
     afterAggregate: async function () {
         let spaceId = this.spaceId;
         let dataList = await getAll();
-        this.data.values = this.data.values.concat(dataList);
-        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+        const values = clone(this.data.values);
+        _.each(dataList, (item) => {
+            if (!_.find(this.data.values, (value) => {
+                return value._id === item._id || item.name === value.name
+            })) {
+                values.push(item)
+            }
+        })
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(values, this.query, spaceId);
 
     },
     afterCount: async function () {
