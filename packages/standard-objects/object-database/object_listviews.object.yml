@@ -73,7 +73,7 @@ fields:
         value: grid
       - label: Calendar
         value: calendar
-    defaultValue: grid
+    defaultValue: '"grid"'
     hidden: true
   scrolling_mode:
     label: Scrolling Mode
@@ -86,7 +86,7 @@ fields:
         value: virtual
       - label: Infinite ( Initially, only the first page will be loaded, and the next page will be loaded while scrolling. )
         value: infinite
-    defaultValue: standard
+    defaultValue: '"standard"'
     hidden: true
   columns:
     label: Columns
