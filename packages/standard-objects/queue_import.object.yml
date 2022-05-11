@@ -27,7 +27,7 @@ fields:
   encoding:
     label: Character Code
     type: select
-    defaultValue: GB2312
+    defaultValue: '"GB2312"'
     options:
       - label: GB2312 , Simplified Chinese
         value: GB2312
@@ -59,7 +59,7 @@ fields:
         value: ','
     readonly: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
-    defaultValue: ','
+    defaultValue: '","'
     name: value_separator
     filterable: true
   
