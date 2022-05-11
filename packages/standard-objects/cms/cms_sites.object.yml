@@ -9,7 +9,7 @@ fields:
     type: select
     hidden: true
     omit: true
-    defaultValue: "space"
+    defaultValue: '"space"'
     options:
       - label: Space
         value: space
