@@ -41,7 +41,7 @@ fields:
         value: record
       - label: Page
         value: page
-    defaultValue: record
+    defaultValue: '"record"'
     hidden: true
     # required: true
   profiles:
@@ -256,7 +256,7 @@ fields:
   related_lists.$.sort_order:
     label: Sort Order
     type: select
-    defaultValue: asc
+    defaultValue: '"asc"'
     options:
       - label: ASC
         value: asc
