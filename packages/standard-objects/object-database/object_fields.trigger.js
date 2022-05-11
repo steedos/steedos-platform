@@ -218,11 +218,16 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters);
         let objectName = filters.object;
+        if(!objectName && filters._id && filters._id.indexOf(".") > -1){
+            objectName = filters._id.split('.')[0];
+        }
         if(objectName){
             let fields = await InternalData.getObjectFields(objectName, this.userId);
             if(fields){
-                this.data.values = this.data.values.concat(fields)
-
+                _.each(fields, (field)=>{
+                    this.data.values.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
+                })
+                // this.data.values = this.data.values.concat(fields)
                 this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, this.spaceId);
             }
         }
@@ -245,11 +250,16 @@ module.exports = {
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters);
         let objectName = filters.object;
+        if(!objectName && filters._id && filters._id.indexOf(".") > -1){
+            objectName = filters._id.split('.')[0];
+        }
         if(objectName){
             let fields = await InternalData.getObjectFields(objectName, this.userId);
             if(fields){
-                this.data.values = this.data.values.concat(fields)
-
+                _.each(fields, (field)=>{
+                    this.data.values.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
+                })
+                // this.data.values = this.data.values.concat(fields)
                 this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, this.spaceId);
             }
         }
