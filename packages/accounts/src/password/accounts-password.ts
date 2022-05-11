@@ -730,7 +730,8 @@ export default class AccountsPassword implements AuthenticationService {
       }
     }
     const hashAlgorithm = this.options.passwordHashAlgorithm;
-    const pass: any = hashAlgorithm ? hashPassword(password, hashAlgorithm) : password;
+    // const pass: any = hashAlgorithm ? hashPassword(password, hashAlgorithm) : password;
+    const pass: any = password;
     const isPasswordValid = await verifyPassword(pass, hash);
 
     if (!isPasswordValid) {

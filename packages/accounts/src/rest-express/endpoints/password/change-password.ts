@@ -17,6 +17,7 @@ export const changePassword = (accountsServer: AccountsServer) => async (
       res.json({ message: 'Unauthorized' });
       return;
     }
+    // oldPassword, newPassword 已经是 sha256之后的
     const { oldPassword, newPassword } = req.body;
 
     let passworPolicy = ((config as any).password || {}).policy
@@ -30,7 +31,7 @@ export const changePassword = (accountsServer: AccountsServer) => async (
     
     const password: any = accountsServer.getServices().password;
 
-    await password.changePassword((req as any).userId, oldPassword, hashPassword(newPassword, password.options.passwordHashAlgorithm));
+    await password.changePassword((req as any).userId, oldPassword, newPassword);
     password.db.collection.updateOne({_id: (req as any).userId}, {$set: {password_expired: false}})
     try {
       Creator.getCollection('space_users').update({user: (req as any).userId}, {$set: {password_expired: false}}, {
