@@ -30,6 +30,13 @@ module.exports = {
         await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true]]);
 
         objectql.checkFormula(this.doc.entry_criteria, this.doc.object_name)
+
+        if(!this.doc.initial_submission_record_lock){
+            this.doc.initial_submission_record_lock = 'lock';
+        }
+        if(!this.doc.recall_record_lock){
+            this.doc.recall_record_lock = 'unlock';
+        }
     },
     beforeUpdate: async function () {
         if(_.has(this.doc, 'object_name')){
