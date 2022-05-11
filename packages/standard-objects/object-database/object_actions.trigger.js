@@ -1,5 +1,6 @@
 const InternalData = require('../core/internalData');
-
+const objectql = require('@steedos/objectql');
+const auth = require("@steedos/auth");
 module.exports = {
     beforeInsert: async function(){
         const { doc } = this;
@@ -9,32 +10,71 @@ module.exports = {
         const { doc } = this;
         doc.visible;
     },
+    beforeFind: async function () {
+        delete this.query.fields;
+    },
+
+    beforeAggregate: async function () {
+        delete this.query.fields;
+    },
+
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        if(filters.object){
-            let actions = await InternalData.getObjectActions(filters.object, this.userId);
-            if(actions){
-                this.data.values = this.data.values.concat(actions)
+        const { spaceId } = this;
+
+        let objectName = filters.object;
+        if(!objectName && filters._id && filters._id.indexOf(".") > -1){
+            objectName = filters._id.split('.')[0];
+        }
+
+        let dataList = await InternalData.getObjectActions(objectName, this.userId);
+        if (!_.isEmpty(dataList)) {
+            dataList.forEach((doc) => {
+                if (!_.find(this.data.values, (value) => {
+                    return value.name === doc.name
+                })) {
+                    this.data.values.push(Object.assign({_id: `${objectName}.${doc.name}`}, doc));
+                }
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if (records.length > 0) {
+                this.data.values = records;
+            } else {
+                this.data.values.length = 0;
             }
         }
+
     },
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        if(filters.object){
-            let actions = await InternalData.getObjectActions(filters.object, this.userId);
-            if(actions){
-                this.data.values = this.data.values.concat(actions)
+        const { spaceId } = this;
+
+        let objectName = filters.object;
+        if(!objectName && filters._id && filters._id.indexOf(".") > -1){
+            objectName = filters._id.split('.')[0];
+        }
+
+        let dataList = await InternalData.getObjectActions(objectName, this.userId);
+        if (!_.isEmpty(dataList)) {
+            dataList.forEach((doc) => {
+                if (!_.find(this.data.values, (value) => {
+                    return value.name === doc.name
+                })) {
+                    this.data.values.push(Object.assign({_id: `${objectName}.${doc.name}`}, doc));
+                }
+            })
+            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+            if (records.length > 0) {
+                this.data.values = records;
+            } else {
+                this.data.values.length = 0;
             }
         }
     },
     afterCount: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        if(filters.object){
-            let actions = await InternalData.getObjectActions(filters.object, this.userId);
-            if(actions){
-                this.data.values = this.data.values + actions.length
-            }
-        }
+        delete this.query.fields;
+        let result = await objectql.getObject(this.object_name).find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
+        this.data.values = result.length;
     },
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
