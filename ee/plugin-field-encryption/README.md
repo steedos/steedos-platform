@@ -2,14 +2,16 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-04 16:44:32
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-05 18:29:24
+ * @LastEditTime: 2022-05-11 11:24:41
  * @Description: 
 -->
 # 客户端字段级加密服务
 
 ## 启用前依赖
 
-- 运行`createMasterKey.js`生成master key，配置于`.env.local`作为`STEEDOS_CSFLE_MASTER_KEY`的值
+- 安装软件包 `@steedos/ee_plugin-field-encryption`
+- 运行软件包中 `createMasterKey.js` 生成master key，配置于`.env.local`作为`STEEDOS_CSFLE_MASTER_KEY`的值
+- 请妥善保存master key，若丢失数据加密密钥会使使用该密钥加密的所有字段永久不可读
 
 ### 环境变量
 
