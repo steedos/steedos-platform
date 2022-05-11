@@ -284,7 +284,8 @@ Creator.getAppMenuUrlForInternet = (menu)->
 	params["X-Company-Ids"] = Steedos.getUserCompanyIds();
 	# params["X-Auth-Token"] = Accounts._storedLoginToken();
 	url = menu.path
-	url = Steedos.parseSingleExpression(url, menu, "#", Creator.USER_CONTEXT)
+	if Steedos.isExpression(url)
+		url = Steedos.parseSingleExpression(url, menu, "#", Creator.USER_CONTEXT)
 	hasQuerySymbol = /(\#.+\?)|(\?[^#]*$)/g.test(url)
 	# 如果没有#号时去判断是否有？号，有末尾加&，无末尾加？；    有#号时判断#号后面是否有？号，有末尾加&，无末尾加？
 	linkStr = if hasQuerySymbol then "&" else "?"
