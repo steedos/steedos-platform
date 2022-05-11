@@ -1,4 +1,5 @@
 import crypto = require('crypto');
+const auth = require('@steedos/auth');
 const Cookies = require('cookies');
 
 export const hashLoginToken = function (loginToken) {
@@ -26,19 +27,14 @@ export const getAuthTokenCookie = function(req, res){
 }
 
 export const setAuthCookies = function (req, res, userId, authToken, accessToken, spaceId?) {
+    auth.setAuthCookies(req, res, userId, authToken, spaceId);
     let cookies = new Cookies(req, res);
     let options = {
       maxAge: 90 * 60 * 60 * 24 * 1000,
-      httpOnly: false,
+      httpOnly: true,
       overwrite: true,
     }
-    cookies.set("X-User-Id", userId, options);
-    cookies.set("X-Auth-Token", authToken, options);
     cookies.set("X-Access-Token", accessToken, options);
-    if (spaceId) {
-      cookies.set("X-Space-Id", spaceId, options);
-      cookies.set("X-Space-Token", spaceId + ',' + authToken, options);
-    }
     return;
 }
 
@@ -46,7 +42,7 @@ export const clearAuthCookies = function (req, res) {
   let cookies = new Cookies(req, res);
   let options = {
     maxAge: 0,
-    httpOnly: false,
+    httpOnly: true,
     overwrite: true
   }
   cookies.set("X-User-Id", null, options);
