@@ -22,26 +22,31 @@ fields:
     type: number
     readonly: true
     name: success_count
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   failure_count:
     label: Number of Failed Records
     type: number
     readonly: true
     name: failure_count
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   total_count:
     label: Total Number
     type: number
     readonly: true
     name: total_count
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   start_time:
     label: Start Time
     type: datetime
     readonly: true
     name: start_time
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   end_time:
     label: End Time
     type: datetime
     readonly: true
     name: end_time
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   state:
     label: State
     type: select
@@ -51,12 +56,14 @@ fields:
     options:
       - label: Finished
         value: finished
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   error:
     label: Error Message
     type: html
     is_wide: true
     readonly: true
     name: error
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   file:
     label: Excel File
     type: file
