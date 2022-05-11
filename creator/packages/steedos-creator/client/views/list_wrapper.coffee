@@ -64,7 +64,7 @@ Template.creator_list_wrapper.onRendered ->
 		listViews?.forEach (view)->
 			unless view?.show_count
 				return
-			filters = Creator.getODataFilter(view._id, object_name)
+			filters = Creator.getODataFilter(view.name, object_name)
 			options =
 				filter: filters
 			Creator.odata.queryCount object_name, options, (count, error)->
