@@ -18,6 +18,10 @@
     vertical-align: initial !important;
 }
 
+body{
+    -webkit-font-smoothing: inherit !important;
+}
+
 /* .row-main{
     border-radius: 0.25rem
 } */
