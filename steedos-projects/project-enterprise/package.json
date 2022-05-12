@@ -1,6 +1,6 @@
 {
   "name": "@steedos/steedos-project-enterprise",
-  "version": "2.1.106",
+  "version": "2.1.107",
   "private": false,
   "repository": "https://github.com/steedos/steedos-project-template.git",
   "description": "",
@@ -29,7 +29,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-enterprise": "2.1.106"
+    "@steedos/service-enterprise": "2.1.107"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
