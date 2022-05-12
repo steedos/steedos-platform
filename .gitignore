@@ -69,3 +69,5 @@ steedos-projects/project-dev/**
 .yarnrc
 
 .rpt2_cache
+
+steedos-projects/project-template/steedos-packages/metadata-test/**
