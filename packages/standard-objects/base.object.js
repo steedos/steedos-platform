@@ -12,7 +12,7 @@ module.exports = {
         standard_new: {
             label: "New",
             visible: function (object_name) {
-                return Steedos.StandardObjects.Base.Actions.standard_query.visible.apply(this, arguments)
+                return Steedos.StandardObjects.Base.Actions.standard_new.visible.apply(this, arguments)
             },
             on: "list",
             todo: "standard_new"
