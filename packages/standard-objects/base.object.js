@@ -57,7 +57,7 @@ module.exports = {
             },
             on: "record_only",
             todo: function () {
-                return Steedos.StandardObjects.Base.Actions.standard_approve.visible.apply(this, arguments)
+                return Steedos.StandardObjects.Base.Actions.standard_approve.todo.apply(this, arguments)
             }
         },
         standard_view_instance: {
