@@ -616,6 +616,12 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             obj[fm.object_field] = values[fm.workflow_field];
                         }
                     }
+                    // 日期、日期时间
+                    else if (oField.type === 'date' || oField.type === 'datetime') {
+                        if (values[fm.workflow_field] && _.isDate(new Date(values[fm.workflow_field]))) {
+                            obj[fm.object_field] = new Date(values[fm.workflow_field]);
+                        }
+                    }
                     else {
                         obj[fm.object_field] = values[fm.workflow_field];
                     }
@@ -759,6 +765,27 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                                     }
                                 }
                             }
+                            // 复选框
+                            if (relatedObjectField.type === "boolean") {
+                                if (['true', '是'].includes(relatedObjectFieldValue)) {
+                                    relatedObjectFieldValue = true;
+                                } else if (['false', '否'].includes(relatedObjectFieldValue)) {
+                                    relatedObjectFieldValue = false;
+                                }
+                            }
+                            // 数值、金额、百分比
+                            else if (relatedObjectField.type === 'number' || relatedObjectField.type === 'currency' || relatedObjectField.type === 'percent') {
+                                if (relatedObjectFieldValue && typeof (Number(relatedObjectFieldValue)) === 'number') {
+                                    relatedObjectFieldValue = Number(relatedObjectFieldValue);
+                                }
+                            }
+                            // 日期、日期时间
+                            else if (relatedObjectField.type === 'date' || relatedObjectField.type === 'datetime') {
+                                if (relatedObjectFieldValue && _.isDate(new Date(relatedObjectFieldValue))) {
+                                    relatedObjectFieldValue = new Date(relatedObjectFieldValue);
+                                }
+                            }
+
                             relatedObjectValue[fieldKey] = relatedObjectFieldValue;
                         }
                     }
