@@ -176,6 +176,10 @@ Template.creatorNavigation.helpers
 			else if tempNavs?.length
 				# 如果在tempNavs中已经存在，则不选中当前对象主导航栏
 				isActive = !(recordId and !!tempNavs.find (n)-> return n.name == objectName and new RegExp(".+/view/#{recordId}$").test(n.url))
+		if !isActive and obj.is_temp
+			# 有可能遇到通过 Creator.createTempNav("amins_test", "/app/test2/page/aminsnav","Amins应用") 这种方式添加临时导航，此时只能通过url比较来判断选中样式
+			isActive = FlowRouter.current().path == obj.url
+
 		if isActive
 			return "slds-is-active"
 

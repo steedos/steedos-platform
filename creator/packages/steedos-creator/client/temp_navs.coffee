@@ -70,6 +70,8 @@ redirectBeforeRemoveTempNav = (name, url, tempNavsAfterRemove, removeAtIndex)->
     if url
         currentUrl = Creator.getObjectUrl(currentObjectName, currentRecordId)
         isCurrentNav = currentUrl == url
+        if !isCurrentNav
+            isCurrentNav = FlowRouter.current().path == url
     else
         isCurrentNav = currentObjectName == name
     if isCurrentNav
