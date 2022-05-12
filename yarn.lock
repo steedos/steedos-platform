@@ -4119,15 +4119,15 @@
   dependencies:
     "@types/path-to-regexp" "^1.7.0"
 
-"@steedos-ui/builder-community@^2.2.8":
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.8.tgz#eae37e4d139bbe3da40b5a99fd3af9c05995f7cc"
-  integrity sha512-itbVWb4B9+H343vmnSLcZq8bV+liKFJM1NZfgOH1ZTM/mzOTJsEtjbTQ9gTKuDgjDePbfO3MxJiaKd+oXFznnQ==
+"@steedos-ui/builder-community@^2.2.9":
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.9.tgz#2cb44268f1d35c5ff53d0da6d65bbc7054939427"
+  integrity sha512-CCci1CWsHPBhwNu/002TyKnyY+1PdePasIPwAokX/rRVRxJ/ACVYZOl/pf7W9hkYlwH0O7mgFeRgToM34CZl+Q==
 
-"@steedos-ui/builder-widgets@^2.2.8":
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.8.tgz#14b901c49c57909dfd0138202847afd9530a8200"
-  integrity sha512-a62g8Y9VOCL/6dlfy2iEmr4AYHFASiKPgI9auOcCn/KKnNtjrB832RdEayxBl8R8BZips4uNmJOmhFYHDUalew==
+"@steedos-ui/builder-widgets@^2.2.9":
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.9.tgz#8f394352c94537655612e9b6f97f132136e83c8a"
+  integrity sha512-U+/7q4/DSoz3uGXSm1Q++7toHYnFOWnnWNUFQcFp19P/sWRJ/N1DYVYbdOUJr65AZrnAH++FIAsafrM8ZBEuzg==
   optionalDependencies:
     create-inferno-context "^0.2.4"
     create-react-context "^0.2.3"
@@ -4138,10 +4138,10 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/design-system@^2.2.8":
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.8.tgz#46bad5e7f0f5388a1ce978a9526e007e496ec21b"
-  integrity sha512-aKZH0jqsmuvx9LMw0PKykCy1hRAqE/dUXGnGvTNNTnNzbNF2T2YDoTt/5JICAcQcbvy3ZOYYoouKvw3VLru6Og==
+"@steedos-ui/design-system@^2.2.9":
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.9.tgz#a01e63bc4cbbf1cef70a9c7ddd722ad44925f442"
+  integrity sha512-JFlVU2O2bu0x5r7xODi3wTcicKyxdS/Ng6gGpOKyzvwBwnyLQo+fR6Cgi71tQVW1/KYl8fhLp2u6rU8C1Vqx/w==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
@@ -8278,9 +8278,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001317:
-  version "1.0.30001339"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001339.tgz"
-  integrity sha512-Es8PiVqCe+uXdms0Gu5xP5PF2bxLR7OBp3wUzUnuO7OHzhOfCyg3hdiGWVPVxhiuniOzng+hTc1u3fEQ0TlkSQ==
+  version "1.0.30001340"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001340.tgz"
+  integrity sha512-jUNz+a9blQTQVu4uFcn17uAD8IDizPzQkIKh3LCJfg9BkyIqExYYdyc/ZSlWUSKb8iYiXxKsxbv4zYSvkqjrxw==
 
 capture-exit@^2.0.0:
   version "2.0.0"
