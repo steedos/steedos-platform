@@ -33,17 +33,24 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
         return gplObj;
     }
     switch (actionName) {
-        case 'count':
+        case 'graphqlCount':
             gplObj.query = gql`
                 type Query {
-                    ${objectName}__${actionName}(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): Int
+                    ${objectName}__count(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): Int
                 }
             `;
             break;
-        case 'find':
+        case 'graphqlFind':
             gplObj.query = gql`
                 type Query {
                     ${objectName}(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): [${objectName}]
+                }
+            `;
+            break;
+        case 'findOne':
+            gplObj.query = gql`
+                type Query {
+                    ${objectName}__${actionName}(id: JSON): ${objectName}
                 }
             `;
             break;

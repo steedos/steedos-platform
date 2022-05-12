@@ -1,11 +1,12 @@
 import { SteedosObjectType } from '../types/object';
-import { getDataSource } from '../types/datasource';
+import { getDataSource, SteedosDatabaseDriverType } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
 import _ = require('underscore');
 import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver, dealWithRelatedFields, getLocalService } from './helpers';
 import { getObjectServiceName } from '.';
 import { jsonToObject } from '../util/convert';
 import { extend } from '../util';
+import { formatFiltersToODataQuery } from "@steedos/filters";
 const Future = require('fibers/future');
 import { getSteedosSchema } from '../';
 // import { parse } from '@steedos/formula';
@@ -192,6 +193,73 @@ function getObjectServiceActionsSchema() {
                 const userSession = ctx.meta.user;
                 const { query, externalPipeline } = ctx.params;
                 return await this.aggregate(query, externalPipeline, userSession)
+            }
+        },
+        // meteor、default database 默认不返回is_deleted = true的数据
+        graphqlFind:{
+            params: {
+                fields: { type: 'array', items: "string", optional: true },
+                filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
+                top: { type: 'number', optional: true },
+                skip: { type: 'number', optional: true },
+                sort: { type: 'string', optional: true }
+            },
+            async handler(ctx) {
+                //TODO filters: 如果filters中没有查询 is_deleted 则自动添加is_deleted != true 条件
+                if(this.object.datasource.driver === SteedosDatabaseDriverType.MeteorMongo ||  this.object.datasource.driver === SteedosDatabaseDriverType.Mongo){
+                    const { filters } = ctx.params;
+                    if (filters) {
+                        if(_.isString(filters)){
+                            if(filters.indexOf('(is_deleted eq true)') < 0){
+                                ctx.params.filters =  `(${filters}) and (is_deleted ne true)`;
+                            }
+                        }
+                        if(_.isArray(filters)){
+                            const filtersStr = formatFiltersToODataQuery(filters);
+                            if(filtersStr.indexOf('(is_deleted eq true)') < 0){
+                                ctx.params.filters.push(['is_deleted', '!=', true])
+                            }
+                        }
+                    }else{
+                        ctx.params.filters = '(is_deleted ne true)'
+                    }
+                }
+
+                const userSession = ctx.meta.user;
+                return this.find(ctx.params, userSession)
+            }
+        },
+        graphqlCount:{
+            params: {
+                fields: { type: 'array', items: "string", optional: true },
+                filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
+                top: { type: 'number', optional: true },
+                skip: { type: 'number', optional: true },
+                sort: { type: 'string', optional: true }
+            },
+            async handler(ctx) {
+                //TODO filters: 如果filters中没有查询 is_deleted 则自动添加is_deleted != true 条件
+                if(this.object.datasource.driver === SteedosDatabaseDriverType.MeteorMongo ||  this.object.datasource.driver === SteedosDatabaseDriverType.Mongo){
+                    const { filters } = ctx.params;
+                    if (filters) {
+                        if(_.isString(filters)){
+                            if(filters.indexOf('(is_deleted eq true)') < 0){
+                                ctx.params.filters =  `(${filters}) and (is_deleted ne true)`;
+                            }
+                        }
+                        if(_.isArray(filters)){
+                            const filtersStr = formatFiltersToODataQuery(filters);
+                            if(filtersStr.indexOf('(is_deleted eq true)') < 0){
+                                ctx.params.filters.push(['is_deleted', '!=', true])
+                            }
+                        }
+                    }else{
+                        ctx.params.filters = '(is_deleted ne true)'
+                    }
+                }
+
+                const userSession = ctx.meta.user;
+                return this.count(ctx.params, userSession)
             }
         },
         find: {
