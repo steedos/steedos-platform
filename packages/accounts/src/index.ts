@@ -33,7 +33,6 @@ function getAccountsServer() {
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   let mailSignname = emailConfig.signname || "华炎魔方";
 
-
   mongoose.connect(mongoUrl, { useNewUrlParser: true });
   const connection = mongoose.connection;
 

@@ -1,6 +1,14 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-05-24 12:32:57
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-05-12 23:23:50
+ * @Description: 
+ */
 const _ = require('underscore');
 const NEEDSYNCATTRIBUTES = ['name', 'username', 'email', 'email_verified', 'mobile', 
 'mobile_verified', 'locale', 'avatar', 'last_logon', 'email_notification', 'sms_notification', 'password_expired'];
+const { Binary } = require('mongodb');
 
 getNeedSyncSet = function(doc, modifierSet){
     let syncSet = {};
@@ -55,9 +63,29 @@ exports.syncUserInfo = function (doc, modifier) {
         }else{
             userProp = needSyncProp
         }
+
+        // 由于matb33_collection_hooks调用了EJSON.clone丢失了加密字段类型Binary，故这里还原回来
+        function _conertToBinary(doc) {
+            for (const key in doc) {
+                if (Object.hasOwnProperty.call(doc, key)) {
+                    const element = doc[key];
+                    if (typeof element == 'object') {
+                        if (element.sub_type
+                            && element.buffer
+                            && element.position) {
+                            doc[key] =  new Binary(Buffer.from(element.buffer), element.sub_type);
+                        }
+                    }
+                }
+            }
+        }
+        _conertToBinary(userProp);
+        _conertToBinary(needSyncProp);
+
         db.users.direct.update({_id: doc.user}, {$set: userProp, $unset: userUnProp});
         db.space_users.direct.update({_id: {$ne: doc._id}, user: doc.user}, {$set: needSyncProp, $unset: needSyncUnProp}, {
-            multi: true
+            multi: true,
+            validate: false
         });
     }
 }

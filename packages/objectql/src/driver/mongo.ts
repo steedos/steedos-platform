@@ -8,12 +8,15 @@ import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter, createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 import { wrapAsync } from '../util';
+import { ClientEncryption } from "mongodb-client-encryption";
+import { SteedosFieldEncryptionSharedConsts } from './field-encrytion';
 
 export class SteedosMongoDriver implements SteedosDriver {
     _url: string;
     _client: any;
     _config: SteedosDriverConfig;
     _collections: Dictionary<any>;
+    _encryption: any;
 
     constructor(config: SteedosDriverConfig) {
         this._collections = {};
@@ -54,9 +57,44 @@ export class SteedosMongoDriver implements SteedosDriver {
         ]
     }
 
+    async encryptValue(value: any) {
+        if (this._encryption) {
+            const { altKeyName } = SteedosFieldEncryptionSharedConsts;
+            const encryption = this._encryption;
+            let encryptValue = await encryption.encrypt(
+                value,
+                {
+                    keyAltName: altKeyName,
+                    algorithm: 'AEAD_AES_256_CBC_HMAC_SHA_512-Deterministic'
+                }
+            )
+            return encryptValue;
+        }
+        return value;
+    }
+
     async connect() {
         if (!this._client) {
-            this._client = await MongoClient.connect(this._url, { useNewUrlParser: true, useUnifiedTopology: true });
+            if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
+                const { keyVaultNamespace, getKMSProviders } = SteedosFieldEncryptionSharedConsts;
+                const kmsProvider = await getKMSProviders();
+                this._client = await MongoClient.connect(this._url, {
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true,
+                    monitorCommands: true,
+                    autoEncryption: {
+                        keyVaultNamespace: keyVaultNamespace,
+                        kmsProviders: kmsProvider,
+                        bypassAutoEncryption: true,
+                    }
+                })
+                this._encryption = new ClientEncryption(this._client, {
+                    keyVaultNamespace: keyVaultNamespace,
+                    kmsProviders: kmsProvider,
+                });
+            } else {
+                this._client = await MongoClient.connect(this._url, { useNewUrlParser: true, useUnifiedTopology: true });
+            }
             return true;
         }
     }
