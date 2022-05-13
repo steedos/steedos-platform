@@ -1,7 +1,7 @@
 {
   "name": "@steedos/standard-objects",
   "private": false,
-  "version": "2.2.28",
+  "version": "2.2.29",
   "description": "Standard objects for steedos",
   "main": "index.js",
   "license": "Apache",
