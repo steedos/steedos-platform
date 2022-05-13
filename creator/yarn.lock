@@ -1391,16 +1391,6 @@
     uglify-js "^3.6.0"
     underscore "1.5.2"
 
-"@steedos/ee_plugin-field-encryption@^2.2.18":
-  version "2.2.26"
-  resolved "https://registry.yarnpkg.com/@steedos/ee_plugin-field-encryption/-/ee_plugin-field-encryption-2.2.26.tgz#fe2e886887162ba2abad72b3d83da3a96023674c"
-  integrity sha512-cvMOW8+Wl/07bZXtzLJjju9IYwnGqBasi/0gaasUsV/T2LIhSVzxn0A2ApzVsQFf3UB4FY4ROAvT9yZn7sWcDA==
-  dependencies:
-    lodash "4.17.21"
-    mongodb "4.5.0"
-    mongodb-client-encryption "2.1.0"
-    mongodb-uri "0.9.7"
-
 "@steedos/filters@2.2.19":
   version "2.2.19"
   resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.2.19.tgz#fc48b482e6d76dfade0dcafd30470617aa1dbad3"
@@ -1770,25 +1760,12 @@
   resolved "https://registry.yarnpkg.com/@types/systemjs/-/systemjs-6.1.1.tgz#eae17f2a080e867d01a2dd614f524ab227cf5a41"
   integrity sha512-d1M6eDKBGWx7RbYy295VEFoOF9YDJkPI959QYnmzcmeaV+SP4D0xV7dEh3sN5XF3GvO3PhGzm+17Z598nvHQuQ==
 
-"@types/webidl-conversions@*":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@types/webidl-conversions/-/webidl-conversions-6.1.1.tgz#e33bc8ea812a01f63f90481c666334844b12a09e"
-  integrity sha512-XAahCdThVuCFDQLT7R7Pk/vqeObFNL3YqRyFZg+AqAP/W1/w3xHaIxuW7WszQqTbIBOPRcItYJIou3i/mppu3Q==
-
 "@types/websocket@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/websocket/-/websocket-1.0.2.tgz#d2855c6a312b7da73ed16ba6781815bf30c6187a"
   integrity sha512-B5m9aq7cbbD/5/jThEr33nUY8WEfVi6A2YKCTOvw5Ldy7mtsOkqRvGjnzy6g7iMMDsgu7xREuCzqATLDLQVKcQ==
   dependencies:
     "@types/node" "*"
-
-"@types/whatwg-url@^8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@types/whatwg-url/-/whatwg-url-8.2.1.tgz#f1aac222dab7c59e011663a0cb0a3117b2ef05d4"
-  integrity sha512-2YubE1sjj5ifxievI5Ge1sckb9k/Er66HyR2c+3+I6VDUUg1TLPdYYTEbQ+DjRkS4nTxMJhgWfSfMRD2sl2EYQ==
-  dependencies:
-    "@types/node" "*"
-    "@types/webidl-conversions" "*"
 
 "@types/ws@^7.0.0":
   version "7.4.7"
@@ -2797,13 +2774,6 @@ bson@^1.1.4:
   resolved "https://registry.npm.taobao.org/bson/download/bson-1.1.5.tgz#2aaae98fcdf6750c0848b0cba1ddec3c73060a34"
   integrity sha1-Kqrpj832dQwISLDLod3sPHMGCjQ=
 
-bson@^4.6.2:
-  version "4.6.3"
-  resolved "https://registry.yarnpkg.com/bson/-/bson-4.6.3.tgz#d1a9a0b84b9e84b62390811fc5580f6a8b1d858c"
-  integrity sha512-rAqP5hcUVJhXP2MCSNVsf0oM2OGU1So6A9pVRDYayvJ5+hygXHQApf87wd5NlhPM1J9RJnbqxIG/f8QTzRoQ4A==
-  dependencies:
-    buffer "^5.6.0"
-
 buffer-alloc-unsafe@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/buffer-alloc-unsafe/-/buffer-alloc-unsafe-1.1.0.tgz#bd7dc26ae2972d0eda253be061dba992349c19f0"
@@ -2861,7 +2831,7 @@ buffer@^4.9.1:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-buffer@^5.5.0, buffer@^5.6.0, buffer@^5.7.0:
+buffer@^5.5.0, buffer@^5.7.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.7.1.tgz#ba62e7c13133053582197160851a8f648e99eed0"
   integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
@@ -3877,11 +3847,6 @@ denque@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/denque/download/denque-1.4.1.tgz#6744ff7641c148c3f8a69c307e51235c1f4a37cf"
   integrity sha1-Z0T/dkHBSMP4ppwwflEjXB9KN88=
-
-denque@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/denque/-/denque-2.0.1.tgz#bcef4c1b80dc32efe97515744f21a4229ab8934a"
-  integrity sha512-tfiWc6BQLXNLpNiR5iGd0Ocu3P3VpxfzFiqubLgMfhfOw9WyvgJBd46CClNn9k3qfbjvT//0cf7AlYRX/OslMQ==
 
 depd@2.0.0:
   version "2.0.0"
@@ -6765,7 +6730,7 @@ mongo-object@^0.1.4:
   resolved "https://registry.yarnpkg.com/mongo-object/-/mongo-object-0.1.4.tgz#950d1d856b85af5f2321b82bb08b67b9c27f9766"
   integrity sha512-QtYk0gupWEn2+iB+DDRt1L+WbcNYvJRaHdih/dcqthOa1DbnREUGSs2WGcW478GNYpElflo/yybZXu0sTiRXHg==
 
-mongodb-client-encryption@2.1.0, mongodb-client-encryption@^2.1.0:
+mongodb-client-encryption@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/mongodb-client-encryption/-/mongodb-client-encryption-2.1.0.tgz#afa5c78c1d356ab0fa9ac93eb385622f39c34d01"
   integrity sha512-9HlH2HlvF091SBj4aTV4duPgJzSPPpLc82CFvuMCCp15dP3HKvjMQec/lj1IzTfIH3ydgzteBw3z6PkKuIFujg==
@@ -6774,31 +6739,6 @@ mongodb-client-encryption@2.1.0, mongodb-client-encryption@^2.1.0:
     node-addon-api "^4.3.0"
     prebuild-install "^7.0.1"
     socks "^2.6.1"
-
-mongodb-connection-string-url@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/mongodb-connection-string-url/-/mongodb-connection-string-url-2.5.2.tgz#f075c8d529e8d3916386018b8a396aed4f16e5ed"
-  integrity sha512-tWDyIG8cQlI5k3skB6ywaEA5F9f5OntrKKsT/Lteub2zgwSUlhqEN2inGgBTm8bpYJf8QYBdA/5naz65XDpczA==
-  dependencies:
-    "@types/whatwg-url" "^8.2.1"
-    whatwg-url "^11.0.0"
-
-mongodb-uri@0.9.7:
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/mongodb-uri/-/mongodb-uri-0.9.7.tgz#0f771ad16f483ae65f4287969428e9fbc4aa6181"
-  integrity sha1-D3ca0W9IOuZfQoeWlCjp+8SqYYE=
-
-mongodb@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.5.0.tgz#d74c2008567b606dccef220f62a44cd7b934eb92"
-  integrity sha512-A2l8MjEpKojnhbCM0MK3+UOGUSGvTNNSv7AkP1fsT7tkambrkkqN/5F2y+PhzsV0Nbv58u04TETpkaSEdI2zKA==
-  dependencies:
-    bson "^4.6.2"
-    denque "^2.0.1"
-    mongodb-connection-string-url "^2.5.2"
-    socks "^2.6.2"
-  optionalDependencies:
-    saslprep "^1.0.3"
 
 mongodb@^3.0.8:
   version "3.7.3"
@@ -8535,7 +8475,7 @@ safe-regex@^1.1.0:
   resolved "https://registry.npm.taobao.org/safer-buffer/download/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha1-RPoWGwGHuVSd2Eu5GAL5vYOFzWo=
 
-saslprep@^1.0.0, saslprep@^1.0.3:
+saslprep@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/saslprep/-/saslprep-1.0.3.tgz#4c02f946b56cf54297e347ba1093e7acac4cf226"
   integrity sha512-/MY/PEMbk2SuY5sScONwhUDsV2p77Znkb/q3nSVstq/yQzYJOH/Azh29p9oJLsl3LnQwSvZDKagDGBsBwSooag==
@@ -8915,7 +8855,7 @@ socket.io@^2.3.0:
     socket.io-client "2.3.0"
     socket.io-parser "~3.4.0"
 
-socks@^2.6.1, socks@^2.6.2:
+socks@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/socks/-/socks-2.6.2.tgz#ec042d7960073d40d94268ff3bb727dc685f111a"
   integrity sha512-zDZhHhZRY9PxRruRMR7kMhnf3I8hDs4S3f9RecfnGxvcBHQcKcIH/oUcEWffsfl1XxdYlA7nnlGbbTvPz9D8gA==
@@ -9498,13 +9438,6 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
-tr46@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/tr46/-/tr46-3.0.0.tgz#555c4e297a950617e8eeddef633c87d4d9d6cbf9"
-  integrity sha512-l7FvfAHlcmulp8kr+flpQZmVwtu7nfRV7NZujtN0OqES8EL4O4e0qqzL0DC5gAvx/ZC/9lk6rhcUwYvkBnBnYA==
-  dependencies:
-    punycode "^2.1.1"
-
 tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
@@ -9882,11 +9815,6 @@ webidl-conversions@^4.0.2:
   resolved "https://registry.npm.taobao.org/webidl-conversions/download/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
   integrity sha1-qFWYCx8LazWbodXZ+zmulB+qY60=
 
-webidl-conversions@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-7.0.0.tgz#256b4e1882be7debbf01d05f0aa2039778ea080a"
-  integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
-
 whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   version "1.0.5"
   resolved "https://registry.npm.taobao.org/whatwg-encoding/download/whatwg-encoding-1.0.5.tgz#5abacf777c32166a51d085d6b4f3e7d27113ddb0"
@@ -9903,14 +9831,6 @@ whatwg-mimetype@^2.1.0, whatwg-mimetype@^2.2.0:
   version "2.3.0"
   resolved "https://registry.npm.taobao.org/whatwg-mimetype/download/whatwg-mimetype-2.3.0.tgz#3d4b1e0312d2079879f826aff18dbeeca5960fbf"
   integrity sha1-PUseAxLSB5h5+Cav8Y2+7KWWD78=
-
-whatwg-url@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-11.0.0.tgz#0a849eebb5faf2119b901bb76fd795c2848d4018"
-  integrity sha512-RKT8HExMpoYx4igMiVMY83lN6UeITKJlBQ+vR/8ZJ8OCdSiN3RwCq+9gH0+Xzj0+5IrM6i4j/6LuvzbZIQgEcQ==
-  dependencies:
-    tr46 "^3.0.0"
-    webidl-conversions "^7.0.0"
 
 whatwg-url@^5.0.0:
   version "5.0.0"

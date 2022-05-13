@@ -16,7 +16,6 @@
     "@steedos-builder/react": "^0.2.21",
     "@steedos-ui/builder-community": "^2.2.1",
     "@steedos/core": "^2.2.18",
-    "@steedos/ee_plugin-field-encryption": "^2.2.18",
     "@steedos/filters": "^2.2.18",
     "@steedos/i18n": "^2.2.18",
     "@steedos/react": "^2.2.18",
