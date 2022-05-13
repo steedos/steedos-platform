@@ -1,7 +1,7 @@
 {
   "name": "@steedos/plugin-enterprise",
   "private": false,
-  "version": "2.2.30",
+  "version": "2.2.31",
   "description": "Enterprise plugin for steedos",
   "main": "index.js",
   "repository": {

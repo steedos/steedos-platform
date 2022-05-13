@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_plugin-field-encryption",
-  "version": "2.2.30",
+  "version": "2.2.31",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -9,7 +9,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/objectql": "2.2.30",
+    "@steedos/objectql": "2.2.31",
     "lodash": "4.17.21",
     "mongodb": "4.5.0",
     "mongodb-client-encryption": "2.1.0",
