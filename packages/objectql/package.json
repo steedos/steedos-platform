@@ -39,6 +39,8 @@
     "moleculer-apollo-server": "^0.3.3",
     "moment": "^2.29.1",
     "mongodb": "^3.0.8",
+    "mongodb-client-encryption": "2.1.0",
+    "mongodb-uri": "^0.9.7",
     "odata-v4-mongodb": "^0.1.12",
     "odata-v4-sql": "^0.1.2",
     "reflect-metadata": "^0.1.10",

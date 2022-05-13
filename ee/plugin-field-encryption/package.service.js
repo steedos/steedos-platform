@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 10:29:51
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-05 17:26:58
+ * @LastEditTime: 2022-05-13 14:35:47
  * @Description: 
  */
 "use strict";
@@ -25,7 +25,7 @@ module.exports = {
         packageInfo: {
             path: __dirname,
             name: packageName
-        }
+        },
     },
 
     /**

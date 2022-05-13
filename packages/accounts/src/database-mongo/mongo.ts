@@ -13,6 +13,8 @@ import { AccountsMongoOptions, MongoUser } from './types';
 import { getSessionByUserId, hashStampedToken } from '@steedos/auth';
 import { isNumber } from "lodash";
 
+import { getDataSource } from '@steedos/objectql';
+
 const moment = require("moment");
 
 const toMongoID = (objectId: string | ObjectID) => {
@@ -143,7 +145,18 @@ export class Mongo implements DatabaseInterface {
 
     if (mobile) {
       user.mobile = mobile;
+      const encryptedMobile = await this.getEncryptedSpaceUserFieldValue(mobile, 'mobile');
+      if (encryptedMobile) {
+        user.mobile = encryptedMobile;
+      }
       user.mobile_verified = mobile_verified;
+    }
+
+    if (user.name) {
+      const encryptedName = await this.getEncryptedSpaceUserFieldValue(user.name, 'name');
+      if (encryptedName) {
+        user.name = encryptedName;
+      }
     }
 
     if (this.options.idProvider) {
@@ -177,9 +190,14 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByMobile(mobile: string): Promise<User | null> {
-    const user = await this.collection.findOne({
-      mobile: mobile,
-    });
+    const selector = {
+      mobile,
+    }
+    const encryptedMobile = await this.getEncryptedSpaceUserFieldValue(mobile, 'mobile');
+    if (encryptedMobile) {
+      selector.mobile = encryptedMobile;
+    }
+    const user = await this.collection.findOne(selector);
     if (user) {
       user.id = user._id.toString();
     }
@@ -335,19 +353,33 @@ export class Mongo implements DatabaseInterface {
     }
   }
 
+  // 如果开启了加密功能，则获取加密后的字段值
+  public async getEncryptedSpaceUserFieldValue(value: string, fieldName: string): Promise<any | null> {
+    const objectql = require('@steedos/objectql');
+    const objFields = await objectql.getObject('space_users').getFields();
+    if (objFields[fieldName].enable_encryption) {
+      const datasource = getDataSource('default');
+      const encryptedValue = await datasource.adapter.encryptValue(value)
+      if (encryptedValue) {
+        return encryptedValue
+      }
+    }
+  }
+
   public async verifyMobile(userId: string, mobile: string): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
       : userId;
+    const encryptedMobile = await this.getEncryptedSpaceUserFieldValue(mobile, 'mobile');
     const ret = await this.collection.updateOne(
-      { _id: id, mobile: mobile },
+      { _id: id, mobile: encryptedMobile || mobile },
       {
         $set: {
           mobile_verified: true,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
         $pull: {
-          "services.mobile.verificationTokens": { mobile: mobile },
+          "services.mobile.verificationTokens": { mobile: encryptedMobile || mobile },
         },
       }
     );

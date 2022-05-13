@@ -37,6 +37,25 @@ function checkMobile(mobile, config){
     }
 }
 
+// 给开启加密的字段加密
+const encryptFields = function (doc) {
+    return objectql.wrapAsync(async function () {
+        const doc = this.doc;
+        const objFields = await objectql.getObject('space_users').getFields();
+        const datasource = objectql.getDataSource('default');
+        for (const key in objFields) {
+            if (Object.hasOwnProperty.call(objFields, key)) {
+                const field = objFields[key];
+                // 判断是加密字段并且值不为空，且还未加密过
+                if (field.enable_encryption && _.has(doc, key) && doc[key] && !doc[key].buffer && !doc[key].sub_type) {
+                    doc[key] = await datasource.adapter.encryptValue(doc[key]);
+                }
+            }
+        }
+
+    }, { doc: doc })
+}
+
 Meteor.startup(function () {
     if (Meteor.isServer) {
         db.space_users.insertVaildate = function (userId, doc) {
@@ -293,9 +312,10 @@ Meteor.startup(function () {
                     }
                 });
                 if (organization && organization.company_id) {
-                    return doc.company_id = organization.company_id;
+                    doc.company_id = organization.company_id;
                 }
             }
+            encryptFields(doc);
         });
         db.space_users.after.insert(function (userId, doc) {
             var unset, user;

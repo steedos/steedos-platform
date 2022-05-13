@@ -2,12 +2,12 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-04 18:57:59
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-05 09:43:30
+ * @LastEditTime: 2022-05-13 14:33:21
  * @Description: 
  */
 const { MongoClient, Binary } = require('mongodb');
 const { ClientEncryption } = require("mongodb-client-encryption");
-const { connectionString, keyVaultNamespace, getKMSProviders, altKeyName, keyVaultDb, keyVaultCollection } = require('./sharedconst.js');
+const { connectionString, keyVaultNamespace, getKMSProviders, altKeyName, keyVaultDb, keyVaultCollection } = require('@steedos/objectql').SteedosFieldEncryptionSharedConsts;
 /**
  * 初始化密钥，如果已经存在，则不再初始化
  */
@@ -28,7 +28,7 @@ async function initKey() {
         });
 
         if (!dataKeyDoc) {
-            const kmsProvider = await getKMSProviders()
+            const kmsProvider = getKMSProviders()
 
             const encryption = new ClientEncryption(client, {
                 keyVaultNamespace: keyVaultNamespace,
