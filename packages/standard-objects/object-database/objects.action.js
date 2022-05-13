@@ -18,7 +18,7 @@ module.exports = {
             return toastr.warning("请先启动数据源");
         }
     }
-    Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name));
+    window.open(Creator.getRelativeUrl("/app/-/" + record.name));
 
     // var allViews = Creator.odata.query('object_listviews', { $select: '_id', $filter: `((object_name eq '${record.name}') and (name eq 'all'))` }, true);
     // if(allViews && allViews.length > 0){
