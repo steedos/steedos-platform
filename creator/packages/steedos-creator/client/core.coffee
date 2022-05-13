@@ -1,5 +1,5 @@
 Creator.Pages = {}
-
+BASE_FIELDNAMES_FOR_PERMISSIONS = ["owner", "company_id", "company_ids", "locked"];
 Steedos.addPage = (page_id, page )->
 	if (page_id)
 		Creator.Pages[page_id] = page;
@@ -376,6 +376,8 @@ if Meteor.isClient
 				return true
 			else
 				return false
+		if object && ["default", "meteor"].indexOf(object.datasource || "default") > -1
+			_keys = _.union(_keys.concat(BASE_FIELDNAMES_FOR_PERMISSIONS));
 		return _keys.join(",")
 
 	Creator.objectOdataExpandFields = (object, columns)->
