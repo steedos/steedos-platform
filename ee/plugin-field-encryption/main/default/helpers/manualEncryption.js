@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 11:42:42
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-04 16:52:55
+ * @LastEditTime: 2022-05-12 19:04:39
  * @Description: 
  */
 
@@ -12,7 +12,7 @@ const { connectionString, keyVaultNamespace, getKMSProviders, altKeyName } = req
 
 // 加密
 async function encrypt(fieldValue) {
-    const kmsProvider = await getKMSProviders()
+    const kmsProvider = getKMSProviders()
 
     const csfleDatabaseConnection = new MongoClient(connectionString, {
         useNewUrlParser: true,
@@ -45,7 +45,7 @@ async function encrypt(fieldValue) {
 
 // 解密
 async function decrypt(fieldValue) {
-    const kmsProvider = await getKMSProviders()
+    const kmsProvider = getKMSProviders()
 
     const csfleDatabaseConnection = new MongoClient(connectionString, {
         useNewUrlParser: true,

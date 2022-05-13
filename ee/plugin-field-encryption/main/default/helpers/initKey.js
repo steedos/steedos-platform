@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-04 18:57:59
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-05 09:43:30
+ * @LastEditTime: 2022-05-12 19:04:35
  * @Description: 
  */
 const { MongoClient, Binary } = require('mongodb');
@@ -28,7 +28,7 @@ async function initKey() {
         });
 
         if (!dataKeyDoc) {
-            const kmsProvider = await getKMSProviders()
+            const kmsProvider = getKMSProviders()
 
             const encryption = new ClientEncryption(client, {
                 keyVaultNamespace: keyVaultNamespace,

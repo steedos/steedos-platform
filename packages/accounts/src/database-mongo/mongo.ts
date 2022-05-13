@@ -13,6 +13,8 @@ import { AccountsMongoOptions, MongoUser } from './types';
 import { getSessionByUserId, hashStampedToken } from '@steedos/auth';
 import { isNumber } from "lodash";
 
+import { getDataSource } from '@steedos/objectql';
+
 const moment = require("moment");
 
 const toMongoID = (objectId: string | ObjectID) => {
@@ -177,9 +179,26 @@ export class Mongo implements DatabaseInterface {
   }
 
   public async findUserByMobile(mobile: string): Promise<User | null> {
-    const user = await this.collection.findOne({
-      mobile: mobile,
-    });
+    const selector = {
+      mobile,
+    }
+    const objectql = require('@steedos/objectql');
+    const objFields = await objectql.getObject('space_users').getFields();
+    if (process.env.STEEDOS_CSFLE_MASTER_KEY && objFields.mobile.enable_encryption) {
+      const pluginFieldEncryption = require('@steedos/ee_plugin-field-encryption');
+      const { altKeyName } = pluginFieldEncryption.settings.sharedconst;
+      const datasource = getDataSource('default');
+      const encryption = datasource.adapter.encryption;
+      let mobile_encrypt = await encryption.encrypt(
+        mobile,
+        {
+            keyAltName: altKeyName,
+            algorithm: 'AEAD_AES_256_CBC_HMAC_SHA_512-Deterministic'
+        }
+      )
+      selector.mobile = mobile_encrypt;
+    }
+    const user = await this.collection.findOne(selector);
     if (user) {
       user.id = user._id.toString();
     }

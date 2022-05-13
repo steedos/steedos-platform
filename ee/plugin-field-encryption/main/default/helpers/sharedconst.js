@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 11:37:54
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-05 14:45:11
+ * @LastEditTime: 2022-05-12 19:04:03
  * @Description: 
  */
 
@@ -12,7 +12,7 @@ const mongodbUri = require('mongodb-uri');
 // 主密钥
 const MY_LOCAL_KEY = process.env.STEEDOS_CSFLE_MASTER_KEY;
 // 密钥管理服务
-async function getKMSProviders() {
+function getKMSProviders() {
     return {
         "local": {
             "key": new Binary(Buffer.from(MY_LOCAL_KEY, "base64"), 0)

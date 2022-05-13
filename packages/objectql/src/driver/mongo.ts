@@ -8,12 +8,14 @@ import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter, createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 import { wrapAsync } from '../util';
+import { ClientEncryption } from "mongodb-client-encryption";
 
 export class SteedosMongoDriver implements SteedosDriver {
     _url: string;
     _client: any;
     _config: SteedosDriverConfig;
     _collections: Dictionary<any>;
+    encryption: any;
 
     constructor(config: SteedosDriverConfig) {
         this._collections = {};
@@ -56,7 +58,27 @@ export class SteedosMongoDriver implements SteedosDriver {
 
     async connect() {
         if (!this._client) {
-            this._client = await MongoClient.connect(this._url, { useNewUrlParser: true, useUnifiedTopology: true });
+            if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
+                const pluginFieldEncryption = require('@steedos/ee_plugin-field-encryption');
+                const { keyVaultNamespace, getKMSProviders } = pluginFieldEncryption.settings.sharedconst;
+                const kmsProvider = await getKMSProviders();
+                this._client = await MongoClient.connect(this._url, {
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true,
+                    monitorCommands: true,
+                    autoEncryption: {
+                        keyVaultNamespace: keyVaultNamespace,
+                        kmsProviders: kmsProvider,
+                        bypassAutoEncryption: true,
+                    }
+                })
+                this.encryption = new ClientEncryption(this._client, {
+                    keyVaultNamespace: keyVaultNamespace,
+                    kmsProviders: kmsProvider,
+                });
+            } else {
+                this._client = await MongoClient.connect(this._url, { useNewUrlParser: true, useUnifiedTopology: true });
+            }
             return true;
         }
     }

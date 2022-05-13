@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 10:29:51
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-05 17:26:58
+ * @LastEditTime: 2022-05-12 18:27:07
  * @Description: 
  */
 "use strict";
@@ -10,6 +10,7 @@ const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const { initKey } = require('./main/default/helpers/initKey');
+const sharedconst = require('./main/default/helpers/sharedconst');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -25,7 +26,8 @@ module.exports = {
         packageInfo: {
             path: __dirname,
             name: packageName
-        }
+        },
+        sharedconst: sharedconst
     },
 
     /**
