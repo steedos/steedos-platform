@@ -36,7 +36,6 @@ Template.creator_view.onCreated ->
 	object = Creator.getObject(object_name)
 	template = Template.instance()
 	this.onEditSuccess = onEditSuccess = (formType,result)->
-#		loadRecordFromOdata(template, Session.get("object_name"), Session.get("record_id"))
 		$('#afModal').modal('hide')
 		FlowRouter.reload()
 	this.agreement.set('odata')
@@ -52,19 +51,12 @@ Template.creator_view.onCreated ->
 				f.autoform.omit = false
 		return schema
 	this.autorun ()->
-		if self.object_name == Session.get("object_name")
+		if self.isLoading.get() != true && self.object_name == Session.get("object_name")
 			self.__record.set(Creator.getObjectRecord());
 			self.__schema.set(getSchema());
 			Tracker.nonreactive ()->
 				if !_.isEmpty(self.__record.get())
 					FormManager.runHook(Session.get("object_name"), 'view', 'before', {schema: self.__schema, record: self.__record});
-#	if object.database_name && object.database_name != 'meteor-mongo'
-#		this.agreement.set('odata')
-#		AutoForm.hooks creatorEditForm:
-#			onSuccess: onEditSuccess
-#		,false
-#	else
-#		this.agreement.set('subscribe')
 
 loadRecord = ()->
 	object_name = Session.get "object_name"
@@ -146,10 +138,11 @@ Template.creator_view.onRendered ->
 			Tracker.nonreactive(loadRecord)
 
 	this.autorun ()->
-		Meteor.setTimeout ()->
-			Tracker.nonreactive ()->
-				FormManager.runHook(Session.get("object_name"), 'view', 'after', {schema: self.__schema, record: self.__record});
-		,10
+		if self.isLoading.get() != true
+			Meteor.setTimeout ()->
+				Tracker.nonreactive ()->
+					FormManager.runHook(Session.get("object_name"), 'view', 'after', {schema: self.__schema, record: self.__record});
+			,10
 
 	# if Steedos.isMobile()
 	# 	this.autorun ->
