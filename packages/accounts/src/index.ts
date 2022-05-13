@@ -33,26 +33,8 @@ function getAccountsServer() {
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   let mailSignname = emailConfig.signname || "华炎魔方";
 
-  let connection: any;
-  if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
-    const pluginFieldEncryption = require('@steedos/ee_plugin-field-encryption');
-    const { keyVaultNamespace, getKMSProviders } = pluginFieldEncryption.settings.sharedconst;
-      const kmsProvider = getKMSProviders();
-      mongoose.connect(mongoUrl, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-          monitorCommands: true,
-          autoEncryption: {
-              keyVaultNamespace: keyVaultNamespace,
-              kmsProviders: kmsProvider,
-              bypassAutoEncryption: true,
-          }
-      });
-  } else {
-    mongoose.connect(mongoUrl, { useNewUrlParser: true });
-  }
-  
-  connection = mongoose.connection;
+  mongoose.connect(mongoUrl, { useNewUrlParser: true });
+  const connection = mongoose.connection;
 
   const rootUrl = process.env.ROOT_URL
     ? process.env.ROOT_URL

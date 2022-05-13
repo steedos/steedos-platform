@@ -15,7 +15,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     _client: any;
     _config: SteedosDriverConfig;
     _collections: Dictionary<any>;
-    encryption: any;
+    _encryption: any;
 
     constructor(config: SteedosDriverConfig) {
         this._collections = {};
@@ -56,6 +56,23 @@ export class SteedosMongoDriver implements SteedosDriver {
         ]
     }
 
+    async encryptValue(value: any) {
+        if (this._encryption) {
+            const pluginFieldEncryption = require('@steedos/ee_plugin-field-encryption');
+            const { altKeyName } = pluginFieldEncryption.settings.sharedconst;
+            const encryption = this._encryption;
+            let encryptValue = await encryption.encrypt(
+                value,
+                {
+                    keyAltName: altKeyName,
+                    algorithm: 'AEAD_AES_256_CBC_HMAC_SHA_512-Deterministic'
+                }
+            )
+            return encryptValue;
+        }
+        return value;
+    }
+
     async connect() {
         if (!this._client) {
             if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
@@ -72,7 +89,7 @@ export class SteedosMongoDriver implements SteedosDriver {
                         bypassAutoEncryption: true,
                     }
                 })
-                this.encryption = new ClientEncryption(this._client, {
+                this._encryption = new ClientEncryption(this._client, {
                     keyVaultNamespace: keyVaultNamespace,
                     kmsProviders: kmsProvider,
                 });
