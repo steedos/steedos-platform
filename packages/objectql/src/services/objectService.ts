@@ -217,7 +217,7 @@ function getObjectServiceActionsSchema() {
                         if(_.isArray(filters)){
                             const filtersStr = formatFiltersToODataQuery(filters);
                             if(filtersStr.indexOf('(is_deleted eq true)') < 0){
-                                ctx.params.filters.push(['is_deleted', '!=', true])
+                                ctx.params.filters = [ctx.params.filters, ['is_deleted', '!=', true]]
                             }
                         }
                     }else{
@@ -250,7 +250,7 @@ function getObjectServiceActionsSchema() {
                         if(_.isArray(filters)){
                             const filtersStr = formatFiltersToODataQuery(filters);
                             if(filtersStr.indexOf('(is_deleted eq true)') < 0){
-                                ctx.params.filters.push(['is_deleted', '!=', true])
+                                ctx.params.filters = [ctx.params.filters, ['is_deleted', '!=', true]]
                             }
                         }
                     }else{
