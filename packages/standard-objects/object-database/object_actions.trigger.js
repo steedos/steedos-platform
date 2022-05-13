@@ -26,24 +26,24 @@ module.exports = {
         if(!objectName && filters._id && filters._id.indexOf(".") > -1){
             objectName = filters._id.split('.')[0];
         }
-
-        let dataList = await InternalData.getObjectActions(objectName, this.userId);
-        if (!_.isEmpty(dataList)) {
-            dataList.forEach((doc) => {
-                if (!_.find(this.data.values, (value) => {
-                    return value.name === doc.name
-                })) {
-                    this.data.values.push(Object.assign({_id: `${objectName}.${doc.name}`}, doc));
+        if(objectName){
+            let dataList = await InternalData.getObjectActions(objectName, this.userId);
+            if (!_.isEmpty(dataList)) {
+                dataList.forEach((doc) => {
+                    if (!_.find(this.data.values, (value) => {
+                        return value.name === doc.name
+                    })) {
+                        this.data.values.push(Object.assign({_id: `${objectName}.${doc.name}`}, doc));
+                    }
+                })
+                const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+                if (records.length > 0) {
+                    this.data.values = records;
+                } else {
+                    this.data.values.length = 0;
                 }
-            })
-            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
-            if (records.length > 0) {
-                this.data.values = records;
-            } else {
-                this.data.values.length = 0;
             }
         }
-
     },
     afterAggregate: async function(){
         let filters = InternalData.parserFilters(this.query.filters)

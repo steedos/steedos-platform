@@ -291,5 +291,31 @@ export async function refreshObject(ctx, objectApiName) {
         objectConfig.table_name = objectConfig.name;
     }
 
+    
+
+    if(objectConfig && objectConfig.__deleted){
+        if(objectConfig.__deleted.fields && _.isArray(objectConfig.__deleted.fields)){
+            _.each(objectConfig.__deleted.fields, (fieldName)=>{
+                try {
+                    delete objectConfig.fields[fieldName]
+                } catch (error) {
+                    
+                }
+            })
+        }
+
+        if(objectConfig.__deleted.actions && _.isArray(objectConfig.__deleted.actions)){
+            _.each(objectConfig.__deleted.actions, (actionName)=>{
+                try {
+                    delete objectConfig.actions[actionName]
+                } catch (error) {
+                    
+                }
+            })
+        }
+
+        delete objectConfig.__deleted
+    }
+
     return objectConfig;
 }

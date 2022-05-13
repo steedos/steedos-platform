@@ -287,16 +287,21 @@ function reloadObject(changeLog){
     }else{
         objectDataSourceName = objectql.getObject(objectName).datasource.name;
     }
-    
+    const deleted = {
+        fields: [],
+        actions: []
+    }
     if(!objectRecord && objectDataSourceName){
 
         switch (data.type) {
             case 'field':
                 if(data.event === 'remove'){
+                    deleted.fields.push(data.value.name);
                     objectql.removeObjectFieldConfig(objectName, data.value);
                 }else{
                     if(data.event === 'update'){
                         if(data.value._previousName != data.value.name){
+                            deleted.fields.push(data.value._previousName);
                             objectql.removeObjectFieldConfig(objectName, {name: data.value._previousName});
                         }
                     }
@@ -305,16 +310,19 @@ function reloadObject(changeLog){
                 break;
             case 'action':
                 if(data.event === 'remove'){
+                    deleted.actions.push(data.value.name);
                     objectql.removeObjectButtonsConfig(objectName, data.value);
                 }else{
                     if(data.event === 'update'){
                         if(data.value._previousName != data.value.name){
+                            deleted.actions.push(data.value._previousName);
                             objectql.removeObjectButtonsConfig(objectName, {name: data.value._previousName});
                         }
                     }
                     if(data.value.is_enable){
                         objectql.addObjectButtonsConfig(objectName, data.value);
                     }else{
+                        deleted.actions.push(data.value.name);
                         objectql.removeObjectButtonsConfig(objectName, data.value);
                     }
                 }
@@ -338,7 +346,15 @@ function reloadObject(changeLog){
         if(_mf && object.name){
             object.fields_serial_number = _mf.sort_no + 10;
         }
-        objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, Object.assign({}, object, {isMain:false})).then(function(res){            
+
+        if(deleted.fields.length == 0){
+            deleted.fields = null;
+        }
+        if(deleted.actions.length == 0){
+            deleted.actions = null;
+        }
+
+        objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, Object.assign({}, object, {isMain:false, __deleted: deleted})).then(function(res){            
             if(res){
                 datasource.setObject(object.name, object);
                 try {

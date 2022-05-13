@@ -30,10 +30,10 @@ Meteor.startup(function () {
             }
         }).observe({
             added: function (newDocument) {
-                return _change(newDocument);
+                return _change(Object.assign(newDocument, {_previousName: newDocument.name}));
             },
             changed: function (newDocument, oldDocument) {
-                return _change(newDocument);
+                return _change(Object.assign(newDocument, {_previousName: oldDocument.name}));
             },
             removed: function (oldDocument) {
                 return _remove(oldDocument);

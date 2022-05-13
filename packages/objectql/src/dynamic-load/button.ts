@@ -68,6 +68,8 @@ export const loadObjectButtons = async function (filePath: string, serviceName: 
 
 export const removeLazyLoadButton = function (objectName: string, json: SteedosActionTypeConfig) {
     let objectButtons = _lazyLoadButtons[objectName];
-    let btnIndex = _.findIndex(objectButtons, { name: json.name});
-    objectButtons.splice(btnIndex, 1);
+    if(objectButtons){
+        let btnIndex = _.findIndex(objectButtons, { name: json.name});
+        objectButtons.splice(btnIndex, 1);
+    }
 }
