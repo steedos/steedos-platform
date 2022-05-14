@@ -16,3 +16,20 @@
   version "2.1.46"
   resolved "https://registry.npmmirror.com/@steedos-labs/workflow/download/@steedos-labs/workflow-2.1.46.tgz#f123666881d0527ab7f56ab706a60232170ae9b7"
   integrity sha512-M0zzmH2XJNEGFpdBNj7RmLlNCYE0ToYRfrXIuoKycgY2rqieQNVxYqCFl+MTvtVrRgsTAut0NEBDkNc5ikwR/g==
+
+"@steedos/service-plugin-amis@2.2.12":
+  version "2.2.12"
+  resolved "https://registry.yarnpkg.com/@steedos/service-plugin-amis/-/service-plugin-amis-2.2.12.tgz#c7bb705657092c166c2a2d0b7a219f44e51d86aa"
+  integrity sha512-F0lZdn60vKz3tGjA8imBXqtoPgfN+DobwxRjQD2aCug9o+VVeNcpWqbnefILqNz/KGakdXfQeZhyrd2kCnHbRA==
+
+"@steedos/webapp-accounts@^2.2.12":
+  version "2.2.12"
+  resolved "https://registry.yarnpkg.com/@steedos/webapp-accounts/-/webapp-accounts-2.2.12.tgz#eb4e53cadd6d779b4d6101341c19bae12b4839c2"
+  integrity sha512-d1KkChTHafeDn6HD+Eql+ab8nrcjv6Ul0gfesp6dx+Zh6dilHkMyZtn6F8rpcH1tGMIzW8Wv4HPPGcv5yprOeA==
+  dependencies:
+    lodash "^4.17.21"
+
+lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==

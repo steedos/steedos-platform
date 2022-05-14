@@ -30,10 +30,16 @@
     ],
     "properties": {
         "name":{
-            "type": "string"
+            "type": "string",
+            "description": "名称"
         },
         "permission_set_id":{
-            "type": "string"
+            "type": "string",
+            "description": "权限集"
+        },
+        "object_name": {
+            "type": "string",
+            "description": "对象"
         },
         "allowRead": {
             "type": "boolean",
@@ -66,6 +72,14 @@
         "modifyCompanyRecords": {
             "type": "boolean",
             "description": "修改本分部"
+        },
+        "viewAssignCompanysRecords": {
+            "type": "array",
+            "description": "查看指定分部"
+        },
+        "modifyAssignCompanysRecords": {
+            "type": "array",
+            "description": "修改指定分部"
         },
         "allowReadFiles": {
             "type": "boolean",

@@ -13,6 +13,27 @@ getRelateds = (objectApiName) ->
 			cb(reject, resolve)
 		)(objectApiName)
 
+objectFindOne = (objectApiName, query) ->
+	return Meteor.wrapAsync((objectApiName, query, cb) ->
+		objectql.getObject(objectApiName).find(query).then (resolve, reject) ->
+			if (resolve && resolve.length > 0)
+				cb(reject, resolve[0])
+			else
+				cb(reject, null)
+		)(objectApiName, query)
+
+objectFind = (objectApiName, query) ->
+	return Meteor.wrapAsync((objectApiName, query, cb) ->
+		objectql.getObject(objectApiName).find(query).then (resolve, reject) ->
+			cb(reject, resolve)
+		)(objectApiName, query)
+
+objectUpdate = (objectApiName, id, data) ->
+	return Meteor.wrapAsync((objectApiName, id, data, cb) ->
+		objectql.getObject(objectApiName).update(id, data).then (resolve, reject) ->
+			cb(reject, resolve)
+		)(objectApiName, id, data)
+
 uuflowManagerForInitApproval = {}
 
 uuflowManagerForInitApproval.check_authorization = (req) ->
@@ -247,7 +268,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 		object_name: objectName,
 		flow_id: flowId
 	})
-	record = Creator.getCollection(objectName, spaceId).findOne(recordId)
+	# record = Creator.getCollection(objectName, spaceId).findOne(recordId)
+	record = objectFindOne(objectName, { filters: [['_id', '=', recordId]]})
 	flow = Creator.getCollection('flows').findOne(flowId, { fields: { form: 1 } })
 	if ow and record
 		form = Creator.getCollection("forms").findOne(flow.form)
@@ -288,21 +310,23 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				return f.code == subFieldCode
 
 		getFieldOdataValue = (objName, id) ->
-			obj = Creator.getCollection(objName)
+			# obj = Creator.getCollection(objName)
+			obj = objectql.getObject(objName)
 			nameKey = getObjectNameFieldKey(objName)
 			if !obj
 				return
 			if _.isString id
-				_record = obj.findOne(id)
+				# _record = obj.findOne(id)
+				_record = objectFindOne(objName, { filters: [['_id', '=', id]]})
 				if _record
 					_record['@label'] = _record[nameKey]
 					return _record
 			else if _.isArray id
 				_records = []
-				obj.find({ _id: { $in: id } }).forEach (_record) ->
+				# obj.find({ _id: { $in: id } })
+				objectFind(objName, { filters: [['_id', 'in', id]]}).forEach (_record) ->
 					_record['@label'] = _record[nameKey]
 					_records.push _record
-
 				if !_.isEmpty _records
 					return _records
 			return
@@ -397,9 +421,12 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				if object
 					objectField = object.fields[objectFieldName]
 					if objectField && formField && ['lookup', 'master_detail'].includes(objectField.type) && _.isString(objectField.reference_to)
-						fieldsObj = {}
-						fieldsObj[lookupFieldName] = 1
-						lookupObjectRecord = Creator.getCollection(objectField.reference_to, spaceId).findOne(record[objectFieldName], { fields: fieldsObj })
+						# fieldsObj = {}
+						# fieldsObj[lookupFieldName] = 1
+						# lookupObjectRecord = Creator.getCollection(objectField.reference_to, spaceId).findOne(record[objectFieldName], { fields: fieldsObj })
+						lookupObjectRecord = objectFindOne(objectField.reference_to, { filters: [['_id', '=', record[objectFieldName]]], fields: [lookupFieldName] })
+						if !lookupObjectRecord
+							return
 						objectFieldObjectName = objectField.reference_to
 						lookupFieldObj = getObjectConfig(objectFieldObjectName)
 						objectLookupField = lookupFieldObj.fields[lookupFieldName]
@@ -553,7 +580,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 	return filterValues
 
 uuflowManagerForInitApproval.evalFieldMapScript = (field_map_script, objectName, spaceId, objectId) ->
-	record = Creator.getCollection(objectName, spaceId).findOne(objectId)
+	# record = Creator.getCollection(objectName, spaceId).findOne(objectId)
+	record = objectFindOne(objectName, { filters: [['_id', '=', objectId]] })
 	script = "module.exports = function (record) { " + field_map_script + " }"
 	func = _eval(script, "field_map_script")
 	values = func(record)
@@ -601,20 +629,28 @@ uuflowManagerForInitApproval.initiateAttach = (recordIds, spaceId, insId, approv
 	return
 
 uuflowManagerForInitApproval.initiateRecordInstanceInfo = (recordIds, insId, spaceId) ->
-	Creator.getCollection(recordIds.o, spaceId).update(recordIds.ids[0], {
-		$push: {
-			instances: {
-				$each: [{
-					_id: insId,
-					state: 'draft'
-				}],
-				$position: 0
-			}
-		},
-		$set: {
-			locked: true
-			instance_state: 'draft'
-		}
+	# Creator.getCollection(recordIds.o, spaceId).update(recordIds.ids[0], {
+	# 	$push: {
+	# 		instances: {
+	# 			$each: [{
+	# 				_id: insId,
+	# 				state: 'draft'
+	# 			}],
+	# 			$position: 0
+	# 		}
+	# 	},
+	# 	$set: {
+	# 		locked: true
+	# 		instance_state: 'draft'
+	# 	}
+	# })
+	objectUpdate(recordIds.o, recordIds.ids[0], {
+		instances: [{
+			_id: insId,
+			state: 'draft'
+		}],
+		locked: true,
+		instance_state: 'draft'
 	})
 
 	return
@@ -637,11 +673,12 @@ uuflowManagerForInitApproval.initiateRelatedRecordInstanceInfo = (relatedTablesI
 	return
 
 uuflowManagerForInitApproval.checkIsInApproval = (recordIds, spaceId) ->
-	record = Creator.getCollection(recordIds.o, spaceId).findOne({
-		_id: recordIds.ids[0], instances: { $exists: true }
-	}, { fields: { instances: 1 } })
+	# record = Creator.getCollection(recordIds.o, spaceId).findOne({
+	# 	_id: recordIds.ids[0], instances: { $exists: true }
+	# }, { fields: { instances: 1 } })
+	record = objectFindOne(recordIds.o, { filters: [['_id', '=', recordIds.ids[0]]], fields: ['instances'] })
 
-	if record and record.instances[0].state isnt 'completed' and Creator.Collections.instances.find(record.instances[0]._id).count() > 0
+	if record and record.instances and record.instances[0].state isnt 'completed' and Creator.Collections.instances.find(record.instances[0]._id).count() > 0
 		throw new Meteor.Error('error!', "此记录已发起流程正在审批中，待审批结束方可发起下一次审批！")
 
 	return

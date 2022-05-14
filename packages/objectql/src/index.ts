@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:02
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-03-30 14:29:36
+ * @LastEditTime: 2022-05-14 09:37:36
  * @Description: 
  */
 export * from './types'
@@ -21,3 +21,4 @@ export * from './metadata-register/shareRules'
 export * from './metadata-register/restrictionRules'
 export * from './metadata-register/permissionFields'
 export * from './metadata-register/process'
+export * from './metadata-register/processTrigger'
