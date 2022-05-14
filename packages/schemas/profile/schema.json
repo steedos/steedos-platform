@@ -38,13 +38,25 @@
             "type": "string",
             "description": "显示名称"
         },
+        "type": {
+            "type": "string",
+            "description": "类别"
+        },
         "license": {
-            "type": "boolean",
+            "type": "string",
             "description": "许可证"
         },
         "assigned_apps": {
             "type": "array",
             "description": "授权应用"
+        },
+        "users": {
+            "type": "array",
+            "description": "成员"
+        },
+        "is_system": {
+            "type": "boolean",
+            "description": "系统"
         },
         "password_history": {
             "type": "string",
@@ -57,6 +69,26 @@
         "lockout_interval": {
             "type": "string",
             "description": "锁定有效期间。默认值15"
+        },
+        "enable_MFA": {
+            "type": "boolean",
+            "description": "多重身份验证(需要开启短信服务)"
+        },
+        "logout_other_clients": {
+            "type": "boolean",
+            "description": "单例登录"
+        },
+        "login_expiration_in_days": {
+            "type": "number",
+            "description": "登录到期时间(天)"
+        },
+        "phone_logout_other_clients": {
+            "type": "boolean",
+            "description": "手机App单例登录"
+        },
+        "phone_login_expiration_in_days": {
+            "type": "number",
+            "description": "手机App登录到期时间(天)"
         }
     }
 }

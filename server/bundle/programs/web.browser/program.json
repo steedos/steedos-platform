@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "3f69a21a9120f60cfe3417fbebb4d3ccd444354b.js",
+      "path": "263bbd3bef39ec5841a0acb2760b73e808af188c.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/3f69a21a9120f60cfe3417fbebb4d3ccd444354b.js?meteor_js_resource=true",
-      "size": 15254268,
-      "hash": "3f69a21a9120f60cfe3417fbebb4d3ccd444354b",
-      "sri": "NgV0P+ifkh/tgkmdIuNK4HkzDvzBc1yo0A0Ib/OjxtfAcVX0DsR28Sb7RuQhgD2FzG6IZ+sATJ5gpUzDi7YHeA=="
+      "url": "/263bbd3bef39ec5841a0acb2760b73e808af188c.js?meteor_js_resource=true",
+      "size": 15257787,
+      "hash": "263bbd3bef39ec5841a0acb2760b73e808af188c",
+      "sri": "ql2xzEYgczz4c3zvfe1TmJrZsKlvxqOuL2XRORGWrExNeDIf5jotpPF7jHtT6lSjf7PbXbylPDSj4YQODJKW/w=="
     },
     {
-      "path": "3f69a21a9120f60cfe3417fbebb4d3ccd444354b.stats.json",
+      "path": "263bbd3bef39ec5841a0acb2760b73e808af188c.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/3f69a21a9120f60cfe3417fbebb4d3ccd444354b.stats.json?meteor_js_resource=true",
-      "size": 314929,
-      "hash": "414b0c8714fd9c9758a73ed52cefe6cf0ee6e635",
-      "sri": "0R+/ZlBAT/skKQr+FaIatK5hQLEAQKd02i06T8Hn7Jzt2zKqB6oykZVgG0Gb0JWwW0T8+ribAM8NOuLcaayYxw=="
+      "url": "/263bbd3bef39ec5841a0acb2760b73e808af188c.stats.json?meteor_js_resource=true",
+      "size": 315113,
+      "hash": "c7597395dbbc444ea81d30964268c78f299b541d",
+      "sri": "K3Tg1pG7Zo08DeqT1UkqDh1gBg06I/hj/JrmXeZM5MadHIgMyF/Ir0gpWM6odnoxhlO9hCyUl1hYE/Yc57z3OA=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3968,8 +3968,8 @@
       "cacheable": false,
       "url": "/packages/steedos_base/client/images/default-avatar.png",
       "size": 216568,
-      "hash": "dd9b071f9d3183d35f6288b4532f5bfcb547e69a",
-      "sri": null
+      "hash": "907a88225a7d248d94fe0397ef3a93ccf2df4122",
+      "sri": "nCyfkrQxcr/UF80rhzFT59tZsAYLJ+7mwvmFwM4KveRN67vwyG2wwAo4rjOQjmbzhrGJnQLsHtiv7SorHKwoLQ=="
     },
     {
       "path": "packages/steedos_jstree/jstree/32px.png",
@@ -4747,8 +4747,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/word/demo.doc",
-      "size": 2,
-      "hash": "637877adffcbf03c142ff32f67d3169116aaa04d",
+      "size": 29696,
+      "hash": "823eafce83fffa1c16cce1779be43102fe9aa9cd",
       "sri": null
     },
     {

@@ -37,13 +37,25 @@
             "type": "string",
             "description": "显示名称"
         },
+        "type": {
+            "type": "string",
+            "description": "类别"
+        },
         "license": {
-            "type": "boolean",
+            "type": "string",
             "description": "许可证"
         },
         "assigned_apps": {
             "type": "array",
             "description": "授权应用"
+        },
+        "users": {
+            "type": "array",
+            "description": "成员"
+        },
+        "is_system": {
+            "type": "boolean",
+            "description": "系统"
         }
     }
 }

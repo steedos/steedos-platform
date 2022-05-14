@@ -118,6 +118,9 @@ UUflow_api.post_submit = function (instance) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
+		beforeSend: function(request) {
+			request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
+		},
 
 		success: function (responseText, status) {
 			$(document.body).removeClass("loading");
@@ -183,6 +186,9 @@ UUflow_api.post_engine = function (approve) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
+		beforeSend: function(request) {
+			request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
+		},
 
 		success: function (responseText, status) {
 			$(document.body).removeClass("loading");
@@ -417,10 +423,12 @@ UUflow_api.get_export = function (spaceId, flowId, type) {
 };
 
 // 计算下一步处理人
-UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body) {
+UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body, nextStepId) {
 	var q = {};
 	q.deal_type = deal_type;
 	q.spaceId = spaceId;
+	q.insId = Session.get("instanceId");
+	q.nextStepId = nextStepId;
 
 	var nextStepUsers = [];
 	var data = JSON.stringify(body);
@@ -432,6 +440,9 @@ UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body) {
 		dataType: 'json',
 		processData: false,
 		contentType: "application/json",
+		beforeSend: function(request) {
+			request.setRequestHeader('Authorization', 'Bearer ' + spaceId + ',' + Accounts._storedLoginToken())
+		},
 		success: function (responseText, status) {
 			if (responseText.errors) {
 				toastr.error(responseText.errors);
@@ -449,10 +460,12 @@ UUflow_api.caculate_nextstep_users = function (deal_type, spaceId, body) {
 };
 
 // 计算下一步处理人
-UUflow_api.caculateNextstepUsers = function (deal_type, spaceId, body) {
+UUflow_api.caculateNextstepUsers = function (deal_type, spaceId, body, nextStepId) {
 	var q = {};
 	q.deal_type = deal_type;
 	q.spaceId = spaceId;
+	q.insId = Session.get("instanceId");
+	q.nextStepId = nextStepId;
 
 	var nextStepUsers = [],
 		error = "";
@@ -465,6 +478,9 @@ UUflow_api.caculateNextstepUsers = function (deal_type, spaceId, body) {
 		dataType: 'json',
 		processData: false,
 		contentType: "application/json",
+		beforeSend: function(request) {
+			request.setRequestHeader('Authorization', 'Bearer ' + spaceId + ',' + Accounts._storedLoginToken())
+		},
 		success: function (responseText, status) {
 			if (responseText.errors) {
 				toastr.error(responseText.errors);

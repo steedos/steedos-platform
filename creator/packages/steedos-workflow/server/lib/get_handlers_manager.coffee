@@ -1,3 +1,4 @@
+serviceWorkflow = require('@steedos/service-workflow');
 getHandlersManager = {}
 
 getHandlersManager.getHandlersByUsersAndRoles = (user_ids, role_ids, space_id)->
@@ -83,7 +84,7 @@ getHandlersManager.getHandlersByOrgAndRole = (org_id, role_id, space_id) ->
 	user_ids = _.uniq(user_ids)
 	return user_ids
 
-getHandlersManager.getHandlers = (instance_id, step_id) ->
+getHandlersManager.getHandlers = (instance_id, step_id, login_user_id) ->
 	instance = db.instances.findOne(instance_id)
 
 	# 拟稿时, 可以设定后续每个步骤的处理人 #1926
@@ -142,7 +143,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 						throw new Meteor.Error('error!', "角色已经被删除")
 				)
 
-				return getHandlersManager.getHandlersByUserAndRoles(applicant, current_step.approver_roles, space_id)
+				users = getHandlersManager.getHandlersByUserAndRoles(applicant, current_step.approver_roles, space_id)
 			else
 				throw new Meteor.Error('error!', "审批岗位未指定")
 
@@ -151,7 +152,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 	else if deal_type is "hrRole"
 		approveHrRoleIds = current_step.approver_hr_roles;
 		if (approveHrRoleIds)
-			return _.pluck(WorkflowManager.getHrRolesUsers(space_id, approveHrRoleIds), 'user');
+			users = _.pluck(WorkflowManager.getHrRolesUsers(space_id, approveHrRoleIds), 'user');
 		else
 			throw new Meteor.Error('error!', "角色未指定")
 	else if deal_type is "applicant"
@@ -161,7 +162,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 		if space_user_count is 0
 			throw new Meteor.Error('error!', "提交人已经被删除或不属于当前space")
 		else
-			return new Array(applicant)
+			users = new Array(applicant)
 	else if deal_type is "orgFieldRole"
 		# 3.***********部门字段所属组织中的审批岗位***********
 		form_id = current_flow.form
@@ -216,7 +217,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 				if role_count is 0
 					throw new Meteor.Error('error!', approver_role + "已经被删除")
 			)
-			return getHandlersManager.getHandlersByOrgsAndRoles(org_ids, current_step.approver_roles, instance.space)
+			users = getHandlersManager.getHandlersByOrgsAndRoles(org_ids, current_step.approver_roles, instance.space)
 		else
 			throw new Meteor.Error('error!', "流程步骤" + current_step.name + "审批岗位未指定")
 	else if deal_type is "orgField"
@@ -290,8 +291,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 
 		)
 
-		user_ids = _.uniq(user_ids)
-		return user_ids
+		users = _.uniq(user_ids)
 	else if deal_type is "userFieldRole"
 		# 5.***********人员字段所属组织中的审批岗位***********
 		form_id = current_flow.form
@@ -348,7 +348,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 				if role_count is 0
 					throw new Meteor.Error('error!', approver_role + "已经被删除")
 			)
-			return getHandlersManager.getHandlersByUsersAndRoles(user_ids, current_step.approver_roles, instance.space)
+			users = getHandlersManager.getHandlersByUsersAndRoles(user_ids, current_step.approver_roles, instance.space)
 		else
 			throw new Meteor.Error('error!', "流程步骤" + current_step.name + "审批岗位未指定")
 	else if deal_type is "userField"
@@ -400,8 +400,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 			user_ids.push(user["id"])
 		)
 
-		user_ids = _.uniq(user_ids)
-		return user_ids
+		users = _.uniq(user_ids)
 	else if deal_type is "specifyStepRole"
 		# 7.***********指定步骤处理审批岗位***********
 		approver_step = current_step.approver_step
@@ -430,7 +429,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 				throw new Meteor.Error('error!', "指定步骤的处理人已经变更")
 		)
 
-		return getHandlersManager.getHandlersByUsersAndRoles(approve_users, current_step.approver_roles, space_id)
+		users = getHandlersManager.getHandlersByUsersAndRoles(approve_users, current_step.approver_roles, space_id)
 	else if deal_type is "specifyStepUser"
 		# 8.***********指定步骤处理人***********
 		approver_step = current_step.approver_step
@@ -453,8 +452,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 				throw new Meteor.Error('error!', "指定步骤的处理人已经变更")
 		)
 
-		approve_users = _.uniq(approve_users)
-		return approve_users
+		users = _.uniq(approve_users)
 	else if deal_type is "submitterRole"
 		# 9.***********填单人所属组织中的审批岗位***********
 		submitter = instance.submitter
@@ -471,7 +469,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 						if role_count is 0
 							throw new Meteor.Error('error!', approver_role + "已经被删除")
 					)
-					return getHandlersManager.getHandlersByUserAndRoles(submitter, current_step.approver_roles, space_id)
+					users = getHandlersManager.getHandlersByUserAndRoles(submitter, current_step.approver_roles, space_id)
 				else
 					throw new Meteor.Error('error!', "流程步骤" + current_step.name + "审批岗位未指定")
 		else
@@ -484,7 +482,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 		if submitter_user_count is 0
 			throw new Meteor.Error('error!', "提交人已经被删除或不属于当前工作区")
 		else
-			return new Array(submitter)
+			users = new Array(submitter)
 	else if deal_type is "specifyOrg"
 		# 11.***********某部门内的所有人***********
 		approver_org_ids = current_step.approver_orgs
@@ -519,7 +517,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 				new_org_user_ids.push(org_user_id)
 		)
 
-		return new_org_user_ids
+		users = new_org_user_ids
 	else if deal_type is "specifyUser"
 		# 12.***********指定的人员***********
 		approver_user_ids = current_step.approver_users
@@ -531,7 +529,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 				new_approver_user_ids.push(approver_user_id)
 		)
 
-		return new_approver_user_ids
+		users = new_approver_user_ids
 	else if deal_type is "pickupAtRuntime"
 		# 13.***********审批时指定***********
 		next_step_users = new Array
@@ -546,7 +544,7 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 			if _approve.next_steps[0]["users"]
 				next_step_users = _approve.next_steps[0]["users"]
 
-		return next_step_users
+		users = next_step_users
 	else if deal_type is "applicantSuperior"
 		# 14.***********申请人上级主管***********
 		applicantSuperiors = new Array
@@ -554,4 +552,15 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 		if _space_user.manager
 			applicantSuperiors.push(_space_user.manager)
 
-		return applicantSuperiors
+		users = applicantSuperiors
+	
+	# cacluateNextStepUsers
+	if serviceWorkflow
+		excuteTriggers(login_user_id, flow_id, instance_id, current_step, users)
+	return users
+
+excuteTriggers = (userId, flowId, insId, nextStep, nextUserIds) ->
+	return Meteor.wrapAsync((userId, flowId, insId, nextStep, nextUserIds, cb) ->
+		serviceWorkflow.settings.excuteTriggers({ when: 'cacluateNextStepUsers', userId: userId, flowId: flowId, insId: insId, nextStep: nextStep, nextUserIds: nextUserIds }).then (resolve, reject) ->
+			cb(reject, resolve)
+	)(userId, flowId, insId, nextStep, nextUserIds)

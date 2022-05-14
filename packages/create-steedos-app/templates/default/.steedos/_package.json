@@ -4,8 +4,8 @@
     "description": "",
     "author": "",
     "dependencies": {
-        "@steedos-labs/master": "2.1.46",
-        "@steedos-labs/oa": "2.1.46",
+        "@steedos-labs/master": "2.1.61",
+        "@steedos-labs/oa": "2.1.61",
         "@steedos-labs/workflow": "2.1.46"
     }
 }

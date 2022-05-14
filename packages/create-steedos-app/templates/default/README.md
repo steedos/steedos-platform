@@ -13,16 +13,16 @@
 
 - **激活华炎魔方**：请参考该 [文档](https://www.steedos.cn/docs/deploy/deploy-activate)，注册华炎魔方门户账户，并准备好后续运行项目时激活华炎魔方依赖的两个环境变量。
 
-- **注册GitPod账户**：如果没有 [Github](https://github.com/) 账户和 [GitPod](https://gitpod.io/) 账户，请分别注册并使用浏览器登录它们。
+- **注册GitPod账户**：如果没有 [Gitlab](https://gitlab.steedos.cn/) 账户，请注册并使用浏览器登录它们。
 
 - **Fork项目**：请Fork本项目到本地，后续我们使用GitPod在线开发Fork后的项目的话就可以把开发后的代码提交到Git仓库。
 也可以执行以下命令来创建一个新项目，然后把该项目提交到Git仓库，而不是Fork本项目来创建自己的魔方项目。```npx create-steedos-app my-app```
 
 ## 运行项目
 
-只要在浏览器中输入地址 `https://gitpod.io/#{之前Fork下来的Git仓库地址}`即可使用 Gitpod 启动远程开发环境，远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等。
+只要在浏览器中输入地址 `https://vscode.steedos.cn/#{之前Fork下来的Git仓库地址}`即可使用 Gitpod 启动远程开发环境，远程开发环境已经安装并初始化好必须的组件，包括 nodejs, mongodb, redis, vscode 等。
 
-比如访问地址 <https://gitpod.io/#https://github.com/steedos/steedos-project-template> 即可在线运行该Git仓库项目，可以把`#`号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
+比如访问地址 <https://vscode.steedos.cn/#https://github.com/steedos/steedos-project-template> 即可在线运行该Git仓库项目，可以把`#`号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址。
 
 在浏览器中打开项目后，会自动执行`yarn`指令安装项目依赖项，并自动执行`yarn start`指令运行项目。
 

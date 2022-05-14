@@ -929,7 +929,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 				throw new Meteor.Error('error!', "不能指定多个处理人")
 			else
 				# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
-				next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
+				next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id, current_user)
 				if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_step)
 					throw new Meteor.Error('error!', "指定的下一步处理人有误")
 				else
@@ -1139,7 +1139,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 						throw new Meteor.Error('error!', "不能指定多个处理人")
 					else
 						# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
-						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
+						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id, current_user)
 						if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_step)
 							throw new Meteor.Error('error!', "指定的下一步处理人有误")
 						else
@@ -1344,7 +1344,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 							throw new Meteor.Error('error!', "不能指定多个处理人")
 						else
 							# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
-							next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
+							next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id, current_user)
 							if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_step)
 								throw new Meteor.Error('error!', "指定的下一步处理人有误")
 							else
@@ -1563,7 +1563,7 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 						throw new Meteor.Error('error!', "不能指定多个处理人")
 					else
 						# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
-						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
+						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id, current_user)
 						if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_steps)
 							throw new Meteor.Error('error!', "指定的下一步处理人有误")
 						else
@@ -2175,7 +2175,7 @@ uuflowManager.submit_instance = (instance_from_client, user_info) ->
 				throw new Meteor.Error('error!', "不能指定多个处理人")
 			else
 				# 验证下一步处理人next_user是否合法
-				checkUsers = getHandlersManager.getHandlers(instance_id, approve["next_steps"][0]["step"])
+				checkUsers = getHandlersManager.getHandlers(instance_id, approve["next_steps"][0]["step"], current_user)
 				if !uuflowManager.checkNestStepUsersIsValid(next_step_users, checkUsers, next_step)
 					throw new Meteor.Error('error!', "指定的下一步处理人有误")
 				else
@@ -3060,3 +3060,96 @@ uuflowManager.relocate = (instance_from_client, current_user_info)->
 
 		# 如果已经配置webhook并已激活则触发
 		pushManager.triggerWebhook(ins.flow, ins, {}, 'relocate', current_user, ins.inbox_users)
+
+uuflowManager.draft_save_instance = (ins, userId) -> 
+	result = true
+	setObj = {}
+	index = 0
+	ins_id = ins._id
+	trace_id = ins.traces[0]._id
+	approve_id = ins.traces[0].approves[0]._id
+	description = ins.traces[0].approves[0].description
+	next_steps = ins.traces[0].approves[0].next_steps
+	values = ins.traces[0].approves[0].values or {}
+	applicant_id = ins.applicant
+	instance = db.instances.findOne(ins_id, fields:
+		applicant: 1
+		state: 1
+		submitter: 1
+		traces: 1
+		form: 1
+		flow_version: 1
+		space: 1
+		flow: 1)
+	space_id = instance.space
+	flow_id = instance.flow
+	form_id = instance.form
+	traces = instance.traces
+	current_trace = _.find(traces, (t) ->
+		t._id == trace_id
+	)
+	current_trace.approves.forEach (a, idx) ->
+		if a._id == approve_id
+			index = idx
+		return
+	key_str = 'traces.$.approves.' + index + '.'
+	# 判断一个instance是否为拟稿状态
+	current_user = db.users.findOne({ _id: userId }, fields: locale: 1)
+	lang = if current_user.locale == 'zh-cn' then 'zh-CN' else 'en'
+	uuflowManager.isInstanceDraft instance, lang
+	# 判断一个用户是否是一个instance的提交者
+	uuflowManager.isInstanceSubmitter instance, userId
+	flow = db.flows.findOne(flow_id, fields:
+		'current._id': 1
+		'current.form_version': 1
+		'name': 1
+		'current.steps': 1)
+	setObj.modified = new Date
+	setObj.modified_by = userId
+	if flow.current._id != instance.flow_version
+		result = 'upgraded'
+		start_step = _.find(flow.current.steps, (s) ->
+			s.step_type == 'start'
+		)
+		# 流程已升级
+		setObj.flow_version = flow.current._id
+		setObj.form_version = flow.current.form_version
+		# 存入当前最新版flow中开始节点的step_id
+		setObj['traces.$.step'] = start_step._id
+		setObj['traces.$.name'] = start_step.name
+	if instance.applicant != applicant_id
+		# 申请人已变换
+		user = db.users.findOne(applicant_id, fields: name: 1)
+		applicant = db.space_users.find({
+			space: space_id
+			user: applicant_id
+		}, fields: organization: 1)
+		org_id = applicant.fetch()[0].organization
+		organization = db.organizations.findOne(org_id, fields:
+			name: 1
+			fullname: 1)
+		setObj.applicant = applicant_id
+		setObj.applicant_name = user.name
+		setObj.applicant_organization = org_id
+		setObj.applicant_organization_name = organization.name
+		setObj.applicant_organization_fullname = organization.fullname
+		setObj[key_str + 'user'] = applicant_id
+		setObj[key_str + 'user_name'] = user.name
+	setObj[key_str + 'values'] = values
+	setObj[key_str + 'description'] = description
+	setObj[key_str + 'judge'] = 'submitted'
+	setObj[key_str + 'read_date'] = new Date
+	if result != 'upgraded' and next_steps
+		setObj[key_str + 'next_steps'] = next_steps
+	# 计算申请单标题
+	form = db.forms.findOne({ _id: form_id }, fields: 'current.name_forumla': 1)
+	name_forumla = form.current.name_forumla
+	if name_forumla
+		# var iscript = name_forumla.replace(/\{/g, "(values['").replace(/\}/g, "'] || '')");
+		# var rev = eval(iscript);
+		setObj.name = uuflowManager.getInstanceName(ins, values)
+	db.instances.update {
+		_id: ins_id
+		'traces._id': trace_id
+	}, $set: setObj
+	result

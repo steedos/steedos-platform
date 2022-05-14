@@ -23,28 +23,48 @@ FlowversionAPI =
 	replaceErrorSymbol: (str)->
 		return str.replace(/\"/g,"&quot;").replace(/\n/g,"<br/>")
 
-	getStepHandlerName: (step)->
-		switch step.deal_type
-			when 'specifyUser'
-				approverNames = step.approver_users.map (userId)->
-					user = db.users.findOne(userId)
-					if user
-						return user.name
-					else
-						return ""
-				stepHandlerName = approverNames.join(",")
-			when 'applicantRole'
-				approverNames = step.approver_roles.map (roleId)->
-					role = db.flow_roles.findOne(roleId)
-					if role
-						return role.name
-					else
-						return ""
-				stepHandlerName = approverNames.join(",")
-			else
-				stepHandlerName = ''
-				break
-		return stepHandlerName
+	getStepHandlerName: (step, insId)->
+		try
+			stepHandlerName = ""
+			if step.step_type == "condition"
+				return stepHandlerName
+
+			# TODO 获取当前用户userId
+			loginUserId = '' 
+			stepId = step._id
+			userIds = getHandlersManager.getHandlers(insId, stepId, loginUserId)
+			approverNames = userIds.map (userId)->
+				user = db.users.findOne(userId, { fields: { name: 1 } })
+				if user
+					return user.name
+				else
+					return ""
+			stepHandlerName = approverNames.join(",")
+			
+			return stepHandlerName
+		catch e
+			return "";
+		# switch step.deal_type
+		# 	when 'specifyUser'
+		# 		approverNames = step.approver_users.map (userId)->
+		# 			user = db.users.findOne(userId)
+		# 			if user
+		# 				return user.name
+		# 			else
+		# 				return ""
+		# 		stepHandlerName = approverNames.join(",")
+		# 	when 'applicantRole'
+		# 		approverNames = step.approver_roles.map (roleId)->
+		# 			role = db.flow_roles.findOne(roleId)
+		# 			if role
+		# 				return role.name
+		# 			else
+		# 				return ""
+		# 		stepHandlerName = approverNames.join(",")
+		# 	else
+		# 		stepHandlerName = ''
+		# 		break
+		# return stepHandlerName
 
 	getStepLabel: (stepName, stepHandlerName)->
 		# 返回sstepName与stepHandlerName结合的步骤显示名称
@@ -59,17 +79,17 @@ FlowversionAPI =
 			stepName = ""
 		return stepName
 
-	getStepName: (step, cachedStepNames)->
+	getStepName: (step, cachedStepNames, instance_id)->
 		# 返回step节点名称，优先从缓存cachedStepNames中取，否则调用getStepLabel生成
 		cachedStepName = cachedStepNames[step._id]
 		if cachedStepName
 			return cachedStepName
-		stepHandlerName = FlowversionAPI.getStepHandlerName(step)
+		stepHandlerName = FlowversionAPI.getStepHandlerName(step, instance_id)
 		stepName = FlowversionAPI.getStepLabel(step.name, stepHandlerName)
 		cachedStepNames[step._id] = stepName
 		return stepName
 
-	generateStepsGraphSyntax: (steps, currentStepId, isConvertToString, direction)->
+	generateStepsGraphSyntax: (steps, currentStepId, isConvertToString, direction, instance_id)->
 		nodes = ["graph #{direction}"]
 		cachedStepNames = {}
 		steps.forEach (step)->
@@ -80,11 +100,11 @@ FlowversionAPI =
 						# 标记条件节点
 						if step.step_type == "condition"
 							nodes.push "	class #{step._id} condition;"
-						stepName = FlowversionAPI.getStepName(step, cachedStepNames)
+						stepName = FlowversionAPI.getStepName(step, cachedStepNames, instance_id)
 					else
 						stepName = ""
 					toStep = steps.findPropertyByPK("_id",line.to_step)
-					toStepName = FlowversionAPI.getStepName(toStep, cachedStepNames)
+					toStepName = FlowversionAPI.getStepName(toStep, cachedStepNames, instance_id)
 					nodes.push "	#{step._id}(\"#{stepName}\")-->#{line.to_step}(\"#{toStepName}\")"
 
 		if currentStepId
@@ -387,7 +407,7 @@ FlowversionAPI =
 					flowversion = WorkflowManager.getInstanceFlowVersion(instance)
 					steps = flowversion?.steps
 					if steps?.length
-						graphSyntax = this.generateStepsGraphSyntax steps,currentStepId,false, direction
+						graphSyntax = this.generateStepsGraphSyntax steps,currentStepId,false, direction, instance_id
 					else
 						error_msg = "没有找到当前申请单的流程步骤数据"
 				else

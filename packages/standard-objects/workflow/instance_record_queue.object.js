@@ -23,6 +23,12 @@ const getObjectConfig = function (objectApiName) {
     }, { objectApiName: objectApiName })
 }
 
+const makeNewID = function (objectApiName) {
+    return objectql.wrapAsync(async function () {
+        return await objectql.getObject(this.objectApiName)._makeNewID()
+    }, { objectApiName: objectApiName })
+}
+
 const objectInsert = function (objectApiName, data) {
     return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).insert(this.data)
@@ -41,6 +47,12 @@ const objectUpdateMany = function (objectApiName, filters, data) {
     }, { objectApiName: objectApiName, filters: filters, data: data })
 }
 
+const objectRemove = function (objectApiName, id) {
+    return objectql.wrapAsync(async function () {
+        return await objectql.getObject(this.objectApiName).delete(this.id)
+    }, { objectApiName: objectApiName, id: id })
+}
+
 const getRelateds = function (objectApiName) {
     return objectql.wrapAsync(async function () {
         return await objectql.getObject(this.objectApiName).getRelateds()
@@ -54,6 +66,13 @@ const objectFindOne = function (objectApiName, query) {
             return result[0];
         }
         return null;
+    }, { objectApiName: objectApiName, query })
+}
+
+const objectFind = function (objectApiName, query) {
+    return objectql.wrapAsync(async function () {
+        const result = await objectql.getObject(this.objectApiName).find(this.query);
+        return result;
     }, { objectApiName: objectApiName, query })
 }
 
@@ -559,15 +578,17 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                     }
                 }
                 else if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to) && _.isString(values[fm.workflow_field])) {
-                    var oCollection = Creator.getCollection(oField.reference_to, spaceId)
+                    // var oCollection = Creator.getCollection(oField.reference_to, spaceId)
+                    var oCollection = objectql.getObject(oField.reference_to)
                     var referObjectNameFieldKey = getObjectNameFieldKey(oField.reference_to);
                     if (oCollection && referObjectNameFieldKey) {
                         // 先认为此值是referObject _id字段值
-                        var referData = oCollection.findOne(values[fm.workflow_field], {
-                            fields: {
-                                _id: 1
-                            }
-                        });
+                        // var referData = oCollection.findOne(values[fm.workflow_field], {
+                        //     fields: {
+                        //         _id: 1
+                        //     }
+                        // });
+                        var referData = objectFindOne(oField.reference_to, { filters: [['_id', '=', values[fm.workflow_field]]], fields: ['_id'] });
                         if (referData) {
                             obj[fm.object_field] = referData._id;
                         }
@@ -575,13 +596,14 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                         // 其次认为此值是referObject NAME_FIELD_KEY值
                         if (!referData) {
                             var nameFieldKey = referObjectNameFieldKey;
-                            var selector = {};
-                            selector[nameFieldKey] = values[fm.workflow_field];
-                            referData = oCollection.findOne(selector, {
-                                fields: {
-                                    _id: 1
-                                }
-                            });
+                            // var selector = {};
+                            // selector[nameFieldKey] = values[fm.workflow_field];
+                            // referData = oCollection.findOne(selector, {
+                            //     fields: {
+                            //         _id: 1
+                            //     }
+                            // });
+                            var referData = objectFindOne(oField.reference_to, { filters: [['space', '=', spaceId],[nameFieldKey, '=', values[fm.workflow_field]]], fields: ['_id'] });
                             if (referData) {
                                 obj[fm.object_field] = referData._id;
                             }
@@ -634,7 +656,8 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                         var referObjField = temObjFields[1];
                         var oField = objectFields[objField];
                         if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
-                            var oCollection = Creator.getCollection(oField.reference_to, spaceId)
+                            // var oCollection = Creator.getCollection(oField.reference_to, spaceId)
+                            var oCollection = objectql.getObject(oField.reference_to)
                             if (oCollection && record && record[objField]) {
                                 var referSetObj = {};
                                 referSetObj[referObjField] = values[fm.workflow_field];
@@ -671,7 +694,8 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             var referObjField = temObjFields[1];
                             var oField = objectFields[objField];
                             if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
-                                var oCollection = Creator.getCollection(oField.reference_to, spaceId)
+                                // var oCollection = Creator.getCollection(oField.reference_to, spaceId)
+                                var oCollection = objectql.getObject(oField.reference_to)
                                 if (oCollection && record && record[objField]) {
                                     var referSetObj = {};
                                     referSetObj[referObjField] = ins[insField];
@@ -840,7 +864,7 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
     var insId = ins._id;
 
     _.each(relatedObjects, function (relatedObject) {
-        var objectCollection = Creator.getCollection(relatedObject.object_name, spaceId);
+        // var objectCollection = Creator.getCollection(relatedObject.object_name, spaceId);
         var tableMap = {};
         _.each(relatedObjectsValue[relatedObject.object_name], function (relatedObjectValue) {
             var table_id = relatedObjectValue._table._id;
@@ -861,7 +885,8 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
                 relatedObjectValue.owner = relatedObjectValue.owner || ins.applicant;
                 relatedObjectValue.created_by = ins.applicant;
                 relatedObjectValue.modified_by = ins.applicant;
-                relatedObjectValue._id = objectCollection._makeNewID();
+                // relatedObjectValue._id = objectCollection._makeNewID();
+                relatedObjectValue._id = makeNewID(relatedObject.object_name);
                 // var instance_state = ins.state;
                 // if (ins.state === 'completed' && ins.final_decision) {
                 //     instance_state = ins.final_decision;
@@ -881,12 +906,18 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
         //清理申请单上被删除子表记录对应的相关表记录
         _.each(tableMap, function (tableIds, tableCode) {
             tableIds = _.compact(tableIds);
-            objectCollection.remove({
-                [relatedObject.foreign_key]: mainRecordId,
-                // "instances._id": insId,
-                "_table._code": tableCode,
-                "_table._id": { $nin: tableIds }
-            })
+            // objectCollection.remove({
+            //     [relatedObject.foreign_key]: mainRecordId,
+            //     // "instances._id": insId,
+            //     "_table._code": tableCode,
+            //     "_table._id": { $nin: tableIds }
+            // })
+            var docsForRemove = objectFind(relatedObject.object_name, { filters: [[relatedObject.foreign_key, '=', mainRecordId], ['_table._code', '=', tableCode]] });
+            for (const doc of docsForRemove) {
+                if (!tableIds.includes(doc._table._id)) {
+                    objectRemove(relatedObject.object_name, doc._id)
+                }
+            }
         })
     });
 
@@ -926,15 +957,17 @@ InstanceRecordQueue.sendDoc = function (doc) {
             flow_id: ins.flow
         });
         var
-            objectCollection = Creator.getCollection(objectName, spaceId),
+            // objectCollection = Creator.getCollection(objectName, spaceId),
+            objectCollection = objectql.getObject(objectName),
             sync_attachment = ow.sync_attachment;
-            syncDirection = ow.sync_direction || 'both';
+        syncDirection = ow.sync_direction || 'both';
         var objectInfo = getObjectConfig(objectName);
-        objectCollection.find({
-            _id: {
-                $in: records[0].ids
-            }
-        }).forEach(function (record) {
+        // objectCollection.find({
+        //     _id: {
+        //         $in: records[0].ids
+        //     }
+        // })
+        objectFind(objectName, { filters: [['_id', 'in', records[0].ids]] }).forEach(function (record) {
             try {
                 if (!['both', 'ins_to_obj'].includes(syncDirection)) {
                     return;
@@ -1017,12 +1050,12 @@ InstanceRecordQueue.sendDoc = function (doc) {
         }).forEach(function (ow) {
             try {
                 var
-                    objectCollection = Creator.getCollection(ow.object_name, spaceId),
+                    // objectCollection = Creator.getCollection(ow.object_name, spaceId),
                     sync_attachment = ow.sync_attachment,
-                    newRecordId = objectCollection._makeNewID(),
+                    newRecordId = makeNewID(ow.object_name),
                     objectName = ow.object_name,
                     syncDirection = ow.sync_direction || 'both';
-                
+
                 if (!['both', 'ins_to_obj'].includes(syncDirection)) {
                     return;
                 }
@@ -1066,7 +1099,8 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     var relatedObjectsValue = syncValues.relatedObjectsValue;
                     InstanceRecordQueue.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins);
                     // workflow里发起审批后，同步时也可以修改相关表的字段值 #1183
-                    var record = objectCollection.findOne(newRecordId);
+                    // var record = objectCollection.findOne(newRecordId);
+                    var record = objectFindOne(objectName, { filters: [['_id', '=', newRecordId]] });
                     InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record);
                 }
 
@@ -1078,10 +1112,12 @@ InstanceRecordQueue.sendDoc = function (doc) {
             } catch (error) {
                 console.error(error.stack);
 
-                objectCollection.remove({
-                    _id: newRecordId,
-                    space: spaceId
-                });
+                // objectCollection.remove({
+                //     _id: newRecordId,
+                //     space: spaceId
+                // });
+                objectRemove(ow.object_name, newRecordId);
+
                 Creator.getCollection('instances').update(ins._id, {
                     $pull: {
                         record_ids: {

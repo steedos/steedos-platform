@@ -80,7 +80,7 @@ InstanceManager.getMyApprove = (instanceId, userId)->
 		if nextSteps.length == 1
 			if step_type == "sign" || step_type == "counterSign"
 				my_approve.judge = 'approved'
-			next_user_ids = getHandlersManager.getHandlers(instance._id , nextSteps[0])
+			next_user_ids = getHandlersManager.getHandlers(instance._id , nextSteps[0], userId)
 			if !next_user_ids
 				my_approve.next_steps = [{ step: nextSteps[0], users: [] }]
 				return my_approve
