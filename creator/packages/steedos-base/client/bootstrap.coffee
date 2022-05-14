@@ -121,6 +121,11 @@ Setup.validate = (onSuccess)->
 			userId: data.userId,
 			user: data
 		}
+
+		stores.Settings.setTenantId(data.spaceId);
+		stores.Settings.setUserId(data.userId);
+		stores.Settings.setAuthToken(data.authToken);
+
 		if !Meteor.loggingIn()
 			# 第一次在登录界面输入用户名密码登录后loggingIn为true，这时还没有登录成功
 			Setup.bootstrap(Session.get("spaceId"))
