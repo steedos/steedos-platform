@@ -255,6 +255,11 @@ fields:
     group: script
     blackbox: true
     is_wide: true
+  form.onRendered:
+    type: code
+    language: javascript
+    rows: 3
+    is_wide: true
   form.onValuesChange:
     type: code
     language: javascript

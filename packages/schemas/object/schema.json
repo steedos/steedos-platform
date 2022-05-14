@@ -288,6 +288,10 @@
                     "type": "string",
                     "description": "表单字段修改时执行, 传入表单中的字段值，如果成功返回undefined，如果失败返回错误数组"
                 },
+                "onRendered": {
+                    "type": "string",
+                    "description": "表单加载完成后执行"
+                },
                 "onValuesChange": {
                     "type": "string",
                     "description": "表单字段修改时执行"
