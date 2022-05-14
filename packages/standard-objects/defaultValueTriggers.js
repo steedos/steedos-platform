@@ -116,7 +116,11 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
                 defaultValue = getCompatibleDefaultValueExpression(defaultValue);
                 // console.log("==setDefaultValues=defaultValue===333=", defaultValue);
                 if(defaultValue){
-                    doc[field.name] = await objectql.computeSimpleFormula(defaultValue, doc, userId, spaceId);
+                    defaultValue = await objectql.computeSimpleFormula(defaultValue, doc, userId, spaceId);
+                    if(field.multiple && !_.isArray(defaultValue)){
+                        defaultValue = defaultValue.split(',');
+                    }
+                    doc[field.name] = defaultValue;
                     // console.log("==setDefaultValues=doc[field.name]====", field.name, doc[field.name]);
                 }
             }
