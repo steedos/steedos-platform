@@ -376,7 +376,7 @@ if Meteor.isClient
 				return true
 			else
 				return false
-		if object && ["default", "meteor"].indexOf(object.datasource || "default") > -1
+		if object && ["default", "meteor"].indexOf(object.database_name || "default") > -1
 			_keys = _.union(_keys.concat(BASE_FIELDNAMES_FOR_PERMISSIONS));
 		return _keys.join(",")
 
