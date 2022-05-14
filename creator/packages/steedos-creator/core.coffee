@@ -18,7 +18,7 @@ Creator.getSchema = (object_name)->
 
 Creator.getObjectHomeComponent = (object_name)->
 	if Meteor.isClient
-		return ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", object_name)
+		return BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "ObjectHome", object_name)
 
 Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if !app_id
@@ -256,7 +256,7 @@ Creator.getAppDashboardComponent = (app_id)->
 	app = Creator.getApp(app_id)
 	if !app
 		return
-	return ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "Dashboard", app._id);
+	return BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "Dashboard", app._id);
 
 Creator.getAppObjectNames = (app_id)->
 	app = Creator.getApp(app_id)
@@ -283,7 +283,6 @@ Creator.getAppMenuUrlForInternet = (menu)->
 	params["X-User-Id"] = Steedos.userId();
 	params["X-Company-Ids"] = Steedos.getUserCompanyIds();
 	# params["X-Auth-Token"] = Accounts._storedLoginToken();
-	# sdk = require("@steedos-ui/builder-community/dist/builder-community.react.js")
 	url = menu.path
 	if Steedos.isExpression(url)
 		url = Steedos.parseSingleExpression(url, menu, "#", Creator.USER_CONTEXT)
@@ -330,8 +329,8 @@ Creator.loadAppsMenus = ()->
 
 Creator.getVisibleApps = (includeAdmin)->
 	changeApp = Creator._subApp.get();
-	ReactSteedos.store.getState().entities.apps = Object.assign({}, ReactSteedos.store.getState().entities.apps, {apps: changeApp});
-	return ReactSteedos.visibleAppsSelector(ReactSteedos.store.getState(), includeAdmin)
+	BuilderCreator.store.getState().entities.apps = Object.assign({}, BuilderCreator.store.getState().entities.apps, {apps: changeApp});
+	return BuilderCreator.visibleAppsSelector(BuilderCreator.store.getState(), includeAdmin)
 
 Creator.getVisibleAppsObjects = ()->
 	apps = Creator.getVisibleApps()
@@ -721,6 +720,12 @@ Creator.getFieldsForGroup = (schema, groupName) ->
   	)
   	fields = _.compact(fields)
   	return fields
+
+Creator.getSystemBaseFields = () ->
+	return ["created", "created_by", "modified", "modified_by"]
+
+Creator.getFieldsWithoutSystemBase = (keys) ->
+	return _.difference(keys, Creator.getSystemBaseFields());
 
 Creator.getFieldsWithoutOmit = (schema, keys) ->
 	keys = _.map(keys, (key) ->
