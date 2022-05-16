@@ -11,9 +11,9 @@
   "dependencies": {
     "@steedos-builder/react": "^0.2.23",
     "@steedos-ui/amis": "^2.2.5",
-    "@steedos-ui/builder-community": "^2.2.10",
-    "@steedos-ui/builder-widgets": "^2.2.10",
-    "@steedos-ui/design-system": "^2.2.10",
+    "@steedos-ui/builder-community": "^2.2.11",
+    "@steedos-ui/builder-widgets": "^2.2.11",
+    "@steedos-ui/design-system": "^2.2.11",
     "amis": "^1.8.0",
     "axios": "^0.26.1",
     "d3": "^3.5.17",
