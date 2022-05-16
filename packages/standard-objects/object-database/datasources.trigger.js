@@ -1,3 +1,9 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-16 11:55:06
+ * @Description: 
+ */
+const InternalData = require('../core/internalData');
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
@@ -15,8 +21,12 @@ module.exports = {
 
     afterFind: async function(){
         const { spaceId } = this;
-        let lng = Steedos.locale(this.userId, true)
+        let lng = Steedos.locale(this.userId, true);
         let dataList = [{_id: 'default', name: 'default', label: TAPi18n.__(`objects_field_datasource_defaultValue`, {}, lng)}];
+        let filters = InternalData.parserFilters(this.query.filters)
+        if(filters._id === 'meteor'){
+            dataList.push({_id: 'meteor', name: 'meteor', label: TAPi18n.__(`objects_field_datasource_meteor`, {}, lng)})
+        }
         if (!_.isEmpty(dataList)) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
@@ -60,13 +70,24 @@ module.exports = {
         this.data.values = result.length;
     },
     afterFindOne: async function(){
-        if(this.id && this.id === 'default'){
-            try {
-                let lng = Steedos.locale(this.userId, true)
-                this.data.values = {_id: 'default', name: 'default', label: TAPi18n.__(`objects_field_datasource_defaultValue`, {}, lng)};
-            } catch (error) {
-                
+        if(this.id){
+            if(this.id === 'default'){
+                try {
+                    let lng = Steedos.locale(this.userId, true)
+                    this.data.values = {_id: 'default', name: 'default', label: TAPi18n.__(`objects_field_datasource_defaultValue`, {}, lng)};
+                } catch (error) {
+                    
+                }
             }
+            if(this.id === 'meteor'){
+                try {
+                    let lng = Steedos.locale(this.userId, true)
+                    this.data.values = {_id: 'meteor', name: 'meteor', label: TAPi18n.__(`objects_field_datasource_meteor`, {}, lng)};
+                } catch (error) {
+                    
+                }
+            }
+            
         }
     }
 }

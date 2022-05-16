@@ -214,6 +214,7 @@ actions:
     label: Copy OData URL
 CustomLabels:
   objects_field_datasource_defaultValue: Default data source
+  objects_field_datasource_meteor: Meteor
   objects_field_enable_approvals: 
   objects_field_enable_space_global: 
   objects_field_enable_web_forms: 
