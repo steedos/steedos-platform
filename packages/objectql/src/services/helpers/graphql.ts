@@ -10,7 +10,6 @@ const BASIC_TYPE_MAPPING = {
     'text': 'String',
     'textarea': 'String',
     'html': 'String',
-    'select': 'String',
     'url': 'String',
     'email': 'String',
     'date': 'Date',
