@@ -15,3 +15,4 @@ enable_workflow: false
 icon: omni_supervisor
 is_enable: true
 label: API Key
+version: 2

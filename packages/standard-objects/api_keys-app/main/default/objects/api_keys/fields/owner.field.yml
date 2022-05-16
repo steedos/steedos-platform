@@ -18,3 +18,4 @@ required: false
 searchable: false
 sort_no: 170
 sortable: true
+visible_on: "{{global.mode ==='read' ? true : false}}"
