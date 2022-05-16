@@ -626,7 +626,7 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 				_.each flowObjectWorkflows, (_objectWorkflow)->
 					steedosImport.objectWorkflow(spaceId, upgradeFlowId, _objectWorkflow.object_name, _objectWorkflow)
 			else
-				db.flows._check(spaceId);
+				# db.flows._check(spaceId);
 				db.flows.direct.insert(flow)
 				new_flow_ids.push(flow_id)
 				_.each flowObjectWorkflows, (_objectWorkflow)->
