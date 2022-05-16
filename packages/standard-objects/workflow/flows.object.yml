@@ -505,9 +505,85 @@ actions:
             }
     'on': list
     todo: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, fields) {
-              return Modal.show('new_flow_modal');
+      function () {
+        const fields = Creator.getObject("flows").fields;
+        const objectSchema = {
+            fields: {
+                category: Object.assign(fields.category, {sort_no: 100, group: null, is_wide: true, readonly: false, disabled: false}),
+                name: Object.assign(fields.name, {required: true, sort_no: 110, group: null, is_wide: true,readonly: false, disabled: false}),
+                company_id: Object.assign(fields.company_id, {sort_no: 120, group: null, is_wide: true,readonly: false, disabled: false}),
+                object_name: Object.assign(fields.object_name, {sort_no: 130, group: null, is_wide: true,readonly: false, disabled: false})
             }
+        };
+
+        SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+            name: "new_flow_form",
+            title: '新建流程',
+            objectSchema: objectSchema,
+            onFinish: async (values = {}) => {
+                debugger;
+                $(document.body).addClass('loading');
+                let url = "/am/forms?sync_token=" + (new Date()).getTime() / 1000;
+                let newFormId = Creator.getCollection("flows")._makeNewID();
+
+            let form = {
+              id: newFormId,
+              name: values.name,
+              space: Steedos.getSpaceId(),
+              is_valid: true,
+              app: "workflow",
+              current: {
+                id: Creator.getCollection("flows")._makeNewID(),
+              }
+            }
+
+            if(values.category){
+              form.category = values.category
+                }
+
+            let companyId = values.company_id
+            if(companyId){
+              form.company_id = companyId
+                }
+
+            if(values.object_name){
+              form.object_name = values.object_name
+                }
+
+            let data = {
+              "Forms": [form]
+            }
+                let options = {
+                    type: 'post',
+                    async: false,
+                    data: JSON.stringify(data),
+                    success: function (data) {
+                        debugger;
+                        toastr.success('创建成功');
+                        Modal.hide();
+                        $(document.body).removeClass('loading');
+                        let flows = data.ChangeSet.inserts.Flows;
+
+                let newFlow = _.find(flows, function(flow){
+                            return flow.form == newFormId
+                        })
+                if (!newFlow.object_name){
+                  WorkflowCore.openFlowDesign(Steedos.locale(), newFlow.space, newFlow._id, Creator.getUserCompanyId())
+                        }
+                FlowRouter.go(`/app/admin/flows/view/${newFlow._id}`)
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.error(XMLHttpRequest.responseJSON);
+                        toastr.error(jqXHR.responseText);
+                        $(document.body).removeClass('loading');
+                    }
+                };
+                Steedos.authRequest(url, options);
+                return true;
+            }
+        }, null, { iconPath: '/assets/icons' })
+
+      }
   standard_new_by_template:
     label: Pull from Library
     visible: !<tag:yaml.org,2002:js/function> |-
