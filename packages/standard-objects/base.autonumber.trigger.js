@@ -91,6 +91,7 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
                 field_name: fieldName,
                 space: spaceId,
                 rule: rule,
+                current_no: 1 // defaultValue 规则调整为触发器实现，这里使用directInsert新增数据，故这里手动设置默认值为1
             };
             if (date_from && date_to) {
                 insertObj.date_from = date_from;
