@@ -126,6 +126,10 @@ Setup.validate = (onSuccess)->
 		stores.Settings.setUserId(data.userId);
 		stores.Settings.setAuthToken(data.authToken);
 
+		stores.API.client.setUserId(data.userId)
+		stores.API.client.setToken(data.authToken);
+		stores.API.client.setSpaceId(data.spaceId);
+
 		if !Meteor.loggingIn()
 			# 第一次在登录界面输入用户名密码登录后loggingIn为true，这时还没有登录成功
 			Setup.bootstrap(Session.get("spaceId"))

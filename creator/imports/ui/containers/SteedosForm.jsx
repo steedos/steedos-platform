@@ -1,3 +1,8 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-09 10:29:22
+ * @Description: 
+ */
 // import React from 'react';
 const { API, ObjectForm, SteedosProvider, SteedosRouter: Router, Forms } = BuilderSteedos;
 
@@ -17,9 +22,9 @@ function SteedosFormContainer(prop){
 		console.log('form.setMode', value);
 	}
 	// API.client.setUrl(Meteor.absoluteUrl());
-	API.client.setUserId(Steedos.getUserId());
-	API.client.setToken(Steedos.getCookie("X-Auth-Token"));
-	API.client.setSpaceId(Steedos.getSpaceId());
+	// API.client.setUserId(Steedos.getUserId());
+	// API.client.setToken(Steedos.getCookie("X-Auth-Token"));
+	// API.client.setSpaceId(Steedos.getSpaceId());
 	let _submitter = submitter;
 	if(_submitter !== false && !_submitter){
 		_submitter = {
