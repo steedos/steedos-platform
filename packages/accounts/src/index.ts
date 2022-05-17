@@ -10,10 +10,10 @@ import MongoDBInterface from './database-mongo';
 // import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
-import { getSteedosConfig, getSteedosSchema } from '@steedos/objectql'
+import { getSteedosConfig, getSteedosSchema, SteedosFieldEncryptionSharedConsts } from '@steedos/objectql'
 import { URL } from 'url';
 import * as bodyParser from 'body-parser';
-import { sendMail, sendSMS} from './core';
+import { sendMail, sendSMS } from './core';
 
 import oauth2Consent from './oauth2/consent';
 import oauth2Login from './oauth2/login';
@@ -33,7 +33,22 @@ function getAccountsServer() {
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   let mailSignname = emailConfig.signname || "华炎魔方";
 
-  mongoose.connect(mongoUrl, { useNewUrlParser: true });
+  if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
+    const { keyVaultNamespace, getKMSProviders } = SteedosFieldEncryptionSharedConsts;
+    const kmsProvider = getKMSProviders();
+    mongoose.connect(mongoUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      monitorCommands: true,
+      autoEncryption: {
+        keyVaultNamespace: keyVaultNamespace,
+        kmsProviders: kmsProvider,
+        bypassAutoEncryption: true,
+      }
+    });
+  } else {
+    mongoose.connect(mongoUrl, { useNewUrlParser: true });
+  }
   const connection = mongoose.connection;
 
   const rootUrl = process.env.ROOT_URL
@@ -128,7 +143,7 @@ function getAccountsServer() {
 
 export const accountsServer = getAccountsServer()
 
-export async function getAccountsRouter(context){
+export async function getAccountsRouter(context) {
 
   const router = accountsExpress(accountsServer, {
     path: '/',
@@ -145,18 +160,18 @@ export async function getAccountsRouter(context){
   return router
 }
 
-export function init(context){
+export function init(context) {
 
-  if(context.settings){
-    if(!context.settings.public){
-        context.settings.public = {} 
+  if (context.settings) {
+    if (!context.settings.public) {
+      context.settings.public = {}
     }
-    if(!context.settings.public.webservices){
-        context.settings.public.webservices = {}  
+    if (!context.settings.public.webservices) {
+      context.settings.public.webservices = {}
     }
     context.settings.public.webservices.accounts = { url: '/accounts' }
   }
-  getAccountsRouter(context).then( (accountsRouter) => {
+  getAccountsRouter(context).then((accountsRouter) => {
     context.app.use("/accounts", accountsRouter);
 
     context.app.use("/initServer", initServer);
