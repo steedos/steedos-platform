@@ -2,6 +2,7 @@ name: autonumber
 label: Auto Number
 icon: formula
 hidden: true
+version: 2
 fields:
   object_name:
     label: Object
