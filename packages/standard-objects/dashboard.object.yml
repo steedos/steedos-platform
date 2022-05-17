@@ -2,6 +2,7 @@ name: dashboard
 label: Dashboard
 icon: dashboard_ea
 hidden: true
+version: 2
 fields:
   name:
     label: Name

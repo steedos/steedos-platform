@@ -10,7 +10,7 @@
         let amisStyle = document.createElement("link");
         amisStyle.setAttribute("rel", "stylesheet");
         amisStyle.setAttribute("type", "text/css");
-        amisStyle.setAttribute("href", "/amis/amis.css");
+        amisStyle.setAttribute("href", Steedos.absoluteUrl("/amis/amis.css"));
         document.getElementsByTagName("head")[0].appendChild(amisStyle);
     } catch (error) {
         console.error(error)
