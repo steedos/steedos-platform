@@ -2,6 +2,7 @@ name: webhooks
 icon: output
 label: Webhook
 hidden: true
+version: 2
 fields:
   name:
     label: Name
@@ -33,7 +34,7 @@ fields:
   content_type:
     label: Format of Request
     type: text
-    defaultValue: application/json
+    defaultValue: '"application/json"'
     hidden: true
     name: content_type
   active:
