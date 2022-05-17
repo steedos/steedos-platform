@@ -30,6 +30,7 @@ fields:
     label: Rule
     type: text
     readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
 list_views:
   all:
     label: All Auto Numbers
