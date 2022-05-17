@@ -13,6 +13,7 @@ export const headTemplate = ({
   head,
   dynamicHead,
 }) => {
+  head = head.replace(/\/unpkg.com\//g, __meteor_runtime_config__.ROOT_URL + "/unpkg.com/");
   var headSections = head.split(/<meteor-bundled-css[^<>]*>/, 2);
   var cssBundle = [
     // We are explicitly not using bundledJsCssUrlRewriteHook: in cordova we serve assets up directly from disk, so rewriting the URL does not make sense

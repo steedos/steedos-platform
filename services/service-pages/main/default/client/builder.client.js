@@ -73,7 +73,7 @@
 
     Builder.set({
         rootUrl: __meteor_runtime_config__.ROOT_URL, 
-        unpkgUrl: '/unpkg.com'
+        unpkgUrl: Steedos.absoluteUrl('/unpkg.com')
     })
 
     if(Meteor.settings.public.page && Meteor.settings.public.page.assetUrls){
