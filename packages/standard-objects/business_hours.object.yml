@@ -2,6 +2,8 @@ name: business_hours
 label: Business Hours
 icon: date_time
 hidden: true
+version: 2
+enable_inline_edit: false
 fields:
   name:
     label: Name
@@ -21,37 +23,21 @@ fields:
     type: text
     label: Start Time
     required: true
-    depend_on:
-      - end
-      - lunch_start
-      - lunch_end
     inlineHelpText: 'Please enter the HH:MM format of the 24 - hour time character.'
   end:
     type: text
     label: End Time
     required: true
-    depend_on:
-      - start
-      - lunch_start
-      - lunch_end
     inlineHelpText: 'Please enter the HH:MM format of the 24 hour time character, must be greater than the start time.'
   lunch_start:
     type: text
     label: Lunch Start Time
     required: true
-    depend_on:
-      - start
-      - end
-      - lunch_end
     inlineHelpText: 'Please enter the HH:MM format of the 24 - hour time character.'
   lunch_end:
     type: text
     label: Lunch End Time
     required: true
-    depend_on:
-      - start
-      - end
-      - lunch_start
     inlineHelpText: 'Please enter the HH:MM format of the 24 hour time character, must be greater than the lunch start time.'
   working_days:
     label: Working Days

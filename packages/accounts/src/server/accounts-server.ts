@@ -160,7 +160,7 @@ export class AccountsServer {
           // if(!user.mobile_verified){
           //   _next = 'TO_VERIFY_MOBILE';
           // }
-          return { _next } as any;
+          return { _next, mobile: user.mobile, mobile_verified: user.mobile_verified } as any;
         }
       }
 
