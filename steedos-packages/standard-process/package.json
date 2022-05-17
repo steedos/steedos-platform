@@ -1,6 +1,6 @@
 {
   "name": "@steedos/standard-process",
-  "version": "2.2.32",
+  "version": "2.2.33",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
