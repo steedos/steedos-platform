@@ -3,6 +3,7 @@ label: Web Forms
 icon: display_text
 enable_api: true
 hidden: true
+version: 2
 fields:
   name:
     label: Name
