@@ -292,6 +292,10 @@
                     "type": "string",
                     "description": "表单加载完成后执行"
                 },
+                "onDestroy": {
+                    "type": "string",
+                    "description": "表单销毁时执行"
+                },
                 "onValuesChange": {
                     "type": "string",
                     "description": "表单字段修改时执行"

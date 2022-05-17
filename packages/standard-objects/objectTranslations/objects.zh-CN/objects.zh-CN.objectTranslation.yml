@@ -167,6 +167,8 @@ fields:
     label: 新增数据之前
   form.onRendered:
     label: 表单加载后
+  form.onDestroy:
+    label: 表单销毁时
   form.onValuesChange:
     label: 数据变化时
   form.beforeUpdate:
