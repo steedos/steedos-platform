@@ -2,6 +2,7 @@ name: object_workflows
 label: Object Synchronization Rule
 icon: link
 hidden: true
+version: 2
 fields:
   name:
     label: Name
