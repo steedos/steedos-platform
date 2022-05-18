@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-08-30 12:06:41
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-11 17:34:35
+ * @LastEditors: baozhoutao@hotoa.com
+ * @LastEditTime: 2022-05-18 16:49:13
  * @Description: 
  */
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '../typeInfo';
@@ -44,6 +44,7 @@ export class LoadPageFile extends BaseLoadMetadataFile {
                     assignment._id = `${apiName}.${getMD5(JSONStringify(assignment))}`;
                 });
             }
+            page.version = 1;
         }
 
         return pages;

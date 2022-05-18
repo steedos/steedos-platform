@@ -2,5 +2,6 @@ name: version
 type: number
 label: 版本号
 scale: 0
-omit: true
+omit: false
 readonly: true
+visible_on: "{{global.mode ==='read' ? true : false}}"
