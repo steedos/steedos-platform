@@ -82,6 +82,7 @@ const actionToMetadata = (config) => {
                 if (!actions[key]) {
                     actions[key] = {};
                 }
+                actions[key].todo = config[key].toString();
                 actions[key]._todo = config[key].toString();
             }
         }
