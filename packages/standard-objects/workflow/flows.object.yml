@@ -692,7 +692,7 @@ actions:
         window.$.ajax({
           type: "POST",
           url: Steedos.absoluteUrl("/am/flows/state?methodOverride=PUT"),
-          data: JSON.stringify({ 'Flows': [{id: record._id, space: record.space, state: 'enabled', form: formId }] }),
+          data: JSON.stringify({ 'Flows': [{id: record._id, space: _.isObject(record.space) ? record.space._id : record.space, state: 'enabled', form: formId }] }),
           dataType: "json",
           contentType: 'application/json',
           beforeSend: function (XHR) {
@@ -735,7 +735,7 @@ actions:
         window.$.ajax({
           type: "POST",
           url: Steedos.absoluteUrl("/am/flows/state?methodOverride=PUT"),
-          data: JSON.stringify({ 'Flows': [{id: record._id, space: record.space, state: 'disabled', form: formId }] }),
+          data: JSON.stringify({ 'Flows': [{id: record._id, space: _.isObject(record.space) ? record.space._id : record.space, state: 'disabled', form: formId }] }),
           dataType: "json",
           contentType: 'application/json',
           beforeSend: function (XHR) {
