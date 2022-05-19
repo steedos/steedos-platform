@@ -6,31 +6,37 @@ fields:
     group: 企业微信
     unique: true
     hidden: false
+    sort_no: 30
   qywx_agent_id:
     label: AgentID
     type: text
     group: 企业微信
     hidden: false
+    sort_no: 40
   qywx_secret:
     label: Secret
     type: text
     group: 企业微信
     hidden: false
+    sort_no: 50
   qywx_contact_secret:
     label: 通讯录同步Secret
     type: text
     group: 企业微信
     hidden: false
+    sort_no: 60
   qywx_token:
     label: Token
     type: text
     group: 企业微信
     hidden: false
+    sort_no: 70
   qywx_aes_key:
     label: AesKey
     type: text
     group: 企业微信
     hidden: false
+    sort_no: 80
   qywx_need_sync:
     label: 同步企业微信
     type: boolean

@@ -260,6 +260,11 @@ fields:
     language: javascript
     rows: 3
     is_wide: true
+  form.onDestroy:
+    type: code
+    language: javascript
+    rows: 3
+    is_wide: true
   form.onValuesChange:
     type: code
     language: javascript

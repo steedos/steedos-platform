@@ -168,6 +168,8 @@ fields:
     label: Before Insert
   form.onRendered:
     label: On Rendered
+  form.onDestroy:
+    label: On Destroy
   form.onValuesChange:
     label: On Change
   form.beforeUpdate:

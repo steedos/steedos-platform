@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2021-08-30 12:06:41
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-21 16:07:04
+ * @LastEditors: baozhoutao@hotoa.com
+ * @LastEditTime: 2022-05-18 16:48:44
  * @Description: 
  */
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
@@ -26,6 +26,7 @@ export class PageCollection extends MetadataBaseCollection {
             // 获取page_assignments和page_versions最新的一条记录的schema
             page.pageAssignments = await this.getPageAssignments(dbManager, page._id, page.name);
             page.schema = await this.getLatestPageVersionSchema(dbManager, page._id);
+            delete page.version
         }
         return pages;
     }
@@ -36,6 +37,7 @@ export class PageCollection extends MetadataBaseCollection {
         // 获取page_assignments和page_versions最新的一条记录的schema
         page.pageAssignments = await this.getPageAssignments(dbManager, page._id, page.name);
         page.schema = await this.getLatestPageVersionSchema(dbManager, page._id);
+        delete page.version
         return page;
     }
 
@@ -44,15 +46,24 @@ export class PageCollection extends MetadataBaseCollection {
         var record = await dbManager.findOne(this.collectionName, filter);
         const pageWidgets = data[WIGETS_TABLE_NAME];
         await this.savePageWidgets(dbManager, data.name, pageWidgets)
-        // 保存pageAssignments
-        await this.savePageAssignments(dbManager, record._id, data.pageAssignments);
-        // 保存page_versions
-        await this.savePageVersions(dbManager, record._id, data.schema);
+
+        let result: any = null;
+
+        let recordId = record?._id;
+        delete data.version
         if (record == null) {
-            return await dbManager.insert(this.collectionName, data);
+            result = await dbManager.insert(this.collectionName, data);
+            recordId = result.insertedId;
         } else {
-            return await dbManager.update(this.collectionName, filter, data);
+            result = await dbManager.update(this.collectionName, filter, data);
         }
+        
+        // 保存pageAssignments
+        await this.savePageAssignments(dbManager, recordId, data.pageAssignments);
+        // 保存page_versions
+        await this.savePageVersions(dbManager, recordId, data.schema);
+
+        return result;
     }
 
     private async savePageWidgets(dbManager, pageApiName, pageWidgets) {
@@ -129,11 +140,13 @@ export class PageCollection extends MetadataBaseCollection {
         } else {
             const pageVersionDoc = {
                 description: '',
-                is_active: false,
+                is_active: true,
                 page: pageId,
+                version: latestVersion ? latestVersion.version + 1 : 1,
                 schema: pageVersionSchema
             }
             await dbManager.insert(PAGE_VERSION_TABLE_NAME, pageVersionDoc);
+            await dbManager.update(this.collectionName, {_id: pageId }, {version: pageVersionDoc.version})
         }
     }
 

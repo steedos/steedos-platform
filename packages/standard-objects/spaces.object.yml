@@ -2,6 +2,7 @@ name: spaces
 label: Company
 icon: account
 hidden: true
+version: 2
 fields:
   name:
     label: Name
