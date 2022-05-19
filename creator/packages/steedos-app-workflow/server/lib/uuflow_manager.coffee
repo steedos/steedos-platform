@@ -421,7 +421,7 @@ uuflowManager.getNextSteps = (instance, flow, step, judge) ->
 		# 定义表单中字段
 		uuflowManager.setFormFieldVariable(formVersion.fields, __values, instance.space)
 		# 匹配包括花括号自身在内的所有符号
-		reg = /(\{[^{}]*\})/
+		reg = /(\{[^{}]*\})/g
 		prefix = "__values"
 		_.each step.lines, (step_line) ->
 			step_line_condition = step_line.condition.replace reg, (vowel) ->
