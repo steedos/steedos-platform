@@ -133,6 +133,7 @@ async function addObjectActionConfigMetadata(config: any, serviceName: string, i
                     if(!actions[key]){
                         actions[key] = {};
                     }
+                    actions[key].todo = config[key].toString();
                     actions[key]._todo = config[key].toString();
                 }
             }
