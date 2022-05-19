@@ -101,6 +101,9 @@ GridExport.excel = (object_name, list_view_id, is_related, related_object_name, 
 
 	if $filter
 		url = url + "&$filter=" + $filter;
-	window.open url
+	if Meteor.isCordova
+		Steedos.cordovaDownload(encodeURI(Steedos.absoluteUrl(url)), filename + ".xlsx");
+	else
+		window.open url
 
 
