@@ -90,6 +90,7 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
                 object_name: objectName,
                 field_name: fieldName,
                 space: spaceId,
+                current_no: 1,
                 rule: rule,
                 current_no: 1 // defaultValue 规则调整为触发器实现，这里使用directInsert新增数据，故这里手动设置默认值为1
             };
