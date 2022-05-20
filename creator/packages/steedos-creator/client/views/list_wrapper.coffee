@@ -293,7 +293,10 @@ Template.creator_list_wrapper.helpers
 	
 	search_title: ()->
 		try
-			unSearchable = _.pluck(_.filter(Creator.getObject().fields, (field) ->
+			currentObject = Creator.getObject()
+			unless currentObject
+				return
+			unSearchable = _.pluck(_.filter(currentObject.fields, (field) ->
 				return !_.include([
 					'text'
 					'textarea'
