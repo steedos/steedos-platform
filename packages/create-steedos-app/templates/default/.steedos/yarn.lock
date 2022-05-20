@@ -2,34 +2,27 @@
 # yarn lockfile v1
 
 
-"@steedos-labs/master@2.1.46":
-  version "2.1.46"
-  resolved "https://registry.npmmirror.com/@steedos-labs/master/download/@steedos-labs/master-2.1.46.tgz#a99d1a85266a2fcc7a68a5f63efbeda82ff53589"
-  integrity sha512-ww6U7rsDxzLWyyFPXZ93vUQEqXVW7OOylOgoOB/ytnKpkpETrrn8G/i4rcDI1zUPqEb/ZFDz63mBfj4tYiaL8w==
+"@steedos-labs/contract@2.1.62":
+  version "2.1.62"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/contract/-/contract-2.1.62.tgz#f43c197bc5153e78e3607cd5d1b41110c23bbfae"
+  integrity sha512-Mdu4/Nb52MfjdtL30uhnYCx/1k0QIhQ/e8sj8vOMdq2T11GuUqMFTVq8PDhCLnChy5Jmrjsz6zKjmaIp05zppw==
 
-"@steedos-labs/oa@2.1.46":
-  version "2.1.46"
-  resolved "https://registry.npmmirror.com/@steedos-labs/oa/download/@steedos-labs/oa-2.1.46.tgz#8805973d56bc493789c42b6b021f6446883a5a98"
-  integrity sha512-YK219meTkA+gqISKZlKPdIUaOB3gOVzJ1xJlUpa3euuUCMAphIBXmElM5Dg0hYXTkucqmAk4CCwi4HYULahNmg==
+"@steedos-labs/master@2.1.62":
+  version "2.1.62"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/master/-/master-2.1.62.tgz#036cb4f0901bb0709b247e968c8cc90a212193c8"
+  integrity sha512-Dr3YuNwcHWf+97LTO3n/yQtFSaO39WNXL3yP3G9lV9iaDc0iJVgALMFDB7/PQlYnSU9BwjlPiUpsyVHy3jNN0w==
 
-"@steedos-labs/workflow@2.1.46":
-  version "2.1.46"
-  resolved "https://registry.npmmirror.com/@steedos-labs/workflow/download/@steedos-labs/workflow-2.1.46.tgz#f123666881d0527ab7f56ab706a60232170ae9b7"
-  integrity sha512-M0zzmH2XJNEGFpdBNj7RmLlNCYE0ToYRfrXIuoKycgY2rqieQNVxYqCFl+MTvtVrRgsTAut0NEBDkNc5ikwR/g==
+"@steedos-labs/oa@2.1.62":
+  version "2.1.62"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/oa/-/oa-2.1.62.tgz#e9a7c20ac97bcaed24ce80cd97741916793324a5"
+  integrity sha512-sVaLl4Cw9nhhYucViyNv99GG2CXb67nqZdvMjmiIpyiLuOPFtITTZUv8DeqcTds2GOQcgypIN93TnAx+ol/IhQ==
 
-"@steedos/service-plugin-amis@2.2.12":
-  version "2.2.12"
-  resolved "https://registry.yarnpkg.com/@steedos/service-plugin-amis/-/service-plugin-amis-2.2.12.tgz#c7bb705657092c166c2a2d0b7a219f44e51d86aa"
-  integrity sha512-F0lZdn60vKz3tGjA8imBXqtoPgfN+DobwxRjQD2aCug9o+VVeNcpWqbnefILqNz/KGakdXfQeZhyrd2kCnHbRA==
+"@steedos-labs/project@2.1.62":
+  version "2.1.62"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/project/-/project-2.1.62.tgz#18ebafd383bb3b4814d6da96697202645ad47a57"
+  integrity sha512-MvLijB5UsxbfAtIzO1uxM1DWDgQ2XDGx8r+hHp4AA0ZmpZ160kkCaNtZAvVQiWWjzH8Tws9uJ4i2r5758fThBQ==
 
-"@steedos/webapp-accounts@^2.2.12":
-  version "2.2.12"
-  resolved "https://registry.yarnpkg.com/@steedos/webapp-accounts/-/webapp-accounts-2.2.12.tgz#eb4e53cadd6d779b4d6101341c19bae12b4839c2"
-  integrity sha512-d1KkChTHafeDn6HD+Eql+ab8nrcjv6Ul0gfesp6dx+Zh6dilHkMyZtn6F8rpcH1tGMIzW8Wv4HPPGcv5yprOeA==
-  dependencies:
-    lodash "^4.17.21"
-
-lodash@^4.17.21:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
-  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+"@steedos-labs/workflow@2.1.62":
+  version "2.1.62"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/workflow/-/workflow-2.1.62.tgz#866fe1da07fe6a1408812f442422ed6314701eb1"
+  integrity sha512-vqLCWDQzcbCeYqNQYaGzj8E0LOrprJ24LiPoRILXg2GWrjqgiQEkYhud0yFzP0jB6TBn2HXikibxQJ6fHyzC2A==
