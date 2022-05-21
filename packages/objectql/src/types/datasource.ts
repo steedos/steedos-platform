@@ -394,6 +394,10 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.delete(tableName, id, userId)
     }
 
+    formatRecord(doc: Dictionary<any>, objectConfig: SteedosObjectType) {
+        return this._adapter.formatRecord(doc, objectConfig)
+    }
+
     async count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType) {
         return await this._adapter.count(tableName, query, userId)
     }
