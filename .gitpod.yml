@@ -3,7 +3,7 @@ image:
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
-  - port: 5000
+  - port: 5100
     onOpen: open-browser
     visibility: public
   - port: 6379
@@ -37,7 +37,7 @@ tasks:
       sh ./.scripts/gitpod_env.sh
       gp await-port 27017
       gp await-port 6379
-      export ROOT_URL=$(gp url 5000)
+      export ROOT_URL=$(gp url 5100)
       yarn start
 vscode:
   extensions:
