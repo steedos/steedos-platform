@@ -2,6 +2,7 @@ name: favorites
 label: My Favorite
 icon: topic
 hidden: true
+version: 2
 fields:
   name: 
     type: text
@@ -39,7 +40,6 @@ fields:
   record_id:
     type: text
     label: Record ID or List View ID（code）
-    required: true
     hidden: true
   sort_no:
     type: number
