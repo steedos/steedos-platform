@@ -47,7 +47,7 @@ function getAccountsServer() {
       }
     });
   } else {
-    mongoose.connect(mongoUrl, { useNewUrlParser: true });
+    mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
   }
   const connection = mongoose.connection;
 
