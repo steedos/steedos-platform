@@ -52,7 +52,7 @@ module.exports = {
 			"@steedos/service-workflow",
 			"@steedos/unpkg",
 			"@steedos/service-plugin-amis",
-			"@steedos/standard-process"
+			// "@steedos/standard-process"
 		],
 		plugins: [
 			"@steedos/webapp-accounts",
