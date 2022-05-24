@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-04-13 10:31:03
  * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-05-24 09:59:47
+ * @LastEditTime: 2022-05-24 10:34:53
  * @Description: 
  */
 var objectql = require('@steedos/objectql');
@@ -37,8 +37,7 @@ async function insertParentAndChildrenFieldForTreeObject(doc){
           _name: 'children',
           label: '子' + doc.label,
           multiple: true, 
-          omit: true,
-          hidden: true,
+          visible_on: "{{false}}",
           ...baseProps
         }
       )
