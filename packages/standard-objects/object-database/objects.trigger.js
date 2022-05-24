@@ -68,7 +68,7 @@ module.exports = {
     afterInsert: async function(){
         const doc = this.doc;
         if(doc.enable_tree){
-            objectTree.insertParentAndChildrenFieldForTreeObject(doc)
+            await objectTree.insertParentAndChildrenFieldForTreeObject(doc)
         }
         // let spaceProfiles = await objectql.getObject('permission_set').find({space: this.spaceId, type: 'profile'});
         // await objectql.getObject('object_layouts').insert({
@@ -114,6 +114,12 @@ module.exports = {
         }
     },
     afterUpdate: async function () {
+        const { doc, previousDoc } = this;
+        // 零代码配置 enable_tree: true 时，添加parent、children两个字段
+        if(previousDoc.enable_tree !== doc.enable_tree && doc.enable_tree === true){
+            // doc中缺少owner,space等字段值，需要从previousDoc中取到一起带过去
+            await objectTree.insertParentAndChildrenFieldForTreeObject(Object.assign({}, previousDoc, doc), true)
+        }
         /*
         const { doc, previousDoc, id, object_name } = this;
         const obj = this.getObject(object_name);

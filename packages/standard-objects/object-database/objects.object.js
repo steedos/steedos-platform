@@ -368,10 +368,6 @@ let objectTriggers = {
             else if(doc.is_deleted && !modifier.$set.is_deleted){
                 beforeRestoreObject(doc);
             }
-            // 零代码配置 enable_tree: true 时，检查是否有parent、children两个字段， 若无则添加。
-            if(modifier.$set.enable_tree !== doc.enable_tree && modifier.$set.enable_tree === true){
-                objectTree.insertParentAndChildrenFieldForTreeObject(Object.assign({}, doc, modifier.$set))
-            }
             if(modifier.$set.is_enable){
                 let fields = doc.fields;
                 if (!fields) {
