@@ -1,3 +1,10 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-04-13 10:31:03
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-05-24 09:59:47
+ * @Description: 
+ */
 var objectql = require('@steedos/objectql');
   
 async function insertParentAndChildrenFieldForTreeObject(doc){
@@ -12,7 +19,8 @@ async function insertParentAndChildrenFieldForTreeObject(doc){
         company_id: doc.company_id,
         company_ids: doc.company_ids
     }
-    const fields = await objectql.getObject(doc.name).toConfig().fields;
+    const object = await objectql.getObject(doc.name);
+    const fields = object.toConfig().fields;
     let docs = [];
     if(!_.has(fields,'parent')){
       docs.push(
