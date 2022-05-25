@@ -508,7 +508,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
   if (!errorInfo) {
     let operation = options.operation; // insert update upsert
     let filters = selectObjectToFilters(selectObj);
-    delete jsonObj._id;
+    // delete jsonObj._id; // 支持导入自定义_id
     if (
       recordExists &&
       recordExistsDoc &&
@@ -518,6 +518,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
         // if(options.userSession){
         //     jsonObj['modified_by'] = options.userSession.userId;
         // }
+        delete jsonObj._id; // 更新内容不包括_id
         await objectCollection.update(recordExistsDoc._id, jsonObj);
         insertInfo["create"] = false;
         insertInfo["update"] = true;
@@ -552,6 +553,12 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
         //     // jsonObj['company_ids'] = space_user.company_ids
 
         // }
+        // 如果有自定义_id，则校验_id为字符串类型且有字母、数字组成
+        if (jsonObj.hasOwnProperty('_id')) {
+          if (!_.isString(jsonObj._id) || !/^[a-zA-Z0-9]*$/.test(jsonObj._id)) {
+            throw new Error('Primary Key ( _id )必须为字母、数字组成的字符串。');
+          }
+        }
         await objectCollection.insert(jsonObj, options.userSession);
         insertInfo["create"] = true;
         insertInfo["update"] = false;

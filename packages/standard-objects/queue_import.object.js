@@ -1,13 +1,3 @@
-Creator.Objects['queue_import'].triggers = {
-  "before.insert.client.import": {
-    on: "client",
-    when: "before.insert",
-    todo: function (userId, doc) {
-      doc.state = "waitting";
-      return console.log(doc);
-    }
-  }
-};
 
 var converteNum, converterBool, converterDate, converterLookup, converterSelect, converterString, fs, importObject, insertRow, logger, path, xlsx;
 

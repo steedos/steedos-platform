@@ -85,18 +85,6 @@ fields:
     type: grid
     is_wide: true
     defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-        if(values && values.object_name){
-          var _object = Creator.getObject(values.object_name);
-          if(_object){
-            var icon = _object.icon;
-            return [{label: "Primary Key ( _id )", value: "_id", icon: "account"}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
-          }
-        }else{
-          return []
-        }
-      }
     required: true
     name: field_mappings
     filterable: true
@@ -117,13 +105,15 @@ fields:
       - object_name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
-
-        if(values.object_name && !_.isString(values.object_name)){
-          values.object_name = values.object_name.name
+        if(values && values.object_name){
+          var _object = Creator.getObject(values.object_name);
+          if(_object){
+            var icon = _object.icon;
+            return [{label: "Primary Key ( _id )", value: "_id", icon: icon}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
+          }
+        }else{
+          return []
         }
-
-        let objectFieldOption = Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
-        return objectFieldOption;
       }
   
   field_mappings.$.matched_by:
