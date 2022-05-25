@@ -71,6 +71,16 @@ if (!rootUrl) {
     process.env.ROOT_URL = rootUrl
 }
 
+// ROOT_URL 环境变量加载时，自动去除尾部 /
+if (process.env.ROOT_URL) {
+  rootUrl = process.env.ROOT_URL = process.env.ROOT_URL.replace(/\/+$/, '');
+}
+
+// 如果ROOT_URL包含pathPrefix，则警告
+if (new URL(rootUrl).pathname !== '/') {
+  console.warn(`[warn] ROOT_URL should not contain pathPrefix.`);
+}
+
 var mongoUrl =  process.env.MONGO_URL;       
 if (!mongoUrl) {
   var _mongoHost = '127.0.0.1';
