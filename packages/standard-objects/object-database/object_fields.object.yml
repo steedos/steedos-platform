@@ -178,6 +178,7 @@ fields:
   precision:
     type: currency
     label: Precision
+    scale: 0
     # defaultValue: 18
     visible_on: "{{
       (function(){
@@ -213,6 +214,7 @@ fields:
   scale:
     type: currency
     label: Scale
+    scale: 0
     # defaultValue: 2
     min: 0
     inlineHelpText: If the field type is a Percent, this indicates the number of decimal places the field will display, for example, two decimal places will display as 10.20%.
