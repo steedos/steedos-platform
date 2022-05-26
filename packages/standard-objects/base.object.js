@@ -43,7 +43,9 @@ module.exports = {
         standard_delete_many: {
             label: "Delete",
             visible: function (object_name, record_id, record_permissions) {
-                if(Steedos.isMobile()){
+                var currentListView = Creator.getListView();
+                var isCalendar = currentListView && currentListView.type === "calendar";
+                if(Steedos.isMobile() || isCalendar){
                     return false;
                 }
                 return Steedos.StandardObjects.Base.Actions.standard_delete_many.visible.apply(this, arguments)
