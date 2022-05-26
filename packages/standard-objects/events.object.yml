@@ -97,6 +97,7 @@ list_views:
     options:
       startDateExpr: start
       endDateExpr: end
+      allDayExpr: is_all_day
       textExpr: name
       title:
         - name
