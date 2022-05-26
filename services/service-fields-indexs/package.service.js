@@ -91,10 +91,14 @@ module.exports = {
 	 */
 	async started(ctx) {
 		try {
+			let indexScheduleCron = "0 0 * * * *"; // 默认每小时执行一次
 			const steedosConfig = objectql.getSteedosConfig() || {};
 			const cron = steedosConfig.cron;
 			if(cron && cron.build_index){
-				this.job = schedule.scheduleJob(cron.build_index, ()=>{
+				indexScheduleCron = cron.build_index;
+			}
+			if (indexScheduleCron) {
+				this.job = schedule.scheduleJob(indexScheduleCron, ()=>{
 					this.broker.call(`${serviceName}.refreshIndexes`)
 				});
 			}
