@@ -4119,15 +4119,15 @@
   dependencies:
     "@types/path-to-regexp" "^1.7.0"
 
-"@steedos-ui/builder-community@^2.2.14":
-  version "2.2.14"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.14.tgz#f4186a3e5cac534773e3e7e3d33c4fdfa53f6a81"
-  integrity sha512-RyPo/iaJ70gJh/m8QIoGmNVanuFJoqTEAmkBAtIIforq3uoRQKNAwHjQjuT6tSVAzKkBeKbG+owQIb4wu9dRMQ==
+"@steedos-ui/builder-community@^2.2.15":
+  version "2.2.15"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.15.tgz#a19df983b22d1b8ae4557ce38536e195f0ce7f51"
+  integrity sha512-9qTWNQg0mRNAkh/hhk8jupSbFHA26igj88kBKNdMabC7SYAxy2/083F088VyrIB43Kwui2Q/VBwz7GQ+nnetSw==
 
-"@steedos-ui/builder-widgets@^2.2.14":
-  version "2.2.14"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.14.tgz#1a0bdce6444566c4c852a6ee08f92d2511062bca"
-  integrity sha512-b9gjBl3A8NeNk7CXsGfnvwD49GjKAGzP5+N7bQWaXljbIhFl5bdqHFNMC5/xIoIrS+k+4StBFIG3G35cFFTCGw==
+"@steedos-ui/builder-widgets@^2.2.15":
+  version "2.2.15"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.15.tgz#5f9fa4d32d81bc93791f7d472d654dfc964b796a"
+  integrity sha512-iEKGo+i43IVTM4sNbor1R2xItDxtRZqnHUQe7wrjotyiSYG6DiROkp/gUjMzihxMDGn8hn4hCdiaA4hgVVtKiw==
   optionalDependencies:
     create-inferno-context "^0.2.4"
     create-react-context "^0.2.3"
@@ -4138,10 +4138,10 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/design-system@^2.2.14":
-  version "2.2.14"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.14.tgz#be60b320c8b60bcfffa1e39bb493131ec2b54984"
-  integrity sha512-bTKb+rIjyqEVP5+Xy9EXS23SBWeyw87SQ8fXntTBy3JtiZGhnk0Y4qhQp26Za7E63yhBpM4TcbhzkCIpx1B/zg==
+"@steedos-ui/design-system@^2.2.15":
+  version "2.2.15"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.15.tgz#c1d68db7b7a53f476a2c6e9d849e93c98dcc500b"
+  integrity sha512-WzSnENJAki0yOfL902abqQ/yDXSOg1P/nYtP3icXchGXUmjWvRAgXD39TSxba+hbv39Y6Ic6R3Wlrwnx8WENjg==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
