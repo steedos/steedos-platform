@@ -173,7 +173,7 @@ async function getObjectFields(objectName, userId){
     let object = await getObject(objectName, userId);
     if(object){
         let fields = [];
-        let originalFieldsName = ['owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids','process_state'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified', 'owner'
+        let originalFieldsName = ['owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids', 'instance_state'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified', 'owner'
         _.each(object.fields, function(field){
             if(!field._id && _.include(originalFieldsName, field.name)){
                 fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
@@ -187,7 +187,7 @@ exports.getObjectFields = getObjectFields
 exports.getDefaultSysFields = async function(object, userId){
     if(object && (!object.datasource || object.datasource === 'default' || object.datasource === 'meteor')){
         let baseObject = await getObject('base', userId)
-        return _.pick(baseObject.fields, 'owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids','process_state');
+        return _.pick(baseObject.fields, 'owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids', 'instance_state');
     }
 }
 
