@@ -29,10 +29,12 @@ const exportRecordData = async function (req, res) {
         if (!collection) {
             res.status(404).send({ msg: `collection not exists: ${objectName}` })
         }
+
+        const collectionConfig = await collection.getConfig();
         
         let lng = userSession.language;
         if(lng){
-            steedosI18n.translationObject(lng, collection.name, collection)
+            steedosI18n.translationObject(lng, collection.name, collectionConfig)
         }
 
         removeInvalidMethod(queryParams);
@@ -73,7 +75,7 @@ const exportRecordData = async function (req, res) {
             }
             if (entities) {
 
-                const fieldConfigs = collection.fields
+                const fieldConfigs = collectionConfig.fields
 
                 for (let i=0; i<entities.length; i++) {
                     let record = entities[i]
