@@ -168,7 +168,7 @@ fields:
         value: terminated
     hidden: true
   process_state:
-    label: Instance State
+    label: Process State
     type: select
     options:
       - label: Draft
