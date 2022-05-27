@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-06-03 15:11:52
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-05-27 10:56:26
+ * @Description: 
+ */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
@@ -17,7 +24,7 @@ module.exports = {
      */
     settings: {
         packageInfo: {
-            path: path.join(__dirname, 'src/objects')
+            path: path.join(__dirname, 'main')
         }
     },
 
